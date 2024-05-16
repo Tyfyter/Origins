@@ -4,7 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class CorruptGlobalNPC : GlobalNPC {
+    public class CorruptGlobalNPC : GlobalNPC, IAssimilationProvider {
+		public string AssimilationName => "CorruptionAssimilation";
 		public static HashSet<int> NPCTypes { get; private set; }
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
@@ -60,6 +61,7 @@ namespace Origins.NPCs.MiscE {
                 [ModContent.NPCType<Cranivore>()] = 0.03f,
                 [ModContent.NPCType<Optiphage>()] = 0.02f,
 			};
+			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
 			NPCTypes = null;
@@ -67,13 +69,6 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
-		}
-		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
-				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
-			}
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {
@@ -104,6 +99,20 @@ namespace Origins.NPCs.MiscE {
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
+		}
+		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
+			AssimilationAmount amount = GetAssimilationAmount(npc);
+			if (amount != default) {
+				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
+			}
+		}
+		public AssimilationAmount GetAssimilationAmount(NPC npc) {
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				return amount;
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				return amount;
+			}
+			return default;
 		}
 	}
 }

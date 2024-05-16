@@ -33,6 +33,7 @@ using MC = Terraria.ModLoader.ModContent;
 using Origins.Walls;
 using Origins.Tiles.Other;
 using AltLibrary.Common.AltBiomes;
+using Origins.NPCs;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -534,6 +535,8 @@ namespace Origins {
 			eyndumCoreUITexture = null;
 			eyndumCoreTexture = null;
 			CloudBottoms = null;
+			BiomeNPCGlobals.assimilationProviders.Clear();
+			BiomeNPCGlobals.assimilationProviders.TrimExcess();
 			foreach (IUnloadable unloadable in unloadables) {
 				unloadable.Unload();
 			}

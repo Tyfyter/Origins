@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Origins.Items.Weapons.Ammo;
+using Origins.NPCs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -839,7 +840,23 @@ namespace Origins.Dev {
 				Main.getGoodWorld = getGoodWorld;
 				npc.SetDefaults(npc.netID);
 			}
-
+			for (int i = 0; i < BiomeNPCGlobals.assimilationProviders.Count; i++) {
+				if (npc.TryGetGlobalNPC((GlobalNPC)BiomeNPCGlobals.assimilationProviders[i], out GlobalNPC gNPC) && gNPC is IAssimilationProvider assimilationProvider) {
+					AssimilationAmount amount = assimilationProvider.GetAssimilationAmount(npc);
+					if (amount != default) {
+						string assName = assimilationProvider.AssimilationName;
+						if (amount.Function is not null) {
+							data.Add(assName, "variable");
+							continue;
+						}
+						data.Add(assName, amount.ClassicAmount);
+						if (amount.ExpertAmount.HasValue) expertData.Add(assName, amount.ExpertAmount.Value);
+						if (amount.MasterAmount.HasValue) masterData.Add(assName, amount.MasterAmount.Value);
+					}
+				}
+			}
+			data.AppendJStat("Expert", expertData, []);
+			data.AppendJStat("Master", masterData, []);
 
 			customStat?.ModifyWikiStats(data);
 			data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);

@@ -11,7 +11,8 @@ using System.Linq;
 
 namespace Origins.NPCs.Defiled
 {
-    public class DefiledGlobalNPC : GlobalNPC {
+    public class DefiledGlobalNPC : GlobalNPC, IAssimilationProvider {
+		public string AssimilationName => "DefiledAssimilation";
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public static Dictionary<int, int> NPCTransformations { get; private set; }
         public override void Load()
@@ -39,6 +40,7 @@ namespace Origins.NPCs.Defiled
 				{ NPCID.Squid, ModContent.NPCType<Defiled_Squid>() }
 			};
 			hasErroredAboutWrongNPC = [];
+			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
         public override void Unload() {
 			AssimilationAmounts = null;
@@ -108,13 +110,20 @@ namespace Origins.NPCs.Defiled
 			}
 		}
         public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				target.GetModPlayer<OriginPlayer>().DefiledAssimilation += amount.GetValue(npc, target);
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+			AssimilationAmount amount = GetAssimilationAmount(npc);
+			if (amount != default) {
 				target.GetModPlayer<OriginPlayer>().DefiledAssimilation += amount.GetValue(npc, target);
 			}
 		}
-        public override void OnKill(NPC npc) {
+		public AssimilationAmount GetAssimilationAmount(NPC npc) {
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				return amount;
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				return amount;
+			}
+			return default;
+		}
+		public override void OnKill(NPC npc) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
 				defiledEnemy.SpawnWisp(npc);
 			}

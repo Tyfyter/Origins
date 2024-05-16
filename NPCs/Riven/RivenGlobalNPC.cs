@@ -5,7 +5,8 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class RivenGlobalNPC : GlobalNPC {
+    public class RivenGlobalNPC : GlobalNPC, IAssimilationProvider {
+		public string AssimilationName => "RivenAssimilation";
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
 			AssimilationAmounts = new() {
@@ -30,6 +31,7 @@ namespace Origins.NPCs.Riven {
                 [ModContent.NPCType<World_Cracker_Tail>()] = 0.09f,
                 [ModContent.NPCType<Torn_Ghoul>()] = 0.10f,
             };
+			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
 			AssimilationAmounts = null;
@@ -83,12 +85,19 @@ namespace Origins.NPCs.Riven {
 				damage += totalDPS / 3;
 			}
 		}
-        public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				target.GetModPlayer<OriginPlayer>().RivenAssimilation += amount.GetValue(npc, target);
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
+			AssimilationAmount amount = GetAssimilationAmount(npc);
+			if (amount != default) {
 				target.GetModPlayer<OriginPlayer>().RivenAssimilation += amount.GetValue(npc, target);
 			}
+		}
+		public AssimilationAmount GetAssimilationAmount(NPC npc) {
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				return amount;
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				return amount;
+			}
+			return default;
 		}
 	}
 	public interface IRivenEnemy {

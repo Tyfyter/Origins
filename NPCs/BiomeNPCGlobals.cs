@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs {
     public static class BiomeNPCGlobals {
+		public static List<IAssimilationProvider> assimilationProviders = [];
 		public static float CalcDryadDPSMult() {
 			float damageMult = 1f;
 			if (NPC.downedBoss1) {
@@ -44,7 +47,11 @@ namespace Origins.NPCs {
 			return damageMult;
 		}
 	}
-	public struct AssimilationAmount {
+	public interface IAssimilationProvider {
+		string AssimilationName { get; }
+		AssimilationAmount GetAssimilationAmount(NPC npc);
+	}
+	public readonly struct AssimilationAmount {
 		public Func<NPC, Player, float> Function { get; init; }
 		public float ClassicAmount { get; init; }
 		public float? ExpertAmount { get; init; }
@@ -61,7 +68,7 @@ namespace Origins.NPCs {
 			ExpertAmount = null;
 			MasterAmount = null;
 		}
-		public float GetValue(NPC attacker, Player victim) {
+		public readonly float GetValue(NPC attacker, Player victim) {
 			if (Function is not null) {
 				return Function(attacker, victim);
 			}
@@ -77,5 +84,11 @@ namespace Origins.NPCs {
 		public static implicit operator AssimilationAmount((float classic, float expert) value) => new(value.classic, value.expert);
 		public static implicit operator AssimilationAmount((float classic, float expert, float master) value) => new(value.classic, value.expert, value.master);
 		public static implicit operator AssimilationAmount(Func<NPC, Player, float> function) => new(function);
+		public static bool operator ==(AssimilationAmount a, AssimilationAmount b) {
+			return a.ClassicAmount == b.ClassicAmount && a.ExpertAmount == b.ExpertAmount && a.MasterAmount == b.MasterAmount && a.Function == b.Function;
+		}
+		public static bool operator !=(AssimilationAmount a, AssimilationAmount b) => !(a == b);
+		public override bool Equals(object obj) => obj is AssimilationAmount other && this == other;
+		public override int GetHashCode() => HashCode.Combine(ClassicAmount, ExpertAmount, MasterAmount, Function);
 	}
 }

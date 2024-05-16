@@ -4,7 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class CrimsonGlobalNPC : GlobalNPC {
+    public class CrimsonGlobalNPC : GlobalNPC, IAssimilationProvider {
+		public string AssimilationName => "CrimsonAssimilation";
 		public static HashSet<int> NPCTypes { get; private set; }
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
@@ -50,6 +51,7 @@ namespace Origins.NPCs.MiscE {
                 [NPCID.IchorSticker] = 0.06f,
                 [ModContent.NPCType<Crimbrain>()] = 0.07f,
             };
+			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
 			NPCTypes = null;
@@ -61,21 +63,6 @@ namespace Origins.NPCs.MiscE {
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
 			if (npc.ichor) {
 				modifiers.Defense.Flat += 5;
-			}
-		}
-		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			/*if (GameModeID.Master) {
-				AssimilationAmounts = AssimilationAmounts * 1.5;
-			} else if (GameModeID.Expert) {
-				AssimilationAmounts = AssimilationAmounts * 1.3;      would be sicko
-			} else {
-				AssimilationAmounts = AssimilationAmounts;
-			}*/
-
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
-				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
 			}
 		}
 		public override void ResetEffects(NPC npc) {
@@ -114,6 +101,20 @@ namespace Origins.NPCs.MiscE {
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
+		}
+		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
+			AssimilationAmount amount = GetAssimilationAmount(npc);
+			if (amount != default) {
+				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
+			}
+		}
+		public AssimilationAmount GetAssimilationAmount(NPC npc) {
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				return amount;
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				return amount;
+			}
+			return default;
 		}
 	}
 }

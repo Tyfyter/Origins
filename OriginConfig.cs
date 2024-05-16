@@ -68,7 +68,6 @@ namespace Origins {
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
 		public DebugConfig debugMenuButton = new();
 	}
-
 	internal class InconspicuousVersionElement : ConfigElement<ModConfig> {
 		private UIPanel separatePagePanel;
 		public override void OnBind() {
@@ -147,6 +146,46 @@ namespace Origins {
 					}
 					Directory.CreateDirectory(StatJSONPath);
 					WikiPageExporter.ExportItemStats(ContentSamples.ItemsByType[value.Type]);
+				}
+			}
+		}
+		public bool ExportAllNPCStatsJSON {
+			get => false;
+			set {
+				if (value) {
+					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+						Origins.LogError($"StatJSONPath is null or whitespace");
+						return;
+					}
+					if (Terraria.UI.ItemSlot.ShiftInUse) {
+						Directory.CreateDirectory(StatJSONPath);
+						int i;
+						for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.NpcsByNetId[i].ModNPC?.Mod is Origins) break;
+						for (; i < NPCLoader.NPCCount; i++) {
+							NPC npc = ContentSamples.NpcsByNetId[i];
+							if (npc.ModNPC is not null) {
+								if (npc.ModNPC?.Mod is not Origins) break;
+								WikiPageExporter.ExportNPCStats(npc);
+							}
+						}
+					} else {
+						const string text = "Shift must be held to export all stats, for safety reasons";
+						Origins.LogError(text);
+						Main.NewText(text);
+					}
+				}
+			}
+		}
+		public NPCDefinition ExportNPCStatsJSON {
+			get => default;
+			set {
+				if ((value?.Type ?? 0) > NPCID.None) {
+					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+						Origins.LogError($"StatJSONPath is null or whitespace");
+						return;
+					}
+					Directory.CreateDirectory(StatJSONPath);
+					WikiPageExporter.ExportNPCStats(ContentSamples.NpcsByNetId[value.Type]);
 				}
 			}
 		}
