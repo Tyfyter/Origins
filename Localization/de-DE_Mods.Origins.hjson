@@ -1503,6 +1503,16 @@ Configs: {
 			// Label: Export NPC Page
 			// Tooltip: ""
 		}
+
+		ExportAllNPCStatsJSON: {
+			// Label: Export All N P C Stats J S O N
+			// Tooltip: ""
+		}
+
+		ExportNPCStatsJSON: {
+			// Label: Export N P C Stats J S O N
+			// Tooltip: ""
+		}
 	}
 }
 

@@ -11,6 +11,7 @@ using System.Reflection;
 //using ThoriumMod.Projectiles.Bard;
 using Microsoft.Xna.Framework;
 using Origins.Tiles;
+using Origins.NPCs.MiscE;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -185,10 +186,8 @@ namespace Origins {
 		delegate void orig_TileShine(ref Vector3 color, Tile tile);
 		delegate void hook_TileShine(orig_TileShine orig, ref Vector3 color, Tile tile);
 		[JITWhenModsEnabled("ThoriumMod")]
-		void LoadThorium() {///TODO: unfalse if thorium
-#if false
-
-			MonoModHooks.Add(
+		static void LoadThorium() {///TODO: unfalse if thorium
+			/*MonoModHooks.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
 				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
 					orig(self);
@@ -205,39 +204,50 @@ namespace Origins {
 						self.Projectile.DamageType = classOverride.DamageType;
 					}
 				})
-			);
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.TheInnocent>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormHead>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormBody>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormTail>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SnowEater>());
+			);*/
+			(string name, float? assimilation)[] thoriumNPCs = [
+				("TheInnocent", 0.02f),
+				("FrostWormHead", null),
+				("FrostWormBody", null),
+				("FrostWormTail", null),
+				("SnowEater", 0.03f),
+				("TheStarved", 0.10f),
+				("HorrificCharger", null),
+				("VileFloater", null),
+				("ChilledSpitter", null),
+				("Freezer", 0.09f),
+				("SoulCorrupter", null),
+			];
+			for (int i = 0; i < thoriumNPCs.Length; i++) {
+				(string name, float? assimilation) = thoriumNPCs[i];
+				if (Thorium.TryFind(name, out ModNPC npc)) {
+					CorruptGlobalNPC.NPCTypes.Add(npc.Type);
+					if (assimilation.HasValue) CorruptGlobalNPC.AssimilationAmounts.Add(npc.Type, assimilation.Value);
+				} else {
+					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
+				}
+			}
 
-			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.TheInnocent>(), 0.02f);
-			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.SnowEater>(), 0.03f);
-
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.TheStarved>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.HorrificCharger>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.VileFloater>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.ChilledSpitter>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Freezer>());
-			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SoulCorrupter>());
-
-			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.TheStarved>(), 0.10f);
-			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.Freezer>(), 0.09f);
-
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.LivingHemorrhage>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Clot>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Coolmera>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrozenFace>());
-
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.BlisterPod>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Blister>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Coldling>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrozenGross>());
-			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.EpiDermon>());
-
-			CrimsonGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.Blister>(), 0.01f);
-#endif
+			thoriumNPCs = [
+				("LivingHemorrhage", null),
+				("Clot", null),
+				("Coolmera", null),
+				("FrozenFace", null),
+				("BlisterPod", null),
+				("Blister", 0.01f),
+				("Coldling", null),
+				("FrozenGross", null),
+				("EpiDermon", null)
+			];
+			for (int i = 0; i < thoriumNPCs.Length; i++) {
+				(string name, float? assimilation) = thoriumNPCs[i];
+				if (Thorium.TryFind(name, out ModNPC npc)) {
+					CrimsonGlobalNPC.NPCTypes.Add(npc.Type);
+					if (assimilation.HasValue) CrimsonGlobalNPC.AssimilationAmounts.Add(npc.Type, assimilation.Value);
+				} else {
+					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
+				}
+			}
 		}
 	}
 	public interface ICustomWikiDestination {
