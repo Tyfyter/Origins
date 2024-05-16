@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedDart);
 			Item.maxStack = 9999;
-			Item.damage = 9;
+			Item.damage = 11;
 			Item.shoot = ModContent.ProjectileType<Bile_Dart_P>();
 			Item.shootSpeed = 3f;
 			Item.knockBack = 2.2f;
@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Ammo {
 					Projectile.position,
 					default,
 					Bile_Dart_Aura.ID,
-					Projectile.damage / 10,
+					Projectile.damage / 2,
 					0,
 					Projectile.owner,
 					Projectile.whoAmI
@@ -96,10 +96,11 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.width = Projectile.height = 72;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
 			Projectile.tileCollide = false;
 			Projectile.scale = 1.5f;
+			Projectile.ArmorPenetration += 100;
 		}
 		public override void Load() {
 			if (Main.dedServ) return;
@@ -130,16 +131,23 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AI() {
 			int auraProj = (int)Projectile.ai[0];
 			if (auraProj < 0) {
-				Projectile.Kill();
+				Projectile.scale *= 0.95f;
+				Projectile.scale -= 0.05f;
+				if (Projectile.scale <= 0) Projectile.Kill();
 			} else {
 				Projectile ownerProj = Main.projectile[auraProj];
 				if (ownerProj.active) {
 					Projectile.Center = ownerProj.Center;
 					Projectile.rotation = ownerProj.rotation;
 				} else {
-					Projectile.Kill();
+					Projectile.Center = ownerProj.Center;
+					Projectile.ai[0] = -1;
 				}
 			}
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			int inflation = (int)(hitbox.Width * (Projectile.scale / 1.5f - 1) * 0.5f);
+			hitbox.Inflate(inflation, inflation);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);

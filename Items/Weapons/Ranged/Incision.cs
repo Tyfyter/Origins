@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Ranged {
             "DartLauncher"
         ];
         public override void SetDefaults() {
-			Item.damage = 25;
+			Item.damage = 34;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;
 			Item.crit = -4;
@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useAnimation = 40;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4;
-			Item.shootSpeed = 10f;
+			Item.shootSpeed = 11f;
 			Item.shoot = ProjectileID.PurificationPowder;
 			Item.useAmmo = AmmoID.Dart;
 			Item.useTurn = false;
