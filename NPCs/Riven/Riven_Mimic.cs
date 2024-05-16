@@ -37,7 +37,7 @@ namespace Origins.NPCs.Riven {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
 				ItemID.SoulDrain, // Super Cell
-				ItemID.DartRifle, // Dart Crossbow
+				ModContent.ItemType<Dart_Crossbow>(), // Dart Crossbow
 				ItemID.FetidBaghnakhs, // Amoebash
 				ModContent.ItemType<Tainted_Flesh>(),
 				ItemID.TendonHook // Salty Seed (Eutrophic Cell, aka Mitosis)
