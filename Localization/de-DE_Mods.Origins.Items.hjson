@@ -4138,3 +4138,8 @@ Counter_Offensive_Scarf: {
 		Increases damage you deal by up to 10% when enemies draw near
 		''' */
 }
+
+Dart_Crossbow: {
+	// DisplayName: Dart_ Crossbow
+	// Tooltip: ""
+}

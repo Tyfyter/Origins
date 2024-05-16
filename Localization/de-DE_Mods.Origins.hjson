@@ -1505,12 +1505,12 @@ Configs: {
 		}
 
 		ExportAllNPCStatsJSON: {
-			// Label: Export All N P C Stats J S O N
+			// Label: Export All NPC Stats JSON
 			// Tooltip: ""
 		}
 
 		ExportNPCStatsJSON: {
-			// Label: Export N P C Stats J S O N
+			// Label: Export NPC Stats JSON
 			// Tooltip: ""
 		}
 	}
