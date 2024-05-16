@@ -79,8 +79,10 @@ namespace Origins.Graphics {
 			oldRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
 		public void Unload() {
-			renderTarget.Dispose();
-			oldRenderTarget.Dispose();
+			Main.QueueMainThreadAction(() => {
+				renderTarget.Dispose();
+				oldRenderTarget.Dispose();
+			});
 			Main.OnResolutionChanged -= Resize;
 		}
 	}
