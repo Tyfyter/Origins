@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 29;
+			Item.damage = 23;
 			Item.crit = 4;
 			Item.useAnimation = 45;
 			Item.useTime = 1;
@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Abrasion_Blaster_Charge_P.ID;
-            SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.2f).WithPitch(0.5f /** projectile.ai[0]*/), position);
+            SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), position);
             //SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
             //Item.UseSound = Origins.Sounds.EnergyRipple;
             int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
