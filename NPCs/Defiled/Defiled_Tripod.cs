@@ -38,6 +38,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 5000;
 			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
 			];
 		}
@@ -45,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 		public int MaxManaDrain => 32;
 		public float Mana { get; set; }
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 70);
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 100);
 			this.DrainMana(target);
 		}
 		public void Regenerate(out int lifeRegen) {

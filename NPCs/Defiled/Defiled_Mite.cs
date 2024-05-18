@@ -22,9 +22,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = NPCAIStyleID.None;
-			NPC.lifeMax = 22;
-			NPC.defense = 9;
-			NPC.damage = 34;
+			NPC.lifeMax = 44;
+			NPC.defense = 12;
+			NPC.damage = 38;
 			NPC.width = 20;
 			NPC.height = 18;
 			NPC.friendly = false;

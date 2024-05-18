@@ -81,7 +81,7 @@ namespace Origins.Items.Weapons.Ammo {
             SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 60);
+            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
         }
 	}
 	public class Bile_Dart_Aura : ModProjectile {
@@ -151,7 +151,7 @@ namespace Origins.Items.Weapons.Ammo {
 			hitbox.Inflate(inflation, inflation);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 25);
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 12);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			anyActive = true;

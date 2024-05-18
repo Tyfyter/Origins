@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 15);
 		}
 	}
 }

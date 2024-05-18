@@ -20,7 +20,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = 14;
-			NPC.lifeMax = 42;
+			NPC.lifeMax = 48;
 			NPC.defense = 10;
 			NPC.damage = 20;
 			NPC.width = 70;

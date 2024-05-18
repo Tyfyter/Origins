@@ -206,7 +206,7 @@ namespace Origins {
 			}
 			if (item.CountsAsClass(DamageClass.Melee)) {//flasks
 				if (flaskBile) {
-					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 				}
 				if (flaskSalt) {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);

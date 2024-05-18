@@ -3190,7 +3190,7 @@ Riven_Flesh_Item: {
 }
 
 Riven_Grass_Seeds: {
-	// DisplayName: Riven Seeds
+	// DisplayName: "{§Riven} Seeds"
 	// Tooltip: ""
 }
 

@@ -403,6 +403,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (X) Retaliatory Tendril*
+(#, ^2) Scrap Compactor*
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -414,7 +415,6 @@ ACCESSORIES:
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
-(#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (#2, ^2) Stack of Shraps*
 (^) Strange Tooth*
@@ -626,7 +626,7 @@ RANGED WEAPONS:
 (^) Firespit
 (X) Frequency
 (^) Incision
-(X) Left Click*
+(X) Left Klik*
 (X) Mythril Harpoon Gun*
 (X) Orichalcum Harpoon Gun*
 (X) Palladium Harpoon Gun*
@@ -641,6 +641,7 @@ RANGED WEAPONS:
 (X) EAC Thunder*
 (X) Fungi Pipe
 (^) Laser Tag Gun
+(X) Plasma Cutter !!!
 (X) Seventh Spline
 (X) Shroomshot
 (X) Skewr
@@ -673,7 +674,6 @@ MAGIC WEAPONS:
 (#, ^2) Communion !!!
 (^) Dismay
 (^) Innermost Manifest
-(#2, ^2) Missing File !!!
 (^) Seam Beam
 (X) Shinedown
 (^) Splashid
@@ -685,6 +685,7 @@ MAGIC WEAPONS:
 (X) Ghost Trap
 (^) Haunted Vase
 (X) Lunarfire
+(#3, ^2) Missing File !!!
 (#, ^2) Phantom Fury
 (^) Pike of Deepneus
 (X) Sapphire Shunter
@@ -721,6 +722,7 @@ SUMMONER WEAPONS:
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
+(X) Scabcoral Lyre !!!
 (#, ^2) Ziptie !!!
 
 (X) Candlelight
@@ -762,7 +764,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(#, ^2) Internal Combustion* !!!
+(#, ^2) Internal Combustionfish* !!!
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
 (^) Meteor*
@@ -885,6 +887,7 @@ TILES:
 
 (^) Alkahest Torch*
 (X) Amoeba Buggy Cage*
+(X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Brine Water Fountain
 (X) Bug Cage*
@@ -955,6 +958,7 @@ TILES:
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
+(X) Scrapleaf Tree
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Wilting Rose*
@@ -1175,7 +1179,7 @@ AMMO:
 (^) Alkahest Arrow*
 (^) Alkahest Bullet*
 (#, ^2) Alkahest Canister* !!!
-(X) Alkahest Dart !!!
+(#, ^2) Alkahest Dart !!!
 (#, ^2) Alkaline Canister* !!!
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
