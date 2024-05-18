@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 		public static Color currentNPCColor;
 		public override void Draw(SpriteBatch spriteBatch) {
 			static bool IsInvalidNPC(NPC npc) {
-				switch (npc.type) {
+				switch (npc.netID) {
 					case NPCID.CultistBoss or NPCID.CultistBossClone or NPCID.CultistDevote or NPCID.CultistArcherBlue or NPCID.CultistArcherWhite:
 					return !npc.active;
 				}
@@ -58,9 +58,9 @@ namespace Origins.Items.Weapons.Magic {
 				Rectangle screenArea = new(margin, margin, Main.screenWidth - margin * 2, Main.screenHeight - margin * 2);
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (IsInvalidNPC(npc)) continue;
-					if (realNPCs.Add(npc.type)) {
+					if (realNPCs.Add(npc.netID)) {
 						targets.Add(new(
-							npc.type,
+							npc.netID,
 							Main.rand.NextVector2FromRectangle(screenArea),
 							Main.rand.NextFloat(4),
 							false
@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Magic {
 					do {
 						fakeTarget = Main.rand.Next(npcTypes);
 						if (++tries > 100) break;
-					} while (IsInvalidNPC(fakeTarget) || realNPCs.Contains(fakeTarget.type));
+					} while (IsInvalidNPC(fakeTarget) || realNPCs.Contains(fakeTarget.netID));
 					targets.Add(new(
 						fakeTarget.type,
 						Main.rand.NextVector2FromRectangle(screenArea),
@@ -85,6 +85,10 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			} else {
 				try {
+					HashSet<int> realNPCs = [];
+					foreach (NPC npc in Main.ActiveNPCs) {
+						realNPCs.Add(npc.netID);
+					}
 					drawingMissingFileUI = true;
 					GraphicsUtils.drawingEffect = true;
 					bool anyReal = false;
@@ -120,17 +124,17 @@ namespace Origins.Items.Weapons.Magic {
 						MissingFileTarget target = targets[i];
 						NPC npc;
 						if (target.Fake) {
-							if (NPC.AnyNPCs(target.Type)) {
+							if (realNPCs.Contains(target.NetID)) {
 								targets.Clear();
 								break;
 							}
-							npc = ContentSamples.NpcsByNetId[target.Type];
+							npc = ContentSamples.NpcsByNetId[target.NetID];
 						} else {
-							if (!NPC.AnyNPCs(target.Type)) {
+							if (!realNPCs.Contains(target.NetID)) {
 								targets.RemoveAt(i--);
 								break;
 							}
-							npc = ContentSamples.NpcsByNetId[target.Type];
+							npc = ContentSamples.NpcsByNetId[target.NetID];
 							anyReal = true;
 						}
 						bool hovered = Main.MouseScreen.DistanceSQ(target.Position) < 32 * 32;
@@ -140,7 +144,7 @@ namespace Origins.Items.Weapons.Magic {
 						} else {
 							currentNPCColor = hoverColor;
 						}
-						Vector2 position = npc.Size * 0.5f - (target.Position * scale);// * scale;
+						Vector2 position = npc.Size * 0.5f - (target.Position * scale);
 						Main.instance.DrawNPCDirect(spriteBatch, npc, true, position);
 						Main.instance.DrawNPCDirect(spriteBatch, npc, false, position);
 						if (hovered && Main.LocalPlayer.ItemAnimationJustStarted) {
@@ -149,7 +153,7 @@ namespace Origins.Items.Weapons.Magic {
 								IEntitySource source = Main.LocalPlayer.GetSource_ItemUse(item);
 								int damage = Main.LocalPlayer.GetWeaponDamage(item);
 								foreach (NPC targetNPC in Main.ActiveNPCs) {
-									if (targetNPC.type == target.Type) {
+									if (targetNPC.netID == target.NetID) {
 										SoundEngine.PlaySound(SoundID.Meowmere, targetNPC.Center);
 										Projectile.NewProjectile(
 											source,
@@ -179,8 +183,8 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 		}
-		public class MissingFileTarget(int type, Vector2 position, float frame, bool fake) {
-			public int Type => type;
+		public class MissingFileTarget(int netID, Vector2 position, float frame, bool fake) {
+			public int NetID => netID;
 			public Vector2 Position => position;
 			public float Frame {
 				get => frame;
