@@ -46,3 +46,8 @@ DeathMessage: {
 	// oh god no, YESSSS
 	// Torn_4: "{0} was compelled by the Primordial Amoeba to 'Split apart.'"
 }
+
+AltBiomes: {
+	// Defiled_Wastelands_Alt_Biome.GenPassName: Bribing local authorities to ignore {§Defiled_Wastelands}'s many health code violations
+	// Riven_Hive_Alt_Biome.GenPassName: Establishing {§Riven}
+}

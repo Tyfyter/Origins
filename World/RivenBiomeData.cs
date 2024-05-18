@@ -741,6 +741,7 @@ namespace Origins.World.BiomeData {
 			}
 		}
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
+			public override string ProgressMessage => Language.GetTextValue("Mods.Origins.AltBiomes.Riven_Hive_Alt_Biome.GenPassName");
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
 				WorldBiomeGeneration.ChangeRange.ResetRange();
 				int y = (int)GenVars.worldSurface - 50;

@@ -31,6 +31,7 @@ using AltLibrary.Common.Systems;
 using System.Linq;
 using Origins.Tiles.Other;
 using AltLibrary;
+using Terraria.Localization;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -794,7 +795,8 @@ namespace Origins.World.BiomeData {
 		public static List<int> defiledWastelandsWestEdge;
 		public static List<int> defiledWastelandsEastEdge;
 		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
-			Stack<Point> defiledHearts = new Stack<Point>() { };
+			Stack<Point> defiledHearts = new();
+			public override string ProgressMessage => Language.GetTextValue("Mods.Origins.AltBiomes.Defiled_Wastelands_Alt_Biome.GenPassName");
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
 				int offset;
 				for (offset = 0; offset < 300; offset = offset > 0 ? (-offset) : ((-offset) + 2)) {

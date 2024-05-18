@@ -447,11 +447,13 @@ AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		DisplayName: "{§Defiled_Wastelands}"
 		Description: An alien entity that seeks out its growth in the Terrarian realm with its own way of life.
+		GenPassName: Generating Wastelands
 	}
 
 	Riven_Hive_Alt_Biome: {
 		DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
 		Description: A natural biome manifested by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
+		GenPassName: Rivenating
 	}
 
 	Ashen_Alt_Biome.DisplayName: Ashen Biome
