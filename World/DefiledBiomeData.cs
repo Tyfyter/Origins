@@ -32,6 +32,7 @@ using System.Linq;
 using Origins.Tiles.Other;
 using AltLibrary;
 using Terraria.Localization;
+using AltLibrary.Core;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -250,7 +251,8 @@ namespace Origins.World.BiomeData {
 						WorldGen.SlopeTile(p.X + o - 1, p.Y + 1, SlopeID.None);
 						WorldGen.SlopeTile(p.X + o, p.Y + 1, SlopeID.None);
 						if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to)) {
-							WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
+							TileObject.Place(to);
+							//WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
 							fisureCount++;
 							break;
 						}
@@ -858,8 +860,8 @@ namespace Origins.World.BiomeData {
 						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
 						Tile tile = Framing.GetTileSafely(i, j);
 						if (tile.HasTile) {
-							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
-							AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
+							ALConvert.ConvertTile(i, j, biome);
+							ALConvert.ConvertWall(i, j, biome);
 						}
 					}
 				}
