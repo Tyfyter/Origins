@@ -34,6 +34,9 @@ namespace Origins.Projectiles.Weapons {
 					Projectile.DamageType = DamageClass.Melee;
 					break;
 				}
+			} else if (source is EntitySource_ItemUse itemUse) {
+				Projectile.friendly = true;
+				Projectile.DamageType = itemUse.Item.DamageType;
 			}
 		}
 		public override bool? CanHitNPC(NPC target) => false;

@@ -2,15 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.UI {
-	public class State_Switching_UI : UIState {
-		readonly List<SwitchableUIState> states = new();
+	public class State_Switching_UI(params SwitchableUIState[] states) : UIState() {
+		readonly List<SwitchableUIState> states = states.ToList();
 		SwitchableUIState currentState;
-		public State_Switching_UI(params SwitchableUIState[] states) : base() {
-			this.states = states.ToList();
-		}
+
 		public void AddState(SwitchableUIState state) {
 			states.Add(state);
 		}
@@ -32,7 +31,16 @@ namespace Origins.UI {
 			currentState.Draw(spriteBatch);
 		}
 	}
-	public abstract class SwitchableUIState : UIState {
+	public abstract class SwitchableUIState : UIState, ILoadable {
+		public void Load(Mod mod) {
+			if (OriginSystem.queuedUIStates is null) {
+				AddToList();
+			} else {
+				OriginSystem.queuedUIStates.Add(this);
+			}
+		}
+		public void Unload() { }
+		public abstract void AddToList();
 		public abstract bool IsActive();
 	}
 }

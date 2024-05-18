@@ -1579,6 +1579,9 @@ namespace Origins {
 				frameSize.Y + sizeOffset.Y
 			);
 		}
+		public static Rectangle Frame(this AutoLoadingAsset<Texture2D> asset, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
+			return asset.Value.Frame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
+		}
 		public static float AngleDif(float alpha, float beta, out int dir) {
 			float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
 			dir = ((phi > MathHelper.Pi) ^ (alpha > beta)) ? -1 : 1;

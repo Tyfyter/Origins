@@ -45,7 +45,7 @@ namespace Origins.Tiles.Defiled {
 			Item.placeStyle = 1;
 		}
 	}
-	public class Defiled_Dungeon_Chest_Placeholder_Item : ModItem {
+	/*public class Defiled_Dungeon_Chest_Placeholder_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
-	}
+	}*/
 }

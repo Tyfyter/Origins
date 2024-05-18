@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
+using Origins.Items.Weapons.Magic;
 using Origins.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,9 @@ namespace Origins.NPCs {
 				drawColor.R = (byte)Math.Max(drawColor.R - 85, 0);
 				drawColor.G = (byte)Math.Min(drawColor.G + 50, 255);
 				drawColor.B = (byte)Math.Min(drawColor.B + 85, 255);
+			}
+			if (Missing_File_UI.drawingMissingFileUI) {
+				drawColor = Missing_File_UI.currentNPCColor;
 			}
 		}
 		public override void AI(NPC npc) {

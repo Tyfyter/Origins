@@ -28,20 +28,30 @@ namespace Origins {
 		public static OriginSystem Instance => instance ??= ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusInventoryUI;
 		UserInterface setBonusHUDInterface;
-		public State_Switching_UI SetBonusHUD { get; private set; }
+		UserInterface itemUseHUDInterface;
+		public State_Switching_UI SetBonusHUD { get; private set; } = new();
+		public State_Switching_UI ItemUseHUD { get; private set; } = new();
 		public UserInterfaceWithDefaultState journalUI;
+		internal static List<SwitchableUIState> queuedUIStates = [];
 		public override void Load() {
 			setBonusInventoryUI = new UserInterface();
 			setBonusHUDInterface = new UserInterface();
-			setBonusHUDInterface.SetState(SetBonusHUD = new(
-				new Berserker_Meter()
-			));
+			setBonusHUDInterface.SetState(SetBonusHUD);
+			itemUseHUDInterface = new UserInterface();
+			itemUseHUDInterface.SetState(ItemUseHUD);
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
 		}
+		public override void SetStaticDefaults() {
+			for (int i = 0; i < queuedUIStates.Count; i++) {
+				queuedUIStates[i].AddToList();
+			}
+			queuedUIStates = null;
+		}
 		public override void Unload() {
 			instance = null;
+			queuedUIStates = null;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.MiningHelmet);
@@ -343,6 +353,7 @@ namespace Origins {
 				}
 			}
 			setBonusHUDInterface.Update(gameTime);
+			itemUseHUDInterface.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -356,13 +367,21 @@ namespace Origins {
 					InterfaceScaleType.UI) { Active = Main.playerInventory }
 				);
 				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+					 "Origins: Held Item HUD",
+					 delegate {
+						 itemUseHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+						 return true;
+					 },
+					 InterfaceScaleType.UI)
+				);
+				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 					 "Origins: Set Bonus HUD",
 					 delegate {
 						 setBonusHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
 						 return true;
 					 },
 					 InterfaceScaleType.UI)
-				 );
+				);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
 					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 						"Origins: Journal UI",

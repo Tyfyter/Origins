@@ -11,6 +11,7 @@ namespace Origins.UI.SetBonus {
 	public class Berserker_Meter : SwitchableUIState {
 		float alpha = 1f;
 		public AutoLoadingAsset<Texture2D> texture = typeof(Berserker_Meter).GetDefaultTMLName();
+		public override void AddToList() => OriginSystem.Instance.SetBonusHUD.AddState(this);
 		public override bool IsActive() {
 			if (OriginPlayer.LocalOriginPlayer is null) return false;
 			if (OriginPlayer.LocalOriginPlayer.setActiveAbility == SetActiveAbility.blast_armor) {

@@ -29,7 +29,11 @@ namespace Origins {
 			for (int i = 0; i < len; i++) {
 				DamageClass other = damageClasses[i];
 				if (!other.GetEffectInheritance(explosive) && other is not ThrowingDamageClass) {
-					ExplosiveVersion.Add(other, ExplosivePlus.CreateAndRegister(other));
+					if (other is global::Origins.Explosive or ExplosivePlus) {
+						ExplosiveVersion.Add(other, other);
+					} else {
+						ExplosiveVersion.Add(other, ExplosivePlus.CreateAndRegister(other));
+					}
 				}
 			}
 			ExplosiveVersion.Add(DamageClass.Throwing, thrownExplosive);
