@@ -11,6 +11,7 @@ namespace Origins.Walls {
 			WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn[Type] = true;
 			WallID.Sets.Conversion.HardenedSand[Type] = true;
 			Main.wallBlend[Type] = WallID.HardenedSand;//what wall type this wall is considered to be when blending
+			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(115, 115, 115));
 		}
 	}

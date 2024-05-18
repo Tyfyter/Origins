@@ -692,7 +692,7 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe3,
 				WallID.CrimsonUnsafe4
 			);
-				AddWallConversions<Defiled_Sandstone_Wall>(
+			AddWallConversions<Defiled_Sandstone_Wall>(
 				WallID.Sandstone,
 				WallID.CorruptSandstone,
 				WallID.CrimsonSandstone,

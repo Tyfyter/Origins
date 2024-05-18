@@ -10,6 +10,7 @@ namespace Origins.Walls {
 			WallID.Sets.Conversion.Stone[Type] = true;
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			Origins.WallHammerRequirement[Type] = 70;
+			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(150, 150, 150));
 		}
 	}
@@ -18,6 +19,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallHouse[Type] = true;
+			Origins.WallHammerRequirement[Type] = 0;
 		}
 	}
 	public class Defiled_Stone_Wall_Item : ModItem {

@@ -18,12 +18,14 @@ namespace Origins.Walls {
 	public abstract class OriginsWall : ModWall {
 		public abstract WallVersion WallVersions { get; }
 		public abstract Color MapColor { get; }
+		public virtual bool CanBeReplacedByWallSpread => true;
 		public virtual int TileItem => -1;
 		public Dictionary<WallVersion, OriginsWall> Versions { get; private set; }
 		public int GetWallID(WallVersion version) => Versions[version].Type;
 		public static int GetWallID<T>(WallVersion version) where T : OriginsWall => ModContent.GetInstance<T>().GetWallID(version);
 		public override void SetStaticDefaults() {
 			AddMapEntry(MapColor);
+			if (!CanBeReplacedByWallSpread) WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			if (WallVersion == WallVersion.Safe) {
 				Main.wallHouse[Type] = true;
 			}

@@ -137,6 +137,7 @@ namespace Origins.Items.Weapons.Ammo {
 			} else {
 				Projectile ownerProj = Main.projectile[auraProj];
 				if (ownerProj.active) {
+					Projectile.scale = ownerProj.scale * 1.5f;
 					Projectile.Center = ownerProj.Center;
 					Projectile.rotation = ownerProj.rotation;
 				} else {

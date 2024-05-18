@@ -714,6 +714,12 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe3,
 				WallID.CrimsonUnsafe4
 			);
+			AddWallConversions<Quartz_Wall>(
+				WallID.Sandstone
+			);
+			AddWallConversions<Brittle_Quartz_Wall>(
+				WallID.HardenedSand
+			);
 			AddWallConversions(OriginsWall.GetWallID<Riven_Grass_Wall>(WallVersion.Natural),
 				WallID.GrassUnsafe,
 				WallID.Grass
