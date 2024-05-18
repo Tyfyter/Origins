@@ -10,6 +10,9 @@ using System.Linq;
 using Terraria.Audio;
 using Origins.Projectiles.Weapons;
 using Terraria.DataStructures;
+using Origins.Graphics;
+using Origins.Items.Other.Dyes;
+using Terraria.Graphics.Shaders;
 
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]
@@ -51,12 +54,14 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			if (targets.Count == 0) {
 				HashSet<int> realNPCs = [];
+				const int margin = 64;
+				Rectangle screenArea = new(margin, margin, Main.screenWidth - margin * 2, Main.screenHeight - margin * 2);
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (IsInvalidNPC(npc)) continue;
 					if (realNPCs.Add(npc.type)) {
 						targets.Add(new(
 							npc.type,
-							Main.rand.NextVector2FromRectangle(new(0, 0, Main.screenWidth, Main.screenHeight)),
+							Main.rand.NextVector2FromRectangle(screenArea),
 							Main.rand.NextFloat(4),
 							false
 						));
@@ -73,7 +78,7 @@ namespace Origins.Items.Weapons.Magic {
 					} while (IsInvalidNPC(fakeTarget) || realNPCs.Contains(fakeTarget.type));
 					targets.Add(new(
 						fakeTarget.type,
-						Main.rand.NextVector2FromRectangle(new(0, 0, Main.screenWidth, Main.screenHeight)),
+						Main.rand.NextVector2FromRectangle(screenArea),
 						Main.rand.NextFloat(4),
 						true
 					));
@@ -81,7 +86,36 @@ namespace Origins.Items.Weapons.Magic {
 			} else {
 				try {
 					drawingMissingFileUI = true;
+					GraphicsUtils.drawingEffect = true;
 					bool anyReal = false;
+					Color normalColor = Color.White * 0.8f;
+					Color hoverColor = Color.White;
+					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null);
+					for (int i = 0; i < targets.Count; i++) {
+						MissingFileTarget target = targets[i];
+						bool hovered = Main.MouseScreen.DistanceSQ(target.Position) < 32 * 32;
+						if (hovered) {
+							currentNPCColor = hoverColor;
+						} else {
+							currentNPCColor = normalColor;
+						}
+						target.Frame = (target.Frame + 0.1f) % 4;
+						spriteBatch.Draw(
+							texture,
+							target.Position,
+							texture.Frame(verticalFrames: 4, frameY: (int)target.Frame),
+							currentNPCColor,
+							0,
+							new(16),
+							2,
+							0,
+						0);
+
+					}
+					Origins.currentScreenTarget = null;
+					Origins.shaderOroboros.Capture(spriteBatch);
+					Main.UIScaleMatrix.Decompose(out Vector3 _scale, out Quaternion _, out Vector3 _);
+					Vector2 scale = new(1 / (_scale.X * _scale.X), 1 / (_scale.Y * _scale.Y)); // why does the scale have to be squared?
 					for (int i = 0; i < targets.Count; i++) {
 						MissingFileTarget target = targets[i];
 						NPC npc;
@@ -100,32 +134,22 @@ namespace Origins.Items.Weapons.Magic {
 							anyReal = true;
 						}
 						bool hovered = Main.MouseScreen.DistanceSQ(target.Position) < 32 * 32;
-						target.Frame = (target.Frame + 0.1f) % 4;
 						if (hovered) {
-							currentNPCColor = Color.White;
+							currentNPCColor = hoverColor;
 							Main.instance.MouseText(npc.TypeName);
 						} else {
-							currentNPCColor = Color.White * 0.8f;
+							currentNPCColor = hoverColor;
 						}
-						spriteBatch.Draw(
-							texture,
-							target.Position,
-							texture.Frame(verticalFrames: 4, frameY: (int)target.Frame),
-							currentNPCColor,
-							0,
-							new(16),
-							2,
-							0,
-						0);
-						Main.instance.DrawNPCDirect(spriteBatch, npc, true, npc.Center - target.Position);
-						Main.instance.DrawNPCDirect(spriteBatch, npc, false, npc.Center - target.Position);
+						Vector2 position = npc.Size * 0.5f - (target.Position * scale);// * scale;
+						Main.instance.DrawNPCDirect(spriteBatch, npc, true, position);
+						Main.instance.DrawNPCDirect(spriteBatch, npc, false, position);
 						if (hovered && Main.LocalPlayer.ItemAnimationJustStarted) {
 							if (target.Real) {
 								Item item = Main.LocalPlayer.HeldItem;
 								IEntitySource source = Main.LocalPlayer.GetSource_ItemUse(item);
 								int damage = Main.LocalPlayer.GetWeaponDamage(item);
 								foreach (NPC targetNPC in Main.ActiveNPCs) {
-									if (targetNPC.netID == npc.netID) {
+									if (targetNPC.type == target.Type) {
 										SoundEngine.PlaySound(SoundID.Meowmere, targetNPC.Center);
 										Projectile.NewProjectile(
 											source,
@@ -144,9 +168,14 @@ namespace Origins.Items.Weapons.Magic {
 							break;
 						}
 					}
+					shader.Shader.Parameters["uOffset"].SetValue(-Main.LocalPlayer.velocity.WithMaxLength(4) * 2);
+					Origins.shaderOroboros.Stack(shader, null);
+					Origins.shaderOroboros.Release();
 					if (!anyReal) targets.Clear();
 				} finally {
 					drawingMissingFileUI = false;
+					GraphicsUtils.drawingEffect = false;
+					if (Origins.shaderOroboros.Capturing) Origins.shaderOroboros.Reset(default);
 				}
 			}
 		}

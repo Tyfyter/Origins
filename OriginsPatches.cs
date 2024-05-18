@@ -1280,7 +1280,7 @@ namespace Origins {
 			orig(self, screenTarget1, clearColor);
 			currentScreenTarget = screenTarget1;
 		}
-		static ShaderLayerTargetHandler shaderOroboros = new();
+		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		private void On_Main_DrawNPCDirect(On_Main.orig_DrawNPCDirect orig, Main self, SpriteBatch mySpriteBatch, NPC rCurrentNPC, bool behindTiles, Vector2 screenPos) {
 			if (GraphicsUtils.drawingEffect) {
 				orig(self, mySpriteBatch, rCurrentNPC, behindTiles, screenPos);

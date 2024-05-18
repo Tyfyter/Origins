@@ -19,6 +19,7 @@ namespace Origins.Graphics {
 		internal RenderTarget2D renderTarget;
 		internal RenderTarget2D oldRenderTarget;
 		SpriteBatchState spriteBatchState;
+		SpriteBatch spriteBatch;
 		bool capturing = false;
 		public bool Capturing {
 			get => capturing;
@@ -32,10 +33,11 @@ namespace Origins.Graphics {
 				capturing = value;
 			}
 		}
-		public void Capture() {
+		public void Capture(SpriteBatch spriteBatch = null) {
 			Capturing = true;
-			spriteBatchState = Main.spriteBatch.GetState();
-			Main.spriteBatch.Restart(spriteBatchState, SpriteSortMode.Immediate);
+			this.spriteBatch = spriteBatch ?? Main.spriteBatch;
+			spriteBatchState = spriteBatch.GetState();
+			spriteBatch.Restart(spriteBatchState, SpriteSortMode.Immediate);
 			Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 		}
@@ -45,23 +47,31 @@ namespace Origins.Graphics {
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 			DrawData data = new(oldRenderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
 			shader.Apply(entity, data);
-			data.Draw(Main.spriteBatch);
+			data.Draw(spriteBatch);
 		}
 		public void Release() {
 			Capturing = false;
-			Main.spriteBatch.Restart(spriteBatchState);
-			RenderTargetUsage? renderTargetUsage = Origins.currentScreenTarget?.RenderTargetUsage;
+			spriteBatch.Restart(spriteBatchState);
+			RenderTargetUsage renderTargetUsage = Origins.currentScreenTarget?.RenderTargetUsage ?? Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage;
 			try {
-				if (renderTargetUsage.HasValue) GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, RenderTargetUsage.PreserveContents);
+				if (Origins.currentScreenTarget is not null) {
+					GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, RenderTargetUsage.PreserveContents);
+				} else {
+					Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+				}
 				Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
 			} finally {
-				if (renderTargetUsage.HasValue) GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, renderTargetUsage.Value);
+				if (Origins.currentScreenTarget is not null) {
+					GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, renderTargetUsage);
+				} else {
+					Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage;
+				}
 			}
-			Main.spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+			spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 		}
-		void Reset(GameTime _) {
+		public void Reset(GameTime _) {
 			Capturing = false;
-			Main.spriteBatch.Restart(spriteBatchState);
+			spriteBatch.Restart(spriteBatchState);
 			Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
 		}
 		public ShaderLayerTargetHandler() {
