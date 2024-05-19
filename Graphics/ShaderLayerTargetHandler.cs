@@ -36,8 +36,8 @@ namespace Origins.Graphics {
 		public void Capture(SpriteBatch spriteBatch = null) {
 			Capturing = true;
 			this.spriteBatch = spriteBatch ?? Main.spriteBatch;
-			spriteBatchState = spriteBatch.GetState();
-			spriteBatch.Restart(spriteBatchState, SpriteSortMode.Immediate);
+			spriteBatchState = this.spriteBatch.GetState();
+			this.spriteBatch.Restart(spriteBatchState, SpriteSortMode.Immediate);
 			Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 		}
