@@ -685,7 +685,7 @@ MAGIC WEAPONS:
 (X) Ghost Trap
 (^) Haunted Vase
 (X) Lunarfire
-(#3, ^2) Missing File !!!
+(^) Missing File
 (#, ^2) Phantom Fury
 (^) Pike of Deepneus
 (X) Sapphire Shunter
