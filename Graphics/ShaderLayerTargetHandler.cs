@@ -21,6 +21,7 @@ namespace Origins.Graphics {
 		SpriteBatchState spriteBatchState;
 		SpriteBatch spriteBatch;
 		bool capturing = false;
+		bool spriteBatchWasRunning = false;
 		public bool Capturing {
 			get => capturing;
 			private set {
@@ -36,9 +37,16 @@ namespace Origins.Graphics {
 		public void Capture(SpriteBatch spriteBatch = null) {
 			if (Main.dedServ) return;
 			Capturing = true;
-			this.spriteBatch = spriteBatch ?? Main.spriteBatch;
-			spriteBatchState = this.spriteBatch.GetState();
-			this.spriteBatch.Restart(spriteBatchState, SpriteSortMode.Immediate);
+			this.spriteBatch = spriteBatch ??= Main.spriteBatch;
+			if (SpriteBatchMethods.beginCalled.GetValue(this.spriteBatch)) {
+				spriteBatchWasRunning = true;
+				spriteBatchState = this.spriteBatch.GetState();
+				this.spriteBatch.Restart(spriteBatchState, SpriteSortMode.Immediate);
+			} else {
+				spriteBatchWasRunning = false;
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+				spriteBatchState = this.spriteBatch.GetState();
+			}
 			Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 		}
@@ -71,11 +79,16 @@ namespace Origins.Graphics {
 				}
 			}
 			spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+			if (!spriteBatchWasRunning) spriteBatch.End();
 		}
 		public void Reset(GameTime _) {
 			if (Main.dedServ) return;
 			Capturing = false;
-			spriteBatch.Restart(spriteBatchState);
+			if (spriteBatchWasRunning) {
+				spriteBatch.Restart(spriteBatchState);
+			} else {
+				spriteBatch.End();
+			}
 			Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
 		}
 		public ShaderLayerTargetHandler() {

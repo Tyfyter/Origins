@@ -177,7 +177,7 @@ namespace Origins.Gores.NPCs {
 		}
 		static void MaskAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
-			while (cachedDusts.Any()) {
+			while (cachedDusts.Count != 0) {
 				Dust dust = Main.dust[cachedDusts.Pop()];
 				float dustAlpha = dust.alpha / 255f;
 				dustAlpha *= dustAlpha;

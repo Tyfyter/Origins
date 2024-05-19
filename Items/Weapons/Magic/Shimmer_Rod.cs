@@ -7,6 +7,11 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
 using System;
+using Origins.Graphics;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -19,6 +24,31 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shoot = ModContent.ProjectileType<Shimmer_Cloud_Held>();
 			Item.channel = true;
 		}
+		public override void Load() {
+			if (Main.dedServ) return;
+			On_Main.DrawProjectiles += (orig, self) => {
+				orig(self);
+				if (Main.dedServ) return;
+				if (cachedRain.Count == 0 && cachedClouds.Count == 0) return;
+				try {
+					GraphicsUtils.drawingEffect = true;
+					Origins.shaderOroboros.Capture();
+					while (cachedRain.Count != 0) {
+						self.DrawProj(cachedRain.Pop());
+					}
+					while (cachedClouds.Count != 0) {
+						self.DrawProj(cachedClouds.Pop());
+					}
+					Origins.shaderOroboros.Stack(GameShaders.Armor.GetShaderFromItemId(ItemID.HallowBossDye));
+					Origins.shaderOroboros.Release();
+				} finally {
+					GraphicsUtils.drawingEffect = false;
+				}
+			};
+		}
+		internal static Stack<int> cachedClouds = [];
+		internal static Stack<int> cachedRain = [];
+
 	}
 	public class Shimmer_Cloud_Held : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainCloudMoving;
@@ -95,7 +125,15 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.frame = 0;
 			}
 		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (!GraphicsUtils.drawingEffect) {
+				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
+				return false;
+			}
+			return true;
+		}
 		public override void PostDraw(Color lightColor) {
+			if (!GraphicsUtils.drawingEffect) return;
 			Rectangle frame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 4);
 			Main.spriteBatch.Draw(
 				TextureAssets.Projectile[Type].Value,
@@ -151,6 +189,13 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.frame = 0;
 			}
 		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (!GraphicsUtils.drawingEffect) {
+				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
+				return false;
+			}
+			return true;
+		}
 	}
 	public class Shimmer_Cloud_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainCloudRaining;
@@ -189,6 +234,10 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			if (!GraphicsUtils.drawingEffect) {
+				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
+				return false;
+			}
 			Rectangle frame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 6, frameY: Projectile.frame);
 			float timeFactor = Math.Min(Projectile.timeLeft / 52f, 1);
 			Main.spriteBatch.Draw(
@@ -228,6 +277,13 @@ namespace Origins.Items.Weapons.Magic {
 				if (hitbox.Intersects(targetHitbox)) return true;
 			}
 			return false;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (!GraphicsUtils.drawingEffect) {
+				Shimmer_Rod.cachedRain.Push(Projectile.whoAmI);
+				return false;
+			}
+			return true;
 		}
 	}
 }
