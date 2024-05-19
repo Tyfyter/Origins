@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool IsActive() => Main.LocalPlayer.HeldItem.type == Missing_File.ID;
 		readonly List<MissingFileTarget> targets = [];
 		readonly AutoLoadingAsset<Texture2D> texture = typeof(Missing_File_UI).GetDefaultTMLName();
-		public static bool drawingMissingFileUI = true;
+		public static bool drawingMissingFileUI = false;
 		public static Color currentNPCColor;
 		public override void Draw(SpriteBatch spriteBatch) {
 			static bool IsInvalidNPC(NPC npc) {
