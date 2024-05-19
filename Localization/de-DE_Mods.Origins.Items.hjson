@@ -4148,3 +4148,8 @@ Acrid_Dye: {
 	// DisplayName: Acrid Dye
 	// Tooltip: ""
 }
+
+Shimmer_Rod: {
+	// DisplayName: Shimmer_ Rod
+	// Tooltip: ""
+}

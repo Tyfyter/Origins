@@ -1,18 +1,21 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+using Microsoft.Xna.Framework;
+using Origins.Reflection;
+
 namespace Origins.Items.Weapons.Magic {
     public class Eternabrite : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "UsesBookcase",
             "SpellBook"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);
 			Item.damage = 28;
 			Item.DamageType = DamageClass.Magic;
+			Item.shoot = ModContent.ProjectileType<Eternabrite_P>();
 			Item.mana = 14;
 			Item.useAmmo = AmmoID.None;
 			Item.noUseGraphic = false;
@@ -32,8 +35,20 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.AddTile(TileID.Bookcases);
 			recipe.Register();
 		}
-        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-            target.AddBuff(BuffID.OnFire, 240);
-        }
     }
+	public class Eternabrite_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Flames;
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Flames);
+			Projectile.DamageType = DamageClass.Magic;
+			AIType = ProjectileID.Flames;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire, 240);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			MainReflection.DrawProj_Flamethrower(Projectile);
+			return false;
+		}
+	}
 }
