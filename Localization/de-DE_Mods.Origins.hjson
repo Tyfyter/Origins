@@ -860,7 +860,7 @@ Buffs: {
 	}
 
 	Spiker_Counter_Debuff: {
-		// DisplayName: Spiker_ Counter_ Debuff
+		// DisplayName: Spiker Counter Debuff
 		// Description: Mods.Origins.Buffs.Spiker_Counter_Debuff.Description
 	}
 }
@@ -1156,7 +1156,11 @@ Projectiles: {
 	// Traffic_Cone_Projectile.DisplayName: Traffic Cone
 	// Mine_Flayer_P.DisplayName: Mine Flayer Mine
 	// Potato_Mine_Projectile.DisplayName: Potato Mine
-	// Eternabrite_P.DisplayName: Eternabrite_ P
+	// Eternabrite_P.DisplayName: Eternabrite
+	// Shimmer_Cloud_Ball.DisplayName: Shimmer_ Cloud_ Ball
+	// Shimmer_Cloud_Held.DisplayName: Shimmer_ Cloud_ Held
+	// Shimmer_Cloud_P.DisplayName: Shimmer_ Cloud_ P
+	// Shimmer_Cloud_Rain.DisplayName: Shimmer_ Cloud_ Rain
 }
 
 Prefixes: {

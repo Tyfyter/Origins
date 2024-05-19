@@ -1157,6 +1157,10 @@ Projectiles: {
 	Mine_Flayer_P.DisplayName: Mine Flayer Mine
 	Potato_Mine_Projectile.DisplayName: Potato Mine
 	Eternabrite_P.DisplayName: Eternabrite
+	Shimmer_Cloud_Ball.DisplayName: Shimmer Cloud
+	Shimmer_Cloud_Held.DisplayName: Shimmer Cloud
+	Shimmer_Cloud_P.DisplayName: Shimmer Cloud
+	Shimmer_Cloud_Rain.DisplayName: Shimmering Rain
 }
 
 Prefixes: {

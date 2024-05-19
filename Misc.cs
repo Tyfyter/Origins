@@ -2548,6 +2548,26 @@ namespace Origins {
 			}
 			return 0f;
 		}
+		//couldn't resist giving this a stupidly long name
+		public static void FadeOutOldProjectilesAtLimit(HashSet<int> types, int limit, int minTimeLeft = 0) {
+			redo:
+			int count = 0;
+			int index = -1;
+			int timeLeft = int.MaxValue;
+			foreach (Projectile projectile in Main.ActiveProjectiles) {
+				if (projectile.owner == Main.myPlayer && projectile.timeLeft > minTimeLeft && types.Contains(projectile.type)) {
+					count++;
+					if (projectile.timeLeft < timeLeft) {
+						index = projectile.whoAmI;
+						timeLeft = projectile.timeLeft;
+					}
+				}
+			}
+			if (count >= limit) {
+				Main.projectile[index].timeLeft = minTimeLeft;
+				if (count > limit) goto redo;
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
