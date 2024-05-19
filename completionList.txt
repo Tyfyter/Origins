@@ -545,12 +545,12 @@ MELEE WEAPONS:
 (^) Baseball Bat
 (^) Bone Latcher
 (^) Cyah Nara
-(X) Dark Spiral !!!
+(#, ^2) Dark Spiral !!!
 (^) Decimator
 (^) Endowood Sword
 (^) Felnum Spear
 (^) Fiberglass Broadsword
-(X) Hemorang !!!
+(#, ^2) Hemorang !!!
 (^) Krakram*
 (^) Marrowick Sword
 (^) Nineball
@@ -565,7 +565,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword (Cursed)
 (^) Vorpal Sword (Uncursed)
-(X) Waning Crescent !!!
+(#, ^2) Waning Crescent !!!
 
 (#2, ^2) Amenonuhoko
 (#, ^2) Amoebash !!!
@@ -582,9 +582,9 @@ MELEE WEAPONS:
 (X) Gospel
 (^) Personal Laser Blade*
 (X) Pile Bunker
-(X) Terrarang !!!
+(#, ^2) Terrarang !!!
 (X) True Light Disc !!!
-(X) True Waning Crescent !!!
+(#, ^2) True Waning Crescent !!!
 
 (X) Celestial Point
 (X) Chromtain Smasher
@@ -731,7 +731,7 @@ SUMMONER WEAPONS:
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
-(X) Scabcoral Lyre !!!
+(#, ^2) Scabcoral Lyre !!!
 (#, ^2) Ziptie !!!
 
 (X) Candlelight
