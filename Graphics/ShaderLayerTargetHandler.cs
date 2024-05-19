@@ -34,6 +34,7 @@ namespace Origins.Graphics {
 			}
 		}
 		public void Capture(SpriteBatch spriteBatch = null) {
+			if (Main.dedServ) return;
 			Capturing = true;
 			this.spriteBatch = spriteBatch ?? Main.spriteBatch;
 			spriteBatchState = this.spriteBatch.GetState();
@@ -42,6 +43,7 @@ namespace Origins.Graphics {
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 		}
 		public void Stack(ArmorShaderData shader, Entity entity = null) {
+			if (Main.dedServ) return;
 			Utils.Swap(ref renderTarget, ref oldRenderTarget);
 			Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
@@ -50,6 +52,7 @@ namespace Origins.Graphics {
 			data.Draw(spriteBatch);
 		}
 		public void Release() {
+			if (Main.dedServ) return;
 			Capturing = false;
 			spriteBatch.Restart(spriteBatchState);
 			RenderTargetUsage renderTargetUsage = Origins.currentScreenTarget?.RenderTargetUsage ?? Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage;
@@ -70,16 +73,19 @@ namespace Origins.Graphics {
 			spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 		}
 		public void Reset(GameTime _) {
+			if (Main.dedServ) return;
 			Capturing = false;
 			spriteBatch.Restart(spriteBatchState);
 			Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
 		}
 		public ShaderLayerTargetHandler() {
+			if (Main.dedServ) return;
 			this.RegisterForUnload();
 			Main.QueueMainThreadAction(SetupRenderTargets);
 			Main.OnResolutionChanged += Resize;
 		}
 		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
 			renderTarget.Dispose();
 			oldRenderTarget.Dispose();
 			SetupRenderTargets();

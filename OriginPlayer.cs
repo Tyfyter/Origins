@@ -426,9 +426,6 @@ namespace Origins {
 			if (hasProtOS) {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Death, protOSQuoteCooldown, Player.Top);
 			}
-			if (Main.netMode == NetmodeID.MultiplayerClient && Player.whoAmI == Main.myPlayer && damageSource is KeyedPlayerDeathReason) {
-				Terraria.Chat.ChatHelper.BroadcastChatMessage(Terraria.Localization.NetworkText.FromLiteral(damageSource.GetDeathText(Player.name) + " (bean filled)"), new Color(225, 25, 25));
-			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;
