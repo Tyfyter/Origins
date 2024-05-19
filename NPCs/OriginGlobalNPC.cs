@@ -153,7 +153,7 @@ namespace Origins.NPCs {
 				return false;
 			}
 			if (rasterizedTime > 0 && npc.oldPosition != default) {
-				if (npc.velocity.Y == 0) {
+				if (Math.Abs(npc.velocity.Y) < 0.001f) {
 					switch (npc.aiStyle) {
 						case NPCAIStyleID.Slime:
 						case NPCAIStyleID.King_Slime:
@@ -162,8 +162,14 @@ namespace Origins.NPCs {
 						break;
 					}
 				}
-				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f);
-				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f * 0.5f);
+				float accelerationFactor = 1; 
+				float velocityFactor = 1; 
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
+					accelerationFactor = adjustment.accelerationFactor;
+					velocityFactor = adjustment.velocityFactor;
+				}
+				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f * accelerationFactor);
+				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f * 0.5f * velocityFactor);
 			}
 			if (slowDebuff) {
 				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 0.7f);

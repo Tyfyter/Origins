@@ -224,7 +224,7 @@ namespace Origins {
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
 				if (flaskBile) {
-					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 				}
 				if (flaskSalt) {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);

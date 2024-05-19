@@ -48,7 +48,7 @@ namespace Origins {
 		public static float[] FlatDamageMultiplier { get => flatDamageMultiplier; }
 		static int[] wallHammerRequirement;
 		public static int[] WallHammerRequirement { get => wallHammerRequirement; }
-		public static Dictionary<int, (int maxLevel, float velDiffMult)> RasterizeAdjustment { get; private set; }
+		public static Dictionary<int, (int maxLevel, float accelerationFactor, float velocityFactor)> RasterizeAdjustment { get; private set; }
 		static bool[] artifactMinion;
 		public static bool[] ArtifactMinion { get => artifactMinion; }
 		static float[] homingEffectivenessMultiplier;
@@ -175,8 +175,8 @@ namespace Origins {
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "the {0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands")); 
 
-			RasterizeAdjustment = new Dictionary<int, (int, float)>();
-			ExplosiveBaseDamage = new Dictionary<int, int>();
+			RasterizeAdjustment = [];
+			ExplosiveBaseDamage = [];
 			DamageModOnHit = new bool[ProjectileLoader.ProjectileCount];
 			DamageModOnHit[ProjectileID.Bomb] = true;
 			DamageModOnHit[ProjectileID.StickyBomb] = true;
@@ -559,23 +559,23 @@ namespace Origins {
 					switch (i) {
 						case NPCID.KingSlime:
 						case NPCID.QueenSlimeBoss:
-						RasterizeAdjustment.Add(i, (0, 1));
+						RasterizeAdjustment.Add(i, (16, 1f, 1f));
 						break;
 
 						case NPCID.QueenBee:
-						RasterizeAdjustment.Add(i, (16, 0.95f));
+						RasterizeAdjustment.Add(i, (16, 0.05f, 1f));
 						break;
 
 						case NPCID.EaterofWorldsHead:
-						RasterizeAdjustment.Add(i, (8, 0.5f));
+						RasterizeAdjustment.Add(i, (8, 0.5f, 1f));
 						break;
 
 						case NPCID.Deerclops:
-						RasterizeAdjustment.Add(i, (8, 0));
+						RasterizeAdjustment.Add(i, (8, 1f, 1f));
 						break;
 
 						default:
-						RasterizeAdjustment.Add(i, (8, 0.95f));
+						RasterizeAdjustment.Add(i, (8, 0.05f, 1f));
 						break;
 					}
 				}
