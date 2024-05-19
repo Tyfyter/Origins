@@ -15,9 +15,8 @@ using Terraria.Graphics.Shaders;
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MagicStaff"
+			"OtherMagic"
 		];
-		public override string Texture => "Terraria/Images/Item_" + ItemID.NimbusRod;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.NimbusRod);
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -51,7 +50,6 @@ namespace Origins.Items.Weapons.Magic {
 
 	}
 	public class Shimmer_Cloud_Held : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainCloudMoving;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 4;
 		}
@@ -145,7 +143,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool ShouldUpdatePosition() => false;
 	}
 	public class Shimmer_Cloud_Ball : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainCloudMoving;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 4;
 		}
@@ -198,7 +195,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Shimmer_Cloud_P : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainCloudRaining;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 6;
 		}

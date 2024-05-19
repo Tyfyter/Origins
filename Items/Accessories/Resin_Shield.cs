@@ -8,13 +8,12 @@ namespace Origins.Items.Accessories {
 	public class Resin_Shield : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Vitality",
-			"ExplosiveBoostAcc"
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		};
 		public static int ShieldID { get; private set; }
 		public static int InactiveShieldID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resin Shield");
-			// Tooltip.SetDefault("Grants immunity to knockback\nGrants immunity to fire blocks\nBlocks all self-damage on next hit\n5 second cooldown\n'A shield to withstand the test of time'");
 			Item.ResearchUnlockCount = 1;
 			ShieldID = Item.shieldSlot;
 		}

@@ -6,7 +6,8 @@ namespace Origins.Items.Accessories {
 	public class Blast_Resistant_Plate : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Vitality",
-			"ExplosiveBoostAcc"
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);

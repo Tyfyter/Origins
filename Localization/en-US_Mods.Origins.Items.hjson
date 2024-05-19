@@ -4151,5 +4151,9 @@ Acrid_Dye: {
 
 Shimmer_Rod: {
 	DisplayName: Shimmer Rod
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a rotatable cloud to rain in any direction
+		Click and hold the Use item key to rotate the cloud
+		'''
 }

@@ -9,21 +9,20 @@ using Origins.Tiles.Other;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Dyes;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Amber {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Amber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => new string[] {
             "HardmodeArmorSet",
-            "ExplosiveBoostGear"
-        };
+            "ExplosiveBoostGear",
+			"SelfDamageProtek"
+		};
         public override void SetStaticDefaults() {
             ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 		}

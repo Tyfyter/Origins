@@ -545,10 +545,12 @@ MELEE WEAPONS:
 (^) Baseball Bat
 (^) Bone Latcher
 (^) Cyah Nara
+(X) Dark Spiral !!!
 (^) Decimator
 (^) Endowood Sword
 (^) Felnum Spear
 (^) Fiberglass Broadsword
+(X) Hemorang !!!
 (^) Krakram*
 (^) Marrowick Sword
 (^) Nineball
@@ -563,6 +565,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword (Cursed)
 (^) Vorpal Sword (Uncursed)
+(X) Waning Crescent !!!
 
 (#2, ^2) Amenonuhoko
 (#, ^2) Amoebash !!!
@@ -579,6 +582,9 @@ MELEE WEAPONS:
 (X) Gospel
 (^) Personal Laser Blade*
 (X) Pile Bunker
+(X) Terrarang !!!
+(X) True Light Disc !!!
+(X) True Waning Crescent !!!
 
 (X) Celestial Point
 (X) Chromtain Smasher
@@ -625,6 +631,7 @@ RANGED WEAPONS:
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
 (X) Frequency
+(^) HNO-3 "Viper"
 (^) Incision
 (X) Left Klik*
 (X) Mythril Harpoon Gun*
@@ -634,14 +641,13 @@ RANGED WEAPONS:
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun*
 (X) Tripod Jawbow
-(^) Vipershot
 
 (X) Disciple Maker*
 (^) Dreikan
 (X) EAC Thunder*
 (X) Fungi Pipe
 (^) Laser Tag Gun
-(X) Plasma Cutter !!!
+(#, ^2) Plasma Cutter !!!
 (X) Seventh Spline
 (X) Shroomshot
 (X) Skewr
@@ -675,12 +681,14 @@ MAGIC WEAPONS:
 (^) Dismay
 (^) Innermost Manifest
 (^) Seam Beam
+(#3, ^2) Shimmer Rod !!!
 (X) Shinedown
 (^) Splashid
 (^) Startillery
 (#, ^2) Super Cell* !!!
 
 (^) Amber of Embers
+(#, ^2) Breach !!!
 (X) Divine Lite
 (X) Ghost Trap
 (^) Haunted Vase
@@ -692,6 +700,7 @@ MAGIC WEAPONS:
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
+(#, ^2) The Calibrator !!!
 (X) True Seam Beam
 
 (X) Ion Minigun

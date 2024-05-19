@@ -12,8 +12,9 @@ namespace Origins.Items.Armor.Ashen
         public string[] Categories => new string[] {
             "ArmorSet",
             "ExplosiveBoostGear",
-			"GenericBoostGear"
-        };
+			"GenericBoostGear",
+			"SelfDamageProtek"
+		};
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Ashen/Ashen_Helmet_Head_Glow");

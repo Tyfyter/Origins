@@ -6,8 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Absorption_Potion : ModItem {
         public string[] Categories => new string[] {
-            "Potion"
-        };
+            "Potion",
+			"SelfDamageProtek"
+		};
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

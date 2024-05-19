@@ -6,7 +6,8 @@ namespace Origins.Items.Accessories {
 	public class Hazard_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Misc",
-			"ExplosiveBoostAcc"
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 26);

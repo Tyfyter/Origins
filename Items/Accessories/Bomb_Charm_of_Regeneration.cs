@@ -7,7 +7,8 @@ namespace Origins.Items.Accessories {
 	public class Bomb_Charm_of_Regeneration : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Vitality",
-			"ExplosiveBoostAcc"
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
