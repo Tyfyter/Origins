@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
@@ -21,6 +22,7 @@ namespace Origins.Reflection {
 		public static float Instance_scAdj { get => scAdj.GetValue(Main.instance); set => scAdj.SetValue(Main.instance, value); }
 		public static FastFieldInfo<Main, float> screenOff;
 		public static float Instance_screenOff { get => screenOff.GetValue(Main.instance); set => screenOff.SetValue(Main.instance, value); }
+		public static Action<Projectile> DrawProj_Flamethrower { get; private set; }
 		public void Load(Mod mod) {
 			bgLoops = new("bgLoops", BindingFlags.NonPublic);
 			bgStartX = new("bgStartX", BindingFlags.NonPublic);
@@ -30,6 +32,7 @@ namespace Origins.Reflection {
 			_ColorOfSurfaceBackgroundsModified = new("ColorOfSurfaceBackgroundsModified", BindingFlags.NonPublic);
 			scAdj = new("scAdj", BindingFlags.NonPublic);
 			screenOff = new("screenOff", BindingFlags.NonPublic);
+			DrawProj_Flamethrower = typeof(Main).GetMethod(nameof(DrawProj_Flamethrower), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<Projectile>>();
 		}
 		public void Unload() {
 			bgLoops = null;
@@ -40,6 +43,7 @@ namespace Origins.Reflection {
 			_ColorOfSurfaceBackgroundsModified = null;
 			scAdj = null;
 			screenOff = null;
+			DrawProj_Flamethrower = null;
 		}
 	}
 }
