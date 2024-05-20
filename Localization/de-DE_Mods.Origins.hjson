@@ -1276,6 +1276,16 @@ Biomes: {
 		// DisplayName: Underground Riven Desert
 		// TownNPCDialogueName: the Underground Riven Desert
 	}
+
+	Riven_Hive_Ice_Biome: {
+		// DisplayName: Riven_ Hive_ Ice_ Biome
+		// TownNPCDialogueName: the Riven_ Hive_ Ice_ Biome
+	}
+
+	Defiled_Wastelands_Ice_Biome: {
+		// DisplayName: Defiled_ Wastelands_ Ice_ Biome
+		// TownNPCDialogueName: the Defiled_ Wastelands_ Ice_ Biome
+	}
 }
 
 Tiles: {

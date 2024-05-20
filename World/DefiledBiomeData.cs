@@ -616,6 +616,19 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress;
 		}
 	}
+	public class Defiled_Wastelands_Ice_Biome : ModBiome {
+		public override int Music => Origins.Music.UndergroundDefiled;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Snow";
+		public override string BestiaryIcon => "Origins/UI/IconSnowDefiled";
+		public override string MapBackground => BackgroundPath;
+		public override bool IsBiomeActive(Player player) {
+			return player.ZoneRockLayerHeight && player.ZoneSnow && player.InModBiome<Defiled_Wastelands>();
+		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress;
+		}
+	}
 	#endregion variations
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
