@@ -152,7 +152,7 @@ ENEMY NPCS:
 (@5, #) Carpalfish*
 (#, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
-(#, ^2) Defiled Pigron !!!
+(☻) Defiled Pigron !!!
 (^) Defiled Squid*
 (^) Defiled Tripod
 (#, ^2) Defiled Watcher* !!!
@@ -165,7 +165,7 @@ ENEMY NPCS:
 (X) Peat Lobber
 (^) Profaned Bident
 (^) Riven Mimic
-(#, ^2) Riven Pigron !!!
+(☻) Riven Pigron !!!
 (^) Savage Whip*
 (X) Sea Dragon
 (^) Shattered Ghoul
