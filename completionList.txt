@@ -471,6 +471,7 @@ VANITY:
 (X) Nova Dye
 (ᗢ) Rasterized Dye
 (X) Riven Dye
+(#, ^2) Shimmer Dye
 ---
 
 
