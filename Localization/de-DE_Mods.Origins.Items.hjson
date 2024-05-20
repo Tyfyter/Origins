@@ -4157,3 +4157,8 @@ Shimmer_Rod: {
 		Click and hold the Use item key to rotate the cloud
 		''' */
 }
+
+Shimmer_Dye: {
+	// DisplayName: Shimmer_ Dye
+	// Tooltip: ""
+}

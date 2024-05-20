@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using Origins.Items.Other.Dyes;
+using Humanizer;
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -38,7 +40,7 @@ namespace Origins.Items.Weapons.Magic {
 					while (cachedClouds.Count != 0) {
 						self.DrawProj(cachedClouds.Pop());
 					}
-					Origins.shaderOroboros.Stack(GameShaders.Armor.GetShaderFromItemId(ItemID.HallowBossDye));
+					Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null));
 					Origins.shaderOroboros.Release();
 				} finally {
 					GraphicsUtils.drawingEffect = false;
@@ -128,6 +130,7 @@ namespace Origins.Items.Weapons.Magic {
 				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
 				return false;
 			}
+			lightColor = Color.LightGray;
 			return true;
 		}
 		public override void PostDraw(Color lightColor) {
@@ -176,6 +179,15 @@ namespace Origins.Items.Weapons.Magic {
 					OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Shimmer_Cloud_P>(), ModContent.ProjectileType<Shimmer_Cloud_Ball>()], 3, 52);
 				}
 			}
+			float inShimmer = Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer ? 1 : 0;
+			if (Projectile.localAI[0] != inShimmer) {
+				Projectile.localAI[0] = inShimmer;
+				if (inShimmer == 1) {
+					Projectile.velocity.Y = -Projectile.velocity.Y;
+					Projectile.ai[1] += (Projectile.Center.Y - Projectile.ai[1]) * 2;
+					Projectile.ai[2] = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+				}
+			}
 
 			Projectile.rotation += Projectile.velocity.X * 0.02f;
 			Projectile.frameCounter++;
@@ -191,7 +203,13 @@ namespace Origins.Items.Weapons.Magic {
 				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
 				return false;
 			}
+			lightColor = Color.LightGray;
 			return true;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			TargetPos = Projectile.Center;
+			Projectile.velocity = default;
+			return false;
 		}
 	}
 	public class Shimmer_Cloud_P : ModProjectile {
@@ -234,6 +252,7 @@ namespace Origins.Items.Weapons.Magic {
 				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
 				return false;
 			}
+			lightColor = Color.LightGray;
 			Rectangle frame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 6, frameY: Projectile.frame);
 			float timeFactor = Math.Min(Projectile.timeLeft / 52f, 1);
 			Main.spriteBatch.Draw(
@@ -250,7 +269,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Shimmer_Cloud_Rain : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainFriendly;
 		public override void SetStaticDefaults() {
 			Origins.HomingEffectivenessMultiplier[Type] = 2;
 		}
@@ -259,9 +277,14 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.aiStyle = 0;
 			Projectile.width = 4;
 			Projectile.height = 4;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.hide = false;
+			if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer) {
+				Projectile.velocity.Y -= 0.2f;
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (projHitbox.Intersects(targetHitbox)) return true;
@@ -279,6 +302,7 @@ namespace Origins.Items.Weapons.Magic {
 				Shimmer_Rod.cachedRain.Push(Projectile.whoAmI);
 				return false;
 			}
+			lightColor = new Color(1f, 0, 0.08f, 0.3f);
 			return true;
 		}
 	}
