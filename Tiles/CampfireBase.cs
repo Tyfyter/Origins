@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -153,10 +154,7 @@ namespace Origins.Tiles {
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			var tile = Main.tile[i, j];
-			//TODO uncomment when TileDrawing.IsVisible is accessible
-			/*if (!TileDrawing.IsVisible(tile)) {
-				return;
-			}*/
+			if (!TileDrawing.IsVisible(tile)) return;
 
 			if (tile.TileFrameY < 36) {
 				Color color = new Color(255, 255, 255, 0);

@@ -33,9 +33,10 @@ namespace Origins.NPCs.Dungeon {
 			return SpawnCondition.DungeonNormal.Chance * 0.05f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
-			});
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Joint_Pop>(), 15));

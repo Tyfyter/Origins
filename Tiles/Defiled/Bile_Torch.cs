@@ -6,6 +6,7 @@ using Origins.Items.Materials;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -89,6 +90,7 @@ namespace Origins.Tiles.Defiled {
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			if (flameTexture is null) return;
+			if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 			// The following code draws multiple flames on top our placed torch.
 
 			int offsetY = 0;

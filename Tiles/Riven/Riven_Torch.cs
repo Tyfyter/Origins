@@ -6,6 +6,7 @@ using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -96,6 +97,7 @@ namespace Origins.Tiles.Riven {
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			if (flameTexture is null) return;
+			if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 			// The following code draws multiple flames on top our placed torch.
 
 			int offsetY = 0;
@@ -171,12 +173,11 @@ namespace Origins.Tiles.Riven {
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 
-			//TODO: sand
-			/*CreateRecipe(3)
+			CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
-			.AddIngredient(ItemType<Hardened_Defiled_Sand_Item>())
+			.AddIngredient(ItemType<Brittle_Quartz_Item>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
-			.Register();*/
+			.Register();
 
 			CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)

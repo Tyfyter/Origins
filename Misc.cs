@@ -31,6 +31,7 @@ using Terraria.GameContent.Bestiary;
 using System.Diagnostics.CodeAnalysis;
 using AltLibrary.Common.AltBiomes;
 using Origins.Walls;
+using Terraria.GameContent.Drawing;
 
 namespace Origins {
 	#region classes
@@ -2256,6 +2257,7 @@ namespace Origins {
 			if (self.GlowTexture.Value is null) {
 				return;
 			}
+			if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 			DrawTileGlow(self.GlowTexture, self.GlowColor, i, j, spriteBatch);
 		}
 		public static void DrawTileGlow(Texture2D glowTexture, Color glowColor, int i, int j, SpriteBatch spriteBatch) {
