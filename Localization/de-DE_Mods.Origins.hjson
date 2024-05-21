@@ -1278,13 +1278,13 @@ Biomes: {
 	}
 
 	Riven_Hive_Ice_Biome: {
-		// DisplayName: Riven_ Hive_ Ice_ Biome
-		// TownNPCDialogueName: the Riven_ Hive_ Ice_ Biome
+		// DisplayName: "{§Riven} Ice"
+		// TownNPCDialogueName: the {§Riven} Ice
 	}
 
 	Defiled_Wastelands_Ice_Biome: {
-		// DisplayName: Defiled_ Wastelands_ Ice_ Biome
-		// TownNPCDialogueName: the Defiled_ Wastelands_ Ice_ Biome
+		// DisplayName: Defiled Ice
+		// TownNPCDialogueName: the Defiled Ice
 	}
 }
 

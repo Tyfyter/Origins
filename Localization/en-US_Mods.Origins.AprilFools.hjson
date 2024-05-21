@@ -51,9 +51,10 @@ AltBiomes: {
 	Defiled_Wastelands_Alt_Biome.GenPassName: Bribing local authorities to ignore {§Defiled_Wastelands}'s many health code violations
 	Riven_Hive_Alt_Biome.GenPassName: Establishing {§Riven}
 }
+
 Biomes: {
 	Defiled_Wastelands_Ice_Biome: {
 		DisplayName: "{§Defiled_Wastelands} Signature Patent-Pending Cold-Park"
-		TownNPCDialogueName: "the {§Defiled_Wastelands} Signature Patent-Pending Cold-Park"
+		TownNPCDialogueName: the {§Defiled_Wastelands} Signature Patent-Pending Cold-Park
 	}
 }

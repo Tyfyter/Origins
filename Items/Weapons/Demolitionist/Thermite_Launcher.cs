@@ -9,6 +9,8 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Thermite_Launcher : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -58,7 +60,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Napalm_Canister_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Napalm_Canister";
+		public override string Texture => "Terraria/Images/Item_1";
+		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Inner";
+		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
+		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
 		}
@@ -85,7 +91,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 1;
 			return true;
 		}
-		public override void OnKill(int timeLeft) {//TODO: make actually different projectile
+		public override void OnKill(int timeLeft) {
 			Projectile.damage = (int)(Projectile.damage * 0.75f);
 			Projectile.knockBack = 16f;
 			Projectile.position = Projectile.Center;

@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -22,7 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 0;
 			Item.useAnimation = 32;
 			Item.useTime = 32;
-			Item.useAmmo = ModContent.ItemType<Ammo.Resizable_Mine_One>();
+			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shoot = ModContent.ProjectileType<Meteor_P>();
 			Item.shootSpeed = 8.3f;
 			Item.reuseDelay = 6;

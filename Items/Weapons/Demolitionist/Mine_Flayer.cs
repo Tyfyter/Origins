@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -80,8 +81,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Mine_Flayer_P : ModProjectile, IIsExplodingProjectile, ICanisterProjectile {
 		public override string Texture => "Terraria/Images/Item_1";
-		public static AutoLoadingAsset<Texture2D> outerTexture = "Origins/Projectiles/Ammo/Resizable_Mine_Outer";
-		public static AutoLoadingAsset<Texture2D> innerTexture = "Origins/Projectiles/Ammo/Resizable_Mine_Inner";
+		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
@@ -104,7 +105,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
-			return false;
+			return true;
 		}
 		public bool IsExploding() => Projectile.penetrate == -1;
 	}

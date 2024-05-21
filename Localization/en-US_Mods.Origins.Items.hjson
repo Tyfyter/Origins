@@ -4162,3 +4162,8 @@ Shimmer_Dye: {
 	DisplayName: Shimmer Dye
 	Tooltip: ""
 }
+
+Coolant_Canister: {
+	DisplayName: Coolant_ Canister
+	Tooltip: ""
+}

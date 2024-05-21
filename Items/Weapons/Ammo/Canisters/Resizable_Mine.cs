@@ -4,7 +4,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
-namespace Origins.Items.Weapons.Ammo {
+using Microsoft.Xna.Framework;
+namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Resizable_Mine_One : ModItem, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(219, 131, 72), new(255, 193, 97));
 		public override void SetStaticDefaults() {
@@ -30,6 +31,18 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.AddIngredient(ItemID.Wood, 2);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			projectile.penetrate = -1;
+			projectile.position.X += projectile.width / 2;
+			projectile.position.Y += projectile.height / 2;
+			projectile.width = 96;
+			projectile.height = 96;
+			projectile.position.X -= projectile.width / 2;
+			projectile.position.Y -= projectile.height / 2;
+			projectile.Damage();
+			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
+			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
 		}
 	}
 	public class Resizable_Mine_Two : ModItem, ICustomWikiStat, ICanisterAmmo {

@@ -8,36 +8,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-    public class Napalm_Canister : ModItem, ICanisterAmmo {
-        static short glowmask;
-		public CanisterData GetCanisterData => new(new(211, 194, 182), new(255, 163, 68));
-        public string[] Categories => new string[] {
-            "Canistah"
-        };
-        public override void SetStaticDefaults() {
-            glowmask = Origins.AddGlowMask(this);
-            Item.ResearchUnlockCount = 199;
-        }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.RocketI);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.useStyle = ItemUseStyleID.None;
-			Item.damage = 30;
-            Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Napalm_Canister_P>();
-			Item.shootSpeed = 4.1f;
-            Item.glowMask = glowmask;
-            Item.value = Item.sellPrice(silver: 3, copper: 2);
-            Item.ArmorPenetration += 3;
-        }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type, 10);
-            recipe.AddIngredient(ItemID.Fireblossom);
-            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
-        }
-    }
     public class Metal_Slug : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 199;

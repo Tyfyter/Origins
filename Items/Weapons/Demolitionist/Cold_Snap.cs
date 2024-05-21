@@ -5,6 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Items.Weapons.Ammo;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ammo.Canisters;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Cold_Snap : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -18,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.crit = 0;
             Item.useAnimation = 32;
             Item.useTime = 32;
-            Item.useAmmo = ModContent.ItemType<Ammo.Resizable_Mine_One>();
+            Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
             Item.shoot = ModContent.ProjectileType<Cold_Snap_P>();
             Item.shootSpeed = 12;
             Item.reuseDelay = 6;
@@ -41,8 +44,12 @@ namespace Origins.Items.Weapons.Demolitionist {
             return new Vector2(-2, 0);
         }
     }
-    public class Cold_Snap_P : ModProjectile {
-        public override void SetStaticDefaults() {
+    public class Cold_Snap_P : ModProjectile, ICanisterProjectile {
+		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Inner";
+		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
+		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public override void SetStaticDefaults() {
             Origins.MagicTripwireRange[Type] = 32;
         }
         public override void SetDefaults() {
@@ -62,16 +69,6 @@ namespace Origins.Items.Weapons.Demolitionist {
             }
             Projectile.timeLeft = 1;
             return true;
-        }
-        public override void OnKill(int timeLeft) {
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, Projectile.owner, -1, 1);
-            Projectile.damage = (int)(Projectile.damage * 0.75f);
-            Projectile.knockBack = 16f;
-            Projectile.position = Projectile.Center;
-            Projectile.width = (Projectile.height = 72);
-            Projectile.Center = Projectile.position;
-            Projectile.Damage();
-            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
         }
         public override void AI() {
             Dust.NewDust(Projectile.Center, 0, 0, DustID.IceTorch, 0, 0, 155, default, 0.75f);

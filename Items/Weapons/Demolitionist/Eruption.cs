@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Eruption : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -17,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 0;
 			Item.useAnimation = 32;
 			Item.useTime = 32;
-			Item.useAmmo = ModContent.ItemType<Ammo.Resizable_Mine_One>();
+			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shoot = ModContent.ProjectileType<Eruption_P>();
 			Item.shootSpeed = 12;
 			Item.reuseDelay = 6;

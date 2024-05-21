@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bombardment : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
