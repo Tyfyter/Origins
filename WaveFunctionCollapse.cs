@@ -277,9 +277,6 @@ namespace Tyfyter.Utils {
 			public InvalidWFCException() { }
 			public InvalidWFCException(string message) : base(message) { }
 			public InvalidWFCException(string message, Exception inner) : base(message, inner) { }
-			protected InvalidWFCException(
-			  System.Runtime.Serialization.SerializationInfo info,
-			  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 		}
 	}
 }

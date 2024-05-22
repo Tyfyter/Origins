@@ -1141,7 +1141,7 @@ Projectiles: {
 	Self_Destruct_Flash.DisplayName: Self Destruct Flash
 	Squid_Bile_P.DisplayName: Black Bile
 	Juvenile_Amalgamation.DisplayName: Juvenile Amalgamation
-	Napalm_Canister_P.DisplayName: Napalm Canistah
+	Thermite_Canister_P.DisplayName: Thermite Canistah
 	Nova_Cascade_Explosion.DisplayName: Nova Cascade
 	Switchblade_Shortsword_P.DisplayName: Switchblade
 	Amber_Shard.DisplayName: Amber Shard
@@ -1161,6 +1161,7 @@ Projectiles: {
 	Shimmer_Cloud_Held.DisplayName: Shimmer Cloud
 	Shimmer_Cloud_P.DisplayName: Shimmer Cloud
 	Shimmer_Cloud_Rain.DisplayName: Shimmering Rain
+	Napalm_P.DisplayName: Napalm
 }
 
 Prefixes: {

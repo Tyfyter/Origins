@@ -12,26 +12,26 @@ using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Thermite_Launcher : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "HardmodeLauncher",
+	public class Thermite_Launcher : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"HardmodeLauncher",
 			"CanistahUser"
-        };
-        public override void SetDefaults() {
+		};
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.damage = 45;
 			Item.width = 44;
 			Item.height = 18;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
-			Item.shoot = ModContent.ProjectileType<Napalm_Canister_P>();
-            Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
-            Item.knockBack = 2f;
+			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
+			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.knockBack = 2f;
 			Item.shootSpeed = 12f;
 			Item.autoReuse = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
-			Item.ArmorPenetration += 3;
+			Item.ArmorPenetration += 10;
 		}
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
@@ -59,28 +59,28 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 	}
-	public class Napalm_Canister_P : ModProjectile {
+	public class Thermite_Canister_P : ModProjectile, ICanisterProjectile {
 		public override string Texture => "Terraria/Images/Item_1";
-		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Outer";
-		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Inner";
+		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Canister_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.aiStyle = 0;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.width = 28;
 			Projectile.height = 28;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 900;
-			Projectile.ArmorPenetration += 3;
-            Projectile.scale = 0.5f;
-            //projectile.aiStyle = 14;
-            //projectile.usesLocalNPCImmunity = true;
-            //projectile.localNPCHitCooldown = 7;
-        }
+			Projectile.scale = 0.85f;
+		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X == 0f) {
 				Projectile.velocity.X = -oldVelocity.X;
@@ -91,60 +91,74 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 1;
 			return true;
 		}
-		public override void OnKill(int timeLeft) {
-			Projectile.damage = (int)(Projectile.damage * 0.75f);
-			Projectile.knockBack = 16f;
-			Projectile.position = Projectile.Center;
-			Projectile.width = Projectile.height = 52;
-			Projectile.Center = Projectile.position;
-			Projectile.Damage();
-            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
-			if (Projectile.ai[2] == CanisterGlobalItem.GetCanisterType(typeof(Napalm_Canister))) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
-			} else {
-				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
-			}
-			for (int i = 0; i < 5; i++) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.velocity / 2) + Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage * 0.65f), 0, Projectile.owner);
-			}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
 		}
 		public override void AI() {
-			Dust.NewDust(Projectile.Center, 0, 0, DustID.Torch);
+			Projectile.velocity.Y += 0.2f;
+			Projectile.rotation += Projectile.velocity.X * 0.1f;
+			int auraProjIndex = (int)Projectile.ai[1] - 1;
+			if (auraProjIndex < 0) {
+				if (Projectile.owner == Main.myPlayer) Projectile.ai[1] = Projectile.NewProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.position,
+					default,
+					Thermite_P.ID,
+					Projectile.damage / 2,
+					0,
+					Projectile.owner,
+					Projectile.whoAmI
+				) + 1;
+			} else {
+				Projectile auraProj = Main.projectile[auraProjIndex];
+				if (auraProj.active && auraProj.type == Thermite_P.ID) {
+					auraProj.Center = Projectile.Center;
+					auraProj.rotation = Projectile.rotation;
+				} else {
+					Projectile.ai[1] = 0;
+				}
+			}
 		}
 	}
-	public class Thermite_P : ModProjectile {
-		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
-		
+	public class Thermite_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
 		public override void SetDefaults() {
-			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.friendly = true;
-			Projectile.width = 6;
-			Projectile.height = 6;
-			Projectile.aiStyle = 1;
+			Projectile.width = 36;
+			Projectile.height = 36;
+			Projectile.aiStyle = 0;
 			Projectile.penetrate = 25;
-			Projectile.timeLeft = Main.rand.Next(300, 451);
+			Projectile.timeLeft = 3600;
 			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.idStaticNPCHitCooldown = 5;
+			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
-			Lighting.AddLight(Projectile.Center, v, v * 0.5f, 0);
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = height = 2;
-			fallThrough = true;
-			return true;
-		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Projectile.ai[0] == 0f) {
-				Projectile.ai[0] = 1f;
-				Projectile.aiStyle = 0;
-				//Projectile.tileCollide = false;
-				//Projectile.position+=Vector2.Normalize(oldVelocity)*2;
+			Lighting.AddLight(Projectile.Center, 1, 0.75f, 0);
+			int auraProj = (int)Projectile.ai[0];
+			if (auraProj < 0) {
+				Projectile.scale *= 0.85f;
+				Projectile.scale -= 0.15f;
+				if (Projectile.scale <= 0) Projectile.Kill();
+			} else {
+				Projectile ownerProj = Main.projectile[auraProj];
+				if (ownerProj.active && ownerProj.type == Thermite_Canister_P.ID) {
+					Projectile.scale = ownerProj.scale * 2;
+					Projectile.Center = ownerProj.Center;
+					Projectile.rotation = ownerProj.rotation;
+				} else {
+					Projectile.Center = ownerProj.Center;
+					Projectile.ai[0] = -1;
+				}
 			}
-			Projectile.velocity *= 0.9f;
-			//Projectile.velocity = Vector2.Zero;
-			return false;
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			float range = projHitbox.Width * Projectile.scale * 0.5f;
+			return Projectile.Center.DistanceSQ(Projectile.Center.Clamp(targetHitbox)) < range * range;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
@@ -153,8 +167,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
 		}
 		public override Color? GetAlpha(Color lightColor) {
-			int v = 200 + (int)(25 * (Math.Sin(Projectile.timeLeft / 5f) + Math.Sin(Projectile.timeLeft / 60f)));
-			return new Color(v + 20, v + 25, v - 150, 0);
+			return new Color(255, 180, 50, 0);
 		}
+		public bool IsExploding() => true;
 	}
 }

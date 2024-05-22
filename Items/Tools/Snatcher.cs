@@ -25,6 +25,10 @@ namespace Origins.Items.Tools {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public override void ModifyFishingLine(Projectile bobber, ref Vector2 lineOriginOffset, ref Color lineColor) {
+			lineOriginOffset.X = 45;
+			lineOriginOffset.Y = 29;
+		}
 	}
 	public class Snatcher_Bobber : ModProjectile {
 		
@@ -55,9 +59,5 @@ namespace Origins.Items.Tools {
 				target.velocity = Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist);
 			}
 		}//*/
-		public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor)/* tModPorter Note: Removed. Use ModItem.ModifyFishingLine */ {
-			lineOriginOffset.X = 45;
-			lineOriginOffset.Y = 29;
-		}
 	}
 }

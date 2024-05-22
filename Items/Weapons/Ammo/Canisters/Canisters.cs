@@ -2,17 +2,16 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Ammo.Canisters {
 	#region global stuff
@@ -41,7 +40,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public interface ICanisterAmmo {
 		CanisterData GetCanisterData { get; }
 		void AI(Projectile projectile, bool child) { }
-		void OnKill(Projectile projectile, bool child) { }
+		public void OnKill(Projectile projectile, bool child) => CanisterGlobalProjectile.DefaultExplosion(projectile, child);
 	}
 	public record class CanisterData(Color OuterColor, Color InnerColor, int WhatAmI = -999, ICanisterAmmo Ammo = null);
 	public class CanisterGlobalProjectile : GlobalProjectile {
@@ -108,6 +107,19 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			canister = projectile.ModProjectile as ICanisterProjectile;
 			CanisterID = binaryReader.ReadInt32();
 		}
+		public static void DefaultExplosion(Projectile projectile, bool child) {
+			if (child) return;
+			projectile.penetrate = -1;
+			projectile.position.X += projectile.width / 2;
+			projectile.position.Y += projectile.height / 2;
+			projectile.width = 96;
+			projectile.height = 96;
+			projectile.position.X -= projectile.width / 2;
+			projectile.position.Y -= projectile.height / 2;
+			projectile.Damage();
+			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
+			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
+		}
 	}
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
 		public override bool InstancePerEntity => true;
@@ -162,7 +174,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 30;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Napalm_Canister_P>();
 			Item.shootSpeed = 4.1f;
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
@@ -176,6 +187,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
 			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, projectile.owner, -1, 1);
 		}
 	}
@@ -195,7 +207,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 30;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Napalm_Canister_P>();
 			Item.shootSpeed = 4.1f;
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
@@ -207,6 +218,71 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
 			.AddTile(TileID.Anvils)
 			.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			int damage = projectile.damage;
+			projectile.damage = (int)(projectile.damage * 0.75f);
+			projectile.knockBack = 16f;
+			projectile.position = projectile.Center;
+			projectile.width = projectile.height = 52;
+			projectile.Center = projectile.position;
+			projectile.Damage();
+			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
+			projectile.damage = damage;
+			if (projectile.type == Thermite_Canister_P.ID) {
+				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, projectile.owner, -1, 1);
+			} else {
+				ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
+			}
+			for (int i = 0; i < 5; i++) {
+				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, (projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<Napalm_P>(), (int)(projectile.damage * 0.65f), 0, projectile.owner);
+			}
+		}
+	}
+	public class Napalm_P : ModProjectile, ICanisterChildProjectile {
+		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
+
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.friendly = true;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = 1;
+			Projectile.penetrate = 25;
+			Projectile.timeLeft = Main.rand.Next(300, 451);
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+		}
+		public override void AI() {
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			Lighting.AddLight(Projectile.Center, v, v * 0.5f, 0);
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = height = 2;
+			fallThrough = true;
+			return true;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			if (Projectile.ai[0] == 0f) {
+				Projectile.ai[0] = 1f;
+				Projectile.aiStyle = 0;
+				//Projectile.tileCollide = false;
+				//Projectile.position+=Vector2.Normalize(oldVelocity)*2;
+			}
+			Projectile.velocity *= 0.9f;
+			//Projectile.velocity = Vector2.Zero;
+			return false;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			int v = 200 + (int)(25 * (Math.Sin(Projectile.timeLeft / 5f) + Math.Sin(Projectile.timeLeft / 60f)));
+			return new Color(v + 20, v + 25, v - 90, 0);
 		}
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {

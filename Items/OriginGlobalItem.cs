@@ -134,7 +134,7 @@ namespace Origins.Items {
 				item.width = 4;
 				item.height = 4;
 			}
-			if (statsModified) {
+			if (statsModified && item.ModItem?.Mod is not Origins) {
 				item.StatsModifiedBy.Add(Mod);
 			}
 		}

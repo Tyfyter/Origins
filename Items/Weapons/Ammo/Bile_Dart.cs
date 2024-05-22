@@ -116,10 +116,10 @@ namespace Origins.Items.Weapons.Ammo {
 				},
 				0
 			);
-			Terraria.On_Main.DrawInfernoRings += Main_DrawInfernoRings;
+			On_Main.DrawInfernoRings += Main_DrawInfernoRings;
 		}
 
-		private void Main_DrawInfernoRings(Terraria.On_Main.orig_DrawInfernoRings orig, Main self) {
+		private void Main_DrawInfernoRings(On_Main.orig_DrawInfernoRings orig, Main self) {
 			orig(self);
 			if (Main.dedServ) return;
 			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
