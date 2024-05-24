@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AltLibrary;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
@@ -284,6 +285,86 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			int v = 200 + (int)(25 * (Math.Sin(Projectile.timeLeft / 5f) + Math.Sin(Projectile.timeLeft / 60f)));
 			return new Color(v + 20, v + 25, v - 90, 0);
 		}
+	}
+	public class Cursed_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		static short glowmask;
+		public CanisterData GetCanisterData => new(new(190, 81, 216), new(126, 255, 65));
+		public string[] Categories => [
+			"Canistah"
+		];
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.RocketI);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
+			Item.damage = 30;
+			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shootSpeed = 4.1f;
+			Item.glowMask = glowmask;
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.CursedFlame)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			int damage = projectile.damage;
+			projectile.damage = (int)(projectile.damage * 0.75f);
+			projectile.knockBack = 16f;
+			projectile.position = projectile.Center;
+			projectile.width = projectile.height = 96;
+			projectile.Center = projectile.position;
+			projectile.Damage();
+			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
+			projectile.damage = damage;
+			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
+			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, default, Lingering_Cursed_Flames_P.ID, (int)(projectile.damage * 0.65f), 0, projectile.owner);
+		}
+	}
+	public class Lingering_Cursed_Flames_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
+		public override string Texture => "Terraria/Images/Item_1";
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.friendly = true;
+			Projectile.width = 96;
+			Projectile.height = 96;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = 25;
+			Projectile.timeLeft = 180;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.tileCollide = false;
+			Projectile.hide = true;
+		}
+		public override void AI() {
+			for (int i = 0; i < Projectile.width / 4; i++) {
+				Dust.NewDust(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					DustID.CursedTorch
+				);
+			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(300, 451));
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(300, 451));
+		}
+		public bool IsExploding() => true;
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {
 		static short glowmask;

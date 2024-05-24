@@ -4167,3 +4167,8 @@ Coolant_Canister: {
 	// DisplayName: Coolant Canister
 	// Tooltip: ""
 }
+
+Cursed_Canister: {
+	// DisplayName: Cursed Canister
+	// Tooltip: ""
+}

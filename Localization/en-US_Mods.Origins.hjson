@@ -1162,6 +1162,7 @@ Projectiles: {
 	Shimmer_Cloud_P.DisplayName: Shimmer Cloud
 	Shimmer_Cloud_Rain.DisplayName: Shimmering Rain
 	Napalm_P.DisplayName: Napalm
+	Lingering_Cursed_Flames_P.DisplayName: Lingering Cursed Flames
 }
 
 Prefixes: {
