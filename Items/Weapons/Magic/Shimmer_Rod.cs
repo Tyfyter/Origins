@@ -59,6 +59,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.CloneDefaults(ProjectileID.RainCloudMoving);
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = Projectile.timeLeft;
+			Projectile.tileCollide = false;
 		}
 		public Vector2 TargetPos {
 			get => new(Projectile.ai[0], Projectile.ai[1]);
@@ -97,7 +98,7 @@ namespace Origins.Items.Weapons.Magic {
 					//Dust.NewDustPerfect(Projectile.Center, 6, normTan * 8).noGravity = true;
 					float dot = 1 - Vector2.Dot(diff, normTan);
 					float change = Projectile.localAI[1] - dot;
-					if (Projectile.localAI[2] == 1 && (dot == 0 || change < 0)) {
+					if (Projectile.localAI[2] == 1 && (dot == 0 || change < 0) && !CollisionExtensions.OverlapsAnyTiles(Projectile.Hitbox)) {
 						//Dust.NewDustPerfect(Projectile.Center, 23, normTan).noGravity = true;
 						Projectile.NewProjectile(
 							owner.GetSource_ItemUse(owner.HeldItem),
@@ -113,6 +114,7 @@ namespace Origins.Items.Weapons.Magic {
 						);
 						Projectile.Kill();
 					}
+					if (owner.ItemAnimationEndingOrEnded) Projectile.Kill();
 					Projectile.localAI[1] = dot;
 					Projectile.localAI[2] = 1;
 				}

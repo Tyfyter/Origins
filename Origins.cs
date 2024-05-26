@@ -318,6 +318,7 @@ namespace Origins {
 			LeggingGlowMasks = new();
 			TorsoLegLayers = new();
 
+			OriginExtensions.initExt();
 			if (!Main.dedServ) {
 				//OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
 				perlinFade0 = new MiscShaderData(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad), "RedFade");

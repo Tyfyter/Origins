@@ -1956,7 +1956,7 @@ namespace Origins {
 		private static FastFieldInfo<ShopHelper, IShoppingBiome[]> _dangerousBiomes;
 		internal static FastFieldInfo<ShopHelper, IShoppingBiome[]> dangerousBiomes => _dangerousBiomes ??= new("_dangerousBiomes", BindingFlags.NonPublic);
 		internal static void initExt() {
-			_idToSlot = (Dictionary<int, Dictionary<EquipType, int>>)typeof(EquipLoader).GetField("idToSlot", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			CollisionExtensions.Load();
 		}
 		private static FastStaticFieldInfo<Color[]> _colorLookup;
 		private static FastStaticFieldInfo<Color[]> MapColorLookup => _colorLookup ??= new(typeof(MapHelper), "colorLookup", BindingFlags.NonPublic);
@@ -1977,6 +1977,7 @@ namespace Origins {
 			strikethroughFont = null;
 			_idToSlot = null;
 			_colorLookup = null;
+			CollisionExtensions.Unload();
 		}
 		public static UnifiedRandom Clone(this UnifiedRandom r) {
 			UnifiedRandom o = new UnifiedRandom();
@@ -2570,6 +2571,32 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
+		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+			Vector2 pos = area.TopLeft() + offset;
+			for (int c = 0; c < area.Width; c += 2) {
+				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero).noGravity = true;
+			}
+			for (int c = 0; c < area.Height; c += 2) {
+				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero).noGravity = true;
+			}
+			for (int c = 0; c < area.Width; c += 2) {
+				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero).noGravity = true;
+			}
+			for (int c = 0; c < area.Height; c += 2) {
+				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero).noGravity = true;
+			}
+		}
+		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+			for (float c = 0; c <= 1; c += 0.125f) {
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), 6, Vector2.Zero).noGravity = true;
+			}
+			for (float c = 0; c <= 1; c += 0.125f) {
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), 6, Vector2.Zero).noGravity = true;
+			}
+			for (float c = 0; c <= 1; c += 0.125f) {
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), 6, Vector2.Zero).noGravity = true;
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
@@ -2611,6 +2638,85 @@ namespace Origins {
 				Language.GetOrRegister("Mods.Origins.Conditions.Not").WithFormatArgs(value.Description),
 				() => !value.Predicate()
 			);
+		}
+	}
+	public static class CollisionExtensions {
+		static Triangle[] tileTriangles;
+		static Rectangle[] tileRectangles;
+		public static void Load() {
+			Vector2 topLeft = Vector2.Zero * 16;
+			Vector2 topRight = Vector2.UnitX * 16;
+			Vector2 bottomLeft = Vector2.UnitY * 16;
+			Vector2 bottomRight = Vector2.One * 16;
+			tileTriangles = [
+				new Triangle(topLeft, bottomLeft, bottomRight),
+				new Triangle(topRight, bottomLeft, bottomRight),
+				new Triangle(topLeft, topRight, bottomLeft),
+				new Triangle(topLeft, topRight, bottomRight)
+			];
+			tileRectangles = [
+				new Rectangle(0, 0, 16, 16),
+				new Rectangle(0, 8, 16, 8)
+			];
+		}
+		public static void Unload() {
+			tileTriangles = null;
+			tileRectangles = null;
+		}
+		public static bool OverlapsAnyTiles(this Rectangle area, bool drawDebug = false) {
+			Rectangle checkArea = area;
+			Point topLeft = area.TopLeft().ToTileCoordinates();
+			Point bottomRight = area.BottomRight().ToTileCoordinates();
+			int minX = Utils.Clamp(topLeft.X, 0, Main.maxTilesX - 1);
+			int minY = Utils.Clamp(topLeft.Y, 0, Main.maxTilesY - 1);
+			int maxX = Utils.Clamp(bottomRight.X, 0, Main.maxTilesX - 1) - minX;
+			int maxY = Utils.Clamp(bottomRight.Y, 0, Main.maxTilesY - 1) - minY;
+			int cornerX = area.X - topLeft.X * 16;
+			int cornerY = area.Y - topLeft.Y * 16;
+			if (drawDebug) {
+				bool colliding = false;
+				for (int i = 0; i <= maxX; i++) {
+					for (int j = 0; j <= maxY; j++) {
+						Tile tile = Main.tile[i + minX, j + minY];
+						Dust.NewDustPerfect(new Vector2((i + minX) * 16 + 8, (j + minY) * 16 + 8), 6, Vector2.Zero).noGravity = true;
+						checkArea.X = i * -16 + cornerX;
+						checkArea.Y = j * -16 + cornerY;
+						//checkArea.DrawDebugOutline(new Vector2((i + minX) * 16, (j + minY) * 16), DustID.WaterCandle);
+						if (tile != null && tile.HasSolidTile()) {
+							if (tile.Slope != SlopeType.Solid) {
+								Triangle draw = tileTriangles[(int)tile.Slope - 1];
+								if (draw.Intersects(checkArea)) {
+									draw.DrawDebugOutline(new Vector2((i + minX) * 16, (j + minY) * 16));
+									colliding = true;
+								}
+							} else {
+								Rectangle draw = tileRectangles[(int)tile.BlockType];
+								if (draw.Intersects(checkArea)) {
+									draw.DrawDebugOutline(new Vector2((i + minX) * 16, (j + minY) * 16));
+									colliding = true;
+								}
+							}
+						}
+					}
+				}
+				return colliding;
+			} else {
+				for (int i = 0; i <= maxX; i++) {
+					for (int j = 0; j <= maxY; j++) {
+						Tile tile = Main.tile[i + minX, j + minY];
+						if (tile != null && tile.HasSolidTile()) {
+							checkArea.X = i * -16 + cornerX;
+							checkArea.Y = j * -16 + cornerY;
+							if (tile.Slope != SlopeType.Solid) {
+								if (tileTriangles[(int)tile.Slope - 1].Intersects(checkArea)) return true;
+							} else {
+								if (tileRectangles[(int)tile.BlockType].Intersects(checkArea)) return true;
+							}
+						}
+					}
+				}
+			}
+			return false;
 		}
 	}
 }
