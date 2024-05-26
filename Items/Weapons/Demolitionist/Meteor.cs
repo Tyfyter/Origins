@@ -25,11 +25,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 32;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shoot = ModContent.ProjectileType<Meteor_P>();
-			Item.shootSpeed = 8.3f;
+			Item.shootSpeed = 12.3f;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item61;
-            Item.value = Item.sellPrice(silver:50);
+			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {

@@ -4172,3 +4172,8 @@ Cursed_Canister: {
 	DisplayName: Cursed Canister
 	Tooltip: ""
 }
+
+Bile_Canister: {
+	DisplayName: Bile Canister
+	Tooltip: ""
+}

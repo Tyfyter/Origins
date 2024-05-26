@@ -13,11 +13,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "HardmodeLauncher",
+		public string[] Categories => new string[] {
+			"HardmodeLauncher",
 			"CanistahUser"
-        };
-        public override void SetDefaults() {
+		};
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.shootsEveryUse = false;
 			Item.damage = 48;
@@ -28,14 +28,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 4f;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shoot = ModContent.ProjectileType<Mine_Flayer_P>();
-			Item.shootSpeed = 5;
+			Item.shootSpeed = 9f;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.reuseDelay = 60;
 			Item.autoReuse = false;
 			Item.UseSound = null;
-            Item.ArmorPenetration += 2;
-        }
+			Item.ArmorPenetration += 2;
+		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			if (player.reuseDelay == 0) {
 				Item.useStyle = ItemUseStyleID.RaiseLamp;

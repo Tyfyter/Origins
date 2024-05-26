@@ -55,22 +55,22 @@ namespace Origins {
 		}
 		//convenient shorthand that's incompatible with the vs debugger
 		/*# region shorthand
-        /// <summary>
-        /// shorthand for Dequeue
-        /// </summary>
-        public T DQ => Dequeue();
-        /// <summary>
-        /// shorthand for Enqueue
-        /// </summary>
-        public void NQ(T value) => Enqueue(value);
-        /// <summary>
-        /// shorthand for Dequeue/Enqueue
-        /// </summary>
-        public T Q {
-            get => Dequeue();
-            set => Enqueue(value);
-        }
-        # endregion*/
+		/// <summary>
+		/// shorthand for Dequeue
+		/// </summary>
+		public T DQ => Dequeue();
+		/// <summary>
+		/// shorthand for Enqueue
+		/// </summary>
+		public void NQ(T value) => Enqueue(value);
+		/// <summary>
+		/// shorthand for Dequeue/Enqueue
+		/// </summary>
+		public T Q {
+			get => Dequeue();
+			set => Enqueue(value);
+		}
+		# endregion*/
 		public bool Remove(T item) {
 			return _items.Remove(item);
 		}

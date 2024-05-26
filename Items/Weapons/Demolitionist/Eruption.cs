@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Eruption : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "Launcher",
+	public class Eruption : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Launcher",
 			"CanistahUser"
-        };
-        public override void SetDefaults() {
+		};
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.damage = 27;
@@ -20,26 +20,26 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 32;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shoot = ModContent.ProjectileType<Eruption_P>();
-			Item.shootSpeed = 12;
+			Item.shootSpeed = 16f;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
-            Item.ArmorPenetration += 3;
-        }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.HellstoneBar, 18);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
-        }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.HellstoneBar, 18);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 		}
-        public override Vector2? HoldoutOffset() {
-            return new Vector2(-2, 0);
-        }
-    }
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-2, 0);
+		}
+	}
 	public class Eruption_P : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);

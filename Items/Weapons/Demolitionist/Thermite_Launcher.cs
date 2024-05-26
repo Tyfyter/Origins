@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.knockBack = 2f;
-			Item.shootSpeed = 12f;
+			Item.shootSpeed = 16f;
 			Item.autoReuse = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;

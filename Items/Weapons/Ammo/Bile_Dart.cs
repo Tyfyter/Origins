@@ -12,11 +12,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Dart : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "Dart",
-            "RasterSource"
-        };
-        public override void SetStaticDefaults() {
+		public string[] Categories => new string[] {
+			"Dart",
+			"RasterSource"
+		};
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -39,8 +39,8 @@ namespace Origins.Items.Weapons.Ammo {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Bile_Dart";
 		
 		public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.CursedDart);
-        }
+			Projectile.CloneDefaults(ProjectileID.CursedDart);
+		}
 		public override void AI() {
 			Projectile.localAI[0] += 1f;
 			if (Projectile.localAI[0] > 3f)
@@ -76,17 +76,15 @@ namespace Origins.Items.Weapons.Ammo {
 			return Projectile.alpha == 0 ? new Color(255, 255, 255, 200) : Color.Transparent;
 		}
 		public override void OnKill(int timeLeft) {
-            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-            SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
-        }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
-        }
+			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+			SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
+		}
 	}
 	public class Bile_Dart_Aura : ModProjectile {
-		internal static bool anyActive;
-		public static ScreenTarget AuraTarget { get; private set; }
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
@@ -101,32 +99,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.tileCollide = false;
 			Projectile.scale = 1.5f;
 			Projectile.ArmorPenetration += 100;
-		}
-		public override void Load() {
-			if (Main.dedServ) return;
-			AuraTarget = new(
-				MaskAura,
-				() => {
-					if (anyActive) {
-						anyActive = false;
-						return Lighting.NotRetro;
-					} else {
-						return false;
-					}
-				},
-				0
-			);
-			On_Main.DrawInfernoRings += Main_DrawInfernoRings;
-		}
-
-		private void Main_DrawInfernoRings(On_Main.orig_DrawInfernoRings orig, Main self) {
-			orig(self);
-			if (Main.dedServ) return;
-			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
-		}
-
-		public override void Unload() {
-			AuraTarget = null;
 		}
 		public override void AI() {
 			int auraProj = (int)Projectile.ai[0];
@@ -154,40 +126,22 @@ namespace Origins.Items.Weapons.Ammo {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 12);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			anyActive = true;
+			if (Mask_Rasterize.QueueProjectile(Projectile.whoAmI)) return false;
+			Vector2 screenCenter = Main.ScreenSize.ToVector2() * 0.5f;
+			Main.spriteBatch.Draw(
+				TextureAssets.Projectile[ID].Value,
+				(Projectile.Center - Main.screenPosition - screenCenter) * Main.GameViewMatrix.Zoom + screenCenter,
+				null,
+				new Color(
+					MathHelper.Clamp(Projectile.velocity.X / 16 + 0.5f, 0, 1),
+					MathHelper.Clamp(Projectile.velocity.Y / 16 + 0.5f, 0, 1),
+				0f),
+				0,
+				new Vector2(36),
+				Projectile.scale * Main.GameViewMatrix.Zoom.X,
+				0,
+			0);
 			return false;
 		}
-		static void MaskAura(SpriteBatch spriteBatch) {
-			if (Main.dedServ) return;
-			Vector2 screenCenter = Main.ScreenSize.ToVector2() * 0.5f;
-			for (int i = 0; i < Main.maxProjectiles; i++) {
-				Projectile proj = Main.projectile[i];
-				if (proj.active && proj.type == ID) {
-					spriteBatch.Draw(
-						TextureAssets.Projectile[ID].Value,
-						(proj.Center - Main.screenPosition - screenCenter) * Main.GameViewMatrix.Zoom + screenCenter,
-						null,
-						new Color(
-							MathHelper.Clamp(proj.velocity.X / 16 + 8, 0, 1),
-							MathHelper.Clamp(proj.velocity.Y / 16 + 8, 0, 1),
-						0f),
-						0,
-						new Vector2(36),
-						proj.scale * Main.GameViewMatrix.Zoom.X,
-						0,
-					0);
-				}
-			}
-		}
-
-		static void DrawAura(SpriteBatch spriteBatch) {
-			if (Main.dedServ) return;
-			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:MaskedRasterizeFilter", anyActive, Main.LocalPlayer.Center);
-			if (anyActive) {
-				Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
-			}
-			//spriteBatch.Draw(AuraTarget.RenderTarget, Vector2.Zero, Color.White);
-		}
 	}
-
 }

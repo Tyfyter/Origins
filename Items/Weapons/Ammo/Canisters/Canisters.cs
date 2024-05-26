@@ -1,7 +1,10 @@
 ﻿using AltLibrary;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
+using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using System;
@@ -9,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -20,6 +24,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public static Dictionary<int, int> ItemToCanisterID { get; private set; } = [];
 		public static Dictionary<Type, int> TypeToCanisterID { get; private set; } = [];
 		public static List<CanisterData> CanisterDatas { get; private set; } = [];
+		public static Dictionary<int, int> LauncherToProjectile { get; private set; } = [];
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) {
 			if (entity.ModItem is ICanisterAmmo canister) {
 				if (!ItemToCanisterID.TryGetValue(entity.type, out _)) {
@@ -31,11 +36,22 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 			return false;
 		}
+		public override void Unload() => LauncherToProjectile = null;
+		public override bool? CanBeChosenAsAmmo(Item ammo, Item weapon, Player player) {
+			if (LauncherToProjectile.ContainsKey(weapon.type)) return true;
+			return null;
+		}
+		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			if (LauncherToProjectile.TryGetValue(weapon.type, out int proj)) type = proj;
+		}
 		public static int GetCanisterType(int type) {
 			return ItemToCanisterID.TryGetValue(type, out int canisterID) ? canisterID : -1;
 		}
 		public static int GetCanisterType(Type type) {
 			return TypeToCanisterID.TryGetValue(type, out int canisterID) ? canisterID : - 1;
+		}
+		public static void RegisterForLauncher(int launcher, int projectile) {
+			LauncherToProjectile.Add(launcher, projectile);
 		}
 	}
 	public interface ICanisterAmmo {
@@ -76,29 +92,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			canisterData?.Ammo?.OnKill(projectile, false);
 		}
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
-			Vector2 origin = canister.OuterTexture.Value.Size() * 0.5f;
-			SpriteEffects spriteEffects = SpriteEffects.None;
-			if (projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
-			Main.EntitySpriteDraw(
-				canister.InnerTexture,
-				projectile.Center - Main.screenPosition,
-				null,
-				canisterData.InnerColor,
-				projectile.rotation,
-				origin,
-				projectile.scale,
-				spriteEffects
-			);
-			Main.EntitySpriteDraw(
-				canister.OuterTexture,
-				projectile.Center - Main.screenPosition,
-				null,
-				canisterData.OuterColor.MultiplyRGBA(lightColor),
-				projectile.rotation,
-				origin,
-				projectile.scale,
-				spriteEffects
-			);
+			canister.CustomDraw(projectile, canisterData, lightColor);
 			return false;
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
@@ -156,6 +150,31 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public const string base_texture_path = "Origins/Items/Weapons/Ammo/Canisters/";
 		public abstract AutoLoadingAsset<Texture2D> OuterTexture { get; }
 		public abstract AutoLoadingAsset<Texture2D> InnerTexture { get; }
+		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
+			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
+			Main.EntitySpriteDraw(
+				InnerTexture,
+				projectile.Center - Main.screenPosition,
+				null,
+				canisterData.InnerColor,
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+			Main.EntitySpriteDraw(
+				OuterTexture,
+				projectile.Center - Main.screenPosition,
+				null,
+				canisterData.OuterColor.MultiplyRGBA(lightColor),
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+		}
 	}
 	public interface ICanisterChildProjectile {}
 	#endregion global stuff
@@ -175,7 +194,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 30;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 4.1f;
+			Item.shootSpeed = 0f;
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -208,7 +227,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 30;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 4.1f;
+			Item.shootSpeed = 0f;
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -302,7 +321,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 30;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 4.1f;
+			Item.shootSpeed = 0f;
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -364,6 +383,93 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(300, 451));
 		}
+		public void Explode(int delay = 0) { }
+		public bool IsExploding() => true;
+	}
+	public class Bile_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		static short glowmask;
+		public CanisterData GetCanisterData => new(new(239, 235, 233), new(70, 19, 66));
+		public string[] Categories => [
+			"Canistah"
+		];
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.RocketI);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
+			Item.damage = 30;
+			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shootSpeed = 0f;
+			Item.glowMask = glowmask;
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 5)
+			.AddIngredient<Black_Bile>()
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.oldPosition + projectile.Size / 2 + projectile.velocity, default, Bile_Canister_Explosion.ID, (int)(projectile.damage * 0.75f), 0, projectile.owner);
+		}
+	}
+	public class Bile_Canister_Explosion : ModProjectile, IIsExplodingProjectile, ICanisterChildProjectile {
+		//public override string Texture => typeof(Bile_Dart_Aura).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.hide = false;
+			Projectile.width = Projectile.height = 72;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.tileCollide = false;
+			Projectile.scale = 1.5f;
+		}
+		public override void AI() {
+			if (Projectile.ai[0] == 0) {
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
+				Projectile.ai[0] = 1;
+			}
+			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+			Projectile.scale = Math.Min(Projectile.scale * 1.2f - 0.3f, Projectile.scale - 0.01f);
+			if (Projectile.scale <= 0) Projectile.Kill();
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			int inflation = (int)(hitbox.Width * (Projectile.scale / 1.5f - 1) * 0.5f);
+			hitbox.Inflate(inflation, inflation);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 12);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (Mask_Rasterize.QueueProjectile(Projectile.whoAmI)) return false;
+			Vector2 screenCenter = Main.ScreenSize.ToVector2() * 0.5f;
+			Main.spriteBatch.Draw(
+				TextureAssets.Projectile[ID].Value,
+				(Projectile.Center - Main.screenPosition - screenCenter) * Main.GameViewMatrix.Zoom + screenCenter,
+				null,
+				new Color(
+					1f,
+					1f,
+				0f),
+				0,
+				new Vector2(36),
+				Projectile.scale * Main.GameViewMatrix.Zoom.X,
+				0,
+			0);
+			return false;
+		}
+		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {
