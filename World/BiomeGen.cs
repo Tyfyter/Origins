@@ -55,68 +55,23 @@ namespace Origins {
 				tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress, GameConfiguration _) {
 					progress.Message = "Generating Dusk Biome";
 					int X = (int)(Main.maxTilesX * 0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
-					GenRunners.HellRunner(X, Main.maxTilesY - 25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
-					//Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh-1).type = TileID.AmberGemspark;
-					//Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh+1).type = TileID.AmberGemspark;
-					//Framing.GetTileSafely(X-1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
-					//Framing.GetTileSafely(X+1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
-					//Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
+					Dusk.Gen.HellRunner(X, Main.maxTilesY - 25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
 					Mod.Logger.Info(HellSpikes.Count + " Void Spikes: " + string.Join(", ", HellSpikes));
 					while (HellSpikes.Count > 0) {
 						(Point, int) i = HellSpikes[0];
 						Point p = i.Item1;
 						HellSpikes.RemoveAt(0);
 						Vector2 vel = new Vector2(0, (p.Y < Main.maxTilesY - 150) ? 2.75f : -2.75f).RotatedByRandom(1.25f, genRand);
-						//TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
 						bool twist = genRand.NextBool();
 						GenRunners.SmoothSpikeRunner(p.X, p.Y, i.Item2 * 0.75, duskStoneID, vel, decay: genRand.NextFloat(0.75f, 1f), twist: twist ? 0.3f : 0, randomtwist: twist, cutoffStrength: 1);
 					}
-					//Tile tile2;
-					//byte dirs = 0;
-					for (int k = GenRunners.duskLeft; k < GenRunners.duskRight; k++) {
-						for (int l = GenRunners.duskBottom; l > GenRunners.duskTop; l--) {
-							//tile2 = Main.tile[k, l];
+					for (int k = Dusk.Gen.duskLeft; k < Dusk.Gen.duskRight; k++) {
+						for (int l = Dusk.Gen.duskBottom; l > Dusk.Gen.duskTop; l--) {
 							if (Main.tile[k, l].TileType == duskStoneID) {
 								GenRunners.AutoSlope(k, l, true);
-								/*dirs = 0;
-                                if(Main.tile[k-1, l].active())
-                                    dirs|=1;
-                                if(Main.tile[k+1, l].active())
-                                    dirs|=2;
-                                if(Main.tile[k, l-1].active())
-                                    dirs|=4;
-                                if(Main.tile[k, l+1].active())
-                                    dirs|=8;
-                                switch(dirs) {
-                                    //top slopes
-                                    case 6:
-                                    Main.tile[k, l].slope(SlopeID.TopLeft);
-                                    Main.tile[k, l].halfBrick(false);
-                                    break;
-                                    case 9:
-                                    Main.tile[k, l].slope(SlopeID.TopRight);
-                                    Main.tile[k, l].halfBrick(false);
-                                    break;
-                                    //bottom slopes
-                                    case 5:
-                                    if(Main.tile[k, l].halfBrick())
-                                        break;
-                                    Main.tile[k, l].slope(SlopeID.BottomLeft);
-                                    break;
-                                    case 10:
-                                    if(Main.tile[k, l].halfBrick())
-                                        break;
-                                    Main.tile[k, l].slope(SlopeID.BottomRight);
-                                    break;
-                                    default:
-                                    Main.tile[k, l].slope(0);
-                                    Main.tile[k, l].halfBrick(false);
-                                    break;
-                                }*/
 							}
 						}
 					}
-					//}
 				}));
 				tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
 					Mod.Logger.Info("Pooling Brine");
