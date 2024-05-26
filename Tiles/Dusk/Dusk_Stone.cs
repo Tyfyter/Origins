@@ -22,7 +22,7 @@ namespace Origins.Tiles.Dusk {
 			return false;
 		}
 		public override void PostSetDefaults() {
-			Main.tileNoSunLight[Type] = true;
+			Main.tileNoSunLight[Type] = false;
 		}
 	}
 	public class Dusk_Stone_Item : ModItem {

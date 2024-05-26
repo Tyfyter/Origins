@@ -54,6 +54,7 @@ using Terraria.GameContent.UI.ResourceSets;
 using Origins.Water;
 using Origins.Graphics;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Light;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -81,7 +82,7 @@ namespace Origins {
 			//On.Terraria.WorldGen.Convert += OriginSystem.ConvertHook;
 			Petrified_Tree.Load();
 			OriginSystem worldInstance = MC.GetInstance<OriginSystem>();
-			if (!(worldInstance is null)) {
+			if (worldInstance is not null) {
 				worldInstance.defiledResurgenceTiles = new List<(int, int)> { };
 				worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
 			}
@@ -484,6 +485,8 @@ namespace Origins {
 			IL_WaterfallManager.GetAlpha += FixWrongWaterfallAlpha_IL;
 			On_Main.DrawNPCDirect += On_Main_DrawNPCDirect;
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
+			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
+			On_Main.DrawBlack += On_Main_DrawBlack;
 		}
 		private void FixWrongWaterfallAlpha_IL(ILContext il) {
 			ILCursor c = new(il);
@@ -1275,6 +1278,18 @@ namespace Origins {
 		}
 		#endregion worldgen
 		#region graphics
+		private void On_Main_DrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force) {
+			if (OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed <= 0) orig(self, force);
+		}
+		private void On_TileLightScanner_ApplyHellLight(On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor) {
+			Vector3 value = lightColor;
+			orig(self, tile, x, y, ref value);
+			if (OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed > 0) {
+				lightColor = Vector3.Lerp(value, lightColor, OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed * 1.5f);
+			} else {
+				lightColor = value;
+			}
+		}
 		public static RenderTarget2D currentScreenTarget;
 		private void On_FilterManager_BeginCapture(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
 			orig(self, screenTarget1, clearColor);
@@ -1410,6 +1425,10 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
+			} else if (OriginPlayer.LocalOriginPlayer is not null && OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed > 0) {
+				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
+				return color;
 			} else {
 				return orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 			}
