@@ -1279,7 +1279,7 @@ namespace Origins {
 		#endregion worldgen
 		#region graphics
 		private void On_Main_DrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force) {
-			if (OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed <= 0) orig(self, force);
+			if ((OriginPlayer.LocalOriginPlayer?.ZoneVoidProgressSmoothed ?? 0) <= 0) orig(self, force);
 		}
 		private void On_TileLightScanner_ApplyHellLight(On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor) {
 			Vector3 value = lightColor;

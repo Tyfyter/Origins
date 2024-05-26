@@ -11,7 +11,7 @@ namespace Origins.World.BiomeData {
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneVoid = OriginSystem.voidTiles > 300;
-			originPlayer.ZoneVoidProgress = Math.Min(OriginSystem.voidTiles - 200, 200) / 300f;
+			originPlayer.ZoneVoidProgress = Math.Clamp(OriginSystem.voidTiles - 200, 0, 200) / 300f;
 			LinearSmoothing(ref originPlayer.ZoneVoidProgressSmoothed, originPlayer.ZoneVoidProgress, OriginSystem.biomeShaderSmoothing);
 			return originPlayer.ZoneVoid;
 		}
