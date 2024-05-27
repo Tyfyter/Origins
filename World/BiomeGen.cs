@@ -21,7 +21,6 @@ using static Terraria.WorldGen;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
-		internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() { };
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
@@ -51,28 +50,7 @@ namespace Origins {
 			#endregion _
 			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
 			if (genIndex != -1) {
-				int duskStoneID = TileType<Dusk_Stone>();
-				tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress, GameConfiguration _) {
-					progress.Message = "Generating Dusk Biome";
-					int X = (int)(Main.maxTilesX * 0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
-					Dusk.Gen.HellRunner(X, Main.maxTilesY - 25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
-					Mod.Logger.Info(HellSpikes.Count + " Void Spikes: " + string.Join(", ", HellSpikes));
-					while (HellSpikes.Count > 0) {
-						(Point, int) i = HellSpikes[0];
-						Point p = i.Item1;
-						HellSpikes.RemoveAt(0);
-						Vector2 vel = new Vector2(0, (p.Y < Main.maxTilesY - 150) ? 2.75f : -2.75f).RotatedByRandom(1.25f, genRand);
-						bool twist = genRand.NextBool();
-						GenRunners.SmoothSpikeRunner(p.X, p.Y, i.Item2 * 0.75, duskStoneID, vel, decay: genRand.NextFloat(0.75f, 1f), twist: twist ? 0.3f : 0, randomtwist: twist, cutoffStrength: 1);
-					}
-					for (int k = Dusk.Gen.duskLeft; k < Dusk.Gen.duskRight; k++) {
-						for (int l = Dusk.Gen.duskBottom; l > Dusk.Gen.duskTop; l--) {
-							if (Main.tile[k, l].TileType == duskStoneID) {
-								GenRunners.AutoSlope(k, l, true);
-							}
-						}
-					}
-				}));
+				tasks.Insert(genIndex + 1, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
 				tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
 					Mod.Logger.Info("Pooling Brine");
 					progress.Message = "Pooling Brine";
@@ -212,7 +190,7 @@ namespace Origins {
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
 			tasks.Insert(genIndex + 1, new PassLegacy("Shiny (Singular)", (GenerationProgress progress, GameConfiguration _) => {
 				int type = TileType<Carburite>();
-				for (int i = 0; i < (int)((Main.maxTilesX * Main.maxTilesY) * 3.75E-05); i++) {
+				for (int i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 3.75E-05); i++) {
 					TileRunner(
 						genRand.Next(0, Main.maxTilesX),
 						genRand.Next((int)Main.worldSurface, (int)Main.rockLayer),
@@ -222,7 +200,7 @@ namespace Origins {
 					);
 				}
 			}));
-			if (WorldGen.remixWorldGen) {
+			if (remixWorldGen) {
 				genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
 				tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
 					Dictionary<ushort, ushort> types = Chambersite_Stone_Wall.AddChambersite;

@@ -203,14 +203,14 @@ namespace Origins {
 			//On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
 			//On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
 			/*HookEndpointManager.Add(typeof(PlantLoader).GetMethod("ShakeTree", BindingFlags.Public | BindingFlags.Static), 
-                (hook_ShakeTree)((orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves) => {
+				(hook_ShakeTree)((orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves) => {
 					if (orig(x, y, type, ref createLeaves)) {
-                        PlantLoader_ShakeTree(x, y, type, ref createLeaves);
-                        return true;
+						PlantLoader_ShakeTree(x, y, type, ref createLeaves);
+						return true;
 					}
-                    return false;
-                })
-            );*/
+					return false;
+				})
+			);*/
 			Terraria.IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
 			Terraria.On_WorldGen.PlantAlch += WorldGen_PlantAlch;
 			Terraria.On_WorldGen.ShakeTree += WorldGen_ShakeTree;
@@ -487,6 +487,8 @@ namespace Origins {
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
 			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
 			On_Main.DrawBlack += On_Main_DrawBlack;
+			On_WorldGen.AddHellHouses += On_WorldGen_AddHellHouses;
+			On_WorldGen.HellFort += On_WorldGen_HellFort;
 		}
 		private void FixWrongWaterfallAlpha_IL(ILContext il) {
 			ILCursor c = new(il);
@@ -1275,6 +1277,13 @@ namespace Origins {
 				return orig(i, j, WorldGen.genRand.Next(pileData.minStyle, pileData.maxStyle), 0, pileData.pileType);
 			}
 			return orig(i, j, X, Y, type);
+		}
+		private void On_WorldGen_AddHellHouses(On_WorldGen.orig_AddHellHouses orig) {
+			Dusk.Gen.GenerateDusk();
+			orig();
+		}
+		private void On_WorldGen_HellFort(On_WorldGen.orig_HellFort orig, int i, int j, ushort tileType, byte wallType) {
+			if (!Dusk.Gen.duskRect.Contains(i, j)) orig(i, j, tileType, wallType);
 		}
 		#endregion worldgen
 		#region graphics

@@ -91,7 +91,6 @@ namespace Origins.World {
 					speed = randomtwist ? speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
 				}
 			}
-			float r = speed.ToRotation();
 			for (int l = X0; l < X1; l++) {
 				for (int k = Y0; k < Y1; k++) {
 					AutoSlopeForSpike(l, k);
@@ -110,6 +109,7 @@ namespace Origins.World {
 			int Y1 = 0;
 			strength = Math.Pow(strength, 2);
 			double decay = speed.Length();
+
 			while (length > 0) {
 				length -= decay;
 				int minX = (int)(pos.X - strength * 0.5);
@@ -154,8 +154,10 @@ namespace Origins.World {
 					}
 				}
 				pos += speed;
-				if (randomtwist || twist != 0.0) {
-					speed = randomtwist ? speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
+				if (twist != 0.0) {
+					speed = speed.RotatedBy(twist);
+				} else if (randomtwist) {
+					speed = speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist));
 				}
 			}
 #if DEBUG

@@ -18,14 +18,14 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
+			TileObjectData.newTile.CoordinateHeights = [18, 18];
 			//TileObjectData.newTile.AnchorBottom = new AnchorData();
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("{$Defiled} Fissure");
 			AddMapEntry(new Color(40, 40, 40), name);
 			//disableSmartCursor = true;
-			AdjTiles = new int[] { TileID.ShadowOrbs };
+			AdjTiles = [TileID.ShadowOrbs];
 			ID = Type;
 			AnimationFrameHeight = 144 / 4;
 			HitSound = Origins.Sounds.DefiledIdle;

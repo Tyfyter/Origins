@@ -441,8 +441,8 @@ namespace Origins {
 			Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
 			Sounds.PowerUp = new SoundStyle("Origins/Sounds/Custom/PowerUp", SoundType.Sound);
 			Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
-            Sounds.PhaserCrash = new SoundStyle("Origins/Sounds/Custom/PhaserCrash", SoundType.Sound);
-            Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound) {
+			Sounds.PhaserCrash = new SoundStyle("Origins/Sounds/Custom/PhaserCrash", SoundType.Sound);
+			Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound) {
 				MaxInstances = 0
 			};
 			Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound) {
@@ -469,25 +469,25 @@ namespace Origins {
 				MaxInstances = 0,
 				Volume = 1.5f,
 				PitchRange = (0.2f, 0.3f)
-            };
-            Sounds.BeckoningRoar = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
-                MaxInstances = 0,
+			};
+			Sounds.BeckoningRoar = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
+				MaxInstances = 0,
 				Volume = 0.75f,
-                PitchRange = (0.2f, 0.3f)
-            };
-            Sounds.IMustScream = new SoundStyle("Origins/Sounds/Custom/IMustScream", SoundType.Sound) {
-                MaxInstances = 0,
-                PitchRange = (0.2f, 0.3f)
-            };
-            Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
+				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.IMustScream = new SoundStyle("Origins/Sounds/Custom/IMustScream", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
 				MaxInstances = 0
 			};
-            Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
-                MaxInstances = 0,
+			Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
+				MaxInstances = 0,
 				Volume = 0.75f
-            };
-            //OriginExtensions.initClone();
-            Music.LoadMusic();
+			};
+			//OriginExtensions.initClone();
+			Music.LoadMusic();
 
 			Main.OnPostDraw += IncrementFrameCount;
 			ApplyPatches();
@@ -549,8 +549,8 @@ namespace Origins {
 		public static uint gameFrameCount = 0;
 		static void IncrementFrameCount(GameTime gameTime) {
 			unchecked {
-                gameFrameCount++;
-            }
+				gameFrameCount++;
+			}
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
@@ -743,11 +743,11 @@ namespace Origins {
 						Main.audioSystem.LoadCue(newID, "Music_" + baseID);
 					}
 				}
-                SetMusic(ref Fiberglass, MusicID.Snow);
+				SetMusic(ref Fiberglass, MusicID.Snow);
 
-                SetMusic(ref BrinePool, MusicID.Rain);
+				SetMusic(ref BrinePool, MusicID.Rain);
 
-                SetMusic(ref Dusk, MusicID.Eerie);
+				SetMusic(ref Dusk, MusicID.Eerie);
 
 				SetMusic(ref Defiled, MusicID.Corruption);
 				SetMusic(ref UndergroundDefiled, MusicID.UndergroundCorruption);
@@ -776,12 +776,12 @@ namespace Origins {
 			public static SoundStyle defiledKill = SoundID.NPCDeath1;
 			public static SoundStyle defiledKillAF = SoundID.NPCDeath1;
 			public static SoundStyle Amalgamation = SoundID.Zombie1;
-            public static SoundStyle BeckoningRoar = SoundID.ForceRoar;
-            public static SoundStyle PowerUp = SoundID.Item4;
+			public static SoundStyle BeckoningRoar = SoundID.ForceRoar;
+			public static SoundStyle PowerUp = SoundID.Item4;
 			public static SoundStyle RivenBass = SoundID.Item4;
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
-            public static SoundStyle IMustScream = SoundID.Roar;
-        }
+			public static SoundStyle IMustScream = SoundID.Roar;
+		}
 		public override object Call(params object[] args) {
 			return args[0] switch {
 				"get_explosive_classes_dict" or "GetExplosiveClassesDict" => DamageClasses.ExplosiveVersion,

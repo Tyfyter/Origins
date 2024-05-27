@@ -31,10 +31,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			rainbow.canisterType = CanisterGlobalItem.RegisterCanister(ItemID.RainbowFlare, new(Color.Black, Color.Black, ammo: rainbow));
 			Shimmer_Flare_Dummy_Canister shimmer = new();
 			shimmer.canisterType = CanisterGlobalItem.RegisterCanister(ItemID.ShimmerFlare, new(Color.Black, Color.Black, ammo: shimmer));
-			
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(18, 32, 16f, 44, 24);
+			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(14, 32, 14f, 44, 24);
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
@@ -62,6 +61,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Flare_Dummy_Canister(int debuffType) : ICanisterAmmo {
 		public CanisterData GetCanisterData => throw new NotImplementedException();
+		public static void Initialize(Projectile projectile) {
+			if (projectile.ai[0] == 0) {
+				if (projectile.timeLeft == 300) {
+					projectile.timeLeft = 3600;
+					projectile.penetrate = -1;
+				}
+			} else if (projectile.ai[0] == 1) {
+				projectile.ai[0] = 2;
+			}
+		}
+		public void AI(Projectile projectile, bool child) {
+			if (!child) Initialize(projectile);
+		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
 			target.AddBuff(debuffType, Main.rand.NextBool(3) ? 600 : 300);
 		}
@@ -70,6 +82,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Spelunker_Flare_Dummy_Canister : ICanisterAmmo {
 		public CanisterData GetCanisterData => throw new NotImplementedException();
 		public void AI(Projectile projectile, bool child) {
+			if (!child) Flare_Dummy_Canister.Initialize(projectile);
 			if (!Main.dedServ) {
 				float range = Main.screenWidth + 30 * 16;
 				if (Main.LocalPlayer.Center.DistanceSQ(projectile.Center) < range * range) {
@@ -87,6 +100,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public int canisterType = -1;
 		readonly FrameCachedValue<Color> color = new(() => Main.hslToRgb(Main.GlobalTimeWrappedHourly * 0.6f % 1f, 1f, 0.5f));
 		public void AI(Projectile projectile, bool child) {
+			if (!child) Flare_Dummy_Canister.Initialize(projectile);
 			if (!Main.dedServ) {
 				CanisterData canisterData = CanisterGlobalItem.CanisterDatas[canisterType];
 				Color color = this.color.GetValue();
@@ -104,6 +118,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public int canisterType = -1;
 		readonly FrameCachedValue<Color> color = new(() => new(LiquidRenderer.GetShimmerBaseColor(0, 0)));
 		public void AI(Projectile projectile, bool child) {
+			if (!child) Flare_Dummy_Canister.Initialize(projectile);
 			if (!Main.dedServ) {
 				CanisterData canisterData = CanisterGlobalItem.CanisterDatas[canisterType];
 				Color color = this.color.GetValue();
@@ -128,19 +143,26 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.timeLeft = 300;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 1;
 			Projectile.aiStyle = 0;
 			Projectile.width = 10;
 			Projectile.height = 10;
 			Projectile.extraUpdates = 0;
 			Projectile.friendly = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 20;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
-				Projectile.velocity.Y += 0.04f;
+				Projectile.velocity.Y += 0.06f;
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			} else {
-				Projectile.timeLeft--;
+				if (Projectile.ai[0] == 1) Projectile.timeLeft--;
+				if (!CollisionExtensions.OverlapsAnyTiles(Projectile.Hitbox)) {
+					Projectile.velocity = Vector2.UnitY;
+					Projectile.tileCollide = true;
+					Projectile.ai[0] = 0;
+				}
 			}
 			Lighting.AddLight(Projectile.Center, Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor.ToVector3());
 		}
@@ -153,6 +175,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] == 0;
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			if (Projectile.ai[0] != 0 && Projectile.timeLeft > 0) modifiers.DisableKnockback();
+		}
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 center = projectile.Center;
 			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
@@ -182,7 +207,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Dust.NewDustPerfect(
 				center - Projectile.velocity.SafeNormalize(default),
 				ModContent.DustType<Flare_Dust>(),
-				-projectile.velocity.RotatedByRandom(0.1f),
+				-projectile.velocity.RotatedByRandom(0.1f) * Main.rand.NextFloat(0.9f, 1f),
 				newColor: canisterData.InnerColor,
 				Scale: 0.85f
 			).noGravity = true;
