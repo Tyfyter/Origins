@@ -34,10 +34,11 @@ namespace Origins.World.BiomeData {
 			internal static int duskTop;
 			internal static int duskBottom;
 			internal static Rectangle duskRect;
-			static Stack<(Point position, int size)> hellSpikes = [];
+			static Stack<(Point position, int size)> hellSpikes;
 			public static void GenerateDusk() {
+				hellSpikes = [];
 				ushort duskStoneID = (ushort)ModContent.TileType<Dusk_Stone>();
-				int X = (int)(Main.maxTilesX * (WorldGen.genRand.NextBool() ? 0.6 : 0.4));
+				int X = (int)(Main.maxTilesX * (WorldGen.genRand.NextBool() ? 0.7 : 0.3));
 				HellRunner(X, Main.maxTilesY - 25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, 0f, 0f);
 				//Mod.Logger.Info(HellSpikes.Count + " Void Spikes: " + string.Join(", ", HellSpikes));
 				duskRect = WorldBiomeGeneration.ChangeRange.GetRange();
@@ -46,6 +47,7 @@ namespace Origins.World.BiomeData {
 				progress.Message = "Finishing Dusk";
 				ushort duskStoneID = (ushort)ModContent.TileType<Dusk_Stone>();
 				ushort duskStoneLiquidID = (ushort)ModContent.TileType<Dusk_Stone_Liquid>();
+				ushort oreID = (ushort)ModContent.TileType<Bleeding_Obsidian>();
 				for (int i = duskRect.Left; i < duskRect.Right; i++) {
 					for (int j = duskRect.Bottom; j > duskRect.Top; j--) {
 						Tile tile = Main.tile[i, j];
@@ -62,12 +64,48 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
+				int oreLeft = 1500;
+				int oreTriesLeft = 5000;
+				HashSet<ushort> replacables = [duskStoneID, duskStoneLiquidID];
+				while (oreLeft > 0 && --oreTriesLeft >= 0) {
+					Vector2 dir = WorldGen.genRand.NextVector2CircularEdge(1, 1) * WorldGen.genRand.NextFloat(0.75f, 1.5f);
+					bool twist = WorldGen.genRand.NextBool();
+					int x = WorldGen.genRand.Next(duskRect.Left, duskRect.Right);
+					int y = WorldGen.genRand.Next(duskRect.Top, duskRect.Bottom);
+					float strength = WorldGen.genRand.NextFloat(2f, 4f);
+					float decay = WorldGen.genRand.NextFloat(0.5f, 0.75f);
+					oreLeft -= GenRunners.SpikeVeinRunner(
+						x,
+						y,
+						strength,
+						replacables,
+						oreID,
+						dir,
+						decay: decay,
+						twist: twist ? 0.2f : 0,
+						randomTwist: twist
+					);
+					oreLeft -= GenRunners.SpikeVeinRunner(
+						x,
+						y,
+						strength,
+						replacables,
+						oreID,
+						-dir,
+						decay: decay,
+						twist: twist ? 0.2f : 0,
+						randomTwist: twist
+					);
+				}
+				bool canBeCleared = TileID.Sets.CanBeClearedDuringGeneration[oreID];
+				TileID.Sets.CanBeClearedDuringGeneration[oreID] = false;
 				while (hellSpikes.Count > 0) {
 					(Point pos, int size) = hellSpikes.Pop();
 					Vector2 vel = new Vector2(0, (pos.Y < Main.maxTilesY - 150) ? 2.75f : -2.75f).RotatedByRandom(1.25f, WorldGen.genRand);
 					bool twist = WorldGen.genRand.NextBool();
 					HellSpikeRunner(pos.X, pos.Y, size * 0.75, duskStoneID, vel, decay: WorldGen.genRand.NextFloat(0.75f, 1f), twist: twist ? 0.3f : 0, randomTwist: twist, cutoffStrength: 1);
 				}
+				TileID.Sets.CanBeClearedDuringGeneration[oreID] = canBeCleared;
 				for (int i = duskRect.Left; i < duskRect.Right; i++) {
 					for (int j = duskRect.Bottom; j > duskRect.Top; j--) {
 						Tile tile = Main.tile[i, j];
@@ -78,6 +116,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
+				hellSpikes = null;
 			}
 			static void FillLavaGapsAndSlope(int i, int j, ushort fillWith) {
 				static bool HasTileOrLava(Tile tile) => tile.HasTile || tile.LiquidAmount > 0;

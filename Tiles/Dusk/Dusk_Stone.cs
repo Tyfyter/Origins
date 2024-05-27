@@ -13,6 +13,8 @@ namespace Origins.Tiles.Dusk {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			Main.tileMerge[Type][TileType<Dusk_Stone_Liquid>()] = true;
+			Main.tileMerge[Type][TileType<Bleeding_Obsidian>()] = true;
 			AddMapEntry(new Color(20, 20, 20));
 			mergeID = TileID.Stone;
 			MinPick = 220;
@@ -39,6 +41,7 @@ namespace Origins.Tiles.Dusk {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			RegisterItemDrop(ItemType<Dusk_Stone_Item>());
+			Main.tileMerge[Type][TileType<Dusk_Stone>()] = true;
 		}
 	}
 }

@@ -7,15 +7,17 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
-    public class Bleeding_Obsidian : OriginTile {
-        public string[] Categories => new string[] {
-            "Ore"
-        };
-        public override void SetStaticDefaults() {
+	public class Bleeding_Obsidian : OriginTile {
+		public string[] Categories => new string[] {
+			"Ore"
+		};
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			Main.tileMerge[Type][TileType<Dusk_Stone>()] = true;
+			Main.tileMerge[Type][TileType<Dusk_Stone_Liquid>()] = true;
 			AddMapEntry(new Color(57, 10, 75));
 			MinPick = 190;
 			MineResist = 8;

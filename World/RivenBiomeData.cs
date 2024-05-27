@@ -22,6 +22,7 @@ using Origins.Walls;
 using Origins.Water;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -218,7 +219,7 @@ namespace Origins.World.BiomeData {
 					pos += (Vector2)speed;
 					if (OriginExtensions.LinearSmoothing(ref speed.Theta, targetTwist + MathHelper.PiOver2, 0.05f)) targetTwist = genRand.NextFloat(-0.5f, 0.5f);
 					strength *= decay;
-					speed.R = (float)Math.Min(speed.R, (float)Math.Sqrt(strength));
+					speed.R = Math.Min(speed.R, (float)Math.Sqrt(strength));
 					decay -= 0.01f;
 				}
 				if (X0 < 1) {
