@@ -22,11 +22,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IceBlock, 30);
-			recipe.AddIngredient(ItemID.Shiverthorn, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IceBlock, 30)
+			.AddIngredient(ItemID.Shiverthorn, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
@@ -36,8 +36,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Cold_Snap_P : ModProjectile, ICanisterProjectile {
-		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Outer";
-		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Cold_Snap_Inner";
+		public static AutoLoadingAsset<Texture2D> outerTexture = typeof(Cold_Snap_P).GetDefaultTMLName() + "_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Cold_Snap_P).GetDefaultTMLName() + "_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {

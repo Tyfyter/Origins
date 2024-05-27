@@ -160,12 +160,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 diff = closest - center;
 			float offScreenDist = diff.Length();
 			Color glowColor = canisterData.InnerColor * (lightColor.A / 255f);
-			if (offScreenDist > 32) {
+			if (offScreenDist > 16) {
 				if (!Collision.CanHitLine(center + (diff / offScreenDist) * 64, 0, 0, closest, 0, 0)) return;
 				glowColor.A = 0;
 				float sqrt = MathF.Sqrt(offScreenDist / 32f);
 				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * Math.Min(projectile.timeLeft / 15f, 1);
 				float colorFactor = MathF.Pow(iSqrt, 0.5f);
+				if (offScreenDist < 90f) colorFactor *= (offScreenDist - 16) / 90f;
 				Main.EntitySpriteDraw(
 					TextureAssets.Projectile[Type].Value,
 					closest - Main.screenPosition,

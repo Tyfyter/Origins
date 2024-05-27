@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria.Audio;
+using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bombardment : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -39,7 +40,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return !Main.rand.NextBool(2);
 		}
 	}
-	public class Bombardment_P : ModProjectile, IIsExplodingProjectile {
+	public class Bombardment_P : ModProjectile, ICanisterProjectile, IIsExplodingProjectile {
+		public static AutoLoadingAsset<Texture2D> outerTexture = typeof(Bombardment_P).GetDefaultTMLName() + "_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Bombardment_P).GetDefaultTMLName() + "_Inner";
+		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
+		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 30;
 		}
@@ -53,19 +58,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.velocity *= 0.96f;
 		}
-		public override bool PreKill(int timeLeft) {
-			Projectile.penetrate = -1;
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 96;
-			Projectile.height = 96;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
-			Projectile.Damage();
-			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
-			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
-			return false;
-		}
-		public bool IsExploding() => Projectile.penetrate == -1;
+		public bool IsExploding() => Projectile.timeLeft <= 0;
 	}
 }

@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Eruption : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -19,10 +20,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HellstoneBar, 18);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.HellstoneBar, 18)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
@@ -31,7 +32,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return new Vector2(-2, 0);
 		}
 	}
-	public class Eruption_P : ModProjectile {
+	public class Eruption_P : ModProjectile, ICanisterProjectile {
+		public static AutoLoadingAsset<Texture2D> outerTexture = typeof(Eruption_P).GetDefaultTMLName() + "_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Eruption_P).GetDefaultTMLName() + "_Inner";
+		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
+		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 600;
@@ -49,17 +54,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy(Projectile) && npc.Hitbox.Intersects(Projectile.Hitbox)) {
-						Projectile.NewProjectile(
-							Projectile.GetSource_FromAI(),
-							Projectile.Center,
-							-Vector2.UnitY,
-							ModContent.ProjectileType<Eruption_Geyser>(),
-							Projectile.damage,
-							Projectile.knockBack,
-							Main.myPlayer
-						);
-						Projectile.penetrate--;
-						break;
+						Projectile.Kill();
+						return;
 					}
 				}
 			}
@@ -76,8 +72,24 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return false;
 		}
+		public override bool PreKill(int timeLeft) {
+			Projectile.velocity.X = 0;
+			Projectile.velocity.Y = -8;
+			return true;
+		}
+		public void DefaultExplosion(Projectile projectile) {
+			Projectile.NewProjectile(
+				Projectile.GetSource_FromAI(),
+				Projectile.Center,
+				-Vector2.UnitY,
+				ModContent.ProjectileType<Eruption_Geyser>(),
+				Projectile.damage,
+				Projectile.knockBack,
+				Main.myPlayer
+			);
+		}
 	}
-	public class Eruption_Geyser : ModProjectile {
+	public class Eruption_Geyser : ModProjectile, ICanisterChildProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GeyserTrap);

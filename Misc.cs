@@ -2727,7 +2727,7 @@ namespace Origins {
 			} else {
 				v = (rect.Height / 2) / s;
 				if (a.Y > b.Y) {
-					return new(b.X - v, rect.Bottom);
+					return new(b.X + v, rect.Bottom);
 				} else {
 					return new(b.X - v, rect.Top);
 				}
