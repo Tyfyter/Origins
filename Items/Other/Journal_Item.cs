@@ -7,6 +7,7 @@ namespace Origins.Items.Other {
 	public class Journal_Item : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FallenStar);
+			Item.ammo = AmmoID.None;
 			Item.maxStack = 1;
 		}
 		public override bool? UseItem(Player player) {

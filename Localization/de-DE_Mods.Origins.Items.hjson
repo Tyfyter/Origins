@@ -4174,6 +4174,11 @@ Cursed_Canister: {
 }
 
 Bile_Canister: {
-	// DisplayName: Bile_ Canister
+	// DisplayName: Bile Canister
 	// Tooltip: ""
+}
+
+Flare_Launcher: {
+	// DisplayName: Flare Launcher
+	// Tooltip: Can fire flares and canisters
 }

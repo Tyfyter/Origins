@@ -4177,3 +4177,8 @@ Bile_Canister: {
 	DisplayName: Bile Canister
 	Tooltip: ""
 }
+
+Flare_Launcher: {
+	DisplayName: Flare Launcher
+	Tooltip: Can fire flares and canisters
+}

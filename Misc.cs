@@ -32,6 +32,7 @@ using System.Diagnostics.CodeAnalysis;
 using AltLibrary.Common.AltBiomes;
 using Origins.Walls;
 using Terraria.GameContent.Drawing;
+using Origins.Items.Weapons.Ammo.Canisters;
 
 namespace Origins {
 	#region classes
@@ -1890,11 +1891,6 @@ namespace Origins {
 				}
 			}
 		}
-		public static void CloneDefaultsKeepSlots(this Item self, int type) {
-			ItemSlotSet slots = new ItemSlotSet(self);
-			self.CloneDefaults(type);
-			slots.Apply(self);
-		}
 		public static bool IsDevName(string name, int dev = 0) {
 			if (dev is 0 or 1) {//Tyfyter
 				return name is "Jennifer" or "Asher";
@@ -2717,6 +2713,71 @@ namespace Origins {
 				}
 			}
 			return false;
+		}
+		public static Vector2 GetCenterProjectedPoint(Rectangle rect, Vector2 a) {
+			Vector2 b = rect.Center();
+			float s = (a.Y - b.Y) / (a.X - b.X);
+			float v = s * rect.Width / 2;
+			if (-rect.Height / 2 <= v && v <= rect.Height / 2) {
+				if (a.X > b.X) {
+					return new(rect.Right, b.Y + v);
+				} else {
+					return new(rect.Left, b.Y - v);
+				}
+			} else {
+				v = (rect.Height / 2) / s;
+				if (a.Y > b.Y) {
+					return new(b.X - v, rect.Bottom);
+				} else {
+					return new(b.X - v, rect.Top);
+				}
+			}
+		}
+	}
+	public static class ItemExtensions {
+		public static void CloneDefaultsKeepSlots(this Item self, int type) {
+			ItemSlotSet slots = new(self);
+			self.CloneDefaults(type);
+			slots.Apply(self);
+		}
+		public static void DefaultToLauncher(this Item self, int damage, int useTime, int width, int height, bool autoReuse = false) {
+			self.damage = damage;
+			self.useTime = useTime;
+			self.useAnimation = useTime;
+			self.width = width;
+			self.height = height;
+			self.autoReuse = autoReuse;
+			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			self.useStyle = ItemUseStyleID.Shoot;
+			self.UseSound = SoundID.Item61;
+			self.noMelee = true;
+		}
+		public static void DefaultToCanisterLauncher(this Item self, int damage, int useTime, float shootSpeed, int width, int height, bool autoReuse = false) {
+			self.damage = damage;
+			self.width = width;
+			self.height = height;
+			self.useTime = useTime;
+			self.useAnimation = useTime;
+			self.shootSpeed = shootSpeed;
+			self.autoReuse = autoReuse;
+			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			self.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			self.useStyle = ItemUseStyleID.Shoot;
+			self.UseSound = SoundID.Item61;
+			self.noMelee = true;
+		}
+		public static void DefaultToCanisterLauncher<T>(this Item self, int damage, int useTime, float shootSpeed, int width, int height, bool autoReuse = false) where T : ModProjectile {
+			self.DefaultToCanisterLauncher(damage, useTime, shootSpeed, width, height, autoReuse);
+			self.shoot = ModContent.ProjectileType<T>();
+		}
+		public static void DefaultToCanister(this Item self, int damage, int width = 16, int height = 28) {
+			self.damage = damage;
+			self.width = width;
+			self.height = height;
+			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			self.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			self.maxStack = 999;
+			self.consumable = true;
 		}
 	}
 }

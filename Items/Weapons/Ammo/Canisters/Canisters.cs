@@ -27,11 +27,10 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public static Dictionary<int, int> LauncherToProjectile { get; private set; } = [];
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) {
 			if (entity.ModItem is ICanisterAmmo canister) {
-				if (!ItemToCanisterID.TryGetValue(entity.type, out _)) {
-					ItemToCanisterID.Add(entity.type, CanisterDatas.Count);
-					TypeToCanisterID.Add(entity.ModItem.GetType(), CanisterDatas.Count);
-					CanisterDatas.Add(canister.GetCanisterData with { WhatAmI = CanisterDatas.Count, Ammo = canister });
-				}
+				CanisterData data = canister.GetCanisterData;
+				data.Ammo = canister;
+				int type = RegisterCanister(entity.type, data);
+				if (type != -1) TypeToCanisterID.Add(entity.ModItem.GetType(), type);
 				return true;
 			}
 			return false;
@@ -53,24 +52,44 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public static void RegisterForLauncher(int launcher, int projectile) {
 			LauncherToProjectile.Add(launcher, projectile);
 		}
+		public static int RegisterCanister(int ammo, CanisterData data) {
+			if (!ItemToCanisterID.TryGetValue(ammo, out _)) {
+				ItemToCanisterID.Add(ammo, CanisterDatas.Count);
+				data.WhatAmI = CanisterDatas.Count;
+				CanisterDatas.Add(data);
+				return data.WhatAmI;
+			}
+			return -1;
+		}
 	}
 	public interface ICanisterAmmo {
 		CanisterData GetCanisterData { get; }
 		void AI(Projectile projectile, bool child) { }
-		public void OnKill(Projectile projectile, bool child) => CanisterGlobalProjectile.DefaultExplosion(projectile, child);
+		void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) { }
+		public void OnKill(Projectile projectile, bool child) {
+			if (!child && projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			}
+		}
 	}
-	public record class CanisterData(Color OuterColor, Color InnerColor, int WhatAmI = -999, ICanisterAmmo Ammo = null);
+	public class CanisterData(Color outerColor, Color innerColor, bool hasSpecialEffect = true, int whatAmI = -999, ICanisterAmmo ammo = null) {
+		public Color OuterColor { get; set; } = outerColor;
+		public Color InnerColor { get; set; } = innerColor;
+		public bool HasSpecialEffect => hasSpecialEffect;
+		public int WhatAmI { get; internal set; } = whatAmI;
+		public ICanisterAmmo Ammo { get; internal set; } = ammo;
+	}
 	public class CanisterGlobalProjectile : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		ICanisterProjectile canister;
 		int canisterID;
-		CanisterData canisterData;
-		public int CanisterID { 
+		public CanisterData CanisterData { get; private set; }
+		public int CanisterID {
 			get => canisterID;
 			set {
 				canisterID = value;
 				if (canisterID == -1) return;
-				canisterData = CanisterGlobalItem.CanisterDatas[value];
+				CanisterData = CanisterGlobalItem.CanisterDatas[value];
 			}
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -83,16 +102,26 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			canister = projectile.ModProjectile as ICanisterProjectile;
 			if (source is EntitySource_ItemUse_WithAmmo ammoSource) {
 				CanisterID = CanisterGlobalItem.GetCanisterType(ammoSource.AmmoItemIdUsed);
+				if (CanisterID == -1) {
+					if (CanisterData is null) CanisterID = 0;
+				}
+			} else if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile proj && proj.TryGetGlobalProjectile(out CanisterGlobalProjectile parentCanister)) {
+				CanisterID = parentCanister.CanisterID;
+			} else {
+				CanisterID = 0;
 			}
 		}
 		public override void AI(Projectile projectile) {
-			canisterData?.Ammo?.AI(projectile, false);
+			CanisterData?.Ammo?.AI(projectile, false);
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
-			canisterData?.Ammo?.OnKill(projectile, false);
+			CanisterData?.Ammo?.OnKill(projectile, false);
+		}
+		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			CanisterData?.Ammo?.OnHitNPC(projectile, target, hit, damageDone, false);
 		}
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
-			canister.CustomDraw(projectile, canisterData, lightColor);
+			canister.CustomDraw(projectile, CanisterData, lightColor);
 			return false;
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
@@ -145,11 +174,15 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void OnKill(Projectile projectile, int timeLeft) {
 			canisterData?.Ammo?.OnKill(projectile, true);
 		}
+		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			canisterData?.Ammo?.OnHitNPC(projectile, target, hit, damageDone, true);
+		}
 	}
 	public interface ICanisterProjectile {
 		public const string base_texture_path = "Origins/Items/Weapons/Ammo/Canisters/";
 		public abstract AutoLoadingAsset<Texture2D> OuterTexture { get; }
 		public abstract AutoLoadingAsset<Texture2D> InnerTexture { get; }
+		public void DefaultExplosion(Projectile projectile) => CanisterGlobalProjectile.DefaultExplosion(projectile, false);
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
 			SpriteEffects spriteEffects = SpriteEffects.None;
@@ -189,12 +222,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RocketI);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.useStyle = ItemUseStyleID.None;
-			Item.damage = 30;
-			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 0f;
+			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -222,12 +250,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RocketI);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.useStyle = ItemUseStyleID.None;
-			Item.damage = 30;
-			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 0f;
+			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -316,12 +339,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RocketI);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.useStyle = ItemUseStyleID.None;
-			Item.damage = 30;
-			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 0f;
+			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -346,6 +364,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			projectile.damage = damage;
 			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
 			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, default, Lingering_Cursed_Flames_P.ID, (int)(projectile.damage * 0.65f), 0, projectile.owner);
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(child ? 180 : 120, child ? 241 : 181));
 		}
 	}
 	public class Lingering_Cursed_Flames_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
@@ -378,10 +399,10 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(300, 451));
+			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 181));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(300, 451));
+			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 181));
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
@@ -397,12 +418,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RocketI);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.useStyle = ItemUseStyleID.None;
-			Item.damage = 30;
-			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shootSpeed = 0f;
+			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -413,6 +429,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), child ? 18 : 12);
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
@@ -448,9 +467,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			int inflation = (int)(hitbox.Width * (Projectile.scale / 1.5f - 1) * 0.5f);
 			hitbox.Inflate(inflation, inflation);
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 12);
-		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (Mask_Rasterize.QueueProjectile(Projectile.whoAmI)) return false;
 			Vector2 screenCenter = Main.ScreenSize.ToVector2() * 0.5f;
@@ -482,8 +498,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.WoodenArrow);
-			Item.maxStack = 999;
+			Item.DefaultToCanister(80);
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Cyan;
 			Item.glowMask = glowmask;

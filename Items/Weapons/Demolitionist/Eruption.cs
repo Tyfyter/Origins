@@ -12,17 +12,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		};
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 27;
-			Item.crit = 0;
-			Item.useAnimation = 32;
-			Item.useTime = 32;
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Eruption_P>();
-			Item.shootSpeed = 16f;
+			Item.DefaultToCanisterLauncher<Eruption_P>(27, 32, 16f, 50, 26, true);
 			Item.reuseDelay = 6;
-			Item.autoReuse = true;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
 			Item.ArmorPenetration += 3;

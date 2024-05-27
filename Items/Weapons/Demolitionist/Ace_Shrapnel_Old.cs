@@ -8,16 +8,9 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel_Old : ModItem {
-
-		
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.ProximityMineLauncher);
-			Item.damage = 85;
-			Item.noMelee = true;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
-			Item.shootSpeed /= 2;
+			Item.DefaultToLauncher(85, 28, 72, 30);
+			Item.shootSpeed = 6;
 			Item.shoot = ModContent.ProjectileType<Ace_Shrapnel_Old_P>();
 			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Lime;

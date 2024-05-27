@@ -1163,9 +1163,10 @@ Projectiles: {
 	// Shimmer_Cloud_Rain.DisplayName: Shimmering Rain
 	// Napalm_P.DisplayName: Napalm
 	// Lingering_Cursed_Flames_P.DisplayName: Lingering Cursed Flames
-	// Bile_Canister_Explosion.DisplayName: Bile_ Canister_ Explosion
-	// Grenade_Launcher_Canister_P.DisplayName: Grenade_ Launcher_ Canister_ P
-	// Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity_ Mine_ Launcher_ Canister_ P
+	// Bile_Canister_Explosion.DisplayName: Bile Canister
+	// Grenade_Launcher_Canister_P.DisplayName: Grenade
+	// Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity
+	// Flare_Launcher_P.DisplayName: Flare
 }
 
 Prefixes: {

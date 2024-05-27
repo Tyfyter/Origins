@@ -18,17 +18,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		};
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.damage = 45;
-			Item.width = 44;
-			Item.height = 18;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
-			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(45, 32, 16f, 44, 18);
 			Item.knockBack = 2f;
-			Item.shootSpeed = 16f;
-			Item.autoReuse = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 10;

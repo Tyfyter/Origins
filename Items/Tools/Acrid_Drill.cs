@@ -16,7 +16,7 @@ namespace Origins.Items.Tools {
 			Item.pick = 195;
 			Item.width = 28;
 			Item.height = 26;
-			Item.knockBack *= 2f;
+			Item.knockBack = 1f;
 			Item.shootSpeed = 56f;
 			Item.shoot = ModContent.ProjectileType<Acrid_Drill_P>();
 			Item.value = Item.sellPrice(gold: 3);

@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Terraria.Audio;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bombardment : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -14,14 +15,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		};
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.ProximityMineLauncher);
-			Item.damage = 3;
+			Item.DefaultToCanisterLauncher<Bombardment_P>(3, 36, 13f, 48, 32);
 			Item.useTime = 6;
-			Item.useAnimation = 36;
 			Item.knockBack = 4f;
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>(); // a weapon can only support one ammo type without custom ammo selection code, so we just make all of the resizable mines share one ammo type
-			Item.shoot = ModContent.ProjectileType<Bombardment_P>();
-			Item.shootSpeed = 13f;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.UseSound = null;
@@ -30,7 +26,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 			velocity = velocity.RotatedByRandom(0.3f);
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -13,43 +13,39 @@ using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "Launcher"
-        };
+		public string[] Categories => new string[] {
+			"Launcher"
+		};
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.SniperRifle);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 23;
+			Item.DefaultToLauncher(23, 45, 48, 22, false);
 			Item.crit = 4;
-			Item.useAnimation = 45;
 			Item.useTime = 1;
 			Item.shoot = ModContent.ProjectileType<Abrasion_Blaster_P>();// just in case anything expects weapons to directly shoot what they shoot
 			Item.useAmmo = ModContent.ItemType<Scrap>();
 			Item.reuseDelay = 15;
-			Item.autoReuse = true;
 			Item.channel = true;
 			Item.UseSound = null;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
-            Item.ArmorPenetration += 2;
-        }
-        public override void AddRecipes() {
-            Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<Biocomponent10>(), 35)
-            .AddIngredient(ModContent.ItemType<Scrap>(), 10)
-            .AddTile(TileID.Anvils)
-            .Register();
-        }
+			Item.ArmorPenetration += 2;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Biocomponent10>(), 35)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
 		protected internal static bool consumeFromProjectile = false;
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return consumeFromProjectile || player.ItemUsesThisAnimation == 1;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Abrasion_Blaster_Charge_P.ID;
-            SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), position);
-            //SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
-            //Item.UseSound = Origins.Sounds.EnergyRipple;
-            int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
+			SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), position);
+			//SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
+			//Item.UseSound = Origins.Sounds.EnergyRipple;
+			int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
 			if (heldProjectile > -1) {
 				Projectile projectile = Main.projectile[heldProjectile];
 				if (projectile.active && projectile.type == Abrasion_Blaster_Charge_P.ID && projectile.ai[0] > 4) {
@@ -75,8 +71,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 			if (player.ItemUsesThisAnimation == 1) {
-                // initial sound here
-                return true;
+				// initial sound here
+				return true;
 			}
 			return false;
 		}
@@ -93,11 +89,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-            Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
-            dust.noGravity = true;
-            dust.velocity *= 3f;
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
+			dust.noGravity = true;
+			dust.velocity *= 3f;
 
-            Player player = Main.player[Projectile.owner];
+			Player player = Main.player[Projectile.owner];
 			player.GetModPlayer<OriginPlayer>().heldProjectile = Projectile.whoAmI;
 			if (!player.channel) {
 				if (Projectile.ai[2] != 1) {
@@ -181,9 +177,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			} else if (Projectile.ai[0] > 2) {
 				Projectile.extraUpdates = 2;
 			}
-            Dust dust = Dust.NewDustDirect(Projectile.Center, 0, -4, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
-            dust.noGravity = true;
-        }
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, -4, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
+			dust.noGravity = true;
+		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			
 		}

@@ -1166,6 +1166,7 @@ Projectiles: {
 	Bile_Canister_Explosion.DisplayName: Bile Canister
 	Grenade_Launcher_Canister_P.DisplayName: Grenade
 	Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity
+	Flare_Launcher_P.DisplayName: Flare
 }
 
 Prefixes: {

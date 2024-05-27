@@ -3,7 +3,7 @@
 namespace Origins.Misc {
 	public class FrameCachedValue<T> {
 		uint lastGameFrameCount = 0;
-		Func<T> GetValueFunc;
+		readonly Func<T> GetValueFunc;
 		T value;
 		public FrameCachedValue(Func<T> getValueFunc) {
 			GetValueFunc = getValueFunc;

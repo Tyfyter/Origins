@@ -15,20 +15,14 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
-            "Launcher"
-        };
-        public override void SetStaticDefaults() {
+		public string[] Categories => new string[] {
+			"Launcher"
+		};
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.width = 44;
-			Item.height = 18;
-			Item.damage = 2;
-			Item.value /= 2;
-			Item.useTime = (int)(Item.useTime * 1.15);
-			Item.useAnimation = (int)(Item.useAnimation * 1.15);
+			Item.DefaultToLauncher(2, 30, 44, 18);
 			Item.shoot = ProjectileID.Grenade;
 			Item.useAmmo = ItemID.Grenade;
 			Item.knockBack = 2f;

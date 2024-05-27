@@ -10,6 +10,7 @@ using Tyfyter.Utils;
 
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Terraria.GameContent;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -17,18 +18,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		};
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.SniperRifle);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 18;
-			Item.crit = 0;
-			Item.useAnimation = 32;
-			Item.useTime = 32;
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Meteor_P>();
-			Item.shootSpeed = 12.3f;
+			Item.DefaultToCanisterLauncher<Meteor_P>(18, 32, 12.3f, 44, 24);
 			Item.reuseDelay = 6;
-			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item61;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
 		}
@@ -63,10 +54,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return new Vector2(-2, 0);
 		}
 	}
-	public class Meteor_P : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => base.Texture + "_Cooling";
-		protected override bool CloneNewInstances => true;
+	public class Meteor_P : ModProjectile, IIsExplodingProjectile, ICanisterProjectile {
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Meteor_P_Cooling";
 		AutoLoadingAsset<Texture2D> hotTexture = "Origins/Items/Weapons/Demolitionist/Meteor_P";
+		public AutoLoadingAsset<Texture2D> OuterTexture => TextureAssets.Projectile[Type];
+		public AutoLoadingAsset<Texture2D> InnerTexture => hotTexture;
+		protected override bool CloneNewInstances => true;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 600;
@@ -85,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.velocity.Y += 0.12f;
 				Projectile.rotation += Projectile.velocity.X * 0.075f;
 			} else if (++Projectile.ai[1] > 180) {
-				Projectile.NewProjectile(
+				/*Projectile.NewProjectile(
 					Projectile.GetSource_Death(),
 					Projectile.Center,
 					default,
@@ -93,7 +86,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.damage,
 					Projectile.knockBack,
 					Projectile.owner
-				);
+				);*/
 				Projectile.Kill();
 			}
 			Lighting.AddLight(Projectile.Center, new Vector3(1.0f, 0.72f, 0.64f) * (1 - Projectile.ai[1] / 180));
@@ -132,20 +125,63 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = false;
 			return false;
 		}
-		public override void PostDraw(Color lightColor) {
-			float factor = (1 - Projectile.ai[1] / 180);
+		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
+			if (canisterData.HasSpecialEffect) {
+				Dust.NewDustDirect(
+					projectile.position,
+					projectile.width,
+					projectile.height,
+					DustID.TintableDustLighted,
+					-projectile.velocity.X,
+					-projectile.velocity.Y,
+					newColor: canisterData.InnerColor
+				).velocity *= 0.5f;
+			}
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				projectile.rotation,
+				new Vector2(15, 13),
+				projectile.scale,
+				SpriteEffects.None
+			);
+			float factor = 1 - projectile.ai[1] / 180;
 			Main.EntitySpriteDraw(
 				hotTexture,
-				Projectile.Center - Main.screenPosition,
+				projectile.Center - Main.screenPosition,
 				null,
 				new Color(factor, factor, factor, factor * 0.5f),
-				Projectile.rotation,
+				projectile.rotation,
 				new Vector2(15, 13),
-				Projectile.scale,
+				projectile.scale,
 				SpriteEffects.None
 			);
 		}
 		public bool IsExploding() => false;
+		public void DefaultExplosion(Projectile projectile) {
+			CanisterGlobalProjectile.DefaultExplosion(projectile, false);
+			Vector2 center = Projectile.Center;
+			int radius = 4;
+			int minI = (int)(center.X / 16f - radius);
+			int maxI = (int)(center.X / 16f + radius);
+			int minJ = (int)(center.Y / 16f - radius);
+			int maxJ = (int)(center.Y / 16f + radius);
+			if (minI < 0) minI = 0;
+			if (maxI > Main.maxTilesX) maxI = Main.maxTilesX;
+			if (minJ < 0) minJ = 0;
+			if (maxJ > Main.maxTilesY) maxJ = Main.maxTilesY;
+			Projectile.ExplodeTiles(
+				center,
+				radius,
+				minI,
+				maxI,
+				minJ,
+				maxJ,
+				Projectile.ShouldWallExplode(center, radius, minI, maxI, minJ, maxJ)
+			);
+		}
 	}
 	public class Meteor_Explosion_1 : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;

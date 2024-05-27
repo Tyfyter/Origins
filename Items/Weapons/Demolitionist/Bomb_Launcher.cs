@@ -16,14 +16,11 @@ using static Origins.OriginExtensions;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "Launcher"
-        };
-        public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.damage = 2;
-			Item.useTime = 40;
-			Item.useAnimation = 40;
+		public string[] Categories => new string[] {
+			"Launcher"
+		};
+		public override void SetDefaults() {
+			Item.DefaultToLauncher(2, 40, 78, 30, true);
 			Item.shoot = ProjectileID.Bomb;
 			Item.useAmmo = ItemID.Bomb;
 			Item.knockBack = 1.6f;
@@ -31,10 +28,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;
 		}
-        public override Vector2? HoldoutOffset() {
-            return new Vector2(-16, 2);
-        }
-        public override bool AltFunctionUse(Player player) {
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-16, 2);
+		}
+		public override bool AltFunctionUse(Player player) {
 			return true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
