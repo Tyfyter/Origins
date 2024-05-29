@@ -169,17 +169,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return base.CanHitNPC(target);
 		}
 		public void DefaultExplosion(Projectile projectile) {
-			/*if (Main.myPlayer == Projectile.owner) {
-				Projectile.NewProjectile(
-					Projectile.GetSource_FromAI(),
-					Projectile.Center,
-					default,
-					ModContent.ProjectileType<Meteor_Explosion_2>(),
-					Projectile.damage,
-					Projectile.knockBack,
-					Projectile.owner
-				);
-			}*/
 			projectile.ResetLocalNPCHitImmunity();
 			CanisterGlobalProjectile.DefaultExplosion(projectile, false);
 			Vector2 center = Projectile.Center;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -23,7 +24,7 @@ using static Tyfyter.Utils.UITools;
 using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 
 namespace Origins {
-    public partial class OriginSystem : ModSystem {
+	public partial class OriginSystem : ModSystem {
 		static OriginSystem instance;
 		public static OriginSystem Instance => instance ??= ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusInventoryUI;
@@ -115,36 +116,36 @@ namespace Origins {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.BallOHurt);
-            recipe.AddIngredient(ItemID.DemoniteBar, 10);
-            recipe.AddIngredient(ItemID.ShadowScale, 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.BallOHurt);
+			recipe.AddIngredient(ItemID.DemoniteBar, 10);
+			recipe.AddIngredient(ItemID.ShadowScale, 5);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.BloodButcherer);
+			recipe = Recipe.Create(ItemID.BloodButcherer);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 6);
 			recipe.AddIngredient(ItemID.TissueSample, 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.CrimsonRod);
-            recipe.AddIngredient(ItemID.CrimtaneBar, 10);
-            recipe.AddIngredient(ItemID.TissueSample, 6);
-            recipe.AddRecipeGroup("Origins:Gem Staves");
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.CrimsonRod);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
+			recipe.AddIngredient(ItemID.TissueSample, 6);
+			recipe.AddRecipeGroup("Origins:Gem Staves");
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.ScarabBomb, 3);
-            recipe.AddIngredient(ItemID.Bomb, 3);
-            recipe.AddIngredient(ItemID.FossilOre);
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.ScarabBomb, 3);
+			recipe.AddIngredient(ItemID.Bomb, 3);
+			recipe.AddIngredient(ItemID.FossilOre);
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.Beenade, 6);
-            recipe.AddIngredient(ItemID.BeeWax);
-            recipe.AddIngredient(ItemID.Grenade, 6);
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.Beenade, 6);
+			recipe.AddIngredient(ItemID.BeeWax);
+			recipe.AddIngredient(ItemID.Grenade, 6);
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.TheRottedFork);
+			recipe = Recipe.Create(ItemID.TheRottedFork);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 9);
 			recipe.AddIngredient(ItemID.TissueSample, 5);
 			recipe.AddTile(TileID.Anvils);
@@ -172,61 +173,64 @@ namespace Origins {
 			recipe.AddIngredient(ItemID.Wood);
 			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.CelestialSigil);
-            recipe.AddIngredient(ItemID.FragmentNebula, 12);
-            recipe.AddIngredient(ItemID.FragmentSolar, 12);
-            recipe.AddIngredient(ItemID.FragmentStardust, 12);
-            recipe.AddIngredient(ItemID.FragmentVortex, 12);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 12);
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.CelestialSigil);
+			recipe.AddIngredient(ItemID.FragmentNebula, 12);
+			recipe.AddIngredient(ItemID.FragmentSolar, 12);
+			recipe.AddIngredient(ItemID.FragmentStardust, 12);
+			recipe.AddIngredient(ItemID.FragmentVortex, 12);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 12);
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.LunarHook);
-            recipe.AddIngredient(ItemID.FragmentNebula, 6);
-            recipe.AddIngredient(ItemID.FragmentSolar, 6);
-            recipe.AddIngredient(ItemID.FragmentStardust, 6);
-            recipe.AddIngredient(ItemID.FragmentVortex, 6);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 6);
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.LunarHook);
+			recipe.AddIngredient(ItemID.FragmentNebula, 6);
+			recipe.AddIngredient(ItemID.FragmentSolar, 6);
+			recipe.AddIngredient(ItemID.FragmentStardust, 6);
+			recipe.AddIngredient(ItemID.FragmentVortex, 6);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 6);
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.SuperHealingPotion, 5);
-            recipe.AddIngredient(ItemID.FragmentNebula);
-            recipe.AddIngredient(ItemID.FragmentSolar);
-            recipe.AddIngredient(ItemID.FragmentStardust);
-            recipe.AddIngredient(ItemID.FragmentVortex);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.SuperHealingPotion, 5);
+			recipe.AddIngredient(ItemID.FragmentNebula);
+			recipe.AddIngredient(ItemID.FragmentSolar);
+			recipe.AddIngredient(ItemID.FragmentStardust);
+			recipe.AddIngredient(ItemID.FragmentVortex);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.FragmentNebula);
-            recipe.AddIngredient(ItemID.FragmentSolar);
-            recipe.AddIngredient(ItemID.FragmentStardust);
-            recipe.AddIngredient(ItemID.FragmentVortex);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.FragmentNebula);
+			recipe.AddIngredient(ItemID.FragmentSolar);
+			recipe.AddIngredient(ItemID.FragmentStardust);
+			recipe.AddIngredient(ItemID.FragmentVortex);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.FragmentSolar);
-            recipe.AddIngredient(ItemID.FragmentNebula);
-            recipe.AddIngredient(ItemID.FragmentStardust);
-            recipe.AddIngredient(ItemID.FragmentVortex);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.FragmentSolar);
+			recipe.AddIngredient(ItemID.FragmentNebula);
+			recipe.AddIngredient(ItemID.FragmentStardust);
+			recipe.AddIngredient(ItemID.FragmentVortex);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.FragmentStardust);
-            recipe.AddIngredient(ItemID.FragmentNebula);
-            recipe.AddIngredient(ItemID.FragmentSolar);
-            recipe.AddIngredient(ItemID.FragmentVortex);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.FragmentStardust);
+			recipe.AddIngredient(ItemID.FragmentNebula);
+			recipe.AddIngredient(ItemID.FragmentSolar);
+			recipe.AddIngredient(ItemID.FragmentVortex);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+			recipe.Register();
 
-            recipe = Recipe.Create(ItemID.FragmentVortex);
-            recipe.AddIngredient(ItemID.FragmentNebula);
-            recipe.AddIngredient(ItemID.FragmentSolar);
-            recipe.AddIngredient(ItemID.FragmentStardust);
-            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-            recipe.Register();
+			recipe = Recipe.Create(ItemID.FragmentVortex);
+			recipe.AddIngredient(ItemID.FragmentNebula);
+			recipe.AddIngredient(ItemID.FragmentSolar);
+			recipe.AddIngredient(ItemID.FragmentStardust);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+			recipe.Register();
 
-            //this hook is supposed to be used for adding recipes,
-            //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
-            Origins.instance.LateLoad();
+			//this hook is supposed to be used for adding recipes,
+			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
+			Origins.instance.LateLoad();
+		}
+		public override void PostSetupRecipes() {
+			AnimatedRecipeGroupGlobalItem.PostSetupRecipes();
 		}
 		public override void PostUpdateInput() {
 		}
@@ -272,46 +276,46 @@ namespace Origins {
 					r.DisableRecipe();
 				}
 
-                if (r.Matches((ItemID.ScarabBomb, null), null, (ItemID.Bomb, 1), (ItemID.FossilOre, 1))) {
-                    r.DisableRecipe();
-                }
+				if (r.Matches((ItemID.ScarabBomb, null), null, (ItemID.Bomb, 1), (ItemID.FossilOre, 1))) {
+					r.DisableRecipe();
+				}
 
-                if (r.Matches((ItemID.Beenade, null), null, (ItemID.Grenade, 1), (ItemID.BeeWax, 1))) {
-                    r.DisableRecipe();
-                }
+				if (r.Matches((ItemID.Beenade, null), null, (ItemID.Grenade, 1), (ItemID.BeeWax, 1))) {
+					r.DisableRecipe();
+				}
 
-                /*if (r.Matches((ItemID.CelestialShell, null), new int[] { TileID.TinkerersWorkbench }, (ItemID.CelestialStone, 1), (ItemID.MoonShell, 1))) {
-                    r.DisableRecipe();
-                } only uncomment when Ornament of Metamorphosis is implemented */
+				/*if (r.Matches((ItemID.CelestialShell, null), new int[] { TileID.TinkerersWorkbench }, (ItemID.CelestialStone, 1), (ItemID.MoonShell, 1))) {
+					r.DisableRecipe();
+				} only uncomment when Ornament of Metamorphosis is implemented */
 
-                //Everything below this needs the corresponding recipe in the Nova Fragment class when the Nova Pillar is implemented
-                /*if (r.Matches((ItemID.CelestialSigil, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 12), (ItemID.FragmentSolar, 12), (ItemID.FragmentStardust, 12), (ItemID.FragmentVortex, 12))) {
-                    r.DisableRecipe();
-                }
-                if (r.Matches((ItemID.LunarHook, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 6), (ItemID.FragmentSolar, 6), (ItemID.FragmentStardust, 6), (ItemID.FragmentVortex, 6))) {
-                    r.DisableRecipe();
-                }
-                if (r.Matches((ItemID.FragmentNebula, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1))) {
-                    r.DisableRecipe();
-                }
-                if (r.Matches((ItemID.FragmentSolar, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1))) {
-                    r.DisableRecipe();
-                }
-                if (r.Matches((ItemID.FragmentStardust, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentVortex, 1))) {
-                    r.DisableRecipe();
-                }
-                if (r.Matches((ItemID.FragmentVortex, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1))) {
-                    r.DisableRecipe();
-                }
-                if (r.Matches((ItemID.SuperHealingPotion, null), new int[] { TileID.Bottles }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1), (ItemID.GreaterHealingPotion, 1)) {
-                    r.DisableRecipe();
-                }*/
+				//Everything below this needs the corresponding recipe in the Nova Fragment class when the Nova Pillar is implemented
+				/*if (r.Matches((ItemID.CelestialSigil, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 12), (ItemID.FragmentSolar, 12), (ItemID.FragmentStardust, 12), (ItemID.FragmentVortex, 12))) {
+					r.DisableRecipe();
+				}
+				if (r.Matches((ItemID.LunarHook, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 6), (ItemID.FragmentSolar, 6), (ItemID.FragmentStardust, 6), (ItemID.FragmentVortex, 6))) {
+					r.DisableRecipe();
+				}
+				if (r.Matches((ItemID.FragmentNebula, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1))) {
+					r.DisableRecipe();
+				}
+				if (r.Matches((ItemID.FragmentSolar, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1))) {
+					r.DisableRecipe();
+				}
+				if (r.Matches((ItemID.FragmentStardust, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentVortex, 1))) {
+					r.DisableRecipe();
+				}
+				if (r.Matches((ItemID.FragmentVortex, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1))) {
+					r.DisableRecipe();
+				}
+				if (r.Matches((ItemID.SuperHealingPotion, null), new int[] { TileID.Bottles }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1), (ItemID.GreaterHealingPotion, 1)) {
+					r.DisableRecipe();
+				}*/
 
-                //recipe = r.Clone();
-                //recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
-                //Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
-                //recipe.Create();
-            }
+				//recipe = r.Clone();
+				//recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
+				//Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
+				//recipe.Create();
+			}
 		}
 		public override void ModifyLightingBrightness(ref float scale) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
