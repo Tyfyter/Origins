@@ -1167,6 +1167,7 @@ Projectiles: {
 	Grenade_Launcher_Canister_P.DisplayName: Grenade
 	Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity
 	Flare_Launcher_P.DisplayName: Flare
+	Flare_Launcher_Glow_P.DisplayName: Flare_ Launcher_ Glow_ P
 }
 
 Prefixes: {

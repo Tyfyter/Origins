@@ -18,13 +18,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Amber {
 	[AutoloadEquip(EquipType.Head)]
 	public class Amber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
-            "HardmodeArmorSet",
-            "ExplosiveBoostGear",
+		public string[] Categories => new string[] {
+			"HardmodeArmorSet",
+			"ExplosiveBoostGear",
 			"SelfDamageProtek"
 		};
-        public override void SetStaticDefaults() {
-            ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
+		public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -161,7 +161,7 @@ namespace Origins.Items.Armor.Amber {
 		}
 		public override bool Update(Dust dust) {
 			bool remain = true;
-			if(dust.customData is not AmberDebuffShardData data) {
+			if(dust.customData is not AmberDebuffShardData data || data.Parent is null) {
 				dust.active = false;
 				return false;
 			}

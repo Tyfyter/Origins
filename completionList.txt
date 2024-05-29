@@ -1197,7 +1197,7 @@ AMMO:
 (#, ^2) Bile Canister* !!!
 (^) Bile Dart*
 (#, ^2) Coolant Canister* !!! 
-(#, ^2) Cursed Canister* !!!
+(☻) Cursed Canister* !!!
 (^) Cursed Harpoon*
 (#, ^2) Ichor Canister* !!!
 (^) Metal Slug*

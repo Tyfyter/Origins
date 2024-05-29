@@ -136,8 +136,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Flare_Launcher_P).GetDefaultTMLName() + "_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
@@ -164,6 +165,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.ai[0] = 0;
 				}
 			}
+			if (Projectile.ai[1] == 0) {
+				Projectile.ai[1] = Projectile.NewProjectile(
+					Projectile.GetSource_FromThis(),
+					Projectile.Center,
+					default,
+					Flare_Launcher_Glow_P.ID,
+					1,
+					1,
+					Projectile.owner,
+					Projectile.whoAmI
+				) + 1;
+				Projectile.netUpdate = true;
+			} else {
+				Flare_Launcher_Glow_P.UpdateGlowPos(Projectile, Main.projectile[(int)Projectile.ai[1] - 1]);
+			}
 			Lighting.AddLight(Projectile.Center, Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor.ToVector3());
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -178,32 +194,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (Projectile.ai[0] != 0 && Projectile.timeLeft > 0) modifiers.DisableKnockback();
 		}
+		public override bool PreKill(int timeLeft) {
+			if (Projectile.ai[0] != 0) Projectile.velocity = default;
+			return true;
+		}
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 center = projectile.Center;
-			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
-			Vector2 closest = screen.Contains(center) ? center : CollisionExtensions.GetCenterProjectedPoint(screen, center);
-			Vector2 diff = closest - center;
-			float offScreenDist = diff.Length();
-			Color glowColor = canisterData.InnerColor * (lightColor.A / 255f);
-			if (offScreenDist > 16) {
-				if (!Collision.CanHitLine(center + (diff / offScreenDist) * 64, 0, 0, closest, 0, 0)) return;
-				glowColor.A = 0;
-				float sqrt = MathF.Sqrt(offScreenDist / 32f);
-				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * Math.Min(projectile.timeLeft / 15f, 1);
-				float colorFactor = MathF.Pow(iSqrt, 0.5f);
-				if (offScreenDist < 90f) colorFactor *= (offScreenDist - 16) / 90f;
-				Main.EntitySpriteDraw(
-					TextureAssets.Projectile[Type].Value,
-					closest - Main.screenPosition,
-					null,
-					glowColor * colorFactor,
-					(center - closest).ToRotation(),
-					new Vector2(45, 45),
-					new Vector2(5 * iSqrt, 1 * colorFactor),
-					SpriteEffects.None
-				);
-				return;
-			}
 			Dust.NewDustPerfect(
 				center - Projectile.velocity.SafeNormalize(default),
 				ModContent.DustType<Flare_Dust>(),
@@ -231,17 +227,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				projectile.scale,
 				SpriteEffects.None
 			);
-			glowColor.A = 0;
-			Main.EntitySpriteDraw(
-				TextureAssets.Projectile[Type].Value,
-				center - Main.screenPosition,
-				null,
-				glowColor,
-				projectile.rotation,
-				new Vector2(45, 45),
-				projectile.scale,
-				SpriteEffects.None
-			);
 		}
 		public bool IsExploding() => false;
 		public void DefaultExplosion(Projectile projectile) {
@@ -265,6 +250,83 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Scale: 2f
 				);
 			}
+		}
+	}
+	public class Flare_Launcher_Glow_P : ModProjectile, ICanisterChildProjectile {
+		public static int ID { get; private set; }
+		public override string Texture => typeof(Flare_Launcher_P).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.timeLeft = 300;
+			Projectile.penetrate = -1;
+			Projectile.aiStyle = 0;
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.friendly = false;
+		}
+		public override void AI() {
+			if (Projectile.ai[0] != -1) {
+				UpdateGlowPos(Main.projectile[(int)Projectile.ai[0]], Projectile);
+			}
+		}
+		public static void UpdateGlowPos(Projectile flare, Projectile glow) {
+			if (!flare.active || flare.type != Flare_Launcher_P.ID) {
+				glow.ai[0] = -1;
+				return;
+			}
+			if (flare.timeLeft > 2) glow.timeLeft = 11;
+			glow.position = flare.Center;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			CanisterData canisterData = Projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
+			Vector2 center = Projectile.Center;
+			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+			Vector2 closest = screen.Contains(center) ? center : CollisionExtensions.GetCenterProjectedPoint(screen, center);
+			Vector2 diff = closest - center;
+			float offScreenDist = diff.Length();
+			Color glowColor = canisterData.InnerColor * (lightColor.A / 255f);
+			float boomFactor = 1f;
+			if (Projectile.timeLeft < 10) {
+				boomFactor = Math.Min(Projectile.timeLeft / 10f, 1);
+				if (canisterData.Ammo is ModItem) {
+					boomFactor *= 1 + boomFactor;
+				}
+			}
+			if (offScreenDist > 16) {
+				if (!Collision.CanHitLine(center + (diff / offScreenDist) * 64, 0, 0, closest, 0, 0)) return false;
+				glowColor.A = 0;
+				float sqrt = MathF.Sqrt(offScreenDist / 32f);
+				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * boomFactor;
+				float colorFactor = MathF.Pow(iSqrt, 0.5f);
+				if (offScreenDist < 90f) colorFactor *= (offScreenDist - 16) / 90f;
+				Main.EntitySpriteDraw(
+					TextureAssets.Projectile[Type].Value,
+					closest - Main.screenPosition,
+					null,
+					glowColor * colorFactor,
+					(center - closest).ToRotation(),
+					new Vector2(45, 45),
+					new Vector2(5 * iSqrt, 1 * colorFactor),
+					SpriteEffects.None
+				);
+				return false;
+			}
+			glowColor.A = 0;
+			//boomFactor = MathF.Pow(boomFactor, 0.5f);
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				center - Main.screenPosition,
+				null,
+				glowColor * MathF.Pow(boomFactor, 0.5f),
+				Projectile.rotation,
+				new Vector2(45, 45),
+				Projectile.scale * MathF.Pow(boomFactor, 1.5f),
+				SpriteEffects.None
+			);
+			return false;
 		}
 	}
 }

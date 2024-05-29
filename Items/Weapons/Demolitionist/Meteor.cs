@@ -127,15 +127,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			if (canisterData.HasSpecialEffect) {
-				Dust.NewDustDirect(
+				Dust dust = Dust.NewDustDirect(
 					projectile.position,
 					projectile.width,
 					projectile.height,
-					DustID.TintableDustLighted,
+					DustID.RainbowMk2,
 					-projectile.velocity.X,
 					-projectile.velocity.Y,
 					newColor: canisterData.InnerColor
-				).velocity *= 0.5f;
+				);
+				dust.velocity *= 0.5f;
+				dust.noGravity = true;
 			}
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
@@ -160,7 +162,25 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 		}
 		public bool IsExploding() => false;
+		public override bool? CanHitNPC(NPC target) {
+			if (Projectile.timeLeft == 0) {
+				//return target.;
+			}
+			return base.CanHitNPC(target);
+		}
 		public void DefaultExplosion(Projectile projectile) {
+			/*if (Main.myPlayer == Projectile.owner) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Meteor_Explosion_2>(),
+					Projectile.damage,
+					Projectile.knockBack,
+					Projectile.owner
+				);
+			}*/
+			projectile.ResetLocalNPCHitImmunity();
 			CanisterGlobalProjectile.DefaultExplosion(projectile, false);
 			Vector2 center = Projectile.Center;
 			int radius = 4;
@@ -193,6 +213,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = 96;
 			Projectile.height = 96;
 			Projectile.hide = true;
+			Projectile.tileCollide = false;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.usesLocalNPCImmunity = true;
 		}

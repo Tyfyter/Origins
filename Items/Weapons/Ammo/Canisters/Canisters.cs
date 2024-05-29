@@ -137,6 +137,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public static void DefaultExplosion(Projectile projectile, bool child) {
 			if (child) return;
+			projectile.friendly = true;
 			projectile.penetrate = -1;
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
@@ -152,13 +153,14 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		int canisterID;
-		CanisterData canisterData;
+		public CanisterData CanisterData { get; private set; }
+		bool isVisual = false;
 		public int CanisterID {
 			get => canisterID;
 			set {
 				canisterID = value;
 				if (canisterID == -1) return;
-				canisterData = CanisterGlobalItem.CanisterDatas[value];
+				CanisterData = CanisterGlobalItem.CanisterDatas[value];
 			}
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -171,15 +173,21 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parentProj && parentProj.TryGetGlobalProjectile(out CanisterGlobalProjectile parent)) {
 				CanisterID = parent.CanisterID;
 			}
+			if (CanisterID == -1) CanisterID = 0;
+			isVisual = ((ICanisterChildProjectile)projectile.ModProjectile).IsVisual;
 		}
 		public override void AI(Projectile projectile) {
-			canisterData?.Ammo?.AI(projectile, true);
+			if (!isVisual) {
+				CanisterData?.Ammo?.AI(projectile, true);
+			}
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
-			canisterData?.Ammo?.OnKill(projectile, true);
+			if (!isVisual) {
+				CanisterData?.Ammo?.OnKill(projectile, true);
+			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			canisterData?.Ammo?.OnHitNPC(projectile, target, hit, damageDone, true);
+			CanisterData?.Ammo?.OnHitNPC(projectile, target, hit, damageDone, true);
 		}
 	}
 	public interface ICanisterProjectile {
@@ -213,7 +221,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			);
 		}
 	}
-	public interface ICanisterChildProjectile {}
+	public interface ICanisterChildProjectile {
+		bool IsVisual => false;
+	}
 	#endregion global stuff
 	public class Coolant_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
@@ -240,7 +250,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
-			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, projectile.owner, -1, 1);
+			//Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, projectile.owner, -1, 1);
 		}
 	}
 	public class Napalm_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
@@ -386,7 +396,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Projectile.height = 96;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 25;
-			Projectile.timeLeft = 180;
+			Projectile.timeLeft = 90;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 15;
 			Projectile.tileCollide = false;
@@ -395,12 +405,15 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void AI() {
 			for (int i = 0; i < Projectile.width / 4; i++) {
 				Dust.NewDust(
-					Projectile.position,
-					Projectile.width,
-					Projectile.height,
+					Projectile.Center + Main.rand.NextVector2Circular(67.5f, 67.5f),
+					0,
+					0,
 					DustID.CursedTorch
 				);
 			}
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			return Projectile.Center.Clamp(targetHitbox).DistanceSQ(Projectile.Center) < 67.5f * 67.5f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 181));
