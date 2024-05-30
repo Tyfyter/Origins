@@ -34,6 +34,7 @@ namespace Origins.NPCs.Defiled {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public int MaxMana => 200;
 		public int MaxManaDrain => 24;
@@ -74,37 +75,37 @@ namespace Origins.NPCs.Defiled {
 		public override void AI() {
 			NPC.TargetClosest();
 			/*if(npc.localAI[3]<=0&&npc.targetRect.Intersects(new Rectangle((int)npc.position.X-(npc.direction == 1 ? 70 : 52), (int)npc.position.Y, 178, npc.height))) {
-                if(!attacking) {
-                    npc.frame = new Rectangle(0, 680, 182, 170);
-                    npc.frameCounter = 0;
-                    npc.velocity.X*=0.25f;
-                }
-                attacking = true;
-            }
-            if(npc.localAI[3]>0)npc.localAI[3]--;*/
+				if(!attacking) {
+					npc.frame = new Rectangle(0, 680, 182, 170);
+					npc.frameCounter = 0;
+					npc.velocity.X*=0.25f;
+				}
+				attacking = true;
+			}
+			if(npc.localAI[3]>0)npc.localAI[3]--;*/
 			if (NPC.HasPlayerTarget) {
 				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			/*if(attacking) {
-                if(++npc.frameCounter>7) {
-                    //add frame height to frame y position and modulo by frame height multiplied by walking frame count
-                    if(npc.frame.Y>=1018) {
-                        if(npc.frameCounter>19) {
-                            npc.frame = new Rectangle(0, 0, 182, 170);
-                            npc.frameCounter = 0;
-                            attacking = false;
-                            npc.localAI[3] = 60;
-                        }
-                    } else {
-                        npc.frame = new Rectangle(0, (npc.frame.Y+170)%1190, 182, 170);
-                        npc.frameCounter = 0;
-                    }
-                }
-                if (npc.collideY) {
-                    npc.velocity.X*=0.5f;
-                }
-            //}else{*/
+				if(++npc.frameCounter>7) {
+					//add frame height to frame y position and modulo by frame height multiplied by walking frame count
+					if(npc.frame.Y>=1018) {
+						if(npc.frameCounter>19) {
+							npc.frame = new Rectangle(0, 0, 182, 170);
+							npc.frameCounter = 0;
+							attacking = false;
+							npc.localAI[3] = 60;
+						}
+					} else {
+						npc.frame = new Rectangle(0, (npc.frame.Y+170)%1190, 182, 170);
+						npc.frameCounter = 0;
+					}
+				}
+				if (npc.collideY) {
+					npc.velocity.X*=0.5f;
+				}
+			//}else{*/
 			if (++NPC.frameCounter > 9) {
 				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 62) % 248, 74, 60);
@@ -120,25 +121,25 @@ namespace Origins.NPCs.Defiled {
 			//}
 		}
 		/*public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
-            bool flip = npc.direction == 1;
-            //Rectangle armHitbox = new Rectangle((int)npc.position.X+(flip?0:108), (int)npc.position.Y, 70, npc.height);
-            bool h = victimHitbox.Intersects(npcRect);
-            if(attacking) {
-                if(npc.frame.Y>=1018) {
-                    npcRect = new Rectangle(npcRect.Center.X+(npc.direction*63), npcRect.Y, 52, npc.height);
-                    if(npc.frameCounter<9&&victimHitbox.Intersects(npcRect)) {
-                        damageMultiplier = 3;
-                        knockbackMult = 2f;
-                        return;
-                    }
-                }
-            }
-            /*if(victimHitbox.Intersects(armHitbox)) {
-                npcRect = armHitbox;
-                return;
-            }
-            npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
-        }*/
+			bool flip = npc.direction == 1;
+			//Rectangle armHitbox = new Rectangle((int)npc.position.X+(flip?0:108), (int)npc.position.Y, 70, npc.height);
+			bool h = victimHitbox.Intersects(npcRect);
+			if(attacking) {
+				if(npc.frame.Y>=1018) {
+					npcRect = new Rectangle(npcRect.Center.X+(npc.direction*63), npcRect.Y, 52, npc.height);
+					if(npc.frameCounter<9&&victimHitbox.Intersects(npcRect)) {
+						damageMultiplier = 3;
+						knockbackMult = 2f;
+						return;
+					}
+				}
+			}
+			/*if(victimHitbox.Intersects(armHitbox)) {
+				npcRect = armHitbox;
+				return;
+			}
+			npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
+		}*/
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));

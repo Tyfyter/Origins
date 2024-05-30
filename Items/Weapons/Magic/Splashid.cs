@@ -10,11 +10,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Splashid : ModItem, IElementalItem {
 		static short glowmask;
-        public string[] Categories => new string[] {
-            "HardmodeWand",
+		public string[] Categories => new string[] {
+			"HardmodeWand",
 			"ToxicSource"
-        };
-        public ushort Element => Elements.Acid;
+		};
+		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

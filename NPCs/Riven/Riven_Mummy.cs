@@ -10,6 +10,7 @@ using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				Velocity = 1

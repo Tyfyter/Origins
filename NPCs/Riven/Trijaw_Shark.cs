@@ -10,8 +10,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Trijaw_Shark : ModNPC{
-        public override void SetStaticDefaults() {
+	public class Trijaw_Shark : ModNPC {
+		public override void Load() => this.AddBanner();
+		public override void SetStaticDefaults() {
             Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {

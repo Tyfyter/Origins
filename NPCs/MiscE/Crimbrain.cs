@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
     public class Crimbrain : ModNPC {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);

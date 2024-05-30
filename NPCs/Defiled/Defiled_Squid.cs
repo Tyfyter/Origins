@@ -28,12 +28,13 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 165;
 			NPC.defense = 22;
 			NPC.knockBackResist = 0;
-            NPC.HitSound = Origins.Sounds.DefiledHurt;
-            NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.HitSound = Origins.Sounds.DefiledHurt;
+			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;

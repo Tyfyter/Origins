@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -13,12 +14,12 @@ namespace Origins.Items.Other.Consumables {
 	public class Mojo_Flask : ModItem {
 		public const int cooldown_time = 5 * 60;
 		public static int ID { get; private set; } = -1;
-        public string[] Categories => new string[] {
-            "Potion"
-        };
-        public override void SetStaticDefaults() {
+		public string[] Categories => new string[] {
+			"Potion"
+		};
+		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrame));
-			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Mojo_Injection>();
 			ID = Type;
 		}
 		public static Rectangle GetFrame(Texture2D texture) {

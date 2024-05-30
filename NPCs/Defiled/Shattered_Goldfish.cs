@@ -19,6 +19,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.frame.Height = 28;
 			NPC.value = 500;
 			AnimationType = NPCID.CorruptGoldfish;
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
         public bool ForceSyncMana => false;
         public float Mana { get => 1; set { } }

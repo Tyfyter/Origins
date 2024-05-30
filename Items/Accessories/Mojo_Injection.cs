@@ -8,19 +8,29 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => new string[] {
 			"Misc"
 		};
-        public override void SetStaticDefaults() {
-            glowmask = Origins.AddGlowMask(this);
-        }
-        static short glowmask;
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+		}
+		static short glowmask;
+		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.LightRed;
-			Item.value = Item.sellPrice(gold: 2);
-            Item.glowMask = glowmask;
-        }
-		public override void UpdateAccessory(Player player, bool hideVisual) {
+			Item.value = Item.buyPrice(silver: 40);
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.accessory = false;
+			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.glowMask = glowmask;
+			Item.consumable = true;
+		}
+		public override bool? UseItem(Player player) {
+			ref bool mojoInjection = ref player.GetModPlayer<OriginPlayer>().mojoInjection;
+			if (mojoInjection) return false;
+			mojoInjection = true;
+			return true;
+		}
+		public static void UpdateEffect(OriginPlayer originPlayer) {
 			const float healing = 0.0000444f;
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.CorruptionAssimilation -= Math.Min(healing, originPlayer.CorruptionAssimilation);
 			originPlayer.CrimsonAssimilation -= Math.Min(healing, originPlayer.CrimsonAssimilation);
 			originPlayer.DefiledAssimilation -= Math.Min(healing, originPlayer.DefiledAssimilation);

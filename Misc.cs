@@ -33,6 +33,7 @@ using AltLibrary.Common.AltBiomes;
 using Origins.Walls;
 using Terraria.GameContent.Drawing;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Tiles.Banners;
 
 namespace Origins {
 	#region classes
@@ -2247,8 +2248,8 @@ namespace Origins {
 			return self.HasTile && self.TileType == type;
 		}
 		#endregion
-		public static T SafeGet<T>(this TagCompound self, string key) {
-			return self.TryGet(key, out T output) ? output : default;
+		public static T SafeGet<T>(this TagCompound self, string key, T fallback = default) {
+			return self.TryGet(key, out T output) ? output : fallback;
 		}
 		public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
 			if (self.GlowTexture.Value is null) {
@@ -2593,6 +2594,26 @@ namespace Origins {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), 6, Vector2.Zero).noGravity = true;
 			}
 		}
+		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> fallback) {
+			if (self.TryGetValue(key, out TValue value)) return value;
+			value = fallback();
+			self.Add(key, value);
+			return value;
+		}
+		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key) where TValue : new() {
+			if (self.TryGetValue(key, out TValue value)) return value;
+			value = new();
+			self.Add(key, value);
+			return value;
+		}
+		public static bool TryGetText(string key, [MaybeNullWhen(false)] out LocalizedText text) {
+			if (Language.Exists(key)) {
+				text = Language.GetText(key);
+				return true;
+			}
+			text = null;
+			return false;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
@@ -2778,6 +2799,19 @@ namespace Origins {
 			self.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			self.maxStack = 999;
 			self.consumable = true;
+		}
+	}
+	public static class NPCExtensions {
+		public static void CopyBanner<TOther>(this ModNPC self) where TOther : ModNPC {
+			int type = ModContent.NPCType<TOther>();
+			self.Banner = type;
+			self.BannerItem = BannerGlobalNPC.NPCToBannerItem[type];
+		}
+	}
+	public static class ContentExtensions {
+		public static void AddBanner(this ModNPC self) {
+			self.Mod.AddContent(new Banner(self));
+			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());
 		}
 	}
 }

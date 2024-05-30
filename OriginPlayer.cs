@@ -418,6 +418,7 @@ namespace Origins {
 					}
 				}
 			}
+			if (mojoInjection) Mojo_Injection.UpdateEffect(this);
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {
@@ -530,6 +531,7 @@ namespace Origins {
 			tag.Add("crimsonAssimilation", crimsonAssimilation);
 			tag.Add("defiledAssimilation", defiledAssimilation);
 			tag.Add("rivenAssimilation", rivenAssimilation);
+			tag.Add("mojoInjection", mojoInjection);
 			tag.Add("GUID", guid.ToByteArray());
 		}
 		public override void LoadData(TagCompound tag) {
@@ -559,6 +561,7 @@ namespace Origins {
 			crimsonAssimilation = tag.SafeGet<float>("crimsonAssimilation");
 			defiledAssimilation = tag.SafeGet<float>("defiledAssimilation");
 			rivenAssimilation = tag.SafeGet<float>("rivenAssimilation");
+			mojoInjection = tag.SafeGet<bool>("mojoInjection");
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
 				guid = new Guid(guidBytes);
 			} else {

@@ -708,7 +708,7 @@ namespace Origins.Projectiles {
 			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
 			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
-		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false) {
+		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false, int fireDustType = DustID.Torch) {
 			if (applyHitboxModifiers) {
 				Rectangle hitbox = projectile.Hitbox;
 				float baseWidth = hitbox.Width;
@@ -718,12 +718,12 @@ namespace Origins.Projectiles {
 					fireDustAmount = (int)(fireDustAmount * dustMult);
 					smokeDustAmount = (int)(smokeDustAmount * dustMult);
 				}
-				ExplosionVisual(hitbox, sound, fireDustAmount, smokeDustAmount, smokeGoreAmount, debugOutline);
+				ExplosionVisual(hitbox, sound, fireDustAmount, smokeDustAmount, smokeGoreAmount, debugOutline, fireDustType);
 			} else {
-				ExplosionVisual(projectile.Hitbox, sound, fireDustAmount, smokeDustAmount, smokeGoreAmount, debugOutline);
+				ExplosionVisual(projectile.Hitbox, sound, fireDustAmount, smokeDustAmount, smokeGoreAmount, debugOutline, fireDustType);
 			}
 		}
-		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false) {
+		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false, int fireDustType = DustID.Torch) {
 			Vector2 center = area.Center.ToVector2();
 			if (sound.HasValue) {
 				SoundEngine.PlaySound(in sound, center);
@@ -747,7 +747,7 @@ namespace Origins.Projectiles {
 					topLeft,
 					area.Width,
 					area.Height,
-					DustID.Torch,
+					fireDustType,
 					0f,
 					0f,
 					100,
@@ -760,7 +760,7 @@ namespace Origins.Projectiles {
 					topLeft,
 					area.Width,
 					area.Height,
-					DustID.Torch,
+					fireDustType,
 					0f,
 					0f,
 					100,
@@ -788,18 +788,7 @@ namespace Origins.Projectiles {
 				gore.velocity.Y -= 1f;
 			}
 			if (debugOutline) {
-				for (int i = 0; i < area.Width; i += 2) {
-					Dust.NewDustPerfect(topLeft + new Vector2(i * 2, 0), 6, Vector2.Zero);
-				}
-				for (int i = 0; i < area.Height; i += 2) {
-					Dust.NewDustPerfect(topLeft + new Vector2(0, i * 2), 6, Vector2.Zero);
-				}
-				for (int i = 0; i < area.Width; i += 2) {
-					Dust.NewDustPerfect(topLeft + new Vector2(i * 2, area.Height), 6, Vector2.Zero);
-				}
-				for (int i = 0; i < area.Height; i += 2) {
-					Dust.NewDustPerfect(topLeft + new Vector2(area.Width, i * 2), 6, Vector2.Zero);
-				}
+				area.DrawDebugOutline();
 			}
 		}
 		public static void DealSelfDamage(Projectile projectile, int cooldownCounter = -1) {

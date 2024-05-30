@@ -18,11 +18,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		};
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(45, 32, 16f, 44, 18);
+			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(35, 34, 16f, 44, 18);
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
-			Item.ArmorPenetration += 10;
+			Item.ArmorPenetration = 15;
 		}
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
@@ -71,6 +71,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 900;
 			Projectile.scale = 0.85f;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 6;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X == 0f) {
@@ -95,7 +97,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.position,
 					default,
 					Thermite_P.ID,
-					Projectile.damage / 2,
+					Projectile.damage / 3,
 					0,
 					Projectile.owner,
 					Projectile.whoAmI

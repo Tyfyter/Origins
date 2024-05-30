@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Enchanted_Trident : ModNPC, IDefiledEnemy {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 		}

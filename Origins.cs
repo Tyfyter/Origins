@@ -34,6 +34,7 @@ using Origins.Walls;
 using Origins.Tiles.Other;
 using AltLibrary.Common.AltBiomes;
 using Origins.NPCs;
+using Origins.Tiles.Banners;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -689,6 +690,7 @@ namespace Origins {
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
+			BannerGlobalNPC.BuildBannerCache();
 		}
 		static void LoadCloudBottoms() {
 			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];

@@ -168,7 +168,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return base.CanHitNPC(target);
 		}
-		public void DefaultExplosion(Projectile projectile) {
+		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch) {
 			projectile.ResetLocalNPCHitImmunity();
 			CanisterGlobalProjectile.DefaultExplosion(projectile, false);
 			Vector2 center = Projectile.Center;

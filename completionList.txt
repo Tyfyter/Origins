@@ -39,6 +39,7 @@ X: No progress
 †: needs testing (unicode hex code 2020)
 ᗢ: Implemented, but will need to be revisited in later update
 ♫: rough implementation, functional, but needs polish (sound, balancing, etc.)
+⚐: needs banner (unicode hex code 2690)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -1080,7 +1081,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 ---
-(#3, ^2) Mojo Injection* !!!
+(☻) Mojo Injection* !!!
 (^) Quantum Injector*
 (%3) The Defiled Will*
 
@@ -1188,18 +1189,18 @@ AMMO:
 
 (^) Alkahest Arrow*
 (^) Alkahest Bullet*
-(#, ^2) Alkahest Canister* !!!
+(☻) Alkahest Canister* !!!
 (#, ^2) Alkahest Dart !!!
-(#, ^2) Alkaline Canister* !!!
+(☻) Alkaline Canister* !!!
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
-(#, ^2) Bile Canister* !!!
+(☻) Bile Canister* !!!
 (^) Bile Dart*
 (#, ^2) Coolant Canister* !!! 
 (☻) Cursed Canister* !!!
 (^) Cursed Harpoon*
-(#, ^2) Ichor Canister* !!!
+(☻) Ichor Canister* !!!
 (^) Metal Slug*
 (^) Resizable Mine Mk. 3*
 

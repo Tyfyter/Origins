@@ -33,6 +33,7 @@ namespace Origins.NPCs.Defiled {
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }

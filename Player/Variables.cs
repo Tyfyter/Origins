@@ -287,10 +287,11 @@ namespace Origins {
 		public bool boatRockerAltUse = false;
 		public int mojoFlaskCount = 5;
 		public int mojoFlaskCountMax = 5;
-		#endregion
 
 		public int quantumInjectors = 0;
+		public bool mojoInjection = false;
 		public int defiledWill = 0;
+		#endregion
 
 		public float statSharePercent = 0f;
 

@@ -5,7 +5,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Bottomfeeder : ModNPC, IRivenEnemy {
+	public class Bottomfeeder : ModNPC, IRivenEnemy {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 		}
@@ -21,10 +22,10 @@ namespace Origins.NPCs.Riven {
 			AnimationType = NPCID.CorruptGoldfish;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Goldfish naturally evolve into dangerous, insolveable carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),
+			bestiaryEntry.Info.AddRange([
+				this.GetBestiaryFlavorText("Goldfish naturally evolve into dangerous, insoluble carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
-            });
+			]);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {

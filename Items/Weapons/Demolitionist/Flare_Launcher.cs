@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.FlareGun)
 			.AddIngredient(ItemID.IllegalGunParts)
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.ShadowScales)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.ShadowScales, 6)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -229,7 +229,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 		}
 		public bool IsExploding() => false;
-		public void DefaultExplosion(Projectile projectile) {
+		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch) {
 			projectile.penetrate = -1;
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;

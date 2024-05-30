@@ -34,6 +34,7 @@ namespace Origins.NPCs.Defiled {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public int MaxMana => 16;
 		public int MaxManaDrain => 8;

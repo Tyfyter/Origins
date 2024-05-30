@@ -33,6 +33,7 @@ namespace Origins.NPCs.Defiled {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public int MaxMana => 35;
 		public int MaxManaDrain => 15;
@@ -46,9 +47,9 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 180f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+			bestiaryEntry.Info.AddRange([
 				this.GetBestiaryFlavorText("A great antibody for reaching airborne or hard-to-reach threats. This may have once been a flying creature like a bird."),
-			});
+			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));

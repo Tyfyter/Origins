@@ -5,6 +5,7 @@ using Terraria.ID;
 
 namespace Origins.NPCs.Riven {
 	public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 7;
 		}

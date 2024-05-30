@@ -6,13 +6,16 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.NPCs;
 using Origins.Projectiles;
+using Origins.Tiles.Brine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -135,7 +138,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			canister = projectile.ModProjectile as ICanisterProjectile;
 			CanisterID = binaryReader.ReadInt32();
 		}
-		public static void DefaultExplosion(Projectile projectile, bool child) {
+		public static void DefaultExplosion(Projectile projectile, bool child, int fireDustType = DustID.Torch) {
 			if (child) return;
 			projectile.friendly = true;
 			projectile.penetrate = -1;
@@ -147,7 +150,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
 			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
-			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
+			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustType: fireDustType);
 		}
 	}
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
@@ -194,7 +197,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public const string base_texture_path = "Origins/Items/Weapons/Ammo/Canisters/";
 		public abstract AutoLoadingAsset<Texture2D> OuterTexture { get; }
 		public abstract AutoLoadingAsset<Texture2D> InnerTexture { get; }
-		public void DefaultExplosion(Projectile projectile) => CanisterGlobalProjectile.DefaultExplosion(projectile, false);
+		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch) => CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: fireDustType);
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
 			SpriteEffects spriteEffects = SpriteEffects.None;
@@ -242,11 +245,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			/*Recipe.Create(Type, 10)
 			.AddIngredient(ItemID.Fireblossom)
 			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
 			.AddTile(TileID.Anvils)
-			.Register();
+			.Register();*/
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
@@ -396,7 +399,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Projectile.height = 96;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 25;
-			Projectile.timeLeft = 90;
+			Projectile.timeLeft = 120;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 15;
 			Projectile.tileCollide = false;
@@ -404,12 +407,14 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public override void AI() {
 			for (int i = 0; i < Projectile.width / 4; i++) {
-				Dust.NewDust(
-					Projectile.Center + Main.rand.NextVector2Circular(67.5f, 67.5f),
+				Dust dust = Dust.NewDustDirect(
+					Projectile.Center + Main.rand.NextVector2Circular(67.5f, 67.5f) + Vector2.UnitY * 12,
 					0,
 					0,
 					DustID.CursedTorch
 				);
+				//dust.noGravity = true;
+				dust.velocity.Y -= 2;
 			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
@@ -423,6 +428,38 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
+	}
+	public class Ichor_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		static short glowmask;
+		public CanisterData GetCanisterData => new(new(215, 104, 94), new(247, 253, 158));
+		public string[] Categories => [
+			"Canistah"
+		];
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(30);
+			Item.glowMask = glowmask;
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.Ichor)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(BuffID.Ichor, (child ? 7 : 4) * (projectile.penetrate >= 0 ? 2 : 1) * 60);
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (!child && projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile, DustID.IchorTorch);
+			}
+		}
 	}
 	public class Bile_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
@@ -504,6 +541,143 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
+	}
+	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		static short glowmask;
+		public CanisterData GetCanisterData => new(new(61, 164, 196), new(255, 254, 156));
+		public string[] Categories => [
+			"Canistah"
+		];
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(30);
+			Item.glowMask = glowmask;
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 5)
+			.AddIngredient<Alkahest>()
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			OriginGlobalNPC.InflictTorn(target, 240, 180, 0.35f, source: Main.player[projectile.owner].GetModPlayer<OriginPlayer>());
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			}
+			for (int i = 0; i < 6; i++) {
+				Projectile.NewProjectile(
+					projectile.GetSource_FromThis(),
+					projectile.Center,
+					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f, Alkahest_Canister_Droplet.ID,
+					(int)(projectile.damage * 0.35f),
+					0,
+					projectile.owner
+				);
+			}
+		}
+	}
+	public class Alkahest_Canister_Droplet : ModProjectile, ICanisterChildProjectile {
+		public override string Texture => typeof(Bile_Dart_Aura).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.hide = true;
+			Projectile.width = Projectile.height = 4;
+			Projectile.friendly = true;
+			Projectile.penetrate = 2;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.tileCollide = true;
+			Projectile.timeLeft = 180;
+		}
+		public override void AI() {
+			Projectile.velocity.Y += 0.08f;
+			Lighting.AddLight(Projectile.Center, 0.78f, 0.75f, 0.2f);
+			Dust.NewDustPerfect(Projectile.Center, 228, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = false;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			OriginGlobalNPC.InflictTorn(target, 180, 180, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+		}
+	}
+	public class Alkaline_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		static short glowmask;
+		public CanisterData GetCanisterData => new(new(110, 240, 197), new(94, 255, 182));
+		public string[] Categories => [
+			"Canistah"
+		];
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(30);
+			Item.glowMask = glowmask;
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 5)
+			.AddIngredient<Brineglow_Item>()
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(Toxic_Shock_Debuff.ID, 300);
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			}
+			for (int i = 0; i < 6; i++) {
+				Projectile.NewProjectile(
+					projectile.GetSource_FromThis(),
+					projectile.Center,
+					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f, Alkaline_Canister_Droplet.ID,
+					(int)(projectile.damage * 0.35f),
+					0,
+					projectile.owner
+				);
+			}
+		}
+	}
+	public class Alkaline_Canister_Droplet : ModProjectile, ICanisterChildProjectile {
+		public override string Texture => typeof(Bile_Dart_Aura).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.hide = true;
+			Projectile.width = Projectile.height = 4;
+			Projectile.friendly = true;
+			Projectile.penetrate = 2;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.tileCollide = true;
+			Projectile.timeLeft = 180;
+		}
+		public override void AI() {
+			Projectile.velocity.Y += 0.08f;
+			Lighting.AddLight(Projectile.Center, 0.78f, 0.75f, 0.2f);
+			Dust.NewDustPerfect(Projectile.Center, DustID.CoralTorch, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = true;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Projectile.timeLeft -= 2;
+			return false;
+		}
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {
 		static short glowmask;

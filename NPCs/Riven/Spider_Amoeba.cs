@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class Spider_Amoeba : Glowing_Mod_NPC, IRivenEnemy {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 		}
@@ -77,6 +78,7 @@ namespace Origins.NPCs.Riven {
             OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.85f);
         }
     }public class Spider_Amoeba_Wall : Spider_Amoeba {
+		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
@@ -89,6 +91,7 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 68;
 			NPC.height = 68;
 			SetSharedDefaults();
+			this.CopyBanner<Spider_Amoeba>();
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

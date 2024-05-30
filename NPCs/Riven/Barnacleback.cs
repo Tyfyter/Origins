@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Barnacleback : ModNPC, IRivenEnemy {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 		}

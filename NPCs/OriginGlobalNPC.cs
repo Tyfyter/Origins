@@ -71,19 +71,19 @@ namespace Origins.NPCs {
 					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
 					shop.Add<Peatball>(PeatSoldCondition(15));
 					shop.Add<Flashbang>(PeatSoldCondition(25));
-                    shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
-                    shop.Add<Impact_Grenade>(PeatSoldCondition(40));
-                    shop.Add<Defiled_Spirit>(PeatSoldCondition(50)); // ", Condition.DownedAmalgamation"
-                    shop.Add<Ameballoon>(PeatSoldCondition(60)); // ", Condition.DownedCracker"
-                    shop.Add<Impact_Bomb>(PeatSoldCondition(70));
-                    shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
-                    //shop.Add<Link_Grenade>(PeatSoldCondition(85), Condition.AshenWorld);
-                    shop.Add<Nitro_Crate>(PeatSoldCondition(100));
-                    shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
-                    shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.DownedScrapper"
-                    shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-                    //shop.Add(ItemID.Beenade)(PeatSoldCondition(170));
-                    shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
+					shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
+					shop.Add<Impact_Grenade>(PeatSoldCondition(40));
+					shop.Add<Defiled_Spirit>(PeatSoldCondition(50)); // ", Condition.DownedAmalgamation"
+					shop.Add<Ameballoon>(PeatSoldCondition(60)); // ", Condition.DownedCracker"
+					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
+					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
+					//shop.Add<Link_Grenade>(PeatSoldCondition(85), Condition.AshenWorld);
+					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
+					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
+					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.DownedScrapper"
+					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
+					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170));
+					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode);
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
 					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
@@ -95,12 +95,11 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Dryad: {
-                    shop.Add<Bloombomb>();
-                    shop.Add<Mojo_Injection>();
+					shop.Add<Bloombomb>();
 					shop.Add<Cleansing_Station_Item>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
 
-                    shop.InsertAfter<Dreadful_Powder>(ItemID.CorruptGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.InsertAfter<Dreadful_Powder>(ItemID.CorruptGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Sentient_Powder>(ItemID.CrimsonGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
 
 					shop.InsertAfter<Dreadful_Powder, Defiled_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));

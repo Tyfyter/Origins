@@ -441,6 +441,8 @@ Generic: {
 	Defiled_Wastelands: Defiled Wastelands
 	The_Defiled_Wastelands: the {$Mods.Origins.Generic.Defiled_Wastelands}
 	Arms_Dealer: the Arms Dealer
+	Defiled_Antibody: Defiled Antibody
+	Defiled_Antibodies: Defiled Antibodies
 }
 
 AltBiomes: {
@@ -1168,6 +1170,8 @@ Projectiles: {
 	Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity
 	Flare_Launcher_P.DisplayName: Flare
 	Flare_Launcher_Glow_P.DisplayName: Flare_ Launcher_ Glow_ P
+	Alkahest_Canister_Droplet.DisplayName: Alkahest_ Canister_ Droplet
+	Alkaline_Canister_Droplet.DisplayName: Alkaline_ Canister_ Droplet
 }
 
 Prefixes: {
@@ -1347,6 +1351,7 @@ Tiles: {
 	Endowood_Chest.MapEntry: Endowood Chest
 	Marrowick_Chest.MapEntry: Marrowick Chest
 	Endowood_Dresser.MapEntry: Endowood Dresser
+	Bottomfeeder_Banner.MapEntry: Bottomfeeder_ Banner
 }
 
 MapObject: {

@@ -27,6 +27,8 @@ namespace Origins.NPCs.Defiled {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Ice_Biome>().Type
 			];
+			Banner = NPCID.PigronCorruption;
+			BannerItem = ItemID.PigronBanner;
 		}
 		public void Regenerate(ref int lifeRegen) {
 			int factor = 48 / ((NPC.life / 10) + 1);

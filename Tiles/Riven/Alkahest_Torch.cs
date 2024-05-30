@@ -30,7 +30,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.AllowLightInWater[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			DustType = DustID.CoralTorch;
+			DustType = 178;
 			AdjTiles = new int[] { TileID.Torches };
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);

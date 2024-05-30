@@ -13,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
+	public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
 		public const float speedMult = 1f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
@@ -34,6 +34,7 @@ namespace Origins.NPCs.Defiled {
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;
@@ -76,20 +77,20 @@ namespace Origins.NPCs.Defiled {
 				NPC.frameCounter = 0;
 			}
 		}
-        public void SpawnWisp(NPC npc)
-        {
-            if (Main.masterMode || (Main.expertMode && Main.rand.NextBool()))
-            {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
-            }
-        }
-        public override void PostAI() {
+		public void SpawnWisp(NPC npc)
+		{
+			if (Main.masterMode || (Main.expertMode && Main.rand.NextBool()))
+			{
+				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
+			}
+		}
+		public override void PostAI() {
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
 			/*if(!attacking) {
-                npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
-            }*/
+				npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
+			}*/
 		}
-        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;)
 				Origins.instance.SpawnGoreByName(NPC.GetSource_OnHit(NPC), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));

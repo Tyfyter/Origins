@@ -4182,3 +4182,28 @@ Flare_Launcher: {
 	// DisplayName: Flare Launcher
 	// Tooltip: Can fire flares and canisters
 }
+
+Ichor_Canister: {
+	// DisplayName: Ichor Canister
+	// Tooltip: ""
+}
+
+Alkahest_Canister: {
+	// DisplayName: Alkahest Canister
+	// Tooltip: ""
+}
+
+Alkaline_Canister: {
+	// DisplayName: Alkaline Canister
+	// Tooltip: ""
+}
+
+Banner_Item: {
+	// DisplayName: "{0} Banner"
+	// Tooltip: "{$CommonItemTooltip.BannerBonus}{0}"
+}
+
+Defiled_Banner_NPC_Banner_Item: {
+	// DisplayName: "{§Mods.Origins.Generic.Defiled_Antibody} Banner"
+	// Tooltip: Nearby players get a bonus against {§Mods.Origins.Generic.Defiled_Antibodies}
+}

@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Chunky_Slime : ModNPC, IDefiledEnemy {
+	public class Chunky_Slime : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
 		}
@@ -27,6 +27,7 @@ namespace Origins.NPCs.Defiled {
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
 			];
+			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;

@@ -16,6 +16,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Barnacle_Mound : ModNPC, IRivenEnemy {
+		//public override void Load() => this.AddBanner(); //TODO: missing banner
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
