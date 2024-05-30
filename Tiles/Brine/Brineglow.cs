@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -253,7 +254,7 @@ namespace Origins.Tiles.Brine {
 						spriteEffects,
 					0f);
 					Main.spriteBatch.Draw(
-						GlowTexture,
+						this.GetGlowTexture(tile.TileColor),
 						position,
 						frame,
 						Color.White,
@@ -326,6 +327,8 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public override bool IsTileSpelunkable(int i, int j) => true;
+		public override void Load() => this.SetupGlowKeys();
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
     public class Brineglow_Item : ModItem {
         public override void SetStaticDefaults() {

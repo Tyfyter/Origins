@@ -35,6 +35,7 @@ using Origins.Tiles.Other;
 using AltLibrary.Common.AltBiomes;
 using Origins.NPCs;
 using Origins.Tiles.Banners;
+using Origins.Graphics;
 
 namespace Origins {
 	public partial class Origins : Mod {

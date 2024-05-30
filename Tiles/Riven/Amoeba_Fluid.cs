@@ -44,6 +44,8 @@ namespace Origins.Tiles.Riven {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Amoeba_Fluid_Item : ModItem {
 		public override void SetStaticDefaults() {

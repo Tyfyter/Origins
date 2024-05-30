@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Reflection;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -21,7 +22,7 @@ namespace Origins.Tiles {
 					float glowValue = Riven_Hive.NormalGlowValue.GetValue();
 					Color glowColor = new Color(glowValue, glowValue, glowValue, glowValue);
 					OriginExtensions.DrawTileGlow(
-						Riven_Cactus.GlowTexture,
+						CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(Riven_Cactus.GlowPaintKey, tile.TileColor, Riven_Cactus.GlowTexture),
 						glowColor,
 						i,
 						j,
@@ -34,9 +35,9 @@ namespace Origins.Tiles {
 					WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out int sandType);
 					if (sandType == ModContent.TileType<Silica>()) {
 						float glowValue = Riven_Hive.NormalGlowValue.GetValue();
-						Color glowColor = new Color(glowValue, glowValue, glowValue, glowValue);
+						Color glowColor = new(glowValue, glowValue, glowValue, glowValue);
 						OriginExtensions.DrawTileGlow(
-							Riven_Cactus.FruitGlowTexture,
+							CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(Riven_Cactus.FruitGlowPaintKey, tile.TileColor, Riven_Cactus.FruitGlowTexture),
 							glowColor,
 							i,
 							j,
@@ -48,7 +49,7 @@ namespace Origins.Tiles {
 				Tile tile = Main.tile[i, j];
 				if (tile.TileFrameX != 22 || tile.TileFrameY < 198) {
 					OriginExtensions.DrawTileGlow(
-						glowingTree.GlowTexture,
+						glowingTree.GetGlowTexture(tile.TileColor),
 						glowingTree.GlowColor,
 						i,
 						j,
@@ -71,7 +72,7 @@ namespace Origins.Tiles {
 						Rectangle frame = new Rectangle(treeFrame * (topTextureFrameWidth + 2), 0, topTextureFrameWidth, topTextureFrameHeight);
 						float rotation = windFactor * 0.08f;
 						spriteBatch.Draw(
-							glowingTree.TopTexture,
+							glowingTree.GetTopTexture(tile.TileColor),
 							position,
 							frame,
 							Lighting.GetColor(i, j),
@@ -81,7 +82,7 @@ namespace Origins.Tiles {
 							SpriteEffects.None,
 						0f);
 						spriteBatch.Draw(
-							glowingTree.TopGlowTexture,
+							glowingTree.GetTopGlowTexture(tile.TileColor),
 							position,
 							frame,
 							glowingTree.GlowColor,

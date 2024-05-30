@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -10,9 +11,9 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Cactus : ModCactus, IGlowingModPlant, ICustomWikiStat, INoSeperateWikiPage {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Glow";
 		public static AutoLoadingAsset<Texture2D> FruitGlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit_Glow";
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileType == TileID.DyePlants || HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
 		}
@@ -33,8 +34,12 @@ namespace Origins.Tiles.Riven {
 			return true;
 		}
 		public override void SetStaticDefaults() {
-			GrowsOnTileId = new int[] { ModContent.TileType<Silica>() };
+			GrowsOnTileId = [ModContent.TileType<Silica>()];
+			GlowPaintKey = CustomTilePaintLoader.CreateKey();
+			FruitGlowPaintKey = CustomTilePaintLoader.CreateKey();
 		}
+		public static CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public static CustomTilePaintLoader.CustomTileVariationKey FruitGlowPaintKey { get; set; }
 		public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>(typeof(Riven_Cactus).GetDefaultTMLName());
 		public override Asset<Texture2D> GetFruitTexture() => ModContent.Request<Texture2D>(typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit");
 		public bool ShouldHavePage => false;

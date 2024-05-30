@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -173,5 +174,10 @@ namespace Origins.Tiles.MusicBoxes {
 				}
 			}
 		}
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }

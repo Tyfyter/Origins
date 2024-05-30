@@ -62,5 +62,7 @@ namespace Origins.Tiles.Riven {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override bool CanExplode(int i, int j) => false;
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }

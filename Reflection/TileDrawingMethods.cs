@@ -1,9 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using static Terraria.GameContent.TilePaintSystemV2;
 
 namespace Origins.Reflection {
 	public class TileDrawingMethods : ReflectionLoader {

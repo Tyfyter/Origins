@@ -127,6 +127,8 @@ namespace Origins.Tiles.Riven {
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
 		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Riven_Flesh_Item : ModItem {
 		public override void SetStaticDefaults() {

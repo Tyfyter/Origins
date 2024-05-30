@@ -18,6 +18,8 @@ namespace Origins.Tiles.Other {
 		public Riven_Fountain() : base() {
 			glowTexture = Texture + "_Glow";
 		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Riven_Fountain_Item : ModItem {
 		public string[] Categories => new string[] {

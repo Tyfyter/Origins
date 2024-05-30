@@ -69,6 +69,8 @@ namespace Origins.Tiles.Riven {
 			g = 0.0375f * GlowValue;
 			b = 0.015f * GlowValue;
 		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Gel_Blister_Item : ModItem, ICustomWikiStat {
 		public override string Texture => typeof(Gel_Blister).GetDefaultTMLName();

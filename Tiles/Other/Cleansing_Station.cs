@@ -107,7 +107,7 @@ namespace Origins.Tiles.Other {
 			//this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
-			drawData.glowTexture = GlowTexture;
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 			drawData.glowColor = GlowColor;
 			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
 		}
@@ -116,6 +116,8 @@ namespace Origins.Tiles.Other {
 			g = 0.05f;
 			b = 0.055f;
 		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Cleansing_Station_Item : ModItem {
 		

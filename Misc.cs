@@ -365,10 +365,9 @@ namespace Origins {
 			return frame(texture);
 		}
 	}
-	public struct AutoCastingAsset<T> where T : class {
+	public readonly struct AutoCastingAsset<T> where T : class {
 		public bool IsLoaded => asset?.IsLoaded ?? false;
 		public T Value => asset?.Value;
-
 		public readonly Asset<T> asset;
 		AutoCastingAsset(Asset<T> asset) {
 			this.asset = asset;
@@ -431,6 +430,10 @@ namespace Origins {
 		public static implicit operator AutoLoadingAsset<T>(string asset) => new(asset);
 		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
 		public static implicit operator AutoCastingAsset<T>(AutoLoadingAsset<T> asset) {
+			asset.LoadAsset();
+			return asset.asset;
+		}
+		public static implicit operator Asset<T>(AutoLoadingAsset<T> asset) {
 			asset.LoadAsset();
 			return asset.asset;
 		}
@@ -2329,7 +2332,7 @@ namespace Origins {
 				key.Y--;
 			}
 			int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
-			spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(self.GetGlowTexture(tile.TileColor), (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 		}
 		public static Point GetTilePosition(this Tile tile) {
 			uint id = TileMethods.TileId.GetValue(tile);

@@ -40,6 +40,8 @@ namespace Origins.Tiles.Riven {
 			g = 0.15f;
 			b = 0.06f;
 		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Riven_Dungeon_Chest_Item : ModItem {
 		static short glowmask;
