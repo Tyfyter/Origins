@@ -436,6 +436,8 @@ namespace Origins {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
 			}
+			Utils.Swap(ref ExplosiveGlobalProjectile.nextExplodingProjectiles, ref ExplosiveGlobalProjectile.explodingProjectiles);
+			ExplosiveGlobalProjectile.nextExplodingProjectiles.Clear();
 		}
 		FastStaticFieldInfo<Main, float> _minWind;
 		FastStaticFieldInfo<Main, float> _maxWind;

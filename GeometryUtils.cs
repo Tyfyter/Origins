@@ -131,6 +131,7 @@ namespace Tyfyter.Utils {
 			float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
 			return distance;
 		}
+		public static bool IsWithin(this Vector2 a, Vector2 b, float range) => a.DistanceSQ(b) < range * range;
 		public static Vector2 Vec2FromPolar(float r, float theta) {
 			return new Vector2((float)(r * Math.Cos(theta)), (float)(r * Math.Sin(theta)));
 		}

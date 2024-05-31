@@ -1172,6 +1172,8 @@ Projectiles: {
 	// Flare_Launcher_Glow_P.DisplayName: Flare_ Launcher_ Glow_ P
 	// Alkahest_Canister_Droplet.DisplayName: Alkahest_ Canister_ Droplet
 	// Alkaline_Canister_Droplet.DisplayName: Alkaline_ Canister_ Droplet
+	// Link_Grenade_P.DisplayName: Link_ Grenade_ P
+	// Sticky_Link_Grenade_P.DisplayName: Sticky_ Link_ Grenade_ P
 }
 
 Prefixes: {

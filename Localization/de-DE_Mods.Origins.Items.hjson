@@ -4207,3 +4207,13 @@ Defiled_Banner_NPC_Banner_Item: {
 	// DisplayName: "{§Mods.Origins.Generic.Defiled_Antibody} Banner"
 	// Tooltip: Nearby players get a bonus against {§Mods.Origins.Generic.Defiled_Antibodies}
 }
+
+Link_Grenade: {
+	// DisplayName: Link Grenade
+	// Tooltip: Only explodes when another explosive detonates nearby or when its fuse runs out
+}
+
+Sticky_Link_Grenade: {
+	// DisplayName: Sticky_ Link_ Grenade
+	// Tooltip: ""
+}

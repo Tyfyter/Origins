@@ -4,6 +4,7 @@ using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Reflection;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -14,7 +15,6 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Projectiles {
-	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
 	public class ExplosiveGlobalProjectile : GlobalProjectile {
 		public bool isHoming = false;
 		public bool magicTripwire = false;
@@ -28,6 +28,12 @@ namespace Origins.Projectiles {
 		public StatModifier modifierBlastRadius = StatModifier.Default;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
+		public static List<Vector2> explodingProjectiles = [];
+		public static List<Vector2> nextExplodingProjectiles = [];
+		public override void Unload() {
+			explodingProjectiles = null;
+			nextExplodingProjectiles = null;
+		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			return entity.DamageType.CountsAsClass(DamageClasses.Explosive) || GetVanillaExplosiveType(entity) > 0;
 		}
@@ -85,7 +91,7 @@ namespace Origins.Projectiles {
 			}
 			if (magicTripwire && Origins.MagicTripwireRange[projectile.type] > 0) {
 				int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
-				Rectangle magicTripwireHitbox = new Rectangle(
+				Rectangle magicTripwireHitbox = new(
 					(int)projectile.Center.X - magicTripwireRange,
 					(int)projectile.Center.Y - magicTripwireRange,
 					magicTripwireRange * 2,
@@ -104,6 +110,9 @@ namespace Origins.Projectiles {
 					Explode(projectile, detonationStyle: Origins.MagicTripwireDetonationStyle[projectile.type]);
 				}
 			}
+			/*if (IsExploding(projectile)) {
+				//nextExplodingProjectiles.Add(projectile.Center);
+			}*/
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			Player player = Main.player[projectile.owner];
@@ -149,6 +158,7 @@ namespace Origins.Projectiles {
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 			if (IsExploding(projectile)) {
+				nextExplodingProjectiles.Add(projectile.Center);
 				if (modifierBlastRadius != StatModifier.Default) {
 					StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
 					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
