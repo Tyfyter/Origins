@@ -148,7 +148,7 @@ ENEMY NPCS:
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
-(^) Barnacle Mound
+(^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (#, ^2) Defiled Asphyxiator* !!!
