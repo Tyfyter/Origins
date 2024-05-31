@@ -55,6 +55,7 @@ using Origins.Water;
 using Origins.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
+using Origins.Items;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -489,7 +490,18 @@ namespace Origins {
 			On_Main.DrawBlack += On_Main_DrawBlack;
 			On_WorldGen.AddHellHouses += On_WorldGen_AddHellHouses;
 			On_WorldGen.HellFort += On_WorldGen_HellFort;
+			On_Item.CloneDefaults += On_Item_CloneDefaults;
 		}
+
+		private void On_Item_CloneDefaults(On_Item.orig_CloneDefaults orig, Item self, int TypeToClone) {
+			OriginGlobalItem.isOriginsItemCloningDefaults = self?.ModItem?.Mod == this;
+			try {
+				orig(self, TypeToClone);
+			} finally {
+				OriginGlobalItem.isOriginsItemCloningDefaults = false;
+			}
+		}
+
 		private void FixWrongWaterfallAlpha_IL(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel defaultCase = null;

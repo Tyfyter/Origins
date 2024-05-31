@@ -21,6 +21,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
+		internal static bool isOriginsItemCloningDefaults = false;
 		public override void SetDefaults(Item item) {
 			bool statsModified = false;
 			switch (item.type) {
@@ -134,7 +135,7 @@ namespace Origins.Items {
 				item.width = 4;
 				item.height = 4;
 			}
-			if (statsModified && item.ModItem?.Mod is not Origins) {
+			if (statsModified && !isOriginsItemCloningDefaults) {
 				item.StatsModifiedBy.Add(Mod);
 			}
 		}
