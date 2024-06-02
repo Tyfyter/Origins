@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Metadata;
@@ -10,11 +11,11 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Wilted_Rose : OriginTile, DefiledTile {
+	public class Wilted_Rose : OriginTile, DefiledTile, ICustomWikiStat {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

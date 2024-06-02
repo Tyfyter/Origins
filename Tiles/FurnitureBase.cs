@@ -49,6 +49,8 @@ namespace Origins.Tiles {
 
 			TileID.Sets.CountsAsWaterSource[Type] = TileID.Sets.CountsAsWaterSource[BaseTileID];
 
+			TileID.Sets.Platforms[Type] = TileID.Sets.Platforms[BaseTileID];
+
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(BaseTileID, 0));
 			TileObjectData.newTile.LavaDeath = LavaDeath;
 			if (TileObjectData.newTile.Direction != TileObjectDirection.None) {
@@ -628,6 +630,39 @@ namespace Origins.Tiles {
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = closedDoorTile.item.Type;
+		}
+	}
+	[Autoload(false)]
+	public class Platform_Tile : ModTile {
+		public virtual bool LavaDeath => true;
+		public override void Load() {
+			Mod.AddContent(new TileItem(this));
+		}
+		public override void SetStaticDefaults() {
+			// Properties
+			Main.tileLighted[Type] = true;
+			Main.tileFrameImportant[Type] = true;
+			Main.tileSolidTop[Type] = true;
+			Main.tileSolid[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileTable[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileID.Sets.Platforms[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles = [TileID.Platforms];
+
+			// Placement
+			TileObjectData.newTile.CoordinateHeights = [16];
+			TileObjectData.newTile.CoordinateWidth = 16;
+			TileObjectData.newTile.CoordinatePadding = 2;
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.StyleMultiplier = 27;
+			TileObjectData.newTile.StyleWrapLimit = 27;
+			TileObjectData.newTile.UsesCustomCanPlace = false;
+			TileObjectData.newTile.LavaDeath = LavaDeath;
+			TileObjectData.addTile(Type);
+
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 		}
 	}
 	[Autoload(false)]

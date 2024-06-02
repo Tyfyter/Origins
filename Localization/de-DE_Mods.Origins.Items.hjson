@@ -4214,6 +4214,25 @@ Link_Grenade: {
 }
 
 Sticky_Link_Grenade: {
-	// DisplayName: Sticky_ Link_ Grenade
+	// DisplayName: Sticky Link Grenade
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Link_Grenade.Tooltip}
+		Can stick to enemies and tiles
+		''' */
+}
+
+Hemorang: {
+	// DisplayName: Hemorang
+	// Tooltip: ""
+}
+
+Endowood_Platform_Item: {
+	// DisplayName: Endowood Platform
+	// Tooltip: ""
+}
+
+Dark_Spiral: {
+	// DisplayName: Dark
 	// Tooltip: ""
 }

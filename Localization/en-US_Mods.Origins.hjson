@@ -1169,11 +1169,15 @@ Projectiles: {
 	Grenade_Launcher_Canister_P.DisplayName: Grenade
 	Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity
 	Flare_Launcher_P.DisplayName: Flare
-	Flare_Launcher_Glow_P.DisplayName: Flare_ Launcher_ Glow_ P
-	Alkahest_Canister_Droplet.DisplayName: Alkahest_ Canister_ Droplet
-	Alkaline_Canister_Droplet.DisplayName: Alkaline_ Canister_ Droplet
-	Link_Grenade_P.DisplayName: Link_ Grenade_ P
-	Sticky_Link_Grenade_P.DisplayName: Sticky_ Link_ Grenade_ P
+	Flare_Launcher_Glow_P.DisplayName: Flare Launcher Glow
+	Alkahest_Canister_Droplet.DisplayName: Alkahest Droplet
+	Alkaline_Canister_Droplet.DisplayName: Alkaline Droplet
+	Link_Grenade_P.DisplayName: Link Grenade
+	Sticky_Link_Grenade_P.DisplayName: Sticky Link Grenade
+	Hemorang_Blood_P.DisplayName: Hemorang
+	Hemorang_P.DisplayName: Hemorang
+	Dark_Spiral_P.DisplayName: Dark Spiral
+	Dark_Spiral_Thrown.DisplayName: Dark Spiral
 }
 
 Prefixes: {
