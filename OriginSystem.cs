@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
@@ -244,15 +245,22 @@ namespace Origins {
 		public static int RottenChunkRecipeGroupID { get; private set; }
 		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
+		public static int EvilBoomerangRecipeGroupID { get; private set; }
 		public override void AddRecipeGroups() {
-			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => $"{Lang.misc[37].Value} Gem Staff", new int[] {
+			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
 				ItemID.AmethystStaff,
 				ItemID.TopazStaff,
 				ItemID.SapphireStaff,
 				ItemID.EmeraldStaff,
 				ItemID.RubyStaff,
 				ItemID.DiamondStaff
-			}));
+			]));
+			EvilBoomerangRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Evil Boomerangs", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilBoomerangs").Value, [
+				ModContent.ItemType<Dark_Spiral>(),
+				ModContent.ItemType<Hemorang>(),
+				ModContent.ItemType<Krakram>(),
+				ModContent.ItemType<Riverang>(),
+			]));
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;

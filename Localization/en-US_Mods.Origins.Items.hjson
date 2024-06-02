@@ -4236,3 +4236,8 @@ Dark_Spiral: {
 	DisplayName: Dark Spiral
 	Tooltip: ""
 }
+
+Waning_Crescent: {
+	DisplayName: Waning Crescent
+	Tooltip: ""
+}

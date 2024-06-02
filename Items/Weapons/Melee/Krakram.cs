@@ -22,15 +22,15 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 		}
-		public override bool CanUseItem(Player player) {
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
-		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 7);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 7)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 4)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+		public override bool CanUseItem(Player player) {
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
 	public class Krakram_P : ModProjectile {

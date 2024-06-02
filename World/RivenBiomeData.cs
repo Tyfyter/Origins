@@ -87,6 +87,10 @@ namespace Origins.World.BiomeData {
 			LesionDropRule = null;
 			NormalGlowValue = null;
 		}
+
+		public static Color GetGlowAlpha(Color lightColor) {
+			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
+		}
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.BlueMoss;

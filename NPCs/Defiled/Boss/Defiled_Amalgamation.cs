@@ -63,6 +63,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {

@@ -5,15 +5,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.World.BiomeData;
 namespace Origins.Items.Weapons.Melee {
-    public class Riverang : ModItem, ICustomWikiStat {
-		static short glowmask;
-        public string[] Categories => new string[] {
-            "Boomerang"
-        };
-        public override void SetStaticDefaults() {
+	public class Riverang : ModItem, ICustomWikiStat {
+		internal static short glowmask;
+		public string[] Categories => [
+			"Boomerang"
+		];
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
@@ -39,7 +41,7 @@ namespace Origins.Items.Weapons.Melee {
 			recipe.Register();
 		}
 		public override bool CanUseItem(Player player) {
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
 	public class Riverang_P : ModProjectile {
@@ -144,6 +146,24 @@ namespace Origins.Items.Weapons.Melee {
 				return false;
 			}
 			return true;
+		}
+		public override void PostDraw(Color lightColor) {
+			Vector2 origin = new(
+				11,
+				11
+			);
+			Color color = Riven_Hive.GetGlowAlpha(lightColor);
+			color.A = 255;
+			Main.EntitySpriteDraw(
+				TextureAssets.GlowMask[Riverang.glowmask].Value,
+				Projectile.Center,
+				null,
+				color,
+				Projectile.rotation,
+				origin,
+				Projectile.scale,
+				Projectile.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
 		}
 	}
 }

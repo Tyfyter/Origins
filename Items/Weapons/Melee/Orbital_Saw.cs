@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Melee {
 			recipe.Register();
 		}
 		public override bool CanUseItem(Player player) {
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
 	public class Orbital_Saw_P : ModProjectile {

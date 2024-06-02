@@ -262,7 +262,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Projectile.timeLeft = 300;
+			Projectile.timeLeft = 11;
 			Projectile.penetrate = -1;
 			Projectile.aiStyle = 0;
 			Projectile.width = 0;

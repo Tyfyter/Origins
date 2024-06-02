@@ -4233,6 +4233,11 @@ Endowood_Platform_Item: {
 }
 
 Dark_Spiral: {
-	// DisplayName: Dark
+	// DisplayName: Dark Spiral
+	// Tooltip: ""
+}
+
+Waning_Crescent: {
+	// DisplayName: Waning Crescent
 	// Tooltip: ""
 }

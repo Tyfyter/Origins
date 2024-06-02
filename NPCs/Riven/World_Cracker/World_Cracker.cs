@@ -53,6 +53,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
 				HPBarArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor_Health_Bar");
 			}
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
 		}
 		public override void Unload() {
 			ArmorTexture = null;

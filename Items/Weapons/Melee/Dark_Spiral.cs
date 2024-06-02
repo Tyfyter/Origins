@@ -8,15 +8,10 @@ using Origins.Dev;
 using Tyfyter.Utils;
 using Terraria.Audio;
 namespace Origins.Items.Weapons.Melee {
-    public class Dark_Spiral : ModItem, ICustomWikiStat {
-		static short glowmask;
-        public string[] Categories => new string[] {
-            "Boomerang"
-        };
-        public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
-		}
+	public class Dark_Spiral : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Boomerang"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;
@@ -31,7 +26,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
-			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -41,7 +35,7 @@ namespace Origins.Items.Weapons.Melee {
 			.Register();
 		}
 		public override bool CanUseItem(Player player) {
-			return player.ownedProjectileCounts[Item.shoot] <= 0;
+			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
 	public class Dark_Spiral_Thrown : ModProjectile {

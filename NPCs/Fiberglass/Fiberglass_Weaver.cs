@@ -32,6 +32,10 @@ namespace Origins.NPCs.Fiberglass {
 		const float lowerLegLength = 76f;
 		const float totalLegLength = upperLegLength + lowerLegLength;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		public override void SetStaticDefaults() {
+			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+		}
 		public override void Unload() {
 			armorDropRule = null;
 			weaponDropRule = null;
