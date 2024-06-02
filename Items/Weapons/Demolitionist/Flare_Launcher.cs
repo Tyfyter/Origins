@@ -34,9 +34,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(14, 32, 14f, 44, 24);
+			Item.knockBack = 2;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
+			Item.ArmorPenetration += 4;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

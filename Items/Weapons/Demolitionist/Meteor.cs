@@ -13,12 +13,13 @@ using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria.GameContent;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Launcher",
 			"CanistahUser"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Meteor_P>(18, 32, 12.3f, 44, 24);
+			Item.knockBack = 4;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
@@ -102,8 +103,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			_ = Projectile.knockBack;
 			target.velocity -= target.velocity * target.knockBackResist;
-			target.velocity += Projectile.velocity.SafeNormalize(default) * hit.Knockback * (Projectile.velocity.Y > 0 ? 2 : 0.5f);
+			if (!float.IsNaN(hit.Knockback)) target.velocity += Projectile.velocity.SafeNormalize(default) * hit.Knockback * (Projectile.velocity.Y > 0 ? 2 : 0.5f);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.ai[0] = 1;

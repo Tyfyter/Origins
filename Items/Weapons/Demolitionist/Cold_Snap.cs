@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		};
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Cold_Snap_P>(15, 32, 16f, 50, 24);
+			Item.knockBack = 3;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Orange;

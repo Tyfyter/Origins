@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		};
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Eruption_P>(27, 32, 16f, 50, 26, true);
+			Item.knockBack = 6;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
