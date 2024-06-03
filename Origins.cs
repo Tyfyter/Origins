@@ -36,6 +36,7 @@ using AltLibrary.Common.AltBiomes;
 using Origins.NPCs;
 using Origins.Tiles.Banners;
 using Origins.Graphics;
+using MonoMod.Cil;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -97,12 +98,28 @@ namespace Origins {
 		public static AutoCastingAsset<Texture2D> eyndumCoreUITexture;
 		public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
 		public static Texture2D[] CloudBottoms;
-		public static List<IUnloadable> unloadables = new();
-		public static List<object> loggedErrors = new();
+		public static List<IUnloadable> unloadables = [];
+		public static List<object> loggedErrors = [];
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
 			celestineBoosters = new int[3];
+#if DEBUG
+			try {
+				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));
+				if (meth is not null) {
+					MonoModHooks.Modify(meth, il => {
+						ILCursor c = new(il);
+						c.GotoNext(MoveType.Before, ILPatternMatchingExt.MatchRet);
+						c.EmitLdstr("_ ");
+						c.EmitLdstr(" ");
+						c.EmitCall(typeof(String).GetMethod(nameof(String.Replace), [typeof(string), typeof(string)]));
+					});
+				}
+			} catch (Exception e) {
+				_ = e;
+			}
+#endif
 		}
 		internal void LateLoad() {
 			#region vanilla explosive base damage registry

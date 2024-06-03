@@ -1185,6 +1185,8 @@ Projectiles: {
 	Dark_Spiral_Thrown.DisplayName: Dark Spiral
 	Waning_Crescent_P.DisplayName: Waning Crescent
 	Waning_Crescent_Thrown.DisplayName: Waning Crescent
+	True_Light_Disc_Thrown.DisplayName: True Light Disc
+	Plasma_Cutter_P.DisplayName: Plasma Cutter
 }
 
 Prefixes: {

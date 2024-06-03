@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shootSpeed = 11.75f;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
@@ -108,6 +108,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.ignoreWater = false;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override Color? GetAlpha(Color lightColor) {

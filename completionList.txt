@@ -547,12 +547,12 @@ MELEE WEAPONS:
 (^) Baseball Bat
 (^) Bone Latcher
 (^) Cyah Nara
-(#, ^2) Dark Spiral !!!
+(☻) Dark Spiral !!!
 (^) Decimator
 (^) Endowood Sword
 (^) Felnum Spear
 (^) Fiberglass Broadsword
-(#, ^2) Hemorang !!!
+(☻) Hemorang !!!
 (^) Krakram*
 (^) Marrowick Sword
 (^) Nineball
@@ -567,7 +567,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword (Cursed)
 (^) Vorpal Sword (Uncursed)
-(#, ^2) Waning Crescent !!!
+(☻) Waning Crescent !!!
 
 (#2, ^2) Amenonuhoko
 (#, ^2) Amoebash !!!
@@ -585,7 +585,7 @@ MELEE WEAPONS:
 (^) Personal Laser Blade*
 (X) Pile Bunker
 (#, ^2) Terrarang !!!
-(X) True Light Disc !!!
+(☻) True Light Disc !!!
 (#, ^2) True Waning Crescent !!!
 
 (X) Celestial Point
@@ -629,7 +629,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
-(#, ^2) Dart Crossbow !!!
+(☻) Dart Crossbow !!!
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
 (X) Frequency

@@ -225,6 +225,7 @@ namespace Origins.NPCs {
 				npc.AddBuff(Torn_Debuff.ID, duration);
 				globalNPC.tornSeverityRate = targetSeverity / targetTime;
 				globalNPC.tornTarget = targetSeverity;
+				npc.netUpdate = true;
 			}
 			/*bool hadTorn = npc.HasBuff(Torn_Debuff.ID);
 			npc.AddBuff(Torn_Debuff.ID, duration);

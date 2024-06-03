@@ -9,15 +9,14 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Avulsion : ModItem, ICustomWikiStat {
         static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Torn",
             "TornSource",
             "Wand"
-        };
+        ];
         public override void SetStaticDefaults() {
             Item.staff[Item.type] = true;
             glowmask = Origins.AddGlowMask(this);
-            Item.ResearchUnlockCount = 1;
         }
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

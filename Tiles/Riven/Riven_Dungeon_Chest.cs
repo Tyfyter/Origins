@@ -63,7 +63,4 @@ namespace Origins.Tiles.Riven {
 			Item.glowMask = glowmask;
 		}
 	}
-	public class Riven_Dungeon_Chest_Placeholder_Item : ModItem {
-		public override string Texture => "Origins/Tiles/Riven/Riven_Dungeon_Chest_Item";
-	}
 }
