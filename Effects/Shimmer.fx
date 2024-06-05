@@ -78,7 +78,7 @@ float4 Shimmer(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 
 	if (uDirection < 0) {
 		pixelCoords.x = uSourceRect.z - pixelCoords.x;
 	}
-	float2 worldPosition = (pixelCoords + uWorldPosition) / 16;
+	float2 worldPosition = (pixelCoords + uOffset) / 16;
 	return lerp(color, color.a, 0) * GetShimmerBaseColor(worldPosition) * 2 + GetShimmerGlitterColor(worldPosition) * clamp(pow(1.0 - round(rainbowFactor * 3.0) / 3.0, 15) * 15, 0, 1) * 0.5;
 }
 

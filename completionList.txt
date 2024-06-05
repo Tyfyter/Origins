@@ -649,7 +649,7 @@ RANGED WEAPONS:
 (X) EAC Thunder*
 (X) Fungi Pipe
 (^) Laser Tag Gun
-(#, ^2) Plasma Cutter !!!
+(☻) Plasma Cutter !!!
 (X) Seventh Spline
 (X) Shroomshot
 (X) Skewr
@@ -683,7 +683,7 @@ MAGIC WEAPONS:
 (^) Dismay
 (^) Innermost Manifest
 (^) Seam Beam
-(#3, ^2) Shimmer Rod !!!
+(☻) Shimmer Rod !!!
 (X) Shinedown
 (^) Splashid
 (^) Startillery
@@ -776,14 +776,14 @@ EXPLOSIVE WEAPONS:
 (^) Impact Dynamite*
 (^) Impact Grenade*
 (#, ^2) Internal Combustionfish* !!!
-(#, ^2) Link Grenade* !!!
+(☻) Link Grenade* !!!
 (#, ^2) Matrix* !!!
 (^) Meteor*
 (^) Outbreak Bomb*
 (^) Peatball*
 (^) Potato Mine*
 (^) Shrapnel Bomb*
-(#, ^2) Sticky Link Grenade* !!!
+(☻) Sticky Link Grenade* !!!
 
 (#3, ^2) Acrid Handcannon* !!!
 (^) Alkaline Bomb*

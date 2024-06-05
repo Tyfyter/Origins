@@ -40,7 +40,8 @@ namespace Origins.Items.Weapons.Magic {
 					while (cachedClouds.Count != 0) {
 						self.DrawProj(cachedClouds.Pop());
 					}
-					Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null));
+					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null);
+					Origins.shaderOroboros.Stack(shader);
 					Origins.shaderOroboros.Release();
 				} finally {
 					GraphicsUtils.drawingEffect = false;
@@ -68,6 +69,12 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.ai[1] = value.Y;
 			}
 		}
+		public float TargetRot {
+			get {
+				Vector2 diff = Main.MouseWorld - TargetPos;
+				return diff == default ? 0 : diff.ToRotation() - MathHelper.PiOver2;
+			}
+		}
 		public override void OnSpawn(IEntitySource source) {
 			TargetPos = Main.MouseWorld;
 		}
@@ -80,12 +87,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.Center = owner.itemLocation + new Vector2(24 * owner.direction, -24).RotatedBy(owner.itemRotation);
 				if (!owner.channel && Main.myPlayer == Projectile.owner) {
 					Projectile.ai[2] = 1;
-					Vector2 diff = (Main.MouseWorld - TargetPos);
-					if (diff == default) {
-						Projectile.localAI[0] = 0;
-					} else {
-						Projectile.localAI[0] = diff.ToRotation() - MathHelper.PiOver2;
-					}
+					Projectile.localAI[0] = TargetRot;
 					Projectile.netUpdate = true;
 				}
 			} else {
@@ -127,10 +129,34 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.frame = 0;
 			}
 		}
+		readonly Vector2[] raindicators = new Vector2[4];
+		int raindicatorTimer = 0;
 		public override bool PreDraw(ref Color lightColor) {
 			if (!GraphicsUtils.drawingEffect) {
 				Shimmer_Rod.cachedClouds.Push(Projectile.whoAmI);
 				return false;
+			}
+			if (Main.myPlayer == Projectile.owner && Projectile.ai[2] == 0) {
+				if (++raindicatorTimer % 15 == 1) {
+					if (raindicatorTimer > 60) raindicatorTimer -= 60;
+					raindicators[raindicatorTimer / 15] = new(Main.rand.Next(-10, 11), 32);
+				}
+				Color raindicatorColor = new Color(1f, 0, 0.08f, 0.3f) * 0.2f;
+				float rot = TargetRot;
+				for (int i = 0; i < raindicators.Length; i++) {
+					if (raindicators[i].Y > 32 + 100) continue;
+					Main.spriteBatch.Draw(
+						TextureAssets.Projectile[Shimmer_Cloud_Rain.ID].Value,
+						TargetPos - Main.screenPosition + raindicators[i].RotatedBy(rot),
+						null,
+						raindicatorColor,
+						rot,
+						new(1, 39),
+						1,
+						SpriteEffects.None,
+					0);
+					raindicators[i].Y += 4;
+				}
 			}
 			lightColor = Color.LightGray;
 			return true;
@@ -140,10 +166,14 @@ namespace Origins.Items.Weapons.Magic {
 			Rectangle frame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 4);
 			Main.spriteBatch.Draw(
 				TextureAssets.Projectile[Type].Value,
-				TargetPos - Main.screenPosition - frame.Size() * 0.5f,
+				TargetPos - Main.screenPosition,
 				frame,
-				Color.White * 0.6f
-			);
+				Color.White * 0.4f,
+				TargetRot,
+				frame.Size() * 0.5f,
+				1,
+				SpriteEffects.None,
+			0);
 		}
 		public override bool ShouldUpdatePosition() => false;
 	}
@@ -234,7 +264,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.GetSource_FromAI(),
 					Projectile.Center + unit * 24 + perp * Main.rand.Next(-14, 15),
 					unit * 5,
-					ModContent.ProjectileType<Shimmer_Cloud_Rain>(),
+					Shimmer_Cloud_Rain.ID,
 					Projectile.damage,
 					Projectile.knockBack,
 					Projectile.owner,
@@ -271,8 +301,10 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Shimmer_Cloud_Rain : ModProjectile {
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Origins.HomingEffectivenessMultiplier[Type] = 2;
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RainFriendly);

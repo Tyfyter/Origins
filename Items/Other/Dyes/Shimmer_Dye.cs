@@ -18,9 +18,13 @@ namespace Origins.Items.Other.Dyes {
 		];
 		public override void SetStaticDefaults() {
 			ID = Type;
-			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
+			GameShaders.Armor.BindShader(Type, new DelegatedArmorShaderData(
 				Mod.Assets.Request<Effect>("Effects/Shimmer"),
-				"Shimmer"
+				"Shimmer",
+				(self, entity, data) => {
+					Vector2 pos = entity is null ? Main.screenPosition : ((data?.position??entity.position) + Main.screenPosition) * 0.25f;
+					self.Shader.Parameters["uOffset"].SetValue(pos);
+				}
 			));
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 			Item.ResearchUnlockCount = 3;
