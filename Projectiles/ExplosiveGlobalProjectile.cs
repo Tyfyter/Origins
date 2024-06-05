@@ -2,6 +2,7 @@
 using Origins.Items;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Projectiles.Weapons;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Origins.Projectiles {
 		public bool magicTripwire = false;
 		public bool magicTripwireTripped = false;
 		public bool noTileSplode = false;
+		public bool acridHandcannon = false;
 		public bool novaCascade = false;
 		public bool novaSwarm = false;
 		public bool hasAmber = false;
@@ -143,6 +145,7 @@ namespace Origins.Projectiles {
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is ISelfDamagePrefix sdPrefix) {
 					selfDamageModifier = selfDamageModifier.CombineWith(sdPrefix.SelfDamage());
 				}
+				acridHandcannon = itemUse.Item.type == Acrid_Handcannon.ID;
 				novaCascade = itemUse.Item.type == Nova_Cascade.ID;
 				novaSwarm = itemUse.Item.type == Nova_Swarm.ID;
 				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
@@ -377,7 +380,6 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 			if (novaCascade) {
 				int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
 				if (projectile.type != type) {
@@ -394,6 +396,21 @@ namespace Origins.Projectiles {
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
 			if (!fromDeath && projectile.owner == Main.myPlayer) {
+				if (acridHandcannon) {
+					const int count = 6;
+					const float portion = MathHelper.TwoPi / count;
+					int projType = ModContent.ProjectileType<Acid_Shot>();
+					for (int i = 0; i < count; i++) {
+						Projectile.NewProjectile(
+							projectile.GetSource_Death(),
+							projectile.Center,
+							new Vector2(6, 0).RotatedByRandom(i * portion + Main.rand.NextFloat(-0.1f, 0.1f)),
+							projType,
+							projectile.damage / 3,
+							projectile.knockBack / 4
+						);
+					}
+				}
 				if (novaCascade) {
 					int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
 					if (projectile.type != type) {
@@ -410,12 +427,13 @@ namespace Origins.Projectiles {
 				if (hasAmber) {
 					const int count = 6;
 					const float portion = MathHelper.TwoPi / count;
+					int projType = ModContent.ProjectileType<Amber_Shard>();
 					for (int i = 0; i < count; i++) {
 						Projectile.NewProjectile(
 							projectile.GetSource_Death(),
 							projectile.Center,
 							new Vector2(6, 0).RotatedByRandom(i * portion + Main.rand.NextFloat(-0.1f, 0.1f)),
-							ModContent.ProjectileType<Amber_Shard>(),
+							projType,
 							projectile.damage / 4,
 							projectile.knockBack / 8
 						);

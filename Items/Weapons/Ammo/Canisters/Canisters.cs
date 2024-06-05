@@ -604,10 +604,14 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void AI() {
 			Projectile.velocity.Y += 0.08f;
 			Lighting.AddLight(Projectile.Center, 0.78f, 0.75f, 0.2f);
-			Dust.NewDustPerfect(Projectile.Center, 228, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = false;
+			Dust.NewDustPerfect(Projectile.Center, 228, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginGlobalNPC.InflictTorn(target, 180, 180, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Projectile.timeLeft -= 2;
+			return false;
 		}
 	}
 	public class Alkaline_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
@@ -641,42 +645,18 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			if (projectile.ModProjectile is ICanisterProjectile canister) {
 				canister.DefaultExplosion(projectile);
 			}
+			int projType = ModContent.ProjectileType<Projectiles.Weapons.Acid_Shot>();
 			for (int i = 0; i < 6; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
 					projectile.Center,
-					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f, Alkaline_Canister_Droplet.ID,
+					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
+					projType,
 					(int)(projectile.damage * 0.35f),
 					0,
 					projectile.owner
 				);
 			}
-		}
-	}
-	public class Alkaline_Canister_Droplet : ModProjectile, ICanisterChildProjectile {
-		public override string Texture => typeof(Bile_Dart_Aura).GetDefaultTMLName();
-		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			ID = Type;
-		}
-		public override void SetDefaults() {
-			Projectile.hide = true;
-			Projectile.width = Projectile.height = 4;
-			Projectile.friendly = true;
-			Projectile.penetrate = 2;
-			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 15;
-			Projectile.tileCollide = true;
-			Projectile.timeLeft = 180;
-		}
-		public override void AI() {
-			Projectile.velocity.Y += 0.08f;
-			Lighting.AddLight(Projectile.Center, 0.78f, 0.75f, 0.2f);
-			Dust.NewDustPerfect(Projectile.Center, DustID.CoralTorch, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = true;
-		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Projectile.timeLeft -= 2;
-			return false;
 		}
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {

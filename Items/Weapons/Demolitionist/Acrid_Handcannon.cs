@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Acrid_Handcannon : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "HardmodeHandcannon",
+        public string[] Categories => [
+            "Handcannon",
 			"ToxicSource"
-        };
+        ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
@@ -38,10 +38,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return Vector2.Zero;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 18);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 18)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == Metal_Slug_P.ID) type = Item.shoot;

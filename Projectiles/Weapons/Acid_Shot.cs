@@ -12,13 +12,14 @@ namespace Origins.Projectiles.Weapons {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
-			Projectile.penetrate = 1;//when projectile.penetrate reaches 0 the projectile is destroyed
+			Projectile.DamageType = DamageClass.Default;
+			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 1;
 			Projectile.width = Projectile.height = 10;
 			Projectile.light = 0;
 			Projectile.timeLeft = 180;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 20;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 5;
 		}
 		public override void AI() {
 			if (Projectile.ai[1] <= 0/*projectile.timeLeft<168*/) {
@@ -35,7 +36,7 @@ namespace Origins.Projectiles.Weapons {
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Projectile.timeLeft > 168 && (Projectile.ai[1] % 1 + 1) % 1 == 0.5f) {
+			if (Projectile.ai[1] > 0) {
 				Projectile.velocity -= oldVelocity - Projectile.velocity;
 				return false;
 			}
@@ -48,6 +49,7 @@ namespace Origins.Projectiles.Weapons {
 				dust.noGravity = true;
 				dust.noLight = true;
 			}
+			Projectile.friendly = true;
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = (int)(96 * Projectile.scale);
@@ -59,7 +61,9 @@ namespace Origins.Projectiles.Weapons {
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (Projectile.timeLeft > 168 && (Projectile.ai[1] % 1 + 1) % 1 == 0.5f) Projectile.penetrate++;
+			if (Projectile.ai[1] <= 0) {
+				Projectile.penetrate = 0;
+			}
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
 			Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f * Projectile.scale);
 			dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
