@@ -1,8 +1,11 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -58,6 +61,7 @@ namespace Origins.Items.Accessories {
 						player.AddBuff(353, 60);
 					}
 				}
+				TryPickupItems();
 				/*Rectangle playerHitbox = player.Hitbox;
 				try {
 					player.Hitbox = Item.Hitbox;
@@ -68,6 +72,68 @@ namespace Origins.Items.Accessories {
 					originPlayer.isVoodooPickup = false;
 				}*/
 			}
+		}
+		void TryPickupItems() {
+			Vector2 center = player.Center;
+			try {
+				player.Center = Item.Center;
+				Rectangle pullHitbox = new((int)Item.position.X, (int)Item.position.Y, Item.width, Item.height);
+				for (int i = 0; i < Main.maxItems; i++) {
+					Item item = Main.item[i];
+					if (!item.active) continue;
+					if (item.type == Type) continue;
+					if (PreventItemPickup(item, player)) continue;
+					if (item.Hitbox.Intersects(Item.Hitbox)) {
+						if (player.whoAmI != Main.myPlayer || (player.HeldItem.type == ItemID.None && player.itemAnimation > 0)) {
+							continue;
+						}
+						if (CombinedHooks.OnPickup(item, player)) {
+							PlayerMethods.PickupItem(player, i, item);
+						} else {
+							Main.item[i] = new Item();
+							if (Main.netMode == NetmodeID.MultiplayerClient) {
+								NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i);
+							}
+						}
+					} else {
+						int itemGrabRange = player.GetItemGrabRange(item);
+						pullHitbox.Inflate(itemGrabRange, itemGrabRange);
+						if (pullHitbox.Intersects(item.Hitbox)) {
+							Player.ItemSpaceStatus status = player.ItemSpace(item);
+							if (player.CanPullItem(item, status)) {
+								item.shimmered = false;
+								item.beingGrabbed = true;
+								if (!ItemLoader.GrabStyle(item, player)) {
+									if (player.manaMagnet && (item.type is ItemID.Star or ItemID.SoulCake or ItemID.SugarPlum)) {
+										PlayerMethods.PullItem_Pickup(player, item, 12f, 5);
+									} else if (player.lifeMagnet && (item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane)) {
+										PlayerMethods.PullItem_Pickup(player, item, 15f, 5);
+									} else if (ItemID.Sets.NebulaPickup[item.type]) {
+										PlayerMethods.PullItem_Pickup(player, item, 12f, 5);
+									} else if (status.ItemIsGoingToVoidVault) {
+										PlayerMethods.PullItem_ToVoidVault(player, item);
+									} else if (player.goldRing && item.IsACoin) {
+										PlayerMethods.PullItem_Pickup(player, item, 12f, 5);
+									} else {
+										PlayerMethods.PullItem_Common(player, item, 0.75f);
+									}
+								}
+							}
+						}
+						pullHitbox.Inflate(-itemGrabRange, -itemGrabRange);
+					}
+				}
+			} finally {
+				player.Center = center;
+			}
+		}
+		static bool PreventItemPickup(Item item, Player player) {
+			return item.shimmerTime != 0f
+				|| item.noGrabDelay != 0
+				|| item.playerIndexTheItemIsReservedFor != player.whoAmI
+				|| !player.CanAcceptItemIntoInventory(item)
+				|| (item.shimmered && !((double)item.velocity.Length() < 0.2))
+				|| !ItemLoader.CanPickup(item, player);
 		}
 		/*public override bool CanPickup(Player player) {
 			return !player.GetModPlayer<OriginPlayer>().isVoodooPickup;

@@ -419,7 +419,7 @@ ACCESSORIES:
 (^) Scribe of the Meat God*
 (#2, ^2) Stack of Shraps*
 (^) Strange Tooth*
-(#2, ^2) Terrarian Voodoo Doll* !!!
+(☻) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*
 

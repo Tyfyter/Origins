@@ -872,7 +872,7 @@ Buffs: {
 	}
 
 	Ziptie_Buff: {
-		// DisplayName: Ziptie Buff
+		// DisplayName: Ziptied
 		// Description: Mods.Origins.Buffs.Ziptie_Buff.Description
 	}
 }
@@ -1192,7 +1192,7 @@ Projectiles: {
 	// Waning_Crescent_Thrown.DisplayName: Waning Crescent
 	// True_Light_Disc_Thrown.DisplayName: True Light Disc
 	// Plasma_Cutter_P.DisplayName: Plasma Cutter
-	// Ziptie_P.DisplayName: Ziptie P
+	// Ziptie_P.DisplayName: Ziptie
 }
 
 Prefixes: {
