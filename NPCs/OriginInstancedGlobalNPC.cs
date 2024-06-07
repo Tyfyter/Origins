@@ -24,6 +24,7 @@ namespace Origins.NPCs {
 		internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
 		internal bool jointPopDebuff = false;
+		internal bool ziptieDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;

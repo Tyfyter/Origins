@@ -253,6 +253,9 @@ namespace Origins.NPCs {
 				if (jointPopDebuff) {
 					damageBoost += 3f;
 				}
+				if (ziptieDebuff) {
+					damageBoost += 6f;
+				}
 				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost);
 			} else if (npc.HasBuff(Futurephones_Buff.ID)) {
 				modifiers.SourceDamage *= 1.05f;

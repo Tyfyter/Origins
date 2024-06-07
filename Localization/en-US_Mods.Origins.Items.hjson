@@ -4251,3 +4251,8 @@ Plasma_Cutter: {
 	DisplayName: Plasma Cutter
 	Tooltip: ""
 }
+
+Ziptie: {
+	DisplayName: Ziptie
+	Tooltip: ""
+}

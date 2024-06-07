@@ -870,6 +870,11 @@ Buffs: {
 		// DisplayName: Spiker Counter Debuff
 		// Description: Mods.Origins.Buffs.Spiker_Counter_Debuff.Description
 	}
+
+	Ziptie_Buff: {
+		// DisplayName: Ziptie Buff
+		// Description: Mods.Origins.Buffs.Ziptie_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1187,6 +1192,7 @@ Projectiles: {
 	// Waning_Crescent_Thrown.DisplayName: Waning Crescent
 	// True_Light_Disc_Thrown.DisplayName: True Light Disc
 	// Plasma_Cutter_P.DisplayName: Plasma Cutter
+	// Ziptie_P.DisplayName: Ziptie P
 }
 
 Prefixes: {

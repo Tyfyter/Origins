@@ -356,7 +356,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(30);
+			Item.DefaultToCanister(27);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;
@@ -440,7 +440,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(30);
+			Item.DefaultToCanister(35);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.ArmorPenetration += 3;

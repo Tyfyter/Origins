@@ -734,7 +734,7 @@ SUMMONER WEAPONS:
 (X) Mildew Whip
 (X) Obsidian Bone
 (#, ^2) Scabcoral Lyre !!!
-(#, ^2) Ziptie !!!
+(☻) Ziptie !!!
 
 (X) Candlelight
 (X) Controller/Patrol Bot Controller
