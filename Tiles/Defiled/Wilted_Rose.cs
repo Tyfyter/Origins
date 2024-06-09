@@ -11,7 +11,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Wilted_Rose : OriginTile, DefiledTile, ICustomWikiStat {
+	public class Wilted_Rose : OriginTile, IDefiledTile, ICustomWikiStat {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
         public string[] Categories => [
             "Plant"

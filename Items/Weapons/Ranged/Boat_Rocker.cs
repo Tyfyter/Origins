@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "HardmodeHarpoonGun"
-        };
+        public new string[] Categories => [
+            "HarpoonGun"
+        ];
         public override void SetDefaults() {
 			Item.damage = 48;
 			Item.DamageType = DamageClass.Ranged;

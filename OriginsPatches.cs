@@ -406,7 +406,6 @@ namespace Origins {
 			};
 			IL_ShopHelper.AddHappinessReportText += (il) => {
 				ILCursor c = new(il);
-				ShopHelper g;
 				if (c.TryGotoNext(MoveType.Before,
 					i => i.MatchStloc0()
 				)) {

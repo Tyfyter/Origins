@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Ice : OriginTile, DefiledTile {
+	public class Defiled_Ice : OriginTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.Ices[Type] = true;

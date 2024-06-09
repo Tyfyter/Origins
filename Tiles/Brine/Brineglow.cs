@@ -14,7 +14,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brineglow : OriginTile, DefiledTile, IGlowingModTile {
+    public class Brineglow : OriginTile, IDefiledTile, IGlowingModTile {
         public string[] Categories => new string[] {
             "Plant"
         };

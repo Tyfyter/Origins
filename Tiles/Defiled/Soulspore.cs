@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Soulspore : OriginTile, DefiledTile {
+    public class Soulspore : OriginTile, IDefiledTile {
         public string[] Categories => new string[] {
             "Plant"
         };

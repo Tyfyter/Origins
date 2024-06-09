@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Grass : OriginTile, RivenTile {
+	public class Riven_Grass : OriginTile, IRivenTile {
         public string[] Categories => new string[] {
             "Grass"
         };
@@ -52,7 +52,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 	}
-	public class Riven_Jungle_Grass : OriginTile, RivenTile {
+	public class Riven_Jungle_Grass : OriginTile, IRivenTile {
 		public override void SetStaticDefaults() {
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Grass : OriginTile, DefiledTile {
+	public class Defiled_Grass : OriginTile, IDefiledTile {
         public string[] Categories => new string[] {
             "Grass"
         };
@@ -58,7 +58,7 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 	}
-	public class Defiled_Jungle_Grass : OriginTile, DefiledTile {
+	public class Defiled_Jungle_Grass : OriginTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;

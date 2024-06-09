@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -39,9 +41,9 @@ namespace Origins.NPCs.Defiled {
 		public float Mana { get; set; }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				ItemID.SoulDrain, // Communion
+				ModContent.ItemType<Communion>(),
 				ModContent.ItemType<Incision>(),
-				ItemID.FetidBaghnakhs, // Ziptie
+				ModContent.ItemType<Ziptie>(),
 				ModContent.ItemType<Ravel>(),
 				ItemID.TendonHook // Chunky Hook
 			));

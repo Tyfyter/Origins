@@ -46,10 +46,10 @@ namespace Origins.NPCs.Riven {
             return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Shark1;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                this.GetBestiaryFlavorText("This menacing shark has adapted to the Hive's ecosystem quite well, taking on a triple-mandible design used for crushing and cracking nautili caught in its path."),
+            bestiaryEntry.Info.AddRange([
+                this.GetBestiaryFlavorText(),
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Sandstorm
-            });
+            ]);
         }
         public override void AI() {
             if (++NPC.frameCounter > 5) {

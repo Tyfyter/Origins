@@ -567,7 +567,6 @@ namespace Origins.NPCs.Defiled.Boss {
 	}
 	public class Boss_Bar_DA : ModBossBar {
 		int lifeMax;
-		int life;
 		bool isDead = false;
 		float lastTickPercent = 1f;
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {

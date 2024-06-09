@@ -376,7 +376,7 @@ namespace Origins.NPCs {
 					pool[NPCID.DesertBeast] = 1f;
 				}
 			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
+			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 
 				if (spawnInfo.SpawnTileY > Main.worldSurface && !spawnInfo.DesertCave) {
@@ -401,7 +401,7 @@ namespace Origins.NPCs {
 					SkipMiteSpawn:;
 				}
 			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile || player.InModBiome<Riven_Hive>()) {
+			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || player.InModBiome<Riven_Hive>()) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 			}
 			if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) {

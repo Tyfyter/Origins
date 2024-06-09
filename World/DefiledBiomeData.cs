@@ -100,7 +100,7 @@ namespace Origins.World.BiomeData {
 			public const float AncientCyclops = 0.03f;
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Defiled_Ore>())) {
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Defiled_Ore>())) {
 					return 1f;
 				}
 				return 0f;
@@ -731,7 +731,7 @@ namespace Origins.World.BiomeData {
 		public override bool PreConvertMultitileAway(int i, int j, int width, int height, ref int newTile, AltBiome targetBiome) {
 			Tile corner = Main.tile[i, j];
 			int frameOffsetX = 0;
-			int frameOffsetY = 0;
+			//int frameOffsetY = 0;
 			bool convert = false;
 			if (corner.TileType == ModContent.TileType<Defiled_Large_Foliage>()) {
 				newTile = TileID.LargePiles;

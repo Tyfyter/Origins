@@ -221,19 +221,7 @@ namespace Origins.Items.Pets {
 			return true;
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.projFrames[Type] = 6;
 			return true;
-			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-			Main.EntitySpriteDraw(
-				texture,
-				Projectile.Center - Main.screenPosition,
-				new Rectangle(0, Projectile.frame * 52, 56, 50),
-				lightColor,
-				Projectile.rotation,
-				new Vector2(28, 25),
-				Projectile.scale,
-				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-				0);
 		}
 	}
 }

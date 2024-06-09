@@ -195,9 +195,9 @@ namespace Origins.Dev {
 						const int _height = _width + 4;
 						const int _bit_depth = _height + 4;
 						const int _color_type = _bit_depth + 1;
-						const int _compression = _color_type + 1;
-						const int _filter = _compression + 1;
-						const int _interlace = _filter + 1;
+						//const int _compression = _color_type + 1;
+						//const int _filter = _compression + 1;
+						//const int _interlace = _filter + 1;
 						string test = "";
 						string hex = "";
 						for (int j = 0; j < buffer.Length; j++) {

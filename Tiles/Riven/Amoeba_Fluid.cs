@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Amoeba_Fluid : OriginTile, RivenTile, IGlowingModTile {
+	public class Amoeba_Fluid : OriginTile, IRivenTile, IGlowingModTile {
         public string[] Categories => new string[] {
             "OtherBlock"
         };

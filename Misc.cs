@@ -2445,7 +2445,12 @@ namespace Origins {
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
 		}
-		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, string defaultValue = null) {
+		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc) {
+			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", () => "bestiary text here");
+			return new FlavorTextBestiaryInfoElement($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}");
+		}
+		[Obsolete("Should not be used as it puts text data in code just to set a default value")]
+		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, string defaultValue) {
 			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", defaultValue is null ? (() => "bestiary text here") : (() => defaultValue));
 			return new FlavorTextBestiaryInfoElement($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}");
 		}

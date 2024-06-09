@@ -198,7 +198,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 
 			#region Movement
-			movement:
 			// Default movement parameters (here for attacking)
 			float speed = 6f + Projectile.localAI[0] / 15;
 			float turnSpeed = 1f + Math.Max((Projectile.localAI[0] - 15) / 30, 0);

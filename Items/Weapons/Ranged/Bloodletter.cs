@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Bloodletter : Harpoon_Gun, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public new string[] Categories => [
             "HarpoonGun"
-        };
+        ];
         public override void SetDefaults() {
 			Item.damage = 30;
 			Item.DamageType = DamageClass.Ranged;

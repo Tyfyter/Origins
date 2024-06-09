@@ -160,41 +160,6 @@ namespace Origins.Items.Weapons.Summoner {
 
 			DrawLine(list);
 			return false;
-			SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally; //This code is unreachable, is this intended?
-
-			Main.instance.LoadProjectile(Type);
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
-
-			Vector2 pos = list[0];
-
-			for (int i = 0; i < list.Count - 1; i++) {
-				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
-				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 48, 28);
-				Vector2 origin = new Vector2(24, 14);
-				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
-
-				if (i == list.Count - 2) {
-					frame.Y = 112;
-				} else if (i > 10) {
-					frame.Y = 84;
-				} else if (i > 5) {
-					frame.Y = 56;
-				} else if (i > 0) {
-					frame.Y = 28;
-				}
-
-				Vector2 element = list[i];
-				Vector2 diff = list[i + 1] - element;
-
-				float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
-				Color color = Lighting.GetColor(element.ToTileCoordinates());
-
-				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, flip, 0);
-
-				pos += diff;
-			}
-			return false;
 		}
 	}
 }

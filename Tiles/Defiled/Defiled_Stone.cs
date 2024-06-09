@@ -7,7 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Stone : OriginTile, DefiledTile {
+	public class Defiled_Stone : OriginTile, IDefiledTile {
         public string[] Categories => new string[] {
             "Stone"
         };

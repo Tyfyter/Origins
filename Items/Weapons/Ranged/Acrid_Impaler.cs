@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "HardmodeHarpoonGun",
+        public new string[] Categories => [
+            "HarpoonGun",
 			"ToxicSource"
-        };
+        ];
         public override void SetDefaults() {
 			Item.damage = 48;
 			Item.DamageType = DamageClass.Ranged;

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Primordial_Permafrost : OriginTile, RivenTile {
+    public class Primordial_Permafrost : OriginTile, IRivenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.Ices[Type] = true;

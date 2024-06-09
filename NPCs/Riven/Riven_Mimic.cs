@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using Terraria;
@@ -41,7 +42,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.ItemType<Dart_Crossbow>(), // Dart Crossbow
 				ItemID.FetidBaghnakhs, // Amoebash
 				ModContent.ItemType<Tainted_Flesh>(),
-				ItemID.TendonHook // Salty Seed (Eutrophic Cell, aka Mitosis)
+				ModContent.ItemType<Amoeba_Hook>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));

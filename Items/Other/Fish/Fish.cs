@@ -13,7 +13,7 @@ namespace Origins.Items.Other.Fish {
 			Item.DefaultToQuestFish();
 		}
 		public override bool IsAnglerQuestAvailable() {
-			return OriginSystem.WorldEvil == OriginSystem.evil_wastelands;
+			return OriginSystem.HasDefiledWastelands;
 		}
 		public override bool IsQuestFish() => true;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
@@ -34,7 +34,7 @@ namespace Origins.Items.Other.Fish {
 			Item.glowMask = glowmask;
 		}
 		public override bool IsAnglerQuestAvailable() {
-			return OriginSystem.WorldEvil == OriginSystem.evil_riven;
+			return OriginSystem.HasRivenHive;
 		}
 		public override bool IsQuestFish() => true;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {

@@ -114,7 +114,7 @@ namespace Origins.World.BiomeData {
 			public const float Whip = 0.2f;
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
 					return 1f;
 				}
 				return 0f;
@@ -125,14 +125,12 @@ namespace Origins.World.BiomeData {
 			}
 		}
 		public static class Gen {
-			static int lesionCount = 0;
 			public enum FeatureType {
 				CHUNK,
 				CUSP,
 				CAVE
 			}
 			public static void StartHive(int i, int j) {
-				lesionCount = 0;
 				Vector2 pos = new Vector2(i, j);
 				ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
@@ -335,7 +333,6 @@ namespace Origins.World.BiomeData {
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
-				lesionCount = 0;
 				int j2 = j;
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;

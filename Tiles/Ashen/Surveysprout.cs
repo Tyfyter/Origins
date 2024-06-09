@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Surveysprout : OriginTile, AshenTile {
+	public class Surveysprout : OriginTile, IAshenTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
         public string[] Categories => new string[] {
             "Plant"

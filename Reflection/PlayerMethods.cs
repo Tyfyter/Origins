@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿#pragma warning disable CS0649
+#pragma warning disable IDE0044
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 

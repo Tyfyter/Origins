@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Flesh : OriginTile, RivenTile, IGlowingModTile {
+	public class Riven_Flesh : OriginTile, IRivenTile, IGlowingModTile {
         public string[] Categories => new string[] {
             "Stone"
         };
