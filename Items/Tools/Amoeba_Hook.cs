@@ -66,7 +66,7 @@ namespace Origins.Items.Tools {
 				if (progress + dist >= texture.Width - 2) {
 					progress = 0;
 				}
-				Rectangle frame = new Rectangle(0, progress + 2, 6, (int)dist);
+				Rectangle frame = new(0, progress + 2, 6, (int)dist);
 
 
 				data = new DrawData(texture,
@@ -77,8 +77,9 @@ namespace Origins.Items.Tools {
 					frame.Size() * 0.5f,
 					1,
 					SpriteEffects.None
-				);
-				data.shader = owner.cGrapple;
+				) {
+					shader = owner.cGrapple
+				};
 				Main.EntitySpriteDraw(data);
 				progress += 8;
 			}
