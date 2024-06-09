@@ -32,9 +32,9 @@ namespace Origins.NPCs.Riven {
 			];
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("A vicious defender of the Riven Hive, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;

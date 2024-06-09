@@ -33,9 +33,9 @@ namespace Origins.NPCs.Defiled {
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("A rare entity that is released only once its former vessel has been dislodged from its bile interior."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 1, 1, 2));

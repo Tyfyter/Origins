@@ -71,10 +71,10 @@ namespace Origins.NPCs.TownNPCs {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+			bestiaryEntry.AddTags(
 				Brine_Pool.BestiaryBackground,
-				this.GetBestiaryFlavorText("Secluded from the Temple, she took her ventures to live near the Brine Pool and grew a likeness to its contents.")
-			});
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override string GetChat() {
 			WeightedRandom<string> chat = new();

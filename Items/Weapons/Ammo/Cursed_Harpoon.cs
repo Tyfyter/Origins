@@ -87,14 +87,14 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AI() {
 			Projectile.friendly = true;
-			Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 75, 0f, 0f, 100);
+			Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100);
 			dust.position.X -= 2f;
 			dust.position.Y += 2f;
 			dust.scale += Main.rand.Next(50) * 0.01f;
 			dust.noGravity = true;
 			dust.velocity.Y -= 2f;
 			if (Main.rand.NextBool(2)) {
-				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 75, 0f, 0f, 100);
+				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100);
 				dust2.position.X -= 2f;
 				dust2.position.Y += 2f;
 				dust2.scale += 0.3f + Main.rand.Next(50) * 0.01f;

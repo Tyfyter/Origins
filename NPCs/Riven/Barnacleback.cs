@@ -42,9 +42,9 @@ namespace Origins.NPCs.Riven {
 			return rate / count;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Barnaclebacks are a keystone species to the Riven Hive, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 2, 5));

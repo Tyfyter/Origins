@@ -29,9 +29,9 @@ namespace Origins.NPCs.MiscE {
 			target.AddBuff(BuffID.Confused, 50);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("These entities possess a higher standing within the Crimson heirarchy as they bear the knowledge of its secrets."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));

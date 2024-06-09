@@ -34,14 +34,14 @@ namespace Origins.NPCs.Defiled {
 		}
 		public void SpawnWisp(NPC npc) { }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+			bestiaryEntry.AddTags(
 				/*if (heartBroken <= 1) {
 				this.GetBestiaryFlavorText(""A weapon directly forged by the {$Defiled}. This weapon is a machination of its curiosity, and a true testament to how intelligent it is.");
 				} else {
 				this.GetBestiaryFlavorText("A weapon directly forged by the {$Defiled}. This weapon is a machination of its curiosity.");
 				}*/
-				this.GetBestiaryFlavorText("A weapon directly forged by the {$Defiled}. This weapon is a machination of its curiosity."),
-			});
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));

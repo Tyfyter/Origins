@@ -123,9 +123,9 @@ namespace Origins.NPCs.Riven {
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Moeba;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Small and nearly undetectable in its natural habitat of the pools of the Riven Hive, this variant of the Primordial Amoeba swims to facilitate the process of assimilation or digestion."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.spriteDirection = NPC.direction;

@@ -37,9 +37,9 @@ namespace Origins.NPCs.MiscE {
 			NPC.value = 34;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("This Eater is in its first stage of the Eater life cycle. It goes straight for the eyes of its victims in hopes that it can prompt its own eye to grow in."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 5));

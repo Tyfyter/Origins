@@ -38,9 +38,9 @@ namespace Origins.NPCs.Riven {
 			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Silica>()], true) * Riven_Hive.SpawnRates.Mummy / 3f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("It was only a matter of time before the Riven got to the body. It now wanders aimlessly in the Rivenated deserts in search of new hosts."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void AI() {
 			NPC.TargetClosest();

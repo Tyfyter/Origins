@@ -1048,6 +1048,7 @@ namespace Origins.UI {
 
 			spriteBatch.Restart(spriteBatchState);
 		}
+		/*
 		static string loremIpsum =
 @"Dolores rerum odio perferendis aut enim est dicta. Cupiditate et mollitia dolorem. Magni ea laboriosam ad in tempore ab unde doloribus. Aut quam quae id ut consequatur. Quia reiciendis cumque incidunt.
 
@@ -1058,6 +1059,7 @@ Soluta corrupti delectus quod in quia reiciendis quo nihil. Culpa eum qui nesciu
 Excepturi minus consequuntur ipsum quos. Sit eius soluta nesciunt ipsam odio laudantium aut. Est voluptatibus et animi. Neque reiciendis est laborum quisquam qui amet error sunt. Molestias consequatur odit et quaerat repellendus quia.
 
 Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis molestias doloremque corrupti eaque molestiae illo molestiae. Quaerat velit itaque inventore reprehenderit et itaque. Nam aut rerum animi deleniti sed eius non rem. Iste aliquam architecto ut iste sit repellendus maxime quia.";
+		*/
 	}
 	public enum Journal_UI_Mode {
 		Normal_Page,

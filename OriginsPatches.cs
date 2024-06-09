@@ -932,12 +932,6 @@ namespace Origins {
 			orig(self, npcIndex, fromNet);
 		}
 
-		static bool npcChatQuestsFocus = false;
-		static bool npcChatQuestListSelected = false;
-		static int npcChatQuestListFocus = -1;
-		static bool npcChatQuestListBackFocus = false;
-		static int npcChatQuestIndexSelected = -1;
-		public static bool npcChatQuestSelected = false;
 		#endregion quests
 		#region plants
 		private void WorldGen_PlantAlchIL(ILContext il) {

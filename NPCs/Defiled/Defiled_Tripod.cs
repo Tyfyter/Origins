@@ -60,9 +60,9 @@ namespace Origins.NPCs.Defiled {
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Tripod;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Fast and hard-hitting, the Tripod is the last defense of the {§Defiled} before more extreme measures are taken. It is the last thing any traveler would want to encounter."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));

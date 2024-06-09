@@ -22,10 +22,10 @@ namespace Origins.NPCs.Riven {
 			AnimationType = NPCID.CorruptGoldfish;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange([
-				this.GetBestiaryFlavorText("Goldfish naturally evolve into dangerous, insoluble carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
-			]);
+			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {

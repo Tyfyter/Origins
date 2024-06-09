@@ -40,9 +40,9 @@ namespace Origins.NPCs.Riven {
 			if (NPC.velocity.X != 0) NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("This Riven-infested nautilus has grown accustomed to the amebic water's viscosity making it very agile on land. The sharpness of its shell is an added danger."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
             return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Seashell;

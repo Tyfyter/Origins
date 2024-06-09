@@ -19,20 +19,17 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
 namespace Origins {
-	[Label("Settings")]
 	public class OriginConfig : ModConfig {
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
 		[Header("VanillaBuffs")]
 
-		[Label("Infected Wood Items")]
 		[DefaultValue(true)]
 		public bool WoodBuffs = true;
 
 		[Header("Other")]
 
-		[Label("Universal Grass Merge")]
 		[ReloadRequired]
 		[DefaultValue(true)]
 		public bool GrassMerge = true;
@@ -44,7 +41,6 @@ namespace Origins {
 			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
 		}
 	}
-	[Label("Client Settings")]
 	public class OriginClientConfig : ModConfig {
 		public static OriginClientConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ClientSide;

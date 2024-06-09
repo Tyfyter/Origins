@@ -36,9 +36,9 @@ namespace Origins.NPCs.MiscE {
 			NPC.value = 56;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("An uncommon lifeform known to be in the second stage of the Eater life cycle. This creature prefers to start its meals by the head."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 3));

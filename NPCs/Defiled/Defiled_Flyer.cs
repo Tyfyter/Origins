@@ -47,8 +47,8 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 180f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange([
-				this.GetBestiaryFlavorText("A great antibody for reaching airborne or hard-to-reach threats. This may have once been a flying creature like a bird."),
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

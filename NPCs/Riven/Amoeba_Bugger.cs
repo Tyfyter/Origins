@@ -31,9 +31,9 @@ namespace Origins.NPCs.Riven {
 			//this.CopyBanner<Barnacle_Mound>();
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("These nasty bugs thrive in conditions like the Riven Hive feeding on flesh decayed from the barnacles. They also love it fresh whenever available."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void OnSpawn(IEntitySource source) {
 			NPC.velocity = new(NPC.ai[0], NPC.ai[1]);

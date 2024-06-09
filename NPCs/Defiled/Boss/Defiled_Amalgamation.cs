@@ -566,7 +566,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 	}
 	public class Boss_Bar_DA : ModBossBar {
-		int lifeMax;
 		bool isDead = false;
 		float lastTickPercent = 1f;
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
@@ -597,7 +596,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams) {
 			if (OriginsModIntegrations.PhaseIndicator?.Value is Texture2D phaseIndicator) {
 				int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
-				int tickSize = lifeMax / tickCount;
 				Vector2 barSize = new Vector2(456, 22);
 				Vector2 barPos = drawParams.BarCenter - barSize * new Vector2(0.5f, 0);
 				Vector2 origin = phaseIndicator.Size() / 2;

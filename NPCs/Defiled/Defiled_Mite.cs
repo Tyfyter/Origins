@@ -48,10 +48,10 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 120f;// 1 mana for every 1 health regenerated
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Dweller of the {$Defiled} Caverns. Hard to spot as it does not move until prey draws near."),
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
-			});
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
