@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Bled_Out_Staff : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "HardmodeWand"
+            "Wand"
         };
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;

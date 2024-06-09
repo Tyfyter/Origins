@@ -167,7 +167,7 @@ namespace Origins.NPCs {
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {
 			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
-			if (globalNPC.infusionSpikes is null) globalNPC.infusionSpikes = new List<int>();
+			globalNPC.infusionSpikes ??= [];
 			globalNPC.infusionSpikes.Add(projectileID);
 			if (globalNPC.infusionSpikes.Count >= 7) {
 				float damage = 0;

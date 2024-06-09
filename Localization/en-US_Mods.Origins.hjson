@@ -1193,6 +1193,7 @@ Projectiles: {
 	True_Light_Disc_Thrown.DisplayName: True Light Disc
 	Plasma_Cutter_P.DisplayName: Plasma Cutter
 	Ziptie_P.DisplayName: Ziptie
+	Communion_P.DisplayName: Communion
 }
 
 Prefixes: {

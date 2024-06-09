@@ -125,15 +125,16 @@ namespace Origins {
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}
-			TagCompound questsTag = new TagCompound();
+			TagCompound questsTag = [];
 			foreach (var quest in Quest_Registry.Quests) {
 				if (quest.SaveToWorld) {
-					Mod.Logger.Info($"Saving {quest.NameValue}");
-					TagCompound questTag = new TagCompound();
+					TagCompound questTag = [];
 					quest.SaveData(questTag);
 					if (questTag.Count > 0) {
 						questsTag.Add(quest.FullName, questTag);
-						Mod.Logger.Info($"with data: {questTag}");
+						Mod.Logger.Info($"Saving {quest.NameValue} with data: {questTag}");
+					} else {
+						Mod.Logger.Info($"Saving {quest.NameValue}");
 					}
 				}
 			}
