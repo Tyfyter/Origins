@@ -273,8 +273,8 @@ namespace Origins {
 				}
 			}
 			if (cursedVoice) {
+				Player.AddBuff(cursedVoiceItem.buffType, 5);
 				const float maxDist = 256 * 256;
-				Player.AddBuff(BuffID.Silenced, 5);
 				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Player.CheckMana(cursedVoiceItem.mana, false)) {
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
@@ -286,13 +286,13 @@ namespace Origins {
 								Projectile.NewProjectileDirect(
 									Player.GetSource_Accessory(cursedVoiceItem),
 									mouthPosition,
-									diff.SafeNormalize(default) * 4,
+									diff.SafeNormalize(default) * cursedVoiceItem.shootSpeed,
 									cursedVoiceItem.shoot,
 									Player.GetWeaponDamage(cursedVoiceItem),
 									Player.GetWeaponKnockback(cursedVoiceItem),
 									Player.whoAmI
 								);
-								SoundEngine.PlaySound(SoundID.LucyTheAxeTalk.WithPitchRange(-1, -0.8f));
+								if (cursedVoiceItem.UseSound.HasValue) SoundEngine.PlaySound(cursedVoiceItem.UseSound);
 								break;
 							}
 						}

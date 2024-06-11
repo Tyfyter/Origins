@@ -2391,7 +2391,7 @@ namespace Origins {
 			return false;
 		}
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
-			WeightedRandom<int> wr = new WeightedRandom<int>(rand);
+			WeightedRandom<int> wr = new(rand);
 			for (int i = 0; i < prefixCategories.Length; i++) {
 				PrefixCategory category = prefixCategories[i];
 				foreach (int pre in Item.GetVanillaPrefixes(category)) {
@@ -2466,7 +2466,7 @@ namespace Origins {
 		}
 		static Func<IEntitySource, string, IEntitySource> GenerateCloneWithContext(Type sourceType) {
 			string methodName = sourceType.FullName + ".CloneWithContext";
-			DynamicMethod getterMethod = new DynamicMethod(methodName, typeof(IEntitySource), new Type[] { typeof(IEntitySource), typeof(string) }, true);
+			DynamicMethod getterMethod = new(methodName, typeof(IEntitySource), [typeof(IEntitySource), typeof(string)], true);
 			ILGenerator gen = getterMethod.GetILGenerator();
 
 			ConstructorInfo ctor = sourceType.GetConstructors()[0];

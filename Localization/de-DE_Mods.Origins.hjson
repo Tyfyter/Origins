@@ -1194,6 +1194,7 @@ Projectiles: {
 	// Plasma_Cutter_P.DisplayName: Plasma Cutter
 	// Ziptie_P.DisplayName: Ziptie
 	// Communion_P.DisplayName: Communion
+	// Forbidden_Voice_Uncursed_P.DisplayName: Forbidden Voice Uncursed P
 }
 
 Prefixes: {
