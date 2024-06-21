@@ -679,7 +679,7 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Chemical Laser
-(#, ^2) Communion !!!
+(☻) Communion !!!
 (^) Dismay
 (^) Innermost Manifest
 (^) Seam Beam
@@ -690,7 +690,7 @@ MAGIC WEAPONS:
 (#, ^2) Super Cell* !!!
 
 (^) Amber of Embers
-(#, ^2) Breach !!!
+(☻) Breach !!!
 (X) Divine Lite
 (X) Ghost Trap
 (^) Haunted Vase
@@ -923,12 +923,12 @@ TILES:
 (^) Defiled Water Fountain
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
-(#, ^2) Encrusted Brick !!!
+(☻) Encrusted Brick !!!
 (^) Endowood Furniture*
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
-(#, ^2) Lost Brick !!!
+(☻) Lost Brick !!!
 (^) Marrowick Furniture*
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*

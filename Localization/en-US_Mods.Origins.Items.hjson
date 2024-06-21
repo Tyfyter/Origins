@@ -3398,7 +3398,7 @@ Riven_Fountain_Item: {
 }
 
 Gel_Blister_Item: {
-	DisplayName: Gel Blister Item
+	DisplayName: Gel Blister Debug Item
 	Tooltip: ""
 }
 
@@ -4264,5 +4264,20 @@ Communion: {
 
 Forbidden_Voice_Uncursed: {
 	DisplayName: Forbidden Voice
+	Tooltip: ""
+}
+
+Breach: {
+	DisplayName: Breach
+	Tooltip: ""
+}
+
+Encrusted_Brick_Item: {
+	DisplayName: Encrusted Brick
+	Tooltip: ""
+}
+
+Lost_Brick_Item: {
+	DisplayName: Lost Brick
 	Tooltip: ""
 }

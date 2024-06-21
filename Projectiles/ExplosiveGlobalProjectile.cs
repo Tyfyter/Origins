@@ -736,6 +736,19 @@ namespace Origins.Projectiles {
 			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
 			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
+		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch) {
+			projectile.friendly = true;
+			projectile.penetrate = -1;
+			projectile.position.X += projectile.width / 2;
+			projectile.position.Y += projectile.height / 2;
+			projectile.width = size;
+			projectile.height = size;
+			projectile.position.X -= projectile.width / 2;
+			projectile.position.Y -= projectile.height / 2;
+			projectile.Damage();
+			if (dealSelfDamage) DealSelfDamage(projectile);
+			ExplosionVisual(projectile, true, sound: sound, fireDustAmount: fireDustAmount, smokeGoreAmount: smokeGoreAmount, fireDustType: fireDustType);
+		}
 		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false, int fireDustType = DustID.Torch) {
 			if (applyHitboxModifiers) {
 				Rectangle hitbox = projectile.Hitbox;
@@ -825,15 +838,17 @@ namespace Origins.Projectiles {
 				if (player.active && !player.dead && !player.immune) {
 					Rectangle projHitbox = projectile.Hitbox;
 					ProjectileLoader.ModifyDamageHitbox(projectile, ref projHitbox);
-					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					Rectangle playerHitbox = new((int)player.position.X, (int)player.position.Y, player.width, player.height);
 					if (projHitbox.Intersects(playerHitbox)) {
-						player.Hurt(
+						double damageDealt = player.Hurt(
 							PlayerDeathReason.ByProjectile(Main.myPlayer, projectile.whoAmI),
 							Main.DamageVar(projectile.damage, -player.luck),
 							Math.Sign(player.Center.X - projectile.Center.X),
+							out Player.HurtInfo info,
 							true,
 							cooldownCounter: cooldownCounter
 						);
+						if (projectile.ModProjectile is ISelfDamageEffectProjectile selfDamageEffectProjectile) selfDamageEffectProjectile.OnSelfDamage(player, info, damageDealt);
 					}
 				}
 			}

@@ -13,9 +13,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Haunted_Vase : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
-            "HardmodeOtherMagic"
-        };
+        public string[] Categories => [
+            "OtherMagic"
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

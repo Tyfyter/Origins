@@ -438,13 +438,10 @@ namespace Origins {
 			return asset.asset;
 		}
 	}
-	public struct UnorderedTuple<T> : IEquatable<UnorderedTuple<T>> {
-		readonly T a;
-		readonly T b;
-		public UnorderedTuple(T a, T b) {
-			this.a = a;
-			this.b = b;
-		}
+	public readonly struct UnorderedTuple<T>(T a, T b) : IEquatable<UnorderedTuple<T>> {
+		readonly T a = a;
+		readonly T b = b;
+
 		public bool Equals(UnorderedTuple<T> other) {
 			return other == this;
 		}
@@ -459,9 +456,7 @@ namespace Origins {
 			return (!EqualityComparer<T>.Default.Equals(a.a, b.a) || !EqualityComparer<T>.Default.Equals(a.b, b.b))
 				&& (!EqualityComparer<T>.Default.Equals(a.a, b.b) || !EqualityComparer<T>.Default.Equals(a.b, b.a));
 		}
-		public static implicit operator UnorderedTuple<T>((T a, T b) v){
-			return new(v.a, v.b);
-		}
+		public static implicit operator UnorderedTuple<T>((T a, T b) v) => new(v.a, v.b);
 		public override int GetHashCode() {
 			return a.GetHashCode() + b.GetHashCode();
 		}
@@ -698,13 +693,10 @@ namespace Origins {
 			player.balloon = balloonSlot;
 		}
 	}
-	public class GeneratorCache<TKey, TValue> : IReadOnlyDictionary<TKey, TValue> {
-		readonly Dictionary<TKey, TValue> cache;
-		readonly Func<TKey, TValue> generator;
-		public GeneratorCache(Func<TKey, TValue> generator) {
-			cache = new();
-			this.generator = generator;
-		}
+	public class GeneratorCache<TKey, TValue>(Func<TKey, TValue> generator) : IReadOnlyDictionary<TKey, TValue> {
+		readonly Dictionary<TKey, TValue> cache = new();
+		readonly Func<TKey, TValue> generator = generator;
+
 		public GeneratorCache(Func<TKey, TValue> generator, params TKey[] pregenerate) : this(generator) {
 			for (int i = 0; i < pregenerate.Length; i++) {
 				_ = this[pregenerate[i]];
@@ -790,6 +782,9 @@ namespace Origins {
 			}
 		}
 		bool IsExploding();
+	}
+	interface ISelfDamageEffectProjectile {
+		void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt);
 	}
 	interface ICustomRespawnArtifact {
 		void Respawn();

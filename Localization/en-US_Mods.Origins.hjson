@@ -1195,6 +1195,8 @@ Projectiles: {
 	Ziptie_P.DisplayName: Ziptie
 	Communion_P.DisplayName: Communion
 	Forbidden_Voice_Uncursed_P.DisplayName: Vile Spit
+	Breach_P.DisplayName: Breach
+	Breach_Wisp.DisplayName: Breach Wisp
 }
 
 Prefixes: {
