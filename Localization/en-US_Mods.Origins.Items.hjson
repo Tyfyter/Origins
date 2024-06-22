@@ -4281,3 +4281,8 @@ Lost_Brick_Item: {
 	DisplayName: Lost Brick
 	Tooltip: ""
 }
+
+Chunky_Hook: {
+	DisplayName: Chunky Hook
+	Tooltip: ""
+}

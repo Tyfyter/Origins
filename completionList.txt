@@ -479,7 +479,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook
-(#, ^2) Chunky Hook !!!
+(☻) Chunky Hook !!!
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
