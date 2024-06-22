@@ -8,6 +8,7 @@ using static Terraria.ModLoader.ModContent;
 using Terraria.DataStructures;
 using Origins.Items.Weapons.Summoner;
 using Terraria.Utilities;
+using System.Collections.Generic;
 
 namespace Origins.Items.Tools {
 	public class Chunky_Hook : ModItem {
@@ -27,6 +28,8 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GemHookAmethyst);
+			Projectile.width = 14;
+			Projectile.height = 14;
 			Projectile.netImportant = true;
 		}
 		public override float GrappleRange() => 30 * 16;
@@ -45,28 +48,23 @@ namespace Origins.Items.Tools {
 			float distance = distToProj.Length();
 			distToProj.Normalize();
 			distToProj *= 12f;
-			Rectangle frame = new(0, 0, chain.Value.Width, chain.Value.Height / 2);
-			Vector2 origin = frame.Size() * 0.5f;
-			FastRandom fastRandom = new((int)Projectile.localAI[0]);
 
 			Texture2D lineTexture = TextureAssets.FishingLine.Value;
 			Vector2 lineOrigin = new(lineTexture.Width / 2, 2);
 			Color lineColor = new(44, 39, 58);
 			Vector2 lineScale = new(1, (12 + 2) / lineTexture.Height);
-			float lineRotation = distToProj.ToRotation() - MathHelper.PiOver2;
+			float lineRotation = distToProj.ToRotation() + MathHelper.PiOver2;
 
+			List<(Vector2 pos, Color light)> points = new((int)(distance / 16f));
 			while (distance > 16f && !float.IsNaN(distance)) {
 				center += distToProj;
 				distance = (playerCenter - center).Length();
-				Color drawColor = Lighting.GetColor(center.ToTileCoordinates());
-				frame.Y = fastRandom.Next(2) * frame.Height;
-				fastRandom.NextSeed();
-
+				Color lightColor = Lighting.GetColor(center.ToTileCoordinates());
 				Main.EntitySpriteDraw(new DrawData(
 					lineTexture,
 					center - Main.screenPosition,
 					null,
-					lineColor.MultiplyRGB(drawColor),
+					lineColor.MultiplyRGB(lightColor),
 					lineRotation,
 					lineOrigin,
 					lineScale,
@@ -74,11 +72,20 @@ namespace Origins.Items.Tools {
 					) {
 					shader = owner.cGrapple
 				});
+				points.Add((center, lightColor));
+			}
+
+			Rectangle frame = new(0, 0, chain.Value.Width, chain.Value.Height / 2);
+			Vector2 origin = frame.Size() * 0.5f;
+			FastRandom fastRandom = new((int)Projectile.localAI[0]);
+			for (int i = 0; i < points.Count; i++) {
+				frame.Y = fastRandom.Next(2) * frame.Height;
+				fastRandom.NextSeed();
 				Main.EntitySpriteDraw(new DrawData(
 					chain,
-					center - Main.screenPosition,
+					points[i].pos - Main.screenPosition,
 					frame,
-					drawColor,
+					points[i].light,
 					projRotation,
 					origin,
 					new Vector2(1f, 1),
@@ -87,18 +94,6 @@ namespace Origins.Items.Tools {
 					shader = owner.cGrapple
 				});
 			}
-			Main.EntitySpriteDraw(new DrawData(
-				lineTexture,
-				Projectile.Center - Main.screenPosition,
-				null,
-				lineColor.MultiplyRGB(Lighting.GetColor(Projectile.Center.ToTileCoordinates())),
-				lineRotation,
-				lineOrigin,
-				lineScale,
-				SpriteEffects.None
-				) {
-				shader = owner.cGrapple
-			});
 			return false;
 		}
 	}
