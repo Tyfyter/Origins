@@ -4286,3 +4286,13 @@ Chunky_Hook: {
 	DisplayName: Chunky Hook
 	Tooltip: ""
 }
+
+Bee_Afraid_Incantation: {
+	DisplayName: Bee Afraid Incantation
+	Tooltip: ""
+}
+
+True_Waning_Crescent: {
+	DisplayName: True Waning Crescent
+	Tooltip: ""
+}

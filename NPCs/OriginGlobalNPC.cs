@@ -256,6 +256,9 @@ namespace Origins.NPCs {
 				if (ziptieDebuff) {
 					damageBoost += 6f;
 				}
+				if (beeIncantationDebuff) {
+					damageBoost += 5f;
+				}
 				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost);
 			} else if (npc.HasBuff(Futurephones_Buff.ID)) {
 				modifiers.SourceDamage *= 1.05f;

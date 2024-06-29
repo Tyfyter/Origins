@@ -875,6 +875,11 @@ Buffs: {
 		// DisplayName: Ziptied
 		// Description: Mods.Origins.Buffs.Ziptie_Buff.Description
 	}
+
+	Bee_Incantation_Buff: {
+		// DisplayName: Bee Incantation Buff
+		// Description: Mods.Origins.Buffs.Bee_Incantation_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1198,6 +1203,12 @@ Projectiles: {
 	// Breach_P.DisplayName: Breach
 	// Breach_Wisp.DisplayName: Breach Wisp
 	// Chunky_Hook_P.DisplayName: Chunky Hook
+	// Bee_Afraid_Incantation_Bee.DisplayName: Bee Afraid Incantation Bee
+	// Bee_Afraid_Incantation_P.DisplayName: Bee Afraid Incantation P
+	// True_Waning_Crescent_P.DisplayName: True Waning Crescent P
+	// True_Waning_Crescent_P2.DisplayName: True Waning Crescent P2
+	// True_Waning_Crescent_Thrown.DisplayName: True Waning Crescent Thrown
+	// Bee_Afraid_Incantation_Big_Bee.DisplayName: Bee Afraid Incantation Big Bee
 }
 
 Prefixes: {

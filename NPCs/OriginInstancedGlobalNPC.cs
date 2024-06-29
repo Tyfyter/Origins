@@ -25,6 +25,7 @@ namespace Origins.NPCs {
 		internal bool amebolizeDebuff = false;
 		internal bool jointPopDebuff = false;
 		internal bool ziptieDebuff = false;
+		internal bool beeIncantationDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;

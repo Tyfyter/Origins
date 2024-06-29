@@ -412,7 +412,7 @@ ACCESSORIES:
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
 (^) Forbidden Voice (Cursed)*
-(#, ^2) Forbidden Voice (Uncursed)* !!!
+(☻) Forbidden Voice (Uncursed)* !!!
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
@@ -586,7 +586,7 @@ MELEE WEAPONS:
 (X) Pile Bunker
 (#, ^2) Terrarang !!!
 (☻) True Light Disc !!!
-(#, ^2) True Waning Crescent !!!
+(☻) True Waning Crescent !!!
 
 (X) Celestial Point
 (X) Chromtain Smasher
@@ -713,7 +713,7 @@ MAGIC WEAPONS:
 SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation
-(#, ^2) Bee Afraid Incantation* !!!
+(☻) Bee Afraid Incantation* !!!
 (^) Brainy Staff*
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff

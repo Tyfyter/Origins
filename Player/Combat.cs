@@ -708,9 +708,7 @@ namespace Origins {
 			if (Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
 			if (asylumWhistleTarget > -1) selector(Main.npc[asylumWhistleTarget], 1f, true, ref foundTarget);
 			if (!foundTarget) {
-				for (int i = 0; i < Main.maxNPCs; i++) {
-					selector(Main.npc[i], 1f, false, ref foundTarget);
-				}
+				foreach (NPC target in Main.ActiveNPCs) selector(target, 1f, false, ref foundTarget);
 			}
 			return foundTarget;
 		}
