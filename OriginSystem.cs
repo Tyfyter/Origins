@@ -230,9 +230,6 @@ namespace Origins {
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();
 		}
-		public override void PostSetupRecipes() {
-			AnimatedRecipeGroupGlobalItem.PostSetupRecipes();
-		}
 		public override void PostUpdateInput() {
 		}
 		public override void PostUpdateTime() {
