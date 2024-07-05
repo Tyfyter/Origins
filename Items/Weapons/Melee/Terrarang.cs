@@ -208,7 +208,6 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Origins/Items/Weapons/Melee/Terrarang_P";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
-			Projectile.aiStyle = 0;
 			Projectile.DamageType = DamageClass.MeleeNoSpeed;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 30;
@@ -217,6 +216,15 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.ignoreWater = false;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
+		}
+		public override void AI() {
+			if (Projectile.aiStyle == 0) {
+				Projectile.rotation += 0.4f * Projectile.direction;
+				Projectile.alpha += 5;
+				if (Projectile.alpha >= 255) Projectile.Kill();
+			} else if (Projectile.ai[0] != 0) {
+				Projectile.aiStyle = 0;
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			lightColor.A = 150;
@@ -232,6 +240,7 @@ namespace Origins.Items.Weapons.Melee {
 					PositionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox)
 				}
 			);
+			Projectile.ai[0] = 1;
 		}
 	}
 }
