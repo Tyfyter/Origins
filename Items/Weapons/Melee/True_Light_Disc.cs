@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 13;
 			Item.useAnimation = 13;
 			Item.shoot = ModContent.ProjectileType<True_Light_Disc_Thrown>();
-			Item.shootSpeed = 18f;
+			Item.shootSpeed = 15f;
 			Item.knockBack = 8f;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Yellow;

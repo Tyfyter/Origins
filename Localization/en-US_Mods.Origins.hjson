@@ -1211,6 +1211,7 @@ Projectiles: {
 	Bee_Afraid_Incantation_Big_Bee.DisplayName: Bee Afraid Incantation
 	Terrarang_P.DisplayName: Terrarang
 	Terrarang_Thrown.DisplayName: Terrarang
+	Terrarang_P2.DisplayName: Terrarang
 }
 
 Prefixes: {

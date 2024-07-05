@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 10;
 			Item.useAnimation = 10;
 			Item.shoot = ModContent.ProjectileType<Terrarang_Thrown>();
-			Item.shootSpeed = 18f;
+			Item.shootSpeed = 16f;
 			Item.knockBack = 8f;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Yellow;
@@ -32,9 +32,9 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
+			.AddIngredient(ItemID.BrokenHeroSword)
 			.AddIngredient<True_Waning_Crescent>()
 			.AddIngredient<True_Light_Disc>()
-			.AddIngredient(ItemID.BrokenHeroSword)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -68,6 +68,9 @@ namespace Origins.Items.Weapons.Melee {
 					}
 				}
 			}
+			return true;
+		}
+		public override void AI() {
 			if (++Projectile.ai[2] > 6) {
 				Projectile.ai[2] = 0;
 				if (Projectile.owner == Main.myPlayer) Projectile.NewProjectileDirect(
@@ -75,12 +78,45 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.Center,
 					default,
 					ModContent.ProjectileType<Terrarang_P>(),
-					Projectile.damage / 2,
+					Projectile.damage / 3,
 					Projectile.knockBack / 3,
 					Projectile.owner
 				).localAI[2] = 20;
 			}
-			return true;
+			DoSpawnBeams(Projectile);
+		}
+		public static void DoSpawnBeams(Projectile projectile) {
+			if (projectile.owner == Main.myPlayer) {
+				if (projectile.localAI[2] <= 0) {
+					bool foundTarget = false;
+					float dist = 16 * 7;
+					dist *= dist;
+					Vector2 targetPos = default;
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (!npc.CanBeChasedBy(projectile)) continue;
+						float newDist = projectile.DistanceSQ(npc.Center);
+						if (newDist < dist) {
+							dist = newDist;
+							foundTarget = true;
+							targetPos = npc.Center;
+						}
+					}
+					if (foundTarget) {
+						Projectile.NewProjectile(
+							projectile.GetSource_FromAI(),
+							projectile.Center,
+							projectile.DirectionTo(targetPos) * 10f,
+							ModContent.ProjectileType<Terrarang_P2>(),
+							projectile.damage / 2,
+							projectile.knockBack / 1.5f,
+							projectile.owner
+						);
+						projectile.localAI[2] = 20;
+					}
+				} else {
+					projectile.localAI[2]--;
+				}
+			}
 		}
 		public override bool? CanHitNPC(NPC target) {
 			Projectile.aiStyle = 0;
@@ -114,9 +150,6 @@ namespace Origins.Items.Weapons.Melee {
 			default(TerrarangDrawer).Draw(Projectile);
 			return true;
 		}
-		public override void PostDraw(Color lightColor) {
-			base.PostDraw(lightColor);
-		}
 	}
 	public readonly struct TerrarangDrawer {
 		private static readonly VertexStrip _vertexStrip = new();
@@ -146,7 +179,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.DamageType = DamageClass.MeleeNoSpeed;
 			Projectile.penetrate = -1;
-			Projectile.timeLeft = 30;
+			Projectile.timeLeft = 25;
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.ignoreWater = false;
@@ -155,10 +188,40 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
-			//Terrarang_Thrown.DoSpawnBeams(Projectile);
+			Terrarang_Thrown.DoSpawnBeams(Projectile);
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			lightColor.A = 150;
+			return lightColor * Math.Min(Projectile.timeLeft / 30f, 1);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			ParticleOrchestrator.RequestParticleSpawn(
+				false,
+				ParticleOrchestraType.TerraBlade,
+				new() {
+					PositionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox)
+				}
+			);
+		}
+	}
+	public class Terrarang_P2 : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Melee/Terrarang_P";
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.ThornChakram);
+			Projectile.aiStyle = 0;
+			Projectile.DamageType = DamageClass.MeleeNoSpeed;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 30;
+			Projectile.width = 34;
+			Projectile.height = 34;
+			Projectile.ignoreWater = false;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			lightColor.A = 150;
+			lightColor.R /= 2;
+			lightColor.B /= 2;
 			return lightColor * Math.Min(Projectile.timeLeft / 30f, 1);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
