@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
 using Origins.Projectiles;
@@ -144,7 +145,7 @@ namespace Origins {
 				Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
 			}
 			if (gunGlove && gunGloveCooldown <= 0) {
-				if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId, ItemID.Sets.gunProj[gunGloveItem.type])) {
+				if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId)) {
 					int manaCost = Player.GetManaCost(gunGloveItem);
 					if (CombinedHooks.CanShoot(Player, gunGloveItem) && Player.CheckMana(manaCost, true)) {
 						if (manaCost > 0) {
@@ -507,7 +508,9 @@ namespace Origins {
 				Player.CheckMana(manaDamageToTake, true);
 				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
 			}
+			bool isSelfDamage = false;
 			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
+				isSelfDamage = true;
 				selfDamageRally = info.Damage;
 			}
 			if (info.PvP && info.CooldownCounter == ImmunityCooldownID.WrongBugNet) {
@@ -672,7 +675,34 @@ namespace Origins {
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
                    bombCharminItLifeRegenCount += info.SourceDamage;
             }
-            preHitBuffs = new();
+			if (coreGenerator && !isSelfDamage) {
+				int ammoType = coreGeneratorItem.useAmmo;
+				try {
+					coreGeneratorItem.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+					if (Player.PickAmmo(coreGeneratorItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId)) {
+						int manaCost = Player.GetManaCost(coreGeneratorItem);
+						if (CombinedHooks.CanShoot(Player, coreGeneratorItem) && Player.CheckMana(manaCost, true)) {
+							if (manaCost > 0) {
+								Player.manaRegenDelay = (int)Player.maxRegenDelay;
+							}
+							Vector2 position = Player.MountedCenter;
+							Vector2 velocity = new(coreGeneratorItem.shootSpeed, 0);
+
+							CombinedHooks.ModifyShootStats(Player, coreGeneratorItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockback);
+							EntitySource_ItemUse_WithAmmo source = (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(coreGeneratorItem, usedAmmoItemId);
+							if (CombinedHooks.Shoot(Player, coreGeneratorItem, source, position, velocity, projToShoot, damage, knockback)) {
+								Projectile.NewProjectile(source, position, velocity, projToShoot, damage, knockback, Player.whoAmI);
+								SoundEngine.PlaySound(coreGeneratorItem.UseSound, position);
+							}
+						}
+						gunGloveCooldown = CombinedHooks.TotalUseTime(coreGeneratorItem.useTime, Player, coreGeneratorItem);
+					}
+				} finally {
+					coreGeneratorItem.useAmmo = ammoType;
+				}
+			}
+
+            preHitBuffs = [];
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
 			}

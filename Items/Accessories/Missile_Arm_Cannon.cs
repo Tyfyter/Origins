@@ -10,7 +10,6 @@ namespace Origins.Items.Accessories {
 			"ExplosiveBoostAcc"
 		};
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
             glowmask = Origins.AddGlowMask(this);
         }

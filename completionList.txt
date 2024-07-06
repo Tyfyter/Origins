@@ -25,6 +25,7 @@ $3: Needs sound (SFX/music is composed but not implemented)
 ^2: Partial completion (sprites completed)
 ^3: Partial completion (code completed)
 ^4: Partial completion (sound completed)
+^5: Partial completion, but requires tML update to implement
 
 X: No progress
 *: Wiki entry available
@@ -310,7 +311,7 @@ ACCESSORIES:
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
-(#2, ^2) CORE Generator* !!!
+(☻) CORE Generator* !!!
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -584,7 +585,7 @@ MELEE WEAPONS:
 (X) Gospel
 (^) Personal Laser Blade*
 (X) Pile Bunker
-(#, ^2) Terrarang !!!
+(☻) Terrarang !!!
 (☻) True Light Disc !!!
 (☻) True Waning Crescent !!!
 
@@ -945,7 +946,7 @@ TILES:
 (X) Sanguinite Brick
 (X) Shadow Torch*
 (^) Traffic Cone*
-(#, ^2) Wilting Rose Planter Box !!!
+(#, ^5) Wilting Rose Planter Box !!!
 
 (X) Batholith Grindstone*
 (^) Cleansing Station*
@@ -1243,9 +1244,9 @@ UI:
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
-(#, ^2) Underground Defiled Background !!!
-(#, ^2) Underground Fiberglass Background !!!
-(#, ^2) Underground Riven Background !!!
+(@ (needs 4 textures)) Underground Defiled Background !!!
+(@ (needs 4 textures)) Underground Fiberglass Background !!!
+(@ (needs 4 textures)) Underground Riven Background !!!
 
 (#3, ^2) 30x30 Origins Icon !!!
 (@5, ^3) Origins Mod Browser Logo !!!

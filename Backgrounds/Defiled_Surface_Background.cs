@@ -37,4 +37,9 @@ namespace Origins.Backgrounds {
 			//textureSlots[3] = mod.GetBackgroundSlot("Backgrounds/Void_Background");
 		}*/
 	}
+	/*public class Defiled_Underground_Background : ModUndergroundBackgroundStyle {
+		public override void FillTextureArray(int[] textureSlots) {
+			throw new System.NotImplementedException();
+		}
+	}*/
 }
