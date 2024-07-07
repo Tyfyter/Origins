@@ -12,11 +12,14 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Brainy_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "MinionWeapon",
 			"Minion"
-        };
-        public override void SetDefaults() {
+        ];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.StaffMinionSlotsRequired[Type] = 2;
+		}
+		public override void SetDefaults() {
 			Item.damage = 10;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 16;
@@ -33,12 +36,10 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noMelee = true;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Brainy_Buff>();
-			player.AddBuff(Item.buffType, 2);
 			position = Main.MouseWorld;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
+			if (buffID == 0) buffID = ModContent.BuffType<Brainy_Buff>();
 			player.AddBuff(buffID, 2);
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;

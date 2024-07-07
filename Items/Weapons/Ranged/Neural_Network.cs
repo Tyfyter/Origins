@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Neural_Network : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Gun"
-        };
+        ];
         public static int ID { get; set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.height = 22;
 			Item.autoReuse = true;
 		}
+		public override Vector2? HoldoutOffset() => Vector2.Zero;
 	}
 	public class Neural_Network_Buff : ModBuff {
 		public override string Texture => typeof(Neural_Network).GetDefaultTMLName();

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
@@ -17,7 +18,9 @@ namespace Origins.Items.Accessories {
 			Item.glowMask = glowmask;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().warpDrive = true;
+			float factor = Math.Min(player.velocity.Length() / 12f, 1);
+			player.manaRegenDelayBonus += 5f * factor;
+			player.manaRegenBonus += (int)(125 * factor);
 		}
 	}
 }

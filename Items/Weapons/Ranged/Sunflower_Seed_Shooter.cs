@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
+using Terraria.Audio;
 namespace Origins.Items.Weapons.Ranged {
     public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -28,11 +31,16 @@ namespace Origins.Items.Weapons.Ranged {
             Item.reuseDelay = 18;
             Item.autoReuse = true;
             Item.consumeAmmoOnFirstShotOnly = true;
+			Item.UseSound = null;
         }
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return !Main.rand.NextBool(3);
 		}
-    }
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			SoundEngine.PlaySound(SoundID.Item11, position);
+			return true;
+		}
+	}
 	public class Sunflower_Seed_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ranged/Sunflower_Seed_Shooter_P";
 		

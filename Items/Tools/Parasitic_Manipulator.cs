@@ -25,7 +25,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void ModifyFishingLine(Projectile bobber, ref Vector2 lineOriginOffset, ref Color lineColor) {
 			lineOriginOffset.X = 45;
-			lineOriginOffset.Y = 15;
+			lineOriginOffset.Y = -30;
 		}
 	}
 	public class Parasitic_Bobber : ModProjectile {

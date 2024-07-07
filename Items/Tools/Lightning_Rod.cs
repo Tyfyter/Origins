@@ -65,12 +65,12 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override bool PreDrawExtras() {
-			Color fishingLineColor = new Color(176, 225, 255);
+			Color fishingLineColor = new(176, 225, 255);
 			Lighting.AddLight(Projectile.Center, 0, fishingLineColor.G * 0.0015f, fishingLineColor.B * 0.005f);
 
 			//Change these two values in order to change the origin of where the line is being drawn
 			int xPositionAdditive = 45;
-			float yPositionAdditive = 35f;
+			float yPositionAdditive = 33f;
 
 			Player player = Main.player[Projectile.owner];
 			if (!Projectile.bobber || player.inventory[player.selectedItem].holdStyle <= 0)
@@ -160,7 +160,6 @@ namespace Origins.Items.Tools {
 						playerToProjectile.X *= 1f - positionInverseMultiplier;
 					}
 				}
-				//This color decides the color of the fishing line. The color is randomized as decided in the AI.
 				Color lineColor = Lighting.GetColor((int)lineOrigin.X / 16, (int)(lineOrigin.Y / 16f), fishingLineColor);
 				float rotation = playerToProjectile.ToRotation() - MathHelper.PiOver2;
 				Texture2D fishingLineTexture = TextureAssets.FishingLine.Value;

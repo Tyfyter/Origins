@@ -2946,7 +2946,11 @@ Bone_Latcher: {
 
 Brainy_Staff: {
 	DisplayName: Brainy Staff
-	Tooltip: Summons a mini crimbrain to fight for you
+	Tooltip:
+		'''
+		Summons a mini crimbrain to fight for you
+		Uses 2 minion slots
+		'''
 }
 
 Eyeball_Staff: {

@@ -27,8 +27,9 @@ namespace Origins.Items.Weapons.Melee {
 		public int charge = 0;
 		internal int frame = 5;
 		public override void SetStaticDefaults() {
-			animation = new DrawAnimationManual(6);
-			animation.Frame = 5;
+			animation = new DrawAnimationManual(6) {
+				Frame = 5
+			};
 			Main.RegisterItemAnimation(Item.type, animation);
 			Item.ResearchUnlockCount = 1;
 		}
@@ -48,6 +49,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
+			return;//todo: fix, maybe entirely redesign
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Excalibur);
 			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12);
