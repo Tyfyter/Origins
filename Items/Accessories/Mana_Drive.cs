@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mana_Drive : ModItem {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Vitality"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
 			Item.glowMask = glowmask;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().warpDrive -= true;
+			//player.GetModPlayer<OriginPlayer>().warpDrive = true;
 		}
 	}
 }

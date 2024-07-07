@@ -780,7 +780,7 @@ EXPLOSIVE WEAPONS:
 (☻) Link Grenade* !!!
 (#, ^2) Matrix* !!!
 (^) Meteor*
-(^) Outbreak Bomb*
+(^3, @2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)) Outbreak Bomb*
 (^) Peatball*
 (^) Potato Mine*
 (^) Shrapnel Bomb*

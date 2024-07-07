@@ -23,6 +23,7 @@ namespace Origins.Items.Accessories {
 			//player.GetModPlayer<OriginPlayer>().strangeComputer = true; blue laser
 		}
 		public override void AddRecipes() {
+			return;//TODO: implement item
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Glass, 5);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 10);

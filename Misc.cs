@@ -1469,6 +1469,12 @@ namespace Origins {
 				player.ApplyBuffTimeModifier(mult, type, true);
 			}
 		}
+		public static void AddMaxBreath(this Player player, int amount) {
+			player.breathMax += amount;
+			OnIncreaseMaxBreath?.Invoke(player, amount);
+			//OriginsModIntegrations.breathOverMax
+		}
+		public static event Action<Player, int> OnIncreaseMaxBreath;
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -1973,6 +1979,7 @@ namespace Origins {
 			_idToSlot = null;
 			_colorLookup = null;
 			CollisionExtensions.Unload();
+			OnIncreaseMaxBreath = null;
 		}
 		public static UnifiedRandom Clone(this UnifiedRandom r) {
 			UnifiedRandom o = new UnifiedRandom();

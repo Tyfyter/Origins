@@ -91,7 +91,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				lightColor * 0.5f,
 				Projectile.rotation,
 				texture.Size() * 0.5f,
-				5,
+				3,
 				0
 			);
 			return false;

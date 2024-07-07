@@ -19,6 +19,9 @@ namespace Origins.Items.Weapons.Magic {
 		public string[] Categories => [
 			"OtherMagic"
 		];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.NimbusRod] = Type;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.NimbusRod);
 			Item.useStyle = ItemUseStyleID.Swing;

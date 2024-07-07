@@ -140,6 +140,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			Origins.MagicTripwireRange[Type] = 24;
 			ID = Type;
 		}
 		public override void SetDefaults() {

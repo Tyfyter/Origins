@@ -38,8 +38,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f * player.direction), type, damage, knockback, player.whoAmI);
-			return false;
+			//Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f * player.direction), type, damage, knockback, player.whoAmI);
+			return true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -82,13 +82,13 @@ namespace Origins.Items.Weapons.Melee {
             Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
             if (!projOwner.frozen) {
                 if (movementFactor == 0f) {
-                    movementFactor = 2.5f;
+                    movementFactor = 1.9f;
                     Projectile.netUpdate = true;
                 }
                 if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {
-                    movementFactor -= 2.5f;
+                    movementFactor -= 1.95f;
                 } else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-                    movementFactor += 2.7f;
+                    movementFactor += 1.9f;
                 }
             }
             Projectile.position += Projectile.velocity * movementFactor;

@@ -15,11 +15,11 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
-			Item.damage += 8;
+			Item.damage = 8;
 			Item.DamageType = DamageClass.Magic;
 			Item.useTime = 5;
 			Item.useAnimation = 14;
-			Item.shootSpeed += 1;
+			Item.shootSpeed = 3;
 			Item.mana = 3;
 			Item.UseSound = SoundID.Item4;
 		}

@@ -35,8 +35,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Projectiles/Weapons/Defiled_Spirit_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Defiled Spirit");
 			Main.projFrames[Type] = 3;
+			Origins.MagicTripwireRange[Type] = 32;
 			ID = Type;
 		}
 		public override void SetDefaults() {

@@ -35,6 +35,7 @@ namespace Origins.Items.Accessories {
 			player.autoReuseGlove = true;
         }
 		public override void AddRecipes() {
+			return; //todo: implement item
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.FeralClaws);
 			recipe.AddIngredient(ModContent.ItemType<Magic_Glove>());

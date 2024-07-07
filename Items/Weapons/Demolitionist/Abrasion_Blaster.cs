@@ -13,13 +13,14 @@ using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Launcher"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(23, 45, 48, 22, false);
 			Item.crit = 4;
 			Item.useTime = 1;
+			Item.shootSpeed = 15;
 			Item.shoot = ModContent.ProjectileType<Abrasion_Blaster_P>();// just in case anything expects weapons to directly shoot what they shoot
 			Item.useAmmo = ModContent.ItemType<Scrap>();
 			Item.reuseDelay = 15;

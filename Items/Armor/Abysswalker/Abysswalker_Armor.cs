@@ -98,6 +98,7 @@ namespace Origins.Items.Armor.Abysswalker {
 			}
 		}
 		public override void AddRecipes() {
+			return;
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.SoulofNight, 4);
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 8);
@@ -124,6 +125,7 @@ namespace Origins.Items.Armor.Abysswalker {
 			player.lifeRegenCount += 2;
 		}
 		public override void AddRecipes() {
+			return;
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.SoulofNight, 4);
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 24);
@@ -146,6 +148,7 @@ namespace Origins.Items.Armor.Abysswalker {
 			player.moveSpeed += 0.15f;
 		}
 		public override void AddRecipes() {
+			return;
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.SoulofNight, 4);
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 16);

@@ -55,6 +55,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DryadsWardCircle);
 			Projectile.aiStyle = 0;
+			Projectile.tileCollide = false;
 		}
 		public override void AI() {
 			Player owner = Main.player[Projectile.owner];

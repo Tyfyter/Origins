@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
+using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -234,6 +235,7 @@ namespace Origins.NPCs.Fiberglass {
 			armorDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
 			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>());
 			armorDropRule.OnSuccess(weaponDropRule);
+			armorDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Weaver_Head>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				armorDropRule,

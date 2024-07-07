@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noMelee = true;
 		}
 		public override void AddRecipes() {
+			return;//TODO: implement
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());

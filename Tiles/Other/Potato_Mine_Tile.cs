@@ -56,7 +56,7 @@ namespace Origins.Tiles.Other {
 		public HashSet<Point16> projLocations;
 		public override void PreUpdateEntities() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			projLocations ??= new();
+			projLocations ??= [];
 			for (int i = 0; i < tileEntityLocations.Count; i++) {
 				Point16 pos = tileEntityLocations[i];
 				if (Main.tile[pos.X, pos.Y].TileIsType(Potato_Mine_Tile.ID)) {
@@ -68,7 +68,7 @@ namespace Origins.Tiles.Other {
 							Potato_Mine_Projectile.ID,
 							50,
 							6,
-							Owner: Main.maxPlayers
+							Owner: Main.myPlayer
 						);
 					}
 				} else {

@@ -49,6 +49,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Breach_P : ModProjectile, ISelfDamageEffectProjectile {
 		public override void SetStaticDefaults() {
+			Origins.MagicTripwireRange[Type] = 40;
 			Main.projFrames[Type] = 3;
 		}
 		public override void SetDefaults() {

@@ -58,13 +58,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 128;
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
-			int t = ModContent.ProjectileType<Flash_P>();
-			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, Projectile.damage = 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Flash_P>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
 			Projectile.Damage();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Confused, 220);
 			target.AddBuff(BuffID.Slow, 300);
+			target.AddBuff(BuffID.Darkness, 60);
 		}
 	}
 	public class Flash_P : ModProjectile {
@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         public override bool PreDraw(ref Color lightColor) {
 			const float scale = 2f;
 			Main.spriteBatch.Restart(SpriteSortMode.Immediate);
-			DrawData data = new DrawData(
+			DrawData data = new(
 				Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
 				Projectile.Center - Main.screenPosition,
 				new Rectangle(0, 0, 1, 1),

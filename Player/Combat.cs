@@ -43,14 +43,12 @@ namespace Origins {
 			}
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {
-			if (endlessExplosives && ammo.ammo is ItemID.Grenade or ItemID.Bomb or ItemID.Dynamite) {
-				if (Main.rand.NextBool(15, 100)) return false;
+			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
+				if (endlessExplosives && Main.rand.NextBool(15, 100)) return false;
+				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
 			}
 			if (weakpointAnalyzer && ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (Main.rand.NextBool(8, 100)) return false;
-			}
-			if (controlLocus && ammo.CountsAsClass(DamageClasses.Explosive)) {
-				if (Main.rand.NextBool(12, 100)) return false;
 			}
 			return true;
 		}

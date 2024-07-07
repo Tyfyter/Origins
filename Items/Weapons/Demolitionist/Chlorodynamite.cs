@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using static Humanizer.In;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -106,25 +107,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public bool IsExploding() => Projectile.timeLeft <= explosion_delay_time;
 		public override bool PreKill(int timeLeft) {
-			Projectile.type = ProjectileID.Grenade;
-			Projectile.aiStyle = ProjAIStyleID.Explosive;
-			Projectile.friendly = true;
 			return true;
 		}
 		public override bool? CanHitNPC(NPC target) => null;//Projectile.type == ProjectileID.Grenade ? null : false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			if (Projectile.type != ProjectileID.Grenade) {
+			if (Projectile.timeLeft > 0) {
 				modifiers.SourceDamage /= 12;
 			}
 		}
 		public override void OnKill(int timeLeft) {
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 200;
-			Projectile.height = 200;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
-			Projectile.Damage();
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 200, sound: SoundID.Item62);
 		}
 	}
 	public class Chlorodynamite_Vine : ModProjectile {

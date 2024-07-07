@@ -257,6 +257,7 @@ namespace Origins {
 				ModContent.ItemType<Hemorang>(),
 				ModContent.ItemType<Krakram>(),
 				ModContent.ItemType<Riverang>(),
+				ModContent.ItemType<Orbital_Saw>(),
 			]));
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;

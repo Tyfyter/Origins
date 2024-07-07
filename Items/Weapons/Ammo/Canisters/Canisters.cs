@@ -304,7 +304,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
 
 		public override void SetDefaults() {
-			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.friendly = true;
 			Projectile.width = 6;
 			Projectile.height = 6;
@@ -499,6 +499,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			ID = Type;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.hide = false;
 			Projectile.width = Projectile.height = 72;
 			Projectile.friendly = true;
@@ -592,6 +593,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			ID = Type;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.hide = true;
 			Projectile.width = Projectile.height = 4;
 			Projectile.friendly = true;

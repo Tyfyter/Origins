@@ -177,7 +177,7 @@ CFHES: {
 
 Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
-	Tooltip: 5 of the closest enemies will be inflicted with Bleeding, On Fire, and Rasterize
+	Tooltip: The five nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
 }
 
 Comb: {
@@ -457,7 +457,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: Inflicts Rasterize to 4 nearby enemies
+	Tooltip: The four nearest enemies will be afflicted with Rasterized
 }
 
 Lovers_Leap: {
@@ -620,7 +620,7 @@ Plasma_Phial: {
 		'''
 		Slightly increased regeneration
 		Debuff durations reduced by 30%
-		Rapidly lose life when inflicted with Bleeding
+		Rapidly lose life when Bleeding
 		'''
 }
 
@@ -696,7 +696,7 @@ Refactoring_Pieces: {
 	DisplayName: Refactoring Pieces
 	Tooltip:
 		'''
-		Increases mana shielding by 10%
+		Increases mana shielding by 10% if Lost Armor is equipped
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }
@@ -726,7 +726,7 @@ Retribution_Shield: {
 
 Return_To_Sender: {
 	DisplayName: Return To Sender
-	Tooltip: Attackers receive all damage inflicted to the user
+	Tooltip: Attackers receive all damage inflicted on the user
 }
 
 Rope_Of_Sharing: {
@@ -773,7 +773,7 @@ Sonar_Visor: {
 		'''
 		Increased projectile speed
 		Immunity to Confusion
-		Allows you to see the outermost tiles
+		Highlights the outermost layer of tiles
 		'''
 }
 
@@ -2958,7 +2958,7 @@ Flagellash: {
 	DisplayName: Flagellash
 	Tooltip:
 		'''
-		2⅔ summon tag damage
+		2⅔ summon tag damage per whip
 		{$CommonItemTooltip.Whips}
 		'Three ends are better than one'
 		'''
@@ -3300,7 +3300,7 @@ Piledriver: {
 
 Cinder_Seal: {
 	DisplayName: Seal of Cinders
-	Tooltip: ""
+	Tooltip: Motes of dust will combust after taking damage
 }
 
 Miter_Saw: {
@@ -3499,8 +3499,8 @@ Binding_Book: {
 		'''
 		Increases pickup range for mana stars
 		Increases maximum mana by 20
-		Increases mana shielding by 10%
 		Restores mana when damaged
+		Increases mana shielding by 10% if Lost Armor is equipped
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }
@@ -3563,7 +3563,7 @@ Emergency_Bee_Canister: {
 
 Blizzardwalkers_Jacket: {
 	DisplayName: Blizzardwalkers Jacket
-	Tooltip: The player will dodge their next attack as long as no enemies are nearby
+	Tooltip: Become immune after some time away from enemies
 }
 
 Cursed_Crown: {

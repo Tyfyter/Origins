@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using System;
 namespace Origins.Items.Weapons.Melee {
 	public class Broken_Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -69,8 +70,10 @@ namespace Origins.Items.Weapons.Melee {
 			if (projOwner.itemAnimation == 0) {
 				Projectile.Kill();
 			}
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-			Projectile.rotation -= MathHelper.Pi / 2f;
+			projOwner.direction = Math.Sign(Projectile.velocity.X);
+			Projectile.rotation = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+			projOwner.compositeFrontArm.rotation = Projectile.rotation;
+			Projectile.rotation += MathHelper.PiOver4 * 3;//MathHelper.ToRadians(135f);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Broken_Fiberglass_Sword").Value, (Projectile.Center - Projectile.velocity * 2) - Main.screenPosition, new Rectangle(0, 0, 24, 26), lightColor, Projectile.rotation, new Vector2(12, 13), 1f, SpriteEffects.None, 0);
