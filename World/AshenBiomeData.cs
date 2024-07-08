@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Pets;
 
 namespace Origins.World {
     public class AshenBiomeData : ModBiome {
@@ -27,7 +28,7 @@ namespace Origins.World {
 				FirstOrbDropRule,
 				AceShrapnelRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Area_Denial>()),
-				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Smiths_Hammer>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Smiths_Hammer>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Cinder_Seal>())
 			);
 		}

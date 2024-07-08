@@ -862,8 +862,8 @@ Buffs: {
 	}
 
 	Sapphire_Aura_Buff: {
-		DisplayName: Sapphire Aura Buff
-		Description: Mods.Origins.Buffs.Sapphire_Aura_Buff.Description
+		DisplayName: Sapphire Aura
+		Description: Increased attack speed and life regeneration
 	}
 
 	Spiker_Counter_Debuff: {
@@ -879,6 +879,20 @@ Buffs: {
 	Bee_Incantation_Buff: {
 		DisplayName: Bee Incantation Buff
 		Description: Mods.Origins.Buffs.Bee_Incantation_Buff.Description
+	}
+
+	Walking_Furnace_Buff: {
+		DisplayName: Walking Furnace
+		Description: The walking furnace will light your way
+	}
+
+	Self_Contained_Universe_Buff: {
+		DisplayName: Self Contained Universe
+		Description:
+			'''
+			The universe will light your way
+			The little one, not the one you're in
+			'''
 	}
 }
 
@@ -1216,6 +1230,8 @@ Projectiles: {
 	Internal_Combustionfish_P.DisplayName: Internal Combustionfish
 	Amoebash_Smash.DisplayName: Amoebash Smash
 	Amoebash_Shrapnel.DisplayName: Amoebash Splash
+	Walking_Furnace.DisplayName: Walking Furnace
+	Self_Contained_Universe.DisplayName: Self Contained Universe
 }
 
 Prefixes: {

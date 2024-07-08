@@ -4315,3 +4315,13 @@ Amoebash: {
 	// DisplayName: Amoebash
 	// Tooltip: ""
 }
+
+Smiths_Hammer: {
+	// DisplayName: Smith's Hammer
+	// Tooltip: ""
+}
+
+Fleshy_Globe: {
+	// DisplayName: Fleshy Globe
+	// Tooltip: ""
+}

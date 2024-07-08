@@ -719,7 +719,7 @@ SUMMONER WEAPONS:
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
-(#, @2 (I swear the minion sprite existed at some point, but it's gone now)) Forest Staff* !!!
+(#, ^2 (found it)) Forest Staff* !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet* !!!
@@ -1161,13 +1161,13 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Chromatic Scale (Rainbow Pangolin)
-(#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
+(@2 (missing buff icon)) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (X) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
 (X) Rusty Cross Necklace (Guardian Angel)
-(#, ^2) Smith's Hammer (Walking Furnace)* !!!
+(☻, @2 (missing buff icon)) Smith's Hammer (Walking Furnace)* !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
 (#, ^2) Chew Toy (Chee Toy)* !!!

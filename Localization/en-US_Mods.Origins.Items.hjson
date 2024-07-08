@@ -4315,3 +4315,13 @@ Amoebash: {
 	DisplayName: Amoebash
 	Tooltip: ""
 }
+
+Smiths_Hammer: {
+	DisplayName: Smith's Hammer
+	Tooltip: "Summons a Walking Furnace to light your way"
+}
+
+Fleshy_Globe: {
+	DisplayName: Fleshy Globe
+	Tooltip: "Summons a Self Contained Universe to light your way"
+}
