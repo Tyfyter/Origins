@@ -49,7 +49,7 @@ namespace Origins.Items.Other.Consumables {
 				return new ChineseLunisolarCalendar().GetDayOfYear(DateTime.Now) == 1 ? 1 : 0;
 			}));
 			AddHoliday(autismAwareness, new DateTime(2007, 4, 2));
-			shaders = new() {
+			shaders = [
 				(Day(autismAwareness), new HolidayHairPassData(
 					  PassName: "AutismAwareness",
 					  ColorFunc: (hairColor, lightColor) => Color.Lerp(lightColor, Color.White, 0.1f)
@@ -75,8 +75,10 @@ namespace Origins.Items.Other.Consumables {
 					  Image: Main.Assets.Request<Texture2D>("Images/Misc/noise")
 				)),
 				SimpleHoliday("World Stroke Day", new DateTime(1999, 10, 29), new Color(33, 33, 33), "WorldStrokeDay_Hair", false),
+				//SimpleHoliday("World Art Day", new DateTime(2012, 4, 15), new Color(33, 33, 33), "ArtDay_Hair", false),
+				SimpleHoliday("Cerebral Palsy Awareness Day", new DateTime(2012, 3, 25), null, "CerebralPalsyAwarenessDay_Hair", true),
 				(() => true, new())
-			};
+			];
 		}
 		public override void Unload() => shaders = null;
 		public override void SetDefaults() {
