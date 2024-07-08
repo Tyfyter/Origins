@@ -152,7 +152,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(#, ^2) Defiled Asphyxiator* !!!
+(#, ^2) Defiled Asphyxiator* !!!?
 (^) Defiled Mimic
 (☻) Defiled Pigron !!!
 (^) Defiled Squid*

@@ -140,17 +140,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public static void DefaultExplosion(Projectile projectile, bool child, int fireDustType = DustID.Torch) {
 			if (child) return;
-			projectile.friendly = true;
-			projectile.penetrate = -1;
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 96;
-			projectile.height = 96;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
-			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
-			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustType: fireDustType);
+			ExplosiveGlobalProjectile.DoExplosion(projectile, 96, sound: SoundID.Item62, fireDustType: fireDustType);
 		}
 	}
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
