@@ -12,11 +12,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Ocotoral_Bud : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Torn",
 			"TornSource",
 			"SentryWeapon"
-		};
+		];
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

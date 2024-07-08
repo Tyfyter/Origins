@@ -16,6 +16,13 @@ using Terraria.Graphics.Shaders;
 
 namespace Origins.Gores.NPCs {
 	public class R_Effect_Blood1 : ModGore {
+		public static List<int> GoreIDs { get; private set; } = [];
+		public override void SetStaticDefaults() {
+			GoreIDs.Add(Type);
+		}
+		public override void Unload() {
+			GoreIDs = null;
+		}
 		public override Color? GetAlpha(Gore gore, Color lightColor) {
 			return new Color(255, 255, 255, 0);
 		}
@@ -53,7 +60,7 @@ namespace Origins.Gores.NPCs {
 			gore.position += gore.velocity;
 			return false;
 		}
-		public void Splatter(Gore gore, Vector2 newVelocity, Entity collisionEntity = null) {
+		public static void Splatter(Gore gore, Vector2 newVelocity, Entity collisionEntity = null) {
 			if (OriginClientConfig.Instance.ExtraGooeyRivenGores) {
 				Vector2 dustSpawnPosition = gore.position + newVelocity + gore.velocity.SafeNormalize(default) * 8;
 				object dustCustomData = null;

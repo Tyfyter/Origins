@@ -1213,6 +1213,9 @@ Projectiles: {
 	// Terrarang_Thrown.DisplayName: Terrarang
 	// Terrarang_P2.DisplayName: Terrarang
 	// CORE_Generator_P.DisplayName: CORE Generator
+	// Internal_Combustionfish_P.DisplayName: Internal Combustionfish
+	// Amoebash_Smash.DisplayName: Amoebash Smash
+	// Amoebash_Shrapnel.DisplayName: Amoebash Shrapnel
 }
 
 Prefixes: {

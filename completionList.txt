@@ -571,7 +571,7 @@ MELEE WEAPONS:
 (☻) Waning Crescent !!!
 
 (#2, ^2) Amenonuhoko
-(#, ^2) Amoebash !!!
+(☻) Amoebash !!!
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
@@ -776,7 +776,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(#, ^2) Internal Combustionfish* !!!
+(☻) Internal Combustionfish* !!!
 (☻) Link Grenade* !!!
 (#, ^2) Matrix* !!!
 (^) Meteor*

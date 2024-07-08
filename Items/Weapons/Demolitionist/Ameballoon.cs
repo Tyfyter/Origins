@@ -49,8 +49,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Ameballoon_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Ameballoon";
-		public override string GlowTexture => Texture;
-		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
@@ -89,19 +87,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Kill();
 			return false;
 		}
+		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
 	public class Ameballoon_Shrapnel : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Ameballoon_P";
-		public override string GlowTexture => Texture;
-		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 3600;
 			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 1;
-			Projectile.width = 22;
-			Projectile.height = 22;
+			Projectile.width = 10;
+			Projectile.height = 10;
 			Projectile.ignoreWater = true;
 		}
 		public override void AI() {
@@ -110,5 +107,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnKill(int timeLeft) {
 			if (timeLeft < 3590) SoundEngine.PlaySound(SoundID.NPCHit18.WithPitch(0.15f).WithVolumeScale(0.5f), Projectile.Center);
 		}
+		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
 }

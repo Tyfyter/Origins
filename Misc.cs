@@ -2685,7 +2685,7 @@ namespace Origins {
 			tileTriangles = null;
 			tileRectangles = null;
 		}
-		public static bool OverlapsAnyTiles(this Rectangle area, bool drawDebug = false) {
+		public static bool OverlapsAnyTiles(this Rectangle area, bool fallThrough = true, bool drawDebug = false) {
 			Rectangle checkArea = area;
 			Point topLeft = area.TopLeft().ToTileCoordinates();
 			Point bottomRight = area.BottomRight().ToTileCoordinates();
@@ -2701,6 +2701,7 @@ namespace Origins {
 					for (int j = 0; j <= maxY; j++) {
 						Tile tile = Main.tile[i + minX, j + minY];
 						Dust.NewDustPerfect(new Vector2((i + minX) * 16 + 8, (j + minY) * 16 + 8), 6, Vector2.Zero).noGravity = true;
+						if (fallThrough && Main.tileSolidTop[tile.TileType]) continue;
 						checkArea.X = i * -16 + cornerX;
 						checkArea.Y = j * -16 + cornerY;
 						//checkArea.DrawDebugOutline(new Vector2((i + minX) * 16, (j + minY) * 16), DustID.WaterCandle);
@@ -2726,6 +2727,7 @@ namespace Origins {
 				for (int i = 0; i <= maxX; i++) {
 					for (int j = 0; j <= maxY; j++) {
 						Tile tile = Main.tile[i + minX, j + minY];
+						if (fallThrough && Main.tileSolidTop[tile.TileType]) continue;
 						if (tile != null && tile.HasSolidTile()) {
 							checkArea.X = i * -16 + cornerX;
 							checkArea.Y = j * -16 + cornerY;
