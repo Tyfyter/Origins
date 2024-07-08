@@ -521,7 +521,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (DifficultyMult >= 2) {
 				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
                     target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
-                    this.DrainMana(target);
                 }
             }
         }

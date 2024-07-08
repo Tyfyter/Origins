@@ -42,7 +42,7 @@ namespace Origins.NPCs.MiscE {
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
 			if (++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 32) % 128, 34, 32);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 112, 34, 26);
 				NPC.frameCounter = 0;
 			}
 		}

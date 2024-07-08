@@ -18,13 +18,14 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 4;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Bunny);
+			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = 14;
 			NPC.lifeMax = 48;
 			NPC.defense = 10;
 			NPC.damage = 20;
 			NPC.width = 70;
 			NPC.height = 26;
+			NPC.catchItem = 26;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
@@ -38,9 +39,6 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 35;
 		public int MaxManaDrain => 15;
 		public float Mana { get; set; }
-		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			this.DrainMana(target);
-		}
 		public void Regenerate(out int lifeRegen) {
 			int factor = 57 / ((NPC.life / 10) + 1);
 			lifeRegen = factor;

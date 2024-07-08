@@ -45,7 +45,6 @@ namespace Origins.NPCs.Defiled {
 		public float Mana { get; set; }
 		public bool ForceSyncMana => true;
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			this.DrainMana(target);
 			target.AddBuff(Rasterized_Debuff.ID, 36);
 		}
 		public void Regenerate(out int lifeRegen) {

@@ -82,8 +82,7 @@ namespace Origins.NPCs.Riven {
 			HashSet<int> indecies = new();
 			while (current.ai[0] != 0) {
 				Mod.Logger.Info("Wormed the worm");
-				if (indecies.Contains(NPC.whoAmI)) break;
-				indecies.Add(NPC.whoAmI);
+				if (!indecies.Add(current.whoAmI)) break;
 				if (Main.rand.NextBool(9)) {
 					NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X + Main.rand.Next(NPC.width), (int)NPC.position.Y + Main.rand.Next(NPC.height), ModContent.NPCType<Cleaver_Head>());
 				}

@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Melee {
 							vel.RotatedBy(Projectile.ai[1] * -0.5f + Main.rand.NextFloat(-0.2f, 0.4f)) * Main.rand.NextFloat(0.2f, 0.3f),
 							projType,
 							Projectile.damage / 2,
-							Projectile.knockBack,
+							Projectile.knockBack * 0.2f,
 							Projectile.owner
 						);
 						Gore.NewGore(

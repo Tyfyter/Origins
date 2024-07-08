@@ -109,10 +109,13 @@ namespace Origins.NPCs.Defiled
 				damage += totalDPS / 3;
 			}
 		}
-        public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
+		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			AssimilationAmount amount = GetAssimilationAmount(npc);
 			if (amount != default) {
 				target.GetModPlayer<OriginPlayer>().DefiledAssimilation += amount.GetValue(npc, target);
+			}
+			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
+				defiledEnemy.DrainMana(target);
 			}
 		}
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {
@@ -148,13 +151,11 @@ namespace Origins.NPCs.Defiled
 		void SpawnWisp(NPC npc) {
 			if (Main.expertMode) NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
-	}
-	public static class IDefiledEnemyExt {
-		public static void DrainMana(this IDefiledEnemy defiledEnemy, Player target) {
-			int maxDrain = (int)Math.Min(defiledEnemy.MaxMana - defiledEnemy.Mana, defiledEnemy.MaxManaDrain);
+		public void DrainMana(Player target) {
+			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
 			int manaDrain = Math.Min(maxDrain, target.statMana);
 			target.statMana -= manaDrain;
-			defiledEnemy.Mana += manaDrain;
+			Mana += manaDrain;
 			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
 		}
 	}

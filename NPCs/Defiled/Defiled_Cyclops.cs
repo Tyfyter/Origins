@@ -39,9 +39,6 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;
 		public float Mana { get; set; }
-		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			this.DrainMana(target);
-		}
 		public void Regenerate(out int lifeRegen) {
 			int factor = 48 / ((NPC.life / 10) + 1);
 			lifeRegen = factor;
