@@ -81,8 +81,6 @@ namespace Origins.Projectiles.Misc {
 					SoundEngine.PlaySound(Origins.Sounds.DefiledKill.WithPitch(0f).WithVolume(1f), Projectile.Center);
 					Defiled_Amalgamation.spawnDA = true;
 				}
-
-				AchievementsHelper.NotifyProgressionEvent(7);
 			} else {
 				Main.player[(int)Projectile.ai[1]].GetModPlayer<OriginPlayer>().rapidSpawnFrames = 5;
 			}

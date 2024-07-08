@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == Potato_Battery_P.ID) {
-				int frameReduction = player.itemAnimationMax;
+				int frameReduction = player.itemAnimationMax / 3;
 				player.itemTime -= frameReduction;
 				player.itemTimeMax -= frameReduction;
 				player.itemAnimation -= frameReduction;

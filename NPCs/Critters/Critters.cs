@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Critters {
 	public class Amoeba_Buggy : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Buggy");
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 4;
 		}
@@ -30,7 +29,6 @@ namespace Origins.NPCs.Critters {
 	}
 	public class Bug : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bug");
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 2;
 		}
@@ -64,7 +62,6 @@ namespace Origins.NPCs.Critters {
 	}
 	public class Cicada_3301 : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cicada 3301");
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 2;
 		}

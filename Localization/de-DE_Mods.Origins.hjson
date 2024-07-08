@@ -206,7 +206,7 @@ Dialogue: {
 
 	ProtOS: {
 		// Pickup: Hi. Again...
-		// PotatoLauncher: It was a nice try, but no, never again.
+		// Potato_Launcher: It was a nice try, but no, never again.
 		// Craft: Oh... It's you.
 		// Death_0: "[clap clap clap]"
 		// Death_1: "[clap clap]"
@@ -247,16 +247,16 @@ Dialogue: {
 		// Idle_8: I know, I don't care either.
 		// CompanionCube_0: The Enrichment Center reminds you that the Weighted Companion Cube cannot speak.
 		// CompanionCube_1: The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak.
-		// InHell: Good people don't end up here.
-		// ItemIsBad_0: I wouldn't bother with that thing. My guess is that touching it will just make your life even worse somehow.
-		// ItemIsBad_1: I know it's not a Terra Blade or anything, but it is important to the game.
-		// ItemIsExplosive_0: Killing you and giving you good advice aren't mutually exclusive. The rocket really is the way to go.
-		// ItemIsExplosive_1: This should be interesting. Wait, I'm not the Demolitionist.
-		// SmashingEvilTile: Nice job breaking it. Hero.
-		// KillVillager_0: Do you know who else murders people who are only trying to help them?
-		// KillVillager_1: You monster.
-		// KillVillager_2: What are you doing? YOU MONSTER! They're one of us.
-		// BoundNPCAppearedThrice: I'm starting to think you don't want to rescue that person.
+		// In_Hell: Good people don't end up here.
+		// Item_Is_Bad_0: I wouldn't bother with that thing. My guess is that touching it will just make your life even worse somehow.
+		// Item_Is_Bad_1: I know it's not a Terra Blade or anything, but it is important to the game.
+		// Item_Is_Explosive_0: Killing you and giving you good advice aren't mutually exclusive. The rocket really is the way to go.
+		// Item_Is_Explosive_1: This should be interesting. Wait, I'm not the Demolitionist.
+		// Smashing_Evil_Tile: Nice job breaking it. Hero.
+		// Kill_Villager_0: Do you know who else murders people who are only trying to help them?
+		// Kill_Villager_1: You monster.
+		// Kill_Villager_2: What are you doing? YOU MONSTER! They're one of us.
+		// Bound_NPC: I'm starting to think you don't want to rescue that person.
 		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us.
 		// The_Part_Where_He_Kills_You_1: Oh no...
 	}
@@ -1215,7 +1215,7 @@ Projectiles: {
 	// CORE_Generator_P.DisplayName: CORE Generator
 	// Internal_Combustionfish_P.DisplayName: Internal Combustionfish
 	// Amoebash_Smash.DisplayName: Amoebash Smash
-	// Amoebash_Shrapnel.DisplayName: Amoebash Shrapnel
+	// Amoebash_Shrapnel.DisplayName: Amoebash Splash
 }
 
 Prefixes: {

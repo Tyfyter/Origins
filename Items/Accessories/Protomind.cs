@@ -3,23 +3,26 @@ using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Protomind : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		static Message_Cache[] messagesByType;
 		
 		public override void Unload() {
 			messagesByType = null;
+			AchievementsHelper.OnProgressionEvent -= AchievementsHelper_OnProgressionEvent;
 		}
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
-        }
-        static short glowmask;
+			AchievementsHelper.OnProgressionEvent += AchievementsHelper_OnProgressionEvent;
+		}
+		static short glowmask;
         public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
 			Item.accessory = true;
@@ -106,6 +109,14 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
+		static void AchievementsHelper_OnProgressionEvent(int eventID) {
+			if (eventID == AchievementHelperID.Events.SmashShadowOrb) {
+				OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+				if (originPlayer.hasProtOS) {
+					PlayRandomMessage(QuoteType.Smashing_Evil_Tile, originPlayer.protOSQuoteCooldown, Main.LocalPlayer.Top);
+				}
+			}
+		}
 		public static string GetRandomVariation(QuoteType type) {
 			if ((int)type >= (int)QuoteType.Count) {
 				Origins.instance.Logger.Error($"{nameof(Protomind)}.{nameof(GetRandomVariation)} called with invalid parameter {type} ({(int)type})");
@@ -158,9 +169,10 @@ namespace Origins.Items.Accessories {
 					}
 				}
 			}
-			messagesByType[(int)type] = new Message_Cache(cache.ToArray(), LanguageManager.Instance.ActiveCulture, Main.GameModeInfo.Id);
+			messagesByType[(int)type] = new(cache.ToArray(), LanguageManager.Instance.ActiveCulture, Main.GameModeInfo.Id);
 			if (cache.Count == 0) {
-				return $"missingno (Mods.Origins.Dialogue.ProtOS.{type})";
+				messagesByType[(int)type] = new([$"missingno (Mods.Origins.Dialogue.ProtOS.{type})"], LanguageManager.Instance.ActiveCulture, Main.GameModeInfo.Id);
+				return messagesByType[(int)type].Cache[0];
 			}
 			return Main.rand.Next(cache);
 		}
@@ -182,6 +194,8 @@ namespace Origins.Items.Accessories {
 				);
 				switch (type) {
 					case QuoteType.Pickup:
+					case QuoteType.In_Hell:
+					case QuoteType.Smashing_Evil_Tile:
 					cooldowns[(int)type] = Main.rand.Next(1200, 1801);
 					break;
 
@@ -190,6 +204,9 @@ namespace Origins.Items.Accessories {
 					case QuoteType.Bound_NPC:// no need to do something here since the cooldown is already at the desired value of 0
 					break;
 
+					case QuoteType.Item_Is_Bad:
+					case QuoteType.Item_Is_Explosive:
+					case QuoteType.Potato_Launcher:
 					case QuoteType.Bird:
 					cooldowns[(int)type] = Main.rand.Next(200, 481);
 					break;
@@ -201,10 +218,6 @@ namespace Origins.Items.Accessories {
 					case QuoteType.Gravitation:
 					case QuoteType.The_Part_Where_He_Kills_You:
 					cooldowns[(int)type] = Main.rand.Next(600, 901);
-					break;
-
-					case QuoteType.In_Hell:
-					cooldowns[(int)type] = Main.rand.Next(1200, 1801);
 					break;
 				}
 				cooldowns[(int)QuoteType.Idle] = Main.rand.Next(1800, 3601);
@@ -236,34 +249,30 @@ namespace Origins.Items.Accessories {
 		}
 		public enum QuoteType {
 			Pickup,
-			Death,
-			Bird,
-			Combat,
-			The_Part_Where_He_Kills_You,
 			Craft,
+			Bird,
+			Death,
 			Respawn,
+			Combat,
 			Falling,
 			Gravitation,
 			Idle,
 			Companion_Cube,
 			In_Hell,
-			Item_Is_Bad,//←TODO
-			Item_Is_Explosive,//←TODO
-			Smashing_Evil_Tile,//←TODO
+			Item_Is_Bad,
+			Item_Is_Explosive,
+			Smashing_Evil_Tile,
 			Kill_Villager,
 			Bound_NPC,
+			The_Part_Where_He_Kills_You,
+			Potato_Launcher,
 
 			Count
 		}
-		struct Message_Cache {
-			public string[] Cache { get; init; }
-			public GameCulture LastCulture { get; init; }
-			public int LastGameMode { get; init; }
-			public Message_Cache(string[] cache, GameCulture lastCulture, int lastGameMode) {
-				Cache = cache;
-				LastCulture = lastCulture;
-				LastGameMode = lastGameMode;
-			}
+		readonly struct Message_Cache(string[] cache, GameCulture lastCulture, int lastGameMode) {
+			public string[] Cache { get; init; } = cache;
+			public GameCulture LastCulture { get; init; } = lastCulture;
+			public int LastGameMode { get; init; } = lastGameMode;
 		}
 	}
 	public class Protomind_P : ModProjectile {

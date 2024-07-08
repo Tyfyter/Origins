@@ -13,6 +13,7 @@ namespace Origins.Tiles.Defiled {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			TileID.Sets.Conversion.Sand[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;

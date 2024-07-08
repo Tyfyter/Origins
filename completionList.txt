@@ -173,7 +173,7 @@ ENEMY NPCS:
 (^) Shattered Ghoul
 (^) Shattered Mummy
 (^) Torn Ghoul
-(#3, ^2) Trijaw Shark !!!
+(☻) Trijaw Shark !!!
 
 (X) Annihilator
 (X) Clockwork
@@ -356,7 +356,7 @@ ACCESSORIES:
 (^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
-(#3, ^2) Protomind* !!! 
+(☻) Protomind* !!! 
 (^) Razorwire*
 (^) Rebreather*
 (^) Resin Shield*
@@ -719,13 +719,13 @@ SUMMONER WEAPONS:
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
-(#, ^2) Forest Staff* !!!
+(#, @2 (I swear the minion sprite existed at some point, but it's gone now)) Forest Staff* !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
-(#, ^2) Stubborn Flower* !!!
+(#, @4 (minumum frame height to include the whole sprite seems to be higher than maximum frame height to avoid including parts of multiple frames)) Stubborn Flower* !!!
 (^) Teardown
 (^) Woodsprite Staff
 

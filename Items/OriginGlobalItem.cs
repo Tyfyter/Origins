@@ -163,6 +163,15 @@ namespace Origins.Items {
 					originPlayer.cryostenLifeRegenCount += 60;
 				}
 			}
+			if (originPlayer.hasProtOS) {
+				if (item.CountsAsClass(DamageClasses.Explosive)) {
+					Protomind.PlayRandomMessage(Protomind.QuoteType.Item_Is_Explosive, originPlayer.protOSQuoteCooldown, player.Top);
+				} else if (item.OriginalRarity == ItemRarityID.Gray) {
+					Protomind.PlayRandomMessage(Protomind.QuoteType.Item_Is_Bad, originPlayer.protOSQuoteCooldown, player.Top);
+				} else if (item.type == ModContent.ItemType<Potato_Launcher>()) {
+					Protomind.PlayRandomMessage(Protomind.QuoteType.Potato_Launcher, originPlayer.protOSQuoteCooldown, player.Top);
+				}
+			}
 			return true;
 		}
 		public override void GrabRange(Item item, Player player, ref int grabRange) {

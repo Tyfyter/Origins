@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
@@ -45,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 				ModContent.ItemType<Incision>(),
 				ModContent.ItemType<Ziptie>(),
 				ModContent.ItemType<Ravel>(),
-				ItemID.TendonHook // Chunky Hook
+				ModContent.ItemType<Chunky_Hook>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));

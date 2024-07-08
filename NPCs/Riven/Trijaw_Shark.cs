@@ -10,7 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Trijaw_Shark : ModNPC {
+	public class Trijaw_Shark : ModNPC, ICustomCollisionNPC {
+		public bool IsSandshark => true;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
             Main.npcFrameCount[NPC.type] = 4;
@@ -28,6 +29,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Riven_Hive_Ocean>().Type
 			];
+			AnimationType = NPCID.SandsharkCrimson;
 		}
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ItemID.SharkFin, 8));
@@ -51,12 +53,6 @@ namespace Origins.NPCs.Riven {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Sandstorm
             ]);
         }
-        public override void AI() {
-            if (++NPC.frameCounter > 5) {
-                NPC.frame = new Rectangle(0, (NPC.frame.Y + 40) % 160, 96, 38);
-                NPC.frameCounter = 0;
-            }
-        }
         public override void HitEffect(NPC.HitInfo hit) {
             if (NPC.life < 0) {
                 for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
@@ -65,5 +61,13 @@ namespace Origins.NPCs.Riven {
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
             }
         }
-    }
+
+		public void PreUpdateCollision() {
+			
+		}
+
+		public void PostUpdateCollision() {
+			
+		}
+	}
 }
