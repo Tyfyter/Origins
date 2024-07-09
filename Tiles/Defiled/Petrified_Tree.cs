@@ -8,19 +8,21 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Defiled {
     public class Petrified_Tree : ModTree {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         private static Mod mod => Origins.instance;
 		public static Petrified_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 		public override TreeTypes CountsAsTreeType => TreeTypes.None;
+		public static int[] AnchorTypes => [
+			ModContent.TileType<Defiled_Grass>(),
+			ModContent.TileType<Defiled_Sand>(),
+			ModContent.TileType<Defiled_Stone>(),
+			ModContent.TileType<Defiled_Jungle_Grass>()
+		];
 		public override void SetStaticDefaults() {
-			GrowsOnTileId = new int[] {
-				ModContent.TileType<Defiled_Grass>(),
-				ModContent.TileType<Defiled_Sand>(),
-				ModContent.TileType<Defiled_Stone>()
-			};
+			GrowsOnTileId = AnchorTypes;
 		}
 		internal static void Load() {
 			Instance = new Petrified_Tree();
@@ -67,7 +69,7 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Petrified_Tree_Sapling : SaplingBase {
-		public override Color MapColor => new Color(200, 200, 200);
-		public override int[] ValidAnchorTypes => new[] { ModContent.TileType<Defiled_Grass>(), ModContent.TileType<Defiled_Sand>(), ModContent.TileType<Defiled_Stone>() };
+		public override Color MapColor => new(200, 200, 200);
+		public override int[] ValidAnchorTypes => Petrified_Tree.AnchorTypes;
 	}
 }

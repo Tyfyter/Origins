@@ -60,11 +60,14 @@ namespace Origins.Tiles.Riven {
 		public override Asset<Texture2D> GetTexture() {
 			return ModContent.Request<Texture2D>(typeof(Exoskeletal_Tree).GetDefaultTMLName());
 		}
+		public static int[] AnchorTypes => [
+			ModContent.TileType<Riven_Grass>(),
+			ModContent.TileType<Silica>(),
+			ModContent.TileType<Riven_Flesh>(),
+			ModContent.TileType<Riven_Jungle_Grass>()
+		];
 		public override void SetStaticDefaults() {
-			GrowsOnTileId = [
-				ModContent.TileType<Riven_Flesh>(),
-				ModContent.TileType<Riven_Grass>()
-			];
+			GrowsOnTileId = AnchorTypes;
 			this.SetupGlowKeys();
 		}
 		public override Asset<Texture2D> GetTopTextures() {
@@ -88,13 +91,13 @@ namespace Origins.Tiles.Riven {
 	public class Exoskeletal_Tree_Sapling : SaplingBase, IGlowingModTile {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree_Sapling).GetDefaultTMLName() + "_Glow";
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
-		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileFrameX / 18 != 2) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
 		}
-		public override Color MapColor => new Color(200, 175, 160);
-		public override int[] ValidAnchorTypes => new[] { ModContent.TileType<Riven_Flesh>(), ModContent.TileType<Riven_Grass>() };
+		public override Color MapColor => new(200, 175, 160);
+		public override int[] ValidAnchorTypes => Exoskeletal_Tree.AnchorTypes;
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowTexture = GlowTexture;
 			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 16, 16);

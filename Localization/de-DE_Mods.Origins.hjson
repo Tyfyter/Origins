@@ -887,8 +887,12 @@ Buffs: {
 	}
 
 	Self_Contained_Universe_Buff: {
-		// DisplayName: Self Contained Universe Buff
-		// Description: Mods.Origins.Buffs.Self_Contained_Universe_Buff.Description
+		// DisplayName: Self Contained Universe
+		/* Description:
+			'''
+			The universe will light your way
+			The little one, not the one you're in
+			''' */
 	}
 }
 

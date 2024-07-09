@@ -4318,10 +4318,10 @@ Amoebash: {
 
 Smiths_Hammer: {
 	// DisplayName: Smith's Hammer
-	// Tooltip: ""
+	// Tooltip: Summons a Walking Furnace to light your way
 }
 
 Fleshy_Globe: {
 	// DisplayName: Fleshy Globe
-	// Tooltip: ""
+	// Tooltip: Summons a Self Contained Universe to light your way
 }
