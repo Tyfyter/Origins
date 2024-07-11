@@ -747,7 +747,8 @@ namespace Origins.Projectiles {
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
 			if (dealSelfDamage) DealSelfDamage(projectile);
-			ExplosionVisual(projectile, true, sound: sound, fireDustAmount: fireDustAmount, smokeGoreAmount: smokeGoreAmount, fireDustType: fireDustType);
+			if (fireDustType == -1) fireDustAmount = 0;
+			ExplosionVisual(projectile, true, sound: sound, fireDustAmount: fireDustAmount, smokeDustAmount: smokeDustAmount, smokeGoreAmount: smokeGoreAmount, fireDustType: fireDustType);
 		}
 		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false, int fireDustType = DustID.Torch) {
 			if (applyHitboxModifiers) {

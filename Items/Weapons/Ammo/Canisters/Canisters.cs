@@ -138,9 +138,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			canister = projectile.ModProjectile as ICanisterProjectile;
 			CanisterID = binaryReader.ReadInt32();
 		}
-		public static void DefaultExplosion(Projectile projectile, bool child, int fireDustType = DustID.Torch) {
+		public static void DefaultExplosion(Projectile projectile, bool child, int fireDustType = DustID.Torch, int size = 96) {
 			if (child) return;
-			ExplosiveGlobalProjectile.DoExplosion(projectile, 96, sound: SoundID.Item62, fireDustType: fireDustType);
+			ExplosiveGlobalProjectile.DoExplosion(projectile, size, sound: SoundID.Item62, fireDustType: fireDustType);
 		}
 	}
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
@@ -187,7 +187,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public const string base_texture_path = "Origins/Items/Weapons/Ammo/Canisters/";
 		public abstract AutoLoadingAsset<Texture2D> OuterTexture { get; }
 		public abstract AutoLoadingAsset<Texture2D> InnerTexture { get; }
-		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch) => CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: fireDustType);
+		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch, int size = 96) => CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: fireDustType, size: size);
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
 			SpriteEffects spriteEffects = SpriteEffects.None;
@@ -229,21 +229,28 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(30);
+			Item.DefaultToCanister(33);
 			Item.glowMask = glowmask;
-			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.shootSpeed = 0.3f;
+			Item.knockBack = 3.6f;
+			Item.value = Item.sellPrice(silver: 8, copper: 80);
+			Item.rare = ItemRarityID.Pink;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			/*Recipe.Create(Type, 10)
-			.AddIngredient(ItemID.Fireblossom)
-			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
-			.AddTile(TileID.Anvils)
-			.Register();*/
+			Recipe.Create(Type, 200)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 100)
+			.AddIngredient(ItemID.FrostCore)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public void OnKill(Projectile projectile, bool child) {
-			if (child) return;
-			//Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ProjectileID.StardustGuardianExplosion, 0, 0, projectile.owner, -1, 1);
+			if (!child && projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile, fireDustType: DustID.IceTorch, 166);
+			}
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(BuffID.Frostburn2, Main.rand.Next(child ? 180 : 120, child ? 241 : 181));
 		}
 	}
 	public class Napalm_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {

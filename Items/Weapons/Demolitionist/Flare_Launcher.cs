@@ -232,17 +232,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 		}
 		public bool IsExploding() => false;
-		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch) {
-			projectile.penetrate = -1;
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 96;
-			projectile.height = 96;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
-			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
-			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
+		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch, int size = 96) {
+			CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: -1, size: size);
 			Color flareColor = Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor;
 			for (int i = 0; i < 20; i++) {
 				Dust.NewDustPerfect(

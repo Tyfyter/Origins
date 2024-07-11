@@ -41,6 +41,8 @@ X: No progress
 ᗢ: Implemented, but will need to be revisited in later update
 ♫: rough implementation, functional, but needs polish (sound, balancing, etc.)
 ⚐: needs banner (unicode hex code 2690)
+⚯: redundant? (unicode hex code 26AF)
+⛥: needs design discussion (unicode hex code 26E5)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -719,7 +721,7 @@ SUMMONER WEAPONS:
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
-(#, ^2 (found it)) Forest Staff* !!!
+(⚯ (fills same role as woodsprite staff)) Forest Staff* !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet* !!!
@@ -1185,7 +1187,7 @@ AMMO:
 (^) Resizable Mine Mk. 1*
 (^) Resizable Mine Mk. 2*
 (^) Scrap*
-(#, ^2) Sticky Mine !!!
+(⛥ (does not seem to fit with current design of canisters)) Sticky Mine !!!
 (^) Thermite Canister*
 
 (^) Alkahest Arrow*
@@ -1198,7 +1200,7 @@ AMMO:
 (^) Bile Bullet*
 (☻) Bile Canister* !!!
 (^) Bile Dart*
-(#, ^2) Coolant Canister* !!! 
+(☻) Coolant Canister* !!! 
 (☻) Cursed Canister* !!!
 (^) Cursed Harpoon*
 (☻) Ichor Canister* !!!

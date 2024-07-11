@@ -78,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.velocity.Y = -8;
 			return true;
 		}
-		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch) {
+		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch, int size = 96) {
 			Projectile.NewProjectile(
 				Projectile.GetSource_FromAI(),
 				Projectile.Center,
