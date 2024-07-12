@@ -92,7 +92,7 @@ namespace Origins {
 		}
 
 		public T[] ToArray() {
-			return _items.ToArray();
+			return [.. _items];
 		}
 		#region ICollection implementation
 		[Obsolete("Use Enqueue")]
@@ -124,36 +124,32 @@ namespace Origins {
 
 		public bool IsReadOnly => false;
 		#endregion
-		private LinkedList<T> _items = new LinkedList<T>();
+		private readonly LinkedList<T> _items = new();
 	}
-	public struct LLNodeEnumerator<T> : IEnumerator<LinkedListNode<T>> {
+	public struct LLNodeEnumerator<T>(LinkedList<T> list) : IEnumerator<LinkedListNode<T>> {
 		internal static FieldInfo LLVersion;
-		private LinkedList<T> list;
-		private LinkedListNode<T> current;
-		private readonly int version;
-		public LLNodeEnumerator(LinkedList<T> list) {
-			this.list = list;
-			version = list.GetVersion();
-			current = list.First;
-		}
+		private readonly LinkedList<T> list = list;
+		private LinkedListNode<T> current = list.First;
+		private readonly int version = list.GetVersion();
 
-		public LinkedListNode<T> Current => current;
+		public readonly LinkedListNode<T> Current => current;
 
-		object IEnumerator.Current => current;
+		readonly object IEnumerator.Current => current;
 
-		public void Dispose() { }
+		public readonly void Dispose() { }
 
 		public bool MoveNext() {
 			VersionCheck();
 			current = current.Next;
-			return !(current is null);
+			return current is not null;
 		}
 
 		public void Reset() {
 			VersionCheck();
 			current = list.First;
 		}
-		void VersionCheck() {
+
+		readonly void VersionCheck() {
 			if (version != list.GetVersion()) {
 				throw new InvalidOperationException("Collection has been modified");
 			}
@@ -162,20 +158,17 @@ namespace Origins {
 	/// <summary>
 	/// Because it's a little more convenient than an extension method for every number type
 	/// </summary>
-	public struct Fraction {
-		public static Fraction Half => new Fraction(1, 2);
-		public static Fraction Third => new Fraction(1, 3);
-		public static Fraction Quarter => new Fraction(1, 4);
-		public static Fraction Fifth => new Fraction(1, 5);
-		public static Fraction Sixth => new Fraction(1, 6);
-		public int numerator;
-		public int denominator;
-		public int N { get => numerator; set => numerator = value; }
-		public int D { get => denominator; set => denominator = value; }
-		public Fraction(int numerator, int denominator) {
-			this.numerator = numerator;
-			this.denominator = denominator;
-		}
+	public struct Fraction(int numerator, int denominator) {
+		public static Fraction Half => new(1, 2);
+		public static Fraction Third => new(1, 3);
+		public static Fraction Quarter => new(1, 4);
+		public static Fraction Fifth => new(1, 5);
+		public static Fraction Sixth => new(1, 6);
+		public int numerator = numerator;
+		public int denominator = denominator;
+		public int N { readonly get => numerator; set => numerator = value; }
+		public int D { readonly get => denominator; set => denominator = value; }
+
 		public static Fraction operator +(Fraction f1, Fraction f2) {
 			return new Fraction((f1.N * f2.D) + (f2.N * f1.D), f1.D * f2.D);
 		}
@@ -206,7 +199,7 @@ namespace Origins {
 		public static explicit operator double(Fraction frac) {
 			return frac.N / (double)frac.D;
 		}
-		public override string ToString() {
+		public override readonly string ToString() {
 			return N + "/" + D;
 		}
 	}
@@ -239,7 +232,7 @@ namespace Origins {
 		private Func<TParent, T> CreateGetter() {
 			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
 			string methodName = field.ReflectedType.FullName + ".get_" + field.Name;
-			DynamicMethod getterMethod = new DynamicMethod(methodName, typeof(T), new Type[] { typeof(TParent) }, true);
+			DynamicMethod getterMethod = new(methodName, typeof(T), [typeof(TParent)], true);
 			ILGenerator gen = getterMethod.GetILGenerator();
 
 			gen.Emit(OpCodes.Ldarg_0);
@@ -251,7 +244,7 @@ namespace Origins {
 		private Action<TParent, T> CreateSetter() {
 			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
 			string methodName = field.ReflectedType.FullName + ".set_" + field.Name;
-			DynamicMethod setterMethod = new DynamicMethod(methodName, null, new Type[] { typeof(TParent), typeof(T) }, true);
+			DynamicMethod setterMethod = new(methodName, null, [typeof(TParent), typeof(T)], true);
 			ILGenerator gen = setterMethod.GetILGenerator();
 
 			gen.Emit(OpCodes.Ldarg_0);
@@ -262,8 +255,7 @@ namespace Origins {
 			return (Action<TParent, T>)setterMethod.CreateDelegate(typeof(Action<TParent, T>));
 		}
 	}
-	public class FastStaticFieldInfo<TParent, T> : FastStaticFieldInfo<T> {
-		public FastStaticFieldInfo(string name, BindingFlags bindingFlags, bool init = false) : base(typeof(TParent), name, bindingFlags, init) {}
+	public class FastStaticFieldInfo<TParent, T>(string name, BindingFlags bindingFlags, bool init = false) : FastStaticFieldInfo<T>(typeof(TParent), name, bindingFlags, init) {
 	}
 	public class FastStaticFieldInfo<T> {
 		public readonly FieldInfo field;
@@ -2590,13 +2582,13 @@ namespace Origins {
 		}
 		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), 6, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), 6, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), 6, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero).noGravity = true;
 			}
 		}
 		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> fallback) {

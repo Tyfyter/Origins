@@ -14,9 +14,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "MagicGun"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
@@ -114,7 +114,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (embedPos.R > 0) {
 					Vector2 movement = (Vector2)embedPos;
 					int size = 4;
-					Vector2 startOffset = new Vector2(size / 2);
+					Vector2 startOffset = new(size / 2);
 					Vector2 checkPosition = Projectile.Center + movement - startOffset;
 					if (!Collision.SolidCollision(checkPosition, size, size)) {
 						Projectile.timeLeft = embed_duration;

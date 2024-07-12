@@ -660,9 +660,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {
 		static short glowmask;
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Canistah"
-		};
+		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
