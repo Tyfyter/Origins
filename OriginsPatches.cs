@@ -1345,6 +1345,9 @@ namespace Origins {
 				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
 					forcePlayerShader = Rasterized_Dye.ShaderID;
 				}
+				if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
+					forcePlayerShader = Shimmer_Dye.ShaderID;
+				}
 				if (drawPlayersWithShader >= 0) {
 					forcePlayerShader = drawPlayersWithShader;
 					if (drawPlayersWithShader == coordinateMaskFilterID) {

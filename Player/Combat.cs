@@ -348,6 +348,18 @@ namespace Origins {
 					modifiers.SourceDamage = new StatModifier(1, 0.2f);
 				}
 			}
+			if (shineSparkDashTime > 0) {
+				modifiers.FinalDamage *= 0;
+				modifiers.FinalDamage.Flat = int.MinValue;
+				proj.Kill();
+			}
+		}
+		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers) {
+			if (shineSparkDashTime > 0) {
+				modifiers.FinalDamage *= 0;
+				modifiers.FinalDamage.Flat = int.MinValue;
+				npc.SimpleStrikeNPC(Player.GetWeaponDamage(loversLeapItem) * 15, Player.direction, true, 12);
+			}
 		}
 		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
 			if (emergencyBeeCanister && (npc.type == NPCID.Bee || npc.type == NPCID.BeeSmall)) return npc.playerInteraction[Player.whoAmI];

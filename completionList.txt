@@ -154,7 +154,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(#, ^2) Defiled Asphyxiator* !!!?
+(#, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (☻) Defiled Pigron !!!
 (^) Defiled Squid*
@@ -371,7 +371,7 @@ ACCESSORIES:
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
-(#, ^2) Speed Booster* !!!
+(☻) Speed Booster* !!!
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
@@ -490,7 +490,7 @@ UTILITIES:
 
 (#, ^2) Impenetrable Trashcan Lid
 (#, ^2) Indestructible Saddle
-(#2, ^2) Salty Seed (Eutrophic Cell) !!!
+(⛥) Salty Seed (Eutrophic Cell) !!!
 ---
 
 
@@ -780,7 +780,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (☻) Internal Combustionfish* !!!
 (☻) Link Grenade* !!!
-(#, ^2) Matrix* !!!
+(⛥) Matrix* !!!
 (^) Meteor*
 (^3, @2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)) Outbreak Bomb*
 (^) Peatball*

@@ -95,7 +95,32 @@ namespace Origins {
 					meatDashCooldown = 120 + Scribe_of_the_Meat_God_P.dash_duration;
 				}
 			}
-			if (loversLeap) {
+			if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int shineSparkDuration = 90;
+				const float shineSparkSpeed = 16f;
+				if (shineSparkDashTime > 0) {
+					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
+					if (collidingX || collidingY) {
+						shineSparkDashTime = 1;
+						Collision.HitTiles(Player.position, Player.velocity, Player.width, Player.height);
+					}
+					shineSparkDashTime--;
+					dashDelay = 30;
+					loversLeapDashTime = 0;
+					Player.velocity.Y -= Player.gravity * Player.gravDir * 0.1f;
+				} else {
+					if (dashDirection != 0 || dashDirectionY != 0) {
+						shineSparkDashTime = shineSparkDuration;
+						shineSparkDashSpeed = shineSparkSpeed;
+						Player.timeSinceLastDashStarted = 0;
+						shineSparkDashDirection = new((Player.controlRight ? 1 : 0) - (Player.controlLeft ? 1 : 0), (Player.controlDown ? 1 : 0) - (Player.controlUp ? 1 : 0));
+						shineSparkDashDirection.Normalize();
+						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
+					}
+				}
+			} else if (loversLeap) {
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const int loversLeapDuration = 6;
@@ -182,7 +207,7 @@ namespace Origins {
 											CombinedHooks.ModifyPlayerHitNPCWithItem(Player, loversLeapItem, npc, ref modifiers);
 
 											NPC.HitInfo strike = modifiers.ToHitInfo(Player.GetWeaponDamage(loversLeapItem), Main.rand.Next(100) < Player.GetWeaponCrit(loversLeapItem), Player.GetWeaponKnockback(loversLeapItem), damageVariation: true, Player.luck);
-											NPCKillAttempt attempt = new NPCKillAttempt(npc);
+											NPCKillAttempt attempt = new(npc);
 											int dmgDealt = npc.StrikeNPC(strike);
 
 											CombinedHooks.OnPlayerHitNPCWithItem(Player, loversLeapItem, npc, in strike, dmgDealt);
@@ -374,6 +399,23 @@ namespace Origins {
 					rivenAssimilation += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
 				} else if (waterStyle is Brine_Water_Style) {
 					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
+				}
+			}
+
+			if (shineSpark) {
+				if (shineSparkDashTime > 0) {
+					shineSparkCharge = 0;
+				} else {
+					const int max_shinespark_charge = 50;
+					const int shinespark_trigger_charge = 60 * 2 * -1;
+					int dir = shineSparkCharge > 0 ? 1 : -1;
+					bool isCharging = Math.Abs(Player.velocity.X) > 7;
+					if (isCharging) {
+						if (collidingY) shineSparkCharge += dir;
+						if (shineSparkCharge < shinespark_trigger_charge || shineSparkCharge > max_shinespark_charge) shineSparkCharge = max_shinespark_charge;
+					} else if (shineSparkCharge != 0) {
+						shineSparkCharge -= dir;
+					}
 				}
 			}
 		}

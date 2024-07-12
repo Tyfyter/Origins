@@ -83,30 +83,20 @@ namespace Origins.Items.Weapons.Ranged {
 					int projDrawType = longboneType == 1 ? ProjectileID.BoneArrow : Bone_Shard.ID;
 					Main.instance.LoadProjectile(projDrawType);
 					Texture2D texture = TextureAssets.Projectile[projDrawType].Value;
+					Color color = projectile.GetAlpha(lightColor);
 					for (int i = 1; i < 5; i++) {
-						float x = projectile.velocity.X * i;
-						float y = projectile.velocity.Y * i;
-						Color color = projectile.GetAlpha(lightColor);
-						float a = 0f;
-						switch (i) {
-							case 1:
-							a = 0.4f;
-							break;
-							case 2:
-							a = 0.3f;
-							break;
-							case 3:
-							a = 0.2f;
-							break;
-							case 4:
-							a = 0.1f;
-							break;
-						}
-						color.R = (byte)(color.R * a);
-						color.G = (byte)(color.G * a);
-						color.B = (byte)(color.B * a);
-						color.A = (byte)(color.A * a);
-						Main.EntitySpriteDraw(texture, new Vector2(projectile.position.X - Main.screenPosition.X - x, projectile.position.Y - Main.screenPosition.Y + (float)(projectile.height / 2) + projectile.gfxOffY - y), new Rectangle(0, 0, texture.Width, texture.Height), color, projectile.rotation, new Vector2(texture.Width / 2f, texture.Height / 2f), projectile.scale, SpriteEffects.None, 0);
+						Main.EntitySpriteDraw(
+							texture,
+							new Vector2(projectile.position.X, projectile.position.Y + (projectile.height / 2) + projectile.gfxOffY)
+								- projectile.velocity * i
+								- Main.screenPosition,
+							null,
+							color * (0.5f - i * 0.1f),
+							projectile.rotation,
+							texture.Size() * 0.5f,
+							projectile.scale,
+							SpriteEffects.None,
+						0);
 					}
 					return false;
 				}

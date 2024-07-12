@@ -9,6 +9,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using Origins.Dev;
+using Origins.Gores.NPCs;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -105,7 +106,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.rotation -= MathHelper.PiOver2;
 		}
 		public override void OnKill(int timeLeft) {
-			if (timeLeft < 3590) SoundEngine.PlaySound(SoundID.NPCHit18.WithPitch(0.15f).WithVolumeScale(0.5f), Projectile.Center);
+			if (timeLeft < 3590) {
+				SoundEngine.PlaySound(SoundID.NPCHit18.WithPitch(0.15f).WithVolumeScale(0.5f), Projectile.Center);
+				for (int i = Main.rand.Next(6, 12); i-- > 0;) {
+					Gore.NewGore(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity.RotatedByRandom(1.5f) * Main.rand.NextFloat(0f, 1f), ModContent.GoreType<R_Effect_Blood1_Small>());
+				}
+				Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}

@@ -163,9 +163,16 @@ namespace Origins {
 		public int loversLeapDashTime = 0;
 		public int loversLeapDashDirection = 0;
 		public float loversLeapDashSpeed = 0;
+		public bool shineSpark = false;
+		public bool shineSparkVisible = false;
+		public Item shineSparkItem = null;
+		public int shineSparkCharge = 0;
+		public int shineSparkDashTime = 0;
+		public Vector2 shineSparkDashDirection = default;
+		public float shineSparkDashSpeed = 0;
 		public bool magicTripwire = false;
 		public int lousyLiverCount = 0;
-		public List<(int id, int duration)> lousyLiverDebuffs = new();
+		public List<(int id, int duration)> lousyLiverDebuffs = [];
 		public bool summonTagForceCrit = false;
 		public bool rubyReticle = false;
 		public bool taintedFlesh = false;
@@ -506,6 +513,7 @@ namespace Origins {
 			explosiveArteryItem = null;
 			graveDanger = false;
 			loversLeap = false;
+			shineSpark = false;
 			magicTripwire = false;
 			lousyLiverCount = 0;
 			if (lousyLiverDebuffs.Count > 0) lousyLiverDebuffs.Clear();

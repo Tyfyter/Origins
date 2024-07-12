@@ -91,6 +91,15 @@ namespace Origins {
 				b = b * (1 - progress) * progressInvColor + (160 / 255f) * progress * 0.8f;
 				a = a * (1 - progress) * progressInvColor + progress * 0.9f;
 			}
+			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
+				fullBright = true;
+				for (int i = 0; i < 3; i++) {
+					const float speed_mult = -1.5f;
+					int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.VilePowder, Player.velocity.X * speed_mult, Player.velocity.Y * speed_mult);
+					Main.dust[dust].noGravity = true;
+					drawInfo.DustCache.Add(dust);
+				}
+			}
 		}
 		public override void PostUpdateRunSpeeds() {
 			oldGravDir = Player.gravDir;
