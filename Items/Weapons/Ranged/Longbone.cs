@@ -80,38 +80,6 @@ namespace Origins.Items.Weapons.Ranged {
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
 			switch (longboneType) {
 				case 1 or 2: {
-					switch ((int)projectile.localAI[0]) {
-						case ProjectileID.FireArrow:
-						lightColor.R += (byte)Math.Min(80, 255 - lightColor.R);
-						lightColor.G += (byte)Math.Min(60, 255 - lightColor.G);
-						lightColor.B += (byte)Math.Min(10, 255 - lightColor.B);
-						Dust.NewDust(projectile.Center, 0, 0, DustID.Torch);
-						break;
-						case ProjectileID.FrostburnArrow:
-						lightColor.G += (byte)Math.Min(60, 255 - lightColor.G);
-						lightColor.B += (byte)Math.Min(80, 255 - lightColor.B);
-						Dust.NewDust(projectile.Center, 0, 0, DustID.IceTorch);
-						break;
-						case ProjectileID.CursedArrow:
-						lightColor.R += (byte)Math.Min(30, 255 - lightColor.R);
-						lightColor.G += (byte)Math.Min(80, 255 - lightColor.G);
-						Dust.NewDustDirect(projectile.Center, 0, 0, DustID.BubbleBurst_Green, Scale: 0.75f).velocity *= 0.5f;
-						break;
-						case ProjectileID.IchorArrow:
-						lightColor.R += (byte)Math.Min(80, 255 - lightColor.R);
-						lightColor.G += (byte)Math.Min(80, 255 - lightColor.G);
-						Dust.NewDust(projectile.Center, 0, 0, DustID.GoldFlame);
-						break;
-						case ProjectileID.VenomArrow:
-						Dust.NewDustDirect(projectile.Center, 0, 0, DustID.Water_Corruption).noGravity = true;
-						break;
-						case ProjectileID.HellfireArrow:
-						lightColor.R += (byte)Math.Min(80, 255 - lightColor.R);
-						lightColor.G += (byte)Math.Min(60, 255 - lightColor.G);
-						lightColor.B += (byte)Math.Min(10, 255 - lightColor.B);
-						Dust.NewDust(projectile.Center, 0, 0, DustID.Torch);
-						break;
-					}
 					int projDrawType = longboneType == 1 ? ProjectileID.BoneArrow : Bone_Shard.ID;
 					Main.instance.LoadProjectile(projDrawType);
 					Texture2D texture = TextureAssets.Projectile[projDrawType].Value;
