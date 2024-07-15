@@ -2591,6 +2591,24 @@ namespace Origins {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero).noGravity = true;
 			}
 		}
+		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch) {
+			for (float c = 0; c <= 1; c += 0.125f) {
+				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero).noGravity = true;
+			}
+		}
+		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default) {
+			Vector2 diff = b - a;
+			Main.spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				a + offset,
+				new Rectangle(0, 0, 2, 2),
+				color,
+				diff.ToRotation(),
+				Vector2.UnitY,
+				new Vector2(diff.Length() * 0.5f, 1 * 0.5f),
+				0,
+			0);
+		}
 		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> fallback) {
 			if (self.TryGetValue(key, out TValue value)) return value;
 			value = fallback();
@@ -2752,6 +2770,76 @@ namespace Origins {
 					return new(b.X - v, rect.Top);
 				}
 			}
+		}
+		/// <summary>
+		/// returns the signed distance between a line segment and 
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <param name="point"></param>
+		/// <param name="progressOnSegment"></param>
+		/// <param name="onlyWithinSegment"></param>
+		/// <returns></returns>
+		public static float GetEdgeSignedDistance(Vector2 a, Vector2 b, Vector2 point, out float progressOnSegment, bool onlyWithinSegment = true) {
+			Vector2 normal = b - a;
+			normal.Normalize();
+			normal = new(normal.Y, -normal.X);
+			Vector2 point2 = point - normal;
+
+			float t = ((a.X - point.X) * (point.Y - point2.Y) - (a.Y - point.Y) * (point.X - point2.X))
+					/ ((a.X - b.X)     * (point.Y - point2.Y) - (a.Y - b.Y)     * (point.X - point2.X));
+			progressOnSegment = t;
+			if (onlyWithinSegment && (t < 0 || t > 1)) {
+				return float.NaN;
+			}
+
+			float u = ((a.X - b.X) * (a.Y - point.Y)      - (a.Y - b.Y) * (a.X - point.X))
+					/ ((a.X - b.X) * (point.Y - point2.Y) - (a.Y - b.Y) * (point.X - point2.X));
+			return u;
+		}
+		/// <summary>
+		/// checks if a convex polygon defined by a set of line segments intersects a rectangle
+		/// uses <see cref="GetEdgeSignedDistance">
+		/// </summary>
+		/// <param name="lines"></param>
+		/// <param name="hitbox"></param>
+		/// <returns></returns>
+		public static bool PolygonIntersectsRect((Vector2 start, Vector2 end)[] lines, Rectangle hitbox) {
+			int intersections = 0;
+			Vector2 rectPos = hitbox.TopLeft();
+			Vector2 rectSize = hitbox.Size();
+			for (int i = 0; i < lines.Length; i++) {
+				Vector2 a = lines[i].start;
+				Vector2 b = lines[i].end;
+				if (Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
+				float t = ((a.X - rectPos.X) * (rectPos.Y) - (a.Y - rectPos.Y) * (rectPos.X))
+						/ ((a.X - b.X)       * (rectPos.Y) - (a.Y - b.Y)       * (rectPos.X));
+				if (t < 0 || t > 1) continue;
+
+				float u = ((a.X - b.X) * (a.Y - rectPos.Y) - (a.Y - b.Y) * (a.X - rectPos.X))
+						/ ((a.X - b.X) * (rectPos.Y)       - (a.Y - b.Y) * (rectPos.X));
+				if (u > 0 && u < 1) intersections++;
+			}
+			return intersections % 2 == 1;
+		}
+		/*public static bool PolygonIntersectsRect((Vector2 start, Vector2 end)[] lines, Rectangle hitbox) {
+			float maxDist = 0;
+			Vector2 rectPos = hitbox.TopLeft();
+			Vector2 rectSize = hitbox.Size();
+			Vector2 rectCenter = rectPos + rectSize * 0.5f;
+			for (int i = 0; i < lines.Length; i++) {
+				if (Collision.CheckAABBvLineCollision2(rectPos, rectSize, lines[i].start, lines[i].end)) return true;
+				float dist = GetEdgeSignedDistance(lines[i].start, lines[i].end, rectCenter, out _, false);
+				if (dist > maxDist) maxDist = dist;
+			}
+			return maxDist <= 0;
+		}*/
+		public static (Vector2 start, Vector2 end)[] FlipLines((Vector2 start, Vector2 end)[] lines) {
+			var output = new (Vector2 start, Vector2 end)[lines.Length];
+			for (int i = 0; i < lines.Length; i++) {
+				output[i] = (lines[i].end, lines[i].start);
+			}
+			return output;
 		}
 	}
 	public static class ItemExtensions {

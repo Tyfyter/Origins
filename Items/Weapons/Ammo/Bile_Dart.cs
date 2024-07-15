@@ -12,10 +12,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Dart : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Dart",
 			"RasterSource"
-		};
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -30,9 +30,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 100);
-			recipe.AddIngredient(ModContent.ItemType<Black_Bile>());
-			recipe.Register();
+			Recipe.Create(Type, 100)
+			.AddIngredient(ModContent.ItemType<Black_Bile>())
+			.Register();
 		}
 	}
 	public class Bile_Dart_P : ModProjectile {
@@ -108,6 +108,7 @@ namespace Origins.Items.Weapons.Ammo {
 				if (Projectile.scale <= 0) Projectile.Kill();
 			} else {
 				Projectile ownerProj = Main.projectile[auraProj];
+				if (float.IsInfinity(Projectile.scale)) Projectile.timeLeft -= 5;
 				if (ownerProj.active) {
 					Projectile.scale = ownerProj.scale * 1.5f;
 					Projectile.Center = ownerProj.Center;

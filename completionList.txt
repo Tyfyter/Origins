@@ -1193,7 +1193,7 @@ AMMO:
 (^) Alkahest Arrow*
 (^) Alkahest Bullet*
 (☻) Alkahest Canister* !!!
-(#, ^2) Alkahest Dart !!!
+(☻) Alkahest Dart !!!
 (☻) Alkaline Canister* !!!
 (^) Alkaline Harpoon*
 (^) Bile Arrow*

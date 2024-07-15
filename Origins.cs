@@ -390,6 +390,9 @@ namespace Origins {
 				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura");
 				GameShaders.Misc["Origins:SapphireAura"].UseImage0(TextureAssets.Extra[194]);
 
+				GameShaders.Misc["Origins:Framed"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Framed");
+				GameShaders.Misc["Origins:AnimatedTrail"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "AnimatedTrail").UseSamplerState(SamplerState.PointWrap);
+
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam");
 				GameShaders.Misc["Origins:Beam"].UseSamplerState(SamplerState.PointClamp);
 

@@ -4330,3 +4330,8 @@ Speed_Booster: {
 	DisplayName: Speed Booster
 	Tooltip: ""
 }
+
+Alkahest_Dart: {
+	DisplayName: Alkahest Dart
+	Tooltip: ""
+}

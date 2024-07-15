@@ -15,6 +15,10 @@ float2 uImageSize1;
 float2 uOffset;
 float uScale;
 float4 uShaderSpecificData;
+float4 uSourceRect0;
+float4 uSourceRect1;
+float4 uAlphaMatrix0;
+float4 uAlphaMatrix1;
 
 float4 SapphireAura(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	float upi = uv.x * 3.14159265359 * 2;
@@ -25,8 +29,26 @@ float4 SapphireAura(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	return color * tex;
 }
 
+float4 ApplyAlphaMatrix(float4 color, float4 _matrix) {
+	return float4(color.r, color.g, color.b, min(color.r * _matrix.r + color.g * _matrix.g + color.b * _matrix.b + color.a * _matrix.a, 1));
+}
+
+float4 Framed(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	return color * ApplyAlphaMatrix(tex2D(uImage0, (uv * uSourceRect0.zw) + uSourceRect0.xy), uAlphaMatrix0);
+}
+
+float4 AnimatedTrail(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	return color * ApplyAlphaMatrix(tex2D(uImage0, (uv * uSourceRect0.zw) + uSourceRect0.xy), uAlphaMatrix0) * ApplyAlphaMatrix(tex2D(uImage1, (uv * uSourceRect1.zw) + uSourceRect1.xy), uAlphaMatrix1).a;
+}
+
 technique Technique1 {
 	pass SapphireAura {
 		PixelShader = compile ps_2_0 SapphireAura();
+	}
+	pass Framed {
+		PixelShader = compile ps_2_0 Framed();
+	}
+	pass AnimatedTrail {
+		PixelShader = compile ps_2_0 AnimatedTrail();
 	}
 }

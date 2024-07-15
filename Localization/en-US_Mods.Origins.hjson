@@ -1232,6 +1232,8 @@ Projectiles: {
 	Amoebash_Shrapnel.DisplayName: Amoebash Splash
 	Walking_Furnace.DisplayName: Walking Furnace
 	Self_Contained_Universe.DisplayName: Self Contained Universe
+	Alkahest_Dart_Aura.DisplayName: Alkahest Dart Cloud
+	Alkahest_Dart_P.DisplayName: Alkahest Dart
 }
 
 Prefixes: {
