@@ -4335,3 +4335,8 @@ Alkahest_Dart: {
 	DisplayName: Alkahest Dart
 	Tooltip: ""
 }
+
+Chew_Toy: {
+	DisplayName: Chew Toy
+	Tooltip: ""
+}

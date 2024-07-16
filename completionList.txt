@@ -43,6 +43,7 @@ X: No progress
 ⚐: needs banner (unicode hex code 2690)
 ⚯: redundant? (unicode hex code 26AF)
 ⛥: needs design discussion (unicode hex code 26E5)
+⚿: missing localization
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -1172,7 +1173,7 @@ MOUNTS & PETS:
 (☻, @2 (missing buff icon)) Smith's Hammer (Walking Furnace)* !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
-(#, ^2) Chew Toy (Chee Toy)* !!!
+(⚿) Chew Toy (Chee Toy)* !!!
 ---
 
 

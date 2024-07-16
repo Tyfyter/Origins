@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Pets;
 using System;
 using System.IO;
@@ -10,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Chromatic_Scale : ModItem {
+	public class Chew_Toy : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		
@@ -30,7 +31,8 @@ namespace Origins.Items.Pets {
 			return false;
 		}
 	}
-	public class Chromatic_Pangolin : ModProjectile {
+	public class Chee_Toy : ModProjectile {
+		public AutoLoadingAsset<Texture2D> flyingTexture = typeof(Chee_Toy).GetDefaultTMLName() + "_Flying";
 		public bool OnGround {
 			get {
 				return Projectile.localAI[1] > 0;
@@ -49,7 +51,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public override void SetStaticDefaults() {
-			Chromatic_Scale.projectileID = Type;
+			Chew_Toy.projectileID = Type;
 			// DisplayName.SetDefault("Chromatic Pangolin");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -61,8 +63,8 @@ namespace Origins.Items.Pets {
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.width = 50;
-			Projectile.height = 26;
+			Projectile.width = 48;
+			Projectile.height = 32;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
 			Projectile.minionSlots = 0f;
@@ -70,7 +72,8 @@ namespace Origins.Items.Pets {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 1;
 			Projectile.ignoreWater = false;
-			DrawOriginOffsetY = 2;
+			DrawOriginOffsetY = -36;
+			DrawOffsetX = -24;
 			//Projectile.scale = 1.5f;
 		}
 
@@ -85,45 +88,36 @@ namespace Origins.Items.Pets {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Chromatic_Scale.buffID);
+				player.ClearBuff(Chew_Toy.buffID);
 			}
-			if (player.HasBuff(Chromatic_Scale.buffID)) {
+			if (player.HasBuff(Chew_Toy.buffID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
 
 			#region General behavior
 			Vector2 idlePosition = player.Bottom;
-			idlePosition.X -= 48f * player.direction;
+			idlePosition.X -= 80f * player.direction;
 			idlePosition.Y -= 16f * Projectile.scale;
 
 			// Teleport to player if distance is too big
-			Vector2 vectorToIdlePosition = (idlePosition + new Vector2(6 * player.direction, 0)) - Projectile.Center;
+			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (Projectile.soundDelay == 1) {
 				SoundEngine.PlaySound(SoundID.Item29.WithPitch(1f), Projectile.Center);
 				Projectile.soundDelay = 0;
 			}
-			if (distanceToIdlePosition > 500f) {
-				if (Main.myPlayer == player.whoAmI) {
-					ParticleOrchestrator.RequestParticleSpawn(
-						false,
-						ParticleOrchestraType.RainbowRodHit,
-						new ParticleOrchestraSettings() {
-							PositionInWorld = Projectile.Center
-						});
+			if (Main.myPlayer == player.whoAmI) {
+				if (distanceToIdlePosition > 1200f) {
 					// Whenever you deal with non-regular events that change the behavior or position drastically, make sure to only run the code on the owner of the projectile,
 					// and then set netUpdate to true
-					Projectile.Center = idlePosition;
+					Projectile.position = idlePosition;
 					Projectile.velocity *= 0.1f;
 					Projectile.netUpdate = true;
 					Projectile.soundDelay = 2;
-					ParticleOrchestrator.RequestParticleSpawn(
-						false,
-						ParticleOrchestraType.RainbowRodHit,
-						new ParticleOrchestraSettings() {
-							PositionInWorld = Projectile.Center
-						});
+				} else if (distanceToIdlePosition > 600) {
+					Projectile.ai[2] = 1;
+					Projectile.netUpdate = true;
 				}
 			}
 
@@ -162,24 +156,34 @@ namespace Origins.Items.Pets {
 				Projectile.velocity.Y = -jumpStrength;
 			}
 			if (distanceToIdlePosition > 6f) {
-				// The immediate range around the player (when it passively floats about)
-
-				// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
 				vectorToIdlePosition.Normalize();
 				vectorToIdlePosition *= speed;
-				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1) + vectorToIdlePosition.X) / inertia;
+				Vector2 dir = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
+				Projectile.velocity.X = dir.X;
+				if (Projectile.ai[2] == 1) {
+					Projectile.velocity.Y = dir.Y;
+				}
 			} else {
 				inertia = 6f;
-				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1)) / inertia;
+				Vector2 dir = (Projectile.velocity * (inertia - 1)) / inertia;
+				Projectile.velocity.X = dir.X;
+				if (Projectile.ai[2] == 1) {
+					Projectile.velocity.Y = dir.Y;
+					Projectile.ai[2] = 0;
+				}
 			}
 			#endregion
-
-			//gravity
-			Projectile.velocity.Y += 0.4f;
 
 			#region Animation and visuals
 			if (Projectile.velocity.LengthSquared() < 1) Projectile.spriteDirection = Projectile.direction = player.direction;
 			else Projectile.spriteDirection = Projectile.direction = Math.Sign(Projectile.velocity.X);
+			if (Projectile.ai[2] != 1) {
+				Projectile.velocity.Y += 0.4f;
+				OriginExtensions.AngularSmoothing(ref Projectile.rotation, 0, 0.35f);
+			} else {
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver2 * Projectile.direction;
+			}
+
 			if (OnGround) {
 				Projectile.localAI[1]--;
 				const int frameSpeed = 4;
@@ -201,7 +205,17 @@ namespace Origins.Items.Pets {
 					}
 				}
 			} else {
-				Projectile.frame = 2;
+				if (Projectile.ai[2] == 1) {
+					int frameSpeed = (int)(24 / (Projectile.velocity.Length() + 1));
+					if (frameSpeed > 0 && ++Projectile.frameCounter >= frameSpeed) {
+						Projectile.frameCounter = 0;
+						if (++Projectile.frame >= 4) {
+							Projectile.frame = 0;
+						}
+					}
+				} else {
+					Projectile.frame = 2;
+				}
 			}
 			#endregion
 		}
@@ -214,6 +228,7 @@ namespace Origins.Items.Pets {
 		public override bool PreKill(int timeLeft) {
 			return true;
 		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (oldVelocity.Y > Projectile.velocity.Y) {
 				OnGround = true;
@@ -231,22 +246,37 @@ namespace Origins.Items.Pets {
 			}
 			return true;
 		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (Projectile.ai[2] == 1) {
+				Main.EntitySpriteDraw(
+					flyingTexture,
+					Projectile.Center - Main.screenPosition,
+					flyingTexture.Frame(verticalFrames: 4, frameY: Projectile.frame),
+					lightColor,
+					Projectile.rotation,
+					new Vector2(57 + 45 * Projectile.direction, 18),
+					1,
+					Projectile.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+				);
+				return false;
+			}
+			return true;
+		}
 	}
 }
 namespace Origins.Buffs {
-	public class Chromatic_Pangolin_Buff : ModBuff {
+	public class Chee_Toy_Buff : ModBuff {
+		public override string Texture => "Origins/Buffs/Platformer_Mech_Buff";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chromatic Pangolin");
-			// Description.SetDefault("It rainbow, tooltip coming soon.");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			Chromatic_Scale.buffID = Type;
+			Chew_Toy.buffID = Type;
 		}
 
 		public override void Update(Player player, ref int buffIndex) { // This method gets called every frame your buff is active on your player.
 			player.buffTime[buffIndex] = 18000;
 
-			int projType = Chromatic_Scale.projectileID;
+			int projType = Chew_Toy.projectileID;
 
 			// If the player is local, and there hasn't been a pet projectile spawned yet - spawn it.
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0) {
@@ -254,9 +284,6 @@ namespace Origins.Buffs {
 
 				Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
 			}
-		}
-		static void B<T>(T v) where T : struct, Enum {
-			Enum.GetValuesAsUnderlyingType(typeof(T));
 		}
 	}
 }

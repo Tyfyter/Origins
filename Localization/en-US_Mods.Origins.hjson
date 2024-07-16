@@ -894,6 +894,11 @@ Buffs: {
 			The little one, not the one you're in
 			'''
 	}
+
+	Chee_Toy_Buff: {
+		DisplayName: Chee Toy
+		Description: Mods.Origins.Buffs.Chee_Toy_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1234,6 +1239,7 @@ Projectiles: {
 	Self_Contained_Universe.DisplayName: Self Contained Universe
 	Alkahest_Dart_Aura.DisplayName: Alkahest Dart Cloud
 	Alkahest_Dart_P.DisplayName: Alkahest Dart
+	Chee_Toy.DisplayName: Chee Toy
 }
 
 Prefixes: {
