@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Pets;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -9,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Pets.Chee_Toy_Message_Types;
 
 namespace Origins.Items.Pets {
 	public class Chew_Toy : ModItem {
@@ -27,7 +29,6 @@ namespace Origins.Items.Pets {
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2); // The item applies the buff, the buff spawns the projectile
-
 			return false;
 		}
 	}
@@ -49,7 +50,12 @@ namespace Origins.Items.Pets {
 				Projectile.localAI[0] = value;
 			}
 		}
-
+		public static HashSet<int> dogs = [
+			NPCID.TownDog,
+			NPCID.Wolf,
+			NPCID.Werewolf,
+		];
+		public override void Unload() => dogs = null;
 		public override void SetStaticDefaults() {
 			Chew_Toy.projectileID = Type;
 			// DisplayName.SetDefault("Chromatic Pangolin");
@@ -100,6 +106,18 @@ namespace Origins.Items.Pets {
 			idlePosition.X -= 80f * player.direction;
 			idlePosition.Y -= 16f * Projectile.scale;
 
+			const float dog_range = 320;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (dogs.Contains(npc.type) && npc.DistanceSQ(idlePosition) < dog_range * dog_range) {
+					Chee_Toy_Messages.Instance.PlayRandomMessage(Dog, Projectile.Top);
+					Vector2 diff = npc.Center - idlePosition;
+					float dist = diff.Length();
+					if (dist != 0 && dist < dog_range) {
+						idlePosition -= diff.SafeNormalize(default) * (dog_range - dist);
+					}
+				}
+			}
+
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
@@ -115,7 +133,7 @@ namespace Origins.Items.Pets {
 					Projectile.velocity *= 0.1f;
 					Projectile.netUpdate = true;
 					Projectile.soundDelay = 2;
-				} else if (distanceToIdlePosition > 600) {
+				} else if (distanceToIdlePosition > 300) {
 					Projectile.ai[2] = 1;
 					Projectile.netUpdate = true;
 				}
@@ -141,7 +159,7 @@ namespace Origins.Items.Pets {
 			float speed = 6f;
 			float inertia = 12f;
 			if (distanceToIdlePosition > 250f) {
-				speed = 10f;
+				speed = 12f;
 			}
 			int direction = Math.Sign(vectorToIdlePosition.X);
 			Projectile.spriteDirection = direction;
@@ -155,7 +173,7 @@ namespace Origins.Items.Pets {
 				}
 				Projectile.velocity.Y = -jumpStrength;
 			}
-			if (distanceToIdlePosition > 6f) {
+			if (distanceToIdlePosition > 16f) {
 				vectorToIdlePosition.Normalize();
 				vectorToIdlePosition *= speed;
 				Vector2 dir = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
@@ -218,15 +236,14 @@ namespace Origins.Items.Pets {
 				}
 			}
 			#endregion
+
+			Chee_Toy_Messages.Instance.UpdateMoonlordWarningAndIdle(Projectile);
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)Projectile.soundDelay);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			Projectile.soundDelay = reader.ReadByte();
-		}
-		public override bool PreKill(int timeLeft) {
-			return true;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -263,6 +280,58 @@ namespace Origins.Items.Pets {
 			return true;
 		}
 	}
+	public class Chee_Toy_Messages : Message_Cache<Chee_Toy_Message_Types> {
+		public static Chee_Toy_Messages Instance;
+		public override string KeyBase => "Mods.Origins.Dialogue.Chee_Toy";
+		public override void StartCooldown(Chee_Toy_Message_Types type) {
+			switch (type) {
+				case Dog:
+				cooldowns[type] = Main.rand.Next(200, 481);
+				break;
+				case Werewolfified:
+				cooldowns[type] = 1;
+				break;
+				case Combat:
+				cooldowns[type] = Main.rand.Next(240, 361);
+				break;
+				case Near_Cubekon_Girl:
+				cooldowns[type] = Main.rand.Next(1800, 3601);
+				break;
+				case The_Part_Where_He_Kills_You:
+				cooldowns[type] = Main.rand.Next(600, 901);
+				break;
+			}
+			cooldowns[Idle] = Main.rand.Next(1800, 3601);
+		}
+		public void UpdateMoonlordWarningAndIdle(Projectile projectile, bool disableIdle = false) {
+			if (cooldowns[The_Part_Where_He_Kills_You] <= 0) {
+				int index = NPC.FindFirstNPC(NPCID.MoonLordHead);
+				if (index != -1 && Main.npc[index].ai[0] == 1f) { //charging up deathray
+					PlayRandomMessage(
+						The_Part_Where_He_Kills_You,
+						projectile.Top
+					);
+				}
+			}
+			if (!disableIdle) {
+				PlayRandomMessage(Idle, projectile.Top);
+			}
+			if (Main.player[projectile.owner].wereWolf) {
+				PlayRandomMessage(Werewolfified, projectile.Top);
+				cooldowns[Werewolfified]++;
+			}
+		}
+	}
+	public enum Chee_Toy_Message_Types {
+		Summoned,
+		Idle,
+		Dog,
+		Werewolfified,
+		Death,
+		Combat,
+		Near_Cubekon_Girl, // todo: implement when she's implemented
+		The_Part_Where_He_Kills_You
+	}
 }
 namespace Origins.Buffs {
 	public class Chee_Toy_Buff : ModBuff {
@@ -282,7 +351,8 @@ namespace Origins.Buffs {
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0) {
 				var entitySource = player.GetSource_Buff(buffIndex);
 
-				Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
+				Projectile proj = Projectile.NewProjectileDirect(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
+				Chee_Toy_Messages.Instance.PlayRandomMessage(Summoned, proj.Top);
 			}
 		}
 	}

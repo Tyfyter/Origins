@@ -171,13 +171,10 @@ namespace Origins.Items.Accessories {
 
 			Count
 		}
-		struct Message_Type_Count {
-			public int Count { get; init; }
-			public GameCulture LastCulture { get; init; }
-			public Message_Type_Count(int count, GameCulture lastCulture) {
-				Count = count;
-				LastCulture = lastCulture;
-			}
+
+		readonly struct Message_Type_Count(int count, GameCulture lastCulture) {
+			public int Count { get; init; } = count;
+			public GameCulture LastCulture { get; init; } = lastCulture;
 		}
 	}
 }

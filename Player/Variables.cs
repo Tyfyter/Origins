@@ -300,6 +300,9 @@ namespace Origins {
 		public int quantumInjectors = 0;
 		public bool mojoInjection = false;
 		public int defiledWill = 0;
+
+		public int talkingPet = 0;
+		public int talkingPetTime = 0;
 		#endregion
 
 		public float statSharePercent = 0f;
@@ -543,6 +546,8 @@ namespace Origins {
 			for (int i = 0; i < (int)Protomind.QuoteType.Count; i++) {
 				if (protOSQuoteCooldown[i] > 0) protOSQuoteCooldown[i]--;
 			}
+			if (talkingPetTime > 0 && --talkingPetTime <= 0) talkingPet = -1;
+
 			if (resinShieldCooldown > 0) resinShieldCooldown--;
 			resinShield = false;
 			if (thirdEyeTime < thirdEyeUseTime) {
@@ -736,6 +741,10 @@ namespace Origins {
 			}
 			value /= count;
 			return value;
+		}
+		public void SetTalkingPet(int index) {
+			talkingPet = index;
+			talkingPetTime = 2;
 		}
 	}
 }

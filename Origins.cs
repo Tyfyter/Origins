@@ -99,6 +99,7 @@ namespace Origins {
 		public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
 		public static Texture2D[] CloudBottoms;
 		public static List<IUnloadable> unloadables = [];
+		public static List<ITicker> tickers = [];
 		public static List<object> loggedErrors = [];
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
@@ -563,6 +564,7 @@ namespace Origins {
 				unloadable.Unload();
 			}
 			unloadables.Clear();
+			tickers.Clear();
 			Music.UnloadMusic();
 			Main.OnPostDraw -= IncrementFrameCount;
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);

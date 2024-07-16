@@ -237,6 +237,11 @@ namespace Origins {
 				quest.CheckSync();
 			}
 		}
+		public override void PostUpdateEverything() {
+			for (int i = 0; i < Origins.tickers.Count; i++) {
+				Origins.tickers[i].Tick();
+			}
+		}
 		public static int GemStaffRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }
 		public static int RottenChunkRecipeGroupID { get; private set; }

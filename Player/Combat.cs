@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
@@ -305,6 +306,18 @@ namespace Origins {
 						Player.Top,
 						new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 					);
+				}
+			}
+			if (talkingPet != -1) {
+				Projectile pet = Main.projectile[talkingPet];
+				if (pet.type == Chew_Toy.projectileID) {
+					if (Main.rand.NextBool(10)) {
+						Chee_Toy_Messages.Instance.PlayRandomMessage(
+							Chee_Toy_Message_Types.Combat,
+							pet.Top,
+							new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+						);
+					}
 				}
 			}
 		}

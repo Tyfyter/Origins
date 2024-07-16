@@ -6,6 +6,7 @@ using Origins.Items.Armor.Riptide;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
+using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
@@ -468,6 +469,12 @@ namespace Origins {
 			}
 			if (hasProtOS) {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Death, protOSQuoteCooldown, Player.Top);
+			}
+			if (talkingPet != -1) {
+				Projectile pet = Main.projectile[talkingPet];
+				if (pet.type == Chew_Toy.projectileID) {
+					Chee_Toy_Messages.Instance.PlayRandomMessage(Chee_Toy_Message_Types.Death, pet.Top);
+				}
 			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
