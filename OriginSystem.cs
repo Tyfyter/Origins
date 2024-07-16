@@ -56,175 +56,175 @@ namespace Origins {
 			queuedUIStates = null;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.MiningHelmet);
-			recipe.AddIngredient(ItemID.Glowstick, 4);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 7);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.MiningHelmet)
+			.AddIngredient(ItemID.Glowstick, 4)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 7)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.MiningShirt);
-			recipe.AddIngredient(ItemID.Leather, 15);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.MiningShirt)
+			.AddIngredient(ItemID.Leather, 15)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.MiningPants);
-			recipe.AddIngredient(ItemID.Leather, 15);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.MiningPants)
+			.AddIngredient(ItemID.Leather, 15)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.GoldShortsword);
-			recipe.AddIngredient(ItemID.EnchantedSword);
-			recipe.AddTile(TileID.BewitchingTable);
-			recipe.Register();
+			Recipe.Create(ItemID.GoldShortsword)
+			.AddIngredient(ItemID.EnchantedSword)
+			.AddTile(TileID.BewitchingTable)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.SpelunkerGlowstick, 200);
-			recipe.AddIngredient(ItemID.SpelunkerPotion);
-			recipe.AddIngredient(ItemID.Glowstick, 200);
-			recipe.Register();
+			Recipe.Create(ItemID.SpelunkerGlowstick, 200)
+			.AddIngredient(ItemID.SpelunkerPotion)
+			.AddIngredient(ItemID.Glowstick, 200)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.CrystalNinjaHelmet);
-			recipe.AddIngredient(ItemID.CrystalShard, 30);
-			recipe.AddIngredient(ItemID.SoulofLight, 5);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(ItemID.CrystalNinjaHelmet)
+			.AddIngredient(ItemID.CrystalShard, 30)
+			.AddIngredient(ItemID.SoulofLight, 5)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 15)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.CrystalNinjaChestplate);
-			recipe.AddIngredient(ItemID.CrystalShard, 60);
-			recipe.AddIngredient(ItemID.SoulofLight, 7);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 30);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(ItemID.CrystalNinjaChestplate)
+			.AddIngredient(ItemID.CrystalShard, 60)
+			.AddIngredient(ItemID.SoulofLight, 7)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 30)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.CrystalNinjaLeggings);
-			recipe.AddIngredient(ItemID.CrystalShard, 45);
-			recipe.AddIngredient(ItemID.SoulofLight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 23);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(ItemID.CrystalNinjaLeggings)
+			.AddIngredient(ItemID.CrystalShard, 45)
+			.AddIngredient(ItemID.SoulofLight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 23)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.StylistKilLaKillScissorsIWish);
-			recipe.AddIngredient(ItemID.SilverBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.StylistKilLaKillScissorsIWish)
+			.AddIngredient(ItemID.SilverBar, 2)
+			.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 4)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.StylistKilLaKillScissorsIWish);
-			recipe.AddIngredient(ItemID.TungstenBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.StylistKilLaKillScissorsIWish)
+			.AddIngredient(ItemID.TungstenBar, 2)
+			.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 4)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.BallOHurt);
-			recipe.AddIngredient(ItemID.DemoniteBar, 10);
-			recipe.AddIngredient(ItemID.ShadowScale, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.BallOHurt)
+			.AddIngredient(ItemID.DemoniteBar, 10)
+			.AddIngredient(ItemID.ShadowScale, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.BloodButcherer);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 6);
-			recipe.AddIngredient(ItemID.TissueSample, 3);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.BloodButcherer)
+			.AddIngredient(ItemID.CrimtaneBar, 6)
+			.AddIngredient(ItemID.TissueSample, 3)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.CrimsonRod);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
-			recipe.AddIngredient(ItemID.TissueSample, 6);
-			recipe.AddRecipeGroup("Origins:Gem Staves");
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.CrimsonRod)
+			.AddIngredient(ItemID.CrimtaneBar, 10)
+			.AddIngredient(ItemID.TissueSample, 6)
+			.AddRecipeGroup("Origins:Gem Staves")
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.ScarabBomb, 3);
-			recipe.AddIngredient(ItemID.Bomb, 3);
-			recipe.AddIngredient(ItemID.FossilOre);
-			recipe.Register();
+			Recipe.Create(ItemID.ScarabBomb, 3)
+			.AddIngredient(ItemID.Bomb, 3)
+			.AddIngredient(ItemID.FossilOre)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.Beenade, 6);
-			recipe.AddIngredient(ItemID.BeeWax);
-			recipe.AddIngredient(ItemID.Grenade, 6);
-			recipe.Register();
+			Recipe.Create(ItemID.Beenade, 6)
+			.AddIngredient(ItemID.BeeWax)
+			.AddIngredient(ItemID.Grenade, 6)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.TheRottedFork);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 9);
-			recipe.AddIngredient(ItemID.TissueSample, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.TheRottedFork)
+			.AddIngredient(ItemID.CrimtaneBar, 9)
+			.AddIngredient(ItemID.TissueSample, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.TheUndertaker);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 6);
-			recipe.AddIngredient(ItemID.TissueSample, 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.TheUndertaker)
+			.AddIngredient(ItemID.CrimtaneBar, 6)
+			.AddIngredient(ItemID.TissueSample, 4)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.Vilethorn);
-			recipe.AddIngredient(ItemID.DemoniteBar, 10);
-			recipe.AddIngredient(ItemID.ShadowScale, 6);
-			recipe.AddRecipeGroup("Origins:Gem Staves");
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.Vilethorn)
+			.AddIngredient(ItemID.DemoniteBar, 10)
+			.AddIngredient(ItemID.ShadowScale, 6)
+			.AddRecipeGroup("Origins:Gem Staves")
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.Coal);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
-			recipe.Register();
+			Recipe.Create(ItemID.Coal)
+			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.Register();
 
-			recipe = Recipe.Create(ItemID.Torch, 5);
-			recipe.AddIngredient(ItemID.Coal);
-			recipe.AddIngredient(ItemID.Wood);
-			recipe.Register();
+			Recipe.Create(ItemID.Torch, 5)
+			.AddIngredient(ItemID.Coal)
+			.AddIngredient(ItemID.Wood)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.CelestialSigil);
-			recipe.AddIngredient(ItemID.FragmentNebula, 12);
-			recipe.AddIngredient(ItemID.FragmentSolar, 12);
-			recipe.AddIngredient(ItemID.FragmentStardust, 12);
-			recipe.AddIngredient(ItemID.FragmentVortex, 12);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 12);
-			recipe.Register();
+			Recipe.Create(ItemID.CelestialSigil)
+			.AddIngredient(ItemID.FragmentNebula, 12)
+			.AddIngredient(ItemID.FragmentSolar, 12)
+			.AddIngredient(ItemID.FragmentStardust, 12)
+			.AddIngredient(ItemID.FragmentVortex, 12)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 12)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.LunarHook);
-			recipe.AddIngredient(ItemID.FragmentNebula, 6);
-			recipe.AddIngredient(ItemID.FragmentSolar, 6);
-			recipe.AddIngredient(ItemID.FragmentStardust, 6);
-			recipe.AddIngredient(ItemID.FragmentVortex, 6);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 6);
-			recipe.Register();
+			Recipe.Create(ItemID.LunarHook)
+			.AddIngredient(ItemID.FragmentNebula, 6)
+			.AddIngredient(ItemID.FragmentSolar, 6)
+			.AddIngredient(ItemID.FragmentStardust, 6)
+			.AddIngredient(ItemID.FragmentVortex, 6)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 6)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.SuperHealingPotion, 5);
-			recipe.AddIngredient(ItemID.FragmentNebula);
-			recipe.AddIngredient(ItemID.FragmentSolar);
-			recipe.AddIngredient(ItemID.FragmentStardust);
-			recipe.AddIngredient(ItemID.FragmentVortex);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-			recipe.Register();
+			Recipe.Create(ItemID.SuperHealingPotion, 5)
+			.AddIngredient(ItemID.FragmentNebula)
+			.AddIngredient(ItemID.FragmentSolar)
+			.AddIngredient(ItemID.FragmentStardust)
+			.AddIngredient(ItemID.FragmentVortex)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
+			.Register();
 
-			recipe = Recipe.Create(ItemID.FragmentNebula);
-			recipe.AddIngredient(ItemID.FragmentSolar);
-			recipe.AddIngredient(ItemID.FragmentStardust);
-			recipe.AddIngredient(ItemID.FragmentVortex);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-			recipe.Register();
+			Recipe.Create(ItemID.FragmentNebula)
+			.AddIngredient(ItemID.FragmentSolar)
+			.AddIngredient(ItemID.FragmentStardust)
+			.AddIngredient(ItemID.FragmentVortex)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
+			.Register();
 
-			recipe = Recipe.Create(ItemID.FragmentSolar);
-			recipe.AddIngredient(ItemID.FragmentNebula);
-			recipe.AddIngredient(ItemID.FragmentStardust);
-			recipe.AddIngredient(ItemID.FragmentVortex);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-			recipe.Register();
+			Recipe.Create(ItemID.FragmentSolar)
+			.AddIngredient(ItemID.FragmentNebula)
+			.AddIngredient(ItemID.FragmentStardust)
+			.AddIngredient(ItemID.FragmentVortex)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
+			.Register();
 
-			recipe = Recipe.Create(ItemID.FragmentStardust);
-			recipe.AddIngredient(ItemID.FragmentNebula);
-			recipe.AddIngredient(ItemID.FragmentSolar);
-			recipe.AddIngredient(ItemID.FragmentVortex);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-			recipe.Register();
+			Recipe.Create(ItemID.FragmentStardust)
+			.AddIngredient(ItemID.FragmentNebula)
+			.AddIngredient(ItemID.FragmentSolar)
+			.AddIngredient(ItemID.FragmentVortex)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
+			.Register();
 
-			recipe = Recipe.Create(ItemID.FragmentVortex);
-			recipe.AddIngredient(ItemID.FragmentNebula);
-			recipe.AddIngredient(ItemID.FragmentSolar);
-			recipe.AddIngredient(ItemID.FragmentStardust);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
-			recipe.Register();
+			Recipe.Create(ItemID.FragmentVortex)
+			.AddIngredient(ItemID.FragmentNebula)
+			.AddIngredient(ItemID.FragmentSolar)
+			.AddIngredient(ItemID.FragmentStardust)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
+			.Register();
 
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
