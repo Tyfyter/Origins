@@ -94,7 +94,8 @@ namespace Origins.Items.Weapons.Summoner {
 			if (Projectile.penetrate > 2) {
 				List<Vector2> points = Projectile.WhipPointsForCollision;
 				Projectile.FillWhipControlPoints(Projectile, points);
-				if (target.Hitbox.Intersects(new Rectangle((int)points[^1].X - 48, (int)points[^1].Y - 48, 96, 96))) {
+				Rectangle boomBox = new((int)points[^1].X - 48, (int)points[^1].Y - 48, 96, 96);
+				if (target.Hitbox.Intersects(boomBox) && !Main.player[Projectile.owner].Hitbox.Intersects(boomBox)) {
 					Projectile.NewProjectile(
 						Projectile.GetSource_OnHit(target),
 						points[^1],
