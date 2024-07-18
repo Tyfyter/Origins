@@ -190,6 +190,8 @@ namespace Origins.Items.Pets {
 					Projectile.ai[2] = 0;
 				}
 			}
+
+			Projectile.tileCollide = Projectile.ai[2] != 1;
 			#endregion
 
 			#region Animation and visuals

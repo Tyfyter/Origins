@@ -148,7 +148,7 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
-(#, ^2) Amebeye* !!!
+(☻) Amebeye* !!! (arguably @2, gonna need bigger gores)
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
@@ -691,7 +691,7 @@ MAGIC WEAPONS:
 (X) Shinedown
 (^) Splashid
 (^) Startillery
-(#, ^2) Super Cell* !!!
+(⛥) Super Cell* !!!
 
 (^) Amber of Embers
 (☻) Breach !!!

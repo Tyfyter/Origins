@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Melee {
             "Sword"
         ];
 		public override void SetDefaults() {
-			Item.damage = 80;
+			Item.damage = 87;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -66,6 +66,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (player.dead) {
+				Projectile.active = false;
+				return;
+			}
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			swingFactor = MathHelper.Lerp(MathF.Pow(swingFactor, 2f), MathF.Pow(swingFactor, 0.5f), swingFactor * swingFactor);
 			if (!float.IsNaN(Projectile.ai[2])) {
@@ -82,7 +86,7 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f;
 			Vector2 boxPos = Projectile.position + vel * 2;
 			Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
-			if (swingFactor > 0.33f && float.IsNaN(Projectile.ai[2])) {
+			if (swingFactor > 0.4f && float.IsNaN(Projectile.ai[2])) {
 				if (OriginExtensions.BoxOf(boxPos, boxPos + Projectile.Size).OverlapsAnyTiles()) {
 					Projectile.ai[2] = Projectile.rotation;
 					Vector2 slamDir = vel.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
@@ -132,7 +136,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (!target.noTileCollide && float.IsNaN(Projectile.ai[2])) {
 				Rectangle hitbox = target.Hitbox;
 				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation + Projectile.ai[1] * 2.5f).SafeNormalize(default);
-				hitbox.Offset((dir * 4).ToPoint());
+				hitbox.Offset((dir * 8).ToPoint());
 				if (hitbox.OverlapsAnyTiles(fallThrough: false)) {
 					Collision.HitTiles(hitbox.TopLeft(), dir, hitbox.Width, hitbox.Height);
 					modifiers.SetCrit();

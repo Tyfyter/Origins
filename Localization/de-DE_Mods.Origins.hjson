@@ -273,7 +273,7 @@ Dialogue: {
 		// Dog_1: Get me away. Please, put me back into the Void RIGHT NOW!
 		// Dog_2: Good doggie...
 		// Werewolfified_0: Oh hell no.
-		// Werewolfified_1: NO YOU TOO!
+		// Werewolfified_1: NOT YOU TOO!
 		// Death_0: AHHHHHH!
 		// Death_1: HAHAHAAA!
 		// Combat_0: Primitive technology? I thought you guys were humans.
@@ -523,7 +523,7 @@ Buffs: {
 
 	Chromatic_Pangolin_Buff: {
 		// DisplayName: Chromatic Pangolin
-		// Description: It rainbow
+		// Description: It 's rather dashing
 	}
 
 	Corrupt_Assimilation_Debuff: {

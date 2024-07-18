@@ -29,7 +29,7 @@ Conehead_Zombie.DisplayName: Conehead Zombie
 Cranivore.DisplayName: Cranivore
 Crimbrain.DisplayName: Crimbrain
 Optiphage.DisplayName: Optiphage
-Amebic_Slime.DisplayName: Amebic Slime
+Amebic_Slime.DisplayName: Amoebic Slime
 Amoeba_Bugger.DisplayName: Amoeba Bugger
 Barnacle_Mound.DisplayName: Barnacle Mound
 Barnacleback.DisplayName: Barnacleback
@@ -41,7 +41,7 @@ Measly_Moeba.DisplayName: Measly 'Moeba
 Pustule_Jelly.DisplayName: Pustule Jellyfish
 Riven_Fighter.DisplayName: "{§Riven} Protoform"
 Riven_Mimic.DisplayName: "{§Riven} Mimic"
-Riven_Mummy.DisplayName: Amebic Mummy
+Riven_Mummy.DisplayName: Amoebic Mummy
 Rivenator_Body.DisplayName: Mitoworm
 Rivenator_Head.DisplayName: Mitoworm
 Rivenator_Tail.DisplayName: Mitoworm
@@ -116,3 +116,5 @@ Shattered_Ghoul.DisplayName: Shattered Ghoul
 Torn_Ghoul.DisplayName: Torn Ghoul
 Riven_Pigron.DisplayName: Pigron
 Defiled_Pigron.DisplayName: Pigron
+Amebeye.DisplayName: Amoebeye
+Amebeye_P.DisplayName: Amoebeye Bubble

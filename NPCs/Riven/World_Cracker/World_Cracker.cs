@@ -211,7 +211,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			worm.NPC.ai[3] = MaxArmorHealth;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC);
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(0, 0, 102, 58), NPC);
 		}
 		void SetBaseSpeed() {
@@ -322,7 +322,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC);
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(104, (int)(48 * NPC.frameCounter), 62, 58), NPC);
 		}
 		public override void Init() {
@@ -372,7 +372,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, TextureAssets.Npc[Type].Value, NPC);
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, TextureAssets.Npc[Type].Value, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(168, 0, 52, 56), NPC);
 		}
 		public override void Init() {
