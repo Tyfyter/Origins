@@ -17,6 +17,7 @@ namespace Origins.Items.Other.Consumables {
 		public override HairShaderData ShaderData => new HolidayHairShaderData(Mod.Assets.Request<Effect>("Effects/HolidayHairDye"), "Default");
 		public static HolidayHairPassData CurrentPass {
 			get {
+				return shaders[^2].pass;
 				for (int i = 0; i < shaders.Count; i++) {
 					if (shaders[i].day()) return shaders[i].pass;
 				}
@@ -25,58 +26,66 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void Load() {
 			if (!ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
-				shaders = new() { (() => true, new()) };
+				shaders = [(() => true, new())];
 				return;
 			}
 			Func<bool> Day(string name) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", name);
 			Func<object[], object> _addHoliday = (Func<object[], object>)HolidayLib.Call("GETFUNC", "ADDHOLIDAY");
-			void AddHoliday(params object[] args) {
+			Func<bool> AddHoliday(params object[] args) {
 				if (_addHoliday(args) is Exception e) throw e;
+				return Day((string)args[0]);
 			}
-			const string lunarNewYear = "Lunar New Year";
-			const string autismAwareness = "Autism Awareness Day";
 			///<summary>Adds a holiday with the specified information using either the overlay or textured pass</summary>
-			(Func<bool> day, HolidayHairPassData pass) SimpleHoliday(string name, DateTime date, Color? hairColor, string texture, bool overlay = true) {
+			(Func<bool> day, HolidayHairPassData pass) SimpleHoliday(string name, DateTime date, HairColorWrapper hairColor, string texture, bool overlay = true, HairColorWrapper textureColor = default) {
 				AddHoliday(name, date);
 				return (Day(name), new HolidayHairPassData(
 					  PassName: overlay ? "Overlay" : "Textured",
-					  ColorFunc: (hairColor, lightColor) => lightColor,
-					  uColor: hairColor.HasValue ? new HairColorWrapper(hairColor.Value) : default,
+					  //ColorFunc: (hairColor, lightColor) => lightColor,
+					  uColor: hairColor.defined ? hairColor : new((player) => player.hairColor.ToVector3()),
+					  uSecondaryColor: textureColor.defined ? textureColor : new(Color.White),
+					  UsesHairColor: false,
 					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/" + texture)
 				));
 			}
-			AddHoliday(lunarNewYear, (Func<int>)(() => {
-				return new ChineseLunisolarCalendar().GetDayOfYear(DateTime.Now) == 1 ? 1 : 0;
-			}));
-			AddHoliday(autismAwareness, new DateTime(2007, 4, 2));
 			shaders = [
-				(Day(autismAwareness), new HolidayHairPassData(
-					  PassName: "AutismAwareness",
-					  ColorFunc: (hairColor, lightColor) => Color.Lerp(lightColor, Color.White, 0.1f)
+				(AddHoliday("Autism Awareness Day", new DateTime(2007, 4, 2)), new HolidayHairPassData(
+					PassName: "AutismAwareness",
+					ColorFunc: (hairColor, lightColor) => Color.Lerp(lightColor, Color.White, 0.1f)
 				)),
-				(Day(lunarNewYear), new HolidayHairPassData(
-					  PassName: "Textured",
-					  ColorFunc: (hairColor, lightColor) => lightColor,
-					  uColor: Color.Red,
-					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/LunarNewYear_Hair")
+				(AddHoliday("Lunar New Year", () => new ChineseLunisolarCalendar().GetDayOfYear(DateTime.Now) == 1 ? 1 : 0), new HolidayHairPassData(
+					PassName: "Textured",
+					ColorFunc: (hairColor, lightColor) => lightColor,
+					uColor: Color.Red,
+					Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/LunarNewYear_Hair")
 				)),
 				(Day("Saint Patrick's Day"), new HolidayHairPassData(
-					  PassName: "Overlay",
-					  ColorFunc: (hairColor, lightColor) => lightColor,
-					  uColor: Color.DarkGreen,
-					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/StPatricks_Hair")
+					PassName: "Overlay",
+					ColorFunc: (hairColor, lightColor) => lightColor,
+					uColor: Color.DarkGreen,
+					Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/StPatricks_Hair")
 				)),
 				(Day("Summer Solstice"), new HolidayHairPassData(
-					  PassName: "SummerSolstace"
+					PassName: "SummerSolstace"
 				)),
 				(Day("Winter Solstice"), new HolidayHairPassData(
-					  PassName: "WinterSolstace",
-					  UsesHairColor: false,
-					  Image: Main.Assets.Request<Texture2D>("Images/Misc/noise")
+					PassName: "WinterSolstace",
+					UsesHairColor: false,
+					Image: Main.Assets.Request<Texture2D>("Images/Misc/noise")
 				)),
 				SimpleHoliday("World Stroke Day", new DateTime(1999, 10, 29), new Color(33, 33, 33), "WorldStrokeDay_Hair", false),
 				//SimpleHoliday("World Art Day", new DateTime(2012, 4, 15), new Color(33, 33, 33), "ArtDay_Hair", false),
 				SimpleHoliday("Cerebral Palsy Awareness Day", new DateTime(2012, 3, 25), null, "CerebralPalsyAwarenessDay_Hair", true),
+				(() => Main.halloween, new HolidayHairPassData(
+					PassName: "Overlay",
+					uColor: new Color(33, 33, 33),
+					UsesHairColor: false,
+					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/Halloween_Hair")
+				)),
+				(() => Main.xMas, new HolidayHairPassData(
+					PassName: "Overlay",
+					UsesHairColor: false,
+					Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/ChristmasDay_Hair")
+				)),
 				(() => true, new())
 			];
 		}
@@ -121,12 +130,12 @@ namespace Origins.Items.Other.Consumables {
 		HairColorWrapper uColor = default,
 		HairColorWrapper uSecondaryColor = default
 	);
-	public struct HairColorWrapper {
+	public readonly struct HairColorWrapper {
 		readonly Vector3 color;
 		readonly Func<Player, Vector3> colorFunc;
 		public readonly bool isFunc;
 		public readonly bool defined;
-		public Vector3 GetColor(Player player) => isFunc ? colorFunc(player) : color;
+		public readonly Vector3 GetColor(Player player) => isFunc ? colorFunc(player) : color;
 		public HairColorWrapper(Color color) {
 			this.color = color.ToVector3();
 			this.colorFunc = default;
@@ -147,14 +156,12 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public static implicit operator HairColorWrapper(Color color) => new(color);
 		public static implicit operator HairColorWrapper(Vector3 color) => new(color);
-		public static implicit operator HairColorWrapper(Func<Player, Vector3> color) => new(color);
+		public static implicit operator HairColorWrapper(Func<Player, Vector3> color) => color is null ? default : new(color);
 	}
-	public class HolidayHairShaderData : HairShaderData {
-		readonly Func<object[], object> checkVersion;
+	public class HolidayHairShaderData(Asset<Effect> shader, string passName) : HairShaderData(shader, passName) {
+		readonly Func<object[], object> checkVersion = ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? (Func<object[], object>)HolidayLib.Call("GETFUNC", "FORCEDHOLIDAYVERSION") : (_) => -1;
 		int lastVersion = -1;
-		public HolidayHairShaderData(Asset<Effect> shader, string passName) : base(shader, passName) {
-			checkVersion = ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? (Func<object[], object>)HolidayLib.Call("GETFUNC", "FORCEDHOLIDAYVERSION") : (_) => -1;
-		}
+
 		public override Color GetColor(Player player, Color lightColor) {
 			Vector4 color = Vector4.One;
 			currentPass ??= new();
@@ -180,15 +187,21 @@ namespace Origins.Items.Other.Consumables {
 					_uImage = currentPass.Image;
 					_shaderDisabled = currentPass.ShaderDisabled;
 					if (currentPass.uColor.defined && !currentPass.uColor.isFunc) _uColor = currentPass.uColor.GetColor(player);
-					if (currentPass.uSecondaryColor.defined && !currentPass.uSecondaryColor.isFunc) _uColor = currentPass.uSecondaryColor.GetColor(player);
+					if (currentPass.uSecondaryColor.defined && !currentPass.uSecondaryColor.isFunc) _uSecondaryColor = currentPass.uSecondaryColor.GetColor(player);
 				}
 			}
 			if (_shaderDisabled) return;
-			if (currentPass.uColor.defined && currentPass.uColor.isFunc) _uColor = currentPass.uColor.GetColor(player);
-			if (currentPass.uSecondaryColor.defined && currentPass.uSecondaryColor.isFunc) _uColor = currentPass.uSecondaryColor.GetColor(player);
-			if (drawData.HasValue) {
-				UseTargetPosition(Main.screenPosition + drawData.Value.position);
+			if (currentPass.uColor.defined) {
+				if (currentPass.uColor.isFunc) _uColor = currentPass.uColor.GetColor(player);
+			} else {
+				_uColor = player.hairColor.ToVector3();
 			}
+			if (currentPass.uSecondaryColor.defined) {
+				if (currentPass.uSecondaryColor.isFunc) _uSecondaryColor = currentPass.uSecondaryColor.GetColor(player);
+			} else {
+				_uSecondaryColor = Vector3.One;
+			}
+			if (drawData.HasValue) UseTargetPosition(Main.screenPosition + drawData.Value.position);
 			//Shader.Parameters["zoom"].SetValue(Main.GameViewMatrix.TransformationMatrix);
 			base.Apply(player, drawData);
 		}
