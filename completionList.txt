@@ -725,7 +725,7 @@ SUMMONER WEAPONS:
 (⚯ (fills same role as woodsprite staff)) Forest Staff* !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
-(#, ^2) Ocean Amulet* !!!
+(⛥) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
 (#, @4 (minumum frame height to include the whole sprite seems to be higher than maximum frame height to avoid including parts of multiple frames)) Stubborn Flower* !!!
