@@ -9,13 +9,13 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Wood;
 			AddMapEntry(new Color(130, 110, 90));
+			Main.wallHouse[Type] = true;
 		}
 	}
 	public class Marrowick_Wall_Item : ModItem {
 		
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.WoodWall);
-			Item.createWall = WallType<Marrowick_Wall>();
+			Item.DefaultToPlaceableWall(WallType<Marrowick_Wall>());
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace Origins.Walls {
 		public virtual int TileItem => -1;
 		public Dictionary<WallVersion, OriginsWall> Versions { get; private set; }
 		public int GetWallID(WallVersion version) => Versions[version].Type;
-		public static int GetWallID<T>(WallVersion version) where T : OriginsWall => ModContent.GetInstance<T>().GetWallID(version);
+		public static int GetWallID<T>(WallVersion version) where T : OriginsWall => ContentInstance<T>.Instances[0].GetWallID(version);
 		public override void SetStaticDefaults() {
 			AddMapEntry(MapColor);
 			if (!CanBeReplacedByWallSpread) WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
@@ -78,44 +78,41 @@ namespace Origins.Walls {
 				}
 				return true;
 			}
-			return false;
+			return true;
 		}
 		public OriginsWall() : base() {}
 	}
 	[Autoload(false)]
-	public class OriginsWallItem : ModItem {
-		public OriginsWall wall { get; private set; }
-		public override string Texture => wall.Texture + "_Item";
-		public override string Name => wall.Name + "_Item";
+	public class OriginsWallItem(OriginsWall wall) : ModItem() {
+		public OriginsWall Wall { get; private set; } = wall;
+		public override string Texture => Wall.Texture + "_Item";
+		public override string Name => Wall.Name + "_Item";
 		protected override bool CloneNewInstances => true;
 		public override ModItem Clone(Item newEntity) {
 			OriginsWallItem clone = (OriginsWallItem)base.Clone(newEntity);
-			clone.wall = wall;
+			clone.Wall = Wall;
 			return clone;
 		}
-		public OriginsWallItem(OriginsWall wall) : base() {
-			this.wall = wall;
-		}
+
 		public override void SetStaticDefaults() {
-			if (wall.WallVersion == WallVersion.Placed_Unsafe) {
+			if (Wall.WallVersion == WallVersion.Placed_Unsafe) {
 				ItemID.Sets.DrawUnsafeIndicator[Type] = true;
-				if (wall.WallVersions.HasFlag(WallVersion.Safe)) {
+				if (Wall.WallVersions.HasFlag(WallVersion.Safe)) {
 					ItemID.Sets.ShimmerTransformToItem[Type - 1] = Type;
 				}
 			}
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneWall);
-			Item.createWall = wall.Type;
+			Item.DefaultToPlaceableWall(Wall.Type);
 		}
 		public override void AddRecipes() {
-			if (wall.WallVersion == WallVersion.Safe && wall.TileItem >= 0) {
+			if (Wall.WallVersion == WallVersion.Safe && Wall.TileItem >= 0) {
 				Recipe.Create(Type, 4)
-				.AddIngredient(wall.TileItem)
+				.AddIngredient(Wall.TileItem)
 				.AddTile(TileID.WorkBenches)
 				.Register();
 
-				Recipe.Create(wall.TileItem)
+				Recipe.Create(Wall.TileItem)
 				.AddIngredient(Type, 4)
 				.AddTile(TileID.WorkBenches)
 				.Register();

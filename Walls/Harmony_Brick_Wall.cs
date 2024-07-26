@@ -19,8 +19,7 @@ namespace Origins.Walls {
 	}
 	public class Harmony_Brick_Wall_Item : ModItem {
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CobaltBrickWall);
-			Item.createWall = WallType<Harmony_Brick_Wall>();
+			Item.DefaultToPlaceableWall(WallType<Harmony_Brick_Wall_Safe>());
 		}
 	}
 }

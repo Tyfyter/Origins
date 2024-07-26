@@ -9,13 +9,13 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Wood;
 			AddMapEntry(new Color(75, 20, 20));
+			Main.wallHouse[Type] = true;
 		}
 	}
 	public class Eden_Wood_Wall_Item : ModItem {
 		
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.WoodWall);
-			Item.createWall = WallType<Eden_Wood_Wall>();
+			Item.DefaultToPlaceableWall(WallType<Eden_Wood_Wall>());
 		}
 	}
 }
