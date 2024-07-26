@@ -12,7 +12,7 @@ namespace Origins.Items.Other.Consumables {
             "BossSummon"
         };
         public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 20;
+			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 1;
 		}
 		public override void SetDefaults() {
