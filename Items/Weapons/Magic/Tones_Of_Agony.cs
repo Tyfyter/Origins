@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.GameContent;
 namespace Origins.Items.Weapons.Magic {
 	public class Tones_Of_Agony : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -27,9 +28,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Green;
 		}
-        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-            target.AddBuff(BuffID.Bleeding, 300);
-        }
     }
 	public class Agony_Shard : ModProjectile {
 		public override void SetDefaults() {
@@ -59,8 +57,11 @@ namespace Origins.Items.Weapons.Magic {
 			hitbox.X += (int)Projectile.velocity.X;
 			hitbox.Y += (int)Projectile.velocity.Y;
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Bleeding, 300);
+		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Magic/Agony_Shard").Value, (Projectile.Center + Projectile.velocity) - Main.screenPosition, new Rectangle(0, 0, 10, 14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, (Projectile.Center + Projectile.velocity) - Main.screenPosition, new Rectangle(0, 0, 10, 14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0);
 			return true;
 		}
 	}

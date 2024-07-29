@@ -706,7 +706,7 @@ MAGIC WEAPONS:
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
-(#, ^2) The Calibrator !!!
+(☻) The Calibrator !!!
 (X) True Seam Beam
 
 (X) Ion Minigun

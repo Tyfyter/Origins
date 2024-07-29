@@ -4340,3 +4340,8 @@ Chew_Toy: {
 	// DisplayName: Chew Toy
 	// Tooltip: ""
 }
+
+The_Calibrator: {
+	// DisplayName: The Calibrator
+	// Tooltip: ""
+}

@@ -1240,6 +1240,8 @@ Projectiles: {
 	Alkahest_Dart_Aura.DisplayName: Alkahest Dart Cloud
 	Alkahest_Dart_P.DisplayName: Alkahest Dart
 	Chee_Toy.DisplayName: Chee Toy
+	The_Calibrator_P.DisplayName: The Calibrator
+	The_Calibrator_Beam.DisplayName: The Calibrator
 }
 
 Prefixes: {
