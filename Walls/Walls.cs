@@ -35,4 +35,31 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Stone;
 		}
 	}
+	public class Chambersite_Gemspark_Wall_On : OriginsWall {
+		public override WallVersion WallVersions => WallVersion.Safe;
+		public override Color MapColor => new(49, 184, 191);
+		public override bool CanBeReplacedByWallSpread => false;
+		public override int TileItem => ModContent.ItemType<Chambersite_Gemspark_Item>();
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Main.wallBlend[Type] = WallID.TopazGemspark;
+			Main.wallLight[Type] = true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			const float strength = 1f;
+			r = 0.216f * strength;
+			g = 0.800f * strength;
+			b = 0.831f * strength;
+		}
+	}
+	public class Chambersite_Gemspark_Wall_Off : OriginsWall {
+		public override WallVersion WallVersions => WallVersion.Safe;
+		public override Color MapColor => new(15, 67, 69);
+		public override bool CanBeReplacedByWallSpread => false;
+		public override int TileItem => ModContent.ItemType<Chambersite_Gemspark_Item>();
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Main.wallBlend[Type] = WallID.TopazGemspark;
+		}
+	}
 }

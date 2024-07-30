@@ -476,7 +476,7 @@ VANITY:
 (X) Nova Dye
 (ᗢ) Rasterized Dye
 (X) Riven Dye
-(#, ^2) Shimmer Dye
+(^) Shimmer Dye
 ---
 
 
@@ -573,7 +573,7 @@ MELEE WEAPONS:
 (^) Vorpal Sword (Uncursed)
 (☻) Waning Crescent !!!
 
-(#2, ^2) Amenonuhoko
+(☻) Amenonuhoko
 (☻) Amoebash !!!
 (^) Crystal Cutters
 (^) Depth Charge
@@ -880,7 +880,7 @@ TILES:
 
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(#, ^2) Chambersite Gemspark Wall
+(☻) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
 (^) Chambersite Gemstone Wall (Crimson)
@@ -1128,12 +1128,12 @@ CONSUMABLES:
 
 (#2, ^2) Ashen Loot Box*
 (X) Basic Crate*
-(#, ^2) Bilious Crate*
+(☻) Bilious Crate*
 (#2, ^2) Corruption Loot Box*
 (#2, ^2) Crimson Loot Box*
 (^) Crusty Crate*
 (#2, ^2) Defiled Loot Box*
-(#, ^2) Festering Crate*
+(☻) Festering Crate*
 (X) Holy Crate*
 (^) Pointy Crate*
 (X) Residual Crate

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System.Linq;
@@ -13,20 +14,20 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items.Other.Fish {
     #region chunky crate
-    public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile> {
-        public string[] Categories => new string[] {
+    public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile>, ICustomWikiStat {
+        public string[] Categories => [
             "GrabBag"
-        };
+        ];
         public override void ModifyItemLoot(ItemLoot itemLoot) {
 
-			IItemDropRule[] riven = new IItemDropRule[4] {
+			IItemDropRule[] riven = [
 				Defiled_Wastelands.FissureDropRule,
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, Ores),
 					new OneFromRulesRule(3, 2, Bars)),
 				new OneFromRulesRule(3, Potions)
-			};
+			];
 			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
@@ -41,13 +42,13 @@ namespace Origins.Items.Other.Fish {
 	}
 	#endregion
 	#region bilious crate
-	public class Bilious_Crate : Fishing_Crate_Item<Bilious_Crate_Tile> {
-        public string[] Categories => new string[] {
+	public class Bilious_Crate : Fishing_Crate_Item<Bilious_Crate_Tile>, ICustomWikiStat {
+        public string[] Categories => [
             "GrabBag"
-        };
+        ];
         public override void ModifyItemLoot(ItemLoot itemLoot) {
 
-			IItemDropRule[] riven = new IItemDropRule[] {
+			IItemDropRule[] riven = [
 				Defiled_Wastelands.FissureDropRule,
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
@@ -56,7 +57,7 @@ namespace Origins.Items.Other.Fish {
 				new OneFromRulesRule(3, Potions),
 				BiomeCrate_SoulOfNight,
 				ItemDropRule.NotScalingWithLuck(ItemType<Black_Bile>(), 2, 2, 5)
-			};
+			];
 			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
@@ -70,11 +71,11 @@ namespace Origins.Items.Other.Fish {
 	}
 	#endregion
 	#region crusty crate
-	public class Crusty_Crate : Fishing_Crate_Item<Crusty_Crate_Tile> {
+	public class Crusty_Crate : Fishing_Crate_Item<Crusty_Crate_Tile>, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "GrabBag"
-        };
+        ];
         public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			glowmask = Origins.AddGlowMask(this);
@@ -84,14 +85,14 @@ namespace Origins.Items.Other.Fish {
 			Item.glowMask = glowmask;
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] riven = new IItemDropRule[4] {
+			IItemDropRule[] riven = [
 				Riven_Hive.LesionDropRule,
 				BiomeChest_GoldCoin, 
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, Ores),
 					new OneFromRulesRule(3, 2, Bars)),
 				new OneFromRulesRule(3, Potions)
-			};
+			];
 			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
@@ -106,13 +107,13 @@ namespace Origins.Items.Other.Fish {
 	}
 	#endregion
 	#region festering crate
-	public class Festering_Crate : Fishing_Crate_Item<Festering_Crate_Tile> {
-        public string[] Categories => new string[] {
+	public class Festering_Crate : Fishing_Crate_Item<Festering_Crate_Tile>, ICustomWikiStat {
+        public string[] Categories => [
             "GrabBag"
-        };
+        ];
         public override void ModifyItemLoot(ItemLoot itemLoot) {
 
-			IItemDropRule[] riven = new IItemDropRule[] {
+			IItemDropRule[] riven = [
 				Riven_Hive.LesionDropRule,
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
@@ -121,7 +122,7 @@ namespace Origins.Items.Other.Fish {
 				new OneFromRulesRule(3, Potions),
 				BiomeCrate_SoulOfNight,
 				ItemDropRule.NotScalingWithLuck(ItemType<Alkahest>(), 2, 2, 5)
-			};
+			];
 			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));

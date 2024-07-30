@@ -83,7 +83,6 @@ namespace Origins.Gores.NPCs {
 				gore.velocity.Y *= -0.5f;
 			}
 			//gore.velocity *= 1.5f;
-			//TODO: reduce and add animated effect
 			for (int i = Main.rand.Next(6, 12); i-- > 0;) {
 				Gore.NewGore(Entity.GetSource_None(), gore.position, gore.velocity.RotatedByRandom(1.5f) * Main.rand.NextFloat(0f, 1f), ModContent.GoreType<R_Effect_Blood1_Small>());
 			}

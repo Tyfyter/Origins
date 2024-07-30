@@ -4345,3 +4345,13 @@ The_Calibrator: {
 	DisplayName: The Calibrator
 	Tooltip: ""
 }
+
+Chambersite_Gemspark_Wall_Off_Safe_Item: {
+	DisplayName: Offline Chambersite Gemspark Wall
+	Tooltip: ""
+}
+
+Chambersite_Gemspark_Wall_On_Safe_Item: {
+	DisplayName: Chambersite Gemspark Wall
+	Tooltip: ""
+}

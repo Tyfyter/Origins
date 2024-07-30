@@ -63,13 +63,11 @@ namespace Origins.Items.Weapons.Melee {
 
 		public override void AI() {
 			Player projOwner = Main.player[Projectile.owner];
-			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			projOwner.heldProj = Projectile.whoAmI;
 			Projectile.direction = projOwner.direction;
 			Projectile.spriteDirection = projOwner.direction;
 			projOwner.itemTime = projOwner.itemAnimation;
-			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
-			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
+			Projectile.Center = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			if (!projOwner.frozen) {
 				if (movementFactor == 1f) {
 					movementFactor = 1.5f;
@@ -77,11 +75,20 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
 					movementFactor -= 1.1f;
+					if (Projectile.ai[2] == 0) {
+						Projectile.ai[2] = 1;
+						Projectile.NewProjectile(
+							Projectile.GetSource_FromAI(),
+							Projectile.Center + Projectile.velocity * movementFactor,
+							Projectile.velocity,
+							ModContent.ProjectileType<Amenonuhoko_Cloud>(),
+							Projectile.damage,
+							Projectile.knockBack,
+							Projectile.owner
+						);
+					}
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
 					movementFactor += 1.3f;
-				}
-				if (projOwner.itemAnimation == 14 || Projectile.timeLeft == 0) {
-
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor;
@@ -105,6 +112,24 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
 			0);
 			return false;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+		}
+	}
+	public class Amenonuhoko_Cloud : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.SporeCloud;
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = Main.projFrames[ProjectileID.SporeCloud];
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.SporeCloud);
+			AIType = ProjectileID.SporeCloud;
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			lightColor.G = (byte)(lightColor.G * 0.9f);
+			lightColor.B = (byte)(MathHelper.Min(lightColor.B * 1.1f, 255));
+			return lightColor;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
