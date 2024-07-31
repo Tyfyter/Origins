@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
         static short glowmask;
         public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 32);
-			Item.rare = ItemRarityID.Expert;
+			Item.rare = ItemRarityID.Blue;
 			Item.expert = true;
 			Item.value = Item.sellPrice(gold: 2);
             Item.glowMask = glowmask;

@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 			Item.useTime = Item.useAnimation = 45;
 			Item.mana = 10;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-			Item.rare = ItemRarityID.Expert;
+			Item.rare = ItemRarityID.Blue;
 			Item.expert = true;
 			Item.value = Item.sellPrice(gold: 6);
 		}
