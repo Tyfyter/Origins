@@ -34,6 +34,7 @@ using Origins.Walls;
 using Terraria.GameContent.Drawing;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Tiles.Banners;
+using Terraria.ObjectData;
 
 namespace Origins {
 	#region classes
@@ -2628,6 +2629,18 @@ namespace Origins {
 			}
 			text = null;
 			return false;
+		}
+		public static void GetMultiTileTopLeft(int i, int j, TileObjectData data, out int left, out int top) {
+			Tile tile = Main.tile[i, j];
+			int innerFrameY = tile.TileFrameY % data.CoordinateFullHeight;
+			int frameI = (tile.TileFrameX % data.CoordinateFullWidth) / (data.CoordinateWidth + data.CoordinatePadding);
+			int frameJ = 0;
+			while (innerFrameY >= data.CoordinateHeights[frameJ] + data.CoordinatePadding) {
+				innerFrameY -= data.CoordinateHeights[frameJ] + data.CoordinatePadding;
+				frameJ++;
+			}
+			top = j - frameJ;
+			left = i - frameI;
 		}
 	}
 	public static class ShopExtensions {

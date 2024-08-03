@@ -4,6 +4,7 @@ using Origins.NPCs.Critters;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -18,17 +19,22 @@ namespace Origins.Tiles.Defiled {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
 
-			TileObjectData.newTile.AnchorValidTiles = [
+			int[] validTiles = [
 				ModContent.TileType<Defiled_Grass>(),
 				ModContent.TileType<Defiled_Stone>()
 			];
 
+			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
+				TileID.Stone,
+				TileID.Grass
+			];
+
+			TileObjectData.newTile.RandomStyleRange = 3;
+
 			TileObjectData.addTile(Type);
 			//soundType = SoundID.Grass;
-		}
-
-		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
-			if (i % 2 == 1) spriteEffects = SpriteEffects.FlipHorizontally;
+			
+			PileConversionGlobal.AddConversion(TileID.SmallPiles, [100, 101, 102, 103, 104, 105], Type, [..validTiles]);
 		}
 
 		public override bool CanDrop(int i, int j) => true;

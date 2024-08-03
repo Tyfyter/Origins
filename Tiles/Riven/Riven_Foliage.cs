@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,14 +23,23 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(20, 138, 220));
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
-
-			TileObjectData.newTile.AnchorValidTiles = new int[]{
+			int[] validTiles = [
+				ModContent.TileType<Riven_Grass>(),
 				ModContent.TileType<Riven_Flesh>()
-			};
+			];
+
+			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
+				TileID.Stone,
+				TileID.Grass
+			];
+
+			TileObjectData.newTile.RandomStyleRange = 6;
 
 			TileObjectData.addTile(Type);
 			//soundType = SoundID.NPCKilled;
 			DustType = Riven_Hive.DefaultTileDust;
+
+			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [..validTiles]);
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {

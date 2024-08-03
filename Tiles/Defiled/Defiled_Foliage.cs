@@ -18,12 +18,19 @@ namespace Origins.Tiles.Defiled {
 			HitSound = Origins.Sounds.DefiledIdle;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
+			int[] validTiles = [
+				ModContent.TileType<Defiled_Grass>(),
+				ModContent.TileType<Defiled_Stone>()
+			];
 
-			TileObjectData.newTile.AnchorValidTiles = new int[]{
-				ModContent.TileType<Defiled_Grass>()
-			};
+			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
+				TileID.Stone,
+				TileID.Grass
+			];
 
 			TileObjectData.addTile(Type);
+
+			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [..validTiles]);
 			//soundType = SoundID.Grass;
 		}
 

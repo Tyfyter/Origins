@@ -3,6 +3,7 @@ using Origins.NPCs.Critters;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -15,13 +16,21 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(175, 175, 175));
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-
-			TileObjectData.newTile.AnchorValidTiles = [
+			int[] validTiles = [
 				ModContent.TileType<Riven_Grass>(),
 				ModContent.TileType<Riven_Flesh>()
 			];
 
+			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
+				TileID.Stone,
+				TileID.Grass
+			];
+
+			TileObjectData.newTile.RandomStyleRange = 4;
+
 			TileObjectData.addTile(Type);
+
+			PileConversionGlobal.AddConversion(TileID.LargePiles, [7, 8, 9, 10, 11, 12], Type, [..validTiles]);
 			//soundType = SoundID.Grass;
 		}
 		public override bool CanDrop(int i, int j) => true;
