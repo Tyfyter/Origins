@@ -668,9 +668,6 @@ namespace Origins.World.BiomeData {
 			//FountainTile = TileID.WaterFountain;
 			//Fountain = TileID.WaterFountain;
 
-			AddTileConversion(ModContent.TileType<Defiled_Large_Foliage>(), TileID.LargePiles);
-			AddTileConversion(ModContent.TileType<Defiled_Medium_Foliage>(), TileID.SmallPiles);
-
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Defiled_Ore>();
 			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();
@@ -727,69 +724,6 @@ namespace Origins.World.BiomeData {
 			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Defiled_Stone>(), ModContent.WallType<Chambersite_Defiled_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
-		}
-		public override bool PreConvertMultitileAway(int i, int j, int width, int height, ref int newTile, AltBiome targetBiome) {
-			Tile corner = Main.tile[i, j];
-			int frameOffsetX = 0;
-			//int frameOffsetY = 0;
-			bool convert = false;
-			if (corner.TileType == ModContent.TileType<Defiled_Large_Foliage>()) {
-				newTile = TileID.LargePiles;
-				int style = corner.TileFrameX / (18 * 3);
-				frameOffsetX -= 18 * 3 * (style - genRand.Next(7, 12));
-				convert = true;
-			}
-			if (corner.TileType == ModContent.TileType<Defiled_Medium_Foliage>()) {
-				newTile = TileID.SmallPiles;
-				frameOffsetX -= genRand.Next(2) * 6 * 18;
-				convert = true;
-			}
-			Tile tile;
-			if (convert) {
-				for (int k = 0; k < width; k++) {
-					for (int l = 0; l < height; l++) {
-						tile = Main.tile[i + k, j + l];
-						tile.TileType = (ushort)newTile;
-						tile.TileFrameX = (short)(tile.TileFrameX + frameOffsetX);
-					}
-				}
-				NetMessage.SendTileSquare(-1, i, j, width, height, TileChangeType.None);
-			}
-			return true;
-		}
-		public override void ConvertMultitileTo(int i, int j, int width, int height, int newTile, AltBiome fromBiome) {
-			Tile corner = Main.tile[i, j];
-			int frameOffset = 0;
-			bool convert = false;
-			switch (corner.TileType) {
-				case TileID.LargePiles: {
-					int style = corner.TileFrameX / (18 * 3);
-					switch (style) {
-						case 7 or 8 or 9 or 10 or 11 or 12:
-						frameOffset -= 18 * 3 * (style - genRand.Next(4));
-						convert = true;
-						break;
-					}
-					break;
-				}
-				case TileID.SmallPiles: {
-					if (corner.TileFrameX >= 18 * 12 || corner.TileFrameY >= 18 * 2) break;
-					frameOffset = (corner.TileFrameX % (18 * 6)) - corner.TileFrameX;
-					convert = true;
-					break;
-				}
-			}
-			Tile tile;
-			if (convert) {
-				for (int k = 0; k < width; k++) {
-					for (int l = 0; l < height; l++) {
-						tile = Main.tile[i + k, j + l];
-						tile.TileType = (ushort)newTile;
-						tile.TileFrameX = (short)(tile.TileFrameX + frameOffset);
-					}
-				}
-				NetMessage.SendTileSquare(-1, i, j, width, height, TileChangeType.None);
-			}
 		}
 		public override int GetAltBlock(int BaseBlock, int posX, int posY, bool GERunner = false) {
 			return base.GetAltBlock(BaseBlock, posX, posY, GERunner);
