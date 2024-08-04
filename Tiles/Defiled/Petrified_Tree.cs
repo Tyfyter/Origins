@@ -11,7 +11,7 @@ namespace Origins.Tiles.Defiled {
         public string[] Categories => [
             "Plant"
         ];
-        private static Mod mod => Origins.instance;
+        private static Mod Mod => Origins.instance;
 		public static Petrified_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 		public override TreeTypes CountsAsTreeType => TreeTypes.None;
@@ -31,21 +31,8 @@ namespace Origins.Tiles.Defiled {
 		internal static void Unload() {
 			Instance = null;
 		}
-		/*public override bool Shake(int x, int y, ref bool createLeaves) {
-			if (!Origins.PlantLoader_ShakeTree(x, y, Main.tile[x, y].TileType, out _) && WorldGen.genRand.NextBool(15)) {
-				int type = WorldGen.genRand.NextBool() ? ModContent.ItemType<Bileberry>() : ModContent.ItemType<Prickly_Pear>();
-				Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type);
-				createLeaves = true;
-				return false;
-			}
-			return true;
-		}
-		/*public override int CreateDust() {
-			return ModContent.DustType<>();
-		}*/
-
 		public override int TreeLeaf() {
-			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool() ? "Medium" : "Small")}{Main.rand.Next(3) + 1}");//adds one because sprites use 1-based indices
+			return Mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool() ? "Medium" : "Small")}{Main.rand.Next(3) + 1}");//adds one because sprites use 1-based indices
 		}
 		public override int SaplingGrowthType(ref int style) => ModContent.TileType<Petrified_Tree_Sapling>();
 
@@ -54,14 +41,14 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override Asset<Texture2D> GetTexture() {
-			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree");
+			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree");
 		}
 		public override Asset<Texture2D> GetTopTextures() {
-			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Tops");
+			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Tops");
 		}
 
 		public override Asset<Texture2D> GetBranchTextures() {
-			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Branches");
+			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Branches");
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {

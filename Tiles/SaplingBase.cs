@@ -24,7 +24,7 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.UsesCustomCanPlace = true;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorValidTiles = ValidAnchorTypes;
@@ -44,7 +44,7 @@ namespace Origins.Tiles {
 			TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
-			AdjTiles = new int[] { TileID.Saplings };
+			AdjTiles = [TileID.Saplings];
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
