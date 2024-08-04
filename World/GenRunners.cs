@@ -30,6 +30,74 @@ namespace Origins.World {
 			}
 			return new Point((int)x, (int)y);
 		}
+		public static void DefiledSpikeRunner(int i, int j, double strength, int type, int ignoreWallType, Vector2 speed, double decay = 0, float twist = 0, bool randomtwist = false, bool forcesmooth = true, double cutoffStrength = 0.0) {
+			double strengthLeft = strength;
+			Vector2 pos = new Vector2(i, j);
+			Tile tile;
+			if (randomtwist) twist = Math.Abs(twist);
+			int X0 = int.MaxValue;
+			int X1 = 0;
+			int Y0 = int.MaxValue;
+			int Y1 = 0;
+			while (strengthLeft > cutoffStrength) {
+				strengthLeft -= decay;
+				int minX = (int)(pos.X - strengthLeft * 0.5);
+				int maxX = (int)(pos.X + strengthLeft * 0.5);
+				int minY = (int)(pos.Y - strengthLeft * 0.5);
+				int maxY = (int)(pos.Y + strengthLeft * 0.5);
+				if (minX < 1) {
+					minX = 1;
+				}
+				if (maxX > Main.maxTilesX - 1) {
+					maxX = Main.maxTilesX - 1;
+				}
+				if (minY < 1) {
+					minY = 1;
+				}
+				if (maxY > Main.maxTilesY - 1) {
+					maxY = Main.maxTilesY - 1;
+				}
+				for (int l = minX; l < maxX; l++) {
+					for (int k = minY; k < maxY; k++) {
+						if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > Math.Pow(strength, 2)) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+							continue;
+						}
+						tile = Main.tile[l, k];
+						if (tile.HasTile ? TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] : tile.WallType != ignoreWallType) {
+							tile.TileType = (ushort)type;
+							Main.tile[l, k].SetActive(true);
+							Main.tile[l, k].LiquidAmount = 0;
+							Main.tile[l, k].SetLiquidType(1);
+							WorldGen.SquareTileFrame(l, k);
+							if (l > X1) {
+								X1 = l;
+							} else if (l < X0) {
+								X0 = l;
+							}
+							if (k > Y1) {
+								Y1 = k;
+							} else if (k < Y0) {
+								Y0 = k;
+							}
+						}
+					}
+				}
+				if (forcesmooth && speed.Length() > strengthLeft * 0.75) {
+					speed.Normalize();
+					speed *= (float)strengthLeft;
+				}
+				pos += speed;
+				if (randomtwist || twist != 0.0) {
+					speed = randomtwist ? speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
+				}
+			}
+			for (int l = X0; l < X1; l++) {
+				for (int k = Y0; k < Y1; k++) {
+					AutoSlopeForSpike(l, k);
+				}
+			}
+			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+		}
 		public static void SmoothSpikeRunner(int i, int j, double strength, int type, Vector2 speed, double decay = 0, float twist = 0, bool randomtwist = false, bool forcesmooth = true, double cutoffStrength = 0.0) {
 			double strengthLeft = strength;
 			Vector2 pos = new Vector2(i, j);

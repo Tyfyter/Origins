@@ -766,8 +766,8 @@ namespace Origins {
 		}
 		public static List<Vector2> GetTileDirs(int i, int j) {
 			List<Vector2> dirs = new List<Vector2>(8);
-			for (int k = 1; k <= 1; k++) {
-				for (int l = 1; l <= 1; l++) {
+			for (int k = -1; k <= 1; k++) {
+				for (int l = -1; l <= 1; l++) {
 					if (!(k == 0 && l == 0) && Main.tile[i + k, j + l].HasTile) {
 						dirs.Add(new Vector2(k, l));
 					}

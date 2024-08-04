@@ -159,6 +159,7 @@ namespace Origins.World.BiomeData {
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
+								OriginSystem.EvilSpikeAvoidancePoints.Add(new((int)airCheckVec.X, (int)airCheckVec.Y));
 								break;
 							}
 							if (endChance > current.generation) {
@@ -179,6 +180,7 @@ namespace Origins.World.BiomeData {
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
+								OriginSystem.EvilSpikeAvoidancePoints.Add(new((int)airCheckVec.X, (int)airCheckVec.Y));
 								break;
 							}
 							if (endChance > current.generation) {
@@ -196,6 +198,7 @@ namespace Origins.World.BiomeData {
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
+								OriginSystem.EvilSpikeAvoidancePoints.Add(new((int)airCheckVec.X, (int)airCheckVec.Y));
 								break;
 							}
 							if (endChance > current.generation) {
@@ -216,6 +219,7 @@ namespace Origins.World.BiomeData {
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
+								OriginSystem.EvilSpikeAvoidancePoints.Add(new(airCheckVec.X, airCheckVec.Y));
 								break;
 							}
 							if (endChance > next.generation) {
