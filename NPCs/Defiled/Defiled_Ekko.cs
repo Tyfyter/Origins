@@ -12,6 +12,7 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Ekko : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PirateCrossbower);

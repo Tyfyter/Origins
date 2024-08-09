@@ -21,6 +21,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(0, 16)
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Squid);

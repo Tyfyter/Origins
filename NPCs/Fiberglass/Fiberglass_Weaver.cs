@@ -36,6 +36,12 @@ namespace Origins.NPCs.Fiberglass {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
+				CustomTexturePath = "Origins/UI/Fiberglass_Weaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				Position = new Vector2(0f, -32f),
+				PortraitPositionXOverride = 0f,
+				PortraitPositionYOverride = -32f
+			};
 		}
 		public override void Unload() {
 			armorDropRule = null;

@@ -2903,6 +2903,18 @@ namespace Origins {
 			self.Banner = type;
 			self.BannerItem = BannerGlobalNPC.NPCToBannerItem[type];
 		}
+		public static NPCID.Sets.NPCBestiaryDrawModifiers HideInBestiary => new() {
+			Hide = true
+		};
+		public static NPCID.Sets.NPCBestiaryDrawModifiers BestiaryWalkLeft => new() {
+			Velocity = 1f
+		};
+		/// <summary>
+		/// distinct from <see cref="HideInBestiary"/> so it can be easily found and removed when the NPC is implemented
+		/// </summary>
+		public static NPCID.Sets.NPCBestiaryDrawModifiers HideInBestiaryUnimplemented => new() {
+			Hide = true
+		};
 	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {

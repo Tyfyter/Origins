@@ -101,6 +101,8 @@ namespace Origins.NPCs.Riven {
 				vectorToTargetPosition *= speed;
 				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
 			}
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 68) % 272, 72, 66);
 				NPC.frameCounter = 0;
@@ -125,6 +127,7 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.ProjectileNPC[Type] = true;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			ID = Type;
 		}
 		public override void SetDefaults() {

@@ -17,6 +17,7 @@ namespace Origins.NPCs.Defiled {
 		public const float speedMult = 1f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -68,8 +69,9 @@ namespace Origins.NPCs.Defiled {
 				NPC.spriteDirection = NPC.direction;
 			}
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
-				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 66) % 264, 52, 64);
 				NPC.frameCounter = 0;
 			}

@@ -11,6 +11,10 @@ using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
+		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			};
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.lifeMax = 80;
@@ -110,9 +114,7 @@ namespace Origins.NPCs.Defiled {
 	internal class Defiled_Digger_Body : Defiled_Digger {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
@@ -126,9 +128,7 @@ namespace Origins.NPCs.Defiled {
 	internal class Defiled_Digger_Tail : Defiled_Digger {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);

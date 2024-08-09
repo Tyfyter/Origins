@@ -11,6 +11,12 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 		}
+		public override void FindFrame(int frameHeight) {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Scale = 0.85f,
+				PortraitScale = 1
+			};
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CursedHammer);
 			NPC.aiStyle = NPCAIStyleID.Flying_Weapon;

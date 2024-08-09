@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Wisp : ModNPC {
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[Type] = 3;
+			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 		}
 		public override void SetDefaults() {
@@ -49,6 +49,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 5) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 24) % 96, 22, 24);
 				NPC.frameCounter = 0;

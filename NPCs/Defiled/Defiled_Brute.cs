@@ -18,6 +18,7 @@ namespace Origins.NPCs.Defiled {
 		//bool attacking = false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -103,13 +104,14 @@ namespace Origins.NPCs.Defiled {
 					npc.velocity.X*=0.5f;
 				}
 			//}else{*/
+			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
+			//}
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 9) {
-				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 62) % 248, 74, 60);
 				NPC.frameCounter = 0;
 			}
-			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
-			//}
 		}
 		public override void PostAI() {
 			//if(!attacking) {

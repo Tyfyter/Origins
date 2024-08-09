@@ -10,6 +10,11 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 		}
+		public override void FindFrame(int frameHeight) {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				IsWet = true
+			};
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CorruptGoldfish);
 			NPC.lifeMax = 120;

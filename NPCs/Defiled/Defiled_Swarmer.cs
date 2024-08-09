@@ -16,6 +16,10 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(0, -16),
+				PortraitPositionYOverride = -32
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);
@@ -60,6 +64,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 5) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 84, 28, 26);
 				NPC.frameCounter = 0;

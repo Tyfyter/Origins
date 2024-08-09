@@ -10,6 +10,7 @@ namespace Origins.NPCs.MiscE {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner;//maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

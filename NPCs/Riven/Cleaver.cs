@@ -11,12 +11,11 @@ namespace Origins.NPCs.Riven {
 	public class Cleaver_Head : Cleaver, IRivenEnemy {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Cleaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(40f, 24f),
-				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = 12f
-			});
+				Position = new Vector2(0f, 8f),
+				PortraitPositionYOverride = 28f
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
@@ -78,9 +77,7 @@ namespace Origins.NPCs.Riven {
 	internal class Cleaver_Body : Cleaver {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
@@ -91,9 +88,7 @@ namespace Origins.NPCs.Riven {
 	internal class Cleaver_Tail : Cleaver {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);

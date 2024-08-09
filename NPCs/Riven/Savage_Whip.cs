@@ -11,6 +11,10 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Savage_Whip : ModNPC, IRivenEnemy {
 		public override void Load() => this.AddBanner();
+		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			};
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CursedHammer);
 			NPC.aiStyle = NPCAIStyleID.None;
@@ -198,9 +202,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() { }
 		public override void SetStaticDefaults() {
 			ID = Type;
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void ResetEffects() {
 			NPC.dontTakeDamage = true;

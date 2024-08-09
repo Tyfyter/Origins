@@ -64,6 +64,10 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Scale = 0.75f,
+				PortraitScale = 1f,
+			};
 			ID = Type;
 		}
 		public override void SetDefaults() {

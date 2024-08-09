@@ -20,6 +20,12 @@ namespace Origins.NPCs.Riven {
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
+		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(0, 20),
+				PortraitPositionYOverride = 40
+			};
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
 			NPC.aiStyle = 0;

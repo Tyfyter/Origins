@@ -85,6 +85,8 @@ namespace Origins.NPCs.Riven {
 					}
 				}
 			}
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 50) % 150, 36, 50);
 				NPC.frameCounter = 0;

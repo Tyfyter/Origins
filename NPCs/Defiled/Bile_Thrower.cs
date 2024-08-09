@@ -18,6 +18,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CorruptPenguin);

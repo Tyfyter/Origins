@@ -15,8 +15,13 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
             Main.npcFrameCount[NPC.type] = 4;
-        }
-        public override void SetDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(28, 0),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = 8
+			};
+		}
+		public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.SandsharkCrimson);
             NPC.lifeMax = 450;
             NPC.defense = 23;

@@ -283,9 +283,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
@@ -333,9 +331,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Tail : WormTail, IRivenEnemy {
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);

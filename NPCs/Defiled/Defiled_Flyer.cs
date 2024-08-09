@@ -16,6 +16,12 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Flyer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(28, 0),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = -28,
+				Velocity = 1f
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
@@ -61,6 +67,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
+		}
+		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 5) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 38) % 152, 104, 36);
 				NPC.frameCounter = 0;

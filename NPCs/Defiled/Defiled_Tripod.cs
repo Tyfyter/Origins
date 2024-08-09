@@ -23,6 +23,11 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 4;
 			NPCID.Sets.TrailingMode[NPC.type] = 1;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Scale = 0.6f,
+				PortraitScale = 1f,
+				Velocity = 2f,
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -145,7 +150,8 @@ namespace Origins.NPCs.Defiled {
 					if (absX < horizontalAirSpeed) NPC.velocity.X += NPC.direction * 0.2f;
 				}
 			}
-
+		}
+		public override void FindFrame(int frameHeight) {
 			if (NPC.velocity.RotatedBy(-NPC.rotation).X * NPC.direction > 0.5f && ++NPC.frameCounter > 6) {
 				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 100) % 400, 98, 98);

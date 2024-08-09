@@ -14,6 +14,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {// could not add stats because 
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -58,14 +59,13 @@ namespace Origins.NPCs.Riven {
 			}
 			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
 			
-			if (NPC.collideY) {
-				NPC.DoFrames(7);
-				if (NPC.collideX) NPC.velocity.Y = -6f;
-			}
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (NPC.velocity.Y == 0f && NPC.NPCCanStickToWalls()) {
 				NPC.Transform(ModContent.NPCType<Spider_Amoeba_Wall>());
 			}
+		}
+		public override void FindFrame(int frameHeight) {
+			if (NPC.velocity.Y == 0) NPC.DoFrames(7);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
@@ -77,13 +77,12 @@ namespace Origins.NPCs.Riven {
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
             OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.85f);
         }
-    }public class Spider_Amoeba_Wall : Spider_Amoeba {
+    }
+	public class Spider_Amoeba_Wall : Spider_Amoeba {
 		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {// could not add stats because 
 			NPC.CloneDefaults(NPCID.WallCreeperWall);

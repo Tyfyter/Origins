@@ -9,6 +9,7 @@ namespace Origins.NPCs.ICARUS {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Swarmer");
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

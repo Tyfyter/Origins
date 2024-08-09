@@ -14,14 +14,16 @@ namespace Origins.NPCs.Riven {
 	public class Rivenator_Head : Rivenator {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Rivenator_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(40f, 24f),
-				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = 12f
-			});
+				Position = new Vector2(4f, 8f)
+			};
 		}
 		public override void SetDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				CustomTexturePath = "Origins/UI/Rivenator_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				Position = new Vector2(4f, 8f)
+			};
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.lifeMax = 634;
 			NPC.defense = 18;
@@ -96,9 +98,7 @@ namespace Origins.NPCs.Riven {
 	internal class Rivenator_Body : Rivenator {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
@@ -108,9 +108,7 @@ namespace Origins.NPCs.Riven {
 	internal class Rivenator_Tail : Rivenator {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
-				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
-			});
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
