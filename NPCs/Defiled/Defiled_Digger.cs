@@ -12,7 +12,10 @@ using Origins.World.BiomeData;
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				CustomTexturePath = "Origins/UI/Defiled_Digger_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				Position = new Vector2(4f, 8f),
+				PortraitPositionYOverride = 16f
 			};
 		}
 		public override void SetDefaults() {
