@@ -231,8 +231,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 				SpriteEffects.None
 			);
 		}
-		public bool IsExploding() => false;
+		public bool IsExploding() => Projectile.ai[2] == 1;
 		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch, int size = 96) {
+			projectile.ai[2] = 1;
 			CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: -1, size: size);
 			Color flareColor = Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor;
 			for (int i = 0; i < 20; i++) {
