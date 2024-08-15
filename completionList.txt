@@ -1,4 +1,4 @@
-﻿SYMBOL KEY:
+SYMBOL KEY:
 ---
 @: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
 @2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
@@ -771,6 +771,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Eruption*
 (^) Felnum Shock Grenade*
+(@5, ^3) Flare Launcher !!!
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Hand Grenade Launcher
