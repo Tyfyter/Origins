@@ -1189,7 +1189,6 @@ AMMO:
 (^) Resizable Mine Mk. 1*
 (^) Resizable Mine Mk. 2*
 (^) Scrap*
-(⛥ (does not seem to fit with current design of canisters)) Sticky Mine !!!
 (^) Thermite Canister*
 
 (^) Alkahest Arrow*
