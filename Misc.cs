@@ -1509,12 +1509,12 @@ namespace Origins {
 				transformMatrix.GetValue(spriteBatch)
 			);
 		}
-		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
-			spriteBatch.Start(spriteBatchState, sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
+			spriteBatch.Start(spriteBatchState, sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix, depthStencilState ?? spriteBatchState.depthStencilState);
 		}
-		public static void Start(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
-			spriteBatch.Begin(sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
+		public static void Start(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
+			spriteBatch.Begin(sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, depthStencilState ?? spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
 		}
 		#endregion
 		public static int RandomRound(this UnifiedRandom random, float value) {
@@ -2915,6 +2915,63 @@ namespace Origins {
 		public static NPCID.Sets.NPCBestiaryDrawModifiers HideInBestiaryUnimplemented => new() {
 			Hide = true
 		};
+		static RenderTarget2D renderTarget;
+		public static void DrawBestiaryIcon(SpriteBatch spriteBatch, int type, Rectangle within, bool hovering = false, DrawData? stencil = null, Blend stencilColorBlend = Blend.SourceAlpha) {
+			BestiaryEntry bestiaryEntry = BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(type);
+			if (bestiaryEntry?.Icon is not null) {
+				if (renderTarget is not null && (renderTarget.Width != Main.screenWidth || renderTarget.Height != Main.screenHeight)) {
+					renderTarget.Dispose();
+					renderTarget = null;
+				}
+				renderTarget ??= new(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+				Rectangle screenPos = new((Main.screenWidth) / 2, (Main.screenHeight) / 2, (int)(within.Width), (int)(within.Height));
+				screenPos.X -= screenPos.Width / 2;
+				screenPos.Y -= screenPos.Height / 2;
+				//within.Width 
+				BestiaryUICollectionInfo info = new() {
+					OwnerEntry = bestiaryEntry,
+					UnlockState = BestiaryEntryUnlockState.CanShowDropsWithDropRates_4
+				};
+				EntryIconDrawSettings settings = new() {
+					iconbox = screenPos,
+					IsHovered = hovering,
+					IsPortrait = false
+				};
+				bestiaryEntry.Icon.Update(info, screenPos, settings);
+				SpriteBatchState state = spriteBatch.GetState();
+				spriteBatch.Restart(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, Main.Rasterizer, null, Main.UIScaleMatrix, DepthStencilState.None);
+				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+				bestiaryEntry.Icon.Draw(info, spriteBatch, settings);
+				if (stencil is not null) {
+					DrawData stencilValue = stencil.Value;
+					spriteBatch.Restart(spriteBatch.GetState(), blendState: new BlendState() {
+						ColorSourceBlend = Blend.One,
+						AlphaSourceBlend = Blend.One,
+						ColorDestinationBlend = stencilColorBlend,
+						AlphaDestinationBlend = Blend.SourceAlpha
+					});
+					stencilValue.position += screenPos.Center() / Main.UIScale;
+					stencilValue.scale *= 2 / Main.UIScale;
+					stencilValue.Draw(spriteBatch);
+				}
+				spriteBatch.Restart(state);
+				RenderTargetUsage renderTargetUsage = Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage;
+				Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+				Main.graphics.GraphicsDevice.SetRenderTarget(null);
+				Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage;
+				//origin.Y -= 8;
+				screenPos = new(
+					(int)((screenPos.X - screenPos.Width * 0.5f)),
+					(int)((screenPos.Y - screenPos.Height * 0.5f)),
+					(screenPos.Width * 2),
+					(screenPos.Height * 2)
+				);
+				within.Width = (int)(within.Width / Main.UIScale);
+				within.Height = (int)(within.Height / Main.UIScale);
+				spriteBatch.Draw(renderTarget, within, screenPos, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+			}
+		}
 	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {
