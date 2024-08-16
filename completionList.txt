@@ -722,7 +722,6 @@ SUMMONER WEAPONS:
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
-(⚯ (fills same role as woodsprite staff)) Forest Staff* !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
