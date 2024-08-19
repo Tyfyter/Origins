@@ -1243,6 +1243,7 @@ Projectiles: {
 	The_Calibrator_P.DisplayName: The Calibrator
 	The_Calibrator_Beam.DisplayName: The Calibrator
 	Amenonuhoko_Cloud.DisplayName: Amenonuhoko Cloud
+	Dew_Justice_P.DisplayName: Dew Justice P
 }
 
 Prefixes: {

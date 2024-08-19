@@ -4355,3 +4355,8 @@ Chambersite_Gemspark_Wall_On_Safe_Item: {
 	// DisplayName: Chambersite Gemspark Wall
 	// Tooltip: ""
 }
+
+Dew_Justice: {
+	// DisplayName: Dew Justice
+	// Tooltip: ""
+}

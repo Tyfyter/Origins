@@ -137,7 +137,7 @@ namespace Origins.Gores.NPCs {
 				}
 			} else if (dust.customData is (NPC npc, Vector2 npcOffset, float rotation)) {
 				if (npc.rotation != rotation) {
-					npcOffset = npcOffset.RotatedBy(npc.rotation - rotation);
+					npcOffset = npcOffset.RotatedBy((npc.rotation - rotation) * npc.direction);
 					dust.customData = (npc, npcOffset, npc.rotation);
 				}
 				dust.position = npc.Center - npcOffset * new Vector2(npc.direction, npc.directionY);
