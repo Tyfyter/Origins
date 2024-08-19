@@ -684,6 +684,7 @@ MAGIC WEAPONS:
 (^) Bled Out Staff
 (^) Chemical Laser
 (☻) Communion !!!
+(X) Dew Justice !!!
 (^) Dismay
 (^) Innermost Manifest
 (^) Seam Beam
@@ -691,7 +692,6 @@ MAGIC WEAPONS:
 (X) Shinedown
 (^) Splashid
 (^) Startillery
-(⛥) Super Cell* !!!
 
 (^) Amber of Embers
 (☻) Breach !!!
