@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Origins.World.BiomeData;
 using Origins.Gores.NPCs;
 using Origins.Projectiles;
+using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Magic {
     public class Dew_Justice : ModItem, ICustomWikiStat {
@@ -33,8 +34,11 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
 		}
+		const int halfSize = 8;
+		public override bool CanUseItem(Player player) {
+			return !new Rectangle((int)(Main.MouseWorld.X - halfSize), (int)(Main.MouseWorld.Y - halfSize), halfSize * 2, halfSize * 2).OverlapsAnyTiles();
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			const int halfSize = 8;
 			Rectangle hitbox = new(0, 0, halfSize * 2, halfSize * 2);
 			for (int n = 0; n < 2; n++) {
 				bool foundPosition = false;
@@ -46,7 +50,7 @@ namespace Origins.Items.Weapons.Magic {
 						position -= velocity * 0.5f;
 						hitbox.X = (int)(position.X - halfSize);
 						hitbox.Y = (int)(position.Y - halfSize);
-						if (CollisionExtensions.OverlapsAnyTiles(hitbox)) {
+						if (hitbox.OverlapsAnyTiles()) {
 							foundPosition = true;
 							break;
 						}
@@ -62,6 +66,7 @@ namespace Origins.Items.Weapons.Magic {
 					knockback,
 					player.whoAmI
 				);
+				SoundEngine.PlaySound(Main.rand.NextBool() ? SoundID.Item111 : SoundID.Item112, position);
 			}
 			return false;
 		}
@@ -78,7 +83,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.aiStyle = 0;
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.extraUpdates = 0;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 3;
 			Projectile.hide = true;
 			Projectile.alpha = 0;
 			Projectile.tileCollide = false;

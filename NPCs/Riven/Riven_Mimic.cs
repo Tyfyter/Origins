@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Items.Tools;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
@@ -39,7 +40,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				ItemID.SoulDrain, // Super Cell
+				ModContent.ItemType<Dew_Justice>(),
 				ModContent.ItemType<Dart_Crossbow>(),
 				ModContent.ItemType<Amoebash>(),
 				ModContent.ItemType<Tainted_Flesh>(),

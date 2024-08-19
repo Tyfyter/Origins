@@ -79,7 +79,8 @@ namespace Origins.Gores.NPCs {
 			}
 			if (gore.velocity.X != newVelocity.X) {
 				gore.velocity.X *= -0.5f;
-			} else {
+			}
+			if (gore.velocity.Y != newVelocity.Y) {
 				gore.velocity.Y *= -0.5f;
 			}
 			//gore.velocity *= 1.5f;
