@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Lousy_Liver : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
 			Item.rare = ItemRarityID.LightRed;

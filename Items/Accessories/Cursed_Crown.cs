@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Cursed_Crown : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MasterAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);
 			Item.rare = ItemRarityID.Master;

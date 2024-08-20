@@ -6,10 +6,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Tripod_Nip : ModItem, IJournalEntryItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc",
 			"LoreItem"
-		};
+		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Tripod_Nip_Entry).Name;
 		

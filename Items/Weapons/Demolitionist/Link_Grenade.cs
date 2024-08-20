@@ -9,11 +9,11 @@ using Origins.Projectiles;
 using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Link_Grenade : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

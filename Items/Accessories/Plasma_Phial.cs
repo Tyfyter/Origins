@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Plasma_Phial : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 24);
 			Item.value = Item.sellPrice(silver: 60);

@@ -266,7 +266,7 @@ namespace Origins.Tiles.Marrowick {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			AddMapEntry(new Color(200, 200, 200), CreateMapEntryName(), MapChestName);
-			AdjTiles = new int[] { TileID.Containers };
+			AdjTiles = [TileID.Containers];
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 	}

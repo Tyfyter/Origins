@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Sonic_Radar : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Info"
-		};
+		];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

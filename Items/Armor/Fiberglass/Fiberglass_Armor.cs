@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Fiberglass {
     [AutoloadEquip(EquipType.Head)]
 	public class Fiberglass_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet",
             "GenericBoostGear"
-        };
+        ];
         public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
 			Item.ResearchUnlockCount = 1;

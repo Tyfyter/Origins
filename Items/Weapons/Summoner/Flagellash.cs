@@ -14,9 +14,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
 	public class Flagellash : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Whip"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

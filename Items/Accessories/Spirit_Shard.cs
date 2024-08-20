@@ -5,11 +5,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Spirit_Shard : ModItem, IJournalEntryItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"LoreItem",
 			"SummonBoostAcc"
-		};
+		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		

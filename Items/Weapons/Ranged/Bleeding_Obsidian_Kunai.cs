@@ -8,12 +8,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Torn",
 			"TornSource",
 			"HardmodeOtherRanged",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.MagicDagger] = ModContent.ItemType<Bleeding_Obsidian_Kunai>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bleeding_Obsidian_Kunai>()] = ItemID.MagicDagger;

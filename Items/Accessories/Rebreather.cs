@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Rebreather : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc"
-		};
+		];
 		public static int FaceSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			FaceSlot = Item.faceSlot;

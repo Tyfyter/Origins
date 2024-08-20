@@ -8,9 +8,9 @@ using Origins.Dev;
 using System;
 namespace Origins.Items.Weapons.Melee {
 	public class Broken_Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Sword"
-        };
+        ];
         public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.damage = 18;

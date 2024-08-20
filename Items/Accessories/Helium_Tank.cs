@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Helium_Tank : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.LightRed;

@@ -11,9 +11,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeFlail"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;

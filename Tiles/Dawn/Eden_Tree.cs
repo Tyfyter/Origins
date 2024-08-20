@@ -11,9 +11,9 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Dawn {
 	public class Eden_Tree : ModTree {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         private Mod mod => Origins.instance;
 
 		public static Eden_Tree Instance { get; private set; }
@@ -36,9 +36,9 @@ namespace Origins.Tiles.Dawn {
 		}
 
 		public override void SetStaticDefaults() {
-			GrowsOnTileId = new int[] {
+			GrowsOnTileId = [
 				ModContent.TileType<Genesis_Grass>()
-			};
+			];
 		}
 
 		public override Asset<Texture2D> GetTopTextures() {
@@ -64,10 +64,10 @@ namespace Origins.Tiles.Dawn {
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.UsesCustomCanPlace = true;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<Genesis_Grass>() };
+			TileObjectData.newTile.AnchorValidTiles = [ModContent.TileType<Genesis_Grass>()];
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;
 			TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
@@ -79,7 +79,7 @@ namespace Origins.Tiles.Dawn {
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Eden Sapling");
 
-			AdjTiles = new int[] { TileID.Saplings };
+			AdjTiles = [TileID.Saplings];
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

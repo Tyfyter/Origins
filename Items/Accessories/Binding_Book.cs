@@ -6,11 +6,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Binding_Book : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"ManaShielding",
 			"MagicBoostAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 12);
@@ -72,7 +72,7 @@ namespace Origins.Items.Accessories {
 					const float spring = 0.5f;
 					chains[i] = chain = new Physics.Chain() {
 						anchor = anchor,
-						links = new Physics.Chain.Link[] {
+						links = [
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
@@ -80,8 +80,8 @@ namespace Origins.Items.Accessories {
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 8, new Physics.Gravity[] { new Physics.EntityDirectionGravity(new Vector2(0.12f, -0.28f) * gravMod, player) }, drag: 0.93f, spring: spring)
-						}
+							new(anchor.WorldPosition, default, 8, [new Physics.EntityDirectionGravity(new Vector2(0.12f, -0.28f) * gravMod, player)], drag: 0.93f, spring: spring)
+						]
 					};
 				}
 				int kMax = 2;

@@ -62,9 +62,9 @@ namespace Origins.Tiles {
 			TileObjectData.addTile(Type);
 			
 			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID));
-			AdjTiles = new int[] {
+			AdjTiles = [
 				BaseTileID
-			};
+			];
 			if (TileID.Sets.RoomNeeds.CountsAsTable.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			if (TileID.Sets.RoomNeeds.CountsAsChair.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 		}
@@ -157,12 +157,12 @@ namespace Origins.Tiles {
 			TileID.Sets.Clock[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 
-			AdjTiles = new int[] { TileID.GrandfatherClocks };
+			AdjTiles = [TileID.GrandfatherClocks];
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Height = 5;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16];
 			TileObjectData.newTile.Origin = new(0, 4);
 			TileObjectData.addTile(Type);
 
@@ -229,13 +229,13 @@ namespace Origins.Tiles {
 		public override void ModifyTileData() {
 			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
-			TileObjectData.newTile.AnchorInvalidTiles = new int[] {
+			TileObjectData.newTile.AnchorInvalidTiles = [
 				TileID.MagicalIceBlock,
 				TileID.Boulder,
 				TileID.BouncyBoulder,
 				TileID.LifeCrystalBoulder,
 				TileID.RollingCactus
-			};
+			];
 		}
 
 		public static string MapChestName(string name, int i, int j) {
@@ -520,7 +520,7 @@ namespace Origins.Tiles {
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
-			AdjTiles = new int[] { TileID.ClosedDoor };
+			AdjTiles = [TileID.ClosedDoor];
 
 			// Names
 			AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
@@ -568,7 +568,7 @@ namespace Origins.Tiles {
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
 			DustType = closedDoorTile.DustType;
-			AdjTiles = new int[] { TileID.OpenDoor };
+			AdjTiles = [TileID.OpenDoor];
 			// Tiles usually drop their corresponding item automatically, but RegisterItemDrop is needed here since the ExampleDoor item places ExampleDoorClosed, not this tile.
 			RegisterItemDrop(closedDoorTile.item.Type, 0);
 
@@ -585,7 +585,7 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, 1, 0);
 			TileObjectData.newTile.UsesCustomCanPlace = true;
 			TileObjectData.newTile.LavaDeath = true;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = [16, 16, 16];
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.StyleHorizontal = true;

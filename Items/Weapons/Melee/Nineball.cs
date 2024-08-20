@@ -8,9 +8,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee
 {
     public class Nineball : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Yoyo"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Code1);
 			Item.damage = 18;

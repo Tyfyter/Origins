@@ -9,12 +9,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Innermost_Manifest : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Torn",
 			"TornSource",
 			"UsesBookcase",
 			"HardmodeSpellBook"
-		};
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 8;

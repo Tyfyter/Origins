@@ -5,10 +5,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Pincushion : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc",
 			"Explosive"
-		};
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.EncumberingStone);
 			Item.accessory = false;

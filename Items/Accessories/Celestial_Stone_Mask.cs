@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Celestial_Stone_Mask : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 18);

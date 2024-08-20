@@ -79,7 +79,7 @@ namespace Tyfyter.Utils {
 			internal Func<Item, bool> ValidItemFunc;
 			protected internal int index = -1;
 			public Color colorMult = default;
-			public (Texture2D texture, Color color)[] extraTextures = new (Texture2D, Color)[] { };
+			public (Texture2D texture, Color color)[] extraTextures = [];
 			public RefItemSlot(int context = ItemSlot.Context.InventoryItem, float scale = 1f, Ref<Item> _item = null) {
 				_context = context;
 				_scale = scale;

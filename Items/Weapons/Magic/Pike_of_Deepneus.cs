@@ -13,9 +13,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Pike_of_Deepneus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 64;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeOtherMagic"
-        };
+        ];
         public override void SetDefaults() {
 			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;

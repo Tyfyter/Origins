@@ -300,7 +300,7 @@ namespace Origins {
 		private Action<T> CreateSetter() {
 			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
 			string methodName = field.ReflectedType.FullName + ".set_" + field.Name;
-			DynamicMethod setterMethod = new DynamicMethod(methodName, null, new Type[] { typeof(T) }, true);
+			DynamicMethod setterMethod = new DynamicMethod(methodName, null, [typeof(T)], true);
 			ILGenerator gen = setterMethod.GetILGenerator();
 
 			gen.Emit(OpCodes.Ldarg_0);

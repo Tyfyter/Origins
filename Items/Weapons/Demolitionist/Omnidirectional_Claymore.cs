@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeOtherExplosive",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 		}

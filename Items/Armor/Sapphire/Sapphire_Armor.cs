@@ -12,10 +12,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
 	public class Sapphire_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeArmorSet",
             "MagicBoostGear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 2);

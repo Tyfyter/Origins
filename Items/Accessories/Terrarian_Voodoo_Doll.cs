@@ -12,9 +12,9 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 namespace Origins.Items.Accessories {
 	public class Terrarian_Voodoo_Doll : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MasterAcc"
-		};
+		];
 		Guid owner;
 		Player player;
 		public override void SetDefaults() {

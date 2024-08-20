@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 namespace Origins.Buffs {
 	public class Safe_Buff : ModBuff {
 		public static int ID { get; private set; } = -1;
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"ExplosiveBoostBuff"
-		};
+		];
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

@@ -9,10 +9,10 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Magic_Pain_Glove : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"MagicBoostAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 3);

@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Makeover_Choker : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 18);
 			Item.rare = ItemRarityID.LightRed;

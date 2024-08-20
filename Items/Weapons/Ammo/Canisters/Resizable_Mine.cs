@@ -34,9 +34,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	}
 	public class Resizable_Mine_Two : ModItem, ICustomWikiStat, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(188, 171, 167), new(246, 69, 84), false);
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Canistah"
-		};
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

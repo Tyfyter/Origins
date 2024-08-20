@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Solar_Panel : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality"
-		};
+		];
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			BackSlot = Item.backSlot;

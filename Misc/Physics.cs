@@ -147,7 +147,7 @@ namespace Origins.Misc {
 				public Link(Vector2 position, Vector2 velocity, float length, Gravity[] gravity = null, float drag = 0.97f, float spring = 0.95f) {
 					this.position = position;
 					this.velocity = velocity;
-					this.gravity = gravity ?? new Gravity[] { Gravity.NormalGravity };
+					this.gravity = gravity ?? [Gravity.NormalGravity];
 					this.length = length;
 					this.drag = drag;
 					this.spring = spring;

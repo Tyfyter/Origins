@@ -15,9 +15,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
     public class Brineglow : OriginTile, IDefiledTile, IGlowingModTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -83,13 +83,13 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.WaterPlacement = LiquidPlacement.OnlyInFullLiquid;
 			TileObjectData.newTile.AnchorTop = new(AnchorType.SolidTile | AnchorType.AlternateTile, 1, 0);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
-			TileObjectData.newTile.AnchorValidTiles = new int[] {
+			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
 				TileType<Sulphur_Stone>()
-			};
-			TileObjectData.newTile.AnchorAlternateTiles = new int[] {
+			];
+			TileObjectData.newTile.AnchorAlternateTiles = [
 				Type
-			};
+			];
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;

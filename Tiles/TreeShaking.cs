@@ -14,7 +14,7 @@ namespace Origins.Tiles {
 	public class TreeShaking : ILoadable, IItemObtainabilityProvider {
 		public delegate double WeightProvider(ITree tree);
 		public record struct TreeShakeLoot(int Type, WeightProvider Weight, int Min = 1, int Max = 1);
-		public static (float chance, TreeShakeLoot[])[] ShakeLoot => _shakeLoot ??= new (float chance, TreeShakeLoot[])[] {
+		public static (float chance, TreeShakeLoot[])[] ShakeLoot => _shakeLoot ??= [
 			(143 / 2000f, new TreeShakeLoot[] {// fruit
 				new (ItemType<Bileberry>(), tree => tree is Petrified_Tree ? 1 : 0),
 				new (ItemType<Prickly_Pear>(), tree => tree is Petrified_Tree ? 1 : 0),
@@ -24,13 +24,13 @@ namespace Origins.Tiles {
             (3 / 100f, new TreeShakeLoot[] {
                 new (ItemType<Petrified_Prickly_Pear>(), tree => tree is Petrified_Tree ? 1 : 0),
             }),
-        };
-		public static (float chance, TreeShakeLoot[])[] DryShakeLoot => _dryShakeLoot ??= new (float chance, TreeShakeLoot[])[] {
+        ];
+		public static (float chance, TreeShakeLoot[])[] DryShakeLoot => _dryShakeLoot ??= [
 			(1 / 20f, new TreeShakeLoot[] {
 				new (ItemType<Tree_Sap>(), _ => 1),
 				new (ItemType<Bark>(), _ => 1)
 			}),
-		};
+		];
 		public static IEnumerable<TreeShakeLoot> GetLoot((float chance, TreeShakeLoot[])[] lootPool, ITree tree) {
 			for (int i = 0; i < lootPool.Length; i++) {
 				if (WorldGen.genRand.NextFloat() < lootPool[i].chance) {

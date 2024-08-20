@@ -108,7 +108,7 @@ namespace Origins.Tiles.BossDrops {
 			// Register map name and color
 			// "MapObject.Relic" refers to the translation key for the vanilla "Relic" text
 			AddMapEntry(new Color(233, 207, 94), Language.GetText("MapObject.Relic"));
-			AdjTiles = new int[] { TileID.MasterTrophyBase };
+			AdjTiles = [TileID.MasterTrophyBase];
 		}
 
 		public override bool CreateDust(int i, int j, ref int type) => false;

@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
 	public class Jam_Sandwich : ModItem {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Food"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 5;

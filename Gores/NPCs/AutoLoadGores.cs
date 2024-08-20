@@ -11,7 +11,7 @@ namespace Origins.Gores.NPCs {
 			this.name = name;
 		}
 		public static void AddGore(string name, Mod mod) {
-			typeof(ILoadable).GetMethod("Load").Invoke(new AutoLoadGores(name), new object[] { mod });
+			typeof(ILoadable).GetMethod("Load").Invoke(new AutoLoadGores(name), [mod]);
 		}
 	}
 }

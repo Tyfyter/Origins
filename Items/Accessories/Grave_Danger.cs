@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Grave_Danger : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 42);
 			Item.defense = 5;

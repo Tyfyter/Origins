@@ -9,7 +9,7 @@ using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
 
 namespace Tyfyter.Utils {
 	public class ChestLootCache : IEnumerable<KeyValuePair<int, List<int>>> {
-		public static int[] vanillaGenChests => new int[] { 0, 2, 4, 11, 12, 13, 15, 16, 17, 50, 51 };
+		public static int[] vanillaGenChests => [0, 2, 4, 11, 12, 13, 15, 16, 17, 50, 51];
 		public Dictionary<int, List<int>> ChestLoots = new Dictionary<int, List<int>>();
 		public ChestLootCache() {
 			ChestLoots = new Dictionary<int, List<int>>();

@@ -29,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = [16, 16];
 			TileObjectData.newTile.AnchorWall = true;
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.LavaDeath = true;
@@ -37,7 +37,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(20, 136, 182), CreateMapEntryName());
-			AdjTiles = new int[] { TileID.ShadowOrbs };
+			AdjTiles = [TileID.ShadowOrbs];
 			HitSound = SoundID.NPCDeath1;
 		}
 		public override bool CreateDust(int i, int j, ref int type) {

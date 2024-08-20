@@ -11,9 +11,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
 		static short glowmask;
-		public string[] Categories => new string[] {
+		public string[] Categories => [
             "HardmodeGun"
-        };
+        ];
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.viperEffect = true;

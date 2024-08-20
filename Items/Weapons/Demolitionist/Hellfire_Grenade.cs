@@ -8,11 +8,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hellfire_Grenade : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;

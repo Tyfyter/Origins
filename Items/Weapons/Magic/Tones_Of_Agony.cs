@@ -10,9 +10,9 @@ using Origins.Dev;
 using Terraria.GameContent;
 namespace Origins.Items.Weapons.Magic {
 	public class Tones_Of_Agony : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "SpellBook"
-        };
+        ];
         public ushort Element => Elements.Earth;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

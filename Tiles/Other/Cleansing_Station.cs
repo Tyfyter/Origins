@@ -34,7 +34,7 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 3, 0);
 			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(6, 157, 44), CreateMapEntryName());

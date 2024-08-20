@@ -14,11 +14,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Seam_Beam : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Torn",
 			"TornSource",
 			"HardmodeMagicGun"
-		};
+		];
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

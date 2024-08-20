@@ -27,13 +27,13 @@ namespace Origins.Tiles.Riven {
 			Main.tileLighted[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
+			TileObjectData.newTile.CoordinateHeights = [18, 18];
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Riven Altar");
 			AddMapEntry(new Color(20, 136, 182), name);
 			//disableSmartCursor = true;
-			AdjTiles = new int[] { TileID.DemonAltar };
+			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
 			DustType = Riven_Hive.DefaultTileDust;
 		}

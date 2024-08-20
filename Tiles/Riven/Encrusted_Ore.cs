@@ -9,9 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Encrusted_Ore : OriginTile, IComplexMineDamageTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Ore"
-        };
+        ];
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

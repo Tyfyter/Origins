@@ -138,7 +138,7 @@ namespace Origins.Items.Other.Fish {
 	public abstract class Fishing_Crate_Item<TTile> : ModItem where TTile : ModTile {
 		public static IItemDropRule BiomeChest_GoldCoin => ItemDropRule.Common(GoldCoin, 4, 5, 13);//normally NotScalingWithLuck
 		public static IItemDropRule BiomeCrate_SoulOfNight => ItemDropRule.NotScalingWithLuck(SoulofNight, 2, 2, 5);
-		public static IItemDropRule[] Ores => new IItemDropRule[8] {
+		public static IItemDropRule[] Ores => [
 			ItemDropRule.NotScalingWithLuck(CopperOre, 1, 30, 49),
 			ItemDropRule.NotScalingWithLuck(TinOre, 1, 30, 49),
 			ItemDropRule.NotScalingWithLuck(IronOre, 1, 30, 49),
@@ -147,47 +147,47 @@ namespace Origins.Items.Other.Fish {
 			ItemDropRule.NotScalingWithLuck(TungstenOre, 1, 30, 49),
 			ItemDropRule.NotScalingWithLuck(GoldOre, 1, 30, 49),
 			ItemDropRule.NotScalingWithLuck(PlatinumOre, 1, 30, 49)
-		};
-		public static IItemDropRule[] Bars => new IItemDropRule[6] {
+		];
+		public static IItemDropRule[] Bars => [
 			ItemDropRule.NotScalingWithLuck(IronBar, 1, 10, 20),
 			ItemDropRule.NotScalingWithLuck(LeadBar, 1, 10, 20),
 			ItemDropRule.NotScalingWithLuck(SilverBar, 1, 10, 20),
 			ItemDropRule.NotScalingWithLuck(TungstenBar, 1, 10, 20),
 			ItemDropRule.NotScalingWithLuck(GoldBar, 1, 10, 20),
 			ItemDropRule.NotScalingWithLuck(PlatinumBar, 1, 10, 20)
-		};
-		public static IItemDropRule[] HardmodeOres => new IItemDropRule[6] {
+		];
+		public static IItemDropRule[] HardmodeOres => [
 			ItemDropRule.NotScalingWithLuck(364, 1, 20, 35),
 			ItemDropRule.NotScalingWithLuck(1104, 1, 20, 35),
 			ItemDropRule.NotScalingWithLuck(365, 1, 20, 35),
 			ItemDropRule.NotScalingWithLuck(1105, 1, 20, 35),
 			ItemDropRule.NotScalingWithLuck(366, 1, 20, 35),
 			ItemDropRule.NotScalingWithLuck(1106, 1, 20, 35)
-		};
-		public static IItemDropRule[] HardmodeBars => new IItemDropRule[6] {
+		];
+		public static IItemDropRule[] HardmodeBars => [
 			ItemDropRule.NotScalingWithLuck(381, 1, 5, 16),
 			ItemDropRule.NotScalingWithLuck(1184, 1, 5, 16),
 			ItemDropRule.NotScalingWithLuck(382, 1, 5, 16),
 			ItemDropRule.NotScalingWithLuck(1191, 1, 5, 16),
 			ItemDropRule.NotScalingWithLuck(391, 1, 5, 16),
 			ItemDropRule.NotScalingWithLuck(1198, 1, 5, 16)
-		};
-		public static IItemDropRule[] Potions => new IItemDropRule[6] {
+		];
+		public static IItemDropRule[] Potions => [
 			ItemDropRule.NotScalingWithLuck(ObsidianSkinPotion, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(SpelunkerPotion, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(HunterPotion, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(GravitationPotion, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(MiningPotion, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(HeartreachPotion, 1, 2, 4)
-		};
-		public static IItemDropRule[] BiomeCrate_ExtraPotions => new IItemDropRule[2] {
+		];
+		public static IItemDropRule[] BiomeCrate_ExtraPotions => [
 			ItemDropRule.NotScalingWithLuck(188, 1, 5, 17),
 			ItemDropRule.NotScalingWithLuck(189, 1, 5, 17)
-		};
-		public static IItemDropRule[] BiomeCrate_ExtraBait => new IItemDropRule[2] {
+		];
+		public static IItemDropRule[] BiomeCrate_ExtraBait => [
 			ItemDropRule.NotScalingWithLuck(2676, 3, 2, 6),
 			ItemDropRule.NotScalingWithLuck(2675, 1, 2, 6)
-		};
+		];
 		public virtual bool Hardmode => false;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.IsFishingCrate[Type] = true;
@@ -223,7 +223,7 @@ namespace Origins.Items.Other.Fish {
 			SetMapEntry();
 		}
 		protected virtual void SetTileObjectData(TileObjectData data) {
-			data.CoordinateHeights = new int[2] { 16, 18 };
+			data.CoordinateHeights = [16, 18];
 			data.StyleHorizontal = true; // Optional, if you add more placeStyles for the item
 			data.CoordinatePadding = 0;
 			data.CoordinateWidth = 16;

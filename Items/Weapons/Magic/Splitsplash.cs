@@ -11,9 +11,9 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "SpellBook"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalStorm);
 			Item.damage = 16;

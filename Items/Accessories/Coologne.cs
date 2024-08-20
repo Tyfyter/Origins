@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Coologne : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);
 			Item.rare = ItemRarityID.Pink;

@@ -9,9 +9,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Kruncher : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Gun"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 3f / 8f;
 			glowmask = Origins.AddGlowMask(this);

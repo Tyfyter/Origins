@@ -8,10 +8,10 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Defiled_Spirit : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownExplosive",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;

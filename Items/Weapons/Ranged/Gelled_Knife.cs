@@ -7,11 +7,11 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Gelled_Knife : ModItem, ICustomWikiStat {
         static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Torn",
             "TornSource",
             "OtherRanged"
-        };
+        ];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

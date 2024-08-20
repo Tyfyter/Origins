@@ -31,7 +31,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.Torch[Type] = true;
 
 			DustType = DustID.Smoke;
-			AdjTiles = new int[] { TileID.Torches };
+			AdjTiles = [TileID.Torches];
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 

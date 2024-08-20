@@ -12,10 +12,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Armor.Riptide {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riptide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
             "ArmorSet",
             "MagicBoostGear"
-        };
+        ];
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 30);

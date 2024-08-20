@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeSword"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.damage = 44;

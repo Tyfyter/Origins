@@ -13,9 +13,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeMagicGun"
-        };
+        ];
         public ushort Element => Elements.Earth;
 		static DrawAnimationManual animation;
 		public override DrawAnimation Animation => animation;

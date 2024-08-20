@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Eccentric_Stone : ModItem, IJournalEntryItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc",
 			"LoreItem"
-		};
+		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		

@@ -5,10 +5,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Missile_Armcannon : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"ExplosiveBoostAcc"
-		};
+		];
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
             glowmask = Origins.AddGlowMask(this);

@@ -8,10 +8,10 @@ using Origins.Items.Weapons.Ammo.Canisters;
 using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Eruption : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Launcher",
 			"CanistahUser"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Eruption_P>(27, 32, 16f, 50, 26, true);
 			Item.knockBack = 6;

@@ -12,9 +12,9 @@ using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Self_Destruct : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
             "HardmodeOtherExplosive"
-        };
+        ];
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.noMelee = true;

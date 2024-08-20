@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Startillery : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeSpellBook"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldenShower);
 			Item.damage = 48;

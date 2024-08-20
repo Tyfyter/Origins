@@ -8,11 +8,11 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Felnum_Shock_Grenade : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

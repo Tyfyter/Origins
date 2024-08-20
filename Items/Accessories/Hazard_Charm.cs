@@ -4,11 +4,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Hazard_Charm : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc",
 			"ExplosiveBoostAcc",
 			"SelfDamageProtek"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 26);
 			Item.value = Item.sellPrice(gold: 9, silver:50);

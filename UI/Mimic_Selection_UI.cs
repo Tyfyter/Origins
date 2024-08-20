@@ -12,7 +12,7 @@ namespace Origins.UI {
 		static AutoCastingAsset<Texture2D>[] Textures;
 		public class TextureLoader : ILoadable {
 			public void Load(Mod mod) {
-				Textures = new AutoCastingAsset<Texture2D>[] {
+				Textures = [
 					Origins.instance.Assets.Request<Texture2D>("UI/Broadcast_Icon"),
 					Origins.instance.Assets.Request<Texture2D>("UI/Dream_Icon"),
 					Origins.instance.Assets.Request<Texture2D>("UI/Grow_Icon"),
@@ -22,7 +22,7 @@ namespace Origins.UI {
 					Origins.instance.Assets.Request<Texture2D>("UI/Float_Icon"),
 					Origins.instance.Assets.Request<Texture2D>("UI/Command_Icon"),
 					Origins.instance.Assets.Request<Texture2D>("UI/Evolve_Icon")
-				};
+				];
 			}
 
 			public void Unload() {

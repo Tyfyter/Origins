@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Headphones : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"SummonBoostGear"
-		};
+		];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

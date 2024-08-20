@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Charm_of_Regeneration : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality",
 			"ExplosiveBoostAcc",
 			"SelfDamageProtek"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 2);

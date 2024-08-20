@@ -22,9 +22,9 @@ namespace Origins.Tiles.Other {
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Riven_Fountain_Item : ModItem {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"WaterFountain"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Fountain>());
 		}

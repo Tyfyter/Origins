@@ -8,9 +8,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Wrycoral : OriginTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

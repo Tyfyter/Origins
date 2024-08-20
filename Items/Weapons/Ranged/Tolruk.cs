@@ -14,11 +14,11 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem, ICustomWikiStat {
 		int charge = 0;
 		public static short[] glowmasks;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeGun"
-        };
+        ];
         public override void SetStaticDefaults() { //still needs reshaping chee
-			glowmasks = new short[]{
+			glowmasks = [
 				-1,
 				Origins.AddGlowMask(Texture + "_Glow_1"),
 				Origins.AddGlowMask(Texture + "_Glow_2"),
@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Origins.AddGlowMask(Texture + "_Glow_8"),
 				Origins.AddGlowMask(Texture + "_Glow_9"),
 				Origins.AddGlowMask(Texture + "_Glow_10")
-			};
+			];
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

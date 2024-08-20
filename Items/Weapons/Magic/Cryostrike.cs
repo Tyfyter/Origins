@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Cryostrike : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Wand"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;

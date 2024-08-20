@@ -8,9 +8,9 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Decoration {
     public class A_Perfect_World : ModTile {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Painting"
-		};
+		];
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;

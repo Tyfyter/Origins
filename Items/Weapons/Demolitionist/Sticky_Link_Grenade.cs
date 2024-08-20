@@ -10,11 +10,11 @@ using Tyfyter.Utils;
 using System.IO;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Sticky_Link_Grenade : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

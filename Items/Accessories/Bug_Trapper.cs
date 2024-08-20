@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOff)]
     public class Bug_Trapper : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Vitality"
-        };
+        ];
         static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

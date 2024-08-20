@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOff)]
 	public class Playtimes_Over : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Vitality",
             "Torn",
             "TornSource"
-        };
+        ];
         static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

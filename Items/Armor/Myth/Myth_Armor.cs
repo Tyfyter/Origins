@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Head)]
 	public class Mythic_Skull : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet",
             "ExplosiveBoostGear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 90);

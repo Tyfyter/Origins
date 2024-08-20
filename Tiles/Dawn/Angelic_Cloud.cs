@@ -6,9 +6,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dawn {
 	public class Angelic_Cloud : OriginTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "OtherBlock"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

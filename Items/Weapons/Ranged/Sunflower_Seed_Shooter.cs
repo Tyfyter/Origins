@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 namespace Origins.Items.Weapons.Ranged {
     public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Gun"
-        };
+        ];
         public override void SetStaticDefaults() {
             Origins.FlatDamageMultiplier[Type] = 2f / 8f;
         }

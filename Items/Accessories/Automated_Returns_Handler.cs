@@ -5,10 +5,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
 	public class Automated_Returns_Handler : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Movement",
 			"RangedBoostAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 12);

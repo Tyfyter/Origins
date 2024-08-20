@@ -12,9 +12,9 @@ using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Sword"
-        };
+        ];
 		public override void SetStaticDefaults() {
 			PrefixLegacy.ItemSets.SwordsHammersAxesPicks[Type] = true;
 		}
@@ -52,9 +52,9 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Switchblade_Shortsword : ModItem, ICustomWikiStat, INoSeperateWikiPage {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Sword"
-		};
+		];
 		public override void SetStaticDefaults() {
 			PrefixLegacy.ItemSets.SwordsHammersAxesPicks[Type] = true;
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

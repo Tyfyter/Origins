@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeArmorSet",
             "ExplosiveBoostGear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 24;

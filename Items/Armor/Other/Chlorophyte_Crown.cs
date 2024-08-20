@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Crown : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeArmorSet",
             "SummonBoostGear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.width = 24;
 			Item.height = 18;

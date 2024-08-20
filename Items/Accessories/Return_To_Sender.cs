@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Return_To_Sender : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

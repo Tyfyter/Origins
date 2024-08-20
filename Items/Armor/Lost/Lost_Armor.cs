@@ -11,11 +11,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Lost {
     [AutoloadEquip(EquipType.Head)]
 	public class Lost_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet",
             "ManaShielding",
 			"MagicBoostGear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

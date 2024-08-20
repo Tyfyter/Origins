@@ -10,9 +10,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Ravel : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Movement"
-		};
+		];
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
@@ -121,7 +121,7 @@ namespace Origins.Items.Accessories {
 			//MountData.buff = Ravel_Mount_Buff.ID; // The ID number of the buff assigned to the mount.
 
 			MountData.totalFrames = 1; // Amount of animation frames for the mount
-			MountData.playerYOffsets = new int[] { -22 };
+			MountData.playerYOffsets = [-22];
 			(RavelMounts ??= new()).Add(Type);
 			if (!Main.dedServ && TransformTexture.Value is null) {
 				TransformTexture = Mod.Assets.Request<Texture2D>("Items/Accessories/Ravel_Morph");

@@ -108,7 +108,7 @@ namespace Origins {
 		}
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
 			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
-			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[] { Origins.instance });
+			typeof(ILoadable).GetMethod("Load").Invoke(newClass, [Origins.instance]);
 			return newClass;
 		}
 		public override void SetStaticDefaults() {

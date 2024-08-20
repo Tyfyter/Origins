@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Salt_Flask : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Potion"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

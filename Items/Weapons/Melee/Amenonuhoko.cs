@@ -10,10 +10,10 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeSpear",
 			"ToxicSource"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.Spears[Item.type] = true;

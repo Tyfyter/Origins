@@ -55,9 +55,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Alkahest : MaterialItem, IJournalEntryItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "LoreItem"
-        };
+        ];
         public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
@@ -112,9 +112,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntryItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "LoreItem"
-        };
+        ];
         public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
@@ -175,9 +175,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Defiled_Bar : MaterialItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "LoreItem"
-        };
+        ];
         public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override void Load() {
@@ -245,9 +245,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Felnum_Bar : MaterialItem, IJournalEntryItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "LoreItem"
-        };
+        ];
         public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";

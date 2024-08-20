@@ -10,9 +10,9 @@ namespace Origins.Items.Weapons {
 	public class Fragarach : ModItem, ICustomWikiStat {
 		static short glowmask;
         //public override bool OnlyShootOnSwing => true;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "DoesntBelongInOrigins"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

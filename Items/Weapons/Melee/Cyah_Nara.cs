@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Cyah_Nara : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Sword"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);
 			Item.damage = 18;

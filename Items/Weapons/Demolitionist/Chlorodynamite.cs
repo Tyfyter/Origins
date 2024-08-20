@@ -12,11 +12,11 @@ using static Humanizer.In;
 using Origins.Projectiles;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownHardmodeExplosive",
 			"IsDynamite",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Bomb_Charm : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality",
 			"ExplosiveBoostAcc",
 			"SelfDamageProtek"
-		};
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofRegeneration] = ModContent.ItemType<Bomb_Charm>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Charm>()] = ItemID.BandofRegeneration;

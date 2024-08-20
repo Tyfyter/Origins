@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Krakram : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Boomerang"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.damage = 25;

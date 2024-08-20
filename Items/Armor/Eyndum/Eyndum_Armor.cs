@@ -6,14 +6,14 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Eyndum {
     [AutoloadEquip(EquipType.Head)]
 	public class Eyndum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "PostMLArmorSet",
             "MeleeBoostGear",
             "RangedBoostGear",
             "MagicBoostGear",
             "SummmonBoostGear",
             "ExplosiveBoostGear"
-        };
+        ];
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");

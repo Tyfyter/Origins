@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Launcher"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(18, 20, 54, 26);
 			Item.useTime = 1;

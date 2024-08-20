@@ -79,14 +79,14 @@ namespace Origins.Reflection {
 					if (genericType == typeof(FastFieldInfo<,>) || genericType == typeof(FastStaticFieldInfo<,>)) {
 						item.SetValue(
 							null,
-							item.FieldType.GetConstructor(new Type[] { typeof(string), typeof(BindingFlags), typeof(bool) })
-							.Invoke(new object[] { name, BindingFlags.Public | BindingFlags.NonPublic, true })
+							item.FieldType.GetConstructor([typeof(string), typeof(BindingFlags), typeof(bool)])
+							.Invoke([name, BindingFlags.Public | BindingFlags.NonPublic, true])
 						);
 					} else if (genericType == typeof(FastStaticFieldInfo<>)) {
 						item.SetValue(
 							null,
-							item.FieldType.GetConstructor(new Type[] { typeof(Type), typeof(string), typeof(BindingFlags), typeof(bool) })
-							.Invoke(new object[] { item.GetCustomAttribute<ReflectionParentTypeAttribute>().ParentType, name, BindingFlags.Public | BindingFlags.NonPublic, true })
+							item.FieldType.GetConstructor([typeof(Type), typeof(string), typeof(BindingFlags), typeof(bool)])
+							.Invoke([item.GetCustomAttribute<ReflectionParentTypeAttribute>().ParentType, name, BindingFlags.Public | BindingFlags.NonPublic, true])
 						);
 					}
 				}

@@ -12,9 +12,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.VolatileGelatin;
 		public override void SetDefaults(Item entity) {
 			entity.DamageType = DamageClasses.Explosive;

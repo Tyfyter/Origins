@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Head)]
 	public class Cryosten_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet"
-        };
+        ];
         public override void SetDefaults() {
 			Item.defense = 2;
 			Item.value = Item.sellPrice(silver: 7);

@@ -11,9 +11,9 @@ using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
 	public class Lazy_Cloak : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MasterAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
 			Item.damage = 30;

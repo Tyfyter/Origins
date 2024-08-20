@@ -9,9 +9,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons {
 	public class Dragons_Breath : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ReworkExpected"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

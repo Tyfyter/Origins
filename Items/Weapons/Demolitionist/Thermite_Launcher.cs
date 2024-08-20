@@ -13,10 +13,10 @@ using Origins.Items.Weapons.Ammo.Canisters;
 using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Launcher : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"HardmodeLauncher",
 			"CanistahUser"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(35, 34, 16f, 44, 18);
 			Item.knockBack = 2f;

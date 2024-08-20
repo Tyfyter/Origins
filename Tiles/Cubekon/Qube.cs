@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Cubekon {
     public class Qube : OriginTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "OtherBlock"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;

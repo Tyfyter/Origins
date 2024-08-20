@@ -11,10 +11,10 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Potato_Battery : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"MagicBoostAcc"
-		};
+		];
 		static Message_Type_Count[] messageCountsByType;
 		
 		public override void Unload() {

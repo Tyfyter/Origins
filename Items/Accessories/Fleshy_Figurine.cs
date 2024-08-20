@@ -5,11 +5,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Fleshy_Figurine : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"Torn",
 			"TornSource"
-		};
+		];
         static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

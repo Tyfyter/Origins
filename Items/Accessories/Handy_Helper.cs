@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 namespace Origins.Items.Accessories {
 	public class Handy_Helper : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

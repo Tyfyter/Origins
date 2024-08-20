@@ -171,11 +171,11 @@ namespace Origins.Gores.NPCs {
 			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
 		}
 		public override void SetStaticDefaults() {
-			IDs = new int[] {
+			IDs = [
 				ModContent.DustType<Riven_Blood_Coating>(),
 				ModContent.DustType<Riven_Blood_Coating2>(),
 				ModContent.DustType<Riven_Blood_Coating3>()
-			};
+			];
 		}
 		public override void Unload() {
 			cachedDusts = null;

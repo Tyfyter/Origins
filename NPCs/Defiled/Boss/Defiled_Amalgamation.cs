@@ -202,12 +202,12 @@ namespace Origins.NPCs.Defiled.Boss {
 							if (NPC.ai[1] > 300) {
 								WeightedRandom<int> rand = new(
 									Main.rand,
-									new Tuple<int, double>[] {
+									[
 									new(state_single_dash, 1f),
 									new(state_projectiles, 0.9f),
 									new(state_triple_dash, 0.35f),
 									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult))
-									}
+									]
 								);
 								int lastUsedAttack = (-1) - AIState;
 

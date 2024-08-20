@@ -27,7 +27,7 @@ namespace Origins.Tiles.Riven {
 			// name.SetDefault("Locked Riven Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
 			//disableSmartCursor = true;
-			AdjTiles = new int[] { TileID.Containers };
+			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Riven_Key>();
 			DustType = Riven_Hive.DefaultTileDust;
 		}

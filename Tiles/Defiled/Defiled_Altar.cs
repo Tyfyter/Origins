@@ -17,14 +17,14 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
+			TileObjectData.newTile.CoordinateHeights = [18, 18];
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("{$Defiled} Altar");
 			AddMapEntry(new Color(200, 200, 200), name);
 			//disableSmartCursor = true;
 			RegisterItemDrop(-1);
-			AdjTiles = new int[] { TileID.DemonAltar };
+			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
 		}
 

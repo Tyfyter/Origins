@@ -8,9 +8,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
 	public class Cursed_Harpoon : ModItem, ICustomWikiStat {
 		public static int ID { get; private set; } = -1;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Harpoon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			ID = Type;

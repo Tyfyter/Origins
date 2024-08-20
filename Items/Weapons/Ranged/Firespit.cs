@@ -10,9 +10,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Firespit : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Gun"
-        };
+        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);

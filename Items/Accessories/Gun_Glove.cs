@@ -7,9 +7,9 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Gun_Glove : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.FeralClaws] = ModContent.ItemType<Gun_Glove>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Gun_Glove>()] = ItemID.FeralClaws;

@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Hallowed_Cleaver : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeGun"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 39;

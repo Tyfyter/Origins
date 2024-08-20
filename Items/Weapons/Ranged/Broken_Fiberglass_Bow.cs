@@ -12,9 +12,9 @@ using Terraria.UI.Chat;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Bow"
-        };
+        ];
         public ushort Element => Elements.Fiberglass;
 		protected override bool CloneNewInstances => true;
 		int strung = 0;

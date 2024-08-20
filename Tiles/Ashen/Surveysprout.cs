@@ -12,9 +12,9 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Surveysprout : OriginTile, IAshenTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -33,10 +33,10 @@ namespace Origins.Tiles.Ashen {
 				TileType<Sootgrass>(),
 				TileType<Compact_Scrap>()
 			};*/
-			TileObjectData.newTile.AnchorAlternateTiles = new int[] {
+			TileObjectData.newTile.AnchorAlternateTiles = [
 				TileID.ClayPot,
 				TileID.PlanterBox
-			};
+			];
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;

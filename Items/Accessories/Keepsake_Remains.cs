@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Keepsake_Remains : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"Torn",
 			"TornSource",
 			"GenericBoostAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 28);
 			Item.value = Item.sellPrice(gold: 3);

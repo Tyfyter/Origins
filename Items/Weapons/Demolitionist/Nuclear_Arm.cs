@@ -10,9 +10,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Nuclear_Arm : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeLauncher"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}

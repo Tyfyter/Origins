@@ -71,9 +71,9 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	#endregion
 	public class Music_Box_DW : Music_Box {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MusicBox"
-		};
+		];
 		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.Defiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
@@ -92,17 +92,17 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_DC : Music_Box {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MusicBox"
-		};
+		];
 		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.UndergroundDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 	}
 	public class Music_Box_RH : Music_Box, IGlowingModTile {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MusicBox"
-		};
+		];
 		public override Color MapColor => new Color(42, 59, 112);
 		public override int MusicSlot => Origins.Music.Riven;
 		public override int DustType => Riven_Hive.DefaultTileDust;

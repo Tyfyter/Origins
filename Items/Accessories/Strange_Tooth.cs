@@ -7,9 +7,9 @@ using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Tooth : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "MasterAcc"
-        };
+        ];
         public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.DamageType = DamageClass.Summon;

@@ -13,10 +13,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeArtifact",
 			"HardmodeMinion"
-        };
+        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

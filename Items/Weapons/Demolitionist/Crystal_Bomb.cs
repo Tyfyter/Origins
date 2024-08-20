@@ -7,11 +7,11 @@ using static Origins.OriginExtensions;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Crystal_Bomb : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownHardmodeExplosive",
 			"IsBomb",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

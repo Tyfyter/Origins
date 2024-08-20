@@ -13,10 +13,10 @@ using Origins.Gores.NPCs;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ThrownExplosive",
             "SpendableWeapon"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this, "");
 			Item.ResearchUnlockCount = 30;

@@ -135,10 +135,10 @@ namespace Origins.Items.Tools {
 				basePos + unit * (baseUnitScale - 4),
 				Projectile.Center - unit * (swapDir ? 1 : 0),
 				texture,
-				new Rectangle[] {
+				[
 					new Rectangle(46, 6 + Projectile.frame * 24, 8, 14),
 					new Rectangle(46, 6 + (Projectile.frame ^ 1) * 24, 8, 14)
-				},
+				],
 				new Color(225, 225, 225, 180),
 				true,
 				action: (pos) => {

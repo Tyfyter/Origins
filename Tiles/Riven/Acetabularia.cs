@@ -10,9 +10,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Acetabularia : OriginTile, IDefiledTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -27,9 +27,9 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(0, 175, 200), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
-			TileObjectData.newTile.AnchorValidTiles = new int[] {
+			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Riven_Grass>()
-			};
+			];
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;

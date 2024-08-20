@@ -11,9 +11,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Third_Eye : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MasterAcc"
-		};
+		];
 		const int chargeup_time = 180;
 		const int reset_time = 600;
 		

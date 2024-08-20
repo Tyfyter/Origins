@@ -186,8 +186,8 @@ namespace Origins.UI {
 				case Journal_UI_Mode.Search_Page: {
 					//if (!tabLayout) {
 					Rectangle bounds = baseElement.GetDimensions().ToRectangle();
-					pages = new TextSnippet[][]{
-							new TextSnippet[] {
+					pages = [
+							[
 								new Journal_Search_Snippet(
 									new CalculatedStyle(bounds.X + xMargin,
 									bounds.Y + yMargin,
@@ -196,8 +196,8 @@ namespace Origins.UI {
 								) {
 									Text = key ?? ""
 								}
-							}
-						};
+							]
+						];
 					//}
 					SetSearchResults(key);
 					break;

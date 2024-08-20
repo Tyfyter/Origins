@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
     public class Lottery_Ticket : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "SpendableTool"
-        };
+        ];
         public override void SetDefaults() {
 			Item.width = 20;
 			Item.height = 16;

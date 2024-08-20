@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back, EquipType.Front)]
 	public class Blizzardwalkers_Jacket : ModItem, ICustomWikiStat {
 		public const int max_active_time = 60 * 6;
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"MasterAcc"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);
 			Item.value = Item.sellPrice(gold: 2);

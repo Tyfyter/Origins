@@ -141,7 +141,7 @@ namespace Origins {
 					player.adjWater = false;
 				}
 			};*/
-			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool) }), (hook_DropItem)CommonCode_DropItem);
+			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, [typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool)]), (hook_DropItem)CommonCode_DropItem);
 			Terraria.On_WorldGen.ScoreRoom += (Terraria.On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
 				npcScoringRoom = npcTypeAskingToScoreRoom;
 				orig(ignoreNPC, npcTypeAskingToScoreRoom);
@@ -420,7 +420,7 @@ namespace Origins {
 					LogError("Could not find target IL code in AddHappinessReportText");
 				}
 				c.Index++;
-				MethodInfo concat2 = typeof(String).GetMethod(nameof(String.Concat), BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(String), typeof(String) });
+				MethodInfo concat2 = typeof(String).GetMethod(nameof(String.Concat), BindingFlags.Public | BindingFlags.Static, [typeof(String), typeof(String)]);
 				while (c.TryGotoNext(MoveType.Before,
 				   i => i.MatchStloc0()
 				)) {
@@ -544,7 +544,7 @@ namespace Origins {
 			)) {
 				c.Index -= 4;
 				c.EmitLdcI4(1);
-				c.EmitCall(typeof(Math).GetMethod(nameof(Math.Max), new Type[] { typeof(int), typeof(int) }));
+				c.EmitCall(typeof(Math).GetMethod(nameof(Math.Max), [typeof(int), typeof(int)]));
 			} else {
 				LogError("Could not find potential division by zero in PlayerStatsSnapshot ctor");
 			}
@@ -938,21 +938,21 @@ namespace Origins {
 			ILCursor c = new ILCursor(il);
 			if (!c.TryGotoNext(
 				moveType: MoveType.Before,
-				new Func<Instruction, bool>[] {
+				[
 					v => v.MatchCall<NetMessage>("SendTileSquare")
-				}
+				]
 			)) return;
 			if (!c.TryGotoPrev(
 				moveType: MoveType.Before,
-				new Func<Instruction, bool>[] {
+				[
 					v => v.MatchLdsflda<Main>("tile")
-				}
+				]
 			)) return;
 			if (!c.TryFindPrev(
 				out ILCursor[] prevs,
-				new Func<Instruction, bool>[] {
+				[
 					v => v.MatchCall<WorldGen>("PlaceAlch")
-				}
+				]
 			)) return;
 			ILCursor c2 = prevs[0];
 			c.Index = c2.Index;
@@ -964,9 +964,9 @@ namespace Origins {
 			}
 			if (!c.TryGotoNext(
 				moveType: MoveType.AfterLabel,
-				new Func<Instruction, bool>[] {
+				[
 					v => v.MatchLdsflda<Main>("tile")
-				}
+				]
 			)) return;
 			Instruction instruction;
 			while (ins.Count > 0) {

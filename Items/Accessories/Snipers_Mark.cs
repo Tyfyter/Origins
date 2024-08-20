@@ -4,10 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Snipers_Mark : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"RangedBoostAcc"
-		};
+		];
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			BackSlot = Item.backSlot;

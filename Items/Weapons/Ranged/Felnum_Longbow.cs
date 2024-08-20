@@ -8,9 +8,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem, ICustomWikiStat {
 		public const int baseDamage = 19;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Bow"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
 			Item.damage = baseDamage;

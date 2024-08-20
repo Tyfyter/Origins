@@ -9,11 +9,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Blast {
     [AutoloadEquip(EquipType.Head)]
 	public class Blast_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeArmorSet",
             "ExplosiveBoostGear",
 			"SelfDamageProtek"
-		};
+		];
         public override void SetStaticDefaults() {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Blast/Blast_Helmet_Head_Glow");

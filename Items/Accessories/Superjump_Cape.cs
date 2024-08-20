@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Superjump_Cape : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Movement"
-		};
+		];
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			BackSlot = Item.backSlot;

@@ -6,10 +6,10 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
     public class SMART_Wrench : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeMinionWeapon",
 			"HardmodeMinion"
-        };
+        ];
         public override void SetDefaults() {
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;

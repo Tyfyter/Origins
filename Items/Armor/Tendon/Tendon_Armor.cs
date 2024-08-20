@@ -7,12 +7,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Tendon {
     [AutoloadEquip(EquipType.Head)]
 	public class Tendon_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet",
             "RangedBoostGear",
 			"ExplosiveBoostGear",
 			"GenericBoostGear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

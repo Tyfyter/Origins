@@ -4,10 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Priority_Mail : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Combat",
 			"SummonBoostAcc"
-        };
+        ];
         public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
 			Item.maxStack = 2;

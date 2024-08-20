@@ -11,9 +11,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Outreach : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Spear"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

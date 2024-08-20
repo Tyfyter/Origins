@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Resin_Shield : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Vitality",
 			"ExplosiveBoostAcc",
 			"SelfDamageProtek"
-		};
+		];
 		public static int ShieldID { get; private set; }
 		public static int InactiveShieldID { get; private set; }
 		public override void SetStaticDefaults() {

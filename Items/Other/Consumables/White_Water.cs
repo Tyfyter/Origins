@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class White_Water : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "SpendableTool"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

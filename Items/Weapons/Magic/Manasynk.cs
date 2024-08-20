@@ -12,9 +12,9 @@ using Tyfyter.Utils;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Manasynk : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "OtherMagic"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;

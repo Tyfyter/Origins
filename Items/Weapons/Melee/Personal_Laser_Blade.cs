@@ -10,9 +10,9 @@ namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Personal_Laser_Blade : ModItem, IElementalItem, ICustomWikiStat {
 		public const int max_charge = 75;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeSword"
-        };
+        ];
         public ushort Element => Elements.Fire;
 		static short glowmask;
 		public override void SetStaticDefaults() {

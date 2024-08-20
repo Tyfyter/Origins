@@ -16,9 +16,9 @@ using static Origins.OriginExtensions;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Launcher"
-		};
+		];
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(2, 40, 78, 30, true);
 			Item.shoot = ProjectileID.Bomb;

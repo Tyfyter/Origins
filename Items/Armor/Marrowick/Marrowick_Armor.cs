@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Marrowick {
 	[AutoloadEquip(EquipType.Head)]
 	public class Marrowick_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}

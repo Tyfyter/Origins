@@ -7,9 +7,9 @@ namespace Origins.Items.Other.Dyes {
     public class Amber_Dye : Dye_Item, ICustomWikiStat {
 		public static int ID { get; private set; }
 		public static int ShaderID { get; private set; }
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "SpecialEffectDye"
-        };
+        ];
         public override void SetStaticDefaults() {
 			ID = Type;
 			GameShaders.Armor.BindShader(Type, new ArmorShaderData(Main.Assets.Request<Effect>("PixelShader"), "ArmorStardust"))

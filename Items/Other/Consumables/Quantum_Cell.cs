@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Quantum_Cell : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "BossSummon"
-        };
+        ];
         public override void SetStaticDefaults() {
 
 			Item.ResearchUnlockCount = 3;

@@ -12,9 +12,9 @@ using Tyfyter.Utils;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Amber_Of_Embers : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeWand"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;

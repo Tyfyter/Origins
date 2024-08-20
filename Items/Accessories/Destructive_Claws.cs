@@ -5,10 +5,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Destructive_Claws : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat",
 			"ExplosiveBoostAcc"
-		};
+		];
         static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

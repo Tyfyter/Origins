@@ -19,7 +19,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
 			TileObjectData.newTile.Width = 4;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16];
 			TileObjectData.newTile.Origin = new Point16(1, 2);
 			TileObjectData.newTile.AnchorWall = false;
 			TileObjectData.newTile.AnchorTop = AnchorData.Empty;
@@ -31,7 +31,7 @@ namespace Origins.Tiles.Defiled {
 			// name.SetDefault("{$Defiled} Heart");
 			AddMapEntry(new Color(50, 50, 50), name);
 			//disableSmartCursor = true;
-			AdjTiles = new int[] { TileID.ShadowOrbs };
+			AdjTiles = [TileID.ShadowOrbs];
 			ID = Type;
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;

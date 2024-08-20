@@ -12,9 +12,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Rigged_Cubix : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeMagicGun"
-        };
+        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);

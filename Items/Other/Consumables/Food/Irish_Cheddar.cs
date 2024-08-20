@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
     public class Irish_Cheddar : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Food"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 		}

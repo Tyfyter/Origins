@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Chromtain {
     [AutoloadEquip(EquipType.Head)]
 	public class Chromtain_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "PostMLArmorSet"/*,
             "MeleeBoostGear" should probably give it melee boosts, when the time comes */
-        };
+        ];
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Chromtain/Chromtain_Helmet_Head_Glow");

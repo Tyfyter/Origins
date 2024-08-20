@@ -8,11 +8,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Nova {
     [AutoloadEquip(EquipType.Head)]
 	public class Nova_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "PostMLArmorSet",
             "ExplosiveBoostGear",
 			"SelfDamageProtek"
-		};
+		];
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Nova/Nova_Helmet_Head_Glow");

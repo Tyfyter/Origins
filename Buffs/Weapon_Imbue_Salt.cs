@@ -4,10 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Buffs {
 	public class Weapon_Imbue_Salt : ModBuff, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Torn",
 			"TornSource"
-		};
+		];
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			BuffID.Sets.IsAFlaskBuff[Type] = true;

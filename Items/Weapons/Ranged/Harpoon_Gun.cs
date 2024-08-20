@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Harpoon_Gun : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HarpoonGun"
-        };
+        ];
         public override void SetStaticDefaults() {
 			if (GetType() != typeof(Harpoon_Gun)) return;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Harpoon;

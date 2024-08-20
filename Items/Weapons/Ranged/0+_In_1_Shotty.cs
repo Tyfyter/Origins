@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Shotty_x2 : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Gun"
-        };
+        ];
         public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);

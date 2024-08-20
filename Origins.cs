@@ -438,21 +438,21 @@ namespace Origins {
 					}
 				});*/
 			}
-			ChatManager.Register<Journal_Link_Handler>(new string[]{
+			ChatManager.Register<Journal_Link_Handler>([
 				"journal",
 				"j"
-			});
-			ChatManager.Register<Quest_Link_Handler>(new string[]{
+			]);
+			ChatManager.Register<Quest_Link_Handler>([
 				"quest",
 				"q"
-			});
-			ChatManager.Register<Quest_Stage_Snippet_Handler>(new string[]{
+			]);
+			ChatManager.Register<Quest_Stage_Snippet_Handler>([
 				"queststage",
 				"qs"
-			});
-			ChatManager.Register<Header_Snippet_Handler>(new string[]{
+			]);
+			ChatManager.Register<Header_Snippet_Handler>([
 				"header"
-			});
+			]);
 			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
 			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {

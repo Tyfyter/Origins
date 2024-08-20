@@ -9,9 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
 	public class Brine_Leaf_Clover_Tile : OriginTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -30,10 +30,10 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.OnlyInFullLiquid;
-			TileObjectData.newTile.AnchorValidTiles = new int[] {
+			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
 				TileType<Sulphur_Stone>()
-			};
+			];
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;

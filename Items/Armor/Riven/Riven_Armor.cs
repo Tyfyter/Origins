@@ -9,10 +9,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riven_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet",
             "GenericBoostGear"
-        };
+        ];
         public const float lightMagnitude = 0.3f;
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
@@ -51,10 +51,10 @@ namespace Origins.Items.Armor.Riven {
 		public int HeadItemID => Type;
 		public int BodyItemID => ModContent.ItemType<Riven_Coat>();
 		public int LegsItemID => ModContent.ItemType<Riven_Pants>();
-		public string[] SetCategories => new string[] {
+		public string[] SetCategories => [
 			"Torn",
 			"TornSource"
-		};
+		];
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Riven_Coat : ModItem, INoSeperateWikiPage {

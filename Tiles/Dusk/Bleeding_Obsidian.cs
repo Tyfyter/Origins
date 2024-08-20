@@ -8,9 +8,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
 	public class Bleeding_Obsidian : OriginTile {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Ore"
-		};
+		];
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

@@ -322,24 +322,24 @@ namespace Origins {
 		public static void getEvilWallConversionTypes(byte evilType, out ushort[] stoneWallTypes, out ushort[] hardenedSandWallTypes, out ushort[] sandstoneWallTypes) {
 			switch (evilType) {
 				case evil_wastelands:
-				stoneWallTypes = new ushort[] { (ushort)WallType<Defiled_Stone_Wall>() };
-				hardenedSandWallTypes = new ushort[] { (ushort)WallType<Hardened_Defiled_Sand_Wall>() };
-				sandstoneWallTypes = new ushort[] { (ushort)WallType<Defiled_Sandstone_Wall>() };
+				stoneWallTypes = [(ushort)WallType<Defiled_Stone_Wall>()];
+				hardenedSandWallTypes = [(ushort)WallType<Hardened_Defiled_Sand_Wall>()];
+				sandstoneWallTypes = [(ushort)WallType<Defiled_Sandstone_Wall>()];
 				break;
 				case evil_riven:
-				stoneWallTypes = new ushort[] { WallID.CrimstoneUnsafe };
-				hardenedSandWallTypes = new ushort[] { WallID.CrimsonHardenedSand };
-				sandstoneWallTypes = new ushort[] { WallID.CrimsonSandstone };
+				stoneWallTypes = [WallID.CrimstoneUnsafe];
+				hardenedSandWallTypes = [WallID.CrimsonHardenedSand];
+				sandstoneWallTypes = [WallID.CrimsonSandstone];
 				break;
 				case evil_crimson:
-				stoneWallTypes = new ushort[] { WallID.CrimstoneUnsafe };
-				hardenedSandWallTypes = new ushort[] { WallID.CrimsonHardenedSand };
-				sandstoneWallTypes = new ushort[] { WallID.CrimsonSandstone };
+				stoneWallTypes = [WallID.CrimstoneUnsafe];
+				hardenedSandWallTypes = [WallID.CrimsonHardenedSand];
+				sandstoneWallTypes = [WallID.CrimsonSandstone];
 				break;
 				default:
-				stoneWallTypes = new ushort[] { WallID.EbonstoneUnsafe };
-				hardenedSandWallTypes = new ushort[] { WallID.CorruptHardenedSand };
-				sandstoneWallTypes = new ushort[] { WallID.CorruptSandstone };
+				stoneWallTypes = [WallID.EbonstoneUnsafe];
+				hardenedSandWallTypes = [WallID.CorruptHardenedSand];
+				sandstoneWallTypes = [WallID.CorruptSandstone];
 				break;
 			}
 		}

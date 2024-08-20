@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Face)]
 	public class Futurephones : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Combat"
-		};
+		];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

@@ -10,9 +10,9 @@ using Terraria.GameInput;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeHandcannon"
-        };
+        ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;

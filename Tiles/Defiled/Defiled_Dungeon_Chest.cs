@@ -16,7 +16,7 @@ namespace Origins.Tiles.Defiled {
 			// name.SetDefault("Locked {$Defiled} Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
 			//disableSmartCursor = true;
-			AdjTiles = new int[] { TileID.Containers };
+			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Defiled_Key>();
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();

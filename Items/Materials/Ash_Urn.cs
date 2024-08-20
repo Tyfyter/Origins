@@ -9,9 +9,9 @@ using Origins.Tiles.Ashen;
 namespace Origins.Items.Materials
 {
     public class Ash_Urn : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "SpendableTool"
-        };
+        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];

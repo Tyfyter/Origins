@@ -12,9 +12,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Bone_Latcher : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "OtherMelee"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

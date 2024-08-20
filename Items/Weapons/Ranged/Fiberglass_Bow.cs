@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Bow : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Bow"
-        };
+        ];
         public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.damage = 17;

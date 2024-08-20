@@ -10,9 +10,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Low_Signal : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Wand"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
 			glowmask = Origins.AddGlowMask(this);

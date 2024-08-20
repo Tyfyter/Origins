@@ -11,9 +11,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "HardmodeOtherMelee"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

@@ -13,10 +13,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"HardmodeLauncher",
 			"CanistahUser"
-		};
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.shootsEveryUse = false;

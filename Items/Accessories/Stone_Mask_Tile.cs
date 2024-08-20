@@ -11,10 +11,10 @@ using Terraria.ObjectData;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
     public class Stone_Mask : ModItem, IJournalEntryItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Vitality",
 			"LoreItem"
-        };
+        ];
         public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
         public string EntryName => "Origins/" + typeof(Stone_Mask_Entry).Name;
 
@@ -51,7 +51,7 @@ namespace Origins.Items.Accessories {
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = [16, 16];
 			TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, 2);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.addTile(Type);

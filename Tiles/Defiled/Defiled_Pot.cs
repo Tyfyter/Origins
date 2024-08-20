@@ -17,9 +17,9 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Pots, 0));
 			TileObjectData.newTile.Width = 2;
 			TileObjectData.newTile.Height = 2;
-			TileObjectData.newTile.CoordinateHeights = new int[]{ 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = [16, 16];
 			TileObjectData.newTile.CoordinateWidth = 16;
-			TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
+			TileObjectData.newTile.AnchorInvalidTiles = [TileID.MagicalIceBlock];
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);

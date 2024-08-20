@@ -10,10 +10,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Encrusted {
 	[AutoloadEquip(EquipType.Head)]
 	public class Encrusted_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "ArmorSet",
             "SummmonBoostGear"
-        };
+        ];
         public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {

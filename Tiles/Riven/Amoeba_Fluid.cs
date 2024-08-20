@@ -9,9 +9,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : OriginTile, IRivenTile, IGlowingModTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "OtherBlock"
-        };
+        ];
         public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;

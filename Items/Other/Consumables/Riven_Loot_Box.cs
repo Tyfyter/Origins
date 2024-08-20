@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Riven_Loot_Box : ModItem {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "GrabBag"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}

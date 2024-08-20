@@ -10,9 +10,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
 		public const int baseDamage = 18;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Spear"
-        };
+        ];
         public override void SetDefaults() {
 			Item.damage = baseDamage;
 			Item.DamageType = DamageClass.Melee;

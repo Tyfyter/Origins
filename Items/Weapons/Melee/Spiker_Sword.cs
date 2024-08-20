@@ -9,9 +9,9 @@ using Origins.Projectiles.Weapons;
 namespace Origins.Items.Weapons.Melee {
 	public class Spiker_Sword : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Sword"
-        };
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

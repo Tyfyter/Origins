@@ -16,10 +16,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Incantation",
 			"UsesBookcase"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 19;

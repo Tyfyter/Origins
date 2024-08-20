@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Baseball_Bat : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Sword"
-        };
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.damage = 5;

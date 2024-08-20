@@ -10,9 +10,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
     public class Soulspore : OriginTile, IDefiledTile {
-        public string[] Categories => new string[] {
+        public string[] Categories => [
             "Plant"
-        };
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -27,10 +27,10 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(128, 128, 128), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
-			TileObjectData.newTile.AnchorValidTiles = new int[] {
+			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Defiled_Grass>(),
 				TileType<Defiled_Stone>()
-			};
+			];
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;
