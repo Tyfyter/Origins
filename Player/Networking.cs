@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.PlayerSyncDatas;
+using static Origins.PlayerVisualSyncDatas;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -61,10 +62,12 @@ namespace Origins {
 				clone.defiledAssimilation = defiledAssimilation;
 				clone.rivenAssimilation = rivenAssimilation;
 			}
+			clone.blastSetActive = blastSetActive;
 		}
 		public override void SendClientChanges(ModPlayer clientPlayer) {
 			OriginPlayer clone = (OriginPlayer)clientPlayer;// shoot this one
-			PlayerSyncDatas syncDatas = None;
+			PlayerSyncDatas syncDatas = 0;
+			PlayerVisualSyncDatas visualSyncDatas = 0;
 			if (clone.mojoInjection != mojoInjection) syncDatas |= MojoInjection;
 			if (clone.quantumInjectors != quantumInjectors) syncDatas |= QuantumInjectors;
 			if (clone.defiledWill != defiledWill) syncDatas |= DefiledWills;
@@ -76,17 +79,19 @@ namespace Origins {
 				&& !Player.HasBuff(Purifying_Buff.ID)
 				) syncDatas |= Assimilation;
 
-			SyncPlayer(-1, Main.myPlayer, false, syncDatas);
+			if (clone.blastSetActive != blastSetActive) visualSyncDatas |= BlastSetActive;
+
+			SyncPlayer(-1, Main.myPlayer, false, syncDatas, visualSyncDatas);
 		}
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
 			//return;
 			if (Main.netMode == NetmodeID.SinglePlayer) return;
 			NetInit();
-			SyncPlayer(toWho, fromWho, newPlayer, (PlayerSyncDatas)ushort.MaxValue);
+			SyncPlayer(toWho, fromWho, newPlayer, (PlayerSyncDatas)ushort.MaxValue, (PlayerVisualSyncDatas)ushort.MaxValue);
 		}
-		public void SyncPlayer(int toWho, int fromWho, bool newPlayer, PlayerSyncDatas syncDatas) {
+		public void SyncPlayer(int toWho, int fromWho, bool newPlayer, PlayerSyncDatas syncDatas, PlayerVisualSyncDatas visualSyncDatas) {
 			//return;
-			if (Main.netMode == NetmodeID.SinglePlayer || syncDatas == None) return;
+			if (Main.netMode == NetmodeID.SinglePlayer || (syncDatas == 0 && visualSyncDatas == 0)) return;
 			ModPacket packet = Mod.GetPacket();
 			packet.Write(Origins.NetMessageType.sync_player);
 			packet.Write((byte)Player.whoAmI);
@@ -100,6 +105,9 @@ namespace Origins {
 				packet.Write((byte)(defiledAssimilation * 100));
 				packet.Write((byte)(rivenAssimilation * 100));
 			}
+
+			if (visualSyncDatas.HasFlag(BlastSetActive)) packet.Write(blastSetActive);
+
 			packet.Send(toWho, fromWho);
 		}
 		public void ReceivePlayerSync(BinaryReader reader) {
@@ -113,14 +121,20 @@ namespace Origins {
 				defiledAssimilation = reader.ReadByte() / 100f;
 				rivenAssimilation = reader.ReadByte() / 100f;
 			}
+
+			PlayerVisualSyncDatas visualSyncDatas = (PlayerVisualSyncDatas)reader.ReadUInt16();
+			if (visualSyncDatas.HasFlag(BlastSetActive)) blastSetActive = reader.ReadBoolean();
 		}
 	}
 	[Flags]
 	public enum PlayerSyncDatas : ushort {
-		None             = 0b00000000,
 		Assimilation     = 0b00000001,
-		MojoInjection = 0b00100000,
+		MojoInjection    = 0b00100000,
 		DefiledWills     = 0b01000000,
 		QuantumInjectors = 0b10000000,
+	}
+	[Flags]
+	public enum PlayerVisualSyncDatas : ushort {
+		BlastSetActive   = 0b00000001,
 	}
 }
