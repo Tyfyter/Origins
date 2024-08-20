@@ -5,10 +5,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mojo_Injection : ModItem, ICustomWikiStat {
-		public string[] Categories => new string[] {
+		public string[] Categories => [
 			"Misc"
-		};
+		];
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.NaturesGift] = Type;
 			glowmask = Origins.AddGlowMask(this);
 		}
 		static short glowmask;
