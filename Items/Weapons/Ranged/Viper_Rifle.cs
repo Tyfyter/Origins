@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public string[] Categories => [
-            "HardmodeGun"
+            "Gun"
         ];
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {

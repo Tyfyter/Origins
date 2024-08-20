@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Magic {
     public class Rigged_Cubix : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "HardmodeMagicGun"
+            "MagicGun"
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;

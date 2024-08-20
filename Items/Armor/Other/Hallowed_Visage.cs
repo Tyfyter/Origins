@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Hallowed_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "ExplosiveBoostGear"
         ];
         public override void SetStaticDefaults() {

@@ -11,7 +11,7 @@ using Terraria.GameInput;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeHandcannon"
+            "Handcannon"
         ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

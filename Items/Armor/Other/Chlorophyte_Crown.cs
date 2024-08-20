@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Crown : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "SummonBoostGear"
         ];
         public override void SetDefaults() {

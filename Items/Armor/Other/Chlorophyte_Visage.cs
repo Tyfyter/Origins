@@ -8,7 +8,7 @@ namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "ExplosiveBoostGear"
         ];
         public override void SetDefaults() {

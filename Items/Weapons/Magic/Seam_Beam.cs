@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
-			"HardmodeMagicGun"
+			"MagicGun"
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {

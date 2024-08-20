@@ -9,7 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Chemical_Laser : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeMagicGun",
+            "MagicGun",
 			"ToxicSource"
         ];
         public override void SetDefaults() {

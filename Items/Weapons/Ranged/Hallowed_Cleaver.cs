@@ -7,7 +7,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Hallowed_Cleaver : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeGun"
+            "Gun"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);

@@ -13,7 +13,7 @@ namespace Origins.Items.Armor.Acrid {
     [AutoloadEquip(EquipType.Head)]
 	public class Acrid_Dome : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "ExplosiveBoostGear",
 			"ToxicSource"
         ];
@@ -76,7 +76,7 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Headgear : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "MagicBoostGear",
 			"ToxicSource"
 		];
@@ -131,7 +131,7 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "MeleeBoostGear",
 			"ToxicSource"
 		];
@@ -186,7 +186,7 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "SummmonBoostGear",
 			"ToxicSource"
 		];
@@ -241,7 +241,7 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Visor : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "RangedBoostGear",
 			"ToxicSource"
 		];

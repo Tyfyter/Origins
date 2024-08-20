@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeOtherExplosive",
+            "OtherExplosive",
             "SpendableWeapon"
         ];
         public override void SetStaticDefaults() {

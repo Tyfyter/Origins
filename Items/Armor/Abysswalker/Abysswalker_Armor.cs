@@ -8,7 +8,7 @@ namespace Origins.Items.Armor.Abysswalker {
     [AutoloadEquip(EquipType.Head)]
 	public class Abysswalker_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "ManaShielding",
             "SummmonBoostGear",
             "ExplosiveBoostGear"

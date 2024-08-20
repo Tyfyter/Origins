@@ -9,7 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Tiny_Sniper : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeGun"
+            "Gun"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);

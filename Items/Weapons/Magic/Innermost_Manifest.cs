@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Magic {
 			"Torn",
 			"TornSource",
 			"UsesBookcase",
-			"HardmodeSpellBook"
+			"SpellBook"
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

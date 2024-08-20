@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Bleeding {
     [AutoloadEquip(EquipType.Head)]
 	public class Bleeding_Obsidian_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "ExplosiveBoostGear",
 			"SelfDamageProtek"
 		];

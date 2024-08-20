@@ -10,7 +10,7 @@ namespace Origins.Items.Armor.Blast {
     [AutoloadEquip(EquipType.Head)]
 	public class Blast_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "ExplosiveBoostGear",
 			"SelfDamageProtek"
 		];

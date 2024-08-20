@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Splashid : ModItem, IElementalItem {
 		static short glowmask;
 		public string[] Categories => [
-			"HardmodeWand",
+			"Wand",
 			"ToxicSource"
 		];
 		public ushort Element => Elements.Acid;

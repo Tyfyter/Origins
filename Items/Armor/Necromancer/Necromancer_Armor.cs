@@ -10,7 +10,7 @@ namespace Origins.Items.Armor.Necromancer {
     [AutoloadEquip(EquipType.Head)]
 	public class Necromancer_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "SummonBoostGear"
         ];
         public override void SetDefaults() {

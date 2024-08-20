@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"HardmodeLauncher",
+			"Launcher",
 			"CanistahUser"
 		];
 		public override void SetDefaults() {

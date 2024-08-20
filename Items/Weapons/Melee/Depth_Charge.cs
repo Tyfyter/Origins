@@ -12,7 +12,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeFlail"
+            "Flail"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;

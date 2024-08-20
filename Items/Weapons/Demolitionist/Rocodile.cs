@@ -7,7 +7,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Rocodile : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "HardmodeLauncher"
+            "Launcher"
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

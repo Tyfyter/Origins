@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"HardmodeLauncher",
+			"Launcher",
 			"CanistahUser"
 		];
 		public override void SetDefaults() {

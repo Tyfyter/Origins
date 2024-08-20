@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "HardmodeOtherMelee"
+            "OtherMelee"
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

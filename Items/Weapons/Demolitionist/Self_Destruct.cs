@@ -13,7 +13,7 @@ using Terraria.DataStructures;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Self_Destruct : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-            "HardmodeOtherExplosive"
+            "OtherExplosive"
         ];
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;

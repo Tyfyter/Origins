@@ -11,7 +11,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeSpear",
+            "Spear",
 			"ToxicSource"
         ];
         public override void SetStaticDefaults() {

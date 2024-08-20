@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Melee {
 	//this took seven and a half hours to make, now that's dedication
 	public class Tyrfing : AnimatedModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeSword"
+            "Sword"
         ];
         protected override bool CloneNewInstances => true;
 		internal static DrawAnimationManual animation;

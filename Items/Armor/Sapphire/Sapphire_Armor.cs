@@ -13,7 +13,7 @@ namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
 	public class Sapphire_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "HardmodeArmorSet",
+            "ArmorSet",
             "MagicBoostGear"
         ];
         public override void SetDefaults() {

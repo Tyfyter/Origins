@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeSword"
+            "Sword"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);

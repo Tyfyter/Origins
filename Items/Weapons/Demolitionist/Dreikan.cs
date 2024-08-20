@@ -9,7 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HardmodeOtherExplosive"
+            "OtherExplosive"
         ];
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {

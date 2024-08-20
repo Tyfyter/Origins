@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => [
             "UsesBookcase",
-			"HardmodeSpellBook"
+			"SpellBook"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedFlames);
