@@ -28,7 +28,7 @@ namespace Origins {
 			}
 			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
 			if (tornDebuff) {
-				LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
+				LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornTarget > tornCurrentSeverity ? tornSeverityRate : tornSeverityDecayRate);
 			}
 			if (soulhideSet) {
 				const float maxDistTiles = 10f * 16;

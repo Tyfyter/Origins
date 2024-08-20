@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mojo_Injection : ModItem, ICustomWikiStat {
+		public const float healing = 0.0000444f;
 		public string[] Categories => [
 			"Misc"
 		];
@@ -31,7 +32,6 @@ namespace Origins.Items.Accessories {
 			return true;
 		}
 		public static void UpdateEffect(OriginPlayer originPlayer) {
-			const float healing = 0.0000444f;
 			originPlayer.CorruptionAssimilation -= Math.Min(healing, originPlayer.CorruptionAssimilation);
 			originPlayer.CrimsonAssimilation -= Math.Min(healing, originPlayer.CrimsonAssimilation);
 			originPlayer.DefiledAssimilation -= Math.Min(healing, originPlayer.DefiledAssimilation);

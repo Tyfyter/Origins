@@ -395,7 +395,7 @@ namespace Origins {
 						int targetTime = 1440;
 						float targetSeverity = 0.08f;
 					}*/
-					InflictTorn(Player, 188, 1440, 0.99f);
+					InflictTorn(Player, 188, 750, 1f, true);
 					Player.velocity *= 0.95f;
 					rivenAssimilation += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
 				} else if (waterStyle is Brine_Water_Style) {

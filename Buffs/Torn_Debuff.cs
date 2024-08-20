@@ -11,6 +11,7 @@ using Terraria.Localization;
 using System.Collections.Generic;
 using Origins.Graphics;
 using Terraria.Graphics.Effects;
+using Origins.Items.Accessories;
 
 namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {
@@ -28,6 +29,10 @@ namespace Origins.Buffs {
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().tornDebuff = true;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams) {
+			Main.buffNoTimeDisplay[Type] = Main.LocalPlayer.GetModPlayer<OriginPlayer>().hideTornTime;
+			return true;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			string text = $"{Main.LocalPlayer.GetModPlayer<OriginPlayer>().tornCurrentSeverity * 100:#0}%";
@@ -77,7 +82,7 @@ namespace Origins.Buffs {
 				//spriteBatch.End();
 				//spriteBatch.Restart(state);
 				Origins.drawPlayersWithShader = Origins.coordinateMaskFilterID;
-				Origins.coordinateMaskFilter.Shader.Parameters["uCoordinateSize"].SetValue(new Vector2(20, 24));//put the size of the texture in here
+				Origins.coordinateMaskFilter.Shader.Parameters["uCoordinateSize"].SetValue(new Vector2(256, 256));//put the size of the texture in here
 
 				PlayerShaderSet dontCoverArmor = new PlayerShaderSet(0);
 				Origins.keepPlayerShader = Origins.transparencyFilterID;
@@ -164,5 +169,6 @@ namespace Origins.Buffs {
 				buffIndex--;
 			}
 		}
+		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams) => true;
 	}
 }

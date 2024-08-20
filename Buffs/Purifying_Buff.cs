@@ -18,6 +18,7 @@ namespace Origins.Buffs {
 			originPlayer.crimsonAssimilationDebuffMult    = 0;
 			originPlayer.defiledAssimilationDebuffMult    = 0;
 			originPlayer.rivenAssimilationDebuffMult      = 0;
+			originPlayer.tornSeverityDecayRate *= 5;
 		}
 	}
 }

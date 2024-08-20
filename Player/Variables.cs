@@ -43,6 +43,7 @@ namespace Origins {
 		public float RivenAssimilation {
 			get => rivenAssimilation;
 			set {
+				if (rivenAssimilation < value) timeSinceRivenAssimilated = 0;
 				rivenAssimilation = value;
 			}
 		}
@@ -50,6 +51,7 @@ namespace Origins {
 		public float crimsonAssimilationDebuffMult = 1f;
 		public float defiledAssimilationDebuffMult = 1f;
 		public float rivenAssimilationDebuffMult = 1f;
+		public int timeSinceRivenAssimilated = 0;
 		#endregion assimilation
 
 		#region armor/set bonuses
@@ -283,6 +285,7 @@ namespace Origins {
 		public float tornSeverityRate = 0.3f / 180;
 		public float tornSeverityDecayRate = 0.15f / 180;
 		public float tornTarget = 0f;
+		public bool hideTornTime = false;
 		public Vector2 tornOffset = default;
 		#endregion
 
@@ -590,6 +593,7 @@ namespace Origins {
 			crimsonAssimilationDebuffMult = 1f;
 			defiledAssimilationDebuffMult = 1f;
 			rivenAssimilationDebuffMult = 1f;
+			timeSinceRivenAssimilated++;
 
 			explosiveProjectileSpeed = StatModifier.Default;
 			explosiveThrowSpeed = StatModifier.Default;

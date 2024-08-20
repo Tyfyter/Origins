@@ -18,6 +18,7 @@ namespace Origins.Buffs {
 			originPlayer.CrimsonAssimilation = 0;
 			originPlayer.DefiledAssimilation = 0;
 			originPlayer.RivenAssimilation = 0;
+			originPlayer.tornSeverityDecayRate = 0.5f / 1f;
 		}
 	}
 }

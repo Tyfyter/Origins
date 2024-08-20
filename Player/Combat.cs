@@ -766,20 +766,27 @@ namespace Origins {
 			return foundTarget;
 		}
 		internal static float hitOriginalDamage = 0;
-		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.3f) {
+		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.3f, bool hideTimeLeft = false) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int buffIndex = player.FindBuffIndex(Torn_Debuff.ID);
-			if (buffIndex < 0 || (targetSeverity.CompareTo(originPlayer.tornTarget) + (duration.CompareTo(player.buffTime[buffIndex]) & 1) > 0)) {
-				if (buffIndex < 0) originPlayer.tornOffset = new Vector2(Main.rand.NextFloat());
-				int decayIndex = player.FindBuffIndex(Torn_Decay_Debuff.ID);
-				if (decayIndex < 0) {
+			if (buffIndex < 0 || (targetSeverity.CompareTo(originPlayer.tornTarget - Mojo_Injection.healing * 4) + (duration.CompareTo(player.buffTime[buffIndex]) & 1) > 0)) {
+				bool shouldAdd = false;
+				if (buffIndex < 0) {
+					int decayIndex = player.FindBuffIndex(Torn_Decay_Debuff.ID);
+					if (decayIndex >= 0) {
+						player.buffType[decayIndex] = Torn_Debuff.ID;
+						player.buffTime[decayIndex] = duration;
+					} else {
+						originPlayer.tornOffset = new Vector2(Main.rand.NextFloat());
+						shouldAdd = true;
+					}
+				}
+				if (shouldAdd) {
 					player.AddBuff(Torn_Debuff.ID, duration);
-				} else {
-					player.buffType[decayIndex] = Torn_Debuff.ID;
-					player.buffTime[decayIndex] = duration;
 				}
 				originPlayer.tornSeverityRate = targetSeverity / targetTime;
 				originPlayer.tornTarget = targetSeverity;
+				originPlayer.hideTornTime = hideTimeLeft;
 			}
 		}
 	}

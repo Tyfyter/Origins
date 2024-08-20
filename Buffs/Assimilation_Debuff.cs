@@ -143,7 +143,8 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Riven"
 				}, 40, 0);
 			}
-			OriginPlayer.InflictTorn(player, 60, 180, percent);
+			
+			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 300 : 1000, percent, true);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;
