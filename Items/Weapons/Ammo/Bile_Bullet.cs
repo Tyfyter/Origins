@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shoot = ModContent.ProjectileType<Bile_Bullet_P>();
 			Item.shootSpeed = 5f;
 			Item.knockBack = 4f;
-			Item.value = Item.sellPrice(silver: 9, copper: 1);
+			Item.value = Item.sellPrice(copper: 8);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
