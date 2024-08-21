@@ -753,6 +753,7 @@ namespace Origins.Dev {
 			data.AppendStat("Rarity", WikiPageExporter.GetWikiItemRarity(item), "");
 			if (customStat?.Buyable ?? false) data.AppendStat("Buy", item.value, 0);
 			data.AppendStat("Sell", item.value / 5, 0);
+			data.AppendJStat("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(item.type).GetDropRates()), []);
 
 			if (customStat is not null) customStat.ModifyWikiStats(data);
 			data.AppendStat("SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
