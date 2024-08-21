@@ -35,7 +35,7 @@ namespace Origins.Reflection {
 			return getterMethod.CreateDelegate<T>();
 		}
 		public static void LoadReflections(Type type) {
-			foreach (var item in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+			foreach (FieldInfo item in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
 				string name = item.GetCustomAttribute<ReflectionMemberNameAttribute>()?.MemberName ?? item.Name;
 				if (item.FieldType.IsAssignableTo(typeof(Delegate))) {
 					Type parentType = item.GetCustomAttribute<ReflectionParentTypeAttribute>().ParentType;
@@ -114,26 +114,16 @@ namespace Origins.Reflection {
 		}
 	}
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-	public sealed class ReflectionMemberNameAttribute : Attribute {
-		public string MemberName { get; init; }
-		public ReflectionMemberNameAttribute(string memberName) {
-			MemberName = memberName;
-		}
+	public sealed class ReflectionMemberNameAttribute(string memberName) : Attribute {
+		public string MemberName { get; init; } = memberName;
 	}
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-	public sealed class ReflectionParentTypeAttribute : Attribute {
-		public Type ParentType { get; init; }
-		public ReflectionParentTypeAttribute(Type type) {
-			ParentType = type;
-		}
+	public sealed class ReflectionParentTypeAttribute(Type type) : Attribute {
+		public Type ParentType { get; init; } = type;
 	}
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-	public sealed class ReflectionDefaultInstanceAttribute : Attribute {
-		public Type Type { get; init; }
-		public string[] FieldNames { get; init; }
-		public ReflectionDefaultInstanceAttribute(Type type, params string[] fieldNames) {
-			Type = type;
-			FieldNames = fieldNames;
-		}
+	public sealed class ReflectionDefaultInstanceAttribute(Type type, params string[] fieldNames) : Attribute {
+		public Type Type { get; init; } = type;
+		public string[] FieldNames { get; init; } = fieldNames;
 	}
 }

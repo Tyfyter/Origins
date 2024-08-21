@@ -3,6 +3,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Origins.Reflection {
 	public class PlayerMethods : ReflectionLoader {
@@ -26,6 +27,11 @@ namespace Origins.Reflection {
 		private delegate void PullItem_ToVoidVault_Del(Item itemToPickUp);
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("PullItem_ToVoidVault")]
 		private static PullItem_ToVoidVault_Del _PullItem_ToVoidVault;
+
+		private delegate void SetupPlayer_Del(Player player);
+		[ReflectionParentType(typeof(PlayerLoader)), ReflectionMemberName("SetupPlayer")]
+		private static SetupPlayer_Del _SetupPlayer;
+		public static void SetupPlayer(Player player) => _SetupPlayer(player);
 		//private delegate void GrabItems_Del(int playerIndex);
 		//private static GrabItems_Del _GrabItems;
 		public static void ApplyNPCOnHitEffects(Player player, Item sItem, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone) {

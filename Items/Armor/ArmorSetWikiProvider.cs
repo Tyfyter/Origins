@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -183,6 +184,10 @@ namespace Origins.Items.Armor {
 				}
 				throw new Exception("Every single real player slot is in use and tML doesn't like us using the fake one for this");
 				foundIndex:
+				dummyPlayer = new();
+				if (dummyPlayer.ModPlayers.Length == 0) {
+					PlayerMethods.SetupPlayer(dummyPlayer);
+				}
 				for (int i = 0; i < dummyPlayer.armor.Length; i++) {
 					dummyPlayer.armor[i].TurnToAir();
 				}

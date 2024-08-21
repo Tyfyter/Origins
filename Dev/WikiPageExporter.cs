@@ -597,6 +597,7 @@ namespace Origins.Dev {
 		bool FullyGeneratable => true;
 		bool ShouldHavePage => true;
 		bool NeedsCustomSprite => false;
+		string CustomSpritePath => null;
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
 		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
 		IEnumerable<WikiProvider> GetWikiProviders() => WikiPageExporter.GetDefaultProviders(this);
@@ -636,9 +637,9 @@ namespace Origins.Dev {
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
 			Item item = modItem.Item;
-			JObject data = new();
+			JObject data = [];
 			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
-			data["Image"] = WikiPageExporter.GetWikiItemImagePath(modItem);
+			data["Image"] = customStat?.CustomSpritePath ?? WikiPageExporter.GetWikiItemImagePath(modItem);
 			data["Name"] = item.Name;
 			JArray types = new("Item");
 			if (item.accessory) types.Add("Accessory");
@@ -796,7 +797,7 @@ namespace Origins.Dev {
 			NPC npc = modNPC.NPC;
 			JObject data = [];
 			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
-			data["Image"] = modNPC.Texture.Replace(modNPC.Mod.Name, "§ModImage§");
+			data["Image"] = customStat?.CustomSpritePath ?? modNPC.Texture.Replace(modNPC.Mod.Name, "§ModImage§");
 			data["Name"] = npc.TypeName;
 			JArray types = new("NPC");
 			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
@@ -816,7 +817,7 @@ namespace Origins.Dev {
 				data.AppendStat("KBResist", 1 - npc.knockBackResist, 0);
 				data.AppendJStat("Immunities", npc.GetImmunities(), []);
 				data.AppendStat("Coins", npc.value, 0);
-				data.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(npc.type).GetDropRates()));
+				data.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForNPCID(npc.type, false).GetDropRates()));
 
 				Main.GameMode = GameModeID.Expert;
 				npc.SetDefaults(npc.netID);
@@ -825,7 +826,7 @@ namespace Origins.Dev {
 				expertData.AppendAltStat(data, "KBResist", 1 - npc.knockBackResist);
 				expertData.AppendAltStat(data, "Immunities", npc.GetImmunities());
 				expertData.AppendAltStat(data, "Coins", npc.value);
-				expertData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(npc.type).GetDropRates()));
+				expertData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForNPCID(npc.type, false).GetDropRates()));
 
 				Main.GameMode = GameModeID.Master;
 				npc.SetDefaults(npc.netID);
@@ -834,7 +835,7 @@ namespace Origins.Dev {
 				masterData.AppendAltStat(data, "KBResist", 1 - npc.knockBackResist);
 				masterData.AppendAltStat(data, "Immunities", npc.GetImmunities());
 				masterData.AppendAltStat(data, "Coins", npc.value);
-				masterData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(npc.type).GetDropRates()));
+				masterData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForNPCID(npc.type, false).GetDropRates()));
 			} finally {
 				Main.GameMode = gameMode;
 				Main.getGoodWorld = getGoodWorld;
@@ -939,14 +940,14 @@ namespace Origins.Dev {
 			bool first = true;
 			for (int i = 0; i < loot.Count; i++) {
 				DropRateInfo info = loot[i];
-				for (int j = 0; j < info.conditions.Count; j++) {
+				for (int j = 0; j < (info.conditions?.Count ?? 0); j++) {
 					if (!info.conditions[j].CanShowItemDropInUI()) goto skip;
 				}
-				string suffixText = $"{info.dropRate}%";
+				string suffixText = $"{(info.dropRate * 100):0.###}%";
 				if (info.stackMin != 1 || info.stackMax != 1) {
 					suffixText = $"({info.stackMin}‒{info.stackMax}) " + suffixText;
 				}
-				self.Add(prefix(first) + GetItemText(ContentSamples.ItemsByType[info.itemId], string.Join(" | ", info.conditions.Select(c => c.GetConditionDescription()))) + " - " + suffixText);
+				self.Add(prefix(first) + GetItemText(ContentSamples.ItemsByType[info.itemId], string.Join(" | ", info.conditions?.Select(c => c.GetConditionDescription()) ?? [])) + " - " + suffixText);
 				first = false;
 				List<DropRateInfo> itemLoot = Main.ItemDropsDB.GetRulesForItemID(info.itemId).GetDropRates(new(info.dropRate));
 				if (itemLoot.Count != 0) {

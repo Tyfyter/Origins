@@ -109,7 +109,7 @@ namespace Origins {
 			get => false;
 			set {
 				if (value) {
-					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+					if (string.IsNullOrWhiteSpace(StatJSONPath)) {
 						Origins.LogError($"StatJSONPath is null or whitespace");
 						return;
 					}
@@ -136,7 +136,7 @@ namespace Origins {
 			get => default;
 			set {
 				if ((value?.Type ?? 0) > ItemID.None) {
-					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+					if (string.IsNullOrWhiteSpace(StatJSONPath)) {
 						Origins.LogError($"StatJSONPath is null or whitespace");
 						return;
 					}
@@ -149,7 +149,7 @@ namespace Origins {
 			get => false;
 			set {
 				if (value) {
-					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+					if (string.IsNullOrWhiteSpace(StatJSONPath)) {
 						Origins.LogError($"StatJSONPath is null or whitespace");
 						return;
 					}
@@ -176,7 +176,7 @@ namespace Origins {
 			get => default;
 			set {
 				if ((value?.Type ?? 0) > NPCID.None) {
-					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+					if (string.IsNullOrWhiteSpace(StatJSONPath)) {
 						Origins.LogError($"StatJSONPath is null or whitespace");
 						return;
 					}
@@ -189,11 +189,11 @@ namespace Origins {
 			get => false;
 			set {
 				if (value) {
-					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+					if (string.IsNullOrWhiteSpace(WikiTemplatePath)) {
 						Origins.LogError($"WikiTemplatePath is null or whitespace");
 						return;
 					}
-					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+					if (string.IsNullOrWhiteSpace(WikiPagePath)) {
 						Origins.LogError($"WikiPagePath is null or whitespace");
 						return;
 					}
@@ -220,11 +220,11 @@ namespace Origins {
 			get => default;
 			set {
 				if ((value?.Type ?? 0) != NPCID.None) {
-					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+					if (string.IsNullOrWhiteSpace(WikiTemplatePath)) {
 						Origins.LogError($"WikiTemplatePath is null or whitespace");
 						return;
 					}
-					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+					if (string.IsNullOrWhiteSpace(WikiPagePath)) {
 						Origins.LogError($"WikiPagePath is null or whitespace");
 						return;
 					}
@@ -237,11 +237,11 @@ namespace Origins {
 			get => false;
 			set {
 				if (value) {
-					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+					if (string.IsNullOrWhiteSpace(WikiTemplatePath)) {
 						Origins.LogError($"WikiTemplatePath is null or whitespace");
 						return;
 					}
-					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+					if (string.IsNullOrWhiteSpace(WikiPagePath)) {
 						Origins.LogError($"WikiPagePath is null or whitespace");
 						return;
 					}
@@ -268,11 +268,11 @@ namespace Origins {
 			get => default;
 			set {
 				if ((value?.Type ?? 0) > ItemID.None) {
-					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+					if (string.IsNullOrWhiteSpace(WikiTemplatePath)) {
 						Origins.LogError($"WikiTemplatePath is null or whitespace");
 						return;
 					}
-					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+					if (string.IsNullOrWhiteSpace(WikiPagePath)) {
 						Origins.LogError($"WikiPagePath is null or whitespace");
 						return;
 					}
@@ -285,7 +285,7 @@ namespace Origins {
 			get => default;
 			set {
 				if (value) {
-					if (!string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+					if (string.IsNullOrWhiteSpace(WikiSpritesPath)) {
 						Origins.LogError($"WikiSpritesPath is null or whitespace");
 						return;
 					}
@@ -307,7 +307,7 @@ namespace Origins {
 			get => default;
 			set {
 				if ((value?.Type ?? 0) > ItemID.None) {
-					if (!string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+					if (string.IsNullOrWhiteSpace(WikiSpritesPath)) {
 						Origins.LogError($"WikiSpritesPath is null or whitespace");
 						return;
 					}
@@ -320,7 +320,7 @@ namespace Origins {
 			get => false;
 			set {
 				if (value) {
-					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+					if (string.IsNullOrWhiteSpace(WikiPagePath)) {
 						Origins.LogError($"WikiPagePath is null or whitespace");
 						return;
 					}
@@ -356,7 +356,7 @@ namespace Origins {
 							extras.LoadTextures();
 						}
 					}
-					List<string> unused = new();
+					List<string> unused = [];
 					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
 					loadedAssets.Add("icon");
 					loadedAssets.Add("Buffs/BuffTemplate");
@@ -371,7 +371,7 @@ namespace Origins {
 					loadedAssets.Add("Tiles/Tile_Template");
 					foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
 						string _asset = Path.ChangeExtension(asset, null);
-						if ((_asset.EndsWith("_") || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
+						if ((_asset.EndsWith('_') || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
 							continue;
 						}
 						if (!loadedAssets.Contains(_asset)) {

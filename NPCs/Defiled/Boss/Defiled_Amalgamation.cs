@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
@@ -32,9 +33,10 @@ using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled.Boss {
     [AutoloadBossHead]
-	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy {
+	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy, ICustomWikiStat {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
+		public string CustomSpritePath => "DefiledAmalg";
 		public static bool spawnDA = false;
 		float rightArmRot = 0;
 		float leftArmRot = 0;
