@@ -69,10 +69,13 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			return -1;
 		}
 	}
-	public interface ICanisterAmmo {
+	public interface ICanisterAmmo : ICustomWikiStat {
 		CanisterData GetCanisterData { get; }
 		void AI(Projectile projectile, bool child) { }
 		void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) { }
+		string[] ICustomWikiStat.Categories => [
+			"Canistah"
+		];
 		public void OnKill(Projectile projectile, bool child) {
 			if (!child && projectile.ModProjectile is ICanisterProjectile canister) {
 				canister.DefaultExplosion(projectile);
@@ -221,9 +224,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Coolant_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(99, 206, 236), new(178, 255, 255));
-		public string[] Categories => [
-			"Canistah"
-		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -259,6 +260,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public string[] Categories => [
 			"Canistah"
 		];
+		public bool? Hardmode => false;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -267,6 +269,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.Orange;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
@@ -345,9 +348,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Cursed_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(190, 81, 216), new(126, 255, 65));
-		public string[] Categories => [
-			"Canistah"
-		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -356,6 +357,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(27);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
@@ -429,9 +431,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Ichor_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(215, 104, 94), new(247, 253, 158));
-		public string[] Categories => [
-			"Canistah"
-		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -440,6 +440,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(35);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
@@ -461,9 +462,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Bile_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(239, 235, 233), new(70, 19, 66));
-		public string[] Categories => [
-			"Canistah"
-		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -472,6 +471,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
@@ -543,9 +543,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(61, 164, 196), new(255, 254, 156));
-		public string[] Categories => [
-			"Canistah"
-		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -554,6 +552,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
@@ -616,9 +615,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Alkaline_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(110, 240, 197), new(94, 255, 182));
-		public string[] Categories => [
-			"Canistah"
-		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
@@ -627,6 +624,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(30);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
@@ -660,9 +658,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	}
 	public class Starfuze : ModItem, ICustomWikiStat {
 		static short glowmask;
-		public string[] Categories => [
-			"Canistah"
-		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
