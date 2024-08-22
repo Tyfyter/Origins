@@ -1,4 +1,5 @@
-﻿using Origins.Items.Other.Consumables;
+﻿using Origins.Dev;
+using Origins.Items.Other.Consumables;
 using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
@@ -14,7 +15,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public abstract class MaterialItem : ModItem {
+    public abstract class MaterialItem : ModItem, ICustomWikiStat {
 		protected override bool CloneNewInstances => true;
 		public virtual bool HasTooltip => false;
 		public virtual bool HasGlowmask => false;
@@ -23,6 +24,8 @@ namespace Origins.Items.Materials {
 		public virtual int ResearchUnlockCount => 25;
 		public virtual int Rare => ItemRarityID.White;
 		public virtual int Value => 0;
+		bool? ICustomWikiStat.Hardmode => Hardmode;
+		public abstract bool Hardmode { get; }
 		protected short glowmask = -1;
 		protected int tileID = -1;
 		public override void SetStaticDefaults() {
@@ -40,6 +43,7 @@ namespace Origins.Items.Materials {
 	public class Adhesive_Wrap : MaterialItem {
 		public override int ResearchUnlockCount => 25;
 		public override int Value => Item.sellPrice(copper: 18);
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 3);
 			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
@@ -63,6 +67,7 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 9);
+		public override bool Hardmode => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.CursedFlame] = ItemID.Ichor;
@@ -77,6 +82,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Bark : MaterialItem {
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
 			recipe.AddIngredient(this);
@@ -85,6 +91,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Bat_Hide : MaterialItem {
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Leather);
 			recipe.AddIngredient(this, 4);
@@ -95,6 +102,7 @@ namespace Origins.Items.Materials {
 	public class Biocomponent10 : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
+		public override bool Hardmode => false;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RottenChunk] = ItemID.Vertebrae;
@@ -119,6 +127,7 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
+		public override bool Hardmode => true;
 		public class Black_Bile_Entry : JournalEntry {
 			public override string TextKey => "Black_Bile";
 			public override ArmorShaderData TextShader => null;
@@ -128,6 +137,7 @@ namespace Origins.Items.Materials {
 		public override bool HasGlowmask => true;
 		public override int ResearchUnlockCount => 48;
 		public override int Rare => ItemRarityID.LightRed;
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
 			recipe.AddIngredient(this, 8);
@@ -141,7 +151,8 @@ namespace Origins.Items.Materials {
 	public class Bottled_Brine : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 40);
-        public override void AddRecipes() {
+		public override bool Hardmode => false;
+		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Bottle);
             recipe.AddIngredient(ItemID.Stinger, 2);
@@ -153,6 +164,7 @@ namespace Origins.Items.Materials {
 	public class Bud_Barnacle : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.UnholyArrow, 5);
 			recipe.AddIngredient(ItemID.WoodenArrow, 5);
@@ -165,10 +177,12 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 99;
 		public override int Value => Item.sellPrice(silver: 2);
 		public override int Rare => ItemRarityID.Pink;
+		public override bool Hardmode => true;
 	}
 	public class Chromtain_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => CrimsonRarity.ID;
+		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -180,6 +194,7 @@ namespace Origins.Items.Materials {
         ];
         public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
+		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -192,6 +207,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Eitrite_Bar : MaterialItem {
+		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -221,6 +237,7 @@ namespace Origins.Items.Materials {
 	public class Element36_Bundle : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => CrimsonRarity.ID;
+		public override bool Hardmode => true;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.FragmentNebula);
@@ -233,6 +250,7 @@ namespace Origins.Items.Materials {
 	public class Encrusted_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
+		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -252,6 +270,7 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Green;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
+		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -266,10 +285,12 @@ namespace Origins.Items.Materials {
 	public class Fibron_Plating : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => CrimsonRarity.ID;
+		public override bool Hardmode => true;
 	}
 	public class Formium_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
+		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -284,6 +305,7 @@ namespace Origins.Items.Materials {
 	public class Formium_Scrap : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
+		public override bool Hardmode => true;
 	}
 	public class Lunar_Token : MaterialItem {
 		public override bool HasGlowmask => true;
@@ -291,6 +313,7 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 100;
 		public override int Value => -1;
 		public override int Rare => ItemRarityID.Cyan;
+		public override bool Hardmode => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
@@ -300,6 +323,7 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 1;
 		public override int Value => Item.sellPrice(copper: 40);
 		public override int Rare => ItemRarityID.Quest;
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 5);
 			recipe.AddIngredient(ItemID.BottledWater, 5);
@@ -312,6 +336,7 @@ namespace Origins.Items.Materials {
 	public class NE8 : MaterialItem {
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
+		public override bool Hardmode => false;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.ShadowScale] = ItemID.TissueSample;
@@ -326,6 +351,7 @@ namespace Origins.Items.Materials {
 		public override string GlowTexture => Texture;
 		public override int Value => Item.sellPrice(silver: 20);
 		public override int Rare => ItemRarityID.Cyan;
+		public override bool Hardmode => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.ItemNoGravity[Type] = true;
@@ -346,6 +372,7 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 20;
 		public override int Value => Item.sellPrice(silver: 20);
 		public override int Rare => ItemRarityID.Pink;
+		public override bool Hardmode => true;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.HallowedBar, 2);
@@ -357,16 +384,19 @@ namespace Origins.Items.Materials {
 	public class Respyrite : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 9);
 		public override int Rare => ItemRarityID.Orange;
+		public override bool Hardmode => true;
 	}
 	public class Riven_Carapace : MaterialItem {
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
+		public override bool Hardmode => false;
 	}
 	public class Rotor : MaterialItem {
 		public override int ResearchUnlockCount => 99;
 		public override int Value => Item.sellPrice(copper: 40);
 		public override int Rare => ItemRarityID.Pink;
+		public override bool Hardmode => true;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.HallowedBar);
@@ -377,6 +407,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Rubber : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 6);
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Flipper);
 			recipe.AddIngredient(Type, 15);
@@ -394,6 +425,7 @@ namespace Origins.Items.Materials {
 	public class Sanguinite_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
+		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this);
@@ -407,6 +439,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Strange_String : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.UnholyArrow, 5);
 			recipe.AddIngredient(ItemID.WoodenArrow, 5);
@@ -417,6 +450,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Tree_Sap : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
 			recipe.AddIngredient(this);
@@ -434,11 +468,13 @@ namespace Origins.Items.Materials {
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
+		public override bool Hardmode => false;
 	}
 	public class Valkyrum_Bar : MaterialItem {
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ItemRarityID.Yellow;
+		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
 			//tileID = Bar_Tile.AddBarTile(this);
@@ -458,6 +494,7 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 1;
 		public override int Value => 0;
 		public override int Rare => ItemRarityID.Yellow;
+		public override bool Hardmode => true;
 	}
 	public class Defiled_Key : Dawn_Key { }
 	public class Dusk_Key : Dawn_Key { }

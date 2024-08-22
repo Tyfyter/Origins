@@ -33,7 +33,8 @@ namespace Origins.Tiles.Brine {
 		public override int ResearchUnlockCount => 100;
 		public override int Value => Item.sellPrice(copper: 60);
 		public override int Rare => ItemRarityID.Green;
-        public override void AddRecipes() {
+		public override bool Hardmode => false;
+		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
             recipe.AddIngredient(this, 2);
             recipe.AddTile(TileID.GlassKiln);

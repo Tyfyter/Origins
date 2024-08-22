@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
     public class Chambersite_Stone_Wall : ModWall {
-		public static Dictionary<ushort, ushort> AddChambersite = new();
+		public static Dictionary<ushort, ushort> AddChambersite = [];
 		public override void Unload() {
 			AddChambersite = null;
 		}

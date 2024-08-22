@@ -151,6 +151,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Fungarust_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 10);
+		public override bool Hardmode => false;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;

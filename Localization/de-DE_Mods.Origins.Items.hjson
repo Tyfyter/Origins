@@ -3504,7 +3504,7 @@ Binding_Book: {
 		Increases pickup range for mana stars
 		Increases maximum mana by 20
 		Restores mana when damaged
-		Increases mana shielding by 10% if Lost Armor is equipped
+		Increases mana shielding by 10%
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		''' */
 }

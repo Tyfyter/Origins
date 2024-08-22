@@ -19,7 +19,8 @@ namespace Origins.Tiles.Other {
 	}
     public class Chambersite_Item : MaterialItem {
 		public override int ResearchUnlockCount => 15;
-        public override void SetDefaults() {
+		public override bool Hardmode => true;
+		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Chambersite>());
             Item.value = Item.sellPrice(silver: 13);
             Item.rare = ItemRarityID.Blue;
