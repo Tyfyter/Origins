@@ -2249,12 +2249,12 @@ namespace Origins {
 			if (self.GlowTexture.Value is null) {
 				return;
 			}
-			if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 			DrawTileGlow(self.GlowTexture, self.GlowColor, i, j, spriteBatch);
 		}
 		public static void DrawTileGlow(Texture2D glowTexture, Color glowColor, int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
-			Vector2 offset = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (!TileDrawing.IsVisible(tile)) return;
+			Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen) {
 				offset = Vector2.Zero;
 			}
@@ -2266,11 +2266,11 @@ namespace Origins {
 			Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
 			switch (tile.BlockType) {
 				case BlockType.Solid:
-				spriteBatch.Draw(glowTexture, position, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), glowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(glowTexture, position, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				break;
 				case BlockType.HalfBlock:
-				spriteBatch.Draw(glowTexture, position + new Vector2(0, 8), new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 4), glowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				spriteBatch.Draw(glowTexture, position + new Vector2(0, 12), new Rectangle(144, 66, 16, 4), glowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(glowTexture, position + new Vector2(0, 8), new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 4), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(glowTexture, position + new Vector2(0, 12), new Rectangle(144, 66, 16, 4), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				break;
 				case BlockType.SlopeDownLeft://1
 				posYFactor = 0;

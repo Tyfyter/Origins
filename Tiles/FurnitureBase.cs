@@ -20,6 +20,9 @@ namespace Origins.Tiles {
 		public abstract Color MapColor { get; }
 		public virtual bool LavaDeath => true;
 		protected internal TileItem item;
+		protected AutoLoadingAsset<Texture2D> glowTexture;
+		public virtual Color GlowmaskColor => Color.White;
+		protected int width, height;
 		public sealed override void Load() {
 			Mod.AddContent(item = new TileItem(this));
 			OnLoad();
@@ -59,6 +62,8 @@ namespace Origins.Tiles {
 				TileObjectData.addAlternate(1);
 			}
 			ModifyTileData();
+			width = TileObjectData.newTile.Width;
+			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 			
 			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID));
@@ -67,8 +72,13 @@ namespace Origins.Tiles {
 			];
 			if (TileID.Sets.RoomNeeds.CountsAsTable.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			if (TileID.Sets.RoomNeeds.CountsAsChair.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+			glowTexture = Texture + "_Glow";
 		}
-		public virtual void ModifyTileData() {}
+		public virtual void ModifyTileData() { }
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!glowTexture.Exists) return;
+			OriginExtensions.DrawTileGlow(glowTexture, GlowmaskColor, i, j, spriteBatch);
+		}
 	}
 	public abstract class ChairBase : FurnitureBase {
 		public override int BaseTileID => TileID.Chairs;
@@ -422,15 +432,11 @@ namespace Origins.Tiles {
 		}
 	}
 	public abstract class LightFurnitureBase : FurnitureBase {
-		int width, height;
 		AutoLoadingAsset<Texture2D> flameTexture;
 		public bool IsOn(Tile tile) => tile.TileFrameX < width * 18;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
-			TileObjectData data = TileObjectData.GetTileData(Type, 0);
-			width = data.Width;
-			height = data.Height;
 			flameTexture = Texture + "_Flame";
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 		}
@@ -458,6 +464,7 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			base.PostDraw(i, j, spriteBatch);
 			if (!flameTexture.Exists) return;
 			Tile tile = Main.tile[i, j];
 

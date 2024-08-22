@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -94,7 +97,7 @@ namespace Origins.Tiles.Marrowick {
 			};
 		}
 	}
-	public class Marrowick_Candle : LightFurnitureBase {
+	public class Marrowick_Candle : LightFurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -112,8 +115,11 @@ namespace Origins.Tiles.Marrowick {
 				r = 0f;
 			}
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
 	}
-	public class Marrowick_Candelabra : LightFurnitureBase {
+	public class Marrowick_Candelabra : LightFurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.Candelabras;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -130,9 +136,17 @@ namespace Origins.Tiles.Marrowick {
                 TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
                 r = 0f;
             }
-        }
-    }
-	public class Marrowick_Lamp : LightFurnitureBase {
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (IsOn(tile)) {
+				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			}
+		}
+	}
+	public class Marrowick_Lamp : LightFurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -149,9 +163,17 @@ namespace Origins.Tiles.Marrowick {
                 TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
                 r = 0f;
             }
-        }
-    }
-	public class Marrowick_Chandelier : LightFurnitureBase {
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (IsOn(tile)) {
+				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			}
+		}
+	}
+	public class Marrowick_Chandelier : LightFurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.Chandeliers;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -169,9 +191,17 @@ namespace Origins.Tiles.Marrowick {
                 TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
                 r = 0f;
             }
-        }
-    }
-	public class Marrowick_Lantern : LightFurnitureBase {
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (IsOn(tile)) {
+				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			}
+		}
+	}
+	public class Marrowick_Lantern : LightFurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.HangingLanterns;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -188,8 +218,16 @@ namespace Origins.Tiles.Marrowick {
                 TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
                 r = 0f;
             }
-        }
-    }
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (IsOn(tile)) {
+				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			}
+		}
+	}
 	public class Marrowick_Bookcase : FurnitureBase {
 		public override int BaseTileID => TileID.Bookcases;
 		public override Color MapColor => new(245, 225, 143);
@@ -216,7 +254,7 @@ namespace Origins.Tiles.Marrowick {
 			};
 		}
 	}
-	public class Marrowick_Table : FurnitureBase {
+	public class Marrowick_Table : FurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.Tables;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -227,8 +265,14 @@ namespace Origins.Tiles.Marrowick {
 				.Register();
 			};
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+		}
 	}
-	public class Marrowick_Work_Bench : FurnitureBase {
+	public class Marrowick_Work_Bench : FurnitureBase, IGlowingModTile {
 		public override int BaseTileID => TileID.WorkBenches;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -237,6 +281,12 @@ namespace Origins.Tiles.Marrowick {
 				.AddIngredient<Marrowick_Item>(10)
 				.Register();
 			};
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
 		}
 	}
 	public class Marrowick_Dresser : DresserBase {
