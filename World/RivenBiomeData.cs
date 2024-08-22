@@ -419,7 +419,11 @@ namespace Origins.World.BiomeData {
 				for (int x = i2 - (int)(33 * sizeMult + 5); x < i2 + (int)(33 * sizeMult + 5); x++) {
 					for (int y = j2 + (int)(28 * sizeMult + 4); y >= j2 - (int)(28 * sizeMult + 4); y--) {
 						float sq = Math.Max(Math.Abs(y - j2) * 1.5f, Math.Abs(x - i2));
-						float diff = (float)Math.Sqrt((sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f * (GenRunners.GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
+						float diff = (sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f;
+						if (diff * 2 > 35 * sizeMult * 35 * sizeMult) {
+							continue;
+						}
+						diff = MathF.Sqrt(diff * (GenRunners.GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
