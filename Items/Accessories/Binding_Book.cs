@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Misc;
 using Terraria;
@@ -13,7 +13,7 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
-			Item.value = Item.sellPrice(gold: 12);
+			Item.value = Item.sellPrice(gold: 5, silver: 20);
 			Item.rare = ItemRarityID.LightPurple;
 		}
         public override void AddRecipes() {
