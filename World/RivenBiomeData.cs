@@ -129,12 +129,15 @@ namespace Origins.World.BiomeData {
 			public enum FeatureType {
 				CHUNK,
 				CUSP,
-				CAVE
+				CAVE,
+				CLEAVE,
 			}
 			public static void StartHive(int i, int j) {
 				Vector2 pos = new Vector2(i, j);
 				ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
+				ushort gooBlockType = (ushort)ModContent.TileType<Amoeba_Fluid>();
+				HashSet<ushort> cleaveReplacables = [fleshBlockType];
 				Tile tile;
 				int X0 = int.MaxValue;
 				int X1 = 0;
@@ -189,6 +192,9 @@ namespace Origins.World.BiomeData {
 
 									if (compY > j && d < baseStrength + 8 && genRand.Next(1500000 + (int)strength) < strength + 424) {
 										features.Add((x, y, genRand.NextBool() ? FeatureType.CUSP : FeatureType.CAVE, x > i));
+									}
+									if (compY > j && d < baseStrength + 8 && Math.Abs(x) > Math.Abs(y) && genRand.Next(1500000 + (int)strength) < strength + 424) {
+										features.Add((x, y, FeatureType.CLEAVE, x > i));
 									}
 									//WorldGen.SquareTileFrame(l, k);
 								}
@@ -279,6 +285,28 @@ namespace Origins.World.BiomeData {
 							wallType: fleshWallType
 						).position;
 						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
+						break;
+						case FeatureType.CLEAVE:
+						Vector2 cleaveDir = Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(3, 4));
+						int step = rightSide ? 1 : -1;
+						int steps = 14;
+						while (Main.tile[x - step, y].HasSolidTile() && --steps > 0) x -= step;
+						GenRunners.SpikeVeinRunner(x, y,
+							genRand.NextFloat(3f, 4f),
+							cleaveReplacables,
+							gooBlockType,
+							cleaveDir,
+							genRand.NextFloat(0.75f, 1f),
+							twist: 0
+						);
+						GenRunners.SpikeVeinRunner(x, y,
+							genRand.NextFloat(3f, 4f),
+							cleaveReplacables,
+							gooBlockType,
+							-cleaveDir,
+							genRand.NextFloat(0.75f, 1f),
+							twist: 0
+						);
 						break;
 					}
 					tile.HasTile = true;
@@ -420,10 +448,14 @@ namespace Origins.World.BiomeData {
 					for (int y = j2 + (int)(28 * sizeMult + 4); y >= j2 - (int)(28 * sizeMult + 4); y--) {
 						float sq = Math.Max(Math.Abs(y - j2) * 1.5f, Math.Abs(x - i2));
 						float diff = (sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f;
-						if (diff * 2 > 35 * sizeMult * 35 * sizeMult) {
+						if (diff * 0.9f > 35 * sizeMult * 35 * sizeMult) {
 							continue;
 						}
-						diff = MathF.Sqrt(diff * (GenRunners.GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
+						if (diff * 0.9f > (20 * sizeMult - 5) * (20 * sizeMult - 5)) {
+							diff = MathF.Sqrt(diff * (GenRunners.GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
+						} else {
+							diff = 0;
+						}
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
