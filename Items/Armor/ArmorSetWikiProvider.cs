@@ -95,7 +95,7 @@ namespace Origins.Items.Armor {
 				data.Add("SetBonus", item.dummyPlayer.setBonus);
 				data.Add("IconItem", item.set.IconItem);
 				data.Add("Rarity", WikiPageExporter.GetWikiItemRarity(item.dummyPlayer.armor[0]));
-				data.Add("Sell", item.dummyPlayer.armor[0].value + item.dummyPlayer.armor[1].value + item.dummyPlayer.armor[2].value);
+				data.Add("Sell", (item.dummyPlayer.armor[0].value + item.dummyPlayer.armor[1].value + item.dummyPlayer.armor[2].value) / 5);
 				statGroups.Add(data);
 			}
 			if (set.CreateMergedSet && statGroups.Count > 1) {
