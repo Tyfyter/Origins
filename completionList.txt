@@ -296,7 +296,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(X) ASH Attack Relay
+(X) ASH Attack Relay !!!
 (#2, ^2, ♠) ATACS*
 (^) Automated Returns Handler*
 (^) Binding Book*
@@ -367,7 +367,9 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
+(X) Scrap Barrier !!!
 (^) Shield of Retribution*
+(X) Slag Bucket !!!
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
@@ -826,10 +828,15 @@ EXPLOSIVE WEAPONS:
 
 GENERIC WEAPONS:
 ---
+(X) Generic Weapon !!!
 (^) Potato Launcher*
 
+(X) Hyperstatic Gauss Cannon
 (X) Pressurized Supersoaker
+(X) Super Generic Weapon
 (X) Tesla Net Gun
+
+(X) Mega Generic Weapon
 ---
 
 
@@ -878,6 +885,7 @@ TILES:
 (^) Spug Flesh*
 (@5, ^3) Twilith*
 
+(X) Amebic Gel Wall !!!
 (^) Batholith Wall
 (^) Brittle Quartz Wall
 (☻) Chambersite Gemspark Wall
