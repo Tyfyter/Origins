@@ -1272,6 +1272,7 @@ MUSIC:
 (^) Defiled Caverns
 (^) Defiled Wastelands
 ($3) Defiled Wastelands - Mimic Route
+(^) Eutrophic Sea
 (^) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
