@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 99;
 			Item.shoot = Cursed_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
