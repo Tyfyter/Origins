@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Origins.Projectiles;
 using System;
 using Terraria;
@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 99;
 			Item.shoot = Explosive_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 9);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
