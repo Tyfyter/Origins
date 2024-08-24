@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Origins.Dusts;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Ammo {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RedSolution] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Teal_Solution>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Teal_Solution>()] = ItemID.PurpleSolution;//ModContent.ItemType<NE8>();
-			//ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE8>()] = ItemID.PurpleSolution;
+			//ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Orange_Solution>()] = ItemID.PurpleSolution;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
