@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shoot = ProjectileID.None;
 			Item.shootSpeed = 0;
 			Item.ammo = Type;
-			Item.value = Item.sellPrice(silver: 4, copper: 65);
+			Item.value = Item.sellPrice(copper: 65);
 			Item.rare = ItemRarityID.Pink;
 		}
 	}
