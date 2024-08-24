@@ -1,14 +1,12 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-
 using Origins.Dev;
-using Terraria.Audio;
 using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
+using Terraria.ID;
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class True_Light_Disc : ModItem, ICustomWikiStat {
 		public string[] Categories => [

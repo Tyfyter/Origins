@@ -19,11 +19,12 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Communion_P>(), 26, 10);
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 47;
+			Item.damage = 52;
+			Item.crit = 8;
 			Item.knockBack = 8;
 			Item.width = 38;
 			Item.height = 38;
-			Item.mana = 20;
+			Item.mana = 18;
 			Item.ammo = AmmoID.None;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Pink;

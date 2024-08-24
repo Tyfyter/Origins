@@ -1994,7 +1994,7 @@ Acrid_Pickaxe: {
 
 Amoeba_Hook: {
 	DisplayName: Amoeba Hook
-	Tooltip: ""
+	Tooltip: "'Wibbly wobbly, time-y, wimey"
 }
 
 Brick_Breaker: {
@@ -4313,7 +4313,7 @@ Internal_Combustionfish: {
 
 Amoebash: {
 	DisplayName: Amoebash
-	Tooltip: ""
+	Tooltip: Slamming into the ground releases damaging amebic droplets
 }
 
 Smiths_Hammer: {

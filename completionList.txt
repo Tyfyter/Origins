@@ -148,7 +148,7 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
-(☻) Amebeye* !!! (arguably @2, gonna need bigger gores)
+(@2, ^3) Amoebeye* !!! (arguably @2, gonna need bigger gores)
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
@@ -157,7 +157,7 @@ ENEMY NPCS:
 (@5, #) Carpalfish*
 (#, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
-(☻) Defiled Pigron !!!
+(^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod
 (#, ^2) Defiled Watcher* !!!
@@ -170,13 +170,13 @@ ENEMY NPCS:
 (X) Peat Lobber
 (^) Profaned Bident
 (^) Riven Mimic
-(☻) Riven Pigron !!!
+(^) Riven Pigron
 (^) Savage Whip*
 (X) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
 (^) Torn Ghoul
-(☻) Trijaw Shark !!!
+(^) Trijaw Shark
 
 (X) Annihilator
 (X) Clockwork
@@ -314,7 +314,7 @@ ACCESSORIES:
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
-(☻) CORE Generator* !!!
+(#3, ^2) CORE Generator* !!!
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -359,7 +359,7 @@ ACCESSORIES:
 (^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
-(☻) Protomind* !!! 
+(^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
 (^) Resin Shield*
@@ -425,7 +425,7 @@ ACCESSORIES:
 (^) Scribe of the Meat God*
 (#2, ^2) Stack of Shraps*
 (^) Strange Tooth*
-(☻) Terrarian Voodoo Doll* !!!
+(^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
 
@@ -485,7 +485,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook
-(☻) Chunky Hook !!!
+(^) Chunky Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -553,12 +553,12 @@ MELEE WEAPONS:
 (^) Baseball Bat
 (^) Bone Latcher
 (^) Cyah Nara
-(☻) Dark Spiral !!!
+(^) Dark Spiral
 (^) Decimator
 (^) Endowood Sword
 (^) Felnum Spear
 (^) Fiberglass Broadsword
-(☻) Hemorang !!!
+(^) Hemorang
 (^) Krakram*
 (^) Marrowick Sword
 (^) Nineball
@@ -573,10 +573,10 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword (Cursed)
 (^) Vorpal Sword (Uncursed)
-(☻) Waning Crescent !!!
+(^) Waning Crescent
 
-(☻) Amenonuhoko
-(☻) Amoebash !!!
+(^) Amenonuhoko
+(^) Amoebash
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
@@ -590,9 +590,9 @@ MELEE WEAPONS:
 (X) Gospel
 (^) Personal Laser Blade*
 (X) Pile Bunker
-(☻) Terrarang !!!
-(☻) True Light Disc !!!
-(☻) True Waning Crescent !!!
+(^) Terrarang
+(^) True Light Disc
+(^) True Waning Crescent
 
 (X) Celestial Point
 (X) Chromtain Smasher
@@ -635,7 +635,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
-(☻) Dart Crossbow !!!
+(^) Dart Crossbow
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
 (X) Frequency
@@ -685,12 +685,12 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Chemical Laser
-(☻) Communion !!!
-(X) Dew Justice !!!
+(^) Communion
+(^) Dew Justice
 (^) Dismay
 (^) Innermost Manifest
 (^) Seam Beam
-(☻) Shimmer Rod !!!
+(^) Shimmer Rod
 (X) Shinedown
 (^) Splashid
 (^) Startillery
@@ -708,7 +708,7 @@ MAGIC WEAPONS:
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
-(☻) The Calibrator !!!
+(^) The Calibrator
 (X) True Seam Beam
 
 (X) Ion Minigun
@@ -719,7 +719,7 @@ MAGIC WEAPONS:
 SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation
-(☻) Bee Afraid Incantation* !!!
+(^) Bee Afraid Incantation*
 (^) Brainy Staff*
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
@@ -782,16 +782,16 @@ EXPLOSIVE WEAPONS:
 (^) Impact Dynamite*
 (^) Impact Grenade*
 (☻) Internal Combustionfish* !!!
-(☻) Link Grenade* !!!
+(^) Link Grenade*
 (⛥) Matrix* !!!
 (^) Meteor*
 (^3, @2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)) Outbreak Bomb*
 (^) Peatball*
 (^) Potato Mine*
 (^) Shrapnel Bomb*
-(☻) Sticky Link Grenade* !!!
+(^) Sticky Link Grenade*
 
-(☻) Acrid Handcannon* !!!
+(^) Acrid Handcannon*
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
@@ -888,7 +888,7 @@ TILES:
 (X) Amebic Gel Wall !!!
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(☻) Chambersite Gemspark Wall
+(^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
 (^) Chambersite Gemstone Wall (Crimson)
@@ -935,12 +935,12 @@ TILES:
 (^) Defiled Water Fountain
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
-(☻) Encrusted Brick !!!
+(^) Encrusted Brick
 (^) Endowood Furniture*
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
-(☻) Lost Brick !!!
+(^) Lost Brick
 (^) Marrowick Furniture*
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*
@@ -1093,7 +1093,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 ---
-(☻) Mojo Injection* !!!
+(^) Mojo Injection*
 (^) Quantum Injector*
 (%3) The Defiled Will*
 
@@ -1141,7 +1141,7 @@ CONSUMABLES:
 (#2, ^2) Crimson Loot Box*
 (^) Crusty Crate*
 (#2, ^2) Defiled Loot Box*
-(☻) Festering Crate*
+(^) Festering Crate*
 (X) Holy Crate*
 (^) Pointy Crate*
 (X) Residual Crate

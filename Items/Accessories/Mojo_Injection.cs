@@ -22,6 +22,7 @@ namespace Origins.Items.Accessories {
 			Item.useAnimation = 30;
 			Item.accessory = false;
 			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.UseSound = SoundID.Item3;
 			Item.glowMask = glowmask;
 			Item.consumable = true;
 		}

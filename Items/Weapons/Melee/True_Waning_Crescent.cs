@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shootSpeed = 11.75f;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {

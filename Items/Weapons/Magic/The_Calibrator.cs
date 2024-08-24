@@ -1,19 +1,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+using Origins.Dev;
+using ReLogic.Content;
+using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
-
-using Origins.Dev;
 using Terraria.DataStructures;
-using System;
+using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
-using Terraria.GameContent;
-using ReLogic.Content;
-using System.Linq;
+using Terraria.ID;
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class The_Calibrator : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -21,7 +19,7 @@ namespace Origins.Items.Weapons.Magic {
         ];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 90;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 28;
@@ -29,9 +27,9 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 30;
 			Item.useTime = 6;
 			Item.reuseDelay = 7;
-			Item.mana = 10;
+			Item.mana = 16;
 			Item.shoot = ModContent.ProjectileType<The_Calibrator_P>();
-			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = Origins.Sounds.PhaserCrash.WithPitch(1);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
