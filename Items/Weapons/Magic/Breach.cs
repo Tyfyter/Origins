@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void AI() {
-			Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Asphalt, 0, -1, 0, default, 1.2f);
+			Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Asphalt, 0, -1, 0, default, 1.2f);
 			if (++Projectile.frameCounter > 5) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= Main.projFrames[Type]) {
