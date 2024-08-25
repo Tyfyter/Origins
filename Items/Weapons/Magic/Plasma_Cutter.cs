@@ -1,17 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using System;
+using Origins.Dev;
+using Origins.NPCs;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.NPCs;
-using Origins.World.BiomeData;
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Riven_Dungeon_Chest_Placeholder_Item")]
     public class Plasma_Cutter : ModItem, ICustomWikiStat {
@@ -24,7 +21,7 @@ namespace Origins.Items.Weapons.Magic {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 60;
+			Item.damage = 27;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Plasma_Cutter_P>();
 			Item.knockBack = 6;
@@ -42,7 +39,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = Origins.Sounds.EnergyRipple.WithPitch(0.5f);
 			Item.glowMask = glowmask;
 		}
-		//public override Vector2? HoldoutOffset() => Vector2.Zero;
+		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Vector2 perp = velocity.SafeNormalize(default);
 			position += perp * 48;
@@ -75,7 +72,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.alpha = 0;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = 1;
-			Projectile.ArmorPenetration = 20;
+			Projectile.ArmorPenetration = 2;
 			Projectile.hide = false;
 			Projectile.frame = Main.rand.Next(4);
 		}

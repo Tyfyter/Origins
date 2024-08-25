@@ -374,7 +374,7 @@ ACCESSORIES:
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
-(☻) Speed Booster* !!!
+(^) Speed Booster*
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
@@ -418,7 +418,7 @@ ACCESSORIES:
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
 (^) Forbidden Voice (Cursed)*
-(☻) Forbidden Voice (Uncursed)* !!!
+(^) Forbidden Voice (Uncursed)*
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
@@ -655,7 +655,6 @@ RANGED WEAPONS:
 (X) EAC Thunder*
 (X) Fungi Pipe
 (^) Laser Tag Gun
-(☻) Plasma Cutter !!!
 (X) Seventh Spline
 (X) Shroomshot
 (X) Skewr
@@ -696,7 +695,7 @@ MAGIC WEAPONS:
 (^) Startillery
 
 (^) Amber of Embers
-(☻) Breach !!!
+(^) Breach
 (X) Divine Lite
 (X) Ghost Trap
 (^) Haunted Vase
@@ -704,6 +703,7 @@ MAGIC WEAPONS:
 (^) Missing File
 (#, ^2) Phantom Fury
 (^) Pike of Deepneus
+(^) Plasma Cutter
 (X) Sapphire Shunter
 (X) Shocktrain
 (X) Spectra
@@ -739,7 +739,7 @@ SUMMONER WEAPONS:
 (X) Mildew Whip
 (X) Obsidian Bone
 (#, ^2) Scabcoral Lyre !!!
-(☻) Ziptie !!!
+(^) Ziptie
 
 (X) Candlelight
 (X) Controller/Patrol Bot Controller
@@ -772,7 +772,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Eruption*
 (^) Felnum Shock Grenade*
-(@5, ^3) Flare Launcher !!!
+(^) Flare Launcher
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Hand Grenade Launcher
@@ -781,9 +781,9 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(☻) Internal Combustionfish* !!!
+(^) Internal Combustionfish*
 (^) Link Grenade*
-(⛥) Matrix* !!!
+(#, ^2) Matrix* !!!
 (^) Meteor*
 (^3, @2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)) Outbreak Bomb*
 (^) Peatball*
@@ -963,7 +963,7 @@ TILES:
 (^) Cleansing Station*
 (X) Defiled Waste Organ*
 (X) Elderforge*
-(☻/@ (all sprited banners implemented)) Enemy Banners* !!!
+(^) Enemy Banners*
 (#, ^2) Fabricator*
 (X) Flesh Shredder*
 (X) Interstellar Sampler*
@@ -1136,7 +1136,7 @@ CONSUMABLES:
 
 (#2, ^2) Ashen Loot Box*
 (X) Basic Crate*
-(☻) Bilious Crate*
+(^) Bilious Crate*
 (#2, ^2) Corruption Loot Box*
 (#2, ^2) Crimson Loot Box*
 (^) Crusty Crate*
@@ -1172,16 +1172,16 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Chromatic Scale (Rainbow Pangolin)
-(@2 (missing buff icon)) Fleshy Globe (Self-Contained Universe)* !!!
+(^) Fleshy Globe (Self-Contained Universe)*
 (^) Strange Power-Up (Platformer Mech)
 (X) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
 (X) Rusty Cross Necklace (Guardian Angel)
-(☻, @2 (missing buff icon)) Smith's Hammer (Walking Furnace)* !!!
+(^) Smith's Hammer (Walking Furnace)*
 (^) Suspicious Looking Pebble (Defiled Blight)
 
-(⚿) Chew Toy (Chee Toy)* !!!
+(^) Chew Toy (Chee Toy)*
 ---
 
 
@@ -1200,18 +1200,18 @@ AMMO:
 
 (^) Alkahest Arrow*
 (^) Alkahest Bullet*
-(☻) Alkahest Canister* !!!
-(☻) Alkahest Dart !!!
-(☻) Alkaline Canister* !!!
+(^) Alkahest Canister*
+(^) Alkahest Dart
+(^) Alkaline Canister*
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
-(☻) Bile Canister* !!!
+(^) Bile Canister*
 (^) Bile Dart*
-(☻) Coolant Canister* !!! 
-(☻) Cursed Canister* !!!
+(^) Coolant Canister*
+(^) Cursed Canister*
 (^) Cursed Harpoon*
-(☻) Ichor Canister* !!!
+(^) Ichor Canister*
 (^) Metal Slug*
 (^) Resizable Mine Mk. 3*
 

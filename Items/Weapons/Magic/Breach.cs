@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Magic {
 					Main.LocalPlayer.GetSource_OnHurt(PlayerDeathReason.ByProjectile(Main.myPlayer, projectile.whoAmI)),
 					Main.LocalPlayer.MountedCenter,
 					ModContent.ItemType<Manasynk_Pickup>(),
-					(int)(damageDealt * 0.2f)
+					(int)(damageDealt * 1.34f)
 				);
 				if (Main.netMode == NetmodeID.MultiplayerClient) {
 					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);

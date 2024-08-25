@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Gores.NPCs;
-using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,10 +12,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amebeye : ModNPC, IRivenEnemy {
+	public class Amoebeye : ModNPC, IRivenEnemy {
 		public static int ID { get; private set; }
 		public override void Load() => this.AddBanner();
-		public AutoLoadingAsset<Texture2D> glowTexture = typeof(Amebeye).GetDefaultTMLName() + "_Glow";
+		public AutoLoadingAsset<Texture2D> glowTexture = typeof(Amoebeye).GetDefaultTMLName() + "_Glow";
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
@@ -42,7 +40,7 @@ namespace Origins.NPCs.Riven {
 			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Amebeye;
+			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Amoebeye;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -60,7 +58,7 @@ namespace Origins.NPCs.Riven {
 				bool isAggro = NPC.ai[3] == -1;
 				if (!isAggro) {
 					NPC bubble = Main.npc[(int)NPC.ai[3] - 1];
-					if (!bubble.active || bubble.type != Amebeye_P.ID) {
+					if (!bubble.active || bubble.type != Amoebeye_P.ID) {
 						NPC.ai[3] = -1;
 						isAggro = true;
 					} else if (bubble.ai[0] != 0) {
@@ -86,7 +84,7 @@ namespace Origins.NPCs.Riven {
 							NPC.GetSource_FromAI(),
 							(int)NPC.Center.X,
 							(int)NPC.Center.Y,
-							ModContent.NPCType<Amebeye_P>(),
+							ModContent.NPCType<Amoebeye_P>(),
 							ai3: NPC.whoAmI
 						);
 					}
@@ -121,7 +119,7 @@ namespace Origins.NPCs.Riven {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 		}
 	}
-	public class Amebeye_P : ModNPC, IRivenEnemy {
+	public class Amoebeye_P : ModNPC, IRivenEnemy {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
@@ -148,7 +146,7 @@ namespace Origins.NPCs.Riven {
 			NPC parent = Main.npc[(int)NPC.ai[3]];
 			NPCAimedTarget target;
 			bool returning = false;
-			if (!parent.active || parent.type != Amebeye.ID) {
+			if (!parent.active || parent.type != Amoebeye.ID) {
 				if (Main.netMode != NetmodeID.MultiplayerClient) NPC.StrikeInstantKill();
 				return;
 			} else if (NPC.ai[0] != 0) {

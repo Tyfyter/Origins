@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 17;
+			Item.damage = 32;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -49,6 +49,12 @@ namespace Origins.Items.Weapons.Melee {
 			Item.ArmorPenetration = 9999;
 			Item.UseSound = null;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(ModContent.ItemType<Vorpal_Sword>());
+			recipe.AddIngredient(Type);
+			recipe.AddTile(TileID.BewitchingTable);
+			recipe.Register();
 		}
 		static int textIndex = -1;
 		static int delayTime = 0;

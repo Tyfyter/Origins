@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Pets;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,8 +15,9 @@ namespace Origins.Items.Pets {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;
 			Item.height = 32;
-			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Cyan;// dev items are cyan rarity, despite being expert exclusive
+			Item.value = Item.sellPrice(gold: 5);
+			Item.rare = ItemRarityID.Master;
+			Item.master = true;
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
 			Item.UseSound = SoundID.NPCDeath1;
@@ -262,7 +261,6 @@ namespace Origins.Items.Pets {
 }
 namespace Origins.Buffs {
 	public class Self_Contained_Universe_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Meberoid_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

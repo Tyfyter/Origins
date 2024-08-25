@@ -17,8 +17,8 @@ namespace Origins.Items.Pets {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;
 			Item.height = 32;
-			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Cyan;// dev items are cyan rarity, despite being expert exclusive
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.rare = ItemRarityID.Blue;
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
 			Item.UseSound = SoundID.Item37;
@@ -242,7 +242,6 @@ namespace Origins.Items.Pets {
 }
 namespace Origins.Buffs {
 	public class Walking_Furnace_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Headphones_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

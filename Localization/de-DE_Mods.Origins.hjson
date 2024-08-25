@@ -1208,26 +1208,26 @@ Projectiles: {
 	// Alkaline_Canister_Droplet.DisplayName: Alkaline Droplet
 	// Link_Grenade_P.DisplayName: Link Grenade
 	// Sticky_Link_Grenade_P.DisplayName: Sticky Link Grenade
-	// Hemorang_Blood_P.DisplayName: Hemorang
+	// Hemorang_Blood_P.DisplayName: Blood Drop
 	// Hemorang_P.DisplayName: Hemorang
 	// Dark_Spiral_P.DisplayName: Dark Spiral
 	// Dark_Spiral_Thrown.DisplayName: Dark Spiral
 	// Waning_Crescent_P.DisplayName: Waning Crescent
 	// Waning_Crescent_Thrown.DisplayName: Waning Crescent
 	// True_Light_Disc_Thrown.DisplayName: True Light Disc
-	// Plasma_Cutter_P.DisplayName: Plasma Cutter
+	// Plasma_Cutter_P.DisplayName: Plasma Bolt
 	// Ziptie_P.DisplayName: Ziptie
-	// Communion_P.DisplayName: Communion
+	// Communion_P.DisplayName: Extortion Spark
 	// Forbidden_Voice_Uncursed_P.DisplayName: Vile Spit
-	// Breach_P.DisplayName: Breach
+	// Breach_P.DisplayName: Breach Bubble
 	// Breach_Wisp.DisplayName: Breach Wisp
 	// Chunky_Hook_P.DisplayName: Chunky Hook
-	// Bee_Afraid_Incantation_Bee.DisplayName: Bee Afraid Incantation
-	// Bee_Afraid_Incantation_P.DisplayName: Bee Afraid Incantation
+	// Bee_Afraid_Incantation_Bee.DisplayName: Bee of Fear
+	// Bee_Afraid_Incantation_P.DisplayName: Bee of Fear
 	// True_Waning_Crescent_P.DisplayName: True Waning Crescent
 	// True_Waning_Crescent_P2.DisplayName: True Waning Crescent
 	// True_Waning_Crescent_Thrown.DisplayName: True Waning Crescent
-	// Bee_Afraid_Incantation_Big_Bee.DisplayName: Bee Afraid Incantation
+	// Bee_Afraid_Incantation_Big_Bee.DisplayName: Bee of Fear
 	// Terrarang_P.DisplayName: Terrarang
 	// Terrarang_Thrown.DisplayName: Terrarang
 	// Terrarang_P2.DisplayName: Terrarang
@@ -1240,10 +1240,10 @@ Projectiles: {
 	// Alkahest_Dart_Aura.DisplayName: Alkahest Dart Cloud
 	// Alkahest_Dart_P.DisplayName: Alkahest Dart
 	// Chee_Toy.DisplayName: Chee Toy
-	// The_Calibrator_P.DisplayName: The Calibrator
-	// The_Calibrator_Beam.DisplayName: The Calibrator
-	// Amenonuhoko_Cloud.DisplayName: Amenonuhoko Cloud
-	// Dew_Justice_P.DisplayName: Dew Justice P
+	// The_Calibrator_P.DisplayName: Calibrator Tracker
+	// The_Calibrator_Beam.DisplayName: Calibration Beam
+	// Amenonuhoko_Cloud.DisplayName: Brine Cloud
+	// Dew_Justice_P.DisplayName: Amoebic Dew
 }
 
 Prefixes: {

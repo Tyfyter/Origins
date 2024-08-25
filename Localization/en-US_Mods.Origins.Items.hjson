@@ -69,7 +69,7 @@ Automated_Returns_Handler: {
 		'''
 		Allows the ability to climb walls and dash
 		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
-		Gives a chance to dodge attacks
+		Gives a 10% chance to dodge attacks
 		'''
 }
 
@@ -1463,16 +1463,27 @@ Chambersite: {
 }
 
 Chromtain_Bar.DisplayName: Chromtain Bar
-Dawn_Key.DisplayName: Dawn Key
 Defiled_Bar.DisplayName: "{§Defiled} Bar"
-Defiled_Key.DisplayName: "{§Defiled} Key"
+
+Defiled_Key: {
+	DisplayName: "{§Defiled} Key"
+	Tooltip: Unlocks a Defiled Chest in the Dungeon
+}
+
+Dawn_Key: {
+	DisplayName: Dawn Key
+	Tooltip: Unlocks a Dawn Chest in the Dungeon
+}
+
+Dusk_Key: {
+	DisplayName: Dusk Key
+	Tooltip: Unlocks a Dusk Chest in the Dungeon
+}
 
 Dreadful_Powder: {
 	DisplayName: Dreadful Powder
 	Tooltip: Spreads the Defiled
 }
-
-Dusk_Key.DisplayName: Dusk Key
 
 Eitrite_Bar: {
 	DisplayName: Eitrite Bar
@@ -1497,7 +1508,10 @@ FragmentNova: {
 	Tooltip: "'The essence of a dying star in its final moments...'"
 }
 
-Hell_Key.DisplayName: Hell Key
+Hell_Key: {
+	DisplayName: Hell Key
+	Tooltip: Unlocks a Hell Chest in the Dungeon
+}
 
 Lunar_Token: {
 	DisplayName: Lunar Token
@@ -1509,9 +1523,17 @@ Magic_Hair_Spray: {
 	Tooltip: "'Keeps your hair in perfect form!'"
 }
 
-Mushroom_Key.DisplayName: Mushroom Key
+Mushroom_Key: {
+	DisplayName: Mushroom Key
+	Tooltip: Unlocks a Mushroom Chest in the Dungeon
+}
+
 NE9.DisplayName: NE9
-Ocean_Key.DisplayName: Ocean Key
+
+Ocean_Key: {
+	DisplayName: Ocean Key
+	Tooltip: Unlocks a Ocean Chest in the Dungeon
+}
 
 Peat_Moss: {
 	DisplayName: Peat Moss
@@ -1531,7 +1553,12 @@ Respyrite: {
 }
 
 Riven_Carapace.DisplayName: "{§Riven} Carapace"
-Riven_Key.DisplayName: "{§Riven} Key"
+
+Riven_Key: {
+	DisplayName: "{§Riven} Key"
+	Tooltip: Unlocks a Riven Chest in the Dungeon
+}
+
 Rotor.DisplayName: Rotor
 Rubber.DisplayName: Rubber
 
@@ -4164,22 +4191,22 @@ Shimmer_Rod: {
 
 Shimmer_Dye: {
 	DisplayName: Shimmer Dye
-	Tooltip: ""
+	Tooltip: Makes things look quite shimmery
 }
 
 Coolant_Canister: {
 	DisplayName: Coolant Canister
-	Tooltip: ""
+	Tooltip: Inflicts frostburn to anything nearby upon impact
 }
 
 Cursed_Canister: {
 	DisplayName: Cursed Canister
-	Tooltip: ""
+	Tooltip: Releases a lingering cursed inferno in its wake
 }
 
 Bile_Canister: {
 	DisplayName: Bile Canister
-	Tooltip: ""
+	Tooltip: Inflicts raster to anything nearby upon impact
 }
 
 Flare_Launcher: {
@@ -4189,17 +4216,17 @@ Flare_Launcher: {
 
 Ichor_Canister: {
 	DisplayName: Ichor Canister
-	Tooltip: ""
+	Tooltip: Inflicts ichor to anything nearby upon impact
 }
 
 Alkahest_Canister: {
 	DisplayName: Alkahest Canister
-	Tooltip: ""
+	Tooltip: Releases alkahest drops upon impact
 }
 
 Alkaline_Canister: {
 	DisplayName: Alkaline Canister
-	Tooltip: ""
+	Tooltip: Releases brine droplets upon impact
 }
 
 Banner_Item: {
@@ -4228,7 +4255,7 @@ Sticky_Link_Grenade: {
 
 Hemorang: {
 	DisplayName: Hemorang
-	Tooltip: ""
+	Tooltip: Releases blood drops when thrown
 }
 
 Endowood_Platform_Item: {
@@ -4238,7 +4265,7 @@ Endowood_Platform_Item: {
 
 Dark_Spiral: {
 	DisplayName: Dark Spiral
-	Tooltip: ""
+	Tooltip: Releases shadow scales when thrown
 }
 
 Waning_Crescent: {
@@ -4253,27 +4280,36 @@ True_Light_Disc: {
 
 Plasma_Cutter: {
 	DisplayName: Plasma Cutter
-	Tooltip: ""
+	Tooltip:
+		'''
+		Inflicts torn with increasing severities depending on how many of the three pulses hit the target
+		Torn severities are twice as effective for this weapon
+		'''
 }
 
 Ziptie: {
 	DisplayName: Ziptie
-	Tooltip: ""
+	Tooltip: Striking three or more enemies at the same time briefly inflicts rasterized and increases attack speed
 }
 
 Communion: {
 	DisplayName: Communion
-	Tooltip: ""
+	Tooltip: Fires a spark that bounces from enemies and pulls them towards you
 }
 
 Forbidden_Voice_Uncursed: {
 	DisplayName: Forbidden Voice
-	Tooltip: ""
+	Tooltip: The mouth will spit at nearby enemies
 }
 
 Breach: {
 	DisplayName: Breach
-	Tooltip: ""
+	Tooltip:
+		'''
+		Casts a spirit-bound mass of black bile that explodes into miniature wisps
+		Enemies struck by this weapon recieve a brief raster
+		Self-damage recieved from this weapon replenishes mana
+		'''
 }
 
 Encrusted_Brick_Item: {
@@ -4293,7 +4329,7 @@ Chunky_Hook: {
 
 Bee_Afraid_Incantation: {
 	DisplayName: Bee Afraid Incantation
-	Tooltip: ""
+	Tooltip: Summons a swarm of bees to your cursor
 }
 
 True_Waning_Crescent: {
@@ -4308,7 +4344,7 @@ Terrarang: {
 
 Internal_Combustionfish: {
 	DisplayName: Internal Combustionfish
-	Tooltip: ""
+	Tooltip: Remains attached to the target until multiple enemies are nearby
 }
 
 Amoebash: {
@@ -4328,22 +4364,29 @@ Fleshy_Globe: {
 
 Speed_Booster: {
 	DisplayName: Speed Booster
-	Tooltip: ""
+	Tooltip:
+		'''
+		The wearer can run super fast and even faster after taking damage
+		Allows the ability to climb walls and dash into enemies
+		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		Gives a 10% chance to dodge attacks
+		Running fast for extended periods of time generates a charge for a powerful dash
+		'''
 }
 
 Alkahest_Dart: {
 	DisplayName: Alkahest Dart
-	Tooltip: ""
+	Tooltip: Leaves a trail of alkahest behind it
 }
 
 Chew_Toy: {
 	DisplayName: Chew Toy
-	Tooltip: ""
+	Tooltip: Summons  w o r m
 }
 
 The_Calibrator: {
 	DisplayName: The Calibrator
-	Tooltip: ""
+	Tooltip: Fires trackers that prompt a laser to fire upon colliding
 }
 
 Chambersite_Gemspark_Wall_Off_Safe_Item: {
@@ -4358,5 +4401,5 @@ Chambersite_Gemspark_Wall_On_Safe_Item: {
 
 Dew_Justice: {
 	DisplayName: Dew Justice
-	Tooltip: ""
+	Tooltip: Amebic gel particulates rise from nearby surfaces to bombard your target
 }

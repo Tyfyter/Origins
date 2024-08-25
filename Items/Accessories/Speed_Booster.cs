@@ -12,10 +12,10 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 24);
-			Item.damage = 30;
-			Item.knockBack = 2;
-			Item.value = Item.sellPrice(gold: 4);
-			Item.rare = ItemRarityID.LightRed;
+			Item.damage = 42;
+			Item.knockBack = 3;
+			Item.value = Item.sellPrice(gold: 14);
+			Item.rare = ItemRarityID.Yellow;
 			Item.accessory = true;
 		}
 		public override void AddRecipes() {

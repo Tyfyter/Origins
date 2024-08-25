@@ -490,12 +490,12 @@ namespace Origins {
 			};
 			Sounds.Amalgamation = new SoundStyle("Origins/Sounds/Custom/ChorusRoar", SoundType.Sound) {
 				MaxInstances = 0,
-				Volume = 1.5f,
-				PitchRange = (0.2f, 0.3f)
+				Volume = 0.5f,
+				PitchRange = (0.04f, 0.15f)
 			};
 			Sounds.BeckoningRoar = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
 				MaxInstances = 0,
-				Volume = 0.75f,
+				//Volume = 0.75f,
 				PitchRange = (0.2f, 0.3f)
 			};
 			Sounds.IMustScream = new SoundStyle("Origins/Sounds/Custom/IMustScream", SoundType.Sound) {

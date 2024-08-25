@@ -3,7 +3,6 @@ using Origins.Dev;
 using Origins.Journal;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {

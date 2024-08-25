@@ -236,8 +236,6 @@ namespace Origins.Items.Pets {
 namespace Origins.Buffs {
 	public class Chromatic_Pangolin_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chromatic Pangolin");
-			// Description.SetDefault("It rainbow, tooltip coming soon.");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 			Chromatic_Scale.buffID = Type;

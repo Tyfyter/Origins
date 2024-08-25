@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 16;
 			Item.shoot = ModContent.ProjectileType<The_Calibrator_P>();
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = Origins.Sounds.PhaserCrash.WithPitch(1);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
