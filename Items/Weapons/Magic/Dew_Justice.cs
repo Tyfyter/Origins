@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Magic {
 						hitbox.X = (int)(position.X - halfSize);
 						hitbox.Y = (int)(position.Y - halfSize);
 						if (hitbox.OverlapsAnyTiles()) {
-							foundPosition = true;
+							if (i > 4) foundPosition = true;
 							break;
 						}
 					}
