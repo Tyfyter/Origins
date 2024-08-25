@@ -580,11 +580,14 @@ namespace Origins {
 		public override void PostSetupContent() {
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];
-				if (immunityData is not null && (immunityData[BuffID.Confused] ?? false)) {
+				if (immunityData is not null && (immunityData[BuffID.Confused] ?? false) && !RasterizeAdjustment.ContainsKey(i)) {
 					switch (i) {
 						case NPCID.KingSlime:
+						RasterizeAdjustment.Add(i, (12, 1f, 1f));
+						break;
+
 						case NPCID.QueenSlimeBoss:
-						RasterizeAdjustment.Add(i, (16, 1f, 1f));
+						RasterizeAdjustment.Add(i, (12, 0.05f, 0.5f));
 						break;
 
 						case NPCID.QueenBee:
@@ -599,6 +602,10 @@ namespace Origins {
 						RasterizeAdjustment.Add(i, (8, 1f, 1f));
 						break;
 
+						case NPCID.Golem:
+						RasterizeAdjustment.Add(i, (16, 0f, 1f));
+						break;
+
 						default:
 						RasterizeAdjustment.Add(i, (8, 0.05f, 1f));
 						break;
@@ -607,7 +614,7 @@ namespace Origins {
 			}
 		}
 
-		private static void FixedDrawBreath(Terraria.On_Main.orig_DrawInterface_Resources_Breath orig) {
+		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
 			int breath = localPlayer.breath;
 			int breathMax = localPlayer.breathMax;
