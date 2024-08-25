@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 			"Torn",
 			"TornSource",
 			"OtherRanged",
-            "SpendableWeapon"
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.MagicDagger] = ModContent.ItemType<Bleeding_Obsidian_Kunai>();

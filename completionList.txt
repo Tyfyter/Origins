@@ -296,7 +296,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(X) ASH Attack Relay !!!
+(#, ^2) ASH Attack Relay !!!
 (#2, ^2, ♠) ATACS*
 (^) Automated Returns Handler*
 (^) Binding Book*
@@ -314,7 +314,7 @@ ACCESSORIES:
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
-(#3, ^2) CORE Generator* !!!
+(^) CORE Generator*
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -785,7 +785,7 @@ EXPLOSIVE WEAPONS:
 (^) Link Grenade*
 (#, ^2) Matrix* !!!
 (^) Meteor*
-(^3, @2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)) Outbreak Bomb*
+(@2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling), ^3) Outbreak Bomb*
 (^) Peatball*
 (^) Potato Mine*
 (^) Shrapnel Bomb*
@@ -1181,7 +1181,7 @@ MOUNTS & PETS:
 (^) Smith's Hammer (Walking Furnace)*
 (^) Suspicious Looking Pebble (Defiled Blight)
 
-(^) Chew Toy (Chee Toy)*
+(ᗢ) Chew Toy (Chee Toy)*
 ---
 
 

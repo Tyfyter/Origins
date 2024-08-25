@@ -1,20 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Projectiles;
+using Origins.Dev;
+using Origins.Dusts;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Misc;
 using System;
-using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Liquid;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Terraria.GameContent;
-using AltLibrary;
-using Origins.Dusts;
-using Terraria.GameContent.Liquid;
-using Origins.Misc;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Flare_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [

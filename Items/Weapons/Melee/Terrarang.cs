@@ -1,15 +1,13 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-
 using Origins.Dev;
-using Terraria.Audio;
 using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Terrarang : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -33,8 +31,8 @@ namespace Origins.Items.Weapons.Melee {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.BrokenHeroSword)
-			.AddIngredient<True_Waning_Crescent>()
 			.AddIngredient<True_Light_Disc>()
+			.AddIngredient<True_Waning_Crescent>()
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

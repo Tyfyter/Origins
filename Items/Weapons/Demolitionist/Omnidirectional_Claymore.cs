@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "OtherExplosive",
-            "SpendableWeapon"
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;

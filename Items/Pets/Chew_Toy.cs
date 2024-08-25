@@ -58,8 +58,6 @@ namespace Origins.Items.Pets {
 		public override void Unload() => dogs = null;
 		public override void SetStaticDefaults() {
 			Chew_Toy.projectileID = Type;
-			// DisplayName.SetDefault("Chromatic Pangolin");
-			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 4;
 
@@ -294,13 +292,13 @@ namespace Origins.Items.Pets {
 				cooldowns[type] = 1;
 				break;
 				case Combat:
-				cooldowns[type] = Main.rand.Next(240, 361);
+				cooldowns[type] = Main.rand.Next(720, 1801);
 				break;
 				case Near_Cubekon_Girl:
 				cooldowns[type] = Main.rand.Next(1800, 3601);
 				break;
 				case The_Part_Where_He_Kills_You:
-				cooldowns[type] = Main.rand.Next(600, 901);
+				cooldowns[type] = Main.rand.Next(3600, 7201);
 				break;
 			}
 			cooldowns[Idle] = Main.rand.Next(1800, 3601);
@@ -337,7 +335,6 @@ namespace Origins.Items.Pets {
 }
 namespace Origins.Buffs {
 	public class Chee_Toy_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Platformer_Mech_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;

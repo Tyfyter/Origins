@@ -10,7 +10,7 @@ namespace Origins.Items.Materials
 {
     public class Ash_Urn : ModItem {
         public string[] Categories => [
-            "SpendableTool"
+            "ExpendableTool"
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;

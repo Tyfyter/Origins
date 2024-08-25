@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsDynamite",
-            "SpendableWeapon"
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

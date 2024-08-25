@@ -12,9 +12,9 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "ThrownHardmodeExplosive",
+            "ThrownExplosive",
 			"IsGrenade",
-            "SpendableWeapon"
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

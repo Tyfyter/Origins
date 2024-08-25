@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Materials {
 	public class Dreadful_Powder : ModItem {
         public string[] Categories => [
-            "SpendableTool"
+            "ExpendableTool"
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;

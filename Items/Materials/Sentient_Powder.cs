@@ -12,7 +12,7 @@ namespace Origins.Items.Materials {
 	public class Sentient_Powder : ModItem {
 		static short glowmask;
         public string[] Categories => [
-            "SpendableTool"
+            "ExpendableTool"
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;

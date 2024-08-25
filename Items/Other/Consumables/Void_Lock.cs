@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Void_Lock : ModItem {
         public string[] Categories => [
-            "SpendableTool"
+            "ExpendableTool"
         ];
         public override void SetDefaults() {
 			Item.rare = ItemRarityID.Orange;

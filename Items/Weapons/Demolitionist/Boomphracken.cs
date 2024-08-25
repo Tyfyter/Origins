@@ -1,15 +1,14 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Terraria.GameInput;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Boomphracken : ModItem, ICustomWikiStat {
+	public class Boomphracken : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Handcannon"
         ];
