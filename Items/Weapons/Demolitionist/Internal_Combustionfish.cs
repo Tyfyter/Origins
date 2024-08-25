@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Internal_Combustionfish : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
-            "SpendableWeapon"
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 7;

@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo;
-using Origins.Projectiles;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bombardment : ModItem, ICustomWikiStat {
 		public string[] Categories => [

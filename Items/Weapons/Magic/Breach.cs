@@ -63,6 +63,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void AI() {
+			Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Asphalt, 0, -1, 0, default, 1.2f);
 			if (++Projectile.frameCounter > 5) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= Main.projFrames[Type]) {
@@ -77,7 +78,7 @@ namespace Origins.Items.Weapons.Magic {
 			target.AddBuff(Buffs.Rasterized_Debuff.ID, 20);
 		}
 		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, sound: SoundID.Item62, fireDustAmount: 0, smokeDustAmount: 15, smokeGoreAmount: 0);
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, sound: SoundID.Item116, fireDustAmount: 0, smokeDustAmount: 15, smokeGoreAmount: 0);
 			for (int i = 0; i < 3; i++) Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, default, Breach_P_Debris.ID);
 			if (Projectile.owner == Main.myPlayer) {
 				int count = Main.rand.Next(7, 10);
@@ -117,6 +118,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.localAI[2] = Main.rand.Next(30);
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(6)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Asphalt, 0, 0, 0, default, 0.75f);
 			if (Projectile.localAI[2] > 0f) {
 				Projectile.localAI[2]--;
 				Projectile.timeLeft--;
@@ -208,11 +210,11 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.timeLeft > 0) {
 				Projectile.Kill();
 			}
-			target.AddBuff(Buffs.Rasterized_Debuff.ID, 20);
+			target.AddBuff(Buffs.Rasterized_Debuff.ID, 5);
 		}
 		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0) {
-				ExplosiveGlobalProjectile.DoExplosion(Projectile, 32, sound: SoundID.Item62, fireDustAmount: 0, smokeDustAmount: 5, smokeGoreAmount: 0);
+				ExplosiveGlobalProjectile.DoExplosion(Projectile, 32, sound: SoundID.Item46.WithPitchRange(0.2f, 0.3f), fireDustAmount: 0, smokeDustAmount: 5, smokeGoreAmount: 0);
 			} else {
 				Gore.NewGorePerfect(
 					Projectile.GetSource_Death(),

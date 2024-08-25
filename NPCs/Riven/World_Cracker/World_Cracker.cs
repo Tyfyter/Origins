@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
@@ -55,6 +56,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 		}
 		public override void Unload() {
 			ArmorTexture = null;

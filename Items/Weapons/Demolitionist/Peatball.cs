@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Peatball : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
-            "SpendableWeapon"
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 99;

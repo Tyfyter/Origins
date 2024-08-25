@@ -3,11 +3,11 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-namespace Origins.Items.Accessories {
+namespace Origins.Items.Other.Consumables {
 	public class Mojo_Injection : ModItem, ICustomWikiStat {
 		public const float healing = 0.0000444f;
 		public string[] Categories => [
-			"Misc"
+			"PermaBoost"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.NaturesGift] = Type;
@@ -15,11 +15,12 @@ namespace Origins.Items.Accessories {
 		}
 		static short glowmask;
 		public override void SetDefaults() {
-			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.buyPrice(silver: 40);
 			Item.useTime = 30;
 			Item.useAnimation = 30;
+			Item.width = 16;
+			Item.height = 26;
 			Item.accessory = false;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.UseSound = SoundID.Item3;
