@@ -741,7 +741,7 @@ namespace Origins.Dev {
 			data.AppendStat("UseTime", item.useTime, 100);
 			data.AppendStat("Velocity", item.shootSpeed, 0);
 			if (item.ToolTip.Lines > 1) {
-				JArray itemTooltip = new();
+				JArray itemTooltip = [];
 				for (int i = 0; i < item.ToolTip.Lines; i++) {
 					string line = item.ToolTip.GetLine(i);
 					if (!string.IsNullOrWhiteSpace(line)) itemTooltip.Add(line);
@@ -754,8 +754,16 @@ namespace Origins.Dev {
 			if (customStat?.Buyable ?? false) data.AppendStat("Buy", item.value, 0);
 			data.AppendStat("Sell", item.value / 5, 0);
 			data.AppendJStat("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(item.type).GetDropRates()), []);
+			{
+				string baseKey = $"WikiGenerator.Stats.{modItem.Mod?.Name}.{modItem.Name}.";
+				string key = baseKey + "Source";
+				if (Language.Exists(key)) data.AppendStat("Source", Language.GetTextValue(key), key);
 
-			if (customStat is not null) customStat.ModifyWikiStats(data);
+				key = baseKey + "Effect";
+				if (Language.Exists(key)) data.AppendStat("Effect", Language.GetTextValue(key), key);
+
+			}
+			customStat?.ModifyWikiStats(data);
 			data.AppendStat("SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
 			data.AppendStat("InternalName", item.ModItem?.Name, null);
 			yield return (PageName(modItem), data);
