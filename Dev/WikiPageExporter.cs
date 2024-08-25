@@ -274,7 +274,7 @@ namespace Origins.Dev {
 		public static string GetWikiName(ModNPC modNPC) => modNPC.Name;//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
-		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? $"Images/{modItem.Name}" : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
+		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
 		public static string GetWikiItemRarity(Item item) => (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", "");
 		public void Unload() {
 			wikiTemplate = null;
