@@ -50,6 +50,9 @@ namespace Origins.World {
 			(ENQUEUE, ModContent.ItemType<Bomb_Launcher>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Bomb_Handling_Device>(), 1f),
 
+			(CHANGE_QUEUE, ChestID.LockedHallow, 0b0000),
+			(ENQUEUE, ModContent.ItemType<The_Calibrator>(), 1f),
+
 			//(CHANGE_QUEUE, ChestID.Gold, 0b0011), Desert Crown doesn't exist???
 			//(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 1f)
 		];

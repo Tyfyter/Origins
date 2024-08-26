@@ -1,19 +1,16 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Graphics;
+using Origins.Items.Other.Dyes;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent;
-using System;
-using Origins.Graphics;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Origins.Items.Other.Dyes;
-using Humanizer;
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [

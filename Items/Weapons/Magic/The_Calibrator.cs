@@ -17,6 +17,10 @@ namespace Origins.Items.Weapons.Magic {
         public string[] Categories => [
             "MagicGun"
         ];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.RainbowGun] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.RainbowGun;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 48;

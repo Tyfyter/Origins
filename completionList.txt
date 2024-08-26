@@ -493,7 +493,7 @@ UTILITIES:
 
 (#, ^2) Impenetrable Trashcan Lid
 (#, ^2) Indestructible Saddle
-(⛥) Salty Seed (Eutrophic Cell) !!!
+(#, ^2) Salty Seed (Eutrophic Cell) !!!
 ---
 
 
