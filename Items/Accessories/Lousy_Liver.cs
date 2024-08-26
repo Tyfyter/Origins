@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Lousy_Liver : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			"Combat",
+			"RasterSource"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
