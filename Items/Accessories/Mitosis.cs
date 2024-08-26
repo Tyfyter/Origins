@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,10 @@ namespace Origins.Items.Accessories {
 			"Combat",
 			"Shouldntexist"
 		];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Plasma_Cutter>()] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Plasma_Cutter>();
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.Pink;

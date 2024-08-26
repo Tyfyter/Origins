@@ -177,7 +177,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				int tickCount = 10 - difficultyMult * 2;
 				int tickSize = NPC.lifeMax / tickCount;
-				float currentTick = (NPC.life / tickSize);
+				float currentTick = NPC.life / tickSize;
 
 				switch (AIState) {
 					//default state, uses default case so that negative values can be used for which action was taken last
