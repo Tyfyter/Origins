@@ -1244,6 +1244,8 @@ Projectiles: {
 	// The_Calibrator_Beam.DisplayName: Calibration Beam
 	// Amenonuhoko_Cloud.DisplayName: Brine Cloud
 	// Dew_Justice_P.DisplayName: Amoebic Dew
+	// Impactaxe_Explosion.DisplayName: Impactaxe Explosion
+	// Impactaxe_Smash.DisplayName: Impactaxe Smash
 }
 
 Prefixes: {

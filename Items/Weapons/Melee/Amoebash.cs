@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 12f;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 8);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 0;
 		}

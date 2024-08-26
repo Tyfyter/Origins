@@ -4403,3 +4403,8 @@ Dew_Justice: {
 	// DisplayName: Dew Justice
 	// Tooltip: Amebic gel particulates rise from nearby surfaces to bombard your target
 }
+
+Impactaxe: {
+	// DisplayName: Impactaxe
+	// Tooltip: ""
+}
