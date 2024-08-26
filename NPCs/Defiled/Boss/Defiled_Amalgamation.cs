@@ -358,7 +358,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								armSpeed *= 3;
 							} else {
 								AIState = -state_triple_dash;
-								NPC.ai[1] += 100;
+								NPC.ai[1] = 100 * difficultyMult;
 							}
 						}
 					}
@@ -444,8 +444,10 @@ namespace Origins.NPCs.Defiled.Boss {
 				trappedTime = 30;
 				return;
 			}
-			if (Collision.IsClearSpotTest(NPC.position + new Vector2(16), 16f, NPC.width - 32, NPC.height - 32, checkSlopes: true)) {
+			if (!NPC.Hitbox.OverlapsAnyTiles()) {
 				NPC.noTileCollide = false;
+			} else if (AIState == state_triple_dash) {
+				NPC.velocity.Y = -4;
 			}
 			if (NPC.collideX || NPC.collideY) {
 				if (++trappedTime > 30) {
