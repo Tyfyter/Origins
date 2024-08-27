@@ -69,9 +69,11 @@ namespace Origins {
 				return currentLevel;
 			}
 		}
-		public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
+		public List<Point> Defiled_Hearts { get; set; } = [];
 		private List<Point> _abandonedBombs;
-		public List<Point> AbandonedBombs => _abandonedBombs ??= new List<Point>();
+		public List<Point> AbandonedBombs => _abandonedBombs ??= [];
+		private Dictionary<Point, Guid> _voidLocks;
+		public Dictionary<Point, Guid> VoidLocks => _voidLocks ??= [];
 		public override void OnWorldUnload() {
 			forceThunderstorm = false;
 		}
@@ -85,14 +87,22 @@ namespace Origins {
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
 			tag.TryGet("forceThunderstorm", out forceThunderstorm);
+			if (tag.TryGet("voidLocks", out List<TagCompound> voidLocks)) {
+				_voidLocks = voidLocks.ToDictionary(
+					t => t.Get<Vector2>("pos").ToPoint(),
+					t => Guid.Parse(t.Get<string>("uuid"))
+				);
+			} else {
+				_voidLocks = [];
+			}
 
-			defiledResurgenceTiles = new List<(int, int)>() { };
-			defiledAltResurgenceTiles = new List<(int, int, ushort)>() { };
+			defiledResurgenceTiles = [];
+			defiledAltResurgenceTiles = [];
 			questsTag = tag.SafeGet<TagCompound>("Quests");
 			if (Main.dedServ) {
 				foreach (var quest in Quest_Registry.Quests) {
 					if (quest.SaveToWorld) {
-						quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+						quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 					}
 				}
 			}
@@ -108,6 +118,10 @@ namespace Origins {
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}
+			tag.Add("voidLocks", VoidLocks.Select(kvp => new TagCompound() {
+				["pos"] = kvp.Key.ToVector2(),
+				["uuid"] = kvp.Value.ToString()
+			}).ToList());
 			TagCompound questsTag = [];
 			foreach (var quest in Quest_Registry.Quests) {
 				if (quest.SaveToWorld) {
@@ -154,6 +168,55 @@ namespace Origins {
 
 			fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
 		}
+		public bool TryAddVoidLock(Point position, Guid owner, bool fromNet = false, int netOwner = -1) {
+			if (VoidLocks.TryAdd(position, owner)) {
+				switch (Main.netMode) {
+					case NetmodeID.MultiplayerClient:
+					if (!fromNet) {
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(Origins.NetMessageType.add_void_lock);
+						packet.Write(position.X);
+						packet.Write(position.Y);
+						packet.Write(owner.ToByteArray());
+						packet.Send();
+					}
+					break;
+					case NetmodeID.Server: {
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(Origins.NetMessageType.add_void_lock);
+						packet.Write(position.X);
+						packet.Write(position.Y);
+						packet.Write(owner.ToByteArray());
+						packet.Send(ignoreClient: netOwner);
+						break;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		public void RemoveVoidLock(Point position, bool fromNet = false, int netOwner = -1) {
+			if (!VoidLocks.Remove(position)) return;
+			switch (Main.netMode) {
+				case NetmodeID.MultiplayerClient:
+				if (!fromNet) {
+					ModPacket packet = Origins.instance.GetPacket();
+					packet.Write(Origins.NetMessageType.remove_void_lock);
+					packet.Write(position.X);
+					packet.Write(position.Y);
+					packet.Send();
+				}
+				break;
+				case NetmodeID.Server: {
+					ModPacket packet = Origins.instance.GetPacket();
+					packet.Write(Origins.NetMessageType.remove_void_lock);
+					packet.Write(position.X);
+					packet.Write(position.Y);
+					packet.Send(ignoreClient: netOwner);
+					break;
+				}
+			}
+		}
 		protected internal List<(int x, int y)> defiledResurgenceTiles;
 		protected internal List<(int x, int y, ushort)> defiledAltResurgenceTiles;
 		protected internal Queue<(int x, int y)> queuedKillTiles;
@@ -185,125 +248,10 @@ namespace Origins {
 				if (q-- < 0) {
 					break;
 				}
-			}/*
-			if (fiberglassNeedsFraming) {
-				if (fiberglassFrameTask?.IsCompleted ?? true)
-					fiberglassFrameTask = Task.Run(FrameFiberglass);
-			}*/
+			}
 		}
-		/*public void FrameFiberglass() {
-			return;
-			fiberglassNeedsFraming = false;
-			Point fiberglassMin = this.fiberglassMin;
-			Point fiberglassMax = this.fiberglassMax;
-			HashSet<Point> fiberglassFrameSet;
-			lock (this.fiberglassFrameSet) {
-				fiberglassFrameSet = this.fiberglassFrameSet.ToHashSet();
-			}
-			const ushort none = 0x8001;//0b1000000000000001
-			var cellTypes = new Tuple<WaveFunctionCollapse.Generator<(short X, short Y)>.Cell, double>[] {
-#region first 3 columns
-                    new(new(new(0, 0), none, 1 << 4, none, 3 << 4), 1),
-					new(new(new(1, 0), none, 3 << 4, none, 1 << 5), 1),
-					new(new(new(2, 0), none, 1 << 4, none, 1 << 5), 1),
-
-					new(new(new(0, 1), none, 1 << 4, 1 << 5, none), 1),
-					new(new(new(1, 1), none, 3 << 4, 1 << 4, none), 1),
-					new(new(new(2, 1), none, 1 << 4, 1 << 5, none), 1),
-
-					new(new(new(0, 2), 1 << 5, 1 << 5, none, 1 << 5), 1),
-					new(new(new(1, 2), 1 << 5, 1 << 5, none, 1 << 5), 1),
-					new(new(new(2, 2), 1 << 5, 1 << 4, none, 1 << 5), 1),
-
-					new(new(new(0, 3), 1 << 4, none, none, none), 0.5f),
-					new(new(new(1, 3), 1 << 5, none, none, none), 0.5f),
-					new(new(new(2, 3), 1 << 5, none, none, none), 0.5f),
-
-					new(new(new(0, 4), 3 << 4, 1 << 5 , 1 << 4, 1 << 5), 1),
-					new(new(new(1, 4), 1 << 4, 1 << 4, 1 << 4, 1 << 5), 1),
-					new(new(new(2, 4), 1 << 5, 1 << 4, 1 << 4, none), 1),
-#endregion first 3 columns
-#region second 3 columns
-                    new(new(new(4, 0), 1 << 4, none, 1 << 4, none), 1),
-					new(new(new(5, 0), 1 << 5, none, 1 << 5, none), 1),
-					new(new(new(6, 0), 1 << 4, none, 1 << 4, none), 1),
-
-					new(new(new(4, 1), 1 << 3, none, none, 1 << 5), 1),
-					new(new(new(5, 1), 1 << 4, none, none, 1 << 4), 1),
-					new(new(new(6, 1), 1 << 4, none, none, 1 << 4), 1),
-
-					new(new(new(4, 2), none, 1 << 5, 1 << 5, 1 << 5), 1),
-					new(new(new(5, 2), none, 1 << 4, 1 << 5, 1 << 4), 1),
-					new(new(new(6, 2), none, 1 << 5, 1 << 5, 1 << 4), 1),
-
-					new(new(new(4, 3), none, none, none, 1 << 5), 0.5f),
-					new(new(new(5, 3), none, none, none, 1 << 4), 0.5f),
-					new(new(new(6, 3), none, none, none, 1 << 5), 0.5f),
-
-					new(new(new(4, 4), none, none, none, none), 0.15f),
-					new(new(new(5, 4), none, none, none, none), 0.15f),
-					new(new(new(6, 4), none, none, none, none), 0.15f),
-#endregion second 3 columns
-#region last 3 columns
-                    new(new(new(8, 0),  none, none, 1 << 3, 1 << 4), 1),
-					new(new(new(9, 0),  none, none, 1 << 4, 1 << 5), 1),
-					new(new(new(10, 0), none, none, 1 << 4, 1 << 5), 1),
-
-					new(new(new(8, 1),  3 << 4, 1 << 5, none, none), 1),
-					new(new(new(9, 1),  none, 1 << 5, none, none), 1),
-					new(new(new(10, 1), 1 << 4, 1 << 5, none, none), 1),
-
-					new(new(new(8, 2),  none, none, 1 << 4, none), 0.5f),
-					new(new(new(9, 2),  none, none, 1 << 5, none), 0.5f),
-					new(new(new(10, 2), none, none, 1 << 4, none), 0.5f),
-
-					new(new(new(8, 3),  none, 1 << 4, none, none), 0.5f),
-					new(new(new(9, 3),  none, 1 << 5, none, none), 0.5f),
-					new(new(new(10, 3), none, 1 << 4, none, none), 0.5f),
-#endregion last 3 columns
-                    new(new(new(3, 4), none, none, none, none), 0.15f)// empty spot
-                };
-			fiberglassMin -= new Point(1, 1);
-			fiberglassMax += new Point(1, 1);
-			var actuals = new WaveFunctionCollapse.Generator<(short X, short Y)>.Cell?[fiberglassMax.X - fiberglassMin.X + 1, fiberglassMax.Y - fiberglassMin.Y + 1];
-			int fiberglassType = ModContent.TileType<Tiles.Other.Fiberglass_Tile>();
-			for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
-				for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
-					if (!fiberglassFrameSet.Contains(new(i, j)) || i == fiberglassMin.X || i == fiberglassMax.X || j == fiberglassMin.Y || j == fiberglassMax.Y) {
-						bool notFiberglass = !Framing.GetTileSafely(i, j).TileIsType(fiberglassType);
-						var cell = notFiberglass ? new(new(0, 0), none, none, none, none) : cellTypes.Where(v => {
-							var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
-							return v.Item1.value.X == curr.TileFrameX && v.Item1.value.Y == curr.TileFrameY;
-						}).First().Item1;
-						actuals[i - fiberglassMin.X, j - fiberglassMin.Y] = cell;
-					}
-				}
-			}
-			fiberglassFrameSet.Clear();
-			var generator = new WaveFunctionCollapse.Generator<(short X, short Y)>(actuals, matchAll: false, cellTypes: cellTypes);
-			//fiberglassMin += new Point(1, 1);
-			//fiberglassMax -= new Point(1, 1);
-			while (!generator.GetCollapsed()) {
-				//generator.Collapse();
-				generator.CollapseWith((x, y, val) => {
-					Framing.GetTileSafely(x + fiberglassMin.X, y + fiberglassMin.Y).Get<TileExtraVisualData>().TileFrameX = val.X;
-					Framing.GetTileSafely(x + fiberglassMin.X, y + fiberglassMin.Y).Get<TileExtraVisualData>().TileFrameY = val.Y;
-				});
-			}
-			/*for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
-                for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
-                    //if (Framing.GetTileSafely(i, j).TileIsType(fiberglassType)) {
-                    (short X, short Y) = generator.GetActual(i - fiberglassMin.X, j - fiberglassMin.Y);
-                    Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameX = X;
-                    Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameY = Y;
-                    //}
-                }
-            }* /
-		}*/
 		public void QueueKillTile(int i, int j) {
-			if (queuedKillTiles is null) {
-				queuedKillTiles = new Queue<(int, int)>();
-			}
+			queuedKillTiles ??= new Queue<(int, int)>();
 			queuedKillTiles.Enqueue((i, j));
 		}
 		public override void PostWorldGen() {
@@ -563,87 +511,6 @@ namespace Origins {
 			if (Main.tile[i + 1, j + 1].HasTile) count++;
 			return count;
 		}
-		/*
-        /// <summary>
-        /// the first clentaminator conversion type from Origins (from ASCII 'Org')
-        /// </summary>
-        public const int origin_conversion_type =  79114103;
-        public static void ConvertHook(On.Terraria.WorldGen.orig_Convert orig, int i, int j, int conversionType, int size = 4) {
-            Tile current;
-            int tileConvertBuffer = -1;
-            OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-            switch(conversionType) {
-                case origin_conversion_type:
-                for(int k = i - size; k <= i + size; k++) {
-                    for(int l = j - size; l <= j + size; l++) {
-                        if(!WorldGen.InWorld(k, l, 1) || Math.Abs(k - i) + Math.Abs(l - j) >= 6) {
-                            continue;
-                        }
-                        current = Main.tile[k,l];
-                        ConvertTile(ref current.TileType, evil_wastelands);
-                        ConvertWall(ref current.WallType, evil_wastelands);
-                    }
-                }
-                break;
-                case origin_conversion_type + 1:
-                for (int k = i - size; k <= i + size; k++) {
-                    for (int l = j - size; l <= j + size; l++) {
-                        if (!WorldGen.InWorld(k, l, 1) || Math.Abs(k - i) + Math.Abs(l - j) >= 6) {
-                            continue;
-                        }
-                        current = Main.tile[k, l];
-                        ConvertTile(ref current.TileType, evil_riven);
-                        ConvertWall(ref current.WallType, evil_riven);
-                    }
-                }
-                break;
-                default:
-                for(int k = i - size; k <= i + size; k++) {
-                    for(int l = j - size; l <= j + size; l++) {
-                        tileConvertBuffer = -1;
-                        current = Main.tile[k,l];
-                        if(DefiledResurgenceActive && ModContent.GetModTile(current.TileType) is DefiledTile) {
-                            originWorld.defiledResurgenceTiles.Add((k,l));
-                        }
-                        if(conversionType == 0) {
-                            if(!WorldGen.InWorld(k, l, 1) || Math.Abs(k - i) + Math.Abs(l - j) >= 6) {
-                                continue;
-                            }
-                            //convert based on conversion sets
-                            if(TileID.Sets.Conversion.Grass[current.TileType]) {
-                                tileConvertBuffer = TileID.Grass;
-                            } else if(TileID.Sets.Conversion.Stone[current.TileType]) {
-                                tileConvertBuffer = TileID.Stone;
-                            } else if(TileID.Sets.Conversion.Sand[current.TileType]) {
-                                tileConvertBuffer = TileID.Sand;
-                            } else if(TileID.Sets.Conversion.Sandstone[current.TileType]) {
-                                tileConvertBuffer = TileID.Sandstone;
-                            } else if(TileID.Sets.Conversion.HardenedSand[current.TileType]) {
-                                tileConvertBuffer = TileID.HardenedSand;
-                            } else if(TileID.Sets.Conversion.Ice[current.TileType]) {
-                                tileConvertBuffer = TileID.IceBlock;
-                            }
-                            if(tileConvertBuffer!=-1&&tileConvertBuffer!=current.TileType) {
-                                if(WallID.Sets.Conversion.Stone[Main.tile[k, l].WallType]) {
-                                    Main.tile[k, l].WallType = WallID.Stone;
-                                }else if(WallID.Sets.Conversion.Sandstone[Main.tile[k, l].WallType]) {
-                                    Main.tile[k, l].WallType = WallID.Sandstone;
-                                }else if(WallID.Sets.Conversion.HardenedSand[Main.tile[k, l].WallType]) {
-                                    Main.tile[k, l].WallType = WallID.HardenedSand;
-                                }
-                                Main.tile[k, l].TileType = (ushort)tileConvertBuffer;
-                                WorldGen.SquareTileFrame(k, l);
-                                NetMessage.SendTileSquare(-1, k, l, 1);
-                                tileConvertBuffer = -1;
-                            }
-                        }
-                    }
-                }
-                orig(i, j, conversionType, size);
-                break;
-            }
-        }
-        //*/
 		internal static void UpdateTotalEvilTiles() {
 			totalDefiled = totalDefiled2;
 			tDefiled = (byte)Math.Round((totalDefiled / (float)WorldGen.totalSolid2) * 100f);

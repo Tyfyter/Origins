@@ -1,31 +1,47 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Void_Lock : ModItem {
-        public string[] Categories => [
-            "ExpendableTool"
-        ];
-        public override void SetDefaults() {
+	public class Void_Lock : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ExpendableTool"
+		];
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(0);
+			Item.createTile = -1;
 			Item.rare = ItemRarityID.Orange;
+			Item.consumable = true;
+			ContentSamples.CreativeHelper.GetItemGroup(Item, out _);
+		}
+		public override bool? UseItem(Player player) {
+			if (player.whoAmI == Main.myPlayer) {
+				Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+				if (!Main.tileContainer[tile.TileType]) return false;
+				int left = Player.tileTargetX;
+				int top = Player.tileTargetY;
+				if (tile.TileFrameX % 36 != 0) {
+					left--;
+				}
+				if (tile.TileFrameY != 0) {
+					top--;
+				}
+				return ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(left, top), player.GetModPlayer<OriginPlayer>().guid);
+			}
+			return false;
+		}
+		public override bool CanUseItem(Player player) {
+			return base.CanUseItem(player);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Bone, 12);
-			recipe.AddIngredient(ItemID.Chain, 2);
-			recipe.AddIngredient(ItemID.JungleSpores, 5);
-			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ItemID.ShadowScale, 10);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-
-			/*recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Bone, 7);
-			recipe.AddIngredient(ItemID.ChestLock);
-			recipe.AddIngredient(ItemID.JungleSpores, 5);
-			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ItemID.ShadowScale, 10);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();*/
+			CreateRecipe()
+			.AddIngredient(ItemID.Bone, 7)
+			.AddIngredient(ItemID.ChestLock)
+			.AddIngredient(ItemID.JungleSpores, 5)
+			.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ItemID.ShadowScale, 10)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 }

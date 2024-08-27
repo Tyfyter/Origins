@@ -479,8 +479,11 @@ namespace Origins {
 		bool hasLoggedPUP = false;
 		public override void PreUpdatePlayers() {
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
-			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = new();
+			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];
 			else OriginPlayer.playersByGuid.Clear();
+			foreach (Player player in Main.ActivePlayers) {
+				OriginPlayer.playersByGuid.Add(player.GetModPlayer<OriginPlayer>().guid, player.whoAmI);
+			}
 			if (!hasLoggedPUP) {
 				hasLoggedPUP = true;
 				Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");

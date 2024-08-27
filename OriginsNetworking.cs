@@ -44,6 +44,14 @@ namespace Origins {
 						break;
 					}
 
+					case add_void_lock:
+					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), fromNet: true);
+					break;
+
+					case remove_void_lock:
+					ModContent.GetInstance<OriginSystem>().RemoveVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), fromNet: true);
+					break;
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -69,6 +77,14 @@ namespace Origins {
 
 					case spawn_boss_on_player:
 					Main.player[reader.ReadUInt16()].SpawnBossOn(reader.ReadInt32());
+					break;
+
+					case add_void_lock:
+					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), netOwner: whoAmI);
+					break;
+
+					case remove_void_lock:
+					ModContent.GetInstance<OriginSystem>().RemoveVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), netOwner: whoAmI);
 					break;
 
 					default:
@@ -165,6 +181,8 @@ namespace Origins {
 			internal const byte pickle_lottery = 7;
 			internal const byte place_tile_entity = 8;
 			internal const byte spawn_boss_on_player = 9;
+			internal const byte add_void_lock = 10;
+			internal const byte remove_void_lock = 11;
 		}
 	}
 }

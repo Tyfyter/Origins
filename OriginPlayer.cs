@@ -306,7 +306,6 @@ namespace Origins {
 			}*/
 		}
 		public override void PreUpdate() {
-			playersByGuid.Add(guid, Player.whoAmI);
 			if (corruptionAssimilation > 0) {
 				Player.AddBuff(ModContent.BuffType<Corrupt_Assimilation_Debuff>(), 5);
 			}

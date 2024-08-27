@@ -1,4 +1,8 @@
-﻿using Origins.Tiles.Defiled;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Other.Consumables;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,8 +10,37 @@ using Terraria.ModLoader;
 namespace Origins.Tiles {
 	public class OriginsGlobalTile : GlobalTile {
 		public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
-			if (Main.tile[i, j - 1].TileType == Defiled_Altar.ID && type != Defiled_Altar.ID) return false;
+			//if (Main.tile[i, j - 1].TileType == Defiled_Altar.ID && type != Defiled_Altar.ID) return false;
+			//if (Main.tile[i, j - 1].TileType == Riven_Altar.ID && type != Riven_Altar.ID) return false;
 			return true;
+		}
+		public override void MouseOver(int i, int j, int type) {
+			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+			if (Main.tileContainer[tile.TileType]) {
+				Point targetPos = new(Player.tileTargetX, Player.tileTargetY);
+				if (tile.TileFrameX % 36 != 0) {
+					targetPos.X--;
+				}
+				if (tile.TileFrameY != 0) {
+					targetPos.Y--;
+				}
+				OriginSystem originSystem = ModContent.GetInstance<OriginSystem>();
+				if (originSystem.VoidLocks.TryGetValue(targetPos, out Guid owner)) {
+					if (owner == Main.LocalPlayer.GetModPlayer<OriginPlayer>().guid) {
+						Main.LocalPlayer.cursorItemIconID = ItemID.ShadowKey;
+						if (Main.LocalPlayer.tileInteractAttempted) {
+							if (Main.LocalPlayer.HasItemInInventoryOrOpenVoidBag(ItemID.ShadowKey)) {
+								originSystem.VoidLocks.Remove(targetPos);
+							} else {
+								Main.LocalPlayer.tileInteractAttempted = false;
+							}
+						}
+					} else {
+						Main.LocalPlayer.cursorItemIconID = ModContent.ItemType<Void_Lock>();
+						Main.LocalPlayer.tileInteractAttempted = false;
+					}
+				}
+			}
 		}
 		public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			/*if () {
@@ -45,6 +78,8 @@ namespace Origins.Tiles {
 			}
 			if (anchor == ModContent.TileType<Defiled_Grass>()) {
 				plant = (ushort)ModContent.TileType<Defiled_Foliage>();
+			} else if (anchor == ModContent.TileType<Riven_Grass>()) {
+				plant = (ushort)ModContent.TileType<Riven_Foliage>();
 			}
 		}
 	}
