@@ -88,9 +88,9 @@ namespace Origins {
 				worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
 			}
 			//IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
-			Terraria.On_Main.DrawInterface_Resources_Breath += FixedDrawBreath;
-			Terraria.On_WorldGen.CountTiles += WorldGen_CountTiles;
-			Terraria.On_WorldGen.AddUpAlignmentCounts += WorldGen_AddUpAlignmentCounts;
+			On_Main.DrawInterface_Resources_Breath += FixedDrawBreath;
+			On_WorldGen.CountTiles += WorldGen_CountTiles;
+			On_WorldGen.AddUpAlignmentCounts += WorldGen_AddUpAlignmentCounts;
 			Terraria.IO.WorldFile.OnWorldLoad += () => {
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					for (int i = 0; i < Main.maxTilesX; i++) WorldGen.CountTiles(i);
@@ -119,12 +119,12 @@ namespace Origins {
 					i => i.MatchLdcI4(1),
 					i => i.MatchCallvirt<HitTile>("AddDamage")
 				);
-				c.Emit(OpCodes.Ldloc, modTile);
-				c.Emit(OpCodes.Ldarg_3);
-				c.Emit(OpCodes.Ldarg_S, (byte)4);
-				c.Emit(OpCodes.Ldarg_1);
-				c.Emit(OpCodes.Ldfld, typeof(Item).GetField("hammer"));
-				c.Emit(OpCodes.Ldloca, damageArg);
+				c.Emit(Ldloc, modTile);
+				c.Emit(Ldarg_3);
+				c.Emit(Ldarg_S, (byte)4);
+				c.Emit(Ldarg_1);
+				c.Emit(Ldfld, typeof(Item).GetField("hammer"));
+				c.Emit(Ldloca, damageArg);
 				c.EmitDelegate<MinePowerDel>((ModTile modTile, int x, int y, int minePower, ref int damage) => {
 					if (modTile is IComplexMineDamageTile damageTile) {
 						damageTile.MinePower(x, y, minePower, ref damage);
@@ -133,8 +133,8 @@ namespace Origins {
 			};
 
 			Terraria.Graphics.Renderers.On_LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
-			Terraria.DataStructures.On_PlayerDrawLayers.DrawPlayer_TransformDrawData += On_PlayerDrawLayers_DrawPlayer_TransformDrawData;
-			Terraria.On_Projectile.GetWhipSettings += Projectile_GetWhipSettings;
+			On_PlayerDrawLayers.DrawPlayer_TransformDrawData += On_PlayerDrawLayers_DrawPlayer_TransformDrawData;
+			On_Projectile.GetWhipSettings += Projectile_GetWhipSettings;
 			/*On_Recipe.CollectItemsToCraftWithFrom += (orig, player) => {
 				orig(player);
 				if (player.InModBiome<Brine_Pool>()) {
@@ -142,14 +142,14 @@ namespace Origins {
 				}
 			};*/
 			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, [typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool)]), (hook_DropItem)CommonCode_DropItem);
-			Terraria.On_WorldGen.ScoreRoom += (Terraria.On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
+			On_WorldGen.ScoreRoom += (On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
 				npcScoringRoom = npcTypeAskingToScoreRoom;
 				orig(ignoreNPC, npcTypeAskingToScoreRoom);
 			};
-			Terraria.On_WorldGen.GetTileTypeCountByCategory += (Terraria.On_WorldGen.orig_GetTileTypeCountByCategory orig, int[] tileTypeCounts, TileScanGroup group) => {
+			On_WorldGen.GetTileTypeCountByCategory += (On_WorldGen.orig_GetTileTypeCountByCategory orig, int[] tileTypeCounts, TileScanGroup group) => {
 				if (group == TileScanGroup.TotalGoodEvil) {
 					int defiledTiles = tileTypeCounts[MC.TileType<Defiled_Stone>()] + tileTypeCounts[MC.TileType<Defiled_Grass>()] + tileTypeCounts[MC.TileType<Defiled_Sand>()] + tileTypeCounts[MC.TileType<Defiled_Ice>()];
-					int rivenTiles = tileTypeCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
+					int rivenTiles = tileTypeCounts[MC.TileType<Riven_Flesh>()];
 
 					if (npcScoringRoom == MC.NPCType<Acid_Freak>()) {
 						return orig(tileTypeCounts, TileScanGroup.Hallow);
@@ -159,12 +159,12 @@ namespace Origins {
 				}
 				return orig(tileTypeCounts, group);
 			};
-			Terraria.GameContent.On_ShopHelper.BiomeNameByKey += (Terraria.GameContent.On_ShopHelper.orig_BiomeNameByKey orig, string biomeNameKey) => {
+			On_ShopHelper.BiomeNameByKey += (On_ShopHelper.orig_BiomeNameByKey orig, string biomeNameKey) => {
 				lastBiomeNameKey = biomeNameKey;
 				return orig(biomeNameKey);
 			};
 
-			Terraria.Localization.On_Language.GetTextValueWith += (Terraria.Localization.On_Language.orig_GetTextValueWith orig, string key, object obj) => {
+			On_Language.GetTextValueWith += (On_Language.orig_GetTextValueWith orig, string key, object obj) => {
 				if (key.EndsWith("Biome")) {
 					try {
 						string betterKey = key + "_" + lastBiomeNameKey.Split('.')[^1];
@@ -179,7 +179,7 @@ namespace Origins {
 				}
 				return orig(key, obj);
 			};
-			On_ShopHelper.IsPlayerInEvilBiomes += (Terraria.GameContent.On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
+			On_ShopHelper.IsPlayerInEvilBiomes += (On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
 				if (Main.npc[player.talkNPC].type == MC.NPCType<Acid_Freak>()) {
 					IShoppingBiome shoppingBiome = new DungeonBiome();
 					if (shoppingBiome.IsInBiome(player)) {
@@ -200,7 +200,7 @@ namespace Origins {
 				}
 				return orig(projectile);
 			};
-			Terraria.Graphics.Light.On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
+			On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			//On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
 			//On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
 			/*HookEndpointManager.Add(typeof(PlantLoader).GetMethod("ShakeTree", BindingFlags.Public | BindingFlags.Static), 
@@ -212,47 +212,47 @@ namespace Origins {
 					return false;
 				})
 			);*/
-			Terraria.IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
-			Terraria.On_WorldGen.PlantAlch += WorldGen_PlantAlch;
-			Terraria.On_WorldGen.ShakeTree += WorldGen_ShakeTree;
+			IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
+			On_WorldGen.PlantAlch += WorldGen_PlantAlch;
+			On_WorldGen.ShakeTree += WorldGen_ShakeTree;
 			MonoModHooks.Add(
 				typeof(MC).GetMethod("ResizeArrays", BindingFlags.NonPublic | BindingFlags.Static),
 				(Action<bool> orig, bool unloading) => {
 					orig(unloading);
-					if (!unloading) Origins.ResizeArrays();
+					if (!unloading) ResizeArrays();
 				}
 			);
-			Terraria.On_WorldGen.KillWall_CheckFailure += (Terraria.On_WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache) => {
+			On_WorldGen.KillWall_CheckFailure += (On_WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache) => {
 				fail = orig(fail, tileCache);
-				if (Main.LocalPlayer.HeldItem.hammer < Origins.WallHammerRequirement[tileCache.WallType]) {
+				if (Main.LocalPlayer.HeldItem.hammer < WallHammerRequirement[tileCache.WallType]) {
 					fail = true;
 				}
 				return fail;
 			};
 			//Terraria.On_Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
-			Terraria.On_Player.SetTalkNPC += Player_SetTalkNPC;
-			Terraria.On_Item.CanFillEmptyAmmoSlot += (orig, self) => {
+			On_Player.SetTalkNPC += Player_SetTalkNPC;
+			On_Item.CanFillEmptyAmmoSlot += (orig, self) => {
 				if (self.ammo == ItemID.Grenade || self.ammo == ItemID.Bomb || self.ammo == ItemID.Dynamite) {
 					return false;
 				}
 				return orig(self);
 			};
-			Terraria.On_NPC.AddBuff += (orig, self, type, time, quiet) => {
+			On_NPC.AddBuff += (orig, self, type, time, quiet) => {
 				orig(self, type, time, quiet);
 				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsATagBuff[type] && Main.LocalPlayer.GetModPlayer<OriginPlayer>().summonTagForceCrit) {
 					orig(self, Headphones_Buff.ID, 300, quiet);
 				}
 			};
-			Terraria.On_Player.RollLuck += Player_RollLuck;
-			Terraria.GameContent.Drawing.On_TileDrawing.Draw += TileDrawing_Draw;
-			Terraria.GameContent.Drawing.On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
+			On_Player.RollLuck += Player_RollLuck;
+			On_TileDrawing.Draw += TileDrawing_Draw;
+			On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
 			On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
 			On_PlayerDeathReason.WriteSelfTo += On_PlayerDeathReason_WriteSelfTo;
 			On_PlayerDeathReason.FromReader += On_PlayerDeathReason_FromReader;
-			Terraria.On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
-			Terraria.On_WorldGen.PlacePot += WorldGen_PlacePot;
-			Terraria.On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
-			Terraria.On_Projectile.ExplodeTiles += Projectile_ExplodeTiles;
+			On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
+			On_WorldGen.PlacePot += WorldGen_PlacePot;
+			On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
+			On_Projectile.ExplodeTiles += Projectile_ExplodeTiles;
 			IL_Player.Update += (il) => {
 				ILCursor c = new(il);
 				int index = -1;
@@ -271,9 +271,9 @@ namespace Origins {
 				}
 
 			};
-			Terraria.IL_Collision.HurtTiles += (il) => {
+			IL_Collision.HurtTiles += (il) => {
 			};
-			Terraria.GameContent.On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
+			On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
 			On_Player.HurtModifiers.ToHurtInfo += (On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) => {
 				OriginPlayer.hitOriginalDamage = self.SourceDamage.ApplyTo(damage) * self.IncomingDamageMultiplier.Value;
 				return orig(ref self, damage, defense, defenseEffectiveness, knockback, knockbackImmune);
@@ -564,7 +564,7 @@ namespace Origins {
 			c.GotoNext(MoveType.Before, ins => ins.MatchLdnull());
 			c.Remove();
 			c.Emit(Ldarg_0);
-			c.EmitDelegate<Func<NPC, NPCUtils.SearchFilter<Player>>>(EmergencyBeeFilter);
+			c.EmitDelegate(EmergencyBeeFilter);
 		}
 		public static NPCUtils.SearchFilter<Player> EmergencyBeeFilter(NPC bee) => (player) => bee.playerInteraction[player.whoAmI] || !player.GetModPlayer<OriginPlayer>().emergencyBeeCanister;
 		private static void IL_Main_DrawSurfaceBG(ILContext il) {
@@ -614,7 +614,7 @@ namespace Origins {
 					c.Index++;
 				}
 				c.Index = afterIndex;
-				c.EmitDelegate<Func<bool>>(() => {
+				c.EmitDelegate(() => {
 					if (Main.gameMenu) {
 						return MenuLoader.CurrentMenu.MenuBackgroundStyle is Riven_Surface_Background;
 					} else {
@@ -883,7 +883,7 @@ namespace Origins {
 		#endregion combat
 		internal static bool hurtCollisionCrimsonVine;
 		internal static bool rollingLotteryTicket;
-		private int Player_RollLuck(Terraria.On_Player.orig_RollLuck orig, Player self, int range) {
+		private int Player_RollLuck(On_Player.orig_RollLuck orig, Player self, int range) {
 			const int lottery_ticket_min_denominator = 50;
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
 			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
@@ -927,7 +927,7 @@ namespace Origins {
 			return roll;
 		}
 		#region quests
-		private void Player_SetTalkNPC(Terraria.On_Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
+		private void Player_SetTalkNPC(On_Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
 			Questing.Questing.ExitChat();
 			orig(self, npcIndex, fromNet);
 		}
@@ -989,7 +989,7 @@ namespace Origins {
 				}
 			}
 		}
-		private void WorldGen_PlantAlch(Terraria.On_WorldGen.orig_PlantAlch orig) {
+		private void WorldGen_PlantAlch(On_WorldGen.orig_PlantAlch orig) {
 			orig();
 			//if (!WorldGen.genRand.NextBool(10)) return;
 			int x = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
@@ -1191,7 +1191,7 @@ namespace Origins {
 			return index == -1;
 		}
 		#endregion
-		private void TileLightScanner_GetTileLight(Terraria.Graphics.Light.On_TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor) {
+		private void TileLightScanner_GetTileLight(On_TileLightScanner.orig_GetTileLight orig, TileLightScanner self, int x, int y, out Vector3 outputColor) {
 			orig(self, x, y, out outputColor);
 			try {
 				Tile tile = Framing.GetTileSafely(x, y);
@@ -1211,14 +1211,14 @@ namespace Origins {
 		public static void ResolveRuleWithHandler(IItemDropRule rule, DropAttemptInfo dropInfo, ItemDropper handler) {
 			try {
 				itemDropper += handler;
-				OriginExtensions.ResolveRule(rule, dropInfo);
+				ResolveRule(rule, dropInfo);
 			} finally {
 				itemDropper = null;
 			}
 		}
 		static event ItemDropper itemDropper;
 		#endregion
-		private void Projectile_GetWhipSettings(Terraria.On_Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
+		private void Projectile_GetWhipSettings(On_Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			if (proj.ModProjectile is IWhipProjectile whip) {
 				whip.GetWhipSettings(out timeToFlyOut, out segments, out rangeMultiplier);
 			} else {
@@ -1250,12 +1250,12 @@ namespace Origins {
 		}
 		#endregion
 		#region tile counts
-		private void WorldGen_CountTiles(Terraria.On_WorldGen.orig_CountTiles orig, int X) {
+		private void WorldGen_CountTiles(On_WorldGen.orig_CountTiles orig, int X) {
 			if (X == 0) OriginSystem.UpdateTotalEvilTiles();
 			orig(X);
 		}
 
-		private void WorldGen_AddUpAlignmentCounts(Terraria.On_WorldGen.orig_AddUpAlignmentCounts orig, bool clearCounts) {
+		private void WorldGen_AddUpAlignmentCounts(On_WorldGen.orig_AddUpAlignmentCounts orig, bool clearCounts) {
 			int[] tileCounts = WorldGen.tileCounts;
 			if (clearCounts) {
 				OriginSystem.totalDefiled2 = 0;
@@ -1269,14 +1269,14 @@ namespace Origins {
 		}
 		#endregion
 		#region worldgen
-		private bool WorldGen_PlacePot(Terraria.On_WorldGen.orig_PlacePot orig, int x, int y, ushort type, int style) {
+		private bool WorldGen_PlacePot(On_WorldGen.orig_PlacePot orig, int x, int y, ushort type, int style) {
 			Tile placedOn = Framing.GetTileSafely(x, y + 1);
 			if (PotType.TryGetValue(placedOn.TileType, out var potData)) {
 				return orig(x, y, potData.potType, WorldGen.genRand.Next(potData.minStyle, potData.maxStyle));
 			}
 			return orig(x, y, type, style);
 		}
-		private bool WorldGen_PlaceSmallPile(Terraria.On_WorldGen.orig_PlaceSmallPile orig, int i, int j, int X, int Y, ushort type) {
+		private bool WorldGen_PlaceSmallPile(On_WorldGen.orig_PlaceSmallPile orig, int i, int j, int X, int Y, ushort type) {
 			Tile placedOn = Framing.GetTileSafely(i, j + 1);
 			if (PileType.TryGetValue(placedOn.TileType, out var pileData)) {
 				return orig(i, j, WorldGen.genRand.Next(pileData.minStyle, pileData.maxStyle), 0, pileData.pileType);
@@ -1401,7 +1401,7 @@ namespace Origins {
 
 		static bool sonarDrawing = false;
 		static bool sonarDrawingNonSolid = false;
-		private void TileDrawing_Draw(Terraria.GameContent.Drawing.On_TileDrawing.orig_Draw orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets, int waterStyleOverride) {
+		private void TileDrawing_Draw(On_TileDrawing.orig_Draw orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets, int waterStyleOverride) {
 			sonarDrawing = false;
 			sonarDrawingNonSolid = false;
 			orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
@@ -1419,7 +1419,7 @@ namespace Origins {
 				sonarDrawingNonSolid = false;
 			}
 		}
-		private Color TileDrawing_DrawTiles_GetLightOverride(Terraria.GameContent.Drawing.On_TileDrawing.orig_DrawTiles_GetLightOverride orig, TileDrawing self, int j, int i, Tile tileCache, ushort typeCache, short tileFrameX, short tileFrameY, Color tileLight) {
+		private Color TileDrawing_DrawTiles_GetLightOverride(On_TileDrawing.orig_DrawTiles_GetLightOverride orig, TileDrawing self, int j, int i, Tile tileCache, ushort typeCache, short tileFrameX, short tileFrameY, Color tileLight) {
 			if (sonarDrawing) {
 				bool solid = Main.tileSolid[typeCache];
 				if (solid || sonarDrawingNonSolid) {
@@ -1464,11 +1464,11 @@ namespace Origins {
 					//c.Emit(OpCodes.Ldsfld, typeof(Origins).GetField("sonarDrawing", BindingFlags.NonPublic | BindingFlags.Static));
 					//c.Emit(OpCodes.Brfalse, label);
 
-					c.Emit(OpCodes.Ldarg_0);
-					c.Emit(OpCodes.Ldarg_S, il.Method.Parameters[6]);
-					c.Emit(OpCodes.Ldarg_S, il.Method.Parameters[7]);
-					c.Emit(OpCodes.Ldarg_0);
-					c.Emit(OpCodes.Ldfld, tileLight);
+					c.Emit(Ldarg_0);
+					c.Emit(Ldarg_S, il.Method.Parameters[6]);
+					c.Emit(Ldarg_S, il.Method.Parameters[7]);
+					c.Emit(Ldarg_0);
+					c.Emit(Ldfld, tileLight);
 					c.EmitDelegate((Func<int, int, Color, Color>)((int tileX, int tileY, Color _tileLight) => {
 						if (!sonarDrawing) {
 							return _tileLight;
@@ -1483,7 +1483,7 @@ namespace Origins {
 							return new Color(0, 0, 0, 0);
 						}
 					}));
-					c.Emit(OpCodes.Stfld, tileLight);
+					c.Emit(Stfld, tileLight);
 					//c.MarkLabel(label);
 					//}
 				}
@@ -1491,7 +1491,7 @@ namespace Origins {
 		}
 		
 
-		private void _TileDrawing_DrawSingleTile(Terraria.GameContent.Drawing.On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
+		private void _TileDrawing_DrawSingleTile(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
 
 			if (TileDrawing.IsTileDangerous(tileX, tileY, Main.LocalPlayer)) {
 				drawData.tileLight = new Color(255, 50, 50);
