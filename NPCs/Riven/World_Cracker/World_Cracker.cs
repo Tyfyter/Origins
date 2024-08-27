@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Accessories;
@@ -233,11 +233,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 20, 330));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 1, 134));
-			//add cool new weapon idea here
-            normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Vorpal_Sword_Cursed>()));
+   normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Vorpal_Sword_Cursed>()));
 
-            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Trophy_Item>(), 10));
-            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
+   normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Trophy_Item>(), 10));
+   normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
