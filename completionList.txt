@@ -1152,7 +1152,7 @@ CONSUMABLES:
 (%2, ^2) Holiday Hair Dye* !!!
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
-(#2, ^2) Void Lock*
+(☻) Void Lock*
 (^) White Water*
 
 (^) Dawn Key*
