@@ -459,6 +459,7 @@ namespace Origins {
 			}
 			gunGlove = false;
 			gunGloveItem = null;
+			guardedHeart = false;
 			razorwire = false;
 			retributionShield = false;
 			razorwireItem = null;
