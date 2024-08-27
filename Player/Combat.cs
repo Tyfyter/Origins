@@ -90,47 +90,28 @@ namespace Origins {
 		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				if (bleedingObsidianSet) {
-					Fraction dmg = new Fraction(2, 2);
-					int c = (madHand ? 1 : 0) + (Main.rand.NextBool(2) ? 1 : 0);
-					dmg.D += c;
+					Fraction dmg = new(2, 2);
+					int count = (madHand ? 1 : 0) + (Main.rand.NextBool(2) ? 1 : 0);
+					dmg.D += count;
 					damage *= dmg;
 					double rot = Main.rand.NextBool(2) ? -0.1 : 0.1;
-					Vector2 _position;
-					Vector2 _velocity;
-					int _type;
-					int _damage;
-					float _knockback;
-					for (int i = c; i-- > 0;) {
-						_position = position;
-						_velocity = velocity.RotatedBy(rot);
-						_type = type;
-						_damage = damage;
-						_knockback = knockback;
-						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockback)) {
-							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockback, Player.whoAmI);
+					for (int i = count; i-- > 0;) {
+						Vector2 _velocity = velocity.RotatedBy(rot);
+						if (ItemLoader.Shoot(item, Player, source, position, _velocity, type, damage, knockback)) {
+							Projectile.NewProjectile(source, position, _velocity, type, damage, knockback, Player.whoAmI);
 						}
 						rot = -rot;
 					}
-				}
-				if (novaSet) {
-					Fraction dmg = new Fraction(3, 3);
-					int c = (madHand ? 1 : 0) + (Main.rand.NextBool(4) ? 0 : 1);
-					dmg.D += c;
+				} else if (novaSet) {
+					Fraction dmg = new(3, 3);
+					int count = (madHand ? 1 : 0) + (Main.rand.NextBool(4) ? 0 : 1);
+					dmg.D += count;
 					damage *= dmg;
 					double rot = Main.rand.NextBool(2) ? -0.1 : 0.1;
-					Vector2 _position;
-					Vector2 _velocity;
-					int _type;
-					int _damage;
-					float _knockback;
-					for (int i = c; i-- > 0;) {
-						_position = position;
-						_velocity = velocity.RotatedBy(rot);
-						_type = type;
-						_damage = damage;
-						_knockback = knockback;
-						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockback)) {
-							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockback, Player.whoAmI);
+					for (int i = count; i-- > 0;) {
+						Vector2 _velocity = velocity.RotatedBy(rot);
+						if (ItemLoader.Shoot(item, Player, source, position, _velocity, type, damage, knockback)) {
+							Projectile.NewProjectile(source, position, _velocity, type, damage, knockback, Player.whoAmI);
 						}
 						rot = -rot;
 					}

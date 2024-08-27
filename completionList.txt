@@ -423,7 +423,7 @@ ACCESSORIES:
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
-(#2, ^2) Stack of Shraps*
+(#2?, ^2) Stack of Shraps*
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
