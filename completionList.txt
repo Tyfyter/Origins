@@ -423,7 +423,7 @@ ACCESSORIES:
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
-(#2?, ^2) Stack of Shraps*
+(#3 (probably needs to be whispered since its a lore accessory), ^2) Stack of Shraps* !!!
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
@@ -724,6 +724,7 @@ SUMMONER WEAPONS:
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
+(X) Fresh Meat Artifact !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
@@ -778,6 +779,7 @@ EXPLOSIVE WEAPONS:
 (^) Hand Grenade Launcher
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
+(X) Hemoptysis !!!
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*

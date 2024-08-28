@@ -826,7 +826,26 @@ Stone_Mask: {
 
 Strange_Computer: {
 	// DisplayName: Strange Computer
-	// Tooltip: Displays the trajectory of projectiles from your selected item
+	/* Tooltip:
+		'''
+		This tooltip is a message... and part of a system of messages... pay attention to it!
+
+		Sending this message was important to us. We considered ourselves to be a powerful culture.
+
+		This item is not an item of honor... no highly esteemed functionality is commemorated here... nothing valued is here.
+
+		What is here was dangerous and repulsive to us. This message is a warning about danger.
+
+		The danger is in a particular item... it increases towards a center... the center of danger is here... of a particular size and shape, and below your cursor.
+
+		The danger is still present, in your time, as it was in ours.
+
+		The danger is to the game, and it can crash.
+
+		The form of the danger is an emanation of projectiles.
+
+		The danger is unleashed only if you substantially disturb this item physically. This item is best shunned and left uninhabited.
+		''' */
 }
 
 Super_Turbo_Reel: {
