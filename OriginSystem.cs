@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
@@ -408,6 +409,15 @@ namespace Origins {
 					);
 				}
 			}
+			Strange_Computer.drawingStrangeLine = false;
+			layers.Insert(0, new LegacyGameInterfaceLayer(
+				"Origins: Strange Computer Line",
+				delegate {
+					Strange_Computer.DrawStrangeLine();
+					return true;
+				},
+				InterfaceScaleType.Game) { Active = Main.LocalPlayer.GetModPlayer<OriginPlayer>().strangeComputer }
+			);
 		}
 		public override void OnLocalizationsLoaded() {
 			Dictionary<string, LocalizedText> texts = LocalizationMethods._localizedTexts.GetValue(LanguageManager.Instance);

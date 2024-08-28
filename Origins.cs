@@ -613,7 +613,6 @@ namespace Origins {
 				}
 			}
 		}
-
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
 			int breath = localPlayer.breath;
@@ -627,7 +626,7 @@ namespace Origins {
 			localPlayer.breathMax = breathMax;
 		}
 
-		private void NPC_GetMeleeCollisionData(Terraria.On_NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
+		private void NPC_GetMeleeCollisionData(On_NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
 			NPC self = Main.npc[enemyIndex];
 			MeleeCollisionNPCData.knockbackMult = 1f;
 			if (self.ModNPC is IMeleeCollisionDataNPC meleeNPC) {

@@ -177,6 +177,9 @@ namespace Origins.Projectiles {
 					}
 				}
 			}
+			if (Strange_Computer.drawingStrangeLine) {
+				Strange_Computer.projectiles.Add(projectile.whoAmI);
+			}
 		}
 		public override void PostAI(Projectile projectile) {
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall)

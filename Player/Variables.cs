@@ -239,6 +239,8 @@ namespace Origins {
 		public bool futurephones = false;
 		public bool coreGenerator = false;
 		public Item coreGeneratorItem = null;
+		public bool strangeComputer = false;
+		public Color strangeComputerColor = Color.Blue;
 		#endregion
 
 		#region explosive stats
@@ -582,6 +584,7 @@ namespace Origins {
 			if (cursedVoiceCooldown > 0) cursedVoiceCooldown--;
 			futurephones = false;
 			coreGenerator = false;
+			strangeComputer = false;
 
 			flaskBile = false;
 			flaskSalt = false;

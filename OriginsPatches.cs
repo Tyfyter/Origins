@@ -461,7 +461,7 @@ namespace Origins {
 					orig(self);
 				}
 			};
-			chanceNumerators = new();
+			chanceNumerators = [];
 			foreach (Mod mod in ModLoader.Mods) {
 				if (mod.Code is null) continue;
 				foreach (Type type in from t in AssemblyManager.GetLoadableTypes(mod.Code) where t.IsAssignableTo(typeof(IItemDropRule)) select t) {
@@ -490,6 +490,30 @@ namespace Origins {
 			On_WorldGen.AddHellHouses += On_WorldGen_AddHellHouses;
 			On_WorldGen.HellFort += On_WorldGen_HellFort;
 			On_Item.CloneDefaults += On_Item_CloneDefaults;
+			On_Lighting.AddLight_int_int_float_float_float += On_Lighting_AddLight_int_int_float_float_float;
+			On_Dust.NewDust += On_Dust_NewDust;
+			On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += On_Gore_NewGore_IEntitySource_Vector2_Vector2_int_float;
+			On_SoundEngine.PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback += On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback;
+		}
+
+		private ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
+			if (Strange_Computer.drawingStrangeLine) return ReLogic.Utilities.SlotId.Invalid;
+			return orig(ref style, position, updateCallback);
+		}
+
+		private int On_Gore_NewGore_IEntitySource_Vector2_Vector2_int_float(On_Gore.orig_NewGore_IEntitySource_Vector2_Vector2_int_float orig, IEntitySource source, Vector2 Position, Vector2 Velocity, int Type, float Scale) {
+			if (Strange_Computer.drawingStrangeLine) return 600;
+			return orig(source, Position, Velocity, Type, Scale);
+		}
+
+		private int On_Dust_NewDust(On_Dust.orig_NewDust orig, Vector2 Position, int Width, int Height, int Type, float SpeedX, float SpeedY, int Alpha, Color newColor, float Scale) {
+			if (Strange_Computer.drawingStrangeLine) return 6000;
+			return orig(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale);
+		}
+
+		private void On_Lighting_AddLight_int_int_float_float_float(On_Lighting.orig_AddLight_int_int_float_float_float orig, int i, int j, float r, float g, float b) {
+			if (Strange_Computer.drawingStrangeLine) return;
+			orig(i, j, r, g, b);
 		}
 
 		private void On_Item_CloneDefaults(On_Item.orig_CloneDefaults orig, Item self, int TypeToClone) {
