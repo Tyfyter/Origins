@@ -26,7 +26,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Third_Eye_Deathray>();
 			Item.value = Item.sellPrice(gold: 6);
 			Item.master = true;
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.Cyan;
 		}
 		public static Vector2 GetEyePos(Player player) => player.MountedCenter + new Vector2(5 * player.direction, -14);
 		public override void UpdateEquip(Player player) {

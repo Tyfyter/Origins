@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 		Player player;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.Green;
 		}
 		public override bool OnPickup(Player player) {
 			if (!Main.dedServ && owner == Guid.Empty) {

@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
 			Item.knockBack = 2;
 			Item.useTime = Item.useAnimation = 45;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.Blue;
 			Item.master = true;
 		}
 		public override void UpdateEquip(Player player) {

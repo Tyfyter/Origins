@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 			Item.dye = -1;
 			Item.hairDye = -1;
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.Orange;
 			Item.master = true;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 2);

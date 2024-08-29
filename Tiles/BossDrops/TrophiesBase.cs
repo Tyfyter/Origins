@@ -52,7 +52,7 @@ namespace Origins.Tiles.BossDrops {
 			Item.width = 30;
 			Item.height = 40;
 			Item.rare = ItemRarityID.Master;
-			Item.master = true; // This makes sure that "Master" displays in the tooltip, as the rarity only changes the item name color
+			Item.master = true; // This makes "Master" display in the tooltip and overrides the rarity's text color
 			Item.value = Item.buyPrice(0, 5);
 		}
 	}

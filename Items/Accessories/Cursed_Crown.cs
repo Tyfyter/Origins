@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.master = true;
 		}

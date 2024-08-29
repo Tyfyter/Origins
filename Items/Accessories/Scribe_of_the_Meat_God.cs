@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = Scribe_of_the_Meat_God_P.ID;
 			Item.value = Item.sellPrice(gold: 6);
 			Item.master = true;
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().meatScribeItem = Item;
