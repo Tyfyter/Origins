@@ -183,6 +183,7 @@ namespace Origins.NPCs.Riven {
 			if (++NPC.ai[2] >= 450) {
 				targetPosition = parent.Center;
 				returning = true;
+				NPC.noTileCollide = true;
 			}
 			Vector2 vectorToTargetPosition = targetPosition - NPC.Center;
 			if (returning && vectorToTargetPosition.LengthSquared() < 16 * 16) {
