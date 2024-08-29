@@ -44,6 +44,7 @@ X: No progress
 ⚯: redundant? (unicode hex code 26AF)
 ⛥: needs design discussion (unicode hex code 26E5)
 ⚿: missing localization
+ᥢ: can't be implemented in a stable manner (unicode hex code 1962)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -297,7 +298,7 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#, ^2) ASH Attack Relay !!!
-(#2, ^2, ♠) ATACS*
+(ᥢ, ♠) ATACS*
 (^) Automated Returns Handler*
 (^) Binding Book*
 (^) Blast-Resistant Plate*
@@ -401,7 +402,7 @@ ACCESSORIES:
 (^) Eccentric Stone*
 (^) Spirit Shard*
 (^) Stone Mask*
-(#2, ^2) Strange Computer*
+(ᥢ) Strange Computer*
 (^) Timbre of Hell*
 (^) Tripod Nip*
 
