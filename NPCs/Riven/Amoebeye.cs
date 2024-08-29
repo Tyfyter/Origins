@@ -26,14 +26,14 @@ namespace Origins.NPCs.Riven {
 			NPC.aiStyle = NPCAIStyleID.Hovering;
 			NPC.lifeMax = 300;
 			NPC.defense = 60;
-			NPC.damage = 14;
+			NPC.damage = 52;
 			NPC.width = 72;
 			NPC.height = 64;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath15;
 			NPC.knockBackResist = 0.75f;
-			NPC.value = 76;
+			NPC.value = 5000;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
@@ -93,8 +93,8 @@ namespace Origins.NPCs.Riven {
 				NPC.rotation = NPC.velocity.X * 0.1f;
 				NPCAimedTarget target = NPC.GetTargetData();
 				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
-				float speed = 8f;
-				float inertia = 16f;
+				float speed = 16f;
+				float inertia = 32f;
 				vectorToTargetPosition.Normalize();
 				vectorToTargetPosition *= speed;
 				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
@@ -133,7 +133,7 @@ namespace Origins.NPCs.Riven {
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 90;
 			NPC.defense = 0;
-			NPC.damage = 14;
+			NPC.damage = 20;
 			NPC.width = 58;
 			NPC.height = 58;
 			NPC.friendly = false;

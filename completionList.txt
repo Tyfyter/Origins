@@ -673,6 +673,7 @@ MAGIC WEAPONS:
 (^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
+(X) Eaterboros !!!
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion
