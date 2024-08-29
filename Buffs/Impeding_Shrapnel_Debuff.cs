@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs;
 using Origins.World;
 using System;
 using System.IO;
@@ -92,7 +93,7 @@ namespace Origins.Buffs {
 			//Dust.NewDustPerfect(Projectile.Center, 29, diff * 32);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(Impeding_Shrapnel_Debuff.ID, 300);
+			OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
 		}
 		public override void OnKill(int timeLeft) {
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
@@ -24,6 +25,7 @@ namespace Origins.Projectiles {
 		public bool acridHandcannon = false;
 		public bool novaCascade = false;
 		public bool novaSwarm = false;
+		public bool scrapCompactor = false;
 		public bool hasAmber = false;
 		public bool fromDeath = false;
 		public StatModifier selfDamageModifier = StatModifier.Default;
@@ -131,6 +133,9 @@ namespace Origins.Projectiles {
 			if (originPlayer.pincushion) {
 				noTileSplode = true;
 			}
+			if (originPlayer.scrapCompactor) {
+				scrapCompactor = true;
+			}
 			if (originPlayer.amberSet) {
 				hasAmber = true;
 				if (!IsExploding(projectile)) {
@@ -154,7 +159,7 @@ namespace Origins.Projectiles {
 				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
 				novaCascade = parentGlobal.novaCascade;
 				novaSwarm = parentGlobal.novaSwarm;
-				if (!novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
+				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 				noTileSplode = parentGlobal.noTileSplode;
 			}
 		}
@@ -213,6 +218,7 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(hasAmber);
 			bitWriter.WriteBit(fromDeath);
 			bitWriter.WriteBit(novaSwarm);
+			bitWriter.WriteBit(scrapCompactor);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isHoming = bitReader.ReadBit();
@@ -233,6 +239,7 @@ namespace Origins.Projectiles {
 				if (novaSwarm) projectile.scale /= Nova_Swarm.rocket_scale;
 				novaSwarm = false;
 			}
+			scrapCompactor = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile) {
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
@@ -436,6 +443,23 @@ namespace Origins.Projectiles {
 							projType,
 							projectile.damage / 4,
 							projectile.knockBack / 8
+						);
+					}
+				}
+				int shrapnelShardType = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
+				if (scrapCompactor && projectile.type != shrapnelShardType) {
+					SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest, projectile.Center);
+					for (int i = 3; i-- > 0;) {
+						Vector2 v = Main.rand.NextVector2Unit() * 4;
+						Projectile.NewProjectile(
+							projectile.GetSource_Death(),
+							projectile.Center + v * 8,
+							v,
+							shrapnelShardType,
+							projectile.damage / 2,
+							projectile.knockBack / 4,
+							projectile.owner,
+							ai2: 0.5f
 						);
 					}
 				}

@@ -4427,3 +4427,8 @@ Impactaxe: {
 	// DisplayName: Impactaxe
 	// Tooltip: ""
 }
+
+Scrap_Compactor: {
+	// DisplayName: Scrap Compactor
+	// Tooltip: ""
+}

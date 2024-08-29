@@ -213,6 +213,19 @@ namespace Origins {
 					if ((int)Main.timeForVisualEffects % 5 == 0) Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Asphalt, 0f, -3f, 0, default, 1.4f).noGravity = true;
 				}
 			}
+			if (scrapCompactor) {
+				if (++scrapCompactorTimer % 15 == 0 && Player.nearbyActiveNPCs > 0) {
+					const int range = 16 * 20;
+					const int rangeSQ = range * range;
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (npc.life <= npc.lifeMax * 0.4f && npc.HasBuff<Impeding_Shrapnel_Debuff>() && Player.DistanceSQ(npc.Center) <= rangeSQ) {
+							npc.StrikeNPC(new NPC.HitInfo() {
+								Damage = (int)(npc.lifeMax * (npc.boss ? 0.01f : 0.05f))
+							});
+						}
+					}
+				}
+			}
 		}
 		public override void PostUpdateMiscEffects() {
 			if (cryostenHelmet) {
