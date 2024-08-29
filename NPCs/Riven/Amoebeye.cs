@@ -4,6 +4,7 @@ using Origins.Gores.NPCs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.Bestiary;
@@ -80,14 +81,23 @@ namespace Origins.NPCs.Riven {
 				NPCAimedTarget target = NPC.GetTargetData();
 				if (!target.Invalid) {
 					if (NPC.DistanceSQ(target.Center) < attack_range * attack_range) {
-						NPC.ai[3] = 1 + NPC.NewNPC(
-							NPC.GetSource_FromAI(),
-							(int)NPC.Center.X,
-							(int)NPC.Center.Y,
-							ModContent.NPCType<Amoebeye_P>(),
-							ai3: NPC.whoAmI
-						);
-					}
+						if (++NPC.localAI[3] > 30) {
+							NPC.ai[3] = 1 + NPC.NewNPC(
+								NPC.GetSource_FromAI(),
+								(int)NPC.Center.X,
+								(int)NPC.Center.Y,
+								ModContent.NPCType<Amoebeye_P>(),
+								ai3: NPC.whoAmI
+							);
+							SoundEngine.PlaySound(Main.rand.NextBool() ? SoundID.Item111 : SoundID.Item112, NPC.Center);
+						} else {
+							Vector2 offset = Main.rand.NextVector2CircularEdge(32, 32);
+							Vector2 pos = NPC.Center + offset;
+							for (int i = Main.rand.Next(3, 6); i-- > 0;) {
+								Gore.NewGore(NPC.GetSource_FromAI(), pos, offset * -0.125f + NPC.velocity, ModContent.GoreType<R_Effect_Blood1_Small>());
+							}
+						}
+					} else if (NPC.localAI[3] > 0) NPC.localAI[3]--;
 				}
 			} else if (NPC.aiStyle == NPCAIStyleID.None) {
 				NPC.rotation = NPC.velocity.X * 0.1f;
@@ -98,6 +108,9 @@ namespace Origins.NPCs.Riven {
 				vectorToTargetPosition.Normalize();
 				vectorToTargetPosition *= speed;
 				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
+				Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
+				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
+				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
 			}
 		}
 		public override void FindFrame(int frameHeight) {
@@ -181,6 +194,9 @@ namespace Origins.NPCs.Riven {
 			vectorToTargetPosition.Normalize();
 			vectorToTargetPosition *= speed;
 			NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
+			Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
+			if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -1.2f;
+			if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -1.2f;
 
 			if (++NPC.frameCounter > 6) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 60) % 240, 58, 58);
@@ -198,7 +214,7 @@ namespace Origins.NPCs.Riven {
 			return target.whoAmI + 1 != NPC.ai[0];
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			for (int i = NPC.life < 0 ? 6 : 2; i-->0;) {
+			for (int i = (int)((NPC.life < 0 ? 12 : 4) * Main.gfxQuality) ; i-->0;) {
 				Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, Main.rand.Next(R_Effect_Blood1.GoreIDs));
 			}
 		}

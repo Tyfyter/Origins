@@ -144,13 +144,13 @@ namespace Origins.Buffs {
 				}, 40, 0);
 			}
 			
-			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 300 : 1000, percent, true);
+			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 5 : 1000, percent, true);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;
 
 			string text = $"{percent * 100:#0}%";
-			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
+			Color color = new(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(
 				FontAssets.ItemStack.Value,
 				text,
