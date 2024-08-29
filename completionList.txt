@@ -411,7 +411,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (X) Retaliatory Tendril*
-(#, ^2) Scrap Compactor*
+(☻) Scrap Compactor*
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
