@@ -218,7 +218,7 @@ namespace Origins {
 					const int range = 16 * 20;
 					const int rangeSQ = range * range;
 					foreach (NPC npc in Main.ActiveNPCs) {
-						if (npc.life <= npc.lifeMax * (npc.boss ? 0.2f : 0.4f) && npc.HasBuff<Impeding_Shrapnel_Debuff>() && Player.DistanceSQ(npc.Center) <= rangeSQ) {
+						if (npc.life <= npc.lifeMax * (npc.boss ? 0.1f : 0.4f) && npc.HasBuff<Impeding_Shrapnel_Debuff>() && Player.DistanceSQ(npc.Center) <= rangeSQ) {
 							npc.StrikeNPC(new NPC.HitInfo() {
 								Damage = (int)(npc.lifeMax * (npc.boss ? 0.005f : 0.05f))
 							});

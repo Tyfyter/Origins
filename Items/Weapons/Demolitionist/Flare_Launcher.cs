@@ -272,6 +272,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			CanisterData canisterData = Projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
+			if (canisterData is null) return false;
 			Vector2 center = Projectile.Center;
 			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
 			Vector2 closest = screen.Contains(center) ? center : CollisionExtensions.GetCenterProjectedPoint(screen, center);

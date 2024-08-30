@@ -447,7 +447,7 @@ namespace Origins.Projectiles {
 					}
 				}
 				int shrapnelShardType = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
-				if (scrapCompactor && projectile.type != shrapnelShardType) {
+				if (scrapCompactor && projectile.damage > 0 && projectile.type != shrapnelShardType) {
 					SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest, projectile.Center);
 					for (int i = 3; i-- > 0;) {
 						Vector2 v = Main.rand.NextVector2Unit() * 4;

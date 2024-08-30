@@ -138,7 +138,7 @@ namespace Origins.Projectiles {
 				}
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
-					if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
+					if (parentProjectile.type == ModContent.ProjectileType<Mitosis_P>()) {
 						isFromMitosis = true;
 						projectile.alpha = 100;
 						if (projectile.minion) {

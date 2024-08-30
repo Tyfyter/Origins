@@ -108,8 +108,6 @@ namespace Origins {
 		public bool entangledEnergy = false;
 		public bool asylumWhistle = false;
 		public int asylumWhistleTarget = -1;
-		public bool mitosis = false;
-		public Item mitosisItem = null;
 		public int mitosisCooldown = 0;
 		public bool refactoringPieces;
 		public float mysteriousSprayMult = 1;
@@ -444,8 +442,6 @@ namespace Origins {
 			decayingScale = false;
 			lazyCloakVisible = false;
 			amebicVialVisible = false;
-			mitosis = false;
-			mitosisItem = null;
 			entangledEnergy = false;
 			mysteriousSprayMult = 1;
 			protozoaFood = false;

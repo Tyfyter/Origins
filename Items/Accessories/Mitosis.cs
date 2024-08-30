@@ -10,8 +10,7 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Mitosis : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"Shouldntexist"
+			"Combat"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Plasma_Cutter>()] = Type;
@@ -22,27 +21,18 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 8);
 
-			Item.damage = 0;
-			Item.DamageType = DamageClass.Ranged;
 			Item.useTime = 5;
 			Item.useAnimation = 5;
 			Item.shootSpeed = 5;
-			Item.shoot = ModContent.ProjectileType<Amoeba_Bubble>();
+			Item.shoot = ModContent.ProjectileType<Mitosis_P>();
 		}
-		public override void UpdateAccessory(Player player, bool hideVisual) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.mitosis = true;
-			originPlayer.mitosisItem = Item;
-		}
-		public override bool RangedPrefix() => false;
 	}
-	public class Amoeba_Bubble : ModProjectile {
-		public override string Texture => "Origins/Items/Accessories/Mitosis_P";
+	public class Mitosis_P : ModProjectile {
 		public override string GlowTexture => Texture;
-		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.aiStyle = 0;
+			Projectile.DamageType = DamageClass.Default;
+			Projectile.aiStyle = ProjAIStyleID.Hook;
 			Projectile.penetrate = -1;
 			Projectile.width = 22;
 			Projectile.height = 22;
@@ -51,15 +41,13 @@ namespace Origins.Items.Accessories {
 			Projectile.alpha = 150;
 		}
 		public override void AI() {
+			Projectile.aiStyle = 0;
 			Projectile.velocity *= 0.95f;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				if (i == Projectile.whoAmI) continue;
 				Projectile other = Main.projectile[i];
 				if (other.active && !ProjectileID.Sets.IsAWhip[other.type] && other.Colliding(other.Hitbox, Projectile.Hitbox)) {
 					OriginGlobalProj globalProj = other.GetGlobalProjectile<OriginGlobalProj>();
-					if (other.type == 1075) {
-
-					}
 					if (!globalProj.isFromMitosis && !globalProj.hasUsedMitosis) {
 						Projectile duplicated = Projectile.NewProjectileDirect(
 							Projectile.GetSource_FromThis(),
@@ -70,7 +58,8 @@ namespace Origins.Items.Accessories {
 							other.knockBack,
 							other.owner,
 							other.ai[0],
-							other.ai[1]
+							other.ai[1],
+							other.ai[2]
 						);
 						duplicated.rotation += 0.25f;
 
@@ -84,8 +73,19 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
+		public override bool? CanUseGrapple(Player player) {
+			//if (!player.CheckMana()) return false;
+			if (player.ownedProjectileCounts[Type] > 0) {
+				foreach (Projectile proj in Main.ActiveProjectiles) {
+					if (proj.type == Type && proj.owner == player.whoAmI) {
+						proj.Kill();
+						break;
+					}
+				}
+			}
+			return true;
+		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			//Projectile.Kill();
 			return false;
 		}
 	}
