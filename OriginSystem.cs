@@ -492,7 +492,7 @@ namespace Origins {
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];
 			else OriginPlayer.playersByGuid.Clear();
 			foreach (Player player in Main.ActivePlayers) {
-				OriginPlayer.playersByGuid.Add(player.GetModPlayer<OriginPlayer>().guid, player.whoAmI);
+				OriginPlayer.playersByGuid.TryAdd(player.GetModPlayer<OriginPlayer>().guid, player.whoAmI);
 			}
 			if (!hasLoggedPUP) {
 				hasLoggedPUP = true;

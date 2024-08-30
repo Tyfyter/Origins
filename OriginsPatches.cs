@@ -56,6 +56,8 @@ using Origins.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
 using Origins.Items;
+using System.Runtime.ExceptionServices;
+using System.IO;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -318,7 +320,7 @@ namespace Origins {
 				c.GotoNext(MoveType.After,
 					i => i.MatchLdsfld<Collision>("honey"),
 					i => i.MatchStloc(out int _)
-				);;
+				); ;
 				c.Index--;
 				c.EmitDelegate<Func<bool, bool>>((flag) => {
 					if (OriginPlayer.forceHoneyCollision) {
@@ -331,7 +333,7 @@ namespace Origins {
 				c.GotoNext(MoveType.After,
 					i => i.MatchLdsfld<Collision>("shimmer"),
 					i => i.MatchStloc(out int _)
-				);;
+				); ;
 				c.Index--;
 				c.EmitDelegate<Func<bool, bool>>((flag) => {
 					if (OriginPlayer.forceShimmerCollision) {
@@ -494,8 +496,15 @@ namespace Origins {
 			On_Dust.NewDust += On_Dust_NewDust;
 			On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += On_Gore_NewGore_IEntitySource_Vector2_Vector2_int_float;
 			On_SoundEngine.PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback += On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback;
+			//MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 		}
-
+		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
+		void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
+			if (args.Exception is IOException ioException && ioException.Message.Contains("bytes caused by Origins in HandlePacket")) {
+				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
+			}
+			orig(sender, args);
+		}
 		private ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
 			if (Strange_Computer.drawingStrangeLine) return ReLogic.Utilities.SlotId.Invalid;
 			return orig(ref style, position, updateCallback);

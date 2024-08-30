@@ -15,6 +15,7 @@ namespace Origins {
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
 			byte type = reader.ReadByte();
 			bool altHandle = false;
+			lastPacketType = type;
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
 				switch (type) {
 					case tile_counts:
@@ -154,14 +155,14 @@ namespace Origins {
 						break;
 					}
 					case sync_guid: {
-						OriginPlayer originPlayer = Main.player[Main.netMode == NetmodeID.Server ? whoAmI : reader.ReadByte()].GetModPlayer<OriginPlayer>();
+						OriginPlayer originPlayer = Main.player[reader.ReadByte()].GetModPlayer<OriginPlayer>();
 						originPlayer.guid = new(reader.ReadBytes(16));
 						// Forward the changes to the other clients
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
 							ModPacket packet = Origins.instance.GetPacket();
 							packet.Write(Origins.NetMessageType.sync_guid);
-							packet.Write((byte)whoAmI);
+							packet.Write((byte)originPlayer.Player.whoAmI);
 							packet.Write(originPlayer.guid.ToByteArray());
 							packet.Send(-1, Main.myPlayer);
 						}
@@ -169,7 +170,9 @@ namespace Origins {
 					}
 				}
 			}
+			//if (reader.BaseStream.Position != reader.BaseStream.Length) Origins.instance.Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
 		}
+		internal static byte lastPacketType;
 		internal static class NetMessageType {
 			internal const byte tile_counts = 0;
 			internal const byte sync_player = 1;

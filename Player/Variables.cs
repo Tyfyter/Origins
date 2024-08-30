@@ -354,7 +354,7 @@ namespace Origins {
 		public float lifeRegenTimeSinceHit = 0;
 		public int itemUseOldDirection = 0;
 		public List<Vector2> oldVelocities = new();
-		public Guid guid;
+		public Guid guid = Guid.Empty;
 		public int voodooDollIndex = -1;
 		public float manaShielding = 0f;
 		public override void ResetEffects() {

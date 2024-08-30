@@ -13,14 +13,15 @@ namespace Origins {
 		bool dummyInitialize = false;
 		bool netInitialized = false;
 		void NetInit() {
+			if (guid == Guid.Empty) guid = Guid.NewGuid();
 			if (Main.netMode == NetmodeID.Server) {
 				if (!dummyInitialize) {
 					Mod.Logger.Info($"FakeInit {netInitialized}, {Player.name}");
 					dummyInitialize = true;
 					return;
 				}
-				Mod.Logger.Info($"NetInit {netInitialized}, {Player.name}");
 				if (!netInitialized) {
+					Mod.Logger.Info($"NetInit {netInitialized}, {Player.name}");
 					netInitialized = true;
 					ModPacket packet = Mod.GetPacket();
 					packet.Write(Origins.NetMessageType.sync_peat);
@@ -41,8 +42,8 @@ namespace Origins {
 					packet.Send(-1, Main.myPlayer);
 					return;
 				}
-				Mod.Logger.Info($"Client NetInit {netInitialized}, {Player.name}");
 				if (!netInitialized) {
+					Mod.Logger.Info($"Client NetInit {netInitialized}, {Player.name}");
 					netInitialized = true;
 					ModPacket packet = Origins.instance.GetPacket();
 					packet.Write(Origins.NetMessageType.sync_guid);
@@ -88,6 +89,13 @@ namespace Origins {
 			if (Main.netMode == NetmodeID.SinglePlayer) return;
 			NetInit();
 			SyncPlayer(toWho, fromWho, newPlayer, (PlayerSyncDatas)ushort.MaxValue, (PlayerVisualSyncDatas)ushort.MaxValue);
+			if (newPlayer) {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.sync_guid);
+				packet.Write((byte)Player.whoAmI);
+				packet.Write(guid.ToByteArray());
+				packet.Send(toWho, fromWho);
+			}
 		}
 		public void SyncPlayer(int toWho, int fromWho, bool newPlayer, PlayerSyncDatas syncDatas, PlayerVisualSyncDatas visualSyncDatas) {
 			//return;
@@ -105,6 +113,8 @@ namespace Origins {
 				packet.Write((byte)(defiledAssimilation * 100));
 				packet.Write((byte)(rivenAssimilation * 100));
 			}
+
+			packet.Write((ushort)visualSyncDatas);
 
 			if (visualSyncDatas.HasFlag(BlastSetActive)) packet.Write(blastSetActive);
 
