@@ -4436,3 +4436,13 @@ Scrap_Compactor: {
 	// DisplayName: Scrap Compactor
 	// Tooltip: ""
 }
+
+Wilting_Rose_Planter_Box_Item: {
+	// DisplayName: Wilting Rose Planter Box
+	// Tooltip: ""
+}
+
+Marrowick_Platform_Item: {
+	// DisplayName: Marrowick Platform
+	// Tooltip: ""
+}

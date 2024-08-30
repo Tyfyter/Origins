@@ -9,7 +9,20 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Marrowick {
-    public class Marrowick_Door : DoorBase {
+	public class Marrowick_Platform : Platform_Tile {
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type, 2)
+				.AddIngredient<Marrowick_Item>(1)
+				.Register();
+				Recipe.Create(ModContent.ItemType<Marrowick_Item>())
+				.AddIngredient(item.type, 2)
+				.Register();
+			};
+		}
+	}
+	public class Marrowick_Door : DoorBase {
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
 			item.OnAddRecipes += (item) => {

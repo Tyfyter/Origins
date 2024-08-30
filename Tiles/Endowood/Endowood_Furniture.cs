@@ -6,8 +6,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Endowood {
-	public class Endowood_Platform : FurnitureBase {
-		public override int BaseTileID => TileID.Platforms;
+	public class Endowood_Platform : Platform_Tile {
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
 			item.OnAddRecipes += (item) => {

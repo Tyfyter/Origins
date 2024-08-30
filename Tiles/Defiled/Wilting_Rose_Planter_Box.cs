@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 
@@ -8,7 +9,8 @@ namespace Origins.Tiles.Defiled {
         public string[] Categories => [
             "PlanterBox"
         ];
-        public override void SetStaticDefaults() {
+		public override Color MapColor => new(44, 39, 58);
+		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			AdjTiles = [TileID.PlanterBox];
 		}

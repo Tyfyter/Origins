@@ -1425,7 +1425,8 @@ Tiles: {
 	Endowood_Chest.MapEntry: Endowood Chest
 	Marrowick_Chest.MapEntry: Marrowick Chest
 	Endowood_Dresser.MapEntry: Endowood Dresser
-	Bottomfeeder_Banner.MapEntry: Bottomfeeder_ Banner
+	Marrowick_Dresser.MapEntry: Marrowick Dresser
+	Bottomfeeder_Banner.MapEntry: Bottomfeeder Banner
 }
 
 MapObject: {

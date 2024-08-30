@@ -66,7 +66,7 @@ namespace Origins.Tiles {
 			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 			
-			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID));
+			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID), MapName);
 			AdjTiles = [
 				BaseTileID
 			];
@@ -79,6 +79,7 @@ namespace Origins.Tiles {
 			if (!glowTexture.Exists) return;
 			OriginExtensions.DrawTileGlow(glowTexture, GlowmaskColor, i, j, spriteBatch);
 		}
+		public virtual string MapName(string name, int i, int j) => name;
 	}
 	public abstract class ChairBase : FurnitureBase {
 		public override int BaseTileID => TileID.Chairs;
@@ -248,7 +249,7 @@ namespace Origins.Tiles {
 			];
 		}
 
-		public static string MapChestName(string name, int i, int j) {
+		public override string MapName(string name, int i, int j) {
 			int left = i;
 			int top = j;
 			Tile tile = Main.tile[i, j];
@@ -639,12 +640,8 @@ namespace Origins.Tiles {
 			player.cursorItemIconID = closedDoorTile.item.Type;
 		}
 	}
-	[Autoload(false)]
-	public class Platform_Tile : ModTile {
-		public virtual bool LavaDeath => true;
-		public override void Load() {
-			Mod.AddContent(new TileItem(this));
-		}
+	public abstract class Platform_Tile : FurnitureBase {
+		public sealed override int BaseTileID => TileID.Platforms;
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileLighted[Type] = true;
@@ -670,6 +667,10 @@ namespace Origins.Tiles {
 			TileObjectData.addTile(Type);
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+
+			AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
+
+			glowTexture = Texture + "_Glow";
 		}
 	}
 	[Autoload(false)]
