@@ -105,7 +105,7 @@ namespace Origins.Items.Weapons.Melee {
 							Projectile.knockBack * 0.2f,
 							Projectile.owner
 						);
-						Gore.NewGore(
+						if (!Main.dedServ) Gore.NewGore(
 							source,
 							boxPos + new Vector2(Main.rand.NextFloat(Projectile.width), Main.rand.NextFloat(Projectile.height)),
 							slamDir * 0.1f,
