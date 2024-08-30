@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Marrowick {
 	public class Marrowick_Platform : Platform_Tile {
-		public override Color MapColor => new(44, 39, 58);
+		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
 			item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 2)

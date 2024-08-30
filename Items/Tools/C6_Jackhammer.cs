@@ -15,7 +15,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ChlorophyteJackhammer);
-			Item.damage = 28;
+			Item.damage = 18;
 			Item.width = 28;
 			Item.height = 26;
 			Item.hammer = 55;

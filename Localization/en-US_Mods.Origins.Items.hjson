@@ -700,7 +700,7 @@ Refactoring_Pieces: {
 	DisplayName: Refactoring Pieces
 	Tooltip:
 		'''
-		Increases mana shielding by 10% if Lost Armor is equipped
+		Increases mana shielding by 10%
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }
@@ -4429,20 +4429,28 @@ Dew_Justice: {
 
 Impactaxe: {
 	DisplayName: Impactaxe
-	Tooltip: ""
+	Tooltip:
+		'''
+		Explodes when struck, destroying tiles nearby
+		'Self-damage resistance not included!'
+		'''
 }
 
 Scrap_Compactor: {
 	DisplayName: Scrap Compactor
+	Tooltip:
+		'''
+		Your explosives will explode into frenzied shrapnel
+		Nearby enemies below 40% and bosses below 4% of their max life whilst inflicted with Impeding Shrapnel will rapidly lose life
+		'''
+}
+
+Marrowick_Platform_Item: {
+	DisplayName: Marrowick Platform
 	Tooltip: ""
 }
 
 Wilting_Rose_Planter_Box_Item: {
 	DisplayName: Wilting Rose Planter Box
-	Tooltip: ""
-}
-
-Marrowick_Platform_Item: {
-	DisplayName: Marrowick Platform
 	Tooltip: ""
 }

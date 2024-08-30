@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.consumeAmmoOnFirstShotOnly = true;
 			Item.ArmorPenetration += 2;
 			Item.reuseDelay = 0;
+			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -32,8 +33,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-18, -7);
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (velocity != default) position += Vector2.Normalize(velocity) * 54;
+			if (velocity != default) position += Vector2.Normalize(velocity) * 27;
 			velocity = velocity.RotatedByRandom(0.27f);
 			type = Item.shoot;
 		}

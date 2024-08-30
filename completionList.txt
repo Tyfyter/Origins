@@ -272,7 +272,7 @@ ARMOR:
 (^) Blast Armor*
 (X) Chambersite Armor*
 (X) Edenwood Armor*
-(^) Necromancer Armor*
+(@5, ^3) Necromancer Armor*
 (^) Sapphire Mediator Armor*
 
 (X) Ancient Chromtain Armor
@@ -411,7 +411,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (X) Retaliatory Tendril*
-(☻) Scrap Compactor*
+(^) Scrap Compactor*
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -540,7 +540,7 @@ TOOLS:
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(☻) Impactaxe
+(@5, ^3) Impactaxe
 
 (X) Ahe
 (X) Nova Bomb
@@ -1157,7 +1157,7 @@ CONSUMABLES:
 (%2, ^2) Holiday Hair Dye* !!!
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
-(☻) Void Lock*
+(^) Void Lock*
 (^) White Water*
 
 (^) Dawn Key*

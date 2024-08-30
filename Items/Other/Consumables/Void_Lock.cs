@@ -35,9 +35,9 @@ namespace Origins.Items.Other.Consumables {
 			return base.CanUseItem(player);
 		}
 		public override void AddRecipes() {
-			CreateRecipe()
+			CreateRecipe(3)
 			.AddIngredient(ItemID.Bone, 7)
-			.AddIngredient(ItemID.ChestLock)
+			.AddIngredient(ItemID.ChestLock, 3)
 			.AddIngredient(ItemID.JungleSpores, 5)
 			.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ItemID.ShadowScale, 10)
 			.AddTile(TileID.DemonAltar)

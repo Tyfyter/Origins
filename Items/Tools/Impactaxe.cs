@@ -24,14 +24,14 @@ namespace Origins.Items.Tools {
 			"Tool"
 		];
 		public override void SetDefaults() {
-			Item.damage = 40;
+			Item.damage = 32;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.width = 48;
 			Item.height = 48;
-			Item.useTime = 34;
-			Item.useAnimation = 34;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
 			Item.shoot = ModContent.ProjectileType<Impactaxe_Smash>();
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
