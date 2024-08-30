@@ -115,6 +115,7 @@ namespace Origins.World.BiomeData {
 				const float strength = 2.8f; //width of tunnels
 				const float wallThickness = 3.1f;
 				const float distance = 40; //tunnel length
+				const float caveSize = 30;
 
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
@@ -229,7 +230,7 @@ namespace Origins.World.BiomeData {
 							if (airCheckVec.Y >= Main.worldSurface) {
 								DefiledCave(next.data.position.X, next.data.position.Y, size);
 							}
-							DefiledRib(next.data.position.X, next.data.position.Y, size * 30, 0.75f);
+							DefiledRib(next.data.position.X, next.data.position.Y, size * caveSize, 0.75f);
 							fissureCheckSpots.Add(next.data.position);
 							break;
 						}//vein & cave
