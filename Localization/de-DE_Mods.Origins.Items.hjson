@@ -4441,7 +4441,7 @@ Scrap_Compactor: {
 	/* Tooltip:
 		'''
 		Your explosives will explode into frenzied shrapnel
-		Nearby enemies below 40% and bosses below 4% of their max life whilst inflicted with Impeding Shrapnel will rapidly lose life
+		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with Impeding Shrapnel will rapidly lose life
 		''' */
 }
 

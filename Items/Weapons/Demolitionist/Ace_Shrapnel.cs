@@ -27,17 +27,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<NE8>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<Scrap>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<NE8>(), 10)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-18, -7);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (velocity != default) position += Vector2.Normalize(velocity) * 27;
+			if (velocity != default) {
+				Vector2 direction = Vector2.Normalize(velocity);
+				position += direction * 32 + direction.RotatedBy(MathHelper.PiOver2 * player.direction) * -10;
+			}
 			velocity = velocity.RotatedByRandom(0.27f);
 			type = Item.shoot;
 		}
