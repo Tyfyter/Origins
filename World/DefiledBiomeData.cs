@@ -112,9 +112,9 @@ namespace Origins.World.BiomeData {
 		}
 		public static class Gen {
 			public static void StartDefiled(float i, float j) {
-				const float strength = 2.8f; //width of tunnels
+				const float strength = 3.3f; //width of tunnels
 				const float wallThickness = 3.1f;
-				const float distance = 40; //tunnel length
+				const float distance = 48; //tunnel length
 				const float caveSize = 30;
 
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();

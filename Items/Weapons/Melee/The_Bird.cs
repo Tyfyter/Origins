@@ -14,7 +14,9 @@ namespace Origins.Items.Weapons.Melee {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.damage = 99;
-			Item.knockBack = 16f;
+			Item.useAnimation = Item.useTime = 20;
+			Item.rare = ItemRarityID.Cyan;
+			Item.knockBack = (int)99999996;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

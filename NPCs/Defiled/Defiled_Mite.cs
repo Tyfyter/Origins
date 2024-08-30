@@ -28,8 +28,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.width = 20;
 			NPC.height = 18;
 			NPC.friendly = false;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
-			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(2.1f, 2.35f);
+			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(2.1f, 2.35f);
 			NPC.value = 20;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type

@@ -929,7 +929,6 @@ DamageClasses: {
 
 Projectiles: {
 	// Amebic_Vial_Tentacle.DisplayName: Amebic Tentacle
-	// Amoeba_Bubble.DisplayName: Mitosis Node
 	// Dash_Ravel_P.DisplayName: Kinetic Wave
 	// Entangled_Energy_Lifesteal.DisplayName: Entangled Energy Lifesteal
 	// Explosive_Artery_P.DisplayName: Explosive Artery
@@ -1246,7 +1245,7 @@ Projectiles: {
 	// Dew_Justice_P.DisplayName: Amoebic Dew
 	// Impactaxe_Explosion.DisplayName: Impactaxe
 	// Impactaxe_Smash.DisplayName: Impactaxe
-	// Mitosis_P.DisplayName: Mitosis P
+	// Mitosis_P.DisplayName: Mitosis Node
 }
 
 Prefixes: {

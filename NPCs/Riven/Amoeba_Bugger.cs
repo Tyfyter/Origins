@@ -22,7 +22,7 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 28;
 			NPC.height = 26;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.NPCHit13;
+			NPC.HitSound = SoundID.NPCHit9;
 			NPC.DeathSound = SoundID.NPCDeath16;
 			NPC.noGravity = true;
 			NPC.npcSlots = 0.25f;
@@ -38,7 +38,7 @@ namespace Origins.NPCs.Riven {
 			NPC.netUpdate = true;
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(2f, 2.2f), NPC.Center);
+			if (Main.rand.NextBool(1100)) SoundEngine.PlaySound(SoundID.Zombie77.WithVolume(0.5f), NPC.Center);
 			NPC.FaceTarget();
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);

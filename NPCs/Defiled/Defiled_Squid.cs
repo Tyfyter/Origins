@@ -31,8 +31,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 165;
 			NPC.defense = 22;
 			NPC.knockBackResist = 0;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
-			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(2.1f, 2.35f);
+			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(2.1f, 2.35f);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type

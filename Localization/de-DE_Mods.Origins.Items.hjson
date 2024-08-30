@@ -537,9 +537,13 @@ Missile_Armcannon: {
 		''' */
 }
 
-Mitosis: {
-	// DisplayName: Mitosis
-	// Tooltip: Shoots out a mitosis node that duplicates projectiles
+Salty_Seed: {
+	// DisplayName: Salty Seed
+	/* Tooltip:
+		'''
+		Takes the place of a hook, using the same keybind
+		The seed promotes rapid growth of the parasite allowing you to duplicate projectiles that pass through
+		''' */
 }
 
 Mojo_Injection: {
@@ -2040,7 +2044,7 @@ Acrid_Pickaxe: {
 
 Amoeba_Hook: {
 	// DisplayName: Amoeba Hook
-	// Tooltip: "'Wibbly wobbly, time-y, wimey"
+	// Tooltip: "'Wibbly wobbly, time-y, wimey'"
 }
 
 Brick_Breaker: {

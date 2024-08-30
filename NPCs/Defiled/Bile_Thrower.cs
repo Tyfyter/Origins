@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles.Enemies;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -24,6 +23,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.CloneDefaults(NPCID.CorruptPenguin);
 			AnimationType = NPCID.CorruptPenguin;
 			AIType = NPCID.CorruptPenguin;
+			NPC.HitSound = Origins.Sounds.DefiledHurt;
+			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
 		public override void AI() {

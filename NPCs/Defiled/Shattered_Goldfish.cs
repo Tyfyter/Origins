@@ -24,6 +24,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.frame.Height = 28;
 			NPC.value = 500;
 			AnimationType = NPCID.CorruptGoldfish;
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(2.1f, 2.35f);
+			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(2.1f, 2.35f);
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
         public bool ForceSyncMana => false;

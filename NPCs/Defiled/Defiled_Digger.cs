@@ -23,8 +23,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 80;
 			NPC.defense = 8;
 			NPC.damage = 38;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
-			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
+			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
 			NPC.value = 140;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
@@ -121,6 +121,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 		}
 		public override float Mana {
 			get => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana;
@@ -135,6 +136,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 		}
 		public override float Mana {
 			get => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana;

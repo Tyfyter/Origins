@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
@@ -142,7 +143,7 @@ namespace Origins.Projectiles {
 						isFromMitosis = true;
 						projectile.alpha = 100;
 						if (projectile.minion) {
-							mitosisTimeLeft = 300;
+							mitosisTimeLeft = 3000;
 							projectile.minionSlots = 0;
 						}
 					}

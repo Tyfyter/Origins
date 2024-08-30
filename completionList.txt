@@ -494,7 +494,8 @@ UTILITIES:
 
 (#, ^2) Impenetrable Trashcan Lid
 (#, ^2) Indestructible Saddle
-(#, ^2) Salty Seed (Eutrophic Cell) !!!
+(#3, ^2) Salty Seed (Mitosis Node) !!!
+(#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
 
 

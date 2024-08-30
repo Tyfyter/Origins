@@ -48,7 +48,8 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.addTile(Type);*/
 			DustType = Riven_Hive.DefaultTileDust;
             HitSound = SoundID.NPCHit20;
-        }
+			//KillSound = SoundID.NPCDeath12;
+		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			WorldGen.CheckPot(i, j);
 		}

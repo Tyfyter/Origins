@@ -5,13 +5,12 @@ using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
-namespace Origins.Items.Accessories {
-	public class Mitosis : ModItem, ICustomWikiStat {
-		public string[] Categories => [
+namespace Origins.Items.Tools {
+	public class Salty_Seed : ModItem, ICustomWikiStat {
+		/*public string[] Categories => [
 			"Combat"
-		];
+		];*/
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Plasma_Cutter>()] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Plasma_Cutter>();
