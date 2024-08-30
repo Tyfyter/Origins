@@ -541,8 +541,8 @@ Salty_Seed: {
 	DisplayName: Salty Seed
 	Tooltip:
 		'''
-		Takes the place of a hook, using the same keybind
-		The seed promotes rapid growth of the parasite allowing you to duplicate projectiles that pass through
+		Takes the place of a hook, using the same hotkey
+		The seed promotes rapid growth of the parasite, duplicating projectiles that pass through
 		'''
 }
 
