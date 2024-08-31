@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Summoner {
 			);
 		}
 		public static void DrawInHand(Texture2D smallTexture, ref PlayerDrawSet drawInfo, Color lightColor, Texture2D smallGlowTexture = null, Color? smallGlowColor = null) {
-			if (drawInfo.DrawDataCache[^1].texture.Bounds != new Rectangle(0, 0, 360, 224)) return;
+			//if (drawInfo.DrawDataCache[^1].texture.Bounds != new Rectangle(0, 0, 360, 224)) return;
 			Vector2 pos = drawInfo.drawPlayer.GetBackHandPosition(drawInfo.drawPlayer.compositeBackArm.stretch, drawInfo.drawPlayer.compositeBackArm.rotation);
 			pos += drawInfo.DrawDataCache[^1].position - drawInfo.drawPlayer.position - new Vector2(10 + 6 * drawInfo.drawPlayer.direction, 24);
 			DrawData data = new(
