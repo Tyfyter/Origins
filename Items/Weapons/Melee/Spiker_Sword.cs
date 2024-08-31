@@ -33,8 +33,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6)
-			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

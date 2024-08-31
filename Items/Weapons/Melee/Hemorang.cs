@@ -27,8 +27,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.CrimtaneBar, 7)
-			.AddIngredient(ItemID.TissueSample, 4)
+			.AddIngredient(ItemID.CrimtaneBar, 9)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

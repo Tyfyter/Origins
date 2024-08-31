@@ -34,11 +34,10 @@ namespace Origins.Items.Weapons.Melee {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 7);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 9)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool CanUseItem(Player player) {
 			return player.ownedProjectileCounts[Item.shoot] < 1;

@@ -29,8 +29,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.DemoniteBar, 7)
-			.AddIngredient(ItemID.ShadowScale, 4)
+			.AddIngredient(ItemID.DemoniteBar, 9)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

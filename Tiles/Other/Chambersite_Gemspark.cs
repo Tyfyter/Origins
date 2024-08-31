@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,8 @@ namespace Origins.Tiles.Other {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
+			Main.tileMerge[Type] = Main.tileMerge[TileID.DiamondGemspark].ToArray();
+			Main.tileMerge[Type][TileID.DiamondGemspark] = true;
 			Main.tileMerge[Type][TileType<Chambersite_Gemspark_Off>()] = true;
 			AddMapEntry(new Color(55, 204, 212));
 			DustType = DustID.GemSapphire;//TODO: Chambersite gem dust
@@ -32,6 +35,8 @@ namespace Origins.Tiles.Other {
     public class Chambersite_Gemspark_Off : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
+			Main.tileMerge[Type] = Main.tileMerge[TileID.DiamondGemsparkOff].ToArray();
+			Main.tileMerge[Type][TileID.DiamondGemsparkOff] = true;
 			Main.tileMerge[Type][TileType<Chambersite_Gemspark>()] = true;
 			AddMapEntry(new Color(17, 74, 77));
 			mergeID = TileID.EmeraldGemsparkOff;

@@ -26,11 +26,10 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<NE8>(), 4);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 7);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool CanUseItem(Player player) {
 			return player.ownedProjectileCounts[Item.shoot] < 1;

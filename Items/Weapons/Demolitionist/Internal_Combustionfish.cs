@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
 using System.IO;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	//very 7y, following the theme of the whole ashen countdown theme
@@ -28,6 +29,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.AllowReforgeForStackableItem = true;
 		}
 		public override bool WeaponPrefix() => true;
+		public override bool CanShoot(Player player) {
+			consumed = false;
+			return true;
+		}
+		public override void OnConsumeItem(Player player) {
+			consumed = true;
+		}
+		internal static bool consumed = false;
 	}
 	public class Internal_Combustionfish_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Internal_Combustionfish";
@@ -36,11 +45,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		Vector2 stickPos = default;
 		float stickRot = 0;
+		bool consumed = false;
+		int prefix = 0;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 60 * 20;
 			Projectile.friendly = false;
 			Projectile.penetrate = 1;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			consumed = Internal_Combustionfish.consumed;
+			Internal_Combustionfish.consumed = false;
+			if (source is EntitySource_ItemUse itemUse) {
+				prefix = itemUse.Item.prefix;
+			}
 		}
 		public override void AI() {
 			if (Projectile.ai[2] == 0) {
@@ -106,6 +124,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 192, sound: SoundID.Item62);
+			if (consumed && Projectile.owner == Main.myPlayer) {
+				int item = Item.NewItem(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					ModContent.ItemType<Internal_Combustionfish>(),
+					prefixGiven: prefix
+				);
+				if (Main.netMode == NetmodeID.MultiplayerClient) {
+					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+				}
+			}
 		}
 	}
 }
