@@ -13,9 +13,6 @@ namespace Origins.Tiles.Other {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.DiamondGemspark].ToArray();
-			Main.tileMerge[Type][TileID.DiamondGemspark] = true;
-			Main.tileMerge[Type][TileType<Chambersite_Gemspark_Off>()] = true;
 			AddMapEntry(new Color(55, 204, 212));
 			DustType = DustID.GemSapphire;//TODO: Chambersite gem dust
 		}
@@ -56,6 +53,13 @@ namespace Origins.Tiles.Other {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Chambersite_Gemspark>());
 			Item.value = Item.sellPrice(silver: 1);
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.Glass, 20)
+			.AddIngredient<Chambersite_Item>()
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 }
