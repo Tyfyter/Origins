@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -29,13 +32,10 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = [18, 18];
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Riven Altar");
-			AddMapEntry(new Color(20, 136, 182), name);
-			//disableSmartCursor = true;
+			AddMapEntry(new Color(20, 136, 182), CreateMapEntryName());
+			DustType = Riven_Hive.DefaultTileDust;
 			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
-			DustType = Riven_Hive.DefaultTileDust;
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {
@@ -49,20 +49,43 @@ namespace Origins.Tiles.Riven {
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			WorldGen.SmashAltar(i, j);
+		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.02f * GlowValue;
 			g = 0.1f * GlowValue;
 			b = 0.2f * GlowValue;
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			WorldGen.SmashAltar(i, j);
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override bool CanExplode(int i, int j) => false;
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
+	public class Riven_Altar_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
+		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+		public override string Texture => "Origins/Tiles/Riven/Defiled_Altar";
+		public override void SetStaticDefaults() {
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+		}
+
+		public override void SetDefaults() {
+			Item.width = 26;
+			Item.height = 22;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.consumable = true;
+			Item.value = 500;
+			Item.createTile = ModContent.TileType<Riven_Altar>();
+		}
+
+		public bool ShouldHavePage => false;
 	}
 }

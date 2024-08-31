@@ -11,7 +11,7 @@ namespace Origins.Items.Armor.Marrowick {
             "ArmorSet"
         ];
         public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
 		}
 		public override void SetDefaults() {
 			Item.defense = 1;
@@ -35,9 +35,6 @@ namespace Origins.Items.Armor.Marrowick {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Marrowick_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.defense = 2;
 		}
@@ -50,9 +47,6 @@ namespace Origins.Items.Armor.Marrowick {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Marrowick_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.defense = 1;
 		}

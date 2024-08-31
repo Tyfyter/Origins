@@ -19,10 +19,7 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = [18, 18];
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("{$Defiled} Altar");
-			AddMapEntry(new Color(200, 200, 200), name);
-			//disableSmartCursor = true;
+			AddMapEntry(new Color(200, 200, 200), CreateMapEntryName());
 			RegisterItemDrop(-1);
 			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
@@ -39,7 +36,6 @@ namespace Origins.Tiles.Defiled {
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
-
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			WorldGen.SmashAltar(i, j);
 		}
