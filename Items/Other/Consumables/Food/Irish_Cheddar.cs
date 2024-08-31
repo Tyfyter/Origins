@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +14,7 @@ namespace Origins.Items.Other.Consumables.Food {
 				new Color(165, 151, 99)
 			];
 			ItemID.Sets.IsFood[Type] = true;
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
 			Item.DefaultToFood(
@@ -20,7 +22,6 @@ namespace Origins.Items.Other.Consumables.Food {
 				BuffID.WellFed,
 				60 * 60 * 12
 			);
-			Item.holdStyle = ItemHoldStyleID.None;
 			Item.scale = 0.6f;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Blue;

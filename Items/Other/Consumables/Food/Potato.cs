@@ -3,6 +3,7 @@ using Origins.Items.Weapons;
 using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,11 +17,11 @@ namespace Origins.Items.Other.Consumables.Food {
 				new Color(181, 148, 58)
 			];
 			ItemID.Sets.IsFood[Type] = true;
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ChocolateChipCookie);
 			Item.holdStyle = ItemHoldStyleID.HoldUp;
-			Item.scale = 0.75f;
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
 			Item.value = Item.sellPrice(silver: 1);

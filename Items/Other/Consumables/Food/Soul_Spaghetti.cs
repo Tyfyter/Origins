@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Items.Materials;
 using Microsoft.Xna.Framework;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Other.Consumables.Food {
 	public class Soul_Spaghetti : ModItem {
@@ -14,6 +15,7 @@ namespace Origins.Items.Other.Consumables.Food {
 				new Color(66, 66, 66)
 			];
 			ItemID.Sets.IsFood[Type] = true;
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
 			Item.DefaultToFood(
@@ -21,8 +23,6 @@ namespace Origins.Items.Other.Consumables.Food {
 				BuffID.WellFed2,
 				60 * 60 * 8
 			);
-			Item.holdStyle = ItemHoldStyleID.None;
-			Item.scale = 0.6f;
 			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.Green;
 		}

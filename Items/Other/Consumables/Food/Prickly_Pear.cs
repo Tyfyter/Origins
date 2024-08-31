@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +14,7 @@ namespace Origins.Items.Other.Consumables.Food {
 				new Color(88, 88, 88)
 			];
 			ItemID.Sets.IsFood[Type] = true;
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
 			Item.DefaultToFood(
@@ -20,7 +22,6 @@ namespace Origins.Items.Other.Consumables.Food {
 				BuffID.WellFed,
 				60 * 60 * 5
 			);
-			Item.holdStyle = ItemHoldStyleID.None;
 		}
 		/*public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.FruitJuice));
