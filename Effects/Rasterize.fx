@@ -37,7 +37,7 @@ float4 Rasterize(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 	float4 color = tex2D(uImage0, sourceCoords);
 	float median = (min(color.r, min(color.g, color.b)) + max(color.r, max(color.g, color.b))) / 2;
 	color.rgb /= (color.rgb + 0.5f);
-	return lerp(color, median, 0.25) * sampleColor;
+	return lerp(color, median, 0.45) * sampleColor;
 }
 
 technique Technique1 {

@@ -27,7 +27,7 @@ namespace Origins.Items.Other.Dyes {
 					if (rasterizedTime == 0) {
 						rasterizedTime = 8;
 					}
-					self.Shader.Parameters["uOffset"].SetValue(entity.velocity.WithMaxLength(4) * 0.125f * rasterizedTime);
+					self.Shader.Parameters["uOffset"].SetValue(entity.velocity.WithMaxLength(4) * 0.25f * rasterizedTime);
 				}
 			))
 			.UseImage(Origins.cellNoiseTexture.asset);
