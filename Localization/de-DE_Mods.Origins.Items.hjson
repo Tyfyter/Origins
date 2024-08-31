@@ -4456,6 +4456,6 @@ Wilting_Rose_Planter_Box_Item: {
 }
 
 Riven_Altar_Item: {
-	// DisplayName: Riven Altar Item
+	// DisplayName: Riven Altar (Debugging Item)
 	// Tooltip: ""
 }
