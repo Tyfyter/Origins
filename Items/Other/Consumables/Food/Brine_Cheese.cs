@@ -1,23 +1,27 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
     public class Brine_Cheese : ModItem {
-        public string[] Categories => [
-            "Food"
-        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
+			ItemID.Sets.FoodParticleColors[Type] = [
+				new Color(170, 204, 164)
+			];
+			ItemID.Sets.IsFood[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.MonsterLasagna);
-			Item.holdStyle = ItemHoldStyleID.None;
+			Item.DefaultToFood(
+				24, 24,
+				BuffID.WellFed3,
+				60 * 60 * 12
+			);
 			Item.scale = 0.6f;
-			Item.buffType = BuffID.WellFed3;
-			Item.buffTime = 60 * 60 * 12;
 			Item.value = Item.sellPrice(copper: 1);
 			Item.rare = ItemRarityID.Gray;
+			Item.holdStyle = ItemHoldStyleID.None;
 		}
 		public override bool ConsumeItem(Player player) {
 			player.AddBuff(BuffID.Rabies, Item.buffTime + 120);

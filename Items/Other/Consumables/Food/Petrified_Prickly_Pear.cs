@@ -1,21 +1,30 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
-    public class Petrified_Prickly_Pear : ModItem {
+    public class Petrified_Prickly_Pear : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Food",
             "ManaShielding"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
+			ItemID.Sets.FoodParticleColors[Type] = [
+				new Color(180, 180, 180),
+				new Color(81, 52, 161),
+				new Color(22, 18, 33)
+			];
+			ItemID.Sets.IsFood[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.BloodOrange);
+			Item.DefaultToFood(
+				32, 24,
+				BuffID.WellFed,
+				60 * 60 * 5
+			);
 			Item.holdStyle = ItemHoldStyleID.None;
-			Item.buffType = BuffID.WellFed;
-			Item.buffTime = 60 * 60 * 5;
 		}
         /*public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.FruitJuice));

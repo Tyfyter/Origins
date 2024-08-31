@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons;
 using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using Terraria;
@@ -7,11 +8,14 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
     public class Potato : ModItem {
-        public string[] Categories => [
-            "Food"
-        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
+			ItemID.Sets.FoodParticleColors[Type] = [
+				new Color(216, 209, 135),
+				new Color(209, 188, 92),
+				new Color(181, 148, 58)
+			];
+			ItemID.Sets.IsFood[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ChocolateChipCookie);

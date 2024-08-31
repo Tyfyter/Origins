@@ -1,20 +1,26 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
     public class Honey_Wheat_Bread : ModItem {
-        public string[] Categories => [
-            "Food"
-        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
+			ItemID.Sets.FoodParticleColors[Type] = [
+				new Color(216, 209, 135),
+				new Color(209, 188, 92),
+				new Color(181, 148, 58)
+			];
+			ItemID.Sets.IsFood[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.MonsterLasagna);
+			Item.DefaultToFood(
+				32, 24,
+				BuffID.WellFed3,
+				60 * 60 * 4
+			);
 			Item.holdStyle = ItemHoldStyleID.None;
-			Item.buffType = BuffID.WellFed3;
-			Item.buffTime = 60 * 60 * 4;
 			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.White;
 		}
