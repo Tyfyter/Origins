@@ -67,7 +67,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Altar_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
-		public override string Texture => "Origins/Tiles/Riven/Defiled_Altar";
+		public override string Texture => "Origins/Tiles/Riven/Riven_Altar";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
