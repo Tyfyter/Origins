@@ -88,10 +88,14 @@ namespace Origins.Items.Tools {
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f;
 			Vector2 boxPos = Projectile.position + vel;
 			Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
-			if (swingFactor > 0.4f && float.IsNaN(Projectile.ai[2])) {
-				if (OriginExtensions.BoxOf(boxPos, boxPos + Projectile.Size).OverlapsAnyTiles()) {
-					Explode();
+			if (float.IsNaN(Projectile.ai[2])) {
+				if (swingFactor > 0.4f) {
+					if (OriginExtensions.BoxOf(boxPos, boxPos + Projectile.Size).OverlapsAnyTiles()) {
+						Explode();
+					}
 				}
+			} else {
+				Projectile.friendly = false;
 			}
 		}
 		public override bool ShouldUpdatePosition() => false;
@@ -126,6 +130,7 @@ namespace Origins.Items.Tools {
 					proj.localNPCImmunity[immuneTargets[i]] = -1;
 				}
 				Projectile.friendly = false;
+				Projectile.netUpdate = true;
 			}
 		}
 		public override void CutTiles() {

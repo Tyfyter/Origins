@@ -113,6 +113,7 @@ namespace Origins.Items.Weapons.Melee {
 							1f
 						);
 					}
+					Projectile.netUpdate = true;
 				}
 			}
 		}
