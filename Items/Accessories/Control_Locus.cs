@@ -15,6 +15,13 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 			Item.master = true;
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Stack_of_Shraps>())
+			.AddIngredient(ModContent.ItemType<Weakpoint_Analyzer>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().controlLocus = true;
 		}

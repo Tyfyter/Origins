@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 3;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.White;
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
