@@ -32,15 +32,13 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ravelEquipped = true;
 			originPlayer.vanityRavel = Type;
-			const int down = 0;
-			bool toggle = player.controlDown && player.releaseDown && player.doubleTapCardinalTimer[down] < 15;
 			bool inOtherRavel = false;
 			if (player.mount.Type == Item.shoot) {
 				UpdateRaveled(player);
 			} else {
 				inOtherRavel = Ravel_Mount.RavelMounts.Contains(player.mount.Type);
 			}
-			if (toggle || inOtherRavel) ToggleRavel(player);
+			if (originPlayer.doubleTapDown || inOtherRavel) ToggleRavel(player);
 		}
 		public void ToggleRavel(Player player) {
 			bool animated = OriginClientConfig.Instance.AnimatedRavel;

@@ -30,7 +30,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileLighted[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			TileObjectData.newTile.CoordinateHeights = [18, 18];
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(20, 136, 182), CreateMapEntryName());
 			DustType = Riven_Hive.DefaultTileDust;

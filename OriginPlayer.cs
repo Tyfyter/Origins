@@ -482,6 +482,10 @@ namespace Origins {
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
 				TriggerSetBonus();
 			}
+			if (Player.controlDown && Player.releaseDown) {
+				doubleTapDown = doubleTapDownTimer < 15;
+				doubleTapDownTimer = 0;
+			} else doubleTapDown = false;
 		}
 		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
 			if (Player.InModBiome<Brine_Pool>()) {

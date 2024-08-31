@@ -357,6 +357,8 @@ namespace Origins {
 		public Guid guid = Guid.Empty;
 		public int voodooDollIndex = -1;
 		public float manaShielding = 0f;
+		public int doubleTapDownTimer = 0;
+		public bool doubleTapDown = false;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -510,6 +512,7 @@ namespace Origins {
 			ravelEquipped = false;
 			spiderRavel = false;
 			if (spiderRavelTime > 0) spiderRavelTime--;
+			doubleTapDownTimer++;
 			vanityRavel = -1;
 
 			if (explosiveArtery) {
