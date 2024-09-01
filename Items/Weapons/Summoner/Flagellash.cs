@@ -40,8 +40,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Flagellash_P.pitch = Main.rand.NextFloat(0.1f, 0.5f);
 			float scale = player.GetAdjustedItemScale(Item);
 			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= scale;
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 1).scale *= scale;
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 2).scale *= scale;
+			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai2: 1).scale *= scale;
+			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai2: 2).scale *= scale;
 			return false;
 		}
 	}
@@ -66,7 +66,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			Projectile.timeLeft += (int)Projectile.ai[1] * 7;
 			_pitch = pitch;
 		}
 
@@ -81,6 +80,10 @@ namespace Origins.Items.Weapons.Summoner {
 			return true;
 		}
 		public override void AI() {
+			if (Projectile.ai[2] != 0) {
+				Projectile.timeLeft += (int)Projectile.ai[2] * 7;
+				Projectile.ai[2] = 0;
+			}
 			Player owner = Main.player[Projectile.owner];
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 
