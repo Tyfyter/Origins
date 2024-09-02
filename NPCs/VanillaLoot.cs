@@ -24,6 +24,8 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
 		internal static int woFEmblemsCount = 4;
+		static OneFromOptionsDropRule _eaterOfWorldsWeaponDrops;
+		public static OneFromOptionsDropRule EaterOfWorldsWeaponDrops => _eaterOfWorldsWeaponDrops ??=  new(1, 1, ModContent.ItemType<Rotting_Worm_Staff>());
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
@@ -32,6 +34,10 @@ namespace Origins.NPCs {
                 break;*/
                 case NPCID.BrainofCthulhu:
                 npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
+                break;
+                case NPCID.EaterofWorldsHead or NPCID.EaterofWorldsBody or NPCID.EaterofWorldsTail:
+                npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));
+                npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsBossAndNotExpert()).WithOnSuccess(EaterOfWorldsWeaponDrops));
                 break;
                 case NPCID.KingSlime:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Cursed_Crown>(), 4));
@@ -65,7 +71,7 @@ namespace Origins.NPCs {
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
 				r is LeadingConditionRule conditionRule &&
-				conditionRule.ChainedRules.Any() &&
+				conditionRule.ChainedRules.Count != 0 &&
 				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
 				dropRule.dropIds.Contains(ItemID.WarriorEmblem));
 				if (rules.Any()) {
@@ -82,7 +88,7 @@ namespace Origins.NPCs {
 				}
 				rules = dropRules.Where((r) =>
 				r is LeadingConditionRule conditionRule &&
-				conditionRule.ChainedRules.Any() &&
+				conditionRule.ChainedRules.Count != 0 &&
 				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
 				dropRule.dropIds.Contains(ItemID.BreakerBlade));
 				if (rules.Any()) {
@@ -211,10 +217,10 @@ namespace Origins.NPCs {
 			}
 			CommonDrop harpoonRule = null;
 			foreach (var rule in npcLoot.Get(includeGlobalDrops: false)) {
-				List<DropRateInfo> drops = new();
+				List<DropRateInfo> drops = [];
 				DropRateInfoChainFeed ratesInfo = new();
 				rule.ReportDroprates(drops, ratesInfo);
-				if (drops.Any() && drops[0].itemId == ItemID.Harpoon && rule is CommonDrop harp) {
+				if (drops.Count != 0 && drops[0].itemId == ItemID.Harpoon && rule is CommonDrop harp) {
 					harpoonRule = harp;
 				}
 				if (harpoonRule is not null) break;//add any further replacements with &&

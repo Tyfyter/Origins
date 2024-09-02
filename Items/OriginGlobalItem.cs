@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
+using Origins.NPCs;
 using Origins.Questing;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -271,6 +272,10 @@ namespace Origins.Items {
 					} else {
 						Origins.instance.Logger.Warn("Weapon drop rule not present on WoF bag");
 					}
+					break;
+				}
+				case ItemID.EaterOfWorldsBossBag: {
+					itemLoot.Add(OriginGlobalNPC.EaterOfWorldsWeaponDrops);
 					break;
 				}
 				case ItemID.LockBox: {
