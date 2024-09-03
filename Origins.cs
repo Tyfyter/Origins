@@ -101,10 +101,12 @@ namespace Origins {
 		public static List<IUnloadable> unloadables = [];
 		public static List<ITicker> tickers = [];
 		public static List<object> loggedErrors = [];
+		public static List<LocalizedText> loadingWarnings = [];
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
 			celestineBoosters = new int[3];
+			List<LocalizedText> loadingWarnings = [];
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));
@@ -569,6 +571,7 @@ namespace Origins {
 			Main.OnPostDraw -= IncrementFrameCount;
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 			loggedErrors.Clear();
+			List<LocalizedText> loadingWarnings = [];
 		}
 		public static uint gameFrameCount = 0;
 		static void IncrementFrameCount(GameTime gameTime) {
@@ -826,6 +829,10 @@ namespace Origins {
 		public static void LogError(object message, Exception exception) {
 			instance.Logger.Error(message, exception);
 			loggedErrors.Add((message, exception));
+		}
+		public static void LogLoadingWarning(LocalizedText message) {
+			instance.Logger.Warn(message.Value);
+			loadingWarnings.Add(message);
 		}
 	}
 }

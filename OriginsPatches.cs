@@ -58,6 +58,7 @@ using Terraria.Graphics.Light;
 using Origins.Items;
 using System.Runtime.ExceptionServices;
 using System.IO;
+using Microsoft.Xna.Framework.Input;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -496,6 +497,29 @@ namespace Origins {
 			On_Dust.NewDust += On_Dust_NewDust;
 			On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += On_Gore_NewGore_IEntitySource_Vector2_Vector2_int_float;
 			On_SoundEngine.PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback += On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback;
+			On_Main.DrawSocialMediaButtons += (orig, color, upBump) => {
+				orig(color, upBump);
+				if (loadingWarnings.Count != 0) {
+					int titleLinks = Main.tModLoaderTitleLinks.Count;
+					Vector2 anchorPosition = new(18f, 18f);
+					Rectangle rectangle = new((int)anchorPosition.X, (int)anchorPosition.Y, 30, 30);
+					float scaleValue = MathHelper.Lerp(0.5f, 1f, Main.mouseTextColor / 255f);
+					ChatManager.DrawColorCodedStringWithShadow(
+						Main.spriteBatch,
+						FontAssets.DeathText.Value,
+						"!",
+						rectangle.Left() - FontAssets.DeathText.Value.MeasureString("!") * new Vector2(0f, 0.25f),
+						Color.Yellow,
+						Color.OrangeRed,
+						0,
+						Vector2.Zero,
+						new Vector2(scaleValue)
+					);
+					if (rectangle.Contains(Main.mouseX, Main.mouseY)) {
+						Terraria.ModLoader.UI.UICommon.TooltipMouseText(Language.GetText("Mods.Origins.Warnings.WarningPrefaceText") + "\n" + string.Join('\n', loadingWarnings));
+					}
+				}
+			};
 			//MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 		}
 		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);

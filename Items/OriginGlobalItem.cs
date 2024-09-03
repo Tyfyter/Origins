@@ -241,9 +241,12 @@ namespace Origins.Items {
 			}
 		}
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
+			static LocalizedText GetWarningText(string key) => Language.GetText("Mods.Origins.Warnings." + key);
 			List<IItemDropRule> dropRules = itemLoot.Get(false);
 			switch (item.type) {
 				case ItemID.WallOfFleshBossBag: {
+					bool foundEmblem = false;
+					bool foundWeapon = false;
 					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
 					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
 					dropRule.dropIds.Contains(ItemID.WarriorEmblem));
@@ -252,11 +255,8 @@ namespace Origins.Items {
 						if (rule is not null) {
 							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
 							rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
-						} else {
-							Origins.instance.Logger.Warn("Emblem drop rule not present on WoF bag");
+							foundEmblem = true;
 						}
-					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF bag");
 					}
 					rules = dropRules.Where((r) =>
 					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
@@ -266,12 +266,11 @@ namespace Origins.Items {
 						if (rule is not null) {
 							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
 							rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
-						} else {
-							Origins.instance.Logger.Warn("Weapon drop rule not present on WoF bag");
+							foundWeapon = true;
 						}
-					} else {
-						Origins.instance.Logger.Warn("Weapon drop rule not present on WoF bag");
 					}
+					if (!foundEmblem) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Emblem"), Lang.GetItemName(item.type)));
+					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
 					break;
 				}
 				case ItemID.EaterOfWorldsBossBag: {
@@ -279,43 +278,39 @@ namespace Origins.Items {
 					break;
 				}
 				case ItemID.LockBox: {
-					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-					dropRule.dropIds.Contains(ItemID.Muramasa));
-					if (rules.Any()) {
-						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
-						if (rule is not null) {
-							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 4);
-							rule.dropIds[^4] = ModContent.ItemType<Tones_Of_Agony>();
-							rule.dropIds[^3] = ModContent.ItemType<Asylum_Whistle>();
-							rule.dropIds[^2] = ModContent.ItemType<Bomb_Launcher>();
-							rule.dropIds[^1] = ModContent.ItemType<Bomb_Handling_Device>();
-						} else {
-							Origins.instance.Logger.Warn("Main drop rule not present on Lock Box");
-						}
-					} else {
-						Origins.instance.Logger.Warn("Main drop rule not present on Lock Box");
+					bool foundMain = false;
+					OneFromRulesRule rule = dropRules.FindDropRule<OneFromRulesRule>(dropRule => {
+						List<DropRateInfo> drops = [];
+						dropRule.ReportDroprates(drops, default);
+						return drops.Any(i => i.itemId == ItemID.Muramasa);
+					});
+					if (rule is not null) {
+						Array.Resize(ref rule.options, rule.options.Length + 4);
+						rule.options[^4] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Tones_Of_Agony>());
+						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Asylum_Whistle>());
+						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Launcher>());
+						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Handling_Device>());
+						foundMain = true;
 					}
+					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					break;
 				}
 				case ItemID.ObsidianLockbox: {
-					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-					dropRule.dropIds.Contains(ItemID.DarkLance));
-					if (rules.Any()) {
-						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
-						if (rule is not null) {
-							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 4);
-							rule.dropIds[^4] = ModContent.ItemType<Boiler>();
-							rule.dropIds[^3] = ModContent.ItemType<Firespit>();
-							rule.dropIds[^2] = ModContent.ItemType<Dragons_Breath>();
-							rule.dropIds[^1] = ModContent.ItemType<Hand_Grenade_Launcher>();
-						} else {
-							Origins.instance.Logger.Warn("Main drop rule not present on Obsidian Lock Box");
-						}
-					} else {
-						Origins.instance.Logger.Warn("Main drop rule not present on Obsidian Lock Box");
+					bool foundMain = false;
+					OneFromRulesRule rule = dropRules.FindDropRule<OneFromRulesRule>(dropRule => {
+						List<DropRateInfo> drops = [];
+						dropRule.ReportDroprates(drops, default);
+						return drops.Any(i => i.itemId == ItemID.DarkLance);
+					});
+					if (rule is not null) {
+						Array.Resize(ref rule.options, rule.options.Length + 4);
+						rule.options[^4] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>());
+						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>());
+						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>());
+						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>());
+						foundMain = true;
 					}
+					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					break;
 				}
 			}

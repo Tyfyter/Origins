@@ -2978,5 +2978,23 @@ namespace Origins {
 			self.Mod.AddContent(new Banner(self));
 			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());
 		}
+		public static Dictionary<Type, Func<IItemDropRule, IEnumerable<IItemDropRule>>> ruleChildFinders = new() {
+			[typeof(AlwaysAtleastOneSuccessDropRule)] = r => ((AlwaysAtleastOneSuccessDropRule)r).rules,
+			[typeof(DropBasedOnExpertMode)] = r => [((DropBasedOnExpertMode)r).ruleForNormalMode, ((DropBasedOnExpertMode)r).ruleForExpertMode],
+			[typeof(DropBasedOnMasterAndExpertMode)] = r => [((DropBasedOnMasterAndExpertMode)r).ruleForDefault, ((DropBasedOnMasterAndExpertMode)r).ruleForExpertmode, ((DropBasedOnMasterAndExpertMode)r).ruleForMasterMode],
+			[typeof(DropBasedOnMasterMode)] = r => [((DropBasedOnMasterMode)r).ruleForDefault, ((DropBasedOnMasterMode)r).ruleForMasterMode],
+			[typeof(FewFromRulesRule)] = r => ((FewFromRulesRule)r).options,
+			[typeof(OneFromRulesRule)] = r => ((OneFromRulesRule)r).options,
+			[typeof(SequentialRulesNotScalingWithLuckRule)] = r => ((SequentialRulesNotScalingWithLuckRule)r).rules,
+			[typeof(SequentialRulesRule)] = r => ((SequentialRulesRule)r).rules,
+		};
+		public static T FindDropRule<T>(this IEnumerable<IItemDropRule> dropRules, Predicate<T> predicate) where T : class, IItemDropRule {
+			foreach (var dropRule in dropRules) {
+				if (dropRule is T rule && predicate(rule)) return rule;
+				if (dropRule.ChainedRules.Select(c => c.RuleToChain).FindDropRule(predicate) is T foundRule) return foundRule;
+				if (ruleChildFinders.TryGetValue(dropRules.GetType(), out var ruleChildFinder)) return ruleChildFinder(dropRule).FindDropRule(predicate);
+			}
+			return null;
+		}
 	}
 }

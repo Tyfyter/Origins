@@ -1,0 +1,8 @@
+WarningPrefaceText: Some errors were encountered during mod loading, these may be the result of incompatibility with other mods
+MissingDropRule: "{0} drop rule not present in {1}"
+
+DropRuleType: {
+	Main: Main
+	Emblem: Emblem
+	Weapon: Weapon
+}

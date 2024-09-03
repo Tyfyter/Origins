@@ -27,6 +27,7 @@ namespace Origins.NPCs {
 		static OneFromOptionsDropRule _eaterOfWorldsWeaponDrops;
 		public static OneFromOptionsDropRule EaterOfWorldsWeaponDrops => _eaterOfWorldsWeaponDrops ??=  new(1, 1, ModContent.ItemType<Rotting_Worm_Staff>());
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
+			static LocalizedText GetWarningText(string key) => Language.GetText("Mods.Origins.Warnings." + key);
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
                 /*case NPCID.EaterofWorldsBody:
@@ -68,41 +69,40 @@ namespace Origins.NPCs {
 				case NPCID.MoonLordCore:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
 				break;
-				case NPCID.WallofFlesh:
-				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-				r is LeadingConditionRule conditionRule &&
-				conditionRule.ChainedRules.Count != 0 &&
-				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-				dropRule.dropIds.Contains(ItemID.WarriorEmblem));
-				if (rules.Any()) {
-					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
-						woFEmblemsCount = rule.dropIds.Length;
-					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+				case NPCID.WallofFlesh: {
+					bool foundEmblem = false;
+					bool foundWeapon = false;
+					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
+					r is LeadingConditionRule conditionRule &&
+					conditionRule.ChainedRules.Count != 0 &&
+					conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+					dropRule.dropIds.Contains(ItemID.WarriorEmblem));
+					if (rules.Any()) {
+						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
+						if (rule is not null) {
+							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+							rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
+							woFEmblemsCount = rule.dropIds.Length;
+							foundEmblem = true;
+						}
 					}
-				} else {
-					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
-				}
-				rules = dropRules.Where((r) =>
-				r is LeadingConditionRule conditionRule &&
-				conditionRule.ChainedRules.Count != 0 &&
-				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-				dropRule.dropIds.Contains(ItemID.BreakerBlade));
-				if (rules.Any()) {
-					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
-					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					rules = dropRules.Where((r) =>
+					r is LeadingConditionRule conditionRule &&
+					conditionRule.ChainedRules.Count != 0 &&
+					conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+					dropRule.dropIds.Contains(ItemID.BreakerBlade));
+					if (rules.Any()) {
+						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
+						if (rule is not null) {
+							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+							rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
+							foundWeapon = true;
+						}
 					}
-				} else {
-					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					if (!foundEmblem) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Emblem"), Lang.GetNPCName(npc.netID)));
+					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
+					break;
 				}
-				break;
 
 				case NPCID.CaveBat:
 				case NPCID.GiantBat:
