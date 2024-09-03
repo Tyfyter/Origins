@@ -782,6 +782,9 @@ namespace Origins {
 	interface ICustomRespawnArtifact {
 		void Respawn();
 	}
+	public interface ICustomCanPlaceTile {
+		public void CanPlace(Player self, Tile targetTile, Item sItem, ref int tileToCreate, ref int previewPlaceStyle, ref bool? overrideCanPlace, ref int? forcedRandom);
+	}
 	interface ILoadExtraTextures {
 		void LoadTextures();
 	}

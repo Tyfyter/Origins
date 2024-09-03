@@ -943,8 +943,8 @@ TILES:
 (^) Encrusted Brick
 (^) Endowood Furniture*
 (#2, ^2) Laser Tag Console*
-(#, ^2) Living Alkahest Block*
-(#, ^2) Living Bile Block*
+(^) Living Alkahest Block*
+(^) Living Bile Block*
 (^) Lost Brick
 (^) Marrowick Furniture*
 (X) Mushroom Dungeon Chest*

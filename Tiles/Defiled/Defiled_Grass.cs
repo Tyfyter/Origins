@@ -87,8 +87,8 @@ namespace Origins.Tiles.Defiled {
 			fail = true;
 			noItem = true;
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-			if (!(originWorld is null)) {
-				if (originWorld.defiledAltResurgenceTiles is null) originWorld.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
+			if (originWorld is not null) {
+				originWorld.defiledAltResurgenceTiles ??= [];
 				originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
 			}
 			bool half = Main.tile[i, j].IsHalfBlock;

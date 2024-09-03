@@ -4459,3 +4459,13 @@ Riven_Altar_Item: {
 	// DisplayName: Riven Altar (Debugging Item)
 	// Tooltip: ""
 }
+
+Living_Bile_Item: {
+	// DisplayName: Living Bile Item
+	// Tooltip: ""
+}
+
+Living_Alkahest_Item: {
+	// DisplayName: Living Alkahest Item
+	// Tooltip: ""
+}

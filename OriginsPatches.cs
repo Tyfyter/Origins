@@ -521,9 +521,16 @@ namespace Origins {
 				}
 			};
 			//MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
+			On_Player.FigureOutWhatToPlace += On_Player_FigureOutWhatToPlace;
 		}
+
+		private void On_Player_FigureOutWhatToPlace(On_Player.orig_FigureOutWhatToPlace orig, Player self, Tile targetTile, Item sItem, out int tileToCreate, out int previewPlaceStyle, out bool? overrideCanPlace, out int? forcedRandom) {
+			orig(self, targetTile, sItem, out tileToCreate, out previewPlaceStyle, out overrideCanPlace, out forcedRandom);
+			if (TileLoader.GetTile(tileToCreate) is ICustomCanPlaceTile customCanPlaceTile) customCanPlaceTile.CanPlace(self, targetTile, sItem, ref tileToCreate, ref previewPlaceStyle, ref overrideCanPlace, ref forcedRandom);
+		}
+
 		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
-		void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
+		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
 			if (args.Exception is IOException ioException && ioException.Message.Contains("bytes caused by Origins in HandlePacket")) {
 				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
 			}
