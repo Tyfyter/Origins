@@ -4461,11 +4461,11 @@ Riven_Altar_Item: {
 }
 
 Living_Bile_Item: {
-	// DisplayName: Living Bile Item
+	// DisplayName: Living Bile Block
 	// Tooltip: ""
 }
 
 Living_Alkahest_Item: {
-	// DisplayName: Living Alkahest Item
+	// DisplayName: Living Alkahest Block
 	// Tooltip: ""
 }

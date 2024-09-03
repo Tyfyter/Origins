@@ -109,13 +109,19 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Defiled_Grass_Seeds : ModItem {
-		
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrassSeeds);
-			Item.placeStyle = ModContent.TileType<Defiled_Grass>();
+			Item.CloneDefaults(ItemID.CorruptSeeds);
 		}
 		public override bool ConsumeItem(Player player) {
-			Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)Item.placeStyle;
+			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
+			switch (tileType) {
+				case TileID.CorruptGrass:
+				tileType = (ushort)ModContent.TileType<Defiled_Grass>();
+				break;
+				case TileID.CorruptJungleGrass:
+				tileType = (ushort)ModContent.TileType<Defiled_Jungle_Grass>();
+				break;
+			}
 			return true;
 		}
 	}

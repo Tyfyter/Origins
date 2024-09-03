@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -100,11 +101,19 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrassSeeds);
+			Item.CloneDefaults(ItemID.CrimsonSeeds);
 			Item.placeStyle = ModContent.TileType<Riven_Grass>();
 		}
 		public override bool ConsumeItem(Player player) {
-			Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)Item.placeStyle;
+			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
+			switch (tileType) {
+				case TileID.CrimsonGrass:
+				tileType = (ushort)ModContent.TileType<Riven_Grass>();
+				break;
+				case TileID.CrimsonJungleGrass:
+				tileType = (ushort)ModContent.TileType<Riven_Jungle_Grass>();
+				break;
+			}
 			return true;
 		}
 	}
