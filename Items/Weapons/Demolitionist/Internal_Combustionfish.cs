@@ -29,13 +29,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.AllowReforgeForStackableItem = true;
 		}
 		public override bool WeaponPrefix() => true;
-		public override bool CanShoot(Player player) {
-			consumed = false;
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			try {
+				calculatingConsume = true;
+				consumed = ItemLoader.ConsumeItem(Item, player);
+			} finally {
+				calculatingConsume = false;
+			}
+			if (consumed) Item.stack--;
 			return true;
 		}
-		public override void OnConsumeItem(Player player) {
-			consumed = true;
+		public override bool ConsumeItem(Player player) {
+			return calculatingConsume;
 		}
+		static bool calculatingConsume = false;
 		internal static bool consumed = false;
 	}
 	public class Internal_Combustionfish_P : ModProjectile {
