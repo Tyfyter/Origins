@@ -2820,10 +2820,11 @@ namespace Origins {
 			int intersections = 0;
 			Vector2 rectPos = hitbox.TopLeft();
 			Vector2 rectSize = hitbox.Size();
+			bool hasSize = hitbox.Width != 0 || hitbox.Height != 0;
 			for (int i = 0; i < lines.Length; i++) {
 				Vector2 a = lines[i].start;
 				Vector2 b = lines[i].end;
-				if (Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
+				if (hasSize && Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
 				float t = ((a.X - rectPos.X) * (rectPos.Y) - (a.Y - rectPos.Y) * (rectPos.X))
 						/ ((a.X - b.X)       * (rectPos.Y) - (a.Y - b.Y)       * (rectPos.X));
 				if (t < 0 || t > 1) continue;

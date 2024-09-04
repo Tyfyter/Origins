@@ -633,7 +633,7 @@ RANGED WEAPONS:
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
-(#, ^2) Boat Rocker*
+(☻) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
@@ -788,7 +788,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (^) Internal Combustionfish*
 (^) Link Grenade*
-(#, ^2) Matrix* !!!
+(☻) Matrix* !!!
 (^) Meteor*
 (@2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling), ^3) Outbreak Bomb*
 (^) Peatball*
