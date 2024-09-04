@@ -1428,6 +1428,8 @@ Tiles: {
 	// Endowood_Dresser.MapEntry: Endowood Dresser
 	// Marrowick_Dresser.MapEntry: Marrowick Dresser
 	// Bottomfeeder_Banner.MapEntry: Bottomfeeder Banner
+	// Living_Alkahest.MapEntry: Living Alkahest
+	// Living_Bile.MapEntry: Living Bile
 }
 
 MapObject: {
