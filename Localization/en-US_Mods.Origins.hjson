@@ -1249,6 +1249,8 @@ Projectiles: {
 	Matrix_P.DisplayName: Matrix
 	Phantom_Fury_P.DisplayName: Phantom Fury
 	Phantom_Fury_P2.DisplayName: Phantom Fury
+	ASH_Attack_Relay_Dust.DisplayName: A.S.H. Attack Relay
+	ASH_Attack_Relay_Explosion.DisplayName: A.S.H. Attack Relay
 }
 
 Prefixes: {

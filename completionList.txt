@@ -297,7 +297,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(#, ^2) ASH Attack Relay !!!
+(☻) ASH Attack Relay !!!
 (ᥢ, ♠) ATACS*
 (^) Automated Returns Handler*
 (^) Binding Book*
@@ -494,7 +494,7 @@ UTILITIES:
 
 (#, ^2) Impenetrable Trashcan Lid
 (#, ^2) Indestructible Saddle
-(#3, ^2) Salty Seed (Mitosis Node) !!!
+(☻) Salty Seed (Mitosis Node) !!!
 (#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
 

@@ -408,7 +408,7 @@ namespace Origins {
 				for (int i = 0; i < cinderSealCount; i++) {
                     Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
                 }
-				if (Player.immuneTime % 15 == 1) {
+				if (Player.immuneTime % cinderSealItem.useTime == 1) {
 					cinderSealCount--;
 					cinderSealItem.ModItem.Shoot(
 						Player,

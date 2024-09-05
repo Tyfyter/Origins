@@ -1,25 +1,30 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Cinder_Seal : ModItem, ICustomWikiStat {
+	[AutoloadEquip(EquipType.Back)]
+	public class ASH_Attack_Relay : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat"
 		];
+		public override void SetStaticDefaults() {
+			Origins.BackGlowMasks.Add(Item.backSlot, Texture + "_Back_Glow");
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 
-			Item.shoot = ModContent.ProjectileType<Cinder_Seal_Dust>();
+			Item.shoot = ModContent.ProjectileType<ASH_Attack_Relay_Dust>();
 			Item.damage = 24;
 			Item.ArmorPenetration = 6;
 			Item.knockBack = 6;
-			Item.useTime = 15;
-			Item.useAnimation = 4;
+			Item.useTime = 12;
+			Item.useAnimation = 6;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.GetModPlayer<OriginPlayer>().cinderSealItem = Item;
@@ -37,7 +42,8 @@ namespace Origins.Items.Accessories {
 			return false;
 		}
 	}
-	public class Cinder_Seal_Dust : ModProjectile {
+	public class ASH_Attack_Relay_Dust : ModProjectile {
+		public override string Texture => "Origins/Items/Accessories/Cinder_Seal_Dust";
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
@@ -47,6 +53,25 @@ namespace Origins.Items.Accessories {
 		public override void AI() {
 			Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ash, Alpha: 100).noGravity = true;
 			Projectile.velocity *= 0.95f;
+			float targetWeight = 300;
+			Vector2 targetPos = default;
+			bool foundTarget = false;
+			for (int i = 0; i < 200; i++) {
+				NPC currentNPC = Main.npc[i];
+				if (currentNPC.CanBeChasedBy(this)) {
+					Vector2 currentPos = currentNPC.Center;
+					float dist = Math.Abs(Projectile.Center.X - currentPos.X) + Math.Abs(Projectile.Center.Y - currentPos.Y);
+					if (dist < targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
+						targetWeight = dist;
+						targetPos = currentPos;
+						foundTarget = true;
+					}
+				}
+			}
+			if (foundTarget) {
+				Vector2 targetVelocity = (targetPos - Projectile.Center).SafeNormalize(-Vector2.UnitY) * 8;
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.083333336f);
+			}
 		}
 		public override void OnKill(int timeLeft) {
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), Projectile.Center);
@@ -55,14 +80,15 @@ namespace Origins.Items.Accessories {
 				Projectile.GetSource_Death(),
 				Projectile.Center,
 				Vector2.Zero,
-				ModContent.ProjectileType<Cinder_Seal_Explosion>(),
+				ModContent.ProjectileType<ASH_Attack_Relay_Explosion>(),
 				Projectile.originalDamage,
 				Projectile.knockBack,
 				Projectile.owner
 			);
 		}
 	}
-	public class Cinder_Seal_Explosion : ModProjectile {
+	public class ASH_Attack_Relay_Explosion : ModProjectile {
+		public override string Texture => "Origins/Items/Accessories/Cinder_Seal_Explosion";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 19;
 		}

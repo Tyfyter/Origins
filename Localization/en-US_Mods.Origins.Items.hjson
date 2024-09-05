@@ -4479,3 +4479,8 @@ Phantom_Fury: {
 	DisplayName: Phantom Fury
 	Tooltip: ""
 }
+
+ASH_Attack_Relay: {
+	DisplayName: A.S.H. Attack Relay
+	Tooltip: ""
+}

@@ -453,8 +453,8 @@ namespace Origins {
 			taintedFlesh2 = false;
 			tornStrengthBoost = StatModifier.Default;
 			endlessExplosives = false;
+			if (!Player.immune) cinderSealCount = cinderSealItem?.useAnimation ?? 4;
 			cinderSealItem = null;
-			if (!Player.immune) cinderSealCount = 4;
 			if (toxicShock) {
 				if (Player.breath > oldBreath) Player.breath = oldBreath;
 				toxicShock = false;

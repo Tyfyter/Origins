@@ -78,6 +78,7 @@ namespace Origins {
 		public static Dictionary<int, AutoCastingAsset<Texture2D>> BreastplateGlowMasks { get; private set; }
 		public static Dictionary<int, AutoCastingAsset<Texture2D>> LeggingGlowMasks { get; private set; }
 		public static Dictionary<int, AutoCastingAsset<Texture2D>> TorsoLegLayers { get; private set; }
+		public static Dictionary<int, AutoLoadingAsset<Texture2D>> BackGlowMasks { get; private set; } = [];
 
 		#endregion Armor IDs
 		public static int[] celestineBoosters;
@@ -547,6 +548,7 @@ namespace Origins {
 			BreastplateGlowMasks = null;
 			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
+			BackGlowMasks = null;
 			instance = null;
 			Petrified_Tree.Unload();
 			OriginExtensions.unInitExt();
