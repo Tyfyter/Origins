@@ -1247,6 +1247,8 @@ Projectiles: {
 	Impactaxe_Smash.DisplayName: Impactaxe
 	Mitosis_P.DisplayName: Mitosis Node
 	Matrix_P.DisplayName: Matrix
+	Phantom_Fury_P.DisplayName: Phantom Fury
+	Phantom_Fury_P2.DisplayName: Phantom Fury
 }
 
 Prefixes: {

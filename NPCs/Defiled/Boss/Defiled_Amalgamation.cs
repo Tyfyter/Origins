@@ -649,8 +649,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
 		}
 		public override void OnKill(int timeLeft) {
-			int[] immune = Projectile.localNPCImmunity.ToArray();
-			Projectile.NewProjectileDirect(
+			Projectile.localNPCImmunity.CopyTo(Projectile.NewProjectileDirect(
 				Projectile.GetSource_FromThis(),
 				Projectile.Center,
 				Vector2.Zero,
@@ -658,7 +657,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				Projectile.damage,
 				0,
 				Projectile.owner,
-			7).localNPCImmunity = immune;
+			7).localNPCImmunity.AsSpan());
 		}
 	}
 	public class Defiled_Spike_Explosion_Hostile : ModProjectile {

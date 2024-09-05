@@ -4474,3 +4474,8 @@ Matrix: {
 	DisplayName: Matrix
 	Tooltip: ""
 }
+
+Phantom_Fury: {
+	DisplayName: Phantom Fury
+	Tooltip: ""
+}
