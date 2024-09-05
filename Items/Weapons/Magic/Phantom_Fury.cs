@@ -90,15 +90,17 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
 		}
-		public override void OnSpawn(IEntitySource source) {
-			Projectile.frame = -4 * (int)Projectile.ai[0];
-		}
 		public override void AI() {
 			Projectile.friendly = false;
-			Projectile.hide = Projectile.frame < 0;
+			Projectile.hide = Projectile.ai[0] > 0;
 			if (++Projectile.frameCounter > 7) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= 3) {
+					if (Projectile.ai[0] > 0) {
+						Projectile.ai[0]--;
+						Projectile.frame = 0;
+						return;
+					}
 					if (Projectile.frame > 3) {
 						Projectile.Kill();
 						return;
