@@ -14,8 +14,8 @@ namespace Origins.Items.Weapons {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Generic;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
+			Item.useTime = 27;
+			Item.useAnimation = 27;
 			Item.useAmmo = ModContent.ItemType<Potato>();
 			Item.shoot = ModContent.ProjectileType<Potato_P>();
 			Item.knockBack = 2f;
@@ -39,6 +39,9 @@ namespace Origins.Items.Weapons {
     }
 	public class Potato_P : ModProjectile {
 		public override string Texture => "Origins/Items/Other/Consumables/Food/Potato";
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 3;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
 			Projectile.DamageType = DamageClass.Generic;
@@ -68,6 +71,24 @@ namespace Origins.Items.Weapons {
 						targetWeight = weight;
 						targetDiff = currentDiff;
 						foundTarget = true;
+					}
+				}
+			}
+			if (!foundTarget) {
+				Player owner = Main.player[Projectile.owner];
+				if (owner.hostile) {
+					foreach (Player player in Main.ActivePlayers) {
+						if (!player.dead && player.hostile && player.team != owner.team) {
+							Vector2 currentDiff = player.Center - Projectile.Center;
+							float dist = currentDiff.Length();
+							currentDiff /= dist;
+							float weight = Vector2.Dot(Projectile.velocity, currentDiff) * (300f / (dist + 100));
+							if (weight > targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, player.position, player.width, player.height)) {
+								targetWeight = weight;
+								targetDiff = currentDiff;
+								foundTarget = true;
+							}
+						}
 					}
 				}
 			}

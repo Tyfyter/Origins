@@ -6,12 +6,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Magic {
-    public class Hot_Potato : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "OtherMagic"
-        ];
-        public override void SetDefaults() {
+	public class Hot_Potato : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"OtherMagic"
+		];
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;
 			Item.damage = 16;
@@ -49,13 +50,15 @@ namespace Origins.Items.Weapons.Magic {
 	public class Hot_Potato_P : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
+			Projectile.aiStyle = 0;
 			Projectile.DamageType = DamageClass.Magic;
-			Projectile.extraUpdates = 0;
+			Projectile.extraUpdates = 1;
 			Projectile.penetrate = 25;
 			Projectile.hide = false;
 			Projectile.alpha = 0;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 0;
+			Projectile.scale = 1f;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.localAI[0] = -1;
@@ -84,16 +87,40 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 			if (foundNextTarget) {
-				Projectile.velocity = (nextDirection - new Vector2(0, System.Math.Abs(nextDirection.X))).SafeNormalize(default) * Projectile.localAI[2];
+				bool goHigh = Main.rand.NextBool(7);
+				if (GeometryUtils.AngleToTarget(nextDirection, Projectile.localAI[2], 0.06f, high: goHigh) is float angle) {
+					Projectile.velocity = GeometryUtils.Vec2FromPolar(Projectile.localAI[2], angle);
+					Rectangle rect = new(0, 0, Projectile.width, Projectile.height);
+					Vector2 pos = Projectile.position;
+					Vector2 velocity = Projectile.velocity;
+					Vector2 targetPos = Projectile.Center + nextDirection;
+					for (int i = 0; i < 240; i++) {
+						pos += velocity;
+						if (pos.DistanceSQ(targetPos) < Projectile.localAI[2] * Projectile.localAI[2] * 4) {
+							break;
+						}
+						rect.X = (int)pos.X;
+						rect.Y = (int)pos.Y;
+						if (rect.OverlapsAnyTiles()) {
+							float? mangle = GeometryUtils.AngleToTarget(nextDirection, Projectile.localAI[2], 0.06f, high: !goHigh);
+							if (mangle.HasValue) {
+								Projectile.velocity = GeometryUtils.Vec2FromPolar(Projectile.localAI[2], mangle.Value);
+							}
+							break;
+						}
+						velocity.Y += 0.06f;
+					}
+				}
 			}
 			Projectile.damage += 2;
 			Projectile.localAI[1] = Projectile.localAI[0];
 			Projectile.localAI[0] = target.whoAmI;
 
-            target.AddBuff(BuffID.OnFire, 180);
-        }
-        public override void AI() {
-			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Torch);
+			target.AddBuff(BuffID.OnFire, 180);
+		}
+		public override void AI() {
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
+			Projectile.velocity.Y += 0.06f;
 		}
 	}
 }

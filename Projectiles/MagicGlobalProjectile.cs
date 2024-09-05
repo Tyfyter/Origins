@@ -37,6 +37,24 @@ namespace Origins.Projectiles {
 						}
 					}
 				}
+				if (!foundTarget) {
+					Player owner = Main.player[projectile.owner];
+					if (owner.hostile) {
+						foreach (Player player in Main.ActivePlayers) {
+							if (!player.dead && player.hostile && player.team != owner.team) {
+								Vector2 currentDiff = player.Center - projectile.Center;
+								float dist = currentDiff.Length();
+								currentDiff /= dist;
+								float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
+								if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, player.position, player.width, player.height)) {
+									targetWeight = weight;
+									targetDiff = currentDiff;
+									foundTarget = true;
+								}
+							}
+						}
+					}
+				}
 
 				if (foundTarget) {
 					PolarVec2 velocity = (PolarVec2)projectile.velocity;

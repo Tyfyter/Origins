@@ -53,11 +53,27 @@ namespace Origins.Projectiles {
 					NPC currentNPC = Main.npc[i];
 					if (currentNPC.CanBeChasedBy(this)) {
 						Vector2 currentPos = currentNPC.Center;
-						float num21 = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
-						if (num21 < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
-							targetWeight = num21;
+						float dist = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
+						if (dist < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
+							targetWeight = dist;
 							targetPos = currentPos;
 							foundTarget = true;
+						}
+					}
+				}
+				if (!foundTarget) {
+					Player owner = Main.player[projectile.owner];
+					if (owner.hostile) {
+						foreach (Player player in Main.ActivePlayers) {
+							if (!player.dead && player.hostile && player.team != owner.team) {
+								Vector2 currentPos = player.Center;
+								float dist = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
+								if (dist < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, player.position, player.width, player.height)) {
+									targetWeight = dist;
+									targetPos = currentPos;
+									foundTarget = true;
+								}
+							}
 						}
 					}
 				}
