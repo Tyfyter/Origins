@@ -4481,6 +4481,11 @@ Phantom_Fury: {
 }
 
 ASH_Attack_Relay: {
-	// DisplayName: A S H Attack Relay
+	// DisplayName: A.S.H. Attack Relay
+	// Tooltip: ""
+}
+
+Indestructible_Saddle: {
+	// DisplayName: Indestructible Saddle
 	// Tooltip: ""
 }

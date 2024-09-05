@@ -899,6 +899,11 @@ Buffs: {
 		// DisplayName: Chee Toy
 		// Description: Marketable plushie tiem
 	}
+
+	Indestructible_Saddle_Mount_Buff: {
+		// DisplayName: Indestructible Saddle Mount Buff
+		// Description: Mods.Origins.Buffs.Indestructible_Saddle_Mount_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1249,8 +1254,8 @@ Projectiles: {
 	// Matrix_P.DisplayName: Matrix
 	// Phantom_Fury_P.DisplayName: Phantom Fury
 	// Phantom_Fury_P2.DisplayName: Phantom Fury
-	// ASH_Attack_Relay_Dust.DisplayName: A S H Attack Relay Dust
-	// ASH_Attack_Relay_Explosion.DisplayName: A S H Attack Relay Explosion
+	// ASH_Attack_Relay_Dust.DisplayName: A.S.H. Attack Relay
+	// ASH_Attack_Relay_Explosion.DisplayName: A.S.H. Attack Relay
 }
 
 Prefixes: {

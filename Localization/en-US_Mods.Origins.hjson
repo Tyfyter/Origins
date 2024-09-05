@@ -899,6 +899,11 @@ Buffs: {
 		DisplayName: Chee Toy
 		Description: Marketable plushie tiem
 	}
+
+	Indestructible_Saddle_Mount_Buff: {
+		DisplayName: Indestructible Saddle Mount Buff
+		Description: Mods.Origins.Buffs.Indestructible_Saddle_Mount_Buff.Description
+	}
 }
 
 DamageClassName: {

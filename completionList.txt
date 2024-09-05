@@ -704,7 +704,7 @@ MAGIC WEAPONS:
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File
-(#, ^2) Phantom Fury
+(♫) Phantom Fury
 (^) Pike of Deepneus
 (^) Plasma Cutter
 (X) Sapphire Shunter
