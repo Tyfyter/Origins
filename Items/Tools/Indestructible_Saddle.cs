@@ -52,22 +52,31 @@ namespace Origins.Items.Tools {
 			MountData.runningFrameDelay = 0;
 			MountData.runningFrameStart = 0;
 		}
+		public static float GetControlDir(Player player) {
+			if (player.controlUp) {
+				if (!player.controlDown) return -0.75f;
+			} else if (player.controlDown) {
+				return 1f;
+			}
+			return 0f;
+		}
+		public override void SetMount(Player player, ref bool skipDust) {
+			player.mount._frameExtraCounter = GetControlDir(player);
+		}
 		public override void UpdateEffects(Player player) {
 			player.velocity *= 0.97f;
 			player.velocity += GeometryUtils.Vec2FromPolar(1, player.direction * (MathHelper.PiOver2 + player.mount._frameExtraCounter) - MathHelper.PiOver2);
 			player.gravity = 0;
-			const float control_limit = 0.5f;
-			const float control_speed = 0.015f;
+			player.maxFallSpeed = 35;
+			const float control_speed = 0.02f;
 			OriginExtensions.LinearSmoothing(
 				ref player.mount._frameExtraCounter,
-				control_limit.Mul(player.controlDown) - control_limit.Mul(player.controlUp),
+				GetControlDir(player),
 				control_speed
 			);
 			Rectangle hitbox = new(0, 0, 12, 12);
-			Vector2 position = player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16));
+			Vector2 position = (player.MountedCenter + new Vector2(0, 22)).RotatedBy(player.fullRotation, player.position + player.fullRotationOrigin - new Vector2(0, 10));//player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16).RotatedBy(player.fullRotation));
 			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
-			position -= move * player.mount._frameExtraCounter;
-			if (player.direction == -1) position.X -= 16;
 			void Explode() {//TODO: replace placeholder explosion & explode on timeout
 				player.mount.Dismount(player);
 				Projectile.NewProjectile(
@@ -75,25 +84,36 @@ namespace Origins.Items.Tools {
 					position + move * 2 + new Vector2(8),
 					Vector2.Zero,
 					ModContent.ProjectileType<Impactaxe_Explosion>(),
-					50,
+					150,
 					10,
 					player.whoAmI
 				);
 			}
-			for (int i = 2; i > -3; i--) {
-				hitbox.X = (int)(position.X + move.X * i);
-				hitbox.Y = (int)(position.Y + move.Y * i);
+			Item item = ContentSamples.ItemsByType[ModContent.ItemType<Indestructible_Saddle>()];
+			for (int i = 2; i > -1; i--) {
+				hitbox.X = (int)(position.X + move.X * i - 8);
+				hitbox.Y = (int)(position.Y + move.Y * i - 8);
+				//hitbox.DrawDebugOutline();
 				if (hitbox.OverlapsAnyTiles()) {
 					Explode();
 					return;
 				}
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.CanBeChasedBy(this) && hitbox.Intersects(npc.Hitbox)) {
+					if (npc.CanBeHitBy(player, item, false) && hitbox.Intersects(npc.Hitbox)) {
 						Explode();
 						return;
 					}
 				}
+				if (player.hostile) {
+					foreach (Player other in Main.ActivePlayers) {
+						if (other.hostile && other.team != player.team && hitbox.Intersects(other.Hitbox)) {
+							Explode();
+							return;
+						}
+					}
+				}
 			}
+			//Dust.NewDustPerfect(player.position + player.fullRotationOrigin - new Vector2(0, 10), 27, Vector2.Zero).noGravity = true;
 		}
 		public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
 			if (++mountedPlayer.mount._frameCounter >= 5) {
