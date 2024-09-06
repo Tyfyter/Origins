@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Accessories;
+using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,23 @@ namespace Origins.Items.Tools {
 		public string[] Categories => [
 			"Movement"
 		];
-        public override void SetDefaults() {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
 			Item.DefaultToMount(ModContent.MountType<Indestructible_Saddle_Mount>());
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
+			Item.DamageType = DamageClasses.Explosive;
+			Item.damage = 150;
+			Item.knockBack = 10;
+			Item.useTime = Item.useAnimation = 20;
+			Item.useStyle = ItemUseStyleID.HoldUp;
         }
 	}
 	public class Indestructible_Saddle_Mount : ModMount {
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			// Movement
 			MountData.jumpHeight = 0; // How high the mount can jump.
@@ -51,17 +62,21 @@ namespace Origins.Items.Tools {
 			MountData.runningFrameCount = 0;
 			MountData.runningFrameDelay = 0;
 			MountData.runningFrameStart = 0;
+			MountData.abilityCooldown = 300;
+			ID = Type;
 		}
 		public static float GetControlDir(Player player) {
 			if (player.controlUp) {
 				if (!player.controlDown) return -0.75f;
+				return 0f;
 			} else if (player.controlDown) {
 				return 1f;
 			}
-			return 0f;
+			return player.mount._frameExtraCounter;
 		}
 		public override void SetMount(Player player, ref bool skipDust) {
 			player.mount._frameExtraCounter = GetControlDir(player);
+			player.mount._abilityCooldown = MountData.abilityCooldown;
 		}
 		public override void UpdateEffects(Player player) {
 			player.velocity *= 0.97f;
@@ -77,19 +92,23 @@ namespace Origins.Items.Tools {
 			Rectangle hitbox = new(0, 0, 12, 12);
 			Vector2 position = (player.MountedCenter + new Vector2(0, 22)).RotatedBy(player.fullRotation, player.position + player.fullRotationOrigin - new Vector2(0, 10));//player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16).RotatedBy(player.fullRotation));
 			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
+			Item item = player.miscEquips[3].type == Indestructible_Saddle.ID ? player.miscEquips[3] : ContentSamples.ItemsByType[Indestructible_Saddle.ID];
 			void Explode() {//TODO: replace placeholder explosion & explode on timeout
 				player.mount.Dismount(player);
 				Projectile.NewProjectile(
-					player.GetSource_Misc("mount_explosion"),
+					player.GetSource_ItemUse(item),
 					position + move * 2 + new Vector2(8),
 					Vector2.Zero,
-					ModContent.ProjectileType<Impactaxe_Explosion>(),
-					150,
-					10,
+					ModContent.ProjectileType<Indestructible_Saddle_Explosion>(),
+					player.GetWeaponDamage(item),
+					player.GetWeaponKnockback(item),
 					player.whoAmI
 				);
 			}
-			Item item = ContentSamples.ItemsByType[ModContent.ItemType<Indestructible_Saddle>()];
+			if (player.mount._abilityCooldown <= 0) {
+				Explode();
+				return;
+			}
 			for (int i = 2; i > -1; i--) {
 				hitbox.X = (int)(position.X + move.X * i - 8);
 				hitbox.Y = (int)(position.Y + move.Y * i - 8);
@@ -143,5 +162,10 @@ namespace Origins.Items.Tools {
 		}
 		public override void Update(Player player, ref int buffIndex) {
 		}
+	}
+	public class Indestructible_Saddle_Explosion : ExplosionProjectile {
+		public override DamageClass DamageType => DamageClasses.Explosive;
+		public override int Size => 144;
+		public override bool DealsSelfDamage => true;
 	}
 }

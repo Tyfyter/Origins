@@ -522,6 +522,9 @@ namespace Origins {
 			};
 			//MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 			On_Player.FigureOutWhatToPlace += On_Player_FigureOutWhatToPlace;
+			MonoModHooks.Add(typeof(Mount).GetProperty(nameof(Mount.AllowDirectionChange)).GetGetMethod(), (Func<Mount, bool> orig, Mount self) => {
+				return orig(self) && self.Type != Indestructible_Saddle_Mount.ID;
+			});
 		}
 
 		private void On_Player_FigureOutWhatToPlace(On_Player.orig_FigureOutWhatToPlace orig, Player self, Tile targetTile, Item sItem, out int tileToCreate, out int previewPlaceStyle, out bool? overrideCanPlace, out int? forcedRandom) {
