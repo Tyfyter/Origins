@@ -31,6 +31,9 @@ namespace Origins.Layers {
 			Vector2 drawItemPos = Main.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
 			int drawXPos = (int)drawItemPos.X;
 			itemCenter.Y = drawItemPos.Y;
+			if (drawPlayer.mount?.Active == true) {
+				itemCenter.Y -= drawPlayer.mount.PlayerOffset;
+			}
 			Vector2 drawOrigin = new Vector2(drawXPos, itemTexture.Height / 2);
 			if (drawPlayer.direction == -1) {
 				drawOrigin = new Vector2(itemTexture.Width + drawXPos, itemTexture.Height / 2);

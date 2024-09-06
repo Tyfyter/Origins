@@ -2854,6 +2854,12 @@ namespace Origins {
 			}
 			return output;
 		}
+		public static N Mul<N>(this bool flag, N value) where N : System.Numerics.INumber<N> {
+			return flag ? value : N.Zero;
+		}
+		public static N Mul<N>(this N value, bool flag) where N : System.Numerics.INumber<N> {
+			return flag ? value : N.Zero;
+		}
 	}
 	public static class ItemExtensions {
 		public static void CloneDefaultsKeepSlots(this Item self, int type) {

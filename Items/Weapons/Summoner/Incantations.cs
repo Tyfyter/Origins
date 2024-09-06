@@ -22,6 +22,9 @@ namespace Origins.Items.Weapons.Summoner {
 			//if (drawInfo.DrawDataCache[^1].texture.Bounds != new Rectangle(0, 0, 360, 224)) return;
 			Vector2 pos = drawInfo.drawPlayer.GetBackHandPosition(drawInfo.drawPlayer.compositeBackArm.stretch, drawInfo.drawPlayer.compositeBackArm.rotation);
 			pos += drawInfo.DrawDataCache[^1].position - drawInfo.drawPlayer.position - new Vector2(10 + 6 * drawInfo.drawPlayer.direction, 24);
+			if (drawInfo.drawPlayer.mount?.Active == true) {
+				pos.Y -= drawInfo.drawPlayer.mount.PlayerOffset;
+			}
 			DrawData data = new(
 				smallTexture,
 				pos,

@@ -34,10 +34,12 @@ namespace Origins.Items.Tools {
 			MountData.runSpeed = 0f; // The speed of the mount
 			MountData.dashSpeed = 0f; // The speed the mount moves when in the state of dashing.
 			MountData.flightTimeMax = 0; // The amount of time in frames a mount can be in the state of flying.
-			MountData.heightBoost = 0;
 			MountData.spawnDust = No_Dust.ID;
 			MountData.textureWidth = 112;
 			MountData.textureHeight = 128;
+			MountData.heightBoost = 22;
+			MountData.yOffset = 22;
+			MountData.playerHeadOffset = -10;
 
 			// Misc
 			MountData.fatigueMax = 0;
@@ -55,12 +57,42 @@ namespace Origins.Items.Tools {
 			player.velocity += GeometryUtils.Vec2FromPolar(1, player.direction * (MathHelper.PiOver2 + player.mount._frameExtraCounter) - MathHelper.PiOver2);
 			player.gravity = 0;
 			const float control_limit = 0.5f;
-			const float control_speed = 0.02f;
-			if (player.controlUp) {
-				player.mount._frameExtraCounter = MathHelper.Lerp(player.mount._frameExtraCounter, -control_limit, 0.02f);
+			const float control_speed = 0.015f;
+			OriginExtensions.LinearSmoothing(
+				ref player.mount._frameExtraCounter,
+				control_limit.Mul(player.controlDown) - control_limit.Mul(player.controlUp),
+				control_speed
+			);
+			Rectangle hitbox = new(0, 0, 12, 12);
+			Vector2 position = player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16));
+			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
+			position -= move * player.mount._frameExtraCounter;
+			if (player.direction == -1) position.X -= 16;
+			void Explode() {//TODO: replace placeholder explosion & explode on timeout
+				player.mount.Dismount(player);
+				Projectile.NewProjectile(
+					player.GetSource_Misc("mount_explosion"),
+					position + move * 2 + new Vector2(8),
+					Vector2.Zero,
+					ModContent.ProjectileType<Impactaxe_Explosion>(),
+					50,
+					10,
+					player.whoAmI
+				);
 			}
-			if (player.controlDown) {
-				player.mount._frameExtraCounter = MathHelper.Lerp(player.mount._frameExtraCounter, control_limit, 0.02f);
+			for (int i = 2; i > -3; i--) {
+				hitbox.X = (int)(position.X + move.X * i);
+				hitbox.Y = (int)(position.Y + move.Y * i);
+				if (hitbox.OverlapsAnyTiles()) {
+					Explode();
+					return;
+				}
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.CanBeChasedBy(this) && hitbox.Intersects(npc.Hitbox)) {
+						Explode();
+						return;
+					}
+				}
 			}
 		}
 		public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
@@ -70,10 +102,12 @@ namespace Origins.Items.Tools {
 					mountedPlayer.mount._frame = 0;
 				}
 			}
+			mountedPlayer.fullRotation = mountedPlayer.direction * mountedPlayer.mount._frameExtraCounter;
+			mountedPlayer.fullRotationOrigin = new(mountedPlayer.width * 0.5f, 52);
 			return false;
 		}
 		public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-			rotation += drawPlayer.direction * drawPlayer.mount._frameExtraCounter;
+			//rotation += drawPlayer.direction * drawPlayer.mount._frameExtraCounter;
 			drawOrigin.X += 8 * drawPlayer.direction;
 			return true;
 		}
@@ -88,10 +122,6 @@ namespace Origins.Items.Tools {
 			Main.buffNoSave[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.changeSize = true;
-			originPlayer.targetWidth = 20;
-			originPlayer.targetHeight = 20;
 		}
 	}
 }
