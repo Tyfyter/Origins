@@ -1256,7 +1256,7 @@ Projectiles: {
 	// Phantom_Fury_P2.DisplayName: Phantom Fury
 	// ASH_Attack_Relay_Dust.DisplayName: A.S.H. Attack Relay
 	// ASH_Attack_Relay_Explosion.DisplayName: A.S.H. Attack Relay
-	// Indestructible_Saddle_Explosion.DisplayName: Indestructible Saddle Explosion
+	// Indestructible_Saddle_Explosion.DisplayName: Indestructible Saddle
 }
 
 Prefixes: {

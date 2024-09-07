@@ -66,8 +66,8 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 	public class Maelstrom_Incantation_P : ModProjectile {
 		const int lifespan = 1800;
+		static AutoLoadingAsset<Texture2D> largeTexture = "Origins/Items/Weapons/Summoner/Maelstrom_Incantation_Large_P";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lightning Orb");
 			Main.projFrames[Type] = 4;
 			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
 		}
@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Summoner {
 			if (Projectile.ai[0] > 0) {
 				int age = lifespan - Projectile.timeLeft;
 				if (age <= Projectile.ai[0]) {
-					Projectile.Center = owner.MountedCenter;
+					Projectile.position = owner.MountedCenter;
 					float ageFactor = age / Projectile.ai[0];
 
 					Projectile.alpha = (int)(255 * (1 - ageFactor));
@@ -136,12 +136,12 @@ namespace Origins.Items.Weapons.Summoner {
 				if (--Projectile.ai[0] <= -16) {
 					if (Projectile.ai[0] > -24) {
 						if (Projectile.ai[0] == -16) {
-							SoundEngine.PlaySound(SoundID.Item122.WithPitchRange(0.9f, 1.1f).WithVolume(2), Projectile.Center);
-							SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitchRange(0.0f, 0.2f).WithVolume(0.75f), Projectile.Center);
+							SoundEngine.PlaySound(SoundID.Item122.WithPitchRange(0.9f, 1.1f).WithVolume(2), Projectile.position);
+							SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitchRange(0.0f, 0.2f).WithVolume(0.75f), Projectile.position);
 							Projectile.damage += Projectile.damage / 2;
 							Projectile.knockBack += Projectile.knockBack;
 						}
-						Projectile.scale += 0.5f;
+						//Projectile.scale += 0.5f;
 					} else {
 						if (Projectile.ai[0] < -32) {
 							Projectile.Kill();
@@ -149,8 +149,8 @@ namespace Origins.Items.Weapons.Summoner {
 					}
 					if ((int)Projectile.ai[0] % 2 == 0) {
 						float angle = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
-						Vector2 targetEnd = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(18, 24) * Projectile.scale) + Projectile.position;
-						Vector2 targetStart = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(2) * Projectile.scale) + Projectile.position;
+						Vector2 targetEnd = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(18, 24)) + Projectile.position;
+						Vector2 targetStart = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(2)) + Projectile.position;
 						if (Main.netMode != NetmodeID.Server) {
 							Projectile.NewProjectile(
 								Projectile.GetSource_FromThis(),
@@ -174,7 +174,7 @@ namespace Origins.Items.Weapons.Summoner {
 						}
 					}
 				} else {
-					Projectile.scale = 0f;
+					Projectile.scale = 2.5f;
 				}
 			}
 		}
@@ -220,15 +220,15 @@ namespace Origins.Items.Weapons.Summoner {
 			hitbox.Inflate(size, size);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Texture2D texture = null;
-			int frame = Projectile.frame;
-			if (Projectile.frame < 4) {
-				texture = TextureAssets.Projectile[Type].Value;
-			} else {
-				texture = TextureAssets.Projectile[Type].Value;
-			}
+			const int large_frames = 3;
+			bool isLarge = Projectile.ai[0] < 0;
+			Texture2D texture = isLarge ? largeTexture : TextureAssets.Projectile[Type].Value;
+			int frame = isLarge ? (int)(Projectile.ai[0] * large_frames / -32f) : Projectile.frame;
+			int frameCount = isLarge ? large_frames : Main.projFrames[Type];
+			float scale = isLarge ? 1 : Projectile.scale;
+
 			int width = texture.Width;
-			int frameHeight = texture.Height / Main.projFrames[Type];
+			int frameHeight = texture.Height / frameCount;
 			int frameY = frameHeight * frame;
 			Main.EntitySpriteDraw(
 				texture,
@@ -237,7 +237,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Projectile.GetAlpha(lightColor),
 				Projectile.rotation,
 				new Vector2(width * 0.5f, frameHeight * 0.5f),
-				Projectile.scale,
+				scale,
 				0,
 				0
 			);
