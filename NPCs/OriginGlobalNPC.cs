@@ -420,16 +420,20 @@ namespace Origins.NPCs {
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			float spawnRateMultiplier = 1f;
+			float maxSpawnsMultiplier = 1f;
 			if (originPlayer.necroSet) {
-				spawnRate = (int)(spawnRate * 0.5);
-				maxSpawns = (int)(maxSpawns * 2f);
-			}
-			if (originPlayer.rapidSpawnFrames > 0) {
-				spawnRate = 1;
+				spawnRateMultiplier *= 0.5f;
+				maxSpawnsMultiplier *= 2f;
 			}
 			if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
-				spawnRate = (int)(spawnRate * 0.65);
-				maxSpawns = (int)(maxSpawns * 1.3f);
+				spawnRateMultiplier *= 0.65f;
+				maxSpawnsMultiplier *= 1.3f;
+			}
+			spawnRate = (int)(spawnRate * spawnRateMultiplier);
+			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);
+			if (originPlayer.rapidSpawnFrames > 0 || originPlayer.swarmStatue) {
+				spawnRate = 1;
 			}
 		}
 		public static Condition PeatSoldCondition(int amount) {

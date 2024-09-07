@@ -904,6 +904,11 @@ Buffs: {
 		DisplayName: Indestructible Saddle Mount Buff
 		Description: Mods.Origins.Buffs.Indestructible_Saddle_Mount_Buff.Description
 	}
+
+	Swarm_Statue_Buff: {
+		DisplayName: Swarm Statue Buff
+		Description: Mods.Origins.Buffs.Swarm_Statue_Buff.Description
+	}
 }
 
 DamageClassName: {

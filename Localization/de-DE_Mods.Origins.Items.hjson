@@ -4489,3 +4489,8 @@ Indestructible_Saddle: {
 	// DisplayName: Indestructible Saddle
 	// Tooltip: ""
 }
+
+Swarm_Statue_Item: {
+	// DisplayName: Swarm Statue Item
+	// Tooltip: ""
+}
