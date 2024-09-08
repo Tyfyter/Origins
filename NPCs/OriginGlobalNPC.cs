@@ -132,8 +132,12 @@ namespace Origins.NPCs {
 				case NPCID.WitchDoctor: {
 					shop.InsertAfter<Defiled_Fountain_Item>(ItemID.CorruptWaterFountain);
 					shop.InsertAfter<Riven_Fountain_Item>(ModContent.ItemType<Defiled_Fountain_Item>());
+					break;
 				}
-				break;
+				case NPCID.Mechanic: {
+					shop.Add<Fabricator_Item>();
+					break;
+				}
 			}
 		}
 		public override bool PreAI(NPC npc) {

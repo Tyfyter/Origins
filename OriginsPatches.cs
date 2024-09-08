@@ -59,6 +59,7 @@ using Origins.Items;
 using System.Runtime.ExceptionServices;
 using System.IO;
 using Microsoft.Xna.Framework.Input;
+using System.Buffers.Text;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -525,6 +526,12 @@ namespace Origins {
 			MonoModHooks.Add(typeof(Mount).GetProperty(nameof(Mount.AllowDirectionChange)).GetGetMethod(), (Func<Mount, bool> orig, Mount self) => {
 				return orig(self) && self.Type != Indestructible_Saddle_Mount.ID;
 			});
+			On_WorldGen.CheckTight += On_WorldGen_CheckTight;
+		}
+
+		private void On_WorldGen_CheckTight(On_WorldGen.orig_CheckTight orig, int x, int j) {
+			if (OriginsGlobalTile.GetStalactiteTexture(x, j, Main.tile[x, j].TileFrameY, out _)) return;
+			orig(x, j);
 		}
 
 		private void On_Player_FigureOutWhatToPlace(On_Player.orig_FigureOutWhatToPlace orig, Player self, Tile targetTile, Item sItem, out int tileToCreate, out int previewPlaceStyle, out bool? overrideCanPlace, out int? forcedRandom) {

@@ -369,11 +369,11 @@ namespace Origins {
 		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
 	}
 	public struct AutoLoadingAsset<T> : IUnloadable where T : class {
-		public bool IsLoaded => asset?.IsLoaded ?? false;
+		public readonly bool IsLoaded => asset.Value?.IsLoaded ?? false;
 		public T Value {
 			get {
 				LoadAsset();
-				return asset?.Value;
+				return asset.Value?.Value;
 			}
 		}
 		public bool Exists {
@@ -385,18 +385,18 @@ namespace Origins {
 		bool exists;
 		bool triedLoading;
 		string assetPath;
-		Asset<T> asset;
+		Ref<Asset<T>> asset;
 		AutoLoadingAsset(Asset<T> asset) {
 			triedLoading = false;
 			assetPath = "";
-			this.asset = asset;
+			this.asset = new(asset);
 			exists = false;
 			this.RegisterForUnload();
 		}
 		AutoLoadingAsset(string asset) {
 			triedLoading = false;
 			assetPath = asset;
-			this.asset = null;
+			this.asset = new(null);
 			exists = false;
 			this.RegisterForUnload();
 		}
@@ -408,13 +408,13 @@ namespace Origins {
 			if (!triedLoading) {
 				triedLoading = true;
 				if (assetPath is null) {
-					asset = Asset<T>.Empty;
+					asset.Value = Asset<T>.Empty;
 				} else {
 					if (!Main.dedServ) {
 						exists = ModContent.RequestIfExists(assetPath, out Asset<T> foundAsset);
-						asset = exists ? foundAsset : Asset<T>.Empty;
+						asset.Value = exists ? foundAsset : Asset<T>.Empty;
 					} else {
-						asset = Asset<T>.Empty;
+						asset.Value = Asset<T>.Empty;
 					}
 				}
 			}
@@ -424,11 +424,11 @@ namespace Origins {
 		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
 		public static implicit operator AutoCastingAsset<T>(AutoLoadingAsset<T> asset) {
 			asset.LoadAsset();
-			return asset.asset;
+			return asset.asset.Value;
 		}
 		public static implicit operator Asset<T>(AutoLoadingAsset<T> asset) {
 			asset.LoadAsset();
-			return asset.asset;
+			return asset.asset.Value;
 		}
 	}
 	public readonly struct UnorderedTuple<T>(T a, T b) : IEquatable<UnorderedTuple<T>> {
