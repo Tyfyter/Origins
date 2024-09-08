@@ -969,7 +969,7 @@ TILES:
 (X) Defiled Waste Organ*
 (X) Elderforge*
 (^) Enemy Banners*
-(#, ^2) Fabricator*
+(☻) Fabricator*
 (X) Flesh Shredder*
 (X) Interstellar Sampler*
 (X) Qube Generator*

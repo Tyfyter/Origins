@@ -1445,6 +1445,7 @@ Tiles: {
 	Bottomfeeder_Banner.MapEntry: Bottomfeeder Banner
 	Living_Alkahest.MapEntry: Living Alkahest
 	Living_Bile.MapEntry: Living Bile
+	Fabricator.MapEntry: Fabricator
 }
 
 MapObject: {

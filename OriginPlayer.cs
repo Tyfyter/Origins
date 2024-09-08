@@ -638,11 +638,11 @@ namespace Origins {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
 		}
 		public override void GetDyeTraderReward(List<int> rewardPool) {
-			rewardPool.AddRange(new int[]{
+			rewardPool.AddRange([
 				ModContent.ItemType<Amber_Dye>(),
 				ModContent.ItemType<High_Contrast_Dye>(),
 				ModContent.ItemType<Rasterized_Dye>(),// temp
-			});
+			]);
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {
@@ -666,6 +666,16 @@ namespace Origins {
 				}
 			}
 			itemUseOldDirection = Player.direction;
+			if (focusPotion) {
+				if (Player.ItemAnimationJustStarted) {
+					focusPotionThisUse = Player.CheckMana(Focus_Potion.GetManaCost(Player.HeldItem), true);
+					Player.manaRegenDelay = (int)Player.maxRegenDelay;
+				} else if (Player.ItemAnimationEndingOrEnded) {
+					focusPotionThisUse = false;
+				}
+			} else {
+				focusPotionThisUse = false;
+			}
 			return true;
 		}
 		public override void PostItemCheck() {

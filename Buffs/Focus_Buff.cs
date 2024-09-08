@@ -11,7 +11,7 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			//mana logic + damage
+			player.GetModPlayer<OriginPlayer>().focusPotion = true;
 		}
 	}
 }

@@ -5,11 +5,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Focus_Potion : ModItem {
-        public string[] Categories => [
-            "Potion"
-        ];
-        public override void SetStaticDefaults() {
+	public class Focus_Potion : ModItem {
+		public const float bonus_multiplicative = 0.15f;
+		public const float bonus_additive = 5f;
+		public string[] Categories => [
+			"Potion"
+		];
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
@@ -25,5 +27,6 @@ namespace Origins.Items.Other.Consumables {
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
+		public static int GetManaCost(Item item) => (int)(15 * (item.useAnimation / 60f)) + 1;
 	}
 }

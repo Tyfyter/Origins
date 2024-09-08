@@ -20,6 +20,7 @@ using static Origins.OriginExtensions;
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		#region stats
+		bool focusPotionThisUse = false;
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
 				damage.Flat += Player.statDefense / 2;
@@ -27,6 +28,10 @@ namespace Origins {
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
 			if (focusCrystal) {
 				damage *= 1 + (focusCrystalTime / 360f);
+			}
+			if (focusPotion && (focusPotionThisUse || Player.CheckMana(Focus_Potion.GetManaCost(Player.HeldItem), false))) {
+				damage *= 1 + Focus_Potion.bonus_multiplicative;
+				damage.Flat += Focus_Potion.bonus_additive;
 			}
 			damage.Base *= Origins.FlatDamageMultiplier[item.type];
 			damage.Flat *= Origins.FlatDamageMultiplier[item.type];

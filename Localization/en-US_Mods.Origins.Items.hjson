@@ -4499,3 +4499,8 @@ Swarm_Statue_Item: {
 	DisplayName: Swarm Statue Item
 	Tooltip: ""
 }
+
+Fabricator_Item: {
+	DisplayName: Fabricator Item
+	Tooltip: ""
+}

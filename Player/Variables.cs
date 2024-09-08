@@ -290,6 +290,7 @@ namespace Origins {
 		public bool hideTornTime = false;
 		public Vector2 tornOffset = default;
 		public bool swarmStatue = false;
+		public bool focusPotion = false;
 		#endregion
 
 		#region keybinds
@@ -592,6 +593,7 @@ namespace Origins {
 			flaskBile = false;
 			flaskSalt = false;
 			swarmStatue = false;
+			focusPotion = false;
 
 			boatRockerAltUse = false;
 
