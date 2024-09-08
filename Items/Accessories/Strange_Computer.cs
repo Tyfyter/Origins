@@ -47,8 +47,9 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 		internal static void DrawStrangeLine() {
-			drawingStrangeLine = true;
 			Player player = Main.LocalPlayer;
+			if (!player.GetModPlayer<OriginPlayer>().strangeComputer) return;
+			drawingStrangeLine = true;
 			List<List<Vector2>> positionss = [];
 			List<List<float>> rotationss = [];
 			int netMode = Main.netMode;

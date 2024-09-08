@@ -3451,6 +3451,11 @@ Riven_Fountain_Item: {
 	// Tooltip: ""
 }
 
+Defiled_Fountain_Item: {
+	// DisplayName: Defiled Water Fountain
+	// Tooltip: ""
+}
+
 Gel_Blister_Item: {
 	// DisplayName: Gel Blister Debug Item
 	// Tooltip: ""

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Water;
 using Origins.World.BiomeData;
 using Terraria;
@@ -21,12 +22,13 @@ namespace Origins.Tiles.Other {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Fountain_Item : ModItem {
+	public class Riven_Fountain_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"WaterFountain"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Fountain>());
+			Item.value = Item.buyPrice(gold: 4);
 		}
 	}
 }

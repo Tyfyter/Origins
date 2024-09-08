@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.Other {
 	public class Swarm_Statue : ModTile {
@@ -64,8 +65,12 @@ namespace Origins.Tiles.Other {
 	}
 	public class Swarm_Statue_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Battle;
+		public override void SetStaticDefaults() {
+			Main.buffNoTimeDisplay[Type] = true;
+		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().swarmStatue = true;
 		}
+		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams) => false;
 	}
 }

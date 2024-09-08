@@ -129,6 +129,11 @@ namespace Origins.NPCs {
 					shop.Add<Holiday_Hair_Dye>();
 					break;
 				}
+				case NPCID.WitchDoctor: {
+					shop.InsertAfter<Defiled_Fountain_Item>(ItemID.CorruptWaterFountain);
+					shop.InsertAfter<Riven_Fountain_Item>(ModContent.ItemType<Defiled_Fountain_Item>());
+				}
+				break;
 			}
 		}
 		public override bool PreAI(NPC npc) {
