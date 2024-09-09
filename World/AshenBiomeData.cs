@@ -13,7 +13,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Pets;
 
 namespace Origins.World {
-    public class AshenBiomeData : ModBiome {
+	public class AshenBiomeData : ModBiome {
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public static IItemDropRule FirstOrbDropRule;
 		public static IItemDropRule OrbDropRule;

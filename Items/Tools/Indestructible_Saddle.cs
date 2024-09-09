@@ -68,12 +68,12 @@ namespace Origins.Items.Tools {
 			ID = Type;
 		}
 		public static float GetControlDir(Player player) {
-			bool controlForewards = player.direction == 1 ? player.controlRight : player.controlLeft;
-			bool controlBackwards = player.direction == -1 ? player.controlRight : player.controlLeft;
-			if (player.controlUp || controlBackwards) {
-				if (!player.controlDown && !controlForewards) return -0.75f;
+			bool controlTiltUp = player.controlUp || (player.direction == -1 ? player.controlRight : player.controlLeft);
+			bool controlTiltDown = player.controlDown || (player.direction == 1 ? player.controlRight : player.controlLeft);
+			if (controlTiltUp) {
+				if (!controlTiltDown) return -0.75f;
 				return 0f;
-			} else if (player.controlDown || controlForewards) {
+			} else if (controlTiltDown) {
 				return 1f;
 			}
 			return player.mount._frameExtraCounter;

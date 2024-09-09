@@ -60,6 +60,7 @@ using System.Runtime.ExceptionServices;
 using System.IO;
 using Microsoft.Xna.Framework.Input;
 using System.Buffers.Text;
+using Origins.Items.Weapons.Ammo;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -527,6 +528,20 @@ namespace Origins {
 				return orig(self) && self.Type != Indestructible_Saddle_Mount.ID;
 			});
 			On_WorldGen.CheckTight += On_WorldGen_CheckTight;
+			On_NPC.SpawnAllowed_ArmsDealer += (orig) => {
+				if (orig()) return true;
+				int harpoon = MC.ItemType<Harpoon>();
+				int scrap = MC.ItemType<Scrap>();
+				foreach (Player player in Main.ActivePlayers) {
+					for (int j = 0; j < 58; j++) {
+						Item item = player.inventory[j];
+						if (item != null && item.stack > 0 && (item.ammo == harpoon || item.useAmmo == harpoon || item.ammo == scrap || item.useAmmo == scrap)) {
+							return true;
+						}
+					}
+				}
+				return false;
+			};
 		}
 
 		private void On_WorldGen_CheckTight(On_WorldGen.orig_CheckTight orig, int x, int j) {

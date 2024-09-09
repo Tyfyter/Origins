@@ -19,6 +19,7 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.World;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -78,10 +79,10 @@ namespace Origins.NPCs {
 					shop.Add<Ameballoon>(PeatSoldCondition(60), WorldEvilBossCondition<Riven_Hive_Alt_Biome>("Mods.Origins.Conditions.DownedWorldCracker"));
 					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
 					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
-					shop.Add<Link_Grenade>(PeatSoldCondition(85)); // ", Condition.AshenWorld"
+					shop.Add<Link_Grenade>(PeatSoldCondition(85), ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>());
 					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
 					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
-					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.DownedScrapper"
+					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
 					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170));
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
