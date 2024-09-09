@@ -7,10 +7,12 @@ Conditions: {
 	// Not: Not {0}
 	// Comma: "{0}, {1}"
 	// QuestCompleted: Completed "{0}"
-	// PeatSoldCondition: Mods.Origins.Conditions.PeatSoldCondition
+	// PeatSoldCondition: After selling {0} peat to the Demolitionist
 	// Brine: Mods.Origins.Conditions.Brine
 	// RivenWater: Amebic Gel
 	// ShimmerDecrafting: Shimmer decrafting only
+	// DownedDefiledAmalgamation: After defeating the Defiled Amalgamation
+	// DownedWorldCracker: After defeating the World Cracker
 }
 
 RecipeGroups: {
@@ -911,8 +913,8 @@ Buffs: {
 	}
 
 	Indestructible_Saddle_Mount_Cooldown: {
-		// DisplayName: Indestructible Saddle Mount Cooldown
-		// Description: Mods.Origins.Buffs.Indestructible_Saddle_Mount_Cooldown.Description
+		// DisplayName: Rowdy Rocket Cooldown
+		// Description: Can't use the Indestructible Saddle
 	}
 }
 

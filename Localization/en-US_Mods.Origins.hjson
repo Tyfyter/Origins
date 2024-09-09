@@ -7,10 +7,12 @@ Conditions: {
 	Not: Not {0}
 	Comma: "{0}, {1}"
 	QuestCompleted: Completed "{0}"
-	PeatSoldCondition: Mods.Origins.Conditions.PeatSoldCondition
+	PeatSoldCondition: After selling {0} peat to the Demolitionist
 	Brine: Mods.Origins.Conditions.Brine
 	RivenWater: Amebic Gel
 	ShimmerDecrafting: Shimmer decrafting only
+	DownedDefiledAmalgamation: After defeating the Defiled Amalgamation
+	DownedWorldCracker: After defeating the World Cracker
 }
 
 RecipeGroups: {

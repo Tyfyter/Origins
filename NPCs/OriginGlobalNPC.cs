@@ -1,4 +1,5 @@
-﻿using AltLibrary.Common.Conditions;
+﻿using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.Conditions;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
@@ -73,8 +74,8 @@ namespace Origins.NPCs {
 					shop.Add<Flashbang>(PeatSoldCondition(25));
 					shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
 					shop.Add<Impact_Grenade>(PeatSoldCondition(40));
-					shop.Add<Defiled_Spirit>(PeatSoldCondition(50)); // ", Condition.DownedAmalgamation"
-					shop.Add<Ameballoon>(PeatSoldCondition(60)); // ", Condition.DownedCracker"
+					shop.Add<Defiled_Spirit>(PeatSoldCondition(50), WorldEvilBossCondition<Defiled_Wastelands_Alt_Biome>("Mods.Origins.Conditions.DownedDefiledAmalgamation"));
+					shop.Add<Ameballoon>(PeatSoldCondition(60), WorldEvilBossCondition<Riven_Hive_Alt_Biome>("Mods.Origins.Conditions.DownedWorldCracker"));
 					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
 					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
 					shop.Add<Link_Grenade>(PeatSoldCondition(85)); // ", Condition.AshenWorld"
@@ -450,6 +451,13 @@ namespace Origins.NPCs {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.PeatSoldCondition").WithFormatArgs(amount),
 				() => ModContent.GetInstance<OriginSystem>().peatSold >= amount
+			);
+		}
+		public static Condition WorldEvilBossCondition<TEvil>(string key) where TEvil : AltBiome {
+			Condition evil = ShopConditions.GetWorldEvilCondition<TEvil>();
+			return new Condition(
+				Language.GetOrRegister(key),
+				() => NPC.downedBoss2 && evil.IsMet()
 			);
 		}
 	}
