@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -50,7 +52,11 @@ namespace Origins.Projectiles {
 					polarDiff.R = oldDiff.Length();
 					Vector2 diff = (Vector2)polarDiff;
 					projectile.Center = player.MountedCenter + diff;
-					projectile.velocity = (diff - oldDiff).SafeNormalize(default).RotatedBy(player.direction * 0.05f) * projectile.velocity.Length();
+					Vector2 oldVel = projectile.velocity;
+					projectile.velocity = (diff - oldDiff).SafeNormalize(default).RotatedBy(player.direction * 0.05f) * projectile.velocity.Length() * 0.9995f;
+					if (Math.Sign(oldVel.X) != Math.Sign(projectile.velocity.X)) {
+						SoundEngine.PlaySound(SoundID.Item1, projectile.Center);
+					}
 				} else if (originPlayer.boatRockerAltUse) {
 					Vector2 diff = projectile.Center - player.MountedCenter;
 					float dist = diff.Length();
