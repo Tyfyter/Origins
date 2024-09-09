@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons;
 using Origins.NPCs.Defiled.Boss;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -74,7 +75,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ItemID.CopperBar);
 			recipe.AddIngredient(ModContent.ItemType<Potato>());
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddTile(TileID.MythrilAnvil); //fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 		public static int GetVariationCount(QuoteType type) {

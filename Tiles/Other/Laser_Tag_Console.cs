@@ -31,7 +31,7 @@ namespace Origins.Tiles.Other {
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 5);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}

@@ -1,6 +1,7 @@
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -61,7 +62,7 @@ namespace Origins.Items.Armor.Blast {
 			recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
             recipe.AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>());
             recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 2);
-            recipe.AddTile(TileID.MythrilAnvil); //fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 		public string ArmorSetName => "Blast_Armor";
@@ -92,7 +93,7 @@ namespace Origins.Items.Armor.Blast {
             recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 2);
             recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
             recipe.AddIngredient(ModContent.ItemType<Rotor>(), 2);
-            recipe.AddTile(TileID.MythrilAnvil); //fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}
@@ -120,7 +121,7 @@ namespace Origins.Items.Armor.Blast {
             recipe.AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>());
             recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 2);
             recipe.AddIngredient(ModContent.ItemType<Rotor>(), 2);
-            recipe.AddTile(TileID.MythrilAnvil); //fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}

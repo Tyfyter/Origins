@@ -297,7 +297,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(☻) ASH Attack Relay !!!
+(^) ASH Attack Relay
 (ᥢ, ♠) ATACS*
 (^) Automated Returns Handler*
 (^) Binding Book*
@@ -368,7 +368,7 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(X) Scrap Barrier !!!
+(#, ^2) Scrap Barrier !!!
 (^) Shield of Retribution*
 (X) Slag Bucket !!!
 (^) Sniper's Mark*
@@ -493,8 +493,8 @@ UTILITIES:
 (X) Strange Backpack
 
 (#, ^2) Impenetrable Trashcan Lid
-(☻) Indestructible Saddle
-(☻) Salty Seed (Mitosis Node) !!!
+(#3, ^2) Indestructible Saddle (make it emit fire dusts and you're golden)
+(#3, ^2) Salty Seed (Mitosis Node) !!! (still needs its animation)
 (#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
 
@@ -633,7 +633,7 @@ RANGED WEAPONS:
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
-(☻) Boat Rocker*
+(#3, ^2) Boat Rocker* (maybe a cool swinging sound every revolution?)
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
@@ -788,7 +788,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (^) Internal Combustionfish*
 (^) Link Grenade*
-(☻) Matrix* !!!
+(#2, ^2) Matrix* !!!
 (^) Meteor*
 (@2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling), ^3) Outbreak Bomb*
 (^) Peatball*
@@ -969,7 +969,7 @@ TILES:
 (X) Defiled Waste Organ*
 (X) Elderforge*
 (^) Enemy Banners*
-(☻) Fabricator*
+(^) Fabricator*
 (X) Flesh Shredder*
 (X) Interstellar Sampler*
 (X) Qube Generator*
@@ -1108,7 +1108,7 @@ CONSUMABLES:
 (^) Fervor Potion*
 (^) Flask of Alkahest*
 (^) Flask of Black Bile*
-(#2, ^2) Focus Potion*
+(^) Focus Potion*
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*

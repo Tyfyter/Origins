@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Tiles.Other;
 namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Nuclear_Arm : ModItem, ICustomWikiStat {
@@ -45,7 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.AddIngredient(ItemID.ExplosivePowder, 10);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 20);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}

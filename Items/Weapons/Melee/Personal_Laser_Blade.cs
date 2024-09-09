@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Tiles.Other;
 namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Personal_Laser_Blade : ModItem, IElementalItem, ICustomWikiStat {
@@ -43,7 +44,7 @@ namespace Origins.Items.Weapons.Melee {
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 2);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 8);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

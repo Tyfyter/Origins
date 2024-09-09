@@ -5,6 +5,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -69,7 +70,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 30);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 8);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

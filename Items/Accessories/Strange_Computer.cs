@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Tiles.Other;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Origins.Items.Accessories {
 			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 10)
 			.AddIngredient(ModContent.ItemType<Power_Core>())
 			.AddIngredient(ModContent.ItemType<Rotor>(), 6)
-			.AddTile(TileID.MythrilAnvil) //fabricator
+			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
 		internal static void DrawStrangeLine() {

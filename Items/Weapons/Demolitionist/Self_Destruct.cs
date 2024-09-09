@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Terraria.DataStructures;
+using Origins.Tiles.Other;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Self_Destruct : ModItem, ICustomWikiStat {
@@ -34,7 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddIngredient(ItemID.SoulofMight, 15)
             .AddIngredient(ModContent.ItemType<Busted_Servo>(), 28)
             .AddIngredient(ModContent.ItemType<Power_Core>(), 2)
-            .AddTile(TileID.MythrilAnvil)
+			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
 		public override bool WeaponPrefix() => true;

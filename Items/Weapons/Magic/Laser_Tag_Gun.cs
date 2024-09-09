@@ -49,7 +49,7 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 18);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 		public override void UpdateInventory(Player player) {

@@ -77,7 +77,7 @@ namespace Origins.NPCs {
 					shop.Add<Ameballoon>(PeatSoldCondition(60)); // ", Condition.DownedCracker"
 					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
 					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
-					//shop.Add<Link_Grenade>(PeatSoldCondition(85), Condition.AshenWorld);
+					shop.Add<Link_Grenade>(PeatSoldCondition(85)); // ", Condition.AshenWorld"
 					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
 					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
 					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.DownedScrapper"
@@ -86,6 +86,7 @@ namespace Origins.NPCs {
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode);
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
+					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
 					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
 					break;
 				}
@@ -135,7 +136,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Mechanic: {
-					shop.Add<Fabricator_Item>();
+					shop.Add<Fabricator_Item>(Condition.DownedMechBossAll);
 					break;
 				}
 			}

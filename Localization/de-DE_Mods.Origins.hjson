@@ -901,13 +901,13 @@ Buffs: {
 	}
 
 	Indestructible_Saddle_Mount_Buff: {
-		// DisplayName: Indestructible Saddle Mount Buff
-		// Description: Mods.Origins.Buffs.Indestructible_Saddle_Mount_Buff.Description
+		// DisplayName: Rowdy Rocket
+		// Description: Ridin' 'til I dyin', baby
 	}
 
 	Swarm_Statue_Buff: {
-		// DisplayName: Swarm Statue Buff
-		// Description: Mods.Origins.Buffs.Swarm_Statue_Buff.Description
+		// DisplayName: Swarm Statue
+		// Description: Enemy spawn rates increased
 	}
 }
 

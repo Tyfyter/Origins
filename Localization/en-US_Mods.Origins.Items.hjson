@@ -2745,7 +2745,7 @@ The_Bird: {
 	Tooltip:
 		'''
 		Developer item
-		'How's being 96-thousand feet in the air for yah? Thought so'
+		'How's being 96000/r in the air going for yah? Thought so'
 		'''
 }
 
@@ -4487,20 +4487,20 @@ Phantom_Fury: {
 
 ASH_Attack_Relay: {
 	DisplayName: A.S.H. Attack Relay
-	Tooltip: ""
+	Tooltip: Releases explosive ashes that home towards your aggressors upon taking damage
 }
 
 Indestructible_Saddle: {
 	DisplayName: Indestructible Saddle
-	Tooltip: ""
+	Tooltip: Saddle up for one wild ride
 }
 
 Swarm_Statue_Item: {
-	DisplayName: Swarm Statue Item
+	DisplayName: Swarm Statue
 	Tooltip: ""
 }
 
 Fabricator_Item: {
-	DisplayName: Fabricator Item
-	Tooltip: ""
+	DisplayName: Fabricator
+	Tooltip: Used to craft high-tech items from mech components
 }

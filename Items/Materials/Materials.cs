@@ -377,7 +377,7 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.HallowedBar, 2);
 			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 3);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator not implemented yet
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}
@@ -401,7 +401,7 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.HallowedBar);
 			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator not implemented yet
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}

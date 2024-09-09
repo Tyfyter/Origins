@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Tiles.Other;
 namespace Origins.Items.Weapons.Magic {
     public class Pike_of_Deepneus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 64;
@@ -40,7 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.AddRecipeGroup("AdamantiteBars", 16);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 		public override void UseItemFrame(Player player) {

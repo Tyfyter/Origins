@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.AddIngredient(ItemID.ExplosivePowder, 7);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13);
 			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 25);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}

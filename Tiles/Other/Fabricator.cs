@@ -1,14 +1,9 @@
-﻿using Origins.Dev;
-using Origins.Water;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using static Terraria.Graphics.Capture.IL_CaptureBiome.Sets;
 using Terraria.ObjectData;
-using Microsoft.Xna.Framework;
 
 namespace Origins.Tiles.Other {
 	public class Fabricator : ModTile {
@@ -36,11 +31,13 @@ namespace Origins.Tiles.Other {
 	}
 	public class Fabricator_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			//"WaterFountain"
+			"Furniture",
+			"CraftingStation"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Fabricator>());
-			Item.value = Item.buyPrice(gold: 4);
+			Item.value = Item.buyPrice(platinum: 1);
+			Item.rare = ItemRarityID.LightPurple;
 		}
 	}
 }

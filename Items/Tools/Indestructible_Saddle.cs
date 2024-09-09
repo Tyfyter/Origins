@@ -2,9 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
-using Origins.Items.Accessories;
 using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -15,7 +13,8 @@ using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Indestructible_Saddle : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Movement"
+			"Movement",
+			"Mount"
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -24,7 +23,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
 			Item.DefaultToMount(ModContent.MountType<Indestructible_Saddle_Mount>());
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.DamageType = DamageClasses.Explosive;
 			Item.damage = 150;
 			Item.knockBack = 10;
@@ -152,7 +151,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Indestructible_Saddle_Mount_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
+		public override string Texture => "Origins/Buffs/Indestructible_Saddle_Mount_Buff";
 		public override void SetStaticDefaults() {
 			BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 				mountID = ModContent.MountType<Indestructible_Saddle_Mount>()

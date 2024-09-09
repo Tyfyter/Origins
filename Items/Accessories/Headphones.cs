@@ -30,7 +30,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 6);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 5);
-			recipe.AddTile(TileID.MythrilAnvil); //fabricator
+			recipe.AddTile(ModContent.TileType<Fabricator>());
 			recipe.Register();
 		}
 	}
