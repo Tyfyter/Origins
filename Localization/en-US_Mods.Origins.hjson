@@ -909,6 +909,11 @@ Buffs: {
 		DisplayName: Swarm Statue
 		Description: Enemy spawn rates increased
 	}
+
+	Indestructible_Saddle_Mount_Cooldown: {
+		DisplayName: Rowdy Rocket Cooldown
+		Description: Can't use the Indestructible Saddle
+	}
 }
 
 DamageClassName: {

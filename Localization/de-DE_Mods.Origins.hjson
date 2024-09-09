@@ -909,6 +909,11 @@ Buffs: {
 		// DisplayName: Swarm Statue
 		// Description: Enemy spawn rates increased
 	}
+
+	Indestructible_Saddle_Mount_Cooldown: {
+		// DisplayName: Indestructible Saddle Mount Cooldown
+		// Description: Mods.Origins.Buffs.Indestructible_Saddle_Mount_Cooldown.Description
+	}
 }
 
 DamageClassName: {

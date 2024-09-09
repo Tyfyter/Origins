@@ -30,6 +30,9 @@ namespace Origins.Items.Tools {
 			Item.useTime = Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.HoldUp;
         }
+		public override bool CanUseItem(Player player) {
+			return !player.HasBuff<Indestructible_Saddle_Mount_Cooldown>();
+		}
 	}
 	public class Indestructible_Saddle_Mount : ModMount {
 		public static int ID { get; private set; }
@@ -78,8 +81,8 @@ namespace Origins.Items.Tools {
 			player.mount._abilityCooldown = MountData.abilityCooldown;
 		}
 		public override void UpdateEffects(Player player) {
-			player.velocity *= 0.97f;
-			player.velocity += GeometryUtils.Vec2FromPolar(1, player.direction * (MathHelper.PiOver2 + player.mount._frameExtraCounter) - MathHelper.PiOver2);
+			player.velocity *= 0.935f;
+			player.velocity += GeometryUtils.Vec2FromPolar(2, player.direction * (MathHelper.PiOver2 + player.mount._frameExtraCounter) - MathHelper.PiOver2);
 			player.gravity = 0;
 			player.maxFallSpeed = 35;
 			const float control_speed = 0.02f;
@@ -93,6 +96,7 @@ namespace Origins.Items.Tools {
 			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
 			Item item = player.miscEquips[3].type == Indestructible_Saddle.ID ? player.miscEquips[3] : ContentSamples.ItemsByType[Indestructible_Saddle.ID];
 			void Explode() {//TODO: replace placeholder explosion & explode on timeout
+				player.mount._abilityCooldown = 0;
 				player.mount.Dismount(player);
 				Projectile.NewProjectile(
 					player.GetSource_ItemUse(item),
@@ -133,6 +137,10 @@ namespace Origins.Items.Tools {
 			}
 			//Dust.NewDustPerfect(player.position + player.fullRotationOrigin - new Vector2(0, 10), 27, Vector2.Zero).noGravity = true;
 		}
+		public override void Dismount(Player player, ref bool skipDust) {
+			int timeLeft = player.mount._abilityCooldown;
+			player.AddBuff(ModContent.BuffType<Indestructible_Saddle_Mount_Cooldown>(), 60 + (timeLeft > 0 ? 30 : 0) + (int)(timeLeft * 1.5f));
+		}
 		public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
 			if (++mountedPlayer.mount._frameCounter >= 5) {
 				mountedPlayer.mount._frameCounter = 0;
@@ -160,6 +168,12 @@ namespace Origins.Items.Tools {
 			Main.buffNoSave[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) {
+		}
+	}
+	public class Indestructible_Saddle_Mount_Cooldown : ModBuff {
+		public override string Texture => "Origins/Buffs/Indestructible_Saddle_Mount_Cooldown";
+		public override void SetStaticDefaults() {
+			Main.buffNoSave[Type] = true;
 		}
 	}
 	public class Indestructible_Saddle_Explosion : ExplosionProjectile {
