@@ -155,7 +155,7 @@ namespace Origins.Tiles.Marrowick {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (IsOn(tile)) {
-				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
 			}
 		}
 	}
@@ -182,7 +182,7 @@ namespace Origins.Tiles.Marrowick {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (IsOn(tile)) {
-				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
 			}
 		}
 	}
@@ -210,7 +210,7 @@ namespace Origins.Tiles.Marrowick {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (IsOn(tile)) {
-				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
 			}
 		}
 	}
@@ -237,7 +237,7 @@ namespace Origins.Tiles.Marrowick {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (IsOn(tile)) {
-				color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
 			}
 		}
 	}
@@ -282,7 +282,7 @@ namespace Origins.Tiles.Marrowick {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
 		}
 	}
 	public class Marrowick_Work_Bench : FurnitureBase, IGlowingModTile {
@@ -299,7 +299,7 @@ namespace Origins.Tiles.Marrowick {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
 		}
 	}
 	public class Marrowick_Dresser : DresserBase {

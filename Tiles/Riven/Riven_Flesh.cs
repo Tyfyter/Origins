@@ -17,7 +17,7 @@ namespace Origins.Tiles.Riven {
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (HasScar(tile)) {
 				//Lighting.AddLight((int)(id % Main.maxTilesX) * 16, (int)(id / Main.maxTilesX) * 16, 1, 0.05f, 0.055f);
-				color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 			}
 		}
 		public override void SetStaticDefaults() {

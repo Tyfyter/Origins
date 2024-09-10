@@ -13,6 +13,7 @@ Conditions: {
 	// ShimmerDecrafting: Shimmer decrafting only
 	// DownedDefiledAmalgamation: After defeating the Defiled Amalgamation
 	// DownedWorldCracker: After defeating the World Cracker
+	// DownedScrapper: After defeating the Scrapper
 }
 
 RecipeGroups: {

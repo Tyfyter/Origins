@@ -130,7 +130,7 @@ namespace Origins.Tiles.MusicBoxes {
 			}
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (ShouldGlow(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile);
+			if (ShouldGlow(tile)) Vector3.Max(color, color = new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile));
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowColor = GlowColor;

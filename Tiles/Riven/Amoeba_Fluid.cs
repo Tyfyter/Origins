@@ -16,7 +16,7 @@ namespace Origins.Tiles.Riven {
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {

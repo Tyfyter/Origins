@@ -29,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+			if (HasScar(tile)) Vector3.Max(color, color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
 		static bool HasScar(Tile tile) {
 			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
@@ -94,7 +94,7 @@ namespace Origins.Tiles.Riven {
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (tile.TileFrameX / 18 != 2) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+			if (tile.TileFrameX / 18 != 2) color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
 		public override Color MapColor => new(200, 175, 160);
 		public override int[] ValidAnchorTypes => Exoskeletal_Tree.AnchorTypes;
