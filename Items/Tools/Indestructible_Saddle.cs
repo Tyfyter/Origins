@@ -67,9 +67,9 @@ namespace Origins.Items.Tools {
 			MountData.abilityCooldown = 300;
 			ID = Type;
 		}
-		public static float GetControlDir(Player player) {
+		public static float GetControlDir(Player player, bool isSpawning) {
 			bool controlTiltUp = player.controlUp || (player.direction == -1 ? player.controlRight : player.controlLeft);
-			bool controlTiltDown = player.controlDown || (player.direction == 1 ? player.controlRight : player.controlLeft);
+			bool controlTiltDown = player.controlDown || (!isSpawning && (player.direction == 1 ? player.controlRight : player.controlLeft));
 			if (controlTiltUp) {
 				if (!controlTiltDown) return -0.75f;
 				return 0f;
@@ -79,7 +79,7 @@ namespace Origins.Items.Tools {
 			return player.mount._frameExtraCounter;
 		}
 		public override void SetMount(Player player, ref bool skipDust) {
-			player.mount._frameExtraCounter = GetControlDir(player);
+			player.mount._frameExtraCounter = GetControlDir(player, true);
 			player.mount._abilityCooldown = MountData.abilityCooldown;
 		}
 		public override void UpdateEffects(Player player) {
@@ -90,7 +90,7 @@ namespace Origins.Items.Tools {
 			const float control_speed = 0.02f;
 			OriginExtensions.LinearSmoothing(
 				ref player.mount._frameExtraCounter,
-				GetControlDir(player),
+				GetControlDir(player, false),
 				control_speed
 			);
 			Rectangle hitbox = new(0, 0, 12, 12);
