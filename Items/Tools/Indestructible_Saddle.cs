@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -110,13 +111,14 @@ namespace Origins.Items.Tools {
 					player.whoAmI
 				);
 			}
+			Dust.NewDustPerfect(position - move * 2.5f - move.RotatedBy(MathHelper.PiOver2 * player.direction) * Main.rand.NextFloat(-0.1f, 0.5f), 6, player.velocity * 0.85f).noGravity = true;
 			if (player.mount._abilityCooldown <= 0) {
 				Explode();
 				return;
 			}
 			for (int i = 2; i > -1; i--) {
-				hitbox.X = (int)(position.X + move.X * i - 8);
-				hitbox.Y = (int)(position.Y + move.Y * i - 8);
+				hitbox.X = (int)(position.X + move.X * i - 6);
+				hitbox.Y = (int)(position.Y + move.Y * i - 6);
 				//hitbox.DrawDebugOutline();
 				if (hitbox.OverlapsAnyTiles()) {
 					Explode();
@@ -136,6 +138,25 @@ namespace Origins.Items.Tools {
 						}
 					}
 				}
+			}
+			player.GoingDownWithGrapple = true;
+			if (Collision.SolidCollision(player.position + player.velocity, player.width, player.height)) {
+				player.mount._abilityCooldown /= 3;
+				Projectile.NewProjectile(
+					player.GetSource_ItemUse(item),
+					position,
+					player.velocity,
+					ModContent.ProjectileType<Indestructible_Saddle_Projectile>(),
+					player.GetWeaponDamage(item),
+					player.GetWeaponKnockback(item),
+					player.whoAmI,
+					player.mount._frameExtraCounter,
+					player.direction,
+					player.mount._abilityCooldown
+				);
+				player.Hurt(PlayerDeathReason.ByOther(0), (int)(player.velocity.Length() * 3), -player.direction, true, cooldownCounter: ImmunityCooldownID.WrongBugNet, dodgeable: false);
+				player.mount.Dismount(player);
+				return;
 			}
 			//Dust.NewDustPerfect(player.position + player.fullRotationOrigin - new Vector2(0, 10), 27, Vector2.Zero).noGravity = true;
 		}
@@ -158,6 +179,75 @@ namespace Origins.Items.Tools {
 			//rotation += drawPlayer.direction * drawPlayer.mount._frameExtraCounter;
 			drawOrigin.X += 8 * drawPlayer.direction;
 			return true;
+		}
+	}
+	public class Indestructible_Saddle_Projectile : ModProjectile {
+		public override string Texture => "Origins/Items/Tools/Indestructible_Saddle_Mount_Back";
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 4;
+		}
+		public override void SetDefaults() {
+			Projectile.width = Projectile.height = 0;
+			Projectile.friendly = true;
+		}
+		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
+		public override void AI() {
+			Projectile.velocity *= 0.935f;
+			Projectile.velocity += GeometryUtils.Vec2FromPolar(2, Projectile.ai[1] * (MathHelper.PiOver2 + Projectile.ai[0]) - MathHelper.PiOver2);
+			Player owner = Main.player[Projectile.owner];
+			Rectangle hitbox = new(0, 0, 12, 12);
+			Vector2 move = HitboxMovement;
+			for (int i = 3; i > 0; i--) {
+				hitbox.X = (int)(Projectile.position.X + move.X * i - 6);
+				hitbox.Y = (int)(Projectile.position.Y + move.Y * i - 6);
+				//hitbox.DrawDebugOutline();
+				if (hitbox.OverlapsAnyTiles()) {
+					Projectile.Kill();
+					return;
+				}
+				if (owner.hostile) {
+					foreach (Player other in Main.ActivePlayers) {
+						if (other.hostile && other.team != owner.team && hitbox.Intersects(other.Hitbox)) {
+							Projectile.Kill();
+							return;
+						}
+					}
+				}
+			}
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			Rectangle hitbox = new(0, 0, 12, 12);
+			Vector2 move = HitboxMovement;
+			for (int i = 3; i > 0; i--) {
+				hitbox.X = (int)(Projectile.position.X + move.X * i - 6);
+				hitbox.Y = (int)(Projectile.position.Y + move.Y * i - 6);
+				if (hitbox.Intersects(targetHitbox)) return true;
+			}
+			return false;
+		}
+		public override void OnKill(int timeLeft) {
+			Projectile.NewProjectile(
+				Projectile.GetSource_Death(),
+				Projectile.position + HitboxMovement * 2 + new Vector2(8),
+				Vector2.Zero,
+				ModContent.ProjectileType<Indestructible_Saddle_Explosion>(),
+				Projectile.damage,
+				Projectile.knockBack,
+				Projectile.owner
+			);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.position - Main.screenPosition,
+				TextureAssets.Projectile[Type].Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame),
+				lightColor,
+				Projectile.ai[1] * Projectile.ai[0],
+				new(48, 16),
+				1,
+				Projectile.ai[1] == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally 
+			);
+			return false;
 		}
 	}
 	public class Indestructible_Saddle_Mount_Buff : ModBuff {
