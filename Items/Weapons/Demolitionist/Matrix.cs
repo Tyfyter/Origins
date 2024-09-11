@@ -57,6 +57,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.ai[2] = 0;
 		}
 		public override void AI() {
+			Projectile.rotation = Projectile.ai[0];
 			Projectile.ai[2]++;
 			Projectile.velocity *= 0.98f;
 		}
@@ -71,7 +72,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2[] nodes = GetNodePositions();
 			for (int i = 0; i < nodes.Length; i++) {
-				Main.spriteBatch.DrawLightningArcBetween(Projectile.position + nodes[i] - Main.screenPosition, Projectile.position + nodes[(i + 1) % nodes.Length] - Main.screenPosition, Main.rand.NextFloat(-3, 3));
+				const int alpha = 128;
+				Main.spriteBatch.DrawLightningArcBetween(
+					Projectile.position + nodes[i] - Main.screenPosition,
+					Projectile.position + nodes[(i + 1) % nodes.Length] - Main.screenPosition,
+					Main.rand.NextFloat(-3, 3),
+					precision: 0.1f,
+					(0.15f, new Color(154, 56, 11, alpha) * 0.5f),
+					(0.1f, new Color(255, 81, 0, alpha) * 0.5f),
+					(0.05f, new Color(255, 177, 140, alpha) * 0.5f)
+				);
 			}
 			for (int i = 0; i < nodes.Length; i++) {
 				Vector2 pos = Projectile.position + nodes[i];
@@ -80,7 +90,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					pos - Main.screenPosition,
 					null,
 					Lighting.GetColor(pos.ToTileCoordinates()),
-					nodes[i].ToRotation(),
+					nodes[i].ToRotation() + MathHelper.PiOver2,
 					TextureAssets.Projectile[Type].Size() * 0.5f,
 					1,
 					SpriteEffects.None

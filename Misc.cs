@@ -2153,7 +2153,7 @@ namespace Origins {
 				}
 			}
 		}
-		public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f) {
+		public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f, params (float scale, Color color)[] colors) {
 			Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
 			if (!screen.Contains(start) && !screen.Contains(end)) {
 				return;
@@ -2164,13 +2164,19 @@ namespace Origins {
 				positions.Add(Vector2.Lerp(start, end, i) + (normal * (float)Math.Sin(i * Math.PI) * Main.rand.NextFloat(0.75f, 1.25f)));
 			}
 			positions.Add(end);
+			if (colors is null || colors.Length == 0) {
+				colors = [
+					(0.15f, new Color(80, 204, 219, 0) * 0.5f),
+					(0.1f, new Color(80, 251, 255, 0) * 0.5f),
+					(0.05f, new Color(200, 255, 255, 0) * 0.5f)
+				];
+			}
 			spriteBatch.DrawLightningArc(
 				positions.ToArray(),
 				null,
 				1.333f,
-				(0.15f, new Color(80, 204, 219, 0) * 0.5f),
-				(0.1f, new Color(80, 251, 255, 0) * 0.5f),
-				(0.05f, new Color(200, 255, 255, 0) * 0.5f));
+				colors
+			);
 		}
 		public static void DrawGrappleChain(Vector2 startPos, Vector2 endPos, Texture2D texture, Rectangle[] frames, Color lightColor, bool useX = false, int dye = 0, Action<Vector2> action = null) {
 			Vector2 center = endPos;
