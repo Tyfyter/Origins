@@ -66,10 +66,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position = Main.player[Projectile.owner].itemLocation;
 			if (nodes is null) {
 				nodes = new (Vector2, Vector2)[(int)Projectile.ai[1]];
-				/*for (int i = 0; i < nodes.Length; i++) {
-					nodes[i] = (Projectile.position, Projectile.velocity + GeometryUtils.Vec2FromPolar(1, (i / (Projectile.ai[1])) * MathHelper.TwoPi));
-				}*/
-				//Projectile.velocity = Vector2.Zero;
 			} else {
 				for (int i = 0; i < GetNodeCount(); i++) {
 					(Vector2 position, Vector2 velocity) = nodes[i];
@@ -81,14 +77,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 					nodes[oldNodeCount] = (Projectile.position, Projectile.velocity + GeometryUtils.Vec2FromPolar(1, (oldNodeCount / (Projectile.ai[1])) * MathHelper.TwoPi));
 				}
 			}
-			//Projectile.velocity *= 0.98f;
 		}
 		public int GetNodeCount(float? time = null) {
 			time ??= Projectile.ai[2];
 			return Math.Min(((int)time.Value) / 2, (int)Projectile.ai[1]);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			//Vector2[] nodes = GetNodePositions();
 			(Vector2, Vector2)[] lines = new (Vector2, Vector2)[GetNodeCount()];
 			for (int i = 0; i < GetNodeCount(); i++) {
 				lines[i] = (nodes[i].position, GetNodePosition(i + 1));
@@ -96,7 +90,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return CollisionExtensions.PolygonIntersectsRect(lines, targetHitbox);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			//Vector2[] nodes = GetNodePositions();
 			for (int i = 0; i < GetNodeCount(); i++) {
 				const int alpha = 128;
 				Main.spriteBatch.DrawLightningArcBetween(
@@ -151,18 +144,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 		}
-		Vector2[] cachePositions = [];
-		int cacheTime = -1;
 		public Vector2[] GetNodePositions() {
-			if (Projectile.ai[2] != cacheTime) {
-				cacheTime = (int)Projectile.ai[2];
-				Vector2[] nodes = new Vector2[GetNodeCount()];
-				for (int i = 0; i < nodes.Length; i++) {
-					nodes[i] = GetNodePosition(i);
-				}
-				cachePositions = nodes;
+			Vector2[] nodes = new Vector2[GetNodeCount()];
+			for (int i = 0; i < nodes.Length; i++) {
+				nodes[i] = GetNodePosition(i);
 			}
-			return cachePositions;
+			return nodes;
 		}
 	}
 }
