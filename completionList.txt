@@ -633,7 +633,7 @@ RANGED WEAPONS:
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
-(#3, ^2) Boat Rocker* (maybe a cool swinging sound every revolution?)
+(☻) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
