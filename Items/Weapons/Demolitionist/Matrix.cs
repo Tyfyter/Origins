@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Matrix : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -38,6 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Matrix_P : ModProjectile {
+		(Vector2 position, Vector2 velocity)[] nodes;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 0;
 		}
@@ -58,29 +60,41 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Projectile.ai[2]++;
-			Projectile.velocity *= 0.98f;
+			if (nodes is null) {
+				nodes = new (Vector2, Vector2)[(int)Projectile.ai[1]];
+				for (int i = 0; i < nodes.Length; i++) {
+					nodes[i] = (Projectile.position, Projectile.velocity + GeometryUtils.Vec2FromPolar(1, (i / (Projectile.ai[1])) * MathHelper.TwoPi));
+				}
+				Projectile.velocity = Vector2.Zero;
+			} else {
+				for (int i = 0; i < nodes.Length; i++) {
+					(Vector2 position, Vector2 velocity) = nodes[i];
+					nodes[i] = (position + velocity, velocity * 0.98f);
+				}
+			}
+			//Projectile.velocity *= 0.98f;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2[] nodes = GetNodePositions();
+			//Vector2[] nodes = GetNodePositions();
 			(Vector2, Vector2)[] lines = new (Vector2, Vector2)[nodes.Length];
 			for (int i = 0; i < nodes.Length; i++) {
-				lines[i] = (Projectile.position + nodes[i], Projectile.position + nodes[(i + 1) % nodes.Length]);
+				lines[i] = (nodes[i].position, nodes[(i + 1) % nodes.Length].position);
 			}
 			return CollisionExtensions.PolygonIntersectsRect(lines, targetHitbox);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2[] nodes = GetNodePositions();
+			//Vector2[] nodes = GetNodePositions();
 			for (int i = 0; i < nodes.Length; i++) {
-				Main.spriteBatch.DrawLightningArcBetween(Projectile.position + nodes[i] - Main.screenPosition, Projectile.position + nodes[(i + 1) % nodes.Length] - Main.screenPosition, Main.rand.NextFloat(-3, 3));
+				Main.spriteBatch.DrawLightningArcBetween(nodes[i].position - Main.screenPosition, nodes[(i + 1) % nodes.Length].position - Main.screenPosition, Main.rand.NextFloat(-3, 3));
 			}
 			for (int i = 0; i < nodes.Length; i++) {
-				Vector2 pos = Projectile.position + nodes[i];
+				Vector2 pos = nodes[i].position;
 				Main.EntitySpriteDraw(
 					TextureAssets.Projectile[Type].Value,
 					pos - Main.screenPosition,
 					null,
 					Lighting.GetColor(pos.ToTileCoordinates()),
-					nodes[i].ToRotation(),
+					0,//nodes[i].ToRotation(),
 					TextureAssets.Projectile[Type].Size() * 0.5f,
 					1,
 					SpriteEffects.None
