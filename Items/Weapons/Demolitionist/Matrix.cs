@@ -109,7 +109,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					pos - Main.screenPosition,
 					null,
 					Lighting.GetColor(pos.ToTileCoordinates()),
-					((GetNodePosition(i - 1) + GetNodePosition(i + 1)) * 0.5f - GetNodePosition(i)).ToRotation() - MathHelper.PiOver2,//nodes[i].ToRotation(),
+					((GetNodePosition(i - 1) + GetNodePosition(i + 1)) * 0.5f - GetNodePosition(i)).ToRotation() - MathHelper.PiOver2,
 					TextureAssets.Projectile[Type].Size() * 0.5f,
 					1,
 					SpriteEffects.None
