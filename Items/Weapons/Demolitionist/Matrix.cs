@@ -13,10 +13,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Matrix : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => [
-            "Launcher"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"Launcher"
+		];
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Lime;
 			Item.autoReuse = true;
 			Item.glowMask = glowmask;
-            Item.ArmorPenetration += 1;
-        }
+			Item.ArmorPenetration += 1;
+		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);
 		}
@@ -59,6 +59,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.ai[2] = 0;
 		}
 		public override void AI() {
+			Projectile.rotation = Projectile.ai[0];
 			Projectile.ai[2]++;
 			if (nodes is null) {
 				nodes = new (Vector2, Vector2)[(int)Projectile.ai[1]];
@@ -85,7 +86,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool PreDraw(ref Color lightColor) {
 			//Vector2[] nodes = GetNodePositions();
 			for (int i = 0; i < nodes.Length; i++) {
-				Main.spriteBatch.DrawLightningArcBetween(nodes[i].position - Main.screenPosition, nodes[(i + 1) % nodes.Length].position - Main.screenPosition, Main.rand.NextFloat(-3, 3));
+				const int alpha = 128;
+				Main.spriteBatch.DrawLightningArcBetween(
+					nodes[i].position - Main.screenPosition,
+					nodes[(i + 1) % nodes.Length].position - Main.screenPosition,
+					Main.rand.NextFloat(-3, 3),
+					precision: 0.1f,
+					(0.15f, new Color(154, 56, 11, alpha) * 0.5f),
+					(0.1f, new Color(255, 81, 0, alpha) * 0.5f),
+					(0.05f, new Color(255, 177, 140, alpha) * 0.5f)
+				);
 			}
 			for (int i = 0; i < nodes.Length; i++) {
 				Vector2 pos = nodes[i].position;
