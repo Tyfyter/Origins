@@ -241,6 +241,7 @@ namespace Origins {
 		public Color strangeComputerColor = Color.Blue;
 		public bool scrapCompactor = false;
 		public int scrapCompactorTimer = 0;
+		public bool scrapBarrierCursed = false;
 		#endregion
 
 		#region explosive stats
@@ -589,6 +590,7 @@ namespace Origins {
 			coreGenerator = false;
 			strangeComputer = false;
 			scrapCompactor = false;
+			scrapBarrierCursed = false;
 
 			flaskBile = false;
 			flaskSalt = false;

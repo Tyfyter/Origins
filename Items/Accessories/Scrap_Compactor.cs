@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Scrap_Compactor : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"Torn",
-			"TornSource",
-			"SummonBoostAcc",
-			"GenericBoostAcc"
+			"Combat"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(48, 36);

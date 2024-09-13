@@ -383,7 +383,7 @@ namespace Origins {
 						}
 					}
 				} else {
-					Player.endurance += 0.15f;
+					Player.endurance += (1 - Player.endurance) * 0.15f;
 				}
 			}
 			if (hasProtOS) {

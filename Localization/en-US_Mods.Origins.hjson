@@ -917,6 +917,11 @@ Buffs: {
 		DisplayName: Rowdy Rocket Cooldown
 		Description: Can't use the Indestructible Saddle
 	}
+
+	Scrap_Barrier_Debuff: {
+		DisplayName: Scrap Barrier Debuff
+		Description: Mods.Origins.Buffs.Scrap_Barrier_Debuff.Description
+	}
 }
 
 DamageClassName: {

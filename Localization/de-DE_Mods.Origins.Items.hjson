@@ -4504,3 +4504,13 @@ Fabricator_Item: {
 	// DisplayName: Fabricator
 	// Tooltip: Used to craft high-tech items from mech components
 }
+
+Scrap_Barrier: {
+	// DisplayName: Scrap Barrier
+	// Tooltip: ""
+}
+
+Scrap_Barrier_Uncursed: {
+	// DisplayName: Scrap Barrier Uncursed
+	// Tooltip: ""
+}

@@ -368,7 +368,7 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(#, ^2) Scrap Barrier !!!
+(☻) Scrap Barrier !!!
 (^) Shield of Retribution*
 (X) Slag Bucket !!!
 (^) Sniper's Mark*

@@ -40,7 +40,8 @@ namespace Origins.Items.Accessories {
 			}
 			float distance = (MathF.Sqrt(bestDist) - min_distance) / (max_distance - min_distance);
 			if (distance < 0) distance = 0;
-			player.endurance += distance * 0.2f;
+
+			player.endurance += (1 - player.endurance) * distance * 0.2f;
 			player.GetDamage(DamageClass.Generic) += (1 - distance) * 0.1f;
 		}
 	}

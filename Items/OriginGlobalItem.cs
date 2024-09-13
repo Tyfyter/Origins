@@ -196,7 +196,7 @@ namespace Origins.Items {
 			if (OriginConfig.Instance.WoodBuffs && set == "pearlwood") {
 				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Pearlwood");
 				player.GetDamage(DamageClass.Generic) += 0.15f;
-				player.endurance += 0.05f;
+				player.endurance += (1 - player.endurance) * 0.05f;
 				return;
 			}
 		}

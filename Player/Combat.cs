@@ -15,6 +15,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -311,6 +312,10 @@ namespace Origins {
 		#endregion
 		#region receiving
 		public override void UpdateBadLifeRegen() {
+			if (Player.HasBuff<Scrap_Barrier_Debuff>()) {
+				if (Player.lifeRegen > 0) Player.lifeRegen = 0;
+				if (Player.lifeRegenCount > 0) Player.lifeRegenCount = 0;
+			}
 			if (plasmaPhial && Player.bleed) {
 				Player.lifeRegen -= 12;
 			}
@@ -350,7 +355,7 @@ namespace Origins {
 			}
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;
-				modifiers.FinalDamage.Flat = int.MinValue;
+				modifiers.FinalDamage.Flat = -ushort.MaxValue;
 				proj.Kill();
 			}
 		}
@@ -510,6 +515,9 @@ namespace Origins {
 			}
 			if (ashenKBReduction) {
 				modifiers.Knockback -= 0.15f;
+			}
+			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.9f) {
+				modifiers.FinalDamage *= 0.5f;
 			}
 		}
 		public override void PostHurt(Player.HurtInfo info) {
@@ -735,6 +743,9 @@ namespace Origins {
 			if (blastSet) {
 				blastSetCharge += info.Damage * blast_set_charge_gain;
 				if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
+			}
+			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
+				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 3 * 60);
 			}
 		}
 		#endregion
