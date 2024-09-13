@@ -143,7 +143,7 @@ namespace Origins.Projectiles {
 						isFromMitosis = true;
 						projectile.alpha = 100;
 						if (projectile.minion) {
-							mitosisTimeLeft = 3000;
+							mitosisTimeLeft = Mitosis_P.minion_duplicate_duration;
 							projectile.minionSlots = 0;
 						}
 					}
@@ -192,12 +192,40 @@ namespace Origins.Projectiles {
 				projectile.rotation = projectile.velocity.ToRotation();
 				break;
 			}
-			if (isFromMitosis) {
-				Main.player[projectile.owner].ownedProjectileCounts[projectile.type]--;
-				if (--mitosisTimeLeft <= 0) projectile.active = false;
-			}
-			if (hasUsedMitosis && projectile.minion && --mitosisTimeLeft <= 0) {
-				hasUsedMitosis = false;
+			if (!isFromMitosis && !hasUsedMitosis && !ProjectileID.Sets.IsAWhip[projectile.type] && projectile.type != ModContent.ProjectileType<Mitosis_P>()) {
+				for (int i = 0; i < Mitosis_P.mitosises.Count; i++) {
+					if (projectile.Colliding(projectile.Hitbox, Main.projectile[Mitosis_P.mitosises[i]].Hitbox)) {
+						Projectile duplicated = Projectile.NewProjectileDirect(
+							Main.projectile[Mitosis_P.mitosises[i]].GetSource_FromThis(),
+							projectile.Center,
+							projectile.velocity.RotatedBy(0.1f),
+							projectile.type,
+							projectile.damage,
+							projectile.knockBack,
+							projectile.owner,
+							Mitosis_P.aiVariableResets[projectile.type][0] ? 0 : projectile.ai[0],
+							Mitosis_P.aiVariableResets[projectile.type][1] ? 0 : projectile.ai[1],
+							Mitosis_P.aiVariableResets[projectile.type][2] ? 0 : projectile.ai[2]
+						);
+						duplicated.rotation += 0.25f;
+
+						projectile.velocity = projectile.velocity.RotatedBy(-0.25f);
+						projectile.rotation -= 0.25f;
+						hasUsedMitosis = true;
+						if (projectile.minion) {
+							mitosisTimeLeft = Mitosis_P.minion_duplicate_duration;
+						}
+					}
+					
+				}
+			} else {
+				if (isFromMitosis) {
+					Main.player[projectile.owner].ownedProjectileCounts[projectile.type]--;
+					if (--mitosisTimeLeft <= 0) projectile.active = false;
+				}
+				if (hasUsedMitosis && projectile.minion && --mitosisTimeLeft <= 0) {
+					hasUsedMitosis = false;
+				}
 			}
 			if (felnumEffect) {
 				if (!ProjectileID.Sets.IsAWhip[projectile.type]) {

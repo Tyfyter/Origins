@@ -37,6 +37,7 @@ using Origins.NPCs;
 using Origins.Tiles.Banners;
 using Origins.Graphics;
 using MonoMod.Cil;
+using Origins.Items.Tools;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -720,6 +721,10 @@ namespace Origins {
 			Array.Resize(ref homingEffectivenessMultiplier, ProjectileLoader.ProjectileCount);
 			for (int i = oldCanGainHomingLength; i < ProjectileLoader.ProjectileCount; i++) {
 				homingEffectivenessMultiplier[i] = 1f;
+			}
+			Array.Resize(ref Mitosis_P.aiVariableResets, ProjectileLoader.ProjectileCount);
+			for (int i = 0; i < Mitosis_P.aiVariableResets.Length; i++) {
+				Mitosis_P.aiVariableResets[i] = new bool[3];
 			}
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);

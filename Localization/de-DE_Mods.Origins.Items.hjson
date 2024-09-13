@@ -4511,6 +4511,6 @@ Scrap_Barrier: {
 }
 
 Scrap_Barrier_Uncursed: {
-	// DisplayName: Scrap Barrier Uncursed
+	// DisplayName: Scrap Barrier
 	// Tooltip: ""
 }

@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,6 +28,10 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Mitosis_P : ModProjectile {
+		public static bool[][] aiVariableResets = [];
+		public static List<int> mitosises = [];
+		public static List<int> nextMitosises = [];
+		public const int minion_duplicate_duration = 300;
 		public override string GlowTexture => Texture;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
@@ -42,35 +47,7 @@ namespace Origins.Items.Tools {
 		public override void AI() {
 			Projectile.aiStyle = 0;
 			Projectile.velocity *= 0.95f;
-			for (int i = 0; i < Main.maxProjectiles; i++) {
-				if (i == Projectile.whoAmI) continue;
-				Projectile other = Main.projectile[i];
-				if (other.active && !ProjectileID.Sets.IsAWhip[other.type] && other.Colliding(other.Hitbox, Projectile.Hitbox)) {
-					OriginGlobalProj globalProj = other.GetGlobalProjectile<OriginGlobalProj>();
-					if (!globalProj.isFromMitosis && !globalProj.hasUsedMitosis) {
-						Projectile duplicated = Projectile.NewProjectileDirect(
-							Projectile.GetSource_FromThis(),
-							other.Center,
-							other.velocity.RotatedBy(0.1f),
-							other.type,
-							other.damage,
-							other.knockBack,
-							other.owner,
-							other.ai[0],
-							other.ai[1],
-							other.ai[2]
-						);
-						duplicated.rotation += 0.25f;
-
-						other.velocity = other.velocity.RotatedBy(-0.25f);
-						other.rotation -= 0.25f;
-						globalProj.hasUsedMitosis = true;
-						if (other.minion) {
-							globalProj.mitosisTimeLeft = 300;
-						}
-					}
-				}
-			}
+			nextMitosises.Add(Projectile.whoAmI);
 		}
 		public override bool? CanUseGrapple(Player player) {
 			//if (!player.CheckMana()) return false;

@@ -493,7 +493,7 @@ UTILITIES:
 (X) Strange Backpack
 
 (#, ^2) Impenetrable Trashcan Lid
-(#3, ^2) Indestructible Saddle (make it emit fire dusts and you're golden)
+(☻) Indestructible Saddle
 (#3, ^2) Salty Seed (Mitosis Node) !!! (still needs its animation)
 (#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
@@ -788,7 +788,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (^) Internal Combustionfish*
 (^) Link Grenade*
-(#2, ^2) Matrix* !!!
+(☻) Matrix* !!!
 (^) Meteor*
 (@2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling), ^3) Outbreak Bomb*
 (^) Peatball*

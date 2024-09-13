@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Tools;
 using Origins.NPCs;
+using Origins.Projectiles;
 using ReLogic.Content;
 using System;
 using System.Linq;
@@ -63,6 +65,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
+			Mitosis_P.aiVariableResets[Type][1] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -156,6 +159,7 @@ namespace Origins.Items.Weapons.Magic {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Beam"];
 			float uTime = (float)Main.timeForVisualEffects / 44;
 			int length = proj.oldPos.Length;
+			if (length == 0) return;
 			float[] rot = new float[length];
 			Vector2[] pos = new Vector2[length];
 			Vector2 unit = default;
@@ -177,6 +181,7 @@ namespace Origins.Items.Weapons.Magic {
 					dustTimer = Main.rand.NextBool() ? 2 : 0;
 				}
 			}
+			if (length == 0) return;
 			Dust.NewDustPerfect(pos[length - 1] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
 			Asset<Texture2D> texture = TextureAssets.Projectile[Seam_Beam_Beam.ID];
 			miscShaderData.UseImage0(texture);

@@ -2,6 +2,7 @@
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -459,6 +460,8 @@ namespace Origins {
 			}
 			Utils.Swap(ref ExplosiveGlobalProjectile.nextExplodingProjectiles, ref ExplosiveGlobalProjectile.explodingProjectiles);
 			ExplosiveGlobalProjectile.nextExplodingProjectiles.Clear();
+			Utils.Swap(ref Mitosis_P.nextMitosises, ref Mitosis_P.mitosises);
+			Mitosis_P.nextMitosises.Clear();
 		}
 		FastStaticFieldInfo<Main, float> _minWind;
 		FastStaticFieldInfo<Main, float> _maxWind;
