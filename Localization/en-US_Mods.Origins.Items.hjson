@@ -4514,3 +4514,8 @@ Scrap_Barrier_Uncursed: {
 	DisplayName: Scrap Barrier
 	Tooltip: ""
 }
+
+Laser_Tag_Vest: {
+	DisplayName: Laser Tag Vest
+	Tooltip: ""
+}

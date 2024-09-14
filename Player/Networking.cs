@@ -70,6 +70,7 @@ namespace Origins {
 			PlayerSyncDatas syncDatas = 0;
 			PlayerVisualSyncDatas visualSyncDatas = 0;
 			if (clone.mojoInjection != mojoInjection) syncDatas |= MojoInjection;
+			if (clone.laserTagVestActive != laserTagVestActive) syncDatas |= LaserTagState;
 			if (clone.quantumInjectors != quantumInjectors) syncDatas |= QuantumInjectors;
 			if (clone.defiledWill != defiledWill) syncDatas |= DefiledWills;
 
@@ -105,6 +106,7 @@ namespace Origins {
 			packet.Write((byte)Player.whoAmI);
 			packet.Write((ushort)syncDatas);
 			if (syncDatas.HasFlag(MojoInjection)) packet.Write(mojoInjection);
+			if (syncDatas.HasFlag(LaserTagState)) packet.Write(laserTagVestActive);
 			if (syncDatas.HasFlag(QuantumInjectors)) packet.Write((byte)quantumInjectors);
 			if (syncDatas.HasFlag(DefiledWills)) packet.Write((byte)defiledWill);
 			if (syncDatas.HasFlag(Assimilation)) { // by sending it with a precision of 1% we can put all of the assimilations in the 4 bytes one of them would take with full precision with very little inaccuracy
@@ -123,6 +125,7 @@ namespace Origins {
 		public void ReceivePlayerSync(BinaryReader reader) {
 			PlayerSyncDatas syncDatas = (PlayerSyncDatas)reader.ReadUInt16();
 			if (syncDatas.HasFlag(MojoInjection)) mojoInjection = reader.ReadBoolean();
+			if (syncDatas.HasFlag(LaserTagState)) laserTagVestActive = reader.ReadBoolean();
 			if (syncDatas.HasFlag(QuantumInjectors)) quantumInjectors = reader.ReadByte();
 			if (syncDatas.HasFlag(DefiledWills)) defiledWill = reader.ReadByte();
 			if (syncDatas.HasFlag(Assimilation)) {
@@ -139,6 +142,7 @@ namespace Origins {
 	[Flags]
 	public enum PlayerSyncDatas : ushort {
 		Assimilation     = 0b00000001,
+		LaserTagState    = 0b00000010,
 		MojoInjection    = 0b00100000,
 		DefiledWills     = 0b01000000,
 		QuantumInjectors = 0b10000000,

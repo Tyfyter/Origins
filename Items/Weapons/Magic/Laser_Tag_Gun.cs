@@ -101,6 +101,10 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.Cursed, 600);
+			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
+			if (originPlayer.laserTagVestActive) {
+				originPlayer.laserTagVestActive = false;
+			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Color color = Main.teamColor[Main.player[Projectile.owner].team];

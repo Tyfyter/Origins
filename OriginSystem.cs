@@ -28,8 +28,7 @@ using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
-		static OriginSystem instance;
-		public static OriginSystem Instance => instance ??= ModContent.GetInstance<OriginSystem>();
+		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusInventoryUI;
 		UserInterface setBonusHUDInterface;
 		UserInterface itemUseHUDInterface;
@@ -54,7 +53,6 @@ namespace Origins {
 			queuedUIStates = null;
 		}
 		public override void Unload() {
-			instance = null;
 			queuedUIStates = null;
 		}
 		public override void AddRecipes() {
@@ -490,12 +488,34 @@ namespace Origins {
 			}
 		}
 		bool hasLoggedPUP = false;
+		public int laserTagActiveTeams = 0;
+		public int laserTagActivePlayers = 0;
+		public bool AnyLaserTagActive => laserTagActivePlayers > 0;
+		public bool LaserTagMultipleTeamsActive {
+			get {
+				if (laserTagActiveTeams == 0) return false;
+				if (laserTagActiveTeams == 1) return laserTagActivePlayers <= 1;
+				return (laserTagActiveTeams & (laserTagActiveTeams - 1)) == 0;
+			}
+		}
 		public override void PreUpdatePlayers() {
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];
 			else OriginPlayer.playersByGuid.Clear();
+			laserTagActiveTeams = 0;
+			laserTagActivePlayers = 0;
 			foreach (Player player in Main.ActivePlayers) {
-				OriginPlayer.playersByGuid.TryAdd(player.GetModPlayer<OriginPlayer>().guid, player.whoAmI);
+				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+				OriginPlayer.playersByGuid.TryAdd(originPlayer.guid, player.whoAmI);
+				if (originPlayer.laserTagVestActive) {
+					laserTagActiveTeams |= 1 << player.team;
+					laserTagActivePlayers++;
+				}
+			}
+			if (AnyLaserTagActive) {
+				foreach (Player player in Main.ActivePlayers) {
+					player.hostile = player.GetModPlayer<OriginPlayer>().laserTagVestActive;
+				}
 			}
 			if (!hasLoggedPUP) {
 				hasLoggedPUP = true;

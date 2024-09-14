@@ -17,10 +17,13 @@ namespace Origins.Tiles.Other {
 
 			AddMapEntry(new Color(81, 81, 81), Language.GetText("Laser Tag Console"));
 		}
+		public override bool RightClick(int i, int j) {
+			if (OriginSystem.Instance.AnyLaserTagActive) return false;
+			Main.LocalPlayer.GetModPlayer<OriginPlayer>().laserTagVestActive = true;
+			return true;
+		}
 	}
 	public class Laser_Tag_Console_Item : ModItem {
-		
-
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LampPost);
 			Item.createTile = ModContent.TileType<Laser_Tag_Console>();

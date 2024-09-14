@@ -242,6 +242,8 @@ namespace Origins {
 		public bool scrapCompactor = false;
 		public int scrapCompactorTimer = 0;
 		public bool scrapBarrierCursed = false;
+		public bool laserTagVest = false;
+		public bool laserTagVestActive = false;
 		#endregion
 
 		#region explosive stats
@@ -591,6 +593,8 @@ namespace Origins {
 			strangeComputer = false;
 			scrapCompactor = false;
 			scrapBarrierCursed = false;
+			if (!laserTagVest) laserTagVestActive = false;
+			laserTagVest = false;
 
 			flaskBile = false;
 			flaskSalt = false;
