@@ -1082,7 +1082,7 @@ MATERIALS:
 CRITTERS AND FISH:
 ---
 (^) Amoeba Buggy*
-(#3, ^2) Bug
+(☻) Bug
 (X) Chambersite Bunny
 (X) Chambersite Squirrel
 (^) Cicada 3301*
