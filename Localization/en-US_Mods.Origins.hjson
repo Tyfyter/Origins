@@ -922,6 +922,11 @@ Buffs: {
 		DisplayName: Scrap Barrier Debuff
 		Description: Mods.Origins.Buffs.Scrap_Barrier_Debuff.Description
 	}
+
+	Trash_Lid_Mount_Buff: {
+		DisplayName: Impenetrable Trashcan Lid
+		Description: This trashcan lid is impenetrable
+	}
 }
 
 DamageClassName: {

@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Pets;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
@@ -348,6 +349,16 @@ namespace Origins {
 				}
 				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
+				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
+					Vector2 diff = proj.Center - Player.MountedCenter;
+					if (diff.Y > 24 && diff.Y > Math.Abs(diff.X)) {
+						modifiers.SourceDamage *= 0;
+						modifiers.SourceDamage.Flat = 1;
+						//modifiers.Knockback *= 0;
+						modifiers.HitDirectionOverride = 0;
+						modifiers.DisableSound();
+					}
+				}
 				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>() && modifiers.SourceDamage.ApplyTo(proj.damage) < proj.damage / 5) {
 					modifiers.SourceDamage = new StatModifier(1, 0.2f);
@@ -357,6 +368,17 @@ namespace Origins {
 				modifiers.FinalDamage *= 0;
 				modifiers.FinalDamage.Flat = -ushort.MaxValue;
 				proj.Kill();
+			}
+		}
+		public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo) {
+			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
+				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
+					Vector2 diff = proj.Center - Player.MountedCenter;
+					if (diff.Y > 24 && diff.Y > Math.Abs(diff.X)) {
+						Player.velocity -= diff.SafeNormalize(default) * hurtInfo.Knockback * 750 / (diff.Length() + 128);
+						SoundEngine.PlaySound(SoundID.Item148.WithPitchRange(-0.7f, -0.6f), Player.MountedCenter + new Vector2(0, 24));
+					}
+				}
 			}
 		}
 		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers) {

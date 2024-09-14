@@ -492,7 +492,7 @@ UTILITIES:
 
 (X) Strange Backpack
 
-(#, ^2) Impenetrable Trashcan Lid
+(☻) Impenetrable Trashcan Lid
 (☻) Indestructible Saddle
 (#3, ^2) Salty Seed (Mitosis Node) !!! (still needs its animation)
 (#3, ^2) Saltier Seed (Mitosis Node) !!!

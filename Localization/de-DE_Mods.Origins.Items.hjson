@@ -4519,3 +4519,8 @@ Laser_Tag_Vest: {
 	// DisplayName: Laser Tag Vest
 	// Tooltip: ""
 }
+
+Trash_Lid: {
+	// DisplayName: Trash Lid
+	// Tooltip: ""
+}
