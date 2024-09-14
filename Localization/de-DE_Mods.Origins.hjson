@@ -924,8 +924,8 @@ Buffs: {
 	}
 
 	Trash_Lid_Mount_Buff: {
-		// DisplayName: Trash Lid Mount Buff
-		// Description: Mods.Origins.Buffs.Trash_Lid_Mount_Buff.Description
+		// DisplayName: Impenetrable Trashcan Lid
+		// Description: This trashcan lid is impenetrable
 	}
 }
 

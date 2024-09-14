@@ -1,4 +1,6 @@
-﻿using Origins.Items.Other.Fish;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Other.Fish;
+using rail;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -63,6 +65,20 @@ namespace Origins.NPCs.Critters {
 					if (target.active && NPC.Hitbox.Intersects(target.Hitbox)) {
 						target.gravDir *= -1;
 						target.AddBuff(BuffID.Gravitation, 30);
+					}
+				}
+			}
+			if (Main.rand.NextBool(100)) {
+				int tries = 0;
+				float range = 16 * 10;
+				Rectangle checkbox = NPC.Hitbox;
+				while (++tries < 1000) {
+					Vector2 pos = NPC.position + new Vector2(Main.rand.NextFloat(-range, range), Main.rand.NextFloat(-range, range));
+					checkbox.X = (int)pos.X;
+					checkbox.Y = (int)pos.Y;
+					if (!checkbox.OverlapsAnyTiles()) {
+						NPC.Teleport(pos, -1);
+						break;
 					}
 				}
 			}
