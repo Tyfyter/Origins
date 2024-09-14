@@ -198,7 +198,7 @@ namespace Origins.Projectiles {
 						Projectile duplicated = Projectile.NewProjectileDirect(
 							Main.projectile[Mitosis_P.mitosises[i]].GetSource_FromThis(),
 							projectile.Center,
-							projectile.velocity.RotatedBy(0.1f),
+							projectile.velocity.RotatedBy(0.25f),
 							projectile.type,
 							projectile.damage,
 							projectile.knockBack,
