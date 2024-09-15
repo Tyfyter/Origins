@@ -49,6 +49,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.extraUpdates = 0;
 			Projectile.timeLeft = 300;
+			Projectile.tileCollide = false;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.ai[0] = Main.rand.NextFloat(0, MathHelper.TwoPi);
@@ -65,6 +66,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			} else {
 				for (int i = 0; i < GetNodeCount(); i++) {
 					(Vector2 position, Vector2 velocity) = nodes[i];
+					Vector2 vel2 = Collision.TileCollision(position - Vector2.One * 3, velocity, 6, 6, true, true);
+					if (vel2.X != velocity.X) velocity.X *= -1;
+					if (vel2.Y != velocity.Y) velocity.Y *= -1;
 					nodes[i] = (position + velocity, velocity * 0.98f);
 				}
 				int nodeIndex = GetNodeCount();
@@ -118,29 +122,25 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		Vector2 GetNodePosition(int index) => nodes[((index % GetNodeCount()) + GetNodeCount()) % GetNodeCount()].position;
 		public override void OnKill(int timeLeft) {
-			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch, 0, 0, 255, new Color(255, 150, 30), 1.5f);
-			dust.noGravity = false;
-			dust.velocity *= 6f;
-
 			Vector2[] cachePositions = GetNodePositions();
+			Vector2 min = new(float.PositiveInfinity);
+			Vector2 max = new(float.NegativeInfinity);
 			Projectile.position = Vector2.Zero;
 			int length = GetNodeCount();
-			float maxDist = 0;
 			for (int i = 0; i < length; i++) {
+				min = Vector2.Min(min, cachePositions[i]);
+				max = Vector2.Max(max, cachePositions[i]);
 				Projectile.position += cachePositions[i] / length;
 			}
-			for (int i = 0; i < length; i++) {
-				maxDist = Math.Max((cachePositions[i] - Projectile.position).LengthSquared(), maxDist);
-			}
-			maxDist = MathF.Sqrt(maxDist);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
 			Rectangle checkPos = default;
-			for (int i = 0; i < 48; i++) {
-				Vector2 pos = Main.rand.NextVector2Circular(maxDist, maxDist) + Projectile.position;
+			Rectangle area = OriginExtensions.BoxOf(min, max);
+			for (int i = 0; i < 128; i++) {
+				Vector2 pos = Main.rand.NextVector2FromRectangle(area);
 				checkPos.X = (int)pos.X;
 				checkPos.Y = (int)pos.Y;
 				if (Colliding(default, checkPos) == true) {
-					Dust.NewDustDirect(pos, 0, 0, DustID.Torch).velocity = (pos - Projectile.position).SafeNormalize(default) * Main.rand.NextFloat(1);
+					Dust.NewDustDirect(pos, 0, 0, DustID.Torch).velocity = (pos - Projectile.position).SafeNormalize(default) * Main.rand.NextFloat(0.5f, 2);
 				}
 			}
 		}
