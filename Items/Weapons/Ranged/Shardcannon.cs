@@ -17,8 +17,8 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
-			Item.damage = 9;
-			Item.useAnimation = Item.useTime = 38;
+			Item.damage = 6;
+			Item.useAnimation = Item.useTime = 20;
 			Item.shoot = ModContent.ProjectileType<Shardcannon_P1>();
 			Item.shootSpeed = 6.5f;
 			Item.width = 44;

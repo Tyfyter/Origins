@@ -1931,7 +1931,7 @@ Chunky_Crate: {
 
 Cicada_3301_Item: {
 	DisplayName: Cicada 3301
-	Tooltip: ""
+	Tooltip: Very cryptic. What does this mean?
 }
 
 Crusty_Crate: {
@@ -4477,7 +4477,7 @@ Living_Alkahest_Item: {
 
 Matrix: {
 	DisplayName: Matrix
-	Tooltip: ""
+	Tooltip: Fires an array of explosive nodes that explode simultaneously when one of the links are broken
 }
 
 Phantom_Fury: {
@@ -4497,7 +4497,7 @@ Indestructible_Saddle: {
 
 Swarm_Statue_Item: {
 	DisplayName: Swarm Statue
-	Tooltip: ""
+	Tooltip: Increases enemy spawn rates when placed
 }
 
 Fabricator_Item: {
@@ -4507,20 +4507,24 @@ Fabricator_Item: {
 
 Scrap_Barrier: {
 	DisplayName: Scrap Barrier
-	Tooltip: ""
+	Tooltip:
+		'''
+		50% damage reduction while above 90% of total life
+		All life regeneration has a 3-second buffer period before it is applied after getting hit while above half life
+		'''
 }
 
 Scrap_Barrier_Uncursed: {
 	DisplayName: Scrap Barrier
-	Tooltip: ""
+	Tooltip: 5% damage reduction and slightly increased life regeneration
 }
 
 Laser_Tag_Vest: {
 	DisplayName: Laser Tag Vest
-	Tooltip: ""
+	Tooltip: Allows you to participate in Laser Tag events
 }
 
 Trash_Lid: {
 	DisplayName: Impenetrable Trashcan Lid
-	Tooltip: ""
+	Tooltip: Knocks you back from your explosions instead of taking damage
 }

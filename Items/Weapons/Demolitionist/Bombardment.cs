@@ -14,18 +14,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Bombardment_P>(3, 36, 13f, 48, 32);
-			Item.useTime = 6;
+			Item.DefaultToCanisterLauncher<Bombardment_P>(2, 42, 11f, 48, 32);
+			Item.useTime = 7;
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.UseSound = null;
-			Item.reuseDelay = 60;
+			Item.reuseDelay = 50;
+		}
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-6f, 0);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
-			velocity = velocity.RotatedByRandom(0.3f);
-			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
+			velocity = velocity.RotatedByRandom(0.25f);
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.4f), position);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

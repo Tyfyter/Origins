@@ -21,14 +21,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.ProximityMineLauncher);
-			Item.damage = 100;
-			Item.useTime = 50;
-			Item.useAnimation = 50;
-			Item.shoot = ModContent.ProjectileType<Matrix_P>();
-			Item.value = Item.sellPrice(gold: 7);
-			Item.rare = ItemRarityID.Lime;
-			Item.autoReuse = true;
+			Item.DefaultToCanisterLauncher<Matrix_P>(14, 50, 8f, 46, 28, true);
+			Item.value = Item.sellPrice(silver: 24);
+			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 			Item.ArmorPenetration += 1;
 		}
@@ -46,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RocketI);
+			//Projectile.tileCollide = true;
 			Projectile.width = Projectile.height = 0;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = -1;
@@ -122,6 +118,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		Vector2 GetNodePosition(int index) => nodes[((index % GetNodeCount()) + GetNodeCount()) % GetNodeCount()].position;
 		public override void OnKill(int timeLeft) {
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch, 0, 0, 255, new Color(255, 150, 30), 1.5f);
+			dust.noGravity = false;
+			dust.velocity *= 6f;
+
 			Vector2[] cachePositions = GetNodePositions();
 			Projectile.position = Vector2.Zero;
 			int length = GetNodeCount();

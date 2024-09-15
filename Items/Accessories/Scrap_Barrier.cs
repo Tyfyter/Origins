@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,13 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().scrapBarrierCursed = true;
 		}
 		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.DarkShard, 2)
+			.AddIngredient(ItemID.SoulofNight, 30)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 20)
+			.AddTile(TileID.DemonAltar)
+			.Register();
+
 			Recipe.Create(ModContent.ItemType<Scrap_Barrier_Uncursed>())
 			.AddIngredient(Type)
 			.AddTile(TileID.BewitchingTable)

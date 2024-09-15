@@ -84,7 +84,8 @@ namespace Origins.NPCs {
 					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
 					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170));
+					shop.Add<Trash_Lid>(PeatSoldCondition(150));
+					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170), Condition.NotTheBeesWorld);
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode);
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);

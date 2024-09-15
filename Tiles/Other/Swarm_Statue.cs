@@ -61,6 +61,7 @@ namespace Origins.Tiles.Other {
 		public override string Texture => "Origins/Tiles/Other/Defiled_Fountain_Item";
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Swarm_Statue>());
+			Item.rare = ItemRarityID.LightPurple;
 		}
 	}
 	public class Swarm_Statue_Buff : ModBuff {

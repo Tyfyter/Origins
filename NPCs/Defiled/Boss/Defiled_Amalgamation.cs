@@ -16,7 +16,6 @@ using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -32,7 +31,7 @@ using Terraria.Utilities;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled.Boss {
-    [AutoloadBossHead]
+	[AutoloadBossHead]
 	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy, ICustomWikiStat {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
@@ -78,7 +77,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_DA>();
 			NPC.aiStyle = NPCAIStyleID.None;
-			NPC.lifeMax = 2400;
+			NPC.lifeMax = 3100;
 			NPC.defense = 14;
 			NPC.damage = 60;
 			NPC.width = 81;
@@ -100,20 +99,20 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */ {
 			switch (DifficultyMult) {
 				case 1:
-				NPC.lifeMax = (int)(2400 * balance);
-				NPC.defense = 14;
+				NPC.lifeMax = (int)(3100 * balance);
+				NPC.defense = 12;
 				NPC.damage = 48;
 				break;
 
 				case 2:
-				NPC.lifeMax = (int)(3840 * balance);
-				NPC.defense = 16;
+				NPC.lifeMax = (int)(4960 * balance);
+				NPC.defense = 13;
 				NPC.damage = 64;
 				break;
 
 				case 3:
-				NPC.lifeMax = (int)(6144 * balance);
-				NPC.defense = 18;
+				NPC.lifeMax = (int)(7936 * balance);
+				NPC.defense = 15;
 				NPC.damage = 72;
 				break;
 			}
