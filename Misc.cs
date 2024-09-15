@@ -35,6 +35,8 @@ using Terraria.GameContent.Drawing;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Tiles.Banners;
 using Terraria.ObjectData;
+using static System.Net.Mime.MediaTypeNames;
+using Terraria.ModLoader.Utilities;
 
 namespace Origins {
 	#region classes
@@ -2769,6 +2771,108 @@ namespace Origins {
 				}
 			}
 			return false;
+		}
+		public static bool CanHitRay(Vector2 position, Vector2 target) {
+			Vector2 diff = target - position;
+			float length = diff.Length();
+			return Raycast(position, diff, length) == length;
+		}
+		public static float Raycast(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+			if (direction == Vector2.Zero) throw new ArgumentException($"{nameof(direction)} may not be zero");
+			float length = 0;
+			Point tilePos = position.ToTileCoordinates();
+			Vector2 tileSubPos = (position - tilePos.ToWorldCoordinates(0, 0)) / 16;
+			float angle = direction.ToRotation();
+			//OriginExtensions.DrawDebugLine(Vector2.Zero, GeometryUtils.Vec2FromPolar(16, angle), position, 27);
+			double sin = Math.Sin(angle);
+			double cos = Math.Cos(angle);
+			static void DoLoopyThing(float currentSubPos, out float newSubPos, int currentTilePos, out int newTilePos) {
+				newTilePos = currentTilePos;
+				if (currentSubPos == 0) {
+					newSubPos = 1;
+					newTilePos--;
+				} else if (currentSubPos == 1) {
+					newSubPos = 0;
+					newTilePos++;
+				} else {
+					newSubPos = currentSubPos;
+				}
+			}
+			while (length < maxLength) {
+				Vector2 next = RaycastStep(tileSubPos, sin, cos);
+				if (next == tileSubPos) break;
+				Tile tile = Framing.GetTileSafely(tilePos);
+				bool doBreak = false;
+				Vector2 diff = next - tileSubPos;
+				float dist = diff.Length();
+				if (tile.HasFullSolidTile()) {
+					switch (tile.BlockType) {
+						case BlockType.Solid:
+						doBreak = true;
+						break;
+						case BlockType.HalfBlock:
+						if (next.Y > 0.5f) {
+							doBreak = true;
+							//length += dist * (next.Y - 0.5f) * 8f;
+						}
+						break;
+						case BlockType.SlopeDownLeft:
+						break;
+						case BlockType.SlopeDownRight:
+						break;
+						case BlockType.SlopeUpLeft:
+						break;
+						case BlockType.SlopeUpRight:
+						break;
+					}
+				}
+				if (doBreak) break;
+				length += dist * 16;
+				//Dust.NewDustPerfect(tilePos.ToWorldCoordinates(0, 0) + next * 16, 6, Vector2.Zero).noGravity = true;
+				DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X);
+				DoLoopyThing(next.Y, out next.Y, tilePos.Y, out tilePos.Y);
+				tile = Framing.GetTileSafely(tilePos);
+				if (tile.HasFullSolidTile()) {
+					switch (tile.BlockType) {
+						case BlockType.Solid:
+						doBreak = true;
+						break;
+						case BlockType.HalfBlock:
+						if (next.Y > 0.5f) doBreak = true;
+						break;
+						case BlockType.SlopeDownLeft:
+						if (next.X == 0 || next.Y == 1) doBreak = true;
+						break;
+						case BlockType.SlopeDownRight:
+						if (next.X == 1 || next.Y == 1) doBreak = true;
+						break;
+						case BlockType.SlopeUpLeft:
+						if (next.X == 0 || next.Y == 0) doBreak = true;
+						break;
+						case BlockType.SlopeUpRight:
+						if (next.X == 1 || next.Y == 0) doBreak = true;
+						break;
+					}
+				}
+				if (!doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
+
+				}
+				if (doBreak) break;
+				tileSubPos = next;
+			}
+			if (length > maxLength) return maxLength;
+			return length;
+		}
+		static Vector2 RaycastStep(Vector2 pos, double sin, double cos) {
+			if (cos == 0) return new(pos.X, sin > 0 ? 1 : 0);
+			if (sin == 0) return new(cos > 0 ? 1 : 0, pos.Y);
+			double slope = sin / cos;
+			int xVlaue = cos > 0 ? 1 : 0;
+			double yIntercept = pos.Y - slope * (pos.X - xVlaue);
+			if (yIntercept >= 0 && yIntercept <= 1) return new Vector2(xVlaue, (float)yIntercept);
+			int yVlaue = sin > 0 ? 1 : 0;
+			double xIntercept = (pos.Y - yVlaue) / -slope + pos.X;
+			return new Vector2((float)xIntercept, yVlaue);
 		}
 		public static Vector2 GetCenterProjectedPoint(Rectangle rect, Vector2 a) {
 			Vector2 b = rect.Center();
