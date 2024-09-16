@@ -53,8 +53,8 @@ namespace Origins.World {
 			(CHANGE_QUEUE, ChestID.LockedHallow, 0b0000),
 			(ENQUEUE, ModContent.ItemType<The_Calibrator>(), 1f),
 
-			//(CHANGE_QUEUE, ChestID.Gold, 0b0011), Desert Crown doesn't exist???
-			//(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 1f)
+			(CHANGE_QUEUE, ChestID.Gold, 0b0011), 
+			(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 0.3f)
 		];
 		public IEnumerable<int> ProvideItemObtainability() => Actions.Where(a => a.action == ENQUEUE).Select(a => a.param);
 		public void Load(Mod mod) { }

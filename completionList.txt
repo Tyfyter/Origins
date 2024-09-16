@@ -724,7 +724,7 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(#, ^2) Desert Crown* !!!
+(☻) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
 (X) Fresh Meat Artifact !!!

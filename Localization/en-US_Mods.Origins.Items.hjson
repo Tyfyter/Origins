@@ -4528,3 +4528,8 @@ Trash_Lid: {
 	DisplayName: Impenetrable Trashcan Lid
 	Tooltip: Knocks you back from your explosions instead of taking damage
 }
+
+Desert_Crown: {
+	DisplayName: Desert Crown
+	Tooltip: ""
+}

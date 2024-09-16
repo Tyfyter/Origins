@@ -927,6 +927,11 @@ Buffs: {
 		// DisplayName: Impenetrable Trashcan Lid
 		// Description: This trashcan lid is impenetrable
 	}
+
+	Desert_Crown_Buff: {
+		// DisplayName: Desert Crown Buff
+		// Description: Mods.Origins.Buffs.Desert_Crown_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1282,6 +1287,8 @@ Projectiles: {
 	// Indestructible_Saddle_Explosion.DisplayName: Indestructible Saddle
 	// Indestructible_Saddle_Projectile.DisplayName: Indestructible Saddle
 	// Etherealizer_P.DisplayName: Etherealizer P
+	// Sand_Elemental.DisplayName: Sand Elemental
+	// Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
 }
 
 Prefixes: {
