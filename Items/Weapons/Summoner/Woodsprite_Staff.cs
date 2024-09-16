@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
 			buffID = ModContent.BuffType<Woodsprite_Buff>();
 			Item.buffType = buffID;

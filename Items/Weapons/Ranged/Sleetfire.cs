@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shootSpeed = 7f;
 			Item.reuseDelay = 9;
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.ArmorPenetration = 5;
 			Item.UseSound = SoundID.Item34;
 		}

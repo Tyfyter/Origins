@@ -23,7 +23,7 @@ namespace Origins.Items.Other.Consumables.Food {
 				60 * 60 * 4
 			);
 			Item.value = Item.sellPrice(silver: 10);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool ConsumeItem(Player player) {
 			player.AddBuff(BuffID.Honey, Item.buffTime);

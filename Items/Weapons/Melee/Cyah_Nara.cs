@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 0f;
 			Item.shoot = ProjectileID.None;
 			Item.value = Item.sellPrice(silver: 2);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = true;
 		}
 	}

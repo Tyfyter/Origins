@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.damage = 85;
 			Item.createTile = ModContent.TileType<Potato_Mine_Tile>();
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.ammo = ModContent.ItemType<Potato>();
             Item.ArmorPenetration += 6;
         }

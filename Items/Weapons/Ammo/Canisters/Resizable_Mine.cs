@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.shootSpeed = -1.3f;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(silver: 2, copper: 33);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.ArmorPenetration += 1;
 			Item.maxStack = 9999;
 		}

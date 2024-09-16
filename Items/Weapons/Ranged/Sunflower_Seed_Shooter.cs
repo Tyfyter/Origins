@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Ranged {
             Item.knockBack = 1;
 			Item.shootSpeed = 9f;
 			Item.value = Item.sellPrice(silver: 40);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
             Item.reuseDelay = 18;
             Item.autoReuse = true;
             Item.consumeAmmoOnFirstShotOnly = true;

@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 10;
 			Item.shoot = ModContent.ProjectileType<Cryostrike_P>();
 			Item.value = Item.sellPrice(silver: 48);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 			Item.scale = 0.85f;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

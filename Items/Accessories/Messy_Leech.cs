@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 26);
 			Item.value = Item.sellPrice(silver: 60);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().messyLeech = true;
