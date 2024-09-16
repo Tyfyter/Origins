@@ -30,9 +30,10 @@ namespace Origins.NPCs.Dungeon {
 			NPC.HitSound = SoundID.NPCHit2;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
-        }
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return SpawnCondition.DungeonNormal.Chance * 0.05f;
+			if (!spawnInfo.HasRightDungeonWall(NPCExtensions.DungeonWallType.Slab)) return 0;
+			return SpawnCondition.DungeonNormal.Chance * 0.1f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -41,7 +42,11 @@ namespace Origins.NPCs.Dungeon {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Joint_Pop>(), 15));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Joint_Pop>(), 15));
+			npcLoot.Add(ItemDropRule.Common(ItemID.AncientNecroHelmet, 450));
+			npcLoot.Add(ItemDropRule.Common(ItemID.ClothierVoodooDoll, 300));
+			npcLoot.Add(ItemDropRule.Common(ItemID.BoneWand, 250)).OnFailedRoll(ItemDropRule.Common(ItemID.TallyCounter, 100)).OnFailedRoll(ItemDropRule.Common(ItemID.GoldenKey, 65)).OnFailedRoll(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Bone, 1, 1, 3));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert(), ItemID.Bone, 1, 2, 6));
 		}
 		public override bool PreAI() {
 			switch (NPC.aiAction) {

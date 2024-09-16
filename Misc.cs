@@ -3092,6 +3092,28 @@ namespace Origins {
 				spriteBatch.Draw(renderTarget, within, screenPos, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
 			}
 		}
+		public static bool HasRightDungeonWall(this NPCSpawnInfo spawnInfo, DungeonWallType wallType) {
+			if (spawnInfo.Player.RollLuck(7) == 0) {
+				return Main.rand.NextBool(3);
+			} else {
+				ushort wall = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].WallType;
+				ushort wall2 = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType;
+				switch (wallType) {
+					case DungeonWallType.Brick:
+					return wall is 7 or 8 or 9 || wall2 is 7 or 8 or 9;
+					case DungeonWallType.Slab:
+					return wall is 94 or 96 or 98 || wall2 is 94 or 96 or 98;
+					case DungeonWallType.Tile:
+					return wall is 95 or 97 or 99 || wall2 is 95 or 97 or 99;
+				}
+			}
+			return true;
+		}
+		public enum DungeonWallType {
+			Brick,
+			Slab,
+			Tile
+		}
 	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {

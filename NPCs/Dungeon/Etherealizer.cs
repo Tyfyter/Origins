@@ -29,18 +29,20 @@ namespace Origins.NPCs.Dungeon {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Caster;
-			NPC.lifeMax = 81;
-			NPC.defense = 10;
+			NPC.lifeMax = 300;
+			NPC.defense = 17;
 			NPC.damage = 33;
 			NPC.width = 20;
 			NPC.height = 38;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit2;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
-			NPC.value = 90;
+			NPC.value = Item.buyPrice(silver: 15);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return SpawnCondition.DungeonNormal.Chance * 0.05f;
+			if (!NPC.downedPlantBoss) return 0;
+			if (!spawnInfo.HasRightDungeonWall(NPCExtensions.DungeonWallType.Brick)) return 0;
+			return SpawnCondition.DungeonNormal.Chance * 0.1f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -50,6 +52,10 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 
+		}
+		public int ProjectileID {
+			get => (int)NPC.ai[1] - 1;
+			set => NPC.ai[1] = value + 1;
 		}
 		public override bool PreAI() {
 			NPC.velocity.X *= 0.93f;
@@ -78,7 +84,7 @@ namespace Origins.NPCs.Dungeon {
 				NPC.ai[2] = 0;
 				NPC.ai[3] = 0;
 			}
-			if (NPC.ai[1] == -1) {
+			if (ProjectileID == -1) {
 				NPC.TargetClosestUpgraded();
 				NPC.ai[0] += 1f;
 				if (NPC.ai[0] >= 120f && Main.netMode != NetmodeID.MultiplayerClient) {
@@ -87,8 +93,8 @@ namespace Origins.NPCs.Dungeon {
 					int targetTileY = (int)Main.player[NPC.target].Center.Y / 16;
 					Vector2 chosenTile = Vector2.Zero;
 					if (NPC.AI_AttemptToFindTeleportSpot(ref chosenTile, targetTileX, targetTileY)) {
-						//NPC.ai[2] = chosenTile.X;
-						//NPC.ai[3] = chosenTile.Y;
+						NPC.ai[2] = chosenTile.X;
+						NPC.ai[3] = chosenTile.Y;
 					}
 
 					NPC.netUpdate = true;
@@ -97,13 +103,23 @@ namespace Origins.NPCs.Dungeon {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
 						Vector2 spawnPos = NPC.Top + new Vector2(NPC.direction * 8, 20);
 						Vector2 diff = NPC.GetTargetData().Center - spawnPos;
-						NPC.ai[1] = Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPos, diff.SafeNormalize(default) * 2, Etherealizer_P.ID, 1, 0, ai0: NPC.whoAmI);
+						ProjectileID = Projectile.NewProjectile(
+							NPC.GetSource_FromAI(),
+							spawnPos,
+							diff.SafeNormalize(default) * 2,
+							Etherealizer_P.ID,
+							35,
+							0,
+							ai0: NPC.whoAmI
+						);
 					}
 				}
 			} else {
-				Projectile projectile = Main.projectile[(int)NPC.ai[1]];
+				Projectile projectile = Main.projectile[ProjectileID];
 				if (!projectile.active || projectile.type != Etherealizer_P.ID || projectile.ai[0] != NPC.whoAmI) {
-					NPC.ai[1] = -1;
+					ProjectileID = -1;
+				} else {
+					NPC.DiscourageDespawn(60);
 				}
 			}
 
@@ -133,7 +149,7 @@ namespace Origins.NPCs.Dungeon {
 				NPC.frameCounter = 0;
 				Frame++;
 			}
-			int frameOffset = NPC.ai[1] == -1 ? 0 : 3;
+			int frameOffset = ProjectileID == -1 ? 0 : 3;
 			if (Frame < frameOffset || Frame >= 3 + frameOffset) {
 				Frame = frameOffset;
 				NPC.frameCounter = 0;
@@ -167,12 +183,12 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void SetDefaults() {
 			Projectile.hostile = true;
-			Projectile.timeLeft = 6000;
+			Projectile.timeLeft = 600;
 			Projectile.width = Projectile.height = 8;
 		}
 		public override void AI() {
 			NPC owner = Main.npc[(int)Projectile.ai[0]];
-			if (!owner.active || owner.type != Etherealizer.ID || owner.ai[1] != Projectile.whoAmI) {
+			if (!owner.active || owner.type != Etherealizer.ID || owner.ai[1] != Projectile.whoAmI + 1 || Projectile.velocity == Vector2.Zero) {
 				Projectile.Kill();
 				return;
 			}
@@ -191,6 +207,8 @@ namespace Origins.NPCs.Dungeon {
 			} else {
 				Pathfind(target);
 			}
+			float scale = MathF.Pow(1 - Math.Min(Projectile.timeLeft / 300f, 1), 0.5f) * 0.5f + 0.5f;
+			Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.DungeonSpirit, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100, Scale: scale).noGravity = true;
 		}
 		public void Pathfind(NPCAimedTarget target) {
 			int bestMatch = -1;
@@ -310,6 +328,15 @@ namespace Origins.NPCs.Dungeon {
 			path.Add(pos);
 			goto test;
 		}
+		void ModifyDamage(ref StatModifier damage) {
+			damage += 1 - Math.Min(Projectile.timeLeft / 300f, 1);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			ModifyDamage(ref modifiers.SourceDamage);
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			ModifyDamage(ref modifiers.SourceDamage);
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Projectile.Kill();
 		}
@@ -320,6 +347,19 @@ namespace Origins.NPCs.Dungeon {
 			NPC owner = Main.npc[(int)Projectile.ai[0]];
 			if (owner.active && owner.type == Etherealizer.ID && owner.ai[1] == Projectile.whoAmI) {
 				owner.ai[1] = -1;
+			}
+			float scale = MathF.Pow(1 - Math.Min(Projectile.timeLeft / 300f, 1), 0.5f) * 0.5f + 0.5f;
+			for (int i = 0; i < 6; i++) {
+				Dust.NewDustDirect(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					DustID.DungeonSpirit,
+					Projectile.velocity.X * 0.5f,
+					Projectile.velocity.Y * 0.5f,
+					100,
+					Scale: scale
+				).noGravity = true;
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
