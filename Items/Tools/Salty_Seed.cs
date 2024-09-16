@@ -32,7 +32,9 @@ namespace Origins.Items.Tools {
 		public static List<int> mitosises = [];
 		public static List<int> nextMitosises = [];
 		public const int minion_duplicate_duration = 300;
-		public override string GlowTexture => Texture;
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 10;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.DamageType = DamageClass.Default;
@@ -42,12 +44,17 @@ namespace Origins.Items.Tools {
 			Projectile.height = 22;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 900;
-			Projectile.alpha = 150;
+			Projectile.alpha = 0;
 		}
 		public override void AI() {
+			Projectile.rotation = 0;
 			Projectile.aiStyle = 0;
 			Projectile.velocity *= 0.95f;
 			nextMitosises.Add(Projectile.whoAmI);
+			if (++Projectile.frameCounter >= 6) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 5;
+			}
 		}
 		public override bool? CanUseGrapple(Player player) {
 			//if (!player.CheckMana()) return false;
