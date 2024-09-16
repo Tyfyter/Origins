@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
-	public class Cellarkeep : Glowing_Mod_NPC {
+	public class Cellarkeep : ModNPC {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 18;

@@ -18,12 +18,15 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
-	public class Etherealizer : Glowing_Mod_NPC {
+	public class Etherealizer : ModNPC {
 		//public override void Load() => this.AddBanner();
+		protected override bool CloneNewInstances => true;
 		static public int ID { get; private set; }
+		AutoLoadingAsset<Texture2D> glowTexture;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			glowTexture = Texture + "_Glow";
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -172,6 +175,10 @@ namespace Origins.NPCs.Dungeon {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 44, NPC.scale);
 			}
 		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			const float strength = 0.75f;
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, new Color(strength, strength, strength, 0.5f));
+		}
 	}
 	public class Etherealizer_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
@@ -188,7 +195,7 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void AI() {
 			NPC owner = Main.npc[(int)Projectile.ai[0]];
-			if (!owner.active || owner.type != Etherealizer.ID || owner.ai[1] != Projectile.whoAmI + 1 || Projectile.velocity == Vector2.Zero) {
+			if (!owner.active || owner.type != Etherealizer.ID || owner.ai[1] != Projectile.whoAmI + 1 || Projectile.velocity.LengthSquared() < 0.01f) {
 				Projectile.Kill();
 				return;
 			}
