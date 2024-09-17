@@ -408,7 +408,7 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Entangled Energy*
-(#2, ^2) Mana Drive*
+(☻) Mana Drive*
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (X) Retaliatory Tendril*
