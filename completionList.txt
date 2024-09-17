@@ -494,7 +494,7 @@ UTILITIES:
 
 (^) Impenetrable Trashcan Lid
 (#4, ^2) Indestructible Saddle
-(#3, ^2) Salty Seed (Mitosis Node) !!!
+(☻) Salty Seed (Mitosis Node) !!!
 (#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
 
@@ -788,7 +788,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (^) Internal Combustionfish*
 (^) Link Grenade*
-(#3, ^2) Matrix* !!!
+(☻) Matrix* !!!
 (^) Meteor*
 (@2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling), ^3) Outbreak Bomb*
 (^) Peatball*

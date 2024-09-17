@@ -1,9 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -28,6 +32,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Mitosis_P : ModProjectile {
+		static readonly AutoLoadingAsset<Texture2D> seedTexture = typeof(Mitosis_P).GetDefaultTMLName() + "_Seed";
 		public static bool[][] aiVariableResets = [];
 		public static List<int> mitosises = [];
 		public static List<int> nextMitosises = [];
@@ -40,8 +45,8 @@ namespace Origins.Items.Tools {
 			Projectile.DamageType = DamageClass.Default;
 			Projectile.aiStyle = ProjAIStyleID.Hook;
 			Projectile.penetrate = -1;
-			Projectile.width = 22;
-			Projectile.height = 22;
+			Projectile.width = 30;
+			Projectile.height = 30;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 900;
 			Projectile.alpha = 0;
@@ -70,6 +75,22 @@ namespace Origins.Items.Tools {
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return false;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Texture2D texture = seedTexture;
+			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition + Vector2.UnitY,
+				frame,
+				lightColor,
+				Projectile.rotation,
+				frame.Size() * 0.5f,
+				1,
+				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None 
+			);
+			lightColor = Riven_Hive.GetGlowAlpha(lightColor);
+			return true;
 		}
 	}
 }
