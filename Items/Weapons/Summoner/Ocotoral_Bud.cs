@@ -285,7 +285,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Barnacle_Turret_Shot : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.MinionShot[Type] = true;
+			ProjectileID.Sets.SentryShot[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CursedBullet);

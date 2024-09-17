@@ -4533,3 +4533,8 @@ Desert_Crown: {
 	DisplayName: Desert Crown
 	Tooltip: ""
 }
+
+Scabcoral_Lyre: {
+	DisplayName: Scabcoral Lyre
+	Tooltip: ""
+}

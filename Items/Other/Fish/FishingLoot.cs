@@ -2,6 +2,7 @@
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Summoner;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using System;
@@ -62,7 +63,8 @@ namespace Origins.Items.Other.Fish {
 							(_, attempt) => attempt.rare && !(attempt.veryrare || attempt.legendary)),
 					(_, attempt) => attempt.crate),
 
-					new ItemFishingLoot(ItemType<Knee_Slapper>(), (_, attempt) => attempt.legendary && Main.hardMode && Main.rand.NextBool(2)),
+					new ItemFishingLoot(ItemType<Scabcoral_Lyre>(), (_, attempt) => attempt.legendary && Main.hardMode && Main.rand.NextBool(2)),
+					new ItemFishingLoot(ItemType<Ocotoral_Bud>(), (_, attempt) => attempt.rare),
 
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(

@@ -1289,6 +1289,7 @@ Projectiles: {
 	Etherealizer_P.DisplayName: Etherealizer P
 	Sand_Elemental.DisplayName: Sand Elemental
 	Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
+	Scabcoral_Lyre_P.DisplayName: Scabcoral
 }
 
 Prefixes: {

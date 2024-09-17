@@ -742,7 +742,7 @@ SUMMONER WEAPONS:
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
-(#, ^2) Scabcoral Lyre !!!
+(☻) Scabcoral Lyre !!!
 (^) Ziptie
 
 (X) Candlelight
