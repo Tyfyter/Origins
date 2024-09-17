@@ -45,6 +45,7 @@ X: No progress
 ⛥: needs design discussion (unicode hex code 26E5)
 ⚿: missing localization
 ᥢ: can't be implemented in a stable manner (unicode hex code 1962)
+々: missing prerequisite development (unicode hex code 3005)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -52,10 +53,10 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 ---
-(#, ^2) Chambersite Sentinel
-(X) Defiled Depressant
-(#, ^2) Grand Corruptor
-(#, ^2) Ichor Storm 
+(#, ^2, 々) Chambersite Sentinel
+(X, 々) Defiled Depressant
+(#, ^2, 々) Grand Corruptor
+(#, ^2, 々) Ichor Storm 
 
 (^) Defiled Amalgamation*
 (†, $, ^2/3) Fiberglass Weaver !!!
@@ -144,7 +145,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish*
 (^) Riven Penguin*
 (^) Riven Protoform
-(#, ^2) Scanner Scout
+(#, ^2, 々) Scanner Scout
 (^) Shattered Goldfish
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
@@ -193,10 +194,10 @@ ENEMY NPCS:
 (X) Tiny Skeleton Sniper
 (X) Volstroy
 
-(#, ^2) Blox
-(#, ^2) Cubix
-(#3, ^2) I.C.A.R.U.S Swarm Drone
-(#, ^2) Tetrix
+(#, ^2, 々) Blox
+(#, ^2, 々) Cubix
+(#3, ^2, 々) I.C.A.R.U.S Swarm Drone
+(#, ^2, 々) Tetrix
 ---
 
 
@@ -1134,23 +1135,23 @@ CONSUMABLES:
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
-(#2, ^2) Quantum Cell*
+(#2, ^2, 々) Quantum Cell*
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*
-(#2, ^2) The Button*
+(#2, ^2, 々) The Button*
 
-(#2, ^2) Ashen Loot Box*
+(#2, ^2, 々) Ashen Loot Box*
 (X) Basic Crate*
 (^) Bilious Crate*
-(#2, ^2) Corruption Loot Box*
-(#2, ^2) Crimson Loot Box*
+(#2, ^2, 々) Corruption Loot Box*
+(#2, ^2, 々) Crimson Loot Box*
 (^) Crusty Crate*
-(#2, ^2) Defiled Loot Box*
+(#2, ^2, 々) Defiled Loot Box*
 (^) Festering Crate*
 (X) Holy Crate*
 (^) Pointy Crate*
 (X) Residual Crate
-(#2, ^2) Riven Loot Box*
+(#2, ^2, 々) Riven Loot Box*
 (X) Twilight Crate*
 
 (^) Gooey Water*
@@ -1225,7 +1226,7 @@ AMMO:
 (X) Homing Rocket I
 (X) Homing Rocket II
 (^) Resizable Mine Mk. 5*
-(#2, ^2) Starfuze*
+(#2, ^2, 々) Starfuze*
 
 (^) Gray Solution*
 (X) Orange Solution
