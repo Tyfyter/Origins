@@ -1476,6 +1476,8 @@ Tiles: {
 	Living_Bile.MapEntry: Living Bile
 	Fabricator.MapEntry: Fabricator
 	Omnidirectional_Claymore_Tile.MapEntry: Omnidirectional Claymore
+	Laser_Tag_Console.MapEntry: Laser Tag Console
+	Potato_Tile.MapEntry: Potato
 }
 
 MapObject: {

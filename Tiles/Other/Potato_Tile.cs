@@ -19,7 +19,7 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(150, 150, 0), Language.GetText("Potato"));
+			AddMapEntry(new Color(150, 150, 0), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);

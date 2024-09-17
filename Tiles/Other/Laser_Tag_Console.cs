@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -11,12 +12,14 @@ namespace Origins.Tiles.Other {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(81, 81, 81), Language.GetText("Laser Tag Console"));
+			AddMapEntry(new Color(81, 81, 81), CreateMapEntryName());
 		}
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => !OriginSystem.Instance.AnyLaserTagActive;
 		public override bool RightClick(int i, int j) {
 			if (OriginSystem.Instance.AnyLaserTagActive) return false;
 			Main.LocalPlayer.GetModPlayer<OriginPlayer>().laserTagVestActive = true;
