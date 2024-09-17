@@ -542,6 +542,31 @@ namespace Origins {
 				}
 				return false;
 			};
+			IL_Player.SlopeDownMovement += IL_Player_SlopeDownMovement;
+			//IL_Player.Update += IL_Player_SlopeDownMovement;
+			On_Collision.StepDown += On_Collision_StepDown;
+		}
+
+		private void On_Collision_StepDown(On_Collision.orig_StepDown orig, ref Vector2 position, ref Vector2 velocity, int width, int height, ref float stepSpeed, ref float gfxOffY, int gravDir, bool waterWalk) {
+			if (Main.CurrentPlayer.mount.Active && Main.CurrentPlayer.mount.Type == Indestructible_Saddle_Mount.ID) return;
+			orig(ref position, ref velocity, width, height, ref stepSpeed, ref gfxOffY, gravDir, waterWalk);
+		}
+
+		private void IL_Player_SlopeDownMovement(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel skip = default;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdarg0(),
+				i => i.MatchLdfld<Player>(nameof(Player.mount)),
+				i => i.MatchCallOrCallvirt<Mount>("get_" + nameof(Mount.Type)),
+				i => i.MatchLdcI4(MountID.DarkMageBook),
+				i => i.MatchBeq(out skip)
+			);
+			c.EmitLdarg0();
+			c.EmitLdfld(typeof(Player).GetField(nameof(Player.mount)));
+			c.EmitCallvirt(typeof(Mount).GetProperty(nameof(Mount.Type)).GetMethod);
+			c.EmitCall(typeof(Indestructible_Saddle_Mount).GetProperty(nameof(Indestructible_Saddle_Mount.ID)).GetMethod);
+			c.EmitBeq(skip);
 		}
 
 		private void On_WorldGen_CheckTight(On_WorldGen.orig_CheckTight orig, int x, int j) {

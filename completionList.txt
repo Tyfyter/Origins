@@ -493,7 +493,7 @@ UTILITIES:
 (X) Strange Backpack
 
 (^) Impenetrable Trashcan Lid
-(#4, ^2) Indestructible Saddle
+(☻) Indestructible Saddle
 (☻) Salty Seed (Mitosis Node) !!!
 (#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
@@ -738,7 +738,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Bomb Artifact
-(#, ^2) Forsaken Desire
+(#, @4/2 (not necessarily missing sprites, but I'd need confirmation that the incredibly sudden transitions between states are intended)) Forsaken Desire
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
