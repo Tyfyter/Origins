@@ -20,12 +20,13 @@ namespace Origins.Items.Other.Consumables {
 				for (int i = 0; i < shaders.Count; i++) {
 					if (shaders[i].day()) return shaders[i].pass;
 				}
-				return shaders[^1].pass;
+				return defaultPass;
 			}
 		}
+		public static HolidayHairPassData defaultPass = new();
 		public override void Load() {
 			if (!ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
-				shaders = [(() => true, new())];
+				shaders = [];
 				return;
 			}
 			Func<bool> Day(string name) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", name);
@@ -35,6 +36,12 @@ namespace Origins.Items.Other.Consumables {
 				return Day((string)args[0]);
 			}
 			///<summary>Adds a holiday with the specified information using either the overlay or textured pass</summary>
+			///<param name="name">the name to use for the holiday</param>
+			///<param name="date">the date to use for the holiday, year is ignored</param>
+			///<param name="hairColor">the color to use for the hair, can be provided as a <see cref="Color">, <see cref="Vector3">, or <see cref="Func<Player, Vector3>"></param>
+			///<param name="texture">the name of the texture, starting in the HolidayHairs folder</param>
+			///<param name="overlay">whether to use the overlay or textured pass, the latter only draws where the hair would normally have pixels, and darkens the overlay where the hair texture is darker</param>
+			///<param name="textureColor">the color to use for the texture, can be provided as a <see cref="Color">, <see cref="Vector3">, or <see cref="Func<Player, Vector3>"></param>
 			(Func<bool> day, HolidayHairPassData pass) SimpleHoliday(string name, DateTime date, HairColorWrapper hairColor, string texture, bool overlay = true, HairColorWrapper textureColor = default) {
 				AddHoliday(name, date);
 				return (Day(name), new HolidayHairPassData(
@@ -84,8 +91,7 @@ namespace Origins.Items.Other.Consumables {
 					PassName: "Overlay",
 					UsesHairColor: false,
 					Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/ChristmasDay_Hair")
-				)),
-				(() => true, new())
+				))
 			];
 		}
 		public override void Unload() => shaders = null;
