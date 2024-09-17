@@ -1290,6 +1290,7 @@ Projectiles: {
 	Sand_Elemental.DisplayName: Sand Elemental
 	Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
 	Scabcoral_Lyre_P.DisplayName: Scabcoral
+	Omnidirectional_Claymore_Projectile.DisplayName: Omnidirectional Claymore
 }
 
 Prefixes: {
@@ -1474,6 +1475,7 @@ Tiles: {
 	Living_Alkahest.MapEntry: Living Alkahest
 	Living_Bile.MapEntry: Living Bile
 	Fabricator.MapEntry: Fabricator
+	Omnidirectional_Claymore_Tile.MapEntry: Omnidirectional Claymore
 }
 
 MapObject: {

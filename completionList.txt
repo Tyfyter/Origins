@@ -819,7 +819,7 @@ EXPLOSIVE WEAPONS:
 (^) Nova Cascade*
 (^) Nova Swarm
 (^) Nuclear Arm*
-(#2, ^2) Omni-directional Claymore*
+(☻) Omni-directional Claymore*
 (^) Rocodile
 (^) Self-Destruct*
 (X) Supernova

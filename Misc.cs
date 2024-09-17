@@ -2786,12 +2786,12 @@ namespace Origins {
 			//OriginExtensions.DrawDebugLine(Vector2.Zero, GeometryUtils.Vec2FromPolar(16, angle), position, 27);
 			double sin = Math.Sin(angle);
 			double cos = Math.Cos(angle);
-			static void DoLoopyThing(float currentSubPos, out float newSubPos, int currentTilePos, out int newTilePos) {
+			static void DoLoopyThing(float currentSubPos, out float newSubPos, int currentTilePos, out int newTilePos, double direction) {
 				newTilePos = currentTilePos;
-				if (currentSubPos == 0) {
+				if (currentSubPos == 0 && direction < 0) {
 					newSubPos = 1;
 					newTilePos--;
-				} else if (currentSubPos == 1) {
+				} else if (currentSubPos == 1 && direction > 0) {
 					newSubPos = 0;
 					newTilePos++;
 				} else {
@@ -2829,8 +2829,8 @@ namespace Origins {
 				if (doBreak) break;
 				length += dist * 16;
 				//Dust.NewDustPerfect(tilePos.ToWorldCoordinates(0, 0) + next * 16, 6, Vector2.Zero).noGravity = true;
-				DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X);
-				DoLoopyThing(next.Y, out next.Y, tilePos.Y, out tilePos.Y);
+				DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, cos);
+				DoLoopyThing(next.Y, out next.Y, tilePos.Y, out tilePos.Y, sin);
 				tile = Framing.GetTileSafely(tilePos);
 				if (tile.HasFullSolidTile()) {
 					switch (tile.BlockType) {
