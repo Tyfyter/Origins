@@ -706,7 +706,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	#endregion variations
-	public class Riven_Hive_Alt_Biome : AltBiome {
+	public class Riven_Hive_Alt_Biome : AltBiome, IItemObtainabilityProvider {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
@@ -775,6 +775,9 @@ namespace Origins.World.BiomeData {
 			);
 			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Riven_Flesh>(), ModContent.WallType<Chambersite_Riven_Flesh_Wall>());
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return BiomeChestItem.Value;
 		}
 		public override AltMaterialContext MaterialContext {
 			get {

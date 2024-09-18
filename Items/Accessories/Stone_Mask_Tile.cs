@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Journal;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -24,7 +25,7 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = Item.useAnimation = 12;
-            //Item.createTile = ModContent.TileType<Stone_Mask>();
+            Item.createTile = ModContent.TileType<Stone_Mask_Tile>();
             Item.consumable = true;
         }
         public override void UpdateEquip(Player player) {
@@ -33,7 +34,7 @@ namespace Origins.Items.Accessories {
             player.jumpSpeedBoost -= 1.8f;
         }
     }
-	public class Stone_Mask_Tile : ModTile {
+	public class Stone_Mask_Tile : ModTile, IItemObtainabilityProvider {
 		public const int NextStyleHeight = 40; // Calculated by adding all CoordinateHeights + CoordinatePaddingFix.Y applied to all of them + 2
 
 		public override void SetStaticDefaults() {
@@ -80,6 +81,9 @@ namespace Origins.Items.Accessories {
 			if (Main.tile[i, j].TileFrameX / 18 < 1) {
 				player.cursorItemIconReversed = true;
 			}
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return ModContent.ItemType<Stone_Mask>();
 		}
 	}
 	public class Stone_Mask_Entry : JournalEntry {

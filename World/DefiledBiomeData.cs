@@ -635,7 +635,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	#endregion variations
-	public class Defiled_Wastelands_Alt_Biome : AltBiome {
+	public class Defiled_Wastelands_Alt_Biome : AltBiome, IItemObtainabilityProvider {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
@@ -733,6 +733,11 @@ namespace Origins.World.BiomeData {
 		public override int GetAltBlock(int BaseBlock, int posX, int posY, bool GERunner = false) {
 			return base.GetAltBlock(BaseBlock, posX, posY, GERunner);
 		}
+
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return BiomeChestItem.Value;
+		}
+
 		public override AltMaterialContext MaterialContext {
 			get {
 				AltMaterialContext context = new AltMaterialContext();
