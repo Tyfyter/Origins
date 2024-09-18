@@ -932,6 +932,26 @@ Buffs: {
 		DisplayName: Desert Crown Buff
 		Description: Mods.Origins.Buffs.Desert_Crown_Buff.Description
 	}
+
+	Defiled_Asphyxiator_Debuff: {
+		DisplayName: Defiled Asphyxiator Debuff
+		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff.Description
+	}
+
+	Defiled_Asphyxiator_Full_Debuff: {
+		DisplayName: Defiled Asphyxiator Full Debuff
+		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Full_Debuff.Description
+	}
+
+	Defiled_Asphyxiator_Debuff_2: {
+		DisplayName: Defiled Asphyxiator Debuff_2
+		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff_2.Description
+	}
+
+	Defiled_Asphyxiator_Debuff_3: {
+		DisplayName: Defiled Asphyxiator Debuff_3
+		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff_3.Description
+	}
 }
 
 DamageClassName: {
@@ -1291,6 +1311,9 @@ Projectiles: {
 	Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
 	Scabcoral_Lyre_P.DisplayName: Scabcoral
 	Omnidirectional_Claymore_Projectile.DisplayName: Omnidirectional Claymore
+	Defiled_Asphyxiator_P1.DisplayName: Defiled Asphyxiator P1
+	Defiled_Asphyxiator_P2.DisplayName: Defiled Asphyxiator P2
+	Defiled_Asphyxiator_P3.DisplayName: Defiled Asphyxiator P3
 }
 
 Prefixes: {

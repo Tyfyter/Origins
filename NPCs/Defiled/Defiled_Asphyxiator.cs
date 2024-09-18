@@ -4,6 +4,8 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -69,24 +71,67 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			NPC.TargetClosestUpgraded();
-			if (NPC.HasValidTarget) {
-				const float hover_range = 16 * 13;
-				NPC.rotation = NPC.velocity.X * 0.1f;
-				NPCAimedTarget target = NPC.GetTargetData();
-				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
+			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
+				Player target = Main.player[NPC.target];
+				int level = Defiled_Asphyxiator_Debuff.GetLevel(target);
+				int projectileType = ProjectileID.None;
 				float speed = 32f;
 				float inertia = 128f;
+				NPC.rotation = NPC.velocity.X * 0.1f;
+				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
 				float dist = vectorToTargetPosition.Length();
-				if (dist < hover_range) {
-					speed *= -1;
+				vectorToTargetPosition /= dist;
+				NPC.aiAction = 0;
+				switch (level) {
+					case 3: {
+
+					}
+					break;
+					case 0:
+					projectileType = ModContent.ProjectileType<Defiled_Asphyxiator_P2>();
+					goto default;
+					case 1:
+					projectileType = ModContent.ProjectileType<Defiled_Asphyxiator_P3>();
+					goto default;
+					case 2:
+					projectileType = ModContent.ProjectileType<Defiled_Asphyxiator_P1>();
+					goto default;
+					default: {
+						const float hover_range = 16 * 13;
+						if (dist < hover_range - 32) {
+							speed *= -1;
+						} else if (dist < hover_range + 32) {
+							speed = 0;
+							if (NPC.velocity.LengthSquared() < 0.1f) {
+								// If there is a case where it's not moving at all, give it a little "poke"
+								NPC.velocity += Main.rand.NextVector2Circular(1, 1) * 0.05f;
+							}
+						}
+
+						if (++NPC.ai[0] > 90 - 9 * 3) {
+							NPC.aiAction = 1;
+							if (NPC.ai[0] > 90) {
+								NPC.ai[0] = 0;
+								if (Main.netMode != NetmodeID.MultiplayerClient) {
+									Projectile.NewProjectile(
+										NPC.GetSource_FromAI(),
+										NPC.Center,
+										vectorToTargetPosition * 8,
+										projectileType,
+										20,
+										4
+									);
+								}
+							}
+						}
+					}
+					break;
 				}
-				vectorToTargetPosition *= speed / dist;
+				vectorToTargetPosition *= speed;
 				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
 				Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
-			} else {
-
 			}
 		}
 		public override void FindFrame(int frameHeight) {
@@ -124,5 +169,63 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
 		}
+	}
+	public class Defiled_Asphyxiator_P1 : ModProjectile {
+		public override void SetDefaults() {
+			Projectile.width = Projectile.height = 36;
+			Projectile.hostile = true;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			Defiled_Asphyxiator_Debuff.AddBuff(target);
+		}
+	}
+	public class Defiled_Asphyxiator_P2 : Defiled_Asphyxiator_P1 { }
+	public class Defiled_Asphyxiator_P3 : Defiled_Asphyxiator_P1 { }
+	public class Defiled_Asphyxiator_Debuff : ModBuff {
+		public override string Texture => typeof(Defiled_Asphyxiator_P2).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() => ID = Type;
+		public static int GetLevel(Player player) => GetLevel(player, out _);
+		public static int GetLevel(Player player, out int index) {
+			index = player.FindBuffIndex(Defiled_Asphyxiator_Debuff_3.ID);
+			if (index != -1) return 3;
+			index = player.FindBuffIndex(Defiled_Asphyxiator_Debuff_2.ID);
+			if (index != -1) return 2;
+			index = player.FindBuffIndex(ID);
+			if (index != -1) return 1;
+			return 0;
+		}
+		public static void AddBuff(Player player) {
+			const int level_1_time = 120;
+			const int level_2_time = 120 + level_1_time;// pointlessly adding and subtracting to show that level 2 will decay into level 1
+			const int level_3_time = 150;
+			int level = GetLevel(player, out int index);
+			if (index != -1) {
+				if (level == 1) {
+					player.buffType[index] = Defiled_Asphyxiator_Debuff_2.ID;
+					player.buffTime[index] = level_3_time;
+				} else {
+					player.buffType[index] = Defiled_Asphyxiator_Debuff_3.ID;
+					player.buffTime[index] = level_2_time - level_1_time;
+				}
+			} else {
+				player.AddBuff(ID, level_1_time);
+			}
+		}
+	}
+	public class Defiled_Asphyxiator_Debuff_2 : Defiled_Asphyxiator_Debuff {
+		public static new int ID { get; private set; }
+		public override void SetStaticDefaults() => ID = Type;
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.buffTime[buffIndex] == 1) {
+				player.buffType[buffIndex] = Defiled_Asphyxiator_Debuff.ID;
+				player.buffTime[buffIndex] = 120;
+			}
+			base.Update(player, ref buffIndex);
+		}
+	}
+	public class Defiled_Asphyxiator_Debuff_3 : Defiled_Asphyxiator_Debuff {
+		public static new int ID { get; private set; }
+		public override void SetStaticDefaults() => ID = Type;
 	}
 }

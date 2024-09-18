@@ -488,7 +488,7 @@ UTILITIES:
 ---
 (^) Amoeba Hook
 (^) Chunky Hook
-(#, ^2) Nano Hook
+(%3, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
 (X) Strange Backpack
