@@ -4,6 +4,7 @@ using Origins.Items.Weapons;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.Questing;
@@ -275,6 +276,17 @@ namespace Origins.Items {
 				}
 				case ItemID.EaterOfWorldsBossBag: {
 					itemLoot.Add(OriginGlobalNPC.EaterOfWorldsWeaponDrops);
+					break;
+				}
+				case ItemID.QueenBeeBossBag: {
+					bool foundWeapon = false;
+					OneFromOptionsNotScaledWithLuckDropRule rule = dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(r => r.dropIds.Contains(ItemID.BeeGun));
+					if (rule is not null) {
+						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+						rule.dropIds[^1] = ModContent.ItemType<Bee_Afraid_Incantation>();
+						foundWeapon = true;
+					}
+					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
 					break;
 				}
 				case ItemID.LockBox: {

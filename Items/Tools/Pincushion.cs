@@ -1,10 +1,11 @@
 ﻿using Origins.Dev;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Tools {
-	public class Pincushion : ModItem, ICustomWikiStat {
+	public class Pincushion : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
 			"Misc",
 			"Explosive"
@@ -25,6 +26,9 @@ namespace Origins.Items.Tools {
 			Item.ChangeItemType(ModContent.ItemType<Pincushion_Inactive>());
 			SoundEngine.PlaySound(SoundID.Grab);
 			return false;
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return ModContent.ItemType<Pincushion_Inactive>();
 		}
 	}
 	public class Pincushion_Inactive : ModItem, ICustomWikiStat {

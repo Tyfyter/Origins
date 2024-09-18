@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Accessories;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -161,7 +162,7 @@ namespace Origins.Questing {
 			Stage = tag.SafeGet<int>("Stage");
 		}
 	}
-	public class Eccentric_Stone_Quest : Quest {
+	public class Eccentric_Stone_Quest : Quest, IItemObtainabilityProvider {
 		//backing field for Stage property
 		int stage = 0;
 
@@ -251,6 +252,9 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return ModContent.ItemType<Eccentric_Stone>();
 		}
 	}
 }

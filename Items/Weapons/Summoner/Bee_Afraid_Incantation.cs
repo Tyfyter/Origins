@@ -299,7 +299,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			npc.GetGlobalNPC<OriginGlobalNPC>().amebolizeDebuff = true;
+			npc.GetGlobalNPC<OriginGlobalNPC>().beeAfraidDebuff = true;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
@@ -30,7 +31,7 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.Bottles)
 			.Register();
 
-            Recipe.Create(ItemID.PoisonedKnife, 50)
+            Recipe.Create(ModContent.ItemType<Gelled_Knife>(), 50)
             .AddIngredient(ItemID.ThrowingKnife, 50)
             .AddIngredient(this)
             .Register();

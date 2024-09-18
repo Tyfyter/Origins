@@ -41,6 +41,13 @@ namespace Origins.Items.Accessories {
 			);
 			return false;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Cinder_Seal>()
+			.AddIngredient<Comb>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 	}
 	public class ASH_Attack_Relay_Dust : ModProjectile {
 		public override string Texture => "Origins/Items/Accessories/Cinder_Seal_Dust";

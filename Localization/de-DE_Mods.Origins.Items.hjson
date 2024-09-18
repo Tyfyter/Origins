@@ -4357,7 +4357,11 @@ Chunky_Hook: {
 
 Bee_Afraid_Incantation: {
 	// DisplayName: Bee Afraid Incantation
-	// Tooltip: Summons a swarm of bees to your cursor
+	/* Tooltip:
+		'''
+		Summons a swarm of bees to your cursor
+		6 summon tag damage
+		''' */
 }
 
 True_Waning_Crescent: {

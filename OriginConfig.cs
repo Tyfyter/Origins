@@ -401,20 +401,9 @@ namespace Origins {
 			get => default;
 			set {
 				if (value) {
-					List<string> unobtainable = new();
-					HashSet<int> obtainableItems = new() {
-						ModContent.ItemType<Chunky_Crate>(),
-						ModContent.ItemType<Knee_Slapper>(),
-						ModContent.ItemType<Prikish>(),
-						ModContent.ItemType<Bilemouth>(),
-
-						ModContent.ItemType<Crusty_Crate>(),
-						ModContent.ItemType<Tearracuda>(),
-
-						ModContent.ItemType<Tire>(),
-						ModContent.ItemType<Messy_Leech>(),
-					};
-					List<(int, List<int>)> recipeResultItems = new();
+					List<string> unobtainable = [];
+					HashSet<int> obtainableItems = [];
+					List<(int, List<int>)> recipeResultItems = [];
 					for (int i = 0; i < Main.recipe.Length; i++) {
 						Recipe recipe = Main.recipe[i];
 						List<int> requiredItems = recipe.requiredItem.Where(item => item.ModItem?.Mod is Origins).Select(item => item.type).ToList();
@@ -424,8 +413,8 @@ namespace Origins {
 							recipeResultItems.Add((recipe.createItem.type, requiredItems));
 						}
 					}
-					DropRateInfoChainFeed ratesInfo = new DropRateInfoChainFeed(1f);
-					List<DropRateInfo> dropInfoList = new List<DropRateInfo>();
+					DropRateInfoChainFeed ratesInfo = new(1f);
+					List<DropRateInfo> dropInfoList = [];
 					foreach (var rule in ItemDropDatabaseMethods._entriesByNpcNetId.GetValue(Main.ItemDropsDB).Values
 						.Concat(ItemDropDatabaseMethods._entriesByItemId.GetValue(Main.ItemDropsDB).Values)
 						.SelectMany(l => l)
@@ -454,14 +443,14 @@ namespace Origins {
 						}
 					}
 
-					foreach (int itemType in Origins.instance.GetContent().SelectMany(c => c is IItemObtainabilityProvider provider ? provider.ProvideItemObtainability() : new int[0])) {
+					foreach (int itemType in Origins.instance.GetContent().SelectMany(c => c is IItemObtainabilityProvider provider ? provider.ProvideItemObtainability() : [])) {
 						obtainableItems.Add(itemType);
 					}
-					foreach (NPCShop.Entry entry in NPCShopDatabase.AllShops.SelectMany(s => s is NPCShop shop ? shop.Entries : new NPCShop.Entry[0])) {
+					foreach (NPCShop.Entry entry in NPCShopDatabase.AllShops.SelectMany(s => s is NPCShop shop ? shop.Entries : [])) {
 						obtainableItems.Add(entry.Item.type);
 					}
 					for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
-						if (i != -1 && obtainableItems.Contains(i)) {
+						if (i != -1 && (i < ItemID.Count || obtainableItems.Contains(i))) {
 							obtainableItems.Add(ItemID.Sets.ShimmerTransformToItem[i]);
 						}
 					}
@@ -491,7 +480,7 @@ namespace Origins {
 							}
 						}
 					}
-					Dictionary<int, HashSet<int>> missingIngredients = new();
+					Dictionary<int, HashSet<int>> missingIngredients = [];
 					for (int i = recipeResultItems.Count; i-- > 0;) {
 						(int result, List<int> ingredients) = recipeResultItems[i];
 						if (!missingIngredients.TryGetValue(result, out HashSet<int> missing)) {

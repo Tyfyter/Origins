@@ -7,9 +7,7 @@ Acrid_Dye
 Agility_Core
 Amber_Dye
 Amoeba_Buggy_Item
-ASH_Attack_Relay
 ATACS: [Strange Computer]
-Bee_Afraid_Incantation
 Black_Hole_Bomb
 Blood_Mushroom_Soup
 Boat_Rocker
@@ -37,7 +35,6 @@ Defiled_Loot_Box
 Depth_Charge
 Dreikan
 Duskarp
-Eccentric_Stone
 Element36_Bundle: [Fibron Plating]
 Explosive_Golf_Ball
 Eyndum_Breastplate
@@ -48,12 +45,9 @@ Fiberglass_Shard
 Fibron_Plating
 Fishing_Core
 Flakjack: [Fibron Plating]
-Fleshy_Globe
 Formium_Scrap
 Fragarach
 Gel_Blister_Item
-Gelled_Knife
-Grave_Danger
 Haunted_Vase
 High_Contrast_Dye
 Impact_Golf_Ball
@@ -69,13 +63,11 @@ Mana_Drive
 Manasynk_Pickup
 Matrix
 Missing_File
-Mojo_Injection
 Nematoclaw
 Newsboy_Cap
 NPC_Spawner
 Olid_Organ: [Decaying Scale]
 Phantom_Fury
-Pincushion_Inactive
 Plague_Texan_Jacket
 Plague_Texan_Jeans
 Plague_Texan_Mask
@@ -91,10 +83,8 @@ Riven_Pot_Item
 Rusty_Cross_Necklace
 Salty_Seed
 Scrap_Compactor
-Scribe_of_the_Meat_God
 Shimmer_Dye
 SMART_Wrench
-Spirit_Shard
 Stack_of_Shraps
 Starfuze
 Stone_Mask

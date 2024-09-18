@@ -339,7 +339,7 @@ namespace Origins.Tiles.Brine {
         }
     }
     public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+		public IEnumerable<int> ProvideItemObtainability() => [Type];
 		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

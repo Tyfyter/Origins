@@ -1,20 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Journal;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Eccentric_Stone : ModItem, IJournalEntryItem, ICustomWikiStat {
+	public class Eccentric_Stone : ModItem, IJournalEntryItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
 			"Misc",
 			"LoreItem"
 		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
-		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Blue;
@@ -30,6 +30,9 @@ namespace Origins.Items.Accessories {
 					break;
 				}
 			}
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return ModContent.ItemType<Spirit_Shard>();
 		}
 	}
 	public class Eccentric_Stone_Entry : JournalEntry {

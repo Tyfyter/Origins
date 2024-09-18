@@ -3133,8 +3133,8 @@ namespace Origins {
 		public static T FindDropRule<T>(this IEnumerable<IItemDropRule> dropRules, Predicate<T> predicate) where T : class, IItemDropRule {
 			foreach (var dropRule in dropRules) {
 				if (dropRule is T rule && predicate(rule)) return rule;
-				if (dropRule.ChainedRules.Select(c => c.RuleToChain).FindDropRule(predicate) is T foundRule) return foundRule;
-				if (ruleChildFinders.TryGetValue(dropRules.GetType(), out var ruleChildFinder)) return ruleChildFinder(dropRule).FindDropRule(predicate);
+				if (dropRule.ChainedRules.Count != 0 && dropRule.ChainedRules.Select(c => c.RuleToChain).FindDropRule(predicate) is T foundRule) return foundRule;
+				if (ruleChildFinders.TryGetValue(dropRule.GetType(), out var ruleChildFinder) && ruleChildFinder(dropRule).FindDropRule(predicate) is T foundRule2) return foundRule2;
 			}
 			return null;
 		}

@@ -263,6 +263,9 @@ namespace Origins.NPCs {
 				if (amebolizeDebuff) {
 					damageBoost += 5f;
 				}
+				if (beeAfraidDebuff) {
+					damageBoost += 6f;
+				}
 				if (jointPopDebuff) {
 					damageBoost += 3f;
 				}

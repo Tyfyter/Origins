@@ -13,6 +13,7 @@ using Origins.Tiles.Other;
 using Origins.World;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Terraria;
 using Terraria.Chat;
@@ -30,17 +31,14 @@ namespace Origins.NPCs {
 			static LocalizedText GetWarningText(string key) => Language.GetText("Mods.Origins.Warnings." + key);
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
-                /*case NPCID.EaterofWorldsBody:
-                npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));
-                break;*/
-                case NPCID.BrainofCthulhu:
-                npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
-                break;
-                case NPCID.EaterofWorldsHead or NPCID.EaterofWorldsBody or NPCID.EaterofWorldsTail:
-                npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));
-                npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsBossAndNotExpert()).WithOnSuccess(EaterOfWorldsWeaponDrops));
-                break;
-                case NPCID.KingSlime:
+				case NPCID.BrainofCthulhu:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
+				break;
+				case NPCID.EaterofWorldsHead or NPCID.EaterofWorldsBody or NPCID.EaterofWorldsTail:
+				npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsABoss())).WithOnSuccess(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));
+				npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsBossAndNotExpert()).WithOnSuccess(EaterOfWorldsWeaponDrops));
+				break;
+				case NPCID.KingSlime:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Cursed_Crown>(), 4));
 				break;
 				case NPCID.EyeofCthulhu:
@@ -49,9 +47,18 @@ namespace Origins.NPCs {
 				case NPCID.SkeletronHead:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terrarian_Voodoo_Doll>(), 4));
 				break;
-				case NPCID.QueenBee:
-				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Emergency_Bee_Canister>(), 4));
-				break;
+				case NPCID.QueenBee: {
+					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Emergency_Bee_Canister>(), 4));
+					bool foundWeapon = false;
+					OneFromOptionsNotScaledWithLuckDropRule rule = dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(r => r.dropIds.Contains(ItemID.BeeGun));
+					if (rule is not null) {
+						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+						rule.dropIds[^1] = ModContent.ItemType<Bee_Afraid_Incantation>();
+						foundWeapon = true;
+					}
+					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
+					break;
+				}
 				case NPCID.Deerclops:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blizzardwalkers_Jacket>(), 4));
 				break;
@@ -70,6 +77,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
 				break;
 				case NPCID.WallofFlesh: {
+					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Scribe_of_the_Meat_God>(), 4));
 					bool foundEmblem = false;
 					bool foundWeapon = false;
 					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
@@ -115,7 +123,7 @@ namespace Origins.NPCs {
 				case NPCID.SkeletonSniper: //Tiny skeleton sniper
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
-                break;
+				break;
 				case NPCID.Snatcher:
 				case NPCID.JungleSlime:
 				case NPCID.SpikedJungleSlime:
@@ -131,8 +139,8 @@ namespace Origins.NPCs {
 				case NPCID.AngryBonesBigMuscle:
 				case NPCID.AngryBonesBigHelmet:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
 				case NPCID.Zombie:
 				case NPCID.Harpy:
@@ -163,12 +171,12 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.UndeadMiner:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IWTPA_Standard>(), 4));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
-                break;
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+				break;
 				case NPCID.SporeSkeleton:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 6));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
-                break;
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+				break;
 				case NPCID.GiantTortoise:
 				npcLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Rocodile>(), 17, 1, 1, new LootConditions.DownedPlantera()));
 				break;
@@ -198,16 +206,19 @@ namespace Origins.NPCs {
 				case NPCID.SmallPantlessSkeleton:
 				case NPCID.SmallSkeleton:
 				case NPCID.TacticalSkeleton:
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
-                break;
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+				break;
 				case NPCID.TheGroom:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>()));
 				break;
-                case NPCID.ZombieSuperman:
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Superjump_Cape>(), 3));
-                //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Well_Gelled_Heroes_Hair>(), 3));
-                break;
-                default:
+				case NPCID.ZombieSuperman:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Superjump_Cape>(), 3));
+				//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Well_Gelled_Heroes_Hair>(), 3));
+				break;
+				case NPCID.MaggotZombie:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grave_Danger>(), 20));
+				break;
+				default:
 				break;
 			}
 			switch (npc.type) {

@@ -9,9 +9,11 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Origins.Items.Tools;
+using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Switchblade_Broadsword : ModItem, ICustomWikiStat {
+	public class Switchblade_Broadsword : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
         public string[] Categories => [
             "Sword"
         ];
@@ -49,6 +51,9 @@ namespace Origins.Items.Weapons.Melee {
 			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)//only bars used in vanilla evil sword recipes, no scales/samples
 			.AddTile(TileID.Anvils)
 			.Register();
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return ModContent.ItemType<Pincushion_Inactive>();
 		}
 	}
 	public class Switchblade_Shortsword : ModItem, ICustomWikiStat, INoSeperateWikiPage {
