@@ -1,0 +1,111 @@
+Abyssal_Anchor: [Celestial Stone Mask]
+Abysswalker_Cloak
+Abysswalker_Greaves
+Abysswalker_Hood
+Ace_Shrapnel_Old
+Acrid_Dye
+Agility_Core
+Amber_Dye
+Amoeba_Buggy_Item
+ASH_Attack_Relay
+ATACS: [Strange Computer]
+Bee_Afraid_Incantation
+Black_Hole_Bomb
+Blood_Mushroom_Soup
+Boat_Rocker
+Bomb_Artifact
+Bouncy_Explosive_Golf_Ball
+Breach
+Brine_Cheese
+Bug_Item
+Celestial_Stone_Mask: [Stone Mask]
+Chambersite_Stone_Wall_Item
+Chew_Toy
+Chocolate_Bar
+Chromatic_Scale
+Cicada_3301_Item
+Cirrhosis_Abhorrence: [Lousy Liver]
+Clubs_Ace
+Combat_Core
+Construction_Core
+Control_Locus: [Stack of Shraps]
+Corruption_Loot_Box
+Cranivore_Beanie
+Crimson_Loot_Box
+Decaying_Scale
+Defiled_Loot_Box
+Depth_Charge
+Dreikan
+Duskarp
+Eccentric_Stone
+Element36_Bundle: [Fibron Plating]
+Explosive_Golf_Ball
+Eyndum_Breastplate
+Eyndum_Greaves
+Eyndum_Helmet
+Eyndum_Scar
+Fiberglass_Shard
+Fibron_Plating
+Fishing_Core
+Flakjack: [Fibron Plating]
+Fleshy_Globe
+Formium_Scrap
+Fragarach
+Gel_Blister_Item
+Gelled_Knife
+Grave_Danger
+Haunted_Vase
+High_Contrast_Dye
+Impact_Golf_Ball
+Impactaxe
+Laser_Tag_Vest
+Lazy_Cloak
+Lifeforce_Core
+Lousy_Liver
+Lunar_Token
+Magic_Core
+Magic_Pain_Glove
+Mana_Drive
+Manasynk_Pickup
+Matrix
+Missing_File
+Mojo_Injection
+Nematoclaw
+Newsboy_Cap
+NPC_Spawner
+Olid_Organ: [Decaying Scale]
+Phantom_Fury
+Pincushion_Inactive
+Plague_Texan_Jacket
+Plague_Texan_Jeans
+Plague_Texan_Mask
+Plague_Texan_Sight
+Plasma_Cutter
+Potato_Launcher
+Quantum_Cell
+Rasterized_Dye
+Remote_Golf_Ball
+Riven_Cactus_Item
+Riven_Loot_Box
+Riven_Pot_Item
+Rusty_Cross_Necklace
+Salty_Seed
+Scrap_Compactor
+Scribe_of_the_Meat_God
+Shimmer_Dye
+SMART_Wrench
+Spirit_Shard
+Stack_of_Shraps
+Starfuze
+Stone_Mask
+Strange_Computer
+Sunflower_Sandal
+Sunflower_Seed_Shooter
+Switchblade_Shortsword
+The_Bird
+The_Button
+The_Defiled_Will
+Tyrfing
+Unsought_Organ: [Olid Organ]
+Voidsight_Potion: [Duskarp]
+World_Cracker_Mask2
