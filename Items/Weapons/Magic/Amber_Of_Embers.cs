@@ -35,12 +35,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Amber, 8);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 18);
-            recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 10);
-            recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Amber, 8)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 18)
+            .AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 10)
+            .AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Amber_Of_Embers_P : ModProjectile {

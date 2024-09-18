@@ -51,10 +51,10 @@ namespace Origins.Items.Weapons.Melee {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Vorpal_Sword>());
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.BewitchingTable);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Vorpal_Sword>())
+			.AddIngredient(Type)
+			.AddTile(TileID.BewitchingTable)
+			.Register();
 		}
 		static int textIndex = -1;
 		static int delayTime = 0;

@@ -24,17 +24,17 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 8)
+			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ModContent.ItemType<Harpoon>(), 8)
+			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Alkaline_Harpoon_P : Harpoon_P {

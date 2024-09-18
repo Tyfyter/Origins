@@ -25,15 +25,15 @@ namespace Origins.Items.Materials {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ModContent.ItemType<Acetabularia_Item>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ModContent.ItemType<Acetabularia_Item>())
+			.AddTile(TileID.Bottles)
+			.Register();
 
-            recipe = Recipe.Create(ItemID.PoisonedKnife, 50);
-            recipe.AddIngredient(ItemID.ThrowingKnife, 50);
-            recipe.AddIngredient(this);
-            recipe.Register();
+            Recipe.Create(ItemID.PoisonedKnife, 50)
+            .AddIngredient(ItemID.ThrowingKnife, 50)
+            .AddIngredient(this)
+            .Register();
         }
 	}
 	public class Sentient_Powder_P : ModProjectile {

@@ -43,12 +43,12 @@ namespace Origins.Items.Armor.Sapphire {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Sapphire, 4);
-			recipe.AddIngredient(ItemID.SoulofMight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Sapphire, 4)
+			.AddIngredient(ItemID.SoulofMight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => "Sapphire_Armor";
 		public int HeadItemID => Type;
@@ -67,12 +67,12 @@ namespace Origins.Items.Armor.Sapphire {
 			player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Sapphire, 12);
-			recipe.AddIngredient(ItemID.SoulofMight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 36);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Sapphire, 12)
+			.AddIngredient(ItemID.SoulofMight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 36)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -87,12 +87,12 @@ namespace Origins.Items.Armor.Sapphire {
 			player.moveSpeed += 0.1f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Sapphire, 8);
-			recipe.AddIngredient(ItemID.SoulofMight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Sapphire, 8)
+			.AddIngredient(ItemID.SoulofMight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Sapphire_Aura : ModProjectile {

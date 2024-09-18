@@ -41,11 +41,11 @@ namespace Origins.Items.Armor.Riven {
 			player.GetModPlayer<OriginPlayer>().tornStrengthBoost.Flat += 0.1f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 15)
+			.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Riven_Armor";
 		public int HeadItemID => Type;
@@ -83,11 +83,11 @@ namespace Origins.Items.Armor.Riven {
 			color = Color.White;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 25);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 25)
+			.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -106,11 +106,11 @@ namespace Origins.Items.Armor.Riven {
 			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 20)
+			.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]

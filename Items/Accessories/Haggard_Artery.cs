@@ -20,11 +20,11 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Explosive_Artery>());
-			recipe.AddIngredient(ModContent.ItemType<Messy_Leech>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Explosive_Artery>())
+			.AddIngredient(ModContent.ItemType<Messy_Leech>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

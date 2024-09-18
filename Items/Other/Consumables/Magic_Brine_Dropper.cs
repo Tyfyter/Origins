@@ -15,14 +15,14 @@ namespace Origins.Items.Other.Consumables {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddCondition(
+			Recipe.Create(Type)
+			.AddCondition(
 			   Language.GetOrRegister("Mods.Origins.Conditions.Brine"),
 			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Brine_Pool>()
-			);
-			recipe.AddIngredient(ItemID.EmptyDropper);
-			recipe.AddTile(TileID.CrystalBall);
-			recipe.Register();
+			)
+			.AddIngredient(ItemID.EmptyDropper)
+			.AddTile(TileID.CrystalBall)
+			.Register();
 		}
 	}
 }

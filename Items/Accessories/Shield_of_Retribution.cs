@@ -24,11 +24,11 @@ namespace Origins.Items.Accessories {
 			originPlayer.retributionShieldItem = Item;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ObsidianShield);
-			recipe.AddIngredient(ModContent.ItemType<Razorwire>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.ObsidianShield)
+			.AddIngredient(ModContent.ItemType<Razorwire>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

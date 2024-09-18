@@ -25,11 +25,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.Grenade, 8);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.Grenade, 8)
+			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Acid_Grenade_P : ModProjectile {

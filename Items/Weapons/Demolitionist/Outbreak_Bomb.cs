@@ -25,11 +25,11 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 15);
-			recipe.AddIngredient(ItemID.Bomb, 15);
-			recipe.AddIngredient(ItemID.DemoniteOre);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+			Recipe.Create(Type, 15)
+			.AddIngredient(ItemID.Bomb, 15)
+			.AddIngredient(ItemID.DemoniteOre)
+            .AddTile(TileID.Anvils)
+            .Register();
 		}
 	}
 	public class Outbreak_Bomb_P : ModProjectile {

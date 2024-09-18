@@ -19,12 +19,12 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ModContent.ItemType<Tearracuda>());
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ModContent.ItemType<Tearracuda>())
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>())
+			.AddTile(TileID.Bottles)
+			.Register();
 		}
 	}
 }

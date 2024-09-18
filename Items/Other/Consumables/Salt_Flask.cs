@@ -19,11 +19,11 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 5);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ModContent.ItemType<Alkahest>(), 2);
-			recipe.AddTile(TileID.ImbuingStation);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ModContent.ItemType<Alkahest>(), 2)
+			.AddTile(TileID.ImbuingStation)
+			.Register();
 		}
 	}
 }

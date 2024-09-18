@@ -27,11 +27,11 @@ namespace Origins.Items.Accessories {
 		}
 
         public override void AddRecipes() {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.CelestialStone);
-            recipe.AddIngredient(ModContent.ItemType<Stone_Mask>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+            CreateRecipe()
+            .AddIngredient(ItemID.CelestialStone)
+            .AddIngredient(ModContent.ItemType<Stone_Mask>())
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

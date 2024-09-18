@@ -34,11 +34,11 @@ namespace Origins.Items.Armor.Lost {
 			originPlayer.manaShielding += originPlayer.refactoringPieces ? 0.25f : 0.15f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 16);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 8)
+			.AddIngredient(ModContent.ItemType<Strange_String>(), 16)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Lost_Armor";
 		public int HeadItemID => Type;
@@ -64,11 +64,11 @@ namespace Origins.Items.Armor.Lost {
 			player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 28);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 20)
+			.AddIngredient(ModContent.ItemType<Strange_String>(), 28)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -83,11 +83,11 @@ namespace Origins.Items.Armor.Lost {
 			player.moveSpeed += 0.05f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 14);
-			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 22);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 14)
+			.AddIngredient(ModContent.ItemType<Strange_String>(), 22)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

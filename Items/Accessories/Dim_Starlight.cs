@@ -22,19 +22,19 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.BandofStarpower);
-            recipe.AddIngredient(ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.DisableDecraft();
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ItemID.BandofStarpower)
+            .AddIngredient(ModContent.ItemType<Wilting_Rose_Item>())
+            .AddTile(TileID.TinkerersWorkbench)
+			.DisableDecraft()
+            .Register();
 
-            recipe = Recipe.Create(ItemID.PanicNecklace);
-            recipe.AddIngredient(ItemID.SwiftnessPotion);
-            recipe.AddIngredient(Type);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.DisableDecraft();
-			recipe.Register();
+            Recipe.Create(ItemID.PanicNecklace)
+            .AddIngredient(ItemID.SwiftnessPotion)
+            .AddIngredient(Type)
+            .AddTile(TileID.TinkerersWorkbench)
+			.DisableDecraft()
+			.Register();
         }
         public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

@@ -30,11 +30,11 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FallenStar, 20);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.FallenStar, 20)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);

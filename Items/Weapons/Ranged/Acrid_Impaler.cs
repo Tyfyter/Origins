@@ -32,10 +32,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void OnConsumeAmmo(Item ammo, Player player) {

@@ -106,10 +106,10 @@ namespace Origins.Tiles.Other {
 			Item.createTile = ModContent.TileType<Traffic_Cone>();
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 6);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 6)
+			.AddTile(TileID.HeavyWorkBench)
+			.Register();
 		}
 	}
 }

@@ -26,17 +26,17 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
-			recipe.AddIngredient(ItemID.PinkGel);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 8)
+			.AddIngredient(ItemID.PinkGel)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(Type, 8);
-            recipe.AddIngredient(ItemID.PinkGel);
-            recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+            .AddIngredient(ItemID.PinkGel)
+            .AddIngredient(ModContent.ItemType<Harpoon>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Bouncy_Harpoon_P : Harpoon_P {

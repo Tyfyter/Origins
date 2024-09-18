@@ -23,10 +23,10 @@ namespace Origins.Items.Weapons.Melee
 		}
         public override void AddRecipes()
         {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
     public class Nineball_P : ModProjectile

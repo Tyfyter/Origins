@@ -31,10 +31,10 @@ namespace Origins.Items.Armor.Other {
 			player.AddBuff(BuffID.LeafCrystal, 18000);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteBar, 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => Name;
 		public int HeadItemID => Type;

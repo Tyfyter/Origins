@@ -58,12 +58,12 @@ namespace Origins.Items.Armor.Blast {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
-            recipe.AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>());
-            recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 2);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteBar, 12)
+            .AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>())
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 2)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public string ArmorSetName => "Blast_Armor";
 		public int HeadItemID => Type;
@@ -87,14 +87,14 @@ namespace Origins.Items.Armor.Blast {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.05f;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 24);
-            recipe.AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>());
-            recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 2);
-            recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
-            recipe.AddIngredient(ModContent.ItemType<Rotor>(), 2);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.ChlorophyteBar, 24)
+            .AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>())
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 2)
+            .AddIngredient(ModContent.ItemType<Power_Core>(), 2)
+            .AddIngredient(ModContent.ItemType<Rotor>(), 2)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -116,13 +116,13 @@ namespace Origins.Items.Armor.Blast {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.05f;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 18);
-            recipe.AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>());
-            recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 2);
-            recipe.AddIngredient(ModContent.ItemType<Rotor>(), 2);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.ChlorophyteBar, 18)
+            .AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>())
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 2)
+            .AddIngredient(ModContent.ItemType<Rotor>(), 2)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 }

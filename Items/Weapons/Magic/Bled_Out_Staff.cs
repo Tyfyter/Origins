@@ -29,10 +29,10 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup("Origins:Gem Staves");
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 6);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddRecipeGroup("Origins:Gem Staves")
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 6)
+			.Register();
 		}
 	}
 	public class Bled_Out_Staff_P : ModProjectile {

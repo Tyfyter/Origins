@@ -28,11 +28,11 @@ namespace Origins.Items.Other.Consumables {
 			return false;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ManaCrystal);
-			recipe.AddIngredient(ModContent.ItemType<Qube_Item>(), 50);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.ManaCrystal)
+			.AddIngredient(ModContent.ItemType<Qube_Item>(), 50)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 	}
 }

@@ -22,11 +22,11 @@ namespace Origins.Items.Accessories {
 			originPlayer.decayingScale = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.PutridScent);
-			recipe.AddIngredient(ModContent.ItemType<Decaying_Scale>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.PutridScent)
+			.AddIngredient(ModContent.ItemType<Decaying_Scale>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

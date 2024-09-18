@@ -42,11 +42,11 @@ namespace Origins.Items.Weapons.Melee {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<NE8>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<NE8>(), 5)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Outreach_P : ModProjectile {

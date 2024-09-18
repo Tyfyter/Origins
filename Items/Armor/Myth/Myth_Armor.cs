@@ -38,12 +38,12 @@ namespace Origins.Items.Armor.Myth {
 			explosiveProjectileSpeed.Flat += speed / (maxSpeed / 3f);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Bone, 10);
-			recipe.AddIngredient(ItemID.Cloud, 5);
-			recipe.AddIngredient(ItemID.Feather, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Bone, 10)
+			.AddIngredient(ItemID.Cloud, 5)
+			.AddIngredient(ItemID.Feather, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Mythic_Armor";
 		public int HeadItemID => Type;
@@ -62,12 +62,12 @@ namespace Origins.Items.Armor.Myth {
 			player.jumpSpeedBoost += 0.45f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Bone, 25);
-			recipe.AddIngredient(ItemID.Cloud, 15);
-			recipe.AddIngredient(ItemID.Feather, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Bone, 25)
+			.AddIngredient(ItemID.Cloud, 15)
+			.AddIngredient(ItemID.Feather, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -82,12 +82,12 @@ namespace Origins.Items.Armor.Myth {
 			player.moveSpeed += 0.2f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Bone, 15);
-			recipe.AddIngredient(ItemID.Cloud, 10);
-			recipe.AddIngredient(ItemID.Feather, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Bone, 15)
+			.AddIngredient(ItemID.Cloud, 10)
+			.AddIngredient(ItemID.Feather, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

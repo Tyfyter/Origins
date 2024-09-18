@@ -30,12 +30,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddIngredient(ItemID.SpellTome);
-			recipe.AddIngredient(ModContent.ItemType<Alkahest>(), 20);
-			recipe.AddTile(TileID.Bookcases);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient(ItemID.SpellTome)
+			.AddIngredient(ModContent.ItemType<Alkahest>(), 20)
+			.AddTile(TileID.Bookcases)
+			.Register();
 		}
 	}
 	public class Innermost_Manifest_P : ModProjectile {

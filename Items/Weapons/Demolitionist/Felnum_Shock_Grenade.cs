@@ -29,11 +29,11 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 6);
-			recipe.AddIngredient(ItemID.Grenade, 6);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>());
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 6)
+			.AddIngredient(ItemID.Grenade, 6)
+			.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>())
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
 

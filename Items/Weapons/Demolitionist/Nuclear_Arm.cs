@@ -42,12 +42,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			player.handon = Item.handOnSlot;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 10);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ExplosivePowder, 10)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 20)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 	public class Nuclear_Arm_P : ModProjectile {

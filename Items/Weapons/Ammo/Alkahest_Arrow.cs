@@ -26,10 +26,10 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 150);
-			recipe.AddIngredient(ItemID.WoodenArrow, 150);
-			recipe.AddIngredient(ModContent.ItemType<Alkahest>());
-			recipe.Register();
+			Recipe.Create(Type, 150)
+			.AddIngredient(ItemID.WoodenArrow, 150)
+			.AddIngredient(ModContent.ItemType<Alkahest>())
+			.Register();
 		}
 	}
 	public class Alkahest_Arrow_P : ModProjectile {

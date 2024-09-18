@@ -31,11 +31,11 @@ namespace Origins.Items.Accessories {
 			player.manaFlower = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ManaCloak);
-			recipe.AddIngredient(ModContent.ItemType<Gun_Glove>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.ManaCloak)
+			.AddIngredient(ModContent.ItemType<Gun_Glove>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			switch (Main.rand.Next(7)) {

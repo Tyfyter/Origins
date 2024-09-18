@@ -26,15 +26,15 @@ namespace Origins.Tiles.Dawn {
 			Item.createTile = TileType<Eden_Wood>();
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Eden_Wood_Wall_Item>(), 4);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Eden_Wood_Wall_Item>(), 4)
+            .AddTile(TileID.WorkBenches)
+            .Register();
 
-            recipe = Recipe.Create(ModContent.ItemType<Eden_Wood_Wall_Item>(), 4);
-            recipe.AddIngredient(this);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            Recipe.Create(ModContent.ItemType<Eden_Wood_Wall_Item>(), 4)
+            .AddIngredient(this)
+            .AddTile(TileID.WorkBenches)
+            .Register();
         }
     }
 }

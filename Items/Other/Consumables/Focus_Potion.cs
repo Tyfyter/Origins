@@ -20,12 +20,12 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ModContent.ItemType<Brineglow_Item>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ModContent.ItemType<Brineglow_Item>())
+			.AddTile(TileID.Bottles)
+			.Register();
 		}
 		public static int GetManaCost(Item item) => (int)(15 * (item.useAnimation / 60f)) + 1;
 	}

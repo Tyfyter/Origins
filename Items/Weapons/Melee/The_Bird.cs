@@ -19,11 +19,11 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = (int)99999996;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Baseball_Bat>());
-			recipe.AddIngredient(ModContent.ItemType<Razorwire>());
-			//recipe.AddCondition(player.name == "Pandora");
-			recipe.DisableRecipe();
+			//Recipe.Create(Type)
+			//.AddIngredient(ModContent.ItemType<Baseball_Bat>())
+			//.AddIngredient(ModContent.ItemType<Razorwire>())
+			//.AddCondition(player.name == "Pandora");
+			//.Register();
 		}
 	}
 }

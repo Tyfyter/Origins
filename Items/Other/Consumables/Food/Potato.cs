@@ -42,11 +42,11 @@ namespace Origins.Items.Other.Consumables.Food {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Hot_Potato>());
-			recipe.AddIngredient(ItemID.HellstoneBar, 14);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Hot_Potato>())
+			.AddIngredient(ItemID.HellstoneBar, 14)
+			.AddIngredient(this)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 }

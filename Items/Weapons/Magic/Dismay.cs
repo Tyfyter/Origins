@@ -32,12 +32,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SoulofNight, 15);
-			recipe.AddIngredient(ItemID.SpellTome);
-			recipe.AddIngredient(ModContent.ItemType<Black_Bile>(), 20);
-			recipe.AddTile(TileID.Bookcases);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient(ItemID.SpellTome)
+			.AddIngredient(ModContent.ItemType<Black_Bile>(), 20)
+			.AddTile(TileID.Bookcases)
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (!player.ItemAnimationJustStarted) velocity = (OriginExtensions.Vec2FromPolar(player.itemRotation, velocity.Length()) * player.direction);

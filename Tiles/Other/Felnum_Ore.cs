@@ -48,11 +48,11 @@ namespace Origins.Tiles.Other {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.CopperOre, 50);
-			recipe.AddIngredient(ItemID.FallenStar, 4);
-			recipe.AddTile(TileID.CrystalBall);
-			recipe.Register();
+			Recipe.Create(Type, 50)
+			.AddIngredient(ItemID.CopperOre, 50)
+			.AddIngredient(ItemID.FallenStar, 4)
+			.AddTile(TileID.CrystalBall)
+			.Register();
 		}
 	}
 	public class Felnum_Mat_Entry : JournalEntry {

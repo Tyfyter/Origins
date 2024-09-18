@@ -66,12 +66,12 @@ namespace Origins.Items.Armor.Necromancer {
 		public override void UpdateVanitySet(Player player) {
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
-			recipe.AddIngredient(ItemID.DarkShard);
-			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteBar, 12)
+			.AddIngredient(ItemID.DarkShard)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 		public string ArmorSetName => "Necromancer_Armor";
 		public int HeadItemID => Type;
@@ -91,12 +91,12 @@ namespace Origins.Items.Armor.Necromancer {
 			player.GetAttackSpeed(DamageClass.Summon) += 0.15f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 24);
-			recipe.AddIngredient(ItemID.DarkShard);
-			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteBar, 24)
+			.AddIngredient(ItemID.DarkShard)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -111,12 +111,12 @@ namespace Origins.Items.Armor.Necromancer {
 			player.GetModPlayer<OriginPlayer>().artifactDamage += 0.25f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 18);
-			recipe.AddIngredient(ItemID.DarkShard);
-			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteBar, 18)
+			.AddIngredient(ItemID.DarkShard)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 }

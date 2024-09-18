@@ -28,10 +28,10 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<No_U_Card>());
-			//recipe.AddCondition(player.name == "Pandora");
-			recipe.DisableRecipe();
+			//Recipe.Create(Type)
+			//.AddIngredient(ModContent.ItemType<No_U_Card>())
+			//.AddCondition(player.name == "Pandora")
+			//.Register();
 		}
 	}
 }

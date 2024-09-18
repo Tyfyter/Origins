@@ -38,12 +38,12 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.UseSound = SoundID.Item8;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Book);
-			recipe.AddIngredient(ItemID.FallenStar, 5);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
-			recipe.AddTile(TileID.Bookcases);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Book)
+			.AddIngredient(ItemID.FallenStar, 5)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7)
+			.AddTile(TileID.Bookcases)
+			.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);

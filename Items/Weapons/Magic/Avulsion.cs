@@ -37,11 +37,11 @@ namespace Origins.Items.Weapons.Magic {
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 5)
+            .AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15)
+            .AddTile(TileID.Anvils)
+            .Register();
         }
     }
 	public class Avulsion_P : ModProjectile {

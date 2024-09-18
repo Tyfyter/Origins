@@ -35,12 +35,12 @@ namespace Origins.Items.Armor.Eyndum {
 			if (player.whoAmI == Main.myPlayer && !Main.gameMenu) Origins.SetEyndumCoreUI();
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 10);
+			/*Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15)
+            //.AddIngredient(ModContent.ItemType<>(), 10)
             recipe.SetResult(this);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();*/
+            .AddTile(TileID.Anvils)
+            .Register();*/
 		}
 		public string ArmorSetName => "Eyndum_Armor";
 		public int HeadItemID => Type;
@@ -65,12 +65,12 @@ namespace Origins.Items.Armor.Eyndum {
 			player.statLifeMax2 += 20;
         }
 		public override void AddRecipes() {
-			/*Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 20);
+			/*Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25)
+            //.AddIngredient(ModContent.ItemType<>(), 20)
             recipe.SetResult(this);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();*/
+            .AddTile(TileID.Anvils)
+            .Register();*/
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -90,12 +90,12 @@ namespace Origins.Items.Armor.Eyndum {
 			player.moveSpeed += 0.2f;
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 15);
+			/*Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20)
+            //.AddIngredient(ModContent.ItemType<>(), 15)
             recipe.SetResult(this);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();*/
+            .AddTile(TileID.Anvils)
+            .Register();*/
 		}
 	}
 }

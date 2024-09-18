@@ -18,12 +18,12 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Ectoplasm);
-			recipe.AddIngredient(ItemID.Moonglow);
-			recipe.AddIngredient(ModContent.ItemType<Mojo_Flask>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Ectoplasm)
+			.AddIngredient(ItemID.Moonglow)
+			.AddIngredient(ModContent.ItemType<Mojo_Flask>())
+			.AddTile(TileID.Bottles)
+			.Register();
 		}
 	}
 }

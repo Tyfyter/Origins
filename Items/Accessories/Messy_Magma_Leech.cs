@@ -16,11 +16,11 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().magmaLeech = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.MagmaStone);
-			recipe.AddIngredient(ModContent.ItemType<Messy_Leech>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.MagmaStone)
+			.AddIngredient(ModContent.ItemType<Messy_Leech>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

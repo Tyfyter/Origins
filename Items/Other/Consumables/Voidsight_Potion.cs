@@ -19,12 +19,12 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Fireblossom);
-			recipe.AddIngredient(ItemID.NightOwlPotion);
-			recipe.AddIngredient(ModContent.ItemType<Duskarp>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Fireblossom)
+			.AddIngredient(ItemID.NightOwlPotion)
+			.AddIngredient(ModContent.ItemType<Duskarp>())
+			.AddTile(TileID.Bottles)
+			.Register();
 		}
 	}
 }

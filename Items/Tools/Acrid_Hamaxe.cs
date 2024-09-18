@@ -28,10 +28,10 @@ namespace Origins.Items.Tools {
 			return player.wet ? 1.5f : 1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 }

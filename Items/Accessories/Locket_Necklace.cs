@@ -16,11 +16,11 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.PanicNecklace);
-			recipe.AddIngredient(ModContent.ItemType<Comb>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.PanicNecklace)
+			.AddIngredient(ModContent.ItemType<Comb>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().guardedHeart = true;

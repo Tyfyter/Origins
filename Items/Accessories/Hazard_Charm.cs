@@ -15,12 +15,12 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.LavaCharm);
-            recipe.AddIngredient(ModContent.ItemType<Bomb_Charm>());
-			recipe.AddIngredient(ModContent.ItemType<Trap_Charm>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+            .AddIngredient(ItemID.LavaCharm)
+            .AddIngredient(ModContent.ItemType<Bomb_Charm>())
+			.AddIngredient(ModContent.ItemType<Trap_Charm>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

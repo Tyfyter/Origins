@@ -36,11 +36,11 @@ namespace Origins.Items.Accessories {
         }
 		public override void AddRecipes() {
 			return; //todo: implement item
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.FeralClaws);
-			recipe.AddIngredient(ModContent.ItemType<Magic_Glove>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.FeralClaws)
+			.AddIngredient(ModContent.ItemType<Magic_Glove>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			switch (Main.rand.Next(8)) {

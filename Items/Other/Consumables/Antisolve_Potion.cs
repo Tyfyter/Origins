@@ -20,12 +20,12 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddIngredient(ModContent.ItemType<Brineglow_Item>());
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			.AddIngredient(ModContent.ItemType<Brineglow_Item>())
+			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.AddTile(TileID.Bottles)
+			.Register();
 		}
 	}
 }

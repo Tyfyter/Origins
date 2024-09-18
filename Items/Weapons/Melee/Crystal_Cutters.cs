@@ -27,12 +27,12 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(silver: 20);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CrystalShard, 14);
-			recipe.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrystalShard, 14)
+			.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 4)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Crystal_Cutters_P : ModProjectile {

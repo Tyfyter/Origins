@@ -18,11 +18,11 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().turboReel2 = true;
 		}
         public override void AddRecipes() {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.Magiluminescence);
-            recipe.AddIngredient(ModContent.ItemType<Turbo_Reel>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+            CreateRecipe()
+            .AddIngredient(ItemID.Magiluminescence)
+            .AddIngredient(ModContent.ItemType<Turbo_Reel>())
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

@@ -44,13 +44,13 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 18);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15)
+			.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 18)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rubber>(), 12)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public override void UpdateInventory(Player player) {
 		}

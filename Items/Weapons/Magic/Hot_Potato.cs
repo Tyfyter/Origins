@@ -40,11 +40,12 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ItemID.HellstoneBar, 8);
-			recipe.AddIngredient(ModContent.ItemType<Potato>());
-			recipe.AddTile(TileID.Anvils);
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ItemID.HellstoneBar, 8)
+			.AddIngredient(ModContent.ItemType<Potato>())
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Hot_Potato_P : ModProjectile {

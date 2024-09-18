@@ -35,11 +35,11 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.DaedalusStormbow);
-			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 14);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.DaedalusStormbow)
+			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 14)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);

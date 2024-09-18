@@ -31,11 +31,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.4f), position);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return !Main.rand.NextBool(2);

@@ -32,13 +32,13 @@ namespace Origins.Tiles.Other {
 			Item.createTile = ModContent.TileType<Laser_Tag_Console>();
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CopperBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CopperBar, 2)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 5)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 }

@@ -26,11 +26,11 @@ namespace Origins.Items.Accessories {
             Item.glowMask = glowmask;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SporeSac);
-			recipe.AddIngredient(ModContent.ItemType<Last_Descendant>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SporeSac)
+			.AddIngredient(ModContent.ItemType<Last_Descendant>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			player.longInvince = true;

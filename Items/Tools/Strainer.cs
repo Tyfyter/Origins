@@ -30,11 +30,11 @@ namespace Origins.Items.Tools {
 			Item.tileBoost = 7;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 12)
+			.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 6)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Strainer_P : ModProjectile {

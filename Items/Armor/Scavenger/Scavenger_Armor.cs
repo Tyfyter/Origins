@@ -37,11 +37,11 @@ namespace Origins.Items.Armor.Scavenger {
 			player.GetModPlayer<OriginPlayer>().scavengerSet = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Biocomponent10>(), 16);
-			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Biocomponent10>(), 16)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Scavenger_Armor";
 		public int HeadItemID => Type;
@@ -60,11 +60,11 @@ namespace Origins.Items.Armor.Scavenger {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.25f;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Biocomponent10>(), 28);
-			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Biocomponent10>(), 28)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -79,11 +79,11 @@ namespace Origins.Items.Armor.Scavenger {
             player.GetModPlayer<OriginPlayer>().explosiveProjectileSpeed += 0.15f;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Biocomponent10>(), 22);
-			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 14);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Biocomponent10>(), 22)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 14)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

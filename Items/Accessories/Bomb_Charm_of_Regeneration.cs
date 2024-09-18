@@ -16,11 +16,11 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.BandofRegeneration);
-            recipe.AddIngredient(ModContent.ItemType<Bomb_Charm>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+            CreateRecipe()
+            .AddIngredient(ItemID.BandofRegeneration)
+            .AddIngredient(ModContent.ItemType<Bomb_Charm>())
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
         public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;

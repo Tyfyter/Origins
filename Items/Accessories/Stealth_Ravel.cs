@@ -23,11 +23,11 @@ namespace Origins.Items.Accessories {
 			player.blackBelt = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.PutridScent);
-			recipe.AddIngredient(Ravel.ID);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.PutridScent)
+			.AddIngredient(Ravel.ID)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 	public class Stealth_Ravel_Mount : Ravel_Mount {

@@ -30,11 +30,11 @@ namespace Origins.Items.Other.Consumables.Food {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Honey_Wheat_Bread>());
-			recipe.AddIngredient(ItemID.BottledHoney);
-			recipe.AddIngredient(ModContent.ItemType<Bread>());
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Honey_Wheat_Bread>())
+			.AddIngredient(ItemID.BottledHoney)
+			.AddIngredient(ModContent.ItemType<Bread>())
+			.AddTile(TileID.CookingPots)
+			.Register();
 		}
 	}
 }

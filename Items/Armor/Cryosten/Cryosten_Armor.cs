@@ -37,12 +37,12 @@ namespace Origins.Items.Armor.Cryosten {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IceBlock, 45);
-            recipe.AddIngredient(ItemID.LifeCrystal);
-            recipe.AddIngredient(ItemID.Shiverthorn, 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IceBlock, 45)
+            .AddIngredient(ItemID.LifeCrystal)
+            .AddIngredient(ItemID.Shiverthorn, 4)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Cryosten_Armor";
 		public int HeadItemID => Type;
@@ -60,12 +60,12 @@ namespace Origins.Items.Armor.Cryosten {
 			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.12);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IceBlock, 60);
-            recipe.AddIngredient(ItemID.LifeCrystal);
-            recipe.AddIngredient(ItemID.Shiverthorn, 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IceBlock, 60)
+            .AddIngredient(ItemID.LifeCrystal)
+            .AddIngredient(ItemID.Shiverthorn, 6)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -80,12 +80,12 @@ namespace Origins.Items.Armor.Cryosten {
 			player.iceSkate = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IceBlock, 30);
-            recipe.AddIngredient(ItemID.LifeCrystal);
-            recipe.AddIngredient(ItemID.Shiverthorn, 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IceBlock, 30)
+            .AddIngredient(ItemID.LifeCrystal)
+            .AddIngredient(ItemID.Shiverthorn, 2)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

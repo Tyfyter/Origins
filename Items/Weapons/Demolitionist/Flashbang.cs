@@ -29,10 +29,10 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ItemID.Grenade, 5);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ItemID.Grenade, 5)
+			.Register();
 		}
 	}
 	public class Flashbang_P : ModProjectile {

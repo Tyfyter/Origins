@@ -25,11 +25,11 @@ namespace Origins.Items.Accessories {
 			originPlayer.unsoughtOrganItem = Item;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Olid_Organ>());
-			recipe.AddIngredient(ModContent.ItemType<Razorwire>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Olid_Organ>())
+			.AddIngredient(ModContent.ItemType<Razorwire>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 	public class Unsought_Organ_P : ModProjectile {

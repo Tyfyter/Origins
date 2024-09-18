@@ -43,12 +43,12 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IllegalGunParts);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IllegalGunParts)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

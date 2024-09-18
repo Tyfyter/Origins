@@ -36,13 +36,13 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = SoundID.Item69;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup("HellBars", 16);
-			recipe.AddRecipeGroup("AdamantiteBars", 16);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddRecipeGroup("HellBars", 16)
+			.AddRecipeGroup("AdamantiteBars", 16)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public override void UseItemFrame(Player player) {
 			float rotation = player.itemRotation - MathHelper.PiOver2 - GetArmDrawAngle(player);

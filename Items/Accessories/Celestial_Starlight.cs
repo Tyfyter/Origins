@@ -14,11 +14,11 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 3, silver: 30);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CelestialMagnet);
-			recipe.AddIngredient(ModContent.ItemType<Dim_Starlight>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CelestialMagnet)
+			.AddIngredient(ModContent.ItemType<Dim_Starlight>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

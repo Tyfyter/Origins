@@ -28,17 +28,17 @@ namespace Origins.Items.Other.Consumables.Food {
 			);
 		}
         /*public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.FruitJuice));
-			recipe.AddIngredient(ItemID.Bottle);
-			recipe.AddIngredient(this, 2); we need to create a new recipe group including origins' fruits
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.FruitJuice))
+			.AddIngredient(ItemID.Bottle)
+			.AddIngredient(this, 2) we need to create a new recipe group including origins' fruits
+			.AddTile(TileID.CookingPots)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.FruitSalad));
-			recipe.AddIngredient(ItemID.Bowl);
-			recipe.AddIngredient(this, 3); we need to create a new recipe group including origins' fruits
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.FruitSalad))
+			.AddIngredient(ItemID.Bowl)
+			.AddIngredient(this, 3) we need to create a new recipe group including origins' fruits
+			.AddTile(TileID.CookingPots)
+			.Register();
 		}*/
         public override bool ConsumeItem(Player player) {
             player.AddBuff(Petrified_Prickly_Pear_Buff.ID, Item.buffTime);

@@ -27,11 +27,11 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 1;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 15);
-			recipe.AddIngredient(ItemID.Bomb, 15);
-			recipe.AddIngredient(ItemID.Fireblossom);
-			recipe.AddIngredient(ItemID.Hellstone, 5);
-			recipe.Register();
+			Recipe.Create(Type, 15)
+			.AddIngredient(ItemID.Bomb, 15)
+			.AddIngredient(ItemID.Fireblossom)
+			.AddIngredient(ItemID.Hellstone, 5)
+			.Register();
 		}
 	}
 	public class Hellfire_Bomb_P : ModProjectile {

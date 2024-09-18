@@ -24,10 +24,10 @@ namespace Origins.Items.Armor.Chromtain {
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 15);
-			recipe.AddTile(TileID.DefendersForge); //Interstellar Sampler
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 15)
+			.AddTile(TileID.DefendersForge) //Interstellar Sampler
+			.Register();
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Chromtain_Breastplate>() && legs.type == ModContent.ItemType<Chromtain_Greaves>();
@@ -60,10 +60,10 @@ namespace Origins.Items.Armor.Chromtain {
 			player.statLifeMax2 += 20;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 25);
-			recipe.AddTile(TileID.DefendersForge); //Interstellar Sampler
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 25)
+			.AddTile(TileID.DefendersForge) //Interstellar Sampler
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -80,10 +80,10 @@ namespace Origins.Items.Armor.Chromtain {
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 20);
-			recipe.AddTile(TileID.DefendersForge); //Interstellar Sampler
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 20)
+			.AddTile(TileID.DefendersForge) //Interstellar Sampler
+			.Register();
 		}
 	}
 }

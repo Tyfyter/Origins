@@ -23,11 +23,11 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 10);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Metal_Slug_P : ModProjectile {

@@ -18,10 +18,10 @@ namespace Origins.Items.Tools {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void ModifyFishingLine(Projectile bobber, ref Vector2 lineOriginOffset, ref Color lineColor) {
 			lineOriginOffset.X = 45;

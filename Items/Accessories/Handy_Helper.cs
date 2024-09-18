@@ -97,12 +97,12 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().amebicVialVisible = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
-			recipe.AddIngredient(ItemID.PowerGlove);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(LocalizedText.Empty, () => !OriginsModIntegrations.CheckAprilFools());
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Amebic_Vial>())
+			.AddIngredient(ItemID.PowerGlove)
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddCondition(LocalizedText.Empty, () => !OriginsModIntegrations.CheckAprilFools())
+			.Register();
 
 			static void HalfPrefix(Item item) {
 				switch (item.prefix) {
@@ -153,12 +153,12 @@ namespace Origins.Items.Accessories {
 				}
 			}
 
-			recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.PowerGlove, 2);
-            recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFools"), () => OriginsModIntegrations.CheckAprilFools());
-			recipe.AddOnCraftCallback((_, result, consumed, _) => {
+			CreateRecipe()
+            .AddIngredient(ItemID.PowerGlove, 2)
+            .AddIngredient(ModContent.ItemType<Amebic_Vial>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFools"), () => OriginsModIntegrations.CheckAprilFools())
+			.AddOnCraftCallback((_, result, consumed, _) => {
 				if (result.ModItem is Handy_Helper helper) {
 					helper.bothGloves = true;
 					helper.SetDefaults();
@@ -167,14 +167,14 @@ namespace Origins.Items.Accessories {
 				Item dropped = consumed[Main.rand.Next(1, 3)];
 				HalfPrefix(dropped);
 				Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_DropAsItem(), dropped);
-			});
-			recipe.Register();
+			})
+			.Register();
 
-			recipe = Recipe.Create(ItemID.PowerGlove);
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFoolsHandyHelper"), () => OriginsModIntegrations.CheckAprilFools());
-			recipe.AddOnCraftCallback((_, result, consumed, _) => {
+			Recipe.Create(ItemID.PowerGlove)
+			.AddIngredient(Type)
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFoolsHandyHelper"), () => OriginsModIntegrations.CheckAprilFools())
+			.AddOnCraftCallback((_, result, consumed, _) => {
 				Item dropped = consumed[0];
 				if (dropped.ModItem is Handy_Helper helper) {
 					if (helper.bothGloves) {
@@ -189,8 +189,8 @@ namespace Origins.Items.Accessories {
 				}
 				HalfPrefix(dropped);
 				Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_DropAsItem(), dropped);
-			});
-			recipe.Register();
+			})
+			.Register();
 		}
 		public override void SaveData(TagCompound tag) {
 			tag.Add("bothGloves", bothGloves);

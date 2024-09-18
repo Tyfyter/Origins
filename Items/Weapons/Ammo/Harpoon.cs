@@ -25,10 +25,10 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 3);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Harpoon_P : ModProjectile {

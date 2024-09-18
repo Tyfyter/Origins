@@ -13,11 +13,11 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CharmofMyths);
-			recipe.AddIngredient(ModContent.ItemType<Plasma_Phial>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CharmofMyths)
+			.AddIngredient(ModContent.ItemType<Plasma_Phial>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			player.lifeRegen += 2;

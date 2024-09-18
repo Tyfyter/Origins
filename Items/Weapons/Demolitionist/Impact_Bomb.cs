@@ -28,11 +28,11 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.Bomb, 5);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.Bomb, 5)
+			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Impact_Bomb_P : ModProjectile {

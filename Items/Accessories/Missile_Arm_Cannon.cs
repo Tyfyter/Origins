@@ -28,12 +28,12 @@ namespace Origins.Items.Accessories {
             Item.glowMask = glowmask;
         }
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.TitanGlove);
-            recipe.AddIngredient(ModContent.ItemType<Destructive_Claws>());
-			recipe.AddIngredient(ModContent.ItemType<Gun_Glove>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+            .AddIngredient(ItemID.TitanGlove)
+            .AddIngredient(ModContent.ItemType<Destructive_Claws>())
+			.AddIngredient(ModContent.ItemType<Gun_Glove>())
+            .AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

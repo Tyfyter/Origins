@@ -23,13 +23,13 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 35);
-			recipe.AddIngredient(ItemID.Bomb, 35);
-			recipe.AddIngredient(ItemID.Bone, 35);
-			recipe.AddIngredient(ItemID.Cloud);
-			recipe.AddIngredient(ItemID.Feather);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+			Recipe.Create(Type, 35)
+			.AddIngredient(ItemID.Bomb, 35)
+			.AddIngredient(ItemID.Bone, 35)
+			.AddIngredient(ItemID.Cloud)
+			.AddIngredient(ItemID.Feather)
+            .AddTile(TileID.Anvils)
+            .Register();
 		}
 	}
 	public class Floaty_Bomb_P : ModProjectile {

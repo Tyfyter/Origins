@@ -33,11 +33,11 @@ namespace Origins.Items.Accessories {
 			player.noKnockback = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Tabi);
-			recipe.AddIngredient(Ravel.ID);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.Tabi)
+			.AddIngredient(Ravel.ID)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 	public class Dash_Ravel_Mount : Ravel_Mount {

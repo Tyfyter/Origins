@@ -45,12 +45,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FallenStar, 8);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 6);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.FallenStar, 8)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 8)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 6)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(8, 0);

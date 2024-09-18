@@ -38,12 +38,12 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Gungnir);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>(), 5);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Gungnir)
+			.AddIngredient(ModContent.ItemType<Bottled_Brine>(), 5)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Amenonuhoko_P : ModProjectile {

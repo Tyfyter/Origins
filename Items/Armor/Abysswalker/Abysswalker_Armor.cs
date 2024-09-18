@@ -99,14 +99,14 @@ namespace Origins.Items.Armor.Abysswalker {
 		}
 		public override void AddRecipes() {
 			return;
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SoulofNight, 4);
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 8);
-			recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 13);
-			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 15);
-			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 10);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 4)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 8)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 13)
+			.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 15)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 10)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 		public string ArmorSetName => "Abysswalker_Armor";
 		public int HeadItemID => Type;
@@ -126,14 +126,14 @@ namespace Origins.Items.Armor.Abysswalker {
 		}
 		public override void AddRecipes() {
 			return;
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SoulofNight, 4);
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 24);
-			recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 39);
-			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 45);
-			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 30);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 4)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 24)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 39)
+			.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 45)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 30)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -149,14 +149,14 @@ namespace Origins.Items.Armor.Abysswalker {
 		}
 		public override void AddRecipes() {
 			return;
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SoulofNight, 4);
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 16);
-			recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 26);
-			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 30);
-			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 20);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 4)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 16)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 26)
+			.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 30)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 20)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 }

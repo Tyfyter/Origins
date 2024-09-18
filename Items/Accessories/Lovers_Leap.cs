@@ -18,11 +18,11 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SpectreBoots);
-			recipe.AddIngredient(ModContent.ItemType<Locket_Necklace>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SpectreBoots)
+			.AddIngredient(ModContent.ItemType<Locket_Necklace>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

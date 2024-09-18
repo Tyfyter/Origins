@@ -40,11 +40,11 @@ namespace Origins.Items.Armor.Nova {
 			originPlayer.novaSet = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.LunarBar, 8);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 10);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.LunarBar, 8)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 10)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 		public string ArmorSetName => "Nova_Armor";
 		public int HeadItemID => Type;
@@ -70,11 +70,11 @@ namespace Origins.Items.Armor.Nova {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.45f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.LunarBar, 16);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 20);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.LunarBar, 16)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 20)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -97,11 +97,11 @@ namespace Origins.Items.Armor.Nova {
 			player.accRunSpeed += 0.25f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.LunarBar, 12);
-			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 15);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.LunarBar, 12)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 15)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 	}
 }

@@ -25,35 +25,35 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 60);
-			recipe.AddIngredient(ItemID.SilverOre);
-            recipe.AddIngredient(ItemID.SandBlock);
-            recipe.Register();
+			Recipe.Create(Type, 60)
+			.AddIngredient(ItemID.SilverOre)
+            .AddIngredient(ItemID.SandBlock)
+            .Register();
 
-            recipe = Recipe.Create(Type, 60);
-            recipe.AddIngredient(ItemID.SilverOre);
-            recipe.AddIngredient(ItemID.EbonsandBlock);
-            recipe.Register();
+            Recipe.Create(Type, 60)
+            .AddIngredient(ItemID.SilverOre)
+            .AddIngredient(ItemID.EbonsandBlock)
+            .Register();
 
-            recipe = Recipe.Create(Type, 60);
-            recipe.AddIngredient(ItemID.SilverOre);
-            recipe.AddIngredient(ItemID.CrimsandBlock);
-            recipe.Register();
+            Recipe.Create(Type, 60)
+            .AddIngredient(ItemID.SilverOre)
+            .AddIngredient(ItemID.CrimsandBlock)
+            .Register();
 
-            recipe = Recipe.Create(Type, 60);
-            recipe.AddIngredient(ItemID.SilverOre);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>());
-            recipe.Register();
+            Recipe.Create(Type, 60)
+            .AddIngredient(ItemID.SilverOre)
+            .AddIngredient(ModContent.ItemType<Defiled_Sand_Item>())
+            .Register();
 
-            recipe = Recipe.Create(Type, 60);
-            recipe.AddIngredient(ItemID.SilverOre);
-            recipe.AddIngredient(ModContent.ItemType<Silica_Item>());
-            recipe.Register();
+            Recipe.Create(Type, 60)
+            .AddIngredient(ItemID.SilverOre)
+            .AddIngredient(ModContent.ItemType<Silica_Item>())
+            .Register();
 
-            /*recipe = Recipe.Create(Type, 60);
-            recipe.AddIngredient(ItemID.SilverOre);
-            recipe.AddIngredient(ModContent.ItemType<Ashen_Sand_Item>());
-            recipe.Register();*/
+            /*Recipe.Create(Type, 60)
+            .AddIngredient(ItemID.SilverOre)
+            .AddIngredient(ModContent.ItemType<Ashen_Sand_Item>())
+            .Register();*/
         }
 	}
 	public class Bang_Snap_P : ModProjectile {

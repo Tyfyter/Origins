@@ -19,11 +19,11 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().heliumTank = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.WhoopieCushion);
-			recipe.AddIngredient(ModContent.ItemType<Air_Tank>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.WhoopieCushion)
+			.AddIngredient(ModContent.ItemType<Air_Tank>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

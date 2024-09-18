@@ -32,10 +32,10 @@ namespace Origins.Items.Tools {
 			);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Lightning_Rod_Bobber : ModProjectile {

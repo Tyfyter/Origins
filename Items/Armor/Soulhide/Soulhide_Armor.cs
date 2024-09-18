@@ -36,11 +36,11 @@ namespace Origins.Items.Armor.Soulhide {
 			}
 		}
         public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.DemoniteOre, 8);
-			recipe.AddIngredient(ItemID.RottenChunk, 16);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.DemoniteOre, 8)
+			.AddIngredient(ItemID.RottenChunk, 16)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Soulhide_Armor";
 		public int HeadItemID => Type;
@@ -66,11 +66,11 @@ namespace Origins.Items.Armor.Soulhide {
 			player.GetAttackSpeed(DamageClass.Melee) += 0.12f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.DemoniteOre, 20);
-			recipe.AddIngredient(ItemID.RottenChunk, 28);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.DemoniteOre, 20)
+			.AddIngredient(ItemID.RottenChunk, 28)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -85,11 +85,11 @@ namespace Origins.Items.Armor.Soulhide {
 			player.GetKnockback(DamageClass.Generic) += 0.14f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.DemoniteOre, 14);
-			recipe.AddIngredient(ItemID.RottenChunk, 22);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.DemoniteOre, 14)
+			.AddIngredient(ItemID.RottenChunk, 22)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Soulhide_Debuff : ModBuff {

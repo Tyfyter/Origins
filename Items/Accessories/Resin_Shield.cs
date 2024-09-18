@@ -38,12 +38,12 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().ResinShield = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Amber, 6);
-			recipe.AddIngredient(ItemID.ObsidianShield);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.Amber, 6)
+			.AddIngredient(ItemID.ObsidianShield)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 }

@@ -17,11 +17,11 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 4);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Boomstick, 2);
-			recipe.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 6);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Boomstick, 2)
+			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 6)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = Main.rand.Next(5, 8); i-- > 0;) {
@@ -38,17 +38,17 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Boomstick, 3);
-			recipe.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 9);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Boomstick);
-			recipe.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 9);
-			recipe.AddIngredient(ModContent.ItemType<Shotty_x2>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Boomstick, 3)
+			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 9)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Boomstick)
+			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 9)
+			.AddIngredient(ModContent.ItemType<Shotty_x2>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = Main.rand.Next(8, 12); i-- > 0;) {

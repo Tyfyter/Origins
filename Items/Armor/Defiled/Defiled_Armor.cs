@@ -37,11 +37,11 @@ namespace Origins.Items.Armor.Defiled {
 			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Defiled_Armor";
 		public int HeadItemID => Type;
@@ -64,11 +64,11 @@ namespace Origins.Items.Armor.Defiled {
 			player.GetDamage(DamageClass.Generic) += 0.03f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -87,11 +87,11 @@ namespace Origins.Items.Armor.Defiled {
 			player.GetDamage(DamageClass.Generic) += 0.03f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]

@@ -28,11 +28,11 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 17;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SkyFracture);
-			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SkyFracture)
+			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);

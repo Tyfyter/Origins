@@ -27,10 +27,10 @@ namespace Origins.Items.Other.Consumables {
 			return false;
 		}
         public override void AddRecipes() {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient<Fiberglass_Item>(12);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            CreateRecipe()
+            .AddIngredient<Fiberglass_Item>(12)
+            .AddTile(TileID.WorkBenches)
+            .Register();
         }
     }
 }

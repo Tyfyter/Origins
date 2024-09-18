@@ -17,11 +17,11 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightPurple;
 		}
         public override void AddRecipes() {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.CelestialCuffs);
-            recipe.AddIngredient(ModContent.ItemType<Refactoring_Pieces>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+            CreateRecipe()
+            .AddIngredient(ItemID.CelestialCuffs)
+            .AddIngredient(ModContent.ItemType<Refactoring_Pieces>())
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
         public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.manaMagnet = true;

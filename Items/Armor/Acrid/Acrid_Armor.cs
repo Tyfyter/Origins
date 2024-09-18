@@ -53,11 +53,11 @@ namespace Origins.Items.Armor.Acrid {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string MergedArmorSetName => "Acrid_Armor";
 		public string ArmorSetName => "Explosive_Acrid_Armor";
@@ -116,11 +116,11 @@ namespace Origins.Items.Armor.Acrid {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => "Magic_Acrid_Armor";
 		public int HeadItemID => Type;
@@ -171,11 +171,11 @@ namespace Origins.Items.Armor.Acrid {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => "Melee_Acrid_Armor";
 		public int HeadItemID => Type;
@@ -226,11 +226,11 @@ namespace Origins.Items.Armor.Acrid {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => "Summon_Acrid_Armor";
 		public int HeadItemID => Type;
@@ -279,11 +279,11 @@ namespace Origins.Items.Armor.Acrid {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => "Ranged_Acrid_Armor";
 		public int HeadItemID => Type;
@@ -307,11 +307,11 @@ namespace Origins.Items.Armor.Acrid {
 			player.lifeRegenCount += 2;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 26);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 30);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 26)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 30)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -330,11 +330,11 @@ namespace Origins.Items.Armor.Acrid {
 			player.accFlipper = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 20)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 }

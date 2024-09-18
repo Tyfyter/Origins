@@ -35,11 +35,11 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.AnkhCharm);
-			recipe.AddIngredient(ModContent.ItemType<Return_To_Sender>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.AnkhCharm)
+			.AddIngredient(ModContent.ItemType<Return_To_Sender>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

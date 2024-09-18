@@ -23,10 +23,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 12);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 12)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);

@@ -33,10 +33,10 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 13);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 13)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);

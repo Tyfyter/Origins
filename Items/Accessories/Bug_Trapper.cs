@@ -19,11 +19,11 @@ namespace Origins.Items.Accessories {
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Shackle);
-            recipe.AddIngredient(ModContent.ItemType<Primordial_Soup>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ItemID.Shackle)
+            .AddIngredient(ModContent.ItemType<Primordial_Soup>())
+            .AddTile(TileID.TinkerersWorkbench)
+			.Register();
         }
         public override void UpdateAccessory(Player player, bool isHidden) {
             player.GetModPlayer<OriginPlayer>().bugZapper = true;

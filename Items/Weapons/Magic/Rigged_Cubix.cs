@@ -39,11 +39,11 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Batholith_Item>(), 16);
-            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 25);
-            recipe.AddTile(TileID.LunarCraftingStation); //Interstellar Sampler
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Batholith_Item>(), 16)
+            .AddIngredient(ModContent.ItemType<Formium_Bar>(), 25)
+            .AddTile(TileID.LunarCraftingStation) //Interstellar Sampler
+            .Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = velocity.RotatedByRandom(0.5f);

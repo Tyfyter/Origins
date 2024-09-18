@@ -15,11 +15,11 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.TreasureMagnet);
-			recipe.AddIngredient(ModContent.ItemType<Turbo_Reel>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.TreasureMagnet)
+			.AddIngredient(ModContent.ItemType<Turbo_Reel>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().boomerangMagnet = true;

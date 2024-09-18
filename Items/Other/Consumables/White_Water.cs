@@ -21,11 +21,11 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(copper: 20);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 10);
-			recipe.AddIngredient(ItemID.BottledWater, 10);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>());
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Grass_Seeds>());
-			recipe.Register();
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.BottledWater, 10)
+			.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>())
+			.AddIngredient(ModContent.ItemType<Defiled_Grass_Seeds>())
+			.Register();
 		}
 	}
 	public class White_Water_P : ModProjectile {

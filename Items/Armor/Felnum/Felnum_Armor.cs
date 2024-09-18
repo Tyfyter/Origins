@@ -57,10 +57,10 @@ namespace Origins.Items.Armor.Felnum {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Felnum_Armor";
 		public int HeadItemID => Type;
@@ -94,10 +94,10 @@ namespace Origins.Items.Armor.Felnum {
 			color = new Color(a, a, a, a);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 25);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 25)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -121,10 +121,10 @@ namespace Origins.Items.Armor.Felnum {
 			glowMaskColor = new Color(a, a, a, a);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

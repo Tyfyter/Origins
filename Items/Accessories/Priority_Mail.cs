@@ -22,12 +22,12 @@ namespace Origins.Items.Accessories {
 			player.GetDamage(DamageClass.Summon) += 0.1f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ItemID.PaperAirplaneA);
-			recipe.AddIngredient(ModContent.ItemType<Asylum_Whistle>());
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type, 2)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ItemID.PaperAirplaneA)
+			.AddIngredient(ModContent.ItemType<Asylum_Whistle>())
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Priority_Mail_Buff : ModBuff {

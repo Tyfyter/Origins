@@ -23,12 +23,12 @@ namespace Origins.Items.Accessories {
 			player.blackBelt = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Cobweb, 270);
-			recipe.AddIngredient(ItemID.SpiderFang, 50);
-			recipe.AddIngredient(Ravel.ID);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.Cobweb, 270)
+			.AddIngredient(ItemID.SpiderFang, 50)
+			.AddIngredient(Ravel.ID)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 	public class Spider_Ravel_Mount : Ravel_Mount {

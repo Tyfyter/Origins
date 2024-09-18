@@ -39,11 +39,11 @@ namespace Origins.Items.Armor.Ashen
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<NE8>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<NE8>(), 10)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Ashen_Armor";
 		public int HeadItemID => Type;
@@ -62,11 +62,11 @@ namespace Origins.Items.Armor.Ashen
             player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<NE8>(), 20);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 25);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<NE8>(), 20)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 25)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -81,11 +81,11 @@ namespace Origins.Items.Armor.Ashen
             player.GetCritChance(DamageClass.Generic) += 8;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<NE8>(), 15);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<NE8>(), 15)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

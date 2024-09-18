@@ -25,12 +25,12 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = Origins.Sounds.HeavyCannon;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IllegalGunParts);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 8);
-			recipe.AddIngredient(ItemID.TissueSample, 4);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IllegalGunParts)
+			.AddIngredient(ItemID.CrimtaneBar, 8)
+			.AddIngredient(ItemID.TissueSample, 4)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			int i = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);

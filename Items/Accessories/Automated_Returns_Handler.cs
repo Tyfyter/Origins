@@ -25,11 +25,11 @@ namespace Origins.Items.Accessories {
 			player.spikedBoots += 2;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.MasterNinjaGear);
-            recipe.AddIngredient(ModContent.ItemType<Super_Turbo_Reel>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ItemID.MasterNinjaGear)
+            .AddIngredient(ModContent.ItemType<Super_Turbo_Reel>())
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

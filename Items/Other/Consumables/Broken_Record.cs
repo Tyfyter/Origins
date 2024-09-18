@@ -16,11 +16,11 @@ namespace Origins.Items.Other.Consumables {
 			Item.expert = false;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Ash_Urn>(), 30);
-			recipe.AddIngredient(ModContent.ItemType<Biocomponent10>(), 15);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Ash_Urn>(), 30)
+			.AddIngredient(ModContent.ItemType<Biocomponent10>(), 15)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			itemLoot.Add(AshenBiomeData.OrbDropRule);

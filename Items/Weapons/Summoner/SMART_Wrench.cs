@@ -27,12 +27,12 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void AddRecipes() {
 			return;//TODO: implement
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 5);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rotor>(), 5)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 }

@@ -20,10 +20,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HallowedBar, 13);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.HallowedBar, 13)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-18, -2);
 	}

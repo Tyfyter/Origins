@@ -38,14 +38,14 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 1;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 20);
-			recipe.AddCondition(
+			Recipe.Create(Type, 20)
+			.AddCondition(
 			   Language.GetOrRegister("Mods.Origins.Conditions.RivenWater"),
 			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
-			);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>());
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			)
+			.AddIngredient(ModContent.ItemType<Rubber>())
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Ameballoon_P : ModProjectile {

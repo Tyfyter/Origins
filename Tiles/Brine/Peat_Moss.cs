@@ -5,11 +5,11 @@ using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Peat_Moss : OriginTile {
-        public string[] Categories => [
-            "Grass"
-        ];
-        public override void SetStaticDefaults() {
+	public class Peat_Moss : OriginTile {
+		public string[] Categories => [
+			"Grass"
+		];
+		public override void SetStaticDefaults() {
 			Main.tileMergeDirt[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -29,17 +29,17 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 	}
-    public class Peat_Moss_Item : MaterialItem {
+	public class Peat_Moss_Item : MaterialItem {
 		public override int ResearchUnlockCount => 100;
 		public override int Value => Item.sellPrice(copper: 60);
 		public override int Rare => ItemRarityID.Green;
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
-            recipe.AddIngredient(this, 2);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.DisableDecraft();
-            recipe.Register();
-        }
-    }
+			Recipe.Create(ItemID.ExplosivePowder)
+			.AddIngredient(this, 2)
+			.AddTile(TileID.GlassKiln)
+			.DisableDecraft()
+			.Register();
+		}
+	}
 }

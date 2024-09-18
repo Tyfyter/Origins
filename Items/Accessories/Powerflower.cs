@@ -22,11 +22,11 @@ namespace Origins.Items.Accessories {
 			Lighting.AddLight(player.Center, 0.3f, 0.3f, 0f);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ManaFlower);
-			recipe.AddIngredient(ModContent.ItemType<Dim_Starlight>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.ManaFlower)
+			.AddIngredient(ModContent.ItemType<Dim_Starlight>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

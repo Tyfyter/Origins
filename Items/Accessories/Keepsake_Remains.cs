@@ -21,11 +21,11 @@ namespace Origins.Items.Accessories {
 			player.GetArmorPenetration(DamageClass.Generic) += 5;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.SharkToothNecklace);
-			recipe.AddIngredient(ModContent.ItemType<Symbiote_Skull>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.SharkToothNecklace)
+			.AddIngredient(ModContent.ItemType<Symbiote_Skull>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

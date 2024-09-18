@@ -52,11 +52,11 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = SoundID.Item11;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Uzi);
-			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Uzi)
+			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			if (charge > 0) {

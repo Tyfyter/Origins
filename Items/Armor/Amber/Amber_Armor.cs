@@ -41,12 +41,12 @@ namespace Origins.Items.Armor.Amber {
 			originPlayer.amberSet = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Amber, 4);
-			recipe.AddIngredient(ItemID.SoulofNight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Amber, 4)
+			.AddIngredient(ItemID.SoulofNight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string ArmorSetName => "Amber_Armor";
 		public int HeadItemID => Type;
@@ -65,12 +65,12 @@ namespace Origins.Items.Armor.Amber {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Amber, 12);
-			recipe.AddIngredient(ItemID.SoulofNight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 36);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Amber, 12)
+			.AddIngredient(ItemID.SoulofNight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 36)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -85,12 +85,12 @@ namespace Origins.Items.Armor.Amber {
 			player.moveSpeed += 0.1f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Amber, 8);
-			recipe.AddIngredient(ItemID.SoulofNight, 3);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Amber, 8)
+			.AddIngredient(ItemID.SoulofNight, 3)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Amber_Shard : ModProjectile, IShadedProjectile {

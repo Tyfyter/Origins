@@ -30,11 +30,11 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HellstoneBar, 12);
-			recipe.AddIngredient(ModContent.ItemType<Harpoon_Gun>());
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.HellstoneBar, 12)
+			.AddIngredient(ModContent.ItemType<Harpoon_Gun>())
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void OnConsumeAmmo(Item ammo, Player player) {

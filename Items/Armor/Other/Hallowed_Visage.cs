@@ -35,10 +35,10 @@ namespace Origins.Items.Armor.Other {
 			player.onHitDodge = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HallowedBar, 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.HallowedBar, 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string MergedArmorSetName => "Explosive_Hallowed_Armor";
 		public string ArmorSetName => Name;

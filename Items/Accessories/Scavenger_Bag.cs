@@ -25,11 +25,11 @@ namespace Origins.Items.Accessories {
 			player.GetArmorPenetration(DamageClass.Generic) += 5;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.PapyrusScarab);
-			recipe.AddIngredient(ModContent.ItemType<Keepsake_Remains>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.PapyrusScarab)
+			.AddIngredient(ModContent.ItemType<Keepsake_Remains>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

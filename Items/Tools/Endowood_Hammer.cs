@@ -16,10 +16,10 @@ namespace Origins.Items.Tools {
 			Item.value = Item.sellPrice(copper: 10);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Endowood_Item>(), 8);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Endowood_Item>(), 8)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 }

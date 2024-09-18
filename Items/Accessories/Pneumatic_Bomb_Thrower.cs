@@ -19,11 +19,11 @@ namespace Origins.Items.Accessories {
 		}
 
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Air_Tank>());
-            recipe.AddIngredient(ModContent.ItemType<Bomb_Handling_Device>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+            Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Air_Tank>())
+            .AddIngredient(ModContent.ItemType<Bomb_Handling_Device>())
+			.AddTile(TileID.TinkerersWorkbench)
+            .Register();
         }
     }
 }

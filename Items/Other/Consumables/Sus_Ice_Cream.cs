@@ -33,11 +33,11 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<Sentient_Powder>(30);
-			recipe.AddIngredient<Bud_Barnacle>(15);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient<Sentient_Powder>(30)
+			.AddIngredient<Bud_Barnacle>(15)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 }

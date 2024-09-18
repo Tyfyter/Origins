@@ -29,10 +29,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = Potato_Mine_P.ID; // has to be done here somewhere like this because it blocks placing the tile if it's not 0 when the player uses the item
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 150);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 15);
-			recipe.AddIngredient(ModContent.ItemType<Potato>());
-			recipe.Register();
+			Recipe.Create(Type, 150)
+			.AddIngredient(ItemID.ExplosivePowder, 15)
+			.AddIngredient(ModContent.ItemType<Potato>())
+			.Register();
 		}
 	}
 }

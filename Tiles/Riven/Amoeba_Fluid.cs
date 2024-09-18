@@ -9,10 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : OriginTile, IRivenTile, IGlowingModTile {
-        public string[] Categories => [
-            "OtherBlock"
-        ];
-        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public string[] Categories => [
+			"OtherBlock"
+		];
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -56,10 +56,10 @@ namespace Origins.Tiles.Riven {
 			Item.createTile = TileType<Amoeba_Fluid>();
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 10);
-			recipe.AddIngredient(ModContent.ItemType<Gooey_Water>());
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.Register();
+			Recipe.Create(Type, 10)
+			.AddIngredient(ModContent.ItemType<Gooey_Water>())
+			.AddTile(TileID.HeavyWorkBench)
+			.Register();
 		}
 	}
 }

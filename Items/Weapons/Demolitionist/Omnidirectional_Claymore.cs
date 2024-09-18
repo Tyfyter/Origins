@@ -23,12 +23,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			return;//TODO: implement
-			Recipe recipe = Recipe.Create(Type, 250);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 7);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 25);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type, 250)
+			.AddIngredient(ItemID.ExplosivePowder, 7)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13)
+			.AddIngredient(ModContent.ItemType<Rotor>(), 25)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 }

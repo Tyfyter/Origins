@@ -21,15 +21,15 @@ namespace Origins.Items.Materials
 			Item.shoot = ModContent.ProjectileType<Ash_Urn_P>();
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ModContent.ItemType<Fungarust_Item>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ModContent.ItemType<Fungarust_Item>())
+			.AddTile(TileID.Bottles)
+			.Register();
 
-            recipe = Recipe.Create(ItemID.PoisonedKnife, 50);
-            recipe.AddIngredient(ItemID.ThrowingKnife, 50);
-            recipe.AddIngredient(this);
-            recipe.Register();
+            Recipe.Create(ItemID.PoisonedKnife, 50)
+            .AddIngredient(ItemID.ThrowingKnife, 50)
+            .AddIngredient(this)
+            .Register();
         }
 	}
 	public class Ash_Urn_P : ModProjectile {

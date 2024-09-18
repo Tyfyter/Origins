@@ -29,11 +29,11 @@ namespace Origins.Items.Armor.Tendon {
 			player.GetModPlayer<OriginPlayer>().tendonSet = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CrimtaneOre, 8);
-			recipe.AddIngredient(ItemID.Vertebrae, 16);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrimtaneOre, 8)
+			.AddIngredient(ItemID.Vertebrae, 16)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Tendon_Armor";
 		public int HeadItemID => Type;
@@ -52,11 +52,11 @@ namespace Origins.Items.Armor.Tendon {
 			player.GetCritChance(DamageClass.Generic) += 0.06f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CrimtaneOre, 20);
-			recipe.AddIngredient(ItemID.Vertebrae, 28);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrimtaneOre, 20)
+			.AddIngredient(ItemID.Vertebrae, 28)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -71,11 +71,11 @@ namespace Origins.Items.Armor.Tendon {
 			player.ammoBox = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CrimtaneOre, 14);
-			recipe.AddIngredient(ItemID.Vertebrae, 22);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrimtaneOre, 14)
+			.AddIngredient(ItemID.Vertebrae, 22)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

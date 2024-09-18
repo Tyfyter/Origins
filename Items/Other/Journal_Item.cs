@@ -19,18 +19,18 @@ namespace Origins.Items.Other {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Book);
-			recipe.AddIngredient(ItemID.Feather);
-			recipe.AddIngredient(ItemID.BlackInk);
-			recipe.AddOnCraftCallback((_, i, _, _) => {
+			CreateRecipe()
+			.AddIngredient(ItemID.Book)
+			.AddIngredient(ItemID.Feather)
+			.AddIngredient(ItemID.BlackInk)
+			.AddOnCraftCallback((_, i, _, _) => {
 				ref bool isUnlocked = ref Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked;
 				if (!isUnlocked) {
 					isUnlocked = true;
 					i.TurnToAir();
 				}
-			});
-			recipe.Register();
+			})
+			.Register();
 		}
 	}
 }

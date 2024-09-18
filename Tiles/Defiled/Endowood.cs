@@ -28,25 +28,25 @@ namespace Origins.Tiles.Defiled {
 			Item.createTile = TileType<Endowood>();
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 4);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 4)
+            .AddTile(TileID.WorkBenches)
+            .Register();
 
-            recipe = Recipe.Create(ModContent.ItemType<Endowood_Wall_Item>(), 4);
-            recipe.AddIngredient(this);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            Recipe.Create(ModContent.ItemType<Endowood_Wall_Item>(), 4)
+            .AddIngredient(this)
+            .AddTile(TileID.WorkBenches)
+            .Register();
 
-            recipe = Recipe.Create(ModContent.ItemType<Endowood_Bow>());
-            recipe.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 10);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            Recipe.Create(ModContent.ItemType<Endowood_Bow>())
+            .AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 10)
+            .AddTile(TileID.WorkBenches)
+            .Register();
 
-            recipe = Recipe.Create(ModContent.ItemType<Endowood_Sword>());
-            recipe.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 7);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
+            Recipe.Create(ModContent.ItemType<Endowood_Sword>())
+            .AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 7)
+            .AddTile(TileID.WorkBenches)
+            .Register();
         }
     }
 }

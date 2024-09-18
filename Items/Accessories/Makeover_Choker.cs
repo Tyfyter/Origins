@@ -23,11 +23,11 @@ namespace Origins.Items.Accessories {
 			Mysterious_Spray.VanityEffect(player);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.CrossNecklace);
-			recipe.AddIngredient(ModContent.ItemType<Mysterious_Spray>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.CrossNecklace)
+			.AddIngredient(ModContent.ItemType<Mysterious_Spray>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

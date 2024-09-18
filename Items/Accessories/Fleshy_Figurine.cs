@@ -28,16 +28,16 @@ namespace Origins.Items.Accessories {
 			originPlayer.symbioteSkull = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.GuideVoodooDoll);
-            recipe.AddIngredient(ModContent.ItemType<Symbiote_Skull>());
-            recipe.AddIngredient(ModContent.ItemType<Tainted_Flesh>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(new Condition(
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.GuideVoodooDoll)
+            .AddIngredient(ModContent.ItemType<Symbiote_Skull>())
+            .AddIngredient(ModContent.ItemType<Tainted_Flesh>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddCondition(new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.KillsGuide"),
 				() => NPC.AnyNPCs(NPCID.Guide)
-			));
-			recipe.AddOnCraftCallback((r, item, _, _) => {
+			))
+			.AddOnCraftCallback((r, item, _, _) => {
 				NPC guide = Main.npc[NPC.FindFirstNPC(NPCID.Guide)];
 				guide.life = 0;
 				guide.DeathSound = SoundID.Item104;
@@ -45,8 +45,8 @@ namespace Origins.Items.Accessories {
 				for (int i = 0; i < 16; i++) {
 					Dust.NewDust(guide.position, guide.width, guide.height, DustID.Torch, 0, -6);
 				}
-			});
-			recipe.Register();
+			})
+			.Register();
 		}
 	}
 }

@@ -23,10 +23,10 @@ namespace Origins.Items.Armor.Marrowick {
 			player.statDefense += 1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 20);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 20)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 		public string ArmorSetName => "Marrowick_Armor";
 		public int HeadItemID => Type;
@@ -39,10 +39,10 @@ namespace Origins.Items.Armor.Marrowick {
 			Item.defense = 2;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 30);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 30)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -51,10 +51,10 @@ namespace Origins.Items.Armor.Marrowick {
 			Item.defense = 1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 25);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 25)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 }

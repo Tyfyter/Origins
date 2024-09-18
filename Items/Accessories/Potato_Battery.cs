@@ -71,12 +71,12 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CopperBar);
-			recipe.AddIngredient(ModContent.ItemType<Potato>());
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CopperBar)
+			.AddIngredient(ModContent.ItemType<Potato>())
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public static int GetVariationCount(QuoteType type) {
 			messageCountsByType ??= new Message_Type_Count[(int)QuoteType.Count];

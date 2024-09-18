@@ -50,11 +50,11 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			return;//todo: fix, maybe entirely redesign
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Excalibur);
-			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Excalibur)
+			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 
 		public override bool AltFunctionUse(Player player) {

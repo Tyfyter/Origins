@@ -28,12 +28,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = SoundID.Item82;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Book);
-			recipe.AddIngredient(ItemID.HellstoneBar, 12);
-			recipe.AddIngredient(ItemID.WandofSparking);
-			recipe.AddTile(TileID.Bookcases);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Book)
+			.AddIngredient(ItemID.HellstoneBar, 12)
+			.AddIngredient(ItemID.WandofSparking)
+			.AddTile(TileID.Bookcases)
+			.Register();
 		}
     }
 	public class Eternabrite_P : ModProjectile {

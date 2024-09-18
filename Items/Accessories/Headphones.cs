@@ -25,13 +25,13 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().summonTagForceCrit = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 5);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 8)
+			.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 6)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rubber>(), 5)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 }

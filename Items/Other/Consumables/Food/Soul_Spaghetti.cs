@@ -27,11 +27,11 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.BowlofSoup);
-			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 10);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.BowlofSoup)
+			.AddIngredient(ModContent.ItemType<Strange_String>(), 10)
+			.AddTile(TileID.CookingPots)
+			.Register();
 		}
 	}
 }

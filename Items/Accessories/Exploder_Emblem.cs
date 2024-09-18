@@ -20,13 +20,13 @@ namespace Origins.Items.Accessories {
 			player.GetDamage(DamageClasses.Explosive) += 0.05f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.AvengerEmblem);
-            recipe.AddIngredient(ItemID.SoulofFright, 5);
-            recipe.AddIngredient(ItemID.SoulofMight, 5);
-			recipe.AddIngredient(ItemID.SoulofSight, 5);
-            recipe.AddIngredient(Type);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(ItemID.AvengerEmblem)
+            .AddIngredient(ItemID.SoulofFright, 5)
+            .AddIngredient(ItemID.SoulofMight, 5)
+			.AddIngredient(ItemID.SoulofSight, 5)
+            .AddIngredient(Type)
+            .AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

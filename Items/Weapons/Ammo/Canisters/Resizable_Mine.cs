@@ -25,11 +25,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.Wood, 2);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddIngredient(ItemID.Wood, 2)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Resizable_Mine_Two : ModItem, ICustomWikiStat, ICanisterAmmo {
@@ -50,11 +50,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 2)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Resizable_Mine_Three : ModItem, ICanisterAmmo {
@@ -72,11 +72,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Resizable_Mine_Four : ModItem, ICanisterAmmo {
@@ -94,11 +94,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.ChlorophyteOre, 2);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.ChlorophyteOre, 2)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Resizable_Mine_Five : ModItem, ICanisterAmmo {
@@ -116,11 +116,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 16);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.LunarOre, 2);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			Recipe.Create(Type, 16)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddIngredient(ItemID.LunarOre, 2)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 	}
 }

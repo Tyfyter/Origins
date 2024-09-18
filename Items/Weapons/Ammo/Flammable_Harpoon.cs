@@ -22,17 +22,17 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 3);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-            recipe.AddIngredient(ItemID.Gel);
-            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+            .AddIngredient(ItemID.Gel)
+            .AddRecipeGroup(RecipeGroupID.IronBar, 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(Type, 8);
-            recipe.AddIngredient(ItemID.Gel);
-            recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+            .AddIngredient(ItemID.Gel)
+            .AddIngredient(ModContent.ItemType<Harpoon>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Flammable_Harpoon_P : Harpoon_P {

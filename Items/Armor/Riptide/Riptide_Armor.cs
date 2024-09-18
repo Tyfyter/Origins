@@ -43,11 +43,11 @@ namespace Origins.Items.Armor.Riptide {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.DivingHelmet);
-            recipe.AddIngredient(ItemID.ShellPileBlock, 9);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.DivingHelmet)
+            .AddIngredient(ItemID.ShellPileBlock, 9)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Riptide_Armor";
 		public int HeadItemID => Type;
@@ -67,23 +67,23 @@ namespace Origins.Items.Armor.Riptide {
 			Lighting.AddLight(player.Center, new Vector3(0, 1, 1));
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.BlueJellyfish);
-            recipe.AddIngredient(ItemID.ShellPileBlock, 17);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.BlueJellyfish)
+            .AddIngredient(ItemID.ShellPileBlock, 17)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.GreenJellyfish);
-            recipe.AddIngredient(ItemID.ShellPileBlock, 17);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.GreenJellyfish)
+            .AddIngredient(ItemID.ShellPileBlock, 17)
+			.AddTile(TileID.Anvils)
+			.Register();
 
-			recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.PinkJellyfish);
-            recipe.AddIngredient(ItemID.ShellPileBlock, 17);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.PinkJellyfish)
+            .AddIngredient(ItemID.ShellPileBlock, 17)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -100,11 +100,11 @@ namespace Origins.Items.Armor.Riptide {
 			player.GetModPlayer<OriginPlayer>().riptideLegs = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Flipper);
-            recipe.AddIngredient(ItemID.ShellPileBlock, 13);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.Flipper)
+            .AddIngredient(ItemID.ShellPileBlock, 13)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Riptide_Dash_P : ModProjectile {

@@ -19,11 +19,11 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddRecipeGroup("AdamantiteBars", 10);
-            recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+            .AddRecipeGroup("AdamantiteBars", 10)
+            .AddIngredient(ItemID.Obsidian, 20)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 }

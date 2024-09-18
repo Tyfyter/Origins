@@ -20,19 +20,19 @@ namespace Origins.Items.Accessories {
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.PanicNecklace);
-            recipe.AddIngredient(ItemID.ThornsPotion);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.DisableDecraft();
-			recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ItemID.PanicNecklace)
+            .AddIngredient(ItemID.ThornsPotion)
+            .AddTile(TileID.TinkerersWorkbench)
+			.DisableDecraft()
+			.Register();
 
-            recipe = Recipe.Create(ItemID.BandofStarpower);
-            recipe.AddIngredient(ItemID.ManaCrystal);
-            recipe.AddIngredient(Type);
-            recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.DisableDecraft();
-			recipe.Register();
+            Recipe.Create(ItemID.BandofStarpower)
+            .AddIngredient(ItemID.ManaCrystal)
+            .AddIngredient(Type)
+            .AddTile(TileID.TinkerersWorkbench)
+			.DisableDecraft()
+			.Register();
         }
         public override void UpdateAccessory(Player player, bool isHidden) {
             player.GetModPlayer<OriginPlayer>().primordialSoup = true;

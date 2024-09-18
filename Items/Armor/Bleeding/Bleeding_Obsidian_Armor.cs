@@ -44,11 +44,11 @@ namespace Origins.Items.Armor.Bleeding {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ObsidianHelm);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ObsidianHelm)
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public string ArmorSetName => "Bleeding_Obsidian_Armor";
 		public int HeadItemID => Type;
@@ -75,11 +75,11 @@ namespace Origins.Items.Armor.Bleeding {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.25f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ObsidianShirt);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ObsidianShirt)
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -100,11 +100,11 @@ namespace Origins.Items.Armor.Bleeding {
 			player.runAcceleration += 0.02f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ObsidianPants);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ObsidianPants)
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

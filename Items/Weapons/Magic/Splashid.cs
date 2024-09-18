@@ -38,12 +38,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 10);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 8)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15)
+			.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			int a = Main.rand.Next(5, 7);

@@ -32,11 +32,11 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 6);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 6)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 		public override bool CanUseItem(Player player) {
 			return player.ownedProjectileCounts[Item.shoot] < Item.stack;

@@ -76,10 +76,10 @@ namespace Origins.Items.Other.Fish {
 
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>(), 3);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Rubber>(), 3)
+			.AddIngredient(this)
+			.AddTile(TileID.HeavyWorkBench)
+			.Register();
 		}
 	}
 	public class Tearracuda : ModItem {
@@ -100,17 +100,17 @@ namespace Origins.Items.Other.Fish {
 			Item.value = Item.sellPrice(0, 0, 15);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
-			recipe.AddIngredient(this, 2);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.SeafoodDinner)
+			.AddIngredient(this, 2)
+			.AddTile(TileID.CookingPots)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.HeartreachPotion);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ItemID.Daybloom);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.HeartreachPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Daybloom)
+			.AddIngredient(this)
+			.AddTile(TileID.CookingPots)
+			.Register();
 		}
 	}
 	public class Bilemouth : ModItem {
@@ -125,17 +125,17 @@ namespace Origins.Items.Other.Fish {
 			Item.value = Item.sellPrice(0, 0, 15);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
-			recipe.AddIngredient(this, 2);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.SeafoodDinner)
+			.AddIngredient(this, 2)
+			.AddTile(TileID.CookingPots)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.HeartreachPotion);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ItemID.Daybloom);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.HeartreachPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Daybloom)
+			.AddIngredient(this)
+			.AddTile(TileID.CookingPots)
+			.Register();
 		}
 	}
 	public class Polyeel : ModItem {
@@ -150,17 +150,17 @@ namespace Origins.Items.Other.Fish {
 			Item.value = Item.sellPrice(0, 0, 15);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
-			recipe.AddIngredient(this, 2);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.SeafoodDinner)
+			.AddIngredient(this, 2)
+			.AddTile(TileID.CookingPots)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.HeartreachPotion);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ItemID.Daybloom);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+			Recipe.Create(ItemID.HeartreachPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Daybloom)
+			.AddIngredient(this)
+			.AddTile(TileID.CookingPots)
+			.Register();
 		}
 	}
 }

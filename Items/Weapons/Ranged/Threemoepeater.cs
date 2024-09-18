@@ -32,11 +32,11 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 12)
+			.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 5)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = 0; i < 2; i++) {

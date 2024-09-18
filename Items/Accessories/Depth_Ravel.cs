@@ -27,12 +27,12 @@ namespace Origins.Items.Accessories {
 			Lighting.AddLight(player.Center, new Vector3(1.5f, 0.85f, 0));
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ArcticDivingGear);
-			recipe.AddIngredient(ItemID.Flipper);
-			recipe.AddIngredient(Ravel.ID);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.ArcticDivingGear)
+			.AddIngredient(ItemID.Flipper)
+			.AddIngredient(Ravel.ID)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 	public class Depth_Ravel_Mount : Ravel_Mount {

@@ -51,11 +51,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = CrimsonRarity.ID;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 24);
-            recipe.AddIngredient(ModContent.ItemType<Qube_Item>(), 48);
-            recipe.AddTile(TileID.LunarCraftingStation); // Interstellar Sampler
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Fibron_Plating>(), 24)
+            .AddIngredient(ModContent.ItemType<Qube_Item>(), 48)
+            .AddTile(TileID.LunarCraftingStation) // Interstellar Sampler
+            .Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			SoundEngine.PlaySound(SoundID.Item40, position);

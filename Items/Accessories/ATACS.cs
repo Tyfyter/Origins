@@ -23,11 +23,11 @@ namespace Origins.Items.Accessories {
 			//player.GetModPlayer<OriginPlayer>().strangeComputer = true; red laser
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.EyeoftheGolem);
-			recipe.AddIngredient(ModContent.ItemType<Strange_Computer>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.EyeoftheGolem)
+			.AddIngredient(ModContent.ItemType<Strange_Computer>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

@@ -32,10 +32,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			const int coalNumber = 4;
 
-			Recipe recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
-			recipe.DisableDecraft();
-			recipe.Register();
+			Recipe.Create(Type, 4)
+			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.DisableDecraft()
+			.Register();
 
             Recipe.Create(Type)
             .AddIngredient(ItemID.Coal, coalNumber)

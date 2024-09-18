@@ -28,12 +28,12 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = SoundID.Item34;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IceBlock, 30);
-            recipe.AddIngredient(ItemID.IceTorch);
-            recipe.AddIngredient(ItemID.Shiverthorn, 5);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.IceBlock, 30)
+            .AddIngredient(ItemID.IceTorch)
+            .AddIngredient(ItemID.Shiverthorn, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
         public override Vector2? HoldoutOffset() {
             return new Vector2(4, 0);

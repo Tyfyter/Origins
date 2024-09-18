@@ -14,12 +14,12 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Ruby, 4);
-			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24);
-            recipe.AddRecipeGroup(OriginSystem.CursedFlameRecipeGroupID, 5);
-            recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Ruby, 4)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24)
+            .AddRecipeGroup(OriginSystem.CursedFlameRecipeGroupID, 5)
+            .AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().rubyReticle = true;

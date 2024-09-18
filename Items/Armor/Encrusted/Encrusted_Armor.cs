@@ -40,11 +40,11 @@ namespace Origins.Items.Armor.Encrusted {
 			player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 16);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 16)
+			.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public string ArmorSetName => "Encrusted_Armor";
 		public int HeadItemID => Type;
@@ -76,11 +76,11 @@ namespace Origins.Items.Armor.Encrusted {
 			color = Color.White;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 28);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 28)
+			.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -95,11 +95,11 @@ namespace Origins.Items.Armor.Encrusted {
 			player.jumpSpeedBoost += 1f;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 22);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 14);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 22)
+			.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 14)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

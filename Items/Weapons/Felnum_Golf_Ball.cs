@@ -19,10 +19,10 @@ namespace Origins.Items.Weapons {
 			Item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddIngredient(ModContent.ItemType<Felnum_Bar>())
+            .AddTile(TileID.Anvils)
+            .Register();
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);

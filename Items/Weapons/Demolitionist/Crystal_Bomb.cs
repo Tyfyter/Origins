@@ -28,11 +28,11 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ItemID.Bomb, 4);
-			recipe.AddIngredient(ItemID.CrystalShard);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 4)
+			.AddIngredient(ItemID.Bomb, 4)
+			.AddIngredient(ItemID.CrystalShard)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Crystal_Bomb_P : ModProjectile {

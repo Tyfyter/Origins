@@ -27,11 +27,11 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Wood, 50);
-			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 7);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Wood, 50)
+			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 7)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.NewProjectileDirect(

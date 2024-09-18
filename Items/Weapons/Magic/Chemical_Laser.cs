@@ -27,10 +27,10 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = Origins.Sounds.EnergyRipple.WithPitchRange(1.7f, 2f);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Laseer : ModProjectile {

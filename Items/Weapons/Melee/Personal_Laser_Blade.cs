@@ -39,13 +39,13 @@ namespace Origins.Items.Weapons.Melee {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 2);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 8);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rotor>(), 2)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 8)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			ref int laserBladeCharge = ref player.GetModPlayer<OriginPlayer>().laserBladeCharge;

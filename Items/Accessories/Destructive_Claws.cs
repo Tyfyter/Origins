@@ -20,11 +20,11 @@ namespace Origins.Items.Accessories {
             Item.glowMask = glowmask;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FeralClaws);
-			recipe.AddIngredient(ModContent.ItemType<Bomb_Handling_Device>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.FeralClaws)
+			.AddIngredient(ModContent.ItemType<Bomb_Handling_Device>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

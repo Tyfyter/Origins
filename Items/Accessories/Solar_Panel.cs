@@ -23,12 +23,12 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().solarPanel = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.BandofStarpower);
-			recipe.AddIngredient(ItemID.SunStone);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.BandofStarpower)
+			.AddIngredient(ItemID.SunStone)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

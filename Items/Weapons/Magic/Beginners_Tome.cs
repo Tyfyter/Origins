@@ -25,12 +25,12 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Book);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ItemID.WandofSparking);
-			recipe.AddTile(TileID.Bookcases);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Book)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ItemID.WandofSparking)
+			.AddTile(TileID.Bookcases)
+			.Register();
 		}
 	}
 	public class Beginner_Spell : ModProjectile {

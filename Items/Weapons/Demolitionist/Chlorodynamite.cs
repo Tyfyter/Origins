@@ -28,17 +28,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.ChlorophyteBar);
-			recipe.AddIngredient(ItemID.Dynamite, 5);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.ChlorophyteBar)
+			.AddIngredient(ItemID.Dynamite, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ChlorophyteOre);
-			recipe.AddIngredient(ItemID.Dynamite);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteOre)
+			.AddIngredient(ItemID.Dynamite)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Chlorodynamite_P : ModProjectile, IIsExplodingProjectile {

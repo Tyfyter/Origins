@@ -16,11 +16,11 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.StarVeil);
-			recipe.AddIngredient(ModContent.ItemType<Locket_Necklace>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.StarVeil)
+			.AddIngredient(ModContent.ItemType<Locket_Necklace>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().guardedHeart = true;

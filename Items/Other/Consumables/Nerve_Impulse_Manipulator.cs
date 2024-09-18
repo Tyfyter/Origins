@@ -49,11 +49,11 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<Dreadful_Powder>(30);
-			recipe.AddIngredient<Strange_String>(15);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient<Dreadful_Powder>(30)
+			.AddIngredient<Strange_String>(15)
+			.AddTile(TileID.DemonAltar)
+			.Register();
 		}
 	}
 }

@@ -32,11 +32,11 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.CrystalShard);
-			recipe.AddIngredient(ItemID.Grenade, 8);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.CrystalShard)
+			.AddIngredient(ItemID.Grenade, 8)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		#region blend mode testing
 		/*public override bool AltFunctionUse(Player player) {

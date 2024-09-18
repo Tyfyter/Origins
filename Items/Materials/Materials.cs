@@ -45,17 +45,17 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(copper: 18);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 3);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
-            recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(Type, 3)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>())
+            .AddIngredient(ModContent.ItemType<Tree_Sap>())
+            .AddTile(TileID.WorkBenches)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.AdhesiveBandage);
-			recipe.AddIngredient(ItemID.GlowingMushroom, 3);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.AdhesiveBandage)
+			.AddIngredient(ItemID.GlowingMushroom, 3)
+			.AddIngredient(this)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Alkahest : MaterialItem, IJournalEntryItem {
@@ -84,19 +84,19 @@ namespace Origins.Items.Materials {
 	public class Bark : MaterialItem {
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.GlassKiln);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Rubber>())
+			.AddIngredient(this)
+			.AddTile(TileID.GlassKiln)
+			.Register();
 		}
 	}
 	public class Bat_Hide : MaterialItem {
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.Leather);
-			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.Leather)
+			.AddIngredient(this, 4)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Biocomponent10 : MaterialItem {
@@ -112,11 +112,11 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Biocomponent10>()] = ItemID.RottenChunk;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddIngredient(ItemID.WoodenArrow, 5);
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.UnholyArrow, 5)
+			.AddIngredient(ItemID.WoodenArrow, 5)
+			.AddIngredient(Type)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntryItem {
@@ -139,13 +139,13 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.LightRed;
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
-			recipe.AddIngredient(this, 8);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>())
+			.AddIngredient(this, 8)
+			.Register();
 
-			recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>());
-			recipe.Register();
+			Recipe.Create(Type, 8)
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>())
+			.Register();
 		}
 	}
 	public class Bottled_Brine : MaterialItem {
@@ -153,12 +153,12 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(copper: 40);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Bottle);
-            recipe.AddIngredient(ItemID.Stinger, 2);
-            recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
+			Recipe.Create(Type)
+            .AddIngredient(ItemID.Bottle)
+            .AddIngredient(ItemID.Stinger, 2)
+            .AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>())
+            .AddTile(TileID.Bottles)
+            .Register();
         }
     }
 	public class Bud_Barnacle : MaterialItem {
@@ -166,11 +166,11 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddIngredient(ItemID.WoodenArrow, 5);
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(ItemID.UnholyArrow, 5)
+			.AddIngredient(ItemID.WoodenArrow, 5)
+			.AddIngredient(Type)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Busted_Servo : MaterialItem {
@@ -200,10 +200,10 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
-			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3)
+			.AddTile(TileID.Furnaces)
+			.Register();
 		}
 	}
 	public class Eitrite_Bar : MaterialItem {
@@ -221,17 +221,17 @@ namespace Origins.Items.Materials {
         public override int Value => Item.sellPrice(silver: 81);
 		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 3);
-			recipe.AddTile(TileID.AdamantiteForge);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 3)
+			.AddTile(TileID.AdamantiteForge)
+			.Register();
 
-            recipe = Recipe.Create(Type);
-            recipe.AddRecipeGroup("AdamantiteBars");
-            recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
-            recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.Register();
+            Recipe.Create(Type)
+            .AddRecipeGroup("AdamantiteBars")
+            .AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
+            .AddIngredient(ModContent.ItemType<Bottled_Brine>())
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
 		}
 	}
 	public class Element36_Bundle : MaterialItem {
@@ -239,12 +239,12 @@ namespace Origins.Items.Materials {
 		public override int Rare => CrimsonRarity.ID;
 		public override bool Hardmode => true;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FragmentNebula);
-			recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4);
-			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>());
-			recipe.AddTile(TileID.Anvils); //Interstellar Sampler also not implemented
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.FragmentNebula)
+			.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4)
+			.AddIngredient(ModContent.ItemType<Formium_Bar>())
+			.AddTile(TileID.Anvils) //Interstellar Sampler also not implemented
+			.Register();
 		}
 	}
 	public class Encrusted_Bar : MaterialItem {
@@ -256,10 +256,10 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 3);
-			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 3)
+			.AddTile(TileID.Furnaces)
+			.Register();
 		}
 	}
 	public class Felnum_Bar : MaterialItem, IJournalEntryItem {
@@ -276,10 +276,10 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3)
+			.AddTile(TileID.Hellforge)
+			.Register();
 		}
 	}
 	public class Fibron_Plating : MaterialItem {
@@ -296,10 +296,10 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 	}
 	public class Formium_Scrap : MaterialItem {
@@ -325,12 +325,12 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Quest;
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.BottledWater, 5);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.BottledWater, 5)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>())
+			.AddTile(TileID.Bottles)
+			.Register();
 		}
 	}
 	public class NE8 : MaterialItem {
@@ -358,13 +358,13 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ItemIconPulse[Type] = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FragmentSolar);
-			recipe.AddIngredient(ItemID.FragmentVortex);
-			recipe.AddIngredient(ItemID.FragmentNebula);
-			recipe.AddIngredient(ItemID.FragmentStardust);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.FragmentSolar)
+			.AddIngredient(ItemID.FragmentVortex)
+			.AddIngredient(ItemID.FragmentNebula)
+			.AddIngredient(ItemID.FragmentStardust)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 	}
 	public class Power_Core : MaterialItem {
@@ -374,11 +374,11 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Pink;
 		public override bool Hardmode => true;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HallowedBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 3);
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.HallowedBar, 2)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 3)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 	public class Respyrite : MaterialItem {
@@ -398,28 +398,28 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Pink;
 		public override bool Hardmode => true;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ItemID.HallowedBar);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-			recipe.AddTile(ModContent.TileType<Fabricator>());
-			recipe.Register();
+			Recipe.Create(Type, 4)
+			.AddIngredient(ItemID.HallowedBar)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>())
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 	public class Rubber : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 6);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.Flipper);
-			recipe.AddIngredient(Type, 15);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.Flipper)
+			.AddIngredient(Type, 15)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 
-			recipe = Recipe.Create(ItemID.FloatingTube);
-			recipe.AddIngredient(Type, 20);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 10);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
+			Recipe.Create(ItemID.FloatingTube)
+			.AddIngredient(Type, 20)
+			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 10)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Sanguinite_Bar : MaterialItem {
@@ -431,37 +431,37 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 3);
-			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 3)
+			.AddTile(TileID.Furnaces)
+			.Register();
 		}
 	}
 	public class Strange_String : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddIngredient(ItemID.WoodenArrow, 5);
-            recipe.AddIngredient(Type);
-            recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+            Recipe.Create(ItemID.UnholyArrow, 5)
+			.AddIngredient(ItemID.WoodenArrow, 5)
+            .AddIngredient(Type)
+            .AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Tree_Sap : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.GlassKiln);
-			recipe.Register();
+			Recipe.Create(ModContent.ItemType<Rubber>())
+			.AddIngredient(this)
+			.AddTile(TileID.GlassKiln)
+			.Register();
 
-            recipe = Recipe.Create(ItemID.LesserHealingPotion, 2);
-            recipe.AddIngredient(ItemID.Bottle, 2);
-            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
+            Recipe.Create(ItemID.LesserHealingPotion, 2)
+            .AddIngredient(ItemID.Bottle, 2)
+            .AddIngredient(ModContent.ItemType<Tree_Sap>())
+            .AddTile(TileID.Bottles)
+            .Register();
         }
 	}
 	public class Undead_Chunk : MaterialItem {

@@ -21,11 +21,11 @@ namespace Origins.Items.Accessories {
 			player.buffImmune[BuffID.Confused] = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.UltrabrightHelmet);
-			recipe.AddIngredient(ModContent.ItemType<Advanced_Imaging>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.UltrabrightHelmet)
+			.AddIngredient(ModContent.ItemType<Advanced_Imaging>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

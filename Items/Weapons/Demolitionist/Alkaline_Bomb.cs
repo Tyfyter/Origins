@@ -24,11 +24,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.Bomb, 5);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.Bomb, 5)
+			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Acid_Bomb_P : ModProjectile {
