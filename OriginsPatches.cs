@@ -545,6 +545,16 @@ namespace Origins {
 			IL_Player.SlopeDownMovement += IL_Player_SlopeDownMovement;
 			//IL_Player.Update += IL_Player_SlopeDownMovement;
 			On_Collision.StepDown += On_Collision_StepDown;
+			IL_Player.CheckDrowning += IL_Player_CheckDrowning;
+		}
+
+		private void IL_Player_CheckDrowning(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchCallOrCallvirt<Collision>(nameof(Collision.DrownCollision))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate<Func<bool, Player, bool>>((drowning, player) => drowning || player.OriginPlayer().forceDrown);
 		}
 
 		private void On_Collision_StepDown(On_Collision.orig_StepDown orig, ref Vector2 position, ref Vector2 velocity, int width, int height, ref float stepSpeed, ref float gfxOffY, int gravDir, bool waterWalk) {

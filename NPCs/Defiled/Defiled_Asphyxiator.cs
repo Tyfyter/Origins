@@ -51,7 +51,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY < Main.worldSurface || spawnInfo.DesertCave) return 0;
-			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Brute;
+			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -59,11 +59,7 @@ namespace Origins.NPCs.Defiled {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 48));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public int Frame {
 			get => NPC.frame.Y / 58;
@@ -132,6 +128,8 @@ namespace Origins.NPCs.Defiled {
 				Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+			} else {
+
 			}
 		}
 		public override void FindFrame(int frameHeight) {
@@ -185,14 +183,44 @@ namespace Origins.NPCs.Defiled {
 		public override string Texture => typeof(Defiled_Asphyxiator_P2).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() => ID = Type;
-		public static int GetLevel(Player player) => GetLevel(player, out _);
-		public static int GetLevel(Player player, out int index) {
-			index = player.FindBuffIndex(Defiled_Asphyxiator_Debuff_3.ID);
-			if (index != -1) return 3;
-			index = player.FindBuffIndex(Defiled_Asphyxiator_Debuff_2.ID);
-			if (index != -1) return 2;
-			index = player.FindBuffIndex(ID);
-			if (index != -1) return 1;
+		public override void Update(Player player, ref int buffIndex) {
+			int level = GetLevel(player, buffIndex);
+			switch (level) { // temporary implementation for balance testing
+				case 1:
+				player.dazed = true;
+				break;
+				case 2:
+				player.sticky = true;
+				break;
+				case 3:
+				player.stoned = true;
+				player.OriginPlayer().forceDrown = true;
+				if (player.breath > 1) player.breath = 1;
+				break;
+			}
+		}
+		public static int GetLevel(Player player, int searchStart = 0) => GetLevel(player, out _, searchStart);
+		public static int GetLevel(Player player, out int index, int searchStart = 0) {
+			int level1 = ID;
+			int level2 = Defiled_Asphyxiator_Debuff_2.ID;
+			int level3 = Defiled_Asphyxiator_Debuff_3.ID;
+			for (int i = searchStart; i < player.buffType.Length; i++) {
+				if (player.buffTime[i] == 0) break;
+				int type = player.buffType[i];
+				if (type == level1) {
+					index = i;
+					return 1;
+				}
+				if (type == level2) {
+					index = i;
+					return 2;
+				}
+				if (type == level3) {
+					index = i;
+					return 3;
+				}
+			}
+			index = -1;
 			return 0;
 		}
 		public static void AddBuff(Player player) {

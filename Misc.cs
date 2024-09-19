@@ -2649,6 +2649,7 @@ namespace Origins {
 			top = j - frameJ;
 			left = i - frameI;
 		}
+		public static OriginPlayer OriginPlayer(this Player player) => player.GetModPlayer<OriginPlayer>();
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

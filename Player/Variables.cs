@@ -364,6 +364,7 @@ namespace Origins {
 		public float manaShielding = 0f;
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
+		public bool forceDrown = false;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -748,6 +749,7 @@ namespace Origins {
 				Player.shimmerWet |= forceShimmerCollision = voodooDoll.shimmerWet;
 				voodooDollIndex = -1;
 			}
+			forceDrown = false;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

@@ -26,6 +26,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.ownedProjectileCounts[type] > 0) return false;
 			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= player.GetAdjustedItemScale(Item);
 			return false;
 		}
@@ -105,6 +106,7 @@ namespace Origins.Items.Weapons.Summoner {
 						}
 					}
 				}
+				Main.player[Projectile.owner].AddBuff(Ziptie_Buff.ID, 300);
 			}
 		}
 		private static void DrawLine(List<Vector2> list) {
@@ -179,7 +181,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Ziptie_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_160";
+		public override string Texture => "Terraria/Images/Buff_311";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			BuffID.Sets.IsATagBuff[Type] = true;
@@ -187,6 +189,9 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().ziptieDebuff = true;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.GetAttackSpeed(DamageClass.SummonMeleeSpeed) += 0.35f;
 		}
 	}
 }
