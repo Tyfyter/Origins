@@ -8,7 +8,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
 	public class Fiberglass_Weaver_Bag : ModItem {
-		
+		public override void SetStaticDefaults() {
+			ItemID.Sets.BossBag[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
@@ -17,9 +19,6 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(Fiberglass_Weaver.weaponDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Entangled_Energy>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
-		}
-		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
-			itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;
 		}
 		public override bool CanRightClick() {
 			return true;

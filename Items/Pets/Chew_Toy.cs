@@ -1,13 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Pets;
+using Origins.LootConditions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
@@ -30,6 +34,12 @@ namespace Origins.Items.Pets {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2); // The item applies the buff, the buff spawns the projectile
 			return false;
+		}
+		public override void SetStaticDefaults() {
+			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
+				new LeadingSuccessRule()
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chew_Toy>()))
+			]).ToArray();
 		}
 	}
 	public class Chee_Toy : ModProjectile {

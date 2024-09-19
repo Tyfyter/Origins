@@ -2040,15 +2040,15 @@ namespace Origins {
 			return true;
 		}
 		#region drop rules
-		public static IItemDropRule WithOnFailedConditions(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+		public static T WithOnFailedConditions<T>(this T rule, IItemDropRule ruleToChain, bool hideLootReport = false) where T : IItemDropRule {
 			rule.OnFailedConditions(ruleToChain, hideLootReport);
 			return rule;
 		}
-		public static IItemDropRule WithOnFailedRoll(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+		public static T WithOnFailedRoll<T>(this T rule, IItemDropRule ruleToChain, bool hideLootReport = false) where T : IItemDropRule {
 			rule.OnFailedRoll(ruleToChain, hideLootReport);
 			return rule;
 		}
-		public static IItemDropRule WithOnSuccess(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+		public static T WithOnSuccess<T>(this T rule, IItemDropRule ruleToChain, bool hideLootReport = false) where T : IItemDropRule {
 			rule.OnSuccess(ruleToChain, hideLootReport);
 			return rule;
 		}

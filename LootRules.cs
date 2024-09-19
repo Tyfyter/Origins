@@ -2,9 +2,42 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.Localization;
 
 namespace Origins.LootConditions {
+	public class VaryingRateLeadingRule(int chanceDenominator, int chanceNumerator, params (IItemDropRuleCondition condition, int chanceDenominator, int chanceNumerator)[] alternates) : IItemDropRule {
+		public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
+		public bool CanDrop(DropAttemptInfo info) => true;
+		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			int denominator = chanceDenominator;
+			int numerator = chanceNumerator;
+			for (int i = 0; i < alternates.Length; i++) {
+				if (alternates[i].condition.CanShowItemDropInUI()) {
+					denominator = alternates[i].chanceDenominator;
+					numerator = alternates[i].chanceNumerator;
+				}
+			}
+			Chains.ReportDroprates(ChainedRules, numerator / (float)denominator, drops, ratesInfo);
+		}
+		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			int denominator = chanceDenominator;
+			int numerator = chanceNumerator;
+			for (int i = 0; i < alternates.Length; i++) {
+				if (alternates[i].condition.CanDrop(info)) {
+					denominator = alternates[i].chanceDenominator;
+					numerator = alternates[i].chanceNumerator;
+				}
+			}
+			ItemDropAttemptResult result = default;
+			if (info.player.RollLuck(denominator) < numerator) {
+				result.State = ItemDropAttemptResultState.Success;
+				return result;
+			}
+			result.State = ItemDropAttemptResultState.FailedRandomRoll;
+			return result;
+		}
+	}
 	public class LeadingSuccessRule : IItemDropRule {
 		public List<IItemDropRuleChainAttempt> ChainedRules { get; }
 		public LeadingSuccessRule() {
@@ -15,7 +48,7 @@ namespace Origins.LootConditions {
 			Chains.ReportDroprates(ChainedRules, 1f, drops, ratesInfo);
 		}
 		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
-			ItemDropAttemptResult result = default(ItemDropAttemptResult);
+			ItemDropAttemptResult result = default;
 			result.State = ItemDropAttemptResultState.Success;
 			return result;
 		}

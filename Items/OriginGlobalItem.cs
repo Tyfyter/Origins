@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
+using Origins.LootConditions;
 using Origins.NPCs;
 using Origins.Questing;
 using Origins.Tiles.Defiled;
@@ -241,6 +242,9 @@ namespace Origins.Items {
 				}
 			}
 		}
+		static OneFromRulesRule originsDevSetRule;
+		static VaryingRateLeadingRule devSetRealDropRule = new VaryingRateLeadingRule(16, 1, (new Conditions.TenthAnniversaryIsUp(), 8, 1)).WithOnSuccess(originsDevSetRule = new(1));
+		public static OneFromRulesRule OriginsDevSetRule => originsDevSetRule;
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
 			static LocalizedText GetWarningText(string key) => Language.GetText("Mods.Origins.Warnings." + key);
 			List<IItemDropRule> dropRules = itemLoot.Get(false);
@@ -325,6 +329,9 @@ namespace Origins.Items {
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					break;
 				}
+			}
+			if (ItemID.Sets.BossBag[item.type] && item.ModItem?.Mod == Origins.instance) {
+				itemLoot.Add(devSetRealDropRule);
 			}
 		}
 		public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset) {

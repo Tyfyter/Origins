@@ -1,6 +1,10 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Pets;
+using Origins.LootConditions;
+using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,6 +18,16 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
+		}
+		public override void SetStaticDefaults() {
+			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
+				new LeadingSuccessRule()
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Mask>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jacket>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jeans>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Sight>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chromatic_Scale>()))
+			]).ToArray();
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
