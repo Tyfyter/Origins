@@ -105,10 +105,10 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
-			if (longboneType != 0) bitWriter.WriteBit(longboneType == 2);
+			binaryWriter.Write((byte)longboneType);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
-			if (bitReader.MaxBits != 0) longboneType = bitReader.ReadBit() ? 2 : 1;
+			longboneType = binaryReader.ReadByte();
 		}
 	}
 	public class Bone_Shard : ModProjectile {
