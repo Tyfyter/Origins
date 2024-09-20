@@ -80,7 +80,7 @@ TOWN NPCs:
 ---
 (#3) TOWN NPC QUEST MECHANICS (general)
 
-(#3, %2, ^2) Acid Freak
+(#3?, %2, ^2) Acid Freak
 (#, ^2) Defiled Effigy
 
 (%2, X) Dusk Trader
