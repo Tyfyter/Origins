@@ -768,11 +768,13 @@ namespace Origins {
 			public static int Defiled;
 			public static int UndergroundDefiled;
 			public static int DefiledBoss;
+			public static int AncientDefiled;
 
 			public static int Riven;
 			public static int UndergroundRiven;
 			public static int RivenBoss;
 			public static int RivenOcean;
+			public static int AncientRiven;
 			internal static void LoadMusic() {
 				ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
 				static void SetMusic(ref int newID, int baseID) {
@@ -793,11 +795,13 @@ namespace Origins {
 				SetMusic(ref Defiled, MusicID.Corruption);
 				SetMusic(ref UndergroundDefiled, MusicID.UndergroundCorruption);
 				SetMusic(ref DefiledBoss, MusicID.OtherworldlyBoss1);
+				SetMusic(ref AncientDefiled, MusicID.OtherworldlyCorruption);
 
 				SetMusic(ref Riven, MusicID.Crimson);
 				SetMusic(ref UndergroundRiven, MusicID.UndergroundCrimson);
 				SetMusic(ref RivenBoss, MusicID.OtherworldlyBoss1);
 				SetMusic(ref RivenOcean, MusicID.OtherworldlyOcean);
+				SetMusic(ref AncientRiven, MusicID.OtherworldlyCrimson);
 			}
 			private static Func<int> ReserveMusicID;
 			internal static void UnloadMusic() {

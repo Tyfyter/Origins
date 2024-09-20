@@ -29,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (HasScar(tile)) Vector3.Max(color, color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
+			if (HasScar(tile)) color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
 		static bool HasScar(Tile tile) {
 			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {

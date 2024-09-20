@@ -1501,6 +1501,8 @@ Tiles: {
 	Omnidirectional_Claymore_Tile.MapEntry: Omnidirectional Claymore
 	Laser_Tag_Console.MapEntry: Laser Tag Console
 	Potato_Tile.MapEntry: Potato
+	Ancient_Music_Box_DW: Ancient Music Box (Defiled Wastelands)
+	Ancient_Music_Box_RH: Ancient Music Box (Riven Hive)
 }
 
 MapObject: {

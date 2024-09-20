@@ -1501,6 +1501,8 @@ Tiles: {
 	// Omnidirectional_Claymore_Tile.MapEntry: Omnidirectional Claymore
 	// Laser_Tag_Console.MapEntry: Laser Tag Console
 	// Potato_Tile.MapEntry: Potato
+	// Ancient_Music_Box_DW: Mods.Origins.Tiles.Ancient_Music_Box_DW
+	// Ancient_Music_Box_RH: Mods.Origins.Tiles.Ancient_Music_Box_RH
 }
 
 MapObject: {

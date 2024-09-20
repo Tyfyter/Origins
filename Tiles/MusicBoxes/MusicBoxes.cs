@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Graphics;
 using Origins.World.BiomeData;
 using Terraria;
@@ -12,7 +13,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.MusicBoxes {
 	#region base classes
-	public abstract class Music_Box : ModTile {
+	public abstract class Music_Box : ModTile, ICustomWikiStat {
+		public string[] Categories => [
+			"MusicBox"
+		];
 		public abstract Color MapColor { get; }
 		public abstract int MusicSlot { get; }
 		public virtual new int DustType => 0;
@@ -50,16 +54,14 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	[Autoload(false)]
-	public class Music_Box_Item : ModItem {
+	public class Music_Box_Item(Music_Box tile) : ModItem() {
 		[CloneByReference]
-		Music_Box tile;
+		readonly Music_Box tile = tile;
 		public override string Name => tile.Name + "_Item";
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.Tiles." + tile.Name);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected override bool CloneNewInstances => true;
-		public Music_Box_Item(Music_Box tile) : base() {
-			this.tile = tile;
-		}
+
 		public override void SetStaticDefaults() {
 			ItemID.Sets.CanGetPrefixes[Type] = false; // music boxes can't get prefixes in vanilla
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox; // recorded music boxes transform into the basic form in shimmer
@@ -71,9 +73,6 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	#endregion
 	public class Music_Box_DW : Music_Box {
-		public string[] Categories => [
-			"MusicBox"
-		];
 		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.Defiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
@@ -92,17 +91,11 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_DC : Music_Box {
-		public string[] Categories => [
-			"MusicBox"
-		];
 		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.UndergroundDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 	}
 	public class Music_Box_RH : Music_Box, IGlowingModTile {
-		public string[] Categories => [
-			"MusicBox"
-		];
 		public override Color MapColor => new Color(42, 59, 112);
 		public override int MusicSlot => Origins.Music.Riven;
 		public override int DustType => Riven_Hive.DefaultTileDust;
@@ -130,7 +123,7 @@ namespace Origins.Tiles.MusicBoxes {
 			}
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (ShouldGlow(tile)) Vector3.Max(color, color = new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile));
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile));
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowColor = GlowColor;
@@ -162,6 +155,96 @@ namespace Origins.Tiles.MusicBoxes {
 					}
 				}
 			} else if(tile.TileFrameNumber > 0) {
+				frameXOffset += 36;
+				frameYOffset += (tile.TileFrameNumber - 1) * 36;
+				if (tile.TileFrameNumber > 0) {
+					if (frameTime >= 5) {
+						tile.TileFrameNumber--;
+						tile.Slope = 0;
+					} else {
+						tile.Slope = (SlopeType)(frameTime + 1);
+					}
+				}
+			}
+		}
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
+	public class Ancient_Music_Box_DW : Music_Box {
+		public override Color MapColor => new(255, 255, 255);
+		public override int MusicSlot => Origins.Music.AncientDefiled;
+		public override int DustType => Defiled_Wastelands.DefaultTileDust;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			AnimationFrameHeight = 36;
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 8) {
+				frameCounter = 0;
+				frame = ++frame % 4;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
+		}
+	}
+	public class Ancient_Music_Box_RH : Music_Box, IGlowingModTile {
+		public override Color MapColor => new(255, 255, 255);
+		public override int MusicSlot => Origins.Music.AncientRiven;
+		public override int DustType => Defiled_Wastelands.DefaultTileDust;
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public static float GlowLightValue(Tile tile) {
+			int frameNumberOffset = tile.TileFrameX >= 36 ? 1 : 0;
+			return 1 * ((frameNumberOffset + tile.TileFrameNumber) / 4f);
+		}
+		public Color GlowColor => Color.White;
+		public static bool ShouldGlow(Tile tile) {
+			if (tile.TileFrameY == 0) {
+				if (tile.TileFrameX % 36 < 16) return false;
+				return tile.TileFrameNumber > 1;
+			} else {
+				return tile.TileFrameNumber > 0 || tile.Slope > 0;
+			}
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.912f, 0.879f, 0.394f) * GlowLightValue(tile));
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			TileID.Sets.HasSlopeFrames[Type] = true;
+			Main.tileLighted[Type] = true;
+			if (!Main.dedServ) {
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			Tile tile = Main.tile[i, j];
+
+			// If the torch is on
+			if (ShouldGlow(tile)) {
+				float glowLightValue = GlowLightValue(tile);
+				r = 0.35f * glowLightValue;
+				g = 0.32f * glowLightValue;
+				b = 0.05f * glowLightValue;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Tile tile = Main.tile[i, j];
+			int frameTime = (int)tile.Slope;
+			if (tile.TileFrameX >= 36) {
+				frameYOffset += tile.TileFrameNumber * 36;
+				if (tile.TileFrameNumber < 3) {
+					if (frameTime >= 5) {
+						tile.TileFrameNumber++;
+						tile.Slope = 0;
+					} else {
+						tile.Slope = (SlopeType)(frameTime + 1);
+					}
+				}
+			} else if (tile.TileFrameNumber > 0) {
 				frameXOffset += 36;
 				frameYOffset += (tile.TileFrameNumber - 1) * 36;
 				if (tile.TileFrameNumber > 0) {
