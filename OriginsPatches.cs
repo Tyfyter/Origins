@@ -61,6 +61,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Input;
 using System.Buffers.Text;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Other.Consumables;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -546,6 +547,10 @@ namespace Origins {
 			//IL_Player.Update += IL_Player_SlopeDownMovement;
 			On_Collision.StepDown += On_Collision_StepDown;
 			IL_Player.CheckDrowning += IL_Player_CheckDrowning;
+			On_Projectile.StatusPvP += (orig, self, playerIndex) => {
+				orig(self, playerIndex);
+				Main.player[playerIndex].OriginPlayer().OnHitByAnyProjectile(self);
+			};
 		}
 
 		private void IL_Player_CheckDrowning(ILContext il) {

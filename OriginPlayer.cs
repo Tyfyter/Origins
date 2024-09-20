@@ -11,6 +11,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
+using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
@@ -21,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -682,6 +684,29 @@ namespace Origins {
 		}
 		public override void PostItemCheck() {
 			ItemChecking = false;
+		}
+		public void InflictAssimilation(byte assimilationType, float assimilationAmount) {
+			switch (assimilationType) {
+				case 0:
+				CorruptionAssimilation += assimilationAmount;
+				break;
+				case 1:
+				CrimsonAssimilation += assimilationAmount;
+				break;
+				case 2:
+				DefiledAssimilation += assimilationAmount;
+				break;
+				case 3:
+				RivenAssimilation += assimilationAmount;
+				break;
+			}
+			if (Main.netMode == NetmodeID.SinglePlayer || Player.whoAmI == Main.myPlayer) return;
+			ModPacket packet = Origins.instance.GetPacket();
+			packet.Write(Origins.NetMessageType.inflict_assimilation);
+			packet.Write((byte)Player.whoAmI);
+			packet.Write(assimilationType);
+			packet.Write(assimilationAmount);
+			packet.Send(Player.whoAmI, Main.myPlayer);
 		}
 	}
 }

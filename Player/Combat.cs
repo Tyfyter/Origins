@@ -380,6 +380,22 @@ namespace Origins {
 					}
 				}
 			}
+			OnHitByAnyProjectile(proj);
+		}
+		public void OnHitByAnyProjectile(Projectile proj) {
+			if (proj.type == ProjectileID.UnholyWater) {
+				InflictAssimilation(0, 0.075f);
+				proj.Kill();
+			} else if (proj.type == ProjectileID.BloodWater) {
+				InflictAssimilation(1, 0.075f);
+				proj.Kill();
+			} else if (proj.type == ModContent.ProjectileType<White_Water_P>()) {
+				InflictAssimilation(2, 0.075f);
+				proj.Kill();
+			} else if (proj.type == ModContent.ProjectileType<Gooey_Water_P>()) {
+				InflictAssimilation(3, 0.075f);
+				proj.Kill();
+			}
 		}
 		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers) {
 			if (shineSparkDashTime > 0) {

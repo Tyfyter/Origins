@@ -28,6 +28,7 @@ namespace Origins {
 					case sync_peat:
 					case world_cracker_hit:
 					case sync_guid:
+					case inflict_assimilation:
 					altHandle = true;
 					break;
 
@@ -69,6 +70,7 @@ namespace Origins {
 					case sync_peat:
 					case world_cracker_hit:
 					case sync_guid:
+					case inflict_assimilation:
 					altHandle = true;
 					break;
 
@@ -168,6 +170,9 @@ namespace Origins {
 						}
 						break;
 					}
+					case inflict_assimilation:
+					Main.player[reader.ReadByte()].OriginPlayer().InflictAssimilation(reader.ReadByte(), reader.ReadSingle());
+					break;
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Origins.instance.Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -186,6 +191,7 @@ namespace Origins {
 			internal const byte spawn_boss_on_player = 9;
 			internal const byte add_void_lock = 10;
 			internal const byte remove_void_lock = 11;
+			internal const byte inflict_assimilation = 12;
 		}
 	}
 }

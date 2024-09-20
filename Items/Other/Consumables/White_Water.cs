@@ -42,7 +42,7 @@ namespace Origins.Items.Other.Consumables {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Glass);
 			}
 			for (int i = 0; i < 30; i++) {
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, White_Water_Dust.ID, 0f, -2f, 0, default(Color), 1.1f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, White_Water_Dust.ID, 0f, -2f, 0, default, 1.1f);
 				dust.alpha = 100;
 				dust.velocity.X *= 1.5f;
 				dust.velocity *= 3f;
