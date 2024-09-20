@@ -80,6 +80,9 @@ namespace Origins {
 			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {
 				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
 			}
+			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
+				Player.armorEffectDrawShadow = true;
+			}
 		}
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
 			if (blizzardwalkerJacketVisual && blizzardwalkerActiveTime > 0) {

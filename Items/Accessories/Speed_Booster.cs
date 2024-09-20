@@ -31,7 +31,6 @@ namespace Origins.Items.Accessories {
 			if (player.accRunSpeed < 6f) player.accRunSpeed = 6f;
 			if (originPlayer.shineSparkCharge > 0) {
 				player.accRunSpeed += 3f;
-				player.armorEffectDrawShadowBasilisk = true;
 			}
 			player.rocketBoots = 2;
 			originPlayer.guardedHeart = true;
