@@ -157,13 +157,13 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(#, ^2) Defiled Asphyxiator* !!!
+(#, ^2, ☻) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod
 (#, ^2) Defiled Watcher* !!!
-(#, ^2) Hoarder
+(X) Hoarder
 (X) Holy Governor
 (X) Holy Warrior
 (X) King Crab
@@ -996,8 +996,8 @@ TILES:
 (^) A Perfect World
 
 (@, #, $3) Ancient Music Box (Brine Pool)
-(#, $3, ^2) Ancient Music Box (Defiled Wastelands)
-(#, $3, ^2) Ancient Music Box (Riven Hive)
+(☻) Ancient Music Box (Defiled Wastelands)
+(☻) Ancient Music Box (Riven Hive)
 (@, #, $3) Music Box (Abstract)
 (@, #, $3) Music Box (Brine Pool)
 (X) Music Box (Cosmos)
