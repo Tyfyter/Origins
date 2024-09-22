@@ -27,6 +27,11 @@ Status_Messages: {
 	// Defiled_Fissure_3: The skies echo a threatening call...
 	// Cleansing_Station_Invalid_Location: You cannot use this here.
 	// Laser_Tag_Victory: "{0} wins!"
+	// Laser_Tag_Team_Red: Red team
+	// Laser_Tag_Team_Green: Green team
+	// Laser_Tag_Team_Blue: Blue team
+	// Laser_Tag_Team_Yellow: Yellow team
+	// Laser_Tag_Team_Purple: Pink team
 }
 
 ItemDropConditions: {

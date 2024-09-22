@@ -192,7 +192,6 @@ namespace Origins {
 					break;
 					case laser_tag_hit: {
 						byte target = reader.ReadByte();
-						ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"{(Main.netMode == NetmodeID.Server ? "server" : Main.LocalPlayer.name)}; {Main.player[target].name} {Main.player[target].OriginPlayer().laserTagVestActive}"), Color.AliceBlue);
 						Main.player[target].OriginPlayer().laserTagVestActive = false;
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients

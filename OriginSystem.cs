@@ -554,6 +554,8 @@ namespace Origins {
 					ModPacket packet = Origins.instance.GetPacket();
 					packet.Write(Origins.NetMessageType.end_laser_tag);
 					packet.Send(-1, Main.myPlayer);
+					laserTagActiveTeams = 0;
+					laserTagActivePlayers = 0;
 				}
 			}
 			if (!hasLoggedPUP) {
