@@ -13,10 +13,10 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => [
-            "MagicGun"
-        ];
-        public ushort Element => Elements.Earth;
+		public string[] Categories => [
+			"MagicGun"
+		];
+		public ushort Element => Elements.Earth;
 		static DrawAnimationManual animation;
 		public override DrawAnimation Animation => animation;
 		public override Color? GetGlowmaskTint(Player player) => Main.teamColor[player.team];
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 16;
 			Item.useAnimation = 16;
 			Item.mana = 10;
-			Item.shoot = ModContent.ProjectileType<Laser_Tag_Laser>();
+			Item.shoot = Laser_Tag_Laser.ID;
 			Item.scale = 1f;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Lime;
@@ -54,7 +54,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void UpdateInventory(Player player) {
 		}
-
 		static int GetCritMod(Player player) {
 			OriginPlayer modPlayer = player.GetModPlayer<OriginPlayer>();
 			int critMod = 0;
@@ -70,8 +69,8 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.HeldItem.type != Item.type) crit += GetCritMod(player);
 		}
 		/*public override Vector2? HoldoutOffset() {
-            return new Vector2(3-(11*Main.player[Item.playerIndexTheItemIsReservedFor].direction),0);
-        }*/
+			return new Vector2(3-(11*Main.player[Item.playerIndexTheItemIsReservedFor].direction),0);
+		}*/
 		public override void HoldItem(Player player) {
 			if (player.itemAnimation != 0) {
 				player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
@@ -82,6 +81,10 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Laser_Tag_Laser : ModProjectile {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GreenLaser);
 			Projectile.light = 0;
@@ -99,11 +102,15 @@ namespace Origins.Items.Weapons.Magic {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.CritDamage *= 123 * 0.5f;
 		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+		public static void OnHitPvP(Player target) {
 			target.AddBuff(BuffID.Cursed, 600);
 			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
 			if (originPlayer.laserTagVestActive) {
 				originPlayer.laserTagVestActive = false;
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.laser_tag_hit);
+				packet.Write((byte)target.whoAmI);
+				packet.Send(-1, Main.myPlayer);
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {

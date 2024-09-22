@@ -19,6 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -494,8 +495,8 @@ namespace Origins {
 		public bool LaserTagMultipleTeamsActive {
 			get {
 				if (laserTagActiveTeams == 0) return false;
-				if (laserTagActiveTeams == 1) return laserTagActivePlayers <= 1;
-				return (laserTagActiveTeams & (laserTagActiveTeams - 1)) == 0;
+				if (laserTagActiveTeams == 1) return laserTagActivePlayers > 1;
+				return (laserTagActiveTeams & (laserTagActiveTeams - 1)) != 0;
 			}
 		}
 		public override void PreUpdatePlayers() {
@@ -513,8 +514,46 @@ namespace Origins {
 				}
 			}
 			if (AnyLaserTagActive) {
-				foreach (Player player in Main.ActivePlayers) {
-					player.hostile = player.GetModPlayer<OriginPlayer>().laserTagVestActive;
+				if (LaserTagMultipleTeamsActive) {
+					foreach (Player player in Main.ActivePlayers) {
+						player.hostile = player.OriginPlayer().laserTagVestActive;
+					}
+				} else if (Main.netMode == NetmodeID.Server) {
+					Player survivor = null;
+					foreach (Player player in Main.ActivePlayers) {
+						ref bool laserTagVestActive = ref player.OriginPlayer().laserTagVestActive;
+						if (laserTagVestActive) {
+							laserTagVestActive = false;
+							survivor ??= player;
+						}
+					}
+					Color color = Main.teamColor[survivor.team];
+					object substitution;
+					switch (survivor.team) {
+						case 1:
+						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Red");
+						break;
+						case 2:
+						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Green");
+						break;
+						case 3:
+						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Blue");
+						break;
+						case 4:
+						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Yellow");
+						break;
+						case 5:
+						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Purple");
+						break;
+						default:
+						case 0:
+						substitution = survivor.name;
+						break;
+					}
+					ChatHelper.BroadcastChatMessage(Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Victory").ToNetworkText(substitution), color);
+					ModPacket packet = Origins.instance.GetPacket();
+					packet.Write(Origins.NetMessageType.end_laser_tag);
+					packet.Send(-1, Main.myPlayer);
 				}
 			}
 			if (!hasLoggedPUP) {

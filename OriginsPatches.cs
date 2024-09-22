@@ -62,6 +62,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Buffers.Text;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Weapons.Magic;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -549,7 +550,9 @@ namespace Origins {
 			IL_Player.CheckDrowning += IL_Player_CheckDrowning;
 			On_Projectile.StatusPvP += (orig, self, playerIndex) => {
 				orig(self, playerIndex);
-				Main.player[playerIndex].OriginPlayer().OnHitByAnyProjectile(self);
+				Player player = Main.player[playerIndex];
+				player.OriginPlayer().OnHitByAnyProjectile(self);
+				if (self.type == Laser_Tag_Laser.ID) Laser_Tag_Laser.OnHitPvP(player);
 			};
 		}
 

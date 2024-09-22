@@ -19,10 +19,15 @@ namespace Origins.Tiles.Other {
 
 			AddMapEntry(new Color(81, 81, 81), CreateMapEntryName());
 		}
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => !OriginSystem.Instance.AnyLaserTagActive;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.netMode != NetmodeID.SinglePlayer && !OriginSystem.Instance.AnyLaserTagActive;
 		public override bool RightClick(int i, int j) {
 			if (OriginSystem.Instance.AnyLaserTagActive) return false;
-			Main.LocalPlayer.GetModPlayer<OriginPlayer>().laserTagVestActive = true;
+			if (Main.netMode != NetmodeID.SinglePlayer) {
+				// Forward the changes to the other clients
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.start_laser_tag);
+				packet.Send(-1, Main.myPlayer);
+			}
 			return true;
 		}
 	}

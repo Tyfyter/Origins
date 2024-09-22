@@ -1,12 +1,15 @@
-﻿using Origins.Items.Accessories;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Other;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.Origins.NetMessageType;
 
@@ -29,6 +32,7 @@ namespace Origins {
 					case world_cracker_hit:
 					case sync_guid:
 					case inflict_assimilation:
+					case start_laser_tag or laser_tag_hit or end_laser_tag:
 					altHandle = true;
 					break;
 
@@ -71,6 +75,7 @@ namespace Origins {
 					case world_cracker_hit:
 					case sync_guid:
 					case inflict_assimilation:
+					case start_laser_tag or laser_tag_hit or end_laser_tag:
 					altHandle = true;
 					break;
 
@@ -173,6 +178,31 @@ namespace Origins {
 					case inflict_assimilation:
 					Main.player[reader.ReadByte()].OriginPlayer().InflictAssimilation(reader.ReadByte(), reader.ReadSingle());
 					break;
+					case start_laser_tag or end_laser_tag:
+					foreach (Player player in Main.ActivePlayers) {
+						OriginPlayer originPlayer = player.OriginPlayer();
+						if (originPlayer.laserTagVest) originPlayer.laserTagVestActive = type == start_laser_tag;
+					}
+					if (Main.netMode == NetmodeID.Server) {
+						// Forward the changes to the other clients
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(type);
+						packet.Send(-1, Main.myPlayer);
+					}
+					break;
+					case laser_tag_hit: {
+						byte target = reader.ReadByte();
+						ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"{(Main.netMode == NetmodeID.Server ? "server" : Main.LocalPlayer.name)}; {Main.player[target].name} {Main.player[target].OriginPlayer().laserTagVestActive}"), Color.AliceBlue);
+						Main.player[target].OriginPlayer().laserTagVestActive = false;
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = Origins.instance.GetPacket();
+							packet.Write(Origins.NetMessageType.laser_tag_hit);
+							packet.Write(target);
+							packet.Send(-1, Main.myPlayer);
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Origins.instance.Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -192,6 +222,9 @@ namespace Origins {
 			internal const byte add_void_lock = 10;
 			internal const byte remove_void_lock = 11;
 			internal const byte inflict_assimilation = 12;
+			internal const byte start_laser_tag = 13;
+			internal const byte laser_tag_hit = 14;
+			internal const byte end_laser_tag = 15;
 		}
 	}
 }
