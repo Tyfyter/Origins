@@ -2,6 +2,8 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled.Boss;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Watcher : ModNPC, IDefiledEnemy {
@@ -62,29 +65,42 @@ namespace Origins.NPCs.Defiled {
 			get => NPC.frame.Y / 68;
 			set => NPC.frame.Y = value * 68;
 		}
-		public override void AI() {
+		public override bool PreAI() {
 			NPC.TargetClosestUpgraded(false);
-			float speed = 16f;
-			float inertia = 64f;
-			Vector2 vectorToTargetPosition = default;
-			if (NPC.HasValidTarget && NPC.GetTargetData().Center.DistanceSQ(NPC.Center) < 10 * 10 * 16 * 16) {
+			float speed = 5f;
+			float inertia = 24f;
+			Vector2? vectorToTargetPosition = null;
+			Vector2 targetPos = default;
+			if (NPC.HasValidTarget) {
 				Player target = Main.player[NPC.target];
-				vectorToTargetPosition = target.Center - NPC.Center;
+				targetPos = NPC.Center.Clamp(target.Hitbox);
+				vectorToTargetPosition = targetPos - target.Center.Clamp(NPC.Hitbox);
 			} else {
 				if (NPC.velocity.LengthSquared() < 0.001f && Main.rand.NextBool(10)) {
 					// If there is a case where it's not moving at all, give it a little "poke"
 					NPC.velocity += Main.rand.NextVector2CircularEdge(1, 1) * 0.5f;
 				} else {
-
 					NPC.velocity.X = NPC.oldVelocity.X;
 					NPC.velocity.Y = NPC.oldVelocity.Y;
 				}
 			}
-			if (vectorToTargetPosition != default) {
-				vectorToTargetPosition = vectorToTargetPosition.SafeNormalize(default);
-				NPC.aiAction = 0;
-				vectorToTargetPosition *= speed;
-				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
+			if (NPC.ai[0] > 0) NPC.ai[0]--;
+			if (vectorToTargetPosition.HasValue && !vectorToTargetPosition.Value.HasNaNs()) {
+				float distance = vectorToTargetPosition.Value.Length();
+				Vector2 direction = vectorToTargetPosition.Value / distance;
+				NPC.velocity = (NPC.velocity * (inertia - 1) + direction * speed) / inertia;
+				if (distance < 16 * 3 && NPC.ai[0] <= 0) {
+					NPC.ai[0] = 67;
+					Projectile.NewProjectile(
+						NPC.GetSource_FromAI(),
+						NPC.Center,
+						(targetPos - NPC.Center).SafeNormalize(default) * 8,
+						ModContent.ProjectileType<Defiled_Watcher_Spikes>(),
+						20,
+						3,
+						ai2: NPC.whoAmI
+					);
+				}
 			}
 			Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 			if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.2f;
@@ -96,6 +112,7 @@ namespace Origins.NPCs.Defiled {
 			else NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.oldDirection = NPC.direction;
 			NPC.spriteDirection = NPC.direction;
+			return false;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 9) {
@@ -120,6 +137,54 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
+		}
+	}
+	public class Defiled_Watcher_Spikes : ModProjectile {
+		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+		public override void SetDefaults() {
+			Projectile.timeLeft = 600;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.hide = true;
+			Projectile.rotation = Main.rand.NextFloatDirection();
+			Projectile.tileCollide = false;
+			Projectile.npcProj = true;
+			Projectile.hostile = false;
+			Projectile.friendly = false;
+			Projectile.DamageType = DamageClass.Default;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override bool? CanHitNPC(NPC target) => false;
+		public override bool CanHitPlayer(Player target) => false;
+		public override bool CanHitPvp(Player target) => false;
+		public override void AI() {
+			if (Projectile.localAI[0] < 3) {
+				Projectile.NewProjectileDirect(
+					Projectile.GetSource_FromThis(),
+					Projectile.Center,
+					Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.4f) * Main.rand.NextFloat(1.1f, 1.5f),
+					Defiled_Spike_Explosion_Spike_Hostile.ID,
+					Projectile.damage,
+					0,
+					Projectile.owner,
+					ai1: Projectile.whoAmI
+				);
+				if (Projectile.ai[1] != 1) {
+					Projectile.NewProjectileDirect(
+						Projectile.GetSource_FromThis(),
+						Projectile.Center,
+						Projectile.velocity.RotatedBy(-Projectile.localAI[0] * 0.4f) * Main.rand.NextFloat(1.1f, 1.5f),
+						Defiled_Spike_Explosion_Spike_Hostile.ID,
+						Projectile.damage,
+						0,
+						Projectile.owner,
+						ai1: Projectile.whoAmI
+					);
+				} else {
+					Projectile.ai[1] = 1;
+				}
+				Projectile.localAI[0]++;
+			}
+			Projectile.Center = Main.npc[(int)Projectile.ai[2]].Center;
 		}
 	}
 }

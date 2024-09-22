@@ -716,7 +716,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.DamageType = DamageClass.Default;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			realPosition = Projectile.Center;
 		}
 		public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
 		public float movementFactor {
@@ -724,7 +723,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			set => Projectile.ai[0] = value;
 		}
 		public override void AI() {
-			Projectile.Center = realPosition - Projectile.velocity;
+			Projectile.Center = ParentProjectile.Center - Projectile.velocity;
 			if (movementFactor == 0f) {
 				movementFactor = 1f;
 				//if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;

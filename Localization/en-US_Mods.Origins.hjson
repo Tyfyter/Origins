@@ -1314,6 +1314,7 @@ Projectiles: {
 	Defiled_Asphyxiator_P1.DisplayName: Defiled Asphyxiator P1
 	Defiled_Asphyxiator_P2.DisplayName: Defiled Asphyxiator P2
 	Defiled_Asphyxiator_P3.DisplayName: Defiled Asphyxiator P3
+	Defiled_Watcher_Spikes.DisplayName: Defiled Watcher Spikes
 }
 
 Prefixes: {

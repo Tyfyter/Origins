@@ -2814,16 +2814,36 @@ namespace Origins {
 						case BlockType.HalfBlock:
 						if (next.Y > 0.5f) {
 							doBreak = true;
-							//length += dist * (next.Y - 0.5f) * 8f;
+							if (next.Y == 1) {
+								length += dist * 8f;
+							} else {
+								length += dist * (1 / diff.Y) * 8f;
+							}
 						}
 						break;
 						case BlockType.SlopeDownLeft:
+						if (next.X == 0 || next.Y == 1) {
+							doBreak = true;
+							//length += dist * ;
+						}
 						break;
 						case BlockType.SlopeDownRight:
+						if (next.X == 1 || next.Y == 1) {
+							doBreak = true;
+							//length += dist * ;
+						}
 						break;
 						case BlockType.SlopeUpLeft:
+						if (next.X == 0 || next.Y == 0) {
+							doBreak = true;
+							//length += dist * ;
+						}
 						break;
 						case BlockType.SlopeUpRight:
+						if (next.X == 1 || next.Y == 0) {
+							doBreak = true;
+							//length += dist * ;
+						}
 						break;
 					}
 				}

@@ -50,7 +50,7 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.SpawnTileY < Main.worldSurface || spawnInfo.DesertCave) return 0;
+			if ((spawnInfo.SpawnTileY < Main.worldSurface && !spawnInfo.Water) || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -65,13 +65,13 @@ namespace Origins.NPCs.Defiled {
 			get => NPC.frame.Y / 58;
 			set => NPC.frame.Y = value * 58;
 		}
-		public override void AI() {
+		public override bool PreAI() {
 			NPC.TargetClosestUpgraded();
 			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
 				Player target = Main.player[NPC.target];
 				int level = Defiled_Asphyxiator_Debuff.GetLevel(target);
 				int projectileType = ProjectileID.None;
-				float speed = 32f;
+				float speed = 12f;
 				float inertia = 128f;
 				NPC.rotation = NPC.velocity.X * 0.1f;
 				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
@@ -131,6 +131,7 @@ namespace Origins.NPCs.Defiled {
 			} else {
 
 			}
+			return false;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 9) {
