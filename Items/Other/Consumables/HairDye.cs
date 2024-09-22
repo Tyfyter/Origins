@@ -13,6 +13,18 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Holiday_Hair_Dye : HairDye {
+		public const int January = 1;
+		public const int February = 2;
+		public const int March = 3;
+		public const int April = 4;
+		public const int May = 5;
+		public const int June = 6;
+		public const int July = 7;
+		public const int August = 8;
+		public const int September = 9;
+		public const int October = 10;
+		public const int November = 11;
+		public const int December = 12;
 		static List<(Func<bool> day, HolidayHairPassData pass)> shaders;
 		public override HairShaderData ShaderData => new HolidayHairShaderData(Mod.Assets.Request<Effect>("Effects/HolidayHairDye"), "Default");
 		public static HolidayHairPassData CurrentPass {
@@ -54,7 +66,7 @@ namespace Origins.Items.Other.Consumables {
 				));
 			}
 			shaders = [
-				(AddHoliday("Autism Awareness Day", new DateTime(2007, 4, 2)), new HolidayHairPassData(
+				(AddHoliday("Autism Awareness Day", new DateTime(2007, April, 2)), new HolidayHairPassData(
 					PassName: "AutismAwareness",
 					ColorFunc: (hairColor, lightColor) => Color.Lerp(lightColor, Color.White, 0.1f)
 				)),
@@ -78,9 +90,39 @@ namespace Origins.Items.Other.Consumables {
 					UsesHairColor: false,
 					Image: Main.Assets.Request<Texture2D>("Images/Misc/noise")
 				)),
-				SimpleHoliday("World Stroke Day", new DateTime(1999, 10, 29), new Color(33, 33, 33), "WorldStrokeDay_Hair", false),
-				//SimpleHoliday("World Art Day", new DateTime(2012, 4, 15), new Color(33, 33, 33), "ArtDay_Hair", false),
-				SimpleHoliday("Cerebral Palsy Awareness Day", new DateTime(2012, 3, 25), null, "CerebralPalsyAwarenessDay_Hair", true),
+				SimpleHoliday("World Stroke Day", new DateTime(1999, October, 29), new Color(33, 33, 33), "WorldStrokeDay_Hair", false),
+				SimpleHoliday("World Art Day", new DateTime(2012, April, 15), default, "ArtDay_Hair", false),
+				SimpleHoliday("Cerebral Palsy Awareness Day", new DateTime(2012, March, 25), null, "CerebralPalsyAwarenessDay_Hair", true),
+				SimpleHoliday("New Year's Day", new DateTime(2012, January, 1), default, "NewYears_Hair", false),
+				SimpleHoliday("Programmers' Day", new DateTime(2012, January, 26), new Color(33, 33, 33), "Programmers_Hair", false),
+				SimpleHoliday("Environment Day", new DateTime(2012, June, 5), default, "EnvironmentDay_Hair", true),
+				SimpleHoliday("Groundhog Day", new DateTime(2012, February, 2), default, "GroundHog_Hair", true),
+				SimpleHoliday("World Cancer Day", new DateTime(2012, February, 4), default, "WorldCancer_Hair", true),
+				SimpleHoliday("World Art Day", new DateTime(2012, February, 11), default, "SickDay_Hair", true),
+				SimpleHoliday("Saint Valentine's Day", new DateTime(2012, February, 14), default, "Valentines_Hair", true),
+				SimpleHoliday("Women's Day", new DateTime(2012, March, 8), default, "WomensDay_Hair", true),
+				SimpleHoliday("International Day of Happiness", new DateTime(2012, March, 20), default, "HappinessDay_Hair", true),
+				SimpleHoliday("World Creativity and Innovation Day", new DateTime(2012, April, 21), default, "CreativityInnovation_Hair", true),
+				SimpleHoliday("International Press Freedom Day", new DateTime(2012, May, 3), default, "PressFreedom_Hair", true),
+				SimpleHoliday("International Nurses Day", new DateTime(2012, May, 12), default, "NurseDay_Hair", true),
+				SimpleHoliday("International Day of Light", new DateTime(2012, May, 16), default, "LightDay_Hair", true),
+				SimpleHoliday("World Ocean Day", new DateTime(2012, June, 8), default, "WorldOceanDay_Hair", true),
+				SimpleHoliday("Fathers' Day", new DateTime(2012, June, 16), default, "FathersDay_Hair", true),
+				SimpleHoliday("International Asteroid Day", new DateTime(2012, June, 30), default, "InternationalAsteroidDay_Hair", true),
+				//SimpleHoliday("International Cooperatives Day", new DateTime(2012, April, 15), default, "InternationalCooperativesDay_Hair", false),
+				SimpleHoliday("World Population Day", new DateTime(2012, July, 11), default, "WorldPopulationDay_Hair", true),
+				SimpleHoliday("International Moon Day", new DateTime(2012, July, 20), default, "InternationalMoonDay_Hair", true),
+				SimpleHoliday("International Friendship Day", new DateTime(2012, July, 30), default, "InternationalFriendshipDay_Hair", true),
+				//SimpleHoliday("World Art Day", new DateTime(2012, April, 15), default, "MentalHealthAwarenessDay_Hair", false),// could not find such a day
+				SimpleHoliday("Overdose Awareness Day", new DateTime(2012, August, 31), default, "OverdoseAwarenessDay_Hair", true),
+				//SimpleHoliday("World Art Day", new DateTime(2012, April, 15), default, "ThanksgivingDay_Hair", false),
+				SimpleHoliday("International Charity Day", new DateTime(2012, September, 5), default, "InternationalChairtyDay_Hair", true),
+				SimpleHoliday("International Peace Day", new DateTime(2012, September, 21), default, "InternationalPeaceDay_Hair", true),
+				SimpleHoliday("World Art Day", new DateTime(2012, November, 12), default, "WorldPneumoniaDay_Hair", true),
+				SimpleHoliday("World Art Day", new DateTime(2012, November, 14), default, "WorldDiabetesDay_Hair", true),
+				SimpleHoliday("World Art Day", new DateTime(2012, November, 21), default, "WorldPhilosphyDay_Hair", true),
+				SimpleHoliday("World Art Day", new DateTime(2012, December, 10), default, "HumanRightsDay_Hair", true),
+				SimpleHoliday("World Art Day", new DateTime(2012, December, 20), default, "WorldSoilDay_Hair", true),
 				(() => Main.halloween, new HolidayHairPassData(
 					PassName: "Overlay",
 					uColor: new Color(33, 33, 33),
