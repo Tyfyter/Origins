@@ -26,6 +26,7 @@ Status_Messages: {
 	// Defiled_Fissure_2: Rattling emanates from the walls...
 	// Defiled_Fissure_3: The skies echo a threatening call...
 	// Cleansing_Station_Invalid_Location: You cannot use this here.
+	// Laser_Tag_Victory: "{0} wins!"
 }
 
 ItemDropConditions: {
@@ -951,6 +952,11 @@ Buffs: {
 	Defiled_Asphyxiator_Debuff_3: {
 		// DisplayName: Defiled Asphyxiator Debuff_3
 		// Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff_3.Description
+	}
+
+	Laser_Tag_Buff: {
+		// DisplayName: Laser Tag Buff
+		// Description: Mods.Origins.Buffs.Laser_Tag_Buff.Description
 	}
 }
 

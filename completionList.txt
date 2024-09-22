@@ -162,7 +162,7 @@ ENEMY NPCS:
 (^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod
-(#, ^2) Defiled Watcher* !!!
+(#, ^2, ☻) Defiled Watcher* !!!
 (X) Hoarder
 (X) Holy Governor
 (X) Holy Warrior
@@ -601,7 +601,7 @@ MELEE WEAPONS:
 (X) Chromtain Smasher
 (X) Eyndum Scar
 (X) Rocket Lance
-(#2, ^2) The Bird
+(#2, ^2, ⛥) The Bird
 ---
 
 

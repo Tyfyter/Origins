@@ -164,7 +164,7 @@ namespace Origins.NPCs.Defiled {
 					Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.4f) * Main.rand.NextFloat(1.1f, 1.5f),
 					Defiled_Spike_Explosion_Spike_Hostile.ID,
 					Projectile.damage,
-					0,
+					Projectile.knockBack,
 					Projectile.owner,
 					ai1: Projectile.whoAmI
 				);
@@ -175,7 +175,7 @@ namespace Origins.NPCs.Defiled {
 						Projectile.velocity.RotatedBy(-Projectile.localAI[0] * 0.4f) * Main.rand.NextFloat(1.1f, 1.5f),
 						Defiled_Spike_Explosion_Spike_Hostile.ID,
 						Projectile.damage,
-						0,
+						Projectile.knockBack,
 						Projectile.owner,
 						ai1: Projectile.whoAmI
 					);

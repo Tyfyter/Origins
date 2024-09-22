@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.damage = 99;
 			Item.useAnimation = Item.useTime = 20;
 			Item.rare = ItemRarityID.Cyan;
-			Item.knockBack = (int)99999996;
+			Item.knockBack = 99999996;
 		}
 		public override void AddRecipes() {
 			//Recipe.Create(Type)
