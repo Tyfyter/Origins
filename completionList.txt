@@ -81,7 +81,7 @@ TOWN NPCs:
 (#3) TOWN NPC QUEST MECHANICS (general)
 
 (#3?, %2, ^2) Acid Freak
-(#, ^2) Defiled Effigy
+(☻, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
 
@@ -1155,7 +1155,7 @@ CONSUMABLES:
 (X) Twilight Crate*
 
 (^) Gooey Water*
-(%2, ^2) Holiday Hair Dye* !!!
+(☻) Holiday Hair Dye* !!!
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
 (^) Void Lock*
