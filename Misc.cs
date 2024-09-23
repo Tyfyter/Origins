@@ -1429,7 +1429,18 @@ namespace Origins {
 		public static StatModifier GetInverse(this StatModifier statModifier) {
 			return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
 		}
-		public static Vector2 GetKnockbackFromHit(this NPC.HitInfo hit, float xMult = 1, float yMult = -0.1f) => new Vector2(hit.Knockback * hit.HitDirection, -0.1f * hit.Knockback);
+		public static Vector2 GetKnockbackFromHit(this NPC.HitInfo hit, bool nerf = true, bool includeDirection = true, float xMult = 1, float yMult = -0.75f) {
+			float knockback = hit.Knockback;
+			if (nerf) {
+				if (knockback > 8f) knockback = 8f + (knockback - 8f) * 0.9f;
+				if (knockback > 10f) knockback = 10f + (knockback - 10f) * 0.8f;
+				if (knockback > 12f) knockback = 12f + (knockback - 12f) * 0.7f;
+				if (knockback > 14f) knockback = 14f + (knockback - 14f) * 0.6f;
+				if (knockback > 16f) knockback = 16f;
+			}
+			if (hit.Crit) knockback *= 1.4f;
+			return new(knockback * (includeDirection ? hit.HitDirection : 1) * xMult, knockback * yMult);
+		}
 		public static void ApplyBuffTimeModifier(this Player player, float mult, bool[] set, bool invert = false) {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (set[player.buffType[i]]) {
