@@ -130,7 +130,7 @@ namespace Origins {
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
 							ModPacket packet = GetPacket();
-							packet.Write(Origins.NetMessageType.sync_peat);
+							packet.Write(sync_peat);
 							packet.Write((short)OriginSystem.Instance.peatSold);
 							packet.Send(-1, whoAmI);
 						}
@@ -138,7 +138,7 @@ namespace Origins {
 					}
 					case world_cracker_hit: {
 						NPC npc = Main.npc[reader.ReadUInt16()];
-						NPC.HitInfo hit = new NPC.HitInfo() {
+						NPC.HitInfo hit = new() {
 							SourceDamage = reader.ReadInt32(),
 							Crit = reader.ReadBoolean(),
 							HitDirection = reader.ReadInt32(),
@@ -149,8 +149,8 @@ namespace Origins {
 
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
-							ModPacket packet = Origins.instance.GetPacket();
-							packet.Write(Origins.NetMessageType.world_cracker_hit);
+							ModPacket packet = GetPacket();
+							packet.Write(world_cracker_hit);
 							packet.Write((ushort)npc.whoAmI);
 							packet.Write((int)hit.SourceDamage);
 							packet.Write((bool)hit.Crit);
@@ -167,8 +167,8 @@ namespace Origins {
 						// Forward the changes to the other clients
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
-							ModPacket packet = Origins.instance.GetPacket();
-							packet.Write(Origins.NetMessageType.sync_guid);
+							ModPacket packet = GetPacket();
+							packet.Write(sync_guid);
 							packet.Write((byte)originPlayer.Player.whoAmI);
 							packet.Write(originPlayer.guid.ToByteArray());
 							packet.Send(-1, Main.myPlayer);
@@ -179,15 +179,21 @@ namespace Origins {
 					Main.player[reader.ReadByte()].OriginPlayer().InflictAssimilation(reader.ReadByte(), reader.ReadSingle());
 					break;
 					case start_laser_tag or end_laser_tag:
+					bool startLaserTag = type == start_laser_tag;
 					foreach (Player player in Main.ActivePlayers) {
 						OriginPlayer originPlayer = player.OriginPlayer();
-						if (originPlayer.laserTagVest) originPlayer.laserTagVestActive = type == start_laser_tag;
+						if (originPlayer.laserTagVest) originPlayer.laserTagVestActive = startLaserTag;
 					}
+					if (startLaserTag) Laser_Tag_Console.LaserTagRules = Laser_Tag_Rules.Read(reader);
 					if (Main.netMode == NetmodeID.Server) {
 						// Forward the changes to the other clients
-						ModPacket packet = Origins.instance.GetPacket();
+						ModPacket packet = GetPacket();
 						packet.Write(type);
+						if (startLaserTag) Laser_Tag_Console.LaserTagRules.Write(packet);
 						packet.Send(-1, Main.myPlayer);
+					}
+					for (int i = 0; i < Laser_Tag_Console.LaserTagTeamPoints.Length; i++) {
+						Laser_Tag_Console.LaserTagTeamPoints[i] = 0;
 					}
 					break;
 					case laser_tag_hit: {
@@ -195,8 +201,8 @@ namespace Origins {
 						Main.player[target].OriginPlayer().laserTagVestActive = false;
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
-							ModPacket packet = Origins.instance.GetPacket();
-							packet.Write(Origins.NetMessageType.laser_tag_hit);
+							ModPacket packet = GetPacket();
+							packet.Write(laser_tag_hit);
 							packet.Write(target);
 							packet.Send(-1, Main.myPlayer);
 						}
@@ -204,7 +210,7 @@ namespace Origins {
 					}
 				}
 			}
-			//if (reader.BaseStream.Position != reader.BaseStream.Length) Origins.instance.Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
+			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
 		}
 		internal static byte lastPacketType;
 		internal static class NetMessageType {

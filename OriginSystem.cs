@@ -491,73 +491,14 @@ namespace Origins {
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
 		public int laserTagActivePlayers = 0;
-		public bool AnyLaserTagActive => laserTagActivePlayers > 0;
-		public bool LaserTagMultipleTeamsActive {
-			get {
-				if (laserTagActiveTeams == 0) return false;
-				if (laserTagActiveTeams == 1) return laserTagActivePlayers > 1;
-				return (laserTagActiveTeams & (laserTagActiveTeams - 1)) != 0;
-			}
-		}
+		public Laser_Tag_Rules laserTagRules;
+		public int laserTagTimeLeft = 0;
+		public int[] laserTagTeamPoints = new int[6];
 		public override void PreUpdatePlayers() {
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];
 			else OriginPlayer.playersByGuid.Clear();
-			laserTagActiveTeams = 0;
-			laserTagActivePlayers = 0;
-			foreach (Player player in Main.ActivePlayers) {
-				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-				OriginPlayer.playersByGuid.TryAdd(originPlayer.guid, player.whoAmI);
-				if (originPlayer.laserTagVestActive) {
-					laserTagActiveTeams |= 1 << player.team;
-					laserTagActivePlayers++;
-				}
-			}
-			if (AnyLaserTagActive) {
-				if (LaserTagMultipleTeamsActive) {
-					foreach (Player player in Main.ActivePlayers) {
-						player.hostile = player.OriginPlayer().laserTagVestActive;
-					}
-				} else if (Main.netMode == NetmodeID.Server) {
-					Player survivor = null;
-					foreach (Player player in Main.ActivePlayers) {
-						ref bool laserTagVestActive = ref player.OriginPlayer().laserTagVestActive;
-						if (laserTagVestActive) {
-							laserTagVestActive = false;
-							survivor ??= player;
-						}
-					}
-					Color color = Main.teamColor[survivor.team];
-					object substitution;
-					switch (survivor.team) {
-						case 1:
-						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Red");
-						break;
-						case 2:
-						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Green");
-						break;
-						case 3:
-						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Blue");
-						break;
-						case 4:
-						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Yellow");
-						break;
-						case 5:
-						substitution = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Purple");
-						break;
-						default:
-						case 0:
-						substitution = survivor.name;
-						break;
-					}
-					ChatHelper.BroadcastChatMessage(Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Victory").ToNetworkText(substitution), color);
-					ModPacket packet = Origins.instance.GetPacket();
-					packet.Write(Origins.NetMessageType.end_laser_tag);
-					packet.Send(-1, Main.myPlayer);
-					laserTagActiveTeams = 0;
-					laserTagActivePlayers = 0;
-				}
-			}
+			Laser_Tag_Console.ProcessLaserTag();
 			if (!hasLoggedPUP) {
 				hasLoggedPUP = true;
 				Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
