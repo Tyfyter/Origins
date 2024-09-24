@@ -36,13 +36,15 @@ Status_Messages: {
 
 Laser_Tag: {
 	Teams: Teams
-	CTG: Capture the Gem
-	Building: Allow Building
+	CTG: Capture the Gem (unimplemented)
+	Building: Allow Building (unimplemented)
 	StartButton: Start
-	RespawnTime: Respawn Time
+	RespawnTime: Revive Time (unimplemented)
+	Seconds: "{0:0.##} Seconds"
 	Time: Match Duration
 	Indefinite: Indefinite
 	Elimination: Elimination
+	HP: Hit Points
 }
 
 ItemDropConditions: {

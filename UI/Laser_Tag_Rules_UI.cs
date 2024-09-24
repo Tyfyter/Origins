@@ -14,29 +14,12 @@ using Terraria.ModLoader.UI;
 using Terraria.UI;
 using ReLogic.Content;
 using System.Text;
+using Terraria.GameContent;
+using System;
 
 namespace Origins.UI {
 	public class Laser_Tag_Rules_UI : UIState {
-		static AutoCastingAsset<Texture2D>[] Textures;
-		public class TextureLoader : ILoadable {
-			public void Load(Mod mod) {
-				Textures = [
-					Origins.instance.Assets.Request<Texture2D>("UI/Broadcast_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Dream_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Grow_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Inject_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Defile_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Focus_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Float_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Command_Icon"),
-					Origins.instance.Assets.Request<Texture2D>("UI/Evolve_Icon")
-				];
-			}
-
-			public void Unload() {
-				Textures = null;
-			}
-		}
+		public static SoundStyle ClickSound => SoundID.Tink.WithVolumeScale(0.75f);
 		public override void OnInitialize() {
 			UIElement panel = new UIPanel();
 			panel.Width.Set(0f, 0.875f);
@@ -71,7 +54,7 @@ namespace Origins.UI {
 		static AutoLoadingAsset<Texture2D> toggleTexture = "Terraria/Images/UI/Settings_Toggle";
 		public override void LeftClick(UIMouseEvent evt) {
 			variable() ^= true;
-			SoundEngine.PlaySound(SoundID.Tink.WithVolumeScale(0.75f));
+			SoundEngine.PlaySound(Laser_Tag_Rules_UI.ClickSound);
 		}
 		public new Color BorderColor = Color.Black;
 		public new Color BackgroundColor = new Color(63, 82, 151) * 0.7f;
@@ -95,21 +78,21 @@ namespace Origins.UI {
 		}
 	}
 	public delegate ref int ButtonTimenessGetter();
-	public class UI_Time_Button(ButtonTimenessGetter variable, LocalizedText text, (int radix, string format, string suffix)[] radices, int increment = 1, int indefiniteThreshold = 0, LocalizedText indefiniteText = null, int maxValue = int.MaxValue) : UIPanel {
+	public class UI_Time_Button(ButtonTimenessGetter variable, LocalizedText text, (int radix, string format, bool alwaysShow)[] radices, int increment = 1, int indefiniteThreshold = 0, LocalizedText indefiniteText = null, int maxValue = int.MaxValue) : UIPanel {
 		public new Color BorderColor = Color.Black;
 		public new Color BackgroundColor = new Color(63, 82, 151) * 0.7f;
 		public Color HoverBorderColor = new Color(33, 33, 33) * 0.9f;
 		public Color HoverBackgroundColor = new Color(93, 113, 187) * 0.9f;
 		string FormatTime(int time) {
-			if (indefiniteText is not null && time < indefiniteThreshold) return indefiniteText.Value;
+			if (indefiniteText is not null && time < indefiniteThreshold * increment) return indefiniteText.Value;
 			StringBuilder builder = new();
 			float textTime = time / 60f;
 			for (int i = 1; i <= radices.Length; i++) {
-				(int radix, string format, string suffix) = radices[^i];
+				(int radix, string format, bool alwaysShow) = radices[^i];
+				if (textTime == 0 && !alwaysShow) break;
 				float useTime = i == radices.Length ? textTime : textTime % radix;
-				builder.Insert(0, string.Format(format, useTime) + suffix);
+				builder.Insert(0, string.Format(format, useTime));
 				textTime = (int)(textTime / radix);
-				if (textTime == 0) break;
 			}
 			return builder.ToString();
 		}
@@ -129,7 +112,7 @@ namespace Origins.UI {
 			Utils.DrawBorderString(spriteBatch, FormatTime(time), destinationRectangle.Left() - Vector2.UnitX * 8, Color.White, 1f, 1f, 0.4f, -1);
 
 			bool click = Main.mouseLeft && Main.mouseLeftRelease;
-			bool indefinite = time < indefiniteThreshold;
+			bool indefinite = time < indefiniteThreshold * increment;
 			bool maxed = time >= maxValue;
 
 			destinationRectangle.Height /= 2;
@@ -139,10 +122,10 @@ namespace Origins.UI {
 			} else if (destinationRectangle.Contains(Main.mouseX, Main.mouseY)) {
 				color = Color.White;
 				if (click) {
-					if (indefinite) variable() = indefiniteThreshold;
+					if (indefinite) variable() = indefiniteThreshold * increment;
 					else variable() += increment;
 					if (time > maxValue) time = maxValue;
-					SoundEngine.PlaySound(SoundID.Tink.WithVolumeScale(0.75f));
+					SoundEngine.PlaySound(Laser_Tag_Rules_UI.ClickSound);
 				}
 			}
 			spriteBatch.Draw(UICommon.ButtonUpDownTexture.Value, destinationRectangle, sourceRectangle, color);
@@ -156,11 +139,65 @@ namespace Origins.UI {
 				color = Color.White;
 				if (click) {
 					variable() -= increment;
-					if (time < indefiniteThreshold) time = indefiniteThreshold - increment;
-					SoundEngine.PlaySound(SoundID.Tink.WithVolumeScale(0.75f));
+					if (time < indefiniteThreshold) time = indefiniteThreshold * increment - increment;
+					SoundEngine.PlaySound(Laser_Tag_Rules_UI.ClickSound);
 				}
 			}
 			spriteBatch.Draw(UICommon.ButtonUpDownTexture.Value, destinationRectangle, sourceRectangle, color);
+		}
+	}
+	public delegate ref int ButtonHealthnessGetter();
+	public class UI_HP_Button(ButtonHealthnessGetter variable, LocalizedText text, Texture2D texture) : UIPanel {
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
+			Rectangle bounds = GetDimensions().ToRectangle();
+			base.DrawSelf(spriteBatch);
+
+			Vector2 pos = bounds.Left() + Vector2.UnitX * 8;
+			Utils.DrawBorderString(spriteBatch, text.Value, pos, Color.White, 1f, 0f, 0.4f, -1);
+			pos += FontAssets.MouseText.Value.MeasureString(text.Value) * new Vector2(1, 0f) + Vector2.UnitX * 8;
+			bounds.Inflate(-4, -4);
+			Vector2 size = texture.Size() * (bounds.Height / (float)texture.Height);
+			int hp = variable();
+			Rectangle destinationRectangle = new((int)pos.X, bounds.Y, (int)size.X, (int)size.Y);
+			int paddedWidth = (destinationRectangle.Width + 2);
+			int maxDisplayed = (bounds.Right - destinationRectangle.X) / paddedWidth;
+			bool hovered = new Rectangle(destinationRectangle.X, destinationRectangle.Y - 2, maxDisplayed * paddedWidth, destinationRectangle.Height + 4).Contains(Main.mouseX, Main.mouseY);
+			if (hovered) {
+				int hoverIndex = -1;
+				for (int i = maxDisplayed - 1; i >= 0; i--) {
+					destinationRectangle.X = (int)pos.X + paddedWidth * i;
+					if (i < hp) {
+						spriteBatch.Draw(
+							texture,
+							destinationRectangle,
+							Color.Black
+						);
+					}
+					if (hoverIndex == -1 && destinationRectangle.Contains(Main.mouseX, Main.mouseY, 2, 4)) {
+						hoverIndex = i;
+					}
+					if (hoverIndex != -1) {
+						spriteBatch.Draw(
+							texture,
+							destinationRectangle,
+							new Color(255, 255, 255, 0)
+						);
+					}
+				}
+				if (hoverIndex != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
+					variable() = hoverIndex + 1;
+					SoundEngine.PlaySound(Laser_Tag_Rules_UI.ClickSound);
+				}
+			} else {
+				for (int i = hp - 1; i >= 0; i--) {
+					destinationRectangle.X = (int)pos.X + paddedWidth * i;
+					spriteBatch.Draw(
+						texture,
+						destinationRectangle,
+						Color.White
+					);
+				}
+			}
 		}
 	}
 }

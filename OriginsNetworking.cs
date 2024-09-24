@@ -185,6 +185,7 @@ namespace Origins {
 						OriginPlayer originPlayer = player.OriginPlayer();
 						if (originPlayer.laserTagVest) {
 							originPlayer.laserTagVestActive = startLaserTag;
+							if (startLaserTag) originPlayer.laserTagHP = Laser_Tag_Console.LaserTagRules.HP;
 							if (!Laser_Tag_Console.LaserTagRules.Teams) player.team = 0;
 						}
 					}
@@ -201,7 +202,10 @@ namespace Origins {
 					break;
 					case laser_tag_hit: {
 						byte target = reader.ReadByte();
-						Main.player[target].OriginPlayer().laserTagVestActive = false;
+						OriginPlayer originPlayer = Main.player[target].OriginPlayer();
+						if (--originPlayer.laserTagHP <= 0) {
+							originPlayer.laserTagVestActive = false;
+						}
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
 							ModPacket packet = GetPacket();

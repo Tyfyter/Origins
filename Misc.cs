@@ -1578,6 +1578,9 @@ namespace Origins {
 		public static Vector4 FrameToUV(this Rectangle frame, Vector2 save) {
 			return new Vector4(frame.X / save.X, frame.Y / save.Y, frame.Width / save.X, frame.Height / save.Y);
 		}
+		public static bool Contains(this Rectangle area, int x, int y, int xPadding, int yPadding) {
+			return (area.X <= x + xPadding) && (x < area.Right + xPadding) && (area.Y <= y + yPadding) && (y < area.Bottom + yPadding);
+		}
 		public static Vector4 UVFrame(this Asset<Texture2D> frame, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			return frame.Value.UVFrame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
 		}

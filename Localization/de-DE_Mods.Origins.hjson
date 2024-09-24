@@ -40,6 +40,7 @@ Laser_Tag: {
 	// Building: Allow Building
 	// StartButton: Start
 	// RespawnTime: Respawn Time
+	// Seconds: "{0:0.##} Seconds"
 	// Time: Match Duration
 	// Indefinite: Indefinite
 	// Elimination: Elimination
