@@ -39,6 +39,10 @@ Laser_Tag: {
 	// CTG: Capture the Gem
 	// Building: Allow Building
 	// StartButton: Start
+	// RespawnTime: Respawn Time
+	// Time: Match Duration
+	// Indefinite: Indefinite
+	// Elimination: Elimination
 }
 
 ItemDropConditions: {

@@ -32,7 +32,7 @@ namespace Origins.Tiles.Other {
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => CheckInteract(true);
 		public override bool RightClick(int i, int j) => CheckInteract(false);
 		public static bool CheckInteract(bool justCheck) {
-			if (Main.netMode == NetmodeID.SinglePlayer) return false;
+			//if (Main.netMode == NetmodeID.SinglePlayer) return false;
 			if (!OriginPlayer.LocalOriginPlayer.laserTagVest) return false;
 			if (AnyLaserTagActive) {
 				if (LaserTagRules.CTG) {
@@ -193,6 +193,16 @@ namespace Origins.Tiles.Other {
 		public bool CTG = CTG;
 		public bool Building = Building;
 		public IEnumerable<UIElement> GetUIElements() {
+			static UI_Time_Button GetTimeController(ButtonTimenessGetter variable, string name, (int radix, string format, string suffix)[] radices, int increment = 1, int indefiniteThreshold = 0, string indefiniteName = null, int maxValue = int.MaxValue) {
+				UI_Time_Button timeController = new(variable, Language.GetOrRegister(prefix + name), radices, increment, indefiniteThreshold, Language.GetOrRegister(prefix + (indefiniteName ?? "Indefinite")), maxValue);
+				timeController.Width.Set(-10, 100);
+				timeController.Height.Set(32, 0);
+				return timeController;
+			}
+			yield return GetTimeController(() => ref RespawnTime, "RespawnTime", [(60, "{0:0.##}", "")], 15, indefiniteName: "Elimination");
+			yield return GetTimeController(() => ref Time, "Time", [(60, "{0:#0}", ":"), (60, "{0:00}", "")], 60 * 30, 60 * 30);
+			//yield return GetHealthController(() => ref HP, "HP");
+
 			static UI_Toggle_Button GetButton(ButtonTogglenessGetter variable, string name, float textScaleMax = 1, bool large = false) {
 				UI_Toggle_Button button = new(variable, Language.GetOrRegister(prefix + name));
 				button.Width.Set(-10, 100);
