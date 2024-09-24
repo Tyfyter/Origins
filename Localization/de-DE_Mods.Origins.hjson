@@ -34,6 +34,13 @@ Status_Messages: {
 	// Laser_Tag_Team_Purple: Pink team
 }
 
+Laser_Tag: {
+	// Teams: Teams
+	// CTG: Capture the Gem
+	// Building: Allow Building
+	// StartButton: Start
+}
+
 ItemDropConditions: {
 	// SoulOfNight: Drops in Underground evil biomes
 	// DownedPlantBoss: Found after defeating Plantera

@@ -491,7 +491,7 @@ namespace Origins {
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
 		public int laserTagActivePlayers = 0;
-		public Laser_Tag_Rules laserTagRules;
+		public Laser_Tag_Rules laserTagRules = new();
 		public int laserTagTimeLeft = 0;
 		public int[] laserTagTeamPoints = new int[6];
 		public override void PreUpdatePlayers() {

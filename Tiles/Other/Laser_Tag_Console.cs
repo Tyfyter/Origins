@@ -1,13 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.UI;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
+using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
+using Terraria.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.Tiles.Other {
 	public class Laser_Tag_Console : ModTile {
@@ -30,15 +38,14 @@ namespace Origins.Tiles.Other {
 				if (LaserTagRules.CTG) {
 					_ = Main.LocalPlayer.ownedLargeGems;
 				}
-				if (LaserTagRules.RespawnTime == -1) return false;
+				if (LaserTagRules.RespawnTime < 0) return false;
 
 			} else {
 				if (!justCheck) {
-					// Forward the changes to the other clients
-					ModPacket packet = Origins.instance.GetPacket();
-					packet.Write(Origins.NetMessageType.start_laser_tag);
-					LaserTagRules.Write(packet);
-					packet.Send(-1, Main.myPlayer);
+					Main.LocalPlayer.SetTalkNPC(-1);
+					Main.npcChatCornerItem = 0;
+					SoundEngine.PlaySound(SoundID.MenuOpen);
+					IngameFancyUI.OpenUIState(new Laser_Tag_Rules_UI());
 				}
 			}
 			return true;
@@ -96,7 +103,7 @@ namespace Origins.Tiles.Other {
 				}
 			}
 			if (AnyLaserTagActive || LaserTagTimeLeft > 0) {
-				if (LaserTagRules.RespawnTime == -1) {// elimination
+				if (LaserTagRules.RespawnTime < 0) {// elimination
 					if (LaserTagMultipleTeamsActive) {
 						foreach (Player player in Main.ActivePlayers) {
 							player.hostile = player.OriginPlayer().laserTagVestActive;
@@ -177,14 +184,26 @@ namespace Origins.Tiles.Other {
 			.Register();
 		}
 	}
-	public struct Laser_Tag_Rules(int RespawnTime = -1, int Time = -1, int HP = 1, bool Teams = false, bool CTG = false, bool Building = false) {
-		public int RespawnTime { get; set; } = RespawnTime;
-		public int Time { get; set; } = Time;
-		public int HP { get; set; } = HP;
-		public bool Teams { get; set; } = Teams;
-		public bool CTG { get; set; } = CTG;
-		public bool Building { get; set; } = Building;
-		public readonly void Write(BinaryWriter writer) {
+	public class Laser_Tag_Rules(int RespawnTime = -1, int Time = -1, int HP = 1, bool Teams = false, bool CTG = false, bool Building = false) {
+		const string prefix = "Mods.Origins.Laser_Tag.";
+		public int RespawnTime = RespawnTime;
+		public int Time = Time;
+		public int HP = HP;
+		public bool Teams = Teams;
+		public bool CTG = CTG;
+		public bool Building = Building;
+		public IEnumerable<UIElement> GetUIElements() {
+			static UI_Toggle_Button GetButton(ButtonTogglenessGetter variable, string name, float textScaleMax = 1, bool large = false) {
+				UI_Toggle_Button button = new(variable, Language.GetOrRegister(prefix + name));
+				button.Width.Set(-10, 100);
+				button.Height.Set(32, 0);
+				return button;
+			}
+			yield return GetButton(() => ref Teams, "Teams");
+			yield return GetButton(() => ref CTG, "CTG");
+			yield return GetButton(() => ref Building, "Building");
+		}
+		public void Write(BinaryWriter writer) {
 			writer.Write(RespawnTime);
 			writer.Write(Time);
 			writer.Write(HP);

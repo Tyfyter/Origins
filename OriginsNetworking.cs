@@ -180,11 +180,14 @@ namespace Origins {
 					break;
 					case start_laser_tag or end_laser_tag:
 					bool startLaserTag = type == start_laser_tag;
+					if (startLaserTag) Laser_Tag_Console.LaserTagRules = Laser_Tag_Rules.Read(reader);
 					foreach (Player player in Main.ActivePlayers) {
 						OriginPlayer originPlayer = player.OriginPlayer();
-						if (originPlayer.laserTagVest) originPlayer.laserTagVestActive = startLaserTag;
+						if (originPlayer.laserTagVest) {
+							originPlayer.laserTagVestActive = startLaserTag;
+							if (!Laser_Tag_Console.LaserTagRules.Teams) player.team = 0;
+						}
 					}
-					if (startLaserTag) Laser_Tag_Console.LaserTagRules = Laser_Tag_Rules.Read(reader);
 					if (Main.netMode == NetmodeID.Server) {
 						// Forward the changes to the other clients
 						ModPacket packet = GetPacket();
