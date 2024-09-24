@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,9 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.laserTagVest = true;
+			if (Laser_Tag_Console.AnyLaserTagActive) {
+				player.noBuilding = !Laser_Tag_Console.LaserTagRules.Building;
+			}
 		}
 	}
 }

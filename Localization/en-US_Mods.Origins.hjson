@@ -37,7 +37,7 @@ Status_Messages: {
 Laser_Tag: {
 	Teams: Teams
 	CTG: Capture the Gem (unimplemented)
-	Building: Allow Building (unimplemented)
+	Building: Allow Building
 	StartButton: Start
 	RespawnTime: Revive Time (unimplemented)
 	Seconds: "{0:0.##} Seconds"
