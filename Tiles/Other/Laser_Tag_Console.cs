@@ -122,6 +122,23 @@ namespace Origins.Tiles.Other {
 						SelectWinner(survivor);
 					}
 				}
+				if (LaserTagRules.PointsToWin != 0) {
+					if (LaserTagRules.Teams) {
+						for (int i = 0; i < LaserTagTeamPoints.Length; i++) {
+							if (LaserTagTeamPoints[i] >= LaserTagRules.PointsToWin) {
+								SelectWinner(team: i);
+								break;
+							}
+						}
+					} else {
+						foreach (Player player in Main.ActivePlayers) {
+							if (player.OriginPlayer().laserTagPoints >= LaserTagRules.PointsToWin) {
+								SelectWinner(player);
+								break;
+							}
+						}
+					}
+				}
 				if (LaserTagRules.Time > 0 && --LaserTagTimeLeft <= 0) {//any mode, end by timeout
 					int bestPointsOwner = 0;
 					int bestPointsCount = 0;
@@ -186,49 +203,53 @@ namespace Origins.Tiles.Other {
 			.Register();
 		}
 	}
-	public class Laser_Tag_Rules(int RespawnTime = -1, int Time = -1, int HP = 1, bool Teams = false, bool CTG = false, bool Building = false) {
+	file static class Laser_Tag_Extensions {
+		public static T SetSize<T>(this T element) where T : UIElement {
+			element.Width.Set(-10, 1f);
+			element.Height.Set(32, 0);
+			return element;
+		}
+	}
+	public class Laser_Tag_Rules(int RespawnTime = -1, int Time = -1, int HP = 1, int PointsToWin = 0, bool Teams = true, bool CTG = false, bool Building = false) {
 		const string prefix = "Mods.Origins.Laser_Tag.";
 		public int RespawnTime = RespawnTime;
 		public int Time = Time;
 		public int HP = HP;
+		public int PointsToWin = PointsToWin;
 		public bool Teams = Teams;
 		public bool CTG = CTG;
 		public bool Building = Building;
 		public IEnumerable<UIElement> GetUIElements() {
-			static UI_Time_Button GetTimeController(ButtonTimenessGetter variable, string name, (int radix, string format, bool alwaysShow)[] radices, int increment = 1, int indefiniteThreshold = 0, string indefiniteName = null, int maxValue = int.MaxValue) {
-				UI_Time_Button timeController = new(variable, Language.GetOrRegister(prefix + name), radices, increment, indefiniteThreshold, Language.GetOrRegister(prefix + (indefiniteName ?? "Indefinite")), maxValue);
-				timeController.Width.Set(-10, 100);
-				timeController.Height.Set(32, 0);
-				return timeController;
+			static UI_Time_Button GetTimeController(ButtonIntnessGetter variable, string name, (int radix, string format, bool alwaysShow)[] radices, int increment = 1, int indefiniteThreshold = 0, string indefiniteName = null, int maxValue = int.MaxValue) {
+				return new UI_Time_Button(variable, Language.GetOrRegister(prefix + name), radices, increment, indefiniteThreshold, Language.GetOrRegister(prefix + (indefiniteName ?? "Indefinite")), maxValue).SetSize();
 			}
+			static UI_HP_Button GetHealthController(ButtonIntnessGetter variable, string name, Texture2D texture) {
+				return new UI_HP_Button(variable, Language.GetOrRegister(prefix + name), texture).SetSize();
+			}
+			static UI_Points_Button GetPointsController(ButtonIntnessGetter variable, string name, Texture2D noneTexture, Texture2D countTexture, int noneCount = 0) {
+				return new UI_Points_Button(variable, Language.GetOrRegister(prefix + name), noneTexture, countTexture, noneCount).SetSize();
+			}
+			static UI_Toggle_Button GetToggle(ButtonTogglenessGetter variable, string name, float textScaleMax = 1, bool large = false) {
+				return new UI_Toggle_Button(variable, Language.GetOrRegister(prefix + name)).SetSize();
+			}
+
 			yield return GetTimeController(() => ref RespawnTime, "RespawnTime", [(60, Language.GetOrRegister(prefix + "Seconds").Value, true)], 30, indefiniteName: "Elimination");
 			yield return GetTimeController(() => ref Time, "Time", [(60, "{0:#0}:", true), (60, "{0:00}", true)], 60 * 30, 1);
-			static UI_HP_Button GetHealthController(ButtonHealthnessGetter variable, string name, Texture2D texture) {
-				UI_HP_Button timeController = new(variable, Language.GetOrRegister(prefix + name), texture);
-				timeController.Width.Set(-10, 100);
-				timeController.Height.Set(32, 0);
-				return timeController;
-			}
 			yield return GetHealthController(() => ref HP, "HP", TextureAssets.Heart.Value);
-
-			static UI_Toggle_Button GetButton(ButtonTogglenessGetter variable, string name, float textScaleMax = 1, bool large = false) {
-				UI_Toggle_Button button = new(variable, Language.GetOrRegister(prefix + name));
-				button.Width.Set(-10, 100);
-				button.Height.Set(32, 0);
-				return button;
-			}
-			yield return GetButton(() => ref Teams, "Teams");
-			yield return GetButton(() => ref CTG, "CTG");
-			yield return GetButton(() => ref Building, "Building");
+			yield return GetPointsController(() => ref PointsToWin, "PointsToWin", TextureAssets.Heart.Value, TextureAssets.Mana.Value);
+			yield return GetToggle(() => ref Teams, "Teams");
+			yield return GetToggle(() => ref CTG, "CTG");
+			yield return GetToggle(() => ref Building, "Building");
 		}
 		public void Write(BinaryWriter writer) {
 			writer.Write(RespawnTime);
 			writer.Write(Time);
 			writer.Write(HP);
+			writer.Write(PointsToWin);
 			writer.Write(Teams);
 			writer.Write(CTG);
 			writer.Write(Building);
 		}
-		public static Laser_Tag_Rules Read(BinaryReader reader) => new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadBoolean(), reader.ReadBoolean(), reader.ReadBoolean());
+		public static Laser_Tag_Rules Read(BinaryReader reader) => new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadBoolean(), reader.ReadBoolean(), reader.ReadBoolean());
 	}
 }

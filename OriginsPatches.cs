@@ -552,7 +552,7 @@ namespace Origins {
 				orig(self, playerIndex);
 				Player player = Main.player[playerIndex];
 				player.OriginPlayer().OnHitByAnyProjectile(self);
-				if (self.type == Laser_Tag_Laser.ID) Laser_Tag_Laser.OnHitPvP(player);
+				if (self.type == Laser_Tag_Laser.ID) Laser_Tag_Laser.OnHitPvP(self, player);
 			};
 		}
 

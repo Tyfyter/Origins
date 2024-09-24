@@ -102,13 +102,14 @@ namespace Origins.Items.Weapons.Magic {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.CritDamage *= 123 * 0.5f;
 		}
-		public static void OnHitPvP(Player target) {
+		public static void OnHitPvP(Projectile proj, Player target) {
 			target.AddBuff(BuffID.Cursed, 600);
 			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
 			if (originPlayer.laserTagVestActive) {
 				originPlayer.laserTagVestActive = false;
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.laser_tag_hit);
+				packet.Write((byte)proj.owner);
 				packet.Write((byte)target.whoAmI);
 				packet.Send(-1, Main.myPlayer);
 			}

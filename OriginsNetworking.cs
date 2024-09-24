@@ -201,15 +201,21 @@ namespace Origins {
 					}
 					break;
 					case laser_tag_hit: {
+						Player attacker = Main.player[reader.ReadByte()];
 						byte target = reader.ReadByte();
-						OriginPlayer originPlayer = Main.player[target].OriginPlayer();
-						if (--originPlayer.laserTagHP <= 0) {
-							originPlayer.laserTagVestActive = false;
+						if (Laser_Tag_Console.LaserTagRules.Teams) {
+							Laser_Tag_Console.LaserTagTeamPoints[attacker.team]++;
+						}
+						attacker.OriginPlayer().laserTagPoints++;
+						OriginPlayer originTarget = Main.player[target].OriginPlayer();
+						if (--originTarget.laserTagHP <= 0) {
+							originTarget.laserTagVestActive = false;
 						}
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
 							ModPacket packet = GetPacket();
 							packet.Write(laser_tag_hit);
+							packet.Write((byte)attacker.whoAmI);
 							packet.Write(target);
 							packet.Send(-1, Main.myPlayer);
 						}

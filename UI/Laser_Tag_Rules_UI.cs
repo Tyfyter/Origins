@@ -77,8 +77,8 @@ namespace Origins.UI {
 			spriteBatch.Draw(toggleTexture, bounds.Right() - Vector2.UnitX * 8 - sourceRectangle.Size() * new Vector2(1, 0.5f), sourceRectangle, Color.White);
 		}
 	}
-	public delegate ref int ButtonTimenessGetter();
-	public class UI_Time_Button(ButtonTimenessGetter variable, LocalizedText text, (int radix, string format, bool alwaysShow)[] radices, int increment = 1, int indefiniteThreshold = 0, LocalizedText indefiniteText = null, int maxValue = int.MaxValue) : UIPanel {
+	public delegate ref int ButtonIntnessGetter();
+	public class UI_Time_Button(ButtonIntnessGetter variable, LocalizedText text, (int radix, string format, bool alwaysShow)[] radices, int increment = 1, int indefiniteThreshold = 0, LocalizedText indefiniteText = null, int maxValue = int.MaxValue) : UIPanel {
 		public new Color BorderColor = Color.Black;
 		public new Color BackgroundColor = new Color(63, 82, 151) * 0.7f;
 		public Color HoverBorderColor = new Color(33, 33, 33) * 0.9f;
@@ -146,8 +146,7 @@ namespace Origins.UI {
 			spriteBatch.Draw(UICommon.ButtonUpDownTexture.Value, destinationRectangle, sourceRectangle, color);
 		}
 	}
-	public delegate ref int ButtonHealthnessGetter();
-	public class UI_HP_Button(ButtonHealthnessGetter variable, LocalizedText text, Texture2D texture) : UIPanel {
+	public class UI_HP_Button(ButtonIntnessGetter variable, LocalizedText text, Texture2D texture) : UIPanel {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Rectangle bounds = GetDimensions().ToRectangle();
 			base.DrawSelf(spriteBatch);
@@ -197,6 +196,76 @@ namespace Origins.UI {
 						Color.White
 					);
 				}
+			}
+		}
+	}
+	public class UI_Points_Button(ButtonIntnessGetter variable, LocalizedText text, Texture2D noneTexture, Texture2D countTexture, int noneCount = 0) : UIPanel {
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
+			Rectangle bounds = GetDimensions().ToRectangle();
+			base.DrawSelf(spriteBatch);
+
+			Vector2 pos = bounds.Left() + Vector2.UnitX * 8;
+			Utils.DrawBorderString(spriteBatch, text.Value, pos, Color.White, 1f, 0f, 0.4f, -1);
+			pos += FontAssets.MouseText.Value.MeasureString(text.Value) * new Vector2(1, 0f) + Vector2.UnitX * 8;
+			bounds.Inflate(-4, -4);
+			Vector2 size = countTexture.Size() * (bounds.Height / (float)countTexture.Height);
+			int points = variable();
+			Rectangle destinationRectangle = new((int)pos.X, bounds.Y, (int)size.X, (int)size.Y);
+			int paddedWidth = (destinationRectangle.Width + 2);
+			int maxDisplayed = (bounds.Right - destinationRectangle.X) / paddedWidth;
+			bool hovered = new Rectangle(destinationRectangle.X, destinationRectangle.Y - 2, maxDisplayed * paddedWidth, destinationRectangle.Height + 4).Contains(Main.mouseX, Main.mouseY);
+			if (hovered) {
+				int hoverIndex = -1;
+				for (int i = maxDisplayed; i > 0; i--) {
+					destinationRectangle.X = (int)pos.X + paddedWidth * i;
+					if (i <= points) {
+						spriteBatch.Draw(
+							countTexture,
+							destinationRectangle,
+							Color.Black
+						);
+					}
+					if (hoverIndex == -1 && destinationRectangle.Contains(Main.mouseX, Main.mouseY, 2, 4)) {
+						hoverIndex = i;
+					}
+					if (hoverIndex != -1) {
+						spriteBatch.Draw(
+							countTexture,
+							destinationRectangle,
+							new Color(255, 255, 255, 0)
+						);
+					}
+				}
+				if (hoverIndex != -1 && Main.mouseLeft && Main.mouseLeftRelease) {
+					variable() = hoverIndex;
+					SoundEngine.PlaySound(Laser_Tag_Rules_UI.ClickSound);
+				}
+				destinationRectangle.X = (int)pos.X;
+				bool hoveringNone = destinationRectangle.Contains(Main.mouseX, Main.mouseY, 2, 4);
+				if (hoveringNone && Main.mouseLeft && Main.mouseLeftRelease) {
+					variable() = noneCount;
+					SoundEngine.PlaySound(Laser_Tag_Rules_UI.ClickSound);
+				}
+				spriteBatch.Draw(
+					noneTexture,
+					destinationRectangle,
+					Color.White
+				);
+			} else {
+				for (int i = points; i > 0; i--) {
+					destinationRectangle.X = (int)pos.X + paddedWidth * i;
+					spriteBatch.Draw(
+						countTexture,
+						destinationRectangle,
+						Color.White
+					);
+				}
+				destinationRectangle.X = (int)pos.X;
+				spriteBatch.Draw(
+					noneTexture,
+					destinationRectangle,
+					Color.White
+				);
 			}
 		}
 	}

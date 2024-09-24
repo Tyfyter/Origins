@@ -45,6 +45,7 @@ Laser_Tag: {
 	Indefinite: Indefinite
 	Elimination: Elimination
 	HP: Hit Points
+	PointsToWin: Points to Win
 }
 
 ItemDropConditions: {
