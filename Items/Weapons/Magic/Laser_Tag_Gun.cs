@@ -106,7 +106,6 @@ namespace Origins.Items.Weapons.Magic {
 			target.AddBuff(BuffID.Cursed, 600);
 			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
 			if (originPlayer.laserTagVestActive) {
-				originPlayer.laserTagVestActive = false;
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.laser_tag_hit);
 				packet.Write((byte)proj.owner);

@@ -494,6 +494,8 @@ namespace Origins {
 		public Laser_Tag_Rules laserTagRules = new();
 		public int laserTagTimeLeft = 0;
 		public int[] laserTagTeamPoints = new int[6];
+		public int[] laserTagTeamHits = new int[6];
+		public int[] laserTagTeamGems = new int[6];
 		public override void PreUpdatePlayers() {
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];

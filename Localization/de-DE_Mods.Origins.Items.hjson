@@ -4542,3 +4542,8 @@ Scabcoral_Lyre: {
 	// DisplayName: Scabcoral Lyre
 	// Tooltip: ""
 }
+
+Laser_Tag_Base_Console_Item: {
+	// DisplayName: Laser Tag Base Console
+	// Tooltip: ""
+}

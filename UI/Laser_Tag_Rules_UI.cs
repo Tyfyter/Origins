@@ -16,6 +16,9 @@ using ReLogic.Content;
 using System.Text;
 using Terraria.GameContent;
 using System;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Origins.UI {
 	public class Laser_Tag_Rules_UI : UIState {
@@ -29,7 +32,7 @@ namespace Origins.UI {
 			panel.Height.Set(-310f, 1f);
 			panel.HAlign = 0.5f;
 			Append(panel);
-			UIList list = [..Laser_Tag_Console.LaserTagRules.GetUIElements()];
+			UI_Hidden_Supporting_List list = [..Laser_Tag_Console.LaserTagRules.GetUIElements()];
 			list.Width.Set(-10, 1f);
 			list.Height.Set(-36, 1f);
 			panel.HAlign = 0.5f;
@@ -49,8 +52,49 @@ namespace Origins.UI {
 			panel.Append(startButton);
 		}
 	}
+	public class UI_Hideable_Panel : UIPanel {
+		bool hidden;
+		public bool Hidden {
+			get => hidden;
+			set {
+				if (hidden == value) return;
+				if (hidden = value) {
+					MaxHeight.Set(0, 0);
+				} else {
+					MaxHeight.Set(0, 1);
+				}
+			}
+		}
+		public override void Draw(SpriteBatch spriteBatch) {
+			if (!hidden) base.Draw(spriteBatch);
+		}
+	}
+	public class UI_Auto_Hide_Panel(Func<bool> IsHidden) : UI_Hideable_Panel {
+		public Func<bool> IsHidden = IsHidden;
+		public static bool NeverHidden() => false;
+		public override void Draw(SpriteBatch spriteBatch) {
+			Hidden = IsHidden();
+			base.Draw(spriteBatch);
+		}
+	}
+	public class UI_Hidden_Supporting_List : UIList {
+		static FastFieldInfo<UIList, float> _innerListHeight = new(nameof(_innerListHeight), BindingFlags.NonPublic);
+		public override void RecalculateChildren() {
+			foreach (UIElement element in Elements) {
+				element.Recalculate();
+			}
+			float height = 0f;
+			for (int i = 0; i < _items.Count; i++) {
+				_items[i].Top.Set(height, 0f);
+				_items[i].Recalculate();
+				float itemHeight = _items[i].GetOuterDimensions().Height;
+				if (itemHeight != 0) height += itemHeight + ((_items.Count == 1) ? 0f : ListPadding);
+			}
+			_innerListHeight.SetValue(this, height);
+		}
+	}
 	public delegate ref bool ButtonTogglenessGetter();
-	public class UI_Toggle_Button(ButtonTogglenessGetter variable, LocalizedText text) : UIPanel {
+	public class UI_Toggle_Button(ButtonTogglenessGetter variable, LocalizedText text) : UI_Auto_Hide_Panel(NeverHidden) {
 		static AutoLoadingAsset<Texture2D> toggleTexture = "Terraria/Images/UI/Settings_Toggle";
 		public override void LeftClick(UIMouseEvent evt) {
 			variable() ^= true;
@@ -78,13 +122,18 @@ namespace Origins.UI {
 		}
 	}
 	public delegate ref int ButtonIntnessGetter();
-	public class UI_Time_Button(ButtonIntnessGetter variable, LocalizedText text, (int radix, string format, bool alwaysShow)[] radices, int increment = 1, int indefiniteThreshold = 0, LocalizedText indefiniteText = null, int maxValue = int.MaxValue) : UIPanel {
-		public new Color BorderColor = Color.Black;
-		public new Color BackgroundColor = new Color(63, 82, 151) * 0.7f;
-		public Color HoverBorderColor = new Color(33, 33, 33) * 0.9f;
-		public Color HoverBackgroundColor = new Color(93, 113, 187) * 0.9f;
-		string FormatTime(int time) {
-			if (indefiniteText is not null && time < indefiniteThreshold * increment) return indefiniteText.Value;
+	public record struct Time_Radix(int Radix, string Format, bool AlwaysShow) {
+		public static Time_Radix[] ParseRadices(string text) {
+			Regex regex = new("\\$(\\d+)(!?):(.*?)\\$");
+			Match[] matches = regex.Matches(text).ToArray();
+			Time_Radix[] radices = new Time_Radix[matches.Length];
+			for (int i = 0; i < matches.Length; i++) {
+				radices[i] = new(int.Parse(matches[i].Groups[1].Value), matches[i].Groups[3].Value, !string.IsNullOrWhiteSpace(matches[i].Groups[2].Value));
+			}
+			return radices;
+		}
+		public static string FormatTime(int time, Time_Radix[] radices, int increment = 1, int indefiniteThreshold = 0, string indefiniteText = null) {
+			if (indefiniteText is not null && time < indefiniteThreshold * increment) return indefiniteText;
 			StringBuilder builder = new();
 			float textTime = time / 60f;
 			for (int i = 1; i <= radices.Length; i++) {
@@ -95,6 +144,15 @@ namespace Origins.UI {
 				textTime = (int)(textTime / radix);
 			}
 			return builder.ToString();
+		}
+	}
+	public class UI_Time_Button(ButtonIntnessGetter variable, LocalizedText text, Time_Radix[] radices, int increment = 1, int indefiniteThreshold = 0, LocalizedText indefiniteText = null, int maxValue = int.MaxValue) : UI_Auto_Hide_Panel(NeverHidden) {
+		public new Color BorderColor = Color.Black;
+		public new Color BackgroundColor = new Color(63, 82, 151) * 0.7f;
+		public Color HoverBorderColor = new Color(33, 33, 33) * 0.9f;
+		public Color HoverBackgroundColor = new Color(93, 113, 187) * 0.9f;
+		string FormatTime(int time) {
+			return Time_Radix.FormatTime(time, radices, increment, indefiniteThreshold, indefiniteText.Value);
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Rectangle bounds = GetDimensions().ToRectangle();
@@ -146,7 +204,7 @@ namespace Origins.UI {
 			spriteBatch.Draw(UICommon.ButtonUpDownTexture.Value, destinationRectangle, sourceRectangle, color);
 		}
 	}
-	public class UI_HP_Button(ButtonIntnessGetter variable, LocalizedText text, Texture2D texture) : UIPanel {
+	public class UI_HP_Button(ButtonIntnessGetter variable, LocalizedText text, Texture2D texture) : UI_Auto_Hide_Panel(NeverHidden) {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Rectangle bounds = GetDimensions().ToRectangle();
 			base.DrawSelf(spriteBatch);
@@ -199,7 +257,7 @@ namespace Origins.UI {
 			}
 		}
 	}
-	public class UI_Points_Button(ButtonIntnessGetter variable, LocalizedText text, Texture2D noneTexture, Texture2D countTexture, int noneCount = 0) : UIPanel {
+	public class UI_Points_Button(ButtonIntnessGetter variable, LocalizedText text, Texture2D noneTexture, Texture2D countTexture, int noneCount = 0) : UI_Auto_Hide_Panel(NeverHidden) {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Rectangle bounds = GetDimensions().ToRectangle();
 			base.DrawSelf(spriteBatch);

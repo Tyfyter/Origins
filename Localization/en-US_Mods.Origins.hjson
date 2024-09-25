@@ -36,11 +36,12 @@ Status_Messages: {
 
 Laser_Tag: {
 	Teams: Teams
-	CTG: Capture the Gem (unimplemented)
+	CTG: Capture the Gem
 	Building: Allow Building
 	StartButton: Start
-	RespawnTime: Revive Time (unimplemented)
-	Seconds: "{0:0.##} Seconds"
+	RespawnTime: Revive Time
+	ShortTime: $60!:{0:0.##} Seconds$
+	LongTime: $60!:{0:#0}:$$60:{0:00}$
 	Time: Match Duration
 	Indefinite: Indefinite
 	Elimination: Elimination
@@ -1529,6 +1530,7 @@ Tiles: {
 	Potato_Tile.MapEntry: Potato
 	Ancient_Music_Box_DW: Ancient Music Box (Defiled Wastelands)
 	Ancient_Music_Box_RH: Ancient Music Box (Riven Hive)
+	Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
 }
 
 MapObject: {

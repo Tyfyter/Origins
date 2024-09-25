@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.laserTagVest = true;
-			if (Laser_Tag_Console.AnyLaserTagActive) {
+			if (Laser_Tag_Console.LaserTagGameActive) {
 				player.noBuilding = !Laser_Tag_Console.LaserTagRules.Building;
 			}
 		}

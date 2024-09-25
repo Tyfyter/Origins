@@ -518,6 +518,9 @@ namespace Origins {
 
 			Main.OnPostDraw += IncrementFrameCount;
 			ApplyPatches();
+#if DEBUG
+			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
+#endif
 		}
 		public override void Unload() {
 			ExplosiveBaseDamage = null;

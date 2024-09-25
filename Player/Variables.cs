@@ -245,7 +245,9 @@ namespace Origins {
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
 		public int laserTagPoints = 0;
+		public int laserTagHits = 0;
 		public int laserTagHP = 0;
+		public int laserTagRespawnDelay = 0;
 		#endregion
 
 		#region explosive stats
@@ -596,9 +598,12 @@ namespace Origins {
 			strangeComputer = false;
 			scrapCompactor = false;
 			scrapBarrierCursed = false;
-			if (!laserTagVest) {
+			if (laserTagVest) {
+				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
+			} else {
 				laserTagVestActive = false;
 				laserTagPoints = 0;
+				laserTagHits = 0;
 				laserTagHP = 0;
 			}
 			laserTagVest = false;
