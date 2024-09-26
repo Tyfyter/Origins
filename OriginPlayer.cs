@@ -15,6 +15,7 @@ using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
+using Origins.Tiles.Other;
 using Origins.Water;
 using Origins.World.BiomeData;
 using System;
@@ -707,6 +708,13 @@ namespace Origins {
 			packet.Write(assimilationType);
 			packet.Write(assimilationAmount);
 			packet.Send(Player.whoAmI, Main.myPlayer);
+		}
+		public void ResetLaserTag() {
+			if (!Laser_Tag_Console.LaserTagGameActive) laserTagRespawnDelay = 0;
+			laserTagVestActive = false;
+			laserTagPoints = 0;
+			laserTagHits = 0;
+			laserTagHP = 0;
 		}
 	}
 }

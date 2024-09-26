@@ -191,9 +191,11 @@ namespace Origins {
 					foreach (Player player in Main.ActivePlayers) {
 						OriginPlayer originPlayer = player.OriginPlayer();
 						if (originPlayer.laserTagVest) {
-							originPlayer.laserTagVestActive = startLaserTag;
 							if (startLaserTag) {
+								originPlayer.laserTagVestActive = true;
 								originPlayer.laserTagHP = Laser_Tag_Console.LaserTagRules.HP;
+							} else {
+								originPlayer.ResetLaserTag();
 							}
 							if (!Laser_Tag_Console.LaserTagRules.Teams) player.team = 0;
 						}
@@ -216,7 +218,7 @@ namespace Origins {
 							Laser_Tag_Console.LaserTagTeamHits[attacker.team]++;
 						}
 						attacker.OriginPlayer().laserTagHits++;
-						if (Laser_Tag_Console.LaserTagRules.HitsArePoints) Laser_Tag_Console.ScorePoint(Main.player[reader.ReadByte()], true);
+						if (Laser_Tag_Console.LaserTagRules.HitsArePoints) Laser_Tag_Console.ScorePoint(attacker, true);
 						OriginPlayer originTarget = Main.player[target].OriginPlayer();
 						if (--originTarget.laserTagHP <= 0) {
 							originTarget.laserTagVestActive = false;

@@ -601,10 +601,7 @@ namespace Origins {
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {
-				laserTagVestActive = false;
-				laserTagPoints = 0;
-				laserTagHits = 0;
-				laserTagHP = 0;
+				ResetLaserTag();
 			}
 			laserTagVest = false;
 
