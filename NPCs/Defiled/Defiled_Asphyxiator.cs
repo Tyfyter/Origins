@@ -111,10 +111,11 @@ namespace Origins.NPCs.Defiled {
 									Projectile.NewProjectile(
 										NPC.GetSource_FromAI(),
 										projPos,
-										(target.MountedCenter - projPos).SafeNormalize(default) * 8,
+										(target.MountedCenter - projPos).SafeNormalize(default) * 10,
 										projectileType,
 										20,
-										4
+										4,
+										ai1: target.whoAmI
 									);
 								}
 							}
@@ -130,6 +131,7 @@ namespace Origins.NPCs.Defiled {
 			}
 			return false;
 		}
+		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 9) {
 				NPC.frameCounter = 0;
@@ -167,17 +169,19 @@ namespace Origins.NPCs.Defiled {
 		}
 	}
 	public class Defiled_Asphyxiator_P1 : ModProjectile {
+		const int delay = 10;
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 36;
 			Projectile.hostile = true;
 			Projectile.hide = true;
 		}
-		public override bool ShouldUpdatePosition() => Projectile.ai[0] > 15;
+		public override bool ShouldUpdatePosition() => Projectile.ai[0] > delay;
 		public override void AI() {
-			if (++Projectile.ai[0] > 15) {
+			if (++Projectile.ai[0] > delay) {
 				Projectile.hide = false;
 			} else {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WhiteTorch);
+				if (Projectile.ai[0] == delay) Projectile.velocity = (Main.player[(int)Projectile.ai[1]].MountedCenter - Projectile.Center).SafeNormalize(default) * 14;
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
