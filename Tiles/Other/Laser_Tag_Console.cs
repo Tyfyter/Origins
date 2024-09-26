@@ -128,12 +128,11 @@ namespace Origins.Tiles.Other {
 				}
 			}
 			if (LaserTagGameActive) {
+				foreach (Player player in Main.ActivePlayers) {
+					player.hostile = player.OriginPlayer().laserTagVestActive;
+				}
 				if (LaserTagRules.RespawnTime < 0) {// elimination
-					if (LaserTagMultipleTeamsActive) {
-						foreach (Player player in Main.ActivePlayers) {
-							player.hostile = player.OriginPlayer().laserTagVestActive;
-						}
-					} else if (Main.netMode == NetmodeID.Server) {
+					if (Main.netMode == NetmodeID.Server) {
 						Player survivor = null;
 						foreach (Player player in Main.ActivePlayers) {
 							ref bool laserTagVestActive = ref player.OriginPlayer().laserTagVestActive;
@@ -210,6 +209,9 @@ namespace Origins.Tiles.Other {
 				LaserTagActiveTeams = 0;
 				LaserTagActivePlayers = 0;
 				LaserTagTimeLeft = -1;
+				foreach (Player player in Main.ActivePlayers) {
+					player.OriginPlayer().laserTagVestActive = false;
+				}
 			}
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {

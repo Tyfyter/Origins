@@ -10,6 +10,7 @@ using Origins.LootConditions;
 using Origins.NPCs;
 using Origins.Questing;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
@@ -49,12 +50,12 @@ namespace Origins.Items {
 				item.consumable = true;
 				break;
 
-                case ItemID.Fireblossom:
-                item.ammo = ItemID.Fireblossom;
-                item.consumable = true;
+				case ItemID.Fireblossom:
+				item.ammo = ItemID.Fireblossom;
+				item.consumable = true;
 				break;
 
-                case ItemID.Bomb:
+				case ItemID.Bomb:
 				case ItemID.BouncyBomb:
 				case ItemID.StickyBomb:
 				case ItemID.BombFish:
@@ -363,6 +364,12 @@ namespace Origins.Items {
 				}
 				item.stack = stack;
 			}
+		}
+		public override bool CanPickup(Item item, Player player) {
+			if (item.type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond && Laser_Tag_Console.LaserTagGameActive) {
+				return player.OriginPlayer().laserTagVestActive;
+			}
+			return true;
 		}
 
 		public static ushort GetItemElement(Item item) {

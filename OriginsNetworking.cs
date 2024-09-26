@@ -221,6 +221,12 @@ namespace Origins {
 						if (--originTarget.laserTagHP <= 0) {
 							originTarget.laserTagVestActive = false;
 							originTarget.laserTagRespawnDelay = Laser_Tag_Console.LaserTagRules.RespawnTime;
+							if (target == Main.myPlayer) {
+								Player targetPlayer = Main.player[target];
+								for (int i = 0; i < targetPlayer.inventory.Length; i++) {
+									if (targetPlayer.inventory[i].type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond) targetPlayer.DropItem(targetPlayer.GetSource_Death(), targetPlayer.MountedCenter, ref targetPlayer.inventory[i]);
+								}
+							}
 						}
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the clients
