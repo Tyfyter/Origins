@@ -602,7 +602,7 @@ MELEE WEAPONS:
 (X) Chromtain Smasher
 (X) Eyndum Scar
 (X) Rocket Lance
-(#2, ^2, ⛥) The Bird
+(#2, ^2, ☻(just the right click attack, there's nothing special about the left click except the knockback yet)) The Bird
 ---
 
 
