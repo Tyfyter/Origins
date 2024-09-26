@@ -36,6 +36,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.25f, 0.5f);
 			NPC.value = 103;
 			NPC.noGravity = true;
+			NPC.noTileCollide = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];
