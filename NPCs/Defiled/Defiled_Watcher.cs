@@ -87,7 +87,7 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.ai[0] > 0) NPC.ai[0]--;
 			if (vectorToTargetPosition.HasValue && !vectorToTargetPosition.Value.HasNaNs()) {
 				float distance = vectorToTargetPosition.Value.Length();
-				Vector2 direction = vectorToTargetPosition.Value / distance;
+				Vector2 direction = distance == 0 ? default : vectorToTargetPosition.Value / distance;
 				NPC.velocity = (NPC.velocity * (inertia - 1) + direction * speed) / inertia;
 				if (distance < 16 * 3 && NPC.ai[0] <= 0) {
 					NPC.ai[0] = 67;
@@ -102,6 +102,7 @@ namespace Origins.NPCs.Defiled {
 					);
 				}
 			}
+			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 			if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.2f;
 			if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.2f;
