@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -67,13 +68,14 @@ namespace Origins.NPCs.Defiled {
 				float speed = 12f;
 				float inertia = 128f;
 				NPC.rotation = NPC.velocity.X * 0.1f;
-				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
+				Vector2 vectorToTargetPosition = target.MountedCenter - NPC.Center;
+				NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
 				float dist = vectorToTargetPosition.Length();
 				vectorToTargetPosition /= dist;
 				NPC.aiAction = 0;
 				switch (level) {
 					case 3: {
-
+						NPC.aiAction = 1;
 					}
 					break;
 					case 0:
@@ -98,14 +100,18 @@ namespace Origins.NPCs.Defiled {
 						}
 
 						if (++NPC.ai[0] > 90 - 9 * 3) {
-							NPC.aiAction = 1;
 							if (NPC.ai[0] > 90) {
 								NPC.ai[0] = 0;
 								if (Main.netMode != NetmodeID.MultiplayerClient) {
+									Vector2 projPos;
+									int tries = 0;
+									do {
+										projPos = NPC.Center + Main.rand.NextVector2CircularEdge(7 * 16, 7 * 16);
+									} while (!Collision.CanHitLine(projPos - new Vector2(18), 36, 36, target.position, target.width, target.height) && ++tries < 100);
 									Projectile.NewProjectile(
 										NPC.GetSource_FromAI(),
-										NPC.Center,
-										vectorToTargetPosition * 8,
+										projPos,
+										(target.MountedCenter - projPos).SafeNormalize(default) * 8,
 										projectileType,
 										20,
 										4
@@ -121,8 +127,6 @@ namespace Origins.NPCs.Defiled {
 				Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
-			} else {
-
 			}
 			return false;
 		}
@@ -166,6 +170,15 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 36;
 			Projectile.hostile = true;
+			Projectile.hide = true;
+		}
+		public override bool ShouldUpdatePosition() => Projectile.ai[0] > 15;
+		public override void AI() {
+			if (++Projectile.ai[0] > 15) {
+				Projectile.hide = false;
+			} else {
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WhiteTorch);
+			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Defiled_Asphyxiator_Debuff.AddBuff(target);

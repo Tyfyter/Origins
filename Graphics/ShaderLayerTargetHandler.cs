@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Reflection;
+using Origins;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,7 @@ namespace Origins.Graphics {
 		SpriteBatch spriteBatch;
 		bool capturing = false;
 		bool spriteBatchWasRunning = false;
+		RenderTargetBinding[] oldRenderTargets = [];
 		public bool Capturing {
 			get => capturing;
 			private set {
@@ -47,6 +49,7 @@ namespace Origins.Graphics {
 				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 				spriteBatchState = this.spriteBatch.GetState();
 			}
+			oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 			Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 		}
@@ -64,19 +67,28 @@ namespace Origins.Graphics {
 			if (Main.dedServ) return;
 			Capturing = false;
 			spriteBatch.Restart(spriteBatchState, transformMatrix: Matrix.Identity);
-			RenderTargetUsage renderTargetUsage = Origins.currentScreenTarget?.RenderTargetUsage ?? Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage;
+			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;
+			RenderTargetUsage[] renderTargetUsage = [];
 			try {
-				if (Origins.currentScreenTarget is not null) {
-					GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, RenderTargetUsage.PreserveContents);
+				if (anyOldTargets) {
+					renderTargetUsage = new RenderTargetUsage[oldRenderTargets.Length];
+					for (int i = 0; i < oldRenderTargets.Length; i++) {
+						RenderTarget2D renderTarget = (RenderTarget2D)oldRenderTargets[i].RenderTarget;
+						renderTargetUsage[i] = renderTarget.RenderTargetUsage;
+						GraphicsMethods.SetRenderTargetUsage(renderTarget, RenderTargetUsage.PreserveContents);
+					}
 				} else {
-					Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+					renderTargetUsage = [Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage];
 				}
-				Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
+				Main.graphics.GraphicsDevice.SetRenderTargets(oldRenderTargets);
 			} finally {
-				if (Origins.currentScreenTarget is not null) {
-					GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, renderTargetUsage);
+				if (anyOldTargets) {
+					renderTargetUsage = new RenderTargetUsage[oldRenderTargets.Length];
+					for (int i = 0; i < oldRenderTargets.Length; i++) {
+						GraphicsMethods.SetRenderTargetUsage((RenderTarget2D)oldRenderTargets[i].RenderTarget, renderTargetUsage[i]);
+					}
 				} else {
-					Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage;
+					Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage[0];
 				}
 			}
 			spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
@@ -91,7 +103,7 @@ namespace Origins.Graphics {
 			} else {
 				spriteBatch.End();
 			}
-			Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
+			Main.graphics.GraphicsDevice.SetRenderTargets(oldRenderTargets);
 		}
 		public ShaderLayerTargetHandler() {
 			if (Main.dedServ) return;
