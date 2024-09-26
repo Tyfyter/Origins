@@ -1,14 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -26,15 +19,15 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.None;
-			NPC.lifeMax = 160;
-			NPC.defense = 9;
+			NPC.lifeMax = 475;
+			NPC.defense = 28;
 			NPC.damage = 49;
 			NPC.width = 92;
 			NPC.height = 56;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
-			NPC.value = 103;
+			NPC.value = 2300;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type

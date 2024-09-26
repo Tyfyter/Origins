@@ -4535,12 +4535,12 @@ Trash_Lid: {
 
 Desert_Crown: {
 	DisplayName: Desert Crown
-	Tooltip: ""
+	Tooltip: Summons a sand elemental to fight for you
 }
 
 Scabcoral_Lyre: {
 	DisplayName: Scabcoral Lyre
-	Tooltip: ""
+	Tooltip: Summons a vein of scabcoral that attacks nearby enemies
 }
 
 Laser_Tag_Base_Console_Item: {

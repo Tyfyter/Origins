@@ -950,8 +950,8 @@ Buffs: {
 	}
 
 	Desert_Crown_Buff: {
-		DisplayName: Desert Crown Buff
-		Description: Mods.Origins.Buffs.Desert_Crown_Buff.Description
+		DisplayName: Mud Crown
+		Description: The sand elemental will fight for you
 	}
 
 	Defiled_Asphyxiator_Debuff: {

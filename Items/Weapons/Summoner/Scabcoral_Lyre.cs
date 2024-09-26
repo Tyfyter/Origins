@@ -29,9 +29,9 @@ namespace Origins.Items.Weapons.Summoner {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 26;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 12;
+			Item.mana = 24;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;

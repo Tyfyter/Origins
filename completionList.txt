@@ -81,7 +81,7 @@ TOWN NPCs:
 (#3) TOWN NPC QUEST MECHANICS (general)
 
 (#3?, %2, ^2) Acid Freak
-(☻, 々) Defiled Effigy
+(^, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
 
@@ -157,12 +157,12 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(#, ^2, ☻) Defiled Asphyxiator* !!!
+(#3, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod
-(#, ^2, ☻) Defiled Watcher* !!!
+(^) Defiled Watcher*
 (X) Hoarder
 (X) Holy Governor
 (X) Holy Warrior
@@ -186,7 +186,7 @@ ENEMY NPCS:
 (X) Duskoo
 (X) Dynaray
 (@2/3, #) Electromancer
-(@2/3, #) Etherealizer
+(^) Etherealizer
 (@2, #) Illusionary
 (X) Prosperer
 (X) Soulpine
@@ -268,6 +268,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
+(X) Mildew Armor
 (X) Ruby Ranger Armor*
 
 (^) Blast Armor*
@@ -408,7 +409,7 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Entangled Energy*
-(☻) Mana Drive*
+(^) Mana Drive*
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (X) Retaliatory Tendril*
@@ -494,8 +495,8 @@ UTILITIES:
 (X) Strange Backpack
 
 (^) Impenetrable Trashcan Lid
-(☻) Indestructible Saddle
-(☻) Salty Seed (Mitosis Node) !!!
+(^) Indestructible Saddle
+(^) Salty Seed (Mitosis Node)
 (#3, ^2) Saltier Seed (Mitosis Node) !!!
 ---
 
@@ -725,7 +726,7 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(☻) Desert Crown* !!!
+(^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
 (X) Fresh Meat Artifact !!!
@@ -739,13 +740,18 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Bomb Artifact
+(X) Deep Ocean Pearl
+(X) Entropy Incantation
 (#, @4/2 (not necessarily missing sprites, but I'd need confirmation that the incredibly sudden transitions between states are intended)) Forsaken Desire
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
-(☻) Scabcoral Lyre !!!
+(X) Ornamental Riven Artifact
+(^) Scabcoral Lyre
+(X) Wyvern Horn
 (^) Ziptie
 
+(X) Binding Incantation
 (X) Candlelight
 (X) Controller/Patrol Bot Controller
 (X) Core of Cogs
@@ -753,6 +759,7 @@ SUMMONER WEAPONS:
 (X) Doom Incantation
 (X) Ego
 (@2/3, #2) Fiber Optic Whips
+(X) Ingress Incantation
 (X) Ribatar
 (X) Seraphim Song
 (@2, #2) SMART Wrench
@@ -789,7 +796,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (^) Internal Combustionfish*
 (^) Link Grenade*
-(☻) Matrix* !!!
+(^) Matrix*
 (^) Meteor*
 (@2 (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling), ^3) Outbreak Bomb*
 (^) Peatball*
@@ -819,7 +826,7 @@ EXPLOSIVE WEAPONS:
 (^) Nova Cascade*
 (^) Nova Swarm
 (^) Nuclear Arm*
-(☻) Omni-directional Claymore*
+(^) Omni-directional Claymore*
 (^) Rocodile
 (^) Self-Destruct*
 (X) Supernova
@@ -996,8 +1003,8 @@ TILES:
 (^) A Perfect World
 
 (@, #, $3) Ancient Music Box (Brine Pool)
-(☻) Ancient Music Box (Defiled Wastelands)
-(☻) Ancient Music Box (Riven Hive)
+($3, ^2/3) Ancient Music Box (Defiled Wastelands)
+($3, ^2/3) Ancient Music Box (Riven Hive)
 (@, #, $3) Music Box (Abstract)
 (@, #, $3) Music Box (Brine Pool)
 (X) Music Box (Cosmos)
@@ -1155,7 +1162,7 @@ CONSUMABLES:
 (X) Twilight Crate*
 
 (^) Gooey Water*
-(☻) Holiday Hair Dye* !!!
+(^) Holiday Hair Dye*
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
 (^) Void Lock*

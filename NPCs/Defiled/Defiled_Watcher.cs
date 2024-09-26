@@ -27,14 +27,14 @@ namespace Origins.NPCs.Defiled {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 160;
-			NPC.defense = 9;
+			NPC.defense = 28;
 			NPC.damage = 49;
 			NPC.width = 74;
 			NPC.height = 74;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.25f, 0.5f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.25f, 0.5f);
-			NPC.value = 103;
+			NPC.value = 2300;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			SpawnModBiomes = [
