@@ -21,6 +21,7 @@ using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
 using Terraria.UI;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Tiles.Other {
 	public class Laser_Tag_Base_Console : ModTile, IGlowingModTile {
@@ -91,28 +92,22 @@ namespace Origins.Tiles.Other {
 			drawData.glowTexture = glowTexture;
 			drawData.glowSourceRect = new(0, drawData.tileFrameY, 16, 16);
 			drawData.addFrX = -drawData.tileFrameX;
-		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Framing.GetTileSafely(i, j);
-			if (tile.TileFrameY == 0 && Laser_Tag_Console.LaserTagTeamGems[tile.TileFrameX] == -1) {//Laser_Tag_Console.LaserTagRules.CTG && 
-				Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
-				if (Main.drawToScreen) {
-					offset = Vector2.Zero;
-				}
+			if (tile.TileFrameY == 0 && Laser_Tag_Console.LaserTagRules.CTG && Laser_Tag_Console.LaserTagTeamGems[tile.TileFrameX] == -1) {
 				int gemID = Laser_Tag_Console.GetLargeGemID(tile.TileFrameX);
-				Vector2 position = new Vector2(i * 16 + 8, j * 16 - 32) + offset - Main.screenPosition;
-				Lighting.AddLight(position, Main.teamColor[tile.TileFrameX].ToVector3());
-				spriteBatch.Draw(
+				drawDatas.Add(new(
 					TextureAssets.Gem[gemID].Value,
-					position,
+					new Vector2(i * 16 + 8, j * 16 - 32),
 					null,
 					new Color(250, 250, 250, Main.mouseTextColor / 2),
 					0,
 					TextureAssets.Gem[gemID].Size() / 2f,
 					(Main.mouseTextColor / 1000f + 0.8f) * 1,
-					0,
-				0);
+					0
+				));
 			}
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 		}
 		readonly AutoLoadingAsset<Texture2D> glowTexture = typeof(Laser_Tag_Base_Console).GetDefaultTMLName() + "_Glow";
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
@@ -120,7 +115,27 @@ namespace Origins.Tiles.Other {
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = Vector3.Max(color, Main.teamColor[tile.TileFrameX].ToVector3());
 		}
-		public override void Load() => this.SetupGlowKeys();
+		public override void Load() {
+			this.SetupGlowKeys();
+			On_Main.DoDraw_Tiles_Solid += DrawLargeGems;
+			On_Main.RenderTiles2 += (orig, self) => {
+				drawDatas.Clear();
+				orig(self);
+			};
+		}
+
+		readonly List<DrawData> drawDatas = [];
+		private void DrawLargeGems(On_Main.orig_DoDraw_Tiles_Solid orig, Main self) {
+			orig(self);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+			foreach (DrawData data in drawDatas) {
+				DrawData temp = data;
+				temp.position -= Main.screenPosition;
+				temp.Draw(Main.spriteBatch);
+			}
+			Main.spriteBatch.End();
+		}
+
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Laser_Tag_Base_Console_Item : Laser_Tag_Console_Item {

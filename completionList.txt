@@ -950,7 +950,7 @@ TILES:
 (X) Edenwood Furniture*
 (^) Encrusted Brick
 (^) Endowood Furniture*
-(#2, ^2) Laser Tag Console*
+(☻) Laser Tag Console*
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
