@@ -104,13 +104,10 @@ namespace Origins.NPCs.Defiled {
 				}
 			}
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
-			Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
-			if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.2f;
-			if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.2f;
 			//if (Math.Abs(NPC.velocity.X) < 0.001f) NPC.velocity.X = 0;
 			//if (Math.Abs(NPC.velocity.Y) < 0.001f) NPC.velocity.Y = 0;
 			NPC.rotation = NPC.velocity.X * 0.1f;
-			if (NPC.velocity.X == 0) NPC.direction = NPC.oldDirection;
+			if (Math.Abs(NPC.velocity.X) <= 0.1f) NPC.direction = NPC.oldDirection;
 			else NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.oldDirection = NPC.direction;
 			NPC.spriteDirection = NPC.direction;
