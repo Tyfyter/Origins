@@ -38,6 +38,7 @@ namespace Origins.Items.Weapons {
 			return new Vector2(-8, 2);
 		}
 		public override void HoldItem(Player player) {
+			if (!DebugConfig.Instance.DebugMode) return;
 			Vector2 direction = Main.MouseWorld - player.MountedCenter;
 			direction.Normalize();
 			Vector2 pos = player.MountedCenter + direction * CollisionExtensions.Raycast(player.MountedCenter, direction, 128);
