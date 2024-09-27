@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -21,16 +22,21 @@ namespace Origins.Items.Weapons.Summoner {
 		public static void DrawInHand(Texture2D smallTexture, ref PlayerDrawSet drawInfo, Color lightColor, Texture2D smallGlowTexture = null, Color? smallGlowColor = null) {
 			//if (drawInfo.DrawDataCache[^1].texture.Bounds != new Rectangle(0, 0, 360, 224)) return;
 			Vector2 pos = drawInfo.drawPlayer.GetBackHandPosition(drawInfo.drawPlayer.compositeBackArm.stretch, drawInfo.drawPlayer.compositeBackArm.rotation);
-			pos += drawInfo.DrawDataCache[^1].position - drawInfo.drawPlayer.position - new Vector2(10 + 6 * drawInfo.drawPlayer.direction, 24);
-			if (drawInfo.drawPlayer.mount?.Active == true) {
-				pos.Y -= drawInfo.drawPlayer.mount.PlayerOffset;
+			pos.Y -= 4;
+			float rotation = drawInfo.drawPlayer.compositeBackArm.rotation + drawInfo.drawPlayer.direction;
+			if (drawInfo.drawPlayer.mount?.Active == true && drawInfo.drawPlayer.mount.Type == MountID.Wolf) {
+				pos = drawInfo.Position;
+				pos.X += drawInfo.drawPlayer.width / 2 + 32 * drawInfo.drawPlayer.direction;
+				pos.Y += 17;
+				rotation = 0;
+				pos.Floor();
 			}
 			DrawData data = new(
 				smallTexture,
-				pos,
+				pos - Main.screenPosition,
 				null,
 				lightColor,
-				drawInfo.drawPlayer.compositeBackArm.rotation + drawInfo.drawPlayer.direction,
+				rotation,
 				new Vector2(5 - 2 * drawInfo.drawPlayer.direction, 8),
 				1,
 				drawInfo.itemEffect
