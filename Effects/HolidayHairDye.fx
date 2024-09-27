@@ -29,6 +29,7 @@ bool EmptyAdj(float2 coords, float2 unit) {
 }
 
 float4 SummerSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	if (sampleColor.r == 0 && sampleColor.g == 0 && sampleColor.b == 0 && sampleColor.a == 0) return sampleColor;
 	/*
 	float2 baseCoords = float2(0.5, (uSourceRect.y + 16) / uImageSize0.y);
 	float2 offsetCoords = (coords - baseCoords) * uImageSize0;
@@ -84,6 +85,7 @@ float4 SummerSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : 
 }
 
 float4 WinterSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	if (sampleColor.r == 0 && sampleColor.g == 0 && sampleColor.b == 0 && sampleColor.a == 0) return sampleColor;
 	float4 baseColor = tex2D(uImage0, coords);
 	float4 color = float4(0.557 * 0.5, 0.441 * 0.5, 0.769 * 0.5, 0.769) * 0.5;
 
