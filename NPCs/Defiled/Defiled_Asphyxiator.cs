@@ -105,18 +105,20 @@ namespace Origins.NPCs.Defiled {
 								if (Main.netMode != NetmodeID.MultiplayerClient) {
 									Vector2 projPos;
 									int tries = 0;
-									do {
-										projPos = NPC.Center + Main.rand.NextVector2CircularEdge(7 * 16, 7 * 16);
-									} while (!Collision.CanHitLine(projPos - new Vector2(18), 36, 36, target.position, target.width, target.height) && ++tries < 100);
-									Projectile.NewProjectile(
-										NPC.GetSource_FromAI(),
-										projPos,
-										(target.MountedCenter - projPos).SafeNormalize(default) * 10,
-										projectileType,
-										20,
-										4,
-										ai1: target.whoAmI
-									);
+									for (int i = Main.rand.Next(2, 4); i-- >0;) {
+										do {
+											projPos = target.Center + Main.rand.NextVector2CircularEdge(13 * 16, 13 * 16);
+										} while (!Collision.CanHitLine(projPos - new Vector2(18), 36, 36, target.position, target.width, target.height) && ++tries < 100);
+										Projectile.NewProjectile(
+											NPC.GetSource_FromAI(),
+											projPos,
+											default,
+											projectileType,
+											20,
+											4,
+											ai1: target.whoAmI
+										);
+									}
 								}
 							}
 						}
@@ -169,19 +171,22 @@ namespace Origins.NPCs.Defiled {
 		}
 	}
 	public class Defiled_Asphyxiator_P1 : ModProjectile {
-		const int delay = 10;
+		const int delay = 20;
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 36;
-			Projectile.hostile = true;
+			Projectile.hostile = false;
 			Projectile.hide = true;
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] > delay;
 		public override void AI() {
 			if (++Projectile.ai[0] > delay) {
 				Projectile.hide = false;
+				Projectile.hostile = true;
 			} else {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WhiteTorch);
-				if (Projectile.ai[0] == delay) Projectile.velocity = (Main.player[(int)Projectile.ai[1]].MountedCenter - Projectile.Center).SafeNormalize(default) * 14;
+				if (Projectile.ai[0] == delay) Projectile.velocity = (Main.player[(int)Projectile.ai[1]].MountedCenter - Projectile.Center).SafeNormalize(default) * 10;
+				Projectile.hostile = false;
+				Projectile.hide = true;
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
@@ -204,8 +209,9 @@ namespace Origins.NPCs.Defiled {
 				player.sticky = true;
 				break;
 				case 3:
-				player.stoned = true;
-				player.OriginPlayer().forceDrown = true;
+				OriginPlayer originPlayer = player.OriginPlayer();
+				originPlayer.rasterizedTime = 8;
+				originPlayer.forceDrown = true;
 				if (player.breath > 1) player.breath = 1;
 				break;
 			}

@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Misc;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
 using System;
 using System.Collections.Generic;
@@ -665,7 +666,7 @@ namespace Origins {
 			int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
 				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
-			} else {
+			} else if (!Player.HasBuff<Defiled_Asphyxiator_Debuff_3>()) {
 				rasterizedTime = 0;
 			}
 			if (Player.breath > Player.breathMax) {
