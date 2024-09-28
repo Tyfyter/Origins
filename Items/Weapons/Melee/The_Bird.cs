@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.damage = 99;
+			Item.crit = 44;
 			Item.useAnimation = Item.useTime = 20;
 			Item.rare = ItemRarityID.Cyan;
 			Item.knockBack = 16;

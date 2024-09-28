@@ -1,15 +1,13 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Other.Consumables.Food;
+using Origins.Buffs;
+using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Buffs;
-using System;
 namespace Origins.Items.Weapons.Magic {
-    public class Communion : ModItem, ICustomWikiStat {
+	public class Communion : ModItem, ICustomWikiStat {
         public string[] Categories => [
 			"Wand"
 		];

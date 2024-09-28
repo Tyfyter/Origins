@@ -157,7 +157,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(☻) Defiled Asphyxiator* !!!
+(#3, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
@@ -602,7 +602,7 @@ MELEE WEAPONS:
 (X) Chromtain Smasher
 (X) Eyndum Scar
 (X) Rocket Lance
-(#2, ^2, ☻(just the right click attack, there's nothing special about the left click except the knockback yet)) The Bird
+(#2, ^2,(just the right click attack, there's nothing special about the left click except the knockback yet)) The Bird
 ---
 
 
@@ -950,7 +950,7 @@ TILES:
 (X) Edenwood Furniture*
 (^) Encrusted Brick
 (^) Endowood Furniture*
-(☻) Laser Tag Console*
+(^) Laser Tag Console*
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
