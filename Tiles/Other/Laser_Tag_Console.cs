@@ -249,7 +249,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Laser_Tag_Console_Item : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Laser_Tag_Base_Console>());
+			Item.DefaultToPlaceableTile(ModContent.TileType<Laser_Tag_Console>());
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
