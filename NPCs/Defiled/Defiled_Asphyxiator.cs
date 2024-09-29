@@ -269,6 +269,7 @@ namespace Origins.NPCs.Defiled {
 		}
 	}
 	public class Defiled_Asphyxiator_Debuff_2 : Defiled_Asphyxiator_Debuff {
+		public override string Texture => typeof(Defiled_Asphyxiator_P3).GetDefaultTMLName();
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() => ID = Type;
 		public override void Update(Player player, ref int buffIndex) {
@@ -280,6 +281,7 @@ namespace Origins.NPCs.Defiled {
 		}
 	}
 	public class Defiled_Asphyxiator_Debuff_3 : Defiled_Asphyxiator_Debuff {
+		public override string Texture => typeof(Defiled_Asphyxiator_P1).GetDefaultTMLName();
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() => ID = Type;
 	}

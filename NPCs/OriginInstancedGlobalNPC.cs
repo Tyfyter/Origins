@@ -45,6 +45,10 @@ namespace Origins.NPCs {
 		public int priorityMailTime = 0;
 		public int prevPriorityMailTime = 0;
 		public bool transformingThroughDeath = false;
+		public int birdedTime = 0;
+		public int birdedDamage = 0;
+		public bool airBird = false;
+		public bool deadBird = false;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -82,6 +86,11 @@ namespace Origins.NPCs {
 			soulhideWeakenedDebuff = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
+			if (birdedTime > 0) birdedTime--;
+			if (birdedTime <= 0) airBird = false;
+			if (deadBird && birdedTime <= 0) {
+				npc.StrikeInstantKill();
+			}
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {

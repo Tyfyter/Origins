@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Microsoft.Xna.Framework;
+using Origins.NPCs;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
@@ -69,6 +70,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
+			if (target.knockBackResist != 0) {
+				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
+				global.birdedTime = 1;
+			}
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 knockback = hit.GetKnockbackFromHit(false, false, yMult: 1);
@@ -76,6 +81,11 @@ namespace Origins.Items.Weapons.Melee {
 				target.velocity = new(knockback.Y * player.direction * 0.25f, -knockback.X);
 			} else {
 				target.velocity = new(knockback.X * player.direction, knockback.Y * (target.noGravity ? -0.5f : -0.75f));
+			}
+			if (hit.Knockback != 0) {
+				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
+				global.birdedTime = 90;
+				global.birdedDamage = hit.SourceDamage;
 			}
 		}
 	}

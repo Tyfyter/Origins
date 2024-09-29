@@ -201,7 +201,8 @@ namespace Origins.NPCs {
 			if (npc.HasBuff(BuffID.OgreSpit) && (npc.collideX || npc.collideY)) {
 				npc.velocity *= 0.95f;
 			}
-			if (infusionSpikes is object) infusionSpikes.Clear();
+			infusionSpikes?.Clear();
+			if (deadBird) return false;
 			return true;
 		}
 		public override void PostAI(NPC npc) {
@@ -210,6 +211,39 @@ namespace Origins.NPCs {
 					npc.velocity.Y *= 1.2f;//
 				}
 			}
+			if (birdedTime > 0) {
+				const float birdKnockback = 8;
+				if (npc.velocity.LengthSquared() < 7 * 7) birdedTime = 0;
+				else {
+					if (npc.collideX || npc.collideY) {
+						if (airBird) {
+							birdedTime = 0;
+							npc.SimpleStrikeNPC(birdedDamage, Math.Sign(npc.velocity.X - npc.oldVelocity.X), false, birdKnockback);
+							airBird = false;
+						}
+					} else {
+						airBird = true;
+						Rectangle hitbox = npc.Hitbox;
+						foreach (NPC other in Main.ActiveNPCs) {
+							if (other.whoAmI != npc.whoAmI && other.Hitbox.Intersects(hitbox)) {
+								birdedTime = 0;
+								int dir = -Math.Sign(other.Center.X - npc.Center.X);
+								npc.SimpleStrikeNPC(birdedDamage, dir, false, birdKnockback);
+								other.SimpleStrikeNPC(birdedDamage, -dir, false, birdKnockback);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		public override bool CheckDead(NPC npc) {
+			if (birdedTime > 0) {
+				deadBird = true;
+				npc.life = 1;
+				return false;
+			}
+			return true;
 		}
 		public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			switch (npc.type) {
@@ -222,8 +256,12 @@ namespace Origins.NPCs {
 				break;
 			}
 		}
+		public override bool CanHitNPC(NPC npc, NPC target) {
+			if (birdedTime > 0) return false;
+			return true;
+		}
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
-			if (npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;
+			if (birdedTime > 0 || npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;
 			return base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
