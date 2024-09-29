@@ -4552,3 +4552,8 @@ Generic_Weapon: {
 	// DisplayName: Generic Weapon
 	// Tooltip: ""
 }
+
+Hemoptysis: {
+	// DisplayName: Hemoptysis
+	// Tooltip: ""
+}

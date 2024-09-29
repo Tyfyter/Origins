@@ -1343,6 +1343,9 @@ Projectiles: {
 	Defiled_Asphyxiator_P3.DisplayName: Defiled Asphyxiator P3
 	Defiled_Watcher_Spikes.DisplayName: Defiled Watcher Spikes
 	Generic_Weapon_P.DisplayName: Generic Weapon
+	Hemoptysis_P.DisplayName: Hemoptysis
+	Hemoptysis_Blood_P.DisplayName: Hemoptysis
+	Hemoptysis_P2.DisplayName: Hemoptysis
 }
 
 Prefixes: {
