@@ -3,6 +3,7 @@ using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -107,7 +108,7 @@ namespace Origins.NPCs.Defiled {
 									int tries = 0;
 									for (int i = Main.rand.Next(2, 4); i-- >0;) {
 										do {
-											projPos = target.Center + Main.rand.NextVector2CircularEdge(13 * 16, 13 * 16);
+											projPos = target.Center + Main.rand.NextVector2CircularEdge(17 * 16, 17 * 16);
 										} while (!Collision.CanHitLine(projPos - new Vector2(18), 36, 36, target.position, target.width, target.height) && ++tries < 100);
 										Projectile.NewProjectile(
 											NPC.GetSource_FromAI(),
@@ -171,9 +172,10 @@ namespace Origins.NPCs.Defiled {
 		}
 	}
 	public class Defiled_Asphyxiator_P1 : ModProjectile {
-		const int delay = 20;
+		const int delay = 25;
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 36;
+			Projectile.timeLeft = 60;
 			Projectile.hostile = false;
 			Projectile.hide = true;
 		}
@@ -184,13 +186,21 @@ namespace Origins.NPCs.Defiled {
 				Projectile.hostile = true;
 			} else {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WhiteTorch);
-				if (Projectile.ai[0] == delay) Projectile.velocity = (Main.player[(int)Projectile.ai[1]].MountedCenter - Projectile.Center).SafeNormalize(default) * 10;
+				if (Projectile.ai[0] == delay - 5) Projectile.velocity = (Main.player[(int)Projectile.ai[1]].MountedCenter - Projectile.Center).SafeNormalize(default) * 10;
 				Projectile.hostile = false;
 				Projectile.hide = true;
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Defiled_Asphyxiator_Debuff.AddBuff(target);
+		}
+		public override void OnKill(int timeLeft) {
+			for (int i = 0; i < 5; i++)
+				Origins.instance.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height)), Projectile.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+			return true;
 		}
 	}
 	public class Defiled_Asphyxiator_P2 : Defiled_Asphyxiator_P1 { }
