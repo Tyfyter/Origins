@@ -543,9 +543,20 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
-				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
-				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
+				SpawnGore(NPC.Center + new Vector2(NPC.spriteDirection * -30, -20), 1);
+				SpawnGore(NPC.Center + new Vector2(NPC.spriteDirection * 15, 18), 2);
+				SpawnGore(NPC.Center + new Vector2(NPC.spriteDirection * -4, -22), 3);
+				for (int i = 0; i < 6; i++)
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
+				for (int i = 0; i < 10; i++)
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
+		}
+		void SpawnGore(Vector2 position, int num) {
+			Gore gore = Main.gore[Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), position, NPC.velocity, $"Gores/NPCs/DA{num}_Gore")];
+			gore.Frame = new SpriteFrame(2, 1) {
+				CurrentColumn = (NPC.spriteDirection == 1) ? (byte)0 : (byte)1
+			};
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor *= (255 - NPC.alpha) / 255f;
