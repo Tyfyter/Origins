@@ -4547,3 +4547,8 @@ Laser_Tag_Base_Console_Item: {
 	// DisplayName: Laser Tag Base Console
 	// Tooltip: ""
 }
+
+Generic_Weapon: {
+	// DisplayName: Generic Weapon
+	// Tooltip: ""
+}

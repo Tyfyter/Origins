@@ -26,6 +26,7 @@ Status_Messages: {
 	Defiled_Fissure_2: Rattling emanates from the walls...
 	Defiled_Fissure_3: The skies echo a threatening call...
 	Cleansing_Station_Invalid_Location: You cannot use this here.
+	Felnum_Spawn: The clouds have been blessed with Felnum!
 	Laser_Tag_Victory: "{0} wins!"
 	Laser_Tag_Team_Red: Red team
 	Laser_Tag_Team_Green: Green team
@@ -1341,6 +1342,7 @@ Projectiles: {
 	Defiled_Asphyxiator_P2.DisplayName: Defiled Asphyxiator P2
 	Defiled_Asphyxiator_P3.DisplayName: Defiled Asphyxiator P3
 	Defiled_Watcher_Spikes.DisplayName: Defiled Watcher Spikes
+	Generic_Weapon_P.DisplayName: Generic Weapon
 }
 
 Prefixes: {

@@ -1341,6 +1341,7 @@ Projectiles: {
 	// Defiled_Asphyxiator_P2.DisplayName: Defiled Asphyxiator P2
 	// Defiled_Asphyxiator_P3.DisplayName: Defiled Asphyxiator P3
 	// Defiled_Watcher_Spikes.DisplayName: Defiled Watcher Spikes
+	// Generic_Weapon_P.DisplayName: Generic Weapon P
 }
 
 Prefixes: {
@@ -1723,12 +1724,12 @@ Configs: {
 		}
 
 		ExportAllNPCImages: {
-			// Label: Export All N P C Images
+			// Label: Export All NPC Images
 			// Tooltip: ""
 		}
 
 		ExportNPCImages: {
-			// Label: Export N P C Images
+			// Label: Export NPC Images
 			// Tooltip: ""
 		}
 	}

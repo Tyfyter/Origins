@@ -3,6 +3,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Pets;
+using Origins.Items.Weapons;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
@@ -275,10 +276,11 @@ namespace Origins.NPCs {
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Mushroom_Key>(), 2500, 1, 1, new LootConditions.Mushroom_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ocean_Key>(), 2500, 1, 1, new LootConditions.Ocean_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Riven_Key>(), 2500, 1, 1, new LootConditions.Riven_Key_Condition()));
+			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<Generic_Weapon>(), 50000));
 		}
 
 		static void GenFelnumOre() {
-			string text = "The clouds have been blessed with Felnum!";
+			string text = Language.GetTextValue("Mods.Origins.Status_Messages.Felnum_Spawn");
 			if (Main.netMode == NetmodeID.SinglePlayer) {
 				Main.NewText(text, Colors.RarityGreen);
 			} else if (Main.netMode == NetmodeID.Server) {
