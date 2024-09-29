@@ -150,7 +150,7 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
-(@2, ^3) Amoebeye* !!! (arguably @2, gonna need bigger gores)
+(#3, ^2) Amoebeye* !!!
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
@@ -677,7 +677,7 @@ MAGIC WEAPONS:
 (^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
-(X) Eaterboros !!!
+(#, ^2) Eaterboros !!!
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion
@@ -790,7 +790,7 @@ EXPLOSIVE WEAPONS:
 (^) Hand Grenade Launcher
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
-(X) Hemoptysis !!!
+(#, ^2) Hemoptysis !!!
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
@@ -841,7 +841,7 @@ EXPLOSIVE WEAPONS:
 
 GENERIC WEAPONS:
 ---
-(X) Generic Weapon !!!
+(#, ^2) Generic Weapon !!!
 (^) Potato Launcher*
 
 (X) Hyperstatic Gauss Cannon

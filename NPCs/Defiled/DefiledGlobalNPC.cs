@@ -1,17 +1,14 @@
-﻿using System;
+﻿using Origins.NPCs.Defiled.Boss;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Origins.NPCs.Defiled.Boss;
-using Origins.World.BiomeData;
-using System.Linq;
 
-namespace Origins.NPCs.Defiled
-{
-    public class DefiledGlobalNPC : GlobalNPC, IAssimilationProvider {
+namespace Origins.NPCs.Defiled {
+	public class DefiledGlobalNPC : GlobalNPC, IAssimilationProvider {
 		public string AssimilationName => "DefiledAssimilation";
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public static Dictionary<int, int> NPCTransformations { get; private set; }
@@ -32,7 +29,8 @@ namespace Origins.NPCs.Defiled
                 [ModContent.NPCType<Defiled_Tripod>()] = 0.07f,
                 [ModContent.NPCType<Shattered_Mummy>()] = 0.07f,
                 [ModContent.NPCType<Shattered_Ghoul>()] = 0.10f,
-            };
+				[ModContent.NPCType<Defiled_Asphyxiator>()] = 0.11f,
+			};
 			NPCTransformations = new() {
 				{ NPCID.Bunny, ModContent.NPCType<Defiled_Mite>() },
 				{ NPCID.Penguin, ModContent.NPCType<Bile_Thrower>() },

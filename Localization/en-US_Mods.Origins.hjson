@@ -165,7 +165,7 @@ Dialogue: {
 		InteractionStorm2: Considering sub-optimal metal-material... Neglected consequences of electric shock.
 		InteractionGraveYard1: Death is an unrealistic outcome to life...
 		InteractionGraveYard2: Why offer energy back? Become circle of life.
-		BloodMoon1: We feel... execellent tonight.
+		BloodMoon1: We feel... rather excellent tonight.
 		BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
 		BloodMoon3: *Chittering.*
 		BloodMoon4: Blood Moon, a welcome sight.
@@ -199,7 +199,7 @@ Dialogue: {
 	Dusk_Trader: {
 		StandardDialogue1: What is it?
 		StandardDialogue2: Give haste, Terrarian.
-		StandardDialogue3: Yes, I am the Dusk Trader. What keeps you?
+		StandardDialogue3: Yes, I'm here. What keeps you?
 		StandardDialogue4: Yes?
 		BloodMoon: Interesting. Wicked spirits shouldn't bother us as much on this night.
 	}
@@ -955,28 +955,28 @@ Buffs: {
 	}
 
 	Defiled_Asphyxiator_Debuff: {
-		DisplayName: Defiled Asphyxiator Debuff
-		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff.Description
+		DisplayName: Asphyxiated
+		Description: You're drowning out
 	}
 
 	Defiled_Asphyxiator_Full_Debuff: {
-		DisplayName: Defiled Asphyxiator Full Debuff
-		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Full_Debuff.Description
+		DisplayName: Asphyxiated
+		Description: You're drowning out
 	}
 
 	Defiled_Asphyxiator_Debuff_2: {
-		DisplayName: Defiled Asphyxiator Debuff_2
-		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff_2.Description
+		DisplayName: Asphyxiated
+		Description: You're drowning out
 	}
 
 	Defiled_Asphyxiator_Debuff_3: {
-		DisplayName: Defiled Asphyxiator Debuff_3
-		Description: Mods.Origins.Buffs.Defiled_Asphyxiator_Debuff_3.Description
+		DisplayName: Asphyxiated
+		Description: You're drowning out
 	}
 
 	Laser_Tag_Buff: {
-		DisplayName: Laser Tag Buff
-		Description: Mods.Origins.Buffs.Laser_Tag_Buff.Description
+		DisplayName: In the Game
+		Description: You're participating in Laser Tag!
 	}
 }
 
