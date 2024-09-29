@@ -1721,6 +1721,16 @@ Configs: {
 			// Label: Export NPC Stats JSON
 			// Tooltip: ""
 		}
+
+		ExportAllNPCImages: {
+			// Label: Export All N P C Images
+			// Tooltip: ""
+		}
+
+		ExportNPCImages: {
+			// Label: Export N P C Images
+			// Tooltip: ""
+		}
 	}
 }
 

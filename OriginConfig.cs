@@ -296,8 +296,8 @@ namespace Origins {
 						Item item = ContentSamples.ItemsByType[i];
 						if (item.ModItem is not null) {
 							if (item.ModItem?.Mod is not Origins) break;
-							if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
-							WikiPageExporter.ExportItemSprites(item);
+							if (item.ModItem is ICustomWikiStat { ShouldHavePage: false }) continue;
+							WikiPageExporter.ExportContentSprites(item.ModItem);
 						}
 					}
 				}
@@ -312,7 +312,42 @@ namespace Origins {
 						return;
 					}
 					Directory.CreateDirectory(WikiSpritesPath);
-					WikiPageExporter.ExportItemSprites(ContentSamples.ItemsByType[value.Type]);
+					WikiPageExporter.ExportContentSprites(ContentSamples.ItemsByType[value.Type].ModItem);
+				}
+			}
+		}
+		public bool ExportAllNPCImages {
+			get => default;
+			set {
+				if (value) {
+					if (string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+						Origins.LogError($"WikiSpritesPath is null or whitespace");
+						return;
+					}
+					Directory.CreateDirectory(WikiSpritesPath);
+					int i;
+					for (i = 0; i < NPCLoader.NPCCount; i++) if (ContentSamples.NpcsByNetId[i].ModNPC?.Mod is Origins) break;
+					for (; i < NPCLoader.NPCCount; i++) {
+						NPC npc = ContentSamples.NpcsByNetId[i];
+						if (npc.ModNPC is not null) {
+							if (npc.ModNPC?.Mod is not Origins) break;
+							if (npc.ModNPC is ICustomWikiStat { ShouldHavePage: false }) continue;
+							WikiPageExporter.ExportContentSprites(npc.ModNPC);
+						}
+					}
+				}
+			}
+		}
+		public NPCDefinition ExportNPCImages {
+			get => default;
+			set {
+				if ((value?.Type ?? 0) > NPCID.None) {
+					if (string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+						Origins.LogError($"WikiSpritesPath is null or whitespace");
+						return;
+					}
+					Directory.CreateDirectory(WikiSpritesPath);
+					WikiPageExporter.ExportContentSprites(ContentSamples.NpcsByNetId[value.Type].ModNPC);
 				}
 			}
 		}

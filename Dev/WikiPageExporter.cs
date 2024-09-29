@@ -87,16 +87,16 @@ namespace Origins.Dev {
 		static bool crc_table_computed = false;
 		static string currentCRCText = "";
 		static int currentCRCLength = 0;
-		public static void ExportItemSprites(Item item) {
+		public static void ExportContentSprites(object content) {
 			int screenWidth = Main.screenWidth;
 			int screenHeight = Main.screenHeight;
-			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
-				foreach ((string name, Texture2D texture) sprite in provider.GetSprites(item.ModItem) ?? Array.Empty<(string, Texture2D)>()) {
-					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
+			foreach (WikiProvider provider in GetWikiProviders(content)) {
+				foreach ((string name, Texture2D texture) in provider.GetSprites(content) ?? Array.Empty<(string, Texture2D)>()) {
+					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";
 					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 					FileStream stream = File.Exists(filePath) ? File.OpenWrite(filePath) : File.Create(filePath);
-					sprite.texture.SaveAsPng(stream, sprite.texture.Width, sprite.texture.Height);
-					sprite.texture.Dispose();
+					texture.SaveAsPng(stream, texture.Width, texture.Height);
+					texture.Dispose();
 					stream.Close();
 				}
 				static void make_crc_table() {
@@ -177,15 +177,15 @@ namespace Origins.Dev {
 					currentCRCText += "|";
 #endif
 				}
-				foreach ((string name, (Texture2D texture, int frames)[] textures) sprite in provider.GetAnimatedSprites(item.ModItem) ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
-					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
+				foreach ((string name, (Texture2D texture, int frames)[] textures) in provider.GetAnimatedSprites(content) ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
+					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";
 					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 					FileStream stream = File.Create(filePath);
 					int seqNum = 0;
-					for (int i = 0; i < sprite.textures.Length; i++) {
-						Texture2D texture = sprite.textures[i].texture;
+					for (int i = 0; i < textures.Length; i++) {
+						Texture2D texture = textures[i].texture;
 						int size = texture.Width * texture.Height * 4;
-						MemoryStream memoryStream = new MemoryStream(0);//never actually large enough, but 
+						MemoryStream memoryStream = new(0);//never actually large enough, but 
 						texture.SaveAsPng(memoryStream, texture.Width, texture.Height);
 						//texture.SaveAsPng(File.Create(Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + $"_frame_{i}.png"), texture.Width, texture.Height);
 						texture.Dispose();
@@ -218,7 +218,7 @@ namespace Origins.Dev {
 							stream.Write([0x00, 0x00, 0x00, 0x08], 0, 4);
 							WriteAndAdvanceCRC(stream, ref crc32, [
 								/*acTL      */0x61, 0x63, 0x54, 0x4C,
-								/*num_frames*/0x00, 0x00, 0x00, (byte)sprite.textures.Length,
+								/*num_frames*/0x00, 0x00, 0x00, (byte)textures.Length,
 								/*num_plays */0x00, 0x00, 0x00, 0xFF
 							]);
 							FinalizeCRC((uint)crc32, stream);
@@ -238,7 +238,7 @@ namespace Origins.Dev {
 						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Height), name: "height");
 						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "x_offset");
 						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "y_offset");
-						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)sprite.textures[i].frames), name: "delay_num");
+						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)textures[i].frames), name: "delay_num");
 						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60), name: "delay_den");
 						WriteAndAdvanceCRC(stream, ref crc32, [(byte)1], name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
 						WriteAndAdvanceCRC(stream, ref crc32, [(byte)0], name: "blend_op");//APNG_BLEND_OP_SOURCE
@@ -258,7 +258,7 @@ namespace Origins.Dev {
 						WriteAndAdvanceCRC(stream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
 						FinalizeCRC((uint)crc32, stream);
 
-						if (i == sprite.textures.Length - 1) {
+						if (i == textures.Length - 1) {
 							int IEND_pos = NextChunk(IDAT_pos, buffer, "IEND"u8.ToArray());
 							uint IEND_len = ReadUInt(buffer, IEND_pos);
 							stream.Write(buffer, IEND_pos, 4 + 4 + (int)IEND_len + 4);
@@ -807,7 +807,7 @@ namespace Origins.Dev {
 			NPC npc = modNPC.NPC;
 			JObject data = [];
 			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
-			data["Image"] = customStat?.CustomSpritePath ?? modNPC.Texture.Replace(modNPC.Mod.Name, "§ModImage§");
+			data["Image"] = customStat?.CustomSpritePath ?? Path.Combine(DebugConfig.Instance.WikiSpritesPath, WikiPageExporter.GetWikiName(modNPC));
 			data["Name"] = npc.TypeName;
 			JArray types = new("NPC");
 			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
