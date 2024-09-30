@@ -4557,3 +4557,8 @@ Hemoptysis: {
 	DisplayName: Hemoptysis
 	Tooltip: ""
 }
+
+Eaterboros: {
+	DisplayName: Eaterboros
+	Tooltip: ""
+}

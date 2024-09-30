@@ -1346,6 +1346,8 @@ Projectiles: {
 	Hemoptysis_P.DisplayName: Hemoptysis
 	Hemoptysis_Blood_P.DisplayName: Hemoptysis
 	Hemoptysis_P2.DisplayName: Hemoptysis
+	Eaterboros_Slash.DisplayName: Eaterboros
+	Eaterboros_Segment_Free.DisplayName: Eaterboros
 }
 
 Prefixes: {

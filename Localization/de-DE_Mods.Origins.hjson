@@ -1344,8 +1344,10 @@ Projectiles: {
 	// Defiled_Watcher_Spikes.DisplayName: Defiled Watcher Spikes
 	// Generic_Weapon_P.DisplayName: Generic Weapon
 	// Hemoptysis_P.DisplayName: Hemoptysis
-	// Hemoptysis_Blood_P.DisplayName: Hemoptysis Blood P
-	// Hemoptysis_P2.DisplayName: Hemoptysis P2
+	// Hemoptysis_Blood_P.DisplayName: Hemoptysis
+	// Hemoptysis_P2.DisplayName: Hemoptysis
+	// Eaterboros_Slash.DisplayName: Eaterboros Slash
+	// Eaterboros_Segment_Free.DisplayName: Eaterboros Segment Free
 }
 
 Prefixes: {
