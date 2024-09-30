@@ -99,7 +99,7 @@ VANILLA MODIFICATIONS:
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (^) Explosive Defense Punishment (increased affliction from defense)*
 (^) Harpoon (new weapon to introduce sub-class)*
-(X) Proximity Mine Launcher to use Canisters* !!!
+(☻) Proximity Mine Launcher to use Canisters* !!!
 (^) Wooden armor buffs*
 ---
 
@@ -150,14 +150,14 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
-(#3, ^2) Amoebeye* !!!
+(☻) Amoebeye* !!!
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(#3, ^2) Defiled Asphyxiator* !!!
+(☻) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
@@ -340,7 +340,7 @@ ACCESSORIES:
 (^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
-(X) Laser Tag Vest*
+(☻, @2) Laser Tag Vest*
 (^) Last Descendent*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -602,7 +602,7 @@ MELEE WEAPONS:
 (X) Chromtain Smasher
 (X) Eyndum Scar
 (X) Rocket Lance
-(#2, ^2,(just the right click attack, there's nothing special about the left click except the knockback yet)) The Bird
+(#2, ^2) The Bird
 ---
 
 
