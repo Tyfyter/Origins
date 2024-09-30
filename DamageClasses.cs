@@ -12,11 +12,13 @@ namespace Origins {
 		private static DamageClass thrownExplosive;
 		private static DamageClass rangedMagic;
 		private static DamageClass summonMagicSpeed;
+		private static DamageClass meleeMagic;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
 		public static DamageClass ThrownExplosive => thrownExplosive ??= ModContent.GetInstance<Thrown_Explosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
 		public static DamageClass RangedMagic => rangedMagic ??= ModContent.GetInstance<Ranged_Magic>();
 		public static DamageClass SummonMagicSpeed => summonMagicSpeed ??= ModContent.GetInstance<Summon_Magic_Speed>();
+		public static DamageClass MeleeMagic => meleeMagic ??= ModContent.GetInstance<Melee_Magic>();
 		static FieldInfo _damageClasses;
 		static FieldInfo _DamageClasses => _damageClasses ??= typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic);
 		public static List<DamageClass> All => (List<DamageClass>)_DamageClasses.GetValue(null);
@@ -162,6 +164,15 @@ namespace Origins {
 		}
 		public override void SetDefaultStats(Player player) {
 
+		}
+	}
+	public class Melee_Magic : DamageClass {
+		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
+			if (damageClass == Generic || damageClass == Melee || damageClass == Magic) return StatInheritanceData.Full;
+			return StatInheritanceData.None;
+		}
+		public override bool GetEffectInheritance(DamageClass damageClass) {
+			return damageClass == Generic || damageClass == Melee || damageClass == Magic;
 		}
 	}
 }

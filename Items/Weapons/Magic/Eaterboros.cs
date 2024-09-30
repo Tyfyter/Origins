@@ -22,16 +22,19 @@ namespace Origins.Items.Weapons.Magic {
 		public string[] Categories => [
 			"Sword"
 		];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 27;
-			Item.DamageType = DamageClass.Magic;
+			Item.DamageType = DamageClasses.MeleeMagic;
 			Item.mana = 7;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.width = 48;
 			Item.height = 48;
-			Item.useTime = 25;
-			Item.useAnimation = 11;
+			Item.useTime = 9;
+			Item.useAnimation = 25;
 			Item.shoot = ModContent.ProjectileType<Eaterboros_Slash>();
 			Item.shootSpeed = 1;
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -55,6 +58,7 @@ namespace Origins.Items.Weapons.Magic {
 		static AutoLoadingAsset<Texture2D> eaterTexture = "Origins/Items/Weapons/Magic/Eaterboros_Segment_Attached";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
+			Projectile.DamageType = DamageClasses.MeleeMagic;
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.friendly = false;
@@ -83,11 +87,11 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			bool newEater = false;
 			if (player.channel) {
-				player.itemTime = player.itemTimeMax;
+				player.itemAnimation = player.itemAnimationMax;
 				player.TryUpdateChannel(Projectile);
 
 				int before = (int)Projectile.ai[2];
-				Projectile.ai[2] += 1f / player.itemAnimationMax;
+				Projectile.ai[2] += 1f / player.itemTimeMax;
 				newEater = before != (int)Projectile.ai[2];
 				if ((newEater && !player.CheckMana(player.HeldItem, pay: true)) || Projectile.ai[2] >= max_segments) player.TryCancelChannel(Projectile);
 				player.manaRegenDelay = (int)player.maxRegenDelay;
@@ -102,17 +106,18 @@ namespace Origins.Items.Weapons.Magic {
 				}
 				Projectile.friendly = false;
 			} else {
+				if (!Projectile.friendly) SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.Center);
 				Projectile.friendly = true;
 			}
 			if (Projectile.localAI[2] < Projectile.ai[2]) Projectile.localAI[2] = Projectile.ai[2];
 			Projectile.ai[1] = player.direction = Math.Sign(Projectile.velocity.X);
 
-			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
+			float swingFactor = 1 - player.itemAnimation / (float)player.itemAnimationMax;
 			swingFactor = MathHelper.Lerp(MathF.Pow(swingFactor, 2f), MathF.Pow(swingFactor, 0.5f), swingFactor * swingFactor);
 			Projectile.rotation = MathHelper.Lerp(-2f, 2f, swingFactor) * Projectile.ai[1] * (1 + Projectile.localAI[2] / swing_angle_extend_factor);
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, realRotation);
-			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
+			Projectile.timeLeft = player.itemAnimation * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 
@@ -133,6 +138,7 @@ namespace Origins.Items.Weapons.Magic {
 					);
 				}
 			}
+			player.itemTime = 2;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		int collideIndex = -1;
@@ -159,7 +165,7 @@ namespace Origins.Items.Weapons.Magic {
 						lastProj = Projectile.NewProjectile(
 							Projectile.GetSource_OnHit(target),
 							Projectile.Center + vel * (i + 0.75f),
-							vel * 8f / Projectile.width,
+							vel.RotatedBy(Projectile.ai[1] * 0.4f) * 8f / Projectile.width,
 							projType,
 							Projectile.damage / 2,
 							Projectile.knockBack / 5,
@@ -215,15 +221,19 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Eaterboros_Segment_Free : ModProjectile {
+		static int frameIndex = 0;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 4;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.TinyEater);
+			Projectile.DamageType = DamageClasses.MeleeMagic;
+			Projectile.width = Projectile.height = 26;
 			Projectile.aiStyle = 0;
 			Projectile.extraUpdates = 0;
 			Projectile.friendly = false;
 			Projectile.alpha = 0;
+			Projectile.frame = frameIndex = (frameIndex + 1) % Main.projFrames[Type];
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] == -1;
 		public override void AI() {
@@ -268,6 +278,25 @@ namespace Origins.Items.Weapons.Magic {
 					float currentSpeed = Projectile.velocity.Length();
 					Projectile.velocity = Vector2.Normalize(Projectile.velocity + (targetCenter - Projectile.Center).SafeNormalize(default) * turnSpeed) * currentSpeed;
 				}
+			}
+			if (++Projectile.frameCounter > 5) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = 14;
+			height = 14;
+			return true;
+		}
+		public override void OnKill(int timeLeft) {
+			for (int j = 0; j < 4; j++) {
+				Dust.NewDust(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					DustID.ScourgeOfTheCorruptor
+				);
 			}
 		}
 	}

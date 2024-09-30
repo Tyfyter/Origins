@@ -1005,6 +1005,7 @@ DamageClasses: {
 	// Summon_Magic_Speed.DisplayName: summon damage
 	// Thrown_Explosive.DisplayName: explosive damage (thrown)
 	// ExplosivePlus.DisplayName: explosive{0}
+	// Melee_Magic.DisplayName: Melee Magic
 }
 
 Projectiles: {
@@ -1346,8 +1347,8 @@ Projectiles: {
 	// Hemoptysis_P.DisplayName: Hemoptysis
 	// Hemoptysis_Blood_P.DisplayName: Hemoptysis
 	// Hemoptysis_P2.DisplayName: Hemoptysis
-	// Eaterboros_Slash.DisplayName: Eaterboros Slash
-	// Eaterboros_Segment_Free.DisplayName: Eaterboros Segment Free
+	// Eaterboros_Slash.DisplayName: Eaterboros
+	// Eaterboros_Segment_Free.DisplayName: Eaterboros
 }
 
 Prefixes: {
