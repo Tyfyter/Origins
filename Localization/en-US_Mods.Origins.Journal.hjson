@@ -1,3 +1,9 @@
+TabName: {
+	Index_Page: Index
+	Quest_List: Quests
+	Search_Page: Search
+	Custom: Notes
+}
 Captured_Mojo: {
 	Name: Mojo
 	Text:

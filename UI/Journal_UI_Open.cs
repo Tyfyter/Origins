@@ -258,6 +258,11 @@ namespace Origins.UI {
 					quest.HasNotification = false;
 				}
 				break;
+
+				case Journal_UI_Mode.Custom: {
+					SetText(OriginPlayer.LocalOriginPlayer.journalText);
+				}
+				break;
 			}
 		}
 		//for example, [i:Origins/Blue_Bovine]
@@ -324,7 +329,8 @@ namespace Origins.UI {
 				Texture2D texture = TabsTexture;
 				float pixelSize = bounds.Width / (256f * 2);
 				Journal_UI_Mode? switchMode = null;
-				for (int i = 0; i < 3; i++) {
+				int tabCount = DebugConfig.Instance.DebugMode ? 4 : 3;
+				for (int i = 0; i < tabCount; i++) {
 					Journal_UI_Mode tabMode = Journal_UI_Mode.Normal_Page;
 					bool active = false;
 					switch (i) {
@@ -345,16 +351,25 @@ namespace Origins.UI {
 						position = bounds.BottomLeft() + new Vector2(pixelSize * -24, pixelSize * -61.25f);
 						tabMode = Journal_UI_Mode.Search_Page;
 						break;
+
+						case 3:
+						frame = new(2, 100, 70, 30);
+						position = bounds.BottomLeft() + new Vector2(pixelSize * -24, pixelSize * -99.25f);
+						tabMode = Journal_UI_Mode.Custom;
+						break;
 					}
+					float pullOut = 0;
 					if (tabMode == mode) {
-						position.X -= pixelSize * Math.Min(timeSinceSwitch * 3, 12);
+						pullOut = pixelSize * Math.Min(timeSinceSwitch * 3, 12);
 						active = true;
 					} else if (tabMode == lastMode) {
-						position.X -= pixelSize * Math.Max(12 - timeSinceSwitch * 3, 0);
+						pullOut = pixelSize * Math.Max(12 - timeSinceSwitch * 3, 0);
 					}
-					if (!PlayerInput.IgnoreMouseInterface && new Rectangle((int)position.X, (int)position.Y, (int)(pixelSize * 40), (int)(pixelSize * 30)).Contains(Main.MouseScreen)) {
+					position.X -= pullOut;
+					if (!PlayerInput.IgnoreMouseInterface && new Rectangle((int)position.X, (int)position.Y, (int)(pixelSize * 40 + pullOut), (int)(pixelSize * 30)).Contains(Main.MouseScreen)) {
 						active = true;
 						Main.LocalPlayer.mouseInterface = true;
+						Main.instance.MouseText(Language.GetOrRegister("Mods.Origins.Journal.TabName." + tabMode).Value);
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
 							switchMode = tabMode;
 						}
@@ -370,6 +385,7 @@ namespace Origins.UI {
 			int pageCount = pages?.Length ?? 0;
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
 			bool shade = currentEffect is not null;
+			bool canDrawArrows = true;
 			try {
 				if (shade) Origins.shaderOroboros.Capture();
 				for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
@@ -400,52 +416,65 @@ namespace Origins.UI {
 				}
 			}
 			#region arrows
-			if (pageOffset < pageCount - 2) {
-				Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
-				Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-				//temp highlight
-				if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
-					if (Main.mouseLeft && Main.mouseLeftRelease) {
-						pageOffset += 2;
+			if (canDrawArrows) {
+				if (pageOffset < pageCount - 2) {
+					Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+					//temp highlight
+					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+						if (Main.mouseLeft && Main.mouseLeftRelease) {
+							pageOffset += 2;
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position + new Vector2(0, 2),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position - new Vector2(0, 2),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position + new Vector2(2, 0),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position - new Vector2(2, 0),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
 					}
 					spriteBatch.Draw(
 						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(0, 2),
+						position,
 						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(0, 2),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
+						Color.White,
 						-MathHelper.PiOver2,
 						new Vector2(7, 16),
 						1,
@@ -453,64 +482,64 @@ namespace Origins.UI {
 						0
 					);
 				}
-				spriteBatch.Draw(
-					TextureAssets.Item[ItemID.WoodenArrow].Value,
-					position,
-					null,
-					Color.White,
-					-MathHelper.PiOver2,
-					new Vector2(7, 16),
-					1,
-					0,
-					0
-				);
-			}
-			if (pageOffset > 0) {
-				Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
-				Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-				//temp highlight
-				if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
-					if (Main.mouseLeft && Main.mouseLeftRelease) {
-						pageOffset = Math.Max(pageOffset - 2, 0);
+				if (pageOffset > 0) {
+					Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+					//temp highlight
+					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+						if (Main.mouseLeft && Main.mouseLeftRelease) {
+							pageOffset = Math.Max(pageOffset - 2, 0);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position + new Vector2(0, 2),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position - new Vector2(0, 2),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position + new Vector2(2, 0),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position - new Vector2(2, 0),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
 					}
 					spriteBatch.Draw(
 						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(0, 2),
+						position,
 						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(0, 2),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
+						Color.White,
 						MathHelper.PiOver2,
 						new Vector2(7, 16),
 						1,
@@ -518,17 +547,6 @@ namespace Origins.UI {
 						0
 					);
 				}
-				spriteBatch.Draw(
-					TextureAssets.Item[ItemID.WoodenArrow].Value,
-					position,
-					null,
-					Color.White,
-					MathHelper.PiOver2,
-					new Vector2(7, 16),
-					1,
-					0,
-					0
-				);
 			}
 			#endregion arrows
 			spriteBatch.Restart(spriteBatchState);
@@ -552,6 +570,7 @@ Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis m
 		Search_Page,
 		Quest_List,
 		Quest_Page,
+		Custom,
 		INVALID
 	}
 }

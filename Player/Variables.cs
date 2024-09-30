@@ -370,6 +370,7 @@ namespace Origins {
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
+		public string journalText = "test";
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
