@@ -1005,7 +1005,7 @@ DamageClasses: {
 	// Summon_Magic_Speed.DisplayName: summon damage
 	// Thrown_Explosive.DisplayName: explosive damage (thrown)
 	// ExplosivePlus.DisplayName: explosive{0}
-	// Melee_Magic.DisplayName: Melee Magic
+	// Melee_Magic.DisplayName: melee/magic damage
 }
 
 Projectiles: {
