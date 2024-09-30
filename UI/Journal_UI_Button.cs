@@ -49,6 +49,7 @@ namespace Origins.UI {
 				} else if (Main.mouseRight && Main.mouseRightRelease && (Main.mouseItem.dye > 0 || Main.mouseItem.IsAir)) {
 					Main.mouseLeft = Main.mouseLeftRelease = true;
 					Main.mouseRight = false;
+					originPlayer.journalDye ??= new();
 					ItemSlot.Handle(ref originPlayer.journalDye);
 					Main.mouseLeft = Main.mouseLeftRelease = false;
 					Main.mouseRight = true;

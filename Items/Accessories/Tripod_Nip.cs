@@ -23,8 +23,7 @@ namespace Origins.Items.Accessories {
 			player.calmed = true;
 		}
 	}
-}
-public class Tripod_Nip_Entry : JournalEntry {
-	public override string TextKey => "Tripod_Nip";
-	public override ArmorShaderData TextShader => null;
+	public class Tripod_Nip_Entry : JournalEntry {
+		public override string TextKey => "Tripod_Nip";
+	}
 }

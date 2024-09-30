@@ -57,6 +57,5 @@ namespace Origins.Tiles.Other {
 	}
 	public class Felnum_Mat_Entry : JournalEntry {
 		public override string TextKey => "Felnum";
-		public override ArmorShaderData TextShader => null;
 	}
 }

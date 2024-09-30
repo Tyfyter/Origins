@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Graphics.Shaders;
@@ -10,15 +11,18 @@ namespace Origins.Journal {
 		public abstract string TextKey { get; }
 		public string NameKey { get; private set; }
 		public string NameValue => Language.GetTextValue(NameKey);
-		public virtual string[] Aliases => Array.Empty<string>();
+		public virtual string[] Aliases => [];
 		public virtual ArmorShaderData TextShader => null;
+		public virtual Color BaseColor => Color.Black;
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
 			NameKey = $"Mods.{Mod.Name}.Journal.{TextKey}.Name";
 			if (!Language.Exists($"Mods.{Mod.Name}.Journal.Name." + TextKey)) {
 				NameKey = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
 			}
-			if (Journal_Registry.Entries is null) Journal_Registry.Entries = new Dictionary<string, JournalEntry>();
+			Language.GetOrRegister(NameKey);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
+			Journal_Registry.Entries ??= [];
 			Journal_Registry.Entries.Add(Mod.Name + "/" + Name, this);
 		}
 		internal int GetQueryIndex(string query) {

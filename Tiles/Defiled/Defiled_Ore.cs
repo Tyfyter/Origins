@@ -45,6 +45,5 @@ namespace Origins.Tiles.Defiled {
     }
 	public class Lost_Ore_Entry : JournalEntry {
 		public override string TextKey => "Lost_Ore";
-		public override ArmorShaderData TextShader => null;
 	}
 }

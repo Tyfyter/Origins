@@ -78,7 +78,6 @@ namespace Origins.Items.Materials {
 		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
-			public override ArmorShaderData TextShader => null;
 		}
 	}
 	public class Bark : MaterialItem {
@@ -130,7 +129,6 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public class Black_Bile_Entry : JournalEntry {
 			public override string TextKey => "Black_Bile";
-			public override ArmorShaderData TextShader => null;
 		}
 	}
 	public class Bleeding_Obsidian_Shard : MaterialItem {

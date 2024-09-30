@@ -88,6 +88,5 @@ namespace Origins.Items.Accessories {
 	}
 	public class Stone_Mask_Entry : JournalEntry {
 		public override string TextKey => "Stone_Mask";
-		public override ArmorShaderData TextShader => null;
 	}
 }

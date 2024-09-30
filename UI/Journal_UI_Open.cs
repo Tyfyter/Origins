@@ -50,7 +50,8 @@ namespace Origins.UI {
 			//SetText(loremIpsum);
 			SwitchMode(Journal_UI_Mode.Index_Page, "");
 		}
-		public void SetText(string text) {
+		public void SetText(string text) => SetText(text, Color.Black);
+		public void SetText(string text, Color baseColor) {
 			CalculatedStyle bounds = baseElement.GetDimensions();
 			bounds.Width = bounds.Width * 0.5f - xMargin * 2;
 			bounds.Height -= yMargin * 2.5f;
@@ -61,14 +62,14 @@ namespace Origins.UI {
 			float x = font.MeasureString(" ").X;
 			float snippetScale;
 			float num3 = 0f;
-			List<TextSnippet> snippets = ChatManager.ParseMessage(text, Color.Black);
+			List<TextSnippet> snippets = ChatManager.ParseMessage(text, baseColor);
 
-			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
-			StringBuilder currentText = new StringBuilder();
-			List<TextSnippet> currentPage = new List<TextSnippet>();
+			List<TextSnippet[]> snippetPages = [];
+			StringBuilder currentText = new();
+			List<TextSnippet> currentPage = [];
 			void finishPage() {
 				cursor = Vector2.Zero;
-				currentPage.Add(new TextSnippet(currentText.ToString(), Color.Black));
+				currentPage.Add(new TextSnippet(currentText.ToString(), baseColor));
 				currentText.Clear();
 				snippetPages.Add(currentPage.ToArray());
 				currentPage.Clear();
@@ -78,7 +79,7 @@ namespace Origins.UI {
 				textSnippet.Update();
 				snippetScale = textSnippet.Scale;
 				Color snippetColor = textSnippet.GetVisibleColor();
-				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, Color.Black, snippetScale)) {
+				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					result.X = Math.Max(result.X, cursor.X);
 					currentPage.Add(textSnippet);
@@ -159,13 +160,13 @@ namespace Origins.UI {
 				case Journal_UI_Mode.Normal_Page: {
 					JournalEntry entry = Journal_Registry.Entries[key];
 					currentEffect = entry.TextShader;
-					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}.Text")));
+					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}.Text")), entry.BaseColor);
 				}
 				break;
 
 				case Journal_UI_Mode.Index_Page: {
-					List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
-					List<TextSnippet> currentPage = new List<TextSnippet>();
+					List<TextSnippet[]> snippetPages = [];
+					List<TextSnippet> currentPage = [];
 					int lineCount = 0;
 					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 					foreach (var entry in Journal_Registry.Entries.Keys) {
@@ -176,7 +177,7 @@ namespace Origins.UI {
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
-							currentPage = new List<TextSnippet>();
+							currentPage = [];
 							lineCount = 0;
 						}
 					}
@@ -206,11 +207,11 @@ namespace Origins.UI {
 				}
 
 				case Journal_UI_Mode.Quest_List: {
-					List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
-					List<TextSnippet> currentPage = new List<TextSnippet>();
+					List<TextSnippet[]> snippetPages = [];
+					List<TextSnippet> currentPage = [];
 					int lineCount = 0;
-					List<Quest> activeQuests = new();
-					List<Quest> completedQuests = new();
+					List<Quest> activeQuests = [];
+					List<Quest> completedQuests = [];
 					foreach (var quest in Quest_Registry.Quests) {
 						if (quest.ShowInJournal()) {
 							if (quest.Completed) {
@@ -225,7 +226,7 @@ namespace Origins.UI {
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
-							currentPage = new List<TextSnippet>();
+							currentPage = [];
 							lineCount = 0;
 						}
 					}
@@ -243,7 +244,7 @@ namespace Origins.UI {
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
-							currentPage = new List<TextSnippet>();
+							currentPage = [];
 							lineCount = 0;
 						}
 					}
@@ -276,8 +277,8 @@ namespace Origins.UI {
 			return outputText;
 		}
 		public void SetSearchResults(string query) {
-			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
-			List<TextSnippet> currentPage = new List<TextSnippet>();
+			List<TextSnippet[]> snippetPages = [];
+			List<TextSnippet> currentPage = [];
 			int lineCount = 0;
 			if (pages.Length < 1 || pages[0].Length < 0 || pages[0][0] is not Journal_Search_Snippet) {
 				SwitchMode(Journal_UI_Mode.Search_Page, query);
@@ -294,7 +295,7 @@ namespace Origins.UI {
 				currentPage.Add(new TextSnippet("\n"));
 				if (++lineCount > 16) {
 					snippetPages.Add(currentPage.ToArray());
-					currentPage = new List<TextSnippet>();
+					currentPage = [];
 					lineCount = 0;
 				}
 			}
@@ -303,7 +304,7 @@ namespace Origins.UI {
 		}
 		public static string[] GetSearchResults(string query) {
 			if (string.IsNullOrWhiteSpace(query)) return Array.Empty<string>();
-			List<(string key, int weight)> entries = new List<(string, int)>();
+			List<(string key, int weight)> entries = [];
 			foreach (var item in Journal_Registry.Entries) {
 				int index = item.Value.GetQueryIndex(query);
 				if (index >= 0) {
@@ -398,104 +399,7 @@ namespace Origins.UI {
 					Origins.shaderOroboros.Release();
 				}
 			}
-			/*
-			switch (mode) {
-				case Journal_UI_Mode.Quest_Page:
-				case Journal_UI_Mode.Normal_Page: {
-					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
-						ChatManager.DrawColorCodedString(spriteBatch,
-							FontAssets.MouseText.Value,
-							pages[i + pageOffset],
-							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
-							Color.Black,
-							0,
-							Vector2.Zero,
-							Vector2.One,
-							out int hoveredSnippet,
-							bounds.Width * 0.5f - xMargin * 2
-						);
-						if (hoveredSnippet >= 0) {
-							pages[i + pageOffset][hoveredSnippet].OnHover();
-							if (Main.mouseLeft && Main.mouseLeftRelease) {
-								pages[i + pageOffset][hoveredSnippet].OnClick();
-							}
-						}
-					}
-					break;
-				}
-				case Journal_UI_Mode.Index_Page: {
-					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
-						ChatManager.DrawColorCodedString(spriteBatch,
-							FontAssets.MouseText.Value,
-							pages[i + pageOffset],
-							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
-							Color.Black,
-							0,
-							Vector2.Zero,
-							Vector2.One,
-							out int hoveredSnippet,
-							bounds.Width * 0.5f - xMargin * 2
-						);
-						if (hoveredSnippet >= 0) {
-							if (pages[i + pageOffset][hoveredSnippet] is Journal_Link_Handler.Journal_Link_Snippet currentSnippet) {
-								currentSnippet.OnHover();
-								if (Main.mouseLeft && Main.mouseLeftRelease) {
-									currentSnippet.OnClick();
-								}
-							}
-						}
-					}
-					break;
-				}
-				case Journal_UI_Mode.Search_Page: {
-					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
-						ChatManager.DrawColorCodedString(spriteBatch,
-							FontAssets.MouseText.Value,
-							pages[i + pageOffset],
-							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
-							Color.Black,
-							0,
-							Vector2.Zero,
-							Vector2.One,
-							out int hoveredSnippet,
-							bounds.Width * 0.5f - xMargin * 2
-						);
-						if (hoveredSnippet >= 0 && hoveredSnippet < pages[i + pageOffset].Length) {
-							if (pages[i + pageOffset][hoveredSnippet] is TextSnippet currentSnippet) {
-								currentSnippet.OnHover();
-								if (Main.mouseLeft && Main.mouseLeftRelease) {
-									currentSnippet.OnClick();
-								}
-							}
-						}
-					}
-					break;
-				}
-				case Journal_UI_Mode.Quest_List: {
-					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
-						ChatManager.DrawColorCodedString(spriteBatch,
-							FontAssets.MouseText.Value,
-							pages[i + pageOffset],
-							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
-							Color.Black,
-							0,
-							Vector2.Zero,
-							Vector2.One,
-							out int hoveredSnippet,
-							bounds.Width * 0.5f - xMargin * 2
-						);
-						if (hoveredSnippet >= 0) {
-							if (pages[i + pageOffset][hoveredSnippet] is Quest_Link_Handler.Quest_Link_Snippet currentSnippet) {
-								currentSnippet.OnHover();
-								if (Main.mouseLeft && Main.mouseLeftRelease) {
-									currentSnippet.OnClick();
-								}
-							}
-						}
-					}
-					break;
-				}
-			}*/
+			#region arrows
 			if (pageOffset < pageCount - 2) {
 				Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 				Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
@@ -626,6 +530,7 @@ namespace Origins.UI {
 					0
 				);
 			}
+			#endregion arrows
 			spriteBatch.Restart(spriteBatchState);
 		}
 		/*

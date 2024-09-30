@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Journal;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -55,6 +56,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Forbidden_Voice_Entry : JournalEntry {
 		public override string TextKey => nameof(Forbidden_Voice);
-		public override ArmorShaderData TextShader => GameShaders.Armor.GetShaderFromItemId(ItemID.BurningHadesDye);
+		public override ArmorShaderData TextShader => GameShaders.Armor.GetShaderFromItemId(ItemID.PurpleOozeDye);
+		public override Color BaseColor => new(64, 64, 64);
 	}
 }

@@ -305,6 +305,5 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Vorpal_Sword_Entry : JournalEntry {
 		public override string TextKey => "Vorpal_Sword";
-		public override ArmorShaderData TextShader => null;
 	}
 }

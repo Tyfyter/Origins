@@ -3198,6 +3198,8 @@ Felnum_Ore_Item: {
 	Tooltip: ""
 }
 
+Felnum.DisplayName: Mods.Origins.Items.Felnum.DisplayName
+
 Fiberglass_Item: {
 	DisplayName: Fiberglass Block
 	Tooltip: ""
@@ -4566,3 +4568,5 @@ Eaterboros: {
 		Eaters struck in the chain release adjacent segments
 		'''
 }
+
+Lost_Ore.DisplayName: Mods.Origins.Items.Lost_Ore.DisplayName

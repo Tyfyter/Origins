@@ -27,6 +27,5 @@ namespace Origins.Items.Accessories {
 	}
 	public class Stack_of_Shraps_Entry : JournalEntry {
 		public override string TextKey => nameof(Stack_of_Shraps);
-		public override ArmorShaderData TextShader => null;
 	}
 }
