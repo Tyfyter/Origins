@@ -195,7 +195,6 @@ namespace Origins.Items.Weapons.Magic {
 					shader.Shader.Parameters["uOffset"].SetValue(-Main.LocalPlayer.velocity.WithMaxLength(4) * 2);
 					Origins.shaderOroboros.Stack(shader, null);
 					Origins.shaderOroboros.Release();
-					spriteBatch.Restart(state);
 					if (!anyReal) targets.Clear();
 				} finally {
 					drawingMissingFileUI = false;

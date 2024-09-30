@@ -296,3 +296,10 @@ Felnum: {
 	Contributions:
 		- aiding the Terrarian
 	''' */
+
+Forbidden_Voice: {
+	// Name: Forbidden Voice
+	// NPCs, Enemies, and Bosses vv
+	
+	// Text: Tumblr Fire Text.gif
+}

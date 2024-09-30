@@ -55,6 +55,6 @@ namespace Origins.Items.Accessories {
 	}
 	public class Forbidden_Voice_Entry : JournalEntry {
 		public override string TextKey => nameof(Forbidden_Voice);
-		public override ArmorShaderData TextShader => GameShaders.Armor.GetShaderFromItemId(ItemID.ShadowflameHadesDye);
+		public override ArmorShaderData TextShader => GameShaders.Armor.GetShaderFromItemId(ItemID.BurningHadesDye);
 	}
 }
