@@ -47,6 +47,10 @@ namespace Origins.Items.Weapons.Magic {
 		public bool? Hardmode => true;
 	}
 	public class Eaterboros_Slash : ModProjectile {
+		public const int base_segments = 2;
+		public const int max_segments = 7;
+		public const float swing_angle_extend = 0.5f;
+		const float swing_angle_extend_factor = max_segments / swing_angle_extend;
 		public override string Texture => "Origins/Items/Weapons/Magic/Eaterboros_Hilt";
 		static AutoLoadingAsset<Texture2D> eaterTexture = "Origins/Items/Weapons/Magic/Eaterboros_Segment_Attached";
 		public override void SetDefaults() {
@@ -69,7 +73,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.scale *= itemUse.Item.scale;
 				}
 			}
-			Projectile.ai[2] = 2;
+			Projectile.ai[2] = base_segments;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
@@ -85,7 +89,7 @@ namespace Origins.Items.Weapons.Magic {
 				int before = (int)Projectile.ai[2];
 				Projectile.ai[2] += 1f / player.itemAnimationMax;
 				newEater = before != (int)Projectile.ai[2];
-				if ((newEater && !player.CheckMana(player.HeldItem, pay: true)) || Projectile.ai[2] >= 7) player.TryCancelChannel(Projectile);
+				if ((newEater && !player.CheckMana(player.HeldItem, pay: true)) || Projectile.ai[2] >= max_segments) player.TryCancelChannel(Projectile);
 				player.manaRegenDelay = (int)player.maxRegenDelay;
 
 				if (Main.myPlayer == Projectile.owner) {
@@ -105,7 +109,7 @@ namespace Origins.Items.Weapons.Magic {
 
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			swingFactor = MathHelper.Lerp(MathF.Pow(swingFactor, 2f), MathF.Pow(swingFactor, 0.5f), swingFactor * swingFactor);
-			Projectile.rotation = MathHelper.Lerp(-2f, 2f, swingFactor) * Projectile.ai[1] * (1 + Projectile.localAI[2] / 14);
+			Projectile.rotation = MathHelper.Lerp(-2f, 2f, swingFactor) * Projectile.ai[1] * (1 + Projectile.localAI[2] / swing_angle_extend_factor);
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, realRotation);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
