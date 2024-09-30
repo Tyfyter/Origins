@@ -121,12 +121,18 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
+				SpawnGore<Amoebeye1_Gore>(NPC.Center + new Vector2(12, -12));
+				SpawnGore<Amoebeye2_Gore>(NPC.Center + new Vector2(-12, 2));
+				SpawnGore<Amoebeye3_Gore>(NPC.Center + new Vector2(21, 5));
 				for (int i = 0; i < 3; i++) {
 					Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, Main.rand.Next(R_Effect_Blood1.GoreIDs));
 				}
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4));
 			}
 			NPC.frameCounter = 0;
+		}
+		void SpawnGore<T>(Vector2 position) where T : ModGore{
+			Gore.NewGoreDirect(NPC.GetSource_Death(), position, NPC.velocity, ModContent.GoreType<T>());
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
