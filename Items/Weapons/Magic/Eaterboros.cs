@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -26,11 +27,11 @@ namespace Origins.Items.Weapons.Magic {
 			Item.width = 48;
 			Item.height = 48;
 			Item.useTime = 15;
-			Item.useAnimation = 11;
+			Item.useAnimation = 20;
 			Item.shoot = ModContent.ProjectileType<Eaterboros_Slash>();
 			Item.shootSpeed = 1;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 12f;
+			Item.knockBack = 6f;
 			Item.useTurn = false;
 			Item.channel = true;
 			Item.value = Item.sellPrice(gold: 1);
@@ -39,6 +40,10 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool MeleePrefix() => true;
 		public bool? Hardmode => true;
+		public override bool AltFunctionUse(Player player) => true;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (player.altFunctionUse == 2) type = ModContent.ProjectileType<Eaterboros_Shoot>();
+		}
 	}
 	public class Eaterboros_Slash : ModProjectile {
 		public const int base_segments = 2;
@@ -225,6 +230,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = false;
 			Projectile.alpha = 0;
 			Projectile.frame = frameIndex = (frameIndex + 1) % Main.projFrames[Type];
+			DrawOriginOffsetY = 6;
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] == -1;
 		public override void AI() {
@@ -289,6 +295,108 @@ namespace Origins.Items.Weapons.Magic {
 					DustID.ScourgeOfTheCorruptor
 				);
 			}
+		}
+	}
+	public class Eaterboros_Shoot : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Magic/Eaterboros_Hilt";
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
+			Projectile.DamageType = DamageClasses.MeleeMagic;
+			Projectile.width = 16;
+			Projectile.height = 16;
+			Projectile.friendly = false;
+			Projectile.aiStyle = 0;
+			Projectile.extraUpdates = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 1;
+			Projectile.noEnchantmentVisuals = true;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				if (itemUse.Entity is Player player) {
+					Projectile.scale *= player.GetAdjustedItemScale(itemUse.Item);
+				} else {
+					Projectile.scale *= itemUse.Item.scale;
+				}
+			}
+			Projectile.ai[2] = float.PositiveInfinity;
+		}
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			if (player.dead) {
+				Projectile.active = false;
+				return;
+			}
+			if (player.controlUseTile) {
+				//player.TryUpdateChannel(Projectile);
+
+				if (Main.myPlayer == Projectile.owner) {
+					Vector2 direction = (Main.MouseWorld - player.MountedCenter).SafeNormalize(default);
+					if (direction.X != Projectile.velocity.X || direction.Y != Projectile.velocity.Y) {
+						// This will sync the projectile, most importantly, the velocity.
+						Projectile.netUpdate = true;
+					}
+					Projectile.velocity = direction;
+				}
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, Projectile.rotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, Projectile.rotation);
+				Projectile.timeLeft = player.itemAnimation * Projectile.MaxUpdates;
+				player.heldProj = Projectile.whoAmI;
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation - MathHelper.PiOver2);
+
+				if (++Projectile.ai[2] >= player.itemAnimationMax) {
+					Projectile.ai[2] = 0;
+					if (player.CheckMana(player.HeldItem, pay: true)) {
+						Vector2 vel = Projectile.velocity * Projectile.width;
+						Vector2 halfSize = Projectile.Size / 2;
+						int projType = ModContent.ProjectileType<Eaterboros_Segment_Free>();
+						int lastProj = -1;
+						for (int i = 2; i-- > 0;) {
+							lastProj = Projectile.NewProjectile(
+								Projectile.GetSource_FromAI(),
+								Projectile.Center + vel * (i + 0.75f),
+								Projectile.velocity * 8 * player.GetTotalAttackSpeed(DamageClass.Melee),
+								projType,
+								Projectile.damage / 4,
+								Projectile.knockBack / 3,
+								Projectile.owner,
+								lastProj
+							);
+							for (int j = 0; j < 4; j++) {
+								Dust.NewDust(
+									Projectile.Center + vel * (i + 0.75f) - halfSize,
+									Projectile.width,
+									Projectile.height,
+									DustID.ScourgeOfTheCorruptor
+								);
+							}
+						}
+						SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.Center);
+					} else {
+						Projectile.Kill();
+						//player.TryCancelChannel(Projectile);
+					}
+				}
+				player.manaRegenDelay = (int)player.maxRegenDelay;
+				player.SetDummyItemTime(5);
+			} else {
+				Projectile.Kill();
+			}
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override bool PreDraw(ref Color lightColor) {
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				new Vector2(0, 13),// origin point in the sprite, 'round which the whole sword rotates
+				Projectile.scale,
+				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				0
+			);
+			return false;
 		}
 	}
 }
