@@ -1,16 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins;
 using Origins.Dev;
-using Origins.Gores.NPCs;
-using Origins.Items.Materials;
-using Origins.Journal;
-using Origins.NPCs;
-using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -28,23 +20,22 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Item.damage = 27;
 			Item.DamageType = DamageClasses.MeleeMagic;
-			Item.mana = 7;
+			Item.mana = 6;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.width = 48;
 			Item.height = 48;
-			Item.useTime = 9;
-			Item.useAnimation = 25;
+			Item.useTime = 15;
+			Item.useAnimation = 11;
 			Item.shoot = ModContent.ProjectileType<Eaterboros_Slash>();
 			Item.shootSpeed = 1;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 12f;
 			Item.useTurn = false;
 			Item.channel = true;
-			Item.value = Item.sellPrice(gold: 8);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
-			Item.ArmorPenetration = 0;
 		}
 		public override bool MeleePrefix() => true;
 		public bool? Hardmode => true;

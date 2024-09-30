@@ -1,18 +1,16 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-using Origins.Dev;
-using System;
 
 namespace Origins.Items.Weapons {
 	public class Generic_Weapon : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
 			Item.DamageType = DamageClass.Generic;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.damage = 40;
+			Item.damage = 30;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.width = 20;
@@ -20,7 +18,7 @@ namespace Origins.Items.Weapons {
 			Item.shoot = ModContent.ProjectileType<Generic_Weapon_P>();
 			Item.shootSpeed = 0f;
 			Item.knockBack = 2.5f;
-			Item.value = Item.sellPrice(gold: 5);
+			Item.value = Item.sellPrice(copper: 1);
 			Item.rare = ItemRarityID.White;
 		}
 		public override Vector2? HoldoutOffset() {

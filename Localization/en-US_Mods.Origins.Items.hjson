@@ -4545,20 +4545,24 @@ Scabcoral_Lyre: {
 
 Laser_Tag_Base_Console_Item: {
 	DisplayName: Laser Tag Base Console
-	Tooltip: ""
+	Tooltip: Used as a base marker for teams in Laser Tag
 }
 
 Generic_Weapon: {
 	DisplayName: Generic Weapon
-	Tooltip: ""
+	Tooltip: Perfect. Too perfect
 }
 
 Hemoptysis: {
 	DisplayName: Hemoptysis
-	Tooltip: ""
+	Tooltip: Launch bloody phlegm that damages, slows and bleeds enemies
 }
 
 Eaterboros: {
 	DisplayName: Eaterboros
-	Tooltip: ""
+	Tooltip:
+		'''
+		Charge your attack to grow the chain
+		Eaters struck in the chain release adjacent segments
+		'''
 }

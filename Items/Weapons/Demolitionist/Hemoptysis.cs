@@ -18,10 +18,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DefaultToCanisterLauncher<Hemoptysis_P>(14, 50, 8f, 46, 28, true);
 			Item.value = Item.sellPrice(silver: 24);
 			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.NPCDeath17;
 			Item.ArmorPenetration += 1;
 		}
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(-8f, 0);
+			return new Vector2(-8f, -8f);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
@@ -44,10 +45,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (++Projectile.ai[0] > 60) {
-				Projectile.velocity.Y += 0.04f;
+				Projectile.velocity.Y += 0.02f;
 			}
 			Projectile.rotation += Projectile.direction * 0.05f;
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(2)) {
 				Dust.NewDust(
 					Projectile.position,
 					Projectile.width,
@@ -57,6 +58,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Dust.NewDust(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					DustID.Blood
+				);
 			if (Projectile.owner != Main.myPlayer) return true;
 			if (Projectile.velocity.X != oldVelocity.X) {
 				Vector2 dir = new(oldVelocity.X - Projectile.velocity.X, 0);
@@ -91,13 +98,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Kill();
 		}
 		public override void OnKill(int timeLeft) {
-			for (int i = 0; i < 5; i++) {
-				Dust.NewDust(
+			Dust.NewDust(
 					Projectile.position,
 					Projectile.width,
 					Projectile.height,
 					DustID.Blood
 				);
+			for (int i = 0; i < 5; i++) {
 				if (Projectile.owner == Main.myPlayer) Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
 					Projectile.Center,

@@ -677,7 +677,7 @@ MAGIC WEAPONS:
 (^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
-(#, ^2) Eaterboros !!!
+(#3, ^2) Eaterboros !!!
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion
@@ -790,7 +790,7 @@ EXPLOSIVE WEAPONS:
 (^) Hand Grenade Launcher
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
-(#, ^2) Hemoptysis !!!
+(^) Hemoptysis
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
@@ -841,7 +841,7 @@ EXPLOSIVE WEAPONS:
 
 GENERIC WEAPONS:
 ---
-(#, ^2) Generic Weapon !!!
+(^) Generic Weapon
 (^) Potato Launcher*
 
 (X) Hyperstatic Gauss Cannon
