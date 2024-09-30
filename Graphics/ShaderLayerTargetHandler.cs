@@ -79,6 +79,7 @@ namespace Origins.Graphics {
 					}
 				} else {
 					renderTargetUsage = [Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage];
+					Main.graphics.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
 				}
 				Main.graphics.GraphicsDevice.SetRenderTargets(oldRenderTargets);
 			} finally {
