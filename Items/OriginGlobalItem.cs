@@ -283,6 +283,10 @@ namespace Origins.Items {
 					itemLoot.Add(OriginGlobalNPC.EaterOfWorldsWeaponDrops);
 					break;
 				}
+				case ItemID.BrainOfCthulhuBossBag: {
+					itemLoot.Add(OriginGlobalNPC.BrainOfCthulhuWeaponDrops);
+					break;
+				}
 				case ItemID.QueenBeeBossBag: {
 					bool foundWeapon = false;
 					OneFromOptionsNotScaledWithLuckDropRule rule = dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(r => r.dropIds.Contains(ItemID.BeeGun));
