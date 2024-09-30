@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
@@ -18,6 +19,13 @@ namespace Origins.Items.Accessories {
 			if (Laser_Tag_Console.LaserTagGameActive) {
 				player.noBuilding = !Laser_Tag_Console.LaserTagRules.Building;
 			}
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rubber>(), 6)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Pets;
 using System;
 using System.IO;
@@ -47,7 +48,7 @@ namespace Origins.Items.Pets {
 				Projectile.localAI[0] = value;
 			}
 		}
-
+		static AutoLoadingAsset<Texture2D> flyingTexture = typeof(Chromatic_Pangolin).GetDefaultTMLName() + "_Flying";
 		public override void SetStaticDefaults() {
 			Chromatic_Scale.projectileID = Type;
 			// DisplayName.SetDefault("Chromatic Pangolin");
@@ -105,25 +106,28 @@ namespace Origins.Items.Pets {
 				Projectile.soundDelay = 0;
 			}
 			if (distanceToIdlePosition > 500f) {
-				if (Main.myPlayer == player.whoAmI) {
-					ParticleOrchestrator.RequestParticleSpawn(
-						false,
-						ParticleOrchestraType.RainbowRodHit,
-						new ParticleOrchestraSettings() {
-							PositionInWorld = Projectile.Center
-						});
-					// Whenever you deal with non-regular events that change the behavior or position drastically, make sure to only run the code on the owner of the projectile,
-					// and then set netUpdate to true
-					Projectile.Center = idlePosition;
-					Projectile.velocity *= 0.1f;
+				if (distanceToIdlePosition > 2000f) {
+					if (Main.myPlayer == player.whoAmI) {
+						ParticleOrchestrator.RequestParticleSpawn(
+							false,
+							ParticleOrchestraType.RainbowRodHit,
+							new ParticleOrchestraSettings() { PositionInWorld = Projectile.Center }
+						);
+						// Whenever you deal with non-regular events that change the behavior or position drastically, make sure to only run the code on the owner of the projectile,
+						// and then set netUpdate to true
+						Projectile.Center = idlePosition;
+						Projectile.velocity *= 0.1f;
+						Projectile.netUpdate = true;
+						Projectile.soundDelay = 2;
+						ParticleOrchestrator.RequestParticleSpawn(
+							false,
+							ParticleOrchestraType.RainbowRodHit,
+							new ParticleOrchestraSettings() { PositionInWorld = Projectile.Center }
+						);
+					}
+				} else {
+					Projectile.ai[2] = 1;
 					Projectile.netUpdate = true;
-					Projectile.soundDelay = 2;
-					ParticleOrchestrator.RequestParticleSpawn(
-						false,
-						ParticleOrchestraType.RainbowRodHit,
-						new ParticleOrchestraSettings() {
-							PositionInWorld = Projectile.Center
-						});
 				}
 			}
 
@@ -144,10 +148,10 @@ namespace Origins.Items.Pets {
 
 			#region Movement
 
-			float speed = 6f;
-			float inertia = 12f;
+			float speed = 6f + 6 * Projectile.ai[2];
+			float inertia = 12f - 6 * Projectile.ai[2];
 			if (distanceToIdlePosition > 250f) {
-				speed = 10f;
+				speed = 10f + 10f * Projectile.ai[2];
 			}
 			int direction = Math.Sign(vectorToIdlePosition.X);
 			Projectile.spriteDirection = direction;
@@ -161,17 +165,27 @@ namespace Origins.Items.Pets {
 				}
 				Projectile.velocity.Y = -jumpStrength;
 			}
+			vectorToIdlePosition.Normalize();
 			if (distanceToIdlePosition > 6f) {
 				// The immediate range around the player (when it passively floats about)
 
 				// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
-				vectorToIdlePosition.Normalize();
-				vectorToIdlePosition *= speed;
-				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1) + vectorToIdlePosition.X) / inertia;
+				Vector2 dir = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition * speed) / inertia;
+				Projectile.velocity.X = dir.X;
+				if (Projectile.ai[2] == 1) {
+					Projectile.velocity.Y = dir.Y;
+				}
 			} else {
-				inertia = 6f;
-				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1)) / inertia;
+				inertia = 6f - 3 * Projectile.ai[2];
+				Vector2 dir = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition * speed) / inertia;
+				Projectile.velocity.X = dir.X;
+				if (Projectile.ai[2] == 1) {
+					Projectile.velocity.Y = dir.Y;
+					Projectile.ai[2] = 0;
+				}
 			}
+
+			Projectile.tileCollide = Projectile.ai[2] != 1;
 			#endregion
 
 			//gravity
@@ -180,6 +194,14 @@ namespace Origins.Items.Pets {
 			#region Animation and visuals
 			if (Projectile.velocity.LengthSquared() < 1) Projectile.spriteDirection = Projectile.direction = player.direction;
 			else Projectile.spriteDirection = Projectile.direction = Math.Sign(Projectile.velocity.X);
+
+			if (Projectile.ai[2] != 1) {
+				Projectile.velocity.Y += 0.4f;
+				OriginExtensions.AngularSmoothing(ref Projectile.rotation, 0, 0.35f);
+			} else {
+				Projectile.rotation += 1f * Projectile.direction;
+			}
+
 			if (OnGround) {
 				Projectile.localAI[1]--;
 				const int frameSpeed = 4;
@@ -200,8 +222,13 @@ namespace Origins.Items.Pets {
 						}
 					}
 				}
-			} else {
+			} else if (Projectile.ai[2] != 1) {
 				Projectile.frame = 2;
+			} else {
+				if (++Projectile.frameCounter >= 3) {
+					Projectile.frameCounter = 0;
+					if (++Projectile.frame >= 3) Projectile.frame = 0;
+				}
 			}
 			#endregion
 		}
@@ -212,6 +239,23 @@ namespace Origins.Items.Pets {
 			Projectile.soundDelay = reader.ReadByte();
 		}
 		public override bool PreKill(int timeLeft) {
+			return true;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (Projectile.ai[2] == 1) {
+				Rectangle frame = flyingTexture.Frame(verticalFrames: 3, frameY: Projectile.frame);
+				Main.EntitySpriteDraw(
+					flyingTexture,
+					Projectile.Center - Main.screenPosition,
+					frame,
+					lightColor,
+					Projectile.rotation,
+					frame.Size() * 0.5f,
+					1,
+					Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+				);
+				return false;
+			}
 			return true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {

@@ -7,14 +7,14 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
 namespace Origins.Items.Weapons.Ranged {
-    public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Gun"
-        ];
-        public override void SetStaticDefaults() {
-            Origins.FlatDamageMultiplier[Type] = 2f / 8f;
-        }
-        public override void SetDefaults() {
+	public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Gun"
+		];
+		public override void SetStaticDefaults() {
+			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 10;
 			Item.crit -= 4;
@@ -24,21 +24,28 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Sunflower_Seed_P>();
 			Item.useAmmo = ItemID.Sunflower;
-            Item.knockBack = 1;
+			Item.knockBack = 1;
 			Item.shootSpeed = 9f;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Blue;
-            Item.reuseDelay = 18;
-            Item.autoReuse = true;
-            Item.consumeAmmoOnFirstShotOnly = true;
+			Item.reuseDelay = 18;
+			Item.autoReuse = true;
+			Item.consumeAmmoOnFirstShotOnly = true;
 			Item.UseSound = null;
-        }
+		}
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return !Main.rand.NextBool(3);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item11, position);
 			return true;
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddRecipeGroup(RecipeGroupID.Wood, 20)
+			.AddIngredient(ItemID.Sunflower, 3)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 	public class Sunflower_Seed_P : ModProjectile {
@@ -53,5 +60,5 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.timeLeft = 300;
 			Projectile.alpha = 0;
 		}
-    }
+	}
 }

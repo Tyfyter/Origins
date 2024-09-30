@@ -15,9 +15,7 @@ Bouncy_Explosive_Golf_Ball
 Brine_Cheese
 Bug_Item
 Chambersite_Stone_Wall_Item
-Chew_Toy
 Chocolate_Bar
-Chromatic_Scale
 Cicada_3301_Item
 Cirrhosis_Abhorrence: [Lousy Liver]
 Clubs_Ace
@@ -49,7 +47,6 @@ Haunted_Vase
 High_Contrast_Dye
 Impact_Golf_Ball
 Impactaxe
-Laser_Tag_Vest
 Lazy_Cloak
 Lifeforce_Core
 Lousy_Liver
@@ -60,14 +57,9 @@ Mana_Drive
 Manasynk_Pickup
 Matrix
 Nematoclaw
-Newsboy_Cap
 NPC_Spawner
 Olid_Organ: [Decaying Scale]
 Phantom_Fury
-Plague_Texan_Jacket
-Plague_Texan_Jeans
-Plague_Texan_Mask
-Plague_Texan_Sight
 Potato_Launcher
 Quantum_Cell
 Rasterized_Dye
@@ -83,7 +75,6 @@ Stack_of_Shraps
 Starfuze
 Strange_Computer
 Sunflower_Sandal
-Sunflower_Seed_Shooter
 Switchblade_Shortsword
 The_Bird
 The_Button
