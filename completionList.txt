@@ -497,7 +497,7 @@ UTILITIES:
 (^) Impenetrable Trashcan Lid
 (^) Indestructible Saddle
 (^) Salty Seed (Mitosis Node)
-(#3, ^2) Saltier Seed (Mitosis Node) !!!
+(^5) Saltier Seed (Mitosis Node) !!!
 ---
 
 
@@ -677,7 +677,7 @@ MAGIC WEAPONS:
 (^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
-(#3, ^2) Eaterboros !!!
+(☻) Eaterboros !!!
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion
