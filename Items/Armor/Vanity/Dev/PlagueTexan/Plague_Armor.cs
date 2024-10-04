@@ -9,6 +9,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
+	public class Plague_Texan_Set : ModItem {
+		public override string Texture => typeof(Plague_Texan_Mask).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
+				new DropAsSetRule(Type)
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Mask>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jacket>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jeans>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Sight>()))
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chromatic_Scale>()))
+			]).ToArray();
+		}
+	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Plague_Texan_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string ArmorSetName => "Plague_Texan_Vanity";
@@ -18,16 +31,6 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
-		}
-		public override void SetStaticDefaults() {
-			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
-				new LeadingSuccessRule()
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Mask>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jacket>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jeans>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Sight>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chromatic_Scale>()))
-			]).ToArray();
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]

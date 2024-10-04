@@ -1540,6 +1540,7 @@ Tiles: {
 	Ancient_Music_Box_DW: Ancient Music Box (Defiled Wastelands)
 	Ancient_Music_Box_RH: Ancient Music Box (Riven Hive)
 	Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
+	Lost_Ore.MapEntry: Lost Ore
 }
 
 MapObject: {

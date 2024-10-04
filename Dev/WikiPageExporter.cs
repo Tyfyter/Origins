@@ -94,9 +94,28 @@ namespace Origins.Dev {
 				foreach ((string name, Texture2D texture) in provider.GetSprites(content) ?? Array.Empty<(string, Texture2D)>()) {
 					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";
 					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-					FileStream stream = File.Exists(filePath) ? File.OpenWrite(filePath) : File.Create(filePath);
+					MemoryStream stream = new(texture.Width * texture.Height * 4);
 					texture.SaveAsPng(stream, texture.Width, texture.Height);
 					texture.Dispose();
+					if (File.Exists(filePath)) {
+						FileStream fileStream = File.OpenRead(filePath);
+						bool isChanged = fileStream.Length != stream.Length;
+						for (int i = 0; i < stream.Length && !isChanged; i++) {
+							if (stream.ReadByte() != fileStream.ReadByte()) isChanged = true;
+						}
+						fileStream.Close();
+						if (isChanged) {
+							fileStream = File.OpenWrite(filePath);
+							stream.Position = 0;
+							fileStream.Position = 0;
+							stream.WriteTo(fileStream);
+							fileStream.Close();
+						}
+					} else {
+						FileStream fileStream = File.Create(filePath);
+						stream.WriteTo(fileStream);
+						fileStream.Close();
+					}
 					stream.Close();
 				}
 				static void make_crc_table() {
@@ -274,7 +293,7 @@ namespace Origins.Dev {
 		public static string GetWikiName(ModNPC modNPC) => modNPC.Name;//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
-		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
+		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name.Replace(' ', '_') : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
 		public static string GetWikiItemRarity(Item item) => (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", "");
 		public void Unload() {
 			wikiTemplate = null;
@@ -807,7 +826,7 @@ namespace Origins.Dev {
 			NPC npc = modNPC.NPC;
 			JObject data = [];
 			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
-			data["Image"] = customStat?.CustomSpritePath ?? Path.Combine(DebugConfig.Instance.WikiSpritesPath, WikiPageExporter.GetWikiName(modNPC));
+			data["Image"] = customStat?.CustomSpritePath ?? ("Images/" + WikiPageExporter.GetWikiName(modNPC));
 			data["Name"] = npc.TypeName;
 			JArray types = new("NPC");
 			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
@@ -945,23 +964,32 @@ namespace Origins.Dev {
 			}
 			return ruleList;
 		}
-		public static JArray FillWithLoot(this JArray self, List<DropRateInfo> loot, Func<bool, string> prefix = null) {
-			prefix ??= _ => "";
-			bool first = true;
+		public static JArray FillWithLoot(this JArray self, List<DropRateInfo> loot, bool doRecursion = false) {
 			for (int i = 0; i < loot.Count; i++) {
 				DropRateInfo info = loot[i];
 				for (int j = 0; j < (info.conditions?.Count ?? 0); j++) {
 					if (!info.conditions[j].CanShowItemDropInUI()) goto skip;
 				}
-				string suffixText = $"{(info.dropRate * 100):0.###}%";
-				if (info.stackMin != 1 || info.stackMax != 1) {
-					suffixText = $"({info.stackMin}‒{info.stackMax}) " + suffixText;
+				Item item = ContentSamples.ItemsByType[info.itemId];
+				JObject drop = new() {
+					["Name"] = item.Name
+				};
+				if (info.dropRate != 1) drop.Add("Chance", $"{(info.dropRate * 100):0.###}%");
+				if (info.stackMin != info.stackMax) {
+					drop.Add("Amount", $"{info.stackMin}‒{info.stackMax}");
+				} else if (info.stackMin != 1 || info.stackMax != 1) {
+					drop.Add("Amount", info.stackMin);
 				}
-				self.Add(prefix(first) + GetItemText(ContentSamples.ItemsByType[info.itemId], string.Join(" | ", info.conditions?.Select(c => c.GetConditionDescription()) ?? [])) + " - " + suffixText);
-				first = false;
-				List<DropRateInfo> itemLoot = Main.ItemDropsDB.GetRulesForItemID(info.itemId).GetDropRates(new(info.dropRate));
-				if (itemLoot.Count != 0) {
-					self.FillWithLoot(itemLoot, first => first ? "§l§ " : "§L§ ");
+				if (item.ModItem?.Mod is not Origins) {
+					drop.Add("LinkOverride", "https://terraria.wiki.gg/wiki/" + item.Name.Replace(' ', '_'));
+					drop.Add("ImageOverride", "");
+				}
+				self.Add(drop);
+				if (doRecursion) {
+					List<DropRateInfo> itemLoot = Main.ItemDropsDB.GetRulesForItemID(info.itemId).GetDropRates(new(info.dropRate));
+					if (itemLoot.Count != 0) {
+						self.FillWithLoot(itemLoot);
+					}
 				}
 				skip:;
 			}
@@ -982,11 +1010,15 @@ namespace Origins.Dev {
 			return text;
 		}
 		public static string GetBuffText(int type) {
-			string[] args = [Lang.GetBuffName(type), "$default", "$default"];
+			string name = Lang.GetBuffName(type);
+			string href = "";
+			string image = "";
 			if (BuffLoader.GetBuff(type)?.Mod is Origins) {
-				args[1] = "$fromStats";
+				image = " image=$fromStats";
+			} else {
+				href = " href=https://terraria.wiki.gg/wiki/" + name.Replace(' ', '_');
 			}
-			return "`[link " + string.Join(" | ", args) + "]`";
+			return $"<a is=a-link{href}{image}>{name}</a>";
 		}
 		public static JArray GetImmunities(this NPC npc) {
 			JArray immunities = [];

@@ -17,6 +17,15 @@ using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
 
 namespace Origins.Items.Pets {
+	public class Chee_Set : ModItem {
+		public override string Texture => typeof(Chew_Toy).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
+				new DropAsSetRule(Type)
+				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chew_Toy>()))
+			]).ToArray();
+		}
+	}
 	public class Chew_Toy : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
@@ -34,12 +43,6 @@ namespace Origins.Items.Pets {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2); // The item applies the buff, the buff spawns the projectile
 			return false;
-		}
-		public override void SetStaticDefaults() {
-			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
-				new LeadingSuccessRule()
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chew_Toy>()))
-			]).ToArray();
 		}
 	}
 	public class Chee_Toy : ModProjectile {

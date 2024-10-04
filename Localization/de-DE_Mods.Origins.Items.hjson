@@ -4570,3 +4570,13 @@ Eaterboros: {
 }
 
 // Lost_Ore.DisplayName: Mods.Origins.Items.Lost_Ore.DisplayName
+
+Plague_Texan_Set: {
+	// DisplayName: Plague Texan Set
+	// Tooltip: ""
+}
+
+Chee_Set: {
+	// DisplayName: Chee Set
+	// Tooltip: ""
+}

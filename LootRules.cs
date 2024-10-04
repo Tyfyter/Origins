@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Origins.LootConditions {
 	public class VaryingRateLeadingRule(int chanceDenominator, int chanceNumerator, params (IItemDropRuleCondition condition, int chanceDenominator, int chanceNumerator)[] alternates) : IItemDropRule {
@@ -144,6 +145,18 @@ namespace Origins.LootConditions {
 		public bool CanShowItemDropInUI() => true;
 		public string GetConditionDescription() {
 			return "";
+		}
+	}
+	public class DropAsSetRule(int iconicItem) : IItemDropRule {
+		public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
+		public bool CanDrop(DropAttemptInfo info) => true;
+		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			drops.Add(new DropRateInfo(iconicItem, 1, 1, ratesInfo.parentDroprateChance, ratesInfo.conditions));
+		}
+		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result = default;
+			result.State = ItemDropAttemptResultState.Success;
+			return result;
 		}
 	}
 }
