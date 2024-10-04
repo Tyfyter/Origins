@@ -35,7 +35,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 8)
+			.AddIngredient(ModContent.ItemType<Lost_Ore_Item>(), 8)
 			.AddIngredient(ModContent.ItemType<Strange_String>(), 16)
 			.AddTile(TileID.Anvils)
 			.Register();
@@ -65,7 +65,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 20)
+			.AddIngredient(ModContent.ItemType<Lost_Ore_Item>(), 20)
 			.AddIngredient(ModContent.ItemType<Strange_String>(), 28)
 			.AddTile(TileID.Anvils)
 			.Register();
@@ -84,7 +84,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 14)
+			.AddIngredient(ModContent.ItemType<Lost_Ore_Item>(), 14)
 			.AddIngredient(ModContent.ItemType<Strange_String>(), 22)
 			.AddTile(TileID.Anvils)
 			.Register();

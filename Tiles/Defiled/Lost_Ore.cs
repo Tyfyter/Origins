@@ -8,7 +8,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Ore : OriginTile, IComplexMineDamageTile {
+	[LegacyName("Defiled_Ore")]
+    public class Lost_Ore : OriginTile, IComplexMineDamageTile {
         public string[] Categories => [
             "Ore"
         ];
@@ -34,13 +35,13 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 	}
-	public class Defiled_Ore_Item : ModItem, IJournalEntryItem {
+	[LegacyName("Defiled_Ore_Item")]
+	public class Lost_Ore_Item : ModItem, IJournalEntryItem {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
-
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);
-			Item.createTile = TileType<Defiled_Ore>();
+			Item.createTile = TileType<Lost_Ore>();
 		}
     }
 	public class Lost_Ore_Entry : JournalEntry {

@@ -101,7 +101,7 @@ namespace Origins.World.BiomeData {
 			public const float Asphyxiator = 0.5f;
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Defiled_Ore>())) {
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>())) {
 					return 1f;
 				}
 				return 0f;
@@ -675,8 +675,8 @@ namespace Origins.World.BiomeData {
 			//Fountain = TileID.WaterFountain;
 
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
-			BiomeOre = ModContent.TileType<Defiled_Ore>();
-			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();
+			BiomeOre = ModContent.TileType<Lost_Ore>();
+			BiomeOreItem = ModContent.ItemType<Lost_Ore_Item>();
 			AltarTile = ModContent.TileType<Defiled_Altar>();
 
 			BiomeChestItem = ModContent.ItemType<Missing_File>();
@@ -744,7 +744,7 @@ namespace Origins.World.BiomeData {
 				AltMaterialContext context = new AltMaterialContext();
 				context.SetEvilHerb(ModContent.ItemType<Wilting_Rose_Item>());
 				context.SetEvilBar(ModContent.ItemType<Defiled_Bar>());
-				context.SetEvilOre(ModContent.ItemType<Defiled_Ore_Item>());
+				context.SetEvilOre(ModContent.ItemType<Lost_Ore_Item>());
 				context.SetVileInnard(ModContent.ItemType<Strange_String>());
 				context.SetVileComponent(ModContent.ItemType<Black_Bile>());
 				context.SetEvilBossDrop(ModContent.ItemType<Undead_Chunk>());

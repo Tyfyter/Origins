@@ -38,8 +38,8 @@ namespace Origins.Tiles.Ashen {
 	public class Sanguinite_Ore_Item : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.DemoniteOre] = ItemID.CrimtaneOre;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.CrimtaneOre] = ItemType<Defiled_Ore_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ItemType<Defiled_Ore_Item>()] = ItemType<Encrusted_Ore_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ItemID.CrimtaneOre] = ItemType<Lost_Ore_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ItemType<Lost_Ore_Item>()] = ItemType<Encrusted_Ore_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ItemType<Encrusted_Ore_Item>()] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.DemoniteOre;
 			Item.ResearchUnlockCount = 100;

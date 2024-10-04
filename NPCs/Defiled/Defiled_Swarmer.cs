@@ -54,7 +54,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 2, 2, 4));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Ore_Item>(), 2, 2, 4));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Lost_Ore_Item>(), 2, 2, 4));
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
 		}
 		public override void AI() {

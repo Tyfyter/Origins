@@ -199,7 +199,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3)
+			.AddIngredient(ModContent.ItemType<Lost_Ore_Item>(), 3)
 			.AddTile(TileID.Furnaces)
 			.Register();
 		}

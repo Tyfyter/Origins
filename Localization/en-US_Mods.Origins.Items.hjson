@@ -3118,7 +3118,7 @@ Defiled_Ice_Item: {
 	Tooltip: ""
 }
 
-Defiled_Ore_Item: {
+Lost_Ore_Item: {
 	DisplayName: Lost Ore
 	Tooltip: A strange metal warped to the curiosity of the Defiled
 }

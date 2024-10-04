@@ -142,7 +142,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			normalDropRule = new LeadingSuccessRule();
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Lost_Ore_Item>(), 1, 140, 330));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
 
