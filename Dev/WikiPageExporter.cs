@@ -21,25 +21,27 @@ using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Origins.Dev.WikiPageExporter;
+using static System.Net.Mime.MediaTypeNames;
 namespace Origins.Dev {
 	public class WikiPageExporter : ILoadable {
 		public delegate string WikiLinkFormatter(string name);
-		public static DictionaryWithNull<Mod, WikiLinkFormatter> LinkFormatters { get; private set; } = new();
+		public static DictionaryWithNull<Mod, WikiLinkFormatter> LinkFormatters { get; private set; } = [];
 		static List<(Type, WikiProvider)> typedDataProviders;
-		public static List<(Type type, WikiProvider provider)> TypedDataProviders => typedDataProviders ??= new();
+		public static List<(Type type, WikiProvider provider)> TypedDataProviders => typedDataProviders ??= [];
 		public delegate bool ConditionalWikiProvider(object obj, out WikiProvider provider, ref bool replaceGenericClassProvider);
 		static List<ConditionalWikiProvider> conditionalDataProviders;
-		public static List<ConditionalWikiProvider> ConditionalDataProviders => conditionalDataProviders ??= new();
+		public static List<ConditionalWikiProvider> ConditionalDataProviders => conditionalDataProviders ??= [];
 		static HashSet<Type> interfaceReplacesGenericClassProvider;
-		public static HashSet<Type> InterfaceReplacesGenericClassProvider => interfaceReplacesGenericClassProvider ??= new();
+		public static HashSet<Type> InterfaceReplacesGenericClassProvider => interfaceReplacesGenericClassProvider ??= [];
 		public void Load(Mod mod) {
 			LinkFormatters[Origins.instance] = (t) => {
 				string formattedName = t.Replace(" ", "_");
-				return $"{t} | Images/{formattedName}.png | {formattedName}";
+				return $"<a is=a-link image=$fromStats>{t}</a>";
 			};
 			LinkFormatters[null] = (t) => {
 				string formattedName = t.Replace(" ", "_");
-				return $"{t} | $default | https://terraria.wiki.gg/wiki/{formattedName}";
+				return $"<a is=a-link href=https://terraria.wiki.gg/wiki/{formattedName}>{t}</a>";
 			};
 		}
 		static PageTemplate wikiTemplate;
@@ -472,30 +474,23 @@ namespace Origins.Dev {
 		public interface ITemplateSnippet {
 			string Resolve(Dictionary<string, object> context);
 		}
-		public class PlainTextSnippit : ITemplateSnippet {
-			readonly string text;
-			public PlainTextSnippit(string text) => this.text = text;
+		public class PlainTextSnippit(string text) : ITemplateSnippet {
+			readonly string text = text;
 			public string Resolve(Dictionary<string, object> context) => text;
 		}
-		public class ConditionalSnippit : ITemplateSnippet {
-			readonly string condition;
-			readonly ITemplateSnippet[] snippets;
-			public ConditionalSnippit(string condition, ITemplateSnippet[] snippets) {
-				this.condition = condition;
-				this.snippets = snippets;
-			}
+		public class ConditionalSnippit(string condition, ITemplateSnippet[] snippets) : ITemplateSnippet {
+			readonly string condition = condition;
+			readonly ITemplateSnippet[] snippets = snippets;
+
 			public string Resolve(Dictionary<string, object> context) {
 				if (context.ContainsKey(condition)) return CombineSnippets(snippets, context);
 				return null;
 			}
 		}
-		public class RepeatingSnippet : ITemplateSnippet {
-			readonly string name;
-			readonly ITemplateSnippet[] snippets;
-			public RepeatingSnippet(string name, ITemplateSnippet[] snippets) {
-				this.name = name;
-				this.snippets = snippets;
-			}
+		public class RepeatingSnippet(string name, ITemplateSnippet[] snippets) : ITemplateSnippet {
+			readonly string name = name;
+			readonly ITemplateSnippet[] snippets = snippets;
+
 			public string Resolve(Dictionary<string, object> context) {
 				StringBuilder builder = new();
 				if (context.TryGetValue(name, out object value) && value is IEnumerable enumerable) {
@@ -507,61 +502,59 @@ namespace Origins.Dev {
 				return builder.ToString();
 			}
 		}
-		public class VariableSnippit : ITemplateSnippet {
-			readonly string name;
-			public VariableSnippit(string name) {
-				this.name = name;
-			}
+		public class VariableSnippit(string name) : ITemplateSnippet {
+			readonly string name = name;
+
 			public string Resolve(Dictionary<string, object> context) {
 				object value = context[name];
 				if (value is List<Recipe> recipes) {
 					StringBuilder builder = new();
-					builder.AppendLine("<recipes>");
+					builder.AppendLine("<a-recipes>");
 					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
 						builder.AppendLine("{");
 						if (group.Key.requirements.Length > 0) {
 							builder.AppendLine("stations:[");
-							foreach (var requirement in group.Key.requirements) {
-								if (WikiPageExporter.LinkFormatters.TryGetValue(requirement.mod, out var formatter)) {
-									builder.AppendLine($"`[link {formatter(requirement.name)}]`");
+							foreach ((Mod reqMod, string reqName) in group.Key.requirements) {
+								if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
+									builder.AppendLine($"`{formatter(reqName)}`");
 								} else {
-									Origins.instance.Logger.Warn($"No wiki link formatter for mod {requirement.mod}, skipping requirement for {requirement.name}");
+									Origins.instance.Logger.Warn($"No wiki link formatter for mod {reqMod}, skipping requirement for {reqName}");
 								}
 							}
-							builder.AppendLine("]");
+							builder.AppendLine("],");
 						}
 						builder.AppendLine("items:[");
+						bool first = true;
 						foreach (Recipe recipe in group) {
+							if (!first) builder.Append(',');
+							first = false;
 							builder.AppendLine("{");
-							builder.AppendLine("result:" + WikiExtensions.GetItemText(recipe.createItem) + ",");
+							builder.AppendLine("result:`" + WikiExtensions.GetItemText(recipe.createItem) + "`,");
 							builder.AppendLine("ingredients:[");
 							for (int i = 0; i < recipe.requiredItem.Count; i++) {
 								if (i > 0) builder.Append(',');
-								builder.Append(WikiExtensions.GetItemText(recipe.requiredItem[i]));
+								builder.AppendLine($"`{WikiExtensions.GetItemText(recipe.requiredItem[i])}`");
 							}
-							builder.AppendLine();
 							builder.AppendLine("]");
 							builder.AppendLine("}");
 						}
 						builder.AppendLine("]");
 						builder.AppendLine("}");
 					}
-					builder.Append("</recipes>");
+					builder.Append("</a-recipes>");
 					return builder.ToString();
 				}
 				return CombineSnippets(Parse(value.ToString()), context);
 			}
 		}
 	}
-	public class RecipeRequirements {
-		public readonly (Mod mod, string name)[] requirements;
-		public RecipeRequirements(Recipe recipe) {
-			requirements =
+	public class RecipeRequirements(Recipe recipe) {
+		public readonly (Mod mod, string name)[] requirements =
 				recipe.requiredTile.Select(t => (TileLoader.GetTile(t)?.Mod, Lang.GetMapObjectName(MapHelper.TileToLookup(t, 0))))
 				/*.Concat(
 					recipe.Conditions.Select(c => c.Description.Value)
 				)*/.ToArray();
-		}
+
 		public override bool Equals(object other) {
 			return other is RecipeRequirements req && Equals(req);
 		}
@@ -996,17 +989,18 @@ namespace Origins.Dev {
 			return self;
 		}
 		public static string GetItemText(Item item, string note = "") {
-			string[] args = [item.Name, "$default", "$default", note];
-			string text;
+			string name = item.Name;
+			string text = "";
 			if (item.ModItem?.Mod is Origins) {
-				args[1] = "$fromStats";
+				text = $"<a is=a-link image=$fromStats>{name}{(string.IsNullOrWhiteSpace(note) ? "" : $"<note>{note}</note>")}</a>";
 			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
-				text = $"`[link {formatter(item.Name)}]`";
+				text = $"`{formatter(item.Name)}`";
 				goto formatted;
+			} else {
+				text = item.Name;
 			}
-			text = "`[link " + string.Join(" | ", args) + "]`";
 			formatted:
-			if (item.stack != 1) text += $"({item.stack})";
+			if (item.stack != 1) text += $" ({item.stack})";
 			return text;
 		}
 		public static string GetBuffText(int type) {
