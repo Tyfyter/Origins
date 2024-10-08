@@ -150,14 +150,14 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
-(☻) Amoebeye* !!!
+(^) Amoebeye*
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
 (^, ⚐) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(☻) Defiled Asphyxiator* !!!
+(^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
@@ -372,7 +372,7 @@ ACCESSORIES:
 (^) Scavenger Bag*
 (^) Scrap Barrier
 (^) Shield of Retribution*
-(X) Slag Bucket !!!
+(#, ^2) Slag Bucket !!!
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
