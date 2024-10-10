@@ -22,7 +22,7 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.Dev.WikiPageExporter;
-using static System.Net.Mime.MediaTypeNames;
+
 namespace Origins.Dev {
 	public class WikiPageExporter : ILoadable {
 		public delegate string WikiLinkFormatter(string name);
@@ -642,6 +642,7 @@ namespace Origins.Dev {
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
 		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
 		IEnumerable<WikiProvider> GetWikiProviders() => WikiPageExporter.GetDefaultProviders(this);
+		IEnumerable<string> LocalizedStats => [];
 	}
 	public class ItemWikiProvider : WikiProvider<ModItem> {
 		public override string PageName(ModItem modItem) => WikiPageExporter.GetWikiName(modItem);
@@ -805,7 +806,13 @@ namespace Origins.Dev {
 				if (Language.Exists(key)) data.AppendStat("Effect", Language.GetTextValue(key), key);
 
 			}
-			customStat?.ModifyWikiStats(data);
+			if (customStat is not null) {
+				string baseKey = $"WikiGenerator.Stats.{modItem.Mod?.Name}.{modItem.Name}.";
+				foreach (string stat in customStat.LocalizedStats) {
+					data.AppendStat(stat, Language.GetOrRegister(baseKey + stat).Value, "");
+				}
+				customStat?.ModifyWikiStats(data);
+			}
 			data.AppendStat("SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
 			data.AppendStat("InternalName", item.ModItem?.Name, null);
 			yield return (PageName(modItem), data);
