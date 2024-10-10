@@ -85,7 +85,7 @@ namespace Origins.Dev {
 			if (currentText.Length > 0) attributes.Add(PopString(), null);
 			return attributes;
 		}
-		public override bool ForcesMultiline => nodeName is not ("a" or "b" or "br") && (!attributes.TryGetValue("class", out string classAttr) || !classAttr.Contains("divider"));
+		public override bool ForcesMultiline => nodeName is not ("a" or "b" or "br" or "a-coins" or "a-coin" or "a-stat") && (!attributes.TryGetValue("class", out string classAttr) || !classAttr.Contains("divider"));
 		protected void Parse(string text, ref int i) {
 			StringBuilder currentText = new();
 			void FlushText() {
