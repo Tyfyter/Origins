@@ -13,8 +13,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor {
 	public class ArmorSetWikiProvider : WikiProvider<IWikiArmorSet> {
 		public override string PageName(IWikiArmorSet set) => set.ArmorSetName;
-		public override string GetPage(IWikiArmorSet value) {
-			if (value.SharedPageSecondary) return null;
+		public override (PageTemplate template, Dictionary<string, object> context) GetPage(IWikiArmorSet value) {
+			if (value.SharedPageSecondary) return default;
 			Dictionary<string, object> context = new() {
 				["Name"] = value.MergedArmorSetName,
 				["DisplayName"] = value.ArmorSetDisplayName
@@ -76,7 +76,7 @@ namespace Origins.Items.Armor {
 			foreach (var text in pageTexts) {
 				context[text.name] = text.text;
 			}
-			return WikiTemplate.Resolve(context);
+			return (WikiTemplate, context);
 		}
 		public override IEnumerable<(string, JObject)> GetStats(IWikiArmorSet set) {
 			if (set.SharedPageSecondary) yield break;

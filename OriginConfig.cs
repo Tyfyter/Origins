@@ -10,7 +10,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -105,7 +108,7 @@ namespace Origins {
 		public bool DebugMode = false;
 
 		public string StatJSONPath { get; set; }
-		public bool ExportAllStatsJSON {
+		public bool ExportAllItemStatsJSON {
 			get => false;
 			set {
 				if (value) {
@@ -254,8 +257,7 @@ namespace Origins {
 							if (item.ModItem is not null) {
 								if (item.ModItem?.Mod is not Origins) break;
 								if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
-								if (((item.ModItem as ICustomWikiStat)?.FullyGeneratable ?? false) || !File.Exists(WikiPageExporter.GetWikiPagePath(WikiPageExporter.GetWikiName(item.ModItem))))
-									WikiPageExporter.ExportItemPage(item);
+								WikiPageExporter.ExportItemPage(item);
 							}
 						}
 					} else {

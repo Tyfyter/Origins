@@ -55,9 +55,31 @@ namespace Origins.Dev {
 				return wikiTemplate;
 			}
 		}
+		static void TryUpdatingExistingPage(string pagePath, PageTemplate template, Dictionary<string, object> context) {
+			List<PageTemplate.ConditionalSnippit> conditionals = template.GetConditionals();
+			string oldPageText = File.ReadAllText(pagePath);
+			HTMLDocument pageNodes = HTMLDocument.Parse(oldPageText);
+			for (int i = 0; i < conditionals.Count; i++) {
+				HTMLDocument newNodes = HTMLDocument.Parse(conditionals[i].Resolve(context));
+				if (newNodes.Children.Count == 1 && newNodes.Children[0] is HTMLNode singleNode && singleNode.attributes.TryGetValue("id", out string id) && pageNodes.GetElementByID(id) is HTMLNode replaceable) {
+					replaceable.Parent.ReplaceChild(replaceable, singleNode);
+				}
+			}
+			string newPageText = pageNodes.ToString().ReplaceLineEndings("\n");
+			if (newPageText != oldPageText) {
+				WriteFileNoUnneededRewrites(pagePath, newPageText);
+			}
+		}
 		public static void ExportItemPage(Item item) {
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
-				if (provider.GetPage(item.ModItem) is string page) WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(item.ModItem)), page);
+				string pagePath = GetWikiPagePath(provider.PageName(item.ModItem));
+				(PageTemplate template, Dictionary<string, object> context) = provider.GetPage(item.ModItem);
+				if (context == null) continue;
+				if (((item.ModItem as ICustomWikiStat)?.FullyGeneratable ?? false) || !File.Exists(pagePath)) {
+					WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(item.ModItem)), template.Resolve(context));
+				} else {
+					TryUpdatingExistingPage(pagePath, template, context);
+				}
 			}
 		}
 		public static void ExportItemStats(Item item) {
@@ -72,7 +94,9 @@ namespace Origins.Dev {
 		}
 		public static void ExportNPCPage(NPC npc) {
 			foreach (WikiProvider provider in GetWikiProviders(npc.ModNPC)) {
-				if (provider.GetPage(npc.ModNPC) is string page) WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(npc.ModNPC)), page);
+				if (provider.GetPage(npc.ModNPC) is (PageTemplate template, Dictionary<string, object> context) && context is not null) {
+					WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(npc.ModNPC)), template.Resolve(context));
+				}
 			}
 		}
 		public static void ExportNPCStats(NPC npc) {
@@ -370,16 +394,14 @@ namespace Origins.Dev {
 			data.Add("LightColor", new JArray() { light.X, light.Y, light.Z });
 		}
 	}
-	public class PageTemplate {
-		ITemplateSnippet[] snippets;
-		public PageTemplate(string text) {
-			snippets = Parse(text);
-		}
-		public string Resolve(Dictionary<string, object> context) => CombineSnippets(snippets, context);
+	public class PageTemplate(string text) {
+		readonly ITemplateSnippet[] snippets = Parse(text);
+
+		public string Resolve(Dictionary<string, object> context) => CombineSnippets(snippets, context).ReplaceLineEndings("\n");
 		public static ITemplateSnippet[] Parse(string text) {
 			StringBuilder currentText = new();
 			int blockDepth = 0;
-			List<ITemplateSnippet> snippets = new();
+			List<ITemplateSnippet> snippets = [];
 			void FlushText() {
 				if (currentText.Length > 0) {
 					snippets.Add(new PlainTextSnippit(currentText.ToString()));
@@ -470,17 +492,24 @@ namespace Origins.Dev {
 			FlushText();
 			return snippets.ToArray();
 		}
+		public List<ConditionalSnippit> GetConditionals() {
+			List<ConditionalSnippit> conditionals = [];
+			for (int i = 0; i < snippets.Length; i++) {
+				if (snippets[i] is ConditionalSnippit conditional) conditionals.Add(conditional);
+			}
+			return conditionals;
+		}
 		static string CombineSnippets(ITemplateSnippet[] snippets, Dictionary<string, object> context) => string.Join(null, snippets.Select(s => s.Resolve(context)));
 		public interface ITemplateSnippet {
 			string Resolve(Dictionary<string, object> context);
 		}
 		public class PlainTextSnippit(string text) : ITemplateSnippet {
-			readonly string text = text;
+			public readonly string text = text;
 			public string Resolve(Dictionary<string, object> context) => text;
 		}
 		public class ConditionalSnippit(string condition, ITemplateSnippet[] snippets) : ITemplateSnippet {
-			readonly string condition = condition;
-			readonly ITemplateSnippet[] snippets = snippets;
+			public readonly string condition = condition;
+			public readonly ITemplateSnippet[] snippets = snippets;
 
 			public string Resolve(Dictionary<string, object> context) {
 				if (context.ContainsKey(condition)) return CombineSnippets(snippets, context);
@@ -488,8 +517,8 @@ namespace Origins.Dev {
 			}
 		}
 		public class RepeatingSnippet(string name, ITemplateSnippet[] snippets) : ITemplateSnippet {
-			readonly string name = name;
-			readonly ITemplateSnippet[] snippets = snippets;
+			public readonly string name = name;
+			public readonly ITemplateSnippet[] snippets = snippets;
 
 			public string Resolve(Dictionary<string, object> context) {
 				StringBuilder builder = new();
@@ -503,7 +532,7 @@ namespace Origins.Dev {
 			}
 		}
 		public class VariableSnippit(string name) : ITemplateSnippet {
-			readonly string name = name;
+			public readonly string name = name;
 
 			public string Resolve(Dictionary<string, object> context) {
 				object value = context[name];
@@ -606,7 +635,7 @@ namespace Origins.Dev {
 		void ModifyWikiStats(JObject data) { }
 		string[] Categories => Array.Empty<string>();
 		bool? Hardmode => null;
-		bool FullyGeneratable => true;
+		bool FullyGeneratable => false;
 		bool ShouldHavePage => true;
 		bool NeedsCustomSprite => false;
 		string CustomSpritePath => null;
@@ -616,7 +645,7 @@ namespace Origins.Dev {
 	}
 	public class ItemWikiProvider : WikiProvider<ModItem> {
 		public override string PageName(ModItem modItem) => WikiPageExporter.GetWikiName(modItem);
-		public override string GetPage(ModItem modItem) {
+		public override (PageTemplate template, Dictionary<string, object> context) GetPage(ModItem modItem) {
 			Item item = modItem.Item;
 			Dictionary<string, object> context = new() {
 				["Name"] = WikiPageExporter.GetWikiName(modItem),
@@ -645,7 +674,7 @@ namespace Origins.Dev {
 			foreach (var text in pageTexts) {
 				context[text.name] = text.text;
 			}
-			return WikiPageExporter.WikiTemplate.Resolve(context);
+			return (WikiTemplate, context);
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
 			Item item = modItem.Item;
@@ -794,7 +823,7 @@ namespace Origins.Dev {
 	}
 	public class NPCWikiProvider : WikiProvider<ModNPC> {
 		public override string PageName(ModNPC modNPC) => WikiPageExporter.GetWikiName(modNPC);
-		public override string GetPage(ModNPC modNPC) {
+		public override (PageTemplate template, Dictionary<string, object> context) GetPage(ModNPC modNPC) {
 			NPC npc = modNPC.NPC;
 			Dictionary<string, object> context = new() {
 				["Name"] = WikiPageExporter.GetWikiName(modNPC),
@@ -813,7 +842,7 @@ namespace Origins.Dev {
 			foreach (var text in pageTexts) {
 				context[text.name] = text.text;
 			}
-			return WikiPageExporter.WikiTemplate.Resolve(context);
+			return (WikiTemplate, context);
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModNPC modNPC) {
 			NPC npc = modNPC.NPC;
@@ -898,14 +927,14 @@ namespace Origins.Dev {
 			WikiPageExporter.TypedDataProviders.Add((typeof(INoSeperateWikiPage), this));
 			WikiPageExporter.InterfaceReplacesGenericClassProvider.Add(typeof(INoSeperateWikiPage));
 		}
-		public override string GetPage(ModItem modItem) => null;
+		public override (PageTemplate template, Dictionary<string, object> context) GetPage(ModItem modItem) => default;
 	}
 	public abstract class WikiProvider : ModType {
 		protected override void Register() {
 			ModTypeLookup<WikiProvider>.Register(this);
 		}
 		public abstract string PageName(object value);
-		public virtual string GetPage(object value) => default;
+		public virtual (PageTemplate template, Dictionary<string, object> context) GetPage(object value) => default;
 		public virtual IEnumerable<(string name, JObject stats)> GetStats(object value) => default;
 		public virtual IEnumerable<(string name, Texture2D texture)> GetSprites(object value) => default;
 		public virtual IEnumerable<(string name, (Texture2D texture, int frames)[] texture)> GetAnimatedSprites(object value) => default;
@@ -922,12 +951,12 @@ namespace Origins.Dev {
 			}
 		}
 		public sealed override string PageName(object value) => value is T v ? PageName(v) : null;
-		public sealed override string GetPage(object value) => value is T v ? GetPage(v) : default;
+		public sealed override (PageTemplate template, Dictionary<string, object> context) GetPage(object value) => value is T v ? GetPage(v) : default;
 		public sealed override IEnumerable<(string, JObject)> GetStats(object value) => value is T v ? GetStats(v) : null;
 		public sealed override IEnumerable<(string, Texture2D)> GetSprites(object value) => value is T v ? GetSprites(v) : null;
 		public sealed override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(object value) => value is T v ? GetAnimatedSprites(v) : null;
 		public abstract string PageName(T value);
-		public abstract string GetPage(T value);
+		public abstract (PageTemplate template, Dictionary<string, object> context) GetPage(T value);
 		public abstract IEnumerable<(string, JObject)> GetStats(T value);
 		public virtual IEnumerable<(string, Texture2D)> GetSprites(T value) => default;
 		public virtual IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(T value) => default;
