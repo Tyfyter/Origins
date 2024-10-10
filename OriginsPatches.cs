@@ -63,6 +63,7 @@ using System.Buffers.Text;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Magic;
+using Terraria.GameContent.Events;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -553,6 +554,53 @@ namespace Origins {
 				player.OriginPlayer().OnHitByAnyProjectile(self);
 				if (self.type == Laser_Tag_Laser.ID) Laser_Tag_Laser.OnHitPvP(self, player);
 			};
+			IL_Sandstorm.EmitDust += IL_Sandstorm_EmitDust;
+			IL_Sandstorm.ShouldSandstormDustPersist += IL_Sandstorm_ShouldSandstormDustPersist; ;
+		}
+
+		private void IL_Sandstorm_ShouldSandstormDustPersist(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel succeed = default;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdsfld<Main>(nameof(Main.bgStyle)),
+				i => i.MatchLdcI4(2),
+				i => i.MatchBeq(out succeed),
+				i => i.MatchLdsfld<Main>(nameof(Main.bgStyle)),
+				i => i.MatchLdcI4(5),
+				i => i.MatchBneUn(out _)
+			);
+			c.Index--;
+			c.EmitBeq(succeed);
+			c.EmitDelegate(() => Main.LocalPlayer.InModBiome<Defiled_Wastelands_Desert>() || Main.LocalPlayer.InModBiome<Riven_Hive_Desert>());
+			c.EmitBrfalse((ILLabel)c.Next.Operand);
+			c.Remove();
+		}
+
+		private void IL_Sandstorm_EmitDust(ILContext il) {
+			ILCursor c = new(il);
+			int local = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdloc(out local),
+				i => i.MatchLdcI4(213), i => i.MatchLdcI4(196), i => i.MatchLdcI4(197), i => i.MatchLdcI4(180), i => i.MatchNewobj<Color>(),
+				i => i.MatchLdsfld<Main>(nameof(Main.SceneMetrics)),
+				i => i.MatchLdcI4(TileID.Pearlsand),
+				i => i.MatchCallOrCallvirt<SceneMetrics>(nameof(SceneMetrics.GetTileCount)),
+				i => i.MatchLdsfld<Main>(nameof(Main.SceneMetrics)),
+				i => i.MatchLdcI4(TileID.HallowSandstone),
+				i => i.MatchCallOrCallvirt<SceneMetrics>(nameof(SceneMetrics.GetTileCount)),
+				i => i.MatchAdd(),
+				i => i.MatchLdsfld<Main>(nameof(Main.SceneMetrics)),
+				i => i.MatchLdcI4(TileID.HallowHardenedSand),
+				i => i.MatchCallOrCallvirt<SceneMetrics>(nameof(SceneMetrics.GetTileCount)),
+				i => i.MatchAdd(),
+				i => i.MatchConvR8(),
+				i => i.MatchCallOrCallvirt<WeightedRandom<Color>>(nameof(WeightedRandom<Color>.Add))
+			);
+			c.EmitLdloc(local);
+			c.EmitDelegate<Action<WeightedRandom<Color>>>(weightedRandom => {
+				weightedRandom.Add(new Color(113, 113, 113, 180), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Defiled_Sand>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Defiled_Sandstone>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Hardened_Defiled_Sand>()));
+				weightedRandom.Add(new Color(189, 195, 195, 180), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Silica>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Brittle_Quartz>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Quartz>()));
+			});
 		}
 
 		private void IL_Player_CheckDrowning(ILContext il) {

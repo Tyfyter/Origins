@@ -1637,8 +1637,8 @@ Configs: {
 			// Tooltip: ""
 		}
 
-		ExportAllStatsJSON: {
-			// Label: Export All Stats JSON
+		ExportAllItemStatsJSON: {
+			// Label: Export All Item Stats JSON
 			// Tooltip: Shift must be held to mass-export stats
 		}
 
