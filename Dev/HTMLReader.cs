@@ -145,7 +145,7 @@ namespace Origins.Dev {
 			FlushText();
 		}
 		public void AddChild(IHTMLNode child) {
-			if (child.Parent is not null) Parent.Children.Remove(child);
+			if (child.Parent is not null) child.Parent.Children.Remove(child);
 			child.Parent = this;
 			Children.Add(child);
 		}
@@ -154,6 +154,8 @@ namespace Origins.Dev {
 			int index = Children.IndexOf(oldChild);
 			Children.RemoveAt(index);
 			for (int i = 0; i < newChildren.Length; i++) {
+				if (newChildren[i].Parent is not null) newChildren[i].Parent.Children.Remove(child);
+				newChildren[i].Parent = this;
 				Children.Insert(index++, newChildren[i]);
 			}
 		}
