@@ -789,7 +789,7 @@ namespace Origins.Dev {
 					string line = item.ToolTip.GetLine(i);
 					if (!string.IsNullOrWhiteSpace(line)) itemTooltip.Add(line);
 				}
-				data.AppendJStat("Tooltip", itemTooltip, new());
+				data.AppendJStat("Tooltip", itemTooltip, []);
 			} else if (item.ToolTip.Lines > 0) {
 				data.AppendStat("Tooltip", item.ToolTip.GetLine(0), string.Empty);
 			}

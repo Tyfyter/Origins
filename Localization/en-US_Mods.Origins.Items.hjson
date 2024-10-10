@@ -618,7 +618,7 @@ Pincushion_Inactive: {
 		'''
 }
 
-Plasma_Phial: {
+Plasma_Bag: {
 	DisplayName: Plasma Bag
 	Tooltip:
 		'''
