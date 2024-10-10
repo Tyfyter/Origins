@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
-	public class Plasma_Phial : ModItem, ICustomWikiStat {
+	public class Plasma_Bag : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Vitality"
 		];

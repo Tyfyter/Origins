@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.CharmofMyths)
-			.AddIngredient(ModContent.ItemType<Plasma_Phial>())
+			.AddIngredient(ModContent.ItemType<Plasma_Bag>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

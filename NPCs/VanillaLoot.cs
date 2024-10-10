@@ -163,7 +163,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 1, 69, 69));
 				break;
 				case NPCID.PurpleSlime:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 10));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Bag>(), 10));
 				break;
 				case NPCID.AnglerFish:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rebreather>(), 20));
