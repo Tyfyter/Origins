@@ -10,7 +10,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Scribe_of_the_Meat_God : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MasterAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);

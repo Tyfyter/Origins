@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mysterious_Spray : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MasterAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);

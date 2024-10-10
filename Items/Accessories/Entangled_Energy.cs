@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Entangled_Energy : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ExpertAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);

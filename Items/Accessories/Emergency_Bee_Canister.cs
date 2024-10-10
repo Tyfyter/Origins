@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Emergency_Bee_Canister : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MasterAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);

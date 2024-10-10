@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Refactoring_Pieces : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ExpertAcc",
             "ManaShielding"
         ];
 		public override void SetStaticDefaults() {

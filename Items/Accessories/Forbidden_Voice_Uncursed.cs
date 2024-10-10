@@ -9,7 +9,6 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
 	public class Forbidden_Voice_Uncursed : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MasterAcc"
 		];
 		public override string Texture => typeof(Forbidden_Voice).GetDefaultTMLName();
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";

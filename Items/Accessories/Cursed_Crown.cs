@@ -6,7 +6,6 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Cursed_Crown : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MasterAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);
