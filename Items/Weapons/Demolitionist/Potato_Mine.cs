@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.ammo = ModContent.ItemType<Potato>();
-            Item.ArmorPenetration += 6;
+			Item.noMelee = true;
         }
 		public override void HoldItem(Player player) {
 			Item.shoot = ProjectileID.None;

@@ -101,6 +101,7 @@ namespace Origins.Tiles.Other {
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
 			Projectile.hide = true;
+			Projectile.ArmorPenetration += 6;
 		}
 		public override void AI() {
 			Projectile.timeLeft = 5;

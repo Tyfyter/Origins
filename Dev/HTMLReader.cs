@@ -22,7 +22,16 @@ namespace Origins.Dev {
 		}
 	}
 	public abstract class IHTMLNode {
-		public HTMLNode Parent { get; internal set; } = null;
+		private HTMLNode _parent;
+		public HTMLNode Parent {
+			get => _parent;
+			set {
+				if (_parent != value) {
+					_parent?.Children.Remove(this);
+					_parent = value;
+				}
+			}
+		}
 		public abstract string ToString(int depth);
 		public abstract bool ForcesMultiline { get; }
 	}
@@ -145,7 +154,6 @@ namespace Origins.Dev {
 			FlushText();
 		}
 		public void AddChild(IHTMLNode child) {
-			if (child.Parent is not null) child.Parent.Children.Remove(child);
 			child.Parent = this;
 			Children.Add(child);
 		}
@@ -154,7 +162,6 @@ namespace Origins.Dev {
 			int index = Children.IndexOf(oldChild);
 			Children.RemoveAt(index);
 			for (int i = 0; i < newChildren.Length; i++) {
-				if (newChildren[i].Parent is not null) newChildren[i].Parent.Children.Remove(newChildren[i]);
 				newChildren[i].Parent = this;
 				Children.Insert(index++, newChildren[i]);
 			}

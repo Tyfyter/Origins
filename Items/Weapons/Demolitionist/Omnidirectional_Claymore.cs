@@ -20,9 +20,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.createTile = ModContent.TileType<Omnidirectional_Claymore_Tile>();
 			Item.value = Item.sellPrice(gold: 1, silver: 75);
 			Item.rare = ItemRarityID.Pink;
+			Item.noMelee = true;
 		}
 		public override void AddRecipes() {
-			return;//TODO: implement
 			Recipe.Create(Type, 250)
 			.AddIngredient(ItemID.ExplosivePowder, 7)
 			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13)
