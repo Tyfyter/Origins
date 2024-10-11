@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Wisp : ModNPC {
+	public class Defiled_Wisp : Glowing_Mod_NPC {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;

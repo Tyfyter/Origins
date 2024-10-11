@@ -32,7 +32,7 @@ using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy, ICustomWikiStat {
+	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		public string CustomSpritePath => "DefiledAmalg";
@@ -559,6 +559,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			};
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			base.PostDraw(spriteBatch, screenPos, drawColor);
 			drawColor *= (255 - NPC.alpha) / 255f;
 			bool dir = NPC.spriteDirection == 1;
 			Rectangle armsFrame = new Rectangle(0, armFrame * 96, 30, 94);

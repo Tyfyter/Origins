@@ -58,29 +58,10 @@ namespace Origins.Items.Weapons.Melee {
 			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			ref int laserBladeCharge = ref player.GetModPlayer<OriginPlayer>().laserBladeCharge;
-			//damage += (laserBladeCharge * damage) / max_charge;
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-			laserBladeCharge = 0;
-			return false;
+			return true;
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			ref int laserBladeCharge = ref player.GetModPlayer<OriginPlayer>().laserBladeCharge;
-			if (laserBladeCharge < max_charge) {
-				laserBladeCharge = Math.Min(laserBladeCharge + 2, max_charge + 1);// increments by 2 since it's decrementing by 1 at the same rate
-				if (laserBladeCharge >= max_charge) {
-					/*for (int i = 0; i < 20; i++) {
-						Dust.NewDust(
-							player.position,
-							player.width,
-							player.height,
-							DustID.GoldFlame
-						);
-					}*/
-				}
-			} else {
-				laserBladeCharge = max_charge + 1;
-			}
 		}
 		public override void UseItemFrame(Player player) {
 			player.handon = Item.handOnSlot;
@@ -97,23 +78,21 @@ namespace Origins.Items.Weapons.Melee {
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = trail_length * 2;
 			ID = Type;
 		}
-		protected virtual float Rotation => Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]);
-		protected virtual Vector2 Origin => new(14, 25 + 11 * Projectile.ai[1]);
-		protected virtual int HitboxSteps => 5;
-		protected virtual float Startup => 0.25f;
-		protected virtual float End => 0.25f;
-		protected virtual float SwingStartVelocity => 1f;
-		protected virtual float SwingEndVelocity => 1f;
-		protected virtual float TimeoutVelocity => 1f;
-		protected virtual float MinAngle => -2.5f;
-		protected virtual float MaxAngle => 2.5f;
+		protected const int HitboxSteps = 5;
+		protected const float Startup = 0.25f;
+		protected const float End = 0.25f;
+		protected const float SwingStartVelocity = 1f;
+		protected const float SwingEndVelocity = 1f;
+		protected const float TimeoutVelocity = 1f;
+		protected const float MinAngle = -2.5f;
+		protected const float MaxAngle = 2.5f;
 		protected Rectangle lastHitHitbox;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.aiStyle = 0;
-			Projectile.extraUpdates = 0;
+			Projectile.extraUpdates = 3;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 600;
 			Projectile.noEnchantmentVisuals = true;
@@ -143,7 +122,7 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
 				}
 				player.SetDummyItemTime(player.itemTimeMax - 1);
-				Projectile.ai[0] += 1f / player.itemTimeMax;
+				Projectile.ai[0] += 1f / Projectile.timeLeft;
 				if (Projectile.ai[0] >= 1) {
 					Projectile.ai[0] = 1;
 					player.TryCancelChannel(Projectile);
@@ -182,8 +161,29 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public virtual void EmitEnchantmentVisuals() {
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.95f;
+			float velocityMult = 0;
+			float rotMult = 0.15f;
+			if (Projectile.localAI[2] == 0) {
+				if (Main.player[Projectile.owner].channel) {
+					velocityMult = 2;
+				} else {
+					velocityMult = 8;
+					rotMult = 0.05f;
+				}
+			}
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
+				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < 1 + Projectile.ai[0]) {
+					Dust dust = Dust.NewDustDirect(
+						Projectile.position + vel * j,
+						Projectile.width, Projectile.height,
+						DustID.PortalBoltTrail,
+						newColor: new(0, 235, 255, 64)
+					);
+					dust.velocity = dust.velocity * 0.25f + Projectile.velocity.RotatedBy(Projectile.rotation * rotMult) * velocityMult;
+					dust.position += dust.velocity * 2;
+					dust.noGravity = true;
+				}
 			}
 		}
 		public override void CutTiles() {
@@ -231,7 +231,7 @@ namespace Origins.Items.Weapons.Melee {
 
 			int[] spriteDirections;
 			public void Draw(Projectile proj) {
-				{
+				if (!Main.player[proj.owner].channel) {
 					MiscShaderData miscShaderData = GameShaders.Misc["EmpressBlade"];
 					int num = 1;//1
 					int num2 = 0;//0

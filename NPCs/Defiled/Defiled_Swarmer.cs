@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Swarmer : ModNPC, IDefiledEnemy {
+	public class Defiled_Swarmer : Glowing_Mod_NPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;

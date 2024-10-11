@@ -124,8 +124,10 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 		}
 		public override float Mana {
-			get => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana;
-			set => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana = value;
+			get => CheckValidParent() ? (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana : float.NaN;
+			set {
+				if (CheckValidParent()) (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana = value;
+			}
 		}
 	}
 
@@ -139,12 +141,14 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 		}
 		public override float Mana {
-			get => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana;
-			set => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana = value;
+			get => CheckValidParent() ? (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana : float.NaN;
+			set {
+				if (CheckValidParent()) (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana = value;
+			}
 		}
 	}
 
-	public abstract class Defiled_Digger : ModNPC, IDefiledEnemy {
+	public abstract class Defiled_Digger : Glowing_Mod_NPC, IDefiledEnemy {
 		public int MaxMana => 40;
 		public virtual int MaxManaDrain => 10;
 		public abstract float Mana { get; set; }
@@ -194,6 +198,13 @@ namespace Origins.NPCs.Defiled {
 			//Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
 			Origins.instance.SpawnGoreByName(npc.GetSource_Death(), npc.position, npc.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 			//for(int i = 0; i < 3; i++)
+		}
+		protected bool CheckValidParent() {
+			if (Main.npc[(int)NPC.ai[3]].ModNPC is not IDefiledEnemy) {
+				NPC.active = false;
+				return false;
+			}
+			return true;
 		}
 	}
 }

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Shattered_Goldfish : ModNPC, IDefiledEnemy {
+	public class Shattered_Goldfish : Glowing_Mod_NPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 		}

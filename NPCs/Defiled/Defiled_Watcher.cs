@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Watcher : ModNPC, IDefiledEnemy {
+	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Asphyxiator : ModNPC, IDefiledEnemy {
+	public class Defiled_Asphyxiator : Glowing_Mod_NPC, IDefiledEnemy {
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;

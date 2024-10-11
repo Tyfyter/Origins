@@ -13,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
+	public class Defiled_Cyclops : Glowing_Mod_NPC, IDefiledEnemy {
 		public const float speedMult = 1f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;

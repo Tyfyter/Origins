@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mite : ModNPC, IDefiledEnemy {
+	public class Defiled_Mite : Glowing_Mod_NPC, IDefiledEnemy {
 		internal const int spawnCheckDistance = 15;
 		public const int aggroRange = 128;
 		byte frame = 0;
