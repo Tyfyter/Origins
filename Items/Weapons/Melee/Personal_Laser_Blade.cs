@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 30;
 			Item.useAnimation = 30;
 			Item.noMelee = true;
+			Item.noUseGraphic = true;
 			Item.shoot = Personal_Laser_Blade_P.ID;
 			Item.shootSpeed = 1f;
 			Item.knockBack = 1;
@@ -129,6 +130,7 @@ namespace Origins.Items.Weapons.Melee {
 			get => Projectile.ai[2];
 			set => Projectile.ai[2] = value;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			if (!player.active || player.dead) {
@@ -190,7 +192,6 @@ namespace Origins.Items.Weapons.Melee {
 			Utils.PlotTileLine(Projectile.Center, end, Projectile.width, DelegateMethods.CutTiles);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			//Vector2 vel = Projectile.velocity.SafeNormalize(Vector2.Zero) * Projectile.width * 0.95f;
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width;
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Rectangle hitbox = projHitbox;
@@ -207,6 +208,7 @@ namespace Origins.Items.Weapons.Melee {
 			LaserBladeDrawer trailDrawer = default;
 			trailDrawer.TrailColor = new(0, 35, 35, 0);
 			trailDrawer.BladeColor = new(0, 255, 255, 128);
+			trailDrawer.BladeSecondaryColor = new(0, 200, 255, 64);
 			trailDrawer.Length = Projectile.velocity.Length() * Projectile.width * 0.9f * HitboxSteps;
 			trailDrawer.Draw(Projectile);
 			return false;
@@ -223,6 +225,7 @@ namespace Origins.Items.Weapons.Melee {
 
 			public Color TrailColor;
 			public Color BladeColor;
+			public Color BladeSecondaryColor;
 
 			public float Length;
 
@@ -258,9 +261,9 @@ namespace Origins.Items.Weapons.Melee {
 				{
 					MiscShaderData miscShaderData = GameShaders.Misc["Origins:LaserBlade"];
 					Vector2 velocity = proj.velocity.RotatedBy(proj.rotation) * Length * 1.333f;
-					Vector2[] positions = new Vector2[16];
+					Vector2[] positions = new Vector2[15];
 					for (int i = 0; i < positions.Length; i++) {
-						positions[i] = proj.Center + velocity * (i / (float)positions.Length);
+						positions[i] = proj.Center + velocity * ((i + 1) / (float)(positions.Length + 1));
 					}
 					float[] rotations = [..Enumerable.Repeat(proj.velocity.ToRotation() + proj.rotation, positions.Length)];
 					miscShaderData.UseImage1(TextureAssets.Extra[193]);
@@ -269,7 +272,7 @@ namespace Origins.Items.Weapons.Melee {
 					miscShaderData.UseSaturation(-1);
 					miscShaderData.UseOpacity(2);
 					miscShaderData.Apply();
-					_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, BladeColors, BladeWidth, -Main.screenPosition, true);
+					_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, BladeSecondaryColors, BladeWidth, -Main.screenPosition, true);
 					_vertexStrip.DrawTrail();
 					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
@@ -294,6 +297,9 @@ namespace Origins.Items.Weapons.Melee {
 
 			private readonly Color BladeColors(float progressOnStrip) {
 				return BladeColor * (progressOnStrip == 0 ? 0 : 1);
+			}
+			private readonly Color BladeSecondaryColors(float progressOnStrip) {
+				return BladeSecondaryColor * (progressOnStrip == 0 ? 0 : 1);
 			}
 			private readonly float BladeWidth(float progressOnStrip) {
 				return 24 - 8 * progressOnStrip;
