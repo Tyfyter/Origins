@@ -154,7 +154,7 @@ namespace Origins.Dev {
 			int index = Children.IndexOf(oldChild);
 			Children.RemoveAt(index);
 			for (int i = 0; i < newChildren.Length; i++) {
-				if (newChildren[i].Parent is not null) newChildren[i].Parent.Children.Remove(child);
+				if (newChildren[i].Parent is not null) newChildren[i].Parent.Children.Remove(newChildren[i]);
 				newChildren[i].Parent = this;
 				Children.Insert(index++, newChildren[i]);
 			}
