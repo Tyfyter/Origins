@@ -41,6 +41,11 @@ float4 AnimatedTrail(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	return color * ApplyAlphaMatrix(tex2D(uImage0, (uv * uSourceRect0.zw) + uSourceRect0.xy), uAlphaMatrix0) * ApplyAlphaMatrix(tex2D(uImage1, (uv * uSourceRect1.zw) + uSourceRect1.xy), uAlphaMatrix1).a;
 }
 
+float4 LaserBlade(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	float factor = 1.0 - ((abs(uv.y - 0.5f) + uv.x * 0.45) * (pow(uv.x, 0.5)) * 2);
+	return color * ApplyAlphaMatrix(tex2D(uImage0, uv + float2(uTime.x * uSaturation, 0)), uAlphaMatrix0) * factor * uOpacity;
+}
+
 technique Technique1 {
 	pass SapphireAura {
 		PixelShader = compile ps_2_0 SapphireAura();
@@ -50,5 +55,8 @@ technique Technique1 {
 	}
 	pass AnimatedTrail {
 		PixelShader = compile ps_2_0 AnimatedTrail();
+	}
+	pass LaserBlade {
+		PixelShader = compile ps_2_0 LaserBlade();
 	}
 }

@@ -592,7 +592,7 @@ MELEE WEAPONS:
 
 (X) Chiton Kursarigama
 (X) Gospel
-(^) Personal Laser Blade*
+(☻) Personal Laser Blade*
 (X) Pile Bunker
 (^) Terrarang
 (^) True Light Disc

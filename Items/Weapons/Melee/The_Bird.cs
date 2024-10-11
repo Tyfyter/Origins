@@ -120,11 +120,10 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.Center = player.MountedCenter;
 			if (player.channel) {
 				if (Projectile.owner == Main.myPlayer) {
-
+					Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
 				}
 				Projectile.timeLeft = 15;
 				Projectile.hide = true;
-				Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * MathHelper.PiOver2);
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 				player.itemRotation = Projectile.direction * -(MathHelper.PiOver2 + MathHelper.PiOver4);
