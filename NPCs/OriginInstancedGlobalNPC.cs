@@ -88,8 +88,11 @@ namespace Origins.NPCs {
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
 			if (birdedTime <= 0) airBird = false;
-			if (deadBird && birdedTime <= 0) {
-				npc.StrikeInstantKill();
+			if (deadBird) {
+				npc.noTileCollide = false;
+				if (birdedTime <= 0) {
+					npc.StrikeInstantKill();
+				}
 			}
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
