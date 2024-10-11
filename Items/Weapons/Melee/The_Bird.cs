@@ -6,6 +6,7 @@ using Origins.Dev;
 using Microsoft.Xna.Framework;
 using Origins.NPCs;
 using System;
+using Terraria.WorldBuilding;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
@@ -80,22 +81,28 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
+			ModifyHitNPC(target, ref modifiers);
+		}
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			hit.Knockback = GetBirdKnockback(target, hit, Item.knockBack);
+			if (hit.Knockback != 0) {
+				Vector2 knockback = hit.GetKnockbackFromHit(false, false, yMult: 1);
+				target.velocity = new(knockback.Y * player.direction * 0.25f, -knockback.X);
+				BirdUp(target, hit.SourceDamage);
+			}
+		}
+		public static void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 			target.GetGlobalNPC<OriginGlobalNPC>().birdedTime = 1;
 		}
-		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			hit.Knockback = (!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > Item.knockBack) ? hit.Knockback : Item.knockBack;
-			if (hit.Knockback != 0) {
-				Vector2 knockback = hit.GetKnockbackFromHit(false, false, yMult: 1);
-				if (player.altFunctionUse == 2) {
-					target.velocity = new(knockback.Y * player.direction * 0.25f, -knockback.X);
-				} else {
-					target.velocity = new(knockback.X * player.direction, knockback.Y * (target.noGravity ? -0.5f : -0.75f));
-				}
-				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
-				global.birdedTime = 90;
-				global.birdedDamage = hit.SourceDamage;
-			}
+		public static float GetBirdKnockback(NPC target, NPC.HitInfo hit, float baseKnockback) {
+			baseKnockback *= 0.5f;
+			return (!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > baseKnockback) ? hit.Knockback : baseKnockback;
+		}
+		public static void BirdUp(NPC target, int sourceDamage) {
+			OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
+			global.birdedTime = 90;
+			global.birdedDamage = sourceDamage;
 		}
 	}
 	public class The_Bird_Swing : ModProjectile {
@@ -122,9 +129,9 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				Projectile.timeLeft = player.itemAnimationMax;
 				Projectile.hide = true;
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * MathHelper.PiOver2);
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * 0.5f));
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
-				player.itemRotation = Projectile.direction * -(MathHelper.PiOver2 + MathHelper.PiOver4);
+				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
 			} else {
 				Projectile.hide = false;
 				Projectile.friendly = true;
@@ -154,16 +161,13 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.HitDirectionOverride = 0;
-			target.GetGlobalNPC<OriginGlobalNPC>().birdedTime = 1;
+			The_Bird.ModifyHitNPC(target, ref modifiers);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			float knockback = (!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > Projectile.knockBack) ? hit.Knockback : Projectile.knockBack;
+			float knockback = The_Bird.GetBirdKnockback(target, hit, Projectile.knockBack);
 			if (knockback != 0) {
 				target.velocity = knockback * Projectile.velocity * 1.25f * (hit.Crit ? 1.4f : 1f);
-				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
-				global.birdedTime = 90;
-				global.birdedDamage = hit.SourceDamage;
+				The_Bird.BirdUp(target, hit.SourceDamage);
 			}
 		}
 	}
