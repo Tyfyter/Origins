@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Microsoft.Xna.Framework;
 using Origins.NPCs;
+using System;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
@@ -21,13 +22,23 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useAnimation = Item.useTime = 20;
 			Item.rare = ItemRarityID.Cyan;
 			Item.knockBack = 16;
+			Item.shoot = ModContent.ProjectileType<The_Bird_Swing>();
+			Item.shootSpeed = 1;
+			Item.channel = true;
 		}
 		public override void AddRecipes() {
-			//Recipe.Create(Type)
-			//.AddIngredient(ModContent.ItemType<Baseball_Bat>())
-			//.AddIngredient(ModContent.ItemType<Razorwire>())
-			//.Register();
+			/*
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Baseball_Bat>())
+			.AddIngredient(ModContent.ItemType<Razorwire>())
+			.Register();
+			//*/
 		}
+		public override bool? CanHitNPC(Player player, NPC target) {
+			if (player.altFunctionUse != 2) return false;
+			return null;
+		}
+		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemFrame(Player player) {
 			int frame = player.bodyFrame.Y / player.bodyFrame.Height;
@@ -82,6 +93,75 @@ namespace Origins.Items.Weapons.Melee {
 			} else {
 				target.velocity = new(knockback.X * player.direction, knockback.Y * (target.noGravity ? -0.5f : -0.75f));
 			}
+			if (hit.Knockback != 0) {
+				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
+				global.birdedTime = 90;
+				global.birdedDamage = hit.SourceDamage;
+			}
+		}
+	}
+	public class The_Bird_Swing : ModProjectile {
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 5;
+		}
+		public override void SetDefaults() {
+			Projectile.friendly = false;
+			Projectile.width = 32;
+			Projectile.height = 32;
+			Projectile.timeLeft = 15;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ownerHitCheck = true;
+			DrawHeldProjInFrontOfHeldItemAndArms = true;
+		}
+		public override bool ShouldUpdatePosition() => true;
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			Projectile.Center = player.MountedCenter;
+			if (player.channel) {
+				if (Projectile.owner == Main.myPlayer) {
+
+				}
+				Projectile.timeLeft = 15;
+				Projectile.hide = true;
+				Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * MathHelper.PiOver2);
+				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+				player.itemRotation = Projectile.direction * -(MathHelper.PiOver2 + MathHelper.PiOver4);
+			} else {
+				Projectile.hide = false;
+				Projectile.friendly = true;
+				float rotation = Projectile.velocity.ToRotation();
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
+				player.itemLocation = default;
+				player.itemRotation = rotation + MathHelper.PiOver4 - MathHelper.PiOver4 * (Projectile.direction - 1);
+				Projectile.rotation = rotation;
+				Projectile.frame = (++Projectile.frameCounter) / 3;
+				if (Projectile.frameCounter < 5) {
+					player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+				}
+				Projectile.direction = Math.Sign(Projectile.velocity.X);
+				player.heldProj = Projectile.whoAmI;
+			}
+			player.SetDummyItemTime(2);
+			player.direction = Projectile.direction;
+			Projectile.Center += Projectile.velocity * 32;
+			if (Projectile.direction == -1) {
+				Projectile.spriteDirection = -1;
+				Projectile.rotation += MathHelper.Pi;
+			} else {
+				Projectile.spriteDirection = 1;
+			}
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.HitDirectionOverride = 0;
+			if (target.knockBackResist != 0) {
+				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
+				global.birdedTime = 1;
+			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.velocity = hit.Knockback * Projectile.velocity * (hit.Crit ? 1.4f : 1f);
 			if (hit.Knockback != 0) {
 				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
 				global.birdedTime = 90;

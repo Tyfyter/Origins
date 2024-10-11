@@ -1350,6 +1350,7 @@ Projectiles: {
 	Eaterboros_Slash.DisplayName: Eaterboros
 	Eaterboros_Segment_Free.DisplayName: Eaterboros
 	Eaterboros_Shoot.DisplayName: Eaterboros
+	The_Bird_Swing.DisplayName: The Bird
 }
 
 Prefixes: {
