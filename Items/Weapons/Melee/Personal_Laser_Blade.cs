@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Melee {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 104;
+			Item.damage = 185;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
