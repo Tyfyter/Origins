@@ -211,7 +211,7 @@ namespace Origins.NPCs {
 					npc.velocity.Y *= 1.2f;//
 				}
 			}
-			if (birdedTime > 0) {
+			if (birdedTime > 0 && (deadBird || npc.knockBackResist != 0)) {
 				const float birdKnockback = 8;
 				if (npc.velocity.LengthSquared() < 7 * 7) birdedTime = 0;
 				else {
@@ -257,11 +257,11 @@ namespace Origins.NPCs {
 			}
 		}
 		public override bool CanHitNPC(NPC npc, NPC target) {
-			if (birdedTime > 0) return false;
+			if (birdedTime > 0 && (deadBird || npc.knockBackResist != 0)) return false;
 			return true;
 		}
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
-			if (birdedTime > 0 || npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;
+			if ((birdedTime > 0 && (deadBird || npc.knockBackResist != 0)) || npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;
 			return base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {

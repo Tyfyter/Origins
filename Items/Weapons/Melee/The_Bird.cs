@@ -81,19 +81,17 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
-			if (target.knockBackResist != 0) {
-				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
-				global.birdedTime = 1;
-			}
+			target.GetGlobalNPC<OriginGlobalNPC>().birdedTime = 1;
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			Vector2 knockback = hit.GetKnockbackFromHit(false, false, yMult: 1);
-			if (player.altFunctionUse == 2) {
-				target.velocity = new(knockback.Y * player.direction * 0.25f, -knockback.X);
-			} else {
-				target.velocity = new(knockback.X * player.direction, knockback.Y * (target.noGravity ? -0.5f : -0.75f));
-			}
+			hit.Knockback = (!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > Item.knockBack) ? hit.Knockback : Item.knockBack;
 			if (hit.Knockback != 0) {
+				Vector2 knockback = hit.GetKnockbackFromHit(false, false, yMult: 1);
+				if (player.altFunctionUse == 2) {
+					target.velocity = new(knockback.Y * player.direction * 0.25f, -knockback.X);
+				} else {
+					target.velocity = new(knockback.X * player.direction, knockback.Y * (target.noGravity ? -0.5f : -0.75f));
+				}
 				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
 				global.birdedTime = 90;
 				global.birdedDamage = hit.SourceDamage;
@@ -108,7 +106,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.friendly = false;
 			Projectile.width = 32;
 			Projectile.height = 32;
-			Projectile.timeLeft = 15;
+			Projectile.timeLeft = 18;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true;
@@ -122,7 +120,7 @@ namespace Origins.Items.Weapons.Melee {
 				if (Projectile.owner == Main.myPlayer) {
 					Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
 				}
-				Projectile.timeLeft = 15;
+				Projectile.timeLeft = player.itemAnimationMax;
 				Projectile.hide = true;
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * MathHelper.PiOver2);
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
@@ -131,13 +129,16 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.hide = false;
 				Projectile.friendly = true;
 				float rotation = Projectile.velocity.ToRotation();
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, rotation - MathHelper.PiOver2);
 				player.itemLocation = default;
 				player.itemRotation = rotation + MathHelper.PiOver4 - MathHelper.PiOver4 * (Projectile.direction - 1);
 				Projectile.rotation = rotation;
 				Projectile.frame = (++Projectile.frameCounter) / 3;
-				if (Projectile.frameCounter < 5) {
+				if (Projectile.frameCounter < 8) {
 					player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+				} else {
+					player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
+					Projectile.friendly = false;
 				}
 				Projectile.direction = Math.Sign(Projectile.velocity.X);
 				player.heldProj = Projectile.whoAmI;
@@ -154,14 +155,12 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
-			if (target.knockBackResist != 0) {
-				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
-				global.birdedTime = 1;
-			}
+			target.GetGlobalNPC<OriginGlobalNPC>().birdedTime = 1;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.velocity = hit.Knockback * Projectile.velocity * (hit.Crit ? 1.4f : 1f);
-			if (hit.Knockback != 0) {
+			float knockback = (!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > Projectile.knockBack) ? hit.Knockback : Projectile.knockBack;
+			if (knockback != 0) {
+				target.velocity = knockback * Projectile.velocity * 1.25f * (hit.Crit ? 1.4f : 1f);
 				OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
 				global.birdedTime = 90;
 				global.birdedDamage = hit.SourceDamage;
