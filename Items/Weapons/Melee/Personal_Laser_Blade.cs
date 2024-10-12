@@ -1,19 +1,18 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Tiles.Other;
-using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Linq;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
 using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Tyfyter.Utils;
-using System.Linq;
 
 namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]

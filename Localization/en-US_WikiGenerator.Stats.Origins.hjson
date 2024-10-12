@@ -21,3 +21,41 @@ Counter_Offensive_Scarf.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/
 Dim_Starlight.Source: <a is=a-link image=$fromStats>Defiled Fissure</a>
 Donor_Wristband.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Charm_of_Myths>Charm of Myths</a> + <a is=a-link image=$fromStats>Plasma Bag</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 Makeover_Choker.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Cross_Necklace>Cross Necklace</a> + <a is=a-link image=$fromStats>Mysterious Spray</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Plasma_Bag.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Purple_Slime>Purple Slime</a>
+Playtimes_Over.Source: <a is=a-link image=$fromStats>Bug Trapper</a> + <a is=a-link image=$fromStats>Fleshy Figurine</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Powerflower.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Mana_Flower>Mana Flower</a> + <a is=a-link image=$fromStats>Dim Starlight</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Primordial_Soup.Source: <a is=a-link image=$fromStats>Gel Blister</a>
+Resin_Shield.Source: (6) <a is=a-link href=https://terraria.wiki.gg/wiki/Amber>Amber</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Obsidian_Shield>Obsidian Shield</a> + (12) <a is=a-link image=$fromStats>Carburite</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Solar_Panel.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Band_of_Starpower>Band of Starpower</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Sun_Stone>Sun Stone</a> + (8) <a is=a-link image=$fromStats>Silicon</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Stone_Mask.Source: Found anywhere on the <a is=a-link href=https://terraria.wiki.gg/wiki/Layers#Surface>Surface</a> of the world
+Trap_Charm.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Dead_Man%27s_Chest>Dead Man's Chest</a>
+ASH_Attack_Relay.Source: <a is=a-link image=$fromStats>Comb</a> + <a is=a-link image=$fromStats>Seal of Cinders</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Asylum_Whistle.Source: <a is=a-link image=$fromStats>Bomb Handling Device</a> (@ <a is=a-link href=https://terraria.wiki.gg/wiki/Shimmer>Shimmer</a>) | <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Chest#Dungeon>Locked Gold Chest</a>
+Binding_Book.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Celestial_Cuffs>Celestial Cuffs</a> + <a is=a-link image=$fromStats>Refactoring Pieces</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Bomb_Handling_Device.Source: <a is=a-link image=$fromStats>Asylum Whistle</a> (@ <a is=a-link href=https://terraria.wiki.gg/wiki/Shimmer>Shimmer</a>) | <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Chest#Dungeon>Locked Gold Chest</a>
+Boomerang_Magnet.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Treasure_Magnet>Treasure Magnet</a> + <a is=a-link image=$fromStats>Turbo Reel</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Celestial_Stone_Mask.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Celestial_Stone>Celestial Stone</a> + <a is=a-link image=$fromStats>Stone Mask</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+CFHES.Source: <a is=a-link image=$fromStats>ACME Crate</a> + <a is=a-link image=$fromStats>Danger Barrel</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Seal_of_Cinders.Source: <a is=a-link image=$fromStats>Broken Record</a>
+Cirrhosis_Abhorrence.Source: <a is=a-link image=$fromStats>Lousy Liver</a> + <a is=a-link image=$fromStats>Messy Magma Leech</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Comb.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/The_Groom>The Groom</a>
+Control_Locus.Source: <a is=a-link image=$fromStats>Stack of Shraps</a> + <a is=a-link image=$fromStats>Weakpoint Analyzer</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+CORE_Generator.Source: <a is=a-link image=$fromStats>Last Descendant</a> + <a is=a-link image=$fromStats>Missile Armcannon</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Danger_Barrel.Source: <a is=a-link image=$fromStats>Magma Stone</a> + <a is=a-link image=$fromStats href=IWTPA_Standard.html>I-WTPA Standard</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Decaying_Scale.Source: <a is=a-link image=$fromStats>Carpalfish</a>
+Destructive_Claws.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Feral_Claws>Feral Claws</a> + <a is=a-link image=$fromStats>Bomb Handling Device</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Dryads_Inheritance.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Spore_Sac>Spore Sac</a> + <a is=a-link image=$fromStats>Last Descendant</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Dysfunctional_Endless_Explosives_Bag.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Skeleton_Merchant>Skeleton Merchant</a> (dropped)
+Exploder_Emblem.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Wall_of_Flesh>Wall of Flesh</a>
+Explosive_Artery.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Blood_Crawler>Blood Crawler</a> or <a is=a-link href=https://terraria.wiki.gg/wiki/Face_Monster>Face Monster</a>
+Fleshy_Figurine.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Guide_Voodoo_Doll>Guide Voodoo Doll</a> + <a is=a-link image=$fromStats>Symbiote Skull</a> + <a is=a-link image=$fromStats>Tainted Flesh</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Focus_Crystal.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Shiny_Stone>Shiny Stone</a> + <a is=a-link image=$fromStats>Ruby Reticle</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Futurephones.Source: <a is=a-link image=$fromStats>Headphones</a> + <a is=a-link image=$fromStats href=Snipers_Mark.html>Sniper's Mark</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Grave_Danger.Source: 2.5% chance of being dropped by enemies spawned in the <a is=a-link href=https://terraria.wiki.gg/wiki/Graveyard>Graveyard</a>
+Gun_Glove.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Goblin_Tinkerer>Goblin Tinkerer</a> after completing a quest
+Haggard_Artery.Source: <a is=a-link image=$fromStats>Explosive Artery</a> + <a is=a-link image=$fromStats>Messy Leech</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Handy_Helper.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Power_Glove>Power Glove</a> + <a is=a-link image=$fromStats>Amebic Vial</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Headphones.Source: (8) <a is=a-link image=$fromStats>Busted Servo</a> (6) <a is=a-link image=$fromStats>Fiberglass Block</a> + <a is=a-link image=$fromStats>Power Core</a> + (5) <a is=a-link image=$fromStats>Rubber</a> @ <a is=a-link image=$fromStats>Fabricator</a>
+IWTPA_Standard.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Undead_Miner>Undead Miner</a>
+Keepsake_Remains.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Shark_Tooth_Necklace>Shark Tooth Necklace</a> + <a is=a-link image=$fromStats>Symbiote Skull</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+Last_Descendant.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Star_Veil>Star Veil</a> + <a is=a-link image=$fromStats>Locket Necklace</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>

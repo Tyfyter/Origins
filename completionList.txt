@@ -299,8 +299,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(^) ASH Attack Relay
-(ᥢ, ♠) ATACS*
+(^) ASH Attack Relay*
 (^) Automated Returns Handler*
 (^) Binding Book*
 (^) Blast-Resistant Plate*
@@ -370,9 +369,9 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(^) Scrap Barrier
+(^) Scrap Barrier*
 (^) Shield of Retribution*
-(#, ^2) Slag Bucket !!!
+(#, ^2) Slag Bucket* !!!
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
@@ -592,7 +591,7 @@ MELEE WEAPONS:
 
 (X) Chiton Kursarigama
 (X) Gospel
-(#3, ^2) Personal Laser Blade*
+(^) Personal Laser Blade*
 (X) Pile Bunker
 (^) Terrarang
 (^) True Light Disc
