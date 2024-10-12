@@ -4370,7 +4370,11 @@ Amoebash: {
 
 Smiths_Hammer: {
 	// DisplayName: Smith's Hammer
-	// Tooltip: Summons a Walking Furnace to light your way
+	/* Tooltip:
+		'''
+		Summons a Walking Furnace to light your way
+		'He must be worried sick!'
+		''' */
 }
 
 Fleshy_Globe: {

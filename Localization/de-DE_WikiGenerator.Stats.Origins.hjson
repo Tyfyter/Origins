@@ -2,7 +2,7 @@
 // ACME_Crate.Source: <a is=a-link image=$fromStats>Magic Tripwire</a> + <a is=a-link image=$fromStats>Nitro Crate</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Advanced_Imaging.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Cyborg>Cyborg</a> (<a-coins>250000</a>)
 // Air_Tank.Source: (20) <a is=a-link href=https://terraria.wiki.gg/wiki/Adamantite_Bar>Adamantite</a>/<a is=a-link href=https://terraria.wiki.gg/wiki/Titanium_Bar>Titanium Bar</a> + (12) <a is=a-link image=$fromStats>Rubber</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
-// Amebic_Vial.Source: <a is=a-link image=$fromStats>World Cracker</a>
+// Amebic_Vial.Source: <a is=a-link image=$fromStats>World Cracker</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
 // Automated_Returns_Handler.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Ninja_Gear>Master Ninja Gear</a> + <a is=a-link image=$fromStats>Super Turbo Reel</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Dash_Ravel.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Tabi>Tabi</a> + <a is=a-link image=$fromStats>Ravel</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Depth_Ravel.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Arctic_Diving_Gear>Arctic Diving Gear</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Flipper>Flipper</a> + <a is=a-link image=$fromStats>Ravel</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
@@ -29,7 +29,7 @@
 // Solar_Panel.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Band_of_Starpower>Band of Starpower</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Sun_Stone>Sun Stone</a> + (8) <a is=a-link image=$fromStats>Silicon</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Stone_Mask.Source: Found anywhere on the <a is=a-link href=https://terraria.wiki.gg/wiki/Layers#Surface>Surface</a> of the world
 // Trap_Charm.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Dead_Man%27s_Chest>Dead Man's Chest</a>
-// ASH_Attack_Relay.Source: <a is=a-link image=$fromStats>Comb</a> + <a is=a-link image=$fromStats>Seal of Cinders</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// A.S.H._Attack_Relay.Source: <a is=a-link image=$fromStats>Comb</a> + <a is=a-link image=$fromStats>Seal of Cinders</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Asylum_Whistle.Source: <a is=a-link image=$fromStats>Bomb Handling Device</a> (@ <a is=a-link href=https://terraria.wiki.gg/wiki/Shimmer>Shimmer</a>) | <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Chest#Dungeon>Locked Gold Chest</a>
 // Binding_Book.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Celestial_Cuffs>Celestial Cuffs</a> + <a is=a-link image=$fromStats>Refactoring Pieces</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Bomb_Handling_Device.Source: <a is=a-link image=$fromStats>Asylum Whistle</a> (@ <a is=a-link href=https://terraria.wiki.gg/wiki/Shimmer>Shimmer</a>) | <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Chest#Dungeon>Locked Gold Chest</a>
@@ -52,10 +52,65 @@
 // Focus_Crystal.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Shiny_Stone>Shiny Stone</a> + <a is=a-link image=$fromStats>Ruby Reticle</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Futurephones.Source: <a is=a-link image=$fromStats>Headphones</a> + <a is=a-link image=$fromStats href=Snipers_Mark.html>Sniper's Mark</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Grave_Danger.Source: 2.5% chance of being dropped by enemies spawned in the <a is=a-link href=https://terraria.wiki.gg/wiki/Graveyard>Graveyard</a>
-// Gun_Glove.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Goblin_Tinkerer>Goblin Tinkerer</a> after completing a quest
+// Gun_Glove.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Goblin_Tinkerer>Goblin Tinkerer</a> after completing a <a is=a-link href=NPC_Quests.html>quest</a>
 // Haggard_Artery.Source: <a is=a-link image=$fromStats>Explosive Artery</a> + <a is=a-link image=$fromStats>Messy Leech</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Handy_Helper.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Power_Glove>Power Glove</a> + <a is=a-link image=$fromStats>Amebic Vial</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Headphones.Source: (8) <a is=a-link image=$fromStats>Busted Servo</a> (6) <a is=a-link image=$fromStats>Fiberglass Block</a> + <a is=a-link image=$fromStats>Power Core</a> + (5) <a is=a-link image=$fromStats>Rubber</a> @ <a is=a-link image=$fromStats>Fabricator</a>
 // IWTPA_Standard.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Undead_Miner>Undead Miner</a>
 // Keepsake_Remains.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Shark_Tooth_Necklace>Shark Tooth Necklace</a> + <a is=a-link image=$fromStats>Symbiote Skull</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Last_Descendant.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Star_Veil>Star Veil</a> + <a is=a-link image=$fromStats>Locket Necklace</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Locket_Necklace.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Panic_Necklace>Panic Necklace</a> + <a is=a-link image=$fromStats>Comb</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Lousy_Liver.Source: <a is=a-link image=$fromStats>Defiled Ekko</a>
+// Magic_Glove.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Mana_Cloak>Mana Cloak</a> + <a is=a-link image=$fromStats>Gun Glove</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Magic_Pain_Glove.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Feral_Claws>Feral Claws</a> + <a is=a-link image=$fromStats>Magic Glove</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Magic_Tripwire.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Dead_Man%27s_Chest>Dead Man's Chest</a>
+// Messy_Leech.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Fishing>Fishing</a> in the <a is=a-link href=https://terraria.wiki.gg/wiki/Jungle>Jungle</a>
+// Messy_Magma_Leech.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Magma_Stone>Magma Stone</a> + <a is=a-link image=$fromStats>Messy Leech</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Missile_Armcannon.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Titan_Glove>Titan Glove</a> + <a is=a-link image=$fromStats>Destructive Claws</a> + <a is=a-link image=$fromStats>Gun Glove</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Nitro_Crate.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Chest>Gold Chest</a>
+// No_U_Card.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Ankh_Charm>Ankh Charm</a> + <a is=a-link image=$fromStats>Return To Sender</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Olid_Organ.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Putrid_Scent>Putrid Scent</a> + <a is=a-link image=$fromStats>Decaying Scale</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Pneumatic_Bomb_Thrower: <a is=a-link image=$fromStats>Air Tank</a> + <a is=a-link image=$fromStats>Bomb Handling Device</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Potato_Battery.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Copper_Bar>Copper Bar</a> + <a is=a-link image=$fromStats>Potato</a> + <a is=a-link image=$fromStats>Power Core</a> @ <a is=a-link image=$fromStats>Fabricator</a>
+// Protomind.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Brain_of_Confusion>Brain of Confusion</a> + <a is=a-link image=$fromStats>Potato Battery</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>
+// Protozoa_Food.Source: <a is=a-link image=$fromStats>World Cracker</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
+// Razorwire.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Shackle>Shackle</a> + <a is=a-link image=$fromStats>Return To Sender</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Return_To_Sender.Source: <a is=a-link image=$fromStats>Defiled Amalgamation</a>
+// Ruby_Reticle.Source: (5) <a is=a-link href=https://terraria.wiki.gg/wiki/Cursed_Flame>Cursed Flame</a> + (16) <a is=a-link href=https://terraria.wiki.gg/wiki/Ruby>Ruby</a> + (24) <a is=a-link image=$fromStats>Carburite</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// Scavenger_Bag.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Papyrus_Scarab>Papyrus Scarab</a> + <a is=a-link image=$fromStats>Keepsake Remains</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Scrap_Compactor.Source: <a is=a-link image=$fromStats>Scrapper</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
+// Shield_of_Retribution.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Obsidian_Shield>Obsidian Shield</a> + <a is=a-link image=$fromStats>Razorwire</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Sonar_Visor.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Ultrabright_Helmet>Ultrabright Helmet</a> + <a is=a-link image=$fromStats>Advanced Imaging</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Speed_Booster.Source: <a is=a-link image=$fromStats>Automated Returns Handler</a> + <a is=a-link image=$fromStats href=Lovers_Leap.html>Lover's Leap</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Spirit_Shard.Source: When nearby a <a is=a-link href=https://terraria.wiki.gg/wiki/Dark_Lamia>Dark Lamia</a> while <a is=a-link image=$fromStats>Eccentric Stone</a> is in the player's inventory
+// Stack_of_Shraps.Source: <a is=a-link image=$fromStats>Scrapper</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Super_Turbo_Reel.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Magiluminescence>Magiluminescence</a> + <a is=a-link image=$fromStats>Turbo Reel</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Symbiote_Skull.Source: <a is=a-link image=$fromStats>Riven Protoform</a>
+// Tainted_Flesh.Source: <a is=a-link image=$fromStats>Riven Mimic</a>
+// Turbo_Reel.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Goblin_Tinkerer>Goblin Tinkerer</a> after completing a <a is=a-link href=NPC_Quests.html>quest</a>
+// Unsought_Organ.Source: <a is=a-link image=$fromStats>Olid Organ</a> + <a is=a-link image=$fromStats>Razorwire</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Weakpoint_Analyzer.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Brain_of_Cthulhu>Brain of Cthulhu</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master_Mode<a/>
+// Brine-Leafed_Clover.Source: Harvested in the <a is=a-link>Brine Pool</a>
+// Eccentric_Stone.Souce: Given to the player by the <a is=a-link href=https://terraria.wiki.gg/wiki/Zoologist>Zoologist</a> after completing a <a is=a-link href=NPC_Quests.html>quest</a>
+// Hazard_Charm.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Lava_Charm>Lava_Charm</a> + <a is=a-link image=$fromStats>Bomb Charm</a> + <a is=a-link image=$fromStats>Trap Charm</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Helium_Tank.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Whoopie_Cushion>Whoopie Cushion</a> + <a is=a-link image=$fromStats>Air Tank</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Rebreather.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Angler_Fish>Angler Fish</a>
+// Tripod_Nip.Source: <a is=a-link image=$fromStats>Tripod Nip</a>
+// Strange_Computer.Source: (5) <a is=a-link href=https://terraria.wiki.gg/wiki/Glass>Glass</a> + (10) <a is=a-link image=$fromStats>Busted Servo</a> + <a is=a-link image=$fromStats>Power Core</a> + (6) <a is=a-link image=$fromStats>Rotor</a> @ <a is=a-link image=$fromStats>Fabricator</a>
+// Timbre_of_Hell.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Demon>Demon</a>
+// Entangled_Energy.Source: <a is=a-link image=$fromStats>Fiberglass Weaver</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
+// Mana_Drive.Source: <a is=a-link image=$fromStats>Quantux</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
+// Refactoring_Pieces.Source: <a is=a-link image=$fromStats>Defiled Amalgamation</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
+// Retalitory_Tendril.Source: <a is=a-link image=$fromStats>Lost Diver</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Expert_Mode>Expert Mode<a/>
+// "Blizzardwalkers'_Jacket.Source": <a is=a-link href=https://terraria.wiki.gg/wiki/Deerclops>Deerclops</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Cursed_Crown.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/King_Slime>King Slime</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Emergency_Bee_Canister.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Queen_Bee>Queen Bee</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Fiberglass_Dagger.Source: <a is=a-link image=$fromStats>Fiberglass Weaver</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Forbidden_Voice.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Eater_of_Worlds>Eater of Worlds</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Lazy_Cloak.Source: <a is=a-link image=$fromStats href=Severus.html>Severus, the Dark One</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Mildewy_Diving_Helmet.Source: <a is=a-link image=$fromStats>Lost Diver</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Mysterious_Spray.Source: <a is=a-link image=$fromStats>Defiled Amalgamation</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Scribe_of_the_Meat_God.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Wall_of_Flesh>Wall of Flesh</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Strange_Tooth.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Eye_of_Cthulhu>Eye of Cthulhu</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Terrarian_Voodoo_Doll.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Skeletron>Skeletron</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>
+// Third_Eye.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Moon_Lord>Moon Lord</a> on <a is=a-link href=https://terraria.wiki.gg/wiki/Master_Mode>Master Mode<a/>

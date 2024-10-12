@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 			"SummonBoostAcc"
         ];
         public override void SetDefaults() {
-			Item.DefaultToAccessory(30, 28);
+			Item.DefaultToAccessory(32, 28);
 			Item.maxStack = 2;
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Green;

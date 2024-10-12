@@ -299,7 +299,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(^) ASH Attack Relay*
+(^) A.S.H. Attack Relay*
 (^) Automated Returns Handler*
 (^) Binding Book*
 (^) Blast-Resistant Plate*
@@ -354,7 +354,7 @@ ACCESSORIES:
 (^) Nitro Crate*
 (^) No U Card*
 (^) Olid Organ*
-(^) Plasma Phial*
+(^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
@@ -425,7 +425,7 @@ ACCESSORIES:
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
-(#3, ^2) Stack of Shraps* !!!
+(ᗢ) Stack of Shraps*
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
