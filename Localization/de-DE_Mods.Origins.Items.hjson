@@ -3354,7 +3354,7 @@ Piledriver: {
 	// Tooltip: <right> to mine a larger area
 }
 
-Cinder_Seal: {
+Seal_Of_Cinders: {
 	// DisplayName: Seal of Cinders
 	// Tooltip: Motes of dust will combust after taking damage
 }

@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Cinder_Seal : ModItem, ICustomWikiStat {
+	public class Seal_Of_Cinders : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat"
 		];
@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 
-			Item.shoot = ModContent.ProjectileType<Cinder_Seal_Dust>();
+			Item.shoot = ModContent.ProjectileType<Seal_Of_Cinders_Dust>();
 			Item.damage = 24;
 			Item.ArmorPenetration = 6;
 			Item.knockBack = 6;
@@ -37,7 +37,7 @@ namespace Origins.Items.Accessories {
 			return false;
 		}
 	}
-	public class Cinder_Seal_Dust : ModProjectile {
+	public class Seal_Of_Cinders_Dust : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
@@ -55,14 +55,14 @@ namespace Origins.Items.Accessories {
 				Projectile.GetSource_Death(),
 				Projectile.Center,
 				Vector2.Zero,
-				ModContent.ProjectileType<Cinder_Seal_Explosion>(),
+				ModContent.ProjectileType<Seal_Of_Cinders_Explosion>(),
 				Projectile.originalDamage,
 				Projectile.knockBack,
 				Projectile.owner
 			);
 		}
 	}
-	public class Cinder_Seal_Explosion : ModProjectile {
+	public class Seal_Of_Cinders_Explosion : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 19;
 		}

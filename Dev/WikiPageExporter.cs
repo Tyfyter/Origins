@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using Terraria;
@@ -315,8 +316,9 @@ namespace Origins.Dev {
 			Main.screenWidth = screenWidth;
 			Main.screenHeight = screenHeight;
 		}
-		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
-		public static string GetWikiName(ModNPC modNPC) => modNPC.Name;//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
+		public static string GetWikiName(ModItem modItem) => SanitizeWikiName(modItem.DisplayName.Value);
+		public static string GetWikiName(ModNPC modNPC) => SanitizeWikiName(modNPC.DisplayName.Value);
+		public static string SanitizeWikiName(string name) => WebUtility.UrlEncode(name.Replace(' ', '_'));
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
 		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name.Replace(' ', '_') : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
@@ -855,7 +857,7 @@ namespace Origins.Dev {
 			NPC npc = modNPC.NPC;
 			JObject data = [];
 			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
-			data["Image"] = customStat?.CustomSpritePath ?? ("Images/" + WikiPageExporter.GetWikiName(modNPC));
+			data["Image"] = customStat?.CustomSpritePath ?? (WikiPageExporter.GetWikiName(modNPC));
 			data["Name"] = npc.TypeName;
 			JArray types = new("NPC");
 			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");

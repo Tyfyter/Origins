@@ -1216,8 +1216,8 @@ Projectiles: {
 	Outreach_P.DisplayName: Outreach P
 	Piledriver_P.DisplayName: Piledriver
 	Piledriver_Mine_P.DisplayName: Piledriver
-	Cinder_Seal_Dust.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
-	Cinder_Seal_Explosion.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
+	Seal_Of_Cinders_Dust.DisplayName: "{$Mods.Origins.Items.Seal_Of_Cinders.DisplayName}"
+	Seal_Of_Cinders_Explosion.DisplayName: "{$Mods.Origins.Items.Seal_Of_Cinders.DisplayName}"
 	C6_Jackhammer_P.DisplayName: C6 Jackhammer P
 	Silica_Ball.DisplayName: Silica Ball
 	Dryad_Ward.DisplayName: Dryad Ward

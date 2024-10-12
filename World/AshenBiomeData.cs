@@ -29,7 +29,7 @@ namespace Origins.World {
 				AceShrapnelRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Area_Denial>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Smiths_Hammer>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Cinder_Seal>())
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Seal_Of_Cinders>())
 			);
 		}
 		public override void Unload() {

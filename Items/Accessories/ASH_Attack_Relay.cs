@@ -43,14 +43,14 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Cinder_Seal>()
+			.AddIngredient<Seal_Of_Cinders>()
 			.AddIngredient<Comb>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
 	}
 	public class ASH_Attack_Relay_Dust : ModProjectile {
-		public override string Texture => "Origins/Items/Accessories/Cinder_Seal_Dust";
+		public override string Texture => "Origins/Items/Accessories/Seal_Of_Cinders_Dust";
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
@@ -95,7 +95,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class ASH_Attack_Relay_Explosion : ModProjectile {
-		public override string Texture => "Origins/Items/Accessories/Cinder_Seal_Explosion";
+		public override string Texture => "Origins/Items/Accessories/Seal_Of_Cinders_Explosion";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 19;
 		}
