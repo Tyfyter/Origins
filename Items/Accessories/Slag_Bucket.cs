@@ -40,7 +40,7 @@ namespace Origins.Items.Accessories {
 	public class Slag_Bucket_Uncursed : Uncursed_Cursed_Item<Slag_Bucket>, ICustomWikiStat {
 		public override void SetDefaults() {
 			base.SetDefaults();
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.LightRed;
 			Item.defense = 6;
 		}
 		public override void UpdateEquip(Player player) {

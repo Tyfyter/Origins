@@ -339,7 +339,7 @@ ACCESSORIES:
 (^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
-(☻, @2) Laser Tag Vest*
+(@2, ^3) Laser Tag Vest*
 (^) Last Descendent*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -369,9 +369,9 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(^) Scrap Barrier*
+(#3, ^2) Scrap Barrier*
 (^) Shield of Retribution*
-(#, ^2) Slag Bucket* !!!
+(#3, ^2) Slag Bucket*
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*

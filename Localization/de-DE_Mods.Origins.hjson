@@ -941,8 +941,8 @@ Buffs: {
 	}
 
 	Scrap_Barrier_Debuff: {
-		// DisplayName: Scrap Barrier Debuff
-		// Description: Mods.Origins.Buffs.Scrap_Barrier_Debuff.Description
+		// DisplayName: Shrapnel Disturbance
+		// Description: You cannot regenerate life
 	}
 
 	Trash_Lid_Mount_Buff: {
