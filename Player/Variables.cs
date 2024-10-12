@@ -339,6 +339,7 @@ namespace Origins {
 		public float[] minionSubSlots = new float[minionSubSlotValues];
 		public int wormHeadIndex = -1;
 		public int heldProjectile = -1;
+		public IDrawOverArmProjectile heldProjOverArm = null;
 		public int lastMinionAttackTarget = -1;
 		public int hookTarget = -1;
 		bool rivenWet = false;
@@ -760,6 +761,7 @@ namespace Origins {
 				voodooDollIndex = -1;
 			}
 			forceDrown = false;
+			heldProjOverArm = null;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

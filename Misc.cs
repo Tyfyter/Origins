@@ -258,8 +258,7 @@ namespace Origins {
 			return (Action<TParent, T>)setterMethod.CreateDelegate(typeof(Action<TParent, T>));
 		}
 	}
-	public class FastStaticFieldInfo<TParent, T>(string name, BindingFlags bindingFlags, bool init = false) : FastStaticFieldInfo<T>(typeof(TParent), name, bindingFlags, init) {
-	}
+	public class FastStaticFieldInfo<TParent, T>(string name, BindingFlags bindingFlags, bool init = false) : FastStaticFieldInfo<T>(typeof(TParent), name, bindingFlags, init) { }
 	public class FastStaticFieldInfo<T> {
 		public readonly FieldInfo field;
 		RefGetter refGetter;
@@ -792,6 +791,9 @@ namespace Origins {
 	}
 	interface IItemObtainabilityProvider {
 		IEnumerable<int> ProvideItemObtainability();
+	}
+	public interface IDrawOverArmProjectile {
+		DrawData GetDrawData();
 	}
 	public interface IUnloadable {
 		void Unload();

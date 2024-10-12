@@ -7,6 +7,10 @@ using Microsoft.Xna.Framework;
 using Origins.NPCs;
 using System;
 using Terraria.WorldBuilding;
+using System.Collections.Generic;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
@@ -105,19 +109,19 @@ namespace Origins.Items.Weapons.Melee {
 			global.birdedDamage = sourceDamage;
 		}
 	}
-	public class The_Bird_Swing : ModProjectile {
+	public class The_Bird_Swing : ModProjectile, IDrawOverArmProjectile {
+		static AutoLoadingAsset<Texture2D> frontTexture = typeof(The_Bird_Swing).GetDefaultTMLName() + "_Front";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 5;
 		}
 		public override void SetDefaults() {
 			Projectile.friendly = false;
-			Projectile.width = 32;
-			Projectile.height = 32;
+			Projectile.width = 48;
+			Projectile.height = 48;
 			Projectile.timeLeft = 18;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true;
-			DrawHeldProjInFrontOfHeldItemAndArms = true;
 		}
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {
@@ -141,21 +145,21 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemRotation = rotation + MathHelper.PiOver4 - MathHelper.PiOver4 * (Projectile.direction - 1);
 				Projectile.rotation = rotation;
 				Projectile.frame = (++Projectile.frameCounter) / 3;
-				if (Projectile.frameCounter < 8) {
+				if (Projectile.frameCounter < 3) {
 					player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 				} else {
 					player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
 					Projectile.friendly = false;
 				}
 				Projectile.direction = Math.Sign(Projectile.velocity.X);
-				player.heldProj = Projectile.whoAmI;
+				player.OriginPlayer().heldProjOverArm = this;
 			}
 			player.SetDummyItemTime(2);
 			player.direction = Projectile.direction;
 			Projectile.Center += Projectile.velocity * 32;
 			if (Projectile.direction == -1) {
 				Projectile.spriteDirection = -1;
-				Projectile.rotation += MathHelper.Pi;
+				//Projectile.rotation += MathHelper.Pi;
 			} else {
 				Projectile.spriteDirection = 1;
 			}
@@ -170,5 +174,21 @@ namespace Origins.Items.Weapons.Melee {
 				The_Bird.BirdUp(target, hit.SourceDamage);
 			}
 		}
+		public override bool PreDraw(ref Color lightColor) {
+			DrawData data = GetDrawData();
+			data.texture = TextureAssets.Projectile[Type].Value;
+			Main.EntitySpriteDraw(data);
+			return false;
+		}
+		public DrawData GetDrawData() => new(
+			frontTexture,
+			Projectile.Center - Main.screenPosition,
+			frontTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame),
+			Color.Lerp(Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Color.Blue, 0.5f),
+			Projectile.rotation,
+			new(62, 16 - Projectile.spriteDirection),
+			Projectile.scale,
+			Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically
+		);
 	}
 }
