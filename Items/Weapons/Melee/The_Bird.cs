@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Terraria.Audio;
+using Terraria.GameContent.Drawing;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
@@ -19,6 +21,9 @@ namespace Origins.Items.Weapons.Melee {
 			"DeveloperItem",
 			"ReworkExpected"
 		];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -30,6 +35,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<The_Bird_Swing>();
 			Item.shootSpeed = 1;
 			Item.channel = true;
+			Item.UseSound = SoundID.Item82.WithPitchRange(0.8f, 1f);
+			Item.scale = 1f;
 		}
 		public override void AddRecipes() {
 			/*
@@ -39,17 +46,15 @@ namespace Origins.Items.Weapons.Melee {
 			.Register();
 			//*/
 		}
-		public override bool? CanHitNPC(Player player, NPC target) {
-			if (player.altFunctionUse != 2) return false;
-			return null;
-		}
+		public override bool? CanHitNPC(Player player, NPC target) => player.altFunctionUse == 2 ? null : false;
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemFrame(Player player) {
 			int frame = player.bodyFrame.Y / player.bodyFrame.Height;
 			float progress = player.itemAnimation / (float)player.itemAnimationMax;
 			if (player.altFunctionUse == 2) {
-				progress *= progress;
+				progress *= progress * progress;
+				int oldFrame = frame;
 				frame = 2 + (int)(progress * 4f);
 				if (frame == 5) frame = 0;
 				switch (frame) {
@@ -57,6 +62,7 @@ namespace Origins.Items.Weapons.Melee {
 					player.itemLocation = player.MountedCenter + new Vector2(-4 * player.direction, 4);
 					break;
 					case 4:
+					if (oldFrame != frame) SoundEngine.PlaySound(player.HeldItem.UseSound, player.MountedCenter);
 					player.itemLocation = player.MountedCenter + new Vector2(4 * player.direction, 8);
 					break;
 					case 3:
@@ -85,7 +91,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
-			ModifyHitNPC(target, ref modifiers);
+			PreHitNPC(target, ref modifiers);
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 			hit.Knockback = GetBirdKnockback(target, hit, Item.knockBack);
@@ -95,17 +101,17 @@ namespace Origins.Items.Weapons.Melee {
 				BirdUp(target, hit.SourceDamage);
 			}
 		}
-		public static void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+		public static void PreHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 			target.GetGlobalNPC<OriginGlobalNPC>().birdedTime = 1;
 		}
 		public static float GetBirdKnockback(NPC target, NPC.HitInfo hit, float baseKnockback) {
 			baseKnockback *= 0.5f;
-			return (!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > baseKnockback) ? hit.Knockback : baseKnockback;
+			return Math.Min((!target.GetGlobalNPC<OriginGlobalNPC>().deadBird || hit.Knockback > baseKnockback) ? hit.Knockback : baseKnockback, 16);
 		}
 		public static void BirdUp(NPC target, int sourceDamage) {
 			OriginGlobalNPC global = target.GetGlobalNPC<OriginGlobalNPC>();
-			global.birdedTime = 90;
+			global.birdedTime = (target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type]) ? 30 : 90;
 			global.birdedDamage = sourceDamage;
 		}
 	}
@@ -123,6 +129,11 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				Projectile.scale *= itemUse.Player.GetAdjustedItemScale(itemUse.Item);
+			}
+		}
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
@@ -136,7 +147,18 @@ namespace Origins.Items.Weapons.Melee {
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * 0.5f - 0.2f));
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
+				if (++Projectile.localAI[0] == player.itemAnimationMax) {
+					ParticleOrchestrator.RequestParticleSpawn(false,
+						ParticleOrchestraType.SilverBulletSparkle,
+						new() {
+							PositionInWorld = player.itemLocation + Vector2.UnitY.RotatedBy(player.compositeFrontArm.rotation) * 28,
+							MovementVector = player.velocity,
+							IndexOfPlayerWhoInvokedThis = (byte)Projectile.owner
+						}
+					);
+				}
 			} else {
+				if (Projectile.hide) SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.Center);
 				Projectile.hide = false;
 				Projectile.friendly = true;
 				float rotation = Projectile.velocity.ToRotation();
@@ -164,8 +186,18 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.spriteDirection = 1;
 			}
 		}
+		bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			The_Bird.ModifyHitNPC(target, ref modifiers);
+			const int charge_frames = 15;
+			The_Bird.PreHitNPC(target, ref modifiers);
+			Player player = Main.player[Projectile.owner];
+			forcedCrit = false;
+			if (Projectile.localAI[0] >= player.itemAnimationMax && Projectile.localAI[0] < player.itemAnimationMax + charge_frames) {
+				modifiers.SetCrit();
+				modifiers.CritDamage *= 1 + (Projectile.CritChance / 100f);
+				modifiers.HideCombatText();
+				forcedCrit = true;
+			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			float knockback = The_Bird.GetBirdKnockback(target, hit, Projectile.knockBack);
@@ -173,6 +205,7 @@ namespace Origins.Items.Weapons.Melee {
 				target.velocity = knockback * Projectile.velocity * 1.25f * (hit.Crit ? 1.4f : 1f);
 				The_Bird.BirdUp(target, hit.SourceDamage);
 			}
+			if (forcedCrit) CombatText.NewText(target.Hitbox, Color.Silver, damageDone, true);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			DrawData data = GetDrawData();

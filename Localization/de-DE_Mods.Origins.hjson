@@ -1352,7 +1352,7 @@ Projectiles: {
 	// Eaterboros_Shoot.DisplayName: Eaterboros
 	// The_Bird_Swing.DisplayName: The Bird
 	// Potato_Mine_Melee_Explosion.DisplayName: Potato Mine Melee Explosion
-	// Slag_Bucket_Projectile.DisplayName: Slag Bucket Projectile
+	// Slag_Bucket_Projectile.DisplayName: Slag Bucket
 }
 
 Prefixes: {
