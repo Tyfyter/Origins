@@ -684,11 +684,7 @@ Ravel: {
 
 Razorwire: {
 	DisplayName: Razorwire
-	Tooltip:
-		'''
-		67% of damage received is split across 3 enemies
-		Enemies are less likely to target you
-		'''
+	Tooltip: 67% of damage received is split across 3 enemies
 }
 
 Rebreather: {
@@ -709,22 +705,10 @@ Resin_Shield: {
 	DisplayName: Resin Shield
 	Tooltip:
 		'''
-		Grants immunity to knockback
-		Grants immunity to fire blocks
+		Grants immunity to knockback and fire blocks
 		Blocks all self-damage on next hit
 		5 second cooldown
 		'A shield to withstand the test of time'
-		'''
-}
-
-Retribution_Shield: {
-	DisplayName: Shield of Retribution
-	Tooltip:
-		'''
-		Grants immunity to knockback
-		Grants immunity to fire blocks
-		67% of damage received is redirected to 3 enemies
-		Enemies are less likely to target you
 		'''
 }
 
@@ -3542,10 +3526,8 @@ Shield_of_Retribution: {
 	DisplayName: Shield of Retribution
 	Tooltip:
 		'''
-		Grants immunity to knockback
-		Grants immunity to fire blocks
+		Grants immunity to knockback and fire blocks
 		67% of damage received is redirected to 3 enemies
-		Enemies are less likely to target you
 		'''
 }
 
@@ -4515,7 +4497,7 @@ Scrap_Barrier: {
 	DisplayName: Scrap Barrier
 	Tooltip:
 		'''
-		50% damage reduction while above 90% of total life
+		50% damage reduction while above 90% of maximum life
 		All life regeneration has a 3-second buffer period before it is applied after getting hit while above half life
 		'''
 }
@@ -4579,4 +4561,27 @@ Plague_Texan_Set: {
 Chee_Set: {
 	DisplayName: Chee Set
 	Tooltip: ""
+}
+
+Slag_Bucket: {
+	DisplayName: Slag Bucket
+	Tooltip:
+		'''
+		40% damage reduction while above 80% of maximum life
+		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
+		Grants immunity to knockback, fire blocks, and impeding shrapnel
+		67% of damage received is redirected to 3 enemies
+		You regenerate life while on fire
+		'''
+}
+
+Slag_Bucket_Uncursed: {
+	DisplayName: Slag Bucket
+	Tooltip:
+		'''
+		5% damage reduction and slightly increased life regeneration
+		Grants immunity to knockback, fire blocks, and impeding shrapnel
+		67% of damage received is redirected to 3 enemies
+		You regenerate life while on fire
+		'''
 }

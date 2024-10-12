@@ -14,7 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword : ModItem, IJournalEntryItem, ICustomWikiStat {
+	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntryItem, ICustomWikiStat {
         public string[] Categories => [
             "Sword"
         ];
@@ -42,6 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = null;
 		}
 		public override void AddRecipes() {
+			base.AddRecipes();
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 10)
 			.AddTile(TileID.Anvils)

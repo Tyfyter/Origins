@@ -243,6 +243,8 @@ namespace Origins {
 		public bool scrapCompactor = false;
 		public int scrapCompactorTimer = 0;
 		public bool scrapBarrierCursed = false;
+		public bool slagBucketCursed = false;
+		public bool slagBucket = false;
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
 		public int laserTagPoints = 0;
@@ -319,6 +321,10 @@ namespace Origins {
 		public int talkingPet = 0;
 		public int talkingPetTime = 0;
 		#endregion
+
+		#region visuals
+		public int shieldGlow = -1;
+		#endregion visuals
 
 		public float statSharePercent = 0f;
 
@@ -601,6 +607,8 @@ namespace Origins {
 			strangeComputer = false;
 			scrapCompactor = false;
 			scrapBarrierCursed = false;
+			slagBucketCursed = false;
+			slagBucket = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {
@@ -762,6 +770,7 @@ namespace Origins {
 			}
 			forceDrown = false;
 			heldProjOverArm = null;
+			shieldGlow = -1;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

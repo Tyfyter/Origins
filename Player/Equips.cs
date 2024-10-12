@@ -422,6 +422,16 @@ namespace Origins {
 
 				}
 			}
+			if (slagBucket && Player.onFire) {
+				Player.onFire = false;
+				Player.lifeRegenCount += 4;
+				if (Main.rand.NextBool(4)) {
+					Dust dust18 = Dust.NewDustDirect(Player.position - Vector2.One * 2, Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 3f);
+					dust18.noGravity = true;
+					dust18.velocity *= 1.8f;
+					dust18.velocity.Y -= 0.5f;
+				}
+			}
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
 			oldGravDir = Player.gravDir;
 		}

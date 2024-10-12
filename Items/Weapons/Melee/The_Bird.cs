@@ -133,7 +133,7 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				Projectile.timeLeft = player.itemAnimationMax;
 				Projectile.hide = true;
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * 0.5f));
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * 0.5f - 0.2f));
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
 			} else {
@@ -186,7 +186,7 @@ namespace Origins.Items.Weapons.Melee {
 			frontTexture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame),
 			Color.Lerp(Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Color.Blue, 0.5f),
 			Projectile.rotation,
-			new(62, 16 - Projectile.spriteDirection),
+			new(62, 17 + Projectile.spriteDirection * 6),
 			Projectile.scale,
 			Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically
 		);

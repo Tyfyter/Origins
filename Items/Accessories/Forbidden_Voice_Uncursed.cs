@@ -7,14 +7,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
-	public class Forbidden_Voice_Uncursed : ModItem, IJournalEntryItem, ICustomWikiStat {
+	public class Forbidden_Voice_Uncursed : Uncursed_Cursed_Item<Forbidden_Voice>, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => [
 		];
-		public override string Texture => typeof(Forbidden_Voice).GetDefaultTMLName();
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Forbidden_Voice_Entry).Name;
 		public override void SetDefaults() {
-			Item.DefaultToAccessory(38, 32);
+			base.SetDefaults();
 			Item.damage = 35;
 			Item.DamageType = DamageClass.Generic;
 			Item.knockBack = 4;

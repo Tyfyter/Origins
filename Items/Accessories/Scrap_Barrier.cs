@@ -21,17 +21,12 @@ namespace Origins.Items.Accessories {
 			.AddIngredient(ModContent.ItemType<Scrap>(), 20)
 			.AddTile(TileID.DemonAltar)
 			.Register();
-
-			Recipe.Create(ModContent.ItemType<Scrap_Barrier_Uncursed>())
-			.AddIngredient(Type)
-			.AddTile(TileID.BewitchingTable)
-			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Shield)]
-	public class Scrap_Barrier_Uncursed : ModItem, ICustomWikiStat {
-		public override string Texture => "Origins/Items/Accessories/Scrap_Barrier";
+	public class Scrap_Barrier_Uncursed : Uncursed_Cursed_Item<Scrap_Barrier>, ICustomWikiStat {
 		public override void SetDefaults() {
+			base.SetDefaults();
 			Item.DefaultToAccessory(48, 36);
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 2);

@@ -32,12 +32,6 @@ namespace Origins.Items.Accessories {
 			originPlayer.cursedVoice = true;
 			originPlayer.cursedVoiceItem = Item;
 		}
-		public override void AddRecipes() {
-			Recipe.Create(ModContent.ItemType<Forbidden_Voice_Uncursed>())
-			.AddIngredient(Type)
-			.AddTile(TileID.BewitchingTable)
-			.Register();
-		}
 	}
 	public class Forbidden_Voice_P : ModProjectile {
 		public override string Texture => "Origins/Items/Accessories/Forbidden_Voice";

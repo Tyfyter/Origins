@@ -127,7 +127,7 @@ namespace Origins.Items.Weapons.Melee {
 					player.TryCancelChannel(Projectile);
 					Projectile.timeLeft += Projectile.timeLeft / 2;
 				}
-				Projectile.width = (int)(16 * (1 + Projectile.ai[0]));
+				Projectile.width = (int)(16 * (1 + Projectile.ai[0] * Projectile.ai[0]));
 				Projectile.height = Projectile.width;
 			}
 			if (player.itemTime <= 2) {
@@ -177,7 +177,7 @@ namespace Origins.Items.Weapons.Melee {
 						Projectile.position + vel * j,
 						Projectile.width, Projectile.height,
 						DustID.PortalBoltTrail,
-						newColor: new(0, 235, 255, 64)
+						newColor: new(0, 225, 255, 64)
 					);
 					dust.velocity = dust.velocity * 0.25f + Projectile.velocity.RotatedBy(Projectile.rotation * rotMult) * velocityMult;
 					dust.position += dust.velocity * 2;
@@ -207,7 +207,17 @@ namespace Origins.Items.Weapons.Melee {
 			LaserBladeDrawer trailDrawer = default;
 			trailDrawer.TrailColor = new(0, 35, 35, 0);
 			trailDrawer.BladeColor = new(0, 255, 255, 128);
-			trailDrawer.BladeSecondaryColor = new(0, 200, 255, 64);
+			trailDrawer.BladeSecondaryColor = new(0, 180, 255, 64);
+			/* stun baton
+			trailDrawer.TrailColor = new(35, 35, 0, 0);
+			trailDrawer.BladeColor = new(255, 255, 0, 128);
+			trailDrawer.BladeSecondaryColor = new(255, 255, 130, 64);
+			//*/
+			/* pulse blade
+			trailDrawer.TrailColor = new(15, 35, 30, 0);
+			trailDrawer.BladeColor = new(80, 255, 219, 128);
+			trailDrawer.BladeSecondaryColor = new(130, 255, 255, 64);
+			//*/
 			trailDrawer.Length = Projectile.velocity.Length() * Projectile.width * 0.9f * HitboxSteps;
 			trailDrawer.Draw(Projectile);
 			return false;

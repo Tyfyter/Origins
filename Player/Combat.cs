@@ -554,6 +554,9 @@ namespace Origins {
 			if (ashenKBReduction) {
 				modifiers.Knockback -= 0.15f;
 			}
+			if (slagBucketCursed && Player.statLife > Player.statLifeMax2 * 0.8f) {
+				modifiers.FinalDamage *= 0.6f;
+			}
 			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.9f) {
 				modifiers.FinalDamage *= 0.5f;
 			}
@@ -593,7 +596,7 @@ namespace Origins {
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					npc = Main.npc[i];
-					if (npc.active && npc.damage > 0 && !npc.friendly) {
+					if (npc.CanBeChasedBy(razorwireItem)) {
 						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
 						Vector2 diff = currentPos - Player.MountedCenter;
 						float dist = diff.LengthSquared();
@@ -635,7 +638,7 @@ namespace Origins {
                 NPC npc;
                 for (int i = 0; i < Main.maxNPCs; i++) {
                     npc = Main.npc[i];
-                    if (npc.active && npc.damage > 0 && !npc.friendly) {
+                    if (npc.CanBeChasedBy(retributionShieldItem)) {
                         Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
                         Vector2 diff = currentPos - Player.MountedCenter;
                         float dist = diff.LengthSquared();
@@ -782,7 +785,9 @@ namespace Origins {
 				blastSetCharge += info.Damage * blast_set_charge_gain;
 				if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
 			}
-			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
+			if (slagBucketCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
+				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 4 * 60);
+			} else if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
 				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 3 * 60);
 			}
 		}
