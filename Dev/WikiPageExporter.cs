@@ -733,7 +733,7 @@ namespace Origins.Dev {
 			if (customStat?.Hardmode ?? (!item.consumable && item.rare > ItemRarityID.Orange)) types.Add("Hardmode");
 
 			if (ItemID.Sets.IsFood[item.type]) types.Add("Food");
-			if (item.ammo != 0) types.Add("Ammo");
+			if (item.ammo != 0 && item.ammo != ItemID.CopperOre) types.Add("Ammo");
 			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
 			if (item.createTile != -1) {
