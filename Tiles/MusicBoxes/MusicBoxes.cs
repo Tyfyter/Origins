@@ -16,10 +16,8 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.MusicBoxes {
 	#region base classes
-	public abstract class Music_Box : ModTile, ICustomWikiStat {
-		public string[] Categories => [
-			"MusicBox"
-		];
+	public abstract class Music_Box : ModTile {
+		public virtual string[] Categories => [];
 		public abstract Color MapColor { get; }
 		public abstract int MusicSlot { get; }
 		public virtual new int DustType => 0;
@@ -59,7 +57,8 @@ namespace Origins.Tiles.MusicBoxes {
 	[Autoload(false)]
 	public class Music_Box_Item(Music_Box tile) : ModItem(), ICustomWikiStat {
 		public string[] Categories => [
-			"MusicBox"
+			"MusicBox",
+			..tile.Categories
 		];
 		[CloneByReference]
 		readonly Music_Box tile = tile;
@@ -189,6 +188,9 @@ namespace Origins.Tiles.MusicBoxes {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Ancient_Music_Box_DW : Music_Box {
+		public override string[] Categories => [
+			"Hardmode"
+		];
 		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
@@ -207,6 +209,9 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Ancient_Music_Box_RH : Music_Box, IGlowingModTile {
+		public override string[] Categories => [
+			"Hardmode"
+		];
 		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientRiven;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
