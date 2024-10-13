@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.Waist)]
 	public class Laser_Tag_Vest : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 		];
