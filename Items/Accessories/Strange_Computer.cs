@@ -20,7 +20,8 @@ namespace Origins.Items.Accessories {
 		internal static List<int> projectiles = [];
 		public string[] Categories => [
 			"Info",
-			"LoreItem"
+			"LoreItem",
+			"Hidden"
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
@@ -36,16 +37,6 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.strangeComputer = true;
 			originPlayer.strangeComputerColor = Color.Blue;
-		}
-		public override void AddRecipes() {
-			return;//TODO: implement item
-			CreateRecipe()
-			.AddIngredient(ItemID.Glass, 5)
-			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 10)
-			.AddIngredient(ModContent.ItemType<Power_Core>())
-			.AddIngredient(ModContent.ItemType<Rotor>(), 6)
-			.AddTile(ModContent.TileType<Fabricator>())
-			.Register();
 		}
 		internal static void DrawStrangeLine() {
 			Player player = Main.LocalPlayer;
