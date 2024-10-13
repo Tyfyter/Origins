@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Reflection;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -54,22 +57,34 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	[Autoload(false)]
-	public class Music_Box_Item(Music_Box tile) : ModItem() {
+	public class Music_Box_Item(Music_Box tile) : ModItem(), ICustomWikiStat {
+		public string[] Categories => [
+			"MusicBox"
+		];
 		[CloneByReference]
 		readonly Music_Box tile = tile;
 		public override string Name => tile.Name + "_Item";
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.Tiles." + tile.Name);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected override bool CloneNewInstances => true;
-
 		public override void SetStaticDefaults() {
 			ItemID.Sets.CanGetPrefixes[Type] = false; // music boxes can't get prefixes in vanilla
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox; // recorded music boxes transform into the basic form in shimmer
 		}
-
 		public override void SetDefaults() {
 			Item.DefaultToMusicBox(tile.Type, 0);
 		}
+		public void ModifyWikiStats(JObject data) {
+			Dictionary<string, int> musicByPath = MusicMethods.musicByPath.GetValue();
+			Dictionary<string, string> musicExtensions = MusicMethods.musicExtensions.GetValue();
+			foreach (KeyValuePair<string, int> item in musicByPath) {
+				if (item.Value == tile.MusicSlot && item.Key.StartsWith("OriginsMusic/Sounds/Music/")) {
+					data["Music"] = item.Key.Replace("OriginsMusic/Sounds/Music/", "") + musicExtensions[item.Key];
+					break;
+				}
+			}
+		}
+		public bool CanExportStats => ModLoader.HasMod("OriginsMusic");
 	}
 	#endregion
 	public class Music_Box_DW : Music_Box {

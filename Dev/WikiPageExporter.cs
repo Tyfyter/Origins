@@ -84,6 +84,7 @@ namespace Origins.Dev {
 			}
 		}
 		public static void ExportItemStats(Item item) {
+			if (item.ModItem is ICustomWikiStat customStats && !customStats.CanExportStats) return;
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
 				foreach ((string name, JObject stats) stats in provider.GetStats(item.ModItem)) {
 					WriteFileNoUnneededRewrites(
@@ -101,6 +102,7 @@ namespace Origins.Dev {
 			}
 		}
 		public static void ExportNPCStats(NPC npc) {
+			if (npc.ModNPC is ICustomWikiStat customStats && !customStats.CanExportStats) return;
 			foreach (WikiProvider provider in GetWikiProviders(npc.ModNPC)) {
 				foreach ((string name, JObject stats) stats in provider.GetStats(npc.ModNPC)) {
 					WriteFileNoUnneededRewrites(
@@ -635,12 +637,13 @@ namespace Origins.Dev {
 	public interface ICustomWikiStat {
 		bool Buyable => false;
 		void ModifyWikiStats(JObject data) { }
-		string[] Categories => Array.Empty<string>();
+		string[] Categories => [];
 		bool? Hardmode => null;
 		bool FullyGeneratable => false;
 		bool ShouldHavePage => true;
 		bool NeedsCustomSprite => false;
 		string CustomSpritePath => null;
+		bool CanExportStats => true;
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
 		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
 		IEnumerable<WikiProvider> GetWikiProviders() => WikiPageExporter.GetDefaultProviders(this);
