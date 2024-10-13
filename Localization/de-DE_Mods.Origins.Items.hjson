@@ -2696,10 +2696,10 @@ Nineball: {
 }
 
 Personal_Laser_Blade: {
-	// DisplayName: Laser Blade
+	// DisplayName: Personal Laser Blade
 	/* Tooltip:
 		'''
-		Time your swings for more powerful blows
+		Charge your swings for more powerful blows
 		'Be careful, it's hot'
 		''' */
 }

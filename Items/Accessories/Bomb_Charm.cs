@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Neck)]
+	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Vitality",
