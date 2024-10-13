@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Terraria;
 using Terraria.Audio;
@@ -12,6 +13,7 @@ namespace Origins.Items.Accessories {
 		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Forbidden_Voice_Entry).Name;
+		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.damage = 35;

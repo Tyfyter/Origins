@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Terraria;
 using Terraria.ID;
@@ -37,11 +38,20 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 	}
+	[AutoloadEquip(EquipType.Shield)]
 	public class Slag_Bucket_Uncursed : Uncursed_Cursed_Item<Slag_Bucket>, ICustomWikiStat {
+		public override bool HasOwnTexture => true;
+		public override string Texture => typeof(Slag_Bucket_Uncursed).GetDefaultTMLName();
+		static short glowmask;
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+			Accessory_Glow_Loader.Instance.shieldGlowMasks.Add(Item.shieldSlot, Texture + "_Shield_Glow");
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.rare = ItemRarityID.LightRed;
 			Item.defense = 6;
+			Item.glowMask = glowmask;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();

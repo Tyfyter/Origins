@@ -4,9 +4,12 @@ using Terraria.ModLoader;
 
 namespace Origins.Items {
 	public class Uncursed_Cursed_Item<TCursed> : ModItem where TCursed : ModItem {
-		public override string Texture => typeof(TCursed).GetDefaultTMLName();
+		public virtual bool HasOwnTexture => false;
+		public override string Texture => HasOwnTexture ? base.Texture : typeof(TCursed).GetDefaultTMLName();
 		public override void SetDefaults() {
+			ItemSlotSet slots = new(Item);
 			Item.CloneDefaults(ModContent.ItemType<TCursed>());
+			if (HasOwnTexture) slots.Apply(Item);
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

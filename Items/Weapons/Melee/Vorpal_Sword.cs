@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Melee {
         ];
         public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
-		
+		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Melee;
