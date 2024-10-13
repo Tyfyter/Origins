@@ -3605,7 +3605,7 @@ Emergency_Bee_Canister: {
 }
 
 Blizzardwalkers_Jacket: {
-	DisplayName: Blizzardwalkers Jacket
+	DisplayName: Blizzardwalker's Jacket
 	Tooltip: Become immune after some time away from enemies
 }
 
