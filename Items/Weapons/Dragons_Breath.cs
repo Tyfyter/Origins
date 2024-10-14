@@ -37,13 +37,6 @@ namespace Origins.Items.Weapons {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8, 2);
 		}
-		public override void HoldItem(Player player) {
-			if (!DebugConfig.Instance.DebugMode) return;
-			Vector2 direction = Main.MouseWorld - player.MountedCenter;
-			direction.Normalize();
-			Vector2 pos = player.MountedCenter + direction * CollisionExtensions.Raycast(player.MountedCenter, direction, 128);
-			Dust.NewDustPerfect(pos, 6, Vector2.Zero).noGravity = true;
-		}
 	}
 	public class Dragons_Breath_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Item_37";

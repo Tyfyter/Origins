@@ -2803,6 +2803,7 @@ namespace Origins {
 			//OriginExtensions.DrawDebugLine(Vector2.Zero, GeometryUtils.Vec2FromPolar(16, angle), position, 27);
 			double sin = Math.Sin(angle);
 			double cos = Math.Cos(angle);
+			double slope = cos == 0 ? Math.CopySign(double.PositiveInfinity, sin) : sin / cos;
 			static void DoLoopyThing(float currentSubPos, out float newSubPos, int currentTilePos, out int newTilePos, double direction) {
 				newTilePos = currentTilePos;
 				if (currentSubPos == 0 && direction < 0) {
@@ -2815,6 +2816,10 @@ namespace Origins {
 					newSubPos = currentSubPos;
 				}
 			}
+			if (RaycastStep(tileSubPos, sin, cos) == tileSubPos) {
+				DoLoopyThing(tileSubPos.X, out tileSubPos.X, tilePos.X, out tilePos.X, cos);
+				DoLoopyThing(tileSubPos.Y, out tileSubPos.Y, tilePos.Y, out tilePos.Y, sin);
+			}
 			while (length < maxLength) {
 				Vector2 next = RaycastStep(tileSubPos, sin, cos);
 				if (next == tileSubPos) break;
@@ -2822,45 +2827,61 @@ namespace Origins {
 				bool doBreak = false;
 				Vector2 diff = next - tileSubPos;
 				float dist = diff.Length();
+
 				if (tile.HasFullSolidTile()) {
+					float flope = (float)slope;
+					bool doSICalc = true;
+					float tileSlope = 0;
+					float tileIntercept = 0;
 					switch (tile.BlockType) {
 						case BlockType.Solid:
 						doBreak = true;
+						doSICalc = false;
 						break;
 						case BlockType.HalfBlock:
 						if (next.Y > 0.5f) {
 							doBreak = true;
-							if (next.Y == 1) {
-								length += dist * 8f;
-							} else {
-								length += dist * (1 / diff.Y) * 8f;
-							}
+							tileSlope = 0;
+							tileIntercept = 0.5f;
 						}
 						break;
 						case BlockType.SlopeDownLeft:
 						if (next.X == 0 || next.Y == 1) {
 							doBreak = true;
-							//length += dist * ;
+							tileSlope = 1;
+							tileIntercept = 0;
 						}
 						break;
 						case BlockType.SlopeDownRight:
 						if (next.X == 1 || next.Y == 1) {
 							doBreak = true;
-							//length += dist * ;
+							tileSlope = -1;
+							tileIntercept = 1;
 						}
 						break;
 						case BlockType.SlopeUpLeft:
 						if (next.X == 0 || next.Y == 0) {
 							doBreak = true;
-							//length += dist * ;
+							tileSlope = -1;
+							tileIntercept = 1;
 						}
 						break;
 						case BlockType.SlopeUpRight:
 						if (next.X == 1 || next.Y == 0) {
 							doBreak = true;
-							//length += dist * ;
+							tileSlope = 1;
+							tileIntercept = 0;
 						}
 						break;
+					}
+					if (doSICalc) {
+						//gets x position of intersection, y position can then be calculated by finding the y position at that x on either line
+						float factor = ((tileSubPos.X * -flope + tileSubPos.Y) - tileIntercept) / (tileSlope - flope);
+						Vector2 endPoint = new(
+							factor,
+							tileSlope * factor + tileIntercept
+						);
+						length += (float)(16 * endPoint.Distance(tileSubPos));
 					}
 				}
 				if (doBreak) break;
@@ -2892,7 +2913,28 @@ namespace Origins {
 					}
 				}
 				if (!doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
-
+					switch ((next.X, next.Y)) {
+						case (0, 0):
+						if (Framing.GetTileSafely(tilePos.X, tilePos.Y - 1).BlockType != BlockType.SlopeUpRight && Framing.GetTileSafely(tilePos.X - 1, tilePos.Y).BlockType is not BlockType.SlopeDownLeft or BlockType.HalfBlock) {
+							doBreak = true;
+						}
+						break;
+						case (1, 0):
+						if (Framing.GetTileSafely(tilePos.X, tilePos.Y - 1).BlockType != BlockType.SlopeUpLeft && Framing.GetTileSafely(tilePos.X + 1, tilePos.Y).BlockType is not BlockType.SlopeDownRight or BlockType.HalfBlock) {
+							doBreak = true;
+						}
+						break;
+						case (0, 1):
+						if (Framing.GetTileSafely(tilePos.X, tilePos.Y + 1).BlockType is not BlockType.SlopeDownRight or BlockType.HalfBlock  && Framing.GetTileSafely(tilePos.X - 1, tilePos.Y).BlockType != BlockType.SlopeUpLeft) {
+							doBreak = true;
+						}
+						break;
+						case (1, 1):
+						if (Framing.GetTileSafely(tilePos.X, tilePos.Y + 1).BlockType is not BlockType.SlopeDownLeft or BlockType.HalfBlock && Framing.GetTileSafely(tilePos.X + 1, tilePos.Y).BlockType != BlockType.SlopeUpRight) {
+							doBreak = true;
+						}
+						break;
+					}
 				}
 				if (doBreak) break;
 				tileSubPos = next;
