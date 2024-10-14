@@ -339,7 +339,7 @@ ACCESSORIES:
 (^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
-(#3, ^2) Laser Tag Vest*
+(☻) Laser Tag Vest*
 (^) Last Descendent*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -369,9 +369,11 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(^) Scrap Barrier*
+(#3, ^2) Scrap Barrier (Cursed)*
+(#3, ^2) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
-(☻) Slag Bucket*
+(^) Slag Bucket (Cursed)*
+(^) Slag Bucket (Uncursed)*
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
@@ -419,7 +421,7 @@ ACCESSORIES:
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
-(☻) Forbidden Voice (Cursed)* !!!
+(^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
@@ -648,7 +650,7 @@ RANGED WEAPONS:
 (X) Mythril Harpoon Gun*
 (X) Orichalcum Harpoon Gun*
 (X) Palladium Harpoon Gun*
-(X) Seventh Spline
+(X) Sixth Spline
 (X) Spray 'N Pray*
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun*
