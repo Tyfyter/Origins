@@ -371,7 +371,7 @@ ACCESSORIES:
 (^) Scavenger Bag*
 (^) Scrap Barrier*
 (^) Shield of Retribution*
-(#3, ^2) Slag Bucket* (needs to use cursed sprite)
+(☻) Slag Bucket*
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
@@ -419,7 +419,7 @@ ACCESSORIES:
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
-(#3, ^2) Forbidden Voice (Cursed)* !!! (needs to use cursed sprite)
+(☻) Forbidden Voice (Cursed)* !!!
 (^) Forbidden Voice (Uncursed)*
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
@@ -1002,8 +1002,8 @@ TILES:
 (^) A Perfect World
 
 (@, #, $3) Ancient Music Box (Brine Pool)
-($3, ^2/3) Ancient Music Box (Defiled Wastelands)
-($3, ^2/3) Ancient Music Box (Riven Hive)
+(ᗢ) Ancient Music Box (Defiled Wastelands)
+(ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $3) Music Box (Abstract)
 (@, #, $3) Music Box (Brine Pool)
 (X) Music Box (Cosmos)
