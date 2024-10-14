@@ -648,6 +648,7 @@ RANGED WEAPONS:
 (X) Mythril Harpoon Gun*
 (X) Orichalcum Harpoon Gun*
 (X) Palladium Harpoon Gun*
+(X) Seventh Spline
 (X) Spray 'N Pray*
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun*
@@ -658,7 +659,6 @@ RANGED WEAPONS:
 (X) EAC Thunder*
 (X) Fungi Pipe
 (^) Laser Tag Gun
-(X) Seventh Spline
 (X) Shroomshot
 (X) Skewr
 
