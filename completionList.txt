@@ -56,7 +56,8 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Chambersite Sentinel
 (X, 々) Defiled Depressant
 (#, ^2, 々) Grand Corruptor
-(#, ^2, 々) Ichor Storm 
+(#, ^2, 々) Ichor Storm
+(X) Zombie Paladin
 
 (^) Defiled Amalgamation*
 (†, $, ^2/3) Fiberglass Weaver !!!
@@ -140,6 +141,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (^) Flagellant
+(X) Graveshield Zombie !!!
 (^) Measly Moeba
 (^) Optiphage
 (^) Pustule Jellyfish*
@@ -339,7 +341,7 @@ ACCESSORIES:
 (^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
-(☻) Laser Tag Vest*
+(^) Laser Tag Vest*
 (^) Last Descendent*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -727,10 +729,12 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
+(X) Broken Terratotem !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
 (X) Fresh Meat Artifact !!!
+(X) Inanimate Zombie Hand !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
@@ -766,6 +770,7 @@ SUMMONER WEAPONS:
 (@2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
+(X) Terratotem
 (X) Tonal Resonator
 
 NO POST ML SUMMONER CONTENT YET.
@@ -1122,6 +1127,16 @@ CONSUMABLES:
 (^) Protean Potion*
 (^) Purification Potion*
 (^) Voidsight Potion*
+
+(X) Foul Broth
+(X) Hearty Broth
+(X) Light Broth
+(X) Minty Broth
+(X) Plain Broth
+(X) Savory Broth
+(X) Sour Broth
+(X) Spicy Broth
+(X) Sweet Broth
 
 (^) Bileberry*
 (^) Blue Bovine*
