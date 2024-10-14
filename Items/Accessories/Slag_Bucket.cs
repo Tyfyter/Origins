@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Accessory_Glow_Loader.Instance.shieldGlowMasks.Add(Item.shieldSlot, Texture + "_Shield_Glow");
+			Accessory_Glow_Loader.AddShieldGlowMask(Item.shieldSlot, Texture + "_Shield_Glow");
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(48, 36);
@@ -45,7 +45,7 @@ namespace Origins.Items.Accessories {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Accessory_Glow_Loader.Instance.shieldGlowMasks.Add(Item.shieldSlot, Texture + "_Shield_Glow");
+			Accessory_Glow_Loader.AddShieldGlowMask(Item.shieldSlot, Texture + "_Shield_Glow");
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
