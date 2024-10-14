@@ -28,9 +28,11 @@ namespace Origins {
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
 			mod.AddContent(explosive = new Explosive());
 			mod.AddContent(thrownExplosive = new Thrown_Explosive());
+			ExplosiveVersion.Add(DamageClass.Generic, explosive);
+			ExplosiveVersion.Add(DamageClass.Throwing, thrownExplosive);
 			for (int i = 0; i < len; i++) {
 				DamageClass other = damageClasses[i];
-				if (!other.GetEffectInheritance(explosive) && other is not ThrowingDamageClass) {
+				if (!other.GetEffectInheritance(explosive) && !ExplosiveVersion.ContainsKey(other)) {
 					if (other is global::Origins.Explosive or ExplosivePlus) {
 						ExplosiveVersion.Add(other, other);
 					} else {
@@ -38,7 +40,6 @@ namespace Origins {
 					}
 				}
 			}
-			ExplosiveVersion.Add(DamageClass.Throwing, thrownExplosive);
 		}
 
 		public void Unload() {
@@ -54,14 +55,6 @@ namespace Origins {
 	}
 	[Autoload(false)]
 	public class Explosive : DamageClass {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("explosive damage");
-			foreach (var entry in DamageClasses.ExplosiveVersion) {
-				try {
-					entry.Value.SetStaticDefaults();
-				} catch (Exception) { }
-			}
-		}
 		public override void SetDefaultStats(Player player) {
 			//player.GetCritChance(this) += 4;
 		}
@@ -77,7 +70,6 @@ namespace Origins {
 	}
 	[Autoload(false)]
 	public class Thrown_Explosive : DamageClass {
-		
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == Throwing;
 		}
@@ -93,36 +85,27 @@ namespace Origins {
 			}
 			return StatInheritanceData.None;
 		}
+		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || Throwing.GetsPrefixesFor(damageClass);
 		public override void SetDefaultStats(Player player) {
 			//player.GetCritChance(this) += 4;
 		}
 	}
 	[Autoload(false)]
-	public class ExplosivePlus : DamageClass {
-		private readonly string name;
+	public class ExplosivePlus(DamageClass other, string name) : DamageClass {
 		public override string Name => name;
 
-		readonly DamageClass other;
+		readonly DamageClass other = other;
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.DamageClasses.ExplosivePlus.DisplayName").WithFormatArgs(other.DisplayName);
-		public ExplosivePlus(DamageClass other, string name) {
-			this.other = other;
-			this.name = name;
-		}
+
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
 			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
 			typeof(ILoadable).GetMethod("Load").Invoke(newClass, [Origins.instance]);
 			return newClass;
 		}
-		public override void SetStaticDefaults() {
-			if (other is ThrowingDamageClass) {
-				// DisplayName.SetDefault("explosive damage (thrown)");
-			} else {
-				// DisplayName.SetDefault("explosive " + (other.DisplayName?.GetDefault() ?? other.DisplayName));
-			}
-		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);
 		}
+		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || other.GetsPrefixesFor(damageClass);
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic || damageClass == DamageClasses.Explosive || damageClass == other) {
 				return StatInheritanceData.Full;

@@ -106,6 +106,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
+			if (Projectile.ai[0] == -1) return false;
 			Projectile parent = Main.projectile[(int)Projectile.ai[0]];
 			if (parent.ModProjectile is Ace_Shrapnel_Old_P center) {
 				return (parent.localNPCImmunity[target.whoAmI] > 0 && center.npcCDs[target.whoAmI] > 0) ? (bool?)false : null;

@@ -33,8 +33,6 @@ namespace Origins.Items.Accessories {
 		public override int ChoosePrefix(UnifiedRandom rand) {
 			return OriginExtensions.GetAllPrefixes(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic, PrefixCategory.Accessory);
 		}
-		public override bool MagicPrefix() => true;
-		public override bool WeaponPrefix() => false;
 	}
 	public class Mini_Protozoa_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Amoeba_Ball";
