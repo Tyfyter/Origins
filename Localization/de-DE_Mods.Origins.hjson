@@ -979,6 +979,11 @@ Buffs: {
 		// DisplayName: In the Game
 		// Description: You're participating in Laser Tag!
 	}
+
+	Slag_Bucket_Debuff: {
+		// DisplayName: Slag Bucket Debuff
+		// Description: Mods.Origins.Buffs.Slag_Bucket_Debuff.Description
+	}
 }
 
 DamageClassName: {

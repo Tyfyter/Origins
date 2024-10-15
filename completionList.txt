@@ -371,8 +371,8 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(#3, ^2) Scrap Barrier (Cursed)*
-(#3, ^2) Scrap Barrier (Uncursed)*
+(☻) Scrap Barrier (Cursed)*
+(☻) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
 (^) Slag Bucket (Cursed)*
 (^) Slag Bucket (Uncursed)*

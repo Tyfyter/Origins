@@ -245,6 +245,7 @@ namespace Origins {
 		public bool scrapBarrierCursed = false;
 		public bool slagBucketCursed = false;
 		public bool slagBucket = false;
+		public bool scrapBarrierDebuff = false;
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
 		public int laserTagPoints = 0;
@@ -609,6 +610,7 @@ namespace Origins {
 			scrapBarrierCursed = false;
 			slagBucketCursed = false;
 			slagBucket = false;
+			scrapBarrierDebuff = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {

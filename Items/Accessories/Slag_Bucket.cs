@@ -1,10 +1,18 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
+using ReLogic.Graphics;
+using System;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Slag_Bucket : ModItem, ICustomWikiStat {
@@ -80,6 +88,53 @@ namespace Origins.Items.Accessories {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(240, 360));
+		}
+	}
+	public class Slag_Bucket_Debuff : ModBuff {
+		public override string Texture => "Origins/Buffs/Scrap_Barrier_Debuff";
+		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.Buffs.{nameof(Scrap_Barrier_Debuff)}.{nameof(DisplayName)}");
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.Buffs.{nameof(Scrap_Barrier_Debuff)}.{nameof(Description)}");
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+			Main.buffNoTimeDisplay[Type] = true;
+		}
+		static bool HasScrapBarrierDebuff(Player player, int buffIndex, out int scrapBarrierIndex) {
+			if (buffIndex > 0 && player.buffType[buffIndex - 1] == Scrap_Barrier_Debuff.ID) {
+				scrapBarrierIndex = buffIndex - 1;
+				return true;
+			}
+			if (buffIndex < player.buffType.Length - 1 && player.buffType[buffIndex + 1] == Scrap_Barrier_Debuff.ID) {
+				scrapBarrierIndex = buffIndex + 1;
+				return true;
+			}
+			scrapBarrierIndex = -1;
+			return false;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.OriginPlayer().scrapBarrierDebuff = true;
+			if (HasScrapBarrierDebuff(player, buffIndex, out int scrapBarrierIndex)) {
+				if (player.buffTime[scrapBarrierIndex] % 2 == 0) player.buffTime[buffIndex]++;
+			}
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
+			float buffAlpha = Main.buffAlpha[buffIndex];
+			Color color = new(buffAlpha, buffAlpha, buffAlpha, buffAlpha);
+			Vector2 textPosition = drawParams.TextPosition;
+			if (HasScrapBarrierDebuff(Main.LocalPlayer, buffIndex, out _)) {
+				color = color.MultiplyRGBA(new(200, 0, 200));
+				textPosition.X += MathF.Sin((float)Main.timeForVisualEffects * 0.05f) * 1;
+				textPosition.Y += MathF.Sin((float)Main.timeForVisualEffects * 0.04f) * 0.7f;
+			}
+			spriteBatch.DrawString(
+				FontAssets.ItemStack.Value,
+				Lang.LocalizedDuration(new TimeSpan(0, 0, Main.LocalPlayer.buffTime[buffIndex] / 60), abbreviated: true, showAllAvailableUnits: false),
+				textPosition,
+				color,
+				0f,
+				default,
+				0.8f,
+				SpriteEffects.None,
+			0f);
 		}
 	}
 }

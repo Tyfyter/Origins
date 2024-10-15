@@ -25,6 +25,7 @@ namespace Origins.Items.Accessories {
 	}
 	[AutoloadEquip(EquipType.Shield)]
 	public class Scrap_Barrier_Uncursed : Uncursed_Cursed_Item<Scrap_Barrier>, ICustomWikiStat {
+		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.DefaultToAccessory(48, 36);
@@ -37,9 +38,14 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Scrap_Barrier_Debuff : ModBuff {
-		public override string Texture => "Origins/Items/Accessories/Scrap_Barrier";
+		public override string Texture => "Origins/Buffs/Scrap_Barrier_Debuff";
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			ID = Type;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.OriginPlayer().scrapBarrierDebuff = true;
 		}
 	}
 }

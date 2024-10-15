@@ -313,7 +313,7 @@ namespace Origins {
 		#endregion
 		#region receiving
 		public override void UpdateBadLifeRegen() {
-			if (Player.HasBuff<Scrap_Barrier_Debuff>()) {
+			if (scrapBarrierDebuff) {
 				if (Player.lifeRegen > 0) Player.lifeRegen = 0;
 				if (Player.lifeRegenCount > 0) Player.lifeRegenCount = 0;
 			}
@@ -786,8 +786,9 @@ namespace Origins {
 				if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
 			}
 			if (slagBucketCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
-				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 4 * 60);
-			} else if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
+				Player.AddBuff(ModContent.BuffType<Slag_Bucket_Debuff>(), 4 * 60);
+			}
+			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
 				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 3 * 60);
 			}
 		}
