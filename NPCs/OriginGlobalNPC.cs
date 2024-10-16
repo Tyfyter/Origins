@@ -118,7 +118,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.SkeletonMerchant: {
-					//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Trash_Lid>());
+					shop.Add<Trash_Lid>();
 					break;
 				}
 				case NPCID.Golfer: {
