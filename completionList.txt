@@ -46,7 +46,6 @@ X: No progress
 ⚿: missing localization
 ᥢ: can't be implemented in a stable manner (unicode hex code 1962)
 々: missing prerequisite development (unicode hex code 3005)
-书: needs localization (unicode hex code 4E66)
 赏: missing loot (unicode hex code 8D4F)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
@@ -94,27 +93,36 @@ TOWN NPC Quests:
 (☻) TOWN NPC QUEST MECHANICS (general)
 
 Arms Dealer {
-  (☻) Live Fire
+  (⚿) Live Fire
+}
+Cyborg {
+  (⚿) Sensor Upgrade
 }
 Dryad {
-  (☻) I’ll Give You a Deal
+  (⚿) I’ll Give You a Deal
+  (⚿) Clearing the Way
 }
 Goblin Tinkerer {
-  (☻) Reel In the Goods
-  (☻) Lend a Hand?
+  (⚿) Reel In the Goods
+  (⚿) Lend a Hand?
   (赏) Explosive Result
 }
 Merchant {
-  (☻) To the Skies!
-  (☻) The Greatest Sin of All, Gambling
+  (⚿) To the Skies!
+  (⚿) The Greatest Sin of All, Gambling
+}
+Stylist {
+  (⚿, 赏) Running Dry
+  (⚿, 赏) Slick Styling
+  (⚿) To Be Crystal Clear…
 }
 Party Girl {
-  (赏) Livin' Up the Party
+  (⚿, 赏) Livin' Up the Party
 }
 Zoologist {
-  (☻) Save the Critters!
-  (☻) Not Au-some…
-  (☻) Under the Starlight
+  (⚿) Save the Critters!
+  (⚿) Not Au-some…
+  (⚿) Under the Starlight
 }
 ---
 

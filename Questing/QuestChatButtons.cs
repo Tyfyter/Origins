@@ -27,7 +27,7 @@ namespace Origins.Questing {
 		public override double Priority => 0;
 		public override void OnClick(NPC npc, Player player) {
 			Questing.selectedQuest = Quest;
-			Main.npcChatText = Quest.CanComplete(npc) ? Quest.GetInquireText(npc) : Quest.GetInquireText(npc);
+			Main.npcChatText = Quest.CanComplete(npc) ? Quest.ReadyToCompleteText(npc) : Quest.GetInquireText(npc);
 		}
 		public override string Text(NPC npc, Player player) => Quest.NameValue;
 		public override bool IsActive(NPC npc, Player player) {

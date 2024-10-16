@@ -99,7 +99,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Dryad: {
-					shop.Add<Bloombomb>();
+					shop.Add<Bloombomb>(Quest.QuestCondition<Bloombomb_Quest>());
 					shop.Add<Cleansing_Station_Item>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
 
@@ -114,7 +114,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Cyborg: {
-					shop.Add<Advanced_Imaging>();
+					shop.Add<Advanced_Imaging>(Quest.QuestCondition<Advanced_Imaging_Quest>());
 					break;
 				}
 				case NPCID.SkeletonMerchant: {
@@ -130,7 +130,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Stylist: {
-					shop.Add<Holiday_Hair_Dye>();
+					shop.Add<Holiday_Hair_Dye>(Quest.QuestCondition<Holiday_Hair_Dye_Quest>());
 					break;
 				}
 				case NPCID.WitchDoctor: {

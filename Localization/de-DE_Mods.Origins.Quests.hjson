@@ -12,6 +12,8 @@ Merchant: {
 			Unlocks: [i:Origins/Blue_Bovine]
 			''' */
 		// Inquire: Hey {0}, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!
 	}
 
@@ -29,6 +31,8 @@ Merchant: {
 			Unlocks: [i:Origins/Lottery_Ticket]
 			''' */
 		// Inquire: Do you know why I'm not allowed to sell lottery tickets? Neither do I. Maybe you can convince the gods of fortune to shine a brighter light on us by killing some rare enemies, eh?
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Ah! Thanks, {0}! Because of you we can gamble now! I'm gonna be rich, you'll see me on the Mana Millions!
 	}
 }
@@ -47,6 +51,8 @@ Party_Girl: {
 			Unlocks: ...DELICIOUS BAKER'S DELIGHT
 			''' */
 		// Inquire: The party is ready and everything is set in place! But, something is missing... it's that dreary tax collector again. Try and cheer him up with a party hat so he doesn't give bad vibes.
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Thank you so much, {0}! We can now have the best party ever thanks to you cheering that old man up!
 	}
 }
@@ -70,6 +76,8 @@ Goblin_Tinkerer: {
 			Unlocks: [i:Origins/Turbo_Reel]
 			''' */
 		// Inquire: Hey human! I was wondering if you could possibly fetch me five iron or lead bars, two chains, some adhesive and a watch? I have a project I’m working on that you might want to join in on!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Sweet! Because of your hard work, I have invented the turbo reel! You can use it to make things return to you faster!
 	}
 
@@ -88,6 +96,8 @@ Goblin_Tinkerer: {
 			Unlocks: [i:Origins/Gun_Glove]
 			''' */
 		// Inquire: I got another big ask of you, if you don’t mind that is… so, same deal as last time. Could you get me two leather, a flintlock pistol from {0}, and a zombie arm. What? I just need the arm to test!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Thank you! Oh, the zombie arm? I needed it to test out my new gun glove creation! You can use it to shoot bullets as you move your arm around! Pretty cool right?
 	}
 
@@ -107,6 +117,8 @@ Goblin_Tinkerer: {
 			Unlocks: [i:Origins/Rocket_Boosted_Minecart]
 			''' */
 		// Inquire: I just thought of another idea! This’ll surely impress {0}… can you get me a minecart, fifty rockets, eighty adhesives, and fifteen Adamantite or Titanium Bars? You’ll love the surprise!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Yes! Introducing the world's fastest ticket to space, the rocket-boosted minecart! With this thing you will be anywhere you need to be before you even need to think about it!
 	}
 }
@@ -126,6 +138,8 @@ Arms_Dealer: {
 			Unlocks: [i:Origins/Shardcannon]
 			''' */
 		// Inquire: Hey buddy, I’ve been workin’ on a little something that needs a qualified gunner to use. Would you be interested? I would do it myself, but my neighbors wouldn’t like it if there were holes in their wall.
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Great work, buddy. I've found all of its imperfections and now I'm able to sell them. If you liked it a lot, be sure to check out my wares.
 	}
 }
@@ -145,6 +159,8 @@ Zoologist: {
 			Reward: 3% discount
 			''' */
 		// Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring ‘em back to me? Yah? Thank yah, hun! Oh and I’ll give you some discounts for being nice!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Awww, you picked some good ones, friend! Thank you for da help!
 	}
 
@@ -162,6 +178,8 @@ Zoologist: {
 			Reward: 3% discount
 			''' */
 		// Inquire: This is getting out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals ‘found here! Put an end to this and retrieve me one!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Oh, bless ya heart! Because of you, I can have a little piece o' mind. Of course, saving one ain't gonna change much, but I'm just glad I can trust yah! The hero we all need!
 	}
 
@@ -179,6 +197,8 @@ Zoologist: {
 			Reward: [i:Origins/Eccentric_Stone]
 			''' */
 		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that’s a whole ‘nother can ‘o worms. Get it? Can ‘o worms? Can you please give me ten enchanted nightcrawlers? They make for great bait, but they're living creatures too!
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: You really are a cool {0}! Well, I figure for all dat trouble, I'll give yah a family heirloom my dad gave me before I lost him. Have it with you... its complicated.
 	}
 }
@@ -197,22 +217,106 @@ Dryad: {
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			''' */
 		// Inquire: Hey {0}, look… I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the {1}? If you follow through, I’ll reward you with access to a very rare resource…
+		// Start: missingno
+		// ReadyToComplete: missingno
 		// Complete: Great work! You've made good progress, but it is not enough. The {1} grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
 	}
 
-	Cleansing_Station_Again?: {
-		// Name: idk, ty needs to tell me why this is here
+	Bloombomb: {
+		// Name: Clearing the Way
 		/* Journal:
 			'''
-			{$Mods.Origins.Quests.Dryad.Cleansing_Station_Again?.Name}
+			{$Mods.Origins.Quests.Dryad.Bloombomb.Name}
 			Client: Dryad
 								
-			'{$Mods.Origins.Quests.Dryad.Cleansing_Station_Again?.Inquire}'
+			'{$Mods.Origins.Quests.Dryad.Bloombomb.Inquire}'
 								
-			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
-			Unlocks: [i:Origins/Cleansing_Station_Item]
+			- [qs{4}:Cleanse {3} blocks ({2}/{3})]
+			Unlocks: [i:Origins/Bloombomb]
 			''' */
-		// Inquire: Okay look. I’ve never had to cleanse people from the {0} this much in my life time, so since I’m getting quite tired of it I’ve proposed giving away this station that does it for me. Only one caveat, you have to cleanse some of the {0}.
-		// Complete: we really need these completion messages
+		// Inquire: Hey {0}, long time no seed! Get it? Agh, I'm too old for puns. Anyway, I have another task for you to cleanse the {1} for me. I just need your help to cleanse a decent area to make room for some of these Bloombomb's I've conjured. If you do that, I'll offer you some myself for cheap!
+		// Start: missingno
+		// ReadyToComplete: missingno
+		// Complete: missingno
+	}
+}
+
+Stylist: {
+	Magic_Hair_Spray: {
+		// Name: Running Dry
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Name}
+			Client: Stylist
+								
+			'{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Inquire}'
+								
+			- [qs{2}: Obtain {1} Magic Hair Spray ({0}/{1})]
+			- [qs{3}: Give Magic Hair Spray to {4}]
+			Unlocks: 4 new hairstyles
+			''' */
+		// Inquire: Ugh, ever since I was captured by those spiders I’ve run out of my special hair stuff… could you get me some magic hair spray please? Pretty please?
+		// Start: missingno
+		// ReadyToComplete: missingno
+		// Complete: missingno
+	}
+
+	Comb: {
+		// Name: Slick Styling
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Stylist.Comb.Name}
+			Client: Stylist
+								
+			'{$Mods.Origins.Quests.Stylist.Comb.Inquire}'
+								
+			- [qs{1}: Obtain a Comb]
+			- [qs{2}: Give Comb to {3}]
+			Unlocks: 2 new hairstyles
+			''' */
+		// Inquire: Hey {0}. I am sorry for this one, but I keep forgetting my equipment. I really need a comb so I can properly cut some hair. Think you could do that? I would appreciate it!
+		// Start: missingno
+		// ReadyToComplete: missingno
+		// Complete: missingno
+	}
+
+	Holiday_Hair_Dye: {
+		// Name: To Be Crystal Clear…
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Name}
+			Client: Stylist
+								
+			'{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Inquire}'
+								
+			- [qs{1}: Obtain a Crystal Cutters]
+			- [qs{2}: Give Crystal Cutters to {3}]
+			Unlocks: [i:Origins/Holiday_Hair_Dye]
+			''' */
+		// Inquire: Hey {0}, I have another favor to ask of you. I would like to upgrade my scissors again, but they’re going to be a bit harder to get. Think you can handle it? They’re scissors made of crystals…
+		// Start: missingno
+		// ReadyToComplete: missingno
+		// Complete: missingno
+	}
+}
+
+Cyborg: {
+	Advanced_Imaging: {
+		// Name: Sensor Upgrade
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Cyborg.Advanced_Imaging.Name}
+			Client: Cyborg
+								
+			'{$Mods.Origins.Quests.Cyborg.Advanced_Imaging.Inquire}'
+								
+			- [qs{1}: Investigate the electronic presence]
+			- [qs{2}: Return to {3}]
+			Unlocks: [i:Origins/Advanced_Imaging]
+			''' */
+		// Inquire: Terrarian, my current sensory indicates there is an electronic presence in the skies of {0}. They indicate the signal coming from the ocean. Investigate, this information could improve my sensors.
+		// Start: missingno
+		// ReadyToComplete: missingno
+		// Complete: missingno
 	}
 }
