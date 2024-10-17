@@ -770,7 +770,7 @@ SUMMONER WEAPONS:
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
-(X) Fresh Meat Artifact !!!
+(@, ☻) Fresh Meat Artifact !!!
 (X) Inanimate Zombie Hand !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
