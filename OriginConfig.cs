@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons.Melee;
 using Origins.Reflection;
+using Origins.UI;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,9 @@ namespace Origins {
 		[Header("Journal")]
 		[DefaultValue(true)]
 		public bool OpenJournalOnUnlock = true;
+
+		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
+		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
 
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
 		public DebugConfig debugMenuButton = new();

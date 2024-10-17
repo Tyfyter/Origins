@@ -68,8 +68,7 @@ namespace Origins.Questing {
 				worms,
 				wormTarget,
 				StageTagOption(worms >= wormTarget),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.BestiaryGirl) ?? Language.GetTextValue("Mods.Origins.Generic.Zoologist")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {
@@ -145,8 +144,7 @@ namespace Origins.Questing {
 				"Mods.Origins.Quests.Zoologist.Discount_2_Quest.Journal", //translation key
 
 				StageTagOption(hasSquirrel),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.BestiaryGirl) ?? Language.GetTextValue("Mods.Origins.Generic.Zoologist")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {
@@ -237,8 +235,7 @@ namespace Origins.Questing {
 				worms,
 				wormTarget,
 				StageTagOption(worms >= wormTarget),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.BestiaryGirl) ?? Language.GetTextValue("Mods.Origins.Generic.Zoologist")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {

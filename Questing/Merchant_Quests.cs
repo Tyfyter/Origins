@@ -102,7 +102,7 @@ namespace Origins.Questing {
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.Merchant && Stage == 0;
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Inquire", Main.LocalPlayer.Get2ndPersonReference("casual"));
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
 			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Start");
@@ -118,7 +118,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Merchant.Lottery_Ticket.Journal",
-				Main.LocalPlayer.Get2ndPersonReference("casual"),
 				progress,
 				target,
 				StageTagOption(progress >= target)

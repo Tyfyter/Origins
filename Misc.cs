@@ -37,6 +37,7 @@ using Origins.Tiles.Banners;
 using Terraria.ObjectData;
 using static System.Net.Mime.MediaTypeNames;
 using Terraria.ModLoader.Utilities;
+using Terraria.GameInput;
 
 namespace Origins {
 	#region classes
@@ -2429,11 +2430,51 @@ namespace Origins {
 		static DynamicSpriteFont strikethroughFont;
 		public static DynamicSpriteFont StrikethroughFont {
 			get {
+				if (PlayerInput.Triggers.JustPressed.Down) strikethroughFont = null;
 				if (strikethroughFont is null) {
 					if (FontAssets.MouseText.IsLoaded) {
+						Texture2D strikeTexture = ModContent.Request<Texture2D>("Origins/Textures/Strikethrough_Font", AssetRequestMode.ImmediateLoad).Value;
 						DynamicSpriteFont baseFont = FontAssets.MouseText.Value;
-						strikethroughFont = new DynamicSpriteFont(-2, baseFont.LineSpacing, baseFont.DefaultCharacter);
-						_SpriteCharacters.SetValue(strikethroughFont, _SpriteCharacters.GetValue(baseFont));
+						strikethroughFont = new DynamicSpriteFont(baseFont.CharacterSpacing, baseFont.LineSpacing, baseFont.DefaultCharacter);
+						Type dict = _SpriteCharacters.FieldType;
+						_SpriteCharacters.SetValue(
+							strikethroughFont,
+							dict.GetConstructor([typeof(IDictionary<,>).MakeGenericType(dict.GenericTypeArguments)])
+							.Invoke([_SpriteCharacters.GetValue(baseFont)])
+						);
+						object enumerator = dict.GetMethod(nameof(Dictionary<int, int>.GetEnumerator)).Invoke(_SpriteCharacters.GetValue(baseFont), []);
+						Type enumType = enumerator.GetType();
+						MethodInfo moveNext = enumType.GetMethod(nameof(Dictionary<int, int>.Enumerator.MoveNext));
+						PropertyInfo current = enumType.GetProperty(nameof(Dictionary<int, int>.Enumerator.Current));
+						PropertyInfo key = typeof(KeyValuePair<,>).MakeGenericType(dict.GenericTypeArguments).GetProperty(nameof(KeyValuePair<int, int>.Key));
+						PropertyInfo prop = dict.GetProperty("Item");
+						object sfFont = _SpriteCharacters.GetValue(strikethroughFont);
+
+						Type spriteCharacterData = dict.GenericTypeArguments[1];
+						ConstructorInfo ctor = spriteCharacterData.GetConstructors()[0];
+						FieldInfo glyphField = spriteCharacterData.GetField("Glyph");
+						FieldInfo paddingField = spriteCharacterData.GetField("Padding");
+						FieldInfo kerningField = spriteCharacterData.GetField("Kerning");
+						while ((bool)moveNext.Invoke(enumerator, [])) {
+							object[] index = [key.GetValue(current.GetValue(enumerator))];
+							object value = prop.GetValue(sfFont, index);
+							Rectangle glyph = (Rectangle)glyphField.GetValue(value);
+							Rectangle padding = (Rectangle)paddingField.GetValue(value);
+							Vector3 kerning = (Vector3)kerningField.GetValue(value);
+							padding.X = -4;
+							padding.Y = 0;
+							padding.Height = 0;
+							glyph.X = 0;
+							glyph.Y = -8;// 2 - glyph.Height / 2;
+							glyph.Width += (int)(kerning.Y + kerning.Z + 4f);
+							glyph.Height = 16;
+							prop.SetValue(sfFont, ctor.Invoke([
+								strikeTexture,
+								glyph,
+								padding,
+								kerning,
+							]), index);
+						}
 						_DefaultCharacterData.SetValue(strikethroughFont, _DefaultCharacterData.GetValue(baseFont));
 					} else {
 						return FontAssets.MouseText.Value;

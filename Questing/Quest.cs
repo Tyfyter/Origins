@@ -111,7 +111,7 @@ namespace Origins.Questing {
 		public virtual void ReceiveSync(BinaryReader reader) { }
 		public static Condition QuestCondition<T>() where T : Quest {
 			return new Condition(
-				Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(ModContent.GetInstance<T>().NameKey),
+				Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(ModContent.GetInstance<T>().NameValue),
 				() => ModContent.GetInstance<T>().Completed
 			);
 		}

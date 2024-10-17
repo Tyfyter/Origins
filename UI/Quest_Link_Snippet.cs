@@ -35,7 +35,11 @@ namespace Origins.UI {
 			}
 			public override void OnClick() {
 				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.debugMenuButton.DebugMode) {
-					Quest_Registry.GetQuestByKey(key).LoadData(new Terraria.ModLoader.IO.TagCompound());
+					if (ItemSlot.ShiftInUse) {
+						Quest_Registry.GetQuestByKey(key).OnComplete(Main.npc[0]);
+					} else {
+						Quest_Registry.GetQuestByKey(key).LoadData(new Terraria.ModLoader.IO.TagCompound());
+					}
 					return;
 				}
 				Origins.OpenJournalQuest(key);
@@ -43,17 +47,10 @@ namespace Origins.UI {
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
 				if (inJournal) {
 					if (completed) {
-						StringBuilder builder = new StringBuilder();
 						Vector2 dimensions = FontAssets.MouseText.Value.MeasureString(Text);
 						var strikethroughFont = OriginExtensions.StrikethroughFont;
 						size = dimensions;
 						if (justCheckingString) return false;
-						const char strike = '–';
-						float strikeWidth = strikethroughFont.MeasureString(strike.ToString()).X - 2;
-						for (int i = (int)Math.Ceiling(dimensions.X / strikeWidth); i-- > 0;) {
-							builder.Append(strike);
-						}
-						string strikethroughText = builder.ToString();
 						color *= 0.666f;
 						if (lastHovered > 0) {
 							const float lightness = 0.95f;
@@ -72,18 +69,17 @@ namespace Origins.UI {
 								ChatManager.DrawColorCodedString(
 									spriteBatch,
 									strikethroughFont,
-									strikethroughText,
-									position + dimensions * new Vector2(0.5f, 0.025f) + ChatManager.ShadowDirections[i],
+									Text,
+									position + ChatManager.ShadowDirections[i],
 									new Color(shadowColor.R, shadowColor.G, shadowColor.B, 255),
 									0,
-									new Vector2(strikeWidth * builder.Length * 0.5f, 0),
+									new Vector2(0, 0),
 									new Vector2(scale)
 								);
 							}
 						}
 						ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, color, 0, Vector2.Zero, new Vector2(scale));
-						ChatManager.DrawColorCodedString(spriteBatch, strikethroughFont, strikethroughText, position + dimensions * new Vector2(0.5f, 0.025f), new Color(color.R, color.G, color.B, 255), 0, new Vector2(strikeWidth * builder.Length * 0.5f, 0), new Vector2(scale));
-						//ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, builder.ToString(), position + dimensions * new Vector2(0.5f, 0.025f), new Color(color.R, color.G, color.B, 255), 0, new Vector2(strikeWidth * builder.Length * 0.5f, 0), new Vector2(scale));
+						ChatManager.DrawColorCodedString(spriteBatch, strikethroughFont, Text, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new Vector2(scale));
 						return true;
 					} else {
 						size = FontAssets.MouseText.Value.MeasureString(Text);

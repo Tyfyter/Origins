@@ -45,10 +45,10 @@ namespace Origins.UI {
 			baseElement.HAlign = 0.5f;
 			Append(baseElement);
 			Recalculate();
-			xMargin = baseElement.GetDimensions().Width * 0.075f;
+			xMargin = baseElement.GetDimensions().Width * 0.06f;
 			yMargin = baseElement.GetDimensions().Height * 0.1f;
 			//SetText(loremIpsum);
-			SwitchMode(Journal_UI_Mode.Index_Page, "");
+			SwitchMode((Journal_UI_Mode)OriginClientConfig.Instance.DefaultJournalMode, "");
 		}
 		public void SetText(string text) => SetText(text, Color.Black);
 		public void SetText(string text, Color baseColor) {
@@ -81,6 +81,26 @@ namespace Origins.UI {
 				Color snippetColor = textSnippet.GetVisibleColor();
 				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
+					currentPage.Add(textSnippet);
+					while (cursor.X > bounds.Width) {
+						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
+						cursor.X -= bounds.Width;
+						currentPage.Add(new TextSnippet("\n"));
+					}
+					result.X = Math.Max(result.X, cursor.X);
+					continue;
+				}
+				if (textSnippet.GetType() != typeof(TextSnippet)) {
+					cursor.X += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
+					if (cursor.X > bounds.Width) {
+						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
+						cursor.X = 0f;
+						if (cursor.Y > bounds.Height) {
+							finishPage();
+						} else {
+							currentPage.Add(new TextSnippet("\n"));
+						}
+					}
 					result.X = Math.Max(result.X, cursor.X);
 					currentPage.Add(textSnippet);
 					continue;
@@ -388,6 +408,7 @@ namespace Origins.UI {
 			bool canDrawArrows = true;
 			try {
 				if (shade) Origins.shaderOroboros.Capture();
+				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - xMargin * 2;
 				for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
 					ChatManager.DrawColorCodedString(spriteBatch,
 						FontAssets.MouseText.Value,
@@ -410,6 +431,7 @@ namespace Origins.UI {
 					}
 				}
 			} finally {
+				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = float.PositiveInfinity;
 				if (shade) {
 					Origins.shaderOroboros.Stack(currentEffect);
 					Origins.shaderOroboros.Release();
@@ -572,5 +594,10 @@ Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis m
 		Quest_Page,
 		Custom,
 		INVALID
+	}
+	public enum Journal_Default_UI_Mode  {
+		Index_Page = Journal_UI_Mode.Index_Page,
+		Quest_List = Journal_UI_Mode.Quest_List,
+		Search_Page = Journal_UI_Mode.Search_Page
 	}
 }

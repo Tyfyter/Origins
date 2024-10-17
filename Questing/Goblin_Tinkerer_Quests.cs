@@ -184,10 +184,7 @@ namespace Origins.Questing {
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0 && ModContent.GetInstance<Turbo_Reel_Quest>().Completed;
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue(
-							"Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Inquire",
-							NPC.GetFirstNPCNameOrNull(NPCID.ArmsDealer) ?? Language.GetTextValue("Mods.Origins.Generic.Arms_Dealer")
-						);
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
 			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Start");
@@ -211,7 +208,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Journal", //translation key
-				NPC.GetFirstNPCNameOrNull(NPCID.ArmsDealer) ?? Language.GetTextValue("Mods.Origins.Generic.Arms_Dealer"),
 
 				leather,
 				leatherTarget,
@@ -325,7 +321,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Journal", //translation key
-				NPC.GetFirstNPCNameOrNull(NPCID.Mechanic) ?? Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Generic.Mechanic"),
 
 				StageTagOption(hasMinecart),
 

@@ -118,7 +118,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.SkeletonMerchant: {
-					shop.Add<Trash_Lid>();
+					//shop.Add<Trash_Lid>(Condition.MoonPhaseFull);
 					break;
 				}
 				case NPCID.Golfer: {

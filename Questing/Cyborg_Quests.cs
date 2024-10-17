@@ -64,8 +64,7 @@ namespace Origins.Questing {
 
 				Main.worldName,
 				StageTagOption(SawThing),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.Cyborg) ?? Language.GetTextValue("Mods.Origins.Generic.Cyborg")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {

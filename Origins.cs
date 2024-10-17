@@ -191,6 +191,7 @@ namespace Origins {
 			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
 			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
 			OriginsModIntegrations.LateLoad();
+			_ = OriginExtensions.StrikethroughFont;
 		}
 		public override void Load() {
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Riven", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Riven"));
@@ -457,6 +458,16 @@ namespace Origins {
 			]);
 			ChatManager.Register<Header_Snippet_Handler>([
 				"header"
+			]);
+			ChatManager.Register<NPC_Name_Handler>([
+				"npcname"
+			]);
+			ChatManager.Register<Item_Name_Handler>([
+				"itemname"
+			]);
+			ChatManager.Register<Player_Name_Handler>([
+				"player",
+				"you"
 			]);
 			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
 			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");

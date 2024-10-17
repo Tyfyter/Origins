@@ -71,8 +71,7 @@ namespace Origins.Questing {
 				worms,
 				wormTarget,
 				StageTagOption(worms >= wormTarget),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.Stylist) ?? Language.GetTextValue("Mods.Origins.Generic.Stylist")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {
@@ -146,10 +145,8 @@ namespace Origins.Questing {
 			return Language.GetTextValue(
 				loc_key + "Journal", //translation key
 
-				Main.LocalPlayer.name,
 				StageTagOption(hasComb),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.Stylist) ?? Language.GetTextValue("Mods.Origins.Generic.Stylist")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {
@@ -223,10 +220,8 @@ namespace Origins.Questing {
 			return Language.GetTextValue(
 				loc_key + "Journal", //translation key
 
-				Main.LocalPlayer.name,
 				StageTagOption(hasComb),
-				StageTagOption(Completed),
-				NPC.GetFirstNPCNameOrNull(NPCID.Stylist) ?? Language.GetTextValue("Mods.Origins.Generic.Stylist")
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {

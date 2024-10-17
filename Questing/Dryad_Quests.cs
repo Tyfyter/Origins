@@ -37,7 +37,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Dryad.Cleansing_Station.Journal", //translation key
-				Main.LocalPlayer.name,
 				WorldBiomeManager.GetWorldEvil(true).DisplayName,
 				progress,
 				target,
@@ -107,7 +106,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				loc_key + "Journal", //translation key
-				Main.LocalPlayer.name,
 				WorldBiomeManager.GetWorldEvil(true).DisplayName,
 				progress,
 				target,

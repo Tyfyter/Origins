@@ -38,7 +38,7 @@ namespace Origins.Questing {
 			GiveGun();
 			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Start");
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire", Main.LocalPlayer.Get2ndPersonReference("casual"));
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire");
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.ArmsDealer && Stage == 2;
 		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Arms_Dealer.Shardcannon.ReadyToComplete").Value;
 		public override void OnComplete(NPC npc) {

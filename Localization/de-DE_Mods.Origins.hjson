@@ -6,8 +6,8 @@ Conditions: {
 	// Or: "{0} or {1}"
 	// Not: Not {0}
 	// Comma: "{0}, {1}"
-	// QuestCompleted: Completed "{0}"
-	// PeatSoldCondition: After selling {0} peat to the Demolitionist
+	// QuestCompleted: After completing "{0}"
+	// PeatSoldCondition: After selling {0} peat moss to the Demolitionist
 	// Brine: Mods.Origins.Conditions.Brine
 	// RivenWater: Amebic Gel
 	// ShimmerDecrafting: Shimmer decrafting only
@@ -473,6 +473,7 @@ Generic: {
 	// Arms_Dealer: the Arms Dealer
 	// Defiled_Antibody: Defiled Antibody
 	// Defiled_Antibodies: Defiled Antibodies
+	// Definite_Article: the {0}
 }
 
 AltBiomes: {
@@ -1610,6 +1611,11 @@ Configs: {
 			// Label: 24 Hour Time
 			// Tooltip: Makes Origins' clocks display time in a 24 hour format
 		}
+
+		DefaultJournalMode: {
+			// Label: Open Journal To
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -1749,6 +1755,13 @@ Configs: {
 			// Label: Export NPC Images
 			// Tooltip: ""
 		}
+	}
+
+	Journal_Default_UI_Mode: {
+		// Tooltip: ""
+		// Index_Page.Label: Index
+		// Quest_List.Label: Quests
+		// Search_Page.Label: Search
 	}
 }
 
