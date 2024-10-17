@@ -225,7 +225,7 @@ ENEMY NPCS:
 (X) Duskoo
 (X) Dynaray
 (@2/3, #) Electromancer
-(^) Etherealizer
+(^, 赏) Etherealizer
 (@2, #) Illusionary
 (X) Prosperer
 (X) Soulpine
