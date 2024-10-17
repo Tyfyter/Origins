@@ -985,6 +985,11 @@ Buffs: {
 		DisplayName: Slag Bucket Debuff
 		Description: Mods.Origins.Buffs.Slag_Bucket_Debuff.Description
 	}
+
+	Fresh_Meat_Buff: {
+		DisplayName: Fresh Meat Buff
+		Description: Mods.Origins.Buffs.Fresh_Meat_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1359,6 +1364,8 @@ Projectiles: {
 	The_Bird_Swing.DisplayName: The Bird
 	Potato_Mine_Melee_Explosion.DisplayName: Potato Mine Melee Explosion
 	Slag_Bucket_Projectile.DisplayName: Slag Bucket
+	Fresh_Meat_Artifact_P.DisplayName: Fresh Meat Artifact P
+	Fresh_Meat_Dog.DisplayName: Fresh Meat Dog
 }
 
 Prefixes: {

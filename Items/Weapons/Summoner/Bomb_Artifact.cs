@@ -68,7 +68,7 @@ namespace Origins.Buffs {
 	}
 }
 
-namespace Origins.Items.Weapons.Summon.Minions {
+namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Friendly_Bomb : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Happy_Boi";
 		public bool OnGround {

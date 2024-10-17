@@ -798,11 +798,11 @@ namespace Origins {
 		/// <param name="isPriorityTarget">whether or not this npc is a "priority" target (i.e. a manually selected target)</param>
 		/// <param name="foundTarget">whether or not a target has already been found</param>
 		public delegate void Minion_Selector(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget);
-		public bool GetMinionTarget(Minion_Selector selector) {
+		public bool GetMinionTarget(Minion_Selector selector, bool noGuaranteedPriority = false) {
 			bool foundTarget = false;
 			if (Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
 			if (asylumWhistleTarget > -1) selector(Main.npc[asylumWhistleTarget], 1f, true, ref foundTarget);
-			if (!foundTarget) {
+			if (!foundTarget || noGuaranteedPriority) {
 				foreach (NPC target in Main.ActiveNPCs) selector(target, 1f, false, ref foundTarget);
 			}
 			return foundTarget;
