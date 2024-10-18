@@ -336,6 +336,7 @@ namespace Origins.Tiles.Brine {
             Item.ResearchUnlockCount = 5;
         }
         public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
             Item.sellPrice(copper: 30);
         }
     }
