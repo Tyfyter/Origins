@@ -337,7 +337,7 @@ namespace Origins.Tiles.Brine {
         }
         public override void SetDefaults() {
 			Item.maxStack = Item.CommonMaxStack;
-            Item.sellPrice(copper: 30);
+			Item.value = Item.sellPrice(copper: 30);
         }
     }
     public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider {
