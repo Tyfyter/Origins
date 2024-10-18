@@ -17,5 +17,8 @@ namespace Origins.Items {
 			.AddTile(TileID.BewitchingTable)
 			.Register();
 		}
+		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) {
+			return equippedItem.ModItem is not TCursed;
+		}
 	}
 }
