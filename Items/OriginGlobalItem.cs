@@ -101,6 +101,9 @@ namespace Origins.Items {
 				statsModified = true;
 				break;
 			}
+			if (item.PaintOrCoating) {
+				item.consumable = true;
+			}
 			if (item.damage is 0 or -1 && Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
 				item.damage = damage;
 				statsModified = true;

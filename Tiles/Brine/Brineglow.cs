@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
@@ -224,47 +225,47 @@ namespace Origins.Tiles.Brine {
 				//float lastWindGridPush = 0;
 				for (int k = j; Framing.GetTileSafely(i, k).TileType == Type; k++) {
 					Tile tile = Main.tile[i, k];
-					//if (TileDrawing.IsVisible(tile)) {
-					Color color = Lighting.GetColor(i, k);
-					if (spelunk) {
-						if (color.R < 200) {
-							color.R = 200;
+					if (TileDrawing.IsVisible(tile)) {
+						Color color = Lighting.GetColor(i, k);
+						if (spelunk) {
+							if (color.R < 200) {
+								color.R = 200;
+							}
+							if (color.G < 170) {
+								color.G = 170;
+							}
+							if (isActiveAndNotPaused && Main.rand.NextBool(60)) {
+								Dust dust = Dust.NewDustDirect(new Vector2(i * 16, k * 16), 16, 16, DustID.TreasureSparkle, 0f, 0f, 150, default(Color), 0.3f);
+								dust.fadeIn = 1f;
+								dust.velocity *= 0.1f;
+								dust.noLight = true;
+							}
 						}
-						if (color.G < 170) {
-							color.G = 170;
-						}
-						if (isActiveAndNotPaused && Main.rand.NextBool(60)) {
-							Dust dust = Dust.NewDustDirect(new Vector2(i * 16, k * 16), 16, 16, DustID.TreasureSparkle, 0f, 0f, 150, default(Color), 0.3f);
-							dust.fadeIn = 1f;
-							dust.velocity *= 0.1f;
-							dust.noLight = true;
-						}
+						//Dust.NewDustPerfect(position + Main.screenPosition - zero, DustID.AmberBolt, Vector2.Zero).noGravity = true;
+						frame.X = tile.TileFrameX;
+						frame.Y = tile.TileFrameY;
+						Main.spriteBatch.Draw(
+							tileDrawTexture,
+							position,
+							frame,
+							color,
+							0,
+							new Vector2(0, 0),
+							1f,
+							spriteEffects,
+						0f);
+						Main.spriteBatch.Draw(
+							this.GetGlowTexture(tile.TileColor),
+							position,
+							frame,
+							Color.White,
+							0,
+							new Vector2(0, 0),
+							1f,
+							spriteEffects,
+						0f);
+						position.Y += 16;
 					}
-					//Dust.NewDustPerfect(position + Main.screenPosition - zero, DustID.AmberBolt, Vector2.Zero).noGravity = true;
-					frame.X = tile.TileFrameX;
-					frame.Y = tile.TileFrameY;
-					Main.spriteBatch.Draw(
-						tileDrawTexture,
-						position,
-						frame,
-						color,
-						0,
-						new Vector2(0, 0),
-						1f,
-						spriteEffects,
-					0f);
-					Main.spriteBatch.Draw(
-						this.GetGlowTexture(tile.TileColor),
-						position,
-						frame,
-						Color.White,
-						0,
-						new Vector2(0, 0),
-						1f,
-						spriteEffects,
-					0f);
-					position.Y += 16;
-					//}
 
 					/*float windGridPush = Main.instance.TilesRenderer.GetWindGridPush(i, k, 20, 0.01f);
 					ref short wind = ref tile.Get<TileExtraVisualData>().TileFrameX;
