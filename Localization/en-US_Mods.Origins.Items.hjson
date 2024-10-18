@@ -4594,3 +4594,8 @@ Fresh_Meat_Artifact: {
 	DisplayName: Fresh Meat Artifact
 	Tooltip: ""
 }
+
+Sixth_Spline: {
+	DisplayName: Sixth Spline
+	Tooltip: ""
+}

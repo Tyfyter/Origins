@@ -1366,6 +1366,10 @@ Projectiles: {
 	// Slag_Bucket_Projectile.DisplayName: Slag Bucket
 	// Fresh_Meat_Artifact_P.DisplayName: Fresh Meat Artifact P
 	// Fresh_Meat_Dog.DisplayName: Fresh Meat Dog
+	// Sixth_Spline_Nut.DisplayName: Sixth Spline Nut
+	// Sixth_Spline_Piston.DisplayName: Sixth Spline Piston
+	// Sixth_Spline_Soldering_Iron.DisplayName: Sixth Spline Soldering Iron
+	// Sixth_Spline_Wrench.DisplayName: Sixth Spline Wrench
 }
 
 Prefixes: {

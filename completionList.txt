@@ -689,7 +689,7 @@ RANGED WEAPONS:
 (X) Mythril Harpoon Gun*
 (X) Orichalcum Harpoon Gun*
 (X) Palladium Harpoon Gun*
-(X) Sixth Spline
+(@, ☻) Sixth Spline
 (X) Spray 'N Pray*
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun*
