@@ -1,22 +1,11 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
+using Origins.Dev;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo;
-using System.Collections.Generic;
-using Terraria.Utilities;
-using Origins.Items.Weapons.Melee;
-using Origins.Buffs;
-using Terraria.Audio;
-using System;
-using Origins.Graphics;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics.Effects;
 namespace Origins.Items.Weapons.Ranged {
 	public class Spray_N_Pray : ModItem, ICustomWikiStat {
 		public static byte lastPaint;
@@ -37,6 +26,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useTime = 4;
 			Item.width = 86;
 			Item.height = 22;
+			Item.rare = ItemRarityID.LightPurple;
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item5;
 			Item.reuseDelay = 4;

@@ -1,26 +1,22 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
-using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.Utilities;
-using Origins.Items.Weapons.Melee;
-using Origins.Buffs;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Sixth_Spline : ModItem, ICustomWikiStat {
+	public class Sixth_Spline : ModItem, ICustomWikiStat {
+		static short glowmask;
 		public static WeightedRandom<Sixth_Spline_Projectile> Projectiles { get; private set; }  = new();
         public string[] Categories => [
             "Gun"
         ];
         public static int ID { get; set; }
 		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -32,7 +28,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.width = 86;
 			Item.height = 22;
 			Item.autoReuse = true;
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item11;
+			Item.glowMask = glowmask;
 		}
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

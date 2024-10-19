@@ -90,40 +90,23 @@ TOWN NPCs:
 
 TOWN NPC Quests:
 ---
-(☻) TOWN NPC QUEST MECHANICS (general)
-
-Arms Dealer {
-  (⚿) Live Fire
-}
-Cyborg {
-  (⚿) Sensor Upgrade
-}
-Dryad {
-  (⚿) I’ll Give You a Deal
-  (⚿) Clearing the Way
-}
-Goblin Tinkerer {
-  (⚿) Reel In the Goods
-  (⚿) Lend a Hand?
-  (赏) Explosive Result
-}
-Merchant {
-  (⚿) To the Skies!
-  (⚿) The Greatest Sin of All, Gambling
-}
-Stylist {
-  (⚿, 赏) Running Dry
-  (⚿, 赏) Slick Styling
-  (⚿) To Be Crystal Clear…
-}
-Party Girl {
-  (⚿, 赏) Livin' Up the Party
-}
-Zoologist {
-  (⚿) Save the Critters!
-  (⚿) Not Au-some…
-  (⚿) Under the Starlight
-}
+(^) TOWN NPC QUEST MECHANICS
+(⚿) Arms Dealer - Live Fire
+(⚿) Cyborg - Sensor Upgrade
+(⚿) Dryad - I’ll Give You a Deal
+(⚿) Dryad - Clearing the Way
+(⚿) Goblin Tinkerer - Reel In the Goods
+(⚿) Goblin Tinkerer - Lend a Hand?
+(赏) Goblin Tinkerer - Explosive Result
+(⚿) Merchant - To the Skies!
+(⚿) Merchant - The Greatest Sin of All, Gambling
+(⚿, 赏) Stylist - Running Dry
+(⚿, 赏) Stylist - Slick Styling
+(⚿) Stylist - To Be Crystal Clear…
+(⚿, 赏) Party Girl - Livin' Up the Party
+(⚿) Zoologist - Save the Critters!
+(⚿) Zoologist - Not Au-some…
+(⚿) Zoologist - Under the Starlight
 ---
 
 
@@ -408,8 +391,8 @@ ACCESSORIES:
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
-(☻) Scrap Barrier (Cursed)*
-(☻) Scrap Barrier (Uncursed)*
+(^) Scrap Barrier (Cursed)*
+(^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
 (^) Slag Bucket (Cursed)*
 (^) Slag Bucket (Uncursed)*
@@ -689,8 +672,8 @@ RANGED WEAPONS:
 (X) Mythril Harpoon Gun*
 (X) Orichalcum Harpoon Gun*
 (X) Palladium Harpoon Gun*
-(@, ☻) Sixth Spline
-(@, ☻) Spray 'N Pray*
+(^) Sixth Spline
+(†) Spray 'N Pray*
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun*
 (X) Tripod Jawbow

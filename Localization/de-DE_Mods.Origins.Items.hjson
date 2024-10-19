@@ -4601,6 +4601,6 @@ Sixth_Spline: {
 }
 
 Spray_N_Pray: {
-	// DisplayName: Spray N Pray
-	// Tooltip: ""
+	// DisplayName: Spray 'N Pray
+	// Tooltip: Uses paint as ammo
 }
