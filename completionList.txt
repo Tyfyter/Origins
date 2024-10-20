@@ -161,7 +161,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (^) Flagellant
-(X) Graveshield Zombie !!!
+(#, ^2) Graveshield Zombie !!!
 (^) Measly Moeba
 (^) Optiphage
 (^) Pustule Jellyfish*
@@ -749,12 +749,12 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(X) Broken Terratotem !!!
+(#, ^2) Broken Terratotem !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
-(@, ☻) Fresh Meat Artifact !!!
-(X) Inanimate Zombie Hand !!!
+(#3, ^2) Fresh Meat Artifact !!!
+(#, ^2) Inanimate Zombie Hand !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
@@ -790,7 +790,7 @@ SUMMONER WEAPONS:
 (@2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(X) Terratotem
+(#, ^2) Terratotem
 (X) Tonal Resonator
 
 NO POST ML SUMMONER CONTENT YET.
@@ -924,7 +924,7 @@ TILES:
 (^) Spug Flesh*
 (@5, ^3) Twilith*
 
-(X) Amebic Gel Wall !!!
+(#, ^2) Amebic Gel Wall !!!
 (^) Batholith Wall
 (^) Brittle Quartz Wall
 (^) Chambersite Gemspark Wall
@@ -1307,7 +1307,7 @@ UI:
 (@ (needs 4 textures)) Underground Fiberglass Background !!!
 (@ (needs 4 textures)) Underground Riven Background !!!
 
-(^) 30x30 Origins Icon !!!
+(^) 30x30 Origins Icon
 (@5, ^3) Origins Mod Browser Logo !!!
 ---
 
