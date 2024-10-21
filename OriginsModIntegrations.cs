@@ -12,6 +12,9 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Origins.Tiles;
 using Origins.NPCs.MiscE;
+using MonoMod.Cil;
+using Microsoft.Xna.Framework.Input;
+using Terraria.Localization;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -169,6 +172,32 @@ namespace Origins {
 						}
 					})
 				);
+				int wallShineCount = 0;
+				foreach (var item in smoothLightingType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
+					MethodInfo wallShineMethod = null;
+					if (item.GetMethod("<CalculateSmoothLightingReach>b__0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static) is MethodInfo meth0) {
+						wallShineMethod = meth0;
+					} else if (item.GetMethod("<CalculateSmoothLightingHiDef>b__0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static) is MethodInfo meth1) {
+						wallShineMethod = meth1;
+					}
+					if (wallShineMethod is not null) {
+						MonoModHooks.Modify(wallShineMethod, (il) => {
+							ILCursor c = new(il);
+							c.GotoNext(MoveType.Before,
+								i => i.MatchCall("FancyLighting.Util.VectorToColor", "Assign")
+							);
+							c.EmitLdloc(4);
+							c.EmitDelegate<Func<Vector3, Tile, Vector3>>((color, tile) => {
+								if (WallLoader.GetWall(tile.WallType) is IGlowingModWall glowingWall) glowingWall.FancyLightingGlowColor(tile, ref color);
+								return color;
+							});
+						});
+						wallShineCount++;
+					}
+				}
+				if (wallShineCount == 0) {
+					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
+				}
 			} catch (Exception e) {
 				Origins.LogError("Exception thrown while loading Fancy Lighting Integration:", e);
 				FancyLighting = null;

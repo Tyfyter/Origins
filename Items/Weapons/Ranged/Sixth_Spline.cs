@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.extraUpdates = 1;
 		}
 		public override void AI() {
-			Projectile.rotation += Projectile.direction;
+			Projectile.rotation += Projectile.direction * 0.5f;
 			Projectile.velocity.Y += 0.03f;
 		}
 	}

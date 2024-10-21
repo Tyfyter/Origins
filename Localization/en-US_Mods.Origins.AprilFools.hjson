@@ -58,6 +58,7 @@ Biomes: {
 		DisplayName: "{§Defiled_Wastelands} Signature Patent-Pending Cold-Park"
 		TownNPCDialogueName: the {§Defiled_Wastelands} Signature Patent-Pending Cold-Park
 	}
+
 	Riven_Hive_Ocean_Biome: {
 		DisplayName: "{§Riven_Hive} but wetter"
 		TownNPCDialogueName: the place where Riven Jesus, our savior: {§Riven_Hive} can be found

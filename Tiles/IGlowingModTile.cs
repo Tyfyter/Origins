@@ -11,6 +11,12 @@ namespace Origins.Tiles {
 		Color GlowColor { get; }
 		void FancyLightingGlowColor(Tile tile, ref Vector3 color) => color = GlowColor.ToVector3();
 	}
+	public interface IGlowingModWall {
+		AutoCastingAsset<Texture2D> GlowTexture { get; }
+		CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		Color GlowColor { get; }
+		void FancyLightingGlowColor(Tile tile, ref Vector3 color) => color = GlowColor.ToVector3();
+	}
 	public interface IGlowingModPlant {
 		void FancyLightingGlowColor(Tile tile, ref Vector3 color);
 	}

@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToRangedWeapon(ModContent.ProjectileType<Spray_N_Pray_P>(), ItemID.RedPaint, 12, 10);
-			Item.damage = 40;
+			Item.damage = 20;
 			Item.crit = -4;
 			Item.useAnimation = 12;
 			Item.useTime = 4;
@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Ranged {
 					position,
 					velocity.RotatedByRandom(0.1f) * Main.rand.NextFloat(0.9f, 1.1f),
 					type,
-					damage,
+					damage + 1,
 					knockback
 				);
 			}

@@ -4604,3 +4604,13 @@ Spray_N_Pray: {
 	DisplayName: Spray 'N Pray
 	Tooltip: Uses paint as ammo
 }
+
+Amebic_Gel_Wall_Safe_Item: {
+	DisplayName: Amebic Gel Wall
+	Tooltip: ""
+}
+
+Amebic_Gel_Wall_Placed_Unsafe_Item: {
+	DisplayName: Moist Amebic Gel Wall
+	Tooltip: ""
+}

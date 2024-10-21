@@ -60,25 +60,44 @@ Barnacle_Bunny.DisplayName: Barnacle Bunny
 Bile_Thrower.DisplayName: Bile Thrower
 
 Brine_Fiend: {
-	DisplayName: Brine Fiend
-
 	TownNPCMood: {
-		Content: "{$Mods.Origins.TownNPCMood.Brine_Fiend.Content}"
-		NoHome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.NoHome}"
-		FarFromHome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.FarFromHome}"
-		LoveSpace: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LoveSpace}"
-		DislikeCrowded: "{$Mods.Origins.TownNPCMood.Brine_Fiend.DislikeCrowded}"
-		HateCrowded: "{$Mods.Origins.TownNPCMood.Brine_Fiend.HateCrowded}"
-		LoveBiome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LoveBiome}"
-		LikeBiome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome}"
-		HateBiome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.HateBiome}"
-		LoveNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LoveNPC}"
-		LikeNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeNPC}"
-		DislikeNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.DislikeNPC}"
-		HateNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.HateNPC}"
+		Content: I feel like swimming in the Brine Pool today.
+		NoHome: Some shelter would be nice, but I am used to hostile environments.
+		FarFromHome: I must return home. I need to check on my trophies!
+		LoveSpace: The sparsity is very different from the crowded Jungles. Very different.
+		DislikeCrowded: My brews are worsening with the presence of many others...
+		HateCrowded: This is way worse than my ventures into the Brine.
+		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
+		LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		
+		LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
+		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
+		
+		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
+		# HateBiome_Mushroom: This place... Truffle does not even taste good.
+		
+		LikeBiome_Evil: The perfect place to dissolve everything down with my mega-alkaline brew!
+		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LoveNPC: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		
+		LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		
+		DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		
+		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
+		HateBiome: I hate {BiomeName}.
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
+
+	DisplayName: Brine Fiend
 	Census.SpawnCondition: Conditions unknown
 }
 
@@ -187,45 +206,3 @@ Defiled_Asphyxiator.DisplayName: Defiled Asphyxiator
 Etherealizer.DisplayName: Etherealizer
 Etherealizer_P.DisplayName: Etherealizer P
 Defiled_Watcher.DisplayName: Defiled Watcher
-
-Brine_Fiend: {
-	TownNPCMood: {
-		Content: I feel like swimming in the Brine Pool today.
-		NoHome: Some shelter would be nice, but I am used to hostile environments.
-		FarFromHome: I must return home. I need to check on my trophies!
-		LoveSpace: The sparsity is very different from the crowded Jungles. Very different.
-		DislikeCrowded: My brews are worsening with the presence of many others...
-		HateCrowded: This is way worse than my ventures into the Brine.
-		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
-		LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
-		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
-		
-		LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
-		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
-		
-		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
-		# HateBiome_Mushroom: This place... Truffle does not even taste good.
-		
-		LikeBiome_Evil: The perfect place to dissolve everything down with my mega-alkaline brew!
-		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LoveNPC: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
-		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
-		
-		LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
-		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
-		
-		DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
-		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
-		
-		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
-		HateBiome: I hate {BiomeName}.
-		LikeNPC_Princess: I like {NPCName}.
-		Princess_LovesNPC: I like {NPCName}.
-	}
-
-	DisplayName: Brine Fiend
-	Census.SpawnCondition: Conditions unknown
-}

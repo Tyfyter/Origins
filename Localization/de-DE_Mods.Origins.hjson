@@ -93,7 +93,7 @@ FishQuest: {
 }
 
 Dialogue: {
-	Acid_Freak: {
+	Brine_Fiend: {
 		// StandardDialogue1: My wares are usually of high salinity. Watch yourself {0}.
 		// StandardDialogue2: No, I don't offer refunds for the dissolving of possessions.
 		// StandardDialogue3: There's nothing really freaky about me, nothing at all...
@@ -290,6 +290,97 @@ Dialogue: {
 		// Death_1: Resistance is futile.
 		// Death_2: One day.
 		// Death_3: We keep going anyway.
+	}
+}
+
+TownNPCMood: {
+	Brine_Fiend: {
+		// Content: I feel like swimming in the Brine Pool today.
+		// NoHome: Some shelter would be nice, but I am used to hostile environments.
+		// FarFromHome: I must return home. I need to check on my trophies!
+		// LoveSpace: The sparsity is very different from the crowded Jungles. Very different.
+		// DislikeCrowded: My brews are worsening with the presence of many others...
+		// HateCrowded: This is way worse than my ventures into the Brine.
+		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
+		// LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		
+		// LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
+		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
+		
+		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
+		# HateBiome_Mushroom: This place... Truffle does not even taste good.
+		
+		// LikeBiome_Evil: The perfect place to dissolve everything down with my mega-alkaline brew!
+		// LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LoveNPC: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		
+		// LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		
+		// DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		
+		// HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
+	}
+
+	Cubekon_Tinkerer: {
+		// Content: Hm, I feel like hanging out today, Tourist.
+		// NoHome: My quantum storage backpack works just fine, but I'd still like to set up shop and tinker around, ya' know?
+		// FarFromHome: I've collected enough scrap for today. Time to return back to the 'shop.
+		// LoveSpace: I feel like a kid again... all this room is givin' me ideas. Not the kind you'd be a fan of either.
+		// DislikeCrowded: I don't really enjoy hating on things, but I sure would love some privacy right now.
+		// LikeBiome: This place is quite interesting. I wonder if there's any scrap lying around?
+		// DislikeBiome_Evil: I'm not into the creepy stuff but thanks for the offer, Terrarian.
+		// DislikeBiome_Ashen: This place would be really fun to work in, but it doesn't give me the good feels.
+		// DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		// DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		// DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		// DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
+		
+		// LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
+		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
+		
+		// LikeNPC: "{NPCName} is decent folk. They seemed to be in a good mood today..."
+		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
+		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
+		
+		// DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
+	}
+
+	Cyborg: {
+	}
+
+	Defiled_Effigy: {
+		// Content: We aspire to waste time presently.
+		// NoHome: Place of rest protects chunks from elements.
+		// FarFromHome: Terrarian, we are lost. Where resides village?
+		// LoveSpace: Tension low, healthy heart rate.
+		// DislikeCrowded: We are not appreciated here, Terrarian... allow space.
+		// HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
+		// Ocean: Barrier to our prison rests beyond, Terrarian.
+		// LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us.
+		// LikeBiome: Anywhere remains optimal for home, so long as we are present.
+		// HateBiome: Our chunks decay on this ground. Help us, Terrarian.
+		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
+		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
+		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
+		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
+		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
+		
+		// LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
+		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
+		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
+		
+		// DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
+		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
+		
+		// HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
 	}
 }
 
