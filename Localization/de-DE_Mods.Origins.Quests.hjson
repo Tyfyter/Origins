@@ -1,4 +1,6 @@
 Merchant: {
+	// Quest_Menu: Got time to go on a little quest for me?
+
 	Blue_Bovine: {
 		// Name: To the Skies!
 		/* Journal:
@@ -12,8 +14,8 @@ Merchant: {
 			Unlocks: [i:Origins/Blue_Bovine]
 			''' */
 		// Inquire: Hey {0}, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!
-		// Start: missingno
-		// ReadyToComplete: missingno
+		// Start: Great! Bring me back a chicken nugget if you can.
+		// ReadyToComplete: Oh goodness, I take it being covered in blue feathers is a sure sign you've completed my quest?
 		// Complete: Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!
 	}
 
@@ -30,9 +32,9 @@ Merchant: {
 			Unlocks: [i:Origins/Lottery_Ticket]
 			''' */
 		// Inquire: Do you know why I'm not allowed to sell lottery tickets? Neither do I. Maybe you can convince the gods of fortune to shine a brighter light on us by killing some rare enemies, eh?
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Ah! Thanks, [player:_]! Because of you we can gamble now! I'm gonna be rich, you'll see me on the Mana Millions!
+		// Start: Say "hi" to Tim for me before you kill him. It's been a while.
+		// ReadyToComplete: Did you manage to say "hi" to Tim before you put his lights out?
+		// Complete: No? Anyway, we can gamble now because of you! I'm gonna be rich, you'll see me on the TerraTrillions!
 	}
 }
 
@@ -49,9 +51,9 @@ Party_Girl: {
 			- [qs{0}:Put a Party Hat on <npcname:TaxCollector>]
 			Unlocks: ...DELICIOUS BAKER'S DELIGHT
 			''' */
-		// Inquire: The party is ready and everything is set in place! But, something is missing... it's that dreary tax collector again. Try and cheer him up with a party hat so he doesn't give bad vibes.
-		// Start: missingno
-		// ReadyToComplete: missingno
+		// Inquire: The party is ready and everything is set in place! But, something is missing... it's that old mister again. Try and cheer him up with a party hat, maybe that'll make him happy.
+		// Start: Yay! Thank you for this, Terrarian! You're the best!
+		// ReadyToComplete: I think I see him with the hat on..!
 		// Complete: Thank you so much, [player:_]! We can now have the best party ever thanks to you cheering that old man up!
 	}
 }
@@ -75,9 +77,9 @@ Goblin_Tinkerer: {
 			Unlocks: [i:Origins/Turbo_Reel]
 			''' */
 		// Inquire: Hey human! I was wondering if you could possibly fetch me five iron or lead bars, two chains, some adhesive and a watch? I have a project I’m working on that you might want to join in on!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Sweet! Because of your hard work, I have invented the turbo reel! You can use it to make things return to you faster!
+		// Start: Excellent! Now go reel in those goods and you won't be dissappointed by the result!
+		// ReadyToComplete: How was your adventure, Terrarian? Do you have the supplies?
+		// Complete: Sweet! With your hard work I have invented the turbo reel! You can use it to make things return to you faster!
 	}
 
 	Gun_Glove: {
@@ -94,10 +96,10 @@ Goblin_Tinkerer: {
 			- [qs{4}:Collect Zombie Arm]
 			Unlocks: [i:Origins/Gun_Glove]
 			''' */
-		// Inquire: I got another big ask of you, if you don’t mind that is… so, same deal as last time. Could you get me two leather, a flintlock pistol from [npcname:ArmsDealer], and a zombie arm. What? I just need the arm to test!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Thank you! Oh, the zombie arm? I needed it to test out my new gun glove creation! You can use it to shoot bullets as you move your arm around! Pretty cool right?
+		// Inquire: So, same deal as last time but different materials. Could you get me two leather, a flintlock pistol from [npcname:ArmsDealer] and a zombie arm. What? I just need it, it's important!
+		// Start: Thank you! I'll be here whenever you have the supplies.
+		// ReadyToComplete: All of the supplies, and the zombie arm?
+		// Complete: Oh, good. I needed it to test out my new gun glove creation! You can use it to shoot bullets as you move your arm around! Pretty cool right?
 	}
 
 	Rocket_Boosted_Minecart: {
@@ -115,10 +117,10 @@ Goblin_Tinkerer: {
 			- [qs{9}:Collect {8} Adamantite Bars ({7}/{8})]
 			Unlocks: [i:Origins/Rocket_Boosted_Minecart]
 			''' */
-		// Inquire: I just thought of another idea! This’ll surely impress [npcname:Mechanic]… can you get me a minecart, fifty rockets, eighty adhesives, and fifteen Adamantite or Titanium Bars? You’ll love the surprise!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Yes! Introducing the world's fastest ticket to space, the rocket-boosted minecart! With this thing you will be anywhere you need to be before you even need to think about it!
+		// Inquire: I just thought of another idea! This’ll surely impress [npcname:Mechanic]... can you get me a minecart, fifty rockets, eighty adhesives and fifteen Adamantite or Titanium Bars? Don't worry, my laboratory is explosive-proof!
+		// Start: Thank you in advance! The thought of finishing this project is surely exhilarating!
+		// ReadyToComplete: All good to go?
+		// Complete: Yes! Introducing the world's fastest ticket to space, the rocket-boosted minecart! With this thing you will be anywhere you need before you even need to think about it!
 	}
 }
 
@@ -135,10 +137,10 @@ Arms_Dealer: {
 			- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
 			Unlocks: [i:Origins/Shardcannon]
 			''' */
-		// Inquire: Hey buddy, I’ve been workin’ on a little something that needs a qualified gunner to use. Would you be interested? I would do it myself, but my neighbors wouldn’t like it if there were holes in their wall.
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Great work, buddy. I've found all of its imperfections and now I'm able to sell them. If you liked it a lot, be sure to check out my wares.
+		// Inquire: Hey buddy, I’ve been workin’ on a little something that needs someone who knows how to handle a gun. Now, that makes two of us, but I'm sure my neighbors wouldn't like holes in their wall. Care to fit it out for me?
+		// Start: Thanks, buddy. Go shred up some zombies!
+		// ReadyToComplete: All done? Not too bad?
+		// Complete: Thanks for the info. I'll fix the imperfections, but otherwise sounds like it will sell big. If you liked it a lot, be sure to check out my wares.
 	}
 }
 
@@ -157,8 +159,8 @@ Zoologist: {
 			Reward: 3% discount
 			''' */
 		// Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring ‘em back to me? Yah? Thank yah, hun! Oh and I’ll give you some discounts for being nice!
-		// Start: missingno
-		// ReadyToComplete: missingno
+		// Start: YEE! Yes! Thank you, friend!
+		// ReadyToComplete: You save some critters, ya?
 		// Complete: Awww, you picked some good ones, friend! Thank you for da help!
 	}
 
@@ -175,10 +177,10 @@ Zoologist: {
 			- [qs{1}: Give the squirrel to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			''' */
-		// Inquire: This is getting out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals ‘found here! Put an end to this and retrieve me one!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Oh, bless ya heart! Because of you, I can have a little piece o' mind. Of course, saving one ain't gonna change much, but I'm just glad I can trust yah! The hero we all need!
+		// Inquire: This is gettin' out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals ‘round here! Put an end to this and retrieve me one!
+		// Start: Yes, just one!
+		// ReadyToComplete: Yah find a beauty now?
+		// Complete: Oh, bless ya heart! Because of you, I can have a little piece o' mind. Of course, saving one ain't gonna change much, but I'm just glad I can trust yah! Da hero we all need!
 	}
 
 	Eccentric_Stone_Quest: {
@@ -194,10 +196,10 @@ Zoologist: {
 			- [qs{3}: Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
 			Reward: [i:Origins/Eccentric_Stone]
 			''' */
-		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that’s a whole ‘nother can ‘o worms. Get it? Can ‘o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they're living creatures too!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: You really are a cool {0}! Well, I figure for all dat trouble, I'll give yah a family heirloom my dad gave me before I lost him. Have it with you... its complicated.
+		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that’s a whole ‘nother can ‘o worms. Get it? Can ‘o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they living creatures too!
+		// Start: Thank ya again, hun!
+		// ReadyToComplete: Got some pretty glowin' worms for me?
+		// Complete: You really are a cool {0}! Well, I figure for all dat trouble, I'll give yah this cool looking rock I don't know how I got! Hope you like it!
 	}
 }
 
@@ -214,10 +216,10 @@ Dryad: {
 			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			''' */
-		// Inquire: Hey [player:_], look… I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the {1}? If you follow through, I’ll reward you with access to a very rare resource…
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: Great work! You've made good progress, but it is not enough. The {1} grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
+		// Inquire: Hey [player:_], look. I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the {1}? If you follow through, I’ll reward you with access to something I've been hiding for a while now.
+		// Start: Thanks. The {1} has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
+		// ReadyToComplete: Hold on. Let me turn on my Dryad-instincts to see if you're lying...
+		// Complete: Oh good, you've made some progress, but it's not enough. The {1} grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
 	}
 
 	Bloombomb: {
@@ -232,10 +234,10 @@ Dryad: {
 			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
 			Unlocks: [i:Origins/Bloombomb]
 			''' */
-		// Inquire: Hey [player:_], long time no seed! Get it? Agh, I'm too old for puns. Anyway, I have another task for you to cleanse the {1} for me. I just need your help to cleanse a decent area to make room for some of these  [itemname:Origins/Bloombomb]s I've conjured. If you do that, I'll offer you some myself for cheap!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: missingno
+		// Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the {1} for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
+		// Start: Oh. I didn't think you'd be dying to cleanse the {1} over some [itemname:Origins/Bloombomb]s, to be all that honest. Thanks anyway.
+		// ReadyToComplete: Great work, Terrarian. You did good. However, I am unable to offer you [itemname:Origins/Bloombomb]s until you click that button above me.
+		// Complete: Now. For your reward...
 	}
 }
 
@@ -253,10 +255,10 @@ Stylist: {
 			- [qs{3}: Give Magic Hair Spray to <npcname:Stylist>]
 			Unlocks: 4 new hairstyles
 			''' */
-		// Inquire: Ugh, ever since I was captured by those spiders I’ve run out of my special hair stuff… could you get me some magic hair spray please? Pretty please?
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: missingno
+		// Inquire: Ever since I was captured by those spiders I’ve run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
+		// Start: Looking sharp, Terrarian.
+		// ReadyToComplete: Do you have the special stuff for me?
+		// Complete: Mmm! Wonderful! Oh, I can do some many more daring styles with this stuff again.
 	}
 
 	Comb: {
@@ -272,10 +274,10 @@ Stylist: {
 			- [qs{1}: Give Comb to <npcname:Stylist>]
 			Unlocks: 2 new hairstyles
 			''' */
-		// Inquire: Hey [player:_]. I am sorry for this one, but I keep forgetting my equipment. I really need a comb so I can properly cut some hair. Think you could do that? I would appreciate it!
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: missingno
+		// Inquire: Hey [player:_]. I've been really need a comb so I can properly cut some hair since my other one broke. Yes, I pulled a lot of hair out last Blood Moon, but anyway, yeah could you do that for me?
+		// Start: Thank you. I'll try not to rip my hair out this time.
+		// ReadyToComplete: Ah yes! Do you have a comb?
+		// Complete: Slick moves, Terrarian. I really appreciate it. I've come up with two new styles since we last saw each other that you might be interest in!
 	}
 
 	Holiday_Hair_Dye: {
@@ -291,10 +293,10 @@ Stylist: {
 			- [qs{1}: Give Crystal Cutters to <npcname:Stylist>]
 			Unlocks: [i:Origins/Holiday_Hair_Dye]
 			''' */
-		// Inquire: Hey [player:_], I have another favor to ask of you. I would like to upgrade my scissors again, but they’re going to be a bit harder to get. Think you can handle it? They’re scissors made of crystals…
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: missingno
+		// Inquire: Heyo [player:_]. I have another favor to ask of you. My customers have been complaining that it hurts whenever I use my old scissors and frankly, the blades are going bad. So, naturally I'd need new scissors... well, I've been talking it up with the wizard and he's told me there's crystal-bladed scissors out there... you see my point? GET THEM PLEASE.
+		// Start: YOU'RE AWESOME! ...sorry, I'm just excited.
+		// ReadyToComplete: Oh my goodness, oh my goodness, oh my goodness.
+		// Complete: YES! Mm! Mua! You are the absolute best! In return, the wizard and I made a new hair dye that I'll give you for cheap!
 	}
 }
 
@@ -312,9 +314,9 @@ Cyborg: {
 			- [qs{2}: Return to <npcname:Cyborg>]
 			Unlocks: [i:Origins/Advanced_Imaging]
 			''' */
-		// Inquire: Terrarian, my current sensory indicates there is an electronic presence in the skies of {0}. They indicate the signal coming from the ocean. Investigate, this information could improve my sensors.
-		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: missingno
+		// Inquire: Terrarian, my sensors indicate there is an electronic presence in the skies of {0}. The signal is coming from the ocean. Investigate, this information could improve my systems.
+		// Start: Process-start. Task 1 of 1.
+		// ReadyToComplete: Please import the data medium into my built-in USB port located on my neck.
+		// Complete: Sufficient. Thank you, Terrarian. I have comprised a blueprint that may benefit your combat prowess.
 	}
 }

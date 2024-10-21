@@ -122,3 +122,25 @@ Defiled_Asphyxiator.DisplayName: Defiled Asphyxiator
 Etherealizer.DisplayName: Etherealizer
 Etherealizer_P.DisplayName: Etherealizer P
 Defiled_Watcher.DisplayName: Defiled Watcher
+
+Brine_Fiend: {
+	DisplayName: Brine_ Fiend
+
+	TownNPCMood: {
+		Content: I am content.
+		NoHome: I hate not having a home.
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LoveBiome: I love {BiomeName}.
+		LikeBiome: I like {BiomeName}.
+		HateBiome: I hate {BiomeName}.
+		LoveNPC: I love {NPCName}.
+		LikeNPC: I like {NPCName}.
+		DislikeNPC: I dislike {NPCName}.
+		HateNPC: I hate {NPCName}.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+}

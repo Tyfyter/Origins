@@ -91,22 +91,22 @@ TOWN NPCs:
 TOWN NPC Quests:
 ---
 (^) TOWN NPC QUEST MECHANICS
-(⚿) Arms Dealer - Live Fire
-(⚿) Cyborg - Sensor Upgrade
-(⚿) Dryad - I’ll Give You a Deal
-(⚿) Dryad - Clearing the Way
-(⚿) Goblin Tinkerer - Reel In the Goods
-(⚿) Goblin Tinkerer - Lend a Hand?
-(赏) Goblin Tinkerer - Explosive Result
-(⚿) Merchant - To the Skies!
-(⚿) Merchant - The Greatest Sin of All, Gambling
-(⚿, 赏) Stylist - Running Dry
-(⚿, 赏) Stylist - Slick Styling
-(⚿) Stylist - To Be Crystal Clear…
-(⚿, 赏) Party Girl - Livin' Up the Party
-(⚿) Zoologist - Save the Critters!
-(⚿) Zoologist - Not Au-some…
-(⚿) Zoologist - Under the Starlight
+(^) Arms Dealer - Live Fire
+(^) Cyborg - Sensor Upgrade
+(^) Dryad - I’ll Give You a Deal
+(^) Dryad - Clearing the Way
+(^) Goblin Tinkerer - Reel In the Goods
+(^) Goblin Tinkerer - Lend a Hand?
+(^, 赏) Goblin Tinkerer - Explosive Result
+(^) Merchant - To the Skies!
+(^) Merchant - The Greatest Sin of All, Gambling
+(^, 赏) Stylist - Running Dry
+(^, 赏) Stylist - Slick Styling
+(^) Stylist - To Be Crystal Clear…
+(^, 赏) Party Girl - Livin' Up the Party
+(^) Zoologist - Save the Critters!
+(^) Zoologist - Not Au-some…
+(^) Zoologist - Under the Starlight
 ---
 
 

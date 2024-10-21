@@ -159,7 +159,7 @@ namespace Origins {
 					int defiledTiles = tileTypeCounts[MC.TileType<Defiled_Stone>()] + tileTypeCounts[MC.TileType<Defiled_Grass>()] + tileTypeCounts[MC.TileType<Defiled_Sand>()] + tileTypeCounts[MC.TileType<Defiled_Ice>()];
 					int rivenTiles = tileTypeCounts[MC.TileType<Riven_Flesh>()];
 
-					if (npcScoringRoom == MC.NPCType<Acid_Freak>()) {
+					if (npcScoringRoom == MC.NPCType<Brine_Fiend>()) {
 						return orig(tileTypeCounts, TileScanGroup.Hallow);
 					}
 
@@ -188,7 +188,7 @@ namespace Origins {
 				return orig(key, obj);
 			};
 			On_ShopHelper.IsPlayerInEvilBiomes += (On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
-				if (Main.npc[player.talkNPC].type == MC.NPCType<Acid_Freak>()) {
+				if (Main.npc[player.talkNPC].type == MC.NPCType<Brine_Fiend>()) {
 					IShoppingBiome shoppingBiome = new DungeonBiome();
 					if (shoppingBiome.IsInBiome(player)) {
 						ShopMethods.AddHappinessReportText(self, "HateBiome", new {

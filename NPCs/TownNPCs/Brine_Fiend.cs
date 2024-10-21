@@ -15,7 +15,7 @@ using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
-	public class Acid_Freak : ModNPC {
+	public class Brine_Fiend : ModNPC {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acid Freak");
 			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
@@ -186,22 +186,22 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override ITownNPCProfile TownNPCProfile() {
-			return new Acid_Freak_Profile();
+			return new Brine_Fiend_Profile();
 		}
 	}
-	public class Acid_Freak_Profile : ITownNPCProfile {
+	public class Brine_Fiend_Profile : ITownNPCProfile {
 		public int RollVariation() => 0;
 		public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
 		public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) {
 			if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
-				return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak");
+				return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Brine_Fiend");
 
 			//if (npc.altTexture == 1)
-			//return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak_Party");
+			//return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Brine_Fiend_Party");
 
-			return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak");
+			return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Brine_Fiend");
 		}
 
-		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Origins/NPCs/TownNPCs/Acid_Freak_Head");
+		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Origins/NPCs/TownNPCs/Brine_Fiend_Head");
 	}
 }

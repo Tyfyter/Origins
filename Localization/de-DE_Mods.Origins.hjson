@@ -25,7 +25,7 @@ Status_Messages: {
 	// Defiled_Fissure_1: Your body suddenly aches everywhere...
 	// Defiled_Fissure_2: Rattling emanates from the walls...
 	// Defiled_Fissure_3: The skies echo a threatening call...
-	// Cleansing_Station_Invalid_Location: You cannot use this here.
+	// Cleansing_Station_Invalid_Location: You cannot use this with an evil presence nearby.
 	// Felnum_Spawn: The clouds have been blessed with Felnum!
 	// Laser_Tag_Victory: "{0} wins!"
 	// Laser_Tag_Team_Red: Red team
@@ -85,7 +85,7 @@ FishQuest: {
 	Duskarp: {
 		/* Description:
 			'''
-			Down in the gloomy depths of the underworld is a very dark place known as the "Dusk". I heard there's a type of fish native to the Dusk known as "Duskarp".
+			Down in the gloomy depths of the underworld is a very dark place known as the "Dusk". I've heard there's a type of fish native to the Dusk known as the "Duskarp".
 			Now, I haven't heard much about them, but I do know that they can really nip at anything that looms over the purple lava, so watch your hands!
 			''' */
 		// Location: Caught in {$Dusk}
@@ -100,14 +100,14 @@ Dialogue: {
 		// StandardDialogue4: For my next experiment, I want to try my mixtures on living organisms.
 		// InteractionWitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
 		// InteractionWitchDoctor2: Yeah, I know {NPCName}. He's kinda from the same tribe.
-		// InteractionPartyDemolitionist: I should probably tell {NPCName} that we can use peat as snappers.
-		// InteractionParty: I never thought there was this side of me.
-		// InteractionWind: Good thing acid is too heavy to be mist. Right?
-		// InteractionStorm1: I guess I will not be swimming today.
-		// InteractionStorm2: Lightning is not my taste. Acid is where its at.
+		// InteractionPartyDemolitionist: I should probably tell {NPCName} that he could use peat as snappers.
+		// InteractionParty: I never would've thought there'd be this side of me.
+		// InteractionWind: Good thing brine is too heavy to be mist. Right?
+		// InteractionStorm1: I guess I won't be swimming today.
+		// InteractionStorm2: Lightning's not my taste. Brine is where it's at.
 		// InteractionGraveYard: All that is dead will decay. All that decays is dead.
 		// BloodMoon1: Oh. Do my toxins bother you, Terrarian?
-		// BloodMoon2: I've had enough. Acid will be spilt today.
+		// BloodMoon2: I've had enough. Brine will be spilt today.
 	}
 
 	ATACS: {
