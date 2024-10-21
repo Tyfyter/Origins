@@ -3,6 +3,7 @@ using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -79,17 +80,15 @@ namespace Origins.NPCs.TownNPCs {
 		public override string GetChat() {
 			WeightedRandom<string> chat = new();
 
-			int otherNPC = NPC.FindFirstNPC(NPCID.WitchDoctor);
-			if (otherNPC >= 0) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor1", Main.npc[otherNPC].GivenName));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor2", Main.npc[otherNPC].GivenName));
+			if (NPC.FindFirstNPC(NPCID.WitchDoctor) >= 0) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor1"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor2"));
 			}
 			if (BirthdayParty.PartyIsUp) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionParty", Main.npc[otherNPC].GivenName));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionParty"));
 
-				otherNPC = NPC.FindFirstNPC(NPCID.Demolitionist);
-				if (otherNPC >= 0) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionPartyDemolitionist", Main.npc[otherNPC].GivenName));
+				if (NPC.FindFirstNPC(NPCID.Demolitionist) >= 0) {
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionPartyDemolitionist"));
 				}
 			}
 			if (Main.WindyEnoughForKiteDrops) {
@@ -119,21 +118,17 @@ namespace Origins.NPCs.TownNPCs {
 			return chat; // chat is implicitly cast to a string.
 		}
 
-		public override List<string> SetNPCNameList() {
-			/*if (AprilFools.CheckAprilFools()) {
-				return "Vide Octavius James";
-			}*/
-			return new List<string>() {
-				"Aini",
-				"Citaya",
-				"So-ru",
-				"Vid-ka",
-				"Akvavit'a",
-				"Rems'a",
-				"Miyt'ah",
-				"Genni"
-			};
-		}
+		public override List<string> SetNPCNameList() => this.GetGivenName().ToList();
+		/*[
+			"Aini",
+			"Citaya",
+			"So-ru",
+			"Vid-ka",
+			"Akvavit'a",
+			"Rems'a",
+			"Miyt'ah",
+			"Genni"
+		];*/
 		public override bool CheckConditions(int left, int right, int top, int bottom) {
 			//Terraria.WorldGen.ScoreRoom();
 			return base.CheckConditions(left, right, top, bottom);

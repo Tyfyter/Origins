@@ -99,8 +99,8 @@ Dialogue: {
 		StandardDialogue3: There's nothing really freaky about me, nothing at all...
 		StandardDialogue4: For my next experiment, I want to try my mixtures on living organisms.
 		InteractionWitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
-		InteractionWitchDoctor2: Yeah, I know {NPCName}. He's kinda from the same tribe.
-		InteractionPartyDemolitionist: I should probably tell {NPCName} that he could use peat as snappers.
+		InteractionWitchDoctor2: Yeah, I know [npcname:WitchDoctor]. He's kinda from the same tribe.
+		InteractionPartyDemolitionist: I should probably tell [npcname:Demolitionist] that he could use peat as snappers.
 		InteractionParty: I never would've thought there'd be this side of me.
 		InteractionWind: Good thing brine is too heavy to be mist. Right?
 		InteractionStorm1: I guess I won't be swimming today.
@@ -127,34 +127,6 @@ Dialogue: {
 		BloodMoon1: Accounting for the various IQT pathway inconsistencies in a single Cuboid matrix alone is certainly a lot, Tourist... what could you be thinking?
 		BloodMoon2: Yeah, my current "situation" sucks right now, but how may I be of assistance, Terrarian?
 		StrangeComputerPresent: Oh wow, one smart cookie he is to have preserved himself in your Fabricator.
-	}
-
-	Defiled_Effigy: {
-		FirstDialogue: Humble of Terrarian being spared. Hopeful my abilities prove useful.
-		StandardDialogue1: All coin proceeds to ‘Church of Defiled’. Negatory, coin is only much-needed material.
-		StandardDialogue2: Waste no time, {0}. Our vision needs followers.
-		StandardDialogue3: What is sought? Items, knowledge, or other?
-		StandardDialogue4: Survival is mandatory, desire is optional. Do you survive or desire?
-		StandardDialogue5: A world absent of us is that of error. Order and unity purpose we offer, correct?
-		DefiledNotPresent: Concerned. You- I do not understand...
-		InteractionGuide1: "{NPCName} does not tell much of past, does he?"
-		InteractionGuide2: Ever wonder why demons have doll of {NPCName}? I know...
-		InteractionDryad1: "{NPCName}'s kind attempted destroying us during infancy. Align with her morals, you do?"
-		InteractionDryad2: "{NPCName}'s way of life primitive. No end to ours. Remember that."
-		InteractionParty: Too sad to celebrate. {NPCName} will understand...
-		InteractionWind: *Excessive respsiration amplifies...* Apologies, we dislike pollen...
-		InteractionStorm1: Rain permits our chunks shift optimally. Vowed ecology-safe by rejecting petrol.
-		InteractionStorm2: Considering sub-optimal metal-material... Neglected consequences of electric shock.
-		InteractionGraveYard1: Death is an unrealistic outcome to life...
-		InteractionGraveYard2: Why offer energy back? Become circle of life.
-		BloodMoon1: We feel... rather excellent tonight.
-		BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
-		BloodMoon3: *Chittering.*
-		BloodMoon4: Blood Moon, a welcome sight.
-		LowSpread: Spread is {%}. Lethargic, material urgently required.
-		Spread20: Spread is {%}. The world aligns with our image, but more material is desired.
-		Spread50: Spread is {%}. The world sings harmonious, but more material is desired.
-		Spread100: Spread is {%}. A perfect world… we wonder if more material is acquirable…
 	}
 
 	Demolitionist: {

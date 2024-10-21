@@ -50,49 +50,23 @@ namespace Origins.NPCs.TownNPCs {
 			);
 		}
 		public override void PostAI() {
-			NPC.position -= NPC.velocity;
+			NPC.position.X -= NPC.velocity.X;
 			NPC.spriteDirection = -Math.Sign(NPC.velocity.X);
 		}
 		public override string GetChat() {
-			return "";
 			WeightedRandom<string> chat = new();
 
-			int otherNPC = NPC.FindFirstNPC(NPCID.WitchDoctor);
-			if (otherNPC >= 0) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor1", Main.npc[otherNPC].GivenName));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor2", Main.npc[otherNPC].GivenName));
+			chat.AddNPCDialogue(Name, "Standard");
+			chat.AddOtherNPCDialogue(Name, NPCID.Guide);
+			chat.AddOtherNPCDialogue(Name, NPCID.Dryad);
+			if (chat.AddOtherNPCDialogue(Name, NPCID.PartyGirl) && BirthdayParty.PartyIsUp) {
+				chat.AddNPCDialogue(Name, "Party");
 			}
-			if (BirthdayParty.PartyIsUp) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionParty", Main.npc[otherNPC].GivenName));
-
-				otherNPC = NPC.FindFirstNPC(NPCID.Demolitionist);
-				if (otherNPC >= 0) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionPartyDemolitionist", Main.npc[otherNPC].GivenName));
-				}
-			}
-			if (Main.WindyEnoughForKiteDrops) {
-				if (ChildSafety.Disabled && OriginsModIntegrations.CheckAprilFools()) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.April_Fools.Acid_Freak.InteractionWimd"));
-				} else {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWind"));
-				}
-			}
-			if (Main.IsItStorming) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm2"));
-			}
-			if (Main.bloodMoon) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.BloodMoon1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.BloodMoon2"));
-			}
-			if (Main.SceneMetrics.EnoughTilesForGraveyard) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionGraveYard"));
-			}
-
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue1", Main.LocalPlayer.name));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue2"));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue3"));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue4"));
+			if (OriginSystem.tDefiled == 0) chat.AddNPCDialogue(Name, "DefiledNotPresent");
+			if (Main.IsItStorming) chat.AddNPCDialogue(Name, "Storm");
+			else if (Main.WindyEnoughForKiteDrops) chat.AddNPCDialogue(Name, "Wind");
+			if (Main.LocalPlayer.ZoneGraveyard) chat.AddNPCDialogue(Name, "Graveyard");
+			if (Main.bloodMoon) chat.AddNPCDialogue(Name, "BloodMoon");
 
 			return chat; // chat is implicitly cast to a string.
 		}
