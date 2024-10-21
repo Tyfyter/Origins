@@ -258,7 +258,7 @@ Stylist: {
 		Inquire: Ever since I was captured by those spiders I’ve run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
 		Start: Looking sharp, Terrarian.
 		ReadyToComplete: Do you have the special stuff for me?
-		Complete: Mmm! Wonderful! Oh, I can do some many more daring styles with this stuff again.
+		Complete: Mmm! Wonderful! Oh, I can do some more daring styles with this stuff again.
 	}
 
 	Comb: {
@@ -274,10 +274,10 @@ Stylist: {
 			- [qs{1}: Give Comb to <npcname:Stylist>]
 			Unlocks: 2 new hairstyles
 			'''
-		Inquire: Hey [player:_]. I've been really need a comb so I can properly cut some hair since my other one broke. Yes, I pulled a lot of hair out last Blood Moon, but anyway, yeah could you do that for me?
+		Inquire: Hey [player:_]. I've been needing a comb so I can properly cut some hair since my other one broke. Yes, I pulled a lot of hair out last Blood Moon, but anyway, yeah could you do that for me?
 		Start: Thank you. I'll try not to rip my hair out this time.
 		ReadyToComplete: Ah yes! Do you have a comb?
-		Complete: Slick moves, Terrarian. I really appreciate it. I've come up with two new styles since we last saw each other that you might be interest in!
+		Complete: Slick moves, Terrarian. I really appreciate it. I've come up with two new styles since we last saw each other that you might be interested in!
 	}
 
 	Holiday_Hair_Dye: {

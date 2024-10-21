@@ -59,23 +59,23 @@ Riven_Penguin.DisplayName: "{§Riven} Penguin"
 Barnacle_Bunny.DisplayName: Barnacle Bunny
 Bile_Thrower.DisplayName: Bile Thrower
 
-Acid_Freak: {
-	DisplayName: Acid Freak
+Brine_Fiend: {
+	DisplayName: Brine Fiend
 
 	TownNPCMood: {
-		Content: "{$Mods.Origins.TownNPCMood.Acid_Freak.Content}"
-		NoHome: "{$Mods.Origins.TownNPCMood.Acid_Freak.NoHome}"
-		FarFromHome: "{$Mods.Origins.TownNPCMood.Acid_Freak.FarFromHome}"
-		LoveSpace: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveSpace}"
-		DislikeCrowded: "{$Mods.Origins.TownNPCMood.Acid_Freak.DislikeCrowded}"
-		HateCrowded: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateCrowded}"
-		LoveBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveBiome}"
-		LikeBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome}"
-		HateBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateBiome}"
-		LoveNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveNPC}"
-		LikeNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeNPC}"
-		DislikeNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.DislikeNPC}"
-		HateNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateNPC}"
+		Content: "{$Mods.Origins.TownNPCMood.Brine_Fiend.Content}"
+		NoHome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.NoHome}"
+		FarFromHome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.FarFromHome}"
+		LoveSpace: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LoveSpace}"
+		DislikeCrowded: "{$Mods.Origins.TownNPCMood.Brine_Fiend.DislikeCrowded}"
+		HateCrowded: "{$Mods.Origins.TownNPCMood.Brine_Fiend.HateCrowded}"
+		LoveBiome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LoveBiome}"
+		LikeBiome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome}"
+		HateBiome: "{$Mods.Origins.TownNPCMood.Brine_Fiend.HateBiome}"
+		LoveNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LoveNPC}"
+		LikeNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeNPC}"
+		DislikeNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.DislikeNPC}"
+		HateNPC: "{$Mods.Origins.TownNPCMood.Brine_Fiend.HateNPC}"
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}

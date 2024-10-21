@@ -27,10 +27,9 @@ Items: {
 		'''
 		Doesn't actually flay mines
 		Releases a barrage of canisters when swung
-		60% chance not to consume ammo
+		wrong% chance not to consume ammo
 		'''
 	Hot_Potato.Tooltip: "'Be careful, it's a potato'"
-	Grenade_Tube.DisplayName: Noob Tube
 	Bottled_Brine.DisplayName: Pickle Jar
 	No_U_Card.Tooltip: The greatest 'fuck you' ever
 	Kruncher.DisplayName: Crunker
@@ -38,7 +37,7 @@ Items: {
 	Suspicious_Looking_Pebble.DisplayName: Sus Looking Unusually Round Pebble
 }
 
-Dialogue.Acid_Freak.InteractionWind: It fucken WIMDY!
+Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!
 
 DeathMessage: {
 	Torn_0: "{0} beezechurgered."
@@ -58,5 +57,9 @@ Biomes: {
 	Defiled_Wastelands_Ice_Biome: {
 		DisplayName: "{§Defiled_Wastelands} Signature Patent-Pending Cold-Park"
 		TownNPCDialogueName: the {§Defiled_Wastelands} Signature Patent-Pending Cold-Park
+
+	Riven_Hive_Ocean_Biome: {
+		DisplayName: "{§Riven_Hive} but wetter"
+		TownNPCDialogueName: the place where Riven Jesus, our savior: {§Riven_Hive} can be found
 	}
 }
