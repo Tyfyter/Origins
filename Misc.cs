@@ -728,7 +728,7 @@ namespace Origins {
 		public virtual Color? GetGlowmaskTint(Player player) => null;
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
 			Texture2D texture = TextureAssets.Item[Item.type].Value;
-			spriteBatch.Draw(texture, Item.position - Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, Item.position - Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default, scale, SpriteEffects.None, 0f);
 			return false;
 		}
 	}
@@ -1600,12 +1600,6 @@ namespace Origins {
 		public static Rectangle Frame(this AutoLoadingAsset<Texture2D> asset, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			return asset.Value.Frame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
 		}
-		public static float AngleDif(float alpha, float beta, out int dir) {
-			float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
-			dir = ((phi > MathHelper.Pi) ^ (alpha > beta)) ? -1 : 1;
-			float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
-			return distance;
-		}
 		public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
 			return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
 		}
@@ -1930,14 +1924,6 @@ namespace Origins {
 			self.identity = id;
 			self.owner = owner;
 		}
-		[Obsolete("No longer incompatible with multiplayer, but just use AnimationType")]
-		public static void CloneFrame(this NPC self, int type, int frameHeight) {
-			int t = self.type;
-			self.type = type;
-			self.position += self.netOffset;
-			self.VanillaFindFrame(frameHeight, false, type);
-			self.type = t;
-		}
 		public static void DoFrames(this NPC self, int counterMax) {
 			int heightEtBuffer = self.frame.Height;
 			self.frameCounter += 1;
@@ -2072,7 +2058,7 @@ namespace Origins {
 
 		public static ItemDropAttemptResult ResolveRule(IItemDropRule rule, DropAttemptInfo info) {
 			if (!rule.CanDrop(info)) {
-				ItemDropAttemptResult itemDropAttemptResult = default(ItemDropAttemptResult);
+				ItemDropAttemptResult itemDropAttemptResult = default;
 				itemDropAttemptResult.State = ItemDropAttemptResultState.DoesntFillConditions;
 				ItemDropAttemptResult itemDropAttemptResult2 = itemDropAttemptResult;
 				ResolveRuleChains(rule, info, itemDropAttemptResult2);
@@ -3041,7 +3027,6 @@ namespace Origins {
 		}
 		/// <summary>
 		/// checks if a convex polygon defined by a set of line segments intersects a rectangle
-		/// uses <see cref="GetEdgeSignedDistance">
 		/// </summary>
 		/// <param name="lines"></param>
 		/// <param name="hitbox"></param>

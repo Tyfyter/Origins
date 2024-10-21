@@ -158,7 +158,7 @@ Zoologist: {
 			- [qs{3}: Give critters to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			'''
-		Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring ‘em back to me? Yah? Thank yah, hun! Oh and I’ll give you some discounts for being nice!
+		Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring 'em back to me? Yah? Thank yah, hun! Oh and I’ll give you some discounts for being nice!
 		Start: YEE! Yes! Thank you, friend!
 		ReadyToComplete: You save some critters, ya?
 		Complete: Awww, you picked some good ones, friend! Thank you for da help!
@@ -177,7 +177,7 @@ Zoologist: {
 			- [qs{1}: Give the squirrel to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			'''
-		Inquire: This is gettin' out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals ‘round here! Put an end to this and retrieve me one!
+		Inquire: This is gettin' out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals 'round here! Put an end to this and retrieve me one!
 		Start: Yes, just one!
 		ReadyToComplete: Yah find a beauty now?
 		Complete: Oh, bless ya heart! Because of you, I can have a little piece o' mind. Of course, saving one ain't gonna change much, but I'm just glad I can trust yah! Da hero we all need!
@@ -196,7 +196,7 @@ Zoologist: {
 			- [qs{3}: Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
 			Reward: [i:Origins/Eccentric_Stone]
 			'''
-		Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that’s a whole ‘nother can ‘o worms. Get it? Can ‘o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they living creatures too!
+		Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that’s a whole 'nother can 'o worms. Get it? Can 'o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they living creatures too!
 		Start: Thank ya again, hun!
 		ReadyToComplete: Got some pretty glowin' worms for me?
 		Complete: You really are a cool {0}! Well, I figure for all dat trouble, I'll give yah this cool looking rock I don't know how I got! Hope you like it!
