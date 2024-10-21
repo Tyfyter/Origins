@@ -59,52 +59,94 @@ Riven_Penguin.DisplayName: "{§Riven} Penguin"
 Barnacle_Bunny.DisplayName: Barnacle Bunny
 Bile_Thrower.DisplayName: Bile Thrower
 
-Acid_Freak: {
-	DisplayName: Acid Freak
-
-	TownNPCMood: {
-		Content: "{$Mods.Origins.TownNPCMood.Acid_Freak.Content}"
-		NoHome: "{$Mods.Origins.TownNPCMood.Acid_Freak.NoHome}"
-		FarFromHome: "{$Mods.Origins.TownNPCMood.Acid_Freak.FarFromHome}"
-		LoveSpace: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveSpace}"
-		DislikeCrowded: "{$Mods.Origins.TownNPCMood.Acid_Freak.DislikeCrowded}"
-		HateCrowded: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateCrowded}"
-		LoveBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveBiome}"
-		LikeBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome}"
-		HateBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateBiome}"
-		LoveNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveNPC}"
-		LikeNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeNPC}"
-		DislikeNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.DislikeNPC}"
-		HateNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateNPC}"
-		LikeNPC_Princess: I like {NPCName}.
-		Princess_LovesNPC: I like {NPCName}.
-	}
-
-	Census.SpawnCondition: Conditions unknown
-}
-
 Defiled_Effigy: {
 	DisplayName: Defiled Effigy
 
 	TownNPCMood: {
-		Content: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.Content}"
-		NoHome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.NoHome}"
-		FarFromHome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.FarFromHome}"
-		LoveSpace: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveSpace}"
-		DislikeCrowded: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeCrowded}"
-		HateCrowded: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateCrowded}"
-		LoveBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveBiome}"
-		LikeBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeBiome}"
-		HateBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateBiome}"
-		LoveNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveNPC}"
-		LikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeNPC}"
-		DislikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeNPC}"
-		HateNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateNPC}"
-		LikeNPC_Princess: We find {NPCName}'s face adorable.
-		Princess_LovesNPC: The Defiled is my favorite of the world evils. Take that Corruption nostalgics!
+		Content: We aspire to waste time presently.
+		NoHome: Place of rest protects chunks from elements.
+		FarFromHome: Terrarian, we are lost. Where resides village?
+		LoveSpace: Tension low, healthy heart rate.
+		DislikeCrowded: We are not appreciated here, Terrarian... allow space.
+		HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
+		Ocean: Barrier to our prison rests beyond, Terrarian.
+		LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us.
+		LikeBiome: Anywhere remains optimal for home, so long as we are present.
+		HateBiome: Our chunks decay on this ground. Help us, Terrarian.
+		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
+		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
+		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
+		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
+		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
+		
+		LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
+		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
+		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
+		
+		DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
+		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
+		
+		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+
+	Dialogue: {
+		FirstDialogue: Humble of Terrarian being spared. Hopeful my abilities prove useful.
+		Standard1: All coin proceeds to ‘Church of Defiled’. Negatory, coin is only much-needed material.
+		Standard2: Waste no time, [player:_]. Our vision needs followers.
+		Standard3: What is sought? Items, knowledge, or other?
+		Standard4: Survival is mandatory, desire is optional. Do you survive or desire?
+		Standard5: A world absent of us is that of error. Order and unity purpose we offer, correct?
+		DefiledNotPresent: Concerned. You- I do not understand...
+		Guide1: "[npcname:Guide] does not tell much of past, does he?"
+		Guide2: Ever wonder why demons have doll of [npcname:Guide]? I know...
+		Dryad1: "[npcname:Dryad]'s kind attempted destroying us during infancy. Align with her morals, you do?"
+		Dryad2: "[npcname:Dryad]'s way of life primitive. No end to ours. Remember that."
+		Party: Too sad to celebrate. [npcname:PartyGirl] will understand...
+		Wind: *Excessive respsiration amplifies...* Apologies, we dislike pollen...
+		Storm1: Rain permits our chunks shift optimally. Vowed ecology-safe by rejecting petrol.
+		Storm2: Considering sub-optimal metal-material... Neglected consequences of electric shock.
+		Graveyard1: Death is an unrealistic outcome to life...
+		Graveyard2: Why offer energy back? Become circle of life.
+		BloodMoon1: We feel... rather excellent tonight.
+		BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
+		BloodMoon3: *Chittering.*
+		BloodMoon4: Blood Moon, a welcome sight.
+		LowSpread: Spread is {%}. Lethargic, material urgently required.
+		Spread20: Spread is {%}. The world aligns with our image, but more material is desired.
+		Spread50: Spread is {%}. The world sings harmonious, but more material is desired.
+		Spread100: Spread is {%}. A perfect world… we wonder if more material is acquirable…
 	}
 
 	Census.SpawnCondition: After sparing the Defiled
+}
+
+Cubekon_Tinkerer: {
+	TownNPCMood: {
+		Content: Hm, I feel like hanging out today, Tourist.
+		NoHome: My quantum storage backpack works just fine, but I'd still like to set up shop and tinker around, ya' know?
+		FarFromHome: I've collected enough scrap for today. Time to return back to the 'shop.
+		LoveSpace: I feel like a kid again... all this room is givin' me ideas. Not the kind you'd be a fan of either.
+		DislikeCrowded: I don't really enjoy hating on things, but I sure would love some privacy right now.
+		LikeBiome: This place is quite interesting. I wonder if there's any scrap lying around?
+		DislikeBiome_Evil: I'm not into the creepy stuff but thanks for the offer, Terrarian.
+		DislikeBiome_Ashen: This place would be really fun to work in, but it doesn't give me the good feels.
+		DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
+		
+		LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
+		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
+		
+		LikeNPC: "{NPCName} is decent folk. They seemed to be in a good mood today..."
+		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
+		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
+		
+		DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
+	}
 }
 
 PartyGirl.TownNPCMood_PartyGirl.LoveBiome_Space: I finally got to go to space!!!
@@ -124,23 +166,43 @@ Etherealizer_P.DisplayName: Etherealizer P
 Defiled_Watcher.DisplayName: Defiled Watcher
 
 Brine_Fiend: {
-	DisplayName: Brine_ Fiend
-
 	TownNPCMood: {
-		Content: I am content.
-		NoHome: I hate not having a home.
-		FarFromHome: I am too far from home.
-		LoveSpace: I love having so much space.
-		DislikeCrowded: I dislike how crowded I am.
-		HateCrowded: I hate how crowded I am.
-		LoveBiome: I love {BiomeName}.
-		LikeBiome: I like {BiomeName}.
+		Content: I feel like swimming in the Brine Pool today.
+		NoHome: Some shelter would be nice, but I am used to hostile environments.
+		FarFromHome: I must return home. I need to check on my trophies!
+		LoveSpace: The sparsity is very different from the crowded Jungles. Very different.
+		DislikeCrowded: My brews are worsening with the presence of many others...
+		HateCrowded: This is way worse than my ventures into the Brine.
+		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
+		LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		
+		LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
+		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
+		
+		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
+		# HateBiome_Mushroom: This place... Truffle does not even taste good.
+		
+		LikeBiome_Evil: The perfect place to dissolve everything down with my mega-alkaline brew!
+		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
+		LoveNPC: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		
+		LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		
+		DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		
+		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
 		HateBiome: I hate {BiomeName}.
-		LoveNPC: I love {NPCName}.
-		LikeNPC: I like {NPCName}.
-		DislikeNPC: I dislike {NPCName}.
-		HateNPC: I hate {NPCName}.
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
+
+	DisplayName: Brine Fiend
+	Census.SpawnCondition: Conditions unknown
 }

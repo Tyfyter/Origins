@@ -38,6 +38,7 @@ using Terraria.ObjectData;
 using static System.Net.Mime.MediaTypeNames;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameInput;
+using Microsoft.Xna.Framework.Input;
 
 namespace Origins {
 	#region classes
@@ -3218,6 +3219,39 @@ namespace Origins {
 			Brick,
 			Slab,
 			Tile
+		}
+		public static bool AddOtherNPCDialogue(this WeightedRandom<string> random, string thisNPC, int otherNPCType) {
+			if (NPC.AnyNPCs(otherNPCType)) {
+				random.AddNPCDialogue($"Mods.Origins.NPCs.{thisNPC}.Dialogue.{NPCID.Search.GetName(otherNPCType)}");
+				return true;
+			}
+			return false;
+		}
+		public static void AddNPCDialogue(this WeightedRandom<string> random, string thisNPC, string key) {
+			random.AddNPCDialogue($"Mods.Origins.NPCs.{thisNPC}.Dialogue.{key}");
+		}
+		public static void AddNPCDialogue(this WeightedRandom<string> random, string key) {
+			if (Language.Exists(key)) {
+				random.Add(Language.GetTextValue(key));
+			} else {
+				int i = 1;
+				while (Language.Exists(key + i)) {
+					random.Add(Language.GetTextValue(key + i));
+					i++;
+				}
+			}
+		}
+		public static IEnumerable<string> GetGivenName(this ModNPC npc) {
+			string key = $"Mods.Origins.NPCs.{npc.Name}.Name";
+			if (Language.Exists(key)) {
+				yield return Language.GetTextValue(key);
+			} else {
+				int i = 1;
+				while (Language.Exists(key + i)) {
+					yield return Language.GetTextValue(key + i);
+					i++;
+				}
+			}
 		}
 	}
 	public static class ContentExtensions {

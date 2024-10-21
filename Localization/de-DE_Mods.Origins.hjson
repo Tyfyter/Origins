@@ -99,8 +99,8 @@ Dialogue: {
 		// StandardDialogue3: There's nothing really freaky about me, nothing at all...
 		// StandardDialogue4: For my next experiment, I want to try my mixtures on living organisms.
 		// InteractionWitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
-		// InteractionWitchDoctor2: Yeah, I know {NPCName}. He's kinda from the same tribe.
-		// InteractionPartyDemolitionist: I should probably tell {NPCName} that he could use peat as snappers.
+		// InteractionWitchDoctor2: Yeah, I know [npcname:WitchDoctor]. He's kinda from the same tribe.
+		// InteractionPartyDemolitionist: I should probably tell [npcname:Demolitionist] that he could use peat as snappers.
 		// InteractionParty: I never would've thought there'd be this side of me.
 		// InteractionWind: Good thing brine is too heavy to be mist. Right?
 		// InteractionStorm1: I guess I won't be swimming today.
@@ -110,31 +110,13 @@ Dialogue: {
 		// BloodMoon2: I've had enough. Brine will be spilt today.
 	}
 
-	ATACS: {
-		// Pickup_0: Greetings again, Terrarian. Oh, this is quite an improvement.
-		// Pickup_1: Greetings again, Terrarian.
-		// PotatoNearby: Conflicting authority, Terrarian. I do advise purging the other unit.
-		// ProtomindNearby: Conflicting authority, Terrarian. The Protomind may be an advanced model but that unit will hinder your abilities.
-		// CubekonTinkererNearby: W-what? My creator is still alive?
-		// Death_0: Oh. According to my calculations, your death was highly improbable.
-		// Death_1: See you again, Terrarian.
-		// Death_2: Terrarians never die...
-		// Combat_0: Providing precision support!
-		// Combat_1: This enemy is no match for you, Terrarian.
-		// Combat_2: I estimate a success rate no ordinary computer could compute. You got this.
-		// GoodAim_0: That's it, Terrarian.
-		// GoodAim_1: Strike at them now.
-		// GoodAim_2: Bullseye.
-		// GoodAim_3: Now's your chance.
-	}
-
 	Cubekon_Tinkerer: {
 		// StandardDialogue1: Remember to smile, Terrarian.
-		// StandardDialogue2: Usually I'm the one who likes to put up a show, but man, the Cubekons had one in for me that day...
+		// StandardDialogue2: Usually I'm the one who likes to put up a show, but man, the Cubekons had one in for me that day.
 		// StandardDialogue3: How can I make your day, Tourist?
-		// StandardDialogue4: I will tell yah. Cuboid anatomy ain't easy to understand, even with my knowledge...
+		// StandardDialogue4: I will tell yah, cuboid anatomy ain't easy to understand, even with my knowledge...
 		// StandardDialogue5: Get your laughs while you can...
-		// InteractionWizard: I really dont know what {NPCName}'s problem is. Could you lighten his mood up for me, Tourist?
+		// InteractionWizard: I really don't know what {NPCName}'s problem is. Could you lighten his mood up for me, Tourist?
 		// InteractionTaxCollector: I really wonder what goes on in Mr. {NPCName}'s head sometimes. I think he may be all out of laughs.
 		// InteractionPartyTavernKeep: Now is the time for laughs and cheer! I could really do for some Irish Red Ale... oh, there he is.
 		// InteractionParty: When it's a party, it's hard not to smile...
@@ -145,35 +127,6 @@ Dialogue: {
 		// BloodMoon1: Accounting for the various IQT pathway inconsistencies in a single Cuboid matrix alone is certainly a lot, Tourist... what could you be thinking?
 		// BloodMoon2: Yeah, my current "situation" sucks right now, but how may I be of assistance, Terrarian?
 		// StrangeComputerPresent: Oh wow, one smart cookie he is to have preserved himself in your Fabricator.
-		// ATACSPresent: Look what you did to my baby. Well, I have my own updated version of him anyway. He seems he's starting to like you anyway, Tourist.
-	}
-
-	Defiled_Effigy: {
-		// FirstDialogue: Humble of Terrarian, being spared. Hopeful my abilities prove useful.
-		// StandardDialogue1: All coin proceeds to ‘Church of Defiled’. Negatory, coin is only much-needed material.
-		// StandardDialogue2: Waste no time, {0}. Our vision needs followers.
-		// StandardDialogue3: What is sought? Items, knowledge, or other?
-		// StandardDialogue4: Survival is mandatory, desire is optional. Do you survive or desire?
-		// StandardDialogue5: A world absent of us is that of error. Order and unity purpose we offer, correct?
-		// DefiledNotPresent: Concerned. You- I do not understand...
-		// InteractionGuide1: "{NPCName} does not tell much of past, does he?"
-		// InteractionGuide2: Ever wonder why demons have doll of {NPCName}? I know...
-		// InteractionDryad1: "{NPCName}'s kind attempted destroying us during infancy. Align with her morals, you do?"
-		// InteractionDryad2: "{NPCName}'s way of life primitive. No end to ours. Remember that."
-		// InteractionParty: Too sad to celebrate. {NPCName} (party girl) will understand...
-		// InteractionWind: *Excessive respsiration amplifies...* Apologies, we dislike pollen...
-		// InteractionStorm1: Rain permits our chunks shift optimally. Vowed ecology-safe by rejecting petrol.
-		// InteractionStorm2: Considering sub-optimal metal-material... Neglected consequences of electric shock.
-		// InteractionGraveYard1: Death is an unrealistic outcome to life...
-		// InteractionGraveYard2: Why offer energy back? Become circle of life.
-		// BloodMoon1: We feel... rather excellent tonight.
-		// BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
-		// BloodMoon3: *Chittering.*
-		// BloodMoon4: Blood Moon, a welcome sight.
-		// LowSpread: Spread is {%}. Lethargic, material urgently required.
-		// Spread20: Spread is {%}. The world aligns with our image, but more material is desired.
-		// Spread50: Spread is {%}. The world sings harmonious, but more material is desired.
-		// Spread100: Spread is {%}. A perfect world… we wonder if more material is acquirable…
 	}
 
 	Demolitionist: {
@@ -290,8 +243,8 @@ Dialogue: {
 		// Summoned_0: What.
 		// Summoned_1: Where in galyet is Oyir?
 		// Summoned_2: Who are you? Where am I? What EVEN AM I?!
-		// Idle_0: This is nothing like Oin.
-		// Idle_1: "'Terrarian', that's what they call you? 'Venisoul', that's what I am."
+		// Idle_0: This is nothing like homeworld.
+		// Idle_1: "'Terrarian', that's what they call you? 'Venisoul', that's what they call me."
 		// Idle_2: Yes. I am a Caliph of the Venisoulian Caliphate, why dare question?
 		// Idle_3: WHO TURNED ME INTO A MARKETABLE PLUSHIE?
 		// Dog_0: Please no.
@@ -328,106 +281,15 @@ Dialogue: {
 	}
 
 	WitheringDefiled: {
-		// Idle_0: Want to be my friend..?
-		// Idle_1: Come play with me...
-		// Idle_2: Please be my friend...
-		// Idle_3: Don't leave me...
-		// Idle_4: Stop running- away...
-		// Death_0: Noo...
-		// Death_1: Why...
-		// Death_2: IT HURTS!
-		// Death_3: Please...
-	}
-}
-
-TownNPCMood: {
-	Acid_Freak: {
-		// Content: I feel like swimming in the Brine Pool today.
-		// NoHome: Some shelter would be nice, but I am used to hostile environments.
-		// FarFromHome: I must return home. I need to check on my trophies!
-		// LoveSpace: The sparsity is very different from the crowded Jungles. Very different.
-		// DislikeCrowded: My brews are worsening with the high presence of others...
-		// HateCrowded: This is way worse than my ventures into the Brine.
-		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
-		// LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
-		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
-		
-		// LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
-		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
-		
-		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
-		# HateBiome_Mushroom: This place... Truffle does not even taste good.
-		
-		// LikeBiome_Evil: The perfect place to melt everything down with my mega-acid brew!
-		// LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		// LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		// LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		// LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		// LoveNPC: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
-		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
-		
-		// LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
-		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
-		
-		// DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
-		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
-		
-		// HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
-	}
-
-	Cubekon_Tinkerer: {
-		// Content: Hm, I feel like hanging out today, Tourist.
-		// NoHome: My quantum storage backpack works just fine, but I'd still like to set up shop and tinker around, ya' know?
-		// FarFromHome: I've collected enough scrap for today. Time to return back to the 'shop.
-		// LoveSpace: I feel like a kid again... all this room is givin' me ideas. Not the kind you'd be a fan of either...
-		// DislikeCrowded: I don't really enjoy hating on things, but I sure would love some privacy right now.
-		// LikeBiome: This place is quite interesting. I wonder if there's any scrap lying around?
-		// DislikeBiome_Evil: I'm not into the creepy stuff, but thanks for the offer, Terrarian.
-		// DislikeBiome_Ashen: This place would be really fun to work in, but it doesn't give me the good feels.
-		// DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		// DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		// DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		// DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
-		
-		// LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
-		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
-		
-		// LikeNPC: "{NPCName} is decent folk. They seemed to be in a good mood today..."
-		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
-		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
-		
-		// DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
-	}
-
-	Cyborg: {
-	}
-
-	Defiled_Effigy: {
-		// Content: We aspire to waste time presently.
-		// NoHome: Place of rest protects chunks from elements...
-		// FarFromHome: Terrarian, we are lost. Where resides village?
-		// LoveSpace: Tension low, healthy heart rate.
-		// DislikeCrowded: We are not appreciated here, Terrarian... allow space.
-		// HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
-		// Ocean: Barrier to our prison rests beyond, Terrarian...
-		// LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us...
-		// LikeBiome: Anywhere remains optimal for home, so long as we are present…
-		// HateBiome: Our chunks decay on this ground. Help us, Terrarian.
-		# HateBiome_Mushroom: This place... Truffle does not even taste good.
-		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
-		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
-		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
-		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
-		
-		// LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
-		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
-		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
-		
-		// DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
-		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
-		
-		// HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
+		// Idle_0: Cease this violence.
+		// Idle_1: We're not done yet.
+		// Idle_2: We are the same.
+		// Idle_3: Leave a spot for you.
+		// Idle_4: Running away won't help either of us.
+		// Death_0: We're still here.
+		// Death_1: Resistance is futile.
+		// Death_2: One day.
+		// Death_3: We keep going anyway.
 	}
 }
 
@@ -435,7 +297,7 @@ Interface: {
 	// Journal: Journal
 	// Quests: Quests
 	// AcceptQuest: Accept
-	// CompleteQuestGeneric: Complete Quest
+	// CompleteQuestGeneric: Complete quest
 }
 
 DeathMessage: {
@@ -480,16 +342,16 @@ AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		// DisplayName: "{§Defiled_Wastelands}"
 		// Description: An alien entity that seeks out its growth in the Terrarian realm with its own way of life.
-		// GenPassName: Generating Wastelands
+		// GenPassName: Defiledifying
 	}
 
 	Riven_Hive_Alt_Biome: {
 		// DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
 		// Description: A natural biome manifested by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
-		// GenPassName: Rivenating
+		// GenPassName: Blue Lobsterating
 	}
 
-	// Ashen_Alt_Biome.DisplayName: Ashen Biome
+	// Ashen_Alt_Biome.DisplayName: Ashen Factory
 }
 
 GuideAdvice: {
@@ -987,8 +849,8 @@ Buffs: {
 	}
 
 	Fresh_Meat_Buff: {
-		// DisplayName: Fresh Meat Buff
-		// Description: Mods.Origins.Buffs.Fresh_Meat_Buff.Description
+		// DisplayName: Meat Doggin'
+		// Description: Wut de dog doin'
 	}
 }
 
@@ -1584,33 +1446,33 @@ Keybinds: {
 
 Configs: {
 	OriginClientConfig: {
-		// DisplayName: Client Settings
+		// DisplayName: Client settings
 
 		SetBonusDoubleTap: {
-			// Label: Use Double Tap For Set Bonus Abilities
-			// Tooltip: ""
+			// Label: Use Double Tap for set bonus abilities
+			// Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
 		}
 
 		// Headers.Journal: Journal
 
 		TabbyJournal: {
-			// Label: Alternate Journal Layout
+			// Label: Alternate journal layout
 			// Tooltip: Currently the "normal" layout is still unimplemented
 		}
 
 		OpenJournalOnUnlock: {
-			// Label: Open Journal Entries on Unlock
+			// Label: Open Journal entries on Unlock
 			// Tooltip: ""
 		}
 
 		AnimatedRavel: {
-			// Label: Animated Ravel Transformation
-			// Tooltip: ""
+			// Label: Animated Ravel transformation
+			// Tooltip: Makes Ravel's transformation flashier
 		}
 
 		ExtraGooeyRivenGores: {
 			// Label: Extra Gooey Riven Gores
-			// Tooltip: ""
+			// Tooltip: More visually appealing way to kick Riven-butt
 		}
 
 		debugMenuButton: {
@@ -1620,8 +1482,8 @@ Configs: {
 		}
 
 		TwentyFourHourTime: {
-			// Label: 24 Hour Time
-			// Tooltip: Makes Origins' clocks display time in a 24 hour format
+			// Label: 24-hour time
+			// Tooltip: Makes Origins' clocks display time in a 24-hour format
 		}
 
 		DefaultJournalMode: {
@@ -1641,12 +1503,12 @@ Configs: {
 
 		WoodBuffs: {
 			// Label: Infected Wood Items
-			// Tooltip: ""
+			// Tooltip: Whether or not vanilla/modded wooden items recieve buffs from Origins
 		}
 
 		GrassMerge: {
 			// Label: Universal Grass Merge
-			// Tooltip: ""
+			// Tooltip: Forces grass to merge with other types of grass
 		}
 
 		DebugMode: {
@@ -1675,7 +1537,7 @@ Configs: {
 
 		StatJSONPath: {
 			// Label: Stat JSON Path
-			// Tooltip: the path to put the json files in
+			// Tooltip: The path to put the JSON files in
 		}
 
 		ExportItemPage: {
@@ -1749,22 +1611,22 @@ Configs: {
 		}
 
 		ExportAllNPCStatsJSON: {
-			// Label: Export All NPC Stats JSON
+			// Label: Export all NPC stats JSON
 			// Tooltip: ""
 		}
 
 		ExportNPCStatsJSON: {
-			// Label: Export NPC Stats JSON
+			// Label: Export NPC stats JSON
 			// Tooltip: ""
 		}
 
 		ExportAllNPCImages: {
-			// Label: Export All NPC Images
+			// Label: Export all NPC images
 			// Tooltip: ""
 		}
 
 		ExportNPCImages: {
-			// Label: Export NPC Images
+			// Label: Export NPC images
 			// Tooltip: ""
 		}
 	}
@@ -1786,7 +1648,7 @@ SetBonuses: {
 		''' */
 	/* Amber:
 		'''
-		-38% explosive blast radius.
+		-38% explosive blast radius
 		All explosives are preserved in amber and release amber shards upon detonation
 		Amber shards slow enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
 		''' */
@@ -1803,7 +1665,7 @@ SetBonuses: {
 		''' */
 	/* Cryosten:
 		'''
-		Life restoration from hearts increased.
+		Life restoration from hearts increased
 		Cannot be frozen or chilled
 		''' */
 	// Defiled: Greatly increased maximum life
