@@ -64,6 +64,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Magic;
 using Terraria.GameContent.Events;
+using Origins.Items.Weapons.Summoner.Minions;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -555,7 +556,11 @@ namespace Origins {
 				if (self.type == Laser_Tag_Laser.ID) Laser_Tag_Laser.OnHitPvP(self, player);
 			};
 			IL_Sandstorm.EmitDust += IL_Sandstorm_EmitDust;
-			IL_Sandstorm.ShouldSandstormDustPersist += IL_Sandstorm_ShouldSandstormDustPersist; ;
+			IL_Sandstorm.ShouldSandstormDustPersist += IL_Sandstorm_ShouldSandstormDustPersist;
+			On_Player.CanNPCBeHitByPlayerOrPlayerProjectile += (orig, self, npc, projectile) => {
+				if (projectile is not null && projectile.type == Fresh_Meat_Dog.ID && !self.dontHurtCritters) return true;
+				return orig(self, npc, projectile);
+			};
 		}
 
 		private void IL_Sandstorm_ShouldSandstormDustPersist(ILContext il) {

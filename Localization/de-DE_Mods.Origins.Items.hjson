@@ -4606,11 +4606,11 @@ Spray_N_Pray: {
 }
 
 Amebic_Gel_Wall_Safe_Item: {
-	// DisplayName: Amebic Gel Wall Safe Item
+	// DisplayName: Amebic Gel Wall
 	// Tooltip: ""
 }
 
 Amebic_Gel_Wall_Placed_Unsafe_Item: {
-	// DisplayName: Amebic Gel Wall Placed Unsafe Item
+	// DisplayName: Moist Amebic Gel Wall
 	// Tooltip: ""
 }

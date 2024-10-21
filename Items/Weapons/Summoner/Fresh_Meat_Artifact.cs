@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 30;
+			Item.damage = 25;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 17;
 			Item.shootSpeed = 8f;
@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 		}
 		public sealed override void SetDefaults() {
-			MaxLife = 60 * 30;
+			MaxLife = 60 * 15;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = 1;
 			Projectile.width = 22;
@@ -154,6 +154,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						StickEnemy = -1;
 					}
 				}
+				if (--Life <= 0) Projectile.Kill();
 			}
 			if (Main.rand.NextBool(3)) {
 				Dust dust = Dust.NewDustDirect(
@@ -167,7 +168,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				dust.velocity *= 0.25f;
 				dust.shader = GameShaders.Armor.GetSecondaryShader(player.cMinion, player);
 			}
-			if (--Life <= 0) Projectile.Kill();
 		}
 		void SetupDog() {
 			if (Projectile.ai[1] == 0) {
@@ -255,7 +255,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
-			//Main.projFrames[Type] = 11;
+			Main.projFrames[Type] = 15;
 			// This is necessary for right-click targeting
 
 			// These below are needed for a minion
@@ -266,8 +266,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 		public sealed override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.width = 34;
-			Projectile.height = 22;
+			Projectile.width = 76;
+			Projectile.height = 40;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
 			Projectile.minion = true;
@@ -320,22 +320,18 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			#region Find target
 			// Starting search distance
-			float distanceFromTarget = 2000f;
+			float distanceFromTarget = 700f;
 			Vector2 targetCenter = Projectile.position;
 			int target = -1;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
-				if (!isPriorityTarget && distanceFromTarget > 700f) {
-					distanceFromTarget = 700f;
+				if (!isPriorityTarget && distanceFromTarget > 400f) {
+					distanceFromTarget = 400f;
 				}
-				if (npc.CanBeChasedBy()) {
+				if (npc.active && npc.chaseable && !npc.immortal && !npc.dontTakeDamage && (player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type])) {
 					float between = Vector2.Distance(npc.Center, meat.Center);
 					if (isPriorityTarget) between *= 0.5f;
 					bool inRange = between < distanceFromTarget;
-					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-					// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-					// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-					bool closeThroughWall = between < 100f;
-					if ((inRange || !foundTarget) && (lineOfSight || closeThroughWall)) {
+					if (inRange) {
 						distanceFromTarget = between;
 						targetCenter = npc.Center;
 						target = npc.whoAmI;
@@ -352,7 +348,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			// Default movement parameters (here for attacking)
 			float speed = 8f;
-			float inertia = 6f;
+			float inertia = 12f;
 			Rectangle targetHitbox;
 
 			if (foundTarget) {
@@ -364,11 +360,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 
 			// Minion has a target: attack (here, fly towards the enemy)
-			Vector2 direction = targetCenter - Projectile.Center;
+			Vector2 direction = targetHitbox.Bottom() - Projectile.Top;
 			int directionX = Math.Sign(direction.X);
 			Projectile.spriteDirection = directionX;
 			bool wallColliding = CollidingX != 0 && CollidingX == directionX;
-			float YRatio = direction.Y / ((direction.X * -directionX) + 0.1f);
+			float YRatio = (-direction.Y) / (Math.Abs(direction.X) + 0.1f);
 			if (direction.Y < 160 && (wallColliding || YRatio > 1) && OnGround) {
 				float jumpStrength = 6;
 				if (wallColliding) {
@@ -391,22 +387,29 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				Projectile.velocity.Y = -jumpStrength;
 			}
-			if (distanceFromTarget > 32f) {
-				direction.Normalize();
-				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1) + direction.X * speed) / inertia;
+			distanceFromTarget = targetCenter.Clamp(Projectile.Hitbox).Distance(Projectile.Center.Clamp(targetHitbox));
+			Projectile.friendly = false;
+			if (distanceFromTarget < 16 || ((!OnGround || Projectile.localAI[2] >= 16) && Projectile.localAI[2] <= 14)) {
+				if (++Projectile.localAI[2] >= 14) {
+					if (Projectile.localAI[2] == 16) {
+						if (foundTarget) {
+							Projectile.friendly = true;
+						} else {
+							meat.DamageArtifactMinion(Projectile.damage);
+						}
+					}
+					if (Projectile.localAI[2] >= 18) Projectile.localAI[2] = 0;
+				}
+				if (OnGround) {
+					speed = Projectile.localAI[2] >= 12 ? 16 : 4;
+				}
+			} else if (OnGround) {
+				Projectile.localAI[2] = 0;
+			}
+			if (distanceFromTarget > 0f) {
+				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1) + MathHelper.Clamp(direction.X / 8, -1, 1) * speed) / inertia;
 			} else {
 				Projectile.velocity.X = (Projectile.velocity.X * (inertia - 1)) / inertia;
-			}
-			Projectile.friendly = false;
-			if (distanceFromTarget < 32) {
-				if (++Projectile.localAI[2] >= 25 && Projectile.Hitbox.Intersects(targetHitbox)) {
-					if (foundTarget) {
-						Projectile.friendly = true;
-					} else {
-						meat.DamageArtifactMinion(Projectile.damage);
-					}
-					Projectile.localAI[2] = 0;
-				}
 			}
 
 			#endregion
@@ -415,19 +418,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.velocity.Y += 0.4f;
 
 			#region Animation and visuals
-			if (Projectile.ai[0] > 0) {
-				Projectile.frame = 7 + (int)(Projectile.ai[0] / 6f);
-				if (++Projectile.ai[0] > 30) {
-					//Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, projectile.damage, 0, projectile.owner, 1, 1);
-					Projectile.Kill();
-				}
-			} else if (OnGround) {
+			if (OnGround) {
 				Projectile.localAI[1]--;
 				const int frameSpeed = 4;
 				if (Math.Abs(Projectile.velocity.X) < 0.01f) {
 					Projectile.velocity.X = 0f;
 				}
-				if ((Projectile.velocity.X != 0) ^ (Projectile.oldVelocity.X != 0)) {
+				if ((Projectile.velocity.X != 0) != (Projectile.oldVelocity.X != 0)) {
 					Projectile.frameCounter = 0;
 				}
 				if (Projectile.velocity.X != 0) {
@@ -443,18 +440,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.frameCounter++;
 					if (Projectile.frameCounter >= frameSpeed) {
 						Projectile.frameCounter = 0;
-						Projectile.frame = 0;
+						Projectile.frame = 6;
 					}
 				}
 			} else if (Projectile.frame > 6) {
 				Projectile.frame = 1;
 			}
-
-			// Some visuals here
-			if (Projectile.frame < 7) {
-				Lighting.AddLight(Projectile.Center, Color.Green.ToVector3() * 0.18f);
-			} else if (Projectile.frame < 9) {
-				Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() * 0.24f);
+			if (Projectile.localAI[2] > 0) {
+				Projectile.frame = (int)(Projectile.localAI[2] / 2f) + 6;
 			}
 			#endregion
 		}
@@ -463,7 +456,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (oldVelocity.Y > Projectile.velocity.Y) {
 				OnGround = true;
 			} else {
-				if (Collision.SlopeCollision(Projectile.position, new Vector2(0, 4), Projectile.width, Projectile.height).Y != 4) {
+				Rectangle hitbox = Projectile.Hitbox;
+				hitbox.Offset(0, 1);
+				if (hitbox.OverlapsAnyTiles()) {
 					OnGround = true;
 				}
 			}
@@ -478,23 +473,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
 			Main.EntitySpriteDraw(
 				texture,
-				Projectile.Center - Main.screenPosition,
-				new Rectangle(0, Projectile.frame * 52, 56, 50),
+				Projectile.Bottom - Main.screenPosition,
+				frame,
 				Projectile.GetAlpha(lightColor),
 				Projectile.rotation,
-				new Vector2(28, 25),
-				Projectile.scale,
-				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
-				0);
-			Main.EntitySpriteDraw(
-				Mod.Assets.Request<Texture2D>("Items/Weapons/Summoner/Minions/Happy_Boi_Glow").Value,
-				Projectile.Center - Main.screenPosition,
-				new Rectangle(0, Projectile.frame * 52, 56, 50),
-				Color.White,
-				Projectile.rotation,
-				new Vector2(28, 25),
+				new Vector2(frame.Width / 2, frame.Height - 4),
 				Projectile.scale,
 				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);

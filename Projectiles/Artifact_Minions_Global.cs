@@ -81,7 +81,7 @@ namespace Origins.Projectiles {
 							Projectile projectile = Main.projectile[artifactMinions[i]];
 							if (projectile.ModProjectile is IArtifactMinion artifact) {
 								Vector2 position = default;
-								if (Main.HealthBarDrawSettings != 0) {
+								if (Main.HealthBarDrawSettings != 0 && artifact.Life < artifact.MaxLife) {
 									if (Main.HealthBarDrawSettings == 1) {
 										position = projectile.Bottom + new Vector2(projectile.gfxOffY + 10);
 									} else {
@@ -114,7 +114,10 @@ namespace Origins.Projectiles {
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage) {
 			minion.Life -= damage;
 			minion.OnHurt(damage);
-			if (minion.Life <= 0 && minion is ModProjectile proj) proj.Projectile.Kill();
+			if (minion is ModProjectile proj) {
+				if (minion.Life <= 0) proj.Projectile.Kill();
+				CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, dot: true);
+			}
 		}
 		public static void DamageArtifactMinion(this Projectile minion, int damage) {
 			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage);
