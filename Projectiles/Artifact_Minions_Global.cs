@@ -92,9 +92,9 @@ namespace Origins.Projectiles {
 								Vector2 position = default;
 								if (Main.HealthBarDrawSettings != 0 && artifact.Life < artifact.MaxLife) {
 									if (Main.HealthBarDrawSettings == 1) {
-										position = projectile.Bottom + new Vector2(projectile.gfxOffY + 10);
+										position = projectile.Bottom + new Vector2(0, projectile.gfxOffY + 10);
 									} else {
-										position = projectile.Top + new Vector2(projectile.gfxOffY - 24);
+										position = projectile.Top + new Vector2(0, projectile.gfxOffY - 24);
 									}
 									Main.instance.DrawHealthBar(
 										position.X, position.Y,

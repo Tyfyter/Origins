@@ -4614,3 +4614,8 @@ Amebic_Gel_Wall_Placed_Unsafe_Item: {
 	DisplayName: Moist Amebic Gel Wall
 	Tooltip: ""
 }
+
+Broken_Terratotem: {
+	DisplayName: Broken Terratotem
+	Tooltip: ""
+}
