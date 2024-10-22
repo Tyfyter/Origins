@@ -673,7 +673,7 @@ RANGED WEAPONS:
 (X) Orichalcum Harpoon Gun*
 (X) Palladium Harpoon Gun*
 (^) Sixth Spline
-(†) Spray 'N Pray*
+(^) Spray 'N Pray*
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun*
 (X) Tripod Jawbow
