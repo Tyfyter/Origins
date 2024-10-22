@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.damage = 25;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 17;
-			Item.shootSpeed = 8f;
+			Item.shootSpeed = 9f;
 			Item.width = 24;
 			Item.height = 38;
 			Item.useTime = 24;
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noUseGraphic = true;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundID.Item44;
+			Item.UseSound = SoundID.Item1;
 			Item.buffType = Fresh_Meat_Buff.ID;
 			Item.shoot = Fresh_Meat_Artifact_P.ID;
 			Item.noMelee = true;
@@ -96,7 +96,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public sealed override void SetDefaults() {
 			MaxLife = 60 * 15;
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
 			Projectile.width = 22;
 			Projectile.height = 22;
 			Projectile.tileCollide = true;
@@ -109,13 +109,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public int StickEnemy {
 			get => (int)Projectile.ai[2] - 1;
 			set {
-				SetupDog();
 				Projectile.ai[2] = value + 1;
 			}
 		}
 
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			SetupDog();
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
@@ -131,7 +131,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (!npc.friendly && hitbox.Intersects(npc.Hitbox)) {
 						StickEnemy = npc.whoAmI;
-						stickPos = (Projectile.Center - npc.Center).RotatedBy(-npc.rotation);
+						stickPos = (Projectile.Center + Projectile.velocity - npc.Center).RotatedBy(-npc.rotation);
 						stickRot = Projectile.rotation - npc.rotation;
 						Projectile.netUpdate = true;
 						break;
@@ -194,7 +194,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			StickEnemy = -2;
-			stickPos = Projectile.Center;
+			stickPos = Projectile.Center + Projectile.velocity;
 			stickRot = Projectile.rotation;
 			return false;
 		}
@@ -327,7 +327,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (!isPriorityTarget && distanceFromTarget > 400f) {
 					distanceFromTarget = 400f;
 				}
-				if (npc.active && npc.chaseable && !npc.immortal && !npc.dontTakeDamage && (player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type])) {
+				if (npc.active && npc.chaseable && !npc.immortal && !npc.dontTakeDamage && !(player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type])) {
 					float between = Vector2.Distance(npc.Center, meat.Center);
 					if (isPriorityTarget) between *= 0.5f;
 					bool inRange = between < distanceFromTarget;
@@ -349,6 +349,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Default movement parameters (here for attacking)
 			float speed = 8f;
 			float inertia = 12f;
+			const float gravity = 0.4f;
 			Rectangle targetHitbox;
 
 			if (foundTarget) {
@@ -389,7 +390,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			distanceFromTarget = targetCenter.Clamp(Projectile.Hitbox).Distance(Projectile.Center.Clamp(targetHitbox));
 			Projectile.friendly = false;
-			if (distanceFromTarget < 16 || ((!OnGround || Projectile.localAI[2] >= 16) && Projectile.localAI[2] <= 14)) {
+			bool attac = distanceFromTarget < 16 || ((!OnGround || Projectile.localAI[2] >= 16) && Projectile.localAI[2] <= 14);
+			if (!attac) {
+				const int prediction = 12;
+				Rectangle projHitbox = Projectile.Hitbox;
+				Rectangle targHitbox = targetHitbox;
+				Vector2 gravFactor = new(0, (prediction * (prediction + 1)) * 0.5f);
+				projHitbox.Offset((Projectile.velocity * prediction + gravity * gravFactor).ToPoint());
+				targHitbox.Offset(foundTarget ? (Main.npc[target].velocity * prediction + Main.npc[target].gravity * gravFactor).ToPoint() : default);
+				if (projHitbox.Intersects(targetHitbox)) {
+					attac = true;
+				}
+			}
+			if (attac) {
 				if (++Projectile.localAI[2] >= 14) {
 					if (Projectile.localAI[2] == 16) {
 						if (foundTarget) {
@@ -403,7 +416,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (OnGround) {
 					speed = Projectile.localAI[2] >= 12 ? 16 : 4;
 				}
-			} else if (OnGround) {
+			} else if (OnGround || Projectile.localAI[2] < 10) {
 				Projectile.localAI[2] = 0;
 			}
 			if (distanceFromTarget > 0f) {
@@ -415,7 +428,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 
 			//gravity
-			Projectile.velocity.Y += 0.4f;
+			Projectile.velocity.Y += gravity;
 
 			#region Animation and visuals
 			if (OnGround) {
