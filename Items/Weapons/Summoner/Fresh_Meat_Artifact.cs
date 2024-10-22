@@ -24,7 +24,6 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 25;
@@ -46,7 +45,10 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
-			Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, Item.damage, knockback, player.whoAmI);
+			damage = Item.damage;
+			float kb = knockback;
+			CombinedHooks.ModifyShootStats(player, Item, ref position, ref velocity, ref type, ref damage, ref kb);
+			Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
 			projectile.originalDamage = Item.damage;
 			return false;
 		}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -21,6 +22,14 @@ namespace Origins.Projectiles {
 			isRespawned = false;
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
 				artifact.Life = artifact.MaxLife;
+			}
+		}
+		public override void PostAI(Projectile projectile) {
+			if (projectile.ModProjectile is IArtifactMinion artifact && artifact.Life <= 0) {
+				artifact.Life = 0;
+				if (artifact.CanDie) {
+					projectile.Kill();
+				}
 			}
 		}
 		public bool CanRespawn(Projectile projectile) {
@@ -109,13 +118,14 @@ namespace Origins.Projectiles {
 		int MaxLife { get; set; }
 		int Life { get; set; }
 		void OnHurt(int damage) { }
+		bool CanDie => true;
 	}
 	public static class ArtifactMinionExtensions {
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage) {
 			minion.Life -= damage;
 			minion.OnHurt(damage);
 			if (minion is ModProjectile proj) {
-				if (minion.Life <= 0) proj.Projectile.Kill();
+				if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
 				CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, dot: true);
 			}
 		}
