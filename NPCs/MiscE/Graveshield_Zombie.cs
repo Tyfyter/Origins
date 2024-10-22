@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Other;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -32,12 +33,19 @@ namespace Origins.NPCs.MiscE {
 			}
 			return 0;
 		}
-		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
+		public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers) {
 			if (modifiers.HitDirection == -NPC.direction) {
 				modifiers.Defense.Base += 6;
 				modifiers.Knockback *= 0.25f;
 			}
 		}
+		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
+			if (modifiers.HitDirection == -NPC.direction && Math.Sign(projectile.Center.X - NPC.Center.X) == NPC.direction) {
+				modifiers.Defense.Base += 6;
+				modifiers.Knockback *= 0.25f;
+			}
+		}
+
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
