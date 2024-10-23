@@ -118,10 +118,21 @@ namespace Origins.Projectiles {
 					magicTripwireRange * 2
 				);
 				bool tripped = false;
-				for (int i = 0; i < Main.maxNPCs; i++) {
+				for (int i = 0; i < Main.maxNPCs && !tripped; i++) {
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy() && magicTripwireHitbox.Intersects(npc.Hitbox)) {
 						tripped = true;
+					}
+				}
+				if (!tripped) {
+					Player owner = Main.player[projectile.owner];
+					if (owner.hostile) {
+						foreach (Player player in Main.ActivePlayers) {
+							if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
+								tripped = true;
+								break;
+							}
+						}
 					}
 				}
 				if (tripped) {
