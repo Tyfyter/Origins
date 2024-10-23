@@ -1,20 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Summoner;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Projectiles;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using System.IO;
-using Origins.Items.Weapons.Summoner.Minions;
-using Origins.Buffs;
-using Terraria.Graphics.Shaders;
-using Origins.Projectiles;
-using Terraria.Audio;
-using Origins.Items.Weapons.Magic;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Broken_Terratotem : ModItem, ICustomWikiStat {
@@ -27,9 +22,9 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 25;
+			Item.damage = 28;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 17;
+			Item.mana = 38;
 			Item.shootSpeed = 9f;
 			Item.width = 24;
 			Item.height = 38;
@@ -38,7 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = true;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Terratotem_Buff.ID;
 			Item.shoot = Broken_Terratotem_Orb.ID;

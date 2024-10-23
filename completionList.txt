@@ -114,7 +114,7 @@ VANILLA MODIFICATIONS:
 ---
 (ᗢ) Recipes General
 
-(X) Advanced weapon functionality in PVP*
+(^) Advanced weapon functionality in PVP*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
@@ -161,7 +161,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (^) Flagellant
-(#, ^2) Graveshield Zombie !!!
+(#4, ^2) Graveshield Zombie !!!
 (^) Measly Moeba
 (^) Optiphage
 (^) Pustule Jellyfish*
@@ -171,6 +171,7 @@ ENEMY NPCS:
 (^) Shattered Goldfish
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
+(X) Spiteful Meat
 
 (^) Amoebeye*
 (^) Amebic Mummy
@@ -749,7 +750,7 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(#, ^2) Broken Terratotem !!!
+(#3, ^2) Broken Terratotem !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
@@ -790,7 +791,7 @@ SUMMONER WEAPONS:
 (@2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(#, ^2) Terratotem
+(#3, ^2) Terratotem
 (X) Tonal Resonator
 
 NO POST ML SUMMONER CONTENT YET.

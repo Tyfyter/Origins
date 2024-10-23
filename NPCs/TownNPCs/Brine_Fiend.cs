@@ -18,7 +18,6 @@ namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
 	public class Brine_Fiend : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acid Freak");
 			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
 
 			NPCID.Sets.ExtraFramesCount[Type] = 8; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
@@ -81,39 +80,39 @@ namespace Origins.NPCs.TownNPCs {
 			WeightedRandom<string> chat = new();
 
 			if (NPC.FindFirstNPC(NPCID.WitchDoctor) >= 0) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor2"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionWitchDoctor1"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionWitchDoctor2"));
 			}
 			if (BirthdayParty.PartyIsUp) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionParty"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionParty"));
 
 				if (NPC.FindFirstNPC(NPCID.Demolitionist) >= 0) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionPartyDemolitionist"));
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionPartyDemolitionist"));
 				}
 			}
 			if (Main.WindyEnoughForKiteDrops) {
 				if (ChildSafety.Disabled && OriginsModIntegrations.CheckAprilFools()) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.April_Fools.Acid_Freak.InteractionWimd"));
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.April_Fools.Brine_Fiend.InteractionWimd"));
 				} else {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWind"));
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionWind"));
 				}
 			}
 			if (Main.IsItStorming) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm2"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionStorm1"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionStorm2"));
 			}
 			if (Main.bloodMoon) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.BloodMoon1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.BloodMoon2"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.BloodMoon1"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.BloodMoon2"));
 			}
 			if (Main.SceneMetrics.EnoughTilesForGraveyard) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionGraveYard"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionGraveYard"));
 			}
 
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue1", Main.LocalPlayer.name));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue2"));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue3"));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue4"));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue1", Main.LocalPlayer.name));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue2"));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue3"));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue4"));
 
 			return chat; // chat is implicitly cast to a string.
 		}
