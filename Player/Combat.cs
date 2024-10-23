@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Felnum;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
@@ -65,6 +66,13 @@ namespace Origins {
 			if (destructiveClaws && item.CountsAsClass(DamageClasses.Explosive)) return true;
 			return null;
 		}
+		public static bool ShouldApplyFelnumEffectOnShoot(Projectile projectile) =>
+			(!projectile.CountsAsClass(DamageClass.Melee) &&
+			!projectile.CountsAsClass(DamageClass.Summon) &&
+			!ProjectileID.Sets.IsAWhip[projectile.type] &&
+			!Origins.DamageModOnHit[projectile.type] &&
+			projectile.aiStyle != ProjAIStyleID.WaterJet) ||
+			Origins.ForceFelnumShockOnShoot[projectile.type];
 		public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (advancedImaging) {
 				velocity *= 1.38f;
@@ -77,19 +85,11 @@ namespace Origins {
 				float baseSpeed = velocity.Length();
 				velocity *= velocityModifier.ApplyTo(baseSpeed) / baseSpeed;
 			}
-			if (item.shoot > ProjectileID.None && felnumShock > 29) {
+			if (item.shoot > ProjectileID.None && felnumShock >= Felnum_Helmet.shock_damage_divisor * 2) {
 				Projectile p = new();
 				p.SetDefaults(type);
-				OriginGlobalProj.felnumEffectNext = true;
-				if (
-					(p.CountsAsClass(DamageClass.Melee) ||
-					p.CountsAsClass(DamageClass.Summon) ||
-					ProjectileID.Sets.IsAWhip[type] ||
-					Origins.DamageModOnHit[type] ||
-					p.aiStyle == ProjAIStyleID.WaterJet) &&
-					!Origins.ForceFelnumShockOnShoot[type]) return;
-				damage += (int)(felnumShock / 15);
-				felnumShock = 0;
+				if (!ShouldApplyFelnumEffectOnShoot(p)) return;
+				usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
 			}
 		}
@@ -161,9 +161,9 @@ namespace Origins {
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;
-			if (felnumShock > 29) {
-				modifiers.SourceDamage.Flat += (int)(felnumShock / 15);
-				felnumShock = 0;
+			if (felnumShock >= Felnum_Helmet.shock_damage_divisor * 2) {
+				modifiers.SourceDamage.Flat += (int)(felnumShock / Felnum_Helmet.shock_damage_divisor);
+				usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
 			}
 			if (target.HasBuff(BuffID.Bleeding)) {
@@ -171,11 +171,6 @@ namespace Origins {
 			}
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
-			if ((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
-				modifiers.SourceDamage.Flat += (int)(felnumShock / 15);
-				felnumShock = 0;
-				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), proj.Center);
-			}
 			if (proj.minion && rivenSet) {
 				modifiers.SourceDamage *= rivenMult;
 			}

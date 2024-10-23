@@ -17,7 +17,7 @@ using Terraria.Audio;
 using Origins.Items.Weapons.Magic;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Broken_Terratotem : ModItem, ICustomWikiStat {
+	public class Terratotem : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Artifact",
 			"Minion"
@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 25;
+			Item.damage = 70;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 17;
 			Item.shootSpeed = 9f;
@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Terratotem_Buff.ID;
-			Item.shoot = Broken_Terratotem_Orb.ID;
+			Item.shoot = Terratotem_Orb.ID;
 			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -52,30 +52,9 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 }
-namespace Origins.Buffs {
-	public class Terratotem_Buff : ModBuff {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Terratotem_Orb";
-		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Broken_Terratotem_Orb.ID] > 0 || player.ownedProjectileCounts[Terratotem_Orb.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
-	}
-}
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-	public class Broken_Terratotem_Orb : ModProjectile, IArtifactMinion {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Terratotem_Orb";
+	public class Terratotem_Orb : ModProjectile, IArtifactMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public int Life { get; set; }
@@ -89,6 +68,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			Origins.ForceFelnumShockOnShoot[Type] = true;
 			ID = Type;
 		}
 
@@ -191,7 +171,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						offset * 0.125f
 					).shader = shaderData;
 				}
-				if (++Projectile.ai[1] > Projectile.ai[0]) {
+				if (++Projectile.ai[1] > 0) {
 					Projectile.ai[1] = -Projectile.ai[0];
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromThis(),

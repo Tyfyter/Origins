@@ -4619,3 +4619,8 @@ Broken_Terratotem: {
 	DisplayName: Broken Terratotem
 	Tooltip: ""
 }
+
+Terratotem: {
+	DisplayName: Terratotem
+	Tooltip: ""
+}

@@ -62,6 +62,7 @@ namespace Origins {
 		public bool cryostenHelmet = false;
 		public bool felnumSet = false;
 		public float felnumShock = 0;
+		public bool usedFelnumShock = false;
 		public float oldFelnumShock = 0;
 		public bool minerSet = false;
 		public bool lostSet = false;
@@ -387,7 +388,7 @@ namespace Origins {
 			cryostenSet = false;
 			cryostenHelmet = false;
 			oldFelnumShock = felnumShock;
-			if (!felnumSet) {
+			if (!felnumSet || usedFelnumShock) {
 				felnumShock = 0;
 			} else {
 				if (felnumShock > Player.statLifeMax2) {
@@ -402,6 +403,7 @@ namespace Origins {
 					felnumShock -= (felnumShock - Player.statLifeMax2) / Player.statLifeMax2 * 5 + 1;
 				}
 			}
+			usedFelnumShock = false;
 			if (donorWristband) {
 				float healLogic = (1 - 0.375f) / (Player.pStone ? 0.75f : 1);
 

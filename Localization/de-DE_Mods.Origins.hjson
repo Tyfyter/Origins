@@ -1330,6 +1330,7 @@ Projectiles: {
 	// Sixth_Spline_Wrench.DisplayName: Sixth Spline Wrench
 	// Spray_N_Pray_P.DisplayName: Spray 'N Pray
 	// Broken_Terratotem_Orb.DisplayName: Broken Terratotem Orb
+	// Terratotem_Orb.DisplayName: Terratotem Orb
 }
 
 Prefixes: {

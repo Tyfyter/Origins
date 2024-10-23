@@ -3,11 +3,13 @@ using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Felnum;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.Questing;
+using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,12 +31,11 @@ namespace Origins.Projectiles {
 		public const string no_multishot_context = "noMultishot";
 		public int fromItemType = -1;
 		//bool init = true;
-		public bool felnumEffect = false;
+		public float felnumBonus = 0;
 		public bool viperEffect = false;
 		public bool ownerSafe = false;
 		public int killLink = -1;
 		public float godHunterEffect = 0f;
-		public static bool felnumEffectNext = false;
 		public static int killLinkNext = -1;
 		public bool isFromMitosis = false;
 		public bool hasUsedMitosis = false;
@@ -46,14 +47,12 @@ namespace Origins.Projectiles {
 		public Vector2? weakpointAnalyzerTarget = default;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public override void Load() {
-			itemSourceEffects = new();
+			itemSourceEffects = [];
 		}
 		public override void Unload() {
 			itemSourceEffects = null;
 		}
 		public override void SetDefaults(Projectile projectile) {
-			felnumEffect = felnumEffectNext;
-			felnumEffectNext = false;
 			if (killLinkNext != -1) {
 				killLink = killLinkNext;
 				//sync killLink ids
@@ -83,7 +82,8 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			string[] contextArgs = source?.Context?.Split(';') ?? Array.Empty<string>();
+			felnumBonus = MainReflection._currentPlayerOverride.Value is null ? 0 : Main.CurrentPlayer.OriginPlayer().felnumShock;
+			string[] contextArgs = source?.Context?.Split(';') ?? [];
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
 				projectile.originalDamage = projectile.damage;
 			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
@@ -151,6 +151,7 @@ namespace Origins.Projectiles {
 					prefix = parentGlobalProjectile.prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
+					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(prefix);
 
@@ -185,6 +186,7 @@ namespace Origins.Projectiles {
 		public override void PostAI(Projectile projectile) {
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall)
 				projectile.damage = projectile.originalDamage;
+			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = Main.player[projectile.owner].OriginPlayer().felnumShock;
 		}
 		public override void AI(Projectile projectile) {
 			switch (projectile.aiStyle) {
@@ -227,16 +229,9 @@ namespace Origins.Projectiles {
 					hasUsedMitosis = false;
 				}
 			}
-			if (felnumEffect) {
+			if (felnumBonus > Felnum_Helmet.shock_damage_divisor) {
 				if (!ProjectileID.Sets.IsAWhip[projectile.type]) {
-					if (projectile.CountsAsClass(DamageClass.Melee) || projectile.CountsAsClass(DamageClass.Summon)) {
-						if (Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock > 19)
-							Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
-					} else {
-						Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
-					}
-				} else {
-
+					Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
 				}
 			}
 			if (viperEffect && projectile.extraUpdates != 19) {
@@ -258,6 +253,11 @@ namespace Origins.Projectiles {
 			}
 			if (target.boss && godHunterEffect != 0f) {
 				modifiers.SourceDamage *= 1 + godHunterEffect;
+			}
+			modifiers.SourceDamage.Flat += felnumBonus / Felnum_Helmet.shock_damage_divisor;
+			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) {
+				Main.player[projectile.owner].OriginPlayer().usedFelnumShock = true;
+				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
@@ -294,10 +294,14 @@ namespace Origins.Projectiles {
 			return ownerSafe ? target.whoAmI != projectile.owner : true;
 		}
 		public override bool PreKill(Projectile projectile, int timeLeft) {
-			if (felnumEffect && projectile.type == ProjectileID.WaterGun) {//projectile.aiStyle==60
+			if (felnumBonus > Felnum_Helmet.shock_damage_divisor && projectile.type == ProjectileID.WaterGun) {//projectile.aiStyle==60
 				OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-				Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
-				originPlayer.felnumShock = 0;
+				int type = ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>();
+				int damage = (int)(felnumBonus / Felnum_Helmet.shock_damage_divisor);
+				for (int i = 0; i < 5; i++) {
+					Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, type, damage, projectile.knockBack, projectile.owner);
+				}
+				originPlayer.usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 			}
 			return true;
@@ -324,9 +328,11 @@ namespace Origins.Projectiles {
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			binaryWriter.Write(prefix);
+			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			prefix = binaryReader.ReadInt32();
+			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();
 		}
 
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
@@ -369,6 +375,15 @@ namespace Origins.Projectiles {
 				projectile.ai[0]++;
 			}
 			projectile.rotation += 0.3f * projectile.direction;
+		}
+		public override void PostDraw(Projectile projectile, Color lightColor) {
+			if (felnumBonus > Felnum_Helmet.shock_damage_divisor && ProjectileID.Sets.IsAWhip[projectile.type]) {
+				List<Vector2> controlPoints = [];
+				Projectile.FillWhipControlPoints(projectile, controlPoints);
+				for (int i = 0; i < controlPoints.Count - 1; i++) {
+					Main.spriteBatch.DrawLightningArcBetween(controlPoints[i] - Main.screenPosition, controlPoints[i + 1] - Main.screenPosition, Main.rand.NextFloat(-4, 4));
+				}
+			}
 		}
 	}
 }

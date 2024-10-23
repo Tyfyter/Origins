@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Felnum {
     [AutoloadEquip(EquipType.Head)]
 	public class Felnum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+		public const float shock_damage_divisor = 15f;
         public string[] Categories => [
             "ArmorSet",
             "GenericBoostGear"

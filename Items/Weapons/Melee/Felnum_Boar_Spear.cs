@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Items.Armor.Felnum;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
 		public const int baseDamage = 18;
@@ -88,8 +89,9 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (originPlayer.felnumShock > 29) {
-				modifiers.SourceDamage.Flat += (int)(originPlayer.felnumShock / 30);
+			int shockAmount = (int)(originPlayer.felnumShock / (Felnum_Helmet.shock_damage_divisor * 2));
+			if (shockAmount > 0) {
+				modifiers.SourceDamage.Flat += shockAmount;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
