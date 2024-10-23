@@ -750,11 +750,11 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(#3, ^2) Broken Terratotem !!!
+(#3?, ^2) Broken Terratotem !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
-(#3, ^2) Fresh Meat Artifact !!!
+(#3?, ^2) Fresh Meat Artifact !!!
 (#, ^2) Inanimate Zombie Hand !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
@@ -791,7 +791,7 @@ SUMMONER WEAPONS:
 (@2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(#3, ^2) Terratotem
+(#3?, ^2) Terratotem
 (X) Tonal Resonator
 
 NO POST ML SUMMONER CONTENT YET.
@@ -925,7 +925,7 @@ TILES:
 (^) Spug Flesh*
 (@5, ^3) Twilith*
 
-(#, ^2) Amebic Gel Wall !!!
+(☻) Amebic Gel Wall !!!
 (^) Batholith Wall
 (^) Brittle Quartz Wall
 (^) Chambersite Gemspark Wall
