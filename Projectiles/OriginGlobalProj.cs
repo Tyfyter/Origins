@@ -255,7 +255,7 @@ namespace Origins.Projectiles {
 				modifiers.SourceDamage *= 1 + godHunterEffect;
 			}
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2) {
-				modifiers.SourceDamage.Flat += felnumBonus / Felnum_Helmet.shock_damage_divisor;
+				modifiers.SourceDamage.Base += felnumBonus / Felnum_Helmet.shock_damage_divisor;
 				if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) {
 					Main.player[projectile.owner].OriginPlayer().usedFelnumShock = true;
 					SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);

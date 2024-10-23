@@ -27,6 +27,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.value = Item.sellPrice(silver: 1);
 			Item.ammo = ModContent.ItemType<Potato>();
 			Item.shoot = ModContent.ProjectileType<Potato_P>();
+			Item.notAmmo = true;
 		}
 		public override bool AltFunctionUse(Player player) {
 			return true;

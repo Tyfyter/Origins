@@ -33,6 +33,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Potato_Battery_P>();
 			Item.value = Item.sellPrice(gold: 1);
             Item.glowMask = glowmask;
+			Item.notAmmo = true;
         }
 		public override void UpdateInventory(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

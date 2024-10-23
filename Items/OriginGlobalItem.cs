@@ -33,6 +33,7 @@ namespace Origins.Items {
 				item.damage = (int)(item.damage * 0.8);
 				item.ammo = ItemID.Grenade;
 				item.DamageType = DamageClasses.ThrownExplosive;
+				item.notAmmo = true;
 				statsModified = true;
 				break;
 
@@ -42,17 +43,20 @@ namespace Origins.Items {
 				case ItemID.Beenade:
 				item.ammo = ItemID.Grenade;
 				item.DamageType = DamageClasses.ThrownExplosive;
+				item.notAmmo = true;
 				statsModified = true;
 				break;
 
 				case ItemID.Sunflower:
 				item.ammo = ItemID.Sunflower;
 				item.consumable = true;
+				item.notAmmo = true;
 				break;
 
 				case ItemID.Fireblossom:
 				item.ammo = ItemID.Fireblossom;
 				item.consumable = true;
+				item.notAmmo = true;
 				break;
 
 				case ItemID.Bomb:
@@ -67,6 +71,7 @@ namespace Origins.Items {
 				case ItemID.DirtBomb:
 				item.ammo = ItemID.Bomb;
 				item.DamageType = DamageClasses.ThrownExplosive;
+				item.notAmmo = true;
 				statsModified = true;
 				break;
 
@@ -75,6 +80,7 @@ namespace Origins.Items {
 				case ItemID.StickyDynamite:
 				case ItemID.MolotovCocktail:
 				item.DamageType = DamageClasses.ThrownExplosive;
+				item.notAmmo = true;
 				statsModified = true;
 				break;
 

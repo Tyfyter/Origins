@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.ammo = ModContent.ItemType<Potato>();
+			Item.notAmmo = true;
 			Item.noMelee = !OriginsModIntegrations.CheckAprilFools();
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
