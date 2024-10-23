@@ -281,7 +281,7 @@ Entangled_Energy: {
 
 Exploder_Emblem: {
 	// DisplayName: Exploder Emblem
-	// Tooltip: +5% explosive damage
+	// Tooltip: 5% increased explosive damage
 }
 
 Explosive_Artery: {
