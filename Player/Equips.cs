@@ -289,27 +289,27 @@ namespace Origins {
 				Player.AddBuff(cursedVoiceItem.buffType, 5);
 				const float maxDist = 256 * 256;
 				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Player.CheckMana(cursedVoiceItem.mana, false)) {
-					for (int i = 0; i < Main.maxNPCs; i++) {
-						NPC currentTarget = Main.npc[i];
-						if (currentTarget.CanBeChasedBy(cursedVoiceItem)) {
-							Vector2 diff = currentTarget.Center - Player.MountedCenter;
-							if (diff.LengthSquared() < maxDist) {
-								Player.CheckMana(cursedVoiceItem.mana, true);
-								Player.manaRegenDelay = (int)Player.maxRegenDelay;
-								Projectile.NewProjectileDirect(
-									Player.GetSource_Accessory(cursedVoiceItem),
-									mouthPosition,
-									diff.SafeNormalize(default) * cursedVoiceItem.shootSpeed,
-									cursedVoiceItem.shoot,
-									Player.GetWeaponDamage(cursedVoiceItem),
-									Player.GetWeaponKnockback(cursedVoiceItem),
-									Player.whoAmI
-								);
-								if (cursedVoiceItem.UseSound.HasValue) SoundEngine.PlaySound(cursedVoiceItem.UseSound);
-								break;
-							}
+					bool foundTarget = false;
+					Player.DoHoming((target) => {
+						if (foundTarget) return false;
+						Vector2 diff = target.Center - Player.MountedCenter;
+						if (diff.LengthSquared() < maxDist) {
+							Player.CheckMana(cursedVoiceItem.mana, true);
+							Player.manaRegenDelay = (int)Player.maxRegenDelay;
+							Projectile.NewProjectileDirect(
+								Player.GetSource_Accessory(cursedVoiceItem),
+								mouthPosition,
+								diff.SafeNormalize(default) * cursedVoiceItem.shootSpeed,
+								cursedVoiceItem.shoot,
+								Player.GetWeaponDamage(cursedVoiceItem),
+								Player.GetWeaponKnockback(cursedVoiceItem),
+								Player.whoAmI
+							);
+							if (cursedVoiceItem.UseSound.HasValue) SoundEngine.PlaySound(cursedVoiceItem.UseSound);
+							foundTarget = true;
 						}
-					}
+						return foundTarget;
+					});
 					cursedVoiceCooldown = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
 				}
 			}

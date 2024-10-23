@@ -59,39 +59,18 @@ namespace Origins.Items.Weapons {
 		public override void AI() {
 			float targetWeight = 4.5f;
 			Vector2 targetDiff = default;
-			bool foundTarget = false;
-			for (int i = 0; i < 200; i++) {
-				NPC currentNPC = Main.npc[i];
-				if (currentNPC.CanBeChasedBy(this)) {
-					Vector2 currentDiff = currentNPC.Center - Projectile.Center;
-					float dist = currentDiff.Length();
-					currentDiff /= dist;
-					float weight = Vector2.Dot(Projectile.velocity, currentDiff) * (300f / (dist + 100));
-					if (weight > targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
-						targetWeight = weight;
-						targetDiff = currentDiff;
-						foundTarget = true;
-					}
+			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
+				Vector2 currentDiff = target.Center - Projectile.Center;
+				float dist = currentDiff.Length();
+				currentDiff /= dist;
+				float weight = Vector2.Dot(Projectile.velocity, currentDiff) * (300f / (dist + 100));
+				if (weight > targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
+					targetWeight = weight;
+					targetDiff = currentDiff;
+					return true;
 				}
-			}
-			if (!foundTarget) {
-				Player owner = Main.player[Projectile.owner];
-				if (owner.hostile) {
-					foreach (Player player in Main.ActivePlayers) {
-						if (!player.dead && player.hostile && player.team != owner.team) {
-							Vector2 currentDiff = player.Center - Projectile.Center;
-							float dist = currentDiff.Length();
-							currentDiff /= dist;
-							float weight = Vector2.Dot(Projectile.velocity, currentDiff) * (300f / (dist + 100));
-							if (weight > targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, player.position, player.width, player.height)) {
-								targetWeight = weight;
-								targetDiff = currentDiff;
-								foundTarget = true;
-							}
-						}
-					}
-				}
-			}
+				return false;
+			});
 
 			if (foundTarget) {
 				PolarVec2 velocity = (PolarVec2)Projectile.velocity;

@@ -22,39 +22,18 @@ namespace Origins.Projectiles {
 			if (isHoming && projectile.friendly) {
 				float targetWeight = 4.5f;
 				Vector2 targetDiff = default;
-				bool foundTarget = false;
-				for (int i = 0; i < 200; i++) {
-					NPC currentNPC = Main.npc[i];
-					if (currentNPC.CanBeChasedBy(this)) {
-						Vector2 currentDiff = currentNPC.Center - projectile.Center;
-						float dist = currentDiff.Length();
-						currentDiff /= dist;
-						float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
-						if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
-							targetWeight = weight;
-							targetDiff = currentDiff;
-							foundTarget = true;
-						}
+				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
+					Vector2 currentDiff = target.Center - projectile.Center;
+					float dist = currentDiff.Length();
+					currentDiff /= dist;
+					float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
+					if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height)) {
+						targetWeight = weight;
+						targetDiff = currentDiff;
+						return true;
 					}
-				}
-				if (!foundTarget) {
-					Player owner = Main.player[projectile.owner];
-					if (owner.hostile) {
-						foreach (Player player in Main.ActivePlayers) {
-							if (!player.dead && player.hostile && player.team != owner.team) {
-								Vector2 currentDiff = player.Center - projectile.Center;
-								float dist = currentDiff.Length();
-								currentDiff /= dist;
-								float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
-								if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, player.position, player.width, player.height)) {
-									targetWeight = weight;
-									targetDiff = currentDiff;
-									foundTarget = true;
-								}
-							}
-						}
-					}
-				}
+					return false;
+				});
 
 				if (foundTarget) {
 					PolarVec2 velocity = (PolarVec2)projectile.velocity;

@@ -38,17 +38,23 @@ namespace Origins.Items.Accessories {
 				Vector2 startPoint = GetEyePos(player);
 				Vector2 targetPos = default;
 				float targetWeight = 0;
-				for (int i = 0; i < Main.maxNPCs; i++) {
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy() && npc.DistanceSQ(startPoint) < max_dist) {
-						float weight = npc.lifeMax * 0.01f + npc.defense * 1f + npc.damage * 1f;
-						if (weight > targetWeight && npc.Center != startPoint) {
+				bool foundTarget = player.DoHoming((target) => {
+					if (target.DistanceSQ(startPoint) < max_dist) {
+						float weight;
+						if (target is NPC npc) {
+							weight = npc.lifeMax * 0.01f + npc.defense * 1f + npc.damage * 1f;
+						} else if (target is Player playerTarget) {
+							weight = playerTarget.statLifeMax2 * 0.01f + playerTarget.statDefense * 1f + playerTarget.GetWeaponDamage(playerTarget.HeldItem, true) * 1f;
+						} else weight = 0f;
+						if (weight > targetWeight && target.Center != startPoint) {
 							targetWeight = weight;
-							targetPos = npc.Center;
+							targetPos = target.Center;
+							return true;
 						}
 					}
-				}
-				if (targetWeight > 0) {
+					return false;
+				});
+				if (foundTarget) {
 					if (++thirdEyeTime >= Item.useTime) {
 						float dir = Main.rand.NextFloatDirection();
 						Projectile.NewProjectile(

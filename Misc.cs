@@ -2694,6 +2694,22 @@ namespace Origins {
 			left = i - frameI;
 		}
 		public static OriginPlayer OriginPlayer(this Player player) => player.GetModPlayer<OriginPlayer>();
+		public static bool DoHoming(this Player player, Func<Entity, bool> selector, bool canPvP = true) {
+			bool foundTarget = false;
+			foreach (NPC target in Main.ActiveNPCs) {
+				if (target.CanBeChasedBy(player)) {
+					foundTarget |= selector(target);
+				}
+			}
+			if (!foundTarget && player.hostile && canPvP) {
+				foreach (Player target in Main.ActivePlayers) {
+					if (!target.dead && target.hostile && target.team != player.team) {
+						foundTarget |= selector(target);
+					}
+				}
+			}
+			return foundTarget;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

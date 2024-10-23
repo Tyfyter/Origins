@@ -86,19 +86,19 @@ namespace Origins.Items.Weapons.Melee {
 		public static void DoSpawnBeams(Projectile projectile) {
 			if (projectile.owner == Main.myPlayer) {
 				if (projectile.localAI[2] <= 0) {
-					bool foundTarget = false;
 					float dist = 16 * 7;
 					dist *= dist;
 					Vector2 targetPos = default;
-					foreach (NPC npc in Main.ActiveNPCs) {
-						if (!npc.CanBeChasedBy(projectile)) continue;
-						float newDist = projectile.DistanceSQ(npc.Center);
+					bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
+						float newDist = projectile.DistanceSQ(target.Center);
 						if (newDist < dist) {
 							dist = newDist;
 							foundTarget = true;
-							targetPos = npc.Center;
+							targetPos = target.Center;
+							return true;
 						}
-					}
+						return false;
+					});
 					if (foundTarget) {
 						Projectile.NewProjectile(
 							projectile.GetSource_FromAI(),

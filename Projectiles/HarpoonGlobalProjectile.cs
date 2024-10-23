@@ -72,21 +72,23 @@ namespace Origins.Projectiles {
 			if (bloodletter) {
 				float targetWeight = 4.5f;
 				Vector2 targetDiff = default;
-				bool foundTarget = false;
-				for (int i = 0; i < 200; i++) {
-					NPC currentNPC = Main.npc[i];
-					if (currentNPC.CanBeChasedBy(projectile) && currentNPC.HasBuff(BuffID.Bleeding)) {
-						Vector2 currentDiff = currentNPC.Center - projectile.Center;
-						float dist = currentDiff.Length();
-						currentDiff /= dist;
-						float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
-						if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
-							targetWeight = weight;
-							targetDiff = currentDiff;
-							foundTarget = true;
-						}
+				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
+					if (target is NPC targetNPC) {
+						if (!targetNPC.HasBuff(BuffID.Bleeding)) return false;
+					} else if (target is Player targetPlayer) {
+						if (!targetPlayer.HasBuff(BuffID.Bleeding)) return false;
+					} else return false;
+					Vector2 currentDiff = target.Center - projectile.Center;
+					float dist = currentDiff.Length();
+					currentDiff /= dist;
+					float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
+					if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height)) {
+						targetWeight = weight;
+						targetDiff = currentDiff;
+						return true;
 					}
-				}
+					return false;
+				});
 
 				if (foundTarget) {
 					PolarVec2 velocity = (PolarVec2)projectile.velocity;

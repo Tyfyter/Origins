@@ -49,21 +49,23 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AI() {
 			if (++Projectile.ai[2] > 12) {
-				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.CanBeChasedBy(Projectile) && Projectile.Center.Clamp(npc.Hitbox).IsWithin(Projectile.Center, 5 * 16)) {
+				Main.player[Projectile.owner].DoHoming((target) => {
+					if (Projectile.ai[2] == 0) return false;
+					if (Projectile.Center.Clamp(target.Hitbox).IsWithin(Projectile.Center, 5 * 16)) {
 						Projectile.ai[2] = 0;
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							Projectile.Center,
-							Projectile.Center.DirectionTo(npc.Center) * 8,
+							Projectile.Center.DirectionTo(target.Center) * 8,
 							ModContent.ProjectileType<Dark_Spiral_P>(),
 							Projectile.damage / 2,
 							Projectile.knockBack,
 							Projectile.owner
 						);
-						break;
+						return true;
 					}
-				}
+					return false;
+				});
 			}
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {

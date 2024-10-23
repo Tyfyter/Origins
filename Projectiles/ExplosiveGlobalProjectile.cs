@@ -48,38 +48,18 @@ namespace Origins.Projectiles {
 			if (isHoming && !projectile.minion) {
 				float targetWeight = 300;
 				Vector2 targetPos = default;
-				bool foundTarget = false;
-				for (int i = 0; i < 200; i++) {
-					NPC currentNPC = Main.npc[i];
-					if (currentNPC.CanBeChasedBy(this)) {
-						Vector2 currentPos = currentNPC.Center;
-						float dist = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
-						if (dist < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
-							targetWeight = dist;
-							targetPos = currentPos;
-							foundTarget = true;
-						}
+				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
+					Vector2 currentPos = target.Center;
+					float dist = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
+					if (dist < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height)) {
+						targetWeight = dist;
+						targetPos = currentPos;
+						return true;
 					}
-				}
-				if (!foundTarget) {
-					Player owner = Main.player[projectile.owner];
-					if (owner.hostile) {
-						foreach (Player player in Main.ActivePlayers) {
-							if (!player.dead && player.hostile && player.team != owner.team) {
-								Vector2 currentPos = player.Center;
-								float dist = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
-								if (dist < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, player.position, player.width, player.height)) {
-									targetWeight = dist;
-									targetPos = currentPos;
-									foundTarget = true;
-								}
-							}
-						}
-					}
-				}
+					return false;
+				});
 
 				if (foundTarget) {
-
 					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[projectile.type];
 
 					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
@@ -92,22 +72,22 @@ namespace Origins.Projectiles {
 				projectile.rotation = angle + MathHelper.PiOver2;
 				float targetOffset = 0.9f;
 				float targetAngle = 1;
-				NPC target;
 				float dist = 641;
-				for (int i = 0; i < Main.npc.Length; i++) {
-					target = Main.npc[i];
-					if (!target.CanBeChasedBy()) continue;
+
+				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
 					Vector2 toHit = (projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - projectile.Center);
-					if (!Collision.CanHitLine(projectile.Center + projectile.velocity, 1, 1, projectile.Center + toHit, 1, 1)) continue;
+					if (!Collision.CanHitLine(projectile.Center + projectile.velocity, 1, 1, projectile.Center + toHit, 1, 1)) return false;
 					float tdist = toHit.Length();
 					float ta = (float)Math.Abs(Tyfyter.Utils.GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
 					if (tdist <= dist && ta <= targetOffset) {
 						targetAngle = ((target.Center + target.velocity) - projectile.Center).ToRotation();
 						targetOffset = ta;
 						dist = tdist;
+						return true;
 					}
-				}
-				if (dist < 641) projectile.velocity = (projectile.velocity + new Vector2(force, 0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero) * projectile.velocity.Length();
+					return false;
+				});
+				if (foundTarget) projectile.velocity = (projectile.velocity + new Vector2(force, 0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero) * projectile.velocity.Length();
 			}
 			if (magicTripwire && Origins.MagicTripwireRange[projectile.type] > 0) {
 				int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
