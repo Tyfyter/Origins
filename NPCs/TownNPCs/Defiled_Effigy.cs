@@ -67,7 +67,7 @@ namespace Origins.NPCs.TownNPCs {
 			else if (Main.WindyEnoughForKiteDrops) chat.AddNPCDialogue(Name, "Wind");
 			if (Main.LocalPlayer.ZoneGraveyard) chat.AddNPCDialogue(Name, "Graveyard");
 			if (Main.bloodMoon) chat.AddNPCDialogue(Name, "BloodMoon");
-
+			
 			return chat; // chat is implicitly cast to a string.
 		}
 		public override bool CheckConditions(int left, int right, int top, int bottom) {
