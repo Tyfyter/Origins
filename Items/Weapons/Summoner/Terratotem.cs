@@ -72,13 +72,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.width = 24;
 			Projectile.height = 24;
 			Projectile.tileCollide = true;
-			Projectile.friendly = false;
+			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
-			Projectile.ignoreWater = false;
+			Projectile.localNPCHitCooldown = 20;
+			Projectile.ignoreWater = true;
 			MaxLife = 60 * 45;
 		}
 		public override bool? CanCutTiles() => false;
@@ -86,7 +86,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			Projectile.timeLeft = 2;
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
@@ -206,6 +205,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			#endregion
 			Life--;
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			return Projectile.Center.Clamp(targetHitbox).WithinRange(Projectile.Center, 64);
 		}
 		public override void OnKill(int timeLeft) {
 			const float diameter = 16;

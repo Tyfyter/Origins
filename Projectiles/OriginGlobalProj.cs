@@ -377,11 +377,14 @@ namespace Origins.Projectiles {
 			projectile.rotation += 0.3f * projectile.direction;
 		}
 		public override void PostDraw(Projectile projectile, Color lightColor) {
-			if (felnumBonus > Felnum_Helmet.shock_damage_divisor && ProjectileID.Sets.IsAWhip[projectile.type]) {
+			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2 && ProjectileID.Sets.IsAWhip[projectile.type]) {
 				List<Vector2> controlPoints = [];
 				Projectile.FillWhipControlPoints(projectile, controlPoints);
-				for (int i = 0; i < controlPoints.Count - 1; i++) {
-					Main.spriteBatch.DrawLightningArcBetween(controlPoints[i] - Main.screenPosition, controlPoints[i + 1] - Main.screenPosition, Main.rand.NextFloat(-4, 4));
+				for (int i = 1; i <= controlPoints.Count - 2; i+=2) {
+					Main.spriteBatch.DrawLightningArcBetween(controlPoints[^i] - Main.screenPosition, controlPoints[^(i + 2)] - Main.screenPosition, Main.rand.NextFloat(-4, 4));
+				}
+				if (controlPoints.Count % 2 == 1) {
+					Main.spriteBatch.DrawLightningArcBetween(controlPoints[0] - Main.screenPosition, controlPoints[1] - Main.screenPosition, Main.rand.NextFloat(-4, 4));
 				}
 			}
 		}
