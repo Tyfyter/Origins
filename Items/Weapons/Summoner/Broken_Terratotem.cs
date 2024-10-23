@@ -185,6 +185,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 
 			if (foundTarget) {
+				if (Projectile.ai[1] > 0) {
+					ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(player.cMinion, player);
+					const float diameter = 16;
+					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
+					Dust.NewDustPerfect(
+						Projectile.Center - offset,
+						DustID.TerraBlade,
+						offset * 0.125f
+					).shader = shaderData;
+				}
 				if (++Projectile.ai[1] > Projectile.ai[0] * 0.5f) {
 					Projectile.ai[1] = Projectile.ai[0] * -0.5f;
 					Projectile.NewProjectile(
@@ -226,8 +236,21 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 			Life--;
 		}
+		public override void OnKill(int timeLeft) {
+			const float diameter = 16;
+			Player owner = Main.player[Projectile.owner];
+			ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner);
+			for (int i = 0; i < 8; i++) {
+				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.2f, 1f);
+				Dust.NewDustPerfect(
+					Projectile.Center + offset,
+					DustID.TerraBlade,
+					offset * 0.125f
+				).shader = shaderData;
+			}
+		}
 		public override bool PreDraw(ref Color lightColor) {
-			lightColor = Color.Lerp(lightColor, Color.White, 0.75f);
+			lightColor = Color.Lerp(lightColor, new(1f, 1f, 1f, 0.8f), 0.7f);
 			return true;
 		}
 	}
