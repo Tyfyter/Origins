@@ -327,7 +327,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (!isPriorityTarget && distanceFromTarget > 400f) {
 					distanceFromTarget = 400f;
 				}
-				if (npc.active && npc.chaseable && !npc.immortal && !npc.dontTakeDamage && !(player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type])) {
+				if (npc.active && npc.chaseable && !npc.immortal && !npc.dontTakeDamage && !npc.friendly && !(player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type])) {
 					float between = Vector2.Distance(npc.Center, meat.Center);
 					if (isPriorityTarget) between *= 0.5f;
 					bool inRange = between < distanceFromTarget;

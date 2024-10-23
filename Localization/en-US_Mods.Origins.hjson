@@ -93,23 +93,6 @@ FishQuest: {
 }
 
 Dialogue: {
-	Brine_Fiend: {
-		StandardDialogue1: My wares are usually of high salinity. Watch yourself {0}.
-		StandardDialogue2: No, I don't offer refunds for the dissolving of possessions.
-		StandardDialogue3: There's nothing really freaky about me, nothing at all...
-		StandardDialogue4: For my next experiment, I want to try my mixtures on living organisms.
-		InteractionWitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
-		InteractionWitchDoctor2: Yeah, I know [npcname:WitchDoctor]. He's kinda from the same tribe.
-		InteractionPartyDemolitionist: I should probably tell [npcname:Demolitionist] that he could use peat as snappers.
-		InteractionParty: I never would've thought there'd be this side of me.
-		InteractionWind: Good thing brine is too heavy to be mist. Right?
-		InteractionStorm1: I guess I won't be swimming today.
-		InteractionStorm2: Lightning's not my taste. Brine is where it's at.
-		InteractionGraveYard: All that is dead will decay. All that decays is dead.
-		BloodMoon1: Oh. Do my toxins bother you, Terrarian?
-		BloodMoon2: I've had enough. Brine will be spilt today.
-	}
-
 	Cubekon_Tinkerer: {
 		StandardDialogue1: Remember to smile, Terrarian.
 		StandardDialogue2: Usually I'm the one who likes to put up a show, but man, the Cubekons had one in for me that day.

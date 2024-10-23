@@ -97,6 +97,31 @@ Brine_Fiend: {
 		// Princess_LovesNPC: I like {NPCName}.
 	}
 
+	Dialogue: {
+		// Standard1: My wares are usually of high salinity. Watch yourself [player:_].
+		// Standard2: No, I don't offer refunds for the dissolving of possessions.
+		// Standard3: There's nothing really freaky about me, nothing at all...
+		// Standard4: For my next experiment, I want to try my mixtures on living organisms.
+		// WitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
+		// WitchDoctor2: Yeah, I know [npcname:WitchDoctor]. He's kinda from the same tribe.
+		// PartyDemolitionist: I should probably tell [npcname:Demolitionist] that he could use peat as snappers.
+		// Party: I never would've thought there'd be this side of me.
+		// Wind: Good thing brine is too heavy to be mist. Right?
+		// Storm1: I guess I won't be swimming today.
+		// Storm2: Lightning's not my taste. Brine is where it's at.
+		// Graveyard: All that is dead will decay. All that decays is dead.
+		// BloodMoon1: Oh. Do my toxins bother you, Terrarian?
+		// BloodMoon2: I've had enough. Brine will be spilt today.
+	}
+
+	// Name1: Aini
+	// Name2: Citaya
+	// Name3: So-ru
+	// Name4: Vid-ka
+	// Name5: Akvavit'a
+	// Name6: Rems'a
+	// Name7: Miyt'ah
+	// Name8: Genni
 	// DisplayName: Brine Fiend
 	// Census.SpawnCondition: Conditions unknown
 }

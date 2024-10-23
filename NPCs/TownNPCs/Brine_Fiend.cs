@@ -79,55 +79,38 @@ namespace Origins.NPCs.TownNPCs {
 		public override string GetChat() {
 			WeightedRandom<string> chat = new();
 
-			if (NPC.FindFirstNPC(NPCID.WitchDoctor) >= 0) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionWitchDoctor1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionWitchDoctor2"));
-			}
-			if (BirthdayParty.PartyIsUp) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionParty"));
+			chat.AddOtherNPCDialogue(Name, NPCID.WitchDoctor);
 
+			if (BirthdayParty.PartyIsUp) {
+
+				chat.AddNPCDialogue(Name, "Party");
 				if (NPC.FindFirstNPC(NPCID.Demolitionist) >= 0) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionPartyDemolitionist"));
+					chat.AddNPCDialogue(Name, "PartyDemolitionist");
 				}
 			}
 			if (Main.WindyEnoughForKiteDrops) {
 				if (ChildSafety.Disabled && OriginsModIntegrations.CheckAprilFools()) {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.April_Fools.Brine_Fiend.InteractionWimd"));
+					chat.Add(Language.GetTextValue("Mods.Origins.NPCs.Brine_Fiend.Dialogue.April_Fools.InteractionWimd"));
 				} else {
-					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionWind"));
+					chat.AddNPCDialogue(Name, "Wind");
 				}
 			}
 			if (Main.IsItStorming) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionStorm1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionStorm2"));
+				chat.AddNPCDialogue(Name, "Storm");
 			}
 			if (Main.bloodMoon) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.BloodMoon1"));
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.BloodMoon2"));
+				chat.AddNPCDialogue(Name, "BloodMoon");
 			}
 			if (Main.SceneMetrics.EnoughTilesForGraveyard) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.InteractionGraveYard"));
+				chat.AddNPCDialogue(Name, "Graveyard");
 			}
 
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue1", Main.LocalPlayer.name));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue2"));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue3"));
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Brine_Fiend.StandardDialogue4"));
+			chat.AddNPCDialogue(Name, "Standard");
 
 			return chat; // chat is implicitly cast to a string.
 		}
 
 		public override List<string> SetNPCNameList() => this.GetGivenName().ToList();
-		/*[
-			"Aini",
-			"Citaya",
-			"So-ru",
-			"Vid-ka",
-			"Akvavit'a",
-			"Rems'a",
-			"Miyt'ah",
-			"Genni"
-		];*/
 		public override bool CheckConditions(int left, int right, int top, int bottom) {
 			//Terraria.WorldGen.ScoreRoom();
 			return base.CheckConditions(left, right, top, bottom);
