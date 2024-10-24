@@ -1,19 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
 using Origins.Graphics;
 using Origins.Tiles;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics;
-using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-    public class Amebic_Gel_Wall : OriginsWall, IGlowingModWall {
+	public class Amebic_Gel_Wall : OriginsWall, IGlowingModWall {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
