@@ -80,7 +80,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#3?, %2, ^2) Acid Freak
+(#3?, %2, ^2, ᗢ) Brine Fiend
 (^, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
