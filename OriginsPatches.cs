@@ -225,17 +225,6 @@ namespace Origins {
 				return orig(projectile);
 			};
 			On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
-			//On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
-			//On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
-			/*HookEndpointManager.Add(typeof(PlantLoader).GetMethod("ShakeTree", BindingFlags.Public | BindingFlags.Static), 
-				(hook_ShakeTree)((orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves) => {
-					if (orig(x, y, type, ref createLeaves)) {
-						PlantLoader_ShakeTree(x, y, type, ref createLeaves);
-						return true;
-					}
-					return false;
-				})
-			);*/
 			IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
 			On_WorldGen.PlantAlch += WorldGen_PlantAlch;
 			On_WorldGen.ShakeTree += WorldGen_ShakeTree;

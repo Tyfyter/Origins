@@ -22,8 +22,7 @@ namespace Origins.Tiles.Other {
 			Main.tileLighted[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileMergeDirt[Type] = false;
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(42, 116, 160), name);
+			AddMapEntry(new Color(42, 116, 160));
             HitSound = SoundID.Shatter;
         }
 		/*public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
