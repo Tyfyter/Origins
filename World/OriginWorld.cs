@@ -59,6 +59,7 @@ namespace Origins {
 		public int forceThunderstormDelay = 0;
 
 		public bool taxCollectorWearsPartyhat;
+		public bool unlockedBrineNPC = false;
 		public static int MimicSetLevel {
 			get {
 				float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
@@ -87,6 +88,7 @@ namespace Origins {
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
 			tag.TryGet("forceThunderstorm", out forceThunderstorm);
+			tag.TryGet("unlockedBrineNPC", out unlockedBrineNPC);
 			if (tag.TryGet("voidLocks", out List<TagCompound> voidLocks)) {
 				_voidLocks = voidLocks.ToDictionary(
 					t => t.Get<Vector2>("pos").ToPoint(),
@@ -114,6 +116,7 @@ namespace Origins {
 			tag.Add("hasDefiled", hasDefiled);
 			tag.Add("hasRiven", hasRiven);
 			tag.Add("forceThunderstorm", forceThunderstorm);
+			tag.Add("unlockedBrineNPC", unlockedBrineNPC);
 			tag.Add("defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
