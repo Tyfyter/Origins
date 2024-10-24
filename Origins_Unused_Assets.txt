@@ -2,7 +2,6 @@ Buffs/Friendly_Zombie_Buff
 Buffs/Nano_Buff
 Buffs/Ocean_Buff
 Buffs/Slag_Bucket_Debuff
-Buffs/Terratotem_Buff
 
 Items/Accessories/Advanced_Imaging_Face_Glow
 Items/Accessories/Amebic_Vial_Waist_Glow
@@ -189,7 +188,6 @@ Items/Weapons/Melee/Knee_Slapper_Head_Glow
 Items/Weapons/Melee/Riven_Biome_Blade
 Items/Weapons/Melee/Singulus
 Items/Weapons/Melee/Singulus_Glow
-Items/Weapons/Melee/The_Bird_Swing_Front
 
 Items/Weapons/Ranged/Firespit_Old
 Items/Weapons/Ranged/Hallowed_Cleaver_Alt
@@ -249,34 +247,15 @@ NPCs/Cubekon/Tetrix_Glow
 
 NPCs/Dawn/Angel_WIP
 
-NPCs/Defiled/Boss/Defiled_Amalgamation_Glow
 NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm
 NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm
-NPCs/Defiled/Bile_Thrower_Glow
-NPCs/Defiled/Defiled_Asphyxiator_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P1_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P2_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P3_Glow
-NPCs/Defiled/Defiled_Brute_Glow
-NPCs/Defiled/Defiled_Cyclops_Glow
 NPCs/Defiled/Defiled_Cyclops_Old
-NPCs/Defiled/Defiled_Digger_Body_Glow
-NPCs/Defiled/Defiled_Digger_Head_Glow
-NPCs/Defiled/Defiled_Digger_Tail_Glow
 NPCs/Defiled/Defiled_Ekko_Interact
 NPCs/Defiled/Defiled_Ekko_Parts
-NPCs/Defiled/Defiled_Flyer_Glow
 NPCs/Defiled/Defiled_Flyer_Old
-NPCs/Defiled/Defiled_Mimic_Glow
-NPCs/Defiled/Defiled_Mite_Glow
-NPCs/Defiled/Defiled_Squid_Glow
-NPCs/Defiled/Defiled_Swarmer_Glow
-NPCs/Defiled/Defiled_Tripod_Glow
-NPCs/Defiled/Defiled_Watcher_Glow
-NPCs/Defiled/Defiled_Wisp_Glow
-NPCs/Defiled/Shattered_Ghoul_Glow
-NPCs/Defiled/Shattered_Goldfish_Glow
-NPCs/Defiled/Shattered_Mummy_Glow
 
 NPCs/Dungeon/Cellarkeep_Throw
 NPCs/Dungeon/Electromancer
@@ -314,24 +293,11 @@ NPCs/MiscB/Severus
 NPCs/Nova Pillar/Nova_Pillar_Glow
 NPCs/Nova Pillar/Nova_Pillar_Head_Boss
 
-NPCs/Riven/Amoeba_Bugger_Glow
 NPCs/Riven/Amoebeye_Glow
-NPCs/Riven/Barnacle_Bunny_Glow
 NPCs/Riven/Barnacle_Mound_Glow
 NPCs/Riven/Barnacleback_Glow
-NPCs/Riven/Flagellant_Glow
 NPCs/Riven/Pustule_Jelly_Alt
 NPCs/Riven/Pustule_Jelly_Alt_Glow
-NPCs/Riven/Pustule_Jelly_Glow
-NPCs/Riven/Riven_Fighter_Glow
-NPCs/Riven/Riven_Mimic_Glow
-NPCs/Riven/Riven_Mummy_Glow
-NPCs/Riven/Riven_Penguin_Glow
-NPCs/Riven/Riven_Pigron_Glow
-NPCs/Riven/Single_Cellular_Nautilus_Glow
-NPCs/Riven/Spider_Amoeba_Glow
-NPCs/Riven/Spider_Amoeba_Wall_Glow
-NPCs/Riven/Torn_Ghoul_Glow
 NPCs/Riven/Trijaw_Shark_Glow
 
 Projectiles/Ammo/Acorn_P

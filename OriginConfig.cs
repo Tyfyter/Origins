@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons.Melee;
+using Origins.Layers;
 using Origins.LootConditions;
 using Origins.Reflection;
 using Origins.UI;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
@@ -396,6 +398,11 @@ namespace Origins {
 						}
 						if (content is ILoadExtraTextures extras) {
 							extras.LoadTextures();
+						}
+					}
+					foreach (FieldInfo fieldInfo in typeof(Accessory_Glow_Loader).GetFields(BindingFlags.NonPublic | BindingFlags.Instance)) {
+						if (fieldInfo.GetValue(Accessory_Glow_Loader.Instance) is GlowData glowData) {
+							_ = glowData.Texture.Value;
 						}
 					}
 					List<string> unused = [];

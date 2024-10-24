@@ -52,7 +52,6 @@ namespace Origins.Items.Weapons.Summoner {
 }
 namespace Origins.Buffs {
 	public class Terratotem_Buff : ModBuff {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Terratotem_Orb";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;

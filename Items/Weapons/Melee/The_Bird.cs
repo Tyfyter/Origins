@@ -115,7 +115,7 @@ namespace Origins.Items.Weapons.Melee {
 			global.birdedDamage = sourceDamage;
 		}
 	}
-	public class The_Bird_Swing : ModProjectile, IDrawOverArmProjectile {
+	public class The_Bird_Swing : ModProjectile, IDrawOverArmProjectile, ILoadExtraTextures {
 		static AutoLoadingAsset<Texture2D> frontTexture = typeof(The_Bird_Swing).GetDefaultTMLName() + "_Front";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 5;
@@ -223,5 +223,9 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.scale,
 			Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically
 		);
+
+		public void LoadTextures() {
+			_ = frontTexture.Value;
+		}
 	}
 }
