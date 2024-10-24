@@ -65,6 +65,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Magic;
 using Terraria.GameContent.Events;
 using Origins.Items.Weapons.Summoner.Minions;
+using AltLibrary.Common.Hooks;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -195,6 +196,20 @@ namespace Origins {
 						ShopMethods.AddHappinessReportText(self, "HateBiome", new {
 							BiomeName = ShopHelper.BiomeNameByKey(shoppingBiome.NameKey)
 						});
+					}
+					return false;
+				}
+				if (Main.npc[player.talkNPC].type == MC.NPCType<Defiled_Effigy>()) {
+					List<IShoppingBiome> dangerousBiomes = ShopHelper_EvilBiomes.DangerousBiomes;
+					for (int i = 0; i < dangerousBiomes.Count; i++) {
+						IShoppingBiome aShoppingBiome = dangerousBiomes[i];
+						if (aShoppingBiome == MC.GetInstance<Defiled_Wastelands>()) continue;
+						if (aShoppingBiome.IsInBiome(player)) {
+							ShopMethods.AddHappinessReportText(self, "HateBiome", new {
+								BiomeName = ShopHelper.BiomeNameByKey(aShoppingBiome.NameKey)
+							});
+							return true;
+						}
 					}
 					return false;
 				}

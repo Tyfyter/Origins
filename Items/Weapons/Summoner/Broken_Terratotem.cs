@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
@@ -6,7 +7,9 @@ using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -187,15 +190,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				if (++Projectile.ai[1] > Projectile.ai[0]) {
 					Projectile.ai[1] = -Projectile.ai[0];
-					Projectile.NewProjectile(
+					if (Main.myPlayer == Projectile.owner) Projectile.NewProjectile(
 						Projectile.GetSource_FromThis(),
 						Projectile.Center,
 						Projectile.DirectionTo(targetCenter) * 8,
-						ModContent.ProjectileType<Laser_Tag_Laser>(),
+						Terratotem_Laser.ID,
 						Projectile.damage,
 						Projectile.knockBack,
 						Projectile.owner
 					);
+					SoundEngine.PlaySound(SoundID.Item8.WithPitchRange(0.1f, 0.3f), Projectile.Center);
 				}
 			} else {
 				if (Projectile.ai[1] < 0) Projectile.ai[1]++;
@@ -242,6 +246,43 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool PreDraw(ref Color lightColor) {
 			lightColor = Color.Lerp(lightColor, new(1f, 1f, 1f, 0.8f), 0.7f);
 			return true;
+		}
+	}
+	public class Terratotem_Laser : ModProjectile {
+		public override string Texture => typeof(Laser_Tag_Laser).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.MinionShot[Type] = true;
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.GreenLaser);
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.light = 0;
+			Projectile.aiStyle = 0;
+			Projectile.extraUpdates++;
+			Projectile.alpha = 0;
+		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			try {
+				Lighting.AddLight(Projectile.Center, 0.2f, 0.8f, 0.2f);
+			} catch (Exception) { }
+			if (Projectile.alpha < 255) Projectile.alpha += 15;
+			else Projectile.alpha = 255;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Projectile.type].Value,
+				Projectile.Center - Main.screenPosition,
+				null,
+				Color.LimeGreen * (Projectile.alpha / 255f),
+				Projectile.rotation,
+				new Vector2(42, 1),
+				Projectile.scale,
+				SpriteEffects.None
+			);
+			return false;
 		}
 	}
 }

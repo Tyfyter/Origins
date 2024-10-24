@@ -1318,6 +1318,7 @@ Projectiles: {
 	Silica_Ball_Gun.DisplayName: Silica Ball Gun
 	Defiled_Sand_Ball_Falling.DisplayName: Defiled Sand Ball Falling
 	Defiled_Sand_Ball_Gun.DisplayName: Defiled Sand Ball Gun
+	Terratotem_Laser.DisplayName: Terratotem Laser
 }
 
 Prefixes: {

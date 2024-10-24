@@ -1952,8 +1952,6 @@ namespace Origins {
 		private static FieldInfo _seedArray;
 		internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
 		#endregion
-		private static FastFieldInfo<ShopHelper, IShoppingBiome[]> _dangerousBiomes;
-		internal static FastFieldInfo<ShopHelper, IShoppingBiome[]> dangerousBiomes => _dangerousBiomes ??= new("_dangerousBiomes", BindingFlags.NonPublic);
 		internal static void initExt() {
 			CollisionExtensions.Load();
 		}
@@ -1970,7 +1968,6 @@ namespace Origins {
 			_inext = null;
 			_inextp = null;
 			_seedArray = null;
-			_dangerousBiomes = null;
 			_defaultCharacterData = null;
 			_spriteCharacters = null;
 			strikethroughFont = null;

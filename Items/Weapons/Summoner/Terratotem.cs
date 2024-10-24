@@ -46,6 +46,18 @@ namespace Origins.Items.Weapons.Summoner {
 			projectile.originalDamage = Item.damage;
 			return false;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Broken_Terratotem>()
+			.AddIngredient(ItemID.BabyBirdStaff)
+			.AddIngredient(ItemID.ImpStaff)
+			.AddIngredient(ItemID.SanguineStaff)
+			.AddIngredient(ItemID.Smolstar)
+			.AddIngredient(ItemID.OpticStaff)
+			.AddIngredient(ItemID.TempestStaff)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
 	}
 }
 
@@ -172,7 +184,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						Projectile.GetSource_FromThis(),
 						Projectile.Center,
 						Projectile.DirectionTo(targetCenter) * 8,
-						ModContent.ProjectileType<Laser_Tag_Laser>(),
+						Terratotem_Laser.ID,
 						Projectile.damage,
 						Projectile.knockBack,
 						Projectile.owner
