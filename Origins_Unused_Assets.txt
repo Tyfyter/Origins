@@ -1,6 +1,8 @@
+Buffs/Friendly_Zombie_Buff
 Buffs/Nano_Buff
 Buffs/Ocean_Buff
-Buffs/Teeny_Truffle_Buff
+Buffs/Slag_Bucket_Debuff
+Buffs/Terratotem_Buff
 
 Items/Accessories/Advanced_Imaging_Face_Glow
 Items/Accessories/Amebic_Vial_Waist_Glow
@@ -15,10 +17,11 @@ Items/Accessories/Dryads_Inheritance_Neck_Glow
 Items/Accessories/Futurephones_Face_Glow
 Items/Accessories/Gun_Glove_HandsOn_Glow
 Items/Accessories/Headphones_Face_Glow
-Items/Accessories/Laser_Tag_Vest_Glow
 Items/Accessories/Playtimes_Over_HandsOff_Glow
 Items/Accessories/Protomind_P_Glow
 Items/Accessories/Scrap_Compactor_Glow
+Items/Accessories/Slag_Bucket_Shield_Glow
+Items/Accessories/Slag_Bucket_Uncursed_Shield_Glow
 Items/Accessories/Speed_Booster_Back
 Items/Accessories/Speed_Booster_Back_Glow
 Items/Accessories/Speed_Booster_Glow
@@ -186,7 +189,7 @@ Items/Weapons/Melee/Knee_Slapper_Head_Glow
 Items/Weapons/Melee/Riven_Biome_Blade
 Items/Weapons/Melee/Singulus
 Items/Weapons/Melee/Singulus_Glow
-Items/Weapons/Melee/The_Bird_UI
+Items/Weapons/Melee/The_Bird_Swing_Front
 
 Items/Weapons/Ranged/Firespit_Old
 Items/Weapons/Ranged/Hallowed_Cleaver_Alt
@@ -202,6 +205,10 @@ Items/Weapons/Summoner/Minions/Cluesy_Attack
 Items/Weapons/Summoner/Minions/Cluesy_Fall
 Items/Weapons/Summoner/Minions/Cluesy_Walk
 Items/Weapons/Summoner/Minions/Flying_Exoskeleton_Glow
+Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Attac
+Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Look
+Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Run
+Items/Weapons/Summoner/Minions/Friendly_Zombie
 Items/Weapons/Summoner/Minions/Happy_Boi_Glow
 Items/Weapons/Summoner/Minions/Ocean_Elemental
 Items/Weapons/Summoner/Minions/Ocean_Elemental_Glow
@@ -213,6 +220,7 @@ Items/Weapons/Summoner/Bee_Afraid_Incantation_Smol
 Items/Weapons/Summoner/Fiber_Optic_Whip
 Items/Weapons/Summoner/Forsaken_Desire
 Items/Weapons/Summoner/Forsaken_Desire_Use
+Items/Weapons/Summoner/Inanimate_Zombie_Hand
 Items/Weapons/Summoner/Maelstrom_Incantation_Large_P
 Items/Weapons/Summoner/Maelstrom_Incantation_Smol
 Items/Weapons/Summoner/Ocean_Amulet
@@ -262,9 +270,12 @@ NPCs/Defiled/Defiled_Flyer_Old
 NPCs/Defiled/Defiled_Mimic_Glow
 NPCs/Defiled/Defiled_Mite_Glow
 NPCs/Defiled/Defiled_Squid_Glow
+NPCs/Defiled/Defiled_Swarmer_Glow
 NPCs/Defiled/Defiled_Tripod_Glow
 NPCs/Defiled/Defiled_Watcher_Glow
+NPCs/Defiled/Defiled_Wisp_Glow
 NPCs/Defiled/Shattered_Ghoul_Glow
+NPCs/Defiled/Shattered_Goldfish_Glow
 NPCs/Defiled/Shattered_Mummy_Glow
 
 NPCs/Dungeon/Cellarkeep_Throw

@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons.Melee;
+using Origins.LootConditions;
 using Origins.Reflection;
 using Origins.UI;
 using ReLogic.OS;
@@ -438,6 +439,15 @@ namespace Origins {
 				}
 			}
 		}
+		static void SearchLootForObtainability(List<DropRateInfo> dropInfoList, IEnumerable<IItemDropRule> rules) {
+			DropRateInfoChainFeed ratesInfo = new(1f);
+			foreach (IItemDropRule rule in rules) {
+				rule.ReportDroprates(dropInfoList, ratesInfo);
+				/*foreach (DropAsSetRule dropAsSetRule in rule.ChainedRules.Select(a => a.RuleToChain).FindDropRules<DropAsSetRule>()) {
+					SearchLootForObtainability(dropInfoList, dropAsSetRule.ChainedRules.Select(a => a.RuleToChain));
+				}*/
+			}
+		}
 		public bool CheckItemObtainability {
 			get => default;
 			set {
@@ -454,15 +464,12 @@ namespace Origins {
 							recipeResultItems.Add((recipe.createItem.type, requiredItems));
 						}
 					}
-					DropRateInfoChainFeed ratesInfo = new(1f);
 					List<DropRateInfo> dropInfoList = [];
-					foreach (var rule in ItemDropDatabaseMethods._entriesByNpcNetId.GetValue(Main.ItemDropsDB).Values
+					SearchLootForObtainability(dropInfoList, ItemDropDatabaseMethods._entriesByNpcNetId.GetValue(Main.ItemDropsDB).Values
 						.Concat(ItemDropDatabaseMethods._entriesByItemId.GetValue(Main.ItemDropsDB).Values)
 						.SelectMany(l => l)
 						.Concat(ItemDropDatabaseMethods._globalEntries.GetValue(Main.ItemDropsDB))
-					) {
-						rule.ReportDroprates(dropInfoList, ratesInfo);
-					}
+					);
 					for (int i = 0; i < dropInfoList.Count; i++) {
 						obtainableItems.Add(dropInfoList[i].itemId);
 					}

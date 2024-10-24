@@ -6,13 +6,13 @@ Acrid_Dye
 Agility_Core
 Amber_Dye
 Amoeba_Buggy_Item
-ATACS: [Strange Computer]
 Black_Hole_Bomb
 Blood_Mushroom_Soup
 Boat_Rocker
 Bomb_Artifact
 Bouncy_Explosive_Golf_Ball
 Brine_Cheese
+Broken_Terratotem
 Bug_Item
 Chambersite_Stone_Wall_Item
 Chocolate_Bar
@@ -70,12 +70,15 @@ Riven_Pot_Item
 Rusty_Cross_Necklace
 Scrap_Compactor
 Shimmer_Dye
+Sixth_Spline
 SMART_Wrench
+Spray_N_Pray
 Stack_of_Shraps
 Starfuze
 Strange_Computer
 Sunflower_Sandal
 Switchblade_Shortsword
+Terratotem: [Broken Terratotem]
 The_Bird
 The_Button
 The_Defiled_Will
