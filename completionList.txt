@@ -80,7 +80,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#3?, %2, ^2, ᗢ) Brine Fiend
+(ᗢ) Brine Fiend
 (^, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -161,7 +161,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (^) Flagellant
-(#4, ^2) Graveshield Zombie !!!
+(^) Graveshield Zombie
 (^) Measly Moeba
 (^) Optiphage
 (^) Pustule Jellyfish*
@@ -790,7 +790,7 @@ SUMMONER WEAPONS:
 (@2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(☻) Terratotem
+(^) Terratotem
 (X) Tonal Resonator
 
 NO POST ML SUMMONER CONTENT YET.
@@ -924,7 +924,7 @@ TILES:
 (^) Spug Flesh*
 (@5, ^3) Twilith*
 
-(☻) Amebic Gel Wall
+(^) Amebic Gel Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
 (^) Chambersite Gemspark Wall
