@@ -175,6 +175,11 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				Projectile.direction = Math.Sign(Projectile.velocity.X);
 				player.OriginPlayer().heldProjOverArm = this;
+				if (Projectile.owner == Main.myPlayer) {
+					foreach (Projectile other in Main.ActiveProjectiles) {
+
+					}
+				}
 			}
 			player.SetDummyItemTime(2);
 			player.direction = Projectile.direction;
@@ -199,6 +204,7 @@ namespace Origins.Items.Weapons.Melee {
 				forcedCrit = true;
 			}
 		}
+		public override bool CanHitPvp(Player target) => Projectile.frameCounter > 0;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			float knockback = The_Bird.GetBirdKnockback(target, hit, Projectile.knockBack);
 			if (knockback != 0) {

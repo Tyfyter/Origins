@@ -51,6 +51,7 @@ namespace Origins.Projectiles {
 				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
 					Vector2 currentPos = target.Center;
 					float dist = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
+					if (target is Player) dist *= 2.5f;
 					if (dist < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height)) {
 						targetWeight = dist;
 						targetPos = currentPos;
@@ -79,6 +80,10 @@ namespace Origins.Projectiles {
 					if (!Collision.CanHitLine(projectile.Center + projectile.velocity, 1, 1, projectile.Center + toHit, 1, 1)) return false;
 					float tdist = toHit.Length();
 					float ta = (float)Math.Abs(Tyfyter.Utils.GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
+					if (target is Player) {
+						tdist *= 2.5f;
+						ta *= 2.5f;
+					}
 					if (tdist <= dist && ta <= targetOffset) {
 						targetAngle = ((target.Center + target.velocity) - projectile.Center).ToRotation();
 						targetOffset = ta;

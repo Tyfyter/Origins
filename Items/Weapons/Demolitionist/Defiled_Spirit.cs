@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.frame = (Projectile.frame + 1) % 3;
 				Projectile.frameCounter = 0;
 			}
-			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Asphalt);
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Asphalt);
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
@@ -63,6 +63,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
 			Projectile.Damage();
 			SoundEngine.PlaySound(SoundID.Item46.WithVolume(0.66f), Projectile.Center);
+			for (int i = 0; i < 18; i++) {
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Asphalt);
+			}
 		}
 	}
 }

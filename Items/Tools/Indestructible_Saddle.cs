@@ -30,7 +30,7 @@ namespace Origins.Items.Tools {
 			Item.knockBack = 10;
 			Item.useTime = Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-        }
+		}
 		public override bool CanUseItem(Player player) {
 			return !player.HasBuff<Indestructible_Saddle_Mount_Cooldown>();
 		}

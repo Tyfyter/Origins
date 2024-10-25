@@ -41,6 +41,7 @@ namespace Origins.Items.Tools {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 0;
+			Item.autoReuse = true;
 		}
 		public override bool MeleePrefix() => true;
 		public bool? Hardmode => false;

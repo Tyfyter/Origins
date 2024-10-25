@@ -97,28 +97,30 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Player player = Main.player[Projectile.owner];
 			player.GetModPlayer<OriginPlayer>().heldProjectile = Projectile.whoAmI;
 			if (!player.channel) {
-				if (Projectile.ai[2] != 1) {
-					Projectile.NewProjectile(
-						player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
-						Projectile.Center,
-						Projectile.velocity,
-						Abrasion_Blaster_P.ID,
-						Projectile.damage,
-						Projectile.knockBack,
-						Projectile.owner,
-						Projectile.ai[0]
-					);
-				} else {
-					Projectile.NewProjectile(
-						player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
-						Projectile.Center,
-						Projectile.velocity,
-						ModContent.ProjectileType<Abrasion_Blaster_Explosion>(),
-						Projectile.damage,
-						Projectile.knockBack,
-						Projectile.owner,
-						ai1: Projectile.ai[0]
-					);
+				if (Main.myPlayer == Projectile.owner) {
+					if (Projectile.ai[2] != 1) {
+						Projectile.NewProjectile(
+							player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
+							Projectile.Center,
+							Projectile.velocity,
+							Abrasion_Blaster_P.ID,
+							Projectile.damage,
+							Projectile.knockBack,
+							Projectile.owner,
+							Projectile.ai[0]
+						);
+					} else {
+						Projectile.NewProjectile(
+							player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
+							Projectile.Center,
+							Projectile.velocity,
+							ModContent.ProjectileType<Abrasion_Blaster_Explosion>(),
+							Projectile.damage,
+							Projectile.knockBack,
+							Projectile.owner,
+							ai1: Projectile.ai[0]
+						);
+					}
 				}
 				Projectile.Kill();
 			} else {

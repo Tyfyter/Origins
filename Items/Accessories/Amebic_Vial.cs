@@ -45,7 +45,7 @@ namespace Origins.Items.Accessories {
 			Vector2 diff;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				projectile = Main.projectile[i];
-				if (projectile.active && projectile.hostile) {
+				if (projectile.active && (projectile.hostile || (Main.player[projectile.owner].hostile && Main.player[projectile.owner].team != player.team))) {
 					currentPos = projectile.Hitbox.ClosestPointInRect(player.MountedCenter);
 					diff = player.Hitbox.ClosestPointInRect(projectile.Center) - currentPos;
 					float dist = diff.LengthSquared();
