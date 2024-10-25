@@ -102,6 +102,7 @@ namespace Origins.Items.Accessories {
 			.AddIngredient(ItemID.PowerGlove)
 			.AddTile(TileID.TinkerersWorkbench)
 			.AddCondition(LocalizedText.Empty, () => !OriginsModIntegrations.CheckAprilFools())
+			.ApplyConditionsAsDecraftConditions()
 			.Register();
 
 			static void HalfPrefix(Item item) {
@@ -168,6 +169,7 @@ namespace Origins.Items.Accessories {
 				HalfPrefix(dropped);
 				Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_DropAsItem(), dropped);
 			})
+			.ApplyConditionsAsDecraftConditions()
 			.Register();
 
 			Recipe.Create(ItemID.PowerGlove)
@@ -190,6 +192,7 @@ namespace Origins.Items.Accessories {
 				HalfPrefix(dropped);
 				Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_DropAsItem(), dropped);
 			})
+			.ApplyConditionsAsDecraftConditions()
 			.Register();
 		}
 		public override void SaveData(TagCompound tag) {
