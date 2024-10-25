@@ -14,10 +14,7 @@ namespace Origins.Items.Armor.Nova {
 			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Nova/Nova_Helmet_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
@@ -54,10 +51,7 @@ namespace Origins.Items.Armor.Nova {
 	[AutoloadEquip(EquipType.Body)]
 	public class Nova_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Nova/Nova_Breastplate_Body_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddBreastplateGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 22;
@@ -80,10 +74,7 @@ namespace Origins.Items.Armor.Nova {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Nova_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Nova/Nova_Greaves_Legs_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddLeggingGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;

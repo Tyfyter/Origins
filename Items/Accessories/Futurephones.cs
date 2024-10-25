@@ -1,7 +1,9 @@
 ﻿using Origins.Dev;
+using Origins.Layers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Face)]
 	public class Futurephones : ModItem, ICustomWikiStat {
@@ -10,7 +12,8 @@ namespace Origins.Items.Accessories {
 		];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
-        }
+			Accessory_Glow_Layer.AddGlowMask<Face_Glow_Layer>(Item.faceSlot, Texture + "_Face_Glow");
+		}
         static short glowmask;
         public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);

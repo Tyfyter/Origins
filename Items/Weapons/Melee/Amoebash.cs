@@ -21,6 +21,9 @@ namespace Origins.Items.Weapons.Melee {
         public string[] Categories => [
             "Sword"
         ];
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.damage = 87;
 			Item.DamageType = DamageClass.Melee;

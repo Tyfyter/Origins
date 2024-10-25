@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Accessory_Glow_Loader.AddWaistGlowMask(Item.waistSlot, Texture + "_Waist_Glow", player => {
+			Accessory_Glow_Layer.AddGlowMask<Waist_Glow_Layer>(Item.waistSlot, Texture + "_Waist_Glow", player => {
 				if (!player.OriginPlayer().laserTagVestActive) return Color.Transparent;
 				return Main.teamColor[player.team];
 			});

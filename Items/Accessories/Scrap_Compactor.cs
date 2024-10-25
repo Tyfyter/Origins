@@ -7,6 +7,9 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Combat"
 		];
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(48, 36);
 			Item.rare = ItemRarityID.Blue;

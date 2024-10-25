@@ -16,10 +16,7 @@ namespace Origins.Items.Armor.Scavenger {
 		];
         public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Scavenger/Scavenger_Helmet_Head_Glow");
-            }
-            Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
 		}
         public override void SetDefaults() {
 			Item.defense = 3;

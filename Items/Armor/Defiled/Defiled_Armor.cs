@@ -16,10 +16,7 @@ namespace Origins.Items.Armor.Defiled {
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Helmet>()] = ModContent.ItemType<Defiled_Helmet>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Helmet>()] = ModContent.ItemType<Defiled2_Helmet>();
-            if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;

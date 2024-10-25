@@ -16,10 +16,7 @@ namespace Origins.Items.Armor.Ashen
 			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Ashen/Ashen_Helmet_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;

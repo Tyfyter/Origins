@@ -18,10 +18,8 @@ namespace Origins.Items.Armor.Acrid {
 			"ToxicSource"
         ];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Dome_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
@@ -81,10 +79,8 @@ namespace Origins.Items.Armor.Acrid {
 			"ToxicSource"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Headgear_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -136,10 +132,8 @@ namespace Origins.Items.Armor.Acrid {
 			"ToxicSource"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helm_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
@@ -191,10 +185,8 @@ namespace Origins.Items.Armor.Acrid {
 			"ToxicSource"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Mask_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 1;
@@ -246,10 +238,8 @@ namespace Origins.Items.Armor.Acrid {
 			"ToxicSource"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Visor_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 9;
@@ -294,10 +284,8 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Body)]
 	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Acrid/Acrid_Breastplate_Body_Glow");
-            }
-        }
+			Origins.AddBreastplateGlowmask(this);
+		}
         public override void SetDefaults() {
 			Item.defense = 18;
 			Item.value = Item.sellPrice(gold: 2, silver: 40);
@@ -317,9 +305,8 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Acrid_Greaves : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Acrid/Acrid_Greaves_Legs_Glow");
-            }
+			Origins.AddLeggingGlowMask(this);
+			Origins.AddGlowMask(this);
         }
         public override void SetDefaults() {
 			Item.defense = 14;

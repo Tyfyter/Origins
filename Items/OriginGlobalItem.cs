@@ -151,6 +151,7 @@ namespace Origins.Items {
 			if (statsModified && !isOriginsItemCloningDefaults) {
 				item.StatsModifiedBy.Add(Mod);
 			}
+			if (Origins.itemGlowmasks[item.type] != 0) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
 			if (player.nonTorch != -1 && player.inventory[player.nonTorch].type == Boomphracken.ID && player.HeldItem.CountsAsClass<Thrown_Explosive>()) {

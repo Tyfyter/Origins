@@ -1,26 +1,14 @@
 Buffs/Friendly_Zombie_Buff
 Buffs/Nano_Buff
 Buffs/Ocean_Buff
-Buffs/Slag_Bucket_Debuff
 
-Items/Accessories/Advanced_Imaging_Face_Glow
-Items/Accessories/Amebic_Vial_Waist_Glow
-Items/Accessories/ASH_Attack_Relay_Back_Glow
 Items/Accessories/Binding_Book_P
 Items/Accessories/Binding_Book_P2
 Items/Accessories/Brine_Leafed_Clover
 Items/Accessories/Bug_Trapper_Bug
-Items/Accessories/Bug_Trapper_HandsOff_Glow
 Items/Accessories/Drill_Ravel
-Items/Accessories/Dryads_Inheritance_Neck_Glow
-Items/Accessories/Futurephones_Face_Glow
 Items/Accessories/Gun_Glove_HandsOn_Glow
-Items/Accessories/Headphones_Face_Glow
-Items/Accessories/Playtimes_Over_HandsOff_Glow
 Items/Accessories/Protomind_P_Glow
-Items/Accessories/Scrap_Compactor_Glow
-Items/Accessories/Slag_Bucket_Shield_Glow
-Items/Accessories/Slag_Bucket_Uncursed_Shield_Glow
 Items/Accessories/Speed_Booster_Back
 Items/Accessories/Speed_Booster_Back_Glow
 Items/Accessories/Speed_Booster_Glow
@@ -31,12 +19,6 @@ Items/Accessories/Timbre_of_Hell_HandsOff - Copy
 Items/Accessories/Timbre_of_Hell_HandsOff_Glow
 
 Items/Armor/Acrid/Acrid_Breastplate_Glow
-Items/Armor/Acrid/Acrid_Dome_Glow
-Items/Armor/Acrid/Acrid_Greaves_Glow
-Items/Armor/Acrid/Acrid_Headgear_Glow
-Items/Armor/Acrid/Acrid_Helm_Glow
-Items/Armor/Acrid/Acrid_Mask_Glow
-Items/Armor/Acrid/Acrid_Visor_Glow
 
 Items/Armor/Amber/Explosive_Resin
 Items/Armor/Amber/Explosive_Resin_Gore1
@@ -44,9 +26,6 @@ Items/Armor/Amber/Explosive_Resin_Gore2
 Items/Armor/Amber/Explosive_Resin_Gore3
 
 Items/Armor/Blast/Blast_Helmet_Head_Berserker_Glow
-
-Items/Armor/Chromtain/Chromtain_Breastplate_Glow
-Items/Armor/Chromtain/Chromtain_Greaves_Glow
 
 Items/Armor/Cryosten/CryostenArmorTemplate
 
@@ -57,7 +36,6 @@ Items/Armor/Encrusted/Encrusted_Coat_Female
 Items/Armor/Encrusted/Encrusted_Coat_Female_Glow
 
 Items/Armor/Eyndum/Armor_Temp3
-Items/Armor/Eyndum/Eyndum_Helmet_Glow
 
 Items/Armor/Felnum/Felnum_Glow_Eye
 
@@ -70,8 +48,6 @@ Items/Armor/Lost/Defiled_Exhaustion_Buff
 
 Items/Armor/Myth/Wings_46
 
-Items/Armor/Riptide/Riptide_Breastplate_Body_Glow
-
 Items/Armor/Ruby/ArmorTemplate_v1
 Items/Armor/Ruby/Item_178
 
@@ -81,16 +57,11 @@ Items/Armor/Vanity/Dev/First_Dream
 
 Items/Materials/Valkyrum_Bar_WIP
 
-Items/Other/Consumables/Food/Periven_Glow
-Items/Other/Consumables/Food/Soul_Spaghetti_Glow
-
 Items/Other/Consumables/HolidayHairs/AntiCorruptionDay_Hair
 Items/Other/Consumables/HolidayHairs/MentalHealthAwarenessDay_Hair
 Items/Other/Consumables/HolidayHairs/Player_Hair_Example
 Items/Other/Consumables/Bowl_of_Soup
 Items/Other/Consumables/Captured_Mojo
-
-Items/Other/Fish/Festering_Crate_Glow
 
 Items/Pets/Chee_Toy_Flying
 Items/Pets/Chromatic_Pangolin_Flying
@@ -122,7 +93,6 @@ Items/Weapons/Ammo/Scrap_3
 Items/Weapons/Demolitionist/Abrasion_Blaster_Charge1
 Items/Weapons/Demolitionist/Abrasion_Blaster_Charge2
 Items/Weapons/Demolitionist/Abrasion_Blaster_Charge3
-Items/Weapons/Demolitionist/Acrid_Handcannon_Glow
 Items/Weapons/Demolitionist/Bomb_Example
 Items/Weapons/Demolitionist/Bombardment_P_Inner
 Items/Weapons/Demolitionist/Bombardment_P_Outer
@@ -143,7 +113,6 @@ Items/Weapons/Demolitionist/Meteor_P2
 Items/Weapons/Demolitionist/Meteor_P2_Cooling_Effect
 Items/Weapons/Demolitionist/Mine_Flayer_Use
 Items/Weapons/Demolitionist/Nuclear_Arm_HandsOn_Glow
-Items/Weapons/Demolitionist/Self_Destruct_Glow
 Items/Weapons/Demolitionist/Shrapnel_Dust
 Items/Weapons/Demolitionist/Shrapnel_Dust_2
 Items/Weapons/Demolitionist/Shrapnel_Dust_3
@@ -181,7 +150,6 @@ Items/Weapons/Magic/Missing_File_Use
 Items/Weapons/Magic/Phantom_Fury_P2
 Items/Weapons/Magic/Unending_Energy
 
-Items/Weapons/Melee/Amoebash_Glow
 Items/Weapons/Melee/Chromtain_Smasher
 Items/Weapons/Melee/Defiled_Biome_Blade
 Items/Weapons/Melee/Knee_Slapper_Head_Glow

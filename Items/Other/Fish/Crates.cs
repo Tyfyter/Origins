@@ -13,12 +13,12 @@ using static Terraria.ID.ItemID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items.Other.Fish {
-    #region chunky crate
-    public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile>, ICustomWikiStat {
-        public string[] Categories => [
-            "GrabBag"
-        ];
-        public override void ModifyItemLoot(ItemLoot itemLoot) {
+	#region chunky crate
+	public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile>, ICustomWikiStat {
+		public string[] Categories => [
+			"GrabBag"
+		];
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
 			IItemDropRule[] riven = [
 				Defiled_Wastelands.FissureDropRule,
@@ -43,10 +43,10 @@ namespace Origins.Items.Other.Fish {
 	#endregion
 	#region bilious crate
 	public class Bilious_Crate : Fishing_Crate_Item<Bilious_Crate_Tile>, ICustomWikiStat {
-        public string[] Categories => [
-            "GrabBag"
-        ];
-        public override void ModifyItemLoot(ItemLoot itemLoot) {
+		public string[] Categories => [
+			"GrabBag"
+		];
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
 			IItemDropRule[] riven = [
 				Defiled_Wastelands.FissureDropRule,
@@ -73,10 +73,10 @@ namespace Origins.Items.Other.Fish {
 	#region crusty crate
 	public class Crusty_Crate : Fishing_Crate_Item<Crusty_Crate_Tile>, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => [
-            "GrabBag"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"GrabBag"
+		];
+		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			glowmask = Origins.AddGlowMask(this);
 		}
@@ -108,11 +108,14 @@ namespace Origins.Items.Other.Fish {
 	#endregion
 	#region festering crate
 	public class Festering_Crate : Fishing_Crate_Item<Festering_Crate_Tile>, ICustomWikiStat {
-        public string[] Categories => [
-            "GrabBag"
-        ];
-        public override void ModifyItemLoot(ItemLoot itemLoot) {
-
+		public string[] Categories => [
+			"GrabBag"
+		];
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Origins.AddGlowMask(this);
+		}
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] riven = [
 				Riven_Hive.LesionDropRule,
 				BiomeChest_GoldCoin,

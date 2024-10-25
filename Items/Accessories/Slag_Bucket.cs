@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Accessory_Glow_Loader.AddShieldGlowMask(Item.shieldSlot, Texture + "_Shield_Glow");
+			Accessory_Glow_Layer.AddGlowMask<Shield_Glow_Layer>(Item.shieldSlot, Texture + "_Shield_Glow");
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(48, 36);
@@ -53,7 +53,7 @@ namespace Origins.Items.Accessories {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Accessory_Glow_Loader.AddShieldGlowMask(Item.shieldSlot, Texture + "_Shield_Glow");
+			Accessory_Glow_Layer.AddGlowMask<Shield_Glow_Layer>(Item.shieldSlot, Texture + "_Shield_Glow");
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -91,7 +91,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Slag_Bucket_Debuff : ModBuff {
-		public override string Texture => "Origins/Buffs/Scrap_Barrier_Debuff";
+		public override string Texture => "Origins/Buffs/Slag_Bucket_Debuff";
 		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.Buffs.{nameof(Scrap_Barrier_Debuff)}.{nameof(DisplayName)}");
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.Buffs.{nameof(Scrap_Barrier_Debuff)}.{nameof(Description)}");
 		public override void SetStaticDefaults() {

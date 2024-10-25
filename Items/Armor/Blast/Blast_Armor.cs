@@ -11,15 +11,12 @@ namespace Origins.Items.Armor.Blast {
     [AutoloadEquip(EquipType.Head)]
 	public class Blast_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
             "ExplosiveBoostGear",
 			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Blast/Blast_Helmet_Head_Glow");
-            }
-            Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddHelmetGlowmask(BerserkerModeHead, "Items/Armor/Blast/Blast_Helmet_Head_Berserker_Glow");
         }
         public static int BerserkerModeHead { get; private set; }
 		public override void Load() {
@@ -73,10 +70,8 @@ namespace Origins.Items.Armor.Blast {
 	[AutoloadEquip(EquipType.Body)]
 	public class Blast_Breastplate : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Blast/Blast_Breastplate_Body_Glow");
-            }
-        }
+			Origins.AddBreastplateGlowmask(this);
+		}
         public override void SetDefaults() {
 			Item.defense = 18;
 			Item.value = Item.sellPrice(gold: 6);
@@ -100,10 +95,8 @@ namespace Origins.Items.Armor.Blast {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Blast_Greaves : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Blast/Blast_Greaves_Legs_Glow");
-            }
-        }
+			Origins.AddLeggingGlowMask(this);
+		}
         public override void SetDefaults() {
 			Item.defense = 13;
 			Item.value = Item.sellPrice(gold: 4, silver: 50);

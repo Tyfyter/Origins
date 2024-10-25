@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Layers;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -16,6 +17,7 @@ namespace Origins.Items.Accessories {
         static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMask<Neck_Glow_Layer>(Item.neckSlot, Texture + "_Neck_Glow");
         }
         public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);

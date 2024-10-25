@@ -63,7 +63,7 @@ namespace Origins.Items.Armor.Riven {
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Coat>()] = ModContent.ItemType<Riven_Coat>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Coat>()] = ModContent.ItemType<Riven2_Coat>();
             GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
-			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
+			Origins.AddBreastplateGlowmask(this);
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

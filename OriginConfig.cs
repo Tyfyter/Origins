@@ -400,10 +400,8 @@ namespace Origins {
 							extras.LoadTextures();
 						}
 					}
-					foreach (FieldInfo fieldInfo in typeof(Accessory_Glow_Loader).GetFields(BindingFlags.NonPublic | BindingFlags.Instance)) {
-						if (fieldInfo.GetValue(Accessory_Glow_Loader.Instance) is GlowData glowData) {
-							_ = glowData.Texture.Value;
-						}
+					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
+						glowLayer.LoadAllTextures();
 					}
 					List<string> unused = [];
 					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();

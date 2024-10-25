@@ -56,7 +56,9 @@ namespace Origins.Items.Armor.Riptide {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Riptide_Breastplate : ModItem, INoSeperateWikiPage {
-		
+		public override void SetStaticDefaults() {
+			Origins.AddBreastplateGlowmask(this);
+		}
 		public override void SetDefaults() {
 			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 30);

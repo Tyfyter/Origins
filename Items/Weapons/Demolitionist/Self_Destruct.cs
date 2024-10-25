@@ -12,10 +12,14 @@ using Terraria.DataStructures;
 using Origins.Tiles.Other;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Self_Destruct : ModItem, ICustomWikiStat {
+	public class Self_Destruct : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-            "OtherExplosive"
-        ];
+			"OtherExplosive"
+		];
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.noMelee = true;
@@ -29,12 +33,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Yellow;
 			Item.value = Item.sellPrice(gold: 3);
 			Item.ArmorPenetration += 6;
-        }
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofMight, 15)
-            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 28)
-            .AddIngredient(ModContent.ItemType<Power_Core>(), 2)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 28)
+			.AddIngredient(ModContent.ItemType<Power_Core>(), 2)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
@@ -121,42 +125,42 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 				Projectile.ai[0] = 1;
 			}
-            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Self_Destruct_Flash>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
-        }
+			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Self_Destruct_Flash>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
 	}
-    public class Self_Destruct_Flash : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Visual";
-        public override void SetDefaults() {
-            Projectile.timeLeft = 15;
-            Projectile.tileCollide = false;
-            Projectile.alpha = 100;
-        }
-        public override void AI() {
-            Lighting.AddLight(Projectile.Center, new Vector3(2, 0, 0));
-        }
-        public override bool PreDraw(ref Color lightColor) {
-            const float scale = 3f;
-            Main.spriteBatch.Restart(SpriteSortMode.Immediate);
-            DrawData data = new DrawData(
-                Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
-                Projectile.Center - Main.screenPosition,
-                new Rectangle(0, 0, 1, 1),
-                new Color(0, 0, 0, 255),
-                0, new Vector2(0.5f, 0.5f),
-                new Vector2(160, 160) * scale,
-                SpriteEffects.None,
-            0);
-            float percent = Projectile.timeLeft / 10f;
-            Origins.blackHoleShade.UseOpacity(0.985f);
-            Origins.blackHoleShade.UseSaturation(0f + percent);
-            Origins.blackHoleShade.UseColor(3, 0, 0);
-            Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
-            Origins.blackHoleShade.Apply(data);
-            Main.EntitySpriteDraw(data);
-            Main.spriteBatch.Restart();
-            return false;
-        }
-    }
+	public class Self_Destruct_Flash : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Visual";
+		public override void SetDefaults() {
+			Projectile.timeLeft = 15;
+			Projectile.tileCollide = false;
+			Projectile.alpha = 100;
+		}
+		public override void AI() {
+			Lighting.AddLight(Projectile.Center, new Vector3(2, 0, 0));
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			const float scale = 3f;
+			Main.spriteBatch.Restart(SpriteSortMode.Immediate);
+			DrawData data = new DrawData(
+				Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
+				Projectile.Center - Main.screenPosition,
+				new Rectangle(0, 0, 1, 1),
+				new Color(0, 0, 0, 255),
+				0, new Vector2(0.5f, 0.5f),
+				new Vector2(160, 160) * scale,
+				SpriteEffects.None,
+			0);
+			float percent = Projectile.timeLeft / 10f;
+			Origins.blackHoleShade.UseOpacity(0.985f);
+			Origins.blackHoleShade.UseSaturation(0f + percent);
+			Origins.blackHoleShade.UseColor(3, 0, 0);
+			Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
+			Origins.blackHoleShade.Apply(data);
+			Main.EntitySpriteDraw(data);
+			Main.spriteBatch.Restart();
+			return false;
+		}
+	}
 }

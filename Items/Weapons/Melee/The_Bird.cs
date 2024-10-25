@@ -225,7 +225,7 @@ namespace Origins.Items.Weapons.Melee {
 		);
 
 		public void LoadTextures() {
-			_ = frontTexture.Value;
+			frontTexture.LoadAsset();
 		}
 	}
 }

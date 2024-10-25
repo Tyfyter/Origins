@@ -61,6 +61,7 @@ namespace Origins {
 		public static int[] MagicTripwireRange { get => magicTripwireRange; }
 		static int[] magicTripwireDetonationStyle;
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
+		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
 		public static Dictionary<int, (ushort pileType, int minStyle, int maxStyle)> PileType { get; private set; }
 		public static ModKeybind SetBonusTriggerKey { get; private set; }
@@ -704,23 +705,28 @@ namespace Origins {
 			return -1;
 		}
 		public static short AddGlowMask(ModItem item, string suffix = "_Glow") {
-			return AddGlowMask(item.Texture + suffix);
+			short slot = AddGlowMask(item.Texture + suffix);
+			itemGlowmasks[item.Type] = slot;
+			return slot;
 		}
 		public static short AddGlowMask(ModTexturedType content, string suffix = "_Glow") {
 			return AddGlowMask(content.Texture + suffix);
 		}
+		internal static void AddHelmetGlowmask(ModItem modItem) => AddHelmetGlowmask(modItem.Item.headSlot, $"{modItem.Texture}_{EquipType.Head}_Glow");
+		internal static void AddBreastplateGlowmask(ModItem modItem) => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}_Glow");
+		internal static void AddLeggingGlowMask(ModItem modItem) => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}_Glow");
 		internal static void AddHelmetGlowmask(int armorID, string texture) {
-			if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
 				HelmetGlowMasks.Add(armorID, asset);
 			}
 		}
 		internal static void AddBreastplateGlowmask(int armorID, string texture) {
-			if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
 				BreastplateGlowMasks.Add(armorID, asset);
 			}
 		}
 		internal static void AddLeggingGlowMask(int armorID, string texture) {
-			if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
 				LeggingGlowMasks.Add(armorID, asset);
 			}
 		}
@@ -745,6 +751,7 @@ namespace Origins {
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 			BannerGlobalNPC.BuildBannerCache();
+			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 		}
 		static void LoadCloudBottoms() {
 			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];

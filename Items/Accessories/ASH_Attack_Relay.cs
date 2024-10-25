@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Layers;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,7 +13,7 @@ namespace Origins.Items.Accessories {
 			"Combat"
 		];
 		public override void SetStaticDefaults() {
-			Origins.BackGlowMasks.Add(Item.backSlot, Texture + "_Back_Glow");
+			Accessory_Glow_Layer.AddGlowMask<Back_Glow_Layer>(Item.backSlot, Texture + "_Back_Glow");
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);

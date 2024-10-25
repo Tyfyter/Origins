@@ -56,8 +56,7 @@ namespace Origins.Items.Armor.Encrusted {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
-			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
-			Item.ResearchUnlockCount = 1;
+			Origins.AddBreastplateGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;

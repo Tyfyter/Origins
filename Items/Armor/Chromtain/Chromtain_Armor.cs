@@ -7,16 +7,13 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Chromtain {
     [AutoloadEquip(EquipType.Head)]
-	public class Chromtain_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+	public class Chromtain_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, ICustomWikiStat {
         public string[] Categories => [
             "PostMLArmorSet"/*,
             "MeleeBoostGear" should probably give it melee boosts, when the time comes */
         ];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Chromtain/Chromtain_Helmet_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 16;
@@ -46,10 +43,8 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Body)]
 	public class Chromtain_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Chromtain/Chromtain_Breastplate_Body_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddBreastplateGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 40;
@@ -69,10 +64,8 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Chromtain_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Chromtain/Chromtain_Greaves_Legs_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddLeggingGlowMask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 25;

@@ -15,10 +15,8 @@ namespace Origins.Items.Armor.Eyndum {
             "ExplosiveBoostGear"
         ];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 16;
@@ -50,11 +48,7 @@ namespace Origins.Items.Armor.Eyndum {
 	[AutoloadEquip(EquipType.Body)]
 	public class Eyndum_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_Body_Glow");
-				Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_FemaleBody_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddBreastplateGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 16;
@@ -76,10 +70,7 @@ namespace Origins.Items.Armor.Eyndum {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Eyndum_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Eyndum/Eyndum_Greaves_Legs_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddLeggingGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 12;

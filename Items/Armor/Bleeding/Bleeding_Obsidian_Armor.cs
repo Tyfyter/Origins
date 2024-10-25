@@ -17,10 +17,7 @@ namespace Origins.Items.Armor.Bleeding {
 			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Helmet_Head_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -59,12 +56,11 @@ namespace Origins.Items.Armor.Bleeding {
 	public class Bleeding_Obsidian_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Breastplate_Body_Glow");
+				Origins.AddBreastplateGlowmask(this);
 				if (Mod.RequestAssetIfExists("Items/Armor/Bleeding/Bleeding_Obsidian_Breastplate_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
 				}
 			}
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 10;
@@ -85,10 +81,7 @@ namespace Origins.Items.Armor.Bleeding {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Bleeding_Obsidian_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Greaves_Legs_Glow");
-			}
-			Item.ResearchUnlockCount = 1;
+			Origins.AddLeggingGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.defense = 9;
