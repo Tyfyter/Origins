@@ -15,6 +15,9 @@ using Origins.NPCs.MiscE;
 using MonoMod.Cil;
 using Microsoft.Xna.Framework.Input;
 using Terraria.Localization;
+using Origins.Dev;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -97,6 +100,12 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
 				instance.LoadFancyLighting();
+			}
+			if (ModLoader.TryGetMod("ModDemoUtils", out Mod modDemoUtils)) {
+				ItemWikiProvider itemWikiProvider = new();
+				modDemoUtils.Call("AddStatProvider", Origins.instance, (Item item) => {
+					return itemWikiProvider.GetStats(item.ModItem).First().Item2;
+				});
 			}
 		}
 		public static bool WikiPageExists(object obj, object id) {
