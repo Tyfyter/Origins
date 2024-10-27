@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
@@ -9,7 +10,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class C6_Jackhammer : ModItem {
+    public class C6_Jackhammer : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ToolWeapon"
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}

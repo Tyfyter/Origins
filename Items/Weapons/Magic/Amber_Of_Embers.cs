@@ -16,8 +16,7 @@ namespace Origins.Items.Weapons.Magic {
             "Wand"
         ];
         public override void SetStaticDefaults() {
-			Item.staff[Item.type] = true;
-			Item.ResearchUnlockCount = 1;
+			Item.staff[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamelash);

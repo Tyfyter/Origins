@@ -14,10 +14,6 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Rotting_Worm_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-        public string[] Categories => [
-            "MinionWeapon",
-			"Minion"
-        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 			Item.ResearchUnlockCount = 1;

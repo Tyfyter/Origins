@@ -12,10 +12,6 @@ using Origins.Items.Weapons.Summoner.Minions;
 namespace Origins.Items.Weapons.Summoner {
 	public class Desert_Crown : ModItem, ICustomWikiStat {
 		static short glowmask;
-		public string[] Categories => [
-			"MinionWeapon",
-			"Minion"
-		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

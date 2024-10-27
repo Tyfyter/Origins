@@ -766,10 +766,10 @@ namespace Origins.World {
 				tile.Slope = SlopeType.SlopeUpLeft;
 				break;
 				case r | tr:
-				tile.Slope = SlopeType.SlopeDownRight;
+				tile.Slope = SlopeType.SlopeDownLeft;
 				break;
 				case r | br:
-				tile.Slope = SlopeType.SlopeDownLeft;
+				tile.Slope = SlopeType.SlopeDownRight;
 				break;
 				default:
 				if (sloped) {

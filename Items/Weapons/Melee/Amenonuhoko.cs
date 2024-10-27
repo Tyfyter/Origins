@@ -15,8 +15,7 @@ namespace Origins.Items.Weapons.Melee {
 			"ToxicSource"
         ];
         public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-			ItemID.Sets.Spears[Item.type] = true;
+			ItemID.Sets.Spears[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gungnir);

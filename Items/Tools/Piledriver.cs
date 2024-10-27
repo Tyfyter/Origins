@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Piledriver : ModItem {
+	public class Piledriver : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ToolWeapon"
+		];
 		public static int Pick => 70;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

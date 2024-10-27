@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,7 +8,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Miter_Saw : ModItem, ICustomDrawItem {
+	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ToolWeapon",
+			"OtherMelee"
+		];
 		static AutoCastingAsset<Texture2D> useTexture;
 		public override void SetStaticDefaults() {
 			useTexture = ModContent.Request<Texture2D>(Texture + "_Use");
@@ -28,7 +33,7 @@ namespace Origins.Items.Tools {
 			Item.knockBack = 0.8f;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.UseSound = SoundID.Item23;
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {

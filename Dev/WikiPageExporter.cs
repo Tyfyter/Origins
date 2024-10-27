@@ -689,20 +689,43 @@ namespace Origins.Dev {
 			data["Image"] = customStat?.CustomSpritePath ?? WikiPageExporter.GetWikiItemImagePath(modItem);
 			data["Name"] = item.Name;
 			JArray types = new("Item");
+			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
+			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
 			if (item.accessory) types.Add("Accessory");
-			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) {
+			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == "Tool") || types.Any(t => t.ToString() == "ToolWeapon"))) {
 				types.Add("Weapon");
-				if (!item.noMelee && item.useStyle == ItemUseStyleID.Swing) types.Add("Sword");
-				if (item.shoot > ProjectileID.None) {
+				bool alreadyHasOtherType = types.Any(t => t.ToString() is "OtherMelee" or "OtherRanged" or "OtherMagic" or "OtherSummon" or "OtherExplosive");
+				if (!alreadyHasOtherType && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) types.Add("Sword");
+				if (!alreadyHasOtherType && item.shoot > ProjectileID.None) {
 					switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
 						case ProjAIStyleID.Boomerang:
 						types.Add("Boomerang");
 						break;
 
-						case ProjAIStyleID.Spear:
-						types.Add("Spear");
+						case ProjAIStyleID.Yoyo:
+						types.Add("Yoyo");
 						break;
 					}
+					if (ItemID.Sets.Spears[item.type]) types.Add("Spear");
+
+					if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == "Incantation")) {
+						if (Origins.ArtifactMinion[item.shoot]) types.Add("Artifact");
+						if (ProjectileID.Sets.IsAWhip[item.shoot]) {
+							types.Add("Whip");
+						} else {
+							Projectile proj = ContentSamples.ProjectilesByType[item.shoot];
+							if (proj.minion) types.Add("Minion");
+							else if (proj.sentry) types.Add("Sentry");
+							else types.Add("OtherSummon");
+						}
+					}
+				}
+				if (!alreadyHasOtherType && item.CountsAsClass(DamageClass.Melee) && !types.Any(t => t.ToString() is "Sword" or "Spear" or "Boomerang" or "Yoyo")) {
+					types.Add("OtherMelee");
+				}
+				if (!alreadyHasOtherType && item.CountsAsClass(DamageClass.Magic) && !types.Any(t => t.ToString() is "Wand" or "MagicGun" or "SpellBook")) {
+					if (Item.staff[item.type]) types.Add("Wand");
+					else types.Add("OtherMagic");
 				}
 				switch (item.useAmmo) {
 					case ItemID.WoodenArrow:
@@ -717,24 +740,26 @@ namespace Origins.Dev {
 					else if (item.useAmmo == ModContent.ItemType<Harpoon>()) types.Add("HarpoonGun");
 					break;
 				}
-				switch (item.ammo) {
-					case ItemID.WoodenArrow:
-					types.Add("Arrow");
-					break;
-					case ItemID.MusketBall:
-					types.Add("Bullet");
-					break;
-
-					default:
-					if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add("Harpoon");
-					break;
+				if (!alreadyHasOtherType && item.CountsAsClass(DamageClass.Ranged) && !types.Any(t => t.ToString() is "Bow" or "Gun" or "Handcannon" or "HarpoonGun")) {
+					types.Add("OtherRanged");
 				}
+			}
+			switch (item.ammo) {
+				case ItemID.WoodenArrow:
+				types.Add("Arrow");
+				break;
+				case ItemID.MusketBall:
+				types.Add("Bullet");
+				break;
+
+				default:
+				if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add("Harpoon");
+				break;
 			}
 			if (customStat?.Hardmode ?? (!item.consumable && item.rare > ItemRarityID.Orange)) types.Add("Hardmode");
 
 			if (ItemID.Sets.IsFood[item.type]) types.Add("Food");
 			if (item.ammo != 0 && item.ammo != ItemID.CopperOre) types.Add("Ammo");
-			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
 			if (item.createTile != -1) {
 				types.Add("Tile");
@@ -744,7 +769,6 @@ namespace Origins.Dev {
 			}
 			if (item.expert) types.Add("Expert");
 			if (item.master) types.Add("Master");
-			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
 
 			data.AppendStat("PickPower", item.pick, 0);

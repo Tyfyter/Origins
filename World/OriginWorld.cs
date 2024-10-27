@@ -221,7 +221,7 @@ namespace Origins {
 			}
 		}
 		protected internal List<(int x, int y)> defiledResurgenceTiles;
-		protected internal List<(int x, int y, ushort)> defiledAltResurgenceTiles;
+		protected internal List<(int x, int y, ushort oldType, ushort hurtType)> defiledAltResurgenceTiles;
 		protected internal Queue<(int x, int y)> queuedKillTiles;
 		protected internal HashSet<Point> anoxicAirTiles;
 		public override void PostUpdateWorld() {
@@ -233,16 +233,17 @@ namespace Origins {
 					WorldGen.SquareTileFrame(pos.k, pos.l);
 					NetMessage.SendTileSquare(-1, pos.k, pos.l, 1);
 					defiledResurgenceTiles.RemoveAt(index);
-				} else if (defiledAltResurgenceTiles.Count > 0 && WorldGen.genRand.NextBool(30)) {
-					int index = WorldGen.genRand.Next(defiledAltResurgenceTiles.Count);
-					(int k, int l, ushort type) tile = defiledAltResurgenceTiles[index];
-					if (Main.tile[tile.k, tile.l].HasTile) {
-						Main.tile[tile.k, tile.l].TileType = tile.type;
-						WorldGen.SquareTileFrame(tile.k, tile.l);
-						NetMessage.SendTileSquare(-1, tile.k, tile.l, 1);
-					}
-					defiledAltResurgenceTiles.RemoveAt(index);
 				}
+			}
+			if (defiledAltResurgenceTiles.Count > 0 && WorldGen.genRand.NextBool(30)) {
+				int index = WorldGen.genRand.Next(defiledAltResurgenceTiles.Count);
+				(int k, int l, ushort oldType, ushort hurtType) = defiledAltResurgenceTiles[index];
+				if (Main.tile[k, l].TileIsType(hurtType)) {
+					Main.tile[k, l].TileType = oldType;
+					WorldGen.SquareTileFrame(k, l);
+					NetMessage.SendTileSquare(-1, k, l, 1);
+				}
+				defiledAltResurgenceTiles.RemoveAt(index);
 			}
 			int q = 100;
 			while (!WorldGen.gen && (queuedKillTiles?.Count ?? 0) > 0) {

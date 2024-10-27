@@ -11,10 +11,10 @@ using Origins.Items.Armor.Felnum;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
 		public const int baseDamage = 18;
-        public string[] Categories => [
-            "Spear"
-        ];
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			ItemID.Sets.Spears[Type] = true;
+		}
+		public override void SetDefaults() {
 			Item.damage = baseDamage;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;

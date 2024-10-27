@@ -1,5 +1,6 @@
 ﻿using Origins.Buffs;
 using Origins.Questing;
+using Origins.Tiles;
 using System;
 using System.IO;
 using Terraria;
@@ -27,6 +28,7 @@ namespace Origins {
 					packet.Write(Origins.NetMessageType.sync_peat);
 					packet.Write((short)OriginSystem.Instance.peatSold);
 					packet.Send(Player.whoAmI);
+					TESystem.SyncAllToPlayer(Player.whoAmI);
 					foreach (var quest in Quest_Registry.NetQuests) {
 						quest.Sync(Player.whoAmI);
 					}

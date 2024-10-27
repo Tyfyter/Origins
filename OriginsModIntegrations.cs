@@ -103,6 +103,7 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("ModDemoUtils", out Mod modDemoUtils)) {
 				ItemWikiProvider itemWikiProvider = new();
+				modDemoUtils.Call("RegisterDemo", Origins.instance, "Tyfyter/Origins");
 				modDemoUtils.Call("AddStatProvider", Origins.instance, (Item item) => {
 					return itemWikiProvider.GetStats(item.ModItem).First().Item2;
 				});

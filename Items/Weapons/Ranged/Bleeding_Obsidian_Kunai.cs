@@ -11,7 +11,6 @@ namespace Origins.Items.Weapons.Ranged {
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
-			"OtherRanged",
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {

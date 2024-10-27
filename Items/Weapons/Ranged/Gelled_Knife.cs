@@ -9,8 +9,7 @@ namespace Origins.Items.Weapons.Ranged {
         static short glowmask;
         public string[] Categories => [
             "Torn",
-            "TornSource",
-            "OtherRanged"
+            "TornSource"
         ];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

@@ -41,5 +41,18 @@ namespace Origins.Tiles {
 		public override void LoadWorldData(TagCompound tag) {
 			tileEntityLocations = tag.Get<List<Point16>>(nameof(tileEntityLocations));
 		}
+		public static void SyncAllToPlayer(int player) {
+			foreach (TESystem system in TESystems) system.SyncToPlayer(player);
+		}
+		public void SyncToPlayer(int player) {
+			for (int i = 0; i < tileEntityLocations.Count; i++) {
+				ModPacket packet = Mod.GetPacket();
+				packet.Write(Origins.NetMessageType.place_tile_entity);
+				packet.Write((ushort)TESystemType);
+				packet.Write((short)tileEntityLocations[i].X);
+				packet.Write((short)tileEntityLocations[i].Y);
+				packet.Send(player);
+			}
+		}
 	}
 }

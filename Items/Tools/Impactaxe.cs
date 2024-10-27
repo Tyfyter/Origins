@@ -21,7 +21,8 @@ using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Impactaxe : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Tool"
+			"Tool",
+			"ToolWeapon"
 		];
 		public override void SetDefaults() {
 			Item.damage = 32;
@@ -38,7 +39,7 @@ namespace Origins.Items.Tools {
 			Item.knockBack = 12f;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 8);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 0;
 			Item.autoReuse = true;

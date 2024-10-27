@@ -12,10 +12,6 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Brainy_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-        public string[] Categories => [
-            "MinionWeapon",
-			"Minion"
-        ];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Type] = 2;
 		}

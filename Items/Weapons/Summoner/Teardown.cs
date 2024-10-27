@@ -17,10 +17,6 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		static short glowmask;
-        public string[] Categories => [
-            "MinionWeapon",
-			"Minion"
-        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;

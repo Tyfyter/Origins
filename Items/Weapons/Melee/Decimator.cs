@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Melee {
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			ItemID.Sets.Spears[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 22;

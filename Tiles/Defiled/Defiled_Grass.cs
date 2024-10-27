@@ -37,9 +37,9 @@ namespace Origins.Tiles.Defiled {
 			fail = true;
 			noItem = true;
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-			if (!(originWorld is null)) {
-				if (originWorld.defiledAltResurgenceTiles is null) originWorld.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
-				originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
+			if (originWorld is not null) {
+				originWorld.defiledAltResurgenceTiles ??= [];
+				originWorld.defiledAltResurgenceTiles.Add((i, j, Type, TileID.Dirt));
 			}
 			bool half = Main.tile[i, j].IsHalfBlock;
 			SlopeType slope = Main.tile[i, j].Slope;
@@ -89,7 +89,7 @@ namespace Origins.Tiles.Defiled {
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
 			if (originWorld is not null) {
 				originWorld.defiledAltResurgenceTiles ??= [];
-				originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
+				originWorld.defiledAltResurgenceTiles.Add((i, j, Type, TileID.Mud));
 			}
 			bool half = Main.tile[i, j].IsHalfBlock;
 			SlopeType slope = Main.tile[i, j].Slope;

@@ -94,8 +94,8 @@ namespace Origins {
 			Petrified_Tree.Load();
 			OriginSystem worldInstance = MC.GetInstance<OriginSystem>();
 			if (worldInstance is not null) {
-				worldInstance.defiledResurgenceTiles = new List<(int, int)> { };
-				worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
+				worldInstance.defiledResurgenceTiles = [];
+				worldInstance.defiledAltResurgenceTiles = [];
 			}
 			//IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
 			On_Main.DrawInterface_Resources_Breath += FixedDrawBreath;
