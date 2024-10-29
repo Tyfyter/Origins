@@ -190,7 +190,7 @@ namespace Origins {
 					} else if (item.GetMethod("<CalculateSmoothLightingHiDef>b__0", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static) is MethodInfo meth1) {
 						wallShineMethod = meth1;
 					}
-					if (wallShineMethod is not null) {
+					if (wallShineMethod is not null && false) {
 						MonoModHooks.Modify(wallShineMethod, (il) => {
 							ILCursor c = new(il);
 							c.GotoNext(MoveType.Before,
