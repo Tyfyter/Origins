@@ -565,6 +565,20 @@ namespace Origins {
 				if (projectile is not null && projectile.type == Fresh_Meat_Dog.ID && !self.dontHurtCritters) return true;
 				return orig(self, npc, projectile);
 			};
+			On_NPC.TryTrackingTarget += On_NPC_TryTrackingTarget;
+			On_NPC.SetTargetTrackingValues += On_NPC_SetTargetTrackingValues;
+		}
+
+		private static void On_NPC_SetTargetTrackingValues(On_NPC.orig_SetTargetTrackingValues orig, NPC self, bool faceTarget, float realDist, int tankTarget) {
+			if (!self.HasValidTarget && NPCOnlyTargetInBiome.ContainsKey(self.type)) {
+				return;
+			}
+			orig(self, faceTarget, realDist, tankTarget);
+		}
+
+		private static void On_NPC_TryTrackingTarget(On_NPC.orig_TryTrackingTarget orig, NPC self, ref float distance, ref float realDist, ref bool t, ref int tankTarget, int j) {
+			if (NPCOnlyTargetInBiome.TryGetValue(self.type, out ModBiome biome) && !Main.player[j].InModBiome(biome)) return;
+			orig(self, ref distance, ref realDist, ref t, ref tankTarget, j);
 		}
 
 		private void IL_Sandstorm_ShouldSandstormDustPersist(ILContext il) {

@@ -1319,6 +1319,7 @@ Projectiles: {
 	Defiled_Sand_Ball_Falling.DisplayName: Defiled Sand Ball Falling
 	Defiled_Sand_Ball_Gun.DisplayName: Defiled Sand Ball Gun
 	Terratotem_Laser.DisplayName: Terratotem Laser
+	World_Cracker_Beam.DisplayName: World Cracker Beam
 }
 
 Prefixes: {

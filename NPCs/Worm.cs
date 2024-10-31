@@ -87,19 +87,24 @@ namespace Origins.NPCs {
 				HeadAI();
 
 				if (!NPC.HasValidTarget) {
+					NPC.target = Main.maxPlayers;
 					NPC.TargetClosest(true);
 
 					// If the NPC is a boss and it has no target, force it to fall to the underworld quickly
 					if (!NPC.HasValidTarget && NPC.boss) {
-						NPC.velocity.Y += 8f;
+						NPC.velocity.Y += 1f;
 
 						MoveSpeed = 1000f;
 
 						if (!startDespawning) {
 							startDespawning = true;
+							NPC.EncourageDespawn(10);
 
 							// Despawn after 300 ticks (5 seconds) if the NPC gets far enough away
-							NPC.timeLeft = 300;
+							//NPC.timeLeft = 300;
+						}
+						if (NPC.position.Y > (Main.maxTilesY + 50) * 16) {
+							NPC.active = false;
 						}
 					}
 				}
@@ -398,6 +403,7 @@ namespace Origins.NPCs {
 
 		protected void HeadAI_Movement_HandleFallingFromNoCollision(float dirX, float speed, float acceleration) {
 			// Keep searching for a new target
+			NPC.target = Main.maxPlayers;
 			NPC.TargetClosest(true);
 
 			// Constant gravity of 0.11 pixels/tick

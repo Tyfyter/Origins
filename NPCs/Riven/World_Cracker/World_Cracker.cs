@@ -7,6 +7,7 @@ using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
@@ -17,12 +18,15 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
@@ -59,6 +63,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			Origins.RasterizeAdjustment.Add(Type, (8, 0f, 0f));
+			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Riven_Hive>());
 		}
 		public override void Unload() {
 			ArmorTexture = null;
@@ -94,7 +99,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			//Acceleration = 1;
 			SetBaseSpeed();
 			Player playerTarget = Main.player[NPC.target];
-			ForcedTargetPosition = playerTarget.MountedCenter - playerTarget.velocity * 32;
+			if (!playerTarget.InModBiome<Riven_Hive>()) NPC.target = Main.maxPlayers;
+			if (NPC.HasValidTarget) {
+				ForcedTargetPosition = playerTarget.MountedCenter - playerTarget.velocity * 32;
+			} else {
+				ForcedTargetPosition = new(NPC.Center.X, (Main.maxTilesY + 100) * 16);
+			}
 			float dot = Vector2.Dot(NPC.velocity.SafeNormalize(default), (ForcedTargetPosition.Value - NPC.Center).SafeNormalize(default));
 			CanFly = dot > 0.5f;
 
@@ -105,27 +115,61 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public static void ProcessShoot(NPC npc) {
 			NPC headNPC = npc.realLife >= 0 ? Main.npc[npc.realLife] : npc;
+			if (!headNPC.HasValidTarget) return;
 			int target = headNPC.target;
 			Player playerTarget = Main.player[target];
 			int otherShotDelay = Main.rand.Next(50, 70);
-			if (++npc.ai[2] > (Main.expertMode ? 300 : 120) && Collision.CanHitLine(playerTarget.position, playerTarget.width, playerTarget.height, npc.Center, 8, 8)) {
-				npc.ai[2] = otherShotDelay;
-				Terraria.Audio.SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(0.4f, 0.6f), npc.Center);
+			int shotTime = 300;
+			if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
+			npc.ai[2]++;
+			Vector2 size = playerTarget.Size;
+			Vector2 targetPos = playerTarget.position - size * 0.5f;
+			int projType = Amoeball.ID;
+			if (Main.masterMode && (npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
+				shotTime = 1200;
+				float diameter = npc.width * 0.75f;
+				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
+				Dust dust = Dust.NewDustPerfect(
+					npc.Center - offset,
+					DustID.BlueTorch,
+					offset * 0.125f
+				);
+				dust.velocity += npc.velocity;
+				dust.noGravity = true;
+				if (npc.ai[2] + 60 > shotTime) {
+					dust.velocity = dust.velocity.RotatedByRandom(0.15f) * 2;
+					dust.scale *= 1.25f;
+				}
+				projType = ModContent.ProjectileType<World_Cracker_Beam>();
+				float directRot = (targetPos - npc.Center).ToRotation();
+				float cutOffRot = (playerTarget.velocity.SafeNormalize(Vector2.Zero) * 32 - npc.Center).ToRotation();
+				GeometryUtils.AngleDif(directRot, cutOffRot, out int dir);
+				targetPos = targetPos.RotatedBy(dir * 0.5f, npc.Center);
+			}
+			if (npc.ai[2] > shotTime && Collision.CanHitLine(targetPos + size * 0.5f, playerTarget.width, playerTarget.height, npc.Center, 8, 8)) {
+				SoundEngine.PlaySound(
+					projType == Amoeball.ID ? Origins.Sounds.DefiledIdle.WithPitchRange(0.4f, 0.6f) : Origins.Sounds.EnergyRipple,
+					npc.Center
+				);
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
+					Vector2 velocity = Vector2.Normalize(targetPos - npc.Center);
+					if (projType == Amoeball.ID) velocity = velocity.RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f);
+					else velocity *= 8;
 					Projectile.NewProjectileDirect(
 						npc.GetSource_FromAI(),
 						npc.Center,
-						Vector2.Normalize(playerTarget.MountedCenter - npc.Center).RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f),
-						Amoeball.ID,
+						velocity,
+						projType,
 						10 + (DifficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
 						0f,
 						Main.myPlayer
 					);
 				}
+				npc.ai[2] = -otherShotDelay;
 				NPC current = headNPC;
 				int tailType = ModContent.NPCType<World_Cracker_Tail>();
 				while (current is not null) {
-					current.ai[2] -= otherShotDelay;
+					if (!Main.masterMode || current != headNPC) current.ai[2] -= otherShotDelay;
 					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
 			}
@@ -570,6 +614,18 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				timeFactor = (Projectile.timeLeft - (180f - 15)) / 15;
 			}
 			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f) * timeFactor;
+		}
+	}
+	public class World_Cracker_Beam : Seam_Beam_Beam {
+		public AssimilationAmount Assimilation = 0.06f;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.friendly = false;
+			Projectile.hostile = true;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			OriginPlayer.InflictTorn(target, 300);
+			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
 		}
 	}
 }

@@ -31,7 +31,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 19;
 			Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
-			Item.shootSpeed = 0f;
 			Item.useTime = Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = false;

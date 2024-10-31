@@ -71,6 +71,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				PortraitScale = 1f,
 			};
 			ID = Type;
+			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -165,9 +166,9 @@ namespace Origins.NPCs.Defiled.Boss {
 		int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public override void AI() {
             if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
-            NPC.TargetClosest();
-			if (NPC.HasPlayerTarget && Main.player[NPC.target].active && !Main.player[NPC.target].dead) {
-				Player target = Main.player[NPC.target];
+			NPC.target = Main.maxPlayers;
+			NPC.TargetClosest();
+			if (NPC.HasValidTarget) {
 				float leftArmTarget = 0.5f;
 				float rightArmTarget = 0.25f;
 				float armSpeed = 0.03f;
@@ -187,10 +188,10 @@ namespace Origins.NPCs.Defiled.Boss {
 						float speed = 5;
 						float accelerationMult = 1f;
 
-						float diffY = NPC.Bottom.Y - (target.MountedCenter.Y - targetHeight);
-						float diffX = NPC.Center.X - target.MountedCenter.X;
+						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
+						float diffX = NPC.Center.X - NPC.targetRect.Center().X;
 						diffX -= Math.Sign(diffX) * targetX;
-						float dist = NPC.DistanceSQ(target.MountedCenter);
+						float dist = NPC.DistanceSQ(NPC.targetRect.Center());
 						if (dist > 640 * 640) {
 							accelerationMult = 1 + ((dist / (640 * 640)) - 1) * 3;
 							speed *= accelerationMult;
@@ -217,15 +218,15 @@ namespace Origins.NPCs.Defiled.Boss {
 									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
 								}
 
-								if (!Collision.CanHitLine(target.position, target.width, target.height, NPC.Center, 16, 16)) {
+								if (!Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 16, 16)) {
 									rand.elements[0] = new(rand.elements[0].Item1, rand.elements[0].Item2 / 3f);
 									rand.elements[1] = new(rand.elements[1].Item1, rand.elements[1].Item2 * 6f);
 									rand.elements[2] = new(rand.elements[2].Item1, rand.elements[2].Item2 / 3f);
 								}
 
 								AIState = rand.Get();
-								NPC.ai[2] = target.MountedCenter.X;
-								NPC.ai[3] = target.MountedCenter.Y;
+								NPC.ai[2] = NPC.targetRect.Center().X;
+								NPC.ai[3] = NPC.targetRect.Center().Y;
 								NPC.ai[1] = 0;
 
 								int roarCount = difficultyMult;
@@ -278,8 +279,8 @@ namespace Origins.NPCs.Defiled.Boss {
 						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
 						float speed = 3;
 
-						float diffY = NPC.Bottom.Y - (target.MountedCenter.Y - targetHeight);
-						float diffX = NPC.Center.X - target.MountedCenter.X;
+						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
+						float diffX = NPC.Center.X - NPC.targetRect.Center().X;
 						diffX -= Math.Sign(diffX) * targetX;
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), 0.4f);
@@ -298,12 +299,12 @@ namespace Origins.NPCs.Defiled.Boss {
 								Projectile.NewProjectileDirect(
 									NPC.GetSource_FromAI(),
 									NPC.Center,
-									Vector2.Normalize(target.MountedCenter - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
+									Vector2.Normalize(NPC.targetRect.Center() - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
 									ModContent.ProjectileType<Low_Signal_Hostile>(),
 									22 - (difficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
 									0f,
 									Main.myPlayer
-								).tileCollide = Collision.CanHitLine(target.position, target.width, target.height, NPC.Center, 8, 8);
+								).tileCollide = Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 8, 8);
 							}
 							break;
 							case 12:
@@ -343,8 +344,8 @@ namespace Origins.NPCs.Defiled.Boss {
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3F);
 								NPC.oldVelocity = NPC.velocity;
 							} else if (NPC.ai[1] % cycleLength > dashLength || NPC.collideX || NPC.collideY) {
-								NPC.ai[2] = target.MountedCenter.X;
-								NPC.ai[3] = target.MountedCenter.Y;
+								NPC.ai[2] = NPC.targetRect.Center().X;
+								NPC.ai[3] = NPC.targetRect.Center().Y;
 								goto default;
 							}
 						} else {
@@ -366,8 +367,8 @@ namespace Origins.NPCs.Defiled.Boss {
 					//"sidestep" dash
 					case state_sidestep_dash: {
 						if ((int)NPC.ai[1] == 0) {
-							NPC.ai[2] = target.MountedCenter.X - Math.Sign(NPC.Center.X - target.MountedCenter.X) * 288;
-							NPC.ai[3] = target.MountedCenter.Y - 128;
+							NPC.ai[2] = NPC.targetRect.Center().X - Math.Sign(NPC.Center.X - NPC.targetRect.Center().X) * 288;
+							NPC.ai[3] = NPC.targetRect.Center().Y - 128;
 						}
 						NPC.ai[1]++;
 						float targetHeight = (float)(Math.Sin(++time * 0.05f) + 0.5f) * 32;
@@ -405,7 +406,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									for (int i = 3 + (difficultyMult * NPC.statsAreScaledForThisManyPlayers); i-- > 0;) {
 										Projectile.NewProjectileDirect(
 											NPC.GetSource_FromAI(),
-											target.Center - new Vector2(Main.rand.Next(80, 640) * (Main.rand.Next(2) * 2 - 1), 640),
+											NPC.targetRect.Center() - new Vector2(Main.rand.Next(80, 640) * (Main.rand.Next(2) * 2 - 1), 640),
 											new Vector2(0, 8),
 											ModContent.ProjectileType<Defiled_Enemy_Summon>(),
 											0,
