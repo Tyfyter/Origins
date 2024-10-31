@@ -217,7 +217,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 
 			#endregion
-			Life--;
+			if (--Life <= 0) Projectile.Kill();
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			return Projectile.Center.Clamp(targetHitbox).WithinRange(Projectile.Center, 64);

@@ -35,7 +35,7 @@ namespace Origins {
 		internal bool hasRiven = false;
 		public static bool HasRivenHive => Instance.hasRiven;
 		private static double? _worldSurfaceLow;
-		public static double worldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
+		public static double WorldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
 		public static bool DefiledResurgenceActive => Main.hardMode && !NPC.downedPlantBoss;//true;
 		public const byte evil_corruption = 0b0001;//1
 		public const byte evil_crimson = 0b0010;//2
@@ -228,10 +228,10 @@ namespace Origins {
 			if (DefiledResurgenceActive) {
 				if (defiledResurgenceTiles.Count > 0 && WorldGen.genRand.NextBool(5)) {
 					int index = WorldGen.genRand.Next(defiledResurgenceTiles.Count);
-					(int k, int l) pos = defiledResurgenceTiles[index];
-					ConvertTile(ref Main.tile[pos.k, pos.l].TileType, evil_wastelands);
-					WorldGen.SquareTileFrame(pos.k, pos.l);
-					NetMessage.SendTileSquare(-1, pos.k, pos.l, 1);
+					(int k, int l) = defiledResurgenceTiles[index];
+					ConvertTile(ref Main.tile[k, l].TileType, evil_wastelands);
+					WorldGen.SquareTileFrame(k, l);
+					NetMessage.SendTileSquare(-1, k, l, 1);
 					defiledResurgenceTiles.RemoveAt(index);
 				}
 			}
@@ -302,69 +302,12 @@ namespace Origins {
 			ApplyWeightedLootQueue(chestLoots, ChestLoot.Actions);
 			_worldSurfaceLow = GenVars.worldSurfaceLow;
 		}
-		[Obsolete]
-		public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {
-			int lootType;
-			ChestLootCache cache = null;
-			Chest chest;
-			int chestIndex = -1;
-			Queue<int> items = new Queue<int>();
-			WeightedRandom<int> random;
-			int newLootType;
-			int queueMode = MODE_REPLACE;
-			switch (actions[0].action) {
-				case CHANGE_QUEUE:
-				cache = lootCache[actions[0].param];
-				break;
-				case SWITCH_MODE:
-				queueMode = actions[0].param;
-				break;
-				case ENQUEUE:
-				throw new ArgumentException("the first action in ApplyLootQueue must not be ENQUEUE", "actions");
-			}
-			int actionIndex = 1;
-			cont:
-			if (actionIndex < actions.Length && actions[actionIndex].action == ENQUEUE) {
-				items.Enqueue(actions[actionIndex].param);
-				Origins.instance.Logger.Info("adding item " + actions[actionIndex].param + " to world");
-				actionIndex++;
-				goto cont;
-			}
-			int i = actions.Length;
-			if (cache is null) {
-				return;
-			}
-			while (items.Count > 0) {
-				random = cache.GetWeightedRandom();
-				lootType = random.Get();
-				chestIndex = WorldGen.genRand.Next(cache[lootType]);
-				chest = Main.chest[chestIndex];
-				newLootType = items.Dequeue();
-				int targetIndex = 0;
-				switch (queueMode) {
-					case MODE_ADD:
-					for (targetIndex = 0; targetIndex < Chest.maxItems; targetIndex++) if (chest.item[targetIndex].IsAir) break;
-					break;
-				}
-				if (targetIndex >= Chest.maxItems) {
-					if (--i > 0) items.Enqueue(newLootType);
-				}
-				chest.item[targetIndex].SetDefaults(newLootType);
-				chest.item[targetIndex].Prefix(-2);
-				cache[lootType].Remove(chestIndex);
-			}
-			if (actionIndex < actions.Length && actions[actionIndex].action == CHANGE_QUEUE) {
-				cache = lootCache[actions[actionIndex].param];
-				actionIndex++;
-				goto cont;
-			}
-		}
 		public static void ApplyWeightedLootQueue(ChestLootCache[] lootCaches, params (LootQueueAction action, int param, float weight)[] actions) {
 			int lootType;
 			ChestLootCache cache = null;
 			Chest chest;
 			int chestIndex = -1;
-			Queue<(int, float, int)> items = new Queue<(int, float, int)>();
+			Queue<(int, float, int)> items = new();
 			WeightedRandom<int> random;
 			(int param, float weight, int mode) newLootType;
 			int queueMode = MODE_REPLACE;
@@ -551,7 +494,7 @@ namespace Origins {
 		}
 
 		public static bool ConvertTileWeak(ref ushort tileType, byte evilType, bool convert = true) {
-			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
+			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out _, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
 			switch (tileType) {
 				case TileID.Grass:
 				if (convert) tileType = grassType;
@@ -579,7 +522,7 @@ namespace Origins {
 			return false;
 		}
 		public static bool ConvertTile(ref ushort tileType, byte evilType, bool aggressive = false) {
-			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
+			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out _, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
 			if (TileID.Sets.Conversion.Grass[tileType]) {
 				tileType = grassType;
 				return true;
@@ -636,7 +579,7 @@ namespace Origins {
 			return adj;
 		}
 		public static List<Vector2> GetTileDirs(int i, int j) {
-			List<Vector2> dirs = new List<Vector2>(8);
+			List<Vector2> dirs = new(8);
 			for (int k = -1; k <= 1; k++) {
 				for (int l = -1; l <= 1; l++) {
 					if (!(k == 0 && l == 0) && Main.tile[i + k, j + l].HasTile) {
@@ -652,7 +595,7 @@ namespace Origins {
 			if (j < fiberglassMin.Y || !fiberglassNeedsFraming) fiberglassMin.Y = j;
 			if (i > fiberglassMax.X || !fiberglassNeedsFraming) fiberglassMax.X = i;
 			if (j > fiberglassMax.Y || !fiberglassNeedsFraming) fiberglassMax.Y = j;
-			if (fiberglassFrameSet is null) fiberglassFrameSet = new();
+			if (fiberglassFrameSet is null) fiberglassFrameSet = [];
 			fiberglassFrameSet.Add(new(i, j));
 			fiberglassNeedsFraming = true;
 		}

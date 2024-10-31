@@ -139,7 +139,7 @@ namespace Origins.Items.Accessories {
 				if (between < distanceFromTarget) {
 					distanceFromTarget = between;
 					targetCenter = npc.Center;
-					target = player.MinionAttackTargetNPC;
+					target = npc.whoAmI;
 					foundTarget = true;
 				}
 			}

@@ -931,6 +931,11 @@ Buffs: {
 		DisplayName: Terratotem Buff
 		Description: Mods.Origins.Buffs.Terratotem_Buff.Description
 	}
+
+	Friendly_Zombie_Buff: {
+		DisplayName: Friendly Zombie Buff
+		Description: Mods.Origins.Buffs.Friendly_Zombie_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1320,6 +1325,7 @@ Projectiles: {
 	Defiled_Sand_Ball_Gun.DisplayName: Defiled Sand Ball Gun
 	Terratotem_Laser.DisplayName: Terratotem Laser
 	World_Cracker_Beam.DisplayName: World Cracker Beam
+	Friendly_Zombie.DisplayName: Friendly Zombie
 }
 
 Prefixes: {

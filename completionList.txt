@@ -750,7 +750,7 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(#3, ^2) Broken Terratotem !!!
+(☻) Broken Terratotem !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash

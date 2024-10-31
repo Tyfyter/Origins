@@ -4624,3 +4624,8 @@ Terratotem: {
 	// DisplayName: Terratotem
 	// Tooltip: ""
 }
+
+Inanimate_Zombie_Hand: {
+	// DisplayName: Inanimate Zombie Hand
+	// Tooltip: ""
+}

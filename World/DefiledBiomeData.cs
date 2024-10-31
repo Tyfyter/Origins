@@ -761,7 +761,7 @@ namespace Origins.World.BiomeData {
 				int offset;
 				for (offset = 0; offset < 300; offset = offset > 0 ? (-offset) : ((-offset) + 2)) {
 					if (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX) continue;
-					for (int j = (int)OriginSystem.worldSurfaceLow; j < Main.maxTilesY; j++) {
+					for (int j = (int)OriginSystem.WorldSurfaceLow; j < Main.maxTilesY; j++) {
 						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
 						if (!tile.HasTile || !Main.tileSolid[tile.TileType]) continue;
 						bool fail = false;
