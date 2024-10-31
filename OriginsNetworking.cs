@@ -55,6 +55,14 @@ namespace Origins {
 					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), fromNet: true);
 					break;
 
+					case sync_void_locks: {
+						OriginSystem originSystem = ModContent.GetInstance<OriginSystem>();
+						for (int i = reader.ReadUInt16(); i-- > 0;) {
+							originSystem.TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), fromNet: true);
+						}
+						break;
+					}
+
 					case remove_void_lock:
 					ModContent.GetInstance<OriginSystem>().RemoveVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), fromNet: true);
 					break;
@@ -283,6 +291,7 @@ namespace Origins {
 			internal const byte end_laser_tag = 15;
 			internal const byte laser_tag_respawn = 16;
 			internal const byte laser_tag_score = 17;
+			internal const byte sync_void_locks = 18;
 		}
 	}
 }

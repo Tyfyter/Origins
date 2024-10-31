@@ -29,6 +29,16 @@ namespace Origins {
 					packet.Write((short)OriginSystem.Instance.peatSold);
 					packet.Send(Player.whoAmI);
 					TESystem.SyncAllToPlayer(Player.whoAmI);
+					
+					packet = Mod.GetPacket();
+					packet.Write(Origins.NetMessageType.add_void_lock);
+					packet.Write((ushort)OriginSystem.Instance.VoidLocks.Count);
+					foreach (var @lock in OriginSystem.Instance.VoidLocks) {
+						packet.Write(@lock.Key.X);
+						packet.Write(@lock.Key.Y);
+						packet.Write(@lock.Value.ToByteArray());
+					}
+					packet.Send(Player.whoAmI);
 					foreach (var quest in Quest_Registry.NetQuests) {
 						quest.Sync(Player.whoAmI);
 					}
