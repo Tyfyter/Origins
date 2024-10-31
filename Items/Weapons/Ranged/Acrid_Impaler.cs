@@ -38,12 +38,8 @@ namespace Origins.Items.Weapons.Ranged {
             .Register();
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
-		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(7)) {
-				ammo.stack++;
-			} else {
-				consume = true;
-			}
+		public override bool CanConsumeAmmo(Item ammo, Player player) {
+			return Main.rand.NextBool(7);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == Item.shoot) {

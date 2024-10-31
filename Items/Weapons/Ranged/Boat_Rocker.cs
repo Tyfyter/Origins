@@ -30,12 +30,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
-		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(4)) {
-				ammo.stack++;
-			} else {
-				consume = true;
-			}
+		public override bool CanConsumeAmmo(Item ammo, Player player) {
+			return Main.rand.NextBool(4);
 		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			if (player.controlUseTile && player.releaseUseTile) {

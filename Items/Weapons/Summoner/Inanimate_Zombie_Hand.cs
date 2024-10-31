@@ -303,6 +303,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			const float diameter = 16;
 			Player owner = Main.player[Projectile.owner];
 			ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner);
+			SoundEngine.PlaySound(SoundID.NPCDeath2, Projectile.Center);
 			for (int i = 0; i < 8; i++) {
 				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.2f, 1f);
 				Dust.NewDustPerfect(
@@ -323,6 +324,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				hit.Crit = false;
 				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
 				this.DamageArtifactMinion(target.damage);
+			}
+		}
+		public void OnHurt(int damage) {
+			Player player = Main.player[Projectile.owner];
+			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(player.cMinion, player);
+			if (Life > 0) SoundEngine.PlaySound(SoundID.NPCHit1, Projectile.Center);
+			for (int i = 0; i < 5; i++) {
+				Dust.NewDustDirect(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					DustID.Blood
+				).shader = shader;
 			}
 		}
 	}

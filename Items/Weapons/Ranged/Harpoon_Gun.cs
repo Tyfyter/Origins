@@ -37,20 +37,15 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		protected bool consume = false;
-		public override bool CanShoot(Player player) {
-			consume = true;
-			return true;
-		}
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
+			return Main.rand.NextBool(7);
+		}
+		public override bool? CanChooseAmmo(Item ammo, Player player) {
 			consume = false;
-			return true;
+			return null;
 		}
 		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(7)) {
-				ammo.stack++;
-			} else {
-				consume = true;
-			}
+			consume = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			ModifyShotProjectile(Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: consume ? 1 : 0), source);

@@ -39,12 +39,8 @@ namespace Origins.Items.Weapons.Ranged {
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
-		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(5)) {
-				ammo.stack++;
-			} else {
-				consume = true;
-			}
+		public override bool CanConsumeAmmo(Item ammo, Player player) {
+			return Main.rand.NextBool(5);
 		}
 		public override void ModifyShotProjectile(Projectile projectile, EntitySource_ItemUse_WithAmmo source) {
 			projectile.GetGlobalProjectile<HarpoonGlobalProjectile>().bloodletter = true;
