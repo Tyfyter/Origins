@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -96,13 +98,18 @@ namespace Origins.Projectiles {
 									} else {
 										position = projectile.Top + new Vector2(0, projectile.gfxOffY - 24);
 									}
-									Main.instance.DrawHealthBar(
-										position.X, position.Y,
-										artifact.Life,
-										artifact.MaxLife,
-										Lighting.Brightness((int)position.X / 16, (int)(projectile.Center.Y + projectile.gfxOffY) / 16) * 0.5f + 0.5f,
-										0.85f
-									);
+									float light = Lighting.Brightness((int)position.X / 16, (int)(projectile.Center.Y + projectile.gfxOffY) / 16) * 0.5f + 0.5f;
+									if (artifact.Life > 0) {
+										Main.instance.DrawHealthBar(
+											position.X, position.Y,
+											artifact.Life,
+											artifact.MaxLife,
+											light,
+											0.85f
+										);
+									} else {
+										artifact.DrawDeadHealthBar(position, light);
+									}
 								}
 							}
 						}
@@ -119,6 +126,18 @@ namespace Origins.Projectiles {
 		int Life { get; set; }
 		void OnHurt(int damage) { }
 		bool CanDie => true;
+		void DrawDeadHealthBar(Vector2 position, float light) {
+			Main.spriteBatch.Draw(
+				TextureAssets.Hb2.Value,
+				position - Main.screenPosition,
+				null,
+				Color.Gray * light,
+				0f,
+				new Vector2(18f * 0.85f, 0),
+				0.85f,
+				SpriteEffects.None,
+			0);
+		}
 	}
 	public static class ArtifactMinionExtensions {
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage) {

@@ -146,7 +146,6 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
-				case NPCID.Zombie:
 				case NPCID.Harpy:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
 				break;
@@ -226,6 +225,11 @@ namespace Origins.NPCs {
 				break;
 			}
 			switch (npc.type) {
+				case NPCID.Zombie:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Inanimate_Zombie_Hand>(), 5000));
+				break;
+
 				case NPCID.DemonEye:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;

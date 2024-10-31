@@ -154,7 +154,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						StickEnemy = -1;
 					}
 				}
-				if (--Life <= 0) Projectile.Kill();
+				Life--;
 			}
 			if (Main.rand.NextBool(3)) {
 				Dust dust = Dust.NewDustDirect(

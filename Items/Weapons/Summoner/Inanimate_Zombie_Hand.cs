@@ -72,6 +72,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public int Life { get; set; }
+		public bool CanDie => ++Projectile.ai[2] >= 60 * 5;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -103,7 +104,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;
-
+		public override void OnSpawn(IEntitySource source) {
+			if (Projectile.velocity.X < 0) {
+				Projectile.direction = -1;
+			} else {
+				Projectile.direction = 1;
+			}
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
@@ -118,10 +125,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool walkLeft = Projectile.direction == -1;
 			bool walkRight = Projectile.direction == 1;
 			bool hasBarrier = false;
-			if (player.DistanceSQ(Projectile.Center) > 2000 * 2000 && --Life <= 0) {
-				Projectile.Kill();
+			bool hasHole = false;
+			if (player.DistanceSQ(Projectile.Center) > 1000 * 1000) {
+				Life--;
 			}
 			bool foundTarget = false;
+			Rectangle targetRect = Projectile.Hitbox;
 			Vector2 directionToTarget = Vector2.Zero;
 			Projectile.localAI[0] -= 1f;
 			if (Projectile.localAI[0] < 0f) {
@@ -130,10 +139,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.ai[1] > 0f) {
 				Projectile.ai[1] -= 1f;
 			} else {
-				float distanceFromTarget = 2000f * 2000f;
-				Rectangle targetRect = Projectile.Hitbox;
+				float distanceFromTarget = 1200 * 1200;
 				int target = -1;
 				void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+					if (!isPriorityTarget && distanceFromTarget > 700 * 700) {
+						distanceFromTarget = 700 * 700;
+					}
 					if (!npc.CanBeChasedBy(Projectile)) return;
 					float between = Vector2.DistanceSquared(npc.Center, Projectile.Center);
 					if (between < distanceFromTarget) {
@@ -162,7 +173,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						walkRight = true;
 						walkLeft = false;
 					}
-					if (targetRect.Y < Projectile.Center.Y - 100f && Math.Abs(xDirectionToTarget) < 50 && Projectile.velocity.Y == 0) {
+					if (targetRect.Y < Projectile.Center.Y - 100f && Math.Sign(xDirectionToTarget) != -Math.Sign(Projectile.velocity.X) && Math.Abs(xDirectionToTarget) < 50 && Projectile.velocity.Y == 0) {
 						Projectile.velocity.Y = -10f;
 					}
 					if (meander) {
@@ -189,6 +200,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				if (walkRight) {
 					walkTileX++;
+				}
+				if (((walkRight ? 1 : 0) - (walkLeft ? 1 : 0)) == Math.Sign(Projectile.velocity.X) && !Framing.GetTileSafely(walkTileX, (int)(Projectile.position.Y + Projectile.height + 2) / 16).HasSolidTile()) {
+					hasHole = true;
 				}
 				walkTileX += (int)Projectile.velocity.X;
 				if (Framing.GetTileSafely(walkTileX, walkTileY).HasFullSolidTile()) {
@@ -256,7 +270,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Projectile.velocity.Y = -9.1f;
 						}
 					}
-				}
+				}/* else if (hasHole && foundTarget && targetRect.Bottom <= Projectile.position.Y + Projectile.height) {
+					Projectile.velocity.Y = -9.1f;
+				}*/
 			}
 			if (Projectile.velocity.X > maxSpeed) {
 				Projectile.velocity.X = maxSpeed;
@@ -314,13 +330,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			lightColor = Color.Lerp(lightColor, new(1f, 1f, 1f, 0.8f), 0.7f);
 			return true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.damage > 0) {
 				hit.HitDirection *= -1;
-				hit.Knockback = 4;
+				hit.Knockback = 2;
 				hit.Crit = false;
 				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
 				this.DamageArtifactMinion(target.damage);

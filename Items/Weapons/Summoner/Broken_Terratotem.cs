@@ -227,7 +227,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 
 			#endregion
-			if (--Life <= 0) Projectile.Kill();
+			Life--;
 		}
 		public override void OnKill(int timeLeft) {
 			const float diameter = 16;
