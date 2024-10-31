@@ -330,6 +330,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
+		public override bool SharesImmunityFrames => true;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
@@ -356,9 +357,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (Main.expertMode) ProcessShoot(NPC);
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			base.OnHitByItem(player, item, hit, damageDone);
 			DamageArmor(NPC, hit, item.ArmorPenetration);
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			base.OnHitByProjectile(projectile, hit, damageDone);
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
@@ -378,6 +381,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public class World_Cracker_Tail : WormTail, IRivenEnemy {
+		public override bool SharesImmunityFrames => true;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
@@ -404,9 +408,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (Main.expertMode) ProcessShoot(NPC);
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			base.OnHitByItem(player, item, hit, damageDone);
 			DamageArmor(NPC, hit, item.ArmorPenetration);
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			base.OnHitByProjectile(projectile, hit, damageDone);
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
@@ -516,7 +522,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void Update(GameTime gameTime) {
 			float newRainCount = Main.screenWidth / 1920f;
 			newRainCount *= 25f;
-			Vector2 spawnPos = default(Vector2);
+			Vector2 spawnPos = default;
 			for (int i = 0; i < newRainCount; i++) {
 				int stretch = 600;
 				if (Main.player[Main.myPlayer].velocity.Y < 0f) {
