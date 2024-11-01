@@ -1,4 +1,4 @@
-﻿#if false ///TODO: unfalse if thorium
+﻿#if true ///TODO: unfalse if thorium
 using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -10,16 +10,11 @@ using ThoriumMod.Projectiles.Bard;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	[ExtendsFromMod("ThoriumMod")]
-	public string[] Categories => new string[] {
-            "OtherExplosive",
-			"CrossModContent"
-        };
 	public class Sonorous_Shredder : BardItem, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sonorous Shredder");
-			Tooltip.SetDefault("'Split apart, lost one'");
-			SacrificeTotal = 1;
+			//DisplayName.SetDefault("Sonorous Shredder");
+			//Tooltip.SetDefault("'Split apart, lost one'");
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 			Empowerments.AddInfo<InvincibilityFrames>(2);
 			Empowerments.AddInfo<FlightTime>(2);
@@ -59,7 +54,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 16;
 			Projectile.friendly = true;
 		}
-		public override void BardOnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void BardOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.GetGlobalNPC<OriginsThoriumGlobalNPC>().SonorousShredderHit()) {
 				if (Projectile.owner == Main.myPlayer) {
 					ref bool altEmpowerment = ref Main.LocalPlayer.GetModPlayer<OriginsThoriumPlayer>().altEmpowerment;

@@ -16,6 +16,9 @@
     <Reference Include="BetterDialogue">
       <HintPath>..\ModAssemblies\BetterDialogue_v1.1.5.3.dll</HintPath>
     </Reference>
+    <Reference Include="ThoriumMod">
+      <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />

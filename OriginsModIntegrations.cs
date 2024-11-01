@@ -39,30 +39,13 @@ namespace Origins {
 			get => instance.checkAprilFools ??= ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? HolidayLibCheckAprilFools(HolidayLib) : DefaultCheckAprilFools;
 			set => instance.checkAprilFools = value;
 		}
-		public static Condition AprilFools => new Condition("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
+		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
 				WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki/{}");
-				Origins.instance.Logger.Info("Added Wikithis integration");
-				/*wikiSiteMap = new HashSet<string>();
-				using WebClient client = new WebClient();
-				client.DownloadStringCompleted += (object sender, DownloadStringCompletedEventArgs e) => {
-					if (e.Error is not null) {
-						mod.Logger.Error(e.Error);
-						return;
-					}
-					XDocument doc = XDocument.Parse(e.Result);
-					var desc = doc.Descendants();
-					foreach (var item in doc.Descendants()) if (item.Name.LocalName == "loc") {
-							if (Regex.Match(item.Value, "(?<=\\/)[^\\/]*(?=.html)").Value is string s && !string.IsNullOrEmpty(s)) {
-								wikiSiteMap.Add(s);
-							}
-						}
-				};
-				client.DownloadStringAsync(new Uri(WikiURL + "/sitemap.xml"));*/
 			}
 			if (ModLoader.TryGetMod("ThoriumMod", out instance.thorium)) {
 				LoadThorium();
@@ -111,39 +94,6 @@ namespace Origins {
 					return itemWikiProvider.GetStats(item.ModItem).First().Item2;
 				});
 			}
-		}
-		public static bool WikiPageExists(object obj, object id) {
-			if (wikiSiteMap is not null) {
-				return wikiSiteMap.Contains(GetWikiPageName(obj));
-			}
-			return true;
-		}
-		public static bool OpenWikiPage(object obj, object id) {
-			if (!Main.hasFocus) {
-				return false;
-			}
-			Utils.OpenToURL(WikiURL + "/searchPage?" + GetWikiPageName(obj));
-			return false;
-		}
-		public static string GetWikiPageName(object obj) {
-			if (obj is ICustomWikiDestination other) {
-				return other.WikiPageName;
-			} else {
-				if (obj is Item item) {
-					if (item.ModItem is ICustomWikiDestination wItem) {
-						return wItem.WikiPageName;
-					} else {
-						return ContentSamples.ItemsByType[item.type].Name.Replace(' ', '_');
-					}
-				} else if (obj is NPC npc) {
-					if (npc.ModNPC is ICustomWikiDestination wNPC) {
-						return wNPC.WikiPageName;
-					} else {
-						return npc.TypeName.Replace(' ', '_');
-					}
-				}
-			}
-			return null;
 		}
 		public void Unload() {
 			instance = null;
