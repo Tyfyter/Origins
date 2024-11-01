@@ -72,6 +72,9 @@ namespace Origins {
 			} else {
 				checkAprilFools = DefaultCheckAprilFools;
 			}
+			if (ModLoader.TryGetMod("ItemSourceHelper", out Mod itemSourceHelper)) {
+				itemSourceHelper.Call("AddIconicWeapon", DamageClasses.Explosive.Type, (int)ItemID.Bomb);
+			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
 		static bool DefaultCheckAprilFools() => DateTime.Today.Month == 4 && DateTime.Today.Day == 1;
