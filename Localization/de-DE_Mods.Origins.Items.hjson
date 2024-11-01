@@ -4592,12 +4592,12 @@ Slag_Bucket_Uncursed: {
 
 Fresh_Meat_Artifact: {
 	// DisplayName: Fresh Meat Artifact
-	// Tooltip: ""
+	// Tooltip: The Meat Dog will viciously protect its food
 }
 
 Sixth_Spline: {
 	// DisplayName: Sixth Spline
-	// Tooltip: ""
+	// Tooltip: Go nuts! This thing is really nutty firing all those nuts and bolts
 }
 
 Spray_N_Pray: {
@@ -4617,15 +4617,15 @@ Amebic_Gel_Wall_Placed_Unsafe_Item: {
 
 Broken_Terratotem: {
 	// DisplayName: Broken Terratotem
-	// Tooltip: ""
+	// Tooltip: Summons a lost soul to fight for you
 }
 
 Terratotem: {
 	// DisplayName: Terratotem
-	// Tooltip: ""
+	// Tooltip: Summons a reformed soul to fight for you
 }
 
 Inanimate_Zombie_Hand: {
 	// DisplayName: Inanimate Zombie Hand
-	// Tooltip: ""
+	// Tooltip: Summons a friendly zombie to fight for you
 }

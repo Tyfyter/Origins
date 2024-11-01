@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Gores;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
@@ -72,7 +73,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public int Life { get; set; }
-		public bool CanDie => ++Projectile.ai[2] >= 60 * 5;
+		public bool CanDie => true || ++Projectile.ai[2] >= 60 * 5;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -111,6 +112,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.direction = 1;
 			}
 		}
+		bool targetIsBelow = false;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
@@ -154,7 +156,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 				}
 				foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-				if (foundTarget) targetRect = Main.npc[target].Hitbox;
+				if (foundTarget) {
+					targetRect = Main.npc[target].Hitbox;
+					targetIsBelow = targetRect.Bottom > Projectile.position.Y + Projectile.height;
+				}
 				if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height)) {
 					Projectile.tileCollide = true;
 				}
@@ -315,19 +320,30 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.direction != 0) Projectile.spriteDirection = Projectile.direction;
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = targetIsBelow;
+			return true;
+		}
 		public override void OnKill(int timeLeft) {
-			const float diameter = 16;
+			const float spread = 4;
+			SoundEngine.PlaySound(SoundID.NPCDeath2, Projectile.Center);
 			Player owner = Main.player[Projectile.owner];
 			ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner);
-			SoundEngine.PlaySound(SoundID.NPCDeath2, Projectile.Center);
-			for (int i = 0; i < 8; i++) {
-				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.2f, 1f);
-				Dust.NewDustPerfect(
-					Projectile.Center + offset,
-					DustID.TerraBlade,
-					offset * 0.125f
-				).shader = shaderData;
-			}
+			Dust.NewDustPerfect(
+				Projectile.Center + new Vector2(0, -8),
+				ModContent.DustType<Friendly_Zombie_Gore1>(),
+				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
+			).shader = shaderData;
+			Dust.NewDustPerfect(
+				Projectile.Center + new Vector2(0, 0),
+				ModContent.DustType<Friendly_Zombie_Gore2>(),
+				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
+			).shader = shaderData;
+			Dust.NewDustPerfect(
+				Projectile.Center + new Vector2(0, 8),
+				ModContent.DustType<Friendly_Zombie_Gore3>(),
+				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
+			).shader = shaderData;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			return true;

@@ -24,6 +24,7 @@ namespace Origins.Reflection {
 		public static float Instance_screenOff { get => screenOff.GetValue(Main.instance); set => screenOff.SetValue(Main.instance, value); }
 		public static FastStaticFieldInfo<Main, Player> _currentPlayerOverride;
 		public static Action<Projectile> DrawProj_Flamethrower { get; private set; }
+		public static Action DrawDust { get; private set; }
 		public void Load(Mod mod) {
 			bgLoops = new("bgLoops", BindingFlags.NonPublic);
 			bgStartX = new("bgStartX", BindingFlags.NonPublic);
@@ -35,6 +36,7 @@ namespace Origins.Reflection {
 			screenOff = new("screenOff", BindingFlags.NonPublic);
 			_currentPlayerOverride = new("_currentPlayerOverride", BindingFlags.NonPublic);
 			DrawProj_Flamethrower = typeof(Main).GetMethod(nameof(DrawProj_Flamethrower), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<Projectile>>();
+			DrawDust = typeof(Main).GetMethod(nameof(DrawDust), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<Action>(Main.instance);
 		}
 		public void Unload() {
 			bgLoops = null;

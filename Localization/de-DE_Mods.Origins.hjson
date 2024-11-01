@@ -684,8 +684,8 @@ Buffs: {
 	}
 
 	Lousy_Liver_Debuff: {
-		// DisplayName: Mods.Origins.BuffName.Lousy_Liver_Debuff
-		// Description: Mods.Origins.BuffDescription.Lousy_Liver_Debuff
+		// DisplayName: Liver Failure
+		// Description: It smells of copper wire...
 	}
 
 	Ninja_Ravel_Mount_Buff: {
@@ -805,12 +805,12 @@ Buffs: {
 
 	Outbreak_Bomb_Owner_Buff: {
 		// DisplayName: Outbreak Bomb Owner
-		// Description: Mods.Origins.Buffs.Outbreak_Bomb_Owner_Buff.Description
+		// Description: Stop getting everyone sick
 	}
 
 	Futurephones_Buff: {
 		// DisplayName: Futurephones
-		// Description: Feel her warcry
+		// Description: Heed her warcry
 	}
 
 	Juvenile_Amalgamation_Buff: {
@@ -834,13 +834,13 @@ Buffs: {
 	}
 
 	Ziptie_Buff: {
-		// DisplayName: Ziptied
+		// DisplayName: Tied Up
 		// Description: Mods.Origins.Buffs.Ziptie_Buff.Description
 	}
 
 	Bee_Incantation_Buff: {
-		// DisplayName: Bee Incantation Buff
-		// Description: Mods.Origins.Buffs.Bee_Incantation_Buff.Description
+		// DisplayName: Not the Bees!
+		// Description: Not to be confused with the secret seed
 	}
 
 	Walking_Furnace_Buff: {
@@ -918,8 +918,8 @@ Buffs: {
 	}
 
 	Slag_Bucket_Debuff: {
-		// DisplayName: Slag Bucket Debuff
-		// Description: Mods.Origins.Buffs.Slag_Bucket_Debuff.Description
+		// DisplayName: Shrapnel Disturbance
+		// Description: You cannot regenerate life
 	}
 
 	Fresh_Meat_Buff: {
@@ -929,12 +929,12 @@ Buffs: {
 
 	Terratotem_Buff: {
 		// DisplayName: Terratotem Buff
-		// Description: Mods.Origins.Buffs.Terratotem_Buff.Description
+		// Description: The reformed soul will protect you
 	}
 
 	Friendly_Zombie_Buff: {
 		// DisplayName: Friendly Zombie Buff
-		// Description: Mods.Origins.Buffs.Friendly_Zombie_Buff.Description
+		// Description: The friendly zombie will fight for you
 	}
 }
 
