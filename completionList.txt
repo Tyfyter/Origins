@@ -63,7 +63,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation*
 (†, $, ^2/3) Fiberglass Weaver !!!
 (X) Scrapper
-(^) World Cracker
+(^) World Cracker*
 
 (%, ^2) Lost Diver
 (X) Miscreant
@@ -750,12 +750,12 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(☻) Broken Terratotem !!!
+(@5, ^3) Broken Terratotem
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash
 (^) Fresh Meat Artifact
-(☻) Inanimate Zombie Hand !!!
+(#3, ^2) Inanimate Zombie Hand !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
@@ -790,7 +790,7 @@ SUMMONER WEAPONS:
 (@2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(^) Terratotem
+(@5, ^3) Terratotem
 (X) Tonal Resonator
 
 NO POST ML SUMMONER CONTENT YET.
