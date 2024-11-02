@@ -228,13 +228,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f + Projectile.localAI[0] / 60f);
 			Vector2 direction = foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition;
-			direction.Normalize();
-			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
+			Projectile.velocity = (Projectile.velocity + direction.SafeNormalize(default) * turnSpeed).SafeNormalize(default) * currentSpeed;
 			#endregion
 
 			#region Animation and visuals
 			// So it will lean slightly towards the direction it's moving
-			Projectile.rotation = (float)Math.Atan(Projectile.velocity.Y / Projectile.velocity.X);
+			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
 			// This is a simple "loop through all frames from top to bottom" animation
@@ -262,6 +261,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Projectile.localAI[0] += 20 - Projectile.localAI[0] / 6;
 			Projectile.ai[1] = 0;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = true;
+			return true;
 		}
 	}
 }
