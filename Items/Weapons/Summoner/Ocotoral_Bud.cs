@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Summoner {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 26;
+			Item.damage = 21;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 12;
 			Item.width = 32;
@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Thrust;
 			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
 			Item.shoot = ModContent.ProjectileType<Minions.Barnacle_Turret>();
 			Item.shootSpeed = 1;

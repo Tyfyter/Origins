@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
-using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
@@ -23,7 +21,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -75,9 +72,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_WC>();
 			NPC.width = NPC.height = 60;
-			NPC.damage = 35;
+			NPC.damage = 33;
 			NPC.defense = 100;
-			NPC.lifeMax = 4000;
+			NPC.lifeMax = 2890;
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
 			Music = Origins.Music.RivenBoss;
@@ -118,15 +115,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (!headNPC.HasValidTarget) return;
 			int target = headNPC.target;
 			Player playerTarget = Main.player[target];
-			int otherShotDelay = Main.rand.Next(50, 70);
-			int shotTime = 300;
+			int otherShotDelay = (Main.rand.Next(48, 60) / DifficultyMult) + 30;
+			int shotTime = (450 / DifficultyMult);
 			if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
 			npc.ai[2]++;
 			Vector2 size = playerTarget.Size;
 			Vector2 targetPos = playerTarget.position - size * 0.5f;
 			int projType = Amoeball.ID;
 			if (Main.masterMode && (npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
-				shotTime = 1200;
+				shotTime = (986 / DifficultyMult);
 				float diameter = npc.width * 0.75f;
 				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
 				Dust dust = Dust.NewDustPerfect(
@@ -264,7 +261,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(0, 0, 102, 58), NPC);
 		}
 		void SetBaseSpeed() {
-			MoveSpeed = 15.5f;
+			MoveSpeed = 15.5f + DifficultyMult;
 			Acceleration = 0.2f + 0.05f * DifficultyMult;
 		}
 		public override void Init() {
@@ -389,7 +386,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
 			NPC.width = NPC.height = 60;
-			NPC.damage = 20;
+			NPC.damage = 38;
 			NPC.defense = 20;
 			NPC.aiStyle = -1;
 		}
@@ -558,7 +555,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override string GlowTexture => Texture;
 		public AssimilationAmount Assimilation = 0.04f;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
 			ID = Type;
 		}
@@ -568,17 +564,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Projectile.hostile = true;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = 0;
-			Projectile.penetrate = 5;
+			Projectile.penetrate = (2 * DifficultyMult);
 			Projectile.width = 30;
 			Projectile.height = 30;
 			Projectile.ignoreWater = true;
-			Projectile.timeLeft = 180;
-			Projectile.scale = 0.75f;
+			Projectile.timeLeft = (60 * DifficultyMult) + 90;
+			Projectile.scale = (float)(0.37 * DifficultyMult);
 			Projectile.alpha = 150;
 		}
 		public override void AI() {
 			if (Projectile.timeLeft > 180 - 15) {
-				Projectile.position += Projectile.velocity * (Projectile.timeLeft - (180f - 15)) / 15;
+				Projectile.position += Projectile.velocity * 0.5f;
 			}
 			Projectile.frameCounter++;
 			if (Projectile.frameCounter >= 7) {

@@ -1,15 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+using Origins.Dev;
+using Origins.NPCs;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
-using Origins.Dev;
-using Origins.NPCs;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Bee_Afraid_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
@@ -21,16 +19,16 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetStaticDefaults() {
 		}
 		public override void SetDefaults() {
-			Item.damage = 19;
+			Item.damage = 12;
 			Item.DamageType = DamageClasses.SummonMagicSpeed;
 			Item.width = 22;
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 26;
-			Item.useAnimation = 26;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Bee_Afraid_Incantation_P>();
 			Item.shootSpeed = 0f;
-			Item.mana = 14;
+			Item.mana = 18;
 			Item.knockBack = 0.8f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
@@ -60,7 +58,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
 			Projectile.aiStyle = 0;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 6;
 			Projectile.width = 0;
 			Projectile.height = 0;
 			Projectile.ignoreWater = true;

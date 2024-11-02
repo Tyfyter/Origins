@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.DamageType = DamageClass.Summon;
-			Item.damage = 13;
+			Item.damage = 12;
 			Item.knockBack = 2;
 			Item.useTime = Item.useAnimation = 45;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
@@ -26,7 +26,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Strange_Tooth_Buff : ModBuff {
 		public static int ID { get; private set; }
-		public override string Texture => "Origins/Buffs/Mini_EOC_Buff";
+		public override string Texture => "Origins/Buffs/Strange_Tooth_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
