@@ -42,7 +42,7 @@ namespace Origins.Dev {
 			};
 			LinkFormatters[null] = (t) => {
 				string formattedName = t.Replace(" ", "_");
-				return $"<a is=a-link href=https://terraria.wiki.gg/wiki/{formattedName}>{t}</a>";
+				return $"<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
 			};
 		}
 		static PageTemplate wikiTemplate;
@@ -57,18 +57,22 @@ namespace Origins.Dev {
 			}
 		}
 		static void TryUpdatingExistingPage(string pagePath, PageTemplate template, Dictionary<string, object> context) {
-			List<PageTemplate.ConditionalSnippit> conditionals = template.GetConditionals();
-			string oldPageText = File.ReadAllText(pagePath);
-			HTMLDocument pageNodes = HTMLDocument.Parse(oldPageText);
-			for (int i = 0; i < conditionals.Count; i++) {
-				HTMLDocument newNodes = HTMLDocument.Parse(conditionals[i].Resolve(context));
-				if (newNodes.Children.Count == 1 && newNodes.Children[0] is HTMLNode singleNode && singleNode.attributes.TryGetValue("id", out string id) && pageNodes.GetElementByID(id) is HTMLNode replaceable) {
-					replaceable.Parent.ReplaceChild(replaceable, singleNode);
+			try {
+				List<PageTemplate.ConditionalSnippit> conditionals = template.GetConditionals();
+				string oldPageText = File.ReadAllText(pagePath);
+				HTMLDocument pageNodes = HTMLDocument.Parse(oldPageText);
+				for (int i = 0; i < conditionals.Count; i++) {
+					HTMLDocument newNodes = HTMLDocument.Parse(conditionals[i].Resolve(context));
+					if (newNodes.Children.Count == 1 && newNodes.Children[0] is HTMLNode singleNode && singleNode.attributes.TryGetValue("id", out string id) && pageNodes.GetElementByID(id) is HTMLNode replaceable) {
+						replaceable.Parent.ReplaceChild(replaceable, singleNode);
+					}
 				}
-			}
-			string newPageText = pageNodes.ToString().ReplaceLineEndings("\n");
-			if (newPageText != oldPageText) {
-				WriteFileNoUnneededRewrites(pagePath, newPageText);
+				string newPageText = pageNodes.ToString().ReplaceLineEndings("\n");
+				if (newPageText != oldPageText) {
+					WriteFileNoUnneededRewrites(pagePath, newPageText);
+				}
+			} catch (Exception error) {
+				Origins.instance.Logger.Error($"Encountered error while parsing {pagePath}:", error);
 			}
 		}
 		public static void ExportItemPage(Item item) {
@@ -1059,7 +1063,7 @@ namespace Origins.Dev {
 			if (item.ModItem?.Mod is Origins) {
 				text = $"<a is=a-link image=$fromStats>{name}{(string.IsNullOrWhiteSpace(note) ? "" : $"<note>{note}</note>")}</a>";
 			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
-				text = $"`{formatter(item.Name)}`";
+				text = $"{formatter(item.Name)}";
 				goto formatted;
 			} else {
 				text = item.Name;

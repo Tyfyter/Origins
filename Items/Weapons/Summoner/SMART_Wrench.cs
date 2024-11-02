@@ -8,6 +8,7 @@ using Origins.Tiles.Other;
 namespace Origins.Items.Weapons.Summoner {
     public class SMART_Wrench : ModItem, ICustomWikiStat {
         public override void SetDefaults() {
+			return;//TODO: implement
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 18;

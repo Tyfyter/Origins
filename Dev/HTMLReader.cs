@@ -67,11 +67,15 @@ namespace Origins.Dev {
 					case '=': {
 						string attributeName = PopString();
 						i++;
+						char quote = '"';
 						bool isQuoted = text[i] is '"' or '\'';
-						if (isQuoted) i++;
+						if (isQuoted) {
+							quote = text[i];
+							i++;
+						}
 						for (; i < text.Length; i++) {
 							if (isQuoted) {
-								if (text[i] is '"' or '\'') {
+								if (text[i] == quote) {
 									i++;
 									break;
 								}

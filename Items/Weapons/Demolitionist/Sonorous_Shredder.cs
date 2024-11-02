@@ -13,9 +13,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Sonorous_Shredder : BardItem, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override void SetStaticDefaults() {
-			//DisplayName.SetDefault("Sonorous Shredder");
-			//Tooltip.SetDefault("'Split apart, lost one'");
-			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 			Empowerments.AddInfo<InvincibilityFrames>(2);
 			Empowerments.AddInfo<FlightTime>(2);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

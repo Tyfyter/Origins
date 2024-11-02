@@ -19,35 +19,35 @@ namespace Origins.Items.Armor {
 				["Name"] = value.MergedArmorSetName,
 				["DisplayName"] = value.ArmorSetDisplayName
 			};
-			HashSet<int> heads = new();
-			HashSet<int> bodies = new();
-			HashSet<int> legss = new();
-			List<Recipe> recipes = new();
-			List<Recipe> usedIn = new();
-			List<string> setNames = new();
-			List<string> pieceNames = new();
+			HashSet<int> heads = [];
+			HashSet<int> bodies = [];
+			HashSet<int> legss = [];
+			List<Recipe> recipes = [];
+			List<Recipe> usedIn = [];
+			List<string> setNames = [];
+			List<string> pieceNames = [];
 			foreach (IWikiArmorSet set in GetSetAndSubSets(value)) {
 				if (set.HeadItemID != ItemID.None) heads.Add(set.HeadItemID);
 				if (set.BodyItemID != ItemID.None) bodies.Add(set.BodyItemID);
 				if (set.LegsItemID != ItemID.None) legss.Add(set.LegsItemID);
 				setNames.Add(set.ArmorSetName);
 			}
-			foreach (var item in heads) {
-				if (ContentSamples.ItemsByType[item].ModItem is not null) continue;
+			foreach (int item in heads) {
+				if (ContentSamples.ItemsByType[item].ModItem is null) continue;
 				pieceNames.Add(WikiPageExporter.GetWikiName(ContentSamples.ItemsByType[item].ModItem));
 				(List<Recipe> curRecipes, List<Recipe> curUsedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[item]);
 				recipes.AddRange(curRecipes);
 				usedIn.AddRange(curUsedIn);
 			}
-			foreach (var item in bodies) {
-				if (ContentSamples.ItemsByType[item].ModItem is not null) continue;
+			foreach (int item in bodies) {
+				if (ContentSamples.ItemsByType[item].ModItem is null) continue;
 				pieceNames.Add(WikiPageExporter.GetWikiName(ContentSamples.ItemsByType[item].ModItem));
 				(List<Recipe> curRecipes, List<Recipe> curUsedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[item]);
 				recipes.AddRange(curRecipes);
 				usedIn.AddRange(curUsedIn);
 			}
-			foreach (var item in legss) {
-				if (ContentSamples.ItemsByType[item].ModItem is not null) continue;
+			foreach (int item in legss) {
+				if (ContentSamples.ItemsByType[item].ModItem is null) continue;
 				pieceNames.Add(WikiPageExporter.GetWikiName(ContentSamples.ItemsByType[item].ModItem));
 				(List<Recipe> curRecipes, List<Recipe> curUsedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[item]);
 				recipes.AddRange(curRecipes);
