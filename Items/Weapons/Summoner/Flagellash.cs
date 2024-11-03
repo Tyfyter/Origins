@@ -14,12 +14,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
 	public class Flagellash : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => [
-            "Whip"
-        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			// Call this method to quickly set some of the properties below.
@@ -158,9 +154,8 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
-			List<Vector2> list = new List<Vector2>();
+			List<Vector2> list = [];
 			Projectile.FillWhipControlPoints(Projectile, list);
-
 			DrawLine(list);
 			return false;
 		}

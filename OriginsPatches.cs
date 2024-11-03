@@ -66,6 +66,7 @@ using Origins.Items.Weapons.Magic;
 using Terraria.GameContent.Events;
 using Origins.Items.Weapons.Summoner.Minions;
 using AltLibrary.Common.Hooks;
+using Terraria.ModLoader.UI;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -526,7 +527,7 @@ namespace Origins {
 						new Vector2(scaleValue)
 					);
 					if (rectangle.Contains(Main.mouseX, Main.mouseY)) {
-						Terraria.ModLoader.UI.UICommon.TooltipMouseText(Language.GetText("Mods.Origins.Warnings.WarningPrefaceText") + "\n" + string.Join('\n', loadingWarnings));
+						UICommon.TooltipMouseText(Language.GetText("Mods.Origins.Warnings.WarningPrefaceText") + "\n" + string.Join('\n', loadingWarnings));
 					}
 				}
 			};
@@ -567,6 +568,128 @@ namespace Origins {
 			};
 			On_NPC.TryTrackingTarget += On_NPC_TryTrackingTarget;
 			On_NPC.SetTargetTrackingValues += On_NPC_SetTargetTrackingValues;
+			try {
+				MonoModHooks.Add(typeof(UICommon).Assembly.GetType("Terraria.ModLoader.UI.Interface").GetMethod("AddMenuButtons", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (orig_AddMenuButtons orig, Main main, int selectedMenu, string[] buttonNames, float[] buttonScales, ref int offY, ref int spacing, ref int buttonIndex, ref int numButtons) => {
+					orig(main, selectedMenu, buttonNames, buttonScales, ref offY, ref spacing, ref buttonIndex, ref numButtons);
+					workshopMenuIndex = buttonIndex - 1;
+				});
+				IL_Main.DrawMenu += IL_Main_DrawMenu;
+			} catch (Exception ex) {
+				LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.AddMenuButtonsThing"));
+				instance.Logger.Error("Error while hooking into Terraria.ModLoader.UI.Interface.AddMenuButtons: ", ex);
+			}
+		}
+
+		static int workshopMenuIndex = -1;
+		delegate void orig_AddMenuButtons(Main main, int selectedMenu, string[] buttonNames, float[] buttonScales, ref int offY, ref int spacing, ref int buttonIndex, ref int numButtons);
+		delegate void hook_AddMenuButtons(orig_AddMenuButtons orig, Main main, int selectedMenu, string[] buttonNames, float[] buttonScales, ref int offY, ref int spacing, ref int buttonIndex, ref int numButtons);
+		static bool updatedHiddenSuggestions = true;
+		private void IL_Main_DrawMenu(ILContext il) {
+			ILCursor c = new(il);
+			int i = -1;
+			int l6 = -1;
+			int l182 = -1;
+			int l20 = -1;
+			int l5 = -1;
+			int l7 = -1;
+			int l183 = -1;
+			int l174 = -1;
+			int l22 = -1;
+			int l19 = -1;
+			c.GotoNext(MoveType.After,
+				ins => ins.MatchLdsfld<Main>(nameof(Main.spriteBatch)),
+				ins => ins.MatchLdsfld(typeof(FontAssets), nameof(FontAssets.DeathText)),
+				ins => ins.MatchCallOrCallvirt(out _),
+				ins => ins.MatchLdloc(out _),
+				ins => ins.MatchLdloc(out i),
+				ins => ins.MatchLdelemRef(),
+				ins => ins.MatchLdloc(out l6),
+				ins => ins.MatchLdloc(out l182),
+				ins => ins.MatchAdd(),
+				ins => ins.MatchLdloc(out l20),
+				ins => ins.MatchLdloc(i),
+				ins => ins.MatchLdelemI4(),
+				ins => ins.MatchAdd(),
+				ins => ins.MatchConvR4(),
+				ins => ins.MatchLdloc(out l5),
+				ins => ins.MatchLdloc(out l7),
+				ins => ins.MatchLdloc(i),
+				ins => ins.MatchMul(),
+				ins => ins.MatchAdd(),
+				ins => ins.MatchLdloc(out l183),
+				ins => ins.MatchAdd(),
+				ins => ins.MatchConvR4(),
+				ins => ins.MatchLdloc(out l174),
+				ins => ins.MatchLdfld<Vector2>(nameof(Vector2.Y)),
+				ins => ins.MatchLdloc(out l22),
+				ins => ins.MatchLdloc(i),
+				ins => ins.MatchLdelemR4(),
+				ins => ins.MatchMul(),
+				ins => ins.MatchAdd(),
+				ins => ins.MatchLdloc(out l19),
+				ins => ins.MatchLdloc(i),
+				ins => ins.MatchLdelemI4(),
+				ins => ins.MatchConvR4(),
+				ins => ins.MatchAdd(),
+				ins => ins.MatchNewobj<Vector2>(),
+				ins => ins.MatchLdloc(out _),
+				ins => ins.MatchLdcR4(0.0f),
+				ins => ins.MatchLdloc(out _),
+				ins => ins.MatchLdloc(out _),
+				ins => ins.MatchLdcI4(0),
+				ins => ins.MatchLdcR4(0.0f),
+				ins => ins.MatchCall(typeof(DynamicSpriteFontExtensionMethods), nameof(DynamicSpriteFontExtensionMethods.DrawString))
+			);
+			
+			c.EmitLdloc(i);
+			c.EmitLdloc(l6);
+			c.EmitLdloc(l182);
+			c.EmitLdloc(l20);
+			c.EmitLdloc(l5);
+			c.EmitLdloc(l7);
+			c.EmitLdloc(l183);
+			c.EmitLdloc(l174);
+			c.EmitLdloc(l22);
+			c.EmitLdloc(l19);
+			c.EmitDelegate(
+				static (int i, int l6, int l182, int[] l20, int l5, int l7, int l183, Vector2 lineOrigin, float[] l22, int[] l19) => {
+					if (i != workshopMenuIndex) return;
+					if (updatedHiddenSuggestions) OriginsModIntegrations.compatRecommendations.RemoveAll(loc => DebugConfig.Instance.IgnoredCompatibilitySuggestions.Contains(loc.Key));// let players disable recommendations they've seen
+					bool anyErrors = OriginsModIntegrations.compatErrors.Count != 0;
+					if (!anyErrors && OriginsModIntegrations.compatRecommendations.Count == 0) return;
+					Vector2 anchorPosition = new(l6 + l182 + l20[i] + lineOrigin.X, l5 + l7 * i + l183 + lineOrigin.Y * l22[i] * 0.5f + l19[i]);
+					Rectangle rectangle = new((int)anchorPosition.X, (int)anchorPosition.Y, 30, 30);
+					float scaleValue = MathHelper.Lerp(0.5f, 0.75f, Main.mouseTextColor / 255f);
+					ChatManager.DrawColorCodedStringWithShadow(
+						Main.spriteBatch,
+						FontAssets.DeathText.Value,
+						"!",
+						rectangle.Left() - FontAssets.DeathText.Value.MeasureString("!") * new Vector2(0f, 0.25f),
+						Color.Yellow,
+						anyErrors ? Color.OrangeRed : Color.DarkGoldenrod,
+						0,
+						Vector2.Zero,
+						new Vector2(scaleValue)
+					);
+					if (rectangle.Contains(Main.mouseX, Main.mouseY)) {
+						string ignoreAll = "";
+						if (OriginsModIntegrations.compatRecommendations.Count != 0) ignoreAll = "\n" + Language.GetTextValue("Mods.Origins.ModCompatNotes.ClearAll");
+						UICommon.TooltipMouseText(string.Join("\n",
+							OriginsModIntegrations.compatErrors.Select(x => $"[c/ff0000:{x.Value}]")
+							.Concat(OriginsModIntegrations.compatRecommendations.Select(x => x.Value))
+						) + ignoreAll);
+						if (Main.mouseRight && Main.mouseRightRelease) {
+							for (int j = 0; j < OriginsModIntegrations.compatRecommendations.Count; j++) {
+								DebugConfig.Instance.IgnoredCompatibilitySuggestions.Add(OriginsModIntegrations.compatRecommendations[j].Key);
+							}
+							OriginClientConfig.Instance.Save();
+							updatedHiddenSuggestions = true;
+						}
+					}
+				}
+			);
+			updatedHiddenSuggestions = true;
+			//*/
 		}
 
 		private static void On_NPC_SetTargetTrackingValues(On_NPC.orig_SetTargetTrackingValues orig, NPC self, bool faceTarget, float realDist, int tankTarget) {

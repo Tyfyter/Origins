@@ -1583,6 +1583,16 @@ Configs: {
 			Label: Open Journal To
 			Tooltip: ""
 		}
+
+		IgnoredCompatibilitySuggestions: {
+			Label: Ignored Compatibility Suggestions
+			Tooltip: ""
+		}
+
+		IgnoredCompatibilitySuggestionKeys: {
+			Label: Ignored Compatibility Suggestion Keys
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -1720,6 +1730,11 @@ Configs: {
 
 		ExportNPCImages: {
 			Label: Export NPC images
+			Tooltip: ""
+		}
+
+		IgnoredCompatibilitySuggestions: {
+			Label: Ignored Compatibility Suggestions
 			Tooltip: ""
 		}
 	}

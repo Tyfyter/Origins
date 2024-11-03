@@ -40,8 +40,6 @@ namespace Origins {
 			set => instance.checkAprilFools = value;
 		}
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
-		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
-		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
@@ -86,7 +84,10 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
 				instance.LoadFancyLighting();
+			} else {
+				compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.AddFancyLighting"));
 			}
+
 			if (ModLoader.TryGetMod("ModDemoUtils", out Mod modDemoUtils)) {
 				ItemWikiProvider itemWikiProvider = new();
 				modDemoUtils.Call("RegisterDemo", Origins.instance, "Tyfyter/Origins");
@@ -97,8 +98,11 @@ namespace Origins {
 		}
 		public void Unload() {
 			instance = null;
-			wikiSiteMap = null;
+			compatRecommendations = null;
+			compatErrors = null;
 		}
+		public static List<LocalizedText> compatRecommendations = [];
+		public static List<LocalizedText> compatErrors = [];
 		[JITWhenModsEnabled("FancyLighting")]
 		void LoadFancyLighting() {
 			try {
@@ -135,6 +139,7 @@ namespace Origins {
 						}
 					})
 				);
+				/*
 				int wallShineCount = 0;
 				foreach (var item in smoothLightingType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
 					MethodInfo wallShineMethod = null;
@@ -161,6 +166,7 @@ namespace Origins {
 				if (wallShineCount == 0) {
 					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
 				}
+				//*/
 			} catch (Exception e) {
 				Origins.LogError("Exception thrown while loading Fancy Lighting Integration:", e);
 				FancyLighting = null;

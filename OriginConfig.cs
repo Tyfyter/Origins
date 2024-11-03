@@ -73,6 +73,13 @@ namespace Origins {
 
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
 		public DebugConfig debugMenuButton = new();
+		internal void Save() {
+			Directory.CreateDirectory(ConfigManager.ModConfigPath);
+			string filename = Mod.Name + "_" + Name + ".json";
+			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
+			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
+		}
 	}
 	internal class InconspicuousVersionElement : ConfigElement<ModConfig> {
 		private UIPanel separatePagePanel;
@@ -572,6 +579,7 @@ namespace Origins {
 				}
 			}
 		}
+		public HashSet<string> IgnoredCompatibilitySuggestions { get; set; } = [];
 	}
 	public class AssetPathComparer : IComparer<string> {
 		public int Compare(string x, string y) {
