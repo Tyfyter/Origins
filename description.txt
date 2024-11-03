@@ -1,17 +1,24 @@
 Terraria Origins is a content mod that adds new ways of playing Terraria with content designed and balanced around the vanilla game.
 
-Origins is currently in its early release/Beta version, but still offers 740+ items, 71 enemies, 168 tiles and 6 cool biomes: meaning, there's already a ton of variety already present in the mod! Additionally, there is a new explosive-themed Demolitionist class that can be played up to post-Moon Lord and is balanced well with the other classes.
+Origins is currently in its early release/Beta version, but still includes 780 items, 76 NPCs, 178 tiles and 6 cool biomes. 
+Additionally, there is a new explosive-themed Demolitionist class that can be played up to post-Moon Lord and is balanced with the other classes.
 
-Origins' content adds alternatives for almost every crevice of gameplay reinforced by its two new and nearly completed world evils: the Defiled and the Riven. It will be impossible not to find something new and fun in Origins, even in its current Beta state.
+Origins' content adds alternatives for nearly all areas of gameplay reinforced by its two new and nearly completed world evils: the Defiled and Riven.
+It will be impossible not to find something new and fun in Origins, even in its current Beta state.
 
-This mod does not include the music tracks composed for each of the biomes and bosses, and can be found with the music mod here: https://github.com/Tyfyter/OriginsMusic
+This mod does not include the music tracks composed for each of the biomes and bosses.
+These can be found with the music mod here: https://github.com/Tyfyter/OriginsMusic
 
-Origins' wiki is currently in development so Origins' players have a sense of direction. It is not finished, but we are hard at work making it work. The link can be found below:
-https://tyfyter.github.io/OriginsWiki/
+Origins' wiki is currently in development so Origins' players have a sense of direction.
+It is not finished, but we are hard at work making it work.
+The link can be found here: https://tyfyter.github.io/OriginsWiki/
 
-In the meantime, you can join Origins' official Discord server to talk with other players about your discoveries and any bugs you may find! Use this link to join now: https://discord.gg/NK7jERXsTN
+In the meantime, you can join Origins' official Discord server to talk with other players about your discoveries and any bugs you may find!
+Use this link to join now: https://discord.gg/NK7jERXsTN
 
-This mod, its music mod and its wiki are all made by a collaboration between Tyfyter2002 and chrersis. Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached. We thank you for expressing interest in this mod and hope you have fun with it!
+This mod, its music mod and its wiki are all made by a collaboration between Tyfyter2002 and chrersis.
+Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached.
+We thank you for expressing interest in this mod and hope you have fun with it!
 
 If you have any questions, comments or a bug you have found from anything Origins-related, please reach out to us through our Discord server!
-If you would rather not join the server, instead E-mail us at developmentorigins@gmail.com
+If you would rather not join the server, instead e-mail us at developmentorigins@gmail.com

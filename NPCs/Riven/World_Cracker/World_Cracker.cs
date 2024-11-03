@@ -123,7 +123,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Vector2 targetPos = playerTarget.position - size * 0.5f;
 			int projType = Amoeball.ID;
 			if (Main.masterMode && (npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
-				shotTime = (986 / DifficultyMult);
+				shotTime = 328;
 				float diameter = npc.width * 0.75f;
 				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
 				Dust dust = Dust.NewDustPerfect(
