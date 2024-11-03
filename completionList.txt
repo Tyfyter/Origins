@@ -1303,7 +1303,7 @@ UI:
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
-(@ (needs 4 textures)) Underground Defiled Background !!!
+(#, ^2) Underground Defiled Background !!!
 (@ (needs 4 textures ⚯)) Underground Fiberglass Background !!!
 (#, ^2) Underground Riven Background !!!
 
