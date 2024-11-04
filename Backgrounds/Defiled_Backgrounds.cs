@@ -29,17 +29,12 @@ namespace Origins.Backgrounds {
 				}
 			}
 		}
-
-		/*public override void FillTextureArray(int[] textureSlots) {
-			textureSlots[0] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background");
-			textureSlots[1] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background2");
-			textureSlots[2] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background3");
-			//textureSlots[3] = mod.GetBackgroundSlot("Backgrounds/Void_Background");
-		}*/
 	}
-	/*public class Defiled_Underground_Background : ModUndergroundBackgroundStyle {
+	public class Defiled_Underground_Background : ModUndergroundBackgroundStyle {
 		public override void FillTextureArray(int[] textureSlots) {
-			throw new System.NotImplementedException();
+			for (int i = 0; i < 4; i++) {
+				textureSlots[i] = ModContent.GetModBackgroundSlot(GetType().GetDefaultTMLName() + i);
+			}
 		}
-	}*/
+	}
 }
