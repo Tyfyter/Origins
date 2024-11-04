@@ -27,7 +27,7 @@ namespace Origins.Backgrounds {
 					new Rectangle(0, 0, Main.backgroundWidth[textureSlot], Main.backgroundHeight[textureSlot]),
 					glowColor,
 					0f,
-					default(Vector2),
+					default,
 					MainReflection.bgScale,
 					SpriteEffects.None,
 				0f);
@@ -110,12 +110,12 @@ namespace Origins.Backgrounds {
 				}
 			}
 		}
-
-		/*public override void FillTextureArray(int[] textureSlots) {
-			textureSlots[0] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background");
-			textureSlots[1] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background2");
-			textureSlots[2] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background3");
-			//textureSlots[3] = mod.GetBackgroundSlot("Backgrounds/Void_Background");
-		}*/
+	}
+	public class Riven_Underground_Background : ModUndergroundBackgroundStyle {
+		public override void FillTextureArray(int[] textureSlots) {
+			for (int i = 0; i < 4; i++) {
+				textureSlots[i] = ModContent.GetModBackgroundSlot(GetType().GetDefaultTMLName() + i);
+			}
+		}
 	}
 }

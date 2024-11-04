@@ -954,7 +954,7 @@ namespace Origins {
 				c.Emit(Ldloc, index);
 				c.Emit(Ldloc, color);
 				c.Emit(Ldloc, cloudAlpha);
-				foreach (var (code, operand) in cloudYInstructions) {
+				foreach ((OpCode code, object operand) in cloudYInstructions) {
 					c.Emit(code, operand);
 				}
 				c.EmitDelegate<Action<int, Color, float, float>>(static (i, color, cloudAlpha, cloudY) => {
@@ -1260,7 +1260,7 @@ namespace Origins {
 		#endregion quests
 		#region plants
 		private void WorldGen_PlantAlchIL(ILContext il) {
-			ILCursor c = new ILCursor(il);
+			ILCursor c = new(il);
 			if (!c.TryGotoNext(
 				moveType: MoveType.Before,
 				[
@@ -1282,7 +1282,7 @@ namespace Origins {
 			ILCursor c2 = prevs[0];
 			c.Index = c2.Index;
 			c2.Index++;
-			Stack<Instruction> ins = new Stack<Instruction>();
+			Stack<Instruction> ins = new();
 			while (!c2.Next.MatchBneUn(out _)) {
 				ins.Push(c2.Next);
 				c2.Index--;
