@@ -37,8 +37,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		public string CustomSpritePath => "DefiledAmalg";
 		public static bool spawnDA = false;
-		float rightArmRot = 0;
-		float leftArmRot = 0;
+		float rightArmRot = 0.25f;
+		float leftArmRot = 0.25f;
 		float time = 0;
 		int trappedTime = 0;
 		int roars = 0;
@@ -469,9 +469,10 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 
 		public override void FindFrame(int frameHeight) {
-			if (!NPC.HasValidTarget) {
+			if (!NPC.HasValidTarget && !NPC.IsABestiaryIconDummy) {
 				NPC.frame = new Rectangle(0, (frameHeight * 7) % (frameHeight * 8), 122, frameHeight);
 				NPC.velocity.Y += 0.12f;
+				if (NPC.direction == 0) NPC.direction = 1;
 				return;
 			}
 			int cycleLength = 100 - (DifficultyMult * 4);
