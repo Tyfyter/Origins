@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using Mono.Cecil;
 namespace Origins.Items.Weapons.Summoner {
 	public class Rotting_Worm_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
@@ -74,27 +75,30 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			DrawOriginOffsetY = -29;
 			base.SetDefaults();
 			Projectile.minionSlots = 1f;
+			Projectile.localAI[3] = -1;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.velocity.Y += 6;
-			Projectile.localAI[3] = Projectile.whoAmI;
-			int current = 0;
-			int last = Projectile.whoAmI;
-			int type = Rotting_Worm_Body.ID;
-			//body
-			current = Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
-			Main.projectile[current].localAI[3] = Projectile.whoAmI;
-			Main.projectile[current].localAI[1] = last;
-			Main.projectile[last].localAI[0] = current;
-			last = current;
-			//tail
-			current = Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
-			Main.projectile[current].localAI[3] = Projectile.whoAmI;
-			Main.projectile[current].localAI[1] = last;
-			Main.projectile[last].localAI[0] = current;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (Main.myPlayer == player.whoAmI && Projectile.localAI[3] != Projectile.identity) {
+				Projectile.localAI[3] = Projectile.identity;
+				Projectile current;
+				int last = Projectile.identity;
+				int type = Rotting_Worm_Body.ID;
+				//body
+				current = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+				current.localAI[3] = Projectile.identity;
+				current.localAI[1] = last;
+				Main.projectile[last].localAI[0] = current.identity;
+				last = current.identity;
+				//tail
+				current = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
+				current.localAI[3] = Projectile.identity;
+				current.localAI[1] = last;
+				Main.projectile[last].localAI[0] = current.identity;
+			}
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
@@ -163,37 +167,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-			/*
-            if (player.HasMinionAttackTargetNPC) {
-                NPC npc = Main.npc[player.MinionAttackTargetNPC];
-                float between = Vector2.Distance(npc.Center, Projectile.Center);
-                if(between < 2000f) {
-                    targetDist = between;
-                    targetCenter = npc.Center;
-                    target = player.MinionAttackTargetNPC;
-                    foundTarget = true;
-                }
-            }
-            if(!foundTarget) {
-                for(int i = 0; i < Main.maxNPCs; i++) {
-                    NPC npc = Main.npc[i];
-                    if(npc.CanBeChasedBy()) {
-                        Vector2 diff = Projectile.Center-Projectile.Center;
-                        float dist = diff.Length();
-						if(dist>targetDist)continue;
-						float dot = NormDot(diff,Projectile.velocity);
-						bool inRange = dist < targetDist;
-                        //bool jumpOfHight = (npc.Bottom.Y-projectile.Top.Y)<160;
-                        if(((dot > targetAngle && inRange) || !foundTarget)) {
-                            targetDist = dist;
-                            targetAngle = dot;
-                            targetCenter = npc.height/(float)npc.width>1 ? npc.Top+new Vector2(0, 8) : npc.Center;
-                            target = npc.whoAmI;
-                            foundTarget = true;
-                        }
-                    }
-                }
-            }*/
 
 			Projectile.friendly = foundTarget;
 			#endregion
@@ -246,9 +219,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 		}
 		public override void OnKill(int timeLeft) {
-			Projectile.active = false;
-			Projectile body = Main.projectile[(int)Projectile.localAI[0]];
-			if (body.active && body.type == Rotting_Worm_Body.ID) body.Kill();
+			int currentIndex = Projectile.GetByUUID(Projectile.owner, Projectile.localAI[0]);
+			while (Main.projectile.IndexInRange(currentIndex)) {
+				Projectile currentProjectile = Main.projectile[currentIndex];
+				currentProjectile.active = false;
+				currentIndex = Projectile.GetByUUID(Projectile.owner, currentProjectile.localAI[0]);
+			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage.Base += (int)Projectile.velocity.Length();
@@ -264,10 +240,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			DrawOriginOffsetY = -23;
 			base.SetDefaults();
 		}
-		public override bool PreKill(int timeLeft) {
-			Projectile head = Main.projectile[(int)Projectile.localAI[1]];
-			return !head.active || !(head.type == Rotting_Worm_Staff.projectileID || head.type == Rotting_Worm_Body.ID);
-		}
 	}
 	public class Rotting_Worm_Tail : Mini_EOW_Base {
 		internal static int ID = 0;
@@ -278,10 +250,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetDefaults() {
 			DrawOriginOffsetY = -32;
 			base.SetDefaults();
-		}
-		public override bool PreKill(int timeLeft) {
-			Projectile head = Main.projectile[(int)Projectile.localAI[1]];
-			return !head.active || !(head.type == Rotting_Worm_Staff.projectileID || head.type == Rotting_Worm_Body.ID);
 		}
 	}
 	public abstract class Mini_EOW_Base : ModProjectile {
@@ -321,8 +289,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void AI() {
 			#region Worminess
 			Player player = Main.player[Projectile.owner];
-			Projectile last = Main.projectile[(int)Projectile.localAI[1]];
+			int lastIndex = Projectile.GetByUUID(Projectile.owner, Projectile.localAI[1]);
+			if (!Main.projectile.IndexInRange(lastIndex)) {
+				Projectile.active = false;
+			}
+			Projectile last = Main.projectile[lastIndex];
 			if (!last.active || !(last.type == Rotting_Worm_Staff.projectileID || last.type == Rotting_Worm_Body.ID)) {
+				Projectile.active = false;
 				return;
 			}
 			if (player.HasBuff(Rotting_Worm_Staff.buffID)) {
@@ -357,13 +330,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.NextBool(10)) {
 				target.AddBuff(BuffID.Poisoned, 180);
-			}
-		}
-		public override void OnKill(int timeLeft) {
-			Projectile.active = false;
-			Projectile head = Main.projectile[(int)Projectile.localAI[3]];
-			if (head.active) {
-				head.Kill();
 			}
 		}
 	}

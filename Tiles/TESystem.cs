@@ -13,7 +13,8 @@ namespace Origins.Tiles {
 	public abstract class TESystem : ModSystem {
 		public int TESystemType { get; private set; }
 		static List<TESystem> TESystems;
-		public List<Point16> tileEntityLocations = new();
+		public static int TESystemCount => TESystems.Count;
+		public List<Point16> tileEntityLocations = [];
 		public override void Load() {
 			TESystems ??= [];
 			TESystemType = TESystems.Count;

@@ -54,39 +54,27 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void AI() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (NPC.ai[1] == 0) {
 				NPC.ai[1] = 1;
 				const float offsetLen = 10;
-				NPC.velocity = new Vector2(0, 1);
-				Vector2 offset = new Vector2(0, offsetLen);
-				for (int i = 0; i < 10; i++) {
-					if (Framing.GetTileSafely(NPC.Center + new Vector2(0, 16 * i)).HasSolidTile()) {
-						NPC.velocity = new Vector2(0, 1);
-						NPC.rotation = 0;
-						offset = new Vector2(0, offsetLen);
-						break;
-					} else if (Framing.GetTileSafely(NPC.Center + new Vector2(0, -16 * i)).HasSolidTile()) {
-						NPC.velocity = new Vector2(0, -1);
-						NPC.rotation = MathHelper.Pi;
-						offset = new Vector2(0, -offsetLen);
-						break;
-					} else if (Framing.GetTileSafely(NPC.Center + new Vector2(-16 * i, 0)).HasSolidTile()) {
-						NPC.velocity = new Vector2(-1, 0);
-						NPC.rotation = MathHelper.PiOver2;
-						offset = new Vector2(-offsetLen, 0);
-						break;
-					} else if (Framing.GetTileSafely(NPC.Center + new Vector2(16 * i, 0)).HasSolidTile()) {
-						NPC.velocity = new Vector2(1, 0);
-						NPC.rotation = -MathHelper.PiOver2;
-						offset = new Vector2(offsetLen, 0);
-						break;
+				Vector2 bestPosition = default;
+				float dist = 800;
+				Vector2[] directions = [
+					Vector2.UnitX,
+					-Vector2.UnitX,
+					Vector2.UnitY,
+					-Vector2.UnitY
+				];
+				for (int i = 0; i < directions.Length; i++) {
+					float newDist = CollisionExtensions.Raycast(NPC.Center, directions[i], dist);
+					if (newDist < dist) {
+						dist = newDist;
+						bestPosition = NPC.Center + directions[i] * (dist - offsetLen);
 					}
 				}
-				int tries = 0;
-				while (!Framing.GetTileSafely(NPC.Center + offset + NPC.velocity).HasSolidTile()) {
-					NPC.position += NPC.velocity;
-					if (++tries > 160) break;
-				}
+				NPC.rotation = (bestPosition - NPC.Center).ToRotation() - MathHelper.PiOver2;
+				NPC.Center = bestPosition;
 				NPC.oldVelocity = Vector2.Zero;
 				NPC.oldPosition = NPC.position;
 				NPC.netUpdate = true;
@@ -111,7 +99,7 @@ namespace Origins.NPCs.Riven {
 			NPC.rotation = reader.ReadSByte() * MathHelper.PiOver2;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
+			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

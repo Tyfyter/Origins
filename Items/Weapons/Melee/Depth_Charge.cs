@@ -102,17 +102,17 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.knockBack * 2,
 					Projectile.owner
 				);
-				Vector2 chainDrawPosition = Projectile.Center;
-				Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
-				List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
-				for (int i = 0; i < chainPositions.Count; i++) {
-					Gore.NewGore(
-						Projectile.GetSource_Death(),
-						chainPositions[i],
-						Projectile.velocity * 0.1f,
-						ModContent.GoreType<Depth_Charge_Chain>()
-					);
-				}
+			}
+			Vector2 chainDrawPosition = Projectile.Center;
+			Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
+			List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
+			for (int i = 0; i < chainPositions.Count; i++) {
+				Gore.NewGore(
+					Projectile.GetSource_Death(),
+					chainPositions[i],
+					Projectile.velocity * 0.1f,
+					ModContent.GoreType<Depth_Charge_Chain>()
+				);
 			}
 		}
 		List<Vector2> GetChainPositions(Vector2 chainDrawPosition, Vector2 vectorFromProjectileToPlayerArms) {

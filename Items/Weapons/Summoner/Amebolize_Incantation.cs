@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using log4net.Core;
 namespace Origins.Items.Weapons.Summoner {
 	public class Amebolize_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
 		private Asset<Texture2D> _smolTexture;
@@ -81,34 +82,33 @@ namespace Origins.Items.Weapons.Summoner {
 			Player player = Main.player[Projectile.owner];
 
 			#region Find target
-			// Starting search distance
-			float targetDist = 640f;
-			float targetAngle = 0;
 			Vector2 targetCenter = Projectile.Center;
-			int target = -1;
-			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
-				if (isPriorityTarget) return;
-				if (npc.CanBeChasedBy() && Projectile.localNPCImmunity[npc.whoAmI] == 0) {
-					Vector2 diff = npc.Center - Projectile.Center;
-					float dist = diff.Length();
-					if (dist > targetDist) return;
-					float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier) - (player.DistanceSQ(npc.Center) / (640 * 640));
-					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-					if (dot >= targetAngle && lineOfSight) {
-						targetDist = dist;
-						targetAngle = dot;
-						targetCenter = npc.Center;
-						target = npc.whoAmI;
-						foundTarget = true;
-					}
-				}
-			}
+			float targetAngle = 0;
 			bool foundTarget = player.channel;
 			if (player.channel && Projectile.ai[0] == 0) {
 				if (Main.myPlayer == Projectile.owner) targetCenter = Main.MouseWorld;
 				Projectile.timeLeft = 90;
 				Projectile.localNPCHitCooldown = 30;
 			} else {
+				float targetDist = 640f;
+				int target = -1;
+				void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+					if (isPriorityTarget) return;
+					if (npc.CanBeChasedBy() && Projectile.localNPCImmunity[npc.whoAmI] == 0) {
+						Vector2 diff = npc.Center - Projectile.Center;
+						float dist = diff.Length();
+						if (dist > targetDist) return;
+						float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier) - (player.DistanceSQ(npc.Center) / (640 * 640));
+						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
+						if (dot >= targetAngle && lineOfSight) {
+							targetDist = dist;
+							targetAngle = dot;
+							targetCenter = npc.Center;
+							target = npc.whoAmI;
+							foundTarget = true;
+						}
+					}
+				}
 				foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 				Projectile.ai[0] = 1;
 				Projectile.localNPCHitCooldown = -1;
@@ -130,7 +130,9 @@ namespace Origins.Items.Weapons.Summoner {
 				Vector2 direction = targetCenter - Projectile.Center;
 				float distance = direction.Length();
 				direction /= distance;
+				Vector2 oldVel = Projectile.velocity;
 				Projectile.velocity = (Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed).WithMaxLength(distance);
+				if (oldVel != Projectile.velocity) Projectile.netUpdate = true;
 			}
 			#endregion
 

@@ -44,8 +44,8 @@ namespace Origins.Projectiles.Misc {
 		}
 
 		public override void OnKill(int timeLeft) {
-			if (timeLeft > 0) {
-				if (!(OnStrike is null)) OnStrike();
+			if (timeLeft > 0 && Projectile.owner == Main.myPlayer) {
+				if (OnStrike is not null) OnStrike();
 				SoundEngine.PlaySound(SoundID.Item60.WithVolume(0.65f).WithPitch(1f), Projectile.Center);
 				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, Projectile.damage, 0, Projectile.owner, Projectile.ai[0], Projectile.ai[1]);
 				if (proj.ModProjectile is Felnum_Shock_Arc shock) {

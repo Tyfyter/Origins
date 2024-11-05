@@ -102,6 +102,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.knockBack = 0;
 					Projectile.velocity = Vector2.Zero;
 					embedPos = ((PolarVec2)(Projectile.Center - target.Center)).RotatedBy(-target.rotation);
+					Projectile.netUpdate = true;
 				}
 				Projectile.ai[1] += damageDone * manaStealFactor;
 				CombatText.NewText(Projectile.Hitbox, new Color(150, 65, 200), (int)(Projectile.ai[1] * manaStealFactor));

@@ -105,6 +105,7 @@ namespace Origins.Items.Weapons.Melee {
 			} else {
 				Projectile.velocity *= 0.5f;
 			}
+			Projectile.netUpdate = true;
 			Rectangle overlap = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox);
 			Vector2 dir = (overlap.Center.ToVector2() - Projectile.Center).WithMaxLength(6).RotatedBy(Projectile.direction * MathHelper.PiOver2);
 			for (int i = 0; i < 4; i++) {

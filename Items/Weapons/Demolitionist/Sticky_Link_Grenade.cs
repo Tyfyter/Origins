@@ -101,6 +101,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.ai[2] = -1;
 			stickPos = Projectile.Center;
 			stickRot = Projectile.rotation;
+			Projectile.netUpdate = true;
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {

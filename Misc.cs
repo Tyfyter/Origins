@@ -2953,24 +2953,30 @@ namespace Origins {
 					}
 				}
 				if (!doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
+					bool IsSolidWithExceptions(int xOff, int yOff, params BlockType[] blockTypes) {
+						Tile tile = Framing.GetTileSafely(tilePos.X + xOff, tilePos.Y + yOff);
+						if (tile.HasFullSolidTile()) return !blockTypes.Contains(tile.BlockType);
+						return false;
+					}
 					switch ((next.X, next.Y)) {
 						case (0, 0):
-						if (Framing.GetTileSafely(tilePos.X, tilePos.Y - 1).BlockType != BlockType.SlopeUpRight && Framing.GetTileSafely(tilePos.X - 1, tilePos.Y).BlockType is not BlockType.SlopeDownLeft or BlockType.HalfBlock) {
+						if (IsSolidWithExceptions(0, -1, BlockType.SlopeUpRight) && IsSolidWithExceptions(-1, 0, BlockType.SlopeDownLeft, BlockType.HalfBlock)) {
 							doBreak = true;
 						}
 						break;
 						case (1, 0):
-						if (Framing.GetTileSafely(tilePos.X, tilePos.Y - 1).BlockType != BlockType.SlopeUpLeft && Framing.GetTileSafely(tilePos.X + 1, tilePos.Y).BlockType is not BlockType.SlopeDownRight or BlockType.HalfBlock) {
+						if (IsSolidWithExceptions(0, -1, BlockType.SlopeUpLeft) && IsSolidWithExceptions(+1, 0, BlockType.SlopeDownRight, BlockType.HalfBlock)) {
 							doBreak = true;
 						}
 						break;
 						case (0, 1):
-						if (Framing.GetTileSafely(tilePos.X, tilePos.Y + 1).BlockType is not BlockType.SlopeDownRight or BlockType.HalfBlock  && Framing.GetTileSafely(tilePos.X - 1, tilePos.Y).BlockType != BlockType.SlopeUpLeft) {
+						
+						if (IsSolidWithExceptions(0, +1, BlockType.SlopeDownRight, BlockType.HalfBlock) && IsSolidWithExceptions(-1, 0, BlockType.SlopeUpLeft)) {
 							doBreak = true;
 						}
 						break;
 						case (1, 1):
-						if (Framing.GetTileSafely(tilePos.X, tilePos.Y + 1).BlockType is not BlockType.SlopeDownLeft or BlockType.HalfBlock && Framing.GetTileSafely(tilePos.X + 1, tilePos.Y).BlockType != BlockType.SlopeUpRight) {
+						if (IsSolidWithExceptions(0, +1, BlockType.SlopeDownLeft, BlockType.HalfBlock) && IsSolidWithExceptions(+1, 0, BlockType.SlopeUpRight)) {
 							doBreak = true;
 						}
 						break;
@@ -2988,7 +2994,7 @@ namespace Origins {
 			double slope = sin / cos;
 			int xVlaue = cos > 0 ? 1 : 0;
 			double yIntercept = pos.Y - slope * (pos.X - xVlaue);
-			if (yIntercept >= 0 && yIntercept <= 1) return new Vector2(xVlaue, (float)yIntercept);
+			if (yIntercept >= 0f && yIntercept <= 1f) return new Vector2(xVlaue, (float)yIntercept);
 			int yVlaue = sin > 0 ? 1 : 0;
 			double xIntercept = (pos.Y - yVlaue) / -slope + pos.X;
 			return new Vector2((float)xIntercept, yVlaue);

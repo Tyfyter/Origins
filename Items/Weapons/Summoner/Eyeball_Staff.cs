@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Eyeball_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 			Item.ResearchUnlockCount = 1;
 		}
@@ -234,7 +234,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 			// So it will lean slightly towards the direction it's moving
 			Projectile.rotation = Projectile.velocity.ToRotation();
-			Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
+			Projectile.spriteDirection = 1;// Math.Sign(Projectile.velocity.X);
 
 			// This is a simple "loop through all frames from top to bottom" animation
 			Projectile.frameCounter++;
@@ -261,6 +261,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Projectile.localAI[0] += 20 - Projectile.localAI[0] / 6;
 			Projectile.ai[1] = 0;
+			Projectile.netUpdate = true;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			fallThrough = true;

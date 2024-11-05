@@ -124,7 +124,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.ai[0] += 1f / Projectile.timeLeft;
 				if (Projectile.ai[0] >= 1) {
 					Projectile.ai[0] = 1;
-					player.TryCancelChannel(Projectile);
+					player.channel = false;
 					Projectile.timeLeft += Projectile.timeLeft / 2;
 				}
 				Projectile.width = (int)(16 * (1 + Projectile.ai[0] * Projectile.ai[0]));
@@ -187,14 +187,15 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Vector2 end = Projectile.Center + (Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.9f * HitboxSteps);
+			Vector2 end = Projectile.Center + (Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * HitboxSteps);
 			Utils.PlotTileLine(Projectile.Center, end, Projectile.width, DelegateMethods.CutTiles);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width;
+			Vector2 additionalOffset = vel.SafeNormalize(default) * 12;
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Rectangle hitbox = projHitbox;
-				Vector2 offset = vel * j;
+				Vector2 offset = vel * j + additionalOffset;
 				hitbox.Offset((int)offset.X, (int)offset.Y);
 				if (hitbox.Intersects(targetHitbox)) {
 					lastHitHitbox = hitbox;

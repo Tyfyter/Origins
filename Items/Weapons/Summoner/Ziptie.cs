@@ -14,10 +14,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Ziptie : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Whip"
-		];
+	public class Ziptie : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToWhip(ModContent.ProjectileType<Ziptie_P>(), 47, 5, 4, 35);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
@@ -64,7 +61,7 @@ namespace Origins.Items.Weapons.Summoner {
 
 			float swingTime = owner.itemAnimationMax * Projectile.MaxUpdates - 1;
 
-			if (Timer >= swingTime || owner.itemAnimation <= 0) {
+			if (Timer >= swingTime || owner.ItemAnimationEndingOrEnded) {
 				Projectile.Kill();
 				return;
 			}

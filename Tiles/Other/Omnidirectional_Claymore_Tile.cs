@@ -53,6 +53,7 @@ namespace Origins.Tiles.Other {
 		public override bool RightClick(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			tile.TileFrameY = (short)((tile.TileFrameY + 18) % 90);
+			NetMessage.SendTileSquare(-1, i, j);
 			return true;
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
@@ -94,6 +95,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Omnidirectional_Claymore_Projectile : ModProjectile {
 		public override string Texture => typeof(Traffic_Cone_Item).GetDefaultTMLName();
+		Vector2 LaserStartPoint => Projectile.Center - new Vector2(1, 3);
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
@@ -108,6 +110,7 @@ namespace Origins.Tiles.Other {
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
 			Projectile.hide = false;
+			Mod.Logger.Info("Spawned ODC projectile on netmode" + Main.netMode);
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
@@ -138,15 +141,20 @@ namespace Origins.Tiles.Other {
 						unit = -Vector2.UnitX;
 						break;
 					}
-					Projectile.velocity = unit * CollisionExtensions.Raycast(Projectile.Center, unit, 8 * 16);
+					Vector2 laserStartPoint = LaserStartPoint;
+					Vector2 oldVel = Projectile.velocity;
+					Projectile.velocity = unit * CollisionExtensions.Raycast(laserStartPoint, unit, 8 * 16);
+					if (Projectile.velocity != oldVel) {
+						Projectile.netUpdate = true;
+					}
 					foreach (NPC npc in Main.ActiveNPCs) {
-						if (npc.CanBeChasedBy(Projectile) && Collision.CheckAABBvLineCollision2(npc.position, npc.Size, Projectile.Center, Projectile.Center + Projectile.velocity)) {
+						if (npc.CanBeChasedBy(Projectile) && Collision.CheckAABBvLineCollision2(npc.position, npc.Size, laserStartPoint, laserStartPoint + Projectile.velocity)) {
 							Explode();
 							return;
 						}
 					}
 					foreach (Player player in Main.ActivePlayers) {
-						if (Collision.CheckAABBvLineCollision2(player.position, player.Size, Projectile.Center, Projectile.Center + Projectile.velocity)) {
+						if (Collision.CheckAABBvLineCollision2(player.position, player.Size, laserStartPoint, laserStartPoint + Projectile.velocity)) {
 							Explode();
 							return;
 						}
@@ -156,21 +164,11 @@ namespace Origins.Tiles.Other {
 				Projectile.Kill();
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
-		}
-		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
-		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 spread = GetSpread(Projectile.velocity);
-			return new Triangle(Projectile.Center, Projectile.Center + Projectile.velocity - spread, Projectile.Center + Projectile.velocity + spread).Intersects(targetHitbox);
-		}
 		public override bool PreDraw(ref Color lightColor) {
-			OriginExtensions.DrawDebugLineSprite(Projectile.Center, Projectile.Center + Projectile.velocity, Color.Red, -Main.screenPosition);
+			Vector2 laserStartPoint = LaserStartPoint;
+			OriginExtensions.DrawDebugLineSprite(laserStartPoint + Projectile.velocity.SafeNormalize(default) * 2, laserStartPoint + Projectile.velocity, Color.Red, -Main.screenPosition);
 			return false;
 		}
-		static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * 0.5f;
 		void Explode() {
 			Point16 tilePos = Projectile.position.ToTileCoordinates16();
 			Tile tile = Main.tile[tilePos.X, tilePos.Y];
@@ -178,9 +176,41 @@ namespace Origins.Tiles.Other {
 				Projectile.Kill();
 				return;
 			}
+			tile.HasTile = false;
+			NetMessage.SendTileSquare(-1, tilePos.X, tilePos.Y);
+			Projectile.NewProjectile(
+				Projectile.GetSource_FromAI(),
+				LaserStartPoint,
+				Projectile.velocity,
+				Omnidirectional_Claymore_Explosion.ID,
+				Projectile.damage,
+				Projectile.knockBack
+			);
+			Projectile.Kill();
+		}
+	}
+	public class Omnidirectional_Claymore_Explosion : ModProjectile, IIsExplodingProjectile {
+		public override string Texture => typeof(Traffic_Cone_Item).GetDefaultTMLName();
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		bool didVisual = false;
+		public override void SetDefaults() {
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.trap = true;
 			Projectile.friendly = true;
 			Projectile.hostile = true;
-			tile.HasTile = false;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.timeLeft = 2;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override void AI() {
+			if (Main.netMode == NetmodeID.Server || didVisual) return;
+			didVisual = true;
 			Vector2 direction = Projectile.velocity.SafeNormalize(-Vector2.UnitY);
 			Vector2 spread = GetSpread(direction);
 			for (int i = 0; i < 30; i++) {
@@ -224,9 +254,20 @@ namespace Origins.Tiles.Other {
 					1.5f
 				).velocity *= 3f;
 			}
-			SoundEngine.PlaySound(in SoundID.Item62, Projectile.Center);
-			Projectile.Damage();
-			Projectile.Kill();
+			SoundEngine.PlaySound(in SoundID.Item62, Projectile.position);
 		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.position.X);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.position.X);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			Vector2 laserStartPoint = Projectile.position;
+			Vector2 spread = GetSpread(Projectile.velocity);
+			return new Triangle(laserStartPoint, laserStartPoint + Projectile.velocity - spread, laserStartPoint + Projectile.velocity + spread).Intersects(targetHitbox);
+		}
+		static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * 0.5f;
+		public bool IsExploding() => true;
 	}
 }

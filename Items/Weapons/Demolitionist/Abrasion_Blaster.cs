@@ -190,15 +190,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.3f;
 		}
 		public override void OnKill(int timeLeft) {
-			Projectile.NewProjectile(
-				Projectile.GetSource_Death(),
-				Projectile.Center,
-				default,
-				ModContent.ProjectileType<Abrasion_Blaster_Explosion>(),
-				Projectile.damage,
-				Projectile.knockBack,
-				ai1: Projectile.ai[0]
-			);
+			if (Main.myPlayer == Projectile.owner) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Abrasion_Blaster_Explosion>(),
+					Projectile.damage,
+					Projectile.knockBack,
+					ai1: Projectile.ai[0]
+				);
+			}
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			overPlayers.Add(index);

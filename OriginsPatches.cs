@@ -532,9 +532,6 @@ namespace Origins {
 				}
 			};
 			On_Player.FigureOutWhatToPlace += On_Player_FigureOutWhatToPlace;
-			MonoModHooks.Add(typeof(Mount).GetProperty(nameof(Mount.AllowDirectionChange)).GetGetMethod(), (Func<Mount, bool> orig, Mount self) => {
-				return orig(self) && self.Type != Indestructible_Saddle_Mount.ID;
-			});
 			On_WorldGen.CheckTight += On_WorldGen_CheckTight;
 			On_NPC.SpawnAllowed_ArmsDealer += (orig) => {
 				if (orig()) return true;
@@ -792,7 +789,7 @@ namespace Origins {
 
 		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
 		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
-			if (args.Exception is IOException ioException && ioException.Message.Contains("bytes caused by Origins in HandlePacket")) {
+			if (args.Exception is IOException ioException && (ioException.Message.Contains("bytes caused by Origins in HandlePacket") || ioException.Message.Contains("bytes caused by ModDemoUtils in HandlePacket"))) {
 				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
 			}
 			orig(sender, args);

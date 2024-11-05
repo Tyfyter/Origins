@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         ];
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
-				proj.extraUpdates += 2;
+				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
 			});
 		}
 		public override void SetDefaults() {

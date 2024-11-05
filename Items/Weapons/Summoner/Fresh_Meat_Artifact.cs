@@ -196,6 +196,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			StickEnemy = -2;
 			stickPos = Projectile.Center + Projectile.velocity;
 			stickRot = Projectile.rotation;
+			Projectile.netUpdate = true;
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {

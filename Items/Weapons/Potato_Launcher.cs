@@ -34,6 +34,7 @@ namespace Origins.Items.Weapons {
 			} else if (type == ModContent.ProjectileType<Magic.Hot_Potato_P>()) {
 				velocity *= 0.6f;
 			}
+			position += velocity.SafeNormalize(default).RotatedBy(player.direction * -MathHelper.PiOver2) * 6;
 		}
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
     }
@@ -110,7 +111,7 @@ namespace Origins.Items.Weapons {
 			Projectile.height = 96;
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
-			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true);
+			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 			Projectile.Damage();
 			Projectile.Kill();
 		}

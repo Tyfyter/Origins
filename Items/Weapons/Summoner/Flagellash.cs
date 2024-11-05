@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Flagellash : ModItem, ICustomWikiStat {
+	public class Flagellash : ModItem {
 		static short glowmask;
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Summoner {
 
 			float swingTime = owner.itemAnimationMax * Projectile.MaxUpdates;
 
-			if (Timer >= swingTime || owner.itemAnimation <= 0) {
+			if (Timer >= swingTime || owner.ItemAnimationEndingOrEnded) {
 				Projectile.Kill();
 				return;
 			}

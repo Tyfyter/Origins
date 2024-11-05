@@ -4629,3 +4629,8 @@ Inanimate_Zombie_Hand: {
 	DisplayName: Inanimate Zombie Hand
 	Tooltip: Summons a friendly zombie to fight for you
 }
+
+TileEntityDebugger: {
+	DisplayName: Tile Entity Debugger
+	Tooltip: ""
+}

@@ -14,13 +14,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Joint_Pop : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Whip"
-        ];
-        public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+	public class Joint_Pop : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToWhip(ModContent.ProjectileType<Joint_Pop_P>(), 33, 5, 4, 60);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.SummonMeleeSpeed];
@@ -66,7 +60,7 @@ namespace Origins.Items.Weapons.Summoner {
 
 			float swingTime = owner.itemAnimationMax * Projectile.MaxUpdates;
 
-			if (Timer >= swingTime || owner.itemAnimation <= 0) {
+			if (Timer >= swingTime || owner.ItemAnimationEndingOrEnded) {
 				Projectile.Kill();
 				return;
 			}

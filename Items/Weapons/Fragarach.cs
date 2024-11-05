@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons {
 		public override void AI() {
 			if (Projectile.ai[0] > 0) {
 				Projectile.ai[0]--;
-			} else if (Projectile.timeLeft % 7 == 0) {
+			} else if (Projectile.timeLeft % 7 == 0 && Projectile.owner == Main.myPlayer) {
 				Vector2 pos = Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height));
 				Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, Main.rand.NextVector2CircularEdge(3, 3), Felnum_Shock_Leader.ID, Projectile.damage / 6, 0, Projectile.owner, pos.X, pos.Y);
 				ModProjectile parent = this;
@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons {
 			shockVelocity.Normalize();
 			shockVelocity *= 3;
 			for (int i = 4; i < 31; i++) {
-				if (i % 2 == 0) {
+				if (i % 2 == 0 && Projectile.owner == Main.myPlayer) {
 					Vector2 pos = Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height));
 					Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, shockVelocity.RotatedByRandom(2.5), Felnum_Shock_Leader.ID, Projectile.damage / 3, 0, Projectile.owner, pos.X, pos.Y).usesLocalNPCImmunity = false;
 				}

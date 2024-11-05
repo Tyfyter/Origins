@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
-				proj.extraUpdates += 2;
+				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
 			});
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use");

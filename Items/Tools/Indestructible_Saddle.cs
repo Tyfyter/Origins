@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Projectiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -37,6 +38,14 @@ namespace Origins.Items.Tools {
 	}
 	public class Indestructible_Saddle_Mount : ModMount {
 		public static int ID { get; private set; }
+		public override void Load() {
+			On_Mount.CanMount += (orig, self, m, mountingPlayer) => {
+				return orig(self, m, mountingPlayer) && !(m == ID && mountingPlayer.HasBuff<Indestructible_Saddle_Mount_Cooldown>());
+			};
+			MonoModHooks.Add(typeof(Mount).GetProperty(nameof(Mount.AllowDirectionChange)).GetGetMethod(), (Func<Mount, bool> orig, Mount self) => {
+				return orig(self) && self.Type != ID;
+			});
+		}
 		public override void SetStaticDefaults() {
 			// Movement
 			MountData.jumpHeight = 0; // How high the mount can jump.

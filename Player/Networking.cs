@@ -31,7 +31,7 @@ namespace Origins {
 					TESystem.SyncAllToPlayer(Player.whoAmI);
 					
 					packet = Mod.GetPacket();
-					packet.Write(Origins.NetMessageType.add_void_lock);
+					packet.Write(Origins.NetMessageType.sync_void_locks);
 					packet.Write((ushort)OriginSystem.Instance.VoidLocks.Count);
 					foreach (var @lock in OriginSystem.Instance.VoidLocks) {
 						packet.Write(@lock.Key.X);

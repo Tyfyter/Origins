@@ -99,15 +99,15 @@ namespace Origins.Items.Weapons.Summoner {
 					Projectile.scale = 0.4f + 0.45f * ageFactor;
 
 					owner.heldProj = Projectile.whoAmI;
-					float rotation = (Main.MouseWorld - Projectile.Center).ToRotation();
-					Projectile.velocity = OriginExtensions.Vec2FromPolar(rotation, Projectile.velocity.Length());
 					if (Projectile.owner == Main.myPlayer) {
-						Projectile.netUpdate = true;
+						Vector2 direction = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY);
+						Vector2 oldVel = Projectile.velocity;
+						Projectile.velocity = direction * Projectile.velocity.Length();
+						if (oldVel != Projectile.velocity) Projectile.netUpdate = true;
 					}
 					owner.direction = Math.Sign(Projectile.velocity.X);
-					owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
-					if (age == (int)Projectile.ai[0]) {
-
+					owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.velocity.ToRotation() - MathHelper.PiOver2);
+					if (age == (int)Projectile.ai[0] && Projectile.owner == Main.myPlayer) {
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromThis(),
 							Projectile.position,
@@ -151,7 +151,7 @@ namespace Origins.Items.Weapons.Summoner {
 						float angle = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
 						Vector2 targetEnd = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(18, 24)) + Projectile.position;
 						Vector2 targetStart = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(2)) + Projectile.position;
-						if (Main.netMode != NetmodeID.Server) {
+						if (Projectile.owner == Main.myPlayer) {
 							Projectile.NewProjectile(
 								Projectile.GetSource_FromThis(),
 								targetEnd,
@@ -191,6 +191,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Projectile.ai[2] = Projectile.velocity.X;
 				Projectile.velocity = Vector2.Zero;
 				Projectile.ai[0] = 0;
+				Projectile.netUpdate = true;
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {

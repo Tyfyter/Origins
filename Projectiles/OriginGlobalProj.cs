@@ -35,7 +35,9 @@ namespace Origins.Projectiles {
 		public bool viperEffect = false;
 		public bool ownerSafe = false;
 		public int killLink = -1;
-		public float godHunterEffect = 0f;
+		int updateCountBoost = 0;
+		public int UpdateCountBoost => updateCountBoost;
+		public float extraBossDamage = 0f;
 		public static int killLinkNext = -1;
 		public bool isFromMitosis = false;
 		public bool hasUsedMitosis = false;
@@ -251,8 +253,8 @@ namespace Origins.Projectiles {
 					}
 				}
 			}
-			if (target.boss && godHunterEffect != 0f) {
-				modifiers.SourceDamage *= 1 + godHunterEffect;
+			if (target.boss && extraBossDamage != 0f) {
+				modifiers.SourceDamage *= 1 + extraBossDamage;
 			}
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2) {
 				modifiers.SourceDamage.Base += felnumBonus / Felnum_Helmet.shock_damage_divisor;
@@ -329,12 +331,24 @@ namespace Origins.Projectiles {
 			return null;
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
+			bitWriter.WriteBit(viperEffect);
+			bitWriter.WriteBit(isFromMitosis);
+
 			binaryWriter.Write(prefix);
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
+			binaryWriter.Write((sbyte)updateCountBoost);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
+			viperEffect = bitReader.ReadBit();
+			isFromMitosis = bitReader.ReadBit();
+
 			prefix = binaryReader.ReadInt32();
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();
+			SetUpdateCountBoost(projectile, binaryReader.ReadSByte());
+		}
+		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
+			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;
+			updateCountBoost = newUpdateCountBoost;
 		}
 
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {

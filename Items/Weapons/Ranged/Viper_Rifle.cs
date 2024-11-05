@@ -11,13 +11,10 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
 		static short glowmask;
-		public string[] Categories => [
-            "Gun"
-        ];
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.viperEffect = true;
-				proj.extraUpdates += 2;
+				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
 				if (contextArgs.Contains("barrel")) {
 					proj.extraUpdates = 19;
 					proj.timeLeft = 20;
@@ -56,7 +53,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Vector2 unit = Vector2.Normalize(velocity);
 			float dist = 80 - velocity.Length();
 			position -= unit * dist;
-			EntitySource_ItemUse_WithAmmo barrelSource = new EntitySource_ItemUse_WithAmmo(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context, "barrel"));
+			EntitySource_ItemUse_WithAmmo barrelSource = new(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context, "barrel"));
 			OriginGlobalProj.killLinkNext = Projectile.NewProjectile(barrelSource, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
 			return true;
 		}

@@ -106,6 +106,7 @@ namespace Origins.Items.Weapons.Magic {
 							Projectile.velocity = Vector2.Zero;
 							embedPos = ((PolarVec2)(Projectile.Center - target.Center)).RotatedBy(-target.rotation);
 							embedRotation = Projectile.rotation - target.rotation;
+							Projectile.netUpdate = true;
 							break;
 						}
 					}

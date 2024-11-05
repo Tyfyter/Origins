@@ -9,12 +9,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Items.Weapons.Magic;
+using Terraria.WorldBuilding;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Shard : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => [
-            "ExpendableWeapon"
-        ];
-        public ushort Element => Elements.Fiberglass;
+		public string[] Categories => [
+			"ExpendableWeapon"
+		];
+		public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.width = 12;
@@ -28,7 +30,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Fiberglass_Shard_P : ModProjectile {
-		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
 			Projectile.hostile = false;
@@ -40,6 +41,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.penetrate = 7;
 			Projectile.hide = true;
 			Projectile.light = 0.025f;
+			CooldownSlot = ImmunityCooldownID.WrongBugNet;
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(200)) {
@@ -73,7 +75,7 @@ namespace Origins.Items.Weapons.Ranged {
 			while (exposed) {
 				Projectile.position += oldVelocity;
 				Vector2 center = Projectile.Center;
-				double rot = System.Math.Round(Projectile.rotation / MathHelper.PiOver4);
+				double rot = Math.Round(Projectile.rotation / MathHelper.PiOver4);
 				Vector2 offset = new Vector2(0, 8).RotatedBy(rot * MathHelper.PiOver4);
 				exposed = ++tries < 50 && Collision.CanHitLine(center - offset, 1, 1, center + offset, 1, 1);
 			}
@@ -85,12 +87,20 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			if (Projectile.damage == 1) {
-				Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
-				target.statLife--;
-				PlayerDeathReason reason = new PlayerDeathReason();
-				reason.SourceCustomReason = target.name + " cut themselves on broken glass";
-				if (target.statLife <= 0) target.Hurt(reason, 1, 0);
+				modifiers.Knockback *= 0f;
 				Projectile.Kill();
+			}
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			if (Projectile.damage == 1) {
+				int item = Item.NewItem(
+					Projectile.GetSource_FromThis(),
+					Projectile.Center,
+					ModContent.ItemType<Fiberglass_Shard>()
+				);
+				if (Main.netMode != NetmodeID.SinglePlayer) {
+					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+				}
 			}
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {

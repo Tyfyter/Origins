@@ -16,11 +16,11 @@ namespace Origins.Items.Weapons.Ranged {
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				if (contextArgs.Contains("main")) {
-					global.godHunterEffect += 0.5f;
+					global.extraBossDamage += 0.5f;
 					//proj.extraUpdates -= 1;
 				} else {
-					global.godHunterEffect += 0.25f;
-					proj.extraUpdates += 1;
+					global.extraBossDamage += 0.25f;
+					global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
 				}
 			});
 		}
@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Ranged {
 
 			velocity *= 1.3f;
 			if (type == ProjectileID.WoodenArrowFriendly) type = ProjectileID.MoonlordArrowTrail;
-			EntitySource_ItemUse_WithAmmo middleSource = new EntitySource_ItemUse_WithAmmo(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, "main"));
+			EntitySource_ItemUse_WithAmmo middleSource = new(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, "main"));
 			Projectile.NewProjectile(middleSource, position, velocity, type, damage, knockback, player.whoAmI);
 			return false;
 		}

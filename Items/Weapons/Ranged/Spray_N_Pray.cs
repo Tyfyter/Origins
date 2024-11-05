@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,10 +14,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public string[] Categories => [
 			"Gun"
 		];
-		public static int ID { get; set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
-			ID = Type;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToRangedWeapon(ModContent.ProjectileType<Spray_N_Pray_P>(), ItemID.RedPaint, 12, 10);
@@ -57,19 +56,24 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Spray_N_Pray_P : ModProjectile {
-		public byte lastPaint;
-		public byte lastCoating;
+		public byte paint;
+		public byte coating;
+		public bool hit = false;
+		Vector2 splatterVelocity;
+		int splatterEntity = -1;
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 8;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 1;
 			Projectile.extraUpdates = 1;
+			Projectile.penetrate = 2;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			lastPaint = Spray_N_Pray.lastPaint;
-			lastCoating = Spray_N_Pray.lastCoating;
+			paint = Spray_N_Pray.lastPaint;
+			coating = Spray_N_Pray.lastCoating;
 		}
 		public override void AI() {
+			if (hit) return;
 			Color dustColor = GetPaintColor(out bool isGlow);
 			if (dustColor != Color.Transparent) {
 				Dust dust = Dust.NewDustDirect(Projectile.position, 8, 8, isGlow ? 261 : DustID.Paint, Projectile.velocity.X * 4, Projectile.velocity.Y * 4, 50, dustColor);
@@ -86,7 +90,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override Color? GetAlpha(Color lightColor) => GetPaintColor(out bool isGlow).MultiplyRGBA(isGlow ? Color.White : lightColor);
 		public Color GetPaintColor(out bool isGlow) {
 			isGlow = false;
-			switch (lastCoating) {
+			switch (coating) {
 				case PaintCoatingID.Glow:
 				isGlow = true;
 				return Color.White;
@@ -95,26 +99,73 @@ namespace Origins.Items.Weapons.Ranged {
 				return Main.ShouldShowInvisibleWalls() ? Color.White : Color.Transparent;
 
 				default:
-				return WorldGen.paintColor(lastPaint);
+				return WorldGen.paintColor(paint);
 			}
 		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(paint);
+			writer.Write(coating);
+			writer.Write(hit);
+			if (hit) {
+				writer.Write(splatterVelocity.X);
+				writer.Write(splatterVelocity.Y);
+				writer.Write(splatterEntity);
+			}
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			paint = reader.ReadByte();
+			coating = reader.ReadByte();
+			if (reader.ReadBoolean()) {
+				Vector2 vel = reader.ReadVector2();
+				int target = reader.ReadInt32();
+				Entity entity = null;
+				if (target >= 300) {
+					entity = Main.npc[target - 300];
+				} else if (target >= 0) {
+					entity = Main.player[target];
+				}
+				Splatter(vel, entity);
+				Projectile.Kill();
+			}
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			SetSplatter(Projectile.Center - Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center(), target);
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Splatter(Projectile.Center - Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center(), target);
+			SetSplatter(Projectile.Center - Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center(), target);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Vector2 newVelocity = Projectile.velocity;
 			Projectile.velocity = oldVelocity;
-			Splatter(newVelocity);
-			return true;
+			SetSplatter(newVelocity);
+			return false;
+		}
+		void SetSplatter(Vector2 newVelocity, Entity collisionEntity = null) {
+			hit = true;
+			Projectile.velocity = Vector2.Zero;
+			Projectile.friendly = false;
+			Projectile.hostile = false;
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = 0;
+			Projectile.netSpam = 0;
+			Projectile.netUpdate = true;
+			Projectile.timeLeft = 2;
+			splatterVelocity = newVelocity;
+			if (collisionEntity is NPC npc) {
+				splatterEntity = npc.whoAmI - 300;
+			} else if (collisionEntity is Player player) {
+				splatterEntity = player.whoAmI;
+			}
+			Splatter(newVelocity, collisionEntity);
 		}
 		public void Splatter(Vector2 newVelocity, Entity collisionEntity = null) {
 			Color paintColor = GetPaintColor(out bool isGlow);
 			Vector2 dustSpawnPosition = Projectile.position + newVelocity + Projectile.velocity.SafeNormalize(default) * 8;
-			PaintStickData dustCustomData = new(true, Coating: lastCoating);
+			PaintStickData dustCustomData = new(true, Coating: coating);
 			if (collisionEntity is Player player) {
-				dustCustomData = new(true, player, (dustSpawnPosition - player.Center) * new Vector2(player.direction, 1), 0, lastCoating);
+				dustCustomData = new(true, player, (dustSpawnPosition - player.Center) * new Vector2(player.direction, 1), 0, coating);
 			} else if (collisionEntity is NPC npc) {
-				dustCustomData = new(true, npc, (npc.Center - dustSpawnPosition) * new Vector2(npc.direction, npc.directionY), npc.rotation, lastCoating);
+				dustCustomData = new(true, npc, (npc.Center - dustSpawnPosition) * new Vector2(npc.direction, npc.directionY), npc.rotation, coating);
 			}
 			for (int i = Main.rand.Next(3, 6); i-- > 0;) {
 				Dust dust = Dust.NewDustPerfect(

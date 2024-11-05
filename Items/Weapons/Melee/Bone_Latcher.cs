@@ -10,11 +10,10 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Bone_Latcher : ModItem, ICustomWikiStat {
+	public class Bone_Latcher : ModItem {
 		static short glowmask;
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			// Call this method to quickly set some of the properties below.
@@ -67,7 +66,7 @@ namespace Origins.Items.Weapons.Melee {
 
 				float swingTime = owner.itemAnimationMax * Projectile.MaxUpdates;
 
-				if (Timer >= swingTime || owner.itemAnimation <= 0) {
+				if (Timer >= swingTime || owner.ItemAnimationEndingOrEnded) {
 					Projectile.Kill();
 					return;
 				}
