@@ -105,6 +105,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
 			Projectile.ignoreWater = false;
+			Projectile.netImportant = true;
 		}
 		public int StickEnemy {
 			get => (int)Projectile.ai[2] - 1;
@@ -277,6 +278,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.ignoreWater = false;
+			Projectile.netImportant = true;
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;

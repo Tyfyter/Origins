@@ -8,16 +8,14 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-
 using Origins.Dev;
-using Mono.Cecil;
+
 namespace Origins.Items.Weapons.Summoner {
 	public class Rotting_Worm_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;
@@ -75,29 +73,27 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			DrawOriginOffsetY = -29;
 			base.SetDefaults();
 			Projectile.minionSlots = 1f;
-			Projectile.localAI[3] = -1;
+			Projectile.localAI[0] = -1;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.velocity.Y += 6;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			if (Main.myPlayer == player.whoAmI && Projectile.localAI[3] != Projectile.identity) {
-				Projectile.localAI[3] = Projectile.identity;
+			if (Main.myPlayer == player.whoAmI && Projectile.localAI[0] != Projectile.identity) {
+				Projectile.localAI[0] = Projectile.identity;
 				Projectile current;
-				int last = Projectile.identity;
+				Projectile last = Projectile;
+				Projectile.netUpdate = true;
 				int type = Rotting_Worm_Body.ID;
 				//body
-				current = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
-				current.localAI[3] = Projectile.identity;
-				current.localAI[1] = last;
-				Main.projectile[last].localAI[0] = current.identity;
-				last = current.identity;
+				current = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, type, Projectile.damage, Projectile.knockBack, Projectile.owner, ai1: last.identity);
+				last.ai[0] = current.identity;
+
+				last = current;
 				//tail
-				current = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
-				current.localAI[3] = Projectile.identity;
-				current.localAI[1] = last;
-				Main.projectile[last].localAI[0] = current.identity;
+				current = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, Projectile.damage, Projectile.knockBack, Projectile.owner, ai1: last.identity);
+				last.ai[0] = current.identity;
 			}
 
 			#region Active check
@@ -175,11 +171,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool leap = false;
 			if (foundTarget || distanceToIdlePosition <= 600f) {
 				if (Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, Projectile.position + Projectile.velocity * 4, Projectile.width, Projectile.height)) {
-					if (Projectile.localAI[2] <= 0) leap = true;
-					Projectile.localAI[2] = 5;
+					if (Projectile.ai[2] <= 0) leap = true;
+					Projectile.ai[2] = 5;
 				}
 			}
-			if (distanceToIdlePosition > 900f) Projectile.localAI[2] = 0;
+			if (distanceToIdlePosition > 900f) Projectile.ai[2] = 0;
 			// Default movement parameters (here for attacking)
 			float speed = 8f + (targetCenter.Y < Projectile.Center.Y ? (Projectile.Center.Y - targetCenter.Y) / 32f : 0);
 			float turnSpeed = 2f;
@@ -195,10 +191,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					speed = 4f;
 				}
 			}
-			if (Projectile.localAI[2] > 0) {
+			if (Projectile.ai[2] > 0) {
 				Projectile.velocity.Y += 0.3f;
 				turnSpeed = 0.1f;
-				Projectile.localAI[2]--;
+				Projectile.ai[2]--;
 				if (leap) {
 					turnSpeed = 10f;
 					targetCenter.Y -= 64 * NormDot(Projectile.velocity, foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition);
@@ -207,7 +203,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Vector2 direction = foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition;
 			direction.Normalize();
 			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
-			if (Projectile.localAI[2] <= 0 && (++Projectile.frameCounter) * currentSpeed > 60) {
+			if (Projectile.ai[2] <= 0 && (++Projectile.frameCounter) * currentSpeed > 60) {
 				SoundEngine.PlaySound(SoundID.WormDig.WithPitch(2), Projectile.Center);
 				Projectile.frameCounter = 0;
 			}
@@ -215,15 +211,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			#region Worminess
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			#endregion
 		}
 		public override void OnKill(int timeLeft) {
-			int currentIndex = Projectile.GetByUUID(Projectile.owner, Projectile.localAI[0]);
+			int currentIndex = Projectile.GetByUUID(Projectile.owner, Projectile.ai[0]);
 			while (Main.projectile.IndexInRange(currentIndex)) {
 				Projectile currentProjectile = Main.projectile[currentIndex];
-				currentProjectile.active = false;
-				currentIndex = Projectile.GetByUUID(Projectile.owner, currentProjectile.localAI[0]);
+				currentProjectile.Kill();
+				currentIndex = Projectile.GetByUUID(Projectile.owner, currentProjectile.ai[0]);
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -257,15 +252,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Wormy");
 			// This is necessary for right-click targeting
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
 
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
-			Main.projPet[Projectile.type] = true;
+			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
-			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 3;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+			ProjectileID.Sets.CultistIsResistantTo[Type] = true;
+			ProjectileID.Sets.TrailCacheLength[Type] = 3;
+			ProjectileID.Sets.TrailingMode[Type] = 2;
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 		}
 
 		public override void SetDefaults() {
@@ -281,21 +277,22 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.localNPCHitCooldown = 12;
 			Projectile.scale = 0.5f;
 			Projectile.timeLeft = 2;
+			Projectile.netImportant = true;
 			DrawOriginOffsetX = 0.5f;
-			//next, last, digging cooldown, head
-			if (Projectile.localAI.Length == Projectile.maxAI) Projectile.localAI = new float[4];
 		}
 
 		public override void AI() {
 			#region Worminess
+			if (Main.myPlayer != Projectile.owner) Projectile.timeLeft = 2;
 			Player player = Main.player[Projectile.owner];
-			int lastIndex = Projectile.GetByUUID(Projectile.owner, Projectile.localAI[1]);
+			int lastIndex = Projectile.GetByUUID(Projectile.owner, Projectile.ai[1]);
 			if (!Main.projectile.IndexInRange(lastIndex)) {
-				Projectile.active = false;
+				if (Main.myPlayer != player.whoAmI) return;
+				Projectile.Kill();
 			}
 			Projectile last = Main.projectile[lastIndex];
 			if (!last.active || !(last.type == Rotting_Worm_Staff.projectileID || last.type == Rotting_Worm_Body.ID)) {
-				Projectile.active = false;
+				if (Main.myPlayer == player.whoAmI) Projectile.Kill();
 				return;
 			}
 			if (player.HasBuff(Rotting_Worm_Staff.buffID)) {

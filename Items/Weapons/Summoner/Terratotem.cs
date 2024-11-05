@@ -92,6 +92,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
 			Projectile.ignoreWater = true;
+			Projectile.netImportant = true;
 			MaxLife = 60 * 45;
 		}
 		public override bool? CanCutTiles() => false;

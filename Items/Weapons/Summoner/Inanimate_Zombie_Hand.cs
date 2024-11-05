@@ -101,6 +101,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.ignoreWater = false;
 			Projectile.manualDirectionChange = true;
+			Projectile.netImportant = true;
 			MaxLife = 300;
 		}
 		public override bool? CanCutTiles() => false;

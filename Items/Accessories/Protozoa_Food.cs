@@ -64,6 +64,7 @@ namespace Origins.Items.Accessories {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.alpha = 150;
+			Projectile.netImportant = true;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots

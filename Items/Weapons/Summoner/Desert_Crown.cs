@@ -88,6 +88,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
+			Projectile.netImportant = true;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots

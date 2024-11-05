@@ -8,9 +8,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-
 using Origins.Dev;
-using log4net.Core;
+using System.IO;
+
 namespace Origins.Items.Weapons.Summoner {
 	public class Amebolize_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
 		private Asset<Texture2D> _smolTexture;
@@ -18,10 +18,10 @@ namespace Origins.Items.Weapons.Summoner {
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public Texture2D SmolGlowTexture => (_smolGlowTexture ??= this.GetSmallTexture("_Glow"))?.Value;
 		static short glowmask;
-        public string[] Categories => [
-            "Incantation"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"Incantation"
+		];
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
@@ -78,6 +78,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.alpha = 150;
 		}
+		(bool manual, Vector2 target) targetData;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
@@ -87,9 +88,17 @@ namespace Origins.Items.Weapons.Summoner {
 			bool foundTarget = player.channel;
 			if (player.channel && Projectile.ai[0] == 0) {
 				if (Main.myPlayer == Projectile.owner) targetCenter = Main.MouseWorld;
+				else if (targetData.manual) targetCenter = targetData.target;
 				Projectile.timeLeft = 90;
 				Projectile.localNPCHitCooldown = 30;
+				Vector2 oldTarg = targetData.target;
+				targetData = (true, targetCenter);
+				if (++Projectile.localAI[0] >= 10 && oldTarg != targetCenter) {
+					Projectile.netUpdate = true;
+					Projectile.localAI[0] = 0;
+				}
 			} else {
+				targetData = (false, default);
 				float targetDist = 640f;
 				int target = -1;
 				void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
@@ -130,9 +139,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Vector2 direction = targetCenter - Projectile.Center;
 				float distance = direction.Length();
 				direction /= distance;
-				Vector2 oldVel = Projectile.velocity;
 				Projectile.velocity = (Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed).WithMaxLength(distance);
-				if (oldVel != Projectile.velocity) Projectile.netUpdate = true;
 			}
 			#endregion
 
@@ -151,6 +158,13 @@ namespace Origins.Items.Weapons.Summoner {
 				}
 			}
 			#endregion
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(targetData.manual);
+			if (targetData.manual) writer.WriteVector2(targetData.target);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			targetData = reader.ReadBoolean() ? (true, reader.ReadVector2()) : (false, default);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Amebolize_Buff.ID, 240);

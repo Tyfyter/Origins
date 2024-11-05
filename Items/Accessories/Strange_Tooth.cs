@@ -51,6 +51,7 @@ namespace Origins.Items.Accessories {
 			Projectile.minionSlots = 0f;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 2;
+			Projectile.netImportant = true;
 		}
 		public override bool MinionContactDamage() {
 			return true;

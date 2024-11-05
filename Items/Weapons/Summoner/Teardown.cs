@@ -84,7 +84,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 12;
-			
+			Projectile.netImportant = true;
 		}
 		// Here you can decide if your minion breaks things like grass or pots
 		public override bool? CanCutTiles() {
