@@ -25,6 +25,20 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shoot = ModContent.ProjectileType<Shimmer_Cloud_Held>();
 			Item.channel = true;
 		}
+		public override bool AltFunctionUse(Player player) => true;
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.altFunctionUse == 2) {
+				int ball = ModContent.ProjectileType<Shimmer_Cloud_Ball>();
+				int cloud = ModContent.ProjectileType<Shimmer_Cloud_P>();
+				foreach (Projectile projectile in Main.ActiveProjectiles) {
+					if (projectile.owner == player.whoAmI && (projectile.type == ball || projectile.type == cloud)) {
+						projectile.Kill();
+					}
+				}
+				return false;
+			}
+			return true;
+		}
 		public override void Load() {
 			if (Main.dedServ) return;
 			On_Main.DrawProjectiles += (orig, self) => {
@@ -50,7 +64,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		internal static Stack<int> cachedClouds = [];
 		internal static Stack<int> cachedRain = [];
-
 	}
 	public class Shimmer_Cloud_Held : ModProjectile {
 		public override void SetStaticDefaults() {

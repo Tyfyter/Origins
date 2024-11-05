@@ -33,8 +33,20 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = false;
-        }
-    }
+		}
+		public override bool AltFunctionUse(Player player) => true;
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.altFunctionUse == 2) {
+				foreach (Projectile projectile in Main.ActiveProjectiles) {
+					if (projectile.owner == player.whoAmI && projectile.type == Item.shoot) {
+						projectile.Kill();
+					}
+				}
+				return false;
+			}
+			return true;
+		}
+	}
 	public class Area_Denial_P : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.width = 14;
