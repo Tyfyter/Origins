@@ -77,22 +77,28 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.timeLeft = Projectile.SentryLifeTime;
 		}
 		Arm[] arms;
+		Arm[] Arms {
+			get {
+				if (arms is null) {
+					arms = new Arm[7];
+					Vector2 pos = new(Projectile.ai[0] * 16 + 8, Projectile.ai[1] * 16 + 8);
+					for (int i = 0; i < arms.Length - 1; i++) {
+						arms[i] = new() { start = pos };
+						pos -= Vector2.UnitY * 32;
+						arms[i].end = pos;
+					}
+					arms[^1] = new() {
+						start = pos,
+						end = pos - Vector2.UnitY
+					};
+				}
+				return arms;
+			}
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			Vector2 basePos = new(Projectile.ai[0] * 16 + 8, Projectile.ai[1] * 16 + 8);
-			if (arms is null) {
-				arms = new Arm[7];
-				Vector2 pos = Projectile.Center;
-				for (int i = 0; i < arms.Length - 1; i++) {
-					arms[i] = new() { start = pos };
-					pos -= Vector2.UnitY * 32;
-					arms[i].end = pos;
-				}
-				arms[^1] = new() {
-					start = pos,
-					end = pos - Vector2.UnitY
-				};
-			}
+			_ = Arms;
 			#region General behavior
 			if (player.dead || !player.active) {
 				Projectile.Kill();
@@ -148,7 +154,7 @@ namespace Origins.Items.Weapons.Summoner {
 			#endregion
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			default(Scabcoral_Branch_Drawer).Draw(arms);
+			default(Scabcoral_Branch_Drawer).Draw(Arms);
 			float rotation = (arms[^1].end - arms[^1].start).ToRotation();
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Main.EntitySpriteDraw(
@@ -174,7 +180,7 @@ namespace Origins.Items.Weapons.Summoner {
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write((byte)arms.Length);
+			writer.Write((byte)Arms.Length);
 			for (int i = 0; i < arms.Length; i++) {
 				writer.Write(arms[i].end.X);
 				writer.Write(arms[i].end.Y);
@@ -182,7 +188,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			byte armCount = reader.ReadByte();
-			if (arms.Length != armCount) arms = new Arm[armCount];
+			if (Arms.Length != armCount) arms = new Arm[armCount];
 			Vector2 start = new(Projectile.ai[0] * 16 + 8, Projectile.ai[1] * 16 + 8);
 			for (int i = 0; i < armCount; i++) {
 				arms[i].end = new(reader.ReadSingle(), reader.ReadSingle());
