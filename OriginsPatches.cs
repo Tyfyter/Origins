@@ -575,6 +575,22 @@ namespace Origins {
 				LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.AddMenuButtonsThing"));
 				instance.Logger.Error("Error while hooking into Terraria.ModLoader.UI.Interface.AddMenuButtons: ", ex);
 			}
+			IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
+		}
+
+		private static void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il) {
+			ILCursor c = new(il);
+			if (c.TryGotoNext(MoveType.After,
+				i => i.MatchLdsfld<Main>(nameof(Main.myPlayer)),
+				i => i.MatchLdarg0(),
+				i => i.MatchLdfld<Entity>(nameof(Entity.whoAmI))
+			)) {
+				c.EmitDelegate((int myPlayer, int whoAmI) => myPlayer == whoAmI || ItemsThatAllowRemoteRightClick[Main.player[whoAmI].HeldItem.type]);
+				c.EmitBrfalse(c.Next.Operand as ILLabel);
+				c.Remove();
+			} else {
+				LogError($"Could not find Main.myPlayer == whoAmI comparison in Player.ItemCheck_ManageRightClickFeatures");
+			}
 		}
 
 		static int workshopMenuIndex = -1;

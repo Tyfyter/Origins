@@ -2,10 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Tools {
 	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat {
@@ -17,6 +19,7 @@ namespace Origins.Items.Tools {
 		public override void SetStaticDefaults() {
 			useTexture = ModContent.Request<Texture2D>(Texture + "_Use");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			Origins.ItemsThatAllowRemoteRightClick[Type] = true;
 		}
 		public override void Unload() {
 			useTexture = null;
@@ -73,9 +76,9 @@ namespace Origins.Items.Tools {
 		public override void UseItemFrame(Player player) {
 			float fact = (0.5f - (player.itemAnimation / (float)player.itemAnimationMax)) * 2;
 			if (player.altFunctionUse == 2) {
-				player.itemRotation -= player.direction * (fact * (System.Math.Abs(fact + 0.1f) - 0.65f) + 0.2f);
+				player.itemRotation -= player.direction * (fact * (Math.Abs(fact + 0.1f) - 0.65f) + 0.2f);
 			} else {
-				player.itemRotation += player.direction * fact * (System.Math.Abs(fact) - 0.5f);
+				player.itemRotation += player.direction * fact * (Math.Abs(fact) - 0.5f);
 			}
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2 * player.direction);
 		}

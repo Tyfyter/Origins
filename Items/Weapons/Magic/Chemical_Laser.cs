@@ -4,15 +4,18 @@ using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Microsoft.Xna.Framework;
+using Terraria.Graphics.Shaders;
+
 namespace Origins.Items.Weapons.Magic {
-    public class Chemical_Laser : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "MagicGun",
+	public class Chemical_Laser : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"MagicGun",
 			"ToxicSource"
-        ];
-        public override void SetDefaults() {
+		];
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadowbeamStaff);
 			Item.damage = 30;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
@@ -21,7 +24,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 12;
 			Item.knockBack = 0;
 			Item.shoot = ModContent.ProjectileType<Laseer>();
-			Item.shootSpeed = 32f;
+			Item.shootSpeed = 8f;
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.EnergyRipple.WithPitchRange(1.7f, 2f);
@@ -32,16 +35,33 @@ namespace Origins.Items.Weapons.Magic {
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			Vector2 unit = velocity.SafeNormalize(default);
+			position += unit * 56 + new Vector2(unit.Y, -unit.X) * player.direction * 2;
+		}
 	}
 	public class Laseer : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
-		public override void SetStaticDefaults() {
-			Projectile.penetrate = 1;
-		}
+		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ShadowBeamFriendly);
 			Projectile.friendly = true;
+			Projectile.aiStyle = 0;
 			Projectile.penetrate = 1;
+			Projectile.hide = true;
+		}
+		public override void AI() {
+			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
+			for (int i = 0; i < 2; i++) {
+				Dust dust = Dust.NewDustDirect(Projectile.position, 1, 1, DustID.Electric);
+				dust.position = Projectile.position - Projectile.velocity * (i * 0.5f);
+				dust.position.X += Projectile.width / 2;
+				dust.position.Y += Projectile.height / 2;
+				dust.scale = Main.rand.NextFloat(0.65f, 0.65f);
+				dust.velocity = dust.velocity * 0.2f + Projectile.velocity * 0.1f;
+				dust.shader = shader;
+				dust.noGravity = false;
+				dust.noLight = true;
+			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);

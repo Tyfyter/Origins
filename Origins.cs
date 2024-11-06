@@ -61,6 +61,8 @@ namespace Origins {
 		public static int[] MagicTripwireRange { get => magicTripwireRange; }
 		static int[] magicTripwireDetonationStyle;
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
+		static bool[] itemsThatAllowRemoteRightClick;
+		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -749,6 +751,7 @@ namespace Origins {
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
+			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet(0);
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 		}
