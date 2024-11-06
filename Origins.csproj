@@ -16,6 +16,9 @@
     <Reference Include="BetterDialogue">
       <HintPath>..\ModAssemblies\BetterDialogue_v1.1.5.3.dll</HintPath>
     </Reference>
+    <Reference Include="PegasusLib">
+      <HintPath>..\ModAssemblies\PegasusLib_v1.0.4.dll</HintPath>
+    </Reference>
     <Reference Include="ThoriumMod">
       <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
     </Reference>

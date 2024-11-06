@@ -67,6 +67,7 @@ using Terraria.GameContent.Events;
 using Origins.Items.Weapons.Summoner.Minions;
 using AltLibrary.Common.Hooks;
 using Terraria.ModLoader.UI;
+using PegasusLib.Graphics;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -497,7 +498,6 @@ namespace Origins {
 			IL_PlayerStatsSnapshot.ctor += IL_PlayerStatsSnapshot_ctor;
 			On_PlayerStatsSnapshot.ctor += On_PlayerStatsSnapshot_ctor;
 			IL_WaterfallManager.GetAlpha += FixWrongWaterfallAlpha_IL;
-			On_Main.DrawNPCDirect += On_Main_DrawNPCDirect;
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
 			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
 			On_Main.DrawBlack += On_Main_DrawBlack;
@@ -1648,21 +1648,6 @@ namespace Origins {
 			currentScreenTarget = screenTarget1;
 		}
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
-		private void On_Main_DrawNPCDirect(On_Main.orig_DrawNPCDirect orig, Main self, SpriteBatch mySpriteBatch, NPC rCurrentNPC, bool behindTiles, Vector2 screenPos) {
-			if (GraphicsUtils.drawingEffect) {
-				orig(self, mySpriteBatch, rCurrentNPC, behindTiles, screenPos);
-				return;
-			}
-			List<ArmorShaderData> shaders = rCurrentNPC.GetGlobalNPC<OriginGlobalNPC>().GetShaders(rCurrentNPC);
-			if (shaders.Count != 0) shaderOroboros.Capture();
-			orig(self, mySpriteBatch, rCurrentNPC, behindTiles, screenPos);
-			if (shaders.Count != 0) {
-				for (int i = 0; i < shaders.Count; i++) {
-					shaderOroboros.Stack(shaders[i], rCurrentNPC);
-				}
-				shaderOroboros.Release();
-			}
-		}
 		public static int drawPlayersWithShader = -1;
 		public static int keepPlayerShader = -1;
 		static int forcePlayerShader = -1;

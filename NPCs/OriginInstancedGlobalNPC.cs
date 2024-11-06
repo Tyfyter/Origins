@@ -219,16 +219,14 @@ namespace Origins.NPCs {
 				);
 			}
 		}
-		static List<ArmorShaderData> shaderDatas = [];
-		public List<ArmorShaderData> GetShaders(NPC npc) {
-			shaderDatas.Clear();
+		public void FillShaders(NPC npc, List<ArmorShaderData> shaders) {
+			shaders.Clear();
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(Acrid_Dye.ShaderID, null);
 				shaderData.UseTargetPosition((npc.Center - Main.screenPosition) / Main.ScreenSize.ToVector2());
-				shaderDatas.Add(shaderData);
+				shaders.Add(shaderData);
 			}
-			if (rasterizedTime > 0) shaderDatas.Add(GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null));
-			return shaderDatas;
+			if (rasterizedTime > 0) shaders.Add(GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null));
 		}
 		public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.3f, OriginPlayer source = null) {
 			if (source is not null) {
