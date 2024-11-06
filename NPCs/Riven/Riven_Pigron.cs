@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Pigron : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.PigronCrimson];
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers() {

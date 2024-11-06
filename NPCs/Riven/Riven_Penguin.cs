@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Penguin : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;

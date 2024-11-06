@@ -44,7 +44,6 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 5));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 5));
 		}
 		public override void AI() {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {
@@ -84,14 +83,18 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {
+				if (NPC.GetGlobalNPC<OriginGlobalNPC>().birdedTime > 0) {
+					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
+					return true;
+				}
 				Player targetPlayer = Main.player[NPC.target];
 				Main.EntitySpriteDraw(
 					HeadTexture,
-					(targetPlayer.Top) - screenPos,
+					(targetPlayer.Top.Floor() + new Vector2(0, 8 + targetPlayer.gfxOffY) + Main.OffsetsPlayerHeadgear[targetPlayer.bodyFrame.Y / targetPlayer.bodyFrame.Height]) - screenPos,
 					null,
 					drawColor,
 					targetPlayer.headRotation,
-					new Vector2(11 - targetPlayer.direction * 4, 2),
+					new Vector2(8 - targetPlayer.direction * 8, 2),
 					NPC.scale,
 					targetPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);

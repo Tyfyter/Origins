@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Critters {
-	public class Amoeba_Buggy : ModNPC {
+	public class Amoeba_Buggy : Glowing_Mod_NPC {
 		public override void SetStaticDefaults() {
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 4;

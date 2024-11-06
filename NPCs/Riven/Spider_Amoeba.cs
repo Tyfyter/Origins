@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class Spider_Amoeba : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.04f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -41,9 +42,9 @@ namespace Origins.NPCs.Riven {
 			return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Spighter;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText(),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
@@ -80,6 +81,7 @@ namespace Origins.NPCs.Riven {
         }
     }
 	public class Spider_Amoeba_Wall : Spider_Amoeba {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;

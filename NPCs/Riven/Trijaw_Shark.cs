@@ -10,7 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Trijaw_Shark : ModNPC, ICustomCollisionNPC {
+	public class Trijaw_Shark : Glowing_Mod_NPC, ICustomCollisionNPC {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public bool IsSandshark => true;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -66,13 +67,7 @@ namespace Origins.NPCs.Riven {
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
             }
         }
-
-		public void PreUpdateCollision() {
-			
-		}
-
-		public void PostUpdateCollision() {
-			
-		}
+		public void PreUpdateCollision() { }
+		public void PostUpdateCollision() { }
 	}
 }

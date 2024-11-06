@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -9,6 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.03f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);

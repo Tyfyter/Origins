@@ -267,7 +267,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] != -1) {
-				UpdateGlowPos(Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[0])], Projectile);
+				int projIndex = Projectile.GetByUUID(Projectile.owner, Projectile.ai[0]);
+				if (Main.projectile.IndexInRange(projIndex)) UpdateGlowPos(Main.projectile[projIndex], Projectile);
 			}
 		}
 		public static void UpdateGlowPos(Projectile flare, Projectile glow) {

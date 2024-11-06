@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.08f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

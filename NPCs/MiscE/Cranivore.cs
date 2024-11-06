@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -82,15 +83,19 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {
+				if (NPC.GetGlobalNPC<OriginGlobalNPC>().birdedTime > 0) {
+					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
+					return true;
+				}
 				Player targetPlayer = Main.player[NPC.target];
 				Main.EntitySpriteDraw(
-					HeadTexture,
-					(targetPlayer.Top) - screenPos,
-					null,
-					drawColor,
-					targetPlayer.headRotation,
-					new Vector2(11 - targetPlayer.direction * 4, 2),
-					NPC.scale,
+				HeadTexture,
+				(targetPlayer.Top.Floor() + new Vector2(0, targetPlayer.gfxOffY - 2) + Main.OffsetsPlayerHeadgear[targetPlayer.bodyFrame.Y / targetPlayer.bodyFrame.Height]) - screenPos,
+				null,
+				drawColor,
+				targetPlayer.headRotation,
+				new Vector2(11 - targetPlayer.direction * 4, 2),
+				NPC.scale,
 					targetPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);
 				return false;

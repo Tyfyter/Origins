@@ -7,11 +7,12 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
 	public abstract class Glowing_Mod_NPC : ModNPC, ILoadExtraTextures {
 		public virtual string GlowTexturePath => Texture + "_Glow";
+		public virtual Color? GetGlowColor(Color drawColor) => null;
 		//public virtual bool DrawOverTiles => false;
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			DrawGlow(spriteBatch, screenPos, GlowTexture, NPC);
+			DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, GetGlowColor(drawColor));
 		}
 		public static void DrawGlow(SpriteBatch spriteBatch, Vector2 screenPos, Texture2D glowTexture, NPC npc, Color? color = null) {
 			if (glowTexture is not null) {

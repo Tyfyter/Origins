@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Demolitionist;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -7,9 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amebic_Slime : Glowing_Mod_NPC, IRivenEnemy {
+	public class Amebic_Slime : ModNPC, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.04f;
-		public override string GlowTexturePath => Texture;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
@@ -49,5 +49,6 @@ namespace Origins.NPCs.Riven {
 				for (int i = 0; i < 5; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
 			}
 		}
+		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 }

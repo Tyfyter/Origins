@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class Flagellant : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.11f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

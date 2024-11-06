@@ -149,7 +149,7 @@ namespace Origins.NPCs.Riven {
 					nextNPC.localAI[0] = prevNPC.localAI[0] * 0.5f;
 					break;
 				}
-				nextNPC.rotation = nextNPC.rotation % MathHelper.TwoPi;
+				nextNPC.rotation %= MathHelper.TwoPi;
 				float diff = Tyfyter.Utils.GeometryUtils.AngleDif(nextNPC.rotation, prevNPC.rotation, out int dir);
 				if (diff * dir > 0.8f) {
 					nextNPC.rotation += diff - dir * 0.8f;

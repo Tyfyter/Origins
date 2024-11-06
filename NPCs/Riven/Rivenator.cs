@@ -111,9 +111,8 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 
-	public abstract class Rivenator : Glowing_Mod_NPC, IRivenEnemy {
+	public abstract class Rivenator : ModNPC, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.06f;
-		public override string GlowTexturePath => Texture;
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;
@@ -136,5 +135,6 @@ namespace Origins.NPCs.Riven {
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 480, targetSeverity: 1f - 0.67f);
 		}
+		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 }

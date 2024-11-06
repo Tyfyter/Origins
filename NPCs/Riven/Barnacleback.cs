@@ -10,7 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacleback : ModNPC, IRivenEnemy {
+	public class Barnacleback : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

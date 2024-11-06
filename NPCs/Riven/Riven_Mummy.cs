@@ -10,6 +10,7 @@ using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy {
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.07f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
