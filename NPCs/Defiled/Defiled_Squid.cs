@@ -24,6 +24,7 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, 16)
 			};
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Squid, Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Squid);

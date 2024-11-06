@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Cleaver_Head : Cleaver, IRivenEnemy {
+	public class Cleaver_Head : Cleaver {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
@@ -96,7 +96,8 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 
-	public abstract class Cleaver : Glowing_Mod_NPC {
+	public abstract class Cleaver : Glowing_Mod_NPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override string GlowTexturePath => Texture;
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;

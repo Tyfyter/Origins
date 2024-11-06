@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class Spider_Amoeba : Glowing_Mod_NPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;

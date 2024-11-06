@@ -399,6 +399,13 @@ DeathMessage: {
 	Tripod_1: "{0} got rekt by a Defiled Tripod."
 }
 
+Assimilation: {
+	CrimsonAssimilation: Crimson Assimilation
+	CorruptionAssimilation: Corrupt Assimilation
+	DefiledAssimilation: Defiled Assimilation
+	RivenAssimilation: Riven Assimilation
+}
+
 Generic: {
 	Riven_Hive: "{§Riven} Hive"
 	Riven: Riven
@@ -410,6 +417,7 @@ Generic: {
 	Defiled_Antibody: Defiled Antibody
 	Defiled_Antibodies: Defiled Antibodies
 	Definite_Article: the {0}
+	VariableAssimilation: Variable
 }
 
 AltBiomes: {

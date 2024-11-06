@@ -18,6 +18,7 @@ namespace Origins.NPCs.Defiled {
 		byte anger = 0;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

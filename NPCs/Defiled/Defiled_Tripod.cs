@@ -16,6 +16,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.07f;
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;

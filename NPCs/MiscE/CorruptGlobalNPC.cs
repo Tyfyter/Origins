@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,61 +7,59 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class CorruptGlobalNPC : GlobalNPC, IAssimilationProvider {
 		public string AssimilationName => "CorruptionAssimilation";
-		public static HashSet<int> NPCTypes { get; private set; }
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
+		public string AssimilationTexture => "Terraria/Images/UI/Bestiary/Icon_Tags_Shadow";
+		public Rectangle AssimilationTextureFrame => new(30 * 7, 0, 30, 30);
+		public static HashSet<int> NPCTypes { get; private set; } = [
+			NPCID.EaterofSouls,
+			NPCID.CorruptBunny,
+			NPCID.CorruptGoldfish,
+			NPCID.CorruptPenguin,
+			NPCID.DevourerHead,
+			NPCID.DevourerBody,
+			NPCID.DevourerTail,
+			NPCID.EaterofWorldsHead,
+			NPCID.EaterofWorldsBody,
+			NPCID.EaterofWorldsTail,
+			NPCID.VileSpitEaterOfWorlds,
+
+			NPCID.Corruptor,
+			NPCID.VileSpit,
+			NPCID.CorruptSlime,
+			NPCID.Slimeling,
+			NPCID.Slimer,
+			NPCID.Slimer2,
+			NPCID.SeekerHead,
+			NPCID.SeekerBody,
+			NPCID.SeekerTail,
+
+			NPCID.CursedHammer,
+			NPCID.Clinger,
+			NPCID.BigMimicCorruption,
+
+			NPCID.DarkMummy,
+			NPCID.DesertGhoulCorruption,
+
+			NPCID.PigronCorruption,
+		];
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = new() {
+			[NPCID.Clinger] = 0.11f,
+			[NPCID.CorruptGoldfish] = 0.05f,
+			[NPCID.Corruptor] = 0.09f,
+			[NPCID.CorruptSlime] = 0.04f,
+			[NPCID.DesertGhoulCorruption] = 0.06f,
+			[NPCID.DevourerHead] = 0.05f,
+			[NPCID.DevourerBody] = 0.04f,
+			[NPCID.DevourerTail] = 0.05f,
+			[NPCID.EaterofSouls] = 0.07f,
+			[NPCID.EaterofWorldsHead] = 0.07f,
+			[NPCID.EaterofWorldsBody] = 0.05f,
+			[NPCID.EaterofWorldsTail] = 0.07f,
+			[NPCID.Slimeling] = 0.03f,
+			[NPCID.Slimer] = 0.06f,
+			[NPCID.VileSpit] = 0.14f,
+			[NPCID.VileSpitEaterOfWorlds] = 0.05f,
+		};
 		public override void Load() {
-			NPCTypes = new() {
-				NPCID.EaterofSouls,
-				NPCID.CorruptBunny,
-				NPCID.CorruptGoldfish,
-				NPCID.CorruptPenguin,
-				NPCID.DevourerHead,
-				NPCID.DevourerBody,
-				NPCID.DevourerTail,
-				NPCID.EaterofWorldsHead,
-				NPCID.EaterofWorldsBody,
-				NPCID.EaterofWorldsTail,
-				NPCID.VileSpitEaterOfWorlds,
-
-				NPCID.Corruptor,
-				NPCID.VileSpit,
-				NPCID.CorruptSlime,
-				NPCID.Slimeling,
-				NPCID.Slimer,
-				NPCID.Slimer2,
-				NPCID.SeekerHead,
-				NPCID.SeekerBody,
-				NPCID.SeekerTail,
-
-				NPCID.CursedHammer,
-				NPCID.Clinger,
-				NPCID.BigMimicCorruption,
-
-				NPCID.DarkMummy,
-				NPCID.DesertGhoulCorruption,
-
-				NPCID.PigronCorruption,
-			};
-			AssimilationAmounts = new() {
-                [NPCID.Clinger] = 0.11f,
-                [NPCID.CorruptGoldfish] = 0.05f,
-                [NPCID.Corruptor] = 0.09f,
-                [NPCID.CorruptSlime] = 0.04f,
-                [NPCID.DesertGhoulCorruption] = 0.06f,
-                [NPCID.DevourerHead] = 0.05f,
-                [NPCID.DevourerBody] = 0.04f,
-                [NPCID.DevourerTail] = 0.05f,
-                [NPCID.EaterofSouls] = 0.07f,
-                [NPCID.EaterofWorldsHead] = 0.07f,
-                [NPCID.EaterofWorldsBody] = 0.05f,
-                [NPCID.EaterofWorldsTail] = 0.07f,
-                [NPCID.Slimeling] = 0.03f,
-                [NPCID.Slimer] = 0.06f,
-                [NPCID.VileSpit] = 0.14f,
-				[NPCID.VileSpitEaterOfWorlds] = 0.05f,
-                [ModContent.NPCType<Cranivore>()] = 0.03f,
-                [ModContent.NPCType<Optiphage>()] = 0.02f,
-			};
 			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
@@ -109,7 +108,7 @@ namespace Origins.NPCs.MiscE {
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				return amount;
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
 				return amount;
 			}
 			return default;

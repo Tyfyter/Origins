@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Chunky_Slime : ModNPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.05f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
 		}

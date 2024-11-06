@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Cyclops : Glowing_Mod_NPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.08f;
 		public const float speedMult = 1f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;

@@ -112,6 +112,7 @@ namespace Origins.NPCs.Riven {
 	}
 
 	public abstract class Rivenator : Glowing_Mod_NPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.06f;
 		public override string GlowTexturePath => Texture;
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;

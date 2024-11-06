@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Amebic_Slime : Glowing_Mod_NPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override string GlowTexturePath => Texture;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

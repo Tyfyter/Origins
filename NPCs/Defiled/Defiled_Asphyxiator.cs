@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Asphyxiator : Glowing_Mod_NPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.11f;
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;

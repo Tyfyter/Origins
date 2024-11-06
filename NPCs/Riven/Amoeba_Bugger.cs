@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.03f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 			Main.npcFrameCount[NPC.type] = 2;

@@ -13,6 +13,7 @@ namespace Origins.NPCs.MiscE {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
+			CrimsonGlobalNPC.AssimilationAmounts.Add(Type, 0.07f);
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, -16),
 				PortraitPositionYOverride = -32

@@ -18,6 +18,7 @@ namespace Origins.NPCs.MiscE {
 				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Cranivore_Head");
 			}
 			CorruptGlobalNPC.NPCTypes.Add(Type);
+			CorruptGlobalNPC.AssimilationAmounts.Add(Type, 0.03f);
 		}
 		public override void Unload() {
 			HeadTexture = null;

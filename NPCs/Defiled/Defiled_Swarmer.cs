@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Swarmer : Glowing_Mod_NPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.02f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;

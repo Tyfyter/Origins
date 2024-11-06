@@ -149,6 +149,7 @@ namespace Origins.NPCs.Defiled {
 	}
 
 	public abstract class Defiled_Digger : Glowing_Mod_NPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => this is Defiled_Digger_Head ? 0.06f : 0.03f;
 		public int MaxMana => 40;
 		public virtual int MaxManaDrain => 10;
 		public abstract float Mana { get; set; }

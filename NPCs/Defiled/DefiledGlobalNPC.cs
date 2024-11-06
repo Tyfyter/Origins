@@ -10,43 +10,30 @@ using Terraria.ModLoader.IO;
 namespace Origins.NPCs.Defiled {
 	public class DefiledGlobalNPC : GlobalNPC, IAssimilationProvider {
 		public string AssimilationName => "DefiledAssimilation";
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
-		public static Dictionary<int, int> NPCTransformations { get; private set; }
-        public override void Load()
-        {
-            AssimilationAmounts = new()
-            {
-                [ModContent.NPCType<Chunky_Slime>()] = 0.05f,
-                [ModContent.NPCType<Defiled_Amalgamation>()] = 0.04f,
-                [ModContent.NPCType<Defiled_Brute>()] = 0.08f,
-                [ModContent.NPCType<Defiled_Cyclops>()] = 0.08f,
-                [ModContent.NPCType<Defiled_Digger_Head>()] = 0.06f,
-                [ModContent.NPCType<Defiled_Digger_Body>()] = 0.03f,
-                [ModContent.NPCType<Defiled_Digger_Tail>()] = 0.03f,
-                [ModContent.NPCType<Defiled_Ekko>()] = 0.04f,
-                [ModContent.NPCType<Defiled_Flyer>()] = 0.05f,
-                [ModContent.NPCType<Defiled_Swarmer>()] = 0.02f,
-                [ModContent.NPCType<Defiled_Tripod>()] = 0.07f,
-                [ModContent.NPCType<Shattered_Mummy>()] = 0.07f,
-                [ModContent.NPCType<Shattered_Ghoul>()] = 0.10f,
-				[ModContent.NPCType<Defiled_Asphyxiator>()] = 0.11f,
-			};
-			NPCTransformations = new() {
-				{ NPCID.Bunny, ModContent.NPCType<Defiled_Mite>() },
-				{ NPCID.Penguin, ModContent.NPCType<Bile_Thrower>() },
-				{ NPCID.PenguinBlack, ModContent.NPCType<Bile_Thrower>() },
-				{ NPCID.Squid, ModContent.NPCType<Defiled_Squid>() }
-			};
+		public string AssimilationTexture => "Origins/UI/WorldGen/IconEvilDefiled";
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = [];
+		public static Dictionary<int, int> NPCTransformations { get; private set; } = [];
+		public override void Load() {
 			hasErroredAboutWrongNPC = [];
 			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
-        public override void Unload() {
+		public override void Unload() {
 			AssimilationAmounts = null;
 			NPCTransformations = null;
 			hasErroredAboutWrongNPC = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
-			return entity.ModNPC is IDefiledEnemy;
+			if (entity.ModNPC is IDefiledEnemy defiledEnemy) {
+				if (defiledEnemy.Assimilation is AssimilationAmount amount) {
+					if (AssimilationAmounts.TryGetValue(entity.type, out AssimilationAmount assimilationAmount)) {
+						if (assimilationAmount != amount) Origins.LogError($"Tried to give entity type {entity.type} ({entity.TypeName}) two different assimilation amounts: {assimilationAmount}, {amount}");
+					} else {
+						AssimilationAmounts.Add(entity.type, amount);
+					}
+				}
+				return true;
+			}
+			return false;
 		}
 		static HashSet<int> hasErroredAboutWrongNPC;
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
@@ -80,13 +67,13 @@ namespace Origins.NPCs.Defiled {
 				npc.lifeRegen -= 16;
 				damage -= 3;
 			}
-            /*if (npc.electrified) {
+			/*if (npc.electrified) {
 				damage += 10;
-            }
-            if (npc.electrified && npc.wet) {
-                damage += 35;
-            } */
-            if (npc.shadowFlame) {
+			}
+			if (npc.electrified && npc.wet) {
+				damage += 35;
+			} */
+			if (npc.shadowFlame) {
 				npc.lifeRegen += 15;
 			}
 			if (npc.oiled && (npc.onFire || npc.onFire2 || npc.onFire3 || npc.shadowFlame)) {
@@ -119,7 +106,7 @@ namespace Origins.NPCs.Defiled {
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				return amount;
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
 				return amount;
 			}
 			return default;
@@ -141,8 +128,9 @@ namespace Origins.NPCs.Defiled {
 		}
 	}
 	public interface IDefiledEnemy {
-		int MaxMana => 0;
 		int MaxManaDrain => 0;
+		int MaxMana => 0;
+		AssimilationAmount? Assimilation => null;
 		float Mana { get; set; }
 		bool ForceSyncMana => true;
 		void Regenerate(out int lifeRegen) { lifeRegen = 0; }

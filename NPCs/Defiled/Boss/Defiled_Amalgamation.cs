@@ -36,6 +36,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		public string CustomSpritePath => "DefiledAmalg";
+		public AssimilationAmount? Assimilation => 0.04f;
 		public static bool spawnDA = false;
 		float rightArmRot = 0.25f;
 		float leftArmRot = 0.25f;

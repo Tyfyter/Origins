@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,51 +7,50 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class CrimsonGlobalNPC : GlobalNPC, IAssimilationProvider {
 		public string AssimilationName => "CrimsonAssimilation";
-		public static HashSet<int> NPCTypes { get; private set; }
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
+		public string AssimilationTexture => "Terraria/Images/UI/Bestiary/Icon_Tags_Shadow";
+		public Rectangle AssimilationTextureFrame => new(30 * 12, 0, 30, 30);
+		public static HashSet<int> NPCTypes { get; private set; } = [
+			NPCID.BloodCrawler,
+			NPCID.BloodCrawlerWall,
+			NPCID.CrimsonBunny,
+			NPCID.CrimsonGoldfish,
+			NPCID.CrimsonPenguin,
+			NPCID.FaceMonster,
+			NPCID.Crimera,
+			NPCID.BrainofCthulhu,
+			NPCID.Creeper,
+
+			NPCID.Herpling,
+			NPCID.Crimslime,
+			NPCID.BloodJelly,
+			NPCID.BloodFeeder,
+
+			NPCID.CrimsonAxe,
+			NPCID.IchorSticker,
+			NPCID.FloatyGross,
+			NPCID.BigMimicCrimson,
+
+			NPCID.BloodMummy,
+			NPCID.DesertGhoulCrimson,
+
+			NPCID.PigronCrimson,
+		];
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = new() {
+			[NPCID.BloodCrawler] = 0.05f,
+			[NPCID.BloodFeeder] = 0.06f,
+			[NPCID.BloodJelly] = 0.08f,
+			[NPCID.BrainofCthulhu] = 0.16f,
+			[NPCID.Creeper] = 0.002f,
+			[NPCID.Crimera] = 0.05f,
+			[NPCID.Crimslime] = 0.06f,
+			[NPCID.CrimsonGoldfish] = 0.05f,
+			[NPCID.DesertGhoulCrimson] = 0.06f,
+			[NPCID.FaceMonster] = 0.08f,
+			[NPCID.FloatyGross] = 0.08f,
+			[NPCID.Herpling] = 0.06f,
+			[NPCID.IchorSticker] = 0.06f,
+		};
 		public override void Load() {
-			NPCTypes = new() {
-				NPCID.BloodCrawler,
-				NPCID.BloodCrawlerWall,
-				NPCID.CrimsonBunny,
-				NPCID.CrimsonGoldfish,
-				NPCID.CrimsonPenguin,
-				NPCID.FaceMonster,
-				NPCID.Crimera,
-				NPCID.BrainofCthulhu,
-				NPCID.Creeper,
-
-				NPCID.Herpling,
-				NPCID.Crimslime,
-				NPCID.BloodJelly,
-				NPCID.BloodFeeder,
-
-				NPCID.CrimsonAxe,
-				NPCID.IchorSticker,
-				NPCID.FloatyGross,
-				NPCID.BigMimicCrimson,
-
-				NPCID.BloodMummy,
-				NPCID.DesertGhoulCrimson,
-
-				NPCID.PigronCrimson,
-			};
-			AssimilationAmounts = new() {
-                [NPCID.BloodCrawler] = 0.05f,
-                [NPCID.BloodFeeder] = 0.06f,
-                [NPCID.BloodJelly] = 0.08f,
-                [NPCID.BrainofCthulhu] = 0.16f,
-				[NPCID.Creeper] = 0.002f,
-                [NPCID.Crimera] = 0.05f,
-                [NPCID.Crimslime] = 0.06f,
-                [NPCID.CrimsonGoldfish] = 0.05f,
-                [NPCID.DesertGhoulCrimson] = 0.06f,
-                [NPCID.FaceMonster] = 0.08f,
-                [NPCID.FloatyGross] = 0.08f,
-                [NPCID.Herpling] = 0.06f,
-                [NPCID.IchorSticker] = 0.06f,
-                [ModContent.NPCType<Crimbrain>()] = 0.07f,
-            };
 			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
@@ -111,7 +111,7 @@ namespace Origins.NPCs.MiscE {
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				return amount;
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
 				return amount;
 			}
 			return default;

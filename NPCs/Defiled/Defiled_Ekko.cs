@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Ekko : ModNPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;

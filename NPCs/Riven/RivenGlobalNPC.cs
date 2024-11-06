@@ -1,43 +1,36 @@
 ﻿using Origins.Buffs;
+using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven.World_Cracker;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class RivenGlobalNPC : GlobalNPC, IAssimilationProvider {
 		public string AssimilationName => "RivenAssimilation";
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
+		public string AssimilationTexture => "Origins/UI/WorldGen/IconEvilRiven";
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = [];
 		public override void Load() {
-			AssimilationAmounts = new() {
-				[ModContent.NPCType<Amebic_Slime>()] = 0.04f,
-                [ModContent.NPCType<Amoeba_Bugger>()] = 0.03f,
-                [ModContent.NPCType<Barnacleback>()] = 0.05f,
-                [ModContent.NPCType<Cleaver_Head>()] = 0.04f,
-				[ModContent.NPCType<Cleaver_Body>()] = 0.04f,
-				[ModContent.NPCType<Cleaver_Tail>()] = 0.04f,
-				[ModContent.NPCType<Flagellant>()] = 0.11f,
-                [ModContent.NPCType<Measly_Moeba>()] = 0.05f,
-                [ModContent.NPCType<Pustule_Jelly>()] = 0.08f,
-                [ModContent.NPCType<Rivenator_Head>()] = 0.06f,
-				[ModContent.NPCType<Rivenator_Body>()] = 0.06f,
-				[ModContent.NPCType<Rivenator_Tail>()] = 0.06f,
-				[ModContent.NPCType<Riven_Fighter>()] = 0.09f,
-                [ModContent.NPCType<Riven_Mummy>()] = 0.07f,
-                [ModContent.NPCType<Single_Cellular_Nautilus>()] = 0.03f,
-                [ModContent.NPCType<Spider_Amoeba>()] = 0.04f,
-                [ModContent.NPCType<World_Cracker_Head>()] = 0.08f,
-                [ModContent.NPCType<World_Cracker_Body>()] = 0.06f,
-                [ModContent.NPCType<World_Cracker_Tail>()] = 0.1f,
-                [ModContent.NPCType<Torn_Ghoul>()] = 0.10f,
-            };
 			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
 			AssimilationAmounts = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
-			return entity.ModNPC is IRivenEnemy;
+			if (entity.ModNPC is IRivenEnemy rivenEnemy) {
+				if (rivenEnemy.Assimilation is AssimilationAmount amount) {
+					if (AssimilationAmounts.TryGetValue(entity.type, out AssimilationAmount assimilationAmount)) {
+						if (assimilationAmount != amount) Origins.LogError($"Tried to give entity type {entity.type} ({entity.TypeName}) two different assimilation amounts: {assimilationAmount}, {amount}");
+					} else {
+						AssimilationAmounts.Add(entity.type, amount);
+					}
+				}
+				return true;
+			}
+			return false;
 		}
 		public override void SetDefaults(NPC entity) {
 			entity.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
@@ -94,12 +87,13 @@ namespace Origins.NPCs.Riven {
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				return amount;
-			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
 				return amount;
 			}
 			return default;
 		}
 	}
 	public interface IRivenEnemy {
+		AssimilationAmount? Assimilation => null;
 	}
 }

@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
     public class Measly_Moeba : ModNPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.05f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 		}

@@ -56,7 +56,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.TargetClosest();
 			if (NPC.Hitbox.Intersects(NPC.targetRect)) {
 				if (!attacking) {
-					NPC.frame = new Rectangle(0, 120 * 4, 110, 120);
+					NPC.frame = new Rectangle(0, 120 * 4, 96, 120);
 					NPC.frameCounter = 0;
 					NPC.velocity.X *= 0.25f;
 				}
@@ -71,12 +71,12 @@ namespace Origins.NPCs.Defiled {
 					//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 					if (NPC.frame.Y >= 720) {
 						if (NPC.frameCounter > 19) {
-							NPC.frame = new Rectangle(0, 0, 110, 120);
+							NPC.frame = new Rectangle(0, 0, 96, 120);
 							NPC.frameCounter = 0;
 							attacking = false;
 						}
 					} else {
-						NPC.frame = new Rectangle(0, (NPC.frame.Y + 120) % 840, 110, 120);
+						NPC.frame = new Rectangle(0, (NPC.frame.Y + 120) % 840, 96, 120);
 						NPC.frameCounter = 0;
 					}
 				}
@@ -84,7 +84,7 @@ namespace Origins.NPCs.Defiled {
 				if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;
 				if (++NPC.frameCounter > 7) {
 					//add frame height to frame y position and modulo by frame height multiplied by walking frame count
-					NPC.frame = new Rectangle(0, (NPC.frame.Y + 120) % (840 - 120 * 3), 110, 120);
+					NPC.frame = new Rectangle(0, (NPC.frame.Y + 120) % (840 - 120 * 3), 96, 120);
 					NPC.frameCounter = 0;
 				}
 			}
