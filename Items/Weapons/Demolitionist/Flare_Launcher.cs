@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Misc;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
 using Terraria.ID;
@@ -135,9 +136,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Origins.MagicTripwireRange[Type] = 24;
 			ID = Type;
 		}
+		bool initialized = false;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -150,6 +153,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
+			Projectile.netImportant = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
@@ -163,8 +167,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.ai[0] = 0;
 				}
 			}
-			if (Projectile.ai[1] == 0) {
-				Projectile.ai[1] = Projectile.NewProjectile(
+			if (!initialized) {
+				Projectile.ai[1] = Projectile.NewProjectileDirect(
 					Projectile.GetSource_FromThis(),
 					Projectile.Center,
 					default,
@@ -172,11 +176,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 					1,
 					1,
 					Projectile.owner,
-					Projectile.whoAmI
-				) + 1;
+					Projectile.identity
+				).identity;
 				Projectile.netUpdate = true;
+				initialized = true;
 			} else {
-				Flare_Launcher_Glow_P.UpdateGlowPos(Projectile, Main.projectile[(int)Projectile.ai[1] - 1]);
+				Flare_Launcher_Glow_P.UpdateGlowPos(Projectile, Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[1])]);
 			}
 			Lighting.AddLight(Projectile.Center, Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor.ToVector3());
 		}
@@ -246,6 +251,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static int ID { get; private set; }
 		public override string Texture => typeof(Flare_Launcher_P).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
 			ID = Type;
 		}
@@ -256,10 +262,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = 0;
 			Projectile.height = 0;
 			Projectile.friendly = false;
+			Projectile.netImportant = true;
+			Projectile.ai[0] = -1;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] != -1) {
-				UpdateGlowPos(Main.projectile[(int)Projectile.ai[0]], Projectile);
+				UpdateGlowPos(Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[0])], Projectile);
 			}
 		}
 		public static void UpdateGlowPos(Projectile flare, Projectile glow) {
