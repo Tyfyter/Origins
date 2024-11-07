@@ -271,7 +271,7 @@ namespace Origins.Projectiles {
 					target.Center,
 					default,
 					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-					damageDone / 10,
+					(int)MathF.Ceiling(damageDone / 10f),
 					0,
 					projectile.owner
 				);

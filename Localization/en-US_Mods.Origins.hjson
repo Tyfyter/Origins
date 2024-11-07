@@ -1177,13 +1177,13 @@ Projectiles: {
 	Spiked_Slime_Minion.DisplayName: Spiked Slime Minion
 	Spiked_Slime_Minion_Spike.DisplayName: Spiked Slime Minion Spike
 	Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile Gelatin Slime Explosion
-	Snapthrow_P.DisplayName: Snapthrow P
-	Outreach_P.DisplayName: Outreach P
+	Snapthrow_P.DisplayName: Snapthrow
+	Outreach_P.DisplayName: Outreach
 	Piledriver_P.DisplayName: Piledriver
 	Piledriver_Mine_P.DisplayName: Piledriver
 	Seal_Of_Cinders_Dust.DisplayName: "{$Mods.Origins.Items.Seal_Of_Cinders.DisplayName}"
 	Seal_Of_Cinders_Explosion.DisplayName: "{$Mods.Origins.Items.Seal_Of_Cinders.DisplayName}"
-	C6_Jackhammer_P.DisplayName: C6 Jackhammer P
+	C6_Jackhammer_P.DisplayName: C6 Jackhammer
 	Silica_Ball.DisplayName: Silica Ball
 	Dryad_Ward.DisplayName: Dryad Ward
 	Triple_Threat_Dupe_P.DisplayName: Triple Threat
@@ -1299,7 +1299,7 @@ Projectiles: {
 	ASH_Attack_Relay_Explosion.DisplayName: A.S.H. Attack Relay
 	Indestructible_Saddle_Explosion.DisplayName: Indestructible Saddle
 	Indestructible_Saddle_Projectile.DisplayName: Indestructible Saddle
-	Etherealizer_P.DisplayName: Etherealizer P
+	Etherealizer_P.DisplayName: Etherealizer
 	Sand_Elemental.DisplayName: Sand Elemental
 	Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
 	Scabcoral_Lyre_P.DisplayName: Scabcoral
@@ -1318,7 +1318,7 @@ Projectiles: {
 	The_Bird_Swing.DisplayName: The Bird
 	Potato_Mine_Melee_Explosion.DisplayName: Potato Mine Melee Explosion
 	Slag_Bucket_Projectile.DisplayName: Slag Bucket
-	Fresh_Meat_Artifact_P.DisplayName: Fresh Meat Artifact P
+	Fresh_Meat_Artifact_P.DisplayName: Fresh Meat Artifact
 	Fresh_Meat_Dog.DisplayName: Fresh Meat Dog
 	Sixth_Spline_Nut.DisplayName: Sixth Spline Nut
 	Sixth_Spline_Piston.DisplayName: Sixth Spline Piston
@@ -1335,6 +1335,7 @@ Projectiles: {
 	World_Cracker_Beam.DisplayName: World Cracker Beam
 	Friendly_Zombie.DisplayName: Friendly Zombie
 	Omnidirectional_Claymore_Explosion.DisplayName: Omnidirectional Claymore Explosion
+	Razorwire_P.DisplayName: Razorwire
 }
 
 Prefixes: {

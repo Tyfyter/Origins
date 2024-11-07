@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,17 +58,19 @@ namespace Origins.Items.Accessories {
 				if (foundTarget) {
 					if (++thirdEyeTime >= Item.useTime) {
 						float dir = Main.rand.NextFloatDirection();
-						Projectile.NewProjectile(
-							player.GetSource_Accessory(Item),
-							startPoint,
-							(targetPos - startPoint).SafeNormalize(default),
-							Item.shoot,
-							player.GetWeaponDamage(Item),
-							player.GetWeaponKnockback(Item),
-							player.whoAmI,
-							dir * 0.8f + Math.Sign(dir) * 0.1f,
-							-1
-						);
+						if (Main.myPlayer == player.whoAmI) {
+							Projectile.NewProjectile(
+								player.GetSource_Accessory(Item),
+								startPoint,
+								(targetPos - startPoint).SafeNormalize(default),
+								Item.shoot,
+								player.GetWeaponDamage(Item),
+								player.GetWeaponKnockback(Item),
+								player.whoAmI,
+								dir * 0.8f + Math.Sign(dir) * 0.1f,
+								-1
+							);
+						}
 					} else {
 						Vector2 dustSpawnPos = startPoint + (Main.rand.NextFloat() * (MathF.PI * 2f)).ToRotationVector2() * new Vector2(6.75f, 14.75f);
 						Dust dust = Dust.NewDustDirect(startPoint - new Vector2(4), 8, 8, DustID.Vortex, player.velocity.X / 2f, player.velocity.Y / 2f);
@@ -85,8 +88,12 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.PhantasmalDeathray;
 		Vector2 RealVelocity => Projectile.velocity.RotatedBy(Projectile.ai[0] * Projectile.ai[1]);
 		const int sample_points = 3;
-		
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1200 + 64;
+		}
 		public override void SetDefaults() {
+			Projectile.width = 0;
+			Projectile.height = 0;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 6;
 			Projectile.penetrate = -1;
@@ -102,7 +109,11 @@ namespace Origins.Items.Accessories {
 			Collision.LaserScan(Projectile.Center, unit.SafeNormalize(default), 4 * Projectile.scale, 1200f, laserScanResults);
 			Projectile.localAI[1] = laserScanResults.Average();
 			if (Projectile.ai[1] < 1) {
-				Projectile.ai[1] += 0.05f;
+				if (Projectile.ai[1] == -1) SoundEngine.PlaySound(SoundID.Zombie104.WithPitch(1).WithVolume(0.4f), Projectile.position, (soundInstance) => {
+					soundInstance.Position = Projectile.position;
+					return true;
+				});
+				Projectile.ai[1] += 0.03f;
 			} else {
 				Projectile.Kill();
 			}

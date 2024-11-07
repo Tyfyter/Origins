@@ -85,6 +85,8 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
 			Projectile.DamageType = DamageClass.Generic;
+			Projectile.penetrate = 1;
+			Projectile.alpha = 0;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(240, 360));

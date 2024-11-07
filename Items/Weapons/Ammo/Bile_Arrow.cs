@@ -16,7 +16,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);
-			Item.maxStack = 9999;
 			Item.damage = 15;
 			Item.shoot = ModContent.ProjectileType<Bile_Arrow_P>();
 			Item.shootSpeed = 4f;

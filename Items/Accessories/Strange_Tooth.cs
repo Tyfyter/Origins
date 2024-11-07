@@ -195,10 +195,13 @@ namespace Origins.Items.Accessories {
 			#endregion
 		}
 		public override void OnKill(int timeLeft) {
-			if (Main.netMode != NetmodeID.MultiplayerClient) {
+			if (Main.myPlayer != Projectile.owner) {
 				Player owner = Main.player[Projectile.owner];
 				if (owner.statLife < owner.statLifeMax2 && Main.rand.NextBool(5)) {
-					Item.NewItem(Projectile.GetSource_Death(), Projectile.Hitbox, ItemID.Heart);
+					int item = Item.NewItem(Projectile.GetSource_Death(), Projectile.Hitbox, ItemID.Heart);
+					if (Main.netMode == NetmodeID.MultiplayerClient) {
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+					}
 				}
 			}
 		}

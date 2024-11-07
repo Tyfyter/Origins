@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 38);
 			Item.defense = 3;
-			Item.shoot = ProjectileID.BulletHighVelocity;
+			Item.shoot = ModContent.ProjectileType<Razorwire_P>();
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;
 		}

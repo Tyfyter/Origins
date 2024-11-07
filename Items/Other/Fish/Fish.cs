@@ -67,7 +67,7 @@ namespace Origins.Items.Other.Fish {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Gray;
 			Item.autoReuse = true;
 			Item.consumable = true;

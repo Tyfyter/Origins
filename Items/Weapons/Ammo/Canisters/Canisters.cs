@@ -237,7 +237,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 8, copper: 80);
 			Item.rare = ItemRarityID.Pink;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 200)
@@ -272,7 +271,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.Orange;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)
@@ -361,7 +359,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -445,7 +442,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -477,7 +473,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -559,7 +554,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -632,7 +626,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -674,7 +667,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Cyan;
 			Item.glowMask = glowmask;
-			Item.maxStack = 9999;
 		}
 	}
 }

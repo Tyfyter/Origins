@@ -23,7 +23,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Magic) += 0.05f;
-			player.breathMax += 63;
+			player.AddMaxBreath(63);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Riptide_Breastplate>() && legs.type == ModContent.ItemType<Riptide_Greaves>();

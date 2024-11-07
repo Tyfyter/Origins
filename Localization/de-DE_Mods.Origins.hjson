@@ -1335,6 +1335,7 @@ Projectiles: {
 	// World_Cracker_Beam.DisplayName: World Cracker Beam
 	// Friendly_Zombie.DisplayName: Friendly Zombie
 	// Omnidirectional_Claymore_Explosion.DisplayName: Omnidirectional Claymore Explosion
+	// Razorwire_P.DisplayName: Razorwire P
 }
 
 Prefixes: {

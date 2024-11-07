@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.buffImmune[BuffID.Suffocation] = true;
-			player.breathMax += 257;
+			player.AddMaxBreath(257);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

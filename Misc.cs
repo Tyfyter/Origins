@@ -1485,7 +1485,6 @@ namespace Origins {
 		public static void AddMaxBreath(this Player player, int amount) {
 			player.breathMax += amount;
 			OnIncreaseMaxBreath?.Invoke(player, amount);
-			//OriginsModIntegrations.breathOverMax
 		}
 		public static event Action<Player, int> OnIncreaseMaxBreath;
 		#region spritebatch
@@ -3137,7 +3136,7 @@ namespace Origins {
 			self.height = height;
 			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			self.ammo = ModContent.ItemType<Resizable_Mine_One>();
-			self.maxStack = 999;
+			self.maxStack = Item.CommonMaxStack;
 			self.consumable = true;
 		}
 	}

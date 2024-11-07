@@ -25,14 +25,11 @@ namespace Origins.Layers {
 			Asset<Texture2D>[] slotTextures = _assetArray.Value;
 			for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
 				DrawData data = drawInfo.DrawDataCache[i];
-				if (slotTextures[slotValue] is null) {
-
-				}
 				if (data.texture == slotTextures[slotValue]?.Value) {
 					GlowData glowData = glowMasks[slotValue];
 					data.texture = glowData.Texture.Value;
 					data.color = glowData.ColorFunc(drawInfo.drawPlayer);
-					drawInfo.DrawDataCache.Add(data);
+					drawInfo.DrawDataCache.Insert(i + 1, data);
 					break;
 				}
 			}

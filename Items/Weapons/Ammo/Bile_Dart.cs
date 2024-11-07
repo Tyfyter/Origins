@@ -21,7 +21,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedDart);
-			Item.maxStack = 9999;
 			Item.damage = 11;
 			Item.shoot = ModContent.ProjectileType<Bile_Dart_P>();
 			Item.shootSpeed = 3f;

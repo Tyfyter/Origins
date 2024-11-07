@@ -640,13 +640,16 @@ namespace Origins {
 			Player localPlayer = Main.LocalPlayer;
 			int breath = localPlayer.breath;
 			int breathMax = localPlayer.breathMax;
-			if (breathMax > 400) {
-				localPlayer.breathMax = 400;
-				localPlayer.breath = breath == breathMax ? 400 : (int)(breath / (breathMax / 400f));
+			try {
+				if (breathMax > 400) {
+					localPlayer.breathMax = 400;
+					localPlayer.breath = breath == breathMax ? 400 : (int)((breath / (float)breathMax) * 400f);
+				}
+				orig();
+			} finally {
+				localPlayer.breath = breath;
+				localPlayer.breathMax = breathMax;
 			}
-			orig();
-			localPlayer.breath = breath;
-			localPlayer.breathMax = breathMax;
 		}
 
 		private void NPC_GetMeleeCollisionData(On_NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {

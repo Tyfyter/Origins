@@ -803,7 +803,7 @@ Stealth_Ravel: {
 	/* Tooltip:
 		'''
 		Double tap down to transform into a small, rolling ball
-		Enemies are unable to target you when raveled
+		Enemies are much less likely to target you when raveled
 		''' */
 }
 
@@ -3914,8 +3914,8 @@ Futurephones: {
 	// DisplayName: Futurephones
 	/* Tooltip:
 		'''
-		All attacks other than from your minion can tag enemies
-		5% increased damage and 10% critical strike chance against tagged enemies
+		All non-minion attacks can tag enemies
+		Non-minion attacks deal 5% increased damage and 10% critical strike chance against tagged enemies
 		''' */
 }
 

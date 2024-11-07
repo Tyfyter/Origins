@@ -541,7 +541,21 @@ namespace Origins {
 		}
 		public override void UpdateLifeRegen() {
 			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
-			if (bombCharminItLifeRegenCount > 0) Player.lifeRegenCount += 24;
+			if (bombCharminItLifeRegenCount > 0) {
+				Player.lifeRegenCount += 24;
+				const float offsetMult = 1;
+				const float fadeIn = 0;
+				Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Asphalt, Scale: 0.75f);
+				dust.noGravity = true;
+				dust.velocity *= 0.75f;
+				float xOffset = Main.rand.NextFloat(-40, 40) * offsetMult;
+				float yOffset = Main.rand.NextFloat(-40, 40) * offsetMult;
+				dust.position.X += xOffset;
+				dust.position.Y += yOffset;
+				dust.velocity.X = -xOffset * 0.075f;
+				dust.velocity.Y = -yOffset * 0.075f;
+				dust.fadeIn = fadeIn;
+			}
 			if (focusCrystal) {
 				float factor = Player.dpsDamage / 200f;
 				int rounded = (int)factor;

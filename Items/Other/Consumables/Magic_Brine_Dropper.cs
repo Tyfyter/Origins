@@ -12,7 +12,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

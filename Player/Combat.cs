@@ -182,10 +182,9 @@ namespace Origins {
 					target.Center,
 					default,
 					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
+					(int)MathF.Ceiling(damageDone / 10f),
 					0,
-					0,
-					Player.whoAmI,
-					ai1: damageDone / 10
+					Player.whoAmI
 				);
 			}
 			if (item.CountsAsClass(DamageClass.Melee)) {//flasks
@@ -214,11 +213,11 @@ namespace Origins {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
 			}
-			if (futurephones && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type])) {
+			if (futurephones && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type] || proj.sentry || ProjectileID.Sets.SentryShot[proj.type])) {
 				target.AddBuff(Futurephones_Buff.ID, 300);
 				Player.MinionAttackTargetNPC = target.whoAmI;
 			}
-			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type])) {
+			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type] || proj.sentry || ProjectileID.Sets.SentryShot[proj.type])) {
 				OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
 				originGlobalNPC.priorityMailTime = originGlobalNPC.prevPriorityMailTime;
 			}

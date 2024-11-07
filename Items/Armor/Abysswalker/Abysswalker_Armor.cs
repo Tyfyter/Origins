@@ -49,7 +49,7 @@ namespace Origins.Items.Armor.Abysswalker {
 					player.moveSpeed += 1 * defiledPercentage;
 					player.lifeRegenCount += (int)(7 * defiledPercentage);
 					player.jumpSpeedBoost += 5 * defiledPercentage;
-					player.breathMax += (int)(157 * defiledPercentage);
+					player.AddMaxBreath((int)(157 * defiledPercentage));
 					player.statDefense += (int)(10 * defiledPercentage);
 					break;
 				}

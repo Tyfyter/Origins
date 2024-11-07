@@ -12,7 +12,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.height = 16;
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 1);
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void UpdateInventory(Player player) {
 			player.GetModPlayer<OriginPlayer>().lotteryTicketItem = Item;

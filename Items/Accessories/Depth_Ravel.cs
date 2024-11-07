@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
         }
 		protected override void UpdateRaveled(Player player) {
 			player.accFlipper = true;
-			player.breathMax += 126;
+			player.AddMaxBreath(126);
 			player.ignoreWater = true;
 			player.blackBelt = true;
 			Lighting.AddLight(player.Center, new Vector3(1.5f, 0.85f, 0));
