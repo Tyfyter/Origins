@@ -103,7 +103,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.ignoreWater = false;
 			Projectile.manualDirectionChange = true;
 			Projectile.netImportant = true;
-			MaxLife = 300;
+			MaxLife = 200;
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;

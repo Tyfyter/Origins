@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Origins.Questing;
 using PegasusLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -12,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.Items {
 	public interface IOnSpawnProjectilePrefix {
@@ -77,6 +80,13 @@ namespace Origins.Items {
 				if (selfDamage.Additive != 1) yield return GetLine(selfDamage.Additive, "SelfDamage", BonusStackType.Additive, true);
 				if (selfDamage.Multiplicative != 1) yield return GetLine(selfDamage.Multiplicative, "SelfDamage", BonusStackType.Multiplicative, true);
 				if (selfDamage.Flat != 0) yield return GetLine(selfDamage.Flat, "SelfDamage", BonusStackType.Flat, true);
+			}
+			if (prefix is ArtifactMinionPrefix artifactPrefix) {
+				StatModifier maxLife = artifactPrefix.MaxLifeModifier;
+				if (maxLife.Base != 0) yield return GetLine(maxLife.Base, "ArtifactMaxLife", BonusStackType.Base, false);
+				if (maxLife.Additive != 1) yield return GetLine(maxLife.Additive, "ArtifactMaxLife", BonusStackType.Additive, false);
+				if (maxLife.Multiplicative != 1) yield return GetLine(maxLife.Multiplicative, "ArtifactMaxLife", BonusStackType.Multiplicative, false);
+				if (maxLife.Flat != 0) yield return GetLine(maxLife.Flat, "ArtifactMaxLife", BonusStackType.Flat, false);
 			}
 		}
 	}
@@ -202,6 +212,16 @@ namespace Origins.Items {
 	public abstract class Explosive_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public override bool CanRoll(Item item) => item.DamageType.GetsPrefixesFor<Explosive>();
+		public override void ModifyValue(ref float valueMult) {
+			if (this is IBlastRadiusPrefix blastRad) {
+				StatModifier statModifier = blastRad.BlastRadius();
+				valueMult *= 1 + (statModifier.Additive * statModifier.Multiplicative * (1 + statModifier.Base / 100) * (1 + statModifier.Flat / 100) - 1) * 0.5f;
+			}
+			if (this is ISelfDamagePrefix selfDamagePrefix) {
+				StatModifier statModifier = selfDamagePrefix.SelfDamage();
+				valueMult *= 1 + (statModifier.Additive * statModifier.Multiplicative * (1 + statModifier.Base / 100) * (1 + statModifier.Flat / 100) - 1) * -0.25f;
+			}
+		}
 	}
 	public class Unbounded_Prefix : Explosive_Prefix, IBlastRadiusPrefix {
 		public StatModifier BlastRadius() => new(1, 1.15f);
@@ -386,6 +406,14 @@ namespace Origins.Items {
 			if (!Origins.ArtifactMinion[item.shoot]) return false;
 			return base.CanRoll(item);
 		}
+		public override void ModifyValue(ref float valueMult) {
+			base.ModifyValue(ref valueMult);
+			valueMult *= 1 + (MaxLifeModifier.Additive * MaxLifeModifier.Multiplicative * (1 + MaxLifeModifier.Base / 100) * (1 + MaxLifeModifier.Flat / 100) - 1) * 0.25f;
+		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
+	}
+	public class Brittle_Prefix : ArtifactMinionPrefix {
+		public override StatModifier MaxLifeModifier => new(0.75f, 1);
 	}
 	public class Firestarter_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
 		public override void UpdateProjectile(Projectile projectile, int time) {
@@ -427,6 +455,9 @@ namespace Origins.Items {
 		public override void ModifyValue(ref float valueMult) {
 			valueMult *= 1.2f;
 		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => base.GetTooltipLines(item).Concat([
+			new TooltipLine(Origins.instance, Name, this.GetLocalizedValue("Description")) { IsModifier = true }
+		]);
 		public override bool AllStatChangesHaveEffectOn(Item item) {
 			if (!ContentSamples.ProjectilesByType.TryGetValue(item.shoot, out Projectile proj) || proj.ModProjectile is not IArtifactMinion) return false;
 			return base.AllStatChangesHaveEffectOn(item);
