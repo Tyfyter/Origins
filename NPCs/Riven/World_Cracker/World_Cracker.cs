@@ -159,8 +159,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 						velocity,
 						projType,
 						10 + (DifficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
-						0f,
-						Main.myPlayer
+						0f
 					);
 				}
 				npc.ai[2] = -otherShotDelay;
@@ -186,6 +185,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DamageArmor(NPC, hit, item.ArmorPenetration);
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			if (NPC.ai[3] <= 0) {
+				if (FollowerNPC is not null && FollowerNPC.ai[3] <= 0 && projectile.Colliding(projectile.Hitbox, FollowerNPC.Hitbox)) {
+					DamageArmor(FollowerNPC, hit, projectile.ArmorPenetration);
+				}
+			}
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public static void DamageArmor(NPC npc, NPC.HitInfo hit, int armorPenetration, bool fromNet = false) {
@@ -361,6 +365,13 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			base.OnHitByProjectile(projectile, hit, damageDone);
+			if (NPC.ai[3] <= 0) {
+				if (FollowingNPC is not null && FollowingNPC.ai[3] <= 0 && projectile.Colliding(projectile.Hitbox, FollowingNPC.Hitbox)) {
+					DamageArmor(FollowingNPC, hit, projectile.ArmorPenetration);
+				} else if (FollowerNPC is not null && FollowerNPC.ai[3] <= 0 && projectile.Colliding(projectile.Hitbox, FollowerNPC.Hitbox)) {
+					DamageArmor(FollowerNPC, hit, projectile.ArmorPenetration);
+				}
+			}
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
@@ -413,6 +424,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			base.OnHitByProjectile(projectile, hit, damageDone);
+			if (NPC.ai[3] <= 0) {
+				if (FollowingNPC is not null && FollowingNPC.ai[3] <= 0 && projectile.Colliding(projectile.Hitbox, FollowingNPC.Hitbox)) {
+					DamageArmor(FollowingNPC, hit, projectile.ArmorPenetration);
+				}
+			}
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
@@ -554,11 +570,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	}
 	public class Amoeball : ModProjectile {
 		public static int ID { get; private set; } = -1;
-		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
+		public override string Texture => typeof(Dew_Justice_P).GetDefaultTMLName();
 		public override string GlowTexture => Texture;
 		public AssimilationAmount Assimilation = 0.04f;
 		public override void SetStaticDefaults() {
-			Main.projFrames[Projectile.type] = 4;
+			Main.projFrames[Type] = 7;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -572,20 +588,18 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Projectile.height = 30;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = (60 * DifficultyMult) + 90;
-			Projectile.scale = (float)(0.37 * DifficultyMult);
+			Projectile.scale = (float)(1 + 0.2f * DifficultyMult);
 			Projectile.alpha = 150;
+			Projectile.extraUpdates = 0;
 		}
+		public override bool ShouldUpdatePosition() => Projectile.ai[0] > 0;
 		public override void AI() {
-			if (Projectile.timeLeft > 180 - 15) {
-				Projectile.position += Projectile.velocity * 0.5f;
-			}
-			Projectile.frameCounter++;
-			if (Projectile.frameCounter >= 7) {
+			if (++Projectile.frameCounter > 3) {
 				Projectile.frameCounter = 0;
-				Projectile.frame++;
-				if (Projectile.frame >= Main.projFrames[Projectile.type]) {
-					Projectile.frame = 0;
+				if (++Projectile.frame >= Main.projFrames[Type]) {
+					Projectile.frame = 4;
 				}
+				if (Projectile.frame > 3) Projectile.ai[0] = 1;
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {

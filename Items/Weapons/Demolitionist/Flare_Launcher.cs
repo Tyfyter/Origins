@@ -181,7 +181,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.netUpdate = true;
 				initialized = true;
 			} else {
-				Flare_Launcher_Glow_P.UpdateGlowPos(Projectile, Main.projectile[Projectile.GetByUUID(Projectile.owner, Projectile.ai[1])]);
+				int projIndex = Projectile.GetByUUID(Projectile.owner, Projectile.ai[1]);
+				if (Main.projectile.IndexInRange(projIndex)) Flare_Launcher_Glow_P.UpdateGlowPos(Projectile, Main.projectile[projIndex]);
 			}
 			Lighting.AddLight(Projectile.Center, Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor.ToVector3());
 		}

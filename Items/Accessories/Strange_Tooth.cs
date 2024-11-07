@@ -174,8 +174,7 @@ namespace Origins.Items.Accessories {
 			}
 			OriginExtensions.LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f);
 			Vector2 direction = foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition;
-			direction.Normalize();
-			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
+			Projectile.velocity = (Projectile.velocity + direction.SafeNormalize(default) * turnSpeed).SafeNormalize(default) * currentSpeed;
 			#endregion
 
 			#region Animation and visuals

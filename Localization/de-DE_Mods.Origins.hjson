@@ -1464,7 +1464,7 @@ Biomes: {
 
 	Defiled_Wastelands_Ocean: {
 		// DisplayName: Defiled Wastelands Ocean
-		// TownNPCDialogueName: the Defiled_ Wastelands_ Ocean
+		// TownNPCDialogueName: the Defiled Ocean
 	}
 }
 

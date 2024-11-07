@@ -67,6 +67,20 @@ namespace Origins.Items.Weapons.Magic {
 			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);
 		}
 		public override void OnKill(int timeLeft) {
+			if (Projectile.owner != Main.myPlayer) {
+				if (Projectile.hide) {
+					Projectile.hide = false;
+					try {
+						Projectile.active = true;
+						Projectile.timeLeft = timeLeft;
+						Projectile.Update(Projectile.whoAmI);
+					} finally {
+						Projectile.active = false;
+						Projectile.timeLeft = 0;
+					}
+				}
+				return;
+			}
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 48;

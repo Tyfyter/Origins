@@ -182,11 +182,11 @@ namespace Origins {
 						string betterKey = key + "_" + lastBiomeNameKey.Split('.')[^1];
 						if (Language.Exists(betterKey)) {
 							key = betterKey;
-						} else if (!Language.Exists(lastBiomeNameKey)) {
+						}/* else if (!Language.Exists(lastBiomeNameKey)) {
 							obj = new {
 								BiomeName = "the " + lastBiomeNameKey.Split('.')[^1].Replace('_', ' ')
 							};
-						}
+						}*/
 					} catch (RuntimeBinderException) { }
 				}
 				return orig(key, obj);
