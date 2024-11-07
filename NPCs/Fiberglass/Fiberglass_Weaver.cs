@@ -6,6 +6,7 @@ using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,13 +59,10 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.aiStyle = 0;
 			NPC.width = NPC.height = 68;
 			NPC.knockBackResist = 0.1f;
-			NPC.value = Item.sellPrice(gold: 3); // troll face, waih
-		}
-		public override void OnSpawn(IEntitySource source) {
-		}
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			//bestiaryEntry.
-
+			NPC.value = Item.buyPrice(gold: 4);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
+			];
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData();

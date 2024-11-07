@@ -4,6 +4,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -27,7 +28,10 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.defense = 10;
 			NPC.aiStyle = 0;//104;//10,
 			NPC.width = NPC.height = 27;
-			NPC.alpha = 200;
+			NPC.alpha = NPC.IsABestiaryIconDummy ? 0 : 200;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
+			];
 		}
 		public override void AI() {
 			NPC.velocity *= 0.85f;
@@ -125,6 +129,9 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.defense = 10;
 			NPC.noGravity = true;
 			NPC.width = NPC.height = 27;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
+			];
 		}
 		public override void AI() {
 			NPC.velocity *= 0.85f;
@@ -202,6 +209,9 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.width = NPC.height = 42;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 			//npc.DeathSound = SoundID.DD2_DefeatScene;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
+			];
 		}
 		public override bool PreAI() {
 			if (stuck > 0) {

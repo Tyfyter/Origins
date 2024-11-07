@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Amoebeye : ModNPC, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public static int ID { get; private set; }
 		public override void Load() => this.AddBanner();
 		public AutoLoadingAsset<Texture2D> glowTexture = typeof(Amoebeye).GetDefaultTMLName() + "_Glow";

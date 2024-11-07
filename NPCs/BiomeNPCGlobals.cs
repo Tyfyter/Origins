@@ -10,11 +10,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 
 namespace Origins.NPCs {
 	public class BiomeNPCGlobals : ILoadable {
 		public static List<IAssimilationProvider> assimilationProviders = [];
+		public static Dictionary<int, Dictionary<IAssimilationProvider, AssimilationAmount>> assimilationDisplayOverrides = [];
 		public static float CalcDryadDPSMult() {
 			float damageMult = 1f;
 			if (NPC.downedBoss1) {
@@ -58,6 +58,7 @@ namespace Origins.NPCs {
 
 		public void Load(Mod mod) {
 			On_NPCStatsReportInfoElement.ProvideUIElement += On_NPCStatsReportInfoElement_ProvideUIElement;
+			bestiaryStatBackground.LoadAsset();
 		}
 		static AutoLoadingAsset<Texture2D> bestiaryStatBackground = "Origins/UI/Bestiary_Stat_Background";
 		private static UIElement On_NPCStatsReportInfoElement_ProvideUIElement(On_NPCStatsReportInfoElement.orig_ProvideUIElement orig, NPCStatsReportInfoElement self, BestiaryUICollectionInfo info) {
@@ -68,7 +69,10 @@ namespace Origins.NPCs {
 					if (assimilationProvider is GlobalNPC globalNPC && !ContentSamples.NpcsByNetId[self.NpcId].TryGetGlobalNPC(globalNPC, out _)) continue;
 					if (assimilationProvider.AssimilationTexture is null) continue;
 					string modName = (assimilationProvider as ModType)?.Mod?.Name ?? "Origins";
-					AssimilationAmount assimilation = assimilationProvider.GetAssimilationAmount(ContentSamples.NpcsByNetId[self.NpcId]);
+					AssimilationAmount assimilation;
+					if (!(assimilationDisplayOverrides.TryGetValue(self.NpcId, out var @override) && @override.TryGetValue(assimilationProvider, out assimilation))) {
+						assimilation = assimilationProvider.GetAssimilationAmount(ContentSamples.NpcsByNetId[self.NpcId]);
+					}
 					if (assimilation != default) {
 						if (assimilationTypeCount % 2 == 0) {
 							element.Height.Pixels += 35;
@@ -84,7 +88,6 @@ namespace Origins.NPCs {
 							Top = new StyleDimension(70, 0f),
 							Left = new StyleDimension(3 + 99 * (assimilationTypeCount % 2), 0f)
 						};
-						element.Append(uIImage);
 						uIImage.Append(new UIImageFramed(ModContent.Request<Texture2D>(assimilationProvider.AssimilationTexture), assimilationProvider.AssimilationTextureFrame) {
 							HAlign = 0f,
 							VAlign = 0.5f,
@@ -104,13 +107,16 @@ namespace Origins.NPCs {
 								Main.instance.MouseText(Language.GetTextValue($"Mods.{modName}.Assimilation.{assimilationProvider.AssimilationName}"), 0, 0);
 							}
 						};
+						element.Append(uIImage);
 						assimilationTypeCount++;
 					}
 				}
 			}
 			return element;
 		}
-		public void Unload() {}
+		public void Unload() {
+
+		}
 	}
 	public interface IAssimilationProvider {
 		string AssimilationName { get; }
@@ -172,41 +178,6 @@ namespace Origins.NPCs {
 		public static bool operator !=(AssimilationAmount a, AssimilationAmount b) => !(a == b);
 		public override bool Equals(object obj) => obj is AssimilationAmount other && this == other;
 		public override int GetHashCode() => HashCode.Combine(ClassicAmount, ExpertAmount, MasterAmount, Function);
-	}
-	public class AssimilationBestiaryInfoElement(ModBiome biome, AssimilationAmount assimilationAmount) : IBestiaryInfoElement {
-		public UIElement ProvideUIElement(BestiaryUICollectionInfo info) {
-			if (info.UnlockState == BestiaryEntryUnlockState.NotKnownAtAll_0) {
-				return null;
-			}
-			UIElement uIElement = new UIPanel(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Stat_Panel"), null, 12, 7) {
-				Width = new StyleDimension(-14f, 1f),
-				Height = new StyleDimension(34f, 0f),
-				BackgroundColor = new Color(43, 56, 101),
-				BorderColor = Color.Transparent,
-				Left = new StyleDimension(5f, 0f)
-			};
-			uIElement.SetPadding(0f);
-			uIElement.PaddingRight = 5f;
-
-			UIElement filterImage = new UIImage(ModContent.Request<Texture2D>(biome.BestiaryIcon)) {
-				HAlign = 0.5f,
-				VAlign = 0.5f
-			};
-			filterImage.HAlign = 0f;
-			filterImage.Left = new StyleDimension(5f, 0f);
-			UIText element = new(Language.GetText(biome.GetLocalizationKey("AssimilationText")).WithFormatArgs(assimilationAmount.GetText()), 0.8f) {
-				HAlign = 0f,
-				Left = new StyleDimension(38f, 0f),
-				TextOriginX = 0f,
-				VAlign = 0.5f,
-				DynamicallyScaleDownToWidth = true
-			};
-			if (filterImage != null) {
-				uIElement.Append(filterImage);
-			}
-			uIElement.Append(element);
-			return uIElement;
-		}
 	}
 
 }

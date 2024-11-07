@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled.Boss;
+using Origins.Projectiles.Enemies;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,13 @@ using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy {
+		public AssimilationAmount? Assimilation => 0.03f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
+				[ModContent.GetInstance<DefiledGlobalNPC>()] = Defiled_Watcher_Spikes.assimilation_amount
+			});
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -140,6 +145,8 @@ namespace Origins.NPCs.Defiled {
 	}
 	public class Defiled_Watcher_Spikes : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+		public const float assimilation_amount = 0.05f;
+		public AssimilationAmount Assimilation = assimilation_amount;
 		public override void SetDefaults() {
 			Projectile.timeLeft = 600;
 			Projectile.usesLocalNPCImmunity = true;
@@ -184,6 +191,9 @@ namespace Origins.NPCs.Defiled {
 				Projectile.localAI[0]++;
 			}
 			Projectile.Center = Main.npc[(int)Projectile.ai[2]].Center;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.GetModPlayer<OriginPlayer>().DefiledAssimilation += Assimilation.GetValue(null, target);
 		}
 	}
 }

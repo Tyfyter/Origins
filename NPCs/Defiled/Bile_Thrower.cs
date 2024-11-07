@@ -20,6 +20,9 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Penguin, Type);
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.PenguinBlack, Type);
+			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
+				[ModContent.GetInstance<DefiledGlobalNPC>()] = Defiled_Goop.assimilation_amount
+			});
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CorruptPenguin);

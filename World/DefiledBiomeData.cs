@@ -636,6 +636,17 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress;
 		}
 	}
+	public class Defiled_Wastelands_Ocean : ModBiome {
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Ocean";
+		public override string MapBackground => BackgroundPath;
+		public override bool IsBiomeActive(Player player) {
+			return player.ZoneBeach && player.InModBiome<Defiled_Wastelands>();
+		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.99f;
+		}
+	}
 	#endregion variations
 	public class Defiled_Wastelands_Alt_Biome : AltBiome, IItemObtainabilityProvider {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";

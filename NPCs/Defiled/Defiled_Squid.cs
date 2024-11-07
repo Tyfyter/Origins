@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
 using Origins.Items.Materials;
+using Origins.Projectiles.Enemies;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -25,6 +26,9 @@ namespace Origins.NPCs.Defiled {
 				Position = new(0, 16)
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Squid, Type);
+			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
+				[ModContent.GetInstance<DefiledGlobalNPC>()] = Squid_Bile_P.assimilation_amount
+			});
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Squid);
@@ -36,7 +40,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(2.1f, 2.35f);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
-				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+				ModContent.GetInstance<Defiled_Wastelands_Ocean>().Type
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
@@ -132,7 +136,8 @@ namespace Origins.NPCs.Defiled {
 	}
 	public class Squid_Bile_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VilePowder;
-		public AssimilationAmount Assimilation = 0.06f;
+		public const float assimilation_amount = 0.06f;
+		public AssimilationAmount Assimilation = assimilation_amount;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.VilePowder);
 			Projectile.friendly = true;

@@ -7,7 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Projectiles.Enemies {
 	public class Defiled_Goop : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
-		public AssimilationAmount Assimilation = 0.04f;
+		public const float assimilation_amount = 0.04f;
+		public AssimilationAmount Assimilation = assimilation_amount;
 		public override void SetDefaults() {
 			Projectile.hostile = true;
 			Projectile.aiStyle = 0;

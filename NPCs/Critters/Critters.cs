@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Other.Fish;
+using Origins.World.BiomeData;
 using rail;
 using System;
 using Terraria;
@@ -20,6 +21,9 @@ namespace Origins.NPCs.Critters {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BlueDragonfly);
 			NPC.catchItem = ModContent.ItemType<Amoeba_Buggy_Item>();
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type
+			];
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.frameCounter += 0.75f;
@@ -92,6 +96,9 @@ namespace Origins.NPCs.Critters {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Buggy);
 			NPC.catchItem = ModContent.ItemType<Cicada_3301_Item>();
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
 		}
 		public override void FindFrame(int frameHeight) {
 			if (Main.rand.NextBool(350)) {
