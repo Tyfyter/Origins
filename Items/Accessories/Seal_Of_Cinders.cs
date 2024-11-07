@@ -51,15 +51,17 @@ namespace Origins.Items.Accessories {
 		public override void OnKill(int timeLeft) {
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), Projectile.Center);
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item45, Projectile.Center);
-			Projectile.NewProjectile(
-				Projectile.GetSource_Death(),
-				Projectile.Center,
-				Vector2.Zero,
-				ModContent.ProjectileType<Seal_Of_Cinders_Explosion>(),
-				Projectile.originalDamage,
-				Projectile.knockBack,
-				Projectile.owner
-			);
+			if (Projectile.owner == Main.myPlayer) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Seal_Of_Cinders_Explosion>(),
+					Projectile.originalDamage,
+					Projectile.knockBack,
+					Projectile.owner
+				);
+			}
 		}
 	}
 	public class Seal_Of_Cinders_Explosion : ModProjectile {

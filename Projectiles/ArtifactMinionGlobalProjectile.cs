@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -12,26 +14,44 @@ using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
 	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
-	public class Artifact_Minions_Global : GlobalProjectile {
-		bool isRespawned = false;
+	public class ArtifactMinionGlobalProjectile : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
+		bool isRespawned = false;
+		int timer = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is IArtifactMinion) Origins.ArtifactMinion[entity.type] = true;
 			return Origins.ArtifactMinion[entity.type];
 		}
 		public override void SetDefaults(Projectile projectile) {
 			isRespawned = false;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			ModPrefix prefix = null;
+			if (source is EntitySource_ItemUse itemUseSource) {
+				prefix = PrefixLoader.GetPrefix(itemUseSource.Item.prefix);
+			} else if (source is EntitySource_Parent source_Parent) {
+				if (source_Parent.Entity is Projectile parentProjectile) {
+					prefix = parentProjectile.TryGetGlobalProjectile(out OriginGlobalProj parent) ? parent.prefix : null;
+				}
+			}
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
+				if (prefix is ArtifactMinionPrefix artifactPrefix) artifact.MaxLife = (int)artifactPrefix.MaxLifeModifier.ApplyTo(artifact.MaxLife);
 				artifact.Life = artifact.MaxLife;
 			}
 		}
 		public override void PostAI(Projectile projectile) {
-			if (projectile.ModProjectile is IArtifactMinion artifact && artifact.Life <= 0) {
+			IArtifactMinion artifact = null;
+			if (projectile.ModProjectile is IArtifactMinion _artifact && _artifact.Life <= 0) {
+				artifact = _artifact;
 				artifact.Life = 0;
 				if (artifact.CanDie) {
 					projectile.Kill();
 				}
+			}
+			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is ArtifactMinionPrefix artifactPrefix) {
+				artifactPrefix.UpdateProjectile(projectile, timer);
+				if (projectile.numUpdates == -1) timer++;
 			}
 		}
 		public bool CanRespawn(Projectile projectile) {
@@ -55,8 +75,11 @@ namespace Origins.Projectiles {
 						projectile.owner
 					);
 					proj.originalDamage = projectile.originalDamage;
-					proj.GetGlobalProjectile<Artifact_Minions_Global>().isRespawned = true;
+					proj.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().isRespawned = true;
 				}
+			}
+			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is ArtifactMinionPrefix artifactPrefix) {
+				artifactPrefix.OnKill(projectile);
 			}
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
@@ -124,7 +147,7 @@ namespace Origins.Projectiles {
 	public interface IArtifactMinion {
 		int MaxLife { get; set; }
 		int Life { get; set; }
-		void OnHurt(int damage) { }
+		void OnHurt(int damage, bool fromDoT) { }
 		bool CanDie => true;
 		void DrawDeadHealthBar(Vector2 position, float light) {
 			Main.spriteBatch.Draw(
@@ -140,16 +163,16 @@ namespace Origins.Projectiles {
 		}
 	}
 	public static class ArtifactMinionExtensions {
-		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage) {
+		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, bool fromDoT = false, bool noCombatText = false) {
 			minion.Life -= damage;
-			minion.OnHurt(damage);
+			minion.OnHurt(damage, fromDoT);
 			if (minion is ModProjectile proj) {
 				if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
-				CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, dot: true);
+				if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
 			}
 		}
-		public static void DamageArtifactMinion(this Projectile minion, int damage) {
-			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage);
+		public static void DamageArtifactMinion(this Projectile minion, int damage, bool fromDoT = false, bool noCombatText = false) {
+			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, fromDoT, noCombatText);
 		}
 	}
 }

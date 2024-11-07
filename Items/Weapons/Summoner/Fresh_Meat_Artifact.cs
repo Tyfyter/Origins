@@ -223,7 +223,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				).shader = shader;
 			}
 		}
-		public void OnHurt(int damage) {
+		public void OnHurt(int damage, bool fromDoT) {
+			if (fromDoT) return;
 			Player player = Main.player[Projectile.owner];
 			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(player.cMinion, player);
 			if (Life > 0) SoundEngine.PlaySound(SoundID.NPCHit1, Projectile.Center);

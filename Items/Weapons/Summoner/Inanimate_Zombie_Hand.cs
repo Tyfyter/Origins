@@ -6,6 +6,7 @@ using Origins.Gores;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -135,10 +136,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool foundTarget = false;
 			Rectangle targetRect = Projectile.Hitbox;
 			Vector2 directionToTarget = Vector2.Zero;
-			Projectile.localAI[0] -= 1f;
-			if (Projectile.localAI[0] < 0f) {
-				Projectile.localAI[0] = 0f;
-			}
 			if (Projectile.ai[1] > 0f) {
 				Projectile.ai[1] -= 1f;
 			} else {
@@ -164,13 +161,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height)) {
 					Projectile.tileCollide = true;
 				}
-				bool meander = false;
-				if (Projectile.localAI[1] > 0f) {
-					meander = true;
-					Projectile.localAI[1] -= 1f;
-				}
 				if (foundTarget && distanceFromTarget < 800 * 800) {
-					Projectile.localAI[0] = 60;
 					float xDirectionToTarget = targetRect.Center.X - Projectile.Center.X;
 					if (xDirectionToTarget < -10f) {
 						walkLeft = true;
@@ -182,13 +173,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					if (targetRect.Y < Projectile.Center.Y - 100f && Math.Sign(xDirectionToTarget) != -Math.Sign(Projectile.velocity.X) && Math.Abs(xDirectionToTarget) < 50 && Projectile.velocity.Y == 0) {
 						Projectile.velocity.Y = -10f;
 					}
-					if (meander) {
-						if (Projectile.velocity.X < 0f) {
-							walkLeft = true;
-						} else if (Projectile.velocity.X > 0f) {
-							walkRight = true;
-						}
-					}
 				}
 			}
 			if (Projectile.ai[1] != 0f) {
@@ -198,82 +182,79 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.rotation = 0f;
 			float maxSpeed = 6f;
 			float acceleration = 0.175f;
+			float friction = 0.9f;
 			if (walkLeft || walkRight) {
-				int walkTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-				int walkTileY = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
+				const float lookahead = 16;
+				Vector2 startPos = Projectile.Left;
+				Vector2 endPos = default;
 				if (walkLeft) {
-					walkTileX--;
+					startPos.X += 1;
+					endPos.X -= lookahead;
 				}
 				if (walkRight) {
-					walkTileX++;
+					startPos.X += Projectile.width - 1;
+					endPos.X += lookahead;
 				}
-				if (((walkRight ? 1 : 0) - (walkLeft ? 1 : 0)) == Math.Sign(Projectile.velocity.X) && !Framing.GetTileSafely(walkTileX, (int)(Projectile.position.Y + Projectile.height + 2) / 16).HasSolidTile()) {
-					hasHole = true;
-				}
-				walkTileX += (int)Projectile.velocity.X;
-				if (Framing.GetTileSafely(walkTileX, walkTileY).HasFullSolidTile()) {
+				endPos += startPos;
+				Vector2 offset = Vector2.UnitY * 16;
+				if (!CollisionExtensions.CanHitRay(startPos, endPos) || !CollisionExtensions.CanHitRay(startPos + offset, endPos + offset) || !CollisionExtensions.CanHitRay(startPos - offset, endPos - offset)) {
 					hasBarrier = true;
 				}
 			}
-			if (Projectile.velocity.Y == 0) {
-				if (walkLeft) {
-					if (Projectile.velocity.X > -3.5) {
-						Projectile.velocity.X -= acceleration;
-					} else {
-						Projectile.velocity.X -= acceleration * 0.25f;
-					}
-				} else if (walkRight) {
-					if (Projectile.velocity.X < 3.5) {
-						Projectile.velocity.X += acceleration;
-					} else {
-						Projectile.velocity.X += acceleration * 0.25f;
-					}
-				} else {
-					if (Projectile.velocity.X >= -acceleration && Projectile.velocity.X <= acceleration) {
-						Projectile.velocity.X = 0f;
-					}
-				}
-				Projectile.velocity.X *= 0.9f;
+			if (Projectile.velocity.Y != 0) {
+				friction = 0.97f;
+				acceleration *= 0.3f;
 			}
+			if (walkLeft) {
+				if (Projectile.velocity.X > -3.5) {
+					Projectile.velocity.X -= acceleration;
+				} else {
+					Projectile.velocity.X -= acceleration * 0.25f;
+				}
+			} else if (walkRight) {
+				if (Projectile.velocity.X < 3.5) {
+					Projectile.velocity.X += acceleration;
+				} else {
+					Projectile.velocity.X += acceleration * 0.25f;
+				}
+			} else if (Projectile.velocity.Y == 0) {
+				if (Projectile.velocity.X >= -acceleration && Projectile.velocity.X <= acceleration) {
+					Projectile.velocity.X = 0f;
+				}
+			}
+			Projectile.velocity.X *= friction;
 			Collision.StepUp(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
 			if (Projectile.velocity.Y == 0f) {
-				if (Projectile.velocity.X < 0f || Projectile.velocity.X > 0f) {
-					int num75 = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-					int j3 = (int)(Projectile.position.Y + Projectile.height / 2) / 16 + 1;
-					if (walkLeft) {
-						num75--;
-					}
-					if (walkRight) {
-						num75++;
-					}
-				}
 				if (hasBarrier) {
-					int groundTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-					int groundTileY = (int)(Projectile.position.Y + Projectile.height) / 16;
-					if (WorldGen.SolidTileAllowBottomSlope(groundTileX, groundTileY) || Main.tile[groundTileX, groundTileY].IsHalfBlock || Main.tile[groundTileX, groundTileY].Slope > 0) {
-						try {
-							groundTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-							groundTileY = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
-							if (walkLeft) {
-								groundTileX--;
-							}
-							if (walkRight) {
-								groundTileX++;
-							}
-							groundTileX += (int)Projectile.velocity.X;
-							if (!WorldGen.SolidTile(groundTileX, groundTileY - 1) && !WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
-								Projectile.velocity.Y = -5.1f;
-							} else if (!WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
-								Projectile.velocity.Y = -7.1f;
-							} else if (WorldGen.SolidTile(groundTileX, groundTileY - 5)) {
-								Projectile.velocity.Y = -11.1f;
-							} else if (WorldGen.SolidTile(groundTileX, groundTileY - 4)) {
-								Projectile.velocity.Y = -10.1f;
-							} else {
+					if (Projectile.localAI[1] == Projectile.position.X) {
+						(walkLeft, walkRight) = (walkRight, walkLeft);
+					} else {
+						int groundTileX = (int)(Projectile.position.X + Projectile.width * (walkRight ? 1 : 0)) / 16;
+						int groundTileY = (int)(Projectile.position.Y + Projectile.height + 15) / 16;
+						if (Framing.GetTileSafely(groundTileX, groundTileY).HasSolidTile()) {
+							try {
+								if (walkLeft) {
+									groundTileX--;
+								}
+								if (walkRight) {
+									groundTileX++;
+								}
+								groundTileX += (int)Projectile.velocity.X;
+								if (!WorldGen.SolidTile(groundTileX, groundTileY - 1) && !WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
+									Projectile.velocity.Y = -5.1f;
+								} else if (!WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
+									Projectile.velocity.Y = -7.1f;
+								} else if (WorldGen.SolidTile(groundTileX, groundTileY - 5)) {
+									Projectile.velocity.Y = -11.1f;
+								} else if (WorldGen.SolidTile(groundTileX, groundTileY - 4)) {
+									Projectile.velocity.Y = -10.1f;
+								} else {
+									Projectile.velocity.Y = -9.1f;
+								}
+							} catch {
 								Projectile.velocity.Y = -9.1f;
 							}
-						} catch {
-							Projectile.velocity.Y = -9.1f;
+							Projectile.localAI[1] = Projectile.position.X;
 						}
 					}
 				}/* else if (hasHole && foundTarget && targetRect.Bottom <= Projectile.position.Y + Projectile.height) {
@@ -285,6 +266,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.velocity.X < -maxSpeed) {
 				Projectile.velocity.X = -maxSpeed;
+			}
+			if (walkLeft != (Projectile.direction == -1) || walkRight != (Projectile.direction == 1)) {
+				Projectile.localAI[1] = 0;
 			}
 			if (walkLeft) {
 				Projectile.direction = -1;
@@ -320,6 +304,33 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.velocity.Y = 10f;
 			}
 			if (Projectile.direction != 0) Projectile.spriteDirection = Projectile.direction;
+			if (Projectile.owner == Main.myPlayer) {
+				Point topLeft = Projectile.position.ToTileCoordinates();
+				Point bottomRight = Projectile.BottomRight.ToTileCoordinates();
+				int minX = Utils.Clamp(topLeft.X, 0, Main.maxTilesX - 1);
+				int minY = Utils.Clamp(topLeft.Y, 0, Main.maxTilesY - 1);
+				int maxX = Utils.Clamp(bottomRight.X, 0, Main.maxTilesX - 1) - minX;
+				int maxY = Utils.Clamp(bottomRight.Y, 0, Main.maxTilesY - 1) - minY;
+				int hurtAmount = 0;
+				for (int i = 0; i <= maxX; i++) {
+					for (int j = 0; j <= maxY; j++) {
+						Tile tile = Main.tile[i + minX, j + minY];
+						if (tile.HasTile && TileID.Sets.TouchDamageDestroyTile[tile.TileType]) {
+							if (TileID.Sets.TouchDamageImmediate[tile.TileType] > hurtAmount) hurtAmount = TileID.Sets.TouchDamageImmediate[tile.TileType];
+							WorldGen.KillTile(i + minX, j + minY);
+							if (Main.netMode == NetmodeID.MultiplayerClient && !tile.HasTile) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 4, i + minX, j + minY);
+						}
+					}
+				}
+				if (Projectile.localAI[0] <= 0) {
+					if (hurtAmount > 0) {
+						this.DamageArtifactMinion(hurtAmount);
+						Projectile.localAI[0] = 5;
+					}
+				} else {
+					Projectile.localAI[0]--;
+				}
+			}
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			fallThrough = targetIsBelow;
@@ -358,7 +369,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				this.DamageArtifactMinion(target.damage);
 			}
 		}
-		public void OnHurt(int damage) {
+		public void OnHurt(int damage, bool fromDoT) {
+			if (fromDoT) return;
 			Player player = Main.player[Projectile.owner];
 			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(player.cMinion, player);
 			if (Life > 0) SoundEngine.PlaySound(SoundID.NPCHit1, Projectile.Center);

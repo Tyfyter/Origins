@@ -1336,6 +1336,7 @@ Projectiles: {
 	// Friendly_Zombie.DisplayName: Friendly Zombie
 	// Omnidirectional_Claymore_Explosion.DisplayName: Omnidirectional Claymore Explosion
 	// Razorwire_P.DisplayName: Razorwire
+	// Firestarter_Explosion.DisplayName: Firestarter Explosion
 }
 
 Prefixes: {
@@ -1360,6 +1361,7 @@ Prefixes: {
 	// Unbounded_Prefix.DisplayName: Unbounded
 	// Vicious_Prefix.DisplayName: Vicious
 	// Wimpy_Prefix.DisplayName: Wimpy
+	// Firestarter_Prefix.DisplayName: Firestarter's
 }
 
 BiomeName: {

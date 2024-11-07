@@ -1,9 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
+using Origins.Items.Weapons.Ranged;
+using Origins.Projectiles;
+using Origins.Questing;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -22,6 +28,9 @@ namespace Origins.Items {
 	}
 	public interface ISelfDamagePrefix {
 		StatModifier SelfDamage();
+	}
+	public interface IOnHitNPCPrefix {
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) { }
 	}
 	public static class Prefixes {
 		enum BonusStackType {
@@ -189,6 +198,7 @@ namespace Origins.Items {
 		}
 	}
 	#endregion accessory prefixes
+	#region explosive prefixes
 	public abstract class Explosive_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public override bool CanRoll(Item item) => item.DamageType.GetsPrefixesFor<Explosive>();
@@ -311,7 +321,8 @@ namespace Origins.Items {
 		}
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
-	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IModifyTooltipsPrefix, ICanReforgePrefix {
+	#endregion explosive prefixes
+	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IModifyTooltipsPrefix, ICanReforgePrefix, IOnHitNPCPrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
 
 		public static int ID { get; private set; }
@@ -329,7 +340,13 @@ namespace Origins.Items {
 		public void OnProjectileSpawn(Projectile projectile, IEntitySource source) {
 			projectile.velocity = projectile.velocity.RotatedByRandom(MathHelper.ToRadians(10f));
 		}
-
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.life <= 0) {
+				if (projectile.GetGlobalProjectile<OriginGlobalProj>().fromItemType == ModContent.ItemType<Shardcannon>()) {
+					ModContent.GetInstance<Shardcannon_Quest>().UpdateKillCount();
+				}
+			}
+		}
 		public void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 			for (int i = 0; i < tooltips.Count; i++) {
 				if (tooltips[i].Name == "Price") {
@@ -351,4 +368,97 @@ namespace Origins.Items {
 		}
 		public bool CanReforge(Item item) => false;
 	}
+	#region artifact prefixes
+	public abstract class ArtifactMinionPrefix : ModPrefix {
+		public override PrefixCategory Category => PrefixCategory.Magic;
+		public virtual StatModifier MaxLifeModifier => StatModifier.Default;
+		public virtual void UpdateProjectile(Projectile projectile, int time) { }
+		public virtual void OnKill(Projectile projectile) { }
+		public override bool AllStatChangesHaveEffectOn(Item item) {
+			if (MaxLifeModifier != StatModifier.Default) {
+				if (!ContentSamples.ProjectilesByType.TryGetValue(item.shoot, out Projectile proj) || proj.ModProjectile is not IArtifactMinion artifactProj || artifactProj.MaxLife == (int)MaxLifeModifier.ApplyTo(artifactProj.MaxLife)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		public override bool CanRoll(Item item) {
+			if (!Origins.ArtifactMinion[item.shoot]) return false;
+			return base.CanRoll(item);
+		}
+	}
+	public class Firestarter_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
+		public override void UpdateProjectile(Projectile projectile, int time) {
+			if (projectile.numUpdates == -1 && time % 30 == 0) {
+				projectile.DamageArtifactMinion(2, true);
+			}
+			if (Main.rand.NextBool(3, 4)) {
+				Dust dust = Dust.NewDustDirect(projectile.position - Vector2.One * 2, projectile.width + 4, projectile.height + 4, 6, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100);
+				if (Main.rand.NextBool(4)) {
+					dust.noGravity = false;
+					dust.scale = 0.85f;
+				} else {
+					dust.noGravity = true;
+					dust.scale = 1.5f;
+				}
+				dust.velocity *= 1.8f;
+				dust.velocity.Y -= 0.5f;
+			}
+
+			Lighting.AddLight(projectile.Center, 1f, 0.3f, 0.1f);
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire, Main.rand.Next(240, 361));
+		}
+		public override void OnKill(Projectile projectile) {
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), projectile.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item45, projectile.Center);
+			if (projectile.owner == Main.myPlayer) {
+				Projectile.NewProjectile(
+					projectile.GetSource_Death(),
+					projectile.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Firestarter_Explosion>(),
+					projectile.damage / 2,
+					projectile.knockBack
+				);
+			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.2f;
+		}
+		public override bool AllStatChangesHaveEffectOn(Item item) {
+			if (!ContentSamples.ProjectilesByType.TryGetValue(item.shoot, out Projectile proj) || proj.ModProjectile is not IArtifactMinion) return false;
+			return base.AllStatChangesHaveEffectOn(item);
+		}
+	}
+	public class Firestarter_Explosion : ModProjectile {
+		public override string Texture => typeof(Seal_Of_Cinders_Explosion).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 19;
+			ProjectileID.Sets.MinionShot[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.tileCollide = false;
+			Projectile.width = Projectile.height = 110;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+		}
+		public override void AI() {
+			if (++Projectile.frameCounter > 1) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.timeLeft = 0;
+			}
+			Lighting.AddLight(Projectile.Center, new Vector3(0.3f, 0.1f, 0f) * MathHelper.Min(Projectile.frame / 8f, 1));
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			lightColor = new(1f, 1f, 1f, 0f);
+			return true;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(120, 181));
+		}
+	}
+	#endregion artifact prefixes
 }

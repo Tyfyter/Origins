@@ -755,7 +755,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (^) Fresh Meat Artifact
-(#4, ^2) Inanimate Zombie Hand !!!
+(☻) Inanimate Zombie Hand !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!

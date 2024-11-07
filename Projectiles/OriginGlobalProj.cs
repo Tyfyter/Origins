@@ -43,7 +43,13 @@ namespace Origins.Projectiles {
 		public bool hasUsedMitosis = false;
 		public int mitosisTimeLeft = 3600;
 		public bool fiberglassLifesteal = false;
-		public int prefix;
+		public ModPrefix prefix;
+		public int Prefix {
+			get => prefix?.Type ?? 0;
+			set {
+				prefix = value == 0 ? null : PrefixLoader.GetPrefix(value);
+			}
+		}
 		public bool neuralNetworkEffect = false;
 		public bool neuralNetworkHit = false;
 		public Vector2? weakpointAnalyzerTarget = default;
@@ -97,8 +103,8 @@ namespace Origins.Projectiles {
 				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && originPlayer.entangledEnergy) {
 					fiberglassLifesteal = true;
 				}
-				prefix = itemUseSource.Item.prefix;
-				ModPrefix projPrefix = PrefixLoader.GetPrefix(prefix);
+				Prefix = itemUseSource.Item.prefix;
+				ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
 
 				if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
 					spawnPrefix.OnProjectileSpawn(projectile, source);
@@ -150,12 +156,12 @@ namespace Origins.Projectiles {
 						}
 					}
 					OriginGlobalProj parentGlobalProjectile = parentProjectile.GetGlobalProjectile<OriginGlobalProj>();
-					prefix = parentGlobalProjectile.prefix;
+					Prefix = parentGlobalProjectile.Prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
-					ModPrefix projPrefix = PrefixLoader.GetPrefix(prefix);
+					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
 
 					if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
 						spawnPrefix.OnProjectileSpawn(projectile, source);
@@ -276,10 +282,8 @@ namespace Origins.Projectiles {
 					projectile.owner
 				);
 			}
-			if (target.life <= 0 && prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
-				if (fromItemType == ModContent.ItemType<Shardcannon>()) {
-					ModContent.GetInstance<Shardcannon_Quest>().UpdateKillCount();
-				}
+			if (prefix is IOnHitNPCPrefix onHitNPCPrefix) {
+				onHitNPCPrefix.OnHitNPC(projectile, target, hit, damageDone);
 			}
 			if (viperEffect) {
 				if (hit.Crit || Main.rand.Next(0, 9) == 0) {
@@ -334,7 +338,7 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(viperEffect);
 			bitWriter.WriteBit(isFromMitosis);
 
-			binaryWriter.Write(prefix);
+			binaryWriter.Write(Prefix);
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
 			binaryWriter.Write((sbyte)updateCountBoost);
 		}
@@ -342,7 +346,7 @@ namespace Origins.Projectiles {
 			viperEffect = bitReader.ReadBit();
 			isFromMitosis = bitReader.ReadBit();
 
-			prefix = binaryReader.ReadInt32();
+			Prefix = binaryReader.ReadInt32();
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();
 			SetUpdateCountBoost(projectile, binaryReader.ReadSByte());
 		}
