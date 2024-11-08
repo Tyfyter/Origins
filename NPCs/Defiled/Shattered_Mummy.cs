@@ -33,6 +33,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 700;
 			AnimationType = NPCID.DarkMummy;
+			AIType = NPCID.DarkMummy;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Desert>().Type,
 				ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().Type

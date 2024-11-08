@@ -30,6 +30,7 @@ namespace Origins.NPCs.Riven {
 			NPC.friendly = false;
 			NPC.value = 7;
 			AnimationType = NPCID.BloodMummy;
+			AIType = NPCID.BloodMummy;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Desert>().Type,
 				ModContent.GetInstance<Riven_Hive_Underground_Desert>().Type
