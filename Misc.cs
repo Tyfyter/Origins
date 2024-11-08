@@ -1924,6 +1924,10 @@ namespace Origins {
 			self.identity = id;
 			self.owner = owner;
 		}
+		public static Projectile GetRelatedProjectile(this Projectile self, int index) {
+			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
+			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
+		}
 		public static void DoFrames(this NPC self, int counterMax) {
 			int heightEtBuffer = self.frame.Height;
 			self.frameCounter += 1;

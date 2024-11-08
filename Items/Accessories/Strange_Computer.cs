@@ -13,6 +13,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Computer : ModItem, ICustomWikiStat {
@@ -69,13 +70,16 @@ namespace Origins.Items.Accessories {
 							Projectile.NewProjectile(source, pointPoisition, velocity, projToShoot, 0, 0);
 						}
 						for (int i = 0; i < projectiles.Count; i++) {
+							if (!projectiles.IndexInRange(i)) continue;
 							Projectile projectile = Main.projectile[projectiles[i]];
 							List<Vector2> positions = [];
 							List<float> rotations = [];
-							while (projectile.active) {
+							int updates = 1000;
+							while (projectile.active && --updates > 0) {
 								positions.Add(projectile.Center);
 								projectile.Update(i);
 								rotations.Add((projectile.Center - positions[^1]).ToRotation());
+								if (!WorldGen.InWorld((int)projectile.position.X / 16, (int)projectile.position.Y / 16)) break;
 							}
 							if (positions.Count > 0) {
 								positions.Add(positions[^1] + projectile.oldVelocity);

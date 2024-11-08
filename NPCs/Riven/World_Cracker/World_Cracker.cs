@@ -195,14 +195,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static void DamageArmor(NPC npc, NPC.HitInfo hit, int armorPenetration, bool fromNet = false) {
 			if (npc.ai[3] <= 0) return;
 			int oldArmorHealth = (int)npc.ai[3];
-			NPC.HitModifiers apMods = new NPC.HitModifiers();
+			NPC.HitModifiers apMods = new();
 			apMods.ArmorPenetration += armorPenetration;
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
 			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
 			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit, fromNet);
 			if (npc.ai[3] <= 0) {
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
-					DropAttemptInfo dropInfo = default(DropAttemptInfo);
+					DropAttemptInfo dropInfo = default;
 					dropInfo.player = Main.LocalPlayer;
 					dropInfo.npc = npc;
 					dropInfo.IsExpertMode = Main.expertMode;
@@ -588,7 +588,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Projectile.height = 30;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = (60 * DifficultyMult) + 90;
-			Projectile.scale = (float)(1 + 0.2f * DifficultyMult);
+			Projectile.scale = (float)(1 + 0.1f * DifficultyMult);
 			Projectile.alpha = 150;
 			Projectile.extraUpdates = 0;
 		}

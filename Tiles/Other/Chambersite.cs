@@ -6,9 +6,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
-    public class Chambersite : OriginTile {
+	public class Chambersite : OriginTile {
 		public override void SetStaticDefaults() { //TODO: gemstone properties
-			Main.tileSolid[Type] = true;
+			Main.tileSolid[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
@@ -17,15 +17,15 @@ namespace Origins.Tiles.Other {
 			MineResist = 3;
 		}
 	}
-    public class Chambersite_Item : MaterialItem {
+	public class Chambersite_Item : MaterialItem {
 		public override int ResearchUnlockCount => 15;
 		public override bool Hardmode => true;
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Chambersite>());
-            Item.value = Item.sellPrice(silver: 13);
-            Item.rare = ItemRarityID.Blue;
-            Item.maxStack = Item.CommonMaxStack;
-        }
+			Item.value = Item.sellPrice(silver: 13);
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = Item.CommonMaxStack;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.CrystalShard, 16)

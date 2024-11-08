@@ -27,9 +27,9 @@ namespace Origins.Tiles {
 			return true;
 		}
 		public override void MouseOver(int i, int j, int type) {
-			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-			if (Main.tileContainer[tile.TileType]) {
-				Point targetPos = new(Player.tileTargetX, Player.tileTargetY);
+			Point targetPos = new(i, j);
+			Tile tile = Framing.GetTileSafely(targetPos);
+			if (tile.HasTile && Main.tileContainer[tile.TileType]) {
 				if (tile.TileFrameX % 36 != 0) {
 					targetPos.X--;
 				}

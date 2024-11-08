@@ -49,7 +49,7 @@ namespace Origins.Tiles.Other {
 			}
 			//if (Main.netMode == NetmodeID.SinglePlayer) return false;
 			if (!OriginPlayer.LocalOriginPlayer.laserTagVest) return false;
-			if (Main.LocalPlayer.team != tile.TileFrameX && Laser_Tag_Console.LaserTagRules.RespawnTime >= 0 && !OriginPlayer.LocalOriginPlayer.laserTagVestActive && OriginPlayer.LocalOriginPlayer.laserTagRespawnDelay <= 0) {
+			if (Main.LocalPlayer.team == tile.TileFrameX && Laser_Tag_Console.LaserTagRules.RespawnTime >= 0 && !OriginPlayer.LocalOriginPlayer.laserTagVestActive && OriginPlayer.LocalOriginPlayer.laserTagRespawnDelay <= 0) {
 				if (!justCheck) {
 					OriginPlayer.LocalOriginPlayer.laserTagHP = Laser_Tag_Console.LaserTagRules.HP;
 					OriginPlayer.LocalOriginPlayer.laserTagVestActive = true;

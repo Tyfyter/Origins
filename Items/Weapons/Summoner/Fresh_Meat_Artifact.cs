@@ -117,6 +117,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			SetupDog();
+			if (!Main.npc.IndexInRange(StickEnemy)) StickEnemy = -1;
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not

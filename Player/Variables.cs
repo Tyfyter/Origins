@@ -714,12 +714,12 @@ namespace Origins {
 				NPC possibleTarget = Main.npc[asylumWhistleTarget];
 				if (!possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
 					asylumWhistleTarget = -1;
-				} else if (Player.HeldItem.CountsAsClass(DamageClass.Summon)) {
+				} else if (Player.whoAmI == Main.myPlayer && Player.HeldItem.CountsAsClass(DamageClass.Summon)) {
 					Vector2 center = possibleTarget.Center;
 					float count = Player.miscCounter / 60f;
 					float offset = MathHelper.TwoPi / 3f;
 					for (int i = 0; i < 3; i++) {
-						int dust = Dust.NewDust(center, 0, 0, DustID.WitherLightning, 0f, 0f, 100, default(Color), 0.35f);
+						int dust = Dust.NewDust(center, 0, 0, DustID.WitherLightning, 0f, 0f, 100, default, 0.35f);
 						Main.dust[dust].noGravity = true;
 						Main.dust[dust].velocity = Vector2.Zero;
 						Main.dust[dust].noLight = true;

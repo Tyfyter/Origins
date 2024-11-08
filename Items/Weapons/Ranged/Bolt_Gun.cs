@@ -10,6 +10,7 @@ namespace Origins.Items.Weapons.Ranged {
         public string[] Categories => [
             "Gun"
         ];
+
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);
 			Item.damage = 26;

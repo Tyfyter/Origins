@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Build.Tasks;
+using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Journal;
 using System.Collections.Generic;
@@ -62,12 +63,11 @@ namespace Origins.Items.Accessories {
 			num = fail ? 1 : 3;
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 32, ModContent.ItemType<Stone_Mask>());
-		}
-
 		public override bool RightClick(int i, int j) {
 			WorldGen.KillTile(i, j);
+			if (Main.netMode != NetmodeID.SinglePlayer) {
+				NetMessage.SendTileSquare(-1, i, j);
+			}
 			return true;
 		}
 

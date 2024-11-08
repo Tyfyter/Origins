@@ -494,7 +494,7 @@ Buffs: {
 
 	Chromatic_Pangolin_Buff: {
 		DisplayName: Chromatic Pangolin
-		Description: It 's rather dashing
+		Description: It's rather dashing
 	}
 
 	Corrupt_Assimilation_Debuff: {

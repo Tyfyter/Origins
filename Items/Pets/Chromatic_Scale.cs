@@ -62,7 +62,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.width = 50;
+			Projectile.width = 46;
 			Projectile.height = 26;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;

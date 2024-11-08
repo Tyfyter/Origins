@@ -100,20 +100,19 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.ArmorPenetration += 100;
 		}
 		public override void AI() {
-			int auraProj = (int)Projectile.ai[0];
-			if (auraProj < 0) {
+			Projectile parent = Projectile.GetRelatedProjectile(0);
+			if (parent is null) {
 				Projectile.scale *= 0.95f;
 				Projectile.scale -= 0.05f;
 				if (Projectile.scale <= 0) Projectile.Kill();
 			} else {
-				Projectile ownerProj = Main.projectile[auraProj];
 				if (float.IsInfinity(Projectile.scale)) Projectile.timeLeft -= 5;
-				if (ownerProj.active) {
-					Projectile.scale = ownerProj.scale * 1.5f;
-					Projectile.Center = ownerProj.Center;
-					Projectile.rotation = ownerProj.rotation;
+				if (parent.active) {
+					Projectile.scale = parent.scale * 1.5f;
+					Projectile.Center = parent.Center;
+					Projectile.rotation = parent.rotation;
 				} else {
-					Projectile.Center = ownerProj.Center;
+					Projectile.Center = parent.Center;
 					Projectile.ai[0] = -1;
 				}
 			}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Layers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,15 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Third_Eye : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-		];
-		const int chargeup_time = 180;
-		const int reset_time = 600;
-		
+		public override void SetStaticDefaults() {
+			Accessory_Glow_Layer.AddGlowMask<Face_Glow_Layer>(Item.faceSlot, Texture + "_Face_Glow");
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.damage = 180;
 			Item.knockBack = 24;
-			Item.useTime = 180;
-			Item.reuseDelay = 480;
+			Item.useTime = 180; // chargeup time
+			Item.reuseDelay = 480; // reset time
 			Item.shoot = ModContent.ProjectileType<Third_Eye_Deathray>();
 			Item.value = Item.sellPrice(gold: 6);
 			Item.master = true;
