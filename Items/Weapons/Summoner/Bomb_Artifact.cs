@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
@@ -69,7 +70,7 @@ namespace Origins.Buffs {
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-	public class Friendly_Bomb : ModProjectile {
+	public class Friendly_Bomb : ModProjectile, IArtifactMinion {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Happy_Boi";
 		public bool OnGround {
 			get {
@@ -87,6 +88,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.localAI[0] = value;
 			}
 		}
+
+		public int MaxLife { get; set; }
+		public int Life { get; set; }
 		public override void SetStaticDefaults() {
 			Bomb_Artifact.projectileID = Type;
 			// DisplayName.SetDefault("Friendly Bomb");
@@ -118,6 +122,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.localNPCHitCooldown = 1;
 			Projectile.ignoreWater = false;
 			Projectile.netImportant = true;
+			MaxLife = 1;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -306,7 +311,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.frame = 7 + (int)(Projectile.ai[0] / 6f);
 				if (++Projectile.ai[0] > 30) {
 					//Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, projectile.damage, 0, projectile.owner, 1, 1);
-					Projectile.Kill();
+					Projectile.DamageArtifactMinion(Life, noCombatText: true);
 				}
 			} else if (OnGround) {
 				Projectile.localAI[1]--;
@@ -345,22 +350,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			#endregion
 		}
-
-		public override bool PreKill(int timeLeft) {
-			Projectile.type = ProjectileID.Grenade;
-			return true;
+		public override void PrepareBombToBlow() {
+			Projectile.Resize(128, 128);
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.friendly = true;
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 128;
-			Projectile.height = 128;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.PrepareBombToBlow();
+			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 			Projectile.Damage();
-			//sets type back to the actual type it should be so spirit shard doesn't just spawn a grenade
-			Projectile.type = Bomb_Artifact.projectileID;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity) {

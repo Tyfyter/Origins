@@ -417,7 +417,7 @@ namespace Origins.Items {
 	}
 	public class Firestarter_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
 		public override void UpdateProjectile(Projectile projectile, int time) {
-			if (projectile.numUpdates == -1 && time % 30 == 0) {
+			if (projectile.numUpdates == -1 && time > 0 && time % 30 == 0) {
 				projectile.DamageArtifactMinion(2, true);
 			}
 			if (Main.rand.NextBool(3, 4)) {
