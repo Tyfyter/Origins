@@ -39,9 +39,8 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.Book)
-			.AddIngredient(ItemID.FallenStar, 5)
-			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7)
+			.AddIngredient(ItemID.Book, 5)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 10)
 			.AddTile(TileID.Bookcases)
 			.Register();
 		}

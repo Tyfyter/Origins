@@ -11,7 +11,8 @@ namespace Origins.Items.Armor.Riven {
 	public class Riven_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
             "ArmorSet",
-            "GenericBoostGear"
+            "GenericBoostGear",
+			"Torn"
         ];
         public const float lightMagnitude = 0.3f;
 		public short GlowMask = -1;

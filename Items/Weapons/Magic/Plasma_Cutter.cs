@@ -18,8 +18,6 @@ namespace Origins.Items.Weapons.Magic {
             "MagicGun"
         ];
 		public override void SetStaticDefaults() {
-			//ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Salty_Seed>()] = Type;
-			//ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Salty_Seed>();
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

@@ -92,7 +92,7 @@ namespace Origins.Items.Armor.Lost {
 	}
 }
 namespace Origins.Buffs {
-	public class Defiled_Exhaustion_Debuff : ModBuff {
+	public class Mana_Buffer_Debuff : ModBuff {
 		
 		public override void Update(Player player, ref int buffIndex) {
 			player.manaRegenBuff = false;

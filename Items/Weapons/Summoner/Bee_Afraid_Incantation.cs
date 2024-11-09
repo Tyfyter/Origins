@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.NPCs;
 using ReLogic.Content;
 using System;
@@ -35,6 +36,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.UseSound = SoundID.Item97;
 			Item.channel = true;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.BeeWax, 10)
+			.AddIngredient(ItemID.Book, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);

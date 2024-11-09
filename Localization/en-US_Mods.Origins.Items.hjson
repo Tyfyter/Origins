@@ -1,7 +1,7 @@
 GenericTooltip: {
 	MinuteCooldown: "{0} minute cooldown"
 	SecondCooldown: "{0} second cooldown"
-	TornSeverity: +{0}% torn severity
+	TornSeverity: +{0}% applied torn severity
 }
 
 Krunch_Mix: {
@@ -2551,7 +2551,7 @@ Infusion: {
 
 Innermost_Manifest: {
 	DisplayName: Innermost Manifest
-	Tooltip: ""
+	Tooltip: Attacks tenderize targets
 }
 
 Laser_Tag_Gun: {
@@ -2604,7 +2604,7 @@ Rigged_Cubix: {
 
 Seam_Beam: {
 	DisplayName: Seam Beam
-	Tooltip: ""
+	Tooltip: Attacks tenderize targets
 }
 
 Splitsplash: {
@@ -2752,7 +2752,11 @@ Vorpal_Sword: {
 
 Vorpal_Sword_Cursed: {
 	DisplayName: Vorpal Sword
-	Tooltip: ""
+	Tooltip:
+		'''
+		Attacks tenderize targets
+		Will attack for you if in your inventory
+		'''
 }
 
 Potato_Launcher: {
@@ -2785,7 +2789,11 @@ Astoxo: {
 
 Bleeding_Obsidian_Kunai: {
 	DisplayName: Bleeding Obsidian Kunai
-	Tooltip: "'Be careful, it's sharp'"
+	Tooltip:
+		'''
+		Inflicts bleeding, cursed flames, ichor and torn
+		'Be careful, it's sharp'
+		'''
 }
 
 Bloodletter: {
@@ -3406,7 +3414,11 @@ Triple_Threat: {
 
 Ocotoral_Bud: {
 	DisplayName: Ocotoral Bud
-	Tooltip: Summons a mobile barnacle turret to fight for you
+	Tooltip:
+		'''
+		Summons a mobile barnacle turret to fight for you
+		Attacks tenderize targets
+		'''
 }
 
 World_Cracker_Relic_Item: {
@@ -3678,6 +3690,7 @@ Control_Locus: {
 		'''
 		Ranged projectiles are duplicated 5 times
 		Explosive projectiles are duplicated twice
+		All duplicated projectiles actually deal damage based on whether or not ammo was consumed
 		20% chance not to consume ammo
 		'''
 }
@@ -3691,7 +3704,11 @@ Terrarian_Voodoo_Doll: {
 
 Avulsion: {
 	DisplayName: Avulsion
-	Tooltip: Fires medium-range pulses
+	Tooltip:
+		'''
+		Fires medium-range pulses
+		Attacks tenderize targets
+		'''
 }
 
 Primordial_Soup: {
@@ -3709,7 +3726,7 @@ Playtimes_Over: {
 	Tooltip:
 		'''
 		Attacks tenderize targets
-		+13% torn severity
+		+13% applied torn severity
 		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
 		'''
 }
@@ -4235,7 +4252,11 @@ Ichor_Canister: {
 
 Alkahest_Canister: {
 	DisplayName: Alkahest Canister
-	Tooltip: Releases alkahest drops upon impact
+	Tooltip:
+		'''
+		Releases alkahest drops upon impact
+		Tenderizes the target
+		'''
 }
 
 Alkaline_Canister: {
@@ -4389,7 +4410,7 @@ Speed_Booster: {
 	Tooltip:
 		'''
 		The wearer can run super fast and even faster after taking damage
-		Allows the ability to climb walls and dash into enemies
+		Allows the user to climb walls and dash into enemies
 		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash
@@ -4398,7 +4419,11 @@ Speed_Booster: {
 
 Alkahest_Dart: {
 	DisplayName: Alkahest Dart
-	Tooltip: Leaves a trail of alkahest behind it
+	Tooltip:
+		'''
+		Leaves a trail of alkahest behind it
+		Tenderizes the target
+		'''
 }
 
 Chew_Toy: {

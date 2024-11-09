@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using Origins.Dev;
 using System.IO;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Amebolize_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
@@ -42,6 +43,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.glowMask = glowmask;
 			Item.channel = true;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Book, 5)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);

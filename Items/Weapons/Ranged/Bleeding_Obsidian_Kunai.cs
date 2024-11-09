@@ -66,10 +66,7 @@ namespace Origins.Items.Weapons.Ranged {
 			target.AddBuff(BuffID.Bleeding, 300);
 			target.AddBuff(BuffID.CursedInferno, 300);
 			target.AddBuff(BuffID.Ichor, 300);
-			target.AddBuff(BuffID.OnFire, 300);
 			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
-			/*PlayerDeathReason reason = new PlayerDeathReason();
-			reason.SourceCustomReason = target.name + " cut themselves on broken glass";*/
 		}
 	}
 }

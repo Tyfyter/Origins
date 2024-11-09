@@ -1,28 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Weapons.Magic;
-using Origins.NPCs;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-using System.IO;
-using Origins.World.BiomeData;
 namespace Origins.Items.Weapons.Summoner {
 	public class Scabcoral_Lyre : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Torn",
-			"TornSource"
-		];
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

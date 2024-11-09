@@ -432,7 +432,7 @@ namespace Origins {
 			}
 			if (allManaDamage) {
 				Player.CheckMana(manaDamageToTake, true);
-				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 192);
+				Player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 192);
 				PlayerLoader.PostHurt(Player, info);
 				return true;
 			}
@@ -559,7 +559,7 @@ namespace Origins {
 			lifeRegenTimeSinceHit = 0;
 			if (manaDamageToTake > 0) {
 				Player.CheckMana(manaDamageToTake, true);
-				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+				Player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 50);
 			}
 			bool isSelfDamage = false;
 			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {

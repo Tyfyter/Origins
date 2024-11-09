@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 unit = velocity.SafeNormalize(default);
 			position += unit * 56 + new Vector2(unit.Y, -unit.X) * player.direction * 2;
 		}
+		public override Vector2? HoldoutOffset() => Vector2.Zero;
 	}
 	public class Laseer : ModProjectile {
 		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();

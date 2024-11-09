@@ -44,7 +44,7 @@ Items/Armor/Fiberglass/Fiberglass_Body_Arms
 Items/Armor/Fiberglass/Fiberglass_Body_Body_still
 Items/Armor/Fiberglass/Fiberglass_Body_Female
 
-Items/Armor/Lost/Defiled_Exhaustion_Buff
+Items/Armor/Lost/Mana_Buffer_Buff
 
 Items/Armor/Myth/Wings_46
 

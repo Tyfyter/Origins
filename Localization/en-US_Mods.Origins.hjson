@@ -522,11 +522,6 @@ Buffs: {
 		Description: The {§Defiled} Blight will light your way
 	}
 
-	Defiled_Exhaustion_Debuff: {
-		DisplayName: Mana Buffer
-		Description: You cannot regenerate mana naturally
-	}
-
 	Fervor_Buff: {
 		DisplayName: Fervor
 		Description: 10% increased attack speed
@@ -580,6 +575,11 @@ Buffs: {
 	Maelstrom_Buff_Zap: {
 		DisplayName: Mods.Origins.BuffName.Maelstrom_Buff_Zap
 		Description: Mods.Origins.BuffDescription.Maelstrom_Buff_Zap
+	}
+
+	Mana_Buffer_Debuff: {
+		DisplayName: Mana Buffer
+		Description: You cannot regenerate mana naturally
 	}
 
 	Meberoid_Buff: {
