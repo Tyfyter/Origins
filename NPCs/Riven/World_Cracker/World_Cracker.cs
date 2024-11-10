@@ -383,7 +383,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
-			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(104, (int)(48 * NPC.frameCounter), 62, 58), NPC);
+			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(104, (int)(60 * NPC.frameCounter), 62, 58), NPC);
 		}
 		public override void Init() {
 			NPC.frameCounter = Main.rand.Next(2);

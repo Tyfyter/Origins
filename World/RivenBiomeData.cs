@@ -109,8 +109,8 @@ namespace Origins.World.BiomeData {
 			public const float Shark1 = 0.4f;
 			public const float Worm = 0.4f;
 			public const float Crawler = 0.8f;
-			public const float Mimic = 0.1f;
-			public const float Whip = 0.2f;
+			public const float Mimic = 0.01f;
+			public const float Whip = 0.01f;
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
 				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
