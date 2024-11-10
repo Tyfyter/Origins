@@ -11,6 +11,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Flare_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -141,7 +142,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
 			ID = Type;
 		}
-		bool initialized = false;
+		//bool initialized = false;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
