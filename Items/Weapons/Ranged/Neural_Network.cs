@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void Update(Player player, ref int buffIndex) {
 			if (player.HeldItem.type != Neural_Network.ID) {
 				player.DelBuff(buffIndex--);
-			} else {
+			} else if (player.whoAmI == Main.myPlayer) {
 				player.GetAttackSpeed(DamageClass.Ranged) += 0.05f * player.buffTime[buffIndex];
 				player.GetDamage(DamageClass.Ranged).Base -= 0.13f * player.buffTime[buffIndex];
 			}
