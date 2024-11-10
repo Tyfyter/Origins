@@ -156,6 +156,7 @@ namespace Origins.Items.Weapons.Melee {
 				if (!forcedCrit) dir += dir.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
 				target.velocity += dir.SafeNormalize(default) * hit.Knockback;
 			}
+			target.SyncCustomKnockback();
 			forcedCrit = false;
 		}
 		public override void CutTiles() {

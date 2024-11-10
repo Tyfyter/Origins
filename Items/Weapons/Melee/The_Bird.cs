@@ -100,6 +100,7 @@ namespace Origins.Items.Weapons.Melee {
 				target.velocity = new(knockback.Y * player.direction * 0.25f, -knockback.X);
 				BirdUp(target, hit.SourceDamage);
 			}
+			target.SyncCustomKnockback();
 		}
 		public static void PreHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
@@ -211,7 +212,8 @@ namespace Origins.Items.Weapons.Melee {
 				target.velocity = knockback * Projectile.velocity * 1.25f * (hit.Crit ? 1.4f : 1f);
 				The_Bird.BirdUp(target, hit.SourceDamage);
 			}
-			if (forcedCrit) CombatText.NewText(target.Hitbox, Color.Silver, damageDone, true);
+			if (forcedCrit) OriginExtensions.DoCustomCombatText(target.Hitbox, Color.Silver, damageDone, true);
+			target.SyncCustomKnockback();
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			DrawData data = GetDrawData();

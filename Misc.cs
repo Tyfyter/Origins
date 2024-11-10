@@ -2709,6 +2709,28 @@ namespace Origins {
 			}
 			return foundTarget;
 		}
+		public static void DoCustomCombatText(Rectangle location, Color color, int amount, bool dramatic = false, bool dot = false, bool fromFriendly = true) {
+			CombatText.NewText(location, color, amount, dramatic, dot);
+			if (Main.netMode != NetmodeID.SinglePlayer) {
+				if (fromFriendly) color *= 0.4f;
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.custom_combat_text);
+
+				packet.Write(location.X);
+				packet.Write(location.Y);
+				packet.Write(location.Width);
+				packet.Write(location.Height);
+
+				packet.Write(color.PackedValue);
+
+				packet.Write(amount);
+
+				packet.Write(dramatic);
+
+				packet.Write(dot);
+				packet.Send(-1, Main.myPlayer);
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
@@ -3273,6 +3295,21 @@ namespace Origins {
 					i++;
 				}
 			}
+		}
+		public static void DoCustomKnockback(this NPC npc, Vector2 velocity, bool fromNet = false) {
+			npc.velocity = velocity;
+			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.custom_knockback);
+				packet.Write(npc.whoAmI);
+				packet.Write(velocity.X);
+				packet.Write(velocity.Y);
+				packet.Send();
+			}
+			Origins.instance.Logger.Info("Custom Knockback:" + velocity);
+		}
+		public static void SyncCustomKnockback(this NPC npc, bool fromNet = false) {
+			DoCustomKnockback(npc, npc.velocity, fromNet);
 		}
 	}
 	public static class ContentExtensions {

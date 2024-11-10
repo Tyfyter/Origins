@@ -105,6 +105,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.velocity -= target.velocity * target.knockBackResist;
 			if (!float.IsNaN(hit.Knockback)) target.velocity += Projectile.velocity.SafeNormalize(default) * hit.Knockback * (Projectile.velocity.Y > 0 ? 2 : 0.5f);
+			target.SyncCustomKnockback();
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.ai[0] = 1;

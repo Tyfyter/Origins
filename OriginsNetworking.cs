@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Questing;
 using Origins.Tiles;
@@ -12,7 +13,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.Origins.NetMessageType;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -34,6 +34,7 @@ namespace Origins {
 					case sync_guid:
 					case inflict_assimilation:
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
+					case custom_knockback:
 					altHandle = true;
 					break;
 
@@ -67,6 +68,18 @@ namespace Origins {
 					ModContent.GetInstance<OriginSystem>().RemoveVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), fromNet: true);
 					break;
 
+					case custom_combat_text:
+					CombatText.NewText(
+						new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()),
+						new Color() {
+							PackedValue = reader.ReadUInt32()
+						},
+						reader.ReadInt32(),
+						reader.ReadBoolean(),
+						reader.ReadBoolean()
+					);
+					break;
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -85,6 +98,7 @@ namespace Origins {
 					case sync_guid:
 					case inflict_assimilation:
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
+					case custom_knockback:
 					altHandle = true;
 					break;
 
@@ -102,6 +116,25 @@ namespace Origins {
 
 					case remove_void_lock:
 					ModContent.GetInstance<OriginSystem>().RemoveVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), netOwner: whoAmI);
+					break;
+
+					case custom_combat_text:
+					ModPacket packet = GetPacket();
+					packet.Write(custom_combat_text);
+
+					packet.Write(reader.ReadInt32());
+					packet.Write(reader.ReadInt32());
+					packet.Write(reader.ReadInt32());
+					packet.Write(reader.ReadInt32());
+
+					packet.Write(reader.ReadUInt32());
+
+					packet.Write(reader.ReadInt32());
+
+					packet.Write(reader.ReadBoolean());
+
+					packet.Write(reader.ReadBoolean());
+					packet.Send(-1, whoAmI);
 					break;
 
 					default:
@@ -267,6 +300,10 @@ namespace Origins {
 						Laser_Tag_Console.ScorePoint(Main.player[sender], true, sender);
 						break;
 					}
+					case custom_knockback: {
+						Main.npc[reader.ReadInt32()].DoCustomKnockback(new(reader.ReadSingle(), reader.ReadSingle()), Main.netMode == NetmodeID.MultiplayerClient);
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -292,6 +329,8 @@ namespace Origins {
 			internal const byte laser_tag_respawn = 16;
 			internal const byte laser_tag_score = 17;
 			internal const byte sync_void_locks = 18;
+			internal const byte custom_knockback = 19;
+			internal const byte custom_combat_text = 20;
 		}
 	}
 }
