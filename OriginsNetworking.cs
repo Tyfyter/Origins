@@ -7,6 +7,7 @@ using Origins.Tiles.Other;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -269,6 +270,13 @@ namespace Origins {
 								for (int i = 0; i < targetPlayer.inventory.Length; i++) {
 									if (targetPlayer.inventory[i].type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond) targetPlayer.DropItem(targetPlayer.GetSource_Death(), targetPlayer.MountedCenter, ref targetPlayer.inventory[i]);
 								}
+							}
+							if (Main.netMode != NetmodeID.Server) {
+								SoundEngine.PlaySound(Sounds.LaserTag.Death, Main.player[target].Center);
+							}
+						} else {
+							if (Main.netMode != NetmodeID.Server) {
+								SoundEngine.PlaySound(Sounds.LaserTag.Hurt, Main.player[target].Center);
 							}
 						}
 						if (Main.netMode == NetmodeID.Server) {

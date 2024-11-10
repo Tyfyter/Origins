@@ -76,6 +76,9 @@ namespace Origins.Tiles.Other {
 				packet.Write((byte)scorer.whoAmI);
 				packet.Send(ignoreClient: ignoreClient);
 			}
+			if (Main.netMode != NetmodeID.Server && (scorer.whoAmI == Main.myPlayer || !LaserTagRules.HitsArePoints)) {
+				SoundEngine.PlaySound(Origins.Sounds.LaserTag.Score, scorer.Center);
+			}
 		}
 		//static Time_Radix[] radices;
 		public static void ProcessLaserTag() {

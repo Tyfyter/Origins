@@ -528,6 +528,15 @@ namespace Origins {
 				MaxInstances = 0,
 				Volume = 0.75f
 			};
+			Sounds.LaserTag.Hurt = new SoundStyle("Origins/Sounds/Custom/LaserTag/Hurt", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.LaserTag.Death = new SoundStyle("Origins/Sounds/Custom/LaserTag/Death", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.LaserTag.Score = new SoundStyle("Origins/Sounds/Custom/LaserTag/Score", SoundType.Sound) {
+				MaxInstances = 0
+			};
 			//OriginExtensions.initClone();
 			Music.LoadMusic();
 
@@ -853,6 +862,12 @@ namespace Origins {
 			public static SoundStyle RivenBass = SoundID.Item4;
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 			public static SoundStyle IMustScream = SoundID.Roar;
+
+			public static class LaserTag {
+				public static SoundStyle Hurt = SoundID.DSTMaleHurt;
+				public static SoundStyle Death = SoundID.DD2_KoboldDeath;
+				public static SoundStyle Score = SoundID.DrumTamaSnare;
+			}
 		}
 		public override object Call(params object[] args) {
 			return args[0] switch {

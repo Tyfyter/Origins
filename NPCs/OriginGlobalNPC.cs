@@ -313,7 +313,7 @@ namespace Origins.NPCs {
 				if (beeIncantationDebuff) {
 					damageBoost += 5f;
 				}
-				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost);
+				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost * ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type]);
 			} else if (npc.HasBuff(Futurephones_Buff.ID)) {
 				modifiers.SourceDamage *= 1.05f;
 				if (Main.rand.NextBool(10)) modifiers.SetCrit();
@@ -372,7 +372,7 @@ namespace Origins.NPCs {
 								currentEnd,
 								default,
 								Felnum_Shock_Leader.ID,
-								5,
+								Main.rand.RandomRound(Math.Max(5 * ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type], 1)),
 								hit.Knockback,
 								projectile.owner,
 								currentStart.X,
