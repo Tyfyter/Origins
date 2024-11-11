@@ -947,7 +947,7 @@ namespace Origins.Dev {
 					gameModeData = Main.GameModeInfo,
 					playerCountForMultiplayerDifficultyOverride = 1
 				});
-				expertData.AppendAltStat(data, "MaxLife", tempInstance.lifeMax * (npc.boss ? 2 : 1));
+				expertData.AppendAltStat(data, "MaxLife", tempInstance.lifeMax);
 				expertData.AppendAltStat(data, "Defense", tempInstance.defense);
 				expertData.AppendAltStat(data, "KBResist", 1 - tempInstance.knockBackResist);
 				expertData.AppendAltStat(data, "Immunities", tempInstance.GetImmunities());
@@ -959,7 +959,7 @@ namespace Origins.Dev {
 					gameModeData = Main.GameModeInfo,
 					playerCountForMultiplayerDifficultyOverride = 1
 				});
-				masterData.AppendAltStat(data, "MaxLife", tempInstance.lifeMax * (npc.boss ? 3 : 1));
+				masterData.AppendAltStat(data, "MaxLife", tempInstance.lifeMax);
 				masterData.AppendAltStat(data, "Defense", tempInstance.defense);
 				masterData.AppendAltStat(data, "KBResist", 1 - tempInstance.knockBackResist);
 				masterData.AppendAltStat(data, "Immunities", tempInstance.GetImmunities());
