@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace Origins.Tiles.Dusk {
 		public string[] Categories => [
 			"Ore"
 		];
+		public bool? Hardmode = true;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

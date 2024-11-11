@@ -27,6 +27,7 @@ namespace Origins.Tiles.Brine
 		public string[] Categories => [
 			"Ore"
 		];
+		public bool? Hardmode = true;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}
