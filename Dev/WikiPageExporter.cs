@@ -708,8 +708,7 @@ namespace Origins.Dev {
 				}
 				if (weaponType == WeaponTypes.None) {
 					if (item.CountsAsClass(DamageClasses.Explosive)) {
-
-						if (weaponType == WeaponTypes.None) weaponType = WeaponTypes.OtherExplosive;
+						if (weaponType == WeaponTypes.None) weaponType = item.CountsAsClass(DamageClasses.ThrownExplosive) ? WeaponTypes.ThrownExplosive : WeaponTypes.OtherExplosive;
 					}
 					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
 						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
@@ -768,9 +767,6 @@ namespace Origins.Dev {
 					}
 					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Ranged)) {
 						weaponType = WeaponTypes.OtherRanged;
-					}
-					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClasses.Explosive)) {
-						weaponType = item.CountsAsClass(DamageClasses.ThrownExplosive) ? WeaponTypes.ThrownExplosive : WeaponTypes.OtherExplosive;
 					}
 				}
 				if (weaponType != WeaponTypes.None) types.Add(weaponType.ToString());
