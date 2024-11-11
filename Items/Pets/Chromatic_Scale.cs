@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Pets;
 using System;
 using System.IO;
@@ -11,10 +12,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Chromatic_Scale : ModItem {
+	public class Chromatic_Scale : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		
+		public string[] Categories => [
+			"Pet",
+			"DeveloperItem"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;

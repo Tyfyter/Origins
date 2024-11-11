@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Dev;
 using Origins.Items.Pets;
 using Origins.LootConditions;
 using System;
@@ -10,14 +10,17 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
 
 namespace Origins.Items.Pets {
-	public class Chee_Set : ModItem {
+	public class Chee_Set : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Pet",
+			"DeveloperItem"
+		];
 		public override string Texture => typeof(Chew_Toy).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([

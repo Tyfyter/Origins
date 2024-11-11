@@ -1,18 +1,15 @@
-﻿using Origins.Items.Accessories;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Microsoft.Xna.Framework;
 using Origins.NPCs;
 using System;
-using Terraria.WorldBuilding;
-using System.Collections.Generic;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
+using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {

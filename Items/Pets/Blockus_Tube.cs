@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Pets;
 using System;
 using Terraria;
@@ -7,10 +8,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Blockus_Tube : ModItem {
+	public class Blockus_Tube : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		
+		public string[] Categories => [
+			"Pet"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.value = Item.sellPrice(gold: 5);

@@ -1,18 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Pets;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Strange_Power_Up : ModItem {
+	public class Strange_Power_Up : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		
+		public string[] Categories => [
+			"Pet",
+			"DeveloperItem"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;
