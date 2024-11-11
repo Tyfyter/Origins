@@ -36,7 +36,7 @@ namespace Origins.Tiles.Dusk {
 		public string[] Categories => [
 			"Ore"
 		];
-		public bool? Hardmode = true;
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}
