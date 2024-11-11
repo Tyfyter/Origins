@@ -11,8 +11,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-    public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile {
-        public override void SetStaticDefaults() {
+	public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
@@ -22,7 +22,6 @@ namespace Origins.Tiles.Ashen {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 165, 0), name);
 			mergeID = TileID.Demonite;
-			MinPick = 55;
 			DustType = DustID.Torch;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
@@ -39,7 +38,7 @@ namespace Origins.Tiles.Ashen {
 	public class Sanguinite_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 		   "Ore"
-	   ];
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.DemoniteOre] = ItemID.CrimtaneOre;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.CrimtaneOre] = ItemType<Lost_Ore_Item>();
@@ -57,6 +56,7 @@ namespace Origins.Tiles.Ashen {
 			string key = base_key + "Crafting";
 			data.AppendStat("Crafting", Language.GetTextValue(key), key);
 			data.Add("Tier", 5);
+			data["PickReq"] = 55;
 		}
 	}
 }
