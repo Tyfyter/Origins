@@ -80,15 +80,15 @@ namespace Origins.Items.Armor {
 		}
 		public override IEnumerable<(string, JObject)> GetStats(IWikiArmorSet set) {
 			if (set.SharedPageSecondary) yield break;
-			List<JObject> statGroups = new();
+			List<JObject> statGroups = [];
 			string[] baseTypes = ["Item", "Armor", "ArmorSet"];
 			foreach (var item in ApplySets(GetSetAndSubSets(set))) {
-				JObject data = new();
+				JObject data = [];
 				JArray types = new(baseTypes);
 				foreach (string type in set.SetCategories) types.Add(type);
 				data.Add("Types", types);
 				data.Add("SetName", item.set.ArmorSetName);
-				JArray images = new JArray() { $"ArmorSets/{item.set.ArmorSetName}" };
+				JArray images = [$"ArmorSets/{item.set.ArmorSetName}"];
 				if (item.set.HasFemaleVersion) images.Add($"ArmorSets/{item.set.ArmorSetName}_Female");
 				data.Add("Images", images);
 				data.Add("Defense", (int)item.dummyPlayer.statDefense);
@@ -99,25 +99,24 @@ namespace Origins.Items.Armor {
 				statGroups.Add(data);
 			}
 			if (set.CreateMergedSet && statGroups.Count > 1) {
-				JObject data = new();
+				JObject data = [];
 				JArray types = new(baseTypes);
 				foreach (string type in set.SetCategories) types.Add(type);
 				data.Add("Types", types);
 				data.Add("SetName", set.MergedArmorSetName);
 				data.Add("SetBonus", statGroups[0].GetValue("SetBonus"));
 
-				JArray maleSets = new JArray();
-				JArray femaleSets = new JArray();
+				JArray maleSets = [];
+				JArray femaleSets = [];
 				string defenseString = "";
 				for (int i = 0; i < statGroups.Count; i++) {
 					JObject statGroup = statGroups[i];
 					JArray setImages = statGroup.Value<JArray>("Images");
 					maleSets.Add(setImages[0]);
 					if (setImages.Count > 1) femaleSets.Add(setImages[1]);
-
-					defenseString += $"<img src={WikiPageExporter.GetWikiItemImagePath(ItemLoader.GetItem(statGroup.Value<int>("IconItem")))}.png>{statGroup.GetValue("Defense")}";
+					defenseString += $"<a is=a-link image={WikiPageExporter.GetWikiItemImagePath(ItemLoader.GetItem(statGroup.Value<int>("IconItem")))}></a>{statGroup.GetValue("Defense")}";
 				}
-				JArray images = new JArray() { maleSets };
+				JArray images = [maleSets];
 				if (femaleSets.Count > 0) images.Add(femaleSets);
 				data.Add("Images", images);
 				data.Add("Defense", defenseString);
