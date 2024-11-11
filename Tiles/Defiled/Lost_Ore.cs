@@ -2,7 +2,6 @@
 using Origins.Dev;
 using Origins.Journal;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,6 +20,7 @@ namespace Origins.Tiles.Defiled {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(225, 225, 225), name);
 			mergeID = TileID.Demonite;
+			MinPick = 55;
 			DustType = DustID.WhiteTorch;
             HitSound = SoundID.Tink;
         }

@@ -9,13 +9,12 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public abstract class MaterialItem : ModItem, ICustomWikiStat {
+	public abstract class MaterialItem : ModItem, ICustomWikiStat {
 		protected override bool CloneNewInstances => true;
 		public virtual bool HasTooltip => false;
 		public virtual bool HasGlowmask => false;

@@ -22,6 +22,7 @@ namespace Origins.Tiles.Ashen {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 165, 0), name);
 			mergeID = TileID.Demonite;
+			MinPick = 55;
 			DustType = DustID.Torch;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

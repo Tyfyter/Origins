@@ -16,7 +16,7 @@ namespace Origins.Tiles.Brine
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(79, 86, 207), CreateMapEntryName());
 			mergeID = TileID.Mud;
-			MinPick = 150;
+			MinPick = 180;
 			HitSound = SoundID.Dig;
 		}
 		public override bool CanExplode(int i, int j) {

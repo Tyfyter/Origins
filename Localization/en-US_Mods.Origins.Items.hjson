@@ -1586,7 +1586,7 @@ Ash_Urn: {
 	Tooltip: The day of Verdict will come...
 }
 
-Silicon.DisplayName: Silicon
+Silicon.DisplayName: Silicon Ore
 
 Strange_String: {
 	DisplayName: Strange String
@@ -1599,7 +1599,7 @@ Valkyrum_Bar.DisplayName: Valkyrum Bar
 
 Fungarust: {
 	DisplayName: Fungarust
-	Tooltip: Catalyst of rusting metal
+	Tooltip: Thrives off of rusted metal
 }
 
 Wilting_Rose_Item: {

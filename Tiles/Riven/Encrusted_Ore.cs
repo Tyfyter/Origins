@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
@@ -9,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Encrusted_Ore : OriginTile, IComplexMineDamageTile {
+	public class Encrusted_Ore : OriginTile, IComplexMineDamageTile {
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
@@ -21,7 +20,8 @@ namespace Origins.Tiles.Riven {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(40, 148, 207), name);
 			mergeID = TileID.Crimtane;
-            HitSound = SoundID.Tink;
+			MinPick = 55;
+			HitSound = SoundID.Tink;
         }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.02f * GlowValue;
