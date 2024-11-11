@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
 using Terraria;
@@ -20,7 +21,6 @@ namespace Origins.Tiles.Defiled {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(225, 225, 225), name);
 			mergeID = TileID.Demonite;
-			MinPick = 55;
 			DustType = DustID.WhiteTorch;
             HitSound = SoundID.Tink;
         }
@@ -44,7 +44,14 @@ namespace Origins.Tiles.Defiled {
 			Item.CloneDefaults(ItemID.DemoniteOre);
 			Item.createTile = TileType<Lost_Ore>();
 		}
-    }
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 5);
+			data["PickReq"] = 55;
+		}
+	}
 	public class Lost_Ore_Entry : JournalEntry {
 		public override string TextKey => "Lost_Ore";
 	}

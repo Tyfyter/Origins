@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
@@ -20,7 +21,6 @@ namespace Origins.Tiles.Riven {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(40, 148, 207), name);
 			mergeID = TileID.Crimtane;
-			MinPick = 55;
 			HitSound = SoundID.Tink;
         }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
@@ -46,5 +46,12 @@ namespace Origins.Tiles.Riven {
 			Item.CloneDefaults(ItemID.CrimtaneOre);
 			Item.createTile = TileType<Encrusted_Ore>();
 		}
-    }
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 5);
+			data["PickReq"] = 55;
+		}
+	}
 }
