@@ -4,10 +4,12 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+using PegasusLib;
+using PegasusLib.Reflection;
+using DelegateMethods = PegasusLib.Reflection.DelegateMethods;
 
 namespace Origins.Reflection {
 	public class PlayerMethods : ReflectionLoader {
-		public override Type ParentType => GetType();
 		private delegate void ApplyNPCOnHitEffects_Del(Item sItem, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone);
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ApplyNPCOnHitEffects")]
 		private static ApplyNPCOnHitEffects_Del _ApplyNPCOnHitEffects;
@@ -35,23 +37,23 @@ namespace Origins.Reflection {
 		//private delegate void GrabItems_Del(int playerIndex);
 		//private static GrabItems_Del _GrabItems;
 		public static void ApplyNPCOnHitEffects(Player player, Item sItem, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone) {
-			Basic._target.SetValue(_ApplyNPCOnHitEffects, player);
+			DelegateMethods._target.SetValue(_ApplyNPCOnHitEffects, player);
 			_ApplyNPCOnHitEffects(sItem, itemRectangle, damage, knockBack, npcIndex, dmgRandomized, dmgDone);
 		}
 		public static void PickupItem(Player player, int worldItemArrayIndex, Item itemToPickUp) {
-			Basic._target.SetValue(_PickupItem, player);
+			DelegateMethods._target.SetValue(_PickupItem, player);
 			_PickupItem(player.whoAmI, worldItemArrayIndex, itemToPickUp);
 		}
 		public static void PullItem_Common(Player player, Item itemToPickUp, float xPullSpeed) {
-			Basic._target.SetValue(_PullItem_Common, player);
+			DelegateMethods._target.SetValue(_PullItem_Common, player);
 			_PullItem_Common(itemToPickUp, xPullSpeed);
 		}
 		public static void PullItem_Pickup(Player player, Item itemToPickUp, float speed, int acc) {
-			Basic._target.SetValue(_PullItem_Pickup, player);
+			DelegateMethods._target.SetValue(_PullItem_Pickup, player);
 			_PullItem_Pickup(itemToPickUp, speed, acc);
 		}
 		public static void PullItem_ToVoidVault(Player player, Item itemToPickUp) {
-			Basic._target.SetValue(_PullItem_ToVoidVault, player);
+			DelegateMethods._target.SetValue(_PullItem_ToVoidVault, player);
 			_PullItem_ToVoidVault(itemToPickUp);
 		}
 		/*public static void GrabItems(Player player) {

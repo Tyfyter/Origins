@@ -11,6 +11,7 @@ using Tyfyter.Utils;
 
 using Origins.Dev;
 using Origins.Projectiles;
+using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
 	public class Breach : ModItem, ICustomWikiStat {
 		public string[] Categories => [

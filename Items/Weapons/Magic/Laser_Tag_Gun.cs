@@ -10,6 +10,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Reflection;
+using Terraria.Chat;
+using Terraria.UI.Chat;
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem, ICustomWikiStat {
 		static short glowmask;

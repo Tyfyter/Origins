@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria.ModLoader;
+using PegasusLib;
 
 namespace Origins.Reflection {
 	public class AssetRepositoryMethods : ILoadable {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Reflection;
 using Origins.UI;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ using Terraria.ModLoader.Config;
 using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
 using Terraria.UI;
+using Terraria.UI.Chat;
+using ThoriumMod.NPCs;
 
 namespace Origins.Tiles.Other {
 	public class Laser_Tag_Console : ModTile, IGlowingModTile {
@@ -78,6 +81,9 @@ namespace Origins.Tiles.Other {
 			}
 			if (Main.netMode != NetmodeID.Server && (scorer.whoAmI == Main.myPlayer || !LaserTagRules.HitsArePoints)) {
 				SoundEngine.PlaySound(Origins.Sounds.LaserTag.Score, scorer.Center);
+				ChatMessageContainerMethods.CreateCustomMessage(
+					ChatManager.ParseMessage(Language.GetTextValue("Mods.Origins.Laser_Tag.Score", scorer.name), Main.teamColor[scorer.team])
+				);
 			}
 		}
 		//static Time_Radix[] radices;
@@ -110,19 +116,19 @@ namespace Origins.Tiles.Other {
 				winnerColor = Main.teamColor[team];
 				switch (team) {
 					case 1:
-					winner = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Red");
+					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Red");
 					break;
 					case 2:
-					winner = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Green");
+					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Green");
 					break;
 					case 3:
-					winner = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Blue");
+					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Blue");
 					break;
 					case 4:
-					winner = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Yellow");
+					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Yellow");
 					break;
 					case 5:
-					winner = Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Team_Purple");
+					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Purple");
 					break;
 					default:
 					case 0:
@@ -204,7 +210,7 @@ namespace Origins.Tiles.Other {
 			}
 			if (winner is not null) {
 				if (Main.netMode == NetmodeID.Server) {
-					ChatHelper.BroadcastChatMessage(Language.GetOrRegister("Mods.Origins.Status_Messages.Laser_Tag_Victory").ToNetworkText(winner), winnerColor);
+					ChatHelper.BroadcastChatMessage(Language.GetOrRegister("Mods.Origins.Laser_Tag.Victory").ToNetworkText(winner), winnerColor);
 					ModPacket packet = Origins.instance.GetPacket();
 					packet.Write(Origins.NetMessageType.end_laser_tag);
 					packet.Send();

@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Tyfyter.Utils;
 using Terraria.Audio;
+using PegasusLib;
 
 namespace Origins.Tiles.Other {
 	public class Omnidirectional_Claymore_Tile : ModTile {

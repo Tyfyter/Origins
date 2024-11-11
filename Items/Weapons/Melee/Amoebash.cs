@@ -6,6 +6,7 @@ using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;

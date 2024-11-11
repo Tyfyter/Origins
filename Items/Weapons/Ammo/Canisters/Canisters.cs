@@ -9,6 +9,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Tiles.Brine;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;

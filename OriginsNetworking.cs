@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Questing;
+using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Other;
 using System;
@@ -13,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 using static Origins.Origins.NetMessageType;
 
 namespace Origins {
@@ -255,28 +257,32 @@ namespace Origins {
 					break;
 					case laser_tag_hit: {
 						Player attacker = Main.player[reader.ReadByte()];
-						byte target = reader.ReadByte();
+						Player target = Main.player[reader.ReadByte()];
 						if (Laser_Tag_Console.LaserTagRules.Teams) {
 							Laser_Tag_Console.LaserTagTeamHits[attacker.team]++;
 						}
 						attacker.OriginPlayer().laserTagHits++;
 						if (Laser_Tag_Console.LaserTagRules.HitsArePoints) Laser_Tag_Console.ScorePoint(attacker, true);
-						OriginPlayer originTarget = Main.player[target].OriginPlayer();
+						OriginPlayer originTarget = target.OriginPlayer();
 						if (--originTarget.laserTagHP <= 0) {
 							originTarget.laserTagVestActive = false;
 							originTarget.laserTagRespawnDelay = Laser_Tag_Console.LaserTagRules.RespawnTime;
-							if (target == Main.myPlayer) {
-								Player targetPlayer = Main.player[target];
-								for (int i = 0; i < targetPlayer.inventory.Length; i++) {
-									if (targetPlayer.inventory[i].type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond) targetPlayer.DropItem(targetPlayer.GetSource_Death(), targetPlayer.MountedCenter, ref targetPlayer.inventory[i]);
+							if (target.whoAmI == Main.myPlayer) {
+								for (int i = 0; i < target.inventory.Length; i++) {
+									if (target.inventory[i].type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond) target.DropItem(target.GetSource_Death(), target.MountedCenter, ref target.inventory[i]);
 								}
 							}
 							if (Main.netMode != NetmodeID.Server) {
-								SoundEngine.PlaySound(Sounds.LaserTag.Death, Main.player[target].Center);
+								SoundEngine.PlaySound(Sounds.LaserTag.Death, target.Center);
+								ChatMessageContainerMethods.CreateCustomMessage(
+									ChatManager.ParseMessage(attacker.name, Main.teamColor[attacker.team]),
+									ChatManager.ParseMessage(" [i:Origins/Laser_Tag_Gun] ", Color.White),
+									ChatManager.ParseMessage(target.name, Main.teamColor[target.team])
+								);
 							}
 						} else {
 							if (Main.netMode != NetmodeID.Server) {
-								SoundEngine.PlaySound(Sounds.LaserTag.Hurt, Main.player[target].Center);
+								SoundEngine.PlaySound(Sounds.LaserTag.Hurt, target.Center);
 							}
 						}
 						if (Main.netMode == NetmodeID.Server) {
@@ -284,7 +290,7 @@ namespace Origins {
 							ModPacket packet = GetPacket();
 							packet.Write(laser_tag_hit);
 							packet.Write((byte)attacker.whoAmI);
-							packet.Write(target);
+							packet.Write((byte)target.whoAmI);
 							packet.Send();
 						}
 						break;

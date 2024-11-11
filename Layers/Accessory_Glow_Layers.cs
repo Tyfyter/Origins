@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using PegasusLib;
 
 namespace Origins.Layers {
 	public record struct GlowData(AutoLoadingAsset<Texture2D> Texture, Func<Player, Color> ColorFunc);
@@ -22,7 +23,7 @@ namespace Origins.Layers {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => glowMasks.ContainsKey(_playerSlot.GetValue(drawInfo.drawPlayer));
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			int slotValue = _playerSlot.GetValue(drawInfo.drawPlayer);
-			Asset<Texture2D>[] slotTextures = _assetArray.Value;
+			Asset<Texture2D>[] slotTextures = _assetArray.GetValue();
 			for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
 				DrawData data = drawInfo.DrawDataCache[i];
 				if (data.texture == slotTextures[slotValue]?.Value) {

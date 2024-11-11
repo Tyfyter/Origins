@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
+using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

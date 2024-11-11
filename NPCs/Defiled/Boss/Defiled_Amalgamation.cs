@@ -13,6 +13,7 @@ using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;

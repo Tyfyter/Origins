@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
     public class Rigged_Cubix : ModItem, ICustomWikiStat {
 		static short glowmask;

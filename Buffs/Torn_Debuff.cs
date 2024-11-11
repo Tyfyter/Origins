@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using Origins.Graphics;
 using Terraria.Graphics.Effects;
 using Origins.Items.Accessories;
+using PegasusLib;
+using PegasusLib.Graphics;
 
 namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {

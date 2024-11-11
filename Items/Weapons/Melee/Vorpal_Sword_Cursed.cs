@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.NPCs;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;

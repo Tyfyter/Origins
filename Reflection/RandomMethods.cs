@@ -1,10 +1,12 @@
 ﻿using System;
 using Terraria.Utilities;
+using PegasusLib;
+using PegasusLib.Reflection;
 
 namespace Origins.Reflection {
 	public static class RandomMethods<T> {
 		public class Loader : ReflectionLoader {
-			public override Type ParentType => typeof(RandomMethods<T>);
+			public override Type HostType => typeof(RandomMethods<T>);
 		}
 		static RandomMethods() {
 			new Loader().Load(Origins.instance);

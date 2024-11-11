@@ -7,6 +7,9 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using PegasusLib;
+using PegasusLib.Graphics;
+
 namespace Origins.Items.Accessories {
 	public class Scribe_of_the_Meat_God : ModItem, ICustomWikiStat {
 		public string[] Categories => [

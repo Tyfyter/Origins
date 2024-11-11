@@ -5,6 +5,7 @@ using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles.Weapons;
 using Origins.Reflection;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,7 @@ namespace Origins.Projectiles {
 					Vector2 toHit = (projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - projectile.Center);
 					if (!Collision.CanHitLine(projectile.Center + projectile.velocity, 1, 1, projectile.Center + toHit, 1, 1)) return false;
 					float tdist = toHit.Length();
-					float ta = (float)Math.Abs(Tyfyter.Utils.GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
+					float ta = (float)Math.Abs(GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
 					if (target is Player) {
 						tdist *= 2.5f;
 						ta *= 2.5f;

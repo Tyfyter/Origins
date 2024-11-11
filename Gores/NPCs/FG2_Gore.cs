@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using static Origins.OriginExtensions;
 using Terraria.DataStructures;
 using Tyfyter.Utils;
+using PegasusLib;
 
 namespace Origins.Gores.NPCs {
 	public class FG2_Gore : ModGore {

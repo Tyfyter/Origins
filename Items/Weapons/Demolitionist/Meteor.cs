@@ -11,6 +11,7 @@ using Tyfyter.Utils;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria.GameContent;
+using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
 		public string[] Categories => [

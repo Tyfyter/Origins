@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem, ICustomWikiStat {
 		static short glowmask;

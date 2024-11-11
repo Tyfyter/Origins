@@ -11,6 +11,7 @@ using Terraria.IO;
 using Origins.Tiles.Dusk;
 using System.Collections.Generic;
 using Tyfyter.Utils;
+using PegasusLib;
 
 namespace Origins.World.BiomeData {
 	public class Dusk : ModBiome {

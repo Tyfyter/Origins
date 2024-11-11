@@ -2,6 +2,7 @@
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
+using DelegateMethods = PegasusLib.Reflection.DelegateMethods;
 
 namespace Origins.Reflection {
 	public class ProjectileMethods : ILoadable {
@@ -14,7 +15,7 @@ namespace Origins.Reflection {
 			_GetScarabBombDigDirectionSnap8 = null;
 		}
 		public static Point GetScarabBombDigDirectionSnap8(Projectile projectile) {
-			Basic._target.SetValue(_GetScarabBombDigDirectionSnap8, projectile);
+			DelegateMethods._target.SetValue(_GetScarabBombDigDirectionSnap8, projectile);
 			return _GetScarabBombDigDirectionSnap8();
 		}
 	}

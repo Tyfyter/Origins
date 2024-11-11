@@ -18,6 +18,8 @@ using Origins.Journal;
 using Terraria.Graphics.Shaders;
 using Origins.Questing;
 using Origins.Items.Other.Dyes;
+using PegasusLib;
+using PegasusLib.Graphics;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {

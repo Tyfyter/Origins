@@ -4,9 +4,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-
 using Origins.Dev;
 using System;
+using PegasusLib;
+
 namespace Origins.Items.Weapons {
 	public class Dragons_Breath : ModItem, ICustomWikiStat {
 		static short glowmask;

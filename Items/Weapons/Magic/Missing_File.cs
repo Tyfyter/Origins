@@ -14,6 +14,8 @@ using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Terraria.Graphics.Shaders;
 using Terraria.GameContent.Bestiary;
+using PegasusLib;
+using PegasusLib.Graphics;
 
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]

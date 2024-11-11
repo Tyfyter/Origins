@@ -1,6 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using PegasusLib;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -81,7 +85,7 @@ namespace Origins.Items.Tools {
 						Vector2 tileRange = new Vector2(Player.tileRangeX + tileBoost, Player.tileRangeY + tileBoost) * 16;
 						Vector2 mouseOffset = Main.MouseWorld - playerCenter;
 
-						if (GeometryUtils.GetIntersectionPoints(Vector2.Zero, mouseOffset, -tileRange, tileRange, out var intersections)) {
+						if (GetIntersectionPoints(Vector2.Zero, mouseOffset, -tileRange, tileRange, out var intersections)) {
 							offset = (PolarVec2)intersections[0];
 						} else {
 							offset = (PolarVec2)mouseOffset;
@@ -176,6 +180,38 @@ namespace Origins.Items.Tools {
 				swapDir ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 			0);
 			return false;
+		}
+		[Obsolete("Just here while I update PegasusLib")]
+		public static bool GetIntersectionPoints(Vector2 start, Vector2 end, Vector2 topLeft, Vector2 bottomRight, out List<Vector2> intersections) {
+			intersections = [];
+			Vector2 intersection;
+			if (Intersects(start, end, topLeft, new Vector2(bottomRight.X, topLeft.Y), out intersection)) intersections.Add(intersection);
+			if (Intersects(start, end, new Vector2(bottomRight.X, topLeft.Y), bottomRight, out intersection)) intersections.Add(intersection);
+			if (Intersects(start, end, bottomRight, new Vector2(topLeft.X, bottomRight.Y), out intersection)) intersections.Add(intersection);
+			if (Intersects(start, end, new Vector2(topLeft.X, bottomRight.Y), topLeft, out intersection)) intersections.Add(intersection);
+			return intersections.Count != 0;
+		}
+		public static bool Intersects(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2, out Vector2 intersection) {
+			intersection = a1;
+			Vector2 b = a2 - a1;
+			Vector2 d = b2 - b1;
+			float bDotDPerp = b.X * d.Y - b.Y * d.X;
+
+			// if b dot d == 0, it means the lines are parallel so have infinite intersection points
+			if (bDotDPerp == 0) return true;
+
+			Vector2 c = b1 - a1;
+			float t = (c.X * d.Y - c.Y * d.X) / bDotDPerp;
+			if (t < 0 || t > 1) {
+				return false;
+			}
+
+			float u = (c.X * b.Y - c.Y * b.X) / bDotDPerp;
+			if (u < 0 || u > 1) {
+				return false;
+			}
+			intersection = a1 + t * b;
+			return true;
 		}
 	}
 }

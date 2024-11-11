@@ -19,6 +19,7 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;

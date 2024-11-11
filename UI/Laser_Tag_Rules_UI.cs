@@ -19,6 +19,7 @@ using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq;
+using PegasusLib;
 
 namespace Origins.UI {
 	public class Laser_Tag_Rules_UI : UIState {

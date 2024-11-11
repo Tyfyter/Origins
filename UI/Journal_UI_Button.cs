@@ -11,6 +11,8 @@ using System.Linq;
 using Terraria.GameContent;
 using Terraria.DataStructures;
 using Origins.Questing;
+using PegasusLib;
+using PegasusLib.Graphics;
 
 namespace Origins.UI {
 	public class Journal_UI_Button : UIState {

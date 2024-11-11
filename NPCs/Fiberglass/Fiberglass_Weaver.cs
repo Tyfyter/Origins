@@ -7,6 +7,7 @@ using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;

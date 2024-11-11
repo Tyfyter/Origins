@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -150,7 +151,7 @@ namespace Origins.NPCs.Riven {
 					break;
 				}
 				nextNPC.rotation %= MathHelper.TwoPi;
-				float diff = Tyfyter.Utils.GeometryUtils.AngleDif(nextNPC.rotation, prevNPC.rotation, out int dir);
+				float diff = GeometryUtils.AngleDif(nextNPC.rotation, prevNPC.rotation, out int dir);
 				if (diff * dir > 0.8f) {
 					nextNPC.rotation += diff - dir * 0.8f;
 					NPC.ai[2] = 1;

@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem, ICustomWikiStat {
 		static short glowmask;

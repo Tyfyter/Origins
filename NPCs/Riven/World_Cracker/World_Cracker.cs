@@ -12,6 +12,7 @@ using Origins.LootConditions;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;

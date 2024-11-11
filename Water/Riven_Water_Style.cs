@@ -33,7 +33,7 @@ namespace Origins.Water {
 		}
 		public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {
 			float _blueWave = 1f;
-			if (LightingMethods._activeEngine.Value is LegacyLighting legacyLighting) _blueWave = LightingMethods._blueWave.GetValue(legacyLighting);
+			if (LightingMethods._activeEngine.GetValue() is LegacyLighting legacyLighting) _blueWave = LightingMethods._blueWave.GetValue(legacyLighting);
 			float glowValue = Riven_Water_Style.GlowValue
 				* 0.91f
 				* _blueWave;

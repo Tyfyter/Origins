@@ -90,7 +90,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			felnumBonus = MainReflection._currentPlayerOverride.Value is null ? 0 : Main.CurrentPlayer.OriginPlayer().felnumShock;
+			felnumBonus = MainReflection._currentPlayerOverride.GetValue() is null ? 0 : Main.CurrentPlayer.OriginPlayer().felnumShock;
 			string[] contextArgs = source?.Context?.Split(';') ?? [];
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
 				projectile.originalDamage = projectile.damage;

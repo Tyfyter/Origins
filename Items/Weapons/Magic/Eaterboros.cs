@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Magic {
 			swingFactor = MathHelper.Lerp(MathF.Pow(swingFactor, 2f), MathF.Pow(swingFactor, 0.5f), swingFactor * swingFactor);
 			Projectile.rotation = MathHelper.Lerp(-2f, 2f, swingFactor) * Projectile.ai[1] * (1 + Projectile.localAI[2] / swing_angle_extend_factor);
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, realRotation);
+			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 			Projectile.timeLeft = player.itemAnimation * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
@@ -339,7 +339,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.velocity = direction;
 				}
 				Projectile.rotation = Projectile.velocity.ToRotation();
-				Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, Projectile.rotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, Projectile.rotation);
+				Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, Projectile.rotation - MathHelper.PiOver2);
 				Projectile.timeLeft = player.itemAnimation * Projectile.MaxUpdates;
 				player.heldProj = Projectile.whoAmI;
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation - MathHelper.PiOver2);

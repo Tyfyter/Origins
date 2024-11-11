@@ -14,6 +14,7 @@ using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [

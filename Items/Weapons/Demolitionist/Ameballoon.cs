@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using Origins.Dev;
 using Origins.Gores.NPCs;
+using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -67,7 +68,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitch(0.15f), Projectile.Center);
 			if (Projectile.owner == Main.myPlayer) {
-				PolarVec2 vel = new PolarVec2(4, Main.rand.NextFloat(MathHelper.TwoPi));
+				PolarVec2 vel = new(4, Main.rand.NextFloat(MathHelper.TwoPi));
 				for (int i = Main.rand.Next(12, 16); i-- > 0;) {
 					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vector2)vel, ModContent.ProjectileType<Ameballoon_Shrapnel>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 					vel.Theta += Main.rand.NextFloat(0.5f) + 1.618033988749894848204586834f;

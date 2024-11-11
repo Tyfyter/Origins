@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

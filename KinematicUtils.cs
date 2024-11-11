@@ -1,6 +1,7 @@
 using System;
 using Terraria;
 using Microsoft.Xna.Framework;
+using PegasusLib;
 
 namespace Tyfyter.Utils {
 	public static class KinematicUtils {

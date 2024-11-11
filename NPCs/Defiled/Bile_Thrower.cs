@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles.Enemies;
+using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

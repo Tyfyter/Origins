@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using DelegateMethods = PegasusLib.Reflection.DelegateMethods;
 
 namespace Origins.Gores {
 	public class DustsBehindTiles : ILoadable {
@@ -22,7 +23,7 @@ namespace Origins.Gores {
 		private void On_Main_DoDraw_Tiles_Solid(On_Main.orig_DoDraw_Tiles_Solid orig, Main self) {
 			try {
 				isDrawingBehindTiles = true;
-				Reflection.Basic._target.SetValue(MainReflection.DrawDust, self);
+				DelegateMethods._target.SetValue(MainReflection.DrawDust, self);
 				MainReflection.DrawDust();
 			} finally {
 				isDrawingBehindTiles = false;

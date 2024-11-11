@@ -8,6 +8,7 @@ using Origins.Journal;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -82,7 +83,7 @@ namespace Origins.Items.Tools {
 				Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
 			}
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, realRotation);
+			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);

@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
 	public class Haunted_Vase : ModItem, ICustomWikiStat {
 		static short glowmask;

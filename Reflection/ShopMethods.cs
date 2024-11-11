@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using PegasusLib.Reflection;
+using System.Reflection;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
@@ -13,7 +14,7 @@ namespace Origins.Reflection {
 			_AddHappinessReportText = null;
 		}
 		public static void AddHappinessReportText(ShopHelper instance, string textKeyInCategory, object substitutes = null, int otherNPCType = 0) {
-			Basic._target.SetValue(_AddHappinessReportText, instance);
+			DelegateMethods._target.SetValue(_AddHappinessReportText, instance);
 			_AddHappinessReportText(textKeyInCategory, substitutes, otherNPCType);
 		}
 	}

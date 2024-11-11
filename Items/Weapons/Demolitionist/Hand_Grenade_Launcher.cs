@@ -12,6 +12,7 @@ using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
 		static short glowmask;

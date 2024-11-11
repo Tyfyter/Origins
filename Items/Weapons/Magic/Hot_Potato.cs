@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Tyfyter.Utils;
+using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
 	public class Hot_Potato : ModItem, ICustomWikiStat {
 		public string[] Categories => [

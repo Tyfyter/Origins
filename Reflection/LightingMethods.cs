@@ -7,10 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.Light;
+using PegasusLib;
+using PegasusLib.Reflection;
 
 namespace Origins.Reflection {
 	public class LightingMethods : ReflectionLoader {
-		public override Type ParentType => GetType();
 		[ReflectionParentType(typeof(LegacyLighting))]
 		public static FastFieldInfo<LegacyLighting, float> _blueWave;
 		[ReflectionParentType(typeof(Lighting))]

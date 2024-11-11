@@ -2,6 +2,7 @@
 using System.Reflection;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
+using PegasusLib;
 
 namespace Origins.Reflection {
 	public class ItemDropDatabaseMethods : ILoadable {

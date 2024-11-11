@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;

@@ -9,6 +9,8 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using PegasusLib;
+using PegasusLib.Graphics;
 
 namespace Origins.Items.Other.Dyes {
 	public abstract class Dye_Item : ModItem {

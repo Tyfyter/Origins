@@ -2,6 +2,7 @@
 using System.Reflection;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using PegasusLib;
 
 namespace Origins.Reflection {
 	public class LocalizationMethods : ILoadable {
