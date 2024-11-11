@@ -1,20 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
+using Terraria.DataStructures;
+using Origins.Items.Weapons.Summoner;
+using Terraria.Utilities;
+using System.Collections.Generic;
 
 namespace Origins.Items.Tools {
-	public class Chunky_Hook : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+	public class Chunky_Hook : ModItem {
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.shootSpeed = 16f;

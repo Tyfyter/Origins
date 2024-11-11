@@ -1,14 +1,11 @@
-using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Dismantler : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+	public class Dismantler : ModItem {
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 14;

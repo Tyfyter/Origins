@@ -12,7 +12,8 @@ using ThoriumMod.Items.Donate;
 namespace Origins.Items.Tools {
 	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Tool"
+			"ToolWeapon",
+			"OtherMelee"
 		];
 		static AutoCastingAsset<Texture2D> useTexture;
 		public override void SetStaticDefaults() {

@@ -14,6 +14,7 @@ namespace Origins.Items.Pets {
 		public string[] Categories => [
 			"LightPet"
 		];
+
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;

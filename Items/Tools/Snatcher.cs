@@ -1,15 +1,14 @@
 using Microsoft.Xna.Framework;
-using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Snatcher : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+	public class Snatcher : ModItem {
+
+		
+
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			Item.DamageType = DamageClass.Generic;

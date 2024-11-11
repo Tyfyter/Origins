@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Items.Materials;
 using System;
 using Terraria;
@@ -9,10 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Lightning_Rod : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+	public class Lightning_Rod : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			Item.damage = 0;

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Pincushion : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
-			"Tool",
+			"Misc",
 			"Explosive"
 		];
 		public override void SetDefaults() {

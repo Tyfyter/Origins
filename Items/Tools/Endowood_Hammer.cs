@@ -1,14 +1,10 @@
-using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Endowood_Hammer : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+	public class Endowood_Hammer : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}

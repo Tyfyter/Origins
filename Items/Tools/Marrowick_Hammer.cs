@@ -1,14 +1,10 @@
-using Origins.Dev;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class Marrowick_Hammer : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+    public class Marrowick_Hammer : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}

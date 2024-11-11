@@ -1,15 +1,11 @@
-using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Acrid_Drill : ModItem, ICustomWikiStat {
+	public class Acrid_Drill : ModItem {
 		static short glowmask;
-		public string[] Categories => [
-			"Tool"
-		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

@@ -1,21 +1,20 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Items.Materials;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Tools {
-	public class Strainer : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Tool"
-		];
+	public class Strainer : ModItem {
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LaserDrill);
 			Item.damage = 13;
