@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Journal;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -10,9 +11,6 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
 	[LegacyName("Defiled_Ore")]
     public class Lost_Ore : OriginTile, IComplexMineDamageTile {
-        public string[] Categories => [
-            "Ore"
-        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -36,7 +34,10 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	[LegacyName("Defiled_Ore_Item")]
-	public class Lost_Ore_Item : ModItem, IJournalEntryItem {
+	public class Lost_Ore_Item : ModItem, ICustomWikiStat, IJournalEntryItem {
+		public string[] Categories => [
+			"Ore"
+		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
         public override void SetDefaults() {

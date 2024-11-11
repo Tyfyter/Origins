@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -7,9 +8,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
 	public class Silicon : OriginTile {
-		public string[] Categories => [
-			"Ore"
-		];
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -20,7 +18,10 @@ namespace Origins.Tiles.Other {
 			MineResist = 3;
 		}
 	}
-	public class Silicon_Item : ModItem {
+	public class Silicon_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Ore"
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

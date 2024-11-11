@@ -1310,9 +1310,9 @@ UI:
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
-(☻) Underground Defiled Background !!!
+(^) Underground Defiled Background
 (@ (needs 4 textures ⚯)) Underground Fiberglass Background !!!
-(☻) Underground Riven Background !!!
+(^) Underground Riven Background
 
 (^) 30x30 Origins Icon
 (@5, ^3) Origins Mod Browser Logo !!!

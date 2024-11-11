@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -9,9 +10,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Encrusted_Ore : OriginTile, IComplexMineDamageTile {
-        public string[] Categories => [
-            "Ore"
-        ];
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
@@ -37,7 +35,10 @@ namespace Origins.Tiles.Riven {
 		}
 	}
 	[LegacyName("Infested_Ore_Item")]
-	public class Encrusted_Ore_Item : ModItem {
+	public class Encrusted_Ore_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Ore"
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

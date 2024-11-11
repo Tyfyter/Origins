@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,9 +8,6 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine
 {
     public class Eitrite_Ore : OriginTile {
-        public string[] Categories => [
-            "Ore"
-        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -25,7 +23,10 @@ namespace Origins.Tiles.Brine
 			return false;
 		}
 	}
-	public class Eitrite_Ore_Item : ModItem {
+	public class Eitrite_Ore_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Ore"
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

@@ -125,3 +125,7 @@ Snipers_Mark.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Ranger_Embl
 Priority_Mail.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Fallen_Star>Fallen Star</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Paper_Airplane>Paper Airplane</a> + <a is=a-link image=$fromStats>Asylum Whistle</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Work_Benches>Any Work Bench</a>
 Lovers_Leap.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Spectre_Boots>Spectre Boots</a> + <a is=a-link image=$fromStats>Locket Necklace</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 Laser_Tag_Vest.Source: <a is=a-link image=$fromStats>Power Core</a> + (6) <a is=a-link image=$fromStats>Rotor</a> @ <a is=a-link image=$fromStats>Fabricator</a>
+Sanguinite_Ore.Tier: <b>5</b>
+Sanguinite_Ore.MineReq: <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Pickaxe>Gold Pickaxe</a>, <a is=a-link href=https://terraria.wiki.gg/wiki/Platinum_Pickaxe>Platinum Pickaxe</a>, <a is=a-link href=https://terraria.wiki.gg/wiki/Reaver_Shark>Reaver Shark</a>
+Sanguinite_Ore.Crafting: 3 <a is=a-link image=$fromStats>Sanguinite Ore</a> = <a is=a-link image=$fromStats>Sanguinite Bar</a>
+Sanguinite_Ore.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Underground>Underground</a>, <a is=a-link href=https://terraria.wiki.gg/wiki/Cavern>Cavern</a>, <a is=a-link href=https://terraria.wiki.gg/wiki/Eye_of_Cthulhu>Eye of Cthulhu</a>, <a is=a-link>Scrapper</a>

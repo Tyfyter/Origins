@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using System.Collections.Generic;
 using Terraria;
@@ -8,9 +9,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
 	public class Bleeding_Obsidian : OriginTile {
-		public string[] Categories => [
-			"Ore"
-		];
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -33,7 +31,10 @@ namespace Origins.Tiles.Dusk {
 			b = 49.2f * m;
 		}
 	}
-	public class Bleeding_Obsidian_Item : ModItem {
+	public class Bleeding_Obsidian_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Ore"
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

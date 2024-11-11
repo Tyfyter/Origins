@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Journal;
 using System;
 using Terraria;
@@ -10,9 +11,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
     public class Felnum_Ore : OriginTile {
-        public string[] Categories => [
-            "Ore"
-        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -36,7 +34,10 @@ namespace Origins.Tiles.Other {
 			b = 0.1f + (0.3f * v);
 		}
 	}
-	public class Felnum_Ore_Item : ModItem, IJournalEntryItem {
+	public class Felnum_Ore_Item : ModItem, ICustomWikiStat, IJournalEntryItem {
+		public string[] Categories => [
+			"Ore"
+		];
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {

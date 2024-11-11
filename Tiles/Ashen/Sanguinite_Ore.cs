@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -9,9 +10,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
     public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile {
-        public string[] Categories => [
-            "Ore"
-        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -35,7 +33,10 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 	}
-	public class Sanguinite_Ore_Item : ModItem {
+	public class Sanguinite_Ore_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+		   "Ore"
+	   ];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.DemoniteOre] = ItemID.CrimtaneOre;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.CrimtaneOre] = ItemType<Lost_Ore_Item>();

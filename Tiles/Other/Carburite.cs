@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,9 +7,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
     public class Carburite : OriginTile {
-        public string[] Categories => [
-            "Ore"
-        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -19,7 +17,10 @@ namespace Origins.Tiles.Other {
 			MineResist = 3;
 		}
 	}
-	public class Carburite_Item : ModItem {
+	public class Carburite_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Ore"
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}
