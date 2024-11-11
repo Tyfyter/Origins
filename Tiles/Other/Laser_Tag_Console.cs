@@ -22,6 +22,7 @@ using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using ThoriumMod.NPCs;
+using ThoriumMod.NPCs.BossViscount;
 
 namespace Origins.Tiles.Other {
 	public class Laser_Tag_Console : ModTile, IGlowingModTile {
@@ -110,103 +111,47 @@ namespace Origins.Tiles.Other {
 			}
 			Color winnerColor = Main.teamColor[0];
 			object winner = null;
-			void SelectWinner(Player player = null, int team = 0) {
-				if (player is not null) team = player.team;
-				if (!LaserTagRules.Teams) team = 0;
-				winnerColor = Main.teamColor[team];
-				switch (team) {
-					case 1:
-					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Red");
-					break;
-					case 2:
-					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Green");
-					break;
-					case 3:
-					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Blue");
-					break;
-					case 4:
-					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Yellow");
-					break;
-					case 5:
-					winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Purple");
-					break;
-					default:
-					case 0:
-					winner = player?.name ?? "missingno";
-					break;
-				}
-			}
 			if (LaserTagGameActive) {
 				foreach (Player player in Main.ActivePlayers) {
 					player.hostile = player.OriginPlayer().laserTagVestActive;
 				}
-				if (LaserTagRules.RespawnTime < 0) {// elimination
-					if (Main.netMode == NetmodeID.Server) {
-						Player survivor = null;
-						foreach (Player player in Main.ActivePlayers) {
-							ref bool laserTagVestActive = ref player.OriginPlayer().laserTagVestActive;
-							if (laserTagVestActive) {
-								laserTagVestActive = false;
-								survivor ??= player;
-							}
-						}
-						SelectWinner(survivor);
-					}
-				}
-				if (LaserTagRules.PointsToWin != 0) {
-					if (LaserTagRules.Teams) {
-						for (int i = 0; i < LaserTagTeamPoints.Length; i++) {
-							if (LaserTagTeamPoints[i] >= LaserTagRules.PointsToWin) {
-								SelectWinner(team: i);
-								break;
-							}
-						}
-					} else {
-						foreach (Player player in Main.ActivePlayers) {
-							if (player.OriginPlayer().laserTagPoints >= LaserTagRules.PointsToWin) {
-								SelectWinner(player);
-								break;
-							}
-						}
-					}
-				}
-				if (LaserTagRules.Time > 0 && --LaserTagTimeLeft <= 0) {//any mode, end by timeout
-					LaserTagTimeLeft = 0;
-					int bestPointsOwner = 0;
-					int bestPointsCount = 0;
-					int tieCount = 0;
-					if (LaserTagRules.Teams) {
-						for (int i = 0; i < LaserTagTeamPoints.Length; i++) {
-							if (LaserTagTeamPoints[i] >= bestPointsCount) {
-								tieCount = LaserTagTeamPoints[i] == bestPointsCount ? tieCount + 1 : 1;
-								bestPointsOwner = i;
-								bestPointsCount = LaserTagTeamPoints[i];
-							}
-						}
-					} else {
-						foreach (Player player in Main.ActivePlayers) {
-							int laserTagPoints = player.OriginPlayer().laserTagPoints;
-							if (laserTagPoints >= bestPointsCount) {
-								tieCount = laserTagPoints == bestPointsCount ? tieCount + 1 : 1;
-								bestPointsOwner = player.whoAmI;
-								bestPointsCount = laserTagPoints;
-							}
-						}
-					}
-					if (tieCount <= 1) {
+				if (Main.netMode == NetmodeID.Server) {
+					foreach(LaserTagWinCondition winCondition in LaserTagRules.GetWinConditions()) {
 						if (LaserTagRules.Teams) {
-							SelectWinner(team: bestPointsOwner);
+							int winTeam = winCondition.GetTeamWinner(LaserTagRules);
+							if (winTeam != -1) {
+								winnerColor = Main.teamColor[winTeam];
+								switch (winTeam) {
+									case 1:
+									winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Red");
+									break;
+									case 2:
+									winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Green");
+									break;
+									case 3:
+									winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Blue");
+									break;
+									case 4:
+									winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Yellow");
+									break;
+									case 5:
+									winner = Language.GetOrRegister("Mods.Origins.Laser_Tag.Team_Purple");
+									break;
+									default:
+									winner = "misingno";
+									break;
+								}
+								break;
+							}
 						} else {
-							SelectWinner(Main.player[bestPointsOwner]);
-						}
-						for (int i = 0; i < LaserTagTeamPoints.Length; i++) {
-							LaserTagTeamPoints[i] = 0;
-						}
-						foreach (Player player in Main.ActivePlayers) {
-							player.OriginPlayer().laserTagPoints = 0;
+							if (winCondition.GetWinner(LaserTagRules) is Player winPlayer) {
+								winner = winPlayer.name;
+								break;
+							}
 						}
 					}
 				}
+				if (LaserTagRules.Time > 0 && --LaserTagTimeLeft <= 0) LaserTagTimeLeft = 0;
 			}
 			if (winner is not null) {
 				if (Main.netMode == NetmodeID.Server) {
@@ -281,7 +226,7 @@ namespace Origins.Tiles.Other {
 			return element;
 		}
 	}
-	public class Laser_Tag_Rules(int RespawnTime = -1, int Time = -1, int HP = 1, int PointsToWin = 0, bool Teams = true, bool CTG = false, bool Building = false) {
+	public class Laser_Tag_Rules(int RespawnTime = -1, int Time = -1, int HP = 1, int PointsToWin = 0, bool Teams = true, bool CTG = false, bool CTGNeedOwnGem = true, bool Building = false) {
 		const string prefix = "Mods.Origins.Laser_Tag.";
 		public int RespawnTime = RespawnTime;
 		public int Time = Time;
@@ -289,6 +234,7 @@ namespace Origins.Tiles.Other {
 		public int PointsToWin = PointsToWin;
 		public bool Teams = Teams;
 		public bool CTG = CTG;
+		public bool CTGNeedOwnGem = CTGNeedOwnGem;
 		public bool Building = Building;
 		public bool HitsArePoints => !CTG;
 		public IEnumerable<UIElement> GetUIElements() {
@@ -311,6 +257,7 @@ namespace Origins.Tiles.Other {
 			yield return GetPointsController(() => ref PointsToWin, "PointsToWin", TextureAssets.Heart.Value, TextureAssets.Mana.Value);
 			yield return GetToggle(() => ref Teams, "Teams");
 			yield return GetToggle(() => ref CTG, "CTG");
+			yield return GetToggle(() => ref CTGNeedOwnGem, "CTGNeedOwnGem").SetHidden(() => !CTG);
 			yield return GetToggle(() => ref Building, "Building");
 		}
 		public void Write(BinaryWriter writer) {
@@ -320,8 +267,96 @@ namespace Origins.Tiles.Other {
 			writer.Write(PointsToWin);
 			writer.Write(Teams);
 			writer.Write(CTG);
+			writer.Write(CTGNeedOwnGem);
 			writer.Write(Building);
 		}
-		public static Laser_Tag_Rules Read(BinaryReader reader) => new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadBoolean(), reader.ReadBoolean(), reader.ReadBoolean());
+		public static Laser_Tag_Rules Read(BinaryReader reader) => new(
+			RespawnTime: reader.ReadInt32(),
+			Time: reader.ReadInt32(),
+			HP: reader.ReadInt32(),
+			PointsToWin: reader.ReadInt32(),
+			Teams: reader.ReadBoolean(),
+			CTG: reader.ReadBoolean(),
+			CTGNeedOwnGem: reader.ReadBoolean(),
+			Building: reader.ReadBoolean()
+		);
+		public IEnumerable<LaserTagWinCondition> GetWinConditions() {
+			for (int i = 0; i < LaserTagWinCondition.WinConditions.Count; i++) {
+				if (LaserTagWinCondition.WinConditions[i].IsActive(this)) yield return LaserTagWinCondition.WinConditions[i];
+			}
+		}
+	}
+	public abstract class LaserTagWinCondition : ILoadable {
+		internal static List<LaserTagWinCondition> WinConditions { get; private set; } = [];
+		public void Load(Mod mod) => WinConditions.Add(this);
+		public void Unload() => WinConditions = null;
+		public abstract bool IsActive(Laser_Tag_Rules rules);
+		public abstract Player GetWinner(Laser_Tag_Rules rules);
+		public virtual int GetTeamWinner(Laser_Tag_Rules rules) => GetWinner(rules) is Player winner ? winner.team : -1;
+	}
+	public class Elimination_Win_Condition : LaserTagWinCondition {
+		public override Player GetWinner(Laser_Tag_Rules rules) {
+			if (Laser_Tag_Console.LaserTagMultipleTeamsActive) return null;
+			foreach (Player player in Main.ActivePlayers) {
+				if (!player.OriginPlayer().laserTagVestActive) {
+					return player;
+				}
+			}
+			return null;
+		}
+		public override bool IsActive(Laser_Tag_Rules rules) => rules.RespawnTime < 0;
+	}
+	public class Timeout_Win_Condition : LaserTagWinCondition {
+		public override Player GetWinner(Laser_Tag_Rules rules) {
+			if (Laser_Tag_Console.LaserTagTimeLeft <= 0) return null;
+			int bestPointsOwner = 0;
+			int bestPointsCount = 0;
+			int tieCount = 0;
+			foreach (Player player in Main.ActivePlayers) {
+				int laserTagPoints = player.OriginPlayer().laserTagPoints;
+				if (laserTagPoints >= bestPointsCount) {
+					tieCount = laserTagPoints == bestPointsCount ? tieCount + 1 : 1;
+					bestPointsOwner = player.whoAmI;
+					bestPointsCount = laserTagPoints;
+				}
+			}
+			if (tieCount <= 0) return Main.player[bestPointsOwner];
+			return null;
+		}
+		public override int GetTeamWinner(Laser_Tag_Rules rules) {
+			if (Laser_Tag_Console.LaserTagTimeLeft <= 0) return -1;
+			int bestPointsOwner = -1;
+			int bestPointsCount = 0;
+			int tieCount = 0;
+			for (int i = 0; i < Laser_Tag_Console.LaserTagTeamPoints.Length; i++) {
+				if (Laser_Tag_Console.LaserTagTeamPoints[i] >= bestPointsCount) {
+					tieCount = Laser_Tag_Console.LaserTagTeamPoints[i] == bestPointsCount ? tieCount + 1 : 1;
+					bestPointsOwner = i;
+					bestPointsCount = Laser_Tag_Console.LaserTagTeamPoints[i];
+				}
+			}
+			if (tieCount <= 0) return bestPointsOwner;
+			return -1;
+		}
+		public override bool IsActive(Laser_Tag_Rules rules) => rules.Time > 0;
+	}
+	public class Points_Win_Condition : LaserTagWinCondition {
+		public override Player GetWinner(Laser_Tag_Rules rules) {
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.OriginPlayer().laserTagPoints >= rules.PointsToWin) {
+					return player;
+				}
+			}
+			return null;
+		}
+		public override int GetTeamWinner(Laser_Tag_Rules rules) {
+			for (int i = 0; i < Laser_Tag_Console.LaserTagTeamPoints.Length; i++) {
+				if (Laser_Tag_Console.LaserTagTeamPoints[i] >= rules.PointsToWin) {
+					return i;
+				}
+			}
+			return -1;
+		}
+		public override bool IsActive(Laser_Tag_Rules rules) => rules.PointsToWin > 0;
 	}
 }

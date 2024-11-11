@@ -64,19 +64,18 @@ namespace Origins.Tiles.Other {
 			if (Laser_Tag_Console.LaserTagRules.CTG) {
 				if (Main.LocalPlayer.team == tile.TileFrameX) {
 					if (Main.LocalPlayer.ownedLargeGems != 0) {
+						bool canScore = !Laser_Tag_Console.LaserTagRules.CTGNeedOwnGem || Laser_Tag_Console.LaserTagTeamGems[tile.TileFrameX] == -1;
 						for (int team = 0; team < 6; team++) {
-							if (justCheck) {
-								if (Main.LocalPlayer.HasItem(Laser_Tag_Console.GetLargeGem(team))) return true;
-							} else {
-								if (Main.LocalPlayer.ConsumeItem(Laser_Tag_Console.GetLargeGem(team))) {
-									//Main.NewText(team != Main.LocalPlayer.team);
-									Laser_Tag_Console.ScorePoint(Main.LocalPlayer, false);
-								}
+							if (!canScore && team != Main.LocalPlayer.team) continue;
+							int gem = Laser_Tag_Console.GetLargeGem(team);
+							if (Main.LocalPlayer.HasItem(gem)) {
+								if (!justCheck && Main.LocalPlayer.ConsumeItem(gem) && team != Main.LocalPlayer.team) Laser_Tag_Console.ScorePoint(Main.LocalPlayer, false);
+								return true;
 							}
 						}
 					}
 				} else {
-					if (Laser_Tag_Console.LaserTagTeamGems[tile.TileFrameX] == -1) {
+					if (Laser_Tag_Console.LaserTagTeamGems[tile.TileFrameX] == -1 && OriginPlayer.LocalOriginPlayer.laserTagVestActive) {
 						if (!justCheck) Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), Laser_Tag_Console.GetLargeGem(tile.TileFrameX));
 						return true;
 					}

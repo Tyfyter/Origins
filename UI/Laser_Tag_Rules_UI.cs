@@ -44,6 +44,10 @@ namespace Origins.UI {
 			startButton.Top.Set(-32, 1f);
 			startButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => {
 				IngameFancyUI.Close();
+				if (!Laser_Tag_Console.LaserTagRules.GetWinConditions().Any()) {
+					Main.NewText(Language.GetOrRegister("Mods.Origins.Laser_Tag.NeedWinConditions").Value, Color.Firebrick);
+					return;
+				}
 				if (Main.netMode == NetmodeID.SinglePlayer) return;
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.start_laser_tag);

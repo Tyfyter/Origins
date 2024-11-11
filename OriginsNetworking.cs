@@ -243,6 +243,7 @@ namespace Origins {
 							}
 							if (!Laser_Tag_Console.LaserTagRules.Teams) player.team = 0;
 						}
+						originPlayer.laserTagPoints = 0;
 					}
 					if (Main.netMode == NetmodeID.Server) {
 						// Forward the changes to the clients
