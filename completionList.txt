@@ -768,7 +768,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (^) Fresh Meat Artifact
-(#, ^2) Hibernal Incantation !!!
+(☻) Hibernal Incantation !!!
 (^) Inanimate Zombie Hand
 (^) Joint Pop*
 (^) Maelstrom Incantation
