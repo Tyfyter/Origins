@@ -974,7 +974,7 @@ DamageClassName: {
 DamageClasses: {
 	Explosive.DisplayName: explosive damage
 	Ranged_Magic.DisplayName: ranged/magic damage
-	Summon_Magic_Speed.DisplayName: summon damage
+	Incantation.DisplayName: summon damage
 	Thrown_Explosive.DisplayName: explosive damage (thrown)
 	ExplosivePlus.DisplayName: explosive{0}
 	Melee_Magic.DisplayName: melee/magic damage

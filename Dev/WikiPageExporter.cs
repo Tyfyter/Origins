@@ -729,6 +729,8 @@ namespace Origins.Dev {
 							if (Origins.ArtifactMinion[item.shoot]) weaponType = WeaponTypes.Artifact;
 							if (ProjectileID.Sets.IsAWhip[item.shoot]) {
 								weaponType = WeaponTypes.Whip;
+							} else if (item.CountsAsClass<Incantation>()) {
+								weaponType = WeaponTypes.Incantation;
 							} else {
 								Projectile proj = ContentSamples.ProjectilesByType[item.shoot];
 								if (proj.minion) weaponType = WeaponTypes.Minion;
@@ -768,7 +770,7 @@ namespace Origins.Dev {
 						weaponType = WeaponTypes.OtherRanged;
 					}
 					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClasses.Explosive)) {
-						weaponType = WeaponTypes.OtherExplosive;
+						weaponType = item.CountsAsClass(DamageClasses.ThrownExplosive) ? WeaponTypes.ThrownExplosive : WeaponTypes.OtherExplosive;
 					}
 				}
 				if (weaponType != WeaponTypes.None) types.Add(weaponType.ToString());
@@ -1204,6 +1206,7 @@ namespace Origins.Dev {
 		Sentry,
 		Whip,
 		Incantation,
+		ThrownExplosive,
 		Handcannon,
 		RocketLauncher,
 		CanisterLauncher,

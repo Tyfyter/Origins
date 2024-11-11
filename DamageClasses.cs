@@ -11,13 +11,13 @@ namespace Origins {
 		private static DamageClass explosive;
 		private static DamageClass thrownExplosive;
 		private static DamageClass rangedMagic;
-		private static DamageClass summonMagicSpeed;
+		private static DamageClass incantation;
 		private static DamageClass meleeMagic;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
 		public static DamageClass ThrownExplosive => thrownExplosive ??= ModContent.GetInstance<Thrown_Explosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
 		public static DamageClass RangedMagic => rangedMagic ??= ModContent.GetInstance<Ranged_Magic>();
-		public static DamageClass SummonMagicSpeed => summonMagicSpeed ??= ModContent.GetInstance<Summon_Magic_Speed>();
+		public static DamageClass Incantation => incantation ??= ModContent.GetInstance<Incantation>();
 		public static DamageClass MeleeMagic => meleeMagic ??= ModContent.GetInstance<Melee_Magic>();
 		static FieldInfo _damageClasses;
 		static FieldInfo _DamageClasses => _damageClasses ??= typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic);
@@ -131,7 +131,7 @@ namespace Origins {
 
 		}
 	}
-	public class Summon_Magic_Speed : DamageClass {
+	public class Incantation : DamageClass {
 		
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic || damageClass == Summon) {

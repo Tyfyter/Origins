@@ -13,21 +13,18 @@ using System.IO;
 using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Amebolize_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Amebolize_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		private Asset<Texture2D> _smolGlowTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public Texture2D SmolGlowTexture => (_smolGlowTexture ??= this.GetSmallTexture("_Glow"))?.Value;
 		static short glowmask;
-		public string[] Categories => [
-			"Incantation"
-		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;
-			Item.DamageType = DamageClasses.SummonMagicSpeed;
+			Item.DamageType = DamageClasses.Incantation;
 			Item.width = 22;
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -74,7 +71,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 5;
 			Projectile.width = 30;

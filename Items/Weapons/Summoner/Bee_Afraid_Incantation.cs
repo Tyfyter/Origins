@@ -11,17 +11,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Bee_Afraid_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Bee_Afraid_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
-		public string[] Categories => [
-			"Incantation"
-		];
-		public override void SetStaticDefaults() {
-		}
 		public override void SetDefaults() {
 			Item.damage = 12;
-			Item.DamageType = DamageClasses.SummonMagicSpeed;
+			Item.DamageType = DamageClasses.Incantation;
 			Item.width = 22;
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -64,7 +59,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 6;
 			Projectile.width = 0;
@@ -125,7 +120,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bee);
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 5;
 			Projectile.width = 8;
@@ -281,7 +276,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GiantBee);
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 7;
 			Projectile.width = 16;

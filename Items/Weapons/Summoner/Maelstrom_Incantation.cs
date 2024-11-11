@@ -17,14 +17,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
-        public string[] Categories => [
-            "Incantation",
-			"UsesBookcase"
-        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 19;
-			Item.DamageType = DamageClasses.SummonMagicSpeed;
+			Item.DamageType = DamageClasses.Incantation;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Maelstrom_Incantation_P>();
 			Item.noUseGraphic = true;
@@ -73,7 +69,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.AmberBolt);
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 16;
 			Projectile.width = 0;

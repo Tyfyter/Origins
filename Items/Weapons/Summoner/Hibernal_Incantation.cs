@@ -18,15 +18,12 @@ using System.Collections.Generic;
 using Origins.Items.Weapons.Demolitionist;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Hibernal_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Hibernal_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
-		public string[] Categories => [
-			"Incantation"
-		];
 		public override void SetDefaults() {
 			Item.damage = 15;
-			Item.DamageType = DamageClasses.SummonMagicSpeed;
+			Item.DamageType = DamageClasses.Incantation;
 			Item.width = 22;
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -68,7 +65,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 6;
 			Projectile.width = 40;
@@ -195,7 +192,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override string Texture => "Origins/Projectiles/Weapons/Icicle_P";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);//sets the projectile stat values to those of Ruby Bolts
-			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.penetrate = 2;//when projectile.penetrate reaches 0 the projectile is destroyed
 			Projectile.extraUpdates = 1;
 			Projectile.aiStyle = 1;
