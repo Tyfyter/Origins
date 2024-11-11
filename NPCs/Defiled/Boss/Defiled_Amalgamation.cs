@@ -22,6 +22,7 @@ using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
@@ -98,18 +99,29 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get => 1; set { } }
-		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */ {
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
+			float terriblyPlacedHookMult = 1;
+			if (Main.GameModeInfo.IsJourneyMode) {
+				CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+				if (power != null && power.GetIsUnlocked()) {
+					if (power.StrengthMultiplierToGiveNPCs > 2) {
+						terriblyPlacedHookMult /= 3;
+					} else if (power.StrengthMultiplierToGiveNPCs > 1) {
+						terriblyPlacedHookMult /= 2;
+					}
+				}
+			}
 			switch (DifficultyMult) {
 				case 2:
-				NPC.lifeMax = (int)(4960 * balance / 2);
+				NPC.lifeMax = (int)(4960 * balance * terriblyPlacedHookMult);
 				NPC.defense = 13;
-				NPC.damage = 64;
+				NPC.damage = (int)(64 * terriblyPlacedHookMult);
 				break;
 
 				case 3:
-				NPC.lifeMax = (int)(7936 * balance / 3);
+				NPC.lifeMax = (int)(7936 * balance * terriblyPlacedHookMult);
 				NPC.defense = 15;
-				NPC.damage = 72;
+				NPC.damage = (int)(72 * terriblyPlacedHookMult);
 				break;
 			}
 		}
@@ -160,7 +172,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		const int state_summon_roar = 5;
 		int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public override void AI() {
-            if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
+			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
 			NPC.target = Main.maxPlayers;
 			NPC.TargetClosest();
 			if (NPC.HasValidTarget) {
@@ -384,11 +396,11 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					//"beckoning roar"
 					case state_summon_roar: {
-                        NPC.ai[1]++;
+						NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
-                        SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f).WithVolumeScale(0.25f), NPC.Center);
-                        if (NPC.ai[1] < 40) {
-                            leftArmTarget = 0;
+						SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f).WithVolumeScale(0.25f), NPC.Center);
+						if (NPC.ai[1] < 40) {
+							leftArmTarget = 0;
 							rightArmTarget = 0;
 							armSpeed *= 0.5f;
 						} else if (NPC.ai[1] > 60) {
@@ -522,14 +534,14 @@ namespace Origins.NPCs.Defiled.Boss {
 				break;
 			}
 		}
-        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (DifficultyMult >= 2) {
 				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-                    target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
-                }
-            }
-        }
-        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
+				}
+			}
+		}
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_OnHurt(projectile), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
@@ -669,7 +681,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 	}
 	public class Defiled_Spike_Explosion_Hostile : ModProjectile {
-        public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public override void SetDefaults() {
 			Projectile.timeLeft = 600;
 			Projectile.usesLocalNPCImmunity = true;
@@ -699,10 +711,10 @@ namespace Origins.NPCs.Defiled.Boss {
 				);
 			}
 		}
-    }
+	}
 	public class Defiled_Spike_Explosion_Spike_Hostile : ModProjectile {
-        public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
-        public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public static int ID { get; private set; } = -1;
 		Vector2 realPosition;
 		public override void SetStaticDefaults() {
@@ -758,14 +770,14 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
 		}
-        public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-            if (DifficultyMult >= 2) {
-                if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-                    target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
-                }
-            }
-        }
-        public override bool PreDraw(ref Color lightColor) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			if (DifficultyMult >= 2) {
+				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
+					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
+				}
+			}
+		}
+		public override bool PreDraw(ref Color lightColor) {
 			float totalLength = Projectile.velocity.Length() * movementFactor;
 			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);

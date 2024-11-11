@@ -926,7 +926,9 @@ namespace Origins.Dev {
 			JObject expertData = [];
 			JObject masterData = [];
 			NPC tempInstance = new();
+			bool dontDoHardmodeScaling = NPCID.Sets.DontDoHardmodeScaling[npc.type];
 			try {
+				NPCID.Sets.DontDoHardmodeScaling[npc.type] = true;
 				Main.GameMode = GameModeID.Normal;
 				tempInstance.SetDefaults(npc.netID, new NPCSpawnParams {
 					gameModeData = Main.GameModeInfo,
@@ -966,7 +968,7 @@ namespace Origins.Dev {
 			} finally {
 				Main.GameMode = gameMode;
 				Main.getGoodWorld = getGoodWorld;
-				npc.SetDefaults(npc.netID);
+				NPCID.Sets.DontDoHardmodeScaling[npc.type] = dontDoHardmodeScaling;
 			}
 			for (int i = 0; i < BiomeNPCGlobals.assimilationProviders.Count; i++) {
 				if (npc.TryGetGlobalNPC((GlobalNPC)BiomeNPCGlobals.assimilationProviders[i], out GlobalNPC gNPC) && gNPC is IAssimilationProvider assimilationProvider) {
@@ -1128,7 +1130,7 @@ namespace Origins.Dev {
 		public static JArray GetImmunities(this NPC npc) {
 			JArray immunities = [];
 			for (int i = 0; i < npc.buffImmune.Length; i++) {
-				if (npc.buffImmune[i]) immunities.Add(GetBuffText(i));
+				if (npc.buffImmune[i] && (i < BuffID.Count || ModContent.GetModBuff(i).Mod is Origins)) immunities.Add(GetBuffText(i));
 			}
 			return immunities;
 		}

@@ -19,6 +19,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -84,14 +85,25 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
 		}
-		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */ {
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
+			float terriblyPlacedHookMult = 1;
+			if (Main.GameModeInfo.IsJourneyMode) {
+				CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+				if (power != null && power.GetIsUnlocked()) {
+					if (power.StrengthMultiplierToGiveNPCs > 2) {
+						terriblyPlacedHookMult /= 3;
+					} else if (power.StrengthMultiplierToGiveNPCs > 1) {
+						terriblyPlacedHookMult /= 2;
+					}
+				}
+			}
 			switch (DifficultyMult) {
 				case 2:
-				NPC.lifeMax = (int)(5780 * balance / 2);
+				NPC.lifeMax = (int)(5780 * balance * terriblyPlacedHookMult);
 				break;
 
 				case 3:
-				NPC.lifeMax = (int)(8250 * balance / 3);
+				NPC.lifeMax = (int)(8250 * balance * terriblyPlacedHookMult);
 				break;
 			}
 		}
