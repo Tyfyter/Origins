@@ -421,7 +421,7 @@ namespace Origins.Items {
 				projectile.DamageArtifactMinion(2, true);
 			}
 			if (Main.rand.NextBool(3, 4)) {
-				Dust dust = Dust.NewDustDirect(projectile.position - Vector2.One * 2, projectile.width + 4, projectile.height + 4, 6, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100);
+				Dust dust = Dust.NewDustDirect(projectile.position - Vector2.One * 2, projectile.width + 4, projectile.height + 4, DustID.Torch, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100);
 				if (Main.rand.NextBool(4)) {
 					dust.noGravity = false;
 					dust.scale = 0.85f;

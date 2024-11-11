@@ -24,6 +24,7 @@ namespace Origins.NPCs {
 		internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
 		internal bool beeAfraidDebuff = false;
+		internal bool hibernalIncantationDebuff = false;
 		internal bool jointPopDebuff = false;
 		internal bool ziptieDebuff = false;
 		internal bool beeIncantationDebuff = false;
@@ -61,6 +62,7 @@ namespace Origins.NPCs {
 			}
 			amebolizeDebuff = false;
 			beeAfraidDebuff = false;
+			hibernalIncantationDebuff = false;
 			jointPopDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);

@@ -945,6 +945,11 @@ Buffs: {
 		// DisplayName: Friendly Zombie Buff
 		// Description: The friendly zombie will fight for you
 	}
+
+	Hibernal_Incantation_Buff: {
+		// DisplayName: Hibernal Incantation Buff
+		// Description: Mods.Origins.Buffs.Hibernal_Incantation_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1338,6 +1343,8 @@ Projectiles: {
 	// Omnidirectional_Claymore_Explosion.DisplayName: Omnidirectional Claymore Explosion
 	// Razorwire_P.DisplayName: Razorwire
 	// Firestarter_Explosion.DisplayName: Firestarter Explosion
+	// Hibernal_Incantation_P.DisplayName: Hibernal Incantation
+	// Hibernal_Icicle_P.DisplayName: Hibernal Icicle
 }
 
 Prefixes: {

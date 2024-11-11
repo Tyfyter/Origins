@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
-    public class Amebolize_Buff : ModBuff {
+    public class Hibernal_Incantation_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
@@ -12,7 +12,7 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			npc.GetGlobalNPC<OriginGlobalNPC>().amebolizeDebuff = true;
+			npc.GetGlobalNPC<OriginGlobalNPC>().hibernalIncantationDebuff = true;
 		}
 	}
 }

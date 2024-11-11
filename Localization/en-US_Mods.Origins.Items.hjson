@@ -4661,3 +4661,12 @@ TileEntityDebugger: {
 	DisplayName: Tile Entity Debugger
 	Tooltip: ""
 }
+
+Hibernal_Incantation: {
+	DisplayName: Hibernal Incantation
+	Tooltip:
+		'''
+		4 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}

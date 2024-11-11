@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.DamageType = DamageClass.Summon;
+			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 5;
 			Projectile.width = 30;
