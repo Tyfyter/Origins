@@ -29,6 +29,9 @@ namespace Origins.Tiles {
 					"Tiles/" + PageName(modItem)
 				});
 				s.Item2.Remove("Image");
+				if (TileLoader.GetTile(modItem.Item.createTile) is ModTile modTile) {
+					if (modTile.MinPick > 0) s.Item2.Add("MinPick", modTile.MinPick);
+				}
 				return s;
 			});
 		}
