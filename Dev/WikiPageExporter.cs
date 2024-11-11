@@ -925,32 +925,43 @@ namespace Origins.Dev {
 			int gameMode = Main.GameMode;
 			JObject expertData = [];
 			JObject masterData = [];
+			NPC tempInstance = new();
 			try {
 				Main.GameMode = GameModeID.Normal;
-				npc.SetDefaults(npc.netID);
-				data.AppendStat("MaxLife", npc.lifeMax, 0);
-				data.AppendStat("Defense", npc.defense, 0);
-				data.AppendStat("KBResist", 1 - npc.knockBackResist, 0);
-				data.AppendJStat("Immunities", npc.GetImmunities(), []);
-				data.AppendStat("Coins", npc.value, 0);
+				tempInstance.SetDefaults(npc.netID, new NPCSpawnParams {
+					gameModeData = Main.GameModeInfo,
+					playerCountForMultiplayerDifficultyOverride = 1
+				});
+				data.AppendStat("MaxLife", tempInstance.lifeMax, 0);
+				data.AppendStat("Defense", tempInstance.defense, 0);
+				data.AppendStat("KBResist", 1 - tempInstance.knockBackResist, 0);
+				data.AppendJStat("Immunities", tempInstance.GetImmunities(), []);
+				data.AppendStat("Coins", tempInstance.value, 0);
 				data.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForNPCID(npc.type, false).GetDropRates()));
 
 				Main.GameMode = GameModeID.Expert;
-				npc.SetDefaults(npc.netID);
-				expertData.AppendAltStat(data, "MaxLife", npc.lifeMax);
-				expertData.AppendAltStat(data, "Defense", npc.defense);
-				expertData.AppendAltStat(data, "KBResist", 1 - npc.knockBackResist);
-				expertData.AppendAltStat(data, "Immunities", npc.GetImmunities());
-				expertData.AppendAltStat(data, "Coins", npc.value);
+				_ = Main.expertMode;
+				tempInstance.SetDefaults(npc.netID, new NPCSpawnParams {
+					gameModeData = Main.GameModeInfo,
+					playerCountForMultiplayerDifficultyOverride = 1
+				});
+				expertData.AppendAltStat(data, "MaxLife", tempInstance.lifeMax * (npc.boss ? 2 : 1));
+				expertData.AppendAltStat(data, "Defense", tempInstance.defense);
+				expertData.AppendAltStat(data, "KBResist", 1 - tempInstance.knockBackResist);
+				expertData.AppendAltStat(data, "Immunities", tempInstance.GetImmunities());
+				expertData.AppendAltStat(data, "Coins", tempInstance.value);
 				expertData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForNPCID(npc.type, false).GetDropRates()));
 
 				Main.GameMode = GameModeID.Master;
-				npc.SetDefaults(npc.netID);
-				masterData.AppendAltStat(data, "MaxLife", npc.lifeMax);
-				masterData.AppendAltStat(data, "Defense", npc.defense);
-				masterData.AppendAltStat(data, "KBResist", 1 - npc.knockBackResist);
-				masterData.AppendAltStat(data, "Immunities", npc.GetImmunities());
-				masterData.AppendAltStat(data, "Coins", npc.value);
+				tempInstance.SetDefaults(npc.netID, new NPCSpawnParams {
+					gameModeData = Main.GameModeInfo,
+					playerCountForMultiplayerDifficultyOverride = 1
+				});
+				masterData.AppendAltStat(data, "MaxLife", tempInstance.lifeMax * (npc.boss ? 3 : 1));
+				masterData.AppendAltStat(data, "Defense", tempInstance.defense);
+				masterData.AppendAltStat(data, "KBResist", 1 - tempInstance.knockBackResist);
+				masterData.AppendAltStat(data, "Immunities", tempInstance.GetImmunities());
+				masterData.AppendAltStat(data, "Coins", tempInstance.value);
 				masterData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForNPCID(npc.type, false).GetDropRates()));
 			} finally {
 				Main.GameMode = gameMode;
@@ -978,7 +989,13 @@ namespace Origins.Dev {
 			customStat?.ModifyWikiStats(data);
 			data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
 			data.AppendStat("InternalName", modNPC?.Name, null);
-			yield return (PageName(modNPC), data);
+			string segmentText = "";
+			if (modNPC is WormBody) {
+				segmentText = "_Body";
+			} else if (modNPC is WormTail) {
+				segmentText = "_Tail";
+			}
+			yield return (PageName(modNPC) + segmentText, data);
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;
@@ -1103,7 +1120,7 @@ namespace Origins.Dev {
 			string image = "";
 			if (BuffLoader.GetBuff(type)?.Mod is Origins) {
 				image = " image=$fromStats";
-			} else {
+			} else if (type < BuffID.Count) {
 				href = " href=https://terraria.wiki.gg/wiki/" + name.Replace(' ', '_');
 			}
 			return $"<a is=a-link{href}{image}>{name}</a>";

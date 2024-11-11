@@ -80,8 +80,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_DA>();
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 3100;
-			NPC.defense = 14;
-			NPC.damage = 60;
+			NPC.defense = 12;
+			NPC.damage = 48;
 			NPC.width = 81;
 			NPC.height = 96;
 			NPC.friendly = false;
@@ -100,20 +100,14 @@ namespace Origins.NPCs.Defiled.Boss {
 		public float Mana { get => 1; set { } }
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */ {
 			switch (DifficultyMult) {
-				case 1:
-				NPC.lifeMax = (int)(3100 * balance);
-				NPC.defense = 12;
-				NPC.damage = 48;
-				break;
-
 				case 2:
-				NPC.lifeMax = (int)(4960 * balance);
+				NPC.lifeMax = (int)(4960 * balance / 2);
 				NPC.defense = 13;
 				NPC.damage = 64;
 				break;
 
 				case 3:
-				NPC.lifeMax = (int)(7936 * balance);
+				NPC.lifeMax = (int)(7936 * balance / 3);
 				NPC.defense = 15;
 				NPC.damage = 72;
 				break;

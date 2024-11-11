@@ -75,7 +75,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.width = NPC.height = 60;
 			NPC.damage = 33;
 			NPC.defense = 100;
-			NPC.lifeMax = 2890;
+			NPC.lifeMax = 3800;
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
 			Music = Origins.Music.RivenBoss;
@@ -83,6 +83,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
+		}
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */ {
+			switch (DifficultyMult) {
+				case 2:
+				NPC.lifeMax = (int)(5780 * balance / 2);
+				break;
+
+				case 3:
+				NPC.lifeMax = (int)(8250 * balance / 3);
+				break;
+			}
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
