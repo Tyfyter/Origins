@@ -88,6 +88,7 @@ namespace Origins.Items.Armor {
 				foreach (string type in set.SetCategories) types.Add(type);
 				data.Add("Types", types);
 				data.Add("SetName", item.set.ArmorSetName);
+				data.Add("DisplayName", item.set.ArmorSetDisplayName);
 				JArray images = [$"ArmorSets/{item.set.ArmorSetName}"];
 				if (item.set.HasFemaleVersion) images.Add($"ArmorSets/{item.set.ArmorSetName}_Female");
 				data.Add("Images", images);
@@ -104,6 +105,7 @@ namespace Origins.Items.Armor {
 				foreach (string type in set.SetCategories) types.Add(type);
 				data.Add("Types", types);
 				data.Add("SetName", set.MergedArmorSetName);
+				data.Add("DisplayName", set.ArmorSetDisplayName);
 				data.Add("SetBonus", statGroups[0].GetValue("SetBonus"));
 
 				JArray maleSets = [];
@@ -222,7 +224,7 @@ namespace Origins.Items.Armor {
 	public interface IWikiArmorSet {
 		string ArmorSetName { get; }
 		string MergedArmorSetName => ArmorSetName;
-		string ArmorSetDisplayName => ArmorSetName;
+		string ArmorSetDisplayName => Language.GetOrRegister($"WikiGenerator.Stats.{(this is ModType modType ? modType.Mod.Name : "missingno")}.{ArmorSetName}.DisplayName").Value;
 		bool CreateMergedSet => true;
 		bool HasFemaleVersion => true;
 		int IconItem => HeadItemID;
