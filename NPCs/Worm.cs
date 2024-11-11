@@ -131,8 +131,7 @@ namespace Origins.NPCs {
 	/// <summary>
 	/// The base class for head segment NPCs of Worm enemies
 	/// </summary>
-	public abstract class WormHead : Worm
-	{
+	public abstract class WormHead : Worm {
 		public sealed override WormSegmentType SegmentType => WormSegmentType.Head;
 
 		/// <summary>

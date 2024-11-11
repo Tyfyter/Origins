@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
@@ -30,7 +32,7 @@ using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	[AutoloadBossHead]
-	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat {
 		public AssimilationAmount? Assimilation => 0.08f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -349,6 +351,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			NPC.Center = Main.npc[closest].Center;
 			return false;
+		}
+		public void ModifyWikiStats(JObject data) {
+			data["SpriteWidth"] = 449;
 		}
 	}
 	public class World_Cracker_Body : WormBody, ILoadExtraTextures, IRivenEnemy {
