@@ -5,6 +5,7 @@ using Origins.Items.Materials;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -18,7 +19,7 @@ namespace Origins.Tiles.Dusk {
 			Main.tileMerge[Type][TileType<Dusk_Stone>()] = true;
 			Main.tileMerge[Type][TileType<Dusk_Stone_Liquid>()] = true;
 			AddMapEntry(new Color(57, 10, 75));
-			MinPick = 190;
+			MinPick = 180;
 			MineResist = 8;
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
@@ -50,6 +51,12 @@ namespace Origins.Tiles.Dusk {
 			.AddIngredient(ItemID.SoulofNight)
 			.AddTile(TileID.DemonAltar)
 			.Register();
+		}
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 11);
 		}
 	}
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
@@ -14,7 +16,6 @@ namespace Origins.Tiles.Other {
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			AddMapEntry(new Color(60, 60, 60));
-			MinPick = 35;
 			MineResist = 3;
 		}
 	}
@@ -60,6 +61,12 @@ namespace Origins.Tiles.Other {
 			.AddIngredient(ModContent.ItemType<Ashen_Sand_Item>(), 3)
 			.AddTile(TileID.GlassKiln)
 			.Register();*/
+		}
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 4);
 		}
 	}
 }

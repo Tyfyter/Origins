@@ -135,5 +135,11 @@ Sanguinite_Ore_Item: {
 Eitrite_Ore_Item: {
 	// Tier: <b>11.5</b>
 	// Crafting: 3 <a is=a-link image=$fromStats>Eitrite Ore</a> = <a is=a-link image=$fromStats>Eitrite Bar</a>
-	// Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Underground>Underground</a>, <a is=a-link href=https://terraria.wiki.gg/wiki/Cavern>Cavern</a>, <a is=a-link href=https://terraria.wiki.gg/wiki/Eye_of_Cthulhu>Eye of Cthulhu</a>, <a is=a-link>Scrapper</a>
+	// Source: <a is=a-link>Brine Pool</a>, <a is=a-link>Lost Diver</a>
+}
+
+Bleeding_Obsidian_Item: {
+	// Tier: <b>11.5</b>
+	// Crafting: 8 <a is=a-link image=$fromStats>Bleeding Obsidian Shard</a> = <a is=a-link image=$fromStats>Bleeding Obsidian</a>
+	// Source: <a is=a-link>The Dusk</a>
 }

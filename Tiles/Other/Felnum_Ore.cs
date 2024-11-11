@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
 using System;
@@ -54,6 +55,12 @@ namespace Origins.Tiles.Other {
 			.AddIngredient(ItemID.FallenStar, 4)
 			.AddTile(TileID.CrystalBall)
 			.Register();
+		}
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 8);
 		}
 	}
 	public class Felnum_Mat_Entry : JournalEntry {

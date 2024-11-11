@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -34,6 +36,12 @@ namespace Origins.Tiles.Brine
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);
 			Item.createTile = TileType<Eitrite_Ore>();
+		}
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 11.5);
 		}
 	}
 }
