@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -49,5 +51,11 @@ namespace Origins.Tiles.Ashen {
 			Item.CloneDefaults(ItemID.DemoniteOre);
 			Item.createTile = TileType<Sanguinite_Ore>();
 		}
-    }
+		public void ModifyWikiStats(JObject data) {
+			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
+			string key = base_key + "Crafting";
+			data.AppendStat("Crafting", Language.GetTextValue(key), key);
+			data.Add("Tier", 5);
+		}
+	}
 }
