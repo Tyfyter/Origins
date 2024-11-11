@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs;
 using System;
 using System.Collections;
@@ -698,55 +699,79 @@ namespace Origins.Dev {
 			if (item.accessory) types.Add("Accessory");
 			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == "Tool") || types.Any(t => t.ToString() == "ToolWeapon"))) {
 				types.Add("Weapon");
-				bool alreadyHasOtherType = types.Any(t => t.ToString() is "OtherMelee" or "OtherRanged" or "OtherMagic" or "OtherSummon" or "OtherExplosive");
-				if (!alreadyHasOtherType && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) types.Add("Sword");
-				if (!alreadyHasOtherType && item.shoot > ProjectileID.None) {
-					switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
-						case ProjAIStyleID.Boomerang:
-						types.Add("Boomerang");
-						break;
-
-						case ProjAIStyleID.Yoyo:
-						types.Add("Yoyo");
+				WeaponTypes weaponType = WeaponTypes.None;
+				for (int i = 0; i < types.Count; i++) {
+					if (Enum.TryParse(types[i].ToString(), out WeaponTypes type)) {
+						weaponType = type;
 						break;
 					}
-					if (ItemID.Sets.Spears[item.type]) types.Add("Spear");
+				}
+				if (weaponType == WeaponTypes.None) {
+					if (item.CountsAsClass(DamageClasses.Explosive)) {
 
-					if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == "Incantation")) {
-						if (Origins.ArtifactMinion[item.shoot]) types.Add("Artifact");
-						if (ProjectileID.Sets.IsAWhip[item.shoot]) {
-							types.Add("Whip");
-						} else {
-							Projectile proj = ContentSamples.ProjectilesByType[item.shoot];
-							if (proj.minion) types.Add("Minion");
-							else if (proj.sentry) types.Add("Sentry");
-							else types.Add("OtherSummon");
+						if (weaponType == WeaponTypes.None) weaponType = WeaponTypes.OtherExplosive;
+					}
+					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
+						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
+							case ProjAIStyleID.Boomerang:
+							weaponType = WeaponTypes.Boomerang;
+							break;
+
+							case ProjAIStyleID.Yoyo:
+							weaponType = WeaponTypes.Yoyo;
+							break;
+						}
+						if (ItemID.Sets.Spears[item.type]) {
+							weaponType = WeaponTypes.Spear;
+						}
+
+						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == "Incantation")) {
+							if (Origins.ArtifactMinion[item.shoot]) weaponType = WeaponTypes.Artifact;
+							if (ProjectileID.Sets.IsAWhip[item.shoot]) {
+								weaponType = WeaponTypes.Whip;
+							} else {
+								Projectile proj = ContentSamples.ProjectilesByType[item.shoot];
+								if (proj.minion) weaponType = WeaponTypes.Minion;
+								else if (proj.sentry) weaponType = WeaponTypes.Sentry;
+								else weaponType = WeaponTypes.OtherSummon;
+							}
 						}
 					}
-				}
-				if (!alreadyHasOtherType && item.CountsAsClass(DamageClass.Melee) && !types.Any(t => t.ToString() is "Sword" or "Spear" or "Boomerang" or "Yoyo")) {
-					types.Add("OtherMelee");
-				}
-				if (!alreadyHasOtherType && item.CountsAsClass(DamageClass.Magic) && !types.Any(t => t.ToString() is "Wand" or "MagicGun" or "SpellBook")) {
-					if (Item.staff[item.type]) types.Add("Wand");
-					else types.Add("OtherMagic");
-				}
-				switch (item.useAmmo) {
-					case ItemID.WoodenArrow:
-					types.Add("Bow");
-					break;
-					case ItemID.MusketBall:
-					types.Add("Gun");
-					break;
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Magic)) {
+						if (Item.staff[item.type]) weaponType = WeaponTypes.Wand;
+						else weaponType = WeaponTypes.OtherMagic;
+					}
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Melee)) weaponType = WeaponTypes.OtherMelee;
+					if (weaponType == WeaponTypes.None) {
+						switch (item.useAmmo) {
+							case ItemID.WoodenArrow:
+							weaponType = WeaponTypes.Bow;
+							break;
+							case ItemID.MusketBall:
+							weaponType = WeaponTypes.Gun;
+							break;
 
-					default:
-					if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) types.Add("Handcannon");
-					else if (item.useAmmo == ModContent.ItemType<Harpoon>()) types.Add("HarpoonGun");
-					break;
+							default:
+							if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) {
+								weaponType = WeaponTypes.Handcannon;
+							} else if (item.useAmmo == ModContent.ItemType<Harpoon>()) {
+								weaponType = WeaponTypes.HarpoonGun;
+							} else if (item.useAmmo == AmmoID.Rocket) {
+								weaponType = WeaponTypes.RocketLauncher;
+							} else if (item.useAmmo == ModContent.ItemType<Resizable_Mine_One>()) {
+								weaponType = WeaponTypes.CanisterLauncher;
+							}
+							break;
+						}
+					}
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Ranged)) {
+						weaponType = WeaponTypes.OtherRanged;
+					}
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClasses.Explosive)) {
+						weaponType = WeaponTypes.OtherExplosive;
+					}
 				}
-				if (!alreadyHasOtherType && item.CountsAsClass(DamageClass.Ranged) && !types.Any(t => t.ToString() is "Bow" or "Gun" or "Handcannon" or "HarpoonGun")) {
-					types.Add("OtherRanged");
-				}
+				if (weaponType != WeaponTypes.None) types.Add(weaponType.ToString());
 			}
 			switch (item.ammo) {
 				case ItemID.WoodenArrow:
@@ -1142,5 +1167,31 @@ namespace Origins.Dev {
 				return RecipeUseType.NONE;
 			};
 		}
+	}
+	public enum WeaponTypes {
+		None,
+		Sword,
+		Spear,
+		Boomerang,
+		Yoyo,
+		Bow,
+		Gun,
+		HarpoonGun,
+		Wand,
+		MagicGun,
+		SpellBook,
+		Artifact,
+		Minion,
+		Sentry,
+		Whip,
+		Incantation,
+		Handcannon,
+		RocketLauncher,
+		CanisterLauncher,
+		OtherMelee,
+		OtherRanged,
+		OtherMagic,
+		OtherSummon,
+		OtherExplosive
 	}
 }
