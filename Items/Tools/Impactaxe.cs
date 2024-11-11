@@ -1,16 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins;
 using Origins.Dev;
-using Origins.Gores.NPCs;
-using Origins.Items.Materials;
-using Origins.Journal;
-using Origins.NPCs;
 using Origins.Projectiles;
-using Origins.World.BiomeData;
-using PegasusLib;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -18,12 +10,10 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Impactaxe : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Tool",
-			"ToolWeapon"
+			"Tool"
 		];
 		public override void SetDefaults() {
 			Item.damage = 32;

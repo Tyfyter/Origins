@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Piledriver : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ToolWeapon"
+			"Tool"
 		];
 		public static int Pick => 70;
 		public override void SetStaticDefaults() {

@@ -1,11 +1,14 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Dissector : ModItem {
-		
+	public class Dissector : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Tool"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumWaraxe);
 			Item.damage = 16;

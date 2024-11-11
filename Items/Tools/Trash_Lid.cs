@@ -2,15 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
-using Origins.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Trash_Lid : ModItem, ICustomWikiStat {
 		public string[] Categories => [

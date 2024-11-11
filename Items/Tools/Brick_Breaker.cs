@@ -1,11 +1,14 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Brick_Breaker : ModItem {
-		
+	public class Brick_Breaker : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Tool"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 14;

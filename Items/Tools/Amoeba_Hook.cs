@@ -7,10 +7,13 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.DataStructures;
 using Origins.Items.Weapons.Summoner;
+using Origins.Dev;
 
 namespace Origins.Items.Tools {
-	public class Amoeba_Hook : ModItem {
-		
+	public class Amoeba_Hook : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Tool"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.shootSpeed = 18f;

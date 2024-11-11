@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
     public class C6_Jackhammer : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ToolWeapon"
+			"Tool"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
