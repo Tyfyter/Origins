@@ -58,6 +58,7 @@ BOSSES AND MINI-BOSSES:
 (X, 々) Defiled Depressant
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
+(X) Scrap Mercenary
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation*
@@ -160,11 +161,15 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
+(X) Exhaust Drone
 (^) Flagellant
 (^) Graveshield Zombie
+(X) Junkie
+(X) Machine Gun Machine
 (^) Measly Moeba
 (^) Optiphage
 (^) Pustule Jellyfish*
+(X) Riot Drone
 (^) Riven Penguin*
 (^) Riven Protoform
 (#, ^2, 々) Scanner Scout
@@ -172,6 +177,8 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 (X) Spiteful Flesh
+(X) Top Brass Protector
+(X) Worker Bot
 
 (^) Amoebeye*
 (^) Amebic Mummy
@@ -196,6 +203,7 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
+(X) Rocket Machine
 (^) Savage Whip*
 (X) Sea Dragon
 (^) Shattered Ghoul
@@ -624,6 +632,7 @@ MELEE WEAPONS:
 (^) True Waning Crescent
 
 (X) Celestial Point
+(X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
 (X) Rocket Lance
@@ -1082,6 +1091,7 @@ MATERIALS:
 (^) Rubber*
 (^) Sanguinite Bar*
 (^) Sentient Powder*
+(X) Silicon Bar
 (^) Strange String*
 (^) Tire*
 (^) Tree Sap*

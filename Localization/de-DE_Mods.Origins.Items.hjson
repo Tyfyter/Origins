@@ -4666,7 +4666,6 @@ Hibernal_Incantation: {
 	// DisplayName: Hibernal Incantation
 	/* Tooltip:
 		'''
-		Struck enemies will wither away
 		4 summon tag damage
 		{$CommonItemTooltip.Whips}
 		''' */
