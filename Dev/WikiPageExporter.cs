@@ -708,7 +708,13 @@ namespace Origins.Dev {
 				}
 				if (weaponType == WeaponTypes.None) {
 					if (item.CountsAsClass(DamageClasses.Explosive)) {
-						if (weaponType == WeaponTypes.None) weaponType = item.CountsAsClass(DamageClasses.ThrownExplosive) ? WeaponTypes.ThrownExplosive : WeaponTypes.OtherExplosive;
+						if (item.useAmmo == ModContent.ItemType<Resizable_Mine_One>()) {
+							weaponType = WeaponTypes.CanisterLauncher;
+						} else if (item.CountsAsClass(DamageClasses.ThrownExplosive)) {
+							weaponType = WeaponTypes.ThrownExplosive;
+						} else {
+							weaponType = WeaponTypes.OtherExplosive;
+						}
 					}
 					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
 						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
@@ -768,8 +774,9 @@ namespace Origins.Dev {
 					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Ranged)) {
 						weaponType = WeaponTypes.OtherRanged;
 					}
+					if (weaponType == WeaponTypes.None && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) weaponType = WeaponTypes.Sword;
 				}
-				if (weaponType != WeaponTypes.None) types.Add(weaponType.ToString());
+				if (weaponType != WeaponTypes.None && !types.Any(t => t.ToString() == weaponType.ToString())) types.Add(weaponType.ToString());
 			}
 			switch (item.ammo) {
 				case ItemID.WoodenArrow:
