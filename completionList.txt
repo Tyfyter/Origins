@@ -62,7 +62,7 @@ BOSSES AND MINI-BOSSES:
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation*
-(†, $, ^2/3) Fiberglass Weaver !!!
+($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (^) World Cracker*
 
@@ -159,6 +159,7 @@ ENEMY NPCS:
 (^) Defiled Swarmer
 (^) Defiled Wisp
 (^) Enchanted Fiberglass Bow
+(#, ^2) Enchanted Fiberglass Cannon !!!
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
@@ -587,8 +588,8 @@ TOOLS:
 
 MELEE WEAPONS:
 ---
-(^) Baseball Bat
-(^) Bone Latcher
+(^) Baseball Bat*
+(^) Bone Latcher*
 (^) Cyah Nara
 (^) Dark Spiral
 (^) Decimator
@@ -636,13 +637,13 @@ MELEE WEAPONS:
 (X) Chromtain Smasher
 (X) Eyndum Scar
 (X) Rocket Lance
-(^) The Bird
+(^) The Bird*
 ---
 
 
 RANGED WEAPONS:
 ---
-(^) Ancient Kruncher
+(^) Ancient Kruncher*
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
@@ -827,6 +828,7 @@ EXPLOSIVE WEAPONS:
 (^) Flare Launcher
 (^) Flashbang*
 (^) Floaty Bomb*
+(#, ^2) 'Glass Cannon !!!
 (^) Hand Grenade Launcher
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
@@ -883,6 +885,7 @@ GENERIC WEAPONS:
 ---
 (^) Generic Weapon
 (^) Potato Launcher*
+(#, ^2) Thread Rod !!!
 
 (X) Hyperstatic Gauss Cannon
 (X) Pressurized Supersoaker
@@ -1091,7 +1094,7 @@ MATERIALS:
 (^) Rubber*
 (^) Sanguinite Bar*
 (^) Sentient Powder*
-(X) Silicon Bar
+(^) Silicon Bar
 (^) Strange String*
 (^) Tire*
 (^) Tree Sap*

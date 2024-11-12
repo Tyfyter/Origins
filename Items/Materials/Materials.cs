@@ -44,9 +44,9 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(copper: 18);
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
-			Recipe.Create(Type, 3)
-			.AddIngredient(ModContent.ItemType<Silicon_Item>())
-            .AddIngredient(ModContent.ItemType<Tree_Sap>())
+			Recipe.Create(Type, 9)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
+            .AddIngredient(ModContent.ItemType<Tree_Sap>(), 9)
             .AddTile(TileID.WorkBenches)
 			.Register();
 
@@ -325,7 +325,7 @@ namespace Origins.Items.Materials {
 			Recipe.Create(Type, 5)
 			.AddIngredient(ItemID.BottledWater, 5)
 			.AddIngredient(ItemID.FallenStar)
-			.AddIngredient(ModContent.ItemType<Silicon_Item>())
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}
@@ -395,9 +395,9 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Pink;
 		public override bool Hardmode => true;
 		public override void AddRecipes() {
-			Recipe.Create(Type, 4)
-			.AddIngredient(ItemID.HallowedBar)
-			.AddIngredient(ModContent.ItemType<Silicon_Item>())
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.HallowedBar, 2)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
@@ -408,13 +408,13 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.Flipper)
 			.AddIngredient(Type, 15)
-			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>(), 2)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
 			Recipe.Create(ItemID.FloatingTube)
 			.AddIngredient(Type, 20)
-			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 10)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>(), 3)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
@@ -430,6 +430,20 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 3)
+			.AddTile(TileID.Furnaces)
+			.Register();
+		}
+	}
+	public class Silicon_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 1, copper: 32);
+		public override bool Hardmode => false;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Silicon_Ore_Item>(), 3)
 			.AddTile(TileID.Furnaces)
 			.Register();
 		}

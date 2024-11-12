@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Tyfyter.Utils;
-using Terraria.Audio;
 namespace Origins.Items.Weapons.Melee {
 	public class Dark_Spiral : ModItem, ICustomWikiStat {
 		public string[] Categories => [

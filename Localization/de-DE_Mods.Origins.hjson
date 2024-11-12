@@ -31,7 +31,7 @@ Status_Messages: {
 
 Laser_Tag: {
 	// Teams: Teams
-	// CTG: Capture the Gem
+	// CTG: Don't allow Teams with their gem stolen to score
 	// Building: Allow Building
 	// StartButton: Start
 	// RespawnTime: Revive Time
@@ -49,6 +49,7 @@ Laser_Tag: {
 	// Team_Blue: Blue team
 	// Team_Yellow: Yellow team
 	// Team_Purple: Pink team
+	// NeedWinConditions: You can't start a laser tag game with these settings because it couldn't be won
 }
 
 ItemDropConditions: {

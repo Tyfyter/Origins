@@ -210,7 +210,7 @@ namespace Origins.Tiles.Other {
 			.AddIngredient(ItemID.CopperBar, 2)
 			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 5)
 			.AddIngredient(ModContent.ItemType<Power_Core>())
-			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>(), 8)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}

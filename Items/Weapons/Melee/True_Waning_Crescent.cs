@@ -1,13 +1,11 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Dev;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.Audio;
-using System;
-using Terraria.GameContent.Drawing;
 namespace Origins.Items.Weapons.Melee {
 	public class True_Waning_Crescent : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -30,10 +28,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient<Waning_Crescent>()
 			.AddIngredient(ItemID.SoulofFright, 20)
 			.AddIngredient(ItemID.SoulofMight, 20)
 			.AddIngredient(ItemID.SoulofSight, 20)
+			.AddIngredient<Waning_Crescent>()
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

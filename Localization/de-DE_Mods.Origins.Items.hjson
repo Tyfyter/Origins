@@ -1586,8 +1586,6 @@ Ash_Urn: {
 	// Tooltip: The day of Verdict will come...
 }
 
-// Silicon.DisplayName: Silicon Ore
-
 Strange_String: {
 	// DisplayName: Strange String
 	// Tooltip: "'Involuntary neurectomy'"
@@ -2985,7 +2983,7 @@ Bomb_Artifact: {
 
 Bone_Latcher: {
 	// DisplayName: Bone Latcher
-	// Tooltip: ""
+	// Tooltip: Beckons enemies toward you
 }
 
 Brainy_Staff: {
@@ -3509,11 +3507,6 @@ Peat_Moss_Item: {
 Qube_Item: {
 	// DisplayName: Qube
 	// Tooltip: "'Physical information, like everything else in the world'"
-}
-
-Silicon_Item: {
-	// DisplayName: Silicon
-	// Tooltip: ""
 }
 
 Stone_Mask_Item: {
@@ -4670,3 +4663,10 @@ Hibernal_Incantation: {
 		{$CommonItemTooltip.Whips}
 		''' */
 }
+
+Silicon_Ore_Item: {
+	// DisplayName: Silicon Ore
+	// Tooltip: ""
+}
+
+// Silicon_Bar.DisplayName: Silicon_ Bar

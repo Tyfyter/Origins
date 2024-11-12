@@ -1,9 +1,8 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Bow : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => [

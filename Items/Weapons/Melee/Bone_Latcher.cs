@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Items.Materials;
 namespace Origins.Items.Weapons.Melee {
 	public class Bone_Latcher : ModItem {
 		static short glowmask;
@@ -25,6 +26,12 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
 		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= player.GetAdjustedItemScale(Item);
@@ -32,8 +39,6 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public class Bone_Latcher_P : ModProjectile, IWhipProjectile {
 			public override void SetStaticDefaults() {
-				// DisplayName.SetDefault("Bone Latcher");
-				// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 				ProjectileID.Sets.IsAWhip[Type] = true;
 			}
 

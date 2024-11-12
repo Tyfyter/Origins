@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.LightDisc)
 			.AddIngredient(ItemID.ChlorophyteBar, 24)
+			.AddIngredient(ItemID.LightDisc)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

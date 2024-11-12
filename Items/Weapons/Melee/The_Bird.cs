@@ -15,8 +15,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Sword",
-			"DeveloperItem",
-			"ReworkExpected"
+			"DeveloperItem"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Marrowick_Bow : ModItem, ICustomWikiStat {
+	public class Marrowick_Bow : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Bow"
         ];
@@ -18,6 +18,12 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-4f, 0);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Marrowick_Item>(), 7)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 }

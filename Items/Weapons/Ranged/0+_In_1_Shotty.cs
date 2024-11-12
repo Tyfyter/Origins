@@ -45,8 +45,8 @@ namespace Origins.Items.Weapons.Ranged {
 			.Register();
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Boomstick)
-			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 9)
 			.AddIngredient(ModContent.ItemType<Shotty_x2>())
+			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 3)
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

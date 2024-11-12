@@ -31,7 +31,6 @@ Status_Messages: {
 
 Laser_Tag: {
 	Teams: Teams
-	CTG: Capture the Gem
 	CTG: Don't allow Teams with their gem stolen to score
 	Building: Allow Building
 	StartButton: Start

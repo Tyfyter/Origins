@@ -60,7 +60,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.aiStyle = 0;
 			NPC.width = NPC.height = 68;
 			NPC.knockBackResist = 0.1f;
-			NPC.value = Item.buyPrice(gold: 4);
+			NPC.value = Item.buyPrice(gold: 5);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];

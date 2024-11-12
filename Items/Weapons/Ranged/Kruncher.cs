@@ -1,11 +1,10 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Kruncher : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -37,6 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.05f);
 			Item.glowMask = glowmask;
 			Item.autoReuse = true;
+			Item.ArmorPenetration = 6;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = 0; i < 5; i++) Projectile.NewProjectile(source, position, velocity.RotatedByRandom(i / 10f), type, damage, knockback, player.whoAmI);

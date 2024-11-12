@@ -1,5 +1,5 @@
 ﻿using Origins.Dev;
-using Origins.Tiles.Other;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +26,7 @@ namespace Origins.Items.Accessories {
 			CreateRecipe()
 			.AddIngredient(ItemID.BandofStarpower)
 			.AddIngredient(ItemID.SunStone)
-			.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>(), 5)
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

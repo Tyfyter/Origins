@@ -125,3 +125,60 @@
 // Priority_Mail.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Fallen_Star>Fallen Star</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Paper_Airplane>Paper Airplane</a> + <a is=a-link image=$fromStats>Asylum Whistle</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Work_Benches>Any Work Bench</a>
 // Lovers_Leap.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Spectre_Boots>Spectre Boots</a> + <a is=a-link image=$fromStats>Locket Necklace</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
 // Laser_Tag_Vest.Source: <a is=a-link image=$fromStats>Power Core</a> + (6) <a is=a-link image=$fromStats>Rotor</a> @ <a is=a-link image=$fromStats>Fabricator</a>
+// Baseball_Bat.Source: (7) <a is=a-link href=https://terraria.wiki.gg/wiki/Woods>Wood</a> @ <a is=a-link>Work Benches</a> OR <a is=a-link href=https://terraria.wiki.gg/wiki/Golfer>Golfer</a> on <a is=a-link>April Fools</a>
+// Broken_Fiberglass_Sword.Source: <a is=a-link image$fromStats>Enchanted Fiberglass Sword</a>
+// Cyah_Nara.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Chests#Surface_Loot>Surface Chests</a>
+// Endowood_Sword.Source: (7) <a is=a-link image=$fromStats>Endowood</a> @ <a is=a-link>Work Benches</a>
+// Fiberglass_Sword.Source: <a is=a-link image=$fromStats>Fiberglass Weaver</a>
+// Fiberglass_Pistol.Source: <a is=a-link image=$fromStats>Fiberglass Weaver</a>
+// Fiberglass_Bow.Source: <a is=a-link image=$fromStats>Fiberglass Weaver</a>
+// Glass_Cannon.Source: <a is=a-link image=$fromStats>Enchanted Fiberglass Cannon</a>
+// Marrowick_Sword.Source: (7) <a is=a-link image=$fromStats>Marrowick</a> @ <a is=a-link>Work Benches</a>
+// Spiker_Sword.Source: (10) <a is=a-link image=$fromStats>Defiled Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Bone_Latcher.Source: (10) <a is=a-link image=$fromStats>Defiled Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Switchblade.Source: (10) <a is=a-link image=$fromStats>Sanguinite Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Vorpal_Sword.Source: (10) <a is=a-link image=$fromStats>Encrusted Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a> OR (Cursed) Vorpal Sword @ <a is=a-link href=https://terraria.wiki.gg/wiki/Bewitching_Table>Bewitching Table</a> and <a is=a-link image=$fromStats>World Cracker</a>
+// Amoebash.Source: <a is=a-link image=$fromStats>Riven Mimic</a>
+// Dart_Crossbow.Source: <a is=a-link image=$fromStats>Riven Mimic</a>
+// Salty_Seed.Source: <a is=a-link image=$fromStats>Riven Mimic</a>
+// Dew_Justice.Source: <a is=a-link image=$fromStats>Riven Mimic</a>
+// Crystal_Cutters.Source: (14) <a is=a-link href=https://terraria.wiki.gg/wiki/Crystal_Shard>Crystal Shard</a> + (5) <a is=a-link image=$fromStats>Magic Hair Spray</a> + (4) <a is=a-link image=$fromStats>Rubber</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Eaterboros.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Eater_of_Worlds>Eater of Worlds</a>
+// Eyndum_Scar.Source: (4) <a is=a-link image=$fromStats>Alien Conduit</a> + (23) <a is=a-link image=$fromStats>Endyean Ceramic</a> + <a is=a-link image=$fromStats>Weapon Blueprint</a> @ <a is=a-link image=Elderforge_Smol>Elderforge</a>
+// Personal_Laser_Blade.Source: (13) <a is=a-link image=$fromStats>Busted Servo</a> + <a is=a-link image=$fromStats>Power Core</a> + (2) <a is=a-link image=$fromStats>Rotor</a> + (8) <a is=a-link image=$fromStats>Rubber</a> @ <a is=a-link image=$fromStats>Fabricator</a>
+// Telephone_Pole.Source: (50) <a is=a-link href=https://terraria.wiki.gg/wiki/Woods>Wood</a> + (7) <a is=a-link image=$fromStats>Valkyrum Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// The_Bird.Source: <a is=a-link image=$fromStats>Alien Conduit</a> + (23) <a is=a-link image=$fromStats>Baseball Bat</a> + <a is=a-link image=$fromStats>Razorwire</a> @ <a is=a-link image=Elderforge_Smol>Elderforge</a>
+// Tyrfing.Source: <b>Unobtainable</b>
+// Decimator.Source: (9) <a is=a-link image=$fromStats>Encrusted Bar</a> + (5) <a is=a-link image=$fromStats>Riven Carapace</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Felnum_Boar_Spear.Source: (13) <a is=a-link image=$fromStats>Felnum Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Outreach.Source: (9) <a is=a-link image=$fromStats>Sanguinite Bar</a> + (5) <a is=a-link image=�ModImage�/Items/Materials/NE8>NE-8</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Ripper_Lance.Source: (9) <a is=a-link image=$fromStats>Defiled Bar</a> + (5) <a is=a-link image=$fromStats>Undead Chunk</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Amenonuhoko.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Gungnir>Gungnir</a> + (5) <a is=a-link image=$fromStats>Bottled Brine</a> + (15) <a is=a-link image=$fromStats>Eitrite Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// Dark_Spiral.Source: (9) <a is=a-link href=https://terraria.wiki.gg/wiki/Demonite_Bar>Demonite Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Hemorang.Source: (9) <a is=a-link href=https://terraria.wiki.gg/wiki/Crimtane_Bar>Crimtane Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Krakram.Source: (9) <a is=a-link image=$fromStats>Defiled Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Orbital_Saw.Source: (9) <a is=a-link image=$fromStats>Sanguinite Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Riverang.Source: (9) <a is=a-link image=$fromStats>Encrusted Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Waning_Crescent.Source: <a is=a-link href=Recipes.html>Any Evil Boomerang</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Flamarang>Flamarang</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Thorn_Chakram>Thorn Chakram</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Trimarang>Trimarang</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Altars>Any Altar</a>
+// Terrarang.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Broken_Hero_Sword>Broken Hero Sword</a> + <a is=a-link image=$fromStats>True Light Disc</a> + <a is=a-link image=$fromStats>True Waning Crescent</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// True_Light_Disc.Source: (24) <a is=a-link href=https://terraria.wiki.gg/wiki/Chlorophyte_Bar>Chlorophyte Bar</a> + <a is=a-link href=https://terraria.wiki.gg/wiki/Light_Disc>Light Disc</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// True_Waning_Crescent.Source: (20) <a is=a-link href=https://terraria.wiki.gg/wiki/Soul_of_Fright>Soul of Fright</a> + (20) <a is=a-link href=https://terraria.wiki.gg/wiki/Soul_of_Might>Soul of Might</a> + (20) <a is=a-link href=https://terraria.wiki.gg/wiki/Soul_of_Sight>Soul of Sight</a> + <a is=a-link image=$fromStats>Waning Crescent</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// Depth_Charge.Source: <a is=a-link image=$fromStats>Lost Diver</a>
+// Nineball.Source: (9) <a is=a-link image=$fromStats>Sanguinite Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Snapthrow.Source: (12) <a is=a-link image=$fromStats>Defiled Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Triple_Threat.Source: (12) <a is=a-link image=$fromStats>Encrusted Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Fragarach.Source: <b>Doesn't belong in this mod</b>
+// Knee_Slapper.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Fishing>Fishing</a> in the <a is=a-link href=Defiled_Wastelands.html>Defiled</a> <a is=a-link href=https://terraria.wiki.gg/wiki/Ocean>Ocean</a> in <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode>Hardmode</a>
+// Nematoclaw.Source: <a is=a-link image=$fromStats>Sea Dragon</a>
+// Endowood_Bow.Source: (10) <a is=a-link image=$fromStats>Endowood</a> @ <a is=a-link>Work Benches</a>
+// Marrowick_Bow.Source: (10) <a is=a-link image=$fromStats>Marrowick</a> @ <a is=a-link>Work Benches</a>
+// Felnum_Longbow.Source: (12) <a is=a-link image=$fromStats>Felnum Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Longbone.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Angry_Bones>Angry Bones</a>
+// Threemoepeater.Source: (12) <a is=a-link image=$fromStats>Encrusted Bar</a> + (5) <a is=a-link image=$fromStats>Riven Carapace</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Anvil>Any Anvil</a>
+// Unstrung_Fiberglass_Bow.Source: <a is=a-link image=$fromStats>Enchanted Fiberglass Bow</a>
+// Astoxo.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Daedalus_Stormbow>Daedalus Stormbow</a> + (14) <a is=a-link image=$fromStats>Valkyrum Bar</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvils>Any Hardmode Anvil</a>
+// 2_In_1_Shotty.Source: (2) <a is=a-link href=https://terraria.wiki.gg/wiki/Boomstick>Boomstick</a> + (6) <a is=a-link image=$fromStats>Adhesive Wrap</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// 3_In_1_Shotty.Source: (3) <a is=a-link href=https://terraria.wiki.gg/wiki/Boomstick>Boomstick</a> + (9) <a is=a-link image=$fromStats>Adhesive Wrap</a> OR <a is=a-link href=https://terraria.wiki.gg/wiki/Boomstick>Boomstick</a> + <a is=a-link image=�ModImage�/Items/Weapons/Ranged/2_In_1_Shotty>2-in-1 Shotty</a> + (3) <a is=a-link image=$fromStats>Adhesive Wrap</a> @ <a is=a-link href=https://terraria.wiki.gg/wiki/Tinkerer%27s_Workshop>Tinkerer's Workshop</a>
+// Ancient_Kruncher.Source: <a is=a-link image=$fromStats>Ancient Defiled Cyclops</a>
+// Blotopus.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Fishing>Fishing</a> in the <a is=a-link href=https://terraria.wiki.gg/wiki/The_Crimson>Crimson</a> <a is=a-link href=https://terraria.wiki.gg/wiki/Ocean>Ocean</a>
+// Boiler.Source: <a is=a-link href=https://terraria.wiki.gg/wiki/Shadow_Chest>Locked Shadow Chests</a>

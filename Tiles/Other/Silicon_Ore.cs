@@ -9,7 +9,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
-	public class Silicon : OriginTile {
+	public class Silicon_Ore : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -19,7 +19,7 @@ namespace Origins.Tiles.Other {
 			MineResist = 3;
 		}
 	}
-	public class Silicon_Item : ModItem, ICustomWikiStat {
+	public class Silicon_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Ore"
 		];
@@ -29,7 +29,7 @@ namespace Origins.Tiles.Other {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.value = Item.sellPrice(copper: 44);
-			Item.createTile = ModContent.TileType<Silicon>();
+			Item.createTile = ModContent.TileType<Silicon_Ore>();
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
