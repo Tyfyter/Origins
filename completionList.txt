@@ -69,6 +69,7 @@ BOSSES AND MINI-BOSSES:
 (%, ^2) Lost Diver
 (X) Miscreant
 
+(X) Crimson King
 (X) Duskord
 (X) Logic Brane
 (X) Severus, the Dark One
@@ -306,7 +307,7 @@ ARMOR:
 (^) Blast Armor*
 (X) Chambersite Armor*
 (X) Edenwood Armor*
-(@5, ^3) Necromancer Armor*
+(@1/2/5, #3) Necromancer Armor*
 (^) Sapphire Mediator Armor*
 
 (X) Ancient Chromtain Armor
@@ -800,6 +801,7 @@ SUMMONER WEAPONS:
 (X) Ego
 (@2/3, #2) Fiber Optic Whips
 (X) Ingress Incantation
+(X) Peeping Tom's Incantation
 (X) Ribatar
 (X) Seraphim Song
 (X, @2, #2) SMART Wrench
@@ -1348,6 +1350,7 @@ MUSIC:
 ($2) The Dusk
 (X) Underground Riven Hive
 
+(X) Crimson King
 (^) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Weaver
