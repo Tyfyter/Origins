@@ -1,7 +1,10 @@
 ﻿#if true ///TODO: unfalse if thorium
+using Microsoft.Xna.Framework;
 using Origins.Projectiles;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Empowerments;
@@ -41,6 +44,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			base.ModifyEmpowermentPool(player, target, empPool);
 		}
 	}
+	public class Sonorous_Shredder_Unloaded : ModItem {
+		public override string Name => base.Name[..^"_Unloaded".Length];
+		public override LocalizedText Tooltip => this.GetLocalization("UnloadedTooltip");
+		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
+	}
 	[ExtendsFromMod("ThoriumMod")]
 	public class Sonorous_Shredder_Projectile : BardProjectile, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
@@ -73,6 +81,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
+			Projectile.spriteDirection = Projectile.direction;
+		}
+		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
 	[ExtendsFromMod("ThoriumMod")]
 	public class Sonorous_Shredder_Explosion : BardProjectile, IBardDamageClassOverride, IIsExplodingProjectile {

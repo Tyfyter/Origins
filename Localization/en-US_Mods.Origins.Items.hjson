@@ -2453,6 +2453,7 @@ Shrapnel_Bomb: {
 Sonorous_Shredder: {
 	DisplayName: Sonorous Shredder
 	Tooltip: "'Split apart, lost one'"
+	UnloadedTooltip: Unloaded, relies on Thorium Mod
 }
 
 Thermite_Launcher: {
