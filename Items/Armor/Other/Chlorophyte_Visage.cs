@@ -7,10 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => [
-            "ArmorSet",
-            "ExplosiveBoostGear"
-        ];
         public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 24;
@@ -36,10 +32,9 @@ namespace Origins.Items.Armor.Other {
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
-		public string ArmorSetName => Name;
+		public string ArmorSetName => Name + "_Set";
 		public int HeadItemID => Type;
 		public int BodyItemID => ItemID.ChlorophytePlateMail;
 		public int LegsItemID => ItemID.ChlorophyteGreaves;
-		public bool SharedPageSecondary => true;
 	}
 }
