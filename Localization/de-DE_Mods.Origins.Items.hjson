@@ -1853,7 +1853,7 @@ Sus_Ice_Cream: {
 	// DisplayName: Suspicious Looking Ice Cream
 	/* Tooltip:
 		'''
-		Summons the Primordial Amoeba
+		Summons the World Cracker
 		'This ice cream will eat YOU'
 		''' */
 }
@@ -2460,8 +2460,8 @@ Thermite_Launcher: {
 	// DisplayName: Thermite Launcher
 	/* Tooltip:
 		'''
-		Burn.
 		Uses canisters as ordnance
+		Burn.
 		''' */
 }
 
@@ -2531,11 +2531,7 @@ Haunted_Vase: {
 
 Hivateinn: {
 	// DisplayName: Hævateinn
-	/* Tooltip:
-		'''
-		Receives 50% higher damage bonuses
-		sprite needs recoloring as soon as Dawn material is determined
-		''' */
+	// Tooltip: Receives 50% higher damage bonuses
 }
 
 Hot_Potato: {

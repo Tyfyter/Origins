@@ -1,7 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Journal;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
@@ -16,7 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(32, 26);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
-			Item.expert = true;
+			Item.master = true;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

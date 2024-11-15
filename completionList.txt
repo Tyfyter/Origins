@@ -351,7 +351,7 @@ ACCESSORIES:
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
-(^) CORE Generator*
+(#3, ^2) CORE Generator* (See reminders)
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -737,7 +737,7 @@ MAGIC WEAPONS:
 (^) Communion
 (^) Dew Justice
 (^) Dismay
-(^) Innermost Manifest
+(⛥) Innermost Manifest
 (^) Seam Beam
 (^) Shimmer Rod
 (X) Shinedown

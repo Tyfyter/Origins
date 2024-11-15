@@ -2531,10 +2531,7 @@ Haunted_Vase: {
 
 Hivateinn: {
 	DisplayName: Hævateinn
-	Tooltip:
-		'''
-		Receives 50% higher damage bonuses
-		'''
+	Tooltip: Receives 50% higher damage bonuses
 }
 
 Hot_Potato: {
