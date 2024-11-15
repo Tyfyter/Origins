@@ -408,6 +408,17 @@ namespace Origins.Items {
 		}
 	}
 	#region artifact prefixes
+	public class Speedy_Artifact_Prefix : ArtifactPrefixVariant<Speedy_Prefix> {
+		public override bool CanRoll(Item item) => base.CanRoll(item) && !Origins.ArtifactMinion[item.shoot];
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult -= 0.15f;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			if (projectile.minion || projectile.sentry) {
+				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.1f;
+			}
+		}
+	}
 	public abstract class ArtifactMinionPrefix : MinionPrefix {
 		public virtual StatModifier MaxLifeModifier => StatModifier.Default;
 		public virtual void OnKill(Projectile projectile) { }
@@ -438,6 +449,7 @@ namespace Origins.Items {
 		public override void UpdateProjectile(Projectile projectile, int time) {
 			ModContent.GetInstance<T>().UpdateProjectile(projectile, time);
 		}
+		public override float RollChance(Item item) => ModContent.GetInstance<T>().RollChance(item);
 	}
 	public class Brittle_Prefix : ArtifactMinionPrefix {
 		public override StatModifier MaxLifeModifier => new(0.75f, 1);
