@@ -592,12 +592,13 @@ MELEE WEAPONS:
 ---
 (^) Baseball Bat*
 (^) Bone Latcher*
+(^) Broken Fiberglass Sword
 (^) Cyah Nara
 (^) Dark Spiral
 (^) Decimator
 (^) Endowood Sword
-(^) Felnum Spear
-(^) Fiberglass Broadsword
+(@5, ^3) Felnum Boar Spear
+(^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
 (^) Marrowick Sword
@@ -633,6 +634,7 @@ MELEE WEAPONS:
 (^) Terrarang
 (^) True Light Disc
 (^) True Waning Crescent
+(○) Tyrfing
 
 (X) Celestial Point
 (X) Chromakama
@@ -650,6 +652,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun
 (^) Endowood Bow
+(@5, ^3) Felnum Longbow
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
@@ -695,6 +698,7 @@ RANGED WEAPONS:
 (X) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 
+(^) Astoxo
 (X) Disciple Maker*
 (^) Dreikan
 (X) EAC Thunder*
@@ -702,6 +706,7 @@ RANGED WEAPONS:
 (^) Laser Tag Gun
 (X) Shroomshot
 (X) Skewr
+(@5, ^3) Tolruk
 
 (X) Fulcrum
 (X) Journey's End
@@ -743,6 +748,7 @@ MAGIC WEAPONS:
 (^) Breach
 (X) Divine Lite
 (X) Ghost Trap
+(@5, ^3) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File
@@ -860,7 +866,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (^) Sonorous Shredder
-(^) Thermite Launcher*
+(#3, ^2) Thermite Launcher*
 
 (X) Autohandcannon
 (^) Bomboomstick
@@ -939,7 +945,7 @@ TILES:
 (^) Riven Jungle Grass*
 (^) Sanguinite Ore*
 (^) Silica*
-(^) Silicon*
+(^) Silicon Ore*
 (X) Sootgrass*
 (^) Spug Flesh*
 (@5, ^3) Twilith*
@@ -1097,7 +1103,7 @@ MATERIALS:
 (^) Rubber*
 (^) Sanguinite Bar*
 (^) Sentient Powder*
-(^) Silicon Bar
+(^) Silicon Bar*
 (^) Strange String*
 (^) Tire*
 (^) Tree Sap*
@@ -1274,16 +1280,19 @@ AMMO:
 (^) Alkahest Bullet*
 (^) Alkahest Canister*
 (^) Alkahest Dart
+(X) Alkahest Harpoon
 (^) Alkaline Canister*
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
 (^) Bile Canister*
 (^) Bile Dart*
+(X) Bile Harpoon
 (^) Coolant Canister*
 (^) Cursed Canister*
 (^) Cursed Harpoon*
 (^) Ichor Canister*
+(X) Ichor Harpoon
 (^) Metal Slug*
 (^) Resizable Mine Mk. 3*
 

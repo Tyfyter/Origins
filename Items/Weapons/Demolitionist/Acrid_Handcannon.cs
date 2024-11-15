@@ -40,6 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
+			.AddIngredient(ItemID.IllegalGunParts, 2)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 18)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();

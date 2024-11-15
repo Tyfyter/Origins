@@ -26,7 +26,7 @@ namespace Origins.Items.Accessories {
 			CreateRecipe()
 			.AddIngredient(ItemID.BandofStarpower)
 			.AddIngredient(ItemID.SunStone)
-			.AddIngredient(ModContent.ItemType<Silicon_Bar>(), 5)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>(), 8)
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

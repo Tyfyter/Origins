@@ -6,6 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Scrap_Barrier : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Combat"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(48, 36);
 			Item.rare = CursedRarity.ID;
@@ -25,6 +28,9 @@ namespace Origins.Items.Accessories {
 	}
 	[AutoloadEquip(EquipType.Shield)]
 	public class Scrap_Barrier_Uncursed : Uncursed_Cursed_Item<Scrap_Barrier>, ICustomWikiStat {
+		public string[] Categories => [
+			"Combat"
+		];
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
 			base.SetDefaults();

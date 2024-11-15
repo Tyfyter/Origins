@@ -2461,7 +2461,7 @@ Thermite_Launcher: {
 	/* Tooltip:
 		'''
 		Burn.
-		Uses canisters as ordinance
+		Uses canisters as ordnance
 		''' */
 }
 
@@ -3674,7 +3674,7 @@ Cold_Snap: {
 	/* Tooltip:
 		'''
 		Inflicts frostburn to struck enemies
-		Uses canisters as ordinance
+		Uses canisters as ordnance
 		''' */
 }
 

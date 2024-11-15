@@ -17,6 +17,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Slag_Bucket : ModItem, ICustomWikiStat {
 		static short glowmask;
+		public string[] Categories => [
+			"Combat"
+		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask<Shield_Glow_Layer>(Item.shieldSlot, Texture + "_Shield_Glow");
@@ -48,6 +51,9 @@ namespace Origins.Items.Accessories {
 	}
 	[AutoloadEquip(EquipType.Shield)]
 	public class Slag_Bucket_Uncursed : Uncursed_Cursed_Item<Slag_Bucket>, ICustomWikiStat {
+		public string[] Categories => [
+			"Combat"
+		];
 		public override bool HasOwnTexture => true;
 		public override string Texture => typeof(Slag_Bucket_Uncursed).GetDefaultTMLName();
 		static short glowmask;
