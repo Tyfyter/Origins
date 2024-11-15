@@ -1347,6 +1347,7 @@ Projectiles: {
 	Firestarter_Explosion.DisplayName: Firestarter Explosion
 	Hibernal_Incantation_P.DisplayName: Hibernal Incantation
 	Hibernal_Icicle_P.DisplayName: Hibernal Icicle
+	Thermite_Lingering_P.DisplayName: Lingering Thermite
 }
 
 Prefixes: {

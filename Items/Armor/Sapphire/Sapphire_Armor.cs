@@ -136,7 +136,7 @@ namespace Origins.Items.Armor.Sapphire {
 			for (int i = 0; i < Main.maxPlayers; i++) {
 				if (i == Projectile.owner) continue;
 				Player other = Main.player[i];
-				if (other.active && (!other.hostile || other.team == player.team)) {
+				if (other.active && ((!other.hostile && !player.hostile) || other.team == player.team)) {
 					other.AddBuff(Sapphire_Aura_Buff.ID, 5);
 				}
 			}

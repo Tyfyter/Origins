@@ -392,6 +392,7 @@ namespace Origins.Items {
 	#region minion prefixes
 	public abstract class MinionPrefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Magic;
+		public override bool CanRoll(Item item) => ContentSamples.ProjectilesByType[item.shoot] is { minion: true } or { sentry: true };
 		public virtual void UpdateProjectile(Projectile projectile, int time) { }
 		public virtual void OnSpawn(Projectile projectile, IEntitySource source) { }
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
@@ -403,20 +404,28 @@ namespace Origins.Items {
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			if (projectile.minion || projectile.sentry) {
-				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.1f;
+				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.12f;
 			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			base.ModifyValue(ref valueMult);
+			valueMult *= 1.289f;
 		}
 	}
 	#region artifact prefixes
 	public class Speedy_Artifact_Prefix : ArtifactPrefixVariant<Speedy_Prefix> {
-		public override bool CanRoll(Item item) => base.CanRoll(item) && !Origins.ArtifactMinion[item.shoot];
+		public override StatModifier MaxLifeModifier => new(0.9f, 1);
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
-			damageMult -= 0.15f;
+			damageMult -= 0.12f;
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			if (projectile.minion || projectile.sentry) {
-				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.1f;
+				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.15f;
 			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			base.ModifyValue(ref valueMult);
+			valueMult *= 1.277f;
 		}
 	}
 	public abstract class ArtifactMinionPrefix : MinionPrefix {
@@ -440,15 +449,7 @@ namespace Origins.Items {
 		}
 	}
 	public abstract class ArtifactPrefixVariant<T> : ArtifactMinionPrefix where T : MinionPrefix {
-		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
-			ModContent.GetInstance<T>().SetStats(ref damageMult, ref knockbackMult, ref useTimeMult, ref scaleMult, ref shootSpeedMult, ref manaMult, ref critBonus);
-		}
-		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			ModContent.GetInstance<T>().OnSpawn(projectile, source);
-		}
-		public override void UpdateProjectile(Projectile projectile, int time) {
-			ModContent.GetInstance<T>().UpdateProjectile(projectile, time);
-		}
+		public override LocalizedText DisplayName => ModContent.GetInstance<T>().DisplayName;
 		public override float RollChance(Item item) => ModContent.GetInstance<T>().RollChance(item);
 	}
 	public class Brittle_Prefix : ArtifactMinionPrefix {
