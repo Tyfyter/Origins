@@ -137,7 +137,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Origins.MagicTripwireRange[Type] = 24;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
 			ID = Type;

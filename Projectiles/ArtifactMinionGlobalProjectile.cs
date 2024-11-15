@@ -18,7 +18,6 @@ namespace Origins.Projectiles {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		bool isRespawned = false;
-		int timer = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is IArtifactMinion) Origins.ArtifactMinion[entity.type] = true;
 			return Origins.ArtifactMinion[entity.type];
@@ -41,17 +40,11 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void PostAI(Projectile projectile) {
-			IArtifactMinion artifact = null;
-			if (projectile.ModProjectile is IArtifactMinion _artifact && _artifact.Life <= 0) {
-				artifact = _artifact;
+			if (projectile.ModProjectile is IArtifactMinion artifact && artifact.Life <= 0) {
 				artifact.Life = 0;
 				if (artifact.CanDie) {
 					projectile.Kill();
 				}
-			}
-			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is ArtifactMinionPrefix artifactPrefix) {
-				artifactPrefix.UpdateProjectile(projectile, timer);
-				if (projectile.numUpdates == -1) timer++;
 			}
 		}
 		public bool CanRespawn(Projectile projectile) {

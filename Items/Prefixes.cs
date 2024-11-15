@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -388,11 +389,27 @@ namespace Origins.Items {
 		}
 		public bool CanReforge(Item item) => false;
 	}
-	#region artifact prefixes
-	public abstract class ArtifactMinionPrefix : ModPrefix {
+	#region minion prefixes
+	public abstract class MinionPrefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Magic;
-		public virtual StatModifier MaxLifeModifier => StatModifier.Default;
 		public virtual void UpdateProjectile(Projectile projectile, int time) { }
+		public virtual void OnSpawn(Projectile projectile, IEntitySource source) { }
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
+	}
+	public class Speedy_Prefix : MinionPrefix {
+		public override bool CanRoll(Item item) => base.CanRoll(item) && !Origins.ArtifactMinion[item.shoot];
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult -= 0.15f;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			if (projectile.minion || projectile.sentry) {
+				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.1f;
+			}
+		}
+	}
+	#region artifact prefixes
+	public abstract class ArtifactMinionPrefix : MinionPrefix {
+		public virtual StatModifier MaxLifeModifier => StatModifier.Default;
 		public virtual void OnKill(Projectile projectile) { }
 		public override bool AllStatChangesHaveEffectOn(Item item) {
 			if (MaxLifeModifier != StatModifier.Default) {
@@ -400,7 +417,7 @@ namespace Origins.Items {
 					return false;
 				}
 			}
-			return true;
+			return base.AllStatChangesHaveEffectOn(item);
 		}
 		public override bool CanRoll(Item item) {
 			if (!Origins.ArtifactMinion[item.shoot]) return false;
@@ -410,7 +427,17 @@ namespace Origins.Items {
 			base.ModifyValue(ref valueMult);
 			valueMult *= 1 + (MaxLifeModifier.Additive * MaxLifeModifier.Multiplicative * (1 + MaxLifeModifier.Base / 100) * (1 + MaxLifeModifier.Flat / 100) - 1) * 0.25f;
 		}
-		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
+	}
+	public abstract class ArtifactPrefixVariant<T> : ArtifactMinionPrefix where T : MinionPrefix {
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			ModContent.GetInstance<T>().SetStats(ref damageMult, ref knockbackMult, ref useTimeMult, ref scaleMult, ref shootSpeedMult, ref manaMult, ref critBonus);
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			ModContent.GetInstance<T>().OnSpawn(projectile, source);
+		}
+		public override void UpdateProjectile(Projectile projectile, int time) {
+			ModContent.GetInstance<T>().UpdateProjectile(projectile, time);
+		}
 	}
 	public class Brittle_Prefix : ArtifactMinionPrefix {
 		public override StatModifier MaxLifeModifier => new(0.75f, 1);
@@ -439,8 +466,8 @@ namespace Origins.Items {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(240, 361));
 		}
 		public override void OnKill(Projectile projectile) {
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), projectile.Center);
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item45, projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item45, projectile.Center);
 			if (projectile.owner == Main.myPlayer) {
 				Projectile.NewProjectile(
 					projectile.GetSource_Death(),
@@ -453,7 +480,7 @@ namespace Origins.Items {
 			}
 		}
 		public override void ModifyValue(ref float valueMult) {
-			valueMult *= 1.2f;
+			valueMult *= 1.45f;
 		}
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => base.GetTooltipLines(item).Concat([
 			new TooltipLine(Origins.instance, Name, this.GetLocalizedValue("Description")) { IsModifier = true }
@@ -492,4 +519,5 @@ namespace Origins.Items {
 		}
 	}
 	#endregion artifact prefixes
+	#endregion minion prefixes
 }

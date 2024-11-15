@@ -1382,6 +1382,7 @@ Prefixes: {
 	}
 
 	// Brittle_Prefix.DisplayName: Brittle
+	// Speedy_Prefix.DisplayName: Speedy Prefix
 }
 
 BiomeName: {

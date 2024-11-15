@@ -59,6 +59,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -116,6 +117,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
