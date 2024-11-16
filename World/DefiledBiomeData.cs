@@ -805,14 +805,27 @@ namespace Origins.World.BiomeData {
 				Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands after failure to find a position without jungle grass");
 
 				positioned:
-				defiledWastelandsWestEdge ??= new();
-				defiledWastelandsEastEdge ??= new();
+				defiledWastelandsWestEdge ??= [];
+				defiledWastelandsEastEdge ??= [];
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
 				defiledWastelandsEastEdge.Add(evilBiomePositionEastBound);
 				WorldBiomeGeneration.ChangeRange.ResetRange();
-				int startY;
-				for (startY = (int)GenVars.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
-				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
+				int startY = int.MaxValue;
+				int startEvilBiomePosition = evilBiomePosition;
+				offset = 0;
+				bool first = true;
+				do {
+					if (!first) {
+						offset = offset > 0 ? (-offset) : ((-offset) + 2);
+					} else {
+						first = false;
+					}
+					evilBiomePosition = startEvilBiomePosition + offset;
+					for (startY = (int)GenVars.worldSurfaceLow; !Framing.GetTileSafely(evilBiomePosition, startY).HasTile; startY++) ;
+				} while (startY > Main.maxTilesY);
+				evilBiomePositionWestBound += offset;
+				evilBiomePositionEastBound += offset;
+				Point start = new(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
 				defiledHearts.Push(start);
