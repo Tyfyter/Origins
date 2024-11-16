@@ -58,6 +58,88 @@ namespace Origins {
 			queuedUIStates = null;
 		}
 		public override void AddRecipes() {
+			Recipe.Create(ItemID.GarlandHat)
+			.AddIngredient(ItemID.Daybloom)
+			.AddIngredient(ItemID.Moonglow)
+			.AddIngredient(ItemID.Blinkroot)
+			.AddIngredient(ItemID.Waterleaf)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddIngredient(ItemID.Shiverthorn)
+			.AddIngredient(ItemID.Fireblossom)
+			.Register();
+
+			Recipe.Create(ItemID.BattlePotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.GenderChangePotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Daybloom)
+			.AddIngredient(ItemID.Moonglow)
+			.AddIngredient(ItemID.Blinkroot)
+			.AddIngredient(ItemID.Waterleaf)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddIngredient(ItemID.Shiverthorn)
+			.AddIngredient(ItemID.Fireblossom)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.GravitationPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Fireblossom)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddIngredient(ItemID.Blinkroot)
+			.AddIngredient(ItemID.Feather)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.MagicPowerPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Moonglow)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddIngredient(ItemID.FallenStar)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.RagePotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Hemopiranha)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.StinkPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Stinkfish)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.ThornsPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddIngredient(ItemID.Cactus)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.TitanPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Bone)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddIngredient(ItemID.Shiverthorn)
+			.AddTile(TileID.Bottles)
+			.Register();
+
+			Recipe.Create(ItemID.WrathPotion)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ItemID.Ebonkoi)
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed)
+			.AddTile(TileID.Bottles)
+			.Register();
+
 			Recipe.Create(ItemID.MiningHelmet)
 			.AddIngredient(ItemID.Glowstick, 4)
 			.AddRecipeGroup(RecipeGroupID.IronBar, 7)
@@ -132,9 +214,9 @@ namespace Origins {
 			.Register();
 
 			Recipe.Create(ItemID.CrimsonRod)
+			.AddRecipeGroup("Origins:Gem Staves")
 			.AddIngredient(ItemID.CrimtaneBar, 10)
 			.AddIngredient(ItemID.TissueSample, 6)
-			.AddRecipeGroup("Origins:Gem Staves")
 			.AddTile(TileID.Anvils)
 			.Register();
 
@@ -161,10 +243,36 @@ namespace Origins {
 			.Register();
 
 			Recipe.Create(ItemID.Vilethorn)
+			.AddRecipeGroup("Origins:Gem Staves")
 			.AddIngredient(ItemID.DemoniteBar, 10)
 			.AddIngredient(ItemID.ShadowScale, 6)
-			.AddRecipeGroup("Origins:Gem Staves")
 			.AddTile(TileID.Anvils)
+			.Register();
+			
+			Recipe.Create(ItemID.CoffinMinecart)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk, 10)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
+			.AddRecipeGroup(RecipeGroupID.Wood, 10)
+			.AddTile(TileID.Anvils)
+			//.AddCondition(EchoMist)
+			.Register();
+
+			Recipe.Create(ItemID.UnholyArrow, 5)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk)
+			.AddIngredient(ItemID.WoodenArrow, 5)
+			.AddTile(TileID.Anvils)
+			.Register();
+
+			Recipe.Create(ItemID.MechanicalWorm)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk, 6)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
+			.AddIngredient(ItemID.SoulofNight, 6)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+
+			Recipe.Create(ItemID.MonsterLasagna)
+			.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk, 8)
+			.AddTile(TileID.CookingPots)
 			.Register();
 
 			Recipe.Create(ItemID.Coal)
@@ -252,12 +360,13 @@ namespace Origins {
 		public static int EvilBoomerangRecipeGroupID { get; private set; }
 		public override void AddRecipeGroups() {
 			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
+				ItemID.AmberStaff,
 				ItemID.AmethystStaff,
-				ItemID.TopazStaff,
-				ItemID.SapphireStaff,
+				ItemID.DiamondStaff,
 				ItemID.EmeraldStaff,
 				ItemID.RubyStaff,
-				ItemID.DiamondStaff
+				ItemID.SapphireStaff,
+				ItemID.TopazStaff
 			]));
 			EvilBoomerangRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Evil Boomerangs", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilBoomerangs").Value, [
 				ModContent.ItemType<Dark_Spiral>(),
@@ -273,6 +382,9 @@ namespace Origins {
 			RecipeGroup sandGroup = RecipeGroup.recipeGroups[RecipeGroupID.Sand];
 			sandGroup.ValidItems.Add(ModContent.ItemType<Defiled_Sand_Item>());
 			sandGroup.ValidItems.Add(ModContent.ItemType<Silica_Item>());
+			RecipeGroup woodGroup = RecipeGroup.recipeGroups[RecipeGroupID.Wood];
+			woodGroup.ValidItems.Add(ModContent.ItemType<Endowood_Item>());
+			woodGroup.ValidItems.Add(ModContent.ItemType<Marrowick_Item>());
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;
@@ -294,6 +406,62 @@ namespace Origins {
 				}
 
 				if (r.Matches((ItemID.Beenade, null), null, (ItemID.Grenade, 1), (ItemID.BeeWax, 1))) {
+					r.DisableRecipe();
+				}
+				
+				if (r.Matches((ItemID.GarlandHat, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.BattlePotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.GenderChangePotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.GravitationPotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.MagicPowerPotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.RagePotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.StinkPotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.ThornsPotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.TitanPotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.WrathPotion, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.CoffinMinecart, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.UnholyArrow, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.MechanicalWorm, null), null)) {
+					r.DisableRecipe();
+				}
+
+				if (r.Matches((ItemID.MonsterLasagna, null), null)) {
 					r.DisableRecipe();
 				}
 

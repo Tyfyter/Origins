@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Bled_Out_Staff : ModItem, ICustomWikiStat {
+	public class Bled_Out_Staff : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Wand"
         ];
@@ -32,6 +31,7 @@ namespace Origins.Items.Weapons.Magic {
 			Recipe.Create(Type)
 			.AddRecipeGroup("Origins:Gem Staves")
 			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 6)
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}

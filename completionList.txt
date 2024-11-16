@@ -114,7 +114,7 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 ---
-(ᗢ) Recipes General
+(ᗢ) Recipes General*
 
 (^) Advanced weapon functionality in PVP*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
