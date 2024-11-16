@@ -1361,7 +1361,7 @@ MUSIC:
 (X) Underground Riven Hive
 
 (X) Crimson King
-(^) Defiled Amalgamation
+($3) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S

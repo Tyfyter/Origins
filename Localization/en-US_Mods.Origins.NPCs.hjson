@@ -102,6 +102,7 @@ Brine_Fiend: {
 		Standard2: No, I don't offer refunds for the dissolving of possessions.
 		Standard3: There's nothing really freaky about me, nothing at all...
 		Standard4: For my next experiment, I want to try my mixtures on living organisms.
+		Standard5: No brew I know rivals brine. Maybe I should steal some later.
 		WitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
 		WitchDoctor2: Yeah, I know [npcname:WitchDoctor]. He's kinda from the same tribe.
 		PartyDemolitionist: I should probably tell [npcname:Demolitionist] that he could use peat as snappers.
