@@ -1572,8 +1572,8 @@ MapObject: {
 }
 
 Keybinds: {
-	"Trigger Set Bonus.DisplayName": Trigger Set Bonus
-	"Inspect Item.DisplayName": Inspect Item
+	"Trigger Set Bonus.DisplayName": Trigger set bonus ability
+	"Inspect Item.DisplayName": Inspect item
 }
 
 Configs: {
@@ -1581,11 +1581,11 @@ Configs: {
 		DisplayName: Client settings
 
 		SetBonusDoubleTap: {
-			Label: Use Double Tap for set bonus abilities
+			Label: Set bonus double-tap
 			Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
 		}
 
-		Headers.Journal: Journal
+		Headers.Journal: Journal options
 
 		TabbyJournal: {
 			Label: Alternate journal layout
@@ -1593,17 +1593,17 @@ Configs: {
 		}
 
 		OpenJournalOnUnlock: {
-			Label: Open Journal entries on Unlock
-			Tooltip: ""
+			Label: Auto-open on unlock
+			Tooltip: Opens the Journal when inspecting an item for the first time
 		}
 
 		AnimatedRavel: {
 			Label: Animated Ravel transformation
-			Tooltip: Makes Ravel's transformation flashier
+			Tooltip: Makes Ravel transformations flashier
 		}
 
 		ExtraGooeyRivenGores: {
-			Label: Extra Gooey Riven Gores
+			Label: Extra-gooey Riven gores
 			Tooltip: More visually appealing way to kick Riven-butt
 		}
 
@@ -1615,11 +1615,11 @@ Configs: {
 
 		TwentyFourHourTime: {
 			Label: 24-hour time
-			Tooltip: Makes Origins' clocks display time in a 24-hour format
+			Tooltip: Makes all clocks display time in a 24-hour format
 		}
 
 		DefaultJournalMode: {
-			Label: Open Journal To
+			Label: Open Journal to
 			Tooltip: ""
 		}
 
@@ -1638,13 +1638,13 @@ Configs: {
 		DisplayName: Settings
 
 		Headers: {
-			VanillaBuffs: Vanilla Buffs Header
-			Other: Other Header
+			VanillaBuffs: Vanilla Modifications
+			Other: Other
 			Debugging: Debugging Header
 		}
 
 		WoodBuffs: {
-			Label: Infected Wood Items
+			Label: Wooden item buffs
 			Tooltip: Whether or not vanilla/modded wooden items recieve buffs from Origins
 		}
 
@@ -1668,97 +1668,97 @@ Configs: {
 		}
 
 		ExportAllItemStatsJSON: {
-			Label: Export All Item Stats JSON
+			Label: Export all item stat JSONs
 			Tooltip: Shift must be held to mass-export stats
 		}
 
 		ExportItemStatsJSON: {
-			Label: Export Item Stats JSON
+			Label: Export specific item stat JSON
 			Tooltip: ""
 		}
 
 		StatJSONPath: {
-			Label: Stat JSON Path
+			Label: Stat JSON path
 			Tooltip: The path to put the JSON files in
 		}
 
 		ExportItemPage: {
-			Label: Export Item Page
+			Label: Export item page
 			Tooltip: ""
 		}
 
 		WikiTemplatePath: {
-			Label: Wiki Template Path
+			Label: Wiki template path
 			Tooltip: ""
 		}
 
 		WikiPagePath: {
-			Label: Wiki Page Path
+			Label: Wiki page path
 			Tooltip: ""
 		}
 
 		ExportAllItemPages: {
-			Label: Export All Item Pages
+			Label: Export all item pages
 			Tooltip: ""
 		}
 
 		WikiArmorTemplatePath: {
-			Label: Wiki Armor Template Path
+			Label: Wiki armor template path
 			Tooltip: ""
 		}
 
 		ExportItemImages: {
-			Label: Export Item Images
+			Label: Export specific item image
 			Tooltip: ""
 		}
 
 		WikiSpritesPath: {
-			Label: Wiki Sprites Path
+			Label: Wiki sprites path
 			Tooltip: ""
 		}
 
 		ExportAllItemImages: {
-			Label: Export All Item Images
+			Label: Export all item images
 			Tooltip: ""
 		}
 
 		CheckTextureUsage: {
-			Label: Check Texture Usage
+			Label: Check texture usage
 			Tooltip: ""
 		}
 
 		CheckItemObtainability: {
-			Label: Check Item Obtainability
+			Label: Check item obtainability
 			Tooltip: ""
 		}
 
 		ExportSpecialPages: {
-			Label: Export Special Pages
+			Label: Export special pages
 			Tooltip: ""
 		}
 
 		WikiSpecialTemplatePath: {
-			Label: Wiki Special Template Path
+			Label: Wiki special template path
 			Tooltip: ""
 		}
 
 		ExportAllNPCPages: {
-			Label: Export All NPC Pages
+			Label: Export all NPC pages
 			Tooltip: ""
 		}
 
 		ExportNPCPage: {
-			Label: Export NPC Page
+			Label: Export specific NPC page
 			Tooltip: ""
 		}
 
 		ExportAllNPCStatsJSON: {
-			Label: Export all NPC stats JSON
+			Label: Export all NPC stat JSONs
 			Tooltip: ""
 		}
 
 		ExportNPCStatsJSON: {
-			Label: Export NPC stats JSON
+			Label: Export specific NPC stat JSON
 			Tooltip: ""
 		}
 
@@ -1768,7 +1768,7 @@ Configs: {
 		}
 
 		ExportNPCImages: {
-			Label: Export NPC images
+			Label: Export specific NPC image
 			Tooltip: ""
 		}
 

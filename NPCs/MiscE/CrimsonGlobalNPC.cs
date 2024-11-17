@@ -76,10 +76,10 @@ namespace Origins.NPCs.MiscE {
 				npc.lifeRegen -= 5;
 			}
 			if (npc.venom) {
-				npc.lifeRegen -= 5;
+				npc.lifeRegen -= 10;
 			}
             if (npc.ichor) {
-                npc.lifeRegen += 25;
+                npc.defense += 20;
             }
             if (npc.onFire) {
 				npc.lifeRegen -= 4;
@@ -93,7 +93,12 @@ namespace Origins.NPCs.MiscE {
 				npc.lifeRegen -= 15;
 			}
 			if (npc.daybreak) {
-				npc.lifeRegen -= 25 * 2;
+				npc.lifeRegen += 25 * 2;
+				damage -= 5;
+			}
+			if (npc.javelined) {
+				npc.lifeRegen -= 6;
+				damage += 3;
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;

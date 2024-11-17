@@ -178,7 +178,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Chromtain_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
-		public override int Rare => CrimsonRarity.ID;
+		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
@@ -233,7 +233,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Element36_Bundle : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
-		public override int Rare => CrimsonRarity.ID;
+		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -281,7 +281,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Fibron_Plating : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 68);
-		public override int Rare => CrimsonRarity.ID;
+		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 	}
 	public class Formium_Bar : MaterialItem {

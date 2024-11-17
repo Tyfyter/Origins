@@ -61,18 +61,20 @@ namespace Origins.NPCs.Defiled {
 			}
 			if (npc.onFrostBurn) {
 				npc.lifeRegen -= 4;
-				damage -= 1;
+				damage += 1;
 			}
 			if (npc.onFrostBurn2) {
 				npc.lifeRegen -= 16;
-				damage -= 3;
+				damage += 4;
 			}
 			/*if (npc.electrified) {
-				damage += 10;
+				npc.lifeRegen -= 20;
+				damage += 20;
 			}
 			if (npc.electrified && npc.wet) {
-				damage += 35;
-			} */
+				npc.lifeRegen -= 40;
+				damage += 20;
+			}*/
 			if (npc.shadowFlame) {
 				npc.lifeRegen += 15;
 			}

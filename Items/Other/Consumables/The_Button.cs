@@ -13,7 +13,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
-			Item.rare = CrimsonRarity.ID;
+			Item.rare = ButterscotchRarity.ID;
 		}
 	}
 }

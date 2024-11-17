@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(gold: 15);
-			Item.rare = CrimsonRarity.ID;
+			Item.rare = ButterscotchRarity.ID;
 		}
         public override void AddRecipes() {
             Recipe.Create(Type)

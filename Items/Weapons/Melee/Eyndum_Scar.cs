@@ -1,10 +1,9 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-    public class Eyndum_Scar : ModItem, ICustomWikiStat {
+	public class Eyndum_Scar : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Sword",
 			"ReworkExpected"

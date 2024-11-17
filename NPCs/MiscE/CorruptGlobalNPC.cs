@@ -92,6 +92,14 @@ namespace Origins.NPCs.MiscE {
 			if (npc.oiled && (npc.onFire || npc.onFire2 || npc.onFire3 || npc.shadowFlame)) {
 				npc.lifeRegen -= 15;
 			}
+			if (npc.daybreak) {
+				npc.lifeRegen += 25 * 2;
+				damage -= 5;
+			}
+			if (npc.javelined) {
+				npc.lifeRegen -= 6;
+				damage += 3;
+			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;
 				int totalDPS = (int)(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());

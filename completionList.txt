@@ -131,7 +131,7 @@ OTHER:
 ---
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
-(^) Journal (page sprites, button/pseudoitem sprite)
+(^) Journal*
 (O) Quest System General
 ---
 
@@ -784,7 +784,6 @@ SUMMONER WEAPONS:
 (⛥) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
-(#, @4 (minumum frame height to include the whole sprite seems to be higher than maximum frame height to avoid including parts of multiple frames)) Stubborn Flower*
 (^) Woodsprite Staff
 
 (^) Bomb Artifact
@@ -1340,7 +1339,7 @@ UI:
 (^) Underground Riven Background
 
 (^) 30x30 Origins Icon
-(@5, ^3) Origins Mod Browser Logo !!!
+(^) Origins Mod Browser Logo
 ---
 
 MUSIC:
