@@ -1615,7 +1615,7 @@ Configs: {
 
 		TwentyFourHourTime: {
 			Label: 24-hour time
-			Tooltip: Makes all clocks display time in a 24-hour format
+			Tooltip: Makes Origins' clocks display time in a 24-hour format
 		}
 
 		DefaultJournalMode: {
