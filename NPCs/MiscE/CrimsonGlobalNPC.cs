@@ -62,7 +62,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
 			if (npc.ichor) {
-				modifiers.Defense.Flat += 5;
+				modifiers.Defense.Flat += 10;
 			}
 		}
 		public override void ResetEffects(NPC npc) {
@@ -78,9 +78,6 @@ namespace Origins.NPCs.MiscE {
 			if (npc.venom) {
 				npc.lifeRegen -= 10;
 			}
-            if (npc.ichor) {
-                npc.defense += 20;
-            }
             if (npc.onFire) {
 				npc.lifeRegen -= 4;
 				damage += 2;
