@@ -20,9 +20,9 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>())
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ModContent.ItemType<Tearracuda>())
+			.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}
