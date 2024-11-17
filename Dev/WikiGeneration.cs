@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -28,6 +29,8 @@ namespace Origins.Dev {
 			});
 		}
 		public virtual void ModifyContext(Dictionary<string, object> context) { }
+		public virtual IEnumerable<(string name, Texture2D texture)> GetSprites() => [];
+		public virtual IEnumerable<(string name, (Texture2D texture, int frames)[] texture)> GetAnimatedSprites() => [];
 		#region template management
 		PageTemplate wikiTemplate;
 		string wikiTemplateLastText;

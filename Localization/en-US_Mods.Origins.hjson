@@ -1776,6 +1776,11 @@ Configs: {
 			Label: Ignored Compatibility Suggestions
 			Tooltip: ""
 		}
+
+		ExportSpecialImages: {
+			Label: Export Special Images
+			Tooltip: ""
+		}
 	}
 
 	Journal_Default_UI_Mode: {

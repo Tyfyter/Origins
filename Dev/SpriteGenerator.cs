@@ -1,5 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Reflection;
+using PegasusLib;
+using PegasusLib.Graphics;
+using PegasusLib.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +15,16 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ObjectData;
 
 namespace Origins.Dev {
-	public static class SpriteGenerator {
+	public class SpriteGenerator : ReflectionLoader {
+		public static FastFieldInfo<SpriteBatch, bool> beginCalled { get; private set; }
 		public static Texture2D Generate(Action<SpriteBatch> draw, (int X, int Y) size) {
 			RenderTarget2D renderTarget = new(Main.graphics.GraphicsDevice, size.X, size.Y);
 			SpriteBatch spriteBatch = new(Main.graphics.GraphicsDevice);
+			SpriteBatchState state = null;
+			if (beginCalled.GetValue(Main.spriteBatch)) {
+				state = Main.spriteBatch.GetState();
+				Main.spriteBatch.End();
+			}
 			renderTarget.GraphicsDevice.SetRenderTarget(renderTarget);
 			renderTarget.GraphicsDevice.Clear(Color.Transparent);
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.Identity);
@@ -36,6 +46,9 @@ namespace Origins.Dev {
 				Main.screenMaximized = screenMaximized;
 			}
 			spriteBatch.End();
+			if (state is SpriteBatchState spriteBatchState) {
+				Main.spriteBatch.Begin(spriteBatchState);
+			}
 			return renderTarget;
 		}
 		public static Texture2D GenerateArmorSprite(Player player, ItemSlotSet itemSlotSet, PlayerShaderSet shaderSet = default) {

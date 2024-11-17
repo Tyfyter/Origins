@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -34,6 +35,7 @@ namespace Origins.NPCs.Fiberglass {
 		const float upperLegLength = 70.1f;
 		const float lowerLegLength = 76f;
 		const float totalLegLength = upperLegLength + lowerLegLength;
+		Vector2? spawnPosition = null;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
@@ -94,6 +96,15 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 			float jumpSpeed = 10 + DifficultyMult * 2;
+			spawnPosition ??= target.Position;
+			if (target.Type == NPCTargetType.Player && !Main.player[NPC.target].InModBiome<Fiberglass_Undergrowth>()) {
+				if (NPC.ai[3] < 240) NPC.ai[3] += 0.067f;
+			} else {
+				NPC.ai[3] = 0;
+			}
+			if (target.Invalid) {
+				target.Position = spawnPosition.Value;
+			}
 			switch ((int)NPC.ai[0]) {
 				case 0: {
 					AngularSmoothing(ref NPC.rotation, NPC.AngleTo(target.Center) + MathHelper.PiOver2, 0.05f);
@@ -114,7 +125,7 @@ namespace Origins.NPCs.Fiberglass {
 						}
 					}
 					NPC.velocity = Vector2.Lerp(NPC.velocity, (Vector2)new PolarVec2(3 + DifficultyMult, NPC.rotation - MathHelper.PiOver2), 0.1f);
-					if (++NPC.ai[1] > 240) {
+					if (++NPC.ai[1] > 240 - NPC.ai[3]) {
 						NPC.ai[1] = 0;
 						NPC.ai[0] = Main.rand.Next(1, 3);
 					}

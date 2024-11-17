@@ -6,3 +6,82 @@ RecipePage: {
 		§Recipes§
 		'''
 }
+
+Recipe_Groups: {
+	PageName: Recipe Groups
+	Template:
+		'''
+		<p>
+			If you are looking for the official page of vanilla recipe groups, click <b><a is="a-link" href="https://terraria.wiki.gg/wiki/Alternative_crafting_ingredients">here</a></b>.
+		</p>
+
+		<p>
+			<b>Recipe groups</b> are a feature added by Origins for specific crafting recipes.
+			Sometimes items featured in a recipe group can be <a is="a-link" href="Shimmer">Shimmer cycled</a> into one another.
+			See below for the details of each recipe group.
+		</p>
+
+		#if EvilBossMaterialRecipes
+		<details class="section" id="Any Evil Boss material" open>
+			<summary>Any Evil Boss material<span class="divider"></span></summary>
+				
+			<p>
+				The 'Any Evil Boss material' recipe group includes the <a is="a-link" href="https://terraria.wiki.gg/wiki/Shadow_Scale">Shadow Scale</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Tissue_Sample">Tissue Sample</a>, <a is="a-link">Undead Chunk</a>, <a is="a-link">Riven Carapace</a> and <a is="a-link">NE-8</a>.
+				Items in this recipe group can be Shimmer cycled.
+			</p>
+			§EvilBossMaterialRecipes§
+		</details>
+		#endif
+
+		#if EvilHerbRecipes
+		<details class="section" id="Any Evil Herb" open>
+			<summary>Any Evil Herb<span class="divider"></span></summary>
+				
+			<p>
+				The 'Any Evil Herb' recipe group includes <a is="a-link" href="https://terraria.wiki.gg/wiki/Deathweed">Deathweed</a>, the <a is="a-link">Wilting Rose</a>, <a is="a-link">Wrycoral</a> and <a is="a-link">Surveysprout</a>.
+				Items in this recipe group can be Shimmer cycled.
+			</p>
+
+			§EvilHerbRecipes§
+		</details>
+		#endif
+
+		#if EvilSubstanceRecipes
+		<details class="section" id="Any Evil Substance" open>
+			<summary>Any Evil Substance<span class="divider"></span></summary>
+				
+			<p>
+				The 'Any Evil Substance' recipe group includes <a is="a-link" href="https://terraria.wiki.gg/wiki/Cursed_Flame">Cursed Flame</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Ichor">Ichor</a>, <a is="a-link">Black Bile</a>, <a is="a-link">Alkahest</a> and <a is="a-link">Respyrite</a>.
+				Items in this recipe group can be Shimmer cycled.
+			</p>
+
+			§EvilSubstanceRecipes§
+		</details>
+		#endif
+
+		#if EvilTissueRecipes
+		<details class="section" id="Any Evil Tissue" open>
+			<summary>Any Evil Tissue<span class="divider"></span></summary>
+				
+			<p>
+				The 'Any Evil Tissue' recipe group includes the <a is="a-link" href="https://terraria.wiki.gg/wiki/Rotten_Chunk">Rotten Chunk</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Vertebra">Vertebra</a>, <a is="a-link">Strange String</a>, <a is="a-link">Bud Barnacle</a> and <a is="a-link">Biocomponent 10</a>.
+				Items in this recipe group can be Shimmer cycled.
+			</p>
+
+			§EvilTissueRecipes§
+		</details>
+		#endif
+
+		#if GemStaffRecipes
+		<details class="section" id="Any Gem Staff" open>
+			<summary>Any Gem Staff<span class="divider"></span></summary>
+				
+			<p>
+				The 'Any Gem Staff' recipe group was solely made for the crafting recipe for the <a is="a-link">Bled Out Staff</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Crimson_Rod">Crimson Rod</a> and <a is="a-link" href="https://terraria.wiki.gg/wiki/Vilethorn">Vilethorn</a>.
+				It includes the <a is="a-link" href="https://terraria.wiki.gg/wiki/Amber_Staff">Amber Staff</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Amethyst_Staff">Amethyst Staff</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Diamond_Staff">Diamond Staff</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Emerald_Staff">Emerald Staff</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Ruby_Staff">Ruby Staff</a>, <a is="a-link" href="https://terraria.wiki.gg/wiki/Sapphire_Staff">Sapphire Staff</a> and <a is="a-link" href="https://terraria.wiki.gg/wiki/Topaz_Staff">Topaz Staff</a>.
+			</p>
+			§GemStaffRecipes§
+		</details>
+		#endif
+		'''
+}

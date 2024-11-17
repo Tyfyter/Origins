@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
@@ -378,6 +379,26 @@ namespace Origins {
 					Directory.CreateDirectory(WikiPagePath);
 					foreach (var item in WikiSpecialPage.SpecialPages) {
 						if (item.GeneratePage() is string page) WikiPageExporter.WriteFileNoUnneededRewrites(WikiPageExporter.GetWikiPagePath(item.Name), page);
+					}
+				}
+			}
+		}
+		public bool ExportSpecialImages {
+			get => false;
+			set {
+				if (value) {
+					if (string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+						Origins.LogError($"WikiSpritesPath is null or whitespace");
+						return;
+					}
+					Directory.CreateDirectory(WikiSpritesPath);
+					foreach (var item in WikiSpecialPage.SpecialPages) {
+						foreach ((string name, Texture2D texture) in item.GetSprites() ?? Array.Empty<(string, Texture2D)>()) {
+							WikiImageExporter.ExportImage(name, texture);
+						}
+						foreach ((string name, (Texture2D texture, int frames)[] textures) in item.GetAnimatedSprites() ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
+							WikiImageExporter.ExportAnimatedImage(name, textures);
+						}
 					}
 				}
 			}

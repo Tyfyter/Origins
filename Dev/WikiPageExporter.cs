@@ -126,198 +126,10 @@ namespace Origins.Dev {
 			int screenHeight = Main.screenHeight;
 			foreach (WikiProvider provider in GetWikiProviders(content)) {
 				foreach ((string name, Texture2D texture) in provider.GetSprites(content) ?? Array.Empty<(string, Texture2D)>()) {
-					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";
-					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-					MemoryStream stream = new(texture.Width * texture.Height * 4);
-					texture.SaveAsPng(stream, texture.Width, texture.Height);
-					texture.Dispose();
-					if (File.Exists(filePath)) {
-						FileStream fileStream = File.OpenRead(filePath);
-						bool isChanged = fileStream.Length != stream.Length;
-						for (int i = 0; i < stream.Length && !isChanged; i++) {
-							if (stream.ReadByte() != fileStream.ReadByte()) isChanged = true;
-						}
-						fileStream.Close();
-						if (isChanged) {
-							fileStream = File.OpenWrite(filePath);
-							stream.Position = 0;
-							fileStream.Position = 0;
-							stream.WriteTo(fileStream);
-							fileStream.Close();
-						}
-					} else {
-						FileStream fileStream = File.Create(filePath);
-						stream.WriteTo(fileStream);
-						fileStream.Close();
-					}
-					stream.Close();
-				}
-				static void make_crc_table() {
-					CRCTable = new uint[256];
-					uint c;
-					short n, k;
-
-					for (n = 0; n < 256; n++) {
-						c = (uint)n;
-						for (k = 0; k < 8; k++) {
-							if ((c & 1) != 0)
-								c = 0xedb88320u ^ (c >> 1);
-							else
-								c >>= 1;
-						}
-						CRCTable[n] = c;
-					}
-					crc_table_computed = true;
-				}
-				static void FinalizeCRC(uint crc32, Stream stream) {
-					crc32 ^= 0xFFFFFFFFu;
-					stream.Write(ToBytes((uint)crc32));
-#if DEBUG
-					Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
-					currentCRCText = "";
-					currentCRCLength = 0;
-#endif
-				}
-				static uint ReadUInt(byte[] data, int position) {
-					return ((uint)data[position + 0] << 8 * 3) | ((uint)data[position + 1] << 8 * 2) | ((uint)data[position + 2] << 8 * 1) | ((uint)data[position + 3] << 8 * 0);
-				}
-				static byte[] ToBytes(uint data) {
-					return [(byte)(data >> 8 * 3 & 0xFF), (byte)(data >> 8 * 2 & 0xFF), (byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF)];
-				}
-				static byte[] UShortToBytes(ushort data) {
-					return [(byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF)];
-				}
-				static int NextChunk(int cursor, byte[] buffer, params byte[] targetName) {
-					uint targetBytes = 0;
-					string chunkName = null;
-					if (targetName.Length > 0) {
-						chunkName = string.Join("", targetName.Select(c => (char)c));
-						if (targetName.Length != 4) {
-							throw new ArgumentException($"Target chunk type must be 4 bytes, {chunkName} is {targetName.Length} bytes", nameof(targetName));
-						}
-						targetBytes = ReadUInt(targetName, 0);
-						if (targetBytes == ReadUInt(buffer, cursor + 4)) return cursor;
-					}
-					start:
-					int chunkLength = (int)ReadUInt(buffer, cursor);
-					/* length + chunk type + data + crc*/
-					cursor += 4 + 4 + chunkLength + 4;
-					if (targetName.Length > 0) {
-						if (targetBytes != ReadUInt(buffer, cursor + 4)) goto start;
-					}
-					return cursor;
-				}
-				static void WriteAndAdvanceCRC(Stream stream, ref uint crc, byte[] buffer, int offset = 0, int length = -1, string name = "") {
-#if DEBUG
-					currentCRCText += $"\n{name} :";
-#endif
-					if (!crc_table_computed) make_crc_table();
-					if (length == -1) length = buffer.Length - offset;
-					stream.Write(buffer, offset, length);
-					for (int i = 0; i < length; i++) {
-						crc = CRCTable[(crc ^ buffer[i + offset]) & 0xff] ^ (crc >> 8);
-						if (currentCRCText.Length < 4) {
-							currentCRCText += (char)buffer[i + offset];
-						} else {
-							string h = buffer[i + offset].ToString("X");
-							currentCRCText += " " + (h.Length == 1 ? "0" + h : h);
-						}
-#if DEBUG
-						currentCRCLength++;
-#endif
-					}
-#if DEBUG
-					currentCRCText += "|";
-#endif
+					WikiImageExporter.ExportImage(name, texture);
 				}
 				foreach ((string name, (Texture2D texture, int frames)[] textures) in provider.GetAnimatedSprites(content) ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
-					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";
-					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-					FileStream stream = File.Create(filePath);
-					int seqNum = 0;
-					for (int i = 0; i < textures.Length; i++) {
-						Texture2D texture = textures[i].texture;
-						int size = texture.Width * texture.Height * 4;
-						MemoryStream memoryStream = new(0);//never actually large enough, but 
-						texture.SaveAsPng(memoryStream, texture.Width, texture.Height);
-						//texture.SaveAsPng(File.Create(Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + $"_frame_{i}.png"), texture.Width, texture.Height);
-						texture.Dispose();
-						byte[] buffer = memoryStream.GetBuffer();
-						const int _endSig = 16;
-						const int _width = _endSig;
-						const int _height = _width + 4;
-						const int _bit_depth = _height + 4;
-						const int _color_type = _bit_depth + 1;
-						//const int _compression = _color_type + 1;
-						//const int _filter = _compression + 1;
-						//const int _interlace = _filter + 1;
-						string test = "";
-						string hex = "";
-						for (int j = 0; j < buffer.Length; j++) {
-							test += (char)buffer[j];
-							string h = buffer[j].ToString("X");
-							hex += (h.Length == 1 ? "0" + h : h) + "";
-							if (j % 16 == 15) {
-								//test += '\n';
-								//hex += '\n';
-							}
-						}
-						if (buffer[_color_type] != 6) Origins.LogError("invalid color type " + buffer[_color_type]);
-						int IDAT_pos = NextChunk(0x08, buffer, "IDAT"u8.ToArray());
-						uint IDAT_len = ReadUInt(buffer, IDAT_pos);
-						uint crc32 = 0xFFFFFFFFu;
-						if (i == 0) {
-							stream.Write(buffer, 0, IDAT_pos);
-							stream.Write([0x00, 0x00, 0x00, 0x08], 0, 4);
-							WriteAndAdvanceCRC(stream, ref crc32, [
-								/*acTL      */0x61, 0x63, 0x54, 0x4C,
-								/*num_frames*/0x00, 0x00, 0x00, (byte)textures.Length,
-								/*num_plays */0x00, 0x00, 0x00, 0xFF
-							]);
-							FinalizeCRC((uint)crc32, stream);
-						}
-
-						stream.Write([
-							0x00, 0x00, 0x00, 0x1A
-						], 0, 4);
-						crc32 = 0xFFFFFFFFu;
-						WriteAndAdvanceCRC(stream, ref crc32, "fcTL"u8.ToArray());
-						//BinaryWriter writer = new BinaryWriter(stream, Encoding.Default, true);
-						//writer.Flush();
-						//writer.Dispose();
-
-						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)seqNum++), name: "sequence_number");
-						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Width), name: "width");
-						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Height), name: "height");
-						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "x_offset");
-						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "y_offset");
-						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)textures[i].frames), name: "delay_num");
-						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60), name: "delay_den");
-						WriteAndAdvanceCRC(stream, ref crc32, [(byte)1], name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
-						WriteAndAdvanceCRC(stream, ref crc32, [(byte)0], name: "blend_op");//APNG_BLEND_OP_SOURCE
-						FinalizeCRC((uint)crc32, stream);
-
-						crc32 = 0xFFFFFFFFu;
-						if (i != 0) {
-							stream.Write(ToBytes((uint)(IDAT_len + 4)));
-							WriteAndAdvanceCRC(stream, ref crc32, [
-								/*fdAT          */0x66, 0x64, 0x41, 0x54,
-								/*sequence_number*/0x00, 0x00, 0x00, (byte)seqNum++
-							]);
-						} else {
-							stream.Write(ToBytes((uint)IDAT_len));
-							WriteAndAdvanceCRC(stream, ref crc32, "IDAT"u8.ToArray());
-						}
-						WriteAndAdvanceCRC(stream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
-						FinalizeCRC((uint)crc32, stream);
-
-						if (i == textures.Length - 1) {
-							int IEND_pos = NextChunk(IDAT_pos, buffer, "IEND"u8.ToArray());
-							uint IEND_len = ReadUInt(buffer, IEND_pos);
-							stream.Write(buffer, IEND_pos, 4 + 4 + (int)IEND_len + 4);
-						}
-					}
-					stream.Close();
+					WikiImageExporter.ExportAnimatedImage(name, textures);
 				}
 			}
 			Main.screenWidth = screenWidth;
@@ -434,7 +246,7 @@ namespace Origins.Dev {
 						FlushText();
 						i++;
 						bool isFor = false;
-						while (!char.IsWhiteSpace(text[i])) currentText.Append(text[i++]);
+						while (i < text.Length && !char.IsWhiteSpace(text[i])) currentText.Append(text[i++]);
 						switch (currentText.ToString()) {
 							case "if":
 							blockDepth += 1;
@@ -460,7 +272,7 @@ namespace Origins.Dev {
 								case '#': {
 									int parsePos = i + 1;
 									StringBuilder directiveParser = new();
-									while (!char.IsWhiteSpace(text[parsePos])) directiveParser.Append(text[parsePos++]);
+									while (parsePos < text.Length && !char.IsWhiteSpace(text[parsePos])) directiveParser.Append(text[parsePos++]);
 									switch (directiveParser.ToString()) {
 										case "if":
 										blockDepth += 1;
@@ -548,7 +360,10 @@ namespace Origins.Dev {
 				if (value is List<Recipe> recipes) {
 					StringBuilder builder = new();
 					builder.AppendLine("<a-recipes>");
+					bool firstStation = true;
 					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
+						if (!firstStation) builder.Append(',');
+						firstStation = false;
 						builder.AppendLine("{");
 						if (group.Key.requirements.Length > 0) {
 							builder.AppendLine("stations:[");
@@ -1109,7 +924,10 @@ namespace Origins.Dev {
 		public static string GetItemText(Item item, string note = "") {
 			string name = item.Name;
 			string text = "";
-			if (item.ModItem?.Mod is Origins) {
+			int recipeGroup = item.GetGlobalItem<RecipeGroupTrackerGlobalItem>().recipeGroup;
+			if (recipeGroup != -1) {
+				text = $"<a is=a-link image=\"RecipeGroups/{RecipeGroupPage.GetRecipeGroupWikiName(recipeGroup)}\" href=Recipe_Groups>{RecipeGroup.recipeGroups[recipeGroup].GetText()}</a>";
+			} else if (item.ModItem?.Mod is Origins) {
 				text = $"<a is=a-link image=$fromStats>{name}{(string.IsNullOrWhiteSpace(note) ? "" : $"<note>{note}</note>")}</a>";
 			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
 				text = $"{formatter(item.Name)}";
@@ -1140,8 +958,8 @@ namespace Origins.Dev {
 			return immunities;
 		}
 		public static (List<Recipe> recipes, List<Recipe> usedIn) GetRecipes(Item item) {
-			List<Recipe> recipes = new();
-			List<Recipe> usedIn = new();
+			List<Recipe> recipes = [];
+			List<Recipe> usedIn = [];
 			for (int i = 0; i < Main.recipe.Length; i++) {
 				Recipe recipe = Main.recipe[i];
 				if (recipe.HasResult(item.type)) {
