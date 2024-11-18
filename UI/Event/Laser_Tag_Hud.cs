@@ -77,6 +77,8 @@ namespace Origins.UI.Event {
 				Width = new(0, 1),
 				Height = new(0, 1),
 			});
+
+			Append(new Laser_Tag_Health_Pips());
 		}
 		public override void Update(GameTime gameTime) {
 			if (PlayerInput.Triggers.JustPressed.Down) {
@@ -347,5 +349,71 @@ namespace Origins.UI.Event {
 				spriteBatch.Begin(state);
 			}
 		}
+	}
+	public class Laser_Tag_Health_Pips : UIElement {
+		public override void Draw(SpriteBatch spriteBatch) {
+			if (Laser_Tag_Console.LaserTagRules.HP <= 1) return;
+			SpriteBatchState state = spriteBatch.GetState();
+			Matrix matrix = Main.GameViewMatrix.ZoomMatrix;
+			spriteBatch.Restart(state, transformMatrix: matrix);
+			try {
+				Player player = Main.LocalPlayer;
+				OriginPlayer originPlayer = player.OriginPlayer();
+				Color color = Main.teamColor[player.team];
+				color.A = (byte)(color.A * 0.7f);
+				Color hurtColor = Color.DarkSlateGray;
+				hurtColor.A = (byte)(hurtColor.A * 0.7f);
+				Vector2 pos;
+				Vector2 move;
+				switch (LaserTagConfig.Instance.HealthPipPlacement) {
+					default:
+					case Laser_Tag_Health_Pip_Placement.Bottom:
+					pos = player.Bottom + new Vector2(0, LaserTagConfig.Instance.HealthPipOffset);
+					move = new(player.width / (float)Laser_Tag_Console.LaserTagRules.HP, 0);
+					break;
+
+					case Laser_Tag_Health_Pip_Placement.Left:
+					pos = player.Left - new Vector2(LaserTagConfig.Instance.HealthPipOffset, 0);
+					move = new(0, -player.height / (float)Laser_Tag_Console.LaserTagRules.HP);
+					break;
+
+					case Laser_Tag_Health_Pip_Placement.Right:
+					pos = player.Right + new Vector2(LaserTagConfig.Instance.HealthPipOffset, 0);
+					move = new(0, -player.height / (float)Laser_Tag_Console.LaserTagRules.HP);
+					break;
+
+					case Laser_Tag_Health_Pip_Placement.Top:
+					pos = player.Top - new Vector2(0, LaserTagConfig.Instance.HealthPipOffset);
+					move = new(player.width / (float)Laser_Tag_Console.LaserTagRules.HP, 0);
+					break;
+
+					case Laser_Tag_Health_Pip_Placement.Back:
+					if (player.direction == 1) goto case Laser_Tag_Health_Pip_Placement.Left;
+					goto case Laser_Tag_Health_Pip_Placement.Right;
+
+					case Laser_Tag_Health_Pip_Placement.Front:
+					if (player.direction == -1) goto case Laser_Tag_Health_Pip_Placement.Left;
+					goto case Laser_Tag_Health_Pip_Placement.Right;
+				}
+				if (LaserTagConfig.Instance.HealthPipDirectionInverted) move = -move;
+				pos.Y += player.gfxOffY;
+				pos = (pos.Floor() - move * (Laser_Tag_Console.LaserTagRules.HP - 1) * 0.5f - Main.screenPosition);
+				Rectangle frame = new(0, 0, 2, 2);
+				for (int i = 0; i < Laser_Tag_Console.LaserTagRules.HP; i++) {
+					spriteBatch.Draw(TextureAssets.MagicPixel.Value, pos, frame, i < originPlayer.laserTagHP ? color : hurtColor, 0, Vector2.One, 1f, SpriteEffects.None, 0);
+					pos += move;
+				}
+			} finally {
+				spriteBatch.Restart(state);
+			}
+		}
+	}
+	public enum Laser_Tag_Health_Pip_Placement : int {
+		Bottom,
+		Left,
+		Right,
+		Top,
+		Back,
+		Front
 	}
 }

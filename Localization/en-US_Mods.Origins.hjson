@@ -1634,6 +1634,11 @@ Configs: {
 			Label: Ignored Compatibility Suggestion Keys
 			Tooltip: ""
 		}
+
+		laserTagConfig: {
+			Label: Laser Tag HUD
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -1790,6 +1795,35 @@ Configs: {
 		Index_Page.Label: Index
 		Quest_List.Label: Quests
 		Search_Page.Label: Search
+	}
+
+	LaserTagConfig: {
+		Tooltip: ""
+
+		HealthPipPlacement: {
+			Label: Health Pip Placement
+			Tooltip: ""
+		}
+
+		HealthPipOffset: {
+			Label: Health Pip Offset
+			Tooltip: ""
+		}
+
+		HealthPipDirectionInverted: {
+			Label: Health Pip Direction Inverted
+			Tooltip: ""
+		}
+	}
+
+	Laser_Tag_Health_Pip_Placement: {
+		Tooltip: ""
+		Bottom.Label: Bottom
+		Left.Label: Left
+		Right.Label: Right
+		Top.Label: Top
+		Back.Label: Back
+		Front.Label: Front
 	}
 }
 

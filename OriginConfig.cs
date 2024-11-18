@@ -8,6 +8,7 @@ using Origins.Layers;
 using Origins.LootConditions;
 using Origins.Reflection;
 using Origins.UI;
+using Origins.UI.Event;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ namespace Origins {
 
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
 		public DebugConfig debugMenuButton = new();
+		public LaserTagConfig laserTagConfig = new();
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
@@ -81,6 +83,17 @@ namespace Origins {
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
 			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
 		}
+	}
+	public class LaserTagConfig : ModConfig {
+		public static LaserTagConfig Instance => OriginClientConfig.Instance.laserTagConfig;
+		public override ConfigScope Mode => ConfigScope.ClientSide;
+		public override bool Autoload(ref string name) => false;
+		[DefaultValue(Laser_Tag_Health_Pip_Placement.Back), DrawTicks]
+		public Laser_Tag_Health_Pip_Placement HealthPipPlacement { get; set; } = Laser_Tag_Health_Pip_Placement.Back;
+		[DefaultValue(6), Slider, Range(0, 32), DrawTicks, Increment(2)]
+		public int HealthPipOffset { get; set; } = 6;
+		[DefaultValue(false)]
+		public bool HealthPipDirectionInverted { get; set; } = false;
 	}
 	internal class InconspicuousVersionElement : ConfigElement<ModConfig> {
 		private UIPanel separatePagePanel;
