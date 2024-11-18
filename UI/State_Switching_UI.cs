@@ -21,14 +21,16 @@ namespace Origins.UI {
 			for (int i = 0; i < states.Count; i++) {
 				if (states[i].IsActive()) {
 					currentState = states[i];
+					states[i].Activate();
+				} else {
+					states[i].Deactivate();
+				}
+				if (!this.Children.Contains(states[i])) {
+					this.Append(states[i]);
 				}
 			}
 			if (currentState is null) return;
 			currentState.Update(gameTime);
-		}
-		public override void Draw(SpriteBatch spriteBatch) {
-			if (currentState is null) return;
-			currentState.Draw(spriteBatch);
 		}
 	}
 	public abstract class SwitchableUIState : UIState, ILoadable {
@@ -42,5 +44,19 @@ namespace Origins.UI {
 		public void Unload() { }
 		public abstract void AddToList();
 		public abstract bool IsActive();
+		private bool isActive = false;
+		public override void OnActivate() {
+			isActive = true;
+		}
+		public override void OnDeactivate() {
+			isActive = false;
+		}
+		public override bool ContainsPoint(Vector2 point) => isActive && base.ContainsPoint(point);
+		public override void Update(GameTime gameTime) {
+			if (isActive) base.Update(gameTime);
+		}
+		public override void Draw(SpriteBatch spriteBatch) {
+			if (isActive) base.Draw(spriteBatch);
+		}
 	}
 }

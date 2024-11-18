@@ -34,8 +34,10 @@ namespace Origins {
 		public UserInterface setBonusInventoryUI;
 		UserInterface setBonusHUDInterface;
 		UserInterface itemUseHUDInterface;
+		UserInterface eventHUDInterface;
 		public State_Switching_UI SetBonusHUD { get; private set; } = new();
 		public State_Switching_UI ItemUseHUD { get; private set; } = new();
+		public State_Switching_UI EventHUD { get; private set; } = new();
 		public UserInterfaceWithDefaultState journalUI;
 		internal static List<SwitchableUIState> queuedUIStates = [];
 		public override void Load() {
@@ -44,6 +46,8 @@ namespace Origins {
 			setBonusHUDInterface.SetState(SetBonusHUD);
 			itemUseHUDInterface = new UserInterface();
 			itemUseHUDInterface.SetState(ItemUseHUD);
+			eventHUDInterface = new UserInterface();
+			eventHUDInterface.SetState(EventHUD);
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
@@ -375,6 +379,7 @@ namespace Origins {
 			}
 			setBonusHUDInterface.Update(gameTime);
 			itemUseHUDInterface.Update(gameTime);
+			eventHUDInterface.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -399,6 +404,14 @@ namespace Origins {
 					 "Origins: Set Bonus HUD",
 					 delegate {
 						 setBonusHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+						 return true;
+					 },
+					 InterfaceScaleType.UI)
+				);
+				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+					 "Origins: Event HUD",
+					 delegate {
+						 eventHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
 						 return true;
 					 },
 					 InterfaceScaleType.UI)
@@ -501,6 +514,7 @@ namespace Origins {
 		public int[] laserTagTeamPoints = new int[6];
 		public int[] laserTagTeamHits = new int[6];
 		public int[] laserTagTeamGems = new int[6];
+		public int[] laserTagTeamPlayers = new int[6];
 		public override void PreUpdatePlayers() {
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];

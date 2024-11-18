@@ -54,6 +54,7 @@ namespace Origins.Tiles.Other {
 		}
 		public static ref int LaserTagActiveTeams => ref OriginSystem.Instance.laserTagActiveTeams;
 		public static ref int LaserTagActivePlayers => ref OriginSystem.Instance.laserTagActivePlayers;
+		public static ref int[] LaserTagTeamPlayers => ref OriginSystem.Instance.laserTagTeamPlayers;
 		public static bool AnyLaserTagActive => LaserTagActivePlayers > 0;
 		public static bool LaserTagGameActive => AnyLaserTagActive || (LaserTagRules.Time > 0 && LaserTagTimeLeft > -1);
 		public static bool LaserTagMultipleTeamsActive {
@@ -93,12 +94,16 @@ namespace Origins.Tiles.Other {
 			//Debugging.ChatOverhead(Time_Radix.FormatTime(LaserTagTimeLeft, radices));
 			LaserTagActiveTeams = 0;
 			LaserTagActivePlayers = 0;
-			for (int i = 0; i < LaserTagTeamGems.Length; i++) {
+			for (int i = 0; i < 6; i++) {
 				LaserTagTeamGems[i] = -1;
+				LaserTagTeamPlayers[i] = 0;
 			}
 			foreach (Player player in Main.ActivePlayers) {
 				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 				OriginPlayer.playersByGuid.TryAdd(originPlayer.guid, player.whoAmI);
+				if (originPlayer.laserTagVest) {
+					LaserTagTeamPlayers[player.team]++;
+				}
 				if (originPlayer.laserTagVestActive) {
 					LaserTagActiveTeams |= 1 << player.team;
 					LaserTagActivePlayers++;

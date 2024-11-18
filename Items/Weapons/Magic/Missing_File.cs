@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Magic {
 		readonly AutoLoadingAsset<Texture2D> texture = typeof(Missing_File_UI).GetDefaultTMLName();
 		public static bool drawingMissingFileUI = false;
 		public static Color currentNPCColor;
-		public override void Draw(SpriteBatch spriteBatch) {
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			static bool IsInvalidNPC(NPC npc) {
 				switch (npc.netID) {
 					case NPCID.CultistBoss or NPCID.CultistBossClone or NPCID.CultistDevote or NPCID.CultistArcherBlue or NPCID.CultistArcherWhite:
