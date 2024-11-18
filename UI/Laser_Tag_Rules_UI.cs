@@ -33,7 +33,7 @@ namespace Origins.UI {
 			panel.Height.Set(-310f, 1f);
 			panel.HAlign = 0.5f;
 			Append(panel);
-			UI_Hidden_Supporting_List list = [..Laser_Tag_Console.LaserTagRules.GetUIElements()];
+			UI_Hidden_Supporting_List list = [..Laser_Tag_Console.LaserTagRules.GetSettingUIElements()];
 			list.Width.Set(-10, 1f);
 			list.Height.Set(-36, 1f);
 			panel.HAlign = 0.5f;
@@ -57,7 +57,10 @@ namespace Origins.UI {
 			panel.Append(startButton);
 		}
 	}
-	public class UI_Hideable_Panel : UIPanel {
+	public interface IHideableElement {
+		public bool Hidden { get; set; }
+	}
+	public class UI_Hideable_Panel : UIPanel, IHideableElement {
 		bool hidden;
 		public bool Hidden {
 			get => hidden;

@@ -118,6 +118,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Color color = Main.teamColor[Main.player[Projectile.owner].team];
+			color.A = (byte)(color.A * 0.7f);
 			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(42, 1), Projectile.scale, SpriteEffects.None, 1);
 			return false;
 		}

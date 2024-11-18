@@ -472,6 +472,9 @@ namespace Origins {
 				"player",
 				"you"
 			]);
+			ChatManager.Register<Player_Head_Handler>([
+				"head"
+			]);
 			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
 			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {

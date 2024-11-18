@@ -6,6 +6,8 @@ using Origins.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -242,7 +244,8 @@ namespace Origins.Tiles.Other {
 		public bool CTGNeedOwnGem = CTGNeedOwnGem;
 		public bool Building = Building;
 		public bool HitsArePoints => !CTG;
-		public IEnumerable<UIElement> GetUIElements() {
+		public bool IsElimination => RespawnTime < 0;
+		public IEnumerable<UIElement> GetSettingUIElements() {
 			static UI_Time_Button GetTimeController(ButtonIntnessGetter variable, string name, Time_Radix[] radices, int increment = 1, int indefiniteThreshold = 0, string indefiniteName = null, int maxValue = int.MaxValue) {
 				return new UI_Time_Button(variable, Language.GetOrRegister(prefix + name), radices, increment, indefiniteThreshold, Language.GetOrRegister(prefix + (indefiniteName ?? "Indefinite")), maxValue).SetSize();
 			}
@@ -264,6 +267,45 @@ namespace Origins.Tiles.Other {
 			yield return GetToggle(() => ref CTG, "CTG");
 			yield return GetToggle(() => ref CTGNeedOwnGem, "CTGNeedOwnGem").SetHidden(() => !CTG);
 			yield return GetToggle(() => ref Building, "Building");
+		}
+		public string GetGameSummaryText(float availableWidth) {
+			if (Teams) {
+				StringBuilder builder = new();
+				for (int i = 1; i < 6; i++) {
+					if (Laser_Tag_Console.LaserTagTeamPlayers[i] > 0) {
+						if (builder.Length > 0) builder.Append(" - ");
+						builder.Append($"[c/{Main.teamColor[i].Hex3()}:{Laser_Tag_Console.LaserTagTeamPoints[i]}]");
+					}
+				}
+				return builder.ToString();
+			} else {
+				List<(int points, Player player)> players = [];
+				float totalWidth = 0;
+				float myWidth = 0;
+				foreach (Player player in Main.ActivePlayers) {
+					OriginPlayer originPlayer = player.OriginPlayer();
+					if (originPlayer.laserTagVest) {
+						players.Add((originPlayer.laserTagPoints, player));
+						float width = 32 + FontAssets.MouseText.Value.MeasureString(originPlayer.laserTagPoints + " ").X;
+						totalWidth += width;
+						if (player.whoAmI == Main.myPlayer) myWidth = width;
+					}
+				}
+				players = players.OrderBy(v => v.points).ToList();
+				if (totalWidth <= availableWidth) {
+					return string.Join(" ", players.Select(static v => $"[head:{v.player.whoAmI}]{v.points}"));
+				}
+				StringBuilder builder = new();
+				float x = 0;
+				for (int i = 0; i < players.Count; i++) {
+					if (x + myWidth > availableWidth) break;
+					builder.Append($"[head:{players[i].player.whoAmI}]{players[i].points}");
+					x += 32 + FontAssets.MouseText.Value.MeasureString(players[i].points + " ").X;
+				}
+				builder.Append($"[head:{Main.myPlayer}]{Main.LocalPlayer.OriginPlayer().laserTagPoints}");
+				return builder.ToString();
+			}
+			return string.Empty;
 		}
 		public void Write(BinaryWriter writer) {
 			writer.Write(RespawnTime);
@@ -309,7 +351,7 @@ namespace Origins.Tiles.Other {
 			}
 			return null;
 		}
-		public override bool IsActive(Laser_Tag_Rules rules) => rules.RespawnTime < 0;
+		public override bool IsActive(Laser_Tag_Rules rules) => rules.IsElimination;
 	}
 	public class Timeout_Win_Condition : LaserTagWinCondition {
 		public override Player GetWinner(Laser_Tag_Rules rules) {

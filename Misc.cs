@@ -2978,6 +2978,7 @@ namespace Origins {
 		public static N Mul<N>(this N value, bool flag) where N : System.Numerics.INumber<N> {
 			return flag ? value : N.Zero;
 		}
+		public static Rectangle Scaled(this Rectangle rectangle, float by) => new((int)(rectangle.X * by), (int)(rectangle.Y * by), (int)(rectangle.Width * by), (int)(rectangle.Height * by));
 	}
 	public static class ItemExtensions {
 		public static void CloneDefaultsKeepSlots(this Item self, int type) {
