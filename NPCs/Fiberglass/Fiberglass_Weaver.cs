@@ -10,6 +10,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -171,14 +172,13 @@ namespace Origins.NPCs.Fiberglass {
 					legTargets[0] = NPC.Center + (Vector2)new PolarVec2(84 + (8 * leg0Factor), NPC.rotation - MathHelper.PiOver2 + 0.09f + leg0Factor2 * 0.10f);
 					legTargets[1] = NPC.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), NPC.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
 					if (NPC.ai[1] > 180 - DifficultyMult * 30) {
-						Vector2 position;
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
 							int projectileType = ModContent.ProjectileType<Fiberglass_Thread>();
 							for (int i = 5; i-- > 0;) {
-								PolarVec2 vec = new PolarVec2(Main.rand.Next(8 - DifficultyMult, 12 - DifficultyMult) * 64, Main.rand.NextFloat(0, MathHelper.TwoPi));
-								Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out position, out float[] samples);
+								PolarVec2 vec = new(Main.rand.Next(8 - DifficultyMult, 12 - DifficultyMult) * 64, Main.rand.NextFloat(0, MathHelper.TwoPi));
+								Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out Vector2 position, out float[] samples);
 								position = position.SafeNormalize(Vector2.One) * samples.Average() + target.Center;
-								Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(-0.1f, 0.1f)).WithLength(12);
+								Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(-0.1f, 0.1f)).WithLength(16);
 								Projectile.NewProjectile(
 									NPC.GetSource_FromAI(),
 									position,
@@ -300,6 +300,9 @@ namespace Origins.NPCs.Fiberglass {
 				Projectile.localAI[1] = value.Y;
 			}
 		}
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = ushort.MaxValue;
+		}
 		public override void SetDefaults() {
 			Projectile.hostile = true;
 			Projectile.timeLeft = 600 + Main.rand.Next(60, 120) * Fiberglass_Weaver.DifficultyMult;
@@ -311,15 +314,17 @@ namespace Origins.NPCs.Fiberglass {
 				Projectile.localAI[0] = Projectile.position.X;
 				Projectile.localAI[1] = Projectile.position.Y;
 			}
-			Vector2 vel = Collision.AnyCollision(
+			Vector2 vel = Collision.AnyCollisionWithSpecificTiles(
 				OtherEndPos,
 				new(Projectile.ai[0], Projectile.ai[1]),
 				8,
-				8
+				8,
+				Main.tileSolid
 			);
 			if (Projectile.ai[0] != vel.X || Projectile.ai[1] != vel.Y) {
 				Projectile.ai[0] = 0;
 				Projectile.ai[1] = 0;
+				Projectile.netUpdate = true;
 			}
 			OtherEndPos += vel;
 		}
@@ -333,14 +338,23 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = default;
+			Projectile.netUpdate = true;
 			return false;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(Projectile.localAI[0]);
+			writer.Write(Projectile.localAI[1]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[0] = reader.ReadSingle();
+			Projectile.localAI[1] = reader.ReadSingle();
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2 pos = new Vector2(Projectile.Center.X - Main.screenPosition.X, Projectile.Center.Y - Main.screenPosition.Y);
 			Vector2 diff = OtherEndPos + new Vector2(4) - Projectile.Center;
 			Vector2 scale = new Vector2(diff.Length(), 2);
 
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, lightColor * 0.8f, diff.ToRotation(), new Vector2(0.5f, 0), scale, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, Color.White * 0.8f, diff.ToRotation(), new Vector2(0f, 0.5f), scale, SpriteEffects.None, 0);
 			return false;
 		}
 	}
