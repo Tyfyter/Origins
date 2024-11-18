@@ -50,6 +50,7 @@ Laser_Tag: {
 	Team_Yellow: Yellow team
 	Team_Purple: Pink team
 	NeedWinConditions: You can't start a laser tag game with these settings because it couldn't be won
+	Hud_Points: "{0} points"
 }
 
 ItemDropConditions: {

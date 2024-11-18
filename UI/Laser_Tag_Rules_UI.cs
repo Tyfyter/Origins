@@ -83,7 +83,7 @@ namespace Origins.UI {
 		}
 	}
 	public class UI_Hidden_Supporting_List : UIList {
-		static FastFieldInfo<UIList, float> _innerListHeight = new(nameof(_innerListHeight), BindingFlags.NonPublic);
+		static readonly FastFieldInfo<UIList, float> _innerListHeight = new(nameof(_innerListHeight), BindingFlags.Public | BindingFlags.NonPublic);
 		public override void RecalculateChildren() {
 			foreach (UIElement element in Elements) {
 				element.Recalculate();
