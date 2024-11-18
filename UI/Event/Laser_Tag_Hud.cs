@@ -84,7 +84,7 @@ namespace Origins.UI.Event {
 			} else {
 				summaryPanelWrapper.isHidden = false;
 				teamsListWrapper.isHidden = true;
-				playersList.isHidden = true;
+				//playersList.isHidden = true;
 			}
 			base.Update(gameTime);
 		}

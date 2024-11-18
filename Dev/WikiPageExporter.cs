@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.CodeAnalysis.Rename;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Terraria;
@@ -56,6 +58,13 @@ namespace Origins.Dev {
 				}
 				return wikiTemplate;
 			}
+		}
+		public static readonly Condition ShimmerTransmutationWikiCondition = new(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerTransmutation"), () => false);
+		readonly static ConstructorInfo RecipeCtor = typeof(Recipe).GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, [typeof(Mod)]);
+		internal static Recipe CreateFakeRecipe(int result) {
+			Recipe recipe = (Recipe)RecipeCtor.Invoke([Origins.instance]);
+			recipe.ReplaceResult(result);
+			return recipe;
 		}
 		static void TryUpdatingExistingPage(string pagePath, PageTemplate template, Dictionary<string, object> context) {
 			try {
@@ -367,12 +376,11 @@ namespace Origins.Dev {
 						builder.AppendLine("{");
 						if (group.Key.requirements.Length > 0) {
 							builder.AppendLine("stations:[");
-							foreach ((Mod reqMod, string reqName) in group.Key.requirements) {
-								if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
-									builder.AppendLine($"`{formatter(reqName)}`");
-								} else {
-									Origins.instance.Logger.Warn($"No wiki link formatter for mod {reqMod}, skipping requirement for {reqName}");
-								}
+							bool firstReq = true;
+							foreach (RecipeRequirement requirement in group.Key.requirements) {
+								if (!firstReq) builder.Append(',');
+								firstReq = false;
+								builder.AppendLine($"`{requirement}`");
 							}
 							builder.AppendLine("],");
 						}
@@ -402,11 +410,10 @@ namespace Origins.Dev {
 		}
 	}
 	public class RecipeRequirements(Recipe recipe) {
-		public readonly (Mod mod, string name)[] requirements =
-				recipe.requiredTile.Select(t => (TileLoader.GetTile(t)?.Mod, Lang.GetMapObjectName(MapHelper.TileToLookup(t, 0))))
-				/*.Concat(
-					recipe.Conditions.Select(c => c.Description.Value)
-				)*/.ToArray();
+		public readonly RecipeRequirement[] requirements =
+				recipe.requiredTile.Select(t => new TileRecipeRequirement(t))
+				.Concat(recipe.Conditions.Select(c => (RecipeRequirement)new ConditionRecipeRequirement(c))
+				).ToArray();
 
 		public override bool Equals(object other) {
 			return other is RecipeRequirements req && Equals(req);
@@ -428,6 +435,24 @@ namespace Origins.Dev {
 				return hashCode;
 			}
 		}
+	}
+	public abstract record class RecipeRequirement {
+		public abstract override string ToString();
+	}
+	public record TileRecipeRequirement(int Tile) : RecipeRequirement {
+		public override string ToString() {
+			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
+			string reqName = Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
+			if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
+				return formatter(reqName);
+			} else {
+				Origins.instance.Logger.Warn($"No wiki link formatter for mod {reqMod}, skipping requirement for {reqName}");
+			}
+			return string.Empty;
+		}
+	}
+	public record ConditionRecipeRequirement(Condition Condition) : RecipeRequirement {
+		public override string ToString() => Condition.Description.Value;
 	}
 	public class DictionaryWithNull<TKey, TValue> : Dictionary<TKey, TValue> {
 		bool hasNullValue;
@@ -962,6 +987,7 @@ namespace Origins.Dev {
 			List<Recipe> usedIn = [];
 			for (int i = 0; i < Main.recipe.Length; i++) {
 				Recipe recipe = Main.recipe[i];
+				if (recipe.Disabled) continue;
 				if (recipe.HasResult(item.type)) {
 					recipes.Add(recipe);
 				}
@@ -974,6 +1000,15 @@ namespace Origins.Dev {
 						}
 					}
 				}
+			}
+			for (int i = 0; i < ItemLoader.ItemCount; i++) {
+				if (ItemID.Sets.ShimmerTransformToItem[i] == item.type) {
+					recipes.Add(CreateFakeRecipe(item.type).AddIngredient(i).AddCondition(ShimmerTransmutationWikiCondition));
+					break;
+				}
+			}
+			if (ItemID.Sets.ShimmerTransformToItem[item.type] != -1) {
+				usedIn.Add(CreateFakeRecipe(ItemID.Sets.ShimmerTransformToItem[item.type]).AddIngredient(item.type).AddCondition(ShimmerTransmutationWikiCondition));
 			}
 			return (recipes, usedIn);
 		}

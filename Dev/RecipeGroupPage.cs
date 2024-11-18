@@ -7,6 +7,7 @@ using System.Linq;
 using ReLogic.Content;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace Origins.Dev {
 	public class RecipeGroupPage : WikiSpecialPage {
@@ -37,8 +38,8 @@ namespace Origins.Dev {
 					usedGroups.Add(RecipeGroup.recipeGroups[recipe.acceptedGroups[j]]);
 				}
 			}
-			foreach (RecipeGroup group in RecipeGroup.recipeGroups.Values.Where(usedGroups.Contains)) {
-				yield return ("RecipeGroups/" + GetRecipeGroupWikiName(group.RegisteredId), GetTexuresForGroup(group).ToArray());
+			foreach (RecipeGroup group in RecipeGroup.recipeGroups.Values) {
+				if (usedGroups.Contains(group) || group.ValidItems.Any(type => ContentSamples.ItemsByType[type].ModItem?.Mod is Origins)) yield return ("RecipeGroups/" + GetRecipeGroupWikiName(group.RegisteredId), GetTexuresForGroup(group).ToArray());
 			}
 		}
 		public static IEnumerable<(Texture2D texture, int frames)> GetTexuresForGroup(RecipeGroup group) {
