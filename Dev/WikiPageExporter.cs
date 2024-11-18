@@ -38,6 +38,8 @@ namespace Origins.Dev {
 		public static List<ConditionalWikiProvider> ConditionalDataProviders => conditionalDataProviders ??= [];
 		static HashSet<Type> interfaceReplacesGenericClassProvider;
 		public static HashSet<Type> InterfaceReplacesGenericClassProvider => interfaceReplacesGenericClassProvider ??= [];
+		public static Dictionary<int, LocalizedText> requiredTileWikiTextOverride = [];
+		public static Dictionary<Condition, LocalizedText> recipeConditionWikiTextOverride = [];
 		public void Load(Mod mod) {
 			LinkFormatters[Origins.instance] = (t) => {
 				string formattedName = t.Replace(" ", "_");
@@ -47,6 +49,8 @@ namespace Origins.Dev {
 				string formattedName = t.Replace(" ", "_");
 				return $"<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
 			};
+			requiredTileWikiTextOverride[TileID.Bottles] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.Bottle");
+			recipeConditionWikiTextOverride[Condition.InGraveyard] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.EctoMist");
 		}
 		static PageTemplate wikiTemplate;
 		static DateTime wikiTemplateWriteTime;
@@ -157,6 +161,8 @@ namespace Origins.Dev {
 			typedDataProviders = null;
 			conditionalDataProviders = null;
 			interfaceReplacesGenericClassProvider = null;
+			requiredTileWikiTextOverride = null;
+			recipeConditionWikiTextOverride = null;
 		}
 		public static void WriteFileNoUnneededRewrites(string file, string text) {
 			if (File.Exists(file) && File.ReadAllText(file) == text) return;
@@ -378,6 +384,7 @@ namespace Origins.Dev {
 							builder.AppendLine("stations:[");
 							bool firstReq = true;
 							foreach (RecipeRequirement requirement in group.Key.requirements) {
+								if (string.IsNullOrEmpty(requirement.ToString())) continue;
 								if (!firstReq) builder.Append(',');
 								firstReq = false;
 								builder.AppendLine($"`{requirement}`");
@@ -441,6 +448,7 @@ namespace Origins.Dev {
 	}
 	public record TileRecipeRequirement(int Tile) : RecipeRequirement {
 		public override string ToString() {
+			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) return text.Value;
 			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
 			string reqName = Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
 			if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
@@ -452,7 +460,7 @@ namespace Origins.Dev {
 		}
 	}
 	public record ConditionRecipeRequirement(Condition Condition) : RecipeRequirement {
-		public override string ToString() => Condition.Description.Value;
+		public override string ToString() => recipeConditionWikiTextOverride.TryGetValue(Condition, out LocalizedText text) ? text.Value : Condition.Description.Value;
 	}
 	public class DictionaryWithNull<TKey, TValue> : Dictionary<TKey, TValue> {
 		bool hasNullValue;

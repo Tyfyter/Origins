@@ -1,1 +1,6 @@
 Link.Hardmode: "[link Hardmode | | https://terraria.wiki.gg/wiki/Hardmode]"
+
+RecipeConditions: {
+	Bottle: <span style="text-align: center;"><a href=https://terraria.wiki.gg/wiki/Placed_Bottle>Placed Bottle</a><div class=or>or</div><a href=https://terraria.wiki.gg/wiki/Alchemy_Table>Alchemy Table</a></span>
+	EctoMist: <a href=https://terraria.wiki.gg/wiki/Ecto_Mist>Ecto Mist</a>
+}
