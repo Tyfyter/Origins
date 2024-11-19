@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using Origins.Tiles.Other;
 using PegasusLib.Graphics;
 using System;
@@ -100,6 +102,25 @@ namespace Origins.UI.Event {
 				playersList.Hidden = true;
 			}
 			base.Update(gameTime);
+		}
+		internal static void IL_NewMultiplayerClosePlayersOverlay_Draw(ILContext il) {
+			ILCursor c = new(il);
+			int otherPlayer = -1;
+			c.GotoNext(MoveType.After,
+				il => il.MatchLdloc(out otherPlayer),
+				il => il.MatchLdfld<Player>(nameof(Player.dead)),
+				il => il.MatchBrtrue(out _),
+				il => il.MatchLdloc(out _),
+				il => il.MatchLdfld<Player>(nameof(Player.team)),
+				il => il.MatchLdloc(out _),
+				il => il.MatchLdfld<Player>(nameof(Player.team)),
+				il => il.MatchBneUn(out _)
+			);
+			c.Index--;
+			c.EmitCeq();
+			c.EmitLdloc(otherPlayer);
+			c.EmitDelegate<Func<bool, Player, bool>>(static (teamsMatch, otherPlayer) => teamsMatch || otherPlayer.ownedLargeGems[Laser_Tag_Console.GetLargeGemID(Main.LocalPlayer.team)]);
+			c.Next.OpCode = OpCodes.Brfalse;
 		}
 	}
 	public class UIHideWrapper : UIElement, IHideableElement {

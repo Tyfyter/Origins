@@ -32,7 +32,8 @@ Status_Messages: {
 
 Laser_Tag: {
 	Teams: Teams
-	CTG: Don't allow Teams with their gem stolen to score
+	CTG: Capture the gem
+	CTGNeedOwnGem: Don't allow Teams with their gem stolen to score
 	Building: Allow Building
 	StartButton: Start
 	RespawnTime: Revive Time

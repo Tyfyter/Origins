@@ -69,6 +69,8 @@ using AltLibrary.Common.Hooks;
 using Terraria.ModLoader.UI;
 using PegasusLib.Graphics;
 using PegasusLib;
+using Terraria.GameContent.UI;
+using Origins.UI.Event;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -577,8 +579,8 @@ namespace Origins {
 				instance.Logger.Error("Error while hooking into Terraria.ModLoader.UI.Interface.AddMenuButtons: ", ex);
 			}
 			IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
+			IL_NewMultiplayerClosePlayersOverlay.Draw += Laser_Tag_Hud.IL_NewMultiplayerClosePlayersOverlay_Draw;
 		}
-
 		private static void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il) {
 			ILCursor c = new(il);
 			if (c.TryGotoNext(MoveType.After,
