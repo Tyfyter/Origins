@@ -4667,3 +4667,8 @@ Silicon_Ore_Item: {
 }
 
 Silicon_Bar.DisplayName: Silicon_ Bar
+
+Thread_Rod: {
+	DisplayName: Thread Rod
+	Tooltip: ""
+}

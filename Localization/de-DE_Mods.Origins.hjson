@@ -1351,7 +1351,8 @@ Projectiles: {
 	// Hibernal_Incantation_P.DisplayName: Hibernal Incantation
 	// Hibernal_Icicle_P.DisplayName: Hibernal Icicle
 	// Thermite_Lingering_P.DisplayName: Lingering Thermite
-	// CORE_Generator_Star_P.DisplayName: C O R E Generator Star P
+	// CORE_Generator_Star_P.DisplayName: CORE Generator Star
+	// Thread_Rod_P.DisplayName: Thread Rod P
 }
 
 Prefixes: {

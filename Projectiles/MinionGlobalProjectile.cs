@@ -53,7 +53,7 @@ namespace Origins.Projectiles {
 			});
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
-			return entity.minion || entity.sentry || ProjectileID.Sets.MinionShot[entity.type] || ProjectileID.Sets.SentryShot[entity.type];
+			return entity.IsMinionOrSentryRelated;
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			ModPrefix prefix = null;

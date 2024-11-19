@@ -795,6 +795,7 @@ SUMMONER WEAPONS:
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre
+(☻) Thread Rod !!!
 (X) Wyvern Horn
 (^) Ziptie
 
@@ -893,7 +894,6 @@ GENERIC WEAPONS:
 ---
 (^) Generic Weapon
 (^) Potato Launcher*
-(#, ^2) Thread Rod !!!
 
 (X) Hyperstatic Gauss Cannon
 (X) Pressurized Supersoaker

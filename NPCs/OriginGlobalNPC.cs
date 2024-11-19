@@ -280,7 +280,7 @@ namespace Origins.NPCs {
 			if (amberDebuff) modifiers.Defense *= 0.5f;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
-			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type] || projectile.sentry || ProjectileID.Sets.SentryShot[projectile.type]) {
+			if (projectile.IsMinionOrSentryRelated) {
 				float damageBoost = 0;
 				for (int i = 0; i < npc.buffType.Length; i++) {
 					if (npc.buffTime[i] <= 0) continue;
@@ -356,7 +356,7 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type] || projectile.sentry || ProjectileID.Sets.SentryShot[projectile.type]) {
+			if (projectile.IsMinionOrSentryRelated) {
 				if (npc.HasBuff(Maelstrom_Buff_Zap.ID) && projectile.owner == Main.myPlayer) {
 					const float maxDist = 136 * 136;
 					bool first = true;

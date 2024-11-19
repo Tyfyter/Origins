@@ -213,11 +213,11 @@ namespace Origins {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
 			}
-			if (futurephones && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type] || proj.sentry || ProjectileID.Sets.SentryShot[proj.type])) {
+			if (futurephones && !proj.IsMinionOrSentryRelated) {
 				target.AddBuff(Futurephones_Buff.ID, 300);
 				Player.MinionAttackTargetNPC = target.whoAmI;
 			}
-			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type] || proj.sentry || ProjectileID.Sets.SentryShot[proj.type])) {
+			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer && !proj.IsMinionOrSentryRelated) {
 				OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
 				originGlobalNPC.priorityMailTime = originGlobalNPC.prevPriorityMailTime;
 			}

@@ -49,6 +49,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Area_Denial_P : ModProjectile {
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.width = 14;
 			Projectile.height = 14;
 			Projectile.timeLeft = 5 * 60 * 60;
