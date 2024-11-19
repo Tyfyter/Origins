@@ -36,8 +36,6 @@ namespace Origins {
 				damage *= 1 + Focus_Potion.bonus_multiplicative;
 				damage.Flat += Focus_Potion.bonus_additive;
 			}
-			damage.Base *= Origins.FlatDamageMultiplier[item.type];
-			damage.Flat *= Origins.FlatDamageMultiplier[item.type];
 		}
 		public override void ModifyWeaponCrit(Item item, ref float crit) {
 			if (rubyReticle) {

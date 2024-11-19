@@ -4672,3 +4672,8 @@ Thread_Rod: {
 	// DisplayName: Thread Rod
 	// Tooltip: ""
 }
+
+Glass_Cannon: {
+	// DisplayName: Glass Cannon
+	// Tooltip: ""
+}

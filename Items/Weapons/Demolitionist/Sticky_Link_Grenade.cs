@@ -8,6 +8,7 @@ using Origins.Dev;
 using Origins.Projectiles;
 using Tyfyter.Utils;
 using System.IO;
+using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Sticky_Link_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [

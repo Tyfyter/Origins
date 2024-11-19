@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

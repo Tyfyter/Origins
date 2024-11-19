@@ -580,7 +580,17 @@ namespace Origins {
 			}
 			IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
 			IL_NewMultiplayerClosePlayersOverlay.Draw += Laser_Tag_Hud.IL_NewMultiplayerClosePlayersOverlay_Draw;
+			MonoModHooks.Add(
+				typeof(CombinedHooks).GetMethod(nameof(CombinedHooks.ModifyWeaponDamage), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static),
+				(orig_ModifyWeaponDamage orig, Player player, Item item, ref StatModifier damage) => {
+					orig(player, item, ref damage);
+					damage.Base *= FlatDamageMultiplier[item.type];
+					damage.Flat *= FlatDamageMultiplier[item.type];
+				}
+			);
 		}
+		delegate void orig_ModifyWeaponDamage(Player player, Item item, ref StatModifier damage);
+		delegate void hook_ModifyWeaponDamage(orig_ModifyWeaponDamage orig, Player player, Item item, ref StatModifier damage);
 		private static void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il) {
 			ILCursor c = new(il);
 			if (c.TryGotoNext(MoveType.After,

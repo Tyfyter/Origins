@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
 using Tyfyter.Utils;
+using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Link_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [

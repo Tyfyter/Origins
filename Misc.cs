@@ -2588,8 +2588,6 @@ namespace Origins {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
-		[Obsolete("Just here while I update PegasusLib")]
-		public static bool IsWithin(this Vector2 a, Vector2 b, float range) => a.DistanceSQ(b) < range * range;
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
