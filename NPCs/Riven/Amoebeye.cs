@@ -163,6 +163,7 @@ namespace Origins.NPCs.Riven {
 			NPC.knockBackResist = 0.01f;
 			NPC.value = 0;
 		}
+		public override bool? CanFallThroughPlatforms() => true;
 		public override void AI() {
 			NPC parent = Main.npc[(int)NPC.ai[3]];
 			NPCAimedTarget target;
