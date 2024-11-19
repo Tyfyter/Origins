@@ -17,7 +17,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
 using Origins.Buffs;
 namespace Origins.Items.Weapons.Summoner {
-	public class Thread_Rod : ModItem {
+	public class Thread_Rod : ModItem, IElementalItem {
+		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 		}
@@ -58,7 +59,8 @@ namespace Origins.Items.Weapons.Summoner {
 			return false;
 		}
 	}
-	public class Thread_Rod_P : ModProjectile {
+	public class Thread_Rod_P : ModProjectile, IElementalProjectile {
+		public ushort Element => Elements.Fiberglass;
 		public const int thread_count = 5;
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public readonly struct Thread(Vector2 posA, Vector2 posB) {

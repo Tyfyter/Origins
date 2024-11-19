@@ -6,6 +6,7 @@ using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -249,7 +250,7 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			armorDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
-			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>());
+			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), ModContent.ItemType<Thread_Rod>());
 			armorDropRule.OnSuccess(weaponDropRule);
 			armorDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Weaver_Head>(), 10));
 
@@ -258,6 +259,7 @@ namespace Origins.NPCs.Fiberglass {
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Fiberglass_Weaver_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fiberglass_Dagger>(), 4));
+			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
 			//npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
 			//npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));
 		}
