@@ -90,6 +90,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Origins.ForceFelnumShockOnShoot[Type] = true;
 			ID = Type;
 		}
@@ -113,7 +114,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.ai[2] = value + 1;
 			}
 		}
-
+		public override void OnSpawn(IEntitySource source) {
+			Projectile.ai[1] = -1;
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			SetupDog();
@@ -172,7 +175,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 		void SetupDog() {
-			if (Projectile.ai[1] == 0) {
+			if (Projectile.ai[1] == -1) {
 				Projectile dog = Projectile.NewProjectileDirect(
 					Projectile.GetSource_FromThis(),
 					Projectile.Center,
@@ -181,10 +184,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.originalDamage,
 					Projectile.knockBack,
 					Projectile.owner,
-					ai2: Projectile.whoAmI
+					ai2: Projectile.identity
 				);
 				dog.originalDamage = Projectile.originalDamage;
-				Projectile.ai[1] = dog.whoAmI + 1;
+				Projectile.ai[1] = dog.identity;
+				Projectile.netUpdate = true;
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
@@ -265,6 +269,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Type] = true;
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			ID = Type;
 		}
 
@@ -284,19 +289,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;
-
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			Projectile.timeLeft = 2;
 
 			#region Active check
-			if (Projectile.ai[2] < 0) {
-				Projectile.Kill();
-				return;
-			}
-			Projectile meat = Main.projectile[(int)Projectile.ai[2]];
-			if (!meat.active || meat.type != Fresh_Meat_Artifact_P.ID || meat.ai[1] != Projectile.whoAmI + 1) {
-				Projectile.Kill();
+			Projectile meat = Projectile.GetRelatedProjectile(2);
+			if (meat is null || !meat.active || meat.type != Fresh_Meat_Artifact_P.ID || meat.ai[1] != Projectile.identity) {
+				if (Projectile.owner == Main.myPlayer) Projectile.Kill();
 				return;
 			}
 			#endregion
@@ -313,7 +313,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				// Fix overlap with other minions
 				Projectile other = Main.projectile[i];
-				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && other.type == Projectile.type && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width) {
+				if (i != Projectile.identity && other.active && other.owner == Projectile.owner && other.type == Projectile.type && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width) {
 					if (Projectile.position.X < other.position.X) Projectile.velocity.X -= overlapVelocity;
 					else Projectile.velocity.X += overlapVelocity;
 
