@@ -10,7 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Glass_Cannon : ModItem {
+	public class Glass_Cannon : ModItem, IElementalItem {
+		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 1.5f;
 		}
@@ -42,7 +43,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 	}
-	public class Glass_Cannon_P : ModProjectile, ICanisterProjectile {
+	public class Glass_Cannon_P : ModProjectile, ICanisterProjectile, IElementalProjectile {
+		public ushort Element => Elements.Fiberglass;
 		public override string Texture => "Terraria/Images/Item_1";
 		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Outer";
 		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Inner";

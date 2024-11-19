@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
@@ -250,7 +251,13 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			armorDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
-			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), ModContent.ItemType<Thread_Rod>());
+			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
+				ModContent.ItemType<Fiberglass_Bow>(),
+				ModContent.ItemType<Fiberglass_Sword>(),
+				ModContent.ItemType<Fiberglass_Pistol>(),
+				ModContent.ItemType<Glass_Cannon>(),
+				ModContent.ItemType<Thread_Rod>()
+			);
 			armorDropRule.OnSuccess(weaponDropRule);
 			armorDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Weaver_Head>(), 10));
 
