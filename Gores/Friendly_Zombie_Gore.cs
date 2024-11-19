@@ -45,8 +45,8 @@ namespace Origins.Gores {
 		public void Unload() {}
 		public static void Add(int type) => ModContent.GetInstance<DustsBehindTiles>().isBehindTiles.Add(type);
 	}
-	public class Friendly_Zombie_Gore1 : ModDust {
-		protected virtual Rectangle Frame => new(0, 0, 20, 24);
+	public abstract class GoreDust : ModDust {
+		protected abstract Rectangle Frame { get; }
 		public override void SetStaticDefaults() {
 			DustsBehindTiles.Add(Type);
 		}
@@ -58,7 +58,11 @@ namespace Origins.Gores {
 			dust.rotation += dust.velocity.X * 0.1f;
 			dust.velocity.Y += 0.4f;
 			int size = (int)(Math.Min(dust.frame.Width, dust.frame.Height) * 0.9f * dust.scale);
-			dust.velocity = Collision.TileCollision(dust.position - new Vector2(size * 0.5f), dust.velocity, size, size);
+			Vector2 halfSize = new(size * 0.5f);
+			Vector4 slopeCollision = Collision.SlopeCollision(dust.position - halfSize, dust.velocity, size, size);
+			dust.position = slopeCollision.XY() + halfSize;
+			dust.velocity = slopeCollision.ZW();
+			dust.velocity = Collision.TileCollision(dust.position - halfSize, dust.velocity, size, size);
 			if (dust.velocity.Y == 0f) {
 				dust.velocity.X *= 0.97f;
 				if (dust.velocity.X > -0.01 && dust.velocity.X < 0.01) {
@@ -91,10 +95,13 @@ namespace Origins.Gores {
 			return false;
 		}
 	}
-	public class Friendly_Zombie_Gore2 : Friendly_Zombie_Gore1 {
+	public class Friendly_Zombie_Gore1 : GoreDust {
+		protected override Rectangle Frame => new(0, 0, 20, 24);
+	}
+	public class Friendly_Zombie_Gore2 : GoreDust {
 		protected override Rectangle Frame => new(0, 0, 16, 10);
 	}
-	public class Friendly_Zombie_Gore3 : Friendly_Zombie_Gore1 {
+	public class Friendly_Zombie_Gore3 : GoreDust {
 		protected override Rectangle Frame => new(0, 0, 16, 12);
 	}
 }

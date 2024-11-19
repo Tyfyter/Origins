@@ -14,6 +14,7 @@ using Origins.Buffs;
 using Terraria.Graphics.Shaders;
 using Origins.Projectiles;
 using Terraria.Audio;
+using Origins.Gores;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Fresh_Meat_Artifact : ModItem, ICustomWikiStat {
@@ -503,6 +504,27 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);
 			return false;
+		}
+		public override void OnKill(int timeLeft) {
+			const float spread = 2;
+			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.Center);
+			Player owner = Main.player[Projectile.owner];
+			ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner);
+			Dust.NewDustPerfect(
+				Projectile.Center + new Vector2(22 * Projectile.direction, -4),
+				ModContent.DustType<Meat_Dog_Gore1>(),
+				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
+			).shader = shaderData;
+			Dust.NewDustPerfect(
+				Projectile.Center + new Vector2(-10 * Projectile.direction, 11),
+				ModContent.DustType<Meat_Dog_Gore2>(),
+				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
+			).shader = shaderData;
+			Dust.NewDustPerfect(
+				Projectile.Center + new Vector2(-18 * Projectile.direction, 19),
+				ModContent.DustType<Meat_Dog_Gore3>(),
+				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
+			).shader = shaderData;
 		}
 	}
 }
