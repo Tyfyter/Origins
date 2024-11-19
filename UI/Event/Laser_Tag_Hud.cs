@@ -23,7 +23,7 @@ namespace Origins.UI.Event {
 		public override void AddToList() => OriginSystem.Instance.SetBonusHUD.AddState(this);
 		public override bool IsActive() {
 			if (OriginPlayer.LocalOriginPlayer is null) return false;
-			if (OriginPlayer.LocalOriginPlayer.laserTagVest) {
+			if (Laser_Tag_Console.LaserTagGameActive && OriginPlayer.LocalOriginPlayer.laserTagVest) {
 				return true;
 			}
 			return false;

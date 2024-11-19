@@ -124,7 +124,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				projectile.Center,
 				default,
 				Thermite_Lingering_P.ID,
-				projectile.damage,
+				projectile.damage / 3,
 				projectile.knockBack
 			);
 		}
@@ -172,10 +172,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return Projectile.Center.DistanceSQ(Projectile.Center.Clamp(targetHitbox)) < range * range;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(300, 451));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(300, 451));
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color(255, 180, 50, 0);
@@ -193,18 +193,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = 36;
 			Projectile.height = 36;
 			Projectile.aiStyle = 0;
-			Projectile.penetrate = 25;
-			Projectile.timeLeft = 60 * 10;
+			Projectile.penetrate = 7;
+			Projectile.timeLeft = 60 * 5;
 			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 5;
+			Projectile.idStaticNPCHitCooldown = 10;
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 1, 0.75f, 0);
-			if (Projectile.timeLeft > 60 * 9 && Projectile.scale < 2) Projectile.scale += 0.1f;
-			Projectile.scale *= 0.98f;
-			Projectile.scale += 0.04f * Math.Min(Projectile.timeLeft, 60 * 2) / 120f;
-			if (Projectile.scale <= 0) Projectile.Kill();
+			if (Projectile.timeLeft > 60 * 4.5f && Projectile.scale < 2) Projectile.scale += 0.1f;
+			Projectile.scale *= 0.96f;
+			Projectile.scale += 0.08f * Math.Min(Projectile.timeLeft, 60 * 1) / 60f;
+			if (Projectile.scale <= 0.2f) Projectile.Kill();
+			if (Projectile.timeLeft < 2) Projectile.timeLeft = 2;
 			Dust.NewDustDirect(
 				Projectile.Center, 0, 0,
 				ModContent.DustType<Thermite_Dust>(),
@@ -217,10 +218,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return Projectile.Center.DistanceSQ(Projectile.Center.Clamp(targetHitbox)) < range * range;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(300, 451));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(300, 451));
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color(255, 180, 50, 0);

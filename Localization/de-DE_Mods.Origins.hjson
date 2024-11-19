@@ -1636,7 +1636,7 @@ Configs: {
 		}
 
 		laserTagConfig: {
-			// Label: laser Tag Config
+			// Label: Laser Tag HUD
 			// Tooltip: ""
 		}
 	}

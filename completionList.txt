@@ -865,7 +865,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (^) Sonorous Shredder
-(#3, ^2) Thermite Launcher*
+(☻) Thermite Launcher*
 
 (X) Autohandcannon
 (^) Bomboomstick
@@ -1074,10 +1074,10 @@ TILES:
 (^) Defiled Amalgamation Trophy*
 (^) Defiled Amalgamation Relic*
 (ᗢ) Enemy Banners*
-(@, #3) Miscreant Trophy*
-(@, #3) Miscreant Relic*
-(@, #3) Quantux Trophy*
-(@, #3) Quantux Relic*
+(@, #3, 々) Miscreant Trophy*
+(@, #3, 々) Miscreant Relic*
+(@, #3, 々) Quantux Trophy*
+(@, #3, 々) Quantux Relic*
 (^) World Cracker Trophy*
 (^) World Cracker Relic*
 ---
