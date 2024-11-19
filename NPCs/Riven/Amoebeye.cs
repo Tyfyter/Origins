@@ -74,6 +74,7 @@ namespace Origins.NPCs.Riven {
 			}
 			return true;
 		}
+		public override bool? CanFallThroughPlatforms() => true;
 		public override void AI() {
 			const float attack_range = 16 * 16;
 			if (NPC.ai[3] == 0) {
