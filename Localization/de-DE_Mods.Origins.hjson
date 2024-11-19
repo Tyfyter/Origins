@@ -32,7 +32,8 @@ Status_Messages: {
 
 Laser_Tag: {
 	// Teams: Teams
-	// CTG: Don't allow Teams with their gem stolen to score
+	// CTG: Capture the gem
+	// CTGNeedOwnGem: Don't allow Teams with their gem stolen to score
 	// Building: Allow Building
 	// StartButton: Start
 	// RespawnTime: Revive Time
@@ -1350,6 +1351,7 @@ Projectiles: {
 	// Hibernal_Incantation_P.DisplayName: Hibernal Incantation
 	// Hibernal_Icicle_P.DisplayName: Hibernal Icicle
 	// Thermite_Lingering_P.DisplayName: Lingering Thermite
+	// CORE_Generator_Star_P.DisplayName: C O R E Generator Star P
 }
 
 Prefixes: {
