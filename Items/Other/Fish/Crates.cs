@@ -46,6 +46,7 @@ namespace Origins.Items.Other.Fish {
 		public string[] Categories => [
 			"GrabBag"
 		];
+		public override bool Hardmode => true;
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
 			IItemDropRule[] riven = [
@@ -115,6 +116,7 @@ namespace Origins.Items.Other.Fish {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
 		}
+		public override bool Hardmode => true;
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] riven = [
 				Riven_Hive.LesionDropRule,
@@ -194,6 +196,7 @@ namespace Origins.Items.Other.Fish {
 		public virtual bool Hardmode => false;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.IsFishingCrate[Type] = true;
+			ItemID.Sets.IsFishingCrateHardmode[Type] = Hardmode;
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
