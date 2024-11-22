@@ -3,9 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Glass_Cannon : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
-			Origins.FlatDamageMultiplier[Type] = 1.5f;
+			//Origins.FlatDamageMultiplier[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Glass_Cannon_P>(2, 28, 11f, 48, 32);
@@ -29,7 +31,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 4; i-- > 0;) {
 				Projectile.NewProjectile(
 					source,
 					position,
@@ -45,9 +47,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Glass_Cannon_P : ModProjectile, ICanisterProjectile, IElementalProjectile {
 		public ushort Element => Elements.Fiberglass;
-		public override string Texture => "Terraria/Images/Item_1";
-		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Outer";
-		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Inner";
+		public static AutoLoadingAsset<Texture2D> outerTexture = typeof(Glass_Cannon_P).GetDefaultTMLName() + "_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Glass_Cannon_P).GetDefaultTMLName() + "_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
@@ -65,6 +66,41 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.velocity.Y += 0.08f;
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
+		}
+		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
+			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+			Main.EntitySpriteDraw(
+				InnerTexture,
+				projectile.Center - Main.screenPosition,
+				null,
+				canisterData.InnerColor,
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+			Main.EntitySpriteDraw(
+				OuterTexture,
+				projectile.Center - Main.screenPosition,
+				null,
+				canisterData.OuterColor.MultiplyRGBA(lightColor),
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
 		}
 	}
 }
