@@ -2,6 +2,8 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,10 +16,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items.Other.Fish {
 	#region chunky crate
-	public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile>, ICustomWikiStat {
-		public string[] Categories => [
-			"GrabBag"
-		];
+	public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile> {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
 			IItemDropRule[] riven = [
@@ -42,10 +41,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	#endregion
 	#region bilious crate
-	public class Bilious_Crate : Fishing_Crate_Item<Bilious_Crate_Tile>, ICustomWikiStat {
-		public string[] Categories => [
-			"GrabBag"
-		];
+	public class Bilious_Crate : Fishing_Crate_Item<Bilious_Crate_Tile> {
 		public override bool Hardmode => true;
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
@@ -72,11 +68,8 @@ namespace Origins.Items.Other.Fish {
 	}
 	#endregion
 	#region crusty crate
-	public class Crusty_Crate : Fishing_Crate_Item<Crusty_Crate_Tile>, ICustomWikiStat {
+	public class Crusty_Crate : Fishing_Crate_Item<Crusty_Crate_Tile> {
 		static short glowmask;
-		public string[] Categories => [
-			"GrabBag"
-		];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			glowmask = Origins.AddGlowMask(this);
@@ -108,10 +101,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	#endregion
 	#region festering crate
-	public class Festering_Crate : Fishing_Crate_Item<Festering_Crate_Tile>, ICustomWikiStat {
-		public string[] Categories => [
-			"GrabBag"
-		];
+	public class Festering_Crate : Fishing_Crate_Item<Festering_Crate_Tile> {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
@@ -140,7 +130,17 @@ namespace Origins.Items.Other.Fish {
 		}
 	}
 	#endregion
-	public abstract class Fishing_Crate_Item<TTile> : ModItem where TTile : ModTile {
+	public abstract class Fishing_Crate_Item<TTile> : ModItem, ICustomWikiStat where TTile : ModTile {
+		string[] ICustomWikiStat.Categories {
+			get {
+				return [
+					"GrabBag",
+					..(Hardmode ? ["Hardmode"] : Array.Empty<string>()),
+					..Categories
+				];
+			}
+		}
+		public virtual IEnumerable<string> Categories => [];
 		public static IItemDropRule BiomeChest_GoldCoin => ItemDropRule.Common(GoldCoin, 4, 5, 13);//normally NotScalingWithLuck
 		public static IItemDropRule BiomeCrate_SoulOfNight => ItemDropRule.NotScalingWithLuck(SoulofNight, 2, 2, 5);
 		public static IItemDropRule[] Ores => [
