@@ -720,6 +720,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		Vector2 realPosition;
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);

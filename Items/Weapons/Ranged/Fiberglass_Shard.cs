@@ -30,6 +30,9 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Fiberglass_Shard_P : ModProjectile {
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
 			Projectile.hostile = false;

@@ -30,6 +30,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
     }
 	public class Agony_Shard : ModProjectile {
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
 			Projectile.DamageType = DamageClass.Magic;

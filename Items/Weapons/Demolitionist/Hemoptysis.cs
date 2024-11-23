@@ -119,6 +119,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Hemoptysis_P2 : ModProjectile {
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -167,7 +170,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Hemoptysis_Blood_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Hemorang";
-
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

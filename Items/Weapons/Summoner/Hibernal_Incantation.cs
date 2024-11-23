@@ -190,6 +190,9 @@ namespace Origins.Items.Weapons.Summoner {
 		float stabVel = 1;
 		float drawOffsetY;
 		public override string Texture => "Origins/Projectiles/Weapons/Icicle_P";
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);//sets the projectile stat values to those of Ruby Bolts
 			Projectile.DamageType = DamageClasses.Incantation;

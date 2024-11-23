@@ -9,6 +9,9 @@ namespace Origins.Projectiles.Enemies {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public const float assimilation_amount = 0.04f;
 		public AssimilationAmount Assimilation = assimilation_amount;
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.hostile = true;
 			Projectile.aiStyle = 0;

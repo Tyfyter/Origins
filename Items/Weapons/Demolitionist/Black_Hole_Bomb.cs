@@ -45,6 +45,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		const int collapseDur = 10;
 		const int totalDur = growDur + collapseDur;
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Black_Hole_Bomb";
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.aiStyle = 14;

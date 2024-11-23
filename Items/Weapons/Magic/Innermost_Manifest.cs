@@ -41,6 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Innermost_Manifest_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 2;
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RubyBolt);

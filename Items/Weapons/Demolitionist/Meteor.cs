@@ -62,6 +62,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> OuterTexture => TextureAssets.Projectile[Type];
 		public AutoLoadingAsset<Texture2D> InnerTexture => hotTexture;
 		protected override bool CloneNewInstances => true;
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 600;

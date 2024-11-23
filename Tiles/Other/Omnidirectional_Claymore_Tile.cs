@@ -111,7 +111,7 @@ namespace Origins.Tiles.Other {
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
 			Projectile.hide = false;
-			Mod.Logger.Info("Spawned ODC projectile on netmode" + Main.netMode);
+			//Mod.Logger.Info("Spawned ODC projectile on netmode" + Main.netMode);
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {

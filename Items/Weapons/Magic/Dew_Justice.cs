@@ -74,6 +74,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Dew_Justice_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 7;
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);

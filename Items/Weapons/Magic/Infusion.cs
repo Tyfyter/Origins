@@ -67,7 +67,9 @@ namespace Origins.Items.Weapons.Magic {
 		const int embed_duration = 600;
 		int EmbedTime { get => (int)Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
 		int EmbedTarget { get => (int)Projectile.localAI[1]; set => Projectile.localAI[1] = value; }
-		
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Magic;

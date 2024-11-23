@@ -77,6 +77,7 @@ namespace Origins.Projectiles.Weapons {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Spike Eruption");
 			ID = Projectile.type;
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
