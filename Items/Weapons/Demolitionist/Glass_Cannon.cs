@@ -22,13 +22,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 20);
-			Item.UseSound = null;
+			Item.UseSound = SoundID.Item62.WithPitch(0.4f);
 			Item.reuseDelay = 50;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, 0);
-		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = 4; i-- > 0;) {
@@ -41,7 +39,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 					knockback
 				);
 			}
-			SoundEngine.PlaySound(SoundID.Item62.WithPitch(0.4f), position);
 			return false;
 		}
 	}
@@ -53,6 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
+			Origins.MagicTripwireDetonationStyle[Type] = 2;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
@@ -64,6 +62,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.extraUpdates = 1;
 		}
 		public override void AI() {
+			Origins.MagicTripwireDetonationStyle[Type] = 2;
 			Projectile.velocity.Y += 0.08f;
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
 		}
