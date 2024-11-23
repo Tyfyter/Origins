@@ -62,7 +62,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.extraUpdates = 1;
 		}
 		public override void AI() {
-			Origins.MagicTripwireDetonationStyle[Type] = 2;
 			Projectile.velocity.Y += 0.08f;
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
 		}
