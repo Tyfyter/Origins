@@ -5,6 +5,7 @@ using Origins.Gores.NPCs;
 using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs;
+using Origins.Projectiles;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -49,6 +50,9 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Amoebash_Smash : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Amoebash";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
 			Projectile.aiStyle = 0;
@@ -59,12 +63,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse itemUse) {
-				if (itemUse.Entity is Player player) {
-					Projectile.ai[1] = player.direction;
-					Projectile.scale *= player.GetAdjustedItemScale(itemUse.Item);
-				} else {
-					Projectile.scale *= itemUse.Item.scale;
-				}
+				Projectile.ai[1] = itemUse.Player.direction;
 			}
 			Projectile.ai[2] = float.NaN;
 		}
@@ -87,11 +86,12 @@ namespace Origins.Items.Weapons.Melee {
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 
-			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f;
-			Vector2 boxPos = Projectile.position + vel * 2;
-			Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
+			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f * Projectile.scale;
+			Vector2 size = Projectile.Size * Projectile.scale;
+			Vector2 boxPos = Projectile.Center + vel * 2 - size * 0.5f;
+			Projectile.EmitEnchantmentVisualsAt(boxPos, (int)size.X, (int)size.Y);
 			if (swingFactor > 0.4f && float.IsNaN(Projectile.ai[2])) {
-				if (OriginExtensions.BoxOf(boxPos, boxPos + Projectile.Size).OverlapsAnyTiles()) {
+				if (OriginExtensions.BoxOf(boxPos, boxPos + size).OverlapsAnyTiles()) {
 					Projectile.ai[2] = Projectile.rotation;
 					Vector2 slamDir = vel.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
 					Collision.HitTiles(boxPos, slamDir, Projectile.width, Projectile.height);
@@ -123,10 +123,15 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f;
+			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f * Projectile.scale;
+			projHitbox.Inflate((int)((projHitbox.Width * Projectile.scale - projHitbox.Width) * 0.5f), (int)((projHitbox.Height * Projectile.scale - projHitbox.Height) * 0.5f));
 			for (int j = 1; j <= 2; j++) {
 				Rectangle hitbox = projHitbox;
-				Vector2 offset = vel * j;
+				if (j == 1) {
+					int shrink = (int)(-8 * Projectile.scale);
+					hitbox.Inflate(shrink, shrink);
+				}
+				Vector2 offset = vel * (j - 0.5f);
 				hitbox.Offset((int)offset.X, (int)offset.Y);
 				if (hitbox.Intersects(targetHitbox)) {
 					return true;

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.NPCs;
+using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -213,6 +214,9 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Vorpal_Sword_Cursed";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
 			Projectile.aiStyle = 0;
@@ -220,16 +224,6 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 600;
 			Projectile.noEnchantmentVisuals = true;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				if (itemUse.Entity is Player player) {
-					Projectile.ai[1] *= player.direction;
-					Projectile.scale *= player.GetAdjustedItemScale(itemUse.Item);
-				} else {
-					Projectile.scale *= itemUse.Item.scale;
-				}
-			}
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];

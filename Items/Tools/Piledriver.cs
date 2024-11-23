@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -70,14 +71,12 @@ namespace Origins.Items.Tools {
 		public override bool MeleePrefix() => true;
 	}
 	public class Piledriver_P : ModProjectile {
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.TitaniumDrill);
 			Projectile.friendly = false;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				Projectile.scale *= itemUse.Player.GetAdjustedItemScale(itemUse.Item);
-			}
 		}
 		public override bool PreAI() {
 			Player owner = Main.player[Projectile.owner];

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Projectiles;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -52,6 +53,9 @@ namespace Origins.Items.Weapons.Magic {
 		const float swing_angle_extend_factor = max_segments / swing_angle_extend;
 		public override string Texture => "Origins/Items/Weapons/Magic/Eaterboros_Hilt";
 		static AutoLoadingAsset<Texture2D> eaterTexture = "Origins/Items/Weapons/Magic/Eaterboros_Segment_Attached";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
 			Projectile.DamageType = DamageClasses.MeleeMagic;
@@ -65,14 +69,6 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.noEnchantmentVisuals = true;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				if (itemUse.Entity is Player player) {
-					Projectile.ai[1] = player.direction;
-					Projectile.scale *= player.GetAdjustedItemScale(itemUse.Item);
-				} else {
-					Projectile.scale *= itemUse.Item.scale;
-				}
-			}
 			Projectile.ai[2] = base_segments;
 		}
 		public override void AI() {
@@ -117,12 +113,12 @@ namespace Origins.Items.Weapons.Magic {
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
 			Vector2 boxPos = default;
-			Vector2 halfSize = Projectile.Size / 2;
+			Vector2 halfSize = Projectile.Size * Projectile.scale / 2;
 			for (int j = 0; j <= Projectile.ai[2] + 1; j++) {
 				boxPos = Projectile.Center + vel * (j + 0.75f) - halfSize;
-				Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
+				Projectile.EmitEnchantmentVisualsAt(boxPos, (int)halfSize.X, (int)halfSize.Y);
 			}
 			if (newEater) {
 				for (int i = 0; i < 4; i++) {
@@ -139,7 +135,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool ShouldUpdatePosition() => false;
 		int collideIndex = -1;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
 			collideIndex = -1;
 			for (int j = 0; j <= Projectile.ai[2] + 1; j++) {
 				Rectangle hitbox = projHitbox;
@@ -153,8 +149,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (collideIndex != -1) {
 				if (Main.myPlayer == Projectile.owner) {
-					Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width;
-					Vector2 halfSize = Projectile.Size / 2;
+					Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
+					Vector2 halfSize = Projectile.Size * Projectile.scale / 2;
 					int projType = ModContent.ProjectileType<Eaterboros_Segment_Free>();
 					int lastProj = -1;
 					for (int i = (int)Projectile.ai[2] + 2; --i > collideIndex;) {
@@ -188,7 +184,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			float rotation = Projectile.rotation + Projectile.velocity.ToRotation() - MathHelper.PiOver4 * Projectile.ai[1];
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
 			for (int i = (int)Projectile.ai[2] + 2; --i > 0;) {
 				Main.EntitySpriteDraw(
 					eaterTexture,
@@ -219,6 +215,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Eaterboros_Segment_Free : ModProjectile {
 		static int frameIndex = 0;
 		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			Main.projFrames[Type] = 4;
 		}
 		public override void SetDefaults() {
@@ -231,6 +228,11 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.alpha = 0;
 			Projectile.frame = frameIndex = (frameIndex + 1) % Main.projFrames[Type];
 			DrawOriginOffsetY = 6;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parentProj) {
+				Projectile.scale *= parentProj.scale;
+			}
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] == -1;
 		public override void AI() {
@@ -246,7 +248,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.rotation = (float)Math.Atan2(dY, dX);
 				if (dX != 0f || dY != 0f) {
 					float dist = (float)Math.Sqrt(dY * dY + dX * dX);
-					dist = (dist - 16) / dist;
+					dist = (dist - 16 * Projectile.scale) / dist;
 					dX *= dist;
 					dY *= dist;
 					Projectile.position.X += dX;
@@ -299,6 +301,9 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Eaterboros_Shoot : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Eaterboros_Hilt";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
 			Projectile.DamageType = DamageClasses.MeleeMagic;
@@ -312,13 +317,6 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.noEnchantmentVisuals = true;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				if (itemUse.Entity is Player player) {
-					Projectile.scale *= player.GetAdjustedItemScale(itemUse.Item);
-				} else {
-					Projectile.scale *= itemUse.Item.scale;
-				}
-			}
 			Projectile.ai[2] = float.PositiveInfinity;
 		}
 		public override void AI() {
@@ -347,8 +345,8 @@ namespace Origins.Items.Weapons.Magic {
 				if (++Projectile.ai[2] >= player.itemAnimationMax) {
 					Projectile.ai[2] = 0;
 					if (player.CheckMana(player.HeldItem, pay: true)) {
-						Vector2 vel = Projectile.velocity * Projectile.width;
-						Vector2 halfSize = Projectile.Size / 2;
+						Vector2 vel = Projectile.velocity * Projectile.width * Projectile.scale;
+						Vector2 halfSize = Projectile.Size * Projectile.scale / 2;
 						int projType = ModContent.ProjectileType<Eaterboros_Segment_Free>();
 						int lastProj = -1;
 						for (int i = 2; i-- > 0;) {

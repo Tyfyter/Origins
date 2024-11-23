@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Outreach : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -45,11 +46,13 @@ namespace Origins.Items.Weapons.Melee {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Outreach_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Outreach_P";
 		static new AutoCastingAsset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			if (!Main.dedServ) {
 				GlowTexture = ModContent.Request<Texture2D>(base.GlowTexture);
 			}
@@ -63,7 +66,8 @@ namespace Origins.Items.Weapons.Melee {
             Projectile.width = 18;
             Projectile.height = 18;
             Projectile.aiStyle = 0;
-        }
+			Projectile.scale = 1f;
+		}
         public float movementFactor {
             get => Projectile.ai[0];
             set => Projectile.ai[0] = value;
@@ -78,17 +82,13 @@ namespace Origins.Items.Weapons.Melee {
             Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
             Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
             if (!projOwner.frozen) {
-                if (movementFactor == 0f) {
-                    movementFactor = 1.9f;
-                    Projectile.netUpdate = true;
-                }
                 if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {
-                    movementFactor -= 1.95f;
+                    movementFactor -= 1.7f;
                 } else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-                    movementFactor += 1.9f;
+                    movementFactor += 1.7f;
                 }
             }
-            Projectile.position += Projectile.velocity * movementFactor;
+            Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
             if (projOwner.itemAnimation == 0) {
                 Projectile.Kill();
             }

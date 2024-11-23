@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Items.Armor.Felnum;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
 		public const int baseDamage = 18;
@@ -42,16 +43,20 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Felnum_Boar_Spear_Stab : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Felnum_Boar_Spear_P";
-		
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 3600;
 			Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.aiStyle = 0;
+			Projectile.scale = 1f;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];
@@ -67,17 +72,13 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
-				if (movementFactor == 0f) {
-					movementFactor = 2.5f;
-					Projectile.netUpdate = true;
-				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {
 					movementFactor -= 2.5f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
 					movementFactor += 2.7f;
 				}
 			}
-			Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
 			if (projOwner.itemAnimation == 0) {
 				Projectile.Kill();
 			}

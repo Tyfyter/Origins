@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -53,6 +54,7 @@ namespace Origins.Items.Tools {
 	public class C6_Jackhammer_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ChlorophyteJackhammer);
@@ -60,11 +62,6 @@ namespace Origins.Items.Tools {
 			Projectile.height = 38;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 1;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				Projectile.scale *= itemUse.Player.GetAdjustedItemScale(itemUse.Item);
-			}
 		}
 		public override bool PreAI() {
 			Player owner = Main.player[Projectile.owner];

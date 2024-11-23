@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -46,14 +47,16 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Amenonuhoko_P : ModProjectile {
-		public override string Texture => base.Texture;
-		
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 3600;
 			Projectile.width = 32;
 			Projectile.height = 32;
 			Projectile.aiStyle = 0;
+			Projectile.scale = 1f;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];
@@ -68,17 +71,13 @@ namespace Origins.Items.Weapons.Melee {
 			projOwner.itemTime = projOwner.itemAnimation;
 			Projectile.Center = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			if (!projOwner.frozen) {
-				if (movementFactor == 1f) {
-					movementFactor = 1.5f;
-					Projectile.netUpdate = true;
-				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
 					movementFactor -= 1.1f;
 					if (Projectile.ai[2] == 0) {
 						Projectile.ai[2] = 1;
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
-							Projectile.Center + Projectile.velocity * movementFactor,
+							Projectile.Center + Projectile.velocity * movementFactor * Projectile.scale,
 							Projectile.velocity,
 							ModContent.ProjectileType<Amenonuhoko_Cloud>(),
 							Projectile.damage,
@@ -87,10 +86,10 @@ namespace Origins.Items.Weapons.Melee {
 						);
 					}
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 1.3f;
+					movementFactor += 1.2f;
 				}
 			}
-			Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
 			if (projOwner.itemAnimation == 0) {
 				Projectile.Kill();
 			}

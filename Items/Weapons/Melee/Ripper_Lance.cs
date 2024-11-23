@@ -8,6 +8,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using System;
+using System.IO;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Ripper_Lance : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -34,10 +37,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f * player.direction), type, damage, knockback, player.whoAmI);
-			return false;
-		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 9)
@@ -45,11 +44,13 @@ namespace Origins.Items.Weapons.Melee {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Ripper_Lance_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Ripper_Lance_P";
 		static new AutoCastingAsset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			if (!Main.dedServ) {
 				GlowTexture = ModContent.Request<Texture2D>(base.GlowTexture);
 			}
@@ -63,38 +64,28 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.aiStyle = 0;
+			Projectile.scale = 1f;
 		}
-		public float movementFactor {
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
-		}
-
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Player projOwner = Main.player[Projectile.owner];
-			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			projOwner.heldProj = Projectile.whoAmI;
 			Projectile.direction = projOwner.direction;
 			Projectile.spriteDirection = projOwner.direction;
 			projOwner.itemTime = projOwner.itemAnimation;
-			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
-			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
-			if (!projOwner.frozen) {
-				if (movementFactor == 0f) {
-					movementFactor = 2.5f;
-					Projectile.netUpdate = true;
-				}
-				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
-					movementFactor -= 2.1f;
-				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 2.3f;
-				}
-			}
-			Projectile.velocity = Projectile.velocity.RotatedBy(projOwner.direction * 0.025f);
-			Projectile.position += Projectile.velocity * movementFactor;
+			float totalTime = projOwner.itemAnimationMax / 2f;
+			float progress = (projOwner.itemAnimation - totalTime) / totalTime;
+			progress *= progress * progress;
+			progress = MathHelper.Clamp(progress, -0.9f, 0.9f) / 0.9f;
+			Vector2 direction = Projectile.velocity.RotatedBy(projOwner.direction * progress * -0.2f);
+			
+			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
+			float movementFactor = (1 - Math.Abs(progress)) * 16f + 8;
+			Projectile.Center = ownerMountedCenter + direction * movementFactor * Projectile.scale;
 			if (projOwner.itemAnimation == 0) {
 				Projectile.Kill();
 			}
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+			Projectile.rotation = direction.ToRotation() + MathHelper.ToRadians(135f);
 			if (Projectile.spriteDirection == 1) {
 				Projectile.rotation -= MathHelper.PiOver2;
 			}

@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Decimator : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -43,11 +44,13 @@ namespace Origins.Items.Weapons.Melee {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Decimator_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Decimator_P";
 		static new AutoCastingAsset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			if (!Main.dedServ) {
 				GlowTexture = ModContent.Request<Texture2D>(base.GlowTexture);
 			}
@@ -61,6 +64,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 32;
 			Projectile.height = 32;
 			Projectile.aiStyle = 0;
+			Projectile.scale = 1f;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];
@@ -77,17 +81,13 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
-				if (movementFactor == 0f) {
-					movementFactor = 2.5f;
-					Projectile.netUpdate = true;
-				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
 					movementFactor -= 2.1f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 2.3f;
+					movementFactor += 2.2f;
 				}
 			}
-			Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
 			if (projOwner.itemAnimation == 0) {
 				Projectile.Kill();
 			}

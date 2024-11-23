@@ -766,7 +766,8 @@ namespace Origins {
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
-			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet(0);
+			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
+			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 		}

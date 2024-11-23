@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.NPCs;
+using Origins.Projectiles;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -115,6 +116,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class The_Bird_Swing : ModProjectile, IDrawOverArmProjectile, ILoadExtraTextures {
 		static AutoLoadingAsset<Texture2D> frontTexture = typeof(The_Bird_Swing).GetDefaultTMLName() + "_Front";
 		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			Main.projFrames[Type] = 5;
 		}
 		public override void SetDefaults() {
@@ -125,11 +127,6 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				Projectile.scale *= itemUse.Player.GetAdjustedItemScale(itemUse.Item);
-			}
 		}
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {

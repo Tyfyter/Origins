@@ -9,6 +9,7 @@ using Tyfyter.Utils;
 
 using Origins.Dev;
 using PegasusLib;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -39,7 +40,6 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Projectile proj = Projectile.NewProjectileDirect(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, player.itemAnimationMax, velocity.ToRotation());
-			proj.scale = player.GetAdjustedItemScale(Item);
 			return false;
 		}
 	}
@@ -64,7 +64,9 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public List<PolarVec2> nodes;
 		PolarVec2 GetSwingStartOffset => new PolarVec2(0, Projectile.ai[1] - Projectile.direction * 0.35f);
-		
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;

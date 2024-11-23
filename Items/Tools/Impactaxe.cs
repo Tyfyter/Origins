@@ -50,6 +50,9 @@ namespace Origins.Items.Tools {
 	}
 	public class Impactaxe_Smash : ModProjectile {
 		public override string Texture => "Origins/Items/Tools/Impactaxe";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
 			Projectile.width = Projectile.height = 32;
@@ -60,12 +63,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse itemUse) {
-				if (itemUse.Entity is Player player) {
-					Projectile.ai[1] = player.direction;
-					Projectile.scale *= player.GetAdjustedItemScale(itemUse.Item);
-				} else {
-					Projectile.scale *= itemUse.Item.scale;
-				}
+				Projectile.ai[1] = itemUse.Player.direction;
 			}
 			Projectile.ai[2] = float.NaN;
 		}
@@ -88,7 +86,7 @@ namespace Origins.Items.Tools {
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f * Projectile.scale;
 			Vector2 boxPos = Projectile.position + vel;
 			Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
 			if (float.IsNaN(Projectile.ai[2])) {
@@ -103,7 +101,7 @@ namespace Origins.Items.Tools {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f * Projectile.scale;
 			projHitbox.Offset((int)vel.X, (int)vel.Y);
 			return projHitbox.Intersects(targetHitbox);
 		}
@@ -112,7 +110,7 @@ namespace Origins.Items.Tools {
 		}
 		void Explode(params int[] immuneTargets) {
 			if (float.IsNaN(Projectile.ai[2])) {
-				Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f;
+				Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f * Projectile.scale;
 				Vector2 boxPos = Projectile.position + vel;
 				Projectile.ai[2] = Projectile.rotation;
 				Vector2 slamDir = vel.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);

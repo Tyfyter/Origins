@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using Origins.Items.Tools;
 using System.Collections.Generic;
+using Origins.Projectiles;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
@@ -92,6 +93,9 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Switchblade_Shortsword_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Switchblade_Shortsword";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GladiusStab);
 			Projectile.timeLeft = 3600;
@@ -114,7 +118,6 @@ namespace Origins.Items.Weapons.Melee {
 				if (movementFactor == 0f) {
 					SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.Center);
 					movementFactor = 1f * Projectile.scale;
-					Projectile.scale = player.GetAdjustedItemScale(player.HeldItem);
 					Projectile.netUpdate = true;
 				}
 				movementFactor += 4f * Projectile.scale / player.itemTimeMax;
