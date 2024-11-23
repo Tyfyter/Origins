@@ -351,7 +351,7 @@ ACCESSORIES:
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
-(☻) CORE Generator*
+(^) CORE Generator*
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -605,7 +605,7 @@ MELEE WEAPONS:
 (^) Nineball
 (^) Orbital Saw
 (^) Outreach
-(^) Ripper Lance
+(#3, ^2) Ripper Lance !!!
 (^) Riverang
 (^) Snapthrow
 (^) Spiker Sword
@@ -784,6 +784,7 @@ SUMMONER WEAPONS:
 (⛥) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
+(^) Thread Rod
 (^) Woodsprite Staff
 
 (^) Bomb Artifact
@@ -795,7 +796,6 @@ SUMMONER WEAPONS:
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre
-(☻) Thread Rod !!!
 (X) Wyvern Horn
 (^) Ziptie
 
@@ -837,7 +837,7 @@ EXPLOSIVE WEAPONS:
 (^) Flare Launcher
 (^) Flashbang*
 (^) Floaty Bomb*
-(#, ^2) 'Glass Cannon !!!
+(^) 'Glass Cannon
 (^) Hand Grenade Launcher
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
@@ -866,7 +866,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (^) Sonorous Shredder
-(☻) Thermite Launcher*
+(^) Thermite Launcher*
 
 (X) Autohandcannon
 (^) Bomboomstick

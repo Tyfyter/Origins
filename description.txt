@@ -1,6 +1,6 @@
 Terraria Origins is a content mod that adds new ways of playing Terraria with content designed and balanced around the vanilla game.
 
-Origins is currently in its Open Beta version but still includes 784 items, 76 NPCs, 178 tiles and 6 biomes. 
+Origins is currently in its Open Beta version but still includes 786 items, 76 NPCs, 178 tiles and 6 biomes. 
 Additionally, there is a new explosive-themed Demolitionist class that has content throughout the entire game and is balanced with the other classes.
 
 Origins' content adds alternatives for nearly all areas of gameplay reinforced by its two new world evils: the Defiled Wastelands and Riven Hive.

@@ -4666,14 +4666,18 @@ Silicon_Ore_Item: {
 	Tooltip: ""
 }
 
-Silicon_Bar.DisplayName: Silicon_ Bar
+Silicon_Bar.DisplayName: Silicon Bar
 
 Thread_Rod: {
 	DisplayName: Thread Rod
-	Tooltip: ""
+	Tooltip: 
+		'''
+		Summons fiberglass threads that cut enemies that cross them
+		Works best in enclosures
+		'''
 }
 
 Glass_Cannon: {
 	DisplayName: Glass Cannon
-	Tooltip: ""
+	Tooltip: Fires a cluster of canisters at once
 }
