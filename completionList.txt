@@ -605,7 +605,7 @@ MELEE WEAPONS:
 (^) Nineball
 (^) Orbital Saw
 (^) Outreach
-(#3, ^2) Ripper Lance !!!
+(☻) Ripper Lance !!!
 (^) Riverang
 (^) Snapthrow
 (^) Spiker Sword
