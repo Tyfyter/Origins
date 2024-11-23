@@ -168,7 +168,7 @@ namespace Origins.NPCs.Fiberglass {
 			return true;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) {
-			return dust.color.MultiplyRGB(lightColor) with { A = 25 };
+			return dust.color with { A = 25 };
 		}
 		public override bool PreDraw(Dust dust) {
 			float trail = Math.Abs(dust.velocity.X) + Math.Abs(dust.velocity.Y);
