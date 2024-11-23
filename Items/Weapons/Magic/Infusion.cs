@@ -62,11 +62,11 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Infusion_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
-		PolarVec2 embedPos;
-		float embedRotation;
+		protected PolarVec2 embedPos;
+		protected float embedRotation;
 		const int embed_duration = 600;
-		int EmbedTime { get => (int)Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
-		int EmbedTarget { get => (int)Projectile.localAI[1]; set => Projectile.localAI[1] = value; }
+		protected int EmbedTime { get => (int)Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
+		protected int EmbedTarget { get => (int)Projectile.localAI[1]; set => Projectile.localAI[1] = value; }
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (EmbedTime > embed_duration) {
 					Projectile.Kill();
 				}
-			} else if (Projectile.aiStyle == 1) {//not embedded
+			} else if(Projectile.velocity != Vector2.Zero) {//not embedded
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi * 0.25f;
 				Vector2 boxSize = (Vector2)new PolarVec2(3, Projectile.rotation - MathHelper.PiOver2);
 				Rectangle tipHitbox = OriginExtensions.BoxOf(Projectile.Center + boxSize, Projectile.Center - boxSize, 2);
@@ -114,23 +114,14 @@ namespace Origins.Items.Weapons.Magic {
 						}
 					}
 				}
-			} else {//embedded/embedding in ground
-				if (embedPos.R > 0) {
-					Vector2 movement = (Vector2)embedPos;
-					int size = 4;
-					Vector2 startOffset = new(size / 2);
-					Vector2 checkPosition = Projectile.Center + movement - startOffset;
-					if (!Collision.SolidCollision(checkPosition, size, size)) {
-						Projectile.timeLeft = embed_duration;
-						Projectile.position += movement;
-					} else {
-						embedPos = default;
-					}
-				}
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			return true;
+			Projectile.velocity = Vector2.Zero;
+			Projectile.position += oldVelocity * 1.5f;
+			Projectile.aiStyle = 0;
+			Projectile.friendly = false;
+			return false;
 		}
 		public override bool? CanHitNPC(NPC target) {
 			if (EmbedTime > 0) {

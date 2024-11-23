@@ -1354,6 +1354,7 @@ Projectiles: {
 	// CORE_Generator_Star_P.DisplayName: CORE Generator Star
 	// Thread_Rod_P.DisplayName: Fiberglass Thread
 	// Glass_Cannon_P.DisplayName: Glass Cannon
+	// Ripper_Lance_Spike.DisplayName: Ripper Lance Spike
 }
 
 Prefixes: {

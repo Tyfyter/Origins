@@ -11,22 +11,23 @@ using Origins.Dev;
 using System;
 using System.IO;
 using Origins.Projectiles;
+using Origins.Items.Weapons.Magic;
 namespace Origins.Items.Weapons.Melee {
 	public class Ripper_Lance : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.Spears[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 24;
+			Item.damage = 20;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.width = 52;
 			Item.height = 56;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
+			Item.useTime = 35;
+			Item.useAnimation = 35;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
 			Item.shoot = ModContent.ProjectileType<Ripper_Lance_P>();
@@ -65,6 +66,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.height = 18;
 			Projectile.aiStyle = 0;
 			Projectile.scale = 1f;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 15;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
@@ -82,7 +85,22 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			float movementFactor = (1 - Math.Abs(progress)) * 16f + 8;
 			Projectile.Center = ownerMountedCenter + direction * movementFactor * Projectile.scale;
-			if (projOwner.itemAnimation == 0) {
+			if (progress >= 0 && Projectile.ai[2] == 0) {
+				Projectile.ai[2] = 1;
+				int type = ModContent.ProjectileType<Ripper_Lance_Spike>();
+				for (int i = 0; i < 3; i++) {
+					Projectile.NewProjectile(
+						Projectile.GetSource_FromAI(),
+						Projectile.Center,
+						Projectile.velocity.RotatedByRandom(0.1f) * Main.rand.NextFloat(1.2f, 1.5f),
+						type,
+						Projectile.damage / 7,
+						Projectile.knockBack,
+						Projectile.owner
+					);
+				}
+			}
+			if (projOwner.ItemAnimationEndingOrEnded) {
 				Projectile.Kill();
 			}
 			Projectile.rotation = direction.ToRotation() + MathHelper.ToRadians(135f);
@@ -125,6 +143,26 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
 			);
 			return false;
+		}
+	}
+	public class Ripper_Lance_Spike : Infusion_P {
+		const int embed_duration = 30;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.aiStyle = 0;
+			Projectile.timeLeft = 45;
+		}
+		public override void AI() {
+			bool unembedded = EmbedTime <= 0;
+			base.AI();
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
+			if (EmbedTime > 0) {
+				if (unembedded) Projectile.timeLeft += 300;
+				if (EmbedTime > 150) {
+					Projectile.Kill();
+				}
+			}
 		}
 	}
 }
