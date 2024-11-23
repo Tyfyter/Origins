@@ -145,7 +145,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public bool IsExploding() => true;
 	}
 	public class Flakjack_P : ModProjectile, IIsExplodingProjectile {
-		
+		public override void SetStaticDefaults() {
+			Origins.MagicTripwireRange[Type] = 40;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.MaxUpdates = 10;
@@ -158,30 +160,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.velocity *= 0.2f;
+			Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().magicTripwire = true;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-			const int magicTripwireRange = 40;
-
-			Rectangle magicTripwireHitbox = new Rectangle(
-				(int)Projectile.Center.X - magicTripwireRange,
-				(int)Projectile.Center.Y - magicTripwireRange,
-				magicTripwireRange * 2,
-				magicTripwireRange * 2
-			);
-			bool tripped = false;
-			for (int i = 0; i < Main.maxNPCs; i++) {
-				NPC npc = Main.npc[i];
-				if (npc.CanBeChasedBy() && !npc.collideY && magicTripwireHitbox.Intersects(npc.Hitbox)) {
-					tripped = true;
-				}
-			}
-			ExplosiveGlobalProjectile global = Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>();
-			if (tripped) {
-				global.magicTripwireTripped = true;
-			} else if (global.magicTripwireTripped) {
-				(this as IIsExplodingProjectile).Explode(0);
-			}
 			if (Projectile.alpha > 0)
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)

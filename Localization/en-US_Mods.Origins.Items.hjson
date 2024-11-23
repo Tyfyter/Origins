@@ -4670,7 +4670,7 @@ Silicon_Bar.DisplayName: Silicon Bar
 
 Thread_Rod: {
 	DisplayName: Thread Rod
-	Tooltip: 
+	Tooltip:
 		'''
 		Summons fiberglass threads that cut enemies that cross them
 		Works best in enclosed spaces

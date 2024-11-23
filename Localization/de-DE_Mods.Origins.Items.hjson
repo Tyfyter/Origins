@@ -4670,10 +4670,14 @@ Silicon_Ore_Item: {
 
 Thread_Rod: {
 	// DisplayName: Thread Rod
-	// Tooltip: Summons fiberglass threads that cut enemies that cross them
+	/* Tooltip:
+		'''
+		Summons fiberglass threads that cut enemies that cross them
+		Works best in enclosed spaces
+		''' */
 }
 
 Glass_Cannon: {
 	// DisplayName: Glass Cannon
-	// Tooltip: Fires a cluster of canisters at once
+	// Tooltip: Fires a cluster of canisters
 }

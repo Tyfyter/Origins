@@ -90,7 +90,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
+			Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
+			dust.position = Projectile.Center;
 			dust.noGravity = true;
 			dust.velocity *= 3f;
 
@@ -180,11 +181,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			} else if (Projectile.ai[0] > 2) {
 				Projectile.extraUpdates = 2;
 			}
-			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, -4, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
+			Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30));
+			dust.position = Projectile.Center;
 			dust.noGravity = true;
-		}
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.3f;
