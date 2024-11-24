@@ -168,23 +168,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.ai[0] = 0;
 				}
 			}
-			/*if (!initialized) {
-				Projectile.ai[1] = Projectile.NewProjectileDirect(
-					Projectile.GetSource_FromThis(),
-					Projectile.Center,
-					default,
-					Flare_Launcher_Glow_P.ID,
-					1,
-					1,
-					Projectile.owner,
-					Projectile.identity
-				).identity;
-				Projectile.netUpdate = true;
-				initialized = true;
-			} else {
-				int projIndex = Projectile.GetByUUID(Projectile.owner, Projectile.ai[1]);
-				if (Main.projectile.IndexInRange(projIndex)) Flare_Launcher_Glow_P.UpdateGlowPos(Projectile, Main.projectile[projIndex]);
-			}*/
+			if (Projectile.position.Y + Projectile.velocity.Y < 0) {
+				Projectile.position.Y -= Projectile.velocity.Y;
+			}
 			Lighting.AddLight(Projectile.Center, Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor.ToVector3());
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
