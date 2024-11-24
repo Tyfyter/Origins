@@ -34,7 +34,7 @@ namespace Origins.UI {
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			public override void OnClick() {
-				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.debugMenuButton.DebugMode) {
+				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.DebugMenuButton.DebugMode) {
 					if (ItemSlot.ShiftInUse) {
 						Quest_Registry.GetQuestByKey(key).OnComplete(Main.npc[0]);
 					} else {

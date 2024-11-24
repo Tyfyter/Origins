@@ -73,8 +73,6 @@ namespace Origins {
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
 
-		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
-		public DebugConfig debugMenuButton = new();
 		public LaserTagConfig laserTagConfig = new();
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
@@ -83,6 +81,8 @@ namespace Origins {
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
 			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
 		}
+		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
+		public DebugConfig DebugMenuButton { get; set; }  = new();
 	}
 	public class LaserTagConfig : ModConfig {
 		public static LaserTagConfig Instance => OriginClientConfig.Instance.laserTagConfig;
@@ -119,7 +119,7 @@ namespace Origins {
 		}
 
 		private void SetupList() {
-			separatePagePanel = UIModConfig.MakeSeparateListPanel(Item, Value, MemberInfo, List, Index, Language.GetOrRegister("Mods.Origins.Configs.OriginClientConfig.debugMenuButton.SecretLabel").ToString);
+			separatePagePanel = UIModConfig.MakeSeparateListPanel(Item, Value, MemberInfo, List, Index, Language.GetOrRegister("Mods.Origins.Configs.OriginClientConfig.DebugMenuButton.SecretLabel").ToString);
 		}
 
 		public override void Recalculate() {
@@ -128,7 +128,7 @@ namespace Origins {
 		}
 	}
 	public class DebugConfig : ModConfig {
-		public static DebugConfig Instance => OriginClientConfig.Instance.debugMenuButton;
+		public static DebugConfig Instance => OriginClientConfig.Instance.DebugMenuButton;
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 		public override bool Autoload(ref string name) => false;
 

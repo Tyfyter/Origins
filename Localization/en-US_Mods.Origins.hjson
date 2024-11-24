@@ -1615,7 +1615,7 @@ Configs: {
 			Tooltip: More visually appealing way to kick Riven-butt
 		}
 
-		debugMenuButton: {
+		DebugMenuButton: {
 			Label: Terraria Origins version
 			SecretLabel: Debugging
 			Tooltip: Click to copy

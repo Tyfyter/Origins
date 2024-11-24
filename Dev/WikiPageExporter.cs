@@ -727,6 +727,9 @@ namespace Origins.Dev {
 			data.AppendStat("SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
 			data.AppendStat("InternalName", item.ModItem?.Name, null);
 			yield return (PageName(modItem), data);
+			if (item.makeNPC > 0 && NPCLoader.GetNPC(item.makeNPC) is ModNPC modNPC) {
+				yield return (PageName(modItem) + "_NPC", NPCWikiProvider.GetNPCStats(modNPC));
+			}
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModItem value) {
 			if (Main.itemAnimations[value.Type] is DrawAnimation animation) {
@@ -762,7 +765,7 @@ namespace Origins.Dev {
 			}
 			return (WikiTemplate, context);
 		}
-		public override IEnumerable<(string, JObject)> GetStats(ModNPC modNPC) {
+		public static JObject GetNPCStats(ModNPC modNPC) {
 			NPC npc = modNPC.NPC;
 			JObject data = [];
 			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
@@ -842,15 +845,20 @@ namespace Origins.Dev {
 			data.AppendJStat("Master", masterData, []);
 
 			customStat?.ModifyWikiStats(data);
-			data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
-			data.AppendStat("InternalName", modNPC?.Name, null);
+			if (!data.ContainsKey("SpriteWidth")) data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
+			if (!data.ContainsKey("InternalName")) data.AppendStat("InternalName", modNPC?.Name, null);
+			return data;
+		}
+		public override IEnumerable<(string, JObject)> GetStats(ModNPC modNPC) {
+			NPC npc = modNPC.NPC;
+			if (npc.catchItem > 0) yield break;
 			string segmentText = "";
 			if (modNPC is WormBody) {
 				segmentText = "_Body";
 			} else if (modNPC is WormTail) {
 				segmentText = "_Tail";
 			}
-			yield return (PageName(modNPC) + segmentText, data);
+			yield return (PageName(modNPC) + segmentText, GetNPCStats(modNPC));
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;
@@ -984,6 +992,12 @@ namespace Origins.Dev {
 			return $"<a is=a-link{href}{image}>{name}</a>";
 		}
 		public static JArray GetImmunities(this NPC npc) {
+			if (NPCID.Sets.ImmuneToAllBuffs[npc.type]) {
+				return [Language.GetOrRegister("WikiGenerator.Generic.ImmuneToAllBuffs").Value];
+			}
+			if (NPCID.Sets.ImmuneToRegularBuffs[npc.type]) {
+				return [Language.GetOrRegister("WikiGenerator.Generic.ImmuneToNormalBuffs").Value];
+			}
 			JArray immunities = [];
 			for (int i = 0; i < npc.buffImmune.Length; i++) {
 				if (npc.buffImmune[i] && (i < BuffID.Count || ModContent.GetModBuff(i).Mod is Origins)) immunities.Add(GetBuffText(i));

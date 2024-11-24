@@ -4,7 +4,7 @@ PickOrExplosives: It requires at least {0}% {$WikiGenerator.Generic.Tiles.Link.P
 HardmodeSpread: In {$WikiGenerator.Generic.Link.Hardmode}, the spread of the {1} converts ordinary {2} blocks into §DisplayName§. §DisplayName§ itself also spreads {1} to susceptible blocks nearby.
 
 Link: {
-	PickPower: "[link Pickaxe power | | https://terraria.wiki.gg/wiki/Pickaxe_power]"
-	block: "[link block | | https://terraria.wiki.gg/wiki/Blocks]"
-	explosives: "[link explosives | | https://terraria.wiki.gg/wiki/Explosives_(class)]"
+	PickPower: <a is=a-link href=https://terraria.wiki.gg/wiki/Pickaxe_power>Pickaxe power</a>
+	block: <a is=a-link href=https://terraria.wiki.gg/wiki/Blocks>block</a>
+	explosives: <a is=a-link href=https://terraria.wiki.gg/wiki/Explosives_(class)>explosives</a>
 }

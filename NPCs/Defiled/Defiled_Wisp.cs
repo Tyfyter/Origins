@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
@@ -9,6 +10,8 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Wisp : Glowing_Mod_NPC {
@@ -17,16 +20,18 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DungeonSpirit);
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 			NPC.lifeMax = 12;
 			NPC.defense = 2;
 			NPC.damage = 10;
 			NPC.width = 22;
 			NPC.height = 22;
-			NPC.friendly = false;
+			NPC.knockBackResist = 0.2f;
 			NPC.HitSound = SoundID.NPCHit36;
 			NPC.DeathSound = SoundID.NPCDeath39;
+			NPC.value = 500f;
+			NPC.noTileCollide = true;
+			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];

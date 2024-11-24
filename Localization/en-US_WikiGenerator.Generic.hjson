@@ -1,4 +1,6 @@
-Link.Hardmode: "[link Hardmode | | https://terraria.wiki.gg/wiki/Hardmode]"
+Link.Hardmode: <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode>Hardmode</a>
+ImmuneToNormalBuffs: All <a is=a-link>debuffs</a> except Whip debuffs
+ImmuneToAllBuffs: All <a is=a-link>debuffs</a>
 
 RecipeConditions: {
 	Bottle: <span style="text-align: center;"><a href=https://terraria.wiki.gg/wiki/Placed_Bottle>Placed Bottle</a><div class=or>or</div><a href=https://terraria.wiki.gg/wiki/Alchemy_Table>Alchemy Table</a></span>
