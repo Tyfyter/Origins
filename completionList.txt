@@ -155,7 +155,7 @@ ENEMY NPCS:
 (^) Defiled Digger
 (@4 (if it's going to act remotely like a player, it'd be best for its sprites to be separated similarly to player sprites)) Defiled Ekko*
 (^) Defiled Krusher*
-(^) Defiled Mite
+(#3, ^2) Defiled Mite* !!!
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
@@ -193,7 +193,7 @@ ENEMY NPCS:
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
-(^) Defiled Tripod
+(^) Defiled Tripod*
 (^) Defiled Watcher*
 (X) Hoarder
 (X) Holy Governor
@@ -209,7 +209,7 @@ ENEMY NPCS:
 (^) Savage Whip*
 (X) Sea Dragon
 (^) Shattered Ghoul
-(^) Shattered Mummy
+(^) Shattered Mummy*
 (^) Torn Ghoul
 (^) Trijaw Shark
 
