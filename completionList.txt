@@ -139,26 +139,26 @@ OTHER:
 ENEMY NPCS:
 ---
 (^) Amebic Slime
-(^) Ancient Defiled Cyclops
+(^) Ancient Defiled Cyclops*
 (^) Barnacleback
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (^) Bottomfeeder
 (^) Buckethead Zombie
 (^) Cellarkeep*
-(^) Chunky Slime
+(^) Chunky Slime*
 (^) Cleaver
 (^) Conehead Zombie
 (^) Cranivore
 (^) Crimbrain
-(^) Defiled Cyclops
+(^) Defiled Cyclops*
 (^) Defiled Digger
 (@4 (if it's going to act remotely like a player, it'd be best for its sprites to be separated similarly to player sprites)) Defiled Ekko*
-(^) Defiled Krusher
+(^) Defiled Krusher*
 (^) Defiled Mite
-(^) Defiled Phantom
-(^) Defiled Swarmer
-(^) Defiled Wisp
+(^) Defiled Phantom*
+(^) Defiled Swarmer*
+(^) Defiled Wisp*
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Cannon
 (^) Enchanted Fiberglass Pistol
@@ -175,7 +175,7 @@ ENEMY NPCS:
 (^) Riven Penguin*
 (^) Riven Protoform
 (#, ^2, 々) Scanner Scout
-(^) Shattered Goldfish
+(^) Shattered Goldfish*
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 (X) Spiteful Flesh
