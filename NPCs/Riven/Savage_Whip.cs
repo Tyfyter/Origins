@@ -11,9 +11,23 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Savage_Whip : ModNPC, IRivenEnemy {
-		public override void Load() => this.AddBanner();
+		public override void Load() {
+			this.AddBanner();
+			On_NPC.AddBuff += On_NPC_AddBuff;
+			MonoModHooks.Add(typeof(NPCLoader).GetMethod(nameof(NPCLoader.UpdateLifeRegen)), static (orig_UpdateLifeRegen orig, NPC npc, ref int damage) => {
+				orig(npc, ref damage);
+				if (npc.type == Savage_Whip_Segment.ID) npc.lifeRegen = 0;
+			});
+		}
+		private static void On_NPC_AddBuff(On_NPC.orig_AddBuff orig, NPC self, int type, int time, bool quiet) {
+			orig(self, type, time, quiet);
+			if (self.type == Savage_Whip_Segment.ID && Main.npc.IndexInRange(self.realLife)) Main.npc[self.realLife].AddBuff(type, time, quiet);
+		}
+		delegate void orig_UpdateLifeRegen(NPC npc, ref int damage);
+		delegate void hook_UpdateLifeRegen(orig_UpdateLifeRegen orig, NPC npc, ref int damage);
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				CustomTexturePath = "Origins/UI/Savage_Whip_Preview"
 			};
 		}
 		public override void SetDefaults() {
@@ -37,9 +51,9 @@ namespace Origins.NPCs.Riven {
 			set => NPC.ai[0] = value;
 		}
 		public override void AI() {
-			const float charge_time = 15f;
-			const float swing_time = 25f;
-			const float spin_range = 240f;
+			const float charge_time = 90f;
+			const float swing_time = 30f;
+			const float spin_range = 208f;
 			DoGlow(NPC.Center);
 
 			if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead) NPC.TargetClosest();
@@ -75,12 +89,11 @@ namespace Origins.NPCs.Riven {
 							AIState = 1;
 							NPC.ai[1] = 0;
 						}
-
-						//NPC.velocity *= 0.97f;
+						NPC.velocity = Vector2.Lerp(NPC.velocity, diff.SafeNormalize(default) * 1f, 0.04f);
 						if (NPC.ai[1] < charge_time) NPC.ai[1]++;
 						else NPC.ai[1] = charge_time;
 						float spinSpeed = NPC.ai[1] / charge_time;
-						spinSpeed = 0.05f + spinSpeed * 0.50f;
+						spinSpeed = 0.05f + spinSpeed * 0.2f;
 						NPC.localAI[0] = spinSpeed;
 						if (NPC.ai[1] >= charge_time) {
 							if (NPC.ai[2] != 0 && Vector2.Dot(diff.SafeNormalize(default), new Vector2(-1, 0).RotatedBy(NPC.rotation + 3f)) > 0.9f) {
@@ -99,7 +112,7 @@ namespace Origins.NPCs.Riven {
 
 					NPC.velocity *= 0.96f;
 					NPC.ai[1] += 1f;
-					float spinSpeed = 0.4f;
+					float spinSpeed = 0.3f;
 					NPC.localAI[0] = spinSpeed;
 					if (NPC.ai[1] >= swing_time) {
 						NPC.netUpdate = true;
@@ -110,7 +123,7 @@ namespace Origins.NPCs.Riven {
 				case 3: {
 					NPC.velocity *= 0.96f;
 					float spinSpeed = NPC.ai[1] / swing_time;
-					spinSpeed = 0.1f + spinSpeed * 0.35f;
+					spinSpeed = 0.1f + spinSpeed * 0.1f;
 					NPC.localAI[0] = spinSpeed;
 					NPC.ai[1] -= 1f;
 					if (NPC.ai[1] <= 0) {
@@ -124,7 +137,7 @@ namespace Origins.NPCs.Riven {
 			NPC.rotation += NPC.localAI[0];
 			NPC nextNPC = NPC;
 			NPC prevNPC;
-			nextNPC.rotation = nextNPC.rotation % MathHelper.TwoPi;
+			nextNPC.rotation %= MathHelper.TwoPi;
 			NPC.ai[2] = 0;
 			while (nextNPC.ai[3] >= 0) {
 				prevNPC = nextNPC;
