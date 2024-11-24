@@ -160,7 +160,7 @@ ENEMY NPCS:
 (^) Defiled Swarmer
 (^) Defiled Wisp
 (^) Enchanted Fiberglass Bow
-(#, ^2) Enchanted Fiberglass Cannon !!!
+(^) Enchanted Fiberglass Cannon
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
@@ -605,7 +605,7 @@ MELEE WEAPONS:
 (^) Nineball
 (^) Orbital Saw
 (^) Outreach
-(☻) Ripper Lance !!!
+(^) Ripper Lance
 (^) Riverang
 (^) Snapthrow
 (^) Spiker Sword

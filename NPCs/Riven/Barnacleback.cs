@@ -106,8 +106,6 @@ namespace Origins.NPCs.Riven {
 		public override string Texture => "Terraria/Images/Buff_32";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Barnacled");
-			// Description.SetDefault("You shouldn't have this buff, but if you do, something is horribly wrong");
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

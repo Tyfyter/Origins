@@ -187,7 +187,7 @@ namespace Origins.NPCs {
 				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 0.7f);
 			}
 			if (barnacleBuff) {
-				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 1.01f);
+				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 1.5f);
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				if (toxicShockStunTime > 0) {
@@ -278,6 +278,7 @@ namespace Origins.NPCs {
 			}
 			if (npc.GetGlobalNPC<OriginGlobalNPC>().barnacleBuff) modifiers.Defense += 0.25f;
 			if (amberDebuff) modifiers.Defense *= 0.5f;
+			if (barnacleBuff) modifiers.Defense.Flat += 5;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (projectile.IsMinionOrSentryRelated) {

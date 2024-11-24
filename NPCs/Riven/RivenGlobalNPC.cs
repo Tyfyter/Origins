@@ -77,6 +77,9 @@ namespace Origins.NPCs.Riven {
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
+			if (npc.HasBuff(Barnacled_Buff.ID)) {
+				npc.lifeRegen += 6;
+			}
 		}
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			AssimilationAmount amount = GetAssimilationAmount(npc);
