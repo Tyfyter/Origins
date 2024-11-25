@@ -60,6 +60,12 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
 
+		[DefaultValue(0.2f), Range(0, 1), Increment(0.05f)]
+		public float DefiledShaderJitter = 0.2f;
+
+		[DefaultValue(0.1f), Range(0, 1), Increment(0.05f)]
+		public float DefiledShaderNoise = 0.1f;
+
 		[DefaultValue(true)]
 		public bool ExtraGooeyRivenGores = true;
 

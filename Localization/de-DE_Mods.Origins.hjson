@@ -1645,6 +1645,16 @@ Configs: {
 			// Label: Laser Tag HUD
 			// Tooltip: ""
 		}
+
+		DefiledShaderJitter: {
+			// Label: Defiled Shader Jitter
+			// Tooltip: ""
+		}
+
+		DefiledShaderNoise: {
+			// Label: Defiled Shader Noise
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

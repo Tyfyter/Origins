@@ -59,7 +59,10 @@ namespace Origins.World.BiomeData {
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
+			Filters.Scene["Origins:ZoneDefiled"].GetShader()
+				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed)
+				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.005f)
+				.UseOpacity(Math.Max(OriginClientConfig.Instance.DefiledShaderNoise, float.Epsilon));
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
 		}
 		public override float GetWeight(Player player) {

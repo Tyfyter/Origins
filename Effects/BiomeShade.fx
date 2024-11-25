@@ -34,12 +34,16 @@ float4 VoidShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 	return color;
 }
 
-float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
+float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	coords.x += (tex2D(uImage1, float2(0, tex2D(uImage1, float2(uTime, 0)).r * 5) + coords.y) - 0.5) * uIntensity;
+	coords.y += (tex2D(uImage1, float2(0, tex2D(uImage1, float2(uTime, uTime)).r * 5) + coords.x) - 0.5) * uIntensity;
 	float4 color = tex2D(uImage0, coords);
 	float progress = uProgress;
-	float median = (min(color.r,min(color.g,color.b))+max(color.r,max(color.g,color.b)))/2;
-	color.rgb = lerp(color.rgb,median,progress);
-	return color*(sampleColor+(1,1,1,1))/2;
+	if (progress < 0) progress = 0;
+	float median = (min(color.r, min(color.g, color.b)) + max(color.r, max(color.g, color.b))) / 2;
+	median += (tex2D(uImage1, float2(median, tex2D(uImage1, float2(0, uTime)).r * 5) + coords * float2(1, 4)) - 0.5) * uOpacity;
+	color.rgb = lerp(color.rgb, median, progress);
+	return color * (sampleColor + (1, 1, 1, 1)) / 2;
 }
 
 float4 RivenShade_Old(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
@@ -70,6 +74,6 @@ technique Technique1{
 		PixelShader = compile ps_2_0 VoidShade();
 	}
 	pass DefiledShade{
-		PixelShader = compile ps_2_0 DefiledShade();
+		PixelShader = compile ps_3_0 DefiledShade();
 	}
 }
