@@ -138,10 +138,10 @@ OTHER:
 
 ENEMY NPCS:
 ---
-(^) Amebic Slime
+(^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(^) Barnacleback
+(^) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (^) Bottomfeeder
