@@ -1,14 +1,11 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Projectiles.Weapons;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Low_Signal : ModItem, ICustomWikiStat {
+	public class Low_Signal : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
             "Wand"

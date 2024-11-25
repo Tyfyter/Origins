@@ -140,6 +140,7 @@ ENEMY NPCS:
 ---
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops*
+(^) Ancient Defiled Phantom*
 (^) Barnacleback
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -156,7 +157,7 @@ ENEMY NPCS:
 (@4 (if it's going to act remotely like a player, it'd be best for its sprites to be separated similarly to player sprites)) Defiled Ekko*
 (^) Defiled Krusher*
 (#3, ^2) Defiled Mite* !!!
-(^) Defiled Phantom*
+(#3, ^2) Defiled Phantom* !!!
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
 (^) Enchanted Fiberglass Bow
@@ -479,14 +480,14 @@ ACCESSORIES:
 
 VANITY:
 ---
-(^) Defiled Amalgamation Mask
+(^) Defiled Amalgamation Mask*
 (X) Duskord Mask
 (^) Fiberglass Weaver Head
 (X) I.C.A.R.U.S. Mask
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(^) World Cracker Mask
+(^) World Cracker Mask*
 (X) Scrapper Head
 (X) Severus' Hat
 
@@ -621,7 +622,7 @@ MELEE WEAPONS:
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
-(^) Knee Slapper
+(^) Knee Slapper*
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
 (^) Telephone Pole*
@@ -726,9 +727,9 @@ MAGIC WEAPONS:
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion
-(^) Low Signal
+(^) Low Signal*
 (^) Magnus
-(^) Manasynk
+(^) Manasynk*
 (^) Splitsplash
 (^) Tones of Agony
 
@@ -1149,12 +1150,12 @@ CRITTERS AND FISH:
 (X) Chambersite Squirrel
 (^) Cicada 3301*
 
-(^) Bilemouth
-(^) Bonehead Jellyfish
-(^) Duskarp
-(^) Polyeel
-(^) Prikish
-(^) Tearracuda
+(^) Bilemouth*
+(^) Bonehead Jellyfish*
+(^) Duskarp*
+(^) Polyeel*
+(^) Prikish*
+(^) Tearracuda*
 ---
 
 

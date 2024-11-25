@@ -100,6 +100,7 @@ namespace Origins.World.BiomeData {
 			public const float Sqid = 0.09f;
 			public const float AncientCyclops = 0.03f;
 			public const float Asphyxiator = 0.5f;
+			public const float AncientFlyer = 0.04f;
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
 				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>())) {
