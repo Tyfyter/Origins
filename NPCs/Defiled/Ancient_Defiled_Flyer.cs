@@ -57,7 +57,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 5) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 38) % 152, 104, 36);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 46) % 184, 136, 46);
 				NPC.frameCounter = 0;
 			}
 		}
