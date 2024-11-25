@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Defiled;
 using Origins.World.BiomeData;
 using System;
@@ -128,6 +129,10 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			Mana = reader.ReadSingle();
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.aiStyle == NPCAIStyleID.None) return;
+			base.PostDraw(spriteBatch, screenPos, drawColor);
 		}
 	}
 }
