@@ -627,17 +627,18 @@ namespace Origins {
 		}
 		TagCompound questsTag;
 		public override void OnEnterWorld() {
-			questsTag ??= new TagCompound();
-			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
+			questsTag ??= [];
+			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? [];
 			Origins.instance.Logger.Debug(worldQuestsTag.ToString());
 			foreach (var quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
-					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 				} else {
-					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 				}
 			}
 			netInitialized = false;
+			ResetLaserTag();
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
@@ -715,6 +716,7 @@ namespace Origins {
 			laserTagPoints = 0;
 			laserTagHits = 0;
 			laserTagHP = 0;
+			Laser_Tag_Console.LaserTagTimeLeft = -1;
 		}
 	}
 }

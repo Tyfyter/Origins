@@ -72,14 +72,14 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool TwentyFourHourTime = false;
 
+		public LaserTagConfig laserTagConfig = new();
+
 		[Header("Journal")]
 		[DefaultValue(true)]
 		public bool OpenJournalOnUnlock = true;
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
-
-		public LaserTagConfig laserTagConfig = new();
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
