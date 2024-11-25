@@ -52,9 +52,15 @@ namespace Origins.Dev {
 				maxSize = Vector2.Max(maxSize, TextureAssets.Item[type].Size());
 			}
 			foreach(int type in group.ValidItems) {
+				int frameDuration = 60;
+				switch (type) {
+					case ItemID.Deathweed:
+					frameDuration = 120;
+					break;
+				}
 				yield return (SpriteGenerator.Generate(spriteBatch => {
 					spriteBatch.Draw(TextureAssets.Item[type].Value, maxSize * 0.5f, null, Color.White, 0, TextureAssets.Item[type].Size() * 0.5f, 1, SpriteEffects.None, 0f);
-				}, ((int)maxSize.X, (int)maxSize.Y)), 60);
+				}, ((int)maxSize.X, (int)maxSize.Y)), frameDuration);
 			}
 		}
 		public static string GetRecipeGroupWikiName(int recipeGroup) => Lang.GetItemNameValue(RecipeGroup.recipeGroups[recipeGroup].IconicItemId).Replace(" ", "");
