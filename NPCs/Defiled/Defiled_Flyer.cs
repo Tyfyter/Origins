@@ -1,12 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -26,18 +31,19 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
-			NPC.aiStyle = 14;
+			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
 			NPC.defense = 10;
 			NPC.damage = 20;
-			NPC.width = 70;
-			NPC.height = 26;
-			NPC.catchItem = 26;
+			NPC.width = 30;
+			NPC.height = 30;
+			NPC.catchItem = 0;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 76;
+			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];
@@ -65,15 +71,131 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
-			NPC.FaceTarget();
-			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
-			NPC.spriteDirection = NPC.direction;
-		}
-		public override void FindFrame(int frameHeight) {
-			if (++NPC.frameCounter > 5) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 38) % 152, 104, 36);
-				NPC.frameCounter = 0;
+			NPC.TargetClosest();
+			Vector2 direction;
+			if (NPC.HasValidTarget) {
+				Vector2 target = NPC.GetTargetData().Center;
+				if (!CollisionExt.CanHitRay(NPC.Center, target) && Pathfind(NPC.GetTargetData()) is Vector2 pathTarget) {
+					target = pathTarget;
+				}
+				direction = NPC.DirectionTo(target);
+				float oldRot = NPC.rotation;
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
+				float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int dir) * 0.75f;
+				NPC.velocity = NPC.velocity.RotatedBy(diff * dir) * (1 - diff * 0.1f);
+			} else {
+				direction = Vector2.UnitX * NPC.direction;
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.direction * MathHelper.PiOver2 + MathHelper.PiOver2, 0.1f);
 			}
+			NPC.velocity *= 0.98f;
+			if (++NPC.ai[0] > 60) {
+				NPC.velocity += direction * 7;
+				NPC.ai[0] = 0;
+			}
+			NPC.spriteDirection = Math.Sign(Math.Cos(NPC.rotation));
+		}
+		public Vector2? Pathfind(NPCAimedTarget target) {
+			int bestMatch = -1;
+			float bestMatchDist = float.PositiveInfinity;
+			Vector2 diff = target.Center - NPC.Center;
+			for (int i = 0; i < dirs.Length; i++) {
+				float dist = dirs[i].ToVector2().DistanceSQ(diff);
+				if (dist < bestMatchDist) {
+					bestMatchDist = dist;
+					bestMatch = i;
+				}
+			}
+			diff.Normalize();
+			Vector2 position = NPC.position;
+			position += diff * CollisionExtensions.Raycast(position, diff, 16 * 50);
+			Vector2 clockwiseTarget = default;
+			Vector2 counterclockwiseTarget = default;
+			if (Crawl(target, position.ToTileCoordinates(), bestMatch, false) is Point pos1) {
+				clockwiseTarget = pos1.ToWorldCoordinates();
+				/*Rectangle rect = new(0, 0, 16, 16);
+				rect.X = pos1.X * 16;
+				rect.Y = pos1.Y * 16;
+				OriginExtensions.DrawDebugOutline(rect);*/
+			}
+			if (Crawl(target, position.ToTileCoordinates(), bestMatch, true) is Point pos2) {
+				counterclockwiseTarget = pos2.ToWorldCoordinates();
+			}
+			if (clockwiseTarget == default && counterclockwiseTarget == default) return null;
+			if (target.Center.DistanceSQ(clockwiseTarget) > target.Center.DistanceSQ(counterclockwiseTarget)) {
+				return counterclockwiseTarget;
+			} else {
+				return clockwiseTarget;
+			}
+		}
+		static Point[] dirs = [
+			new(0, -1),
+			new(1, -1),
+			new(1, 0),
+			new(1, 1),
+			new(0, 1),
+			new(-1, 1),
+			new(-1, 0),
+			new(-1, -1)
+		];
+		public Point? Crawl(NPCAimedTarget target, Point pos, int dir, bool counterclockwise) {
+			const float max_dist = 16 * 50;
+			static bool IsValidPosition(Point pos) => !Framing.GetTileSafely(pos).HasFullSolidTile();
+			static bool IsOnes(Point p) => p.X is -1 or 1 && p.Y is -1 or 1;
+			List<Point> path = [pos];
+			//Rectangle rect = new(0, 0, 16, 16);
+			test:
+			if (CollisionExtensions.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
+				if (CollisionExtensions.CanHitRay(NPC.Center, path[^1].ToWorldCoordinates())) return path[^1];
+				if (path.Count <= 1) return null;
+				Point? nextTarget = path[1];
+				for (int i = 1; i < path.Count; i++) {
+					/*rect.X = path[i].X * 16;
+					rect.Y = path[i].Y * 16;
+					OriginExtensions.DrawDebugOutline(rect);*/
+					if (CollisionExtensions.CanHitRay(NPC.Center, path[i].ToWorldCoordinates())) {
+						nextTarget = path[i];
+					} else {
+						Point step = path[i] - nextTarget.Value;
+						if (IsOnes(step)) {
+							for (int j = 0; j < dirs.Length; j++) {
+								if (step == dirs[j]) {
+									nextTarget += dirs[(j + (counterclockwise ? -1 : 1) + dirs.Length) % dirs.Length];
+									break;
+								}
+							}
+						}
+					}
+				}
+				return nextTarget;
+			}
+			if (counterclockwise) {
+				for (int i = 0; i < dirs.Length; i++) {
+					int nextDir = (dir - i + dirs.Length) % dirs.Length;
+					if (IsValidPosition(pos + dirs[nextDir])) {
+						pos += dirs[nextDir];
+						dir = (nextDir + 2) % dirs.Length;
+						break;
+					}
+				}
+			} else {
+				for (int i = 0; i < dirs.Length; i++) {
+					int nextDir = (dir + i) % dirs.Length;
+					if (IsValidPosition(pos + dirs[nextDir])) {
+						pos += dirs[nextDir];
+						dir = (nextDir - 2 + dirs.Length) % dirs.Length;
+						break;
+					}
+				}
+			}
+			if (path.Contains(pos) || pos.ToWorldCoordinates().DistanceSQ(target.Center) > max_dist * max_dist) return null;
+			path.Add(pos);
+			goto test;
+		}
+		public override bool? CanFallThroughPlatforms() => true;
+		public override void FindFrame(int frameHeight) {
+			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[0]) / 60;
+			if (NPC.frameCounter > 1) NPC.frameCounter = 0;
+			NPC.frame = new Rectangle(0, (38 * (int)(frame * frame * Main.npcFrameCount[Type] + 2)) % 152, 104, 36);
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
@@ -95,6 +217,39 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			Mana = reader.ReadSingle();
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
+			if (NPC.spriteDirection == -1) {
+				spriteEffects |= SpriteEffects.FlipVertically;
+			}
+			Vector2 halfSize = new(GlowTexture.Width * 0.5f, GlowTexture.Height / Main.npcFrameCount[NPC.type] / 2);
+			Vector2 position = new(NPC.position.X - screenPos.X + (NPC.width / 2) - GlowTexture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - GlowTexture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + Main.NPCAddHeight(NPC) + NPC.gfxOffY);
+			Vector2 origin = new(halfSize.X * 1.6f, halfSize.Y);
+			spriteBatch.Draw(
+				TextureAssets.Npc[Type].Value,
+				position,
+				NPC.frame,
+				drawColor,
+				NPC.rotation,
+				origin,
+				NPC.scale,
+				spriteEffects,
+			0);
+			spriteBatch.Draw(
+				GlowTexture,
+				position,
+				NPC.frame,
+				Color.White,
+				NPC.rotation,
+				origin,
+				NPC.scale,
+				spriteEffects,
+			0);
+			return false;
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			
 		}
 	}
 }
