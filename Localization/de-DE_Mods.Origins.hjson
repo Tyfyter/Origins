@@ -1843,7 +1843,7 @@ Configs: {
 	}
 
 	OriginAccessibilityConfig: {
-		// DisplayName: Origin Accessibility Config
+		// DisplayName: Accessibility
 
 		DisableDefiledWastelandsShader: {
 			// Label: Disable Defiled Wastelands Shader
