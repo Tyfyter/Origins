@@ -18,7 +18,7 @@ namespace Origins.NPCs.Defiled {
 		byte frame = 0;
 		byte anger = 0;
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 4;
+			Main.npcFrameCount[NPC.type] = 5;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);
 		}
 		public override void SetDefaults() {
@@ -92,7 +92,11 @@ namespace Origins.NPCs.Defiled {
 			return NPC.aiStyle != NPCAIStyleID.None;
 		}
 		public override void FindFrame(int frameHeight) {
-			NPC.frame = new Rectangle(0, 28 * (frame & 12) / 4, 32, 26);
+			if (NPC.aiStyle == NPCAIStyleID.None) {
+				NPC.frame.Y = NPC.frame.Height * 4;
+			} else {
+				NPC.frame = new Rectangle(0, 28 * (frame & 12) / 4, 32, 28);
+			}
 		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
 			anger = 6;
