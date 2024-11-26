@@ -171,7 +171,7 @@ ENEMY NPCS:
 (X) Machine Gun Machine
 (^) Measly Moeba*
 (^) Optiphage
-(#3, ^2) Pustule Jellyfish* !!!
+(☻) Pustule Jellyfish* !!!
 (X) Riot Drone
 (^) Riven Penguin*
 (^) Riven Protoform*
