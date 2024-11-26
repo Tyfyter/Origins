@@ -61,7 +61,7 @@ namespace Origins.World.BiomeData {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			Filters.Scene["Origins:ZoneDefiled"].GetShader()
 				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed)
-				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.005f)
+				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f)
 				.UseOpacity(Math.Max(OriginClientConfig.Instance.DefiledShaderNoise, float.Epsilon));
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0 && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader, player.Center);
 		}

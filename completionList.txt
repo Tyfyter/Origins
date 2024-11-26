@@ -156,8 +156,8 @@ ENEMY NPCS:
 (^) Defiled Digger
 (@4 (if it's going to act remotely like a player, it'd be best for its sprites to be separated similarly to player sprites)) Defiled Ekko*
 (^) Defiled Krusher*
-(☻) Defiled Mite* !!!
-(☻) Defiled Phantom* !!!
+(^) Defiled Mite*
+(^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
 (^) Enchanted Fiberglass Bow
