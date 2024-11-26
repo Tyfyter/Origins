@@ -896,6 +896,7 @@ namespace Origins.Projectiles {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public abstract DamageClass DamageType { get; }
 		public abstract int Size { get; }
+		public virtual bool Hostile => false;
 		public virtual bool DealsSelfDamage => true;
 		public virtual SoundStyle? Sound => SoundID.Item62;
 		public virtual int FireDustAmount => 20;
@@ -906,7 +907,8 @@ namespace Origins.Projectiles {
 			Projectile.DamageType = DamageType;
 			Projectile.width = Size;
 			Projectile.height = Size;
-			Projectile.friendly = true;
+			Projectile.friendly = !Hostile;
+			Projectile.hostile = Hostile;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
@@ -919,7 +921,7 @@ namespace Origins.Projectiles {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount, smokeGoreAmount: SmokeGoreAmount);
 				Projectile.ai[0] = 1;
 			}
-			if (DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile, SelfDamageCooldownCounter);
+			if (!Hostile && DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile, SelfDamageCooldownCounter);
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;

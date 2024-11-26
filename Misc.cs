@@ -3169,6 +3169,290 @@ namespace Origins {
 		public static void SyncCustomKnockback(this NPC npc, bool fromNet = false) {
 			DoCustomKnockback(npc, npc.velocity, fromNet);
 		}
+		public class MultipleUnlockableNPCEntryIcon : IEntryIcon {
+			private int _npcNetId;
+
+			private NPC[] _npcCache;
+
+			private bool _firstUpdateDone;
+
+			private Vector2 _positionOffsetCache;
+
+			private string _overrideNameKey;
+
+			public MultipleUnlockableNPCEntryIcon(int npcNetId, string overrideNameKey = null, params float[][] ai) : this(npcNetId, ai) {
+				_overrideNameKey = overrideNameKey;
+			}
+			public MultipleUnlockableNPCEntryIcon(int npcNetId, params float[][] ai) {
+				_npcNetId = npcNetId;
+				_npcCache = new NPC[ai.Length];
+				for (int i = 0; i < _npcCache.Length; i++) {
+					_npcCache[i] = new NPC {
+						IsABestiaryIconDummy = true
+					};
+					_npcCache[i].SetDefaults(_npcNetId);
+					_firstUpdateDone = false;
+					for (int j = 0; j < _npcCache[i].ai.Length && j < ai[i].Length; j++) {
+						_npcCache[i].ai[j] = ai[i][j];
+					}
+				}
+			}
+
+			public IEntryIcon CreateClone() {
+				return new MultipleUnlockableNPCEntryIcon(_npcNetId, _overrideNameKey, _npcCache.Select(npc => npc.ai).ToArray());
+			}
+
+			public void Update(BestiaryUICollectionInfo providedInfo, Rectangle hitbox, EntryIconDrawSettings settings) {
+				Vector2 positionOffsetCache = default;
+				int? frame = null;
+				int? direction = null;
+				int? spriteDirection = null;
+				bool wet = false;
+				float velocityX = 0f;
+				Asset<Texture2D> asset = null;
+				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(_npcNetId, out NPCID.Sets.NPCBestiaryDrawModifiers value)) {
+					for (int i = 0; i < _npcCache.Length; i++) {
+						NPC npc = _npcCache[i];
+						npc.rotation = value.Rotation;
+						npc.scale = value.Scale;
+						if (value.PortraitScale.HasValue && settings.IsPortrait) {
+							npc.scale = value.PortraitScale.Value;
+						}
+						positionOffsetCache = value.Position;
+						frame = value.Frame;
+						direction = value.Direction;
+						spriteDirection = value.SpriteDirection;
+						velocityX = value.Velocity;
+						wet = value.IsWet;
+						if (value.PortraitPositionXOverride.HasValue && settings.IsPortrait) {
+							positionOffsetCache.X = value.PortraitPositionXOverride.Value;
+						}
+						if (value.PortraitPositionYOverride.HasValue && settings.IsPortrait) {
+							positionOffsetCache.Y = value.PortraitPositionYOverride.Value;
+						}
+						if (value.CustomTexturePath != null) {
+							asset = ModContent.Request<Texture2D>(value.CustomTexturePath);
+						}
+					}
+				}
+				_positionOffsetCache = positionOffsetCache;
+				UpdatePosition(settings);
+				for (int i = 0; i < _npcCache.Length; i++) {
+					NPC npc = _npcCache[i];
+					if (NPCID.Sets.TrailingMode[npc.type] != -1) {
+						for (int j = 0; j < npc.oldPos.Length; j++) {
+							npc.oldPos[i] = npc.position;
+						}
+					}
+					npc.direction = npc.spriteDirection = direction ?? -1;
+					if (spriteDirection.HasValue) {
+						npc.spriteDirection = spriteDirection.Value;
+					}
+					npc.wet = wet;
+					SimulateFirstHover(velocityX);
+					if (!frame.HasValue && (settings.IsPortrait || settings.IsHovered)) {
+						npc.velocity.X = npc.direction * velocityX;
+						npc.FindFrame();
+					} else if (frame.HasValue) {
+						npc.FindFrame();
+						npc.frame.Y = npc.frame.Height * frame.Value;
+					}
+				}
+			}
+
+			private void UpdatePosition(EntryIconDrawSettings settings) {
+				if (!settings.IsPortrait) {
+					NPC npc = _npcCache[0];
+					if (npc.noGravity) {
+						npc.Center = settings.iconbox.Center.ToVector2() + _positionOffsetCache;
+					} else {
+						npc.Bottom = settings.iconbox.TopLeft() + settings.iconbox.Size() * new Vector2(0.5f, 1f) + new Vector2(0f, -8f) + _positionOffsetCache;
+					}
+					npc.position = npc.position.Floor();
+				} else {
+					float totalWidth = 0;
+					for (int i = 0; i < _npcCache.Length; i++) {
+						NPC npc = _npcCache[i];
+						totalWidth += npc.width;
+					}
+					for (int i = 0; i < _npcCache.Length; i++) {
+						NPC npc = _npcCache[i];
+						if (npc.noGravity) {
+							npc.Center = settings.iconbox.Center.ToVector2() + _positionOffsetCache;
+						} else {
+							npc.Bottom = settings.iconbox.TopLeft() + settings.iconbox.Size() * new Vector2(0.5f, 1f) + new Vector2(0f, -8f) + _positionOffsetCache;
+						}
+						npc.position.X += totalWidth * (i - (_npcCache.Length - 1) * 0.5f);
+						npc.position = npc.position.Floor();
+					}
+				}
+			}
+
+			private void SimulateFirstHover(float velocity) {
+				if (!_firstUpdateDone) {
+					_firstUpdateDone = true;
+					for (int i = 0; i < _npcCache.Length; i++) {
+						NPC npc = _npcCache[i];
+						npc.SetFrameSize();
+						npc.velocity.X = npc.direction * velocity;
+						npc.FindFrame();
+					}
+				}
+			}
+
+			public void Draw(BestiaryUICollectionInfo providedInfo, SpriteBatch spriteBatch, EntryIconDrawSettings settings) {
+				UpdatePosition(settings);
+				if (!settings.IsPortrait) {
+					NPC npc = _npcCache[0];
+					Main.instance.DrawNPCDirect(spriteBatch, npc, npc.behindTiles, Vector2.Zero);
+				} else {
+					for (int i = 0; i < _npcCache.Length; i++) {
+						NPC npc = _npcCache[i];
+						Main.instance.DrawNPCDirect(spriteBatch, npc, npc.behindTiles, Vector2.Zero);
+					}
+				}
+			}
+
+			public string GetHoverText(BestiaryUICollectionInfo providedInfo) {
+				string result = Lang.GetNPCNameValue(_npcNetId);
+				if (!string.IsNullOrWhiteSpace(_overrideNameKey)) {
+					result = Language.GetTextValue(_overrideNameKey);
+				}
+				if (GetUnlockState(providedInfo)) {
+					return result;
+				}
+				return "???";
+			}
+
+			public bool GetUnlockState(BestiaryUICollectionInfo providedInfo) {
+				return providedInfo.UnlockState > BestiaryEntryUnlockState.NotKnownAtAll_0;
+			}
+		}
+		public static void DoJellyfishAI(this NPC npc, float lungeThreshold = 0.2f, float lungeSpeed = 7f, Vector3 glowColor = default, bool canDoZappy = true) {
+			bool isZappy = false;
+			if (npc.wet && npc.ai[1] == 1f) {
+				isZappy = true;
+			} else {
+				npc.dontTakeDamage = false;
+			}
+
+			if (Main.expertMode && canDoZappy) {
+				if (npc.wet) {
+					if (npc.HasValidTarget && Main.player[npc.target].wet && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height) && Main.player[npc.target].Center.IsWithin(npc.Center, 150f)) {
+						if (npc.ai[1] == 0f) {
+							npc.ai[2] += 2f;
+						} else {
+							npc.ai[2] -= 0.25f;
+						}
+					}
+
+					if (isZappy) {
+						npc.dontTakeDamage = true;
+						npc.ai[2] += 1f;
+						if (npc.ai[2] >= 120f)
+							npc.ai[1] = 0f;
+					} else {
+						npc.ai[2] += 1f;
+						if (npc.ai[2] >= 420f) {
+							npc.ai[1] = 1f;
+							npc.ai[2] = 0f;
+						}
+					}
+				} else {
+					npc.ai[1] = 0f;
+					npc.ai[2] = 0f;
+				}
+			}
+
+			Lighting.AddLight(npc.Center, glowColor * (isZappy ? 1.5f : 1f));
+
+			if (npc.direction == 0) npc.TargetClosest();
+
+			if (isZappy) return;
+
+			if (npc.wet) {
+				Point centerTile = npc.Center.ToTileCoordinates();
+				if (Framing.GetTileSafely(centerTile).TopSlope) {
+					if (Framing.GetTileSafely(centerTile).LeftSlope) {
+						npc.direction = -1;
+						npc.velocity.X = Math.Abs(npc.velocity.X) * -1f;
+					} else {
+						npc.direction = 1;
+						npc.velocity.X = Math.Abs(npc.velocity.X);
+					}
+				} else if (Framing.GetTileSafely(centerTile.X, centerTile.Y + 1).TopSlope) {
+					if (Framing.GetTileSafely(centerTile.X, centerTile.Y + 1).LeftSlope) {
+						npc.direction = -1;
+						npc.velocity.X = Math.Abs(npc.velocity.X) * -1f;
+					} else {
+						npc.direction = 1;
+						npc.velocity.X = Math.Abs(npc.velocity.X);
+					}
+				}
+
+				if (npc.collideX) {
+					npc.velocity.X *= -1f;
+					npc.direction *= -1;
+				}
+
+				if (npc.collideY) {
+					npc.velocity.Y = -npc.velocity.Y;
+					npc.directionY = Math.Sign(npc.velocity.Y);
+					npc.ai[0] = npc.directionY;
+				}
+
+				npc.TargetClosest(false);
+				if (npc.HasValidTarget && Main.player[npc.target].wet && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height)) {
+					npc.localAI[2] = 1f;
+					npc.rotation = npc.velocity.ToRotation() + MathHelper.PiOver2;
+					npc.velocity *= 0.98f;
+
+					if (npc.velocity.X > -lungeThreshold && npc.velocity.X < lungeThreshold && npc.velocity.Y > -lungeThreshold && npc.velocity.Y < lungeThreshold) {
+
+						npc.TargetClosest();
+						Vector2 diff = (Main.player[npc.target].MountedCenter - npc.Center);
+						float dist = diff.Length();
+						npc.velocity = diff * (lungeSpeed / dist);
+					}
+				} else {
+					npc.localAI[2] = 0f;
+					npc.velocity.X += npc.direction * 0.02f;
+					npc.rotation = npc.velocity.X * 0.4f;
+					if (npc.velocity.X < -1f || npc.velocity.X > 1f)
+						npc.velocity.X *= 0.95f;
+
+					if (npc.ai[0] == -1f) {
+						npc.velocity.Y -= 0.01f;
+						if (npc.velocity.Y < -1f) npc.ai[0] = 1f;
+					} else {
+						npc.velocity.Y += 0.01f;
+						if (npc.velocity.Y > 1f) npc.ai[0] = -1f;
+					}
+
+					Point tilePos = npc.Center.ToTileCoordinates();
+					if (Framing.GetTileSafely(tilePos.X, tilePos.Y - 1).LiquidAmount > 128) {
+						if (Framing.GetTileSafely(tilePos.X, tilePos.Y + 1).HasTile || Framing.GetTileSafely(tilePos.X, tilePos.Y + 2).HasTile) {
+							npc.ai[0] = -1f;
+						}
+					} else {
+						npc.ai[0] = 1f;
+					}
+
+					if (npc.velocity.Y > 1.2 || npc.velocity.Y < -1.2) npc.velocity.Y *= 0.99f;
+				}
+			} else {
+				npc.rotation += npc.velocity.X * 0.1f;
+				if (npc.velocity.Y == 0f) {
+					npc.velocity.X *= 0.98f;
+					if (npc.velocity.X > -0.01 && npc.velocity.X < 0.01) npc.velocity.X = 0f;
+				}
+
+				npc.velocity.Y += 0.2f;
+				if (npc.velocity.Y > 10f) npc.velocity.Y = 10f;
+
+				npc.ai[0] = 1f;
+			}
+		}
 	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {

@@ -99,7 +99,7 @@ namespace Origins.Gores.NPCs {
 			GoreID.Sets.DisappearSpeedAlpha[Type] = 5;
 		}
 		public override void OnSpawn(Gore gore, IEntitySource source) {
-			gore.scale = 0.5f;
+			gore.scale *= 0.5f;
 		}
 		public override bool Update(Gore gore) {
 			gore.position += gore.velocity;
