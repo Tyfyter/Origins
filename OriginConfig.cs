@@ -637,4 +637,10 @@ namespace Origins {
 			return comparer.Compare(x, y);
 		}
 	}
+	public class OriginAccessibilityConfig : ModConfig {
+		public static OriginAccessibilityConfig Instance;
+		public override ConfigScope Mode => ConfigScope.ClientSide;
+		[DefaultValue(false)]
+		public bool DisableDefiledWastelandsShader { get; set; }
+	}
 }

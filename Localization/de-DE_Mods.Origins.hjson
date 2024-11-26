@@ -1841,6 +1841,15 @@ Configs: {
 		// Back.Label: Back
 		// Front.Label: Front
 	}
+
+	OriginAccessibilityConfig: {
+		// DisplayName: Origin Accessibility Config
+
+		DisableDefiledWastelandsShader: {
+			// Label: Disable Defiled Wastelands Shader
+			// Tooltip: ""
+		}
+	}
 }
 
 SetBonuses: {

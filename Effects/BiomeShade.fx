@@ -20,7 +20,7 @@ float uSaturation;
 float4 uSourceRect;
 float2 uZoom;
 
-float4 VoidShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
+float4 VoidShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
 	float progress = uProgress;
 	//progress/=pow(2, 1+(color.r+color.g+color.b)/9);
@@ -34,14 +34,26 @@ float4 VoidShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 	return color;
 }
 
+float Select(float3 a, float i) {
+	if (i < 1.0)
+		return a.r;
+	if (i < 2.0)
+		return a.g;
+	return a.b;
+}
+
 float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
-	coords.x += (tex2D(uImage1, float2(0, tex2D(uImage1, float2(uTime, 0)).r * 5) + coords.y) - 0.5) * uIntensity;
-	coords.y += (tex2D(uImage1, float2(0, tex2D(uImage1, float2(uTime, uTime)).r * 5) + coords.x) - 0.5) * uIntensity;
+	float select = uTime * 10;
+	select = select - floor(select / 3.0) * 3.0;
+	//coords.x += (Select(tex2D(uImage1, float2(0, Select(tex2D(uImage1, float2(uTime, 0)).rgb, select) * 5) + coords.y).rgb, select) - 0.5, select) * uIntensity;
+	coords.x += Select(tex2D(uImage1, float2(coords.y, coords.x) * 10).rgb, select) * uIntensity;
+	coords.y += Select(tex2D(uImage1, coords * 10).rgb, select) * uIntensity; //(Select(tex2D(uImage1, float2(0, Select(tex2D(uImage1, coords * 10).rgb, select) * 5) + coords.x).rgb, select) - 0.5, select) * uIntensity; // float2(uTime, uTime) +
 	float4 color = tex2D(uImage0, coords);
+	
 	float progress = uProgress;
 	if (progress < 0) progress = 0;
 	float median = (min(color.r, min(color.g, color.b)) + max(color.r, max(color.g, color.b))) / 2;
-	median += (tex2D(uImage1, float2(median, tex2D(uImage1, float2(0, uTime)).r * 5) + coords * float2(1, 4)) - 0.5) * uOpacity;
+	median += (Select(tex2D(uImage1, float2(median, 0) + coords * float2(1, 4)).rgb, select) - 0.5) * uOpacity; //
 	color.rgb = lerp(color.rgb, median, progress);
 	return color * (sampleColor + (1, 1, 1, 1)) / 2;
 }
