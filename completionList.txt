@@ -144,11 +144,11 @@ ENEMY NPCS:
 (^) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
-(^) Bottomfeeder
+(^) Bottomfeeder*
 (^) Buckethead Zombie
 (^) Cellarkeep*
 (^) Chunky Slime*
-(^) Cleaver
+(^) Cleaver*
 (^) Conehead Zombie
 (^) Cranivore
 (^) Crimbrain
@@ -165,29 +165,29 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
-(^) Flagellant
+(@5, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
 (X) Machine Gun Machine
-(^) Measly Moeba
+(^) Measly Moeba*
 (^) Optiphage
-(^) Pustule Jellyfish*
+(#3, ^2) Pustule Jellyfish* !!!
 (X) Riot Drone
 (^) Riven Penguin*
-(^) Riven Protoform
+(^) Riven Protoform*
 (#, ^2, 々) Scanner Scout
 (^) Shattered Goldfish*
-(^) Single-Cellular Nautilus
-(^) Spider Amoeba
+(^) Single-Cellular Nautilus*
+(^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Top Brass Protector
 (X) Worker Bot
 
 (^) Amoebeye*
-(^) Amebic Mummy
-(^) Amoeba Bugger
+(^) Amoebic Mummy*
+(^) Amoeba Bugger*
 (@, #, 々) Angel
-(^, ⚐) Barnacle Mound
+(^, ⚐) Barnacle Mound*
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (^) Defiled Asphyxiator*
@@ -212,7 +212,7 @@ ENEMY NPCS:
 (^) Shattered Ghoul
 (^) Shattered Mummy*
 (^) Torn Ghoul
-(^) Trijaw Shark
+(^) Trijaw Shark*
 
 (X) Annihilator
 (X) Clockwork
@@ -720,7 +720,7 @@ RANGED WEAPONS:
 MAGIC WEAPONS:
 ---
 (^) Area Denial*
-(^) Avulsion
+(^) Avulsion*
 (^) Beginner's Tome
 (^) Cryostike
 (^) Eaterboros
@@ -776,7 +776,7 @@ SUMMONER WEAPONS:
 (@5, ^3) Broken Terratotem
 (^) Desert Crown*
 (^) Eyeball Staff
-(^) Flagellash
+(^) Flagellash*
 (^) Fresh Meat Artifact
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
