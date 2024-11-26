@@ -418,8 +418,6 @@ namespace Origins.NPCs {
 				return;
 			}
 			if (player.InModBiome<Defiled_Wastelands>()) {
-				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), Defiled_Wastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
-
 				if (Defiled_Amalgamation.spawnDA) {
 					foreach (var entry in pool) {
 						pool[entry.Key] = 0;

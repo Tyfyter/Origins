@@ -38,6 +38,10 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
+			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.AncientFlyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
 				this.GetBestiaryFlavorText()
