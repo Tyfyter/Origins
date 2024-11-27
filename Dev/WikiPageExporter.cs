@@ -503,7 +503,12 @@ namespace Origins.Dev {
 		IEnumerable<string> LocalizedStats => [];
 	}
 	public class ItemWikiProvider : WikiProvider<ModItem> {
-		public override string PageName(ModItem modItem) => WikiPageExporter.GetWikiName(modItem);
+		public override string PageName(ModItem modItem) {
+			if (modItem.Item.rare == CursedRarity.ID) {
+				return WikiPageExporter.GetWikiName(modItem) + " (Cursed)";
+			}
+			return WikiPageExporter.GetWikiName(modItem);
+		}
 		public override (PageTemplate template, Dictionary<string, object> context) GetPage(ModItem modItem) {
 			Item item = modItem.Item;
 			Dictionary<string, object> context = new() {
