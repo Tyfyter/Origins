@@ -49,7 +49,8 @@ namespace Origins.Items.Weapons.Melee {
 		public bool? Hardmode => true;
 	}
 	public class Amoebash_Smash : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Melee/Amoebash";
+		AutoLoadingAsset<Texture2D> glowTexture = typeof(Amoebash).GetDefaultTMLName() + "_Glow";
+		public override string Texture => typeof(Amoebash).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
@@ -176,6 +177,17 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
+				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
+				new Vector2(10, 39 + 28 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
+				Projectile.scale,
+				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				0
+			);
+			Main.EntitySpriteDraw(
+				glowTexture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				Riven_Hive.GetGlowAlpha(lightColor),
 				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
 				new Vector2(10, 39 + 28 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
 				Projectile.scale,
