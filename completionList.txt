@@ -1037,6 +1037,7 @@ TILES:
 
 (^) Acetabularia*
 (^) Brineglow Vine*
+(^) Defiled Fissure*
 (^) Defiled Foliage
 (^) Defiled Pot
 (X) Eden Tree*
