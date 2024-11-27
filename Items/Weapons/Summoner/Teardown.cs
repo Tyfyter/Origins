@@ -59,8 +59,6 @@ namespace Origins.Items.Weapons.Summoner {
 		public const int frameSpeed = 5;
 		public override void SetStaticDefaults() {
 			Teardown.projectileID = Projectile.type;
-			// DisplayName.SetDefault("Flying Exoskeleton");
-			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 3;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
@@ -258,8 +256,6 @@ namespace Origins.Buffs {
 	public class Teardown_Buff : ModBuff {
 		public override string Texture => "Origins/Buffs/Exoskeleton_Buff";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flying Exoskeleton");
-			// Description.SetDefault("The Flying Exoskeleton will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Teardown.buffID = Type;

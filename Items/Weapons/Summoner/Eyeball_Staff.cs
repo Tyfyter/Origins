@@ -72,8 +72,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public const int frameSpeed = 5;
 		public override void SetStaticDefaults() {
 			Eyeball_Staff.projectileID = Projectile.type;
-			// DisplayName.SetDefault("Gerald");
-			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

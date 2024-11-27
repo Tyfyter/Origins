@@ -171,7 +171,7 @@ ENEMY NPCS:
 (X) Machine Gun Machine
 (^) Measly Moeba*
 (^) Optiphage
-(☻) Pustule Jellyfish* !!!
+(^) Pustule Jellyfish*
 (X) Riot Drone
 (^) Riven Penguin*
 (^) Riven Protoform*
@@ -613,8 +613,8 @@ MELEE WEAPONS:
 (^) Switchblade*
 (^) Triple Threat
 (^) Tyrfing
-(^) Vorpal Sword (Cursed)
-(^) Vorpal Sword (Uncursed)
+(^) Vorpal Sword (Cursed)*
+(^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent
 
 (^) Amenonuhoko
@@ -785,6 +785,7 @@ SUMMONER WEAPONS:
 (⛥) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
+(^) Teardown*
 (^) Thread Rod
 (^) Woodsprite Staff
 
@@ -1041,7 +1042,7 @@ TILES:
 (X) Eden Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(^) Gel Blister
+(^) Gel Blister*
 (X) Heat Vent
 (X) Moonshine*
 (^) Petrified Tree*
