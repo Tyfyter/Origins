@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
@@ -11,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Rivenator_Head : Rivenator {
+	public class Rivenator_Head : Rivenator, ICustomWikiStat {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
@@ -88,6 +90,9 @@ namespace Origins.NPCs.Riven {
 				if (current.type != bodyType) break;
 			}
 			return false;
+		}
+		public void ModifyWikiStats(JObject data) {
+			data["SpriteWidth"] = 354;
 		}
 	}
 

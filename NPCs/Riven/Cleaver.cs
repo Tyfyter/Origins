@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
@@ -8,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Cleaver_Head : Cleaver {
+	public class Cleaver_Head : Cleaver, ICustomWikiStat {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
@@ -71,6 +73,9 @@ namespace Origins.NPCs.Riven {
 				Main.npc[last].ai[0] = current;
 				Main.npc[current].netUpdate = true;
 			}
+		}
+		public void ModifyWikiStats(JObject data) {
+			data["SpriteWidth"] = 108;
 		}
 	}
 
