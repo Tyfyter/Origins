@@ -451,6 +451,9 @@ namespace Origins {
 					}
 				});*/
 			}
+			ChatManager.Register<Journal_Control_Handler>([
+				"jctrl"
+			]);
 			ChatManager.Register<Journal_Link_Handler>([
 				"journal",
 				"j"

@@ -78,6 +78,14 @@ namespace Origins.UI {
 			}
 			for (int i = 0; i < snippets.Count; i++) {
 				TextSnippet textSnippet = snippets[i];
+				if (textSnippet is Journal_Control_Handler.Journal_Control_Snippet ctrl) {
+					switch (ctrl.Text.ToLower()) {
+						case "end_page":
+						finishPage();
+						break;
+					}
+					continue;
+				}
 				textSnippet.Update();
 				snippetScale = textSnippet.Scale;
 				Color snippetColor = textSnippet.GetVisibleColor();
