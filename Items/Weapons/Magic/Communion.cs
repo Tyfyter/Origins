@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 
-            target.AddBuff(Rasterized_Debuff.ID, 15);
+            target.AddBuff(Rasterized_Debuff.ID, 35);
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;

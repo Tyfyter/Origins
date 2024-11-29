@@ -1,16 +1,14 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Materials;
 using ReLogic.Content;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using Origins.Dev;
-using System.IO;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Amebolize_Incantation : ModItem, ICustomDrawItem {

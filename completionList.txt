@@ -256,6 +256,8 @@ STATUS EFFECTS:
 (X) Ionizing Radiation
 (^) Mana Buffer
 (^) Rasterized*
+(#3, ^2) Shadefire
+(#, ^2) Static Shock
 (^) Torn*
 (^) Totally Safe
 (^) Toxic Shock*
@@ -524,8 +526,8 @@ VANITY:
 
 UTILITIES:
 ---
-(^) Amoeba Hook
-(^) Chunky Hook
+(^) Amoeba Hook*
+(^) Chunky Hook*
 (%3, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -596,29 +598,30 @@ MELEE WEAPONS:
 (^) Broken Fiberglass Sword
 (^) Cyah Nara
 (^) Dark Spiral
-(^) Decimator
+(^) Decimator*
 (^) Endowood Sword
 (@5, ^3) Felnum Boar Spear
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
 (^) Marrowick Sword
-(^) Nineball
+(^) Nineball*
 (^) Orbital Saw
-(^) Outreach
-(^) Ripper Lance
-(^) Riverang
-(^) Snapthrow
-(^) Spiker Sword
+(^) Outreach*
+(^) Ripper Lance*
+(^) Riverang*
+(^) Snapthrow*
+(#, ^2) Soul Snatcher* !!!
+(^) Spiker Sword*
 (^) Switchblade*
-(^) Triple Threat
+(^) Triple Threat*
 (^) Tyrfing
 (^) Vorpal Sword (Cursed)*
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent
 
 (^) Amenonuhoko
-(^) Amoebash
+(^) Amoebash*
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
@@ -668,7 +671,7 @@ RANGED WEAPONS:
 (^) Sleetfire
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear
-(^) The Kruncher
+(^) The Kruncher*
 (^) Threemoepeater
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
@@ -682,12 +685,12 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
-(^) Dart Crossbow
+(^) Dart Crossbow*
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
 (X) Frequency
 (^) HNO-3 "Viper"
-(^) Incision
+(^) Incision*
 (X) Left Klik*
 (X) Mythril Harpoon Gun*
 (X) Organ Donor
@@ -726,17 +729,17 @@ MAGIC WEAPONS:
 (^) Eaterboros
 (^) Eternabrite
 (^) Hot Potato
-(^) Infusion
+(^) Infusion*
 (^) Low Signal*
 (^) Magnus
 (^) Manasynk*
-(^) Splitsplash
+(^) Splitsplash*
 (^) Tones of Agony
 
 (^) Bled Out Staff
 (^) Chemical Laser
-(^) Communion
-(^) Dew Justice
+(^) Communion*
+(^) Dew Justice*
 (^) Dismay
 (⛥) Innermost Manifest
 (^) Seam Beam
@@ -752,10 +755,10 @@ MAGIC WEAPONS:
 (@5, ^3) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
-(^) Missing File
+(^) Missing File*
 (♫) Phantom Fury
 (^) Pike of Deepneus
-(^) Plasma Cutter
+(^) Plasma Cutter*
 (X) Sapphire Shunter
 (X) Shocktrain
 (X) Spectra
@@ -770,7 +773,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(^) Amebolize Incantation
+(^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
 (@5, ^3) Broken Terratotem
@@ -783,7 +786,7 @@ SUMMONER WEAPONS:
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
-(^) Ocotoral Bud
+(^) Ocotoral Bud*
 (^) Rotted Worm Staff
 (^) Teardown*
 (^) Thread Rod
@@ -797,9 +800,9 @@ SUMMONER WEAPONS:
 (X) Mildew Whip
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
-(^) Scabcoral Lyre
+(^) Scabcoral Lyre*
 (X) Wyvern Horn
-(^) Ziptie
+(^) Ziptie*
 
 (X) Binding Incantation
 (X) Candlelight
@@ -1096,12 +1099,14 @@ MATERIALS:
 (^) Bud Barnacle*
 (^) Carburite*
 (^) Defiled Bar*
+(^) Defiled Seeds*
 (^) Dreadful Powder*
 (^) Encrusted Bar*
 (^) Felnum Bar*
 (^) Magic Hair Spray*
 (^) NE-8*
 (^) Riven Carapace*
+(^) Riven Seeds*
 (^) Rubber*
 (^) Sanguinite Bar*
 (^) Sentient Powder*
@@ -1256,10 +1261,10 @@ MOUNTS & PETS:
 (^) Strange Power-Up (Platformer Mech)
 (X) Wet Wood (Mildew Blob)
 
-(^) Amoeba Toy (Meberoid)
+(^) Amoeba Toy (Meberoid)*
 (X) Rusty Cross Necklace (Guardian Angel)
 (^) Smith's Hammer (Walking Furnace)*
-(^) Suspicious Looking Pebble (Defiled Blight)
+(^) Suspicious Looking Pebble (Defiled Blight)*
 
 (ᗢ) Chew Toy (Chee Toy)*
 ---

@@ -2967,7 +2967,6 @@ Amebolize_Incantation: {
 	DisplayName: Amebolize Incantation
 	Tooltip:
 		'''
-		Struck enemies will wither away
 		5 summon tag damage
 		{$CommonItemTooltip.Whips}
 		'''

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dusts;
+﻿using Origins.Dusts;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;

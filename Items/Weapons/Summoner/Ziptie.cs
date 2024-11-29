@@ -2,8 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.NPCs;
-using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -11,8 +9,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
 	public class Ziptie : ModItem {
 		public override void SetDefaults() {
@@ -98,7 +94,7 @@ namespace Origins.Items.Weapons.Summoner {
 					if (hitEnemies[i] >= 0) {
 						NPC target = Main.npc[hitEnemies[i]];
 						if (target.CanBeChasedBy(Projectile, true)) {
-							target.AddBuff(Rasterized_Debuff.ID, 60);
+							target.AddBuff(Rasterized_Debuff.ID, 300);
 							target.AddBuff(Ziptie_Buff.ID, 240);
 						}
 					}

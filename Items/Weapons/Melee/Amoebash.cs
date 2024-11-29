@@ -213,6 +213,9 @@ namespace Origins.Items.Weapons.Melee {
 		public override void AI() {
 			Projectile.rotation -= MathHelper.PiOver2;
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			OriginGlobalNPC.InflictTorn(target, 80, targetSeverity: 0.15f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+		}
 		public override void OnKill(int timeLeft) {
 			if (timeLeft < 3597) {
 				SoundEngine.PlaySound(SoundID.NPCHit18.WithPitch(0.15f).WithVolumeScale(0.5f), Projectile.Center);

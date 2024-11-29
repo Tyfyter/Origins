@@ -728,8 +728,8 @@ Buffs: {
 	}
 
 	Soulhide_Debuff: {
-		DisplayName: Burning up
-		Description: The air around you burns
+		DisplayName: Shadefire
+		Description: The flame doesn't go out in the dark
 	}
 
 	Irish_Cheddar_Buff: {

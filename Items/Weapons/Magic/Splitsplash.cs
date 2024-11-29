@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Splitsplash : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -30,6 +30,14 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = SoundID.Item21;
 			Item.reuseDelay = 8;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Book)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Splitsplash_P : ModProjectile {
