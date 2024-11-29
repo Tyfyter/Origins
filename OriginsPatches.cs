@@ -71,6 +71,7 @@ using PegasusLib.Graphics;
 using PegasusLib;
 using Terraria.GameContent.UI;
 using Origins.UI.Event;
+using Origins.UI;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -588,7 +589,14 @@ namespace Origins {
 					damage.Flat *= FlatDamageMultiplier[item.type];
 				}
 			);
+			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
+			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture1;
 		}
+
+		private void On_FilterManager_BeginCapture1(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
+			orig(self, screenTarget1, clearColor);
+		}
+
 		delegate void orig_ModifyWeaponDamage(Player player, Item item, ref StatModifier damage);
 		delegate void hook_ModifyWeaponDamage(orig_ModifyWeaponDamage orig, Player player, Item item, ref StatModifier damage);
 		private static void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il) {

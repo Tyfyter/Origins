@@ -17,6 +17,11 @@ Conditions: {
 	DownedScrapper: After defeating the Scrapper
 }
 
+ModMenu: {
+	Defiled_Wastelands: Defiled Wastelands
+	Riven_Hive: Riven Hive
+}
+
 RecipeGroups: {
 	GemStaves: Any Gem Staff
 	EvilBoomerangs: Any Evil Boomerang
@@ -1648,12 +1653,12 @@ Configs: {
 		}
 
 		DefiledShaderJitter: {
-			Label: Defiled Shader Jitter
+			Label: Defiled Wastelands Shader Jitter
 			Tooltip: ""
 		}
 
 		DefiledShaderNoise: {
-			Label: Defiled Shader Noise
+			Label: Defiled Wastelands Shader Noise
 			Tooltip: ""
 		}
 	}
