@@ -1,7 +1,9 @@
 ﻿#if true ///TODO: unfalse if thorium
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -44,10 +46,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			base.ModifyEmpowermentPool(player, target, empPool);
 		}
 	}
-	public class Sonorous_Shredder_Unloaded : ModItem {
+	public class Sonorous_Shredder_Unloaded : ModItem, ICustomWikiStat {
 		public override string Name => base.Name[..^"_Unloaded".Length];
 		public override LocalizedText Tooltip => this.GetLocalization("UnloadedTooltip");
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
+		public IEnumerable<WikiProvider> GetWikiProviders() => [];
 	}
 	[ExtendsFromMod("ThoriumMod")]
 	public class Sonorous_Shredder_Projectile : BardProjectile, IBardDamageClassOverride {
