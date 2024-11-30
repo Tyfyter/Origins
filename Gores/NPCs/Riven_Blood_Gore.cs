@@ -157,6 +157,7 @@ namespace Origins.Gores.NPCs {
 			SlimeTarget = new(
 				MaskAura,
 				() => {
+					if (Main.gameMenu) anyActive = false;
 					bool isActive = anyActive;
 					anyActive = false;
 					return isActive && Lighting.NotRetro;
