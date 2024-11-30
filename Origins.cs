@@ -40,6 +40,7 @@ using Origins.Tiles.Banners;
 using Origins.Graphics;
 using MonoMod.Cil;
 using Origins.Items.Tools;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -822,7 +823,9 @@ namespace Origins {
 			public static int RivenBoss;
 			public static int RivenOcean;
 			public static int AncientRiven;
+			public static List<int> musicIDs;
 			internal static void LoadMusic() {
+				musicIDs = [];
 				ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
 				static void SetMusic(ref int newID, int baseID) {
 					newID = ReserveMusicID();
@@ -831,6 +834,7 @@ namespace Origins {
 							Array.Resize(ref audioSystem.AudioTracks, newID + 1);
 						}
 						Main.audioSystem.LoadCue(newID, "Music_" + baseID);
+						musicIDs.Add(newID);
 					}
 				}
 				SetMusic(ref Fiberglass, MusicID.Snow);
@@ -853,6 +857,12 @@ namespace Origins {
 			private static Func<int> ReserveMusicID;
 			internal static void UnloadMusic() {
 				ReserveMusicID = null;
+				if (Main.audioSystem is LegacyAudioSystem audioSystem) {
+					for (int i = 0; i < musicIDs.Count; i++) {
+						audioSystem.AudioTracks[musicIDs[i]].Stop(AudioStopOptions.Immediate);
+					}
+				}
+				musicIDs = null;
 			}
 		}
 		public static class Sounds {
