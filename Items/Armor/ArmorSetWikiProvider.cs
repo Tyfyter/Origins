@@ -87,7 +87,8 @@ namespace Origins.Items.Armor {
 				JArray types = new(baseTypes);
 				foreach (string type in set.SetCategories) types.Add(type);
 				data.Add("Types", types);
-				data.Add("SetName", item.set.ArmorSetName);
+				if (set is ModType modSet) data.Add("Name", modSet.Mod.GetLocalization($"ArmorSets.{item.set.ArmorSetName}.DisplayName", () => item.set.ArmorSetName.Replace('_', ' ')).Value);
+				data.Add("WikiName", item.set.ArmorSetName);
 				data.Add("DisplayName", item.set.ArmorSetDisplayName);
 				JArray images = [$"ArmorSets/{item.set.ArmorSetName}"];
 				if (item.set.HasFemaleVersion) images.Add($"ArmorSets/{item.set.ArmorSetName}_Female");
@@ -104,7 +105,8 @@ namespace Origins.Items.Armor {
 				JArray types = new(baseTypes);
 				foreach (string type in set.SetCategories) types.Add(type);
 				data.Add("Types", types);
-				data.Add("SetName", set.MergedArmorSetName);
+				if (set is ModType modSet) data.Add("Name", modSet.Mod.GetLocalization($"ArmorSets.{set.ArmorSetName}.DisplayName", () => set.ArmorSetName.Replace('_', ' ')).Value);
+				data.Add("WikiName", set.MergedArmorSetName);
 				data.Add("DisplayName", set.ArmorSetDisplayName);
 				data.Add("SetBonus", statGroups[0].GetValue("SetBonus"));
 
@@ -127,7 +129,7 @@ namespace Origins.Items.Armor {
 			}
 			for (int i = 0; i < statGroups.Count; i++) {
 				statGroups[i].Remove("IconItem");
-				yield return (statGroups[i].Value<string>("SetName"), statGroups[i]);
+				yield return (statGroups[i].Value<string>("WikiName"), statGroups[i]);
 			}
 			yield break;
 		}
