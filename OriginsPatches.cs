@@ -591,8 +591,12 @@ namespace Origins {
 			);
 			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture1;
+			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
+				try {
+					orig(self);
+				} catch(NullReferenceException) { }
+			};
 		}
-
 		private void On_FilterManager_BeginCapture1(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
 			orig(self, screenTarget1, clearColor);
 		}

@@ -5,6 +5,7 @@ using MonoMod.Cil;
 using Origins.Backgrounds;
 using ReLogic.Content;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
@@ -38,18 +39,21 @@ namespace Origins.UI {
 			c.EmitDelegate((ref bool cantShade) => {
 				if (!OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader && Main.gameMenu && MenuLoader.CurrentMenu is Defiled_Wastelands_Mod_Menu) {
 					Filter defiledFilter = Filters.Scene["Origins:ZoneDefiled"];
-					if (!Filters.Scene["Origins:ZoneDefiled"].IsActive()) Filters.Scene.Activate("Origins:ZoneDefiled", default);
-					defiledFilter.Opacity = Math.Max(OriginClientConfig.Instance.DefiledShaderNoise, float.Epsilon);
-					defiledFilter.GetShader()
-						.UseProgress(0.9f)
-						.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f)
-						.UseOpacity(MathHelper.Clamp(OriginClientConfig.Instance.DefiledShaderNoise * 5, float.Epsilon, 1))
-					.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"), 0);
-					/*Effect shader = defiledFilter.GetShader().Shader;
-					shader.Parameters["uProgress"].SetValue(0.9f);
-					shader.Parameters["uOpacity"].SetValue(defiledFilter.Opacity);
-					shader.Parameters["uIntensity"].SetValue(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f);*/
-					cantShade = false;
+					Effect effect = defiledFilter?.GetShader()?.Shader;
+					if (effect is not null) {
+						if (!Filters.Scene["Origins:ZoneDefiled"].IsActive()) Filters.Scene.Activate("Origins:ZoneDefiled", default);
+						defiledFilter.Opacity = Math.Max(OriginClientConfig.Instance.DefiledShaderNoise, float.Epsilon);
+						defiledFilter.GetShader()
+							.UseProgress(0.9f)
+							.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f)
+							.UseOpacity(MathHelper.Clamp(OriginClientConfig.Instance.DefiledShaderNoise * 5, float.Epsilon, 1))
+							.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"), 0);
+						/*Effect shader = defiledFilter.GetShader().Shader;
+						shader.Parameters["uProgress"].SetValue(0.9f);
+						shader.Parameters["uOpacity"].SetValue(defiledFilter.Opacity);
+						shader.Parameters["uIntensity"].SetValue(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f);*/
+						cantShade = false;
+					}
 				}
 			});
 		}
