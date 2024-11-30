@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Ziptie : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToWhip(ModContent.ProjectileType<Ziptie_P>(), 47, 5, 4, 35);
+			Item.DefaultToWhip(ModContent.ProjectileType<Ziptie_P>(), 51, 5, 4, 35);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;

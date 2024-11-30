@@ -68,7 +68,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Trash_Lid_Mount_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Indestructible_Saddle_Mount_Buff";
+		public override string Texture => "Origins/Buffs/Trash_Lid_Buff";
 		public override void SetStaticDefaults() {
 			BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 				mountID = ModContent.MountType<Trash_Lid_Mount>()
