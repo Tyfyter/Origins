@@ -234,8 +234,8 @@ namespace Origins.Items.Weapons.Summoner {
 				miscShaderData.UseShaderSpecificData(texture.UVFrame());
 				float endLength = (16f / 32f) / length;
 				miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
-					16f / 48f,
-					endLength
+					3,
+					0
 				));
 				miscShaderData.Apply();
 				_vertexStrip.PrepareStrip(pos, rot, StripColors, StripWidth, -Main.screenPosition, length, includeBacksides: true);

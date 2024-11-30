@@ -109,7 +109,7 @@ namespace Origins.Items.Weapons.Summoner {
 					if (hitEnemies[i] >= 0) {
 						NPC target = Main.npc[hitEnemies[i]];
 						if (target.CanBeChasedBy(Projectile, true)) {
-							target.DoCustomKnockback(target.velocity * Math.Max(1 - target.knockBackResist, 0) + target.DirectionTo(center) * Projectile.knockBack * target.knockBackResist);
+							target.DoCustomKnockback(target.velocity * Math.Max(1 - target.knockBackResist, 0) + target.DirectionTo(center) * Projectile.knockBack * target.knockBackResist * 4);
 						}
 					}
 				}

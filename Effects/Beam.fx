@@ -18,7 +18,9 @@ float4 uShaderSpecificData;
 float2 uLoopData;
 
 float4 Beam(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
-	if (uv.x < uLoopData.y) { // start
+	if (uLoopData.y == 0) {
+		uv.x = fmod(uv.x * uLoopData.x, 1);
+	} else if (uv.x < uLoopData.y) { // start
 		uv.x = (uv.x / uLoopData.y) * uLoopData.x;
 	} else if (uv.x > 1 - uLoopData.y) { // end
 		uv.x = ((uv.x - (1 - uLoopData.y)) / uLoopData.y + 2) * uLoopData.x;
