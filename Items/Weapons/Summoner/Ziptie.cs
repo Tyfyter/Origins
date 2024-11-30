@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.NPCs;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -90,16 +91,29 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnKill(int timeLeft) {
 			if (hitEnemies.Count >= 3) {
+				Vector2 center = Vector2.Zero;
+				int count = 0;
 				for (int i = 0; i < hitEnemies.Count; i++) {
 					if (hitEnemies[i] >= 0) {
 						NPC target = Main.npc[hitEnemies[i]];
 						if (target.CanBeChasedBy(Projectile, true)) {
-							target.AddBuff(Rasterized_Debuff.ID, 300);
+							target.AddBuff(Rasterized_Debuff.ID, 60);
 							target.AddBuff(Ziptie_Buff.ID, 240);
+							center += target.Center;
+							count++;
 						}
 					}
 				}
-				Main.player[Projectile.owner].AddBuff(Ziptie_Buff.ID, 300);
+				center /= count;
+				for (int i = 0; i < hitEnemies.Count; i++) {
+					if (hitEnemies[i] >= 0) {
+						NPC target = Main.npc[hitEnemies[i]];
+						if (target.CanBeChasedBy(Projectile, true)) {
+							target.DoCustomKnockback(target.velocity * Math.Max(1 - target.knockBackResist, 0) + target.DirectionTo(center) * Projectile.knockBack * target.knockBackResist);
+						}
+					}
+				}
+				//Main.player[Projectile.owner].AddBuff(Ziptie_Buff.ID, 300);
 			}
 		}
 		private static void DrawLine(List<Vector2> list) {
