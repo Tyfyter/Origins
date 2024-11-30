@@ -659,10 +659,11 @@ namespace Origins.Dev {
 			data.Add("Types", types);
 
 			data.AppendStat("PickPower", item.pick, 0);
-			data.AppendStat("AxePower", item.axe, 0);
+			data.AppendStat("AxePower", item.axe * 5, 0);
 			data.AppendStat("HammerPower", item.hammer, 0);
 			data.AppendStat("FishPower", item.fishingPole, 0);
 			data.AppendStat("BaitPower", item.bait, 0);
+			data.AppendStat("ReachBonus", item.tileBoost, 0);
 
 			if (item.createTile != -1) {
 				ModTile tile = TileLoader.GetTile(item.createTile);
