@@ -321,7 +321,9 @@ namespace Origins {
 				modifiers.SourceDamage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
+			hitIsSelfDamage = false;
 			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
+				hitIsSelfDamage = true;
 				float damageMult = Main.GameModeInfo.EnemyDamageMultiplier;
 				if (Main.GameModeInfo.IsJourneyMode) {
 					Terraria.GameContent.Creative.CreativePowers.DifficultySliderPower power = Terraria.GameContent.Creative.CreativePowerManager.Instance.GetPower<Terraria.GameContent.Creative.CreativePowers.DifficultySliderPower>();
@@ -425,9 +427,6 @@ namespace Origins {
 			}
 		}
 		public override bool FreeDodge(Player.HurtInfo info) {
-			if (hitOriginalDamage <= 0) {
-				return true;
-			}
 			if (allManaDamage) {
 				Player.CheckMana(manaDamageToTake, true);
 				Player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 192);
@@ -798,6 +797,7 @@ namespace Origins {
 			return foundTarget;
 		}
 		internal static float hitOriginalDamage = 0;
+		internal static bool hitIsSelfDamage = false;
 		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.3f, bool hideTimeLeft = false) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int buffIndex = player.FindBuffIndex(Torn_Debuff.ID);

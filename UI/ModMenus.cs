@@ -6,6 +6,7 @@ using Origins.Backgrounds;
 using ReLogic.Content;
 using System;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;

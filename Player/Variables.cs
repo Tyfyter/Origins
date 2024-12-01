@@ -682,10 +682,6 @@ namespace Origins {
 			} else if (!Player.HasBuff<Defiled_Asphyxiator_Debuff_3>()) {
 				rasterizedTime = 0;
 			}
-			if (Player.breath > Player.breathMax) {
-				Player.breath = Player.breathMax;
-			}
-			Player.breathMax = 200;
 			plagueSight = false;
 			plagueSightLight = false;
 			mountOnly = false;

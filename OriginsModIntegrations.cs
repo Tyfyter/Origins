@@ -18,6 +18,7 @@ using Terraria.Localization;
 using Origins.Dev;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using ThoriumMod;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -204,7 +205,7 @@ namespace Origins {
 					}
 				})
 			);*/
-			OriginExtensions.OnIncreaseMaxBreath += [JITWhenModsEnabled("ThoriumMod")] (player, _) => player.GetModPlayer<ThoriumMod.ThoriumPlayer>().breathOverMax = true;
+			if (typeof(ThoriumPlayer).GetField(nameof(ThoriumPlayer.breathOverMax)) is not null) OriginExtensions.OnIncreaseMaxBreath += [JITWhenModsEnabled("ThoriumMod")] (player, _) => player.GetModPlayer<ThoriumMod.ThoriumPlayer>().breathOverMax = true;
 			(string name, float? assimilation)[] thoriumNPCs = [
 				("TheInnocent", 0.02f),
 				("FrostWormHead", null),

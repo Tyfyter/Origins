@@ -359,6 +359,9 @@ namespace Origins {
 				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
 				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "VoidShade"), EffectPriority.High);
+				if (Filters.Scene["Origins:ZoneDefiled"]?.IsActive() ?? false) {
+					Filters.Scene["Origins:ZoneDefiled"].Deactivate();
+				}
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "DefiledShade")
 					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 1),
 				EffectPriority.High);

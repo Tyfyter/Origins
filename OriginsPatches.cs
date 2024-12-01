@@ -72,6 +72,7 @@ using PegasusLib;
 using Terraria.GameContent.UI;
 using Origins.UI.Event;
 using Origins.UI;
+using ThoriumMod;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -290,12 +291,19 @@ namespace Origins {
 				}
 
 			};
-			IL_Collision.HurtTiles += (il) => {
-			};
 			On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
 			On_Player.HurtModifiers.ToHurtInfo += (On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) => {
-				OriginPlayer.hitOriginalDamage = self.SourceDamage.ApplyTo(damage) * self.IncomingDamageMultiplier.Value;
-				return orig(ref self, damage, defense, defenseEffectiveness, knockback, knockbackImmune);
+				Player.HurtInfo info = orig(ref self, damage, defense, defenseEffectiveness, knockback, knockbackImmune);
+				if (OriginPlayer.hitIsSelfDamage && self.DamageSource.TryGetCausingEntity(out Entity entity) && entity is Projectile) {
+					float _damage = self.SourceDamage.ApplyTo(damage) * self.IncomingDamageMultiplier.Value;
+					float armorPenetration = defense * Math.Clamp(self.ScalingArmorPenetration.Value, 0f, 1f) + self.ArmorPenetration.Value;
+					float _defense = Math.Max(defense - armorPenetration, 0f);
+					float damageReduction = _defense * defenseEffectiveness;
+					_damage = Math.Max(_damage - damageReduction, 0f);
+					if (self.FinalDamage.ApplyTo(_damage) <= 0) info.Cancelled = true;
+				}
+				
+				return info;
 			};
 			On_Player.AddBuff_DetermineBuffTimeToAdd += On_Player_AddBuff_DetermineBuffTimeToAdd;
 			On_Player.Update_NPCCollision += On_Player_Update_NPCCollision;
@@ -593,9 +601,17 @@ namespace Origins {
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture1;
 			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
 				try {
-					orig(self);
+					if (self.Shader is not null) orig(self);
 				} catch(NullReferenceException) { }
 			};
+			MonoModHooks.Add(
+				typeof(ModLoader).GetMethod("Reload", BindingFlags.NonPublic | BindingFlags.Static),
+				(Action orig) => {
+					typeof(FilterManager).GetField("_activeFilterCount", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(Filters.Scene, 0);
+					((LinkedList<Filter>)typeof(FilterManager).GetField("_activeFilters", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Filters.Scene)).Clear();
+					orig();
+				}
+			);
 		}
 		private void On_FilterManager_BeginCapture1(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
 			orig(self, screenTarget1, clearColor);
