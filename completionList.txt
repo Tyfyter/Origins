@@ -1256,9 +1256,7 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
-(^) Chromatic Scale (Rainbow Pangolin)
 (^) Fleshy Globe (Self-Contained Universe)*
-(^) Strange Power-Up (Platformer Mech)
 (X) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*
@@ -1266,7 +1264,9 @@ MOUNTS & PETS:
 (^) Smith's Hammer (Walking Furnace)*
 (^) Suspicious Looking Pebble (Defiled Blight)*
 
-(ᗢ) Chew Toy (Chee Toy)*
+(^) Chromatic Scale (Rainbow Pangolin)*
+(^) Chew Toy (Chee Toy)*
+(^) Strange Power-Up (Platformer Mech)*
 ---
 
 
