@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using System;
@@ -175,7 +176,8 @@ namespace Origins.Items.Accessories {
 			return false;
 		}
 	}
-	public class Ravel_Mount_Buff : ModBuff {
+	public class Ravel_Mount_Buff : ModBuff, ICustomWikiStat {
+		public string CustomStatPath => Name;
 		public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
 		protected virtual int MountID => ModContent.MountType<Ravel_Mount>();
 		public override void SetStaticDefaults() {

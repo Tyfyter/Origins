@@ -193,7 +193,7 @@ namespace Origins {
 					if (Terraria.UI.ItemSlot.ShiftInUse) {
 						Directory.CreateDirectory(StatJSONPath);
 						int i;
-						for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.NpcsByNetId[i].ModNPC?.Mod is Origins) break;
+						for (i = 0; i < NPCLoader.NPCCount; i++) if (ContentSamples.NpcsByNetId[i].ModNPC?.Mod is Origins) break;
 						for (; i < NPCLoader.NPCCount; i++) {
 							NPC npc = ContentSamples.NpcsByNetId[i];
 							if (npc.ModNPC is not null) {
@@ -205,6 +205,22 @@ namespace Origins {
 						const string text = "Shift must be held to export all stats, for safety reasons";
 						Origins.LogError(text);
 						Main.NewText(text);
+					}
+				}
+			}
+		}
+		public bool ExportAllBuffStatsJSON {
+			get => false;
+			set {
+				if (value) {
+					if (string.IsNullOrWhiteSpace(StatJSONPath)) {
+						Origins.LogError($"StatJSONPath is null or whitespace");
+						return;
+					}
+					Directory.CreateDirectory(StatJSONPath);
+					for (int i = BuffID.Count; i < BuffLoader.BuffCount; i++) {
+						ModBuff buff = BuffLoader.GetBuff(i);
+						if (buff?.Mod is Origins) WikiPageExporter.ExportBuffStats(buff);
 					}
 				}
 			}

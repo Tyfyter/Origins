@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
+using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -31,7 +33,8 @@ namespace Origins.Items.Other.Consumables.Food {
 			return true;
 		}
 	}
-	public class Irish_Cheddar_Buff : ModBuff {
+	public class Irish_Cheddar_Buff : ModBuff, ICustomWikiStat {
+		public string CustomStatPath => nameof(Irish_Cheddar_Buff);
 		public override string Texture => "Origins/Buffs/Food/Irish_Cheddar_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

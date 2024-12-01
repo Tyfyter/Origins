@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Layers;
 using Terraria;
 using Terraria.ID;
@@ -32,7 +33,8 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 	}
-	public class Futurephones_Buff : ModBuff {
+	public class Futurephones_Buff : ModBuff, ICustomWikiStat {
+		public bool CanExportStats => false;
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

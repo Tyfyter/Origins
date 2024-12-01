@@ -91,11 +91,12 @@ namespace Origins.Dev {
 		}
 		public static void ExportItemPage(Item item) {
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
+				ICustomWikiStat customWikiStat = item.ModItem as ICustomWikiStat;
 				string pagePath = GetWikiPagePath(provider.PageName(item.ModItem));
 				(PageTemplate template, Dictionary<string, object> context) = provider.GetPage(item.ModItem);
 				if (context == null) continue;
-				if (((item.ModItem as ICustomWikiStat)?.FullyGeneratable ?? false) || !File.Exists(pagePath)) {
-					WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(item.ModItem)), template.Resolve(context));
+				if ((customWikiStat?.FullyGeneratable ?? false) || !File.Exists(pagePath)) {
+					WriteFileNoUnneededRewrites(GetWikiPagePath(pagePath), template.Resolve(context));
 				} else {
 					TryUpdatingExistingPage(pagePath, template, context);
 				}
@@ -115,7 +116,7 @@ namespace Origins.Dev {
 		public static void ExportNPCPage(NPC npc) {
 			foreach (WikiProvider provider in GetWikiProviders(npc.ModNPC)) {
 				if (provider.GetPage(npc.ModNPC) is (PageTemplate template, Dictionary<string, object> context) && context is not null) {
-					WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(npc.ModNPC)), template.Resolve(context));
+					WriteFileNoUnneededRewrites(GetWikiPagePath((npc.ModNPC as ICustomWikiStat)?.CustomStatPath ?? provider.PageName(npc.ModNPC)), template.Resolve(context));
 				}
 			}
 		}
@@ -123,6 +124,17 @@ namespace Origins.Dev {
 			if (npc.ModNPC is ICustomWikiStat customStats && !customStats.CanExportStats) return;
 			foreach (WikiProvider provider in GetWikiProviders(npc.ModNPC)) {
 				foreach ((string name, JObject stats) stats in provider.GetStats(npc.ModNPC)) {
+					WriteFileNoUnneededRewrites(
+						GetWikiStatPath(stats.name),
+						JsonConvert.SerializeObject(stats.stats, Formatting.Indented)
+					);
+				}
+			}
+		}
+		public static void ExportBuffStats(ModBuff buff) {
+			if (buff is ICustomWikiStat customStats && !customStats.CanExportStats) return;
+			foreach (WikiProvider provider in GetWikiProviders(buff)) {
+				foreach ((string name, JObject stats) stats in provider.GetStats(buff)) {
 					WriteFileNoUnneededRewrites(
 						GetWikiStatPath(stats.name),
 						JsonConvert.SerializeObject(stats.stats, Formatting.Indented)
@@ -150,6 +162,7 @@ namespace Origins.Dev {
 		}
 		public static string GetWikiName(ModItem modItem) => SanitizeWikiName(modItem.DisplayName.Value);
 		public static string GetWikiName(ModNPC modNPC) => SanitizeWikiName(modNPC.DisplayName.Value);
+		public static string GetWikiName(ModBuff modBuff) => SanitizeWikiName(Lang.GetBuffName(modBuff.Type));
 		public static string SanitizeWikiName(string name) => WebUtility.UrlEncode(name.Replace(' ', '_')).Replace("%27", "'");
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
@@ -496,6 +509,7 @@ namespace Origins.Dev {
 		bool ShouldHavePage => true;
 		bool NeedsCustomSprite => false;
 		string CustomSpritePath => null;
+		string CustomStatPath => null;
 		bool CanExportStats => true;
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
 		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
@@ -732,9 +746,9 @@ namespace Origins.Dev {
 			}
 			data.AppendStat("SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
 			data.AppendStat("InternalName", item.ModItem?.Name, null);
-			yield return (PageName(modItem), data);
+			yield return (customStat?.CustomStatPath ?? PageName(modItem), data);
 			if (item.makeNPC > 0 && NPCLoader.GetNPC(item.makeNPC) is ModNPC modNPC) {
-				yield return (PageName(modItem) + "_NPC", NPCWikiProvider.GetNPCStats(modNPC));
+				yield return ((customStat?.CustomStatPath ?? PageName(modItem)) + "_NPC", NPCWikiProvider.GetNPCStats(modNPC));
 			}
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModItem value) {
@@ -864,7 +878,7 @@ namespace Origins.Dev {
 			} else if (modNPC is WormTail) {
 				segmentText = "_Tail";
 			}
-			yield return (PageName(modNPC) + segmentText, GetNPCStats(modNPC));
+			yield return (((modNPC as ICustomWikiStat)?.CustomStatPath ?? PageName(modNPC)) + segmentText, GetNPCStats(modNPC));
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;

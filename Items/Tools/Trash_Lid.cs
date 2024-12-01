@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Projectiles;
@@ -67,7 +68,8 @@ namespace Origins.Items.Tools {
 			return true;
 		}
 	}
-	public class Trash_Lid_Mount_Buff : ModBuff {
+	public class Trash_Lid_Mount_Buff : ModBuff, ICustomWikiStat {
+		public string CustomStatPath => nameof(Brainy_Buff);
 		public override string Texture => "Origins/Buffs/Trash_Lid_Buff";
 		public override void SetStaticDefaults() {
 			BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {

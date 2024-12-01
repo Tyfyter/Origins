@@ -43,7 +43,8 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Brainy_Buff : ModBuff {
+	public class Brainy_Buff : ModBuff, ICustomWikiStat {
+		public string CustomStatPath => nameof(Brainy_Buff);
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Crimbrain");
 			// Description.SetDefault("The crimbrain will fight for you");

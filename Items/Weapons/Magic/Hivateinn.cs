@@ -48,6 +48,7 @@ namespace Origins.Items.Weapons.Magic {
 		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 0;
 			Projectile.hostile = false;
@@ -88,7 +89,8 @@ namespace Origins.Items.Weapons.Magic {
 			return target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>()) ? false : base.CanHitNPC(target);
 		}
 	}
-	public class LightningImmuneFixBuff : ModBuff {
+	public class LightningImmuneFixBuff : ModBuff, ICustomWikiStat {
+		public bool CanExportStats => false;
 		public override string Texture => "Terraria/Images/Buff_204";
 	}
 }

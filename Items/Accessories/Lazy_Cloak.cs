@@ -244,12 +244,11 @@ namespace Origins.Items.Accessories {
 	}
 }
 namespace Origins.Buffs {
-	public class Lazy_Cloak_Buff : ModBuff {
+	public class Lazy_Cloak_Buff : ModBuff, ICustomWikiStat {
+		public string CustomStatPath => nameof(Lazy_Cloak_Buff);
 		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lazy Cloak");
-			// Description.SetDefault("Your cloak will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			ID = Type;

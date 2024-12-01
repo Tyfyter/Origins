@@ -513,7 +513,7 @@ Buffs: {
 	}
 
 	Cranivore_Debuff: {
-		// DisplayName: Cranivore
+		// DisplayName: Cranivored
 		// Description: It's on your face!
 	}
 
@@ -608,7 +608,7 @@ Buffs: {
 	}
 
 	Optiphage_Debuff: {
-		// DisplayName: Optiphage
+		// DisplayName: Optiphagy
 		// Description: It's on your eyeball!
 	}
 
@@ -828,8 +828,8 @@ Buffs: {
 	}
 
 	Futurephones_Buff: {
-		// DisplayName: Futurephones
-		// Description: Heed her warcry
+		// DisplayName: Ping
+		// Description: Someone's teammate says they should attack you
 	}
 
 	Juvenile_Amalgamation_Buff: {
@@ -887,7 +887,7 @@ Buffs: {
 	}
 
 	Swarm_Statue_Buff: {
-		// DisplayName: Swarm Statue
+		// DisplayName: Swarmed
 		// Description: Enemy spawn rates increased
 	}
 
@@ -1808,6 +1808,11 @@ Configs: {
 
 		ExportSpecialImages: {
 			// Label: Export Special Images
+			// Tooltip: ""
+		}
+
+		ExportAllBuffStatsJSON: {
+			// Label: Export All Buff Stats J S O N
 			// Tooltip: ""
 		}
 	}
