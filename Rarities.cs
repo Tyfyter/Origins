@@ -38,6 +38,7 @@ namespace Origins {
 			return offset == 0 ? Type : ItemRarityID.Cyan + offset;
 		}
 	}
+	//interesting ship
 	public class ButterscotchRarity : ModRarity {
 		public static string RarityName => "Butterscotch";
 		public static int ID { get; private set; }
@@ -67,6 +68,8 @@ namespace Origins {
 		}
 		public override int GetPrefixedRarity(int offset, float valueMult) {
 			switch (offset) {
+				case -1:
+				return ButterscotchRarity.ID;
 				case 0:
 				return ID;
 				case 1:
@@ -87,6 +90,10 @@ namespace Origins {
 		}
 		public override int GetPrefixedRarity(int offset, float valueMult) {
 			switch (offset) {
+				case -2:
+				return ButterscotchRarity.ID;
+				case -1:
+				return CrimsonRarity.ID;
 				case 0:
 				return ID;
 				default:

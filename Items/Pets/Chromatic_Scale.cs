@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Pets;
+using Origins.Tiles;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -12,7 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Chromatic_Scale : ModItem, ICustomWikiStat {
+	public class Chromatic_Scale : ModItem, ICustomWikiStat, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
@@ -31,9 +34,12 @@ namespace Origins.Items.Pets {
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2); // The item applies the buff, the buff spawns the projectile
-
 			return false;
 		}
+		public IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites => [
+			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Chromatic_Pangolin).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 4)),
+			("_Dashing", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Chromatic_Pangolin).GetDefaultTMLName() + "_Flying", AssetRequestMode.ImmediateLoad).Value, 3, 4)),
+		];
 	}
 	public class Chromatic_Pangolin : ModProjectile {
 		public bool OnGround {

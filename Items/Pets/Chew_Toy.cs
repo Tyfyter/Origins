@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Pets;
 using Origins.LootConditions;
+using Origins.Tiles;
+using PegasusLib;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,10 +32,9 @@ namespace Origins.Items.Pets {
 			]).ToArray();
 		}
 	}
-	public class Chew_Toy : ModItem {
+	public class Chew_Toy : ModItem, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;
@@ -47,6 +49,10 @@ namespace Origins.Items.Pets {
 			player.AddBuff(Item.buffType, 2); // The item applies the buff, the buff spawns the projectile
 			return false;
 		}
+		public IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites => [
+			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Chee_Toy).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 4)),
+			("_Flying", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Chee_Toy).GetDefaultTMLName() + "_Flying", AssetRequestMode.ImmediateLoad).Value, 4, 4)),
+		];
 	}
 	public class Chee_Toy : ModProjectile {
 		public AutoLoadingAsset<Texture2D> flyingTexture = typeof(Chee_Toy).GetDefaultTMLName() + "_Flying";

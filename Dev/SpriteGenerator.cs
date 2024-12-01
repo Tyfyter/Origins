@@ -54,6 +54,7 @@ namespace Origins.Dev {
 		public static Texture2D GenerateArmorSprite(Player player, ItemSlotSet itemSlotSet, PlayerShaderSet shaderSet = default) {
 			return Generate(
 				(spriteBatch) => {
+					player.ResetEffects();
 					player.direction = 1;
 					Main.screenPosition = player.position - new Vector2(8, 7);
 					itemSlotSet.Apply(player);
@@ -198,6 +199,20 @@ namespace Origins.Dev {
 				), 1);
 			}
 			return frames;
+		}
+		public static (Texture2D texture, int frames)[] GenerateAnimationSprite(Texture2D texture, int frames, int framesPerFrame) {
+			(Texture2D texture, int frames)[] sprites = new (Texture2D texture, int frames)[frames];
+			Rectangle frame = texture.Frame(verticalFrames: frames);
+			for (int i = 0; i < frames; i++) {
+				sprites[i] = (Generate(
+					(spriteBatch) => {
+						spriteBatch.Draw(texture, Vector2.Zero, frame, Color.White);
+					},
+					(frame.Width, frame.Height)
+				), framesPerFrame);
+				frame.Y += frame.Height;
+			}
+			return sprites;
 		}
 	}
 }
