@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs.Critters;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -32,6 +33,7 @@ namespace Origins.Tiles.Defiled {
 
 			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [..validTiles]);
 			//soundType = SoundID.Grass;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {

@@ -68,7 +68,7 @@ namespace Origins.Tiles {
 				ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j + 1].TileType);
 				return true;
 			}
-			if (type == ModContent.TileType<Defiled_Foliage>()) {
+			if (type == ModContent.TileType<Defiled_Foliage>() || type == ModContent.TileType<Riven_Foliage>()) {
 				ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j + 1].TileType);
 			}
 			return true;
