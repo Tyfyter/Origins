@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Combat"
 		];
+		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.VolatileGelatin;
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.VolatileGelatin;
 		public override void SetDefaults(Item entity) {
 			entity.DamageType = DamageClasses.Explosive;

@@ -37,6 +37,12 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool WoodBuffs = true;
 
+		[DefaultValue(true), ReloadRequired]
+		public bool RoyalGel = true;
+
+		[DefaultValue(true), ReloadRequired]
+		public bool VolatileGelatin = true;
+
 		[Header("Other")]
 
 		[ReloadRequired]
