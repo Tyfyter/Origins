@@ -429,6 +429,7 @@ Generic: {
 	Defiled_Antibodies: Defiled Antibodies
 	Definite_Article: the {0}
 	VariableAssimilation: Variable
+	BuffTime: $60!:{0:0.##} seconds$
 }
 
 AltBiomes: {

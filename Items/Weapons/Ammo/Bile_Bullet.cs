@@ -6,6 +6,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Newtonsoft.Json.Linq;
+using Origins.UI;
+using Terraria.Localization;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Bullet : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -29,6 +32,14 @@ namespace Origins.Items.Weapons.Ammo {
 			.AddIngredient(ItemID.EmptyBullet, 150)
 			.AddIngredient(ModContent.ItemType<Black_Bile>())
 			.Register();
+		}
+		public void ModifyWikiStats(JObject data) {
+			data.Add("Debuffs", new JArray() {
+				new JObject() {
+					["src"] = "Rasterized",// wiki stat file name for the buff
+					["Duration"] = Time_Radices.BuffTime.FormatTime(15)
+				}
+			});
 		}
 	}
 	public class Bile_Bullet_P : ModProjectile {

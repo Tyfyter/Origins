@@ -468,6 +468,7 @@ namespace Origins {
 					subMatch = substitutionRegex.Match(text.Value.Value);
 				}
 			}
+			Time_Radices.Refresh();
 		}
 		public override void PreUpdateProjectiles() {
 			for (int i = 0; i < Main.maxProjectiles; i++) {
