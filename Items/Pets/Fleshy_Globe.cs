@@ -1,14 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Pets;
+using Origins.Tiles;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Fleshy_Globe : ModItem, ICustomWikiStat {
+	public class Fleshy_Globe : ModItem, ICustomWikiStat, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
@@ -31,6 +35,9 @@ namespace Origins.Items.Pets {
 			player.AddBuff(Item.buffType, 2); // The item applies the buff, the buff spawns the projectile
 			return false;
 		}
+		public IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites => [
+			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Self_Contained_Universe).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 4)),
+		];
 	}
 	public class Self_Contained_Universe : ModProjectile {
 		public bool OnGround {

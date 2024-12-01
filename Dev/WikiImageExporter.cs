@@ -120,8 +120,8 @@ namespace Origins.Dev {
 		public static void ExportAnimatedImage(string name, (Texture2D texture, int frames)[] textures) {
 			string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";
 			Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-			FileStream stream = File.Create(filePath);
 			int seqNum = 0;
+			MemoryStream fileBufferStream = new(0);
 			for (int i = 0; i < textures.Length; i++) {
 				Texture2D texture = textures[i].texture;
 				MemoryStream memoryStream = new(0);
@@ -153,57 +153,79 @@ namespace Origins.Dev {
 				uint IDAT_len = ReadUInt(buffer, IDAT_pos);
 				uint crc32 = 0xFFFFFFFFu;
 				if (i == 0) {
-					stream.Write(buffer, 0, IDAT_pos);
-					stream.Write([0x00, 0x00, 0x00, 0x08], 0, 4);
-					WriteAndAdvanceCRC(stream, ref crc32, [
+					fileBufferStream.Write(buffer, 0, IDAT_pos);
+					fileBufferStream.Write([0x00, 0x00, 0x00, 0x08], 0, 4);
+					WriteAndAdvanceCRC(fileBufferStream, ref crc32, [
 						/*acTL      */0x61, 0x63, 0x54, 0x4C,
 								/*num_frames*/0x00, 0x00, 0x00, (byte)textures.Length,
 								/*num_plays */0x00, 0x00, 0x00, 0xFF
 					]);
-					FinalizeCRC((uint)crc32, stream);
+					FinalizeCRC((uint)crc32, fileBufferStream);
 				}
 
-				stream.Write([
+				fileBufferStream.Write([
 					0x00, 0x00, 0x00, 0x1A
 				], 0, 4);
 				crc32 = 0xFFFFFFFFu;
-				WriteAndAdvanceCRC(stream, ref crc32, "fcTL"u8.ToArray());
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, "fcTL"u8.ToArray());
 				//BinaryWriter writer = new BinaryWriter(stream, Encoding.Default, true);
 				//writer.Flush();
 				//writer.Dispose();
 
-				WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)seqNum++), name: "sequence_number");
-				WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Width), name: "width");
-				WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Height), name: "height");
-				WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "x_offset");
-				WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "y_offset");
-				WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)textures[i].frames), name: "delay_num");
-				WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60), name: "delay_den");
-				WriteAndAdvanceCRC(stream, ref crc32, [(byte)1], name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
-				WriteAndAdvanceCRC(stream, ref crc32, [(byte)0], name: "blend_op");//APNG_BLEND_OP_SOURCE
-				FinalizeCRC((uint)crc32, stream);
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, ToBytes((uint)seqNum++), name: "sequence_number");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, ToBytes((uint)texture.Width), name: "width");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, ToBytes((uint)texture.Height), name: "height");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, BitConverter.GetBytes((uint)0), name: "x_offset");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, BitConverter.GetBytes((uint)0), name: "y_offset");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, UShortToBytes((ushort)textures[i].frames), name: "delay_num");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, UShortToBytes((ushort)60), name: "delay_den");
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, [(byte)1], name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, [(byte)0], name: "blend_op");//APNG_BLEND_OP_SOURCE
+				FinalizeCRC((uint)crc32, fileBufferStream);
 
 				crc32 = 0xFFFFFFFFu;
 				if (i != 0) {
-					stream.Write(ToBytes((uint)(IDAT_len + 4)));
-					WriteAndAdvanceCRC(stream, ref crc32, [
+					fileBufferStream.Write(ToBytes((uint)(IDAT_len + 4)));
+					WriteAndAdvanceCRC(fileBufferStream, ref crc32, [
 						/*fdAT          */0x66, 0x64, 0x41, 0x54,
 								/*sequence_number*/0x00, 0x00, 0x00, (byte)seqNum++
 					]);
 				} else {
-					stream.Write(ToBytes((uint)IDAT_len));
-					WriteAndAdvanceCRC(stream, ref crc32, "IDAT"u8.ToArray());
+					fileBufferStream.Write(ToBytes((uint)IDAT_len));
+					WriteAndAdvanceCRC(fileBufferStream, ref crc32, "IDAT"u8.ToArray());
 				}
-				WriteAndAdvanceCRC(stream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
-				FinalizeCRC((uint)crc32, stream);
+				WriteAndAdvanceCRC(fileBufferStream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
+				FinalizeCRC((uint)crc32, fileBufferStream);
 
 				if (i == textures.Length - 1) {
 					int IEND_pos = NextChunk(IDAT_pos, buffer, "IEND"u8.ToArray());
 					uint IEND_len = ReadUInt(buffer, IEND_pos);
-					stream.Write(buffer, IEND_pos, 4 + 4 + (int)IEND_len + 4);
+					fileBufferStream.Write(buffer, IEND_pos, 4 + 4 + (int)IEND_len + 4);
 				}
 			}
-			stream.Close();
+			bool shouldOverwrite = !File.Exists(filePath);
+			if (!shouldOverwrite) {
+				FileStream oldFileStream = File.OpenRead(filePath);
+				if (oldFileStream.Length == fileBufferStream.Length) {
+					fileBufferStream.Position = 0;
+					shouldOverwrite = false;
+					for (int i = 0; i < fileBufferStream.Length; i++) {
+						if (fileBufferStream.ReadByte() != oldFileStream.ReadByte()) {
+							shouldOverwrite = true;
+							break;
+						}
+					}
+				} else {
+					shouldOverwrite = true;
+				}
+				oldFileStream.Close();
+			}
+			if (shouldOverwrite) {
+				fileBufferStream.Position = 0;
+				FileStream stream = File.Create(filePath, (int)fileBufferStream.Length);
+				fileBufferStream.CopyTo(stream);
+			}
+			fileBufferStream.Close();
 		}
 	}
 }

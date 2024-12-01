@@ -1,12 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Pets;
+using Origins.Tiles;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Amoeba_Toy : ModItem {
+	public class Amoeba_Toy : ModItem, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		
@@ -21,6 +26,9 @@ namespace Origins.Items.Pets {
 				player.AddBuff(Item.buffType, 3600);
 			}
 		}
+		public IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites => [
+			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Meberoid).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 5)),
+		];
 	}
 	public class Meberoid : ModProjectile {
 		public override string Texture => "Origins/Items/Pets/Meberoid";

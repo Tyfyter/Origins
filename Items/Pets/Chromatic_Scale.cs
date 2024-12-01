@@ -18,6 +18,7 @@ namespace Origins.Items.Pets {
 	public class Chromatic_Scale : ModItem, ICustomWikiStat, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
+		public bool? Hardmode => false;
 		public string[] Categories => [
 			"Pet",
 			"DeveloperItem"

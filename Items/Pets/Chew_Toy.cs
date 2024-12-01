@@ -19,11 +19,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
 
 namespace Origins.Items.Pets {
-	public class Chee_Set : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Pet",
-			"DeveloperItem"
-		];
+	public class Chee_Set : ModItem {
 		public override string Texture => typeof(Chew_Toy).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
@@ -32,7 +28,12 @@ namespace Origins.Items.Pets {
 			]).ToArray();
 		}
 	}
-	public class Chew_Toy : ModItem, ICustomPetFrames {
+	public class Chew_Toy : ModItem, ICustomWikiStat, ICustomPetFrames {
+		public bool? Hardmode => false;
+		public string[] Categories => [
+			"Pet",
+			"DeveloperItem"
+		];
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetDefaults() {

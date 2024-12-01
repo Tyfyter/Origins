@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles {
 	public class PetWikiProvider : ItemWikiProvider {
 		public bool Condition(object obj, out WikiProvider provider, ref bool replaceGenericClassProvider) {
-			if (obj is ModItem modItem && modItem.Item.buffType > -1 && Main.vanityPet[modItem.Item.buffType] && !(obj is ICustomWikiStat customWiki && customWiki.NeedsCustomSprite)) {
+			if (obj is ModItem modItem && modItem.Item.buffType > -1 && (Main.vanityPet[modItem.Item.buffType] || Main.lightPet[modItem.Item.buffType]) && !(obj is ICustomWikiStat customWiki && customWiki.NeedsCustomSprite)) {
 				provider = this;
 				replaceGenericClassProvider = true;
 				return true;
@@ -28,7 +28,8 @@ namespace Origins.Tiles {
 			return base.GetStats(modItem).Select(s => {
 				s.Item2.Add("Pet", new JObject {
 					["Name"] = Lang.GetProjectileName(modItem.Item.shoot).Value,
-					["Image"] = PageName(modItem) + "_Pet"
+					["Image"] = PageName(modItem) + "_Pet",
+					["LightPet"] = Main.lightPet[modItem.Item.buffType]
 				});
 				return s;
 			});
