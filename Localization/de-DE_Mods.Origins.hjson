@@ -1687,6 +1687,16 @@ Configs: {
 			// Label: Debug Mode
 			// Tooltip: ""
 		}
+
+		RoyalGel: {
+			// Label: Royal Gel
+			// Tooltip: ""
+		}
+
+		VolatileGelatin: {
+			// Label: Volatile Gelatin
+			// Tooltip: ""
+		}
 	}
 
 	DebugConfig: {

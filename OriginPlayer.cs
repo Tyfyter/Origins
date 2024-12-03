@@ -572,12 +572,17 @@ namespace Origins {
 			if (startedQuests is not null) {
 				tag.Add("UnlockedQuests", startedQuests.ToList());
 			}
-			TagCompound questsTag = new TagCompound();
+			TagCompound questsTag = [];
 			foreach (var quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
-					TagCompound questTag = new TagCompound();
+					TagCompound questTag = [];
 					quest.SaveData(questTag);
-					if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
+					if (questTag.Count > 0) {
+						questsTag.Add(quest.FullName, questTag);
+						Mod.Logger.Info($"Saving {quest.NameValue} to player with data: {questTag}");
+					} else {
+						Mod.Logger.Info($"Not saving {quest.NameValue}, no data to save");
+					}
 				}
 			}
 			if (questsTag.Count > 0) {
@@ -629,7 +634,8 @@ namespace Origins {
 		public override void OnEnterWorld() {
 			questsTag ??= [];
 			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? [];
-			Origins.instance.Logger.Debug(worldQuestsTag.ToString());
+			Origins.instance.Logger.Debug("player quests: " + questsTag.ToString());
+			Origins.instance.Logger.Debug("world quests: " + worldQuestsTag.ToString());
 			foreach (var quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
 					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);

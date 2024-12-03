@@ -4680,3 +4680,6 @@ Glass_Cannon: {
 	DisplayName: Glass Cannon
 	Tooltip: Fires a cluster of canisters
 }
+
+Royal_Gel_Buff: Summons a baby slime prince to fight for you
+Volatile_Gelatin_Buff: Struck enemies will detonate when struck by explosions or lit on fire

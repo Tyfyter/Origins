@@ -38,7 +38,7 @@ namespace Origins.UI {
 					if (ItemSlot.ShiftInUse) {
 						Quest_Registry.GetQuestByKey(key).OnComplete(Main.npc[0]);
 					} else {
-						Quest_Registry.GetQuestByKey(key).LoadData(new Terraria.ModLoader.IO.TagCompound());
+						Quest_Registry.GetQuestByKey(key).LoadData([]);
 					}
 					return;
 				}
