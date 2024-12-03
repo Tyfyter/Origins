@@ -66,7 +66,7 @@ BOSSES AND MINI-BOSSES:
 (X) Scrapper
 (^) World Cracker*
 
-(%, ^2) Lost Diver
+(%, ^2) Lost Diver !!!
 (X) Miscreant
 
 (X) Crimson King
@@ -82,7 +82,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(ᗢ) Brine Fiend
+(ᗢ) Brine Fiend !!!
 (^, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -99,13 +99,13 @@ TOWN NPC Quests:
 (^) Dryad - Clearing the Way
 (^) Goblin Tinkerer - Reel In the Goods
 (^) Goblin Tinkerer - Lend a Hand?
-(^, 赏) Goblin Tinkerer - Explosive Result
+(^, 赏) Goblin Tinkerer - Explosive Result !!!
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
-(^, 赏) Stylist - Running Dry
-(^, 赏) Stylist - Slick Styling
+(^, 赏) Stylist - Running Dry !!!
+(^, 赏) Stylist - Slick Styling !!!
 (^) Stylist - To Be Crystal Clear…
-(^, 赏) Party Girl - Livin' Up the Party
+(^, 赏) Party Girl - Livin' Up the Party !!!
 (^) Zoologist - Save the Critters!
 (^) Zoologist - Not Au-some…
 (^) Zoologist - Under the Starlight
@@ -188,27 +188,27 @@ ENEMY NPCS:
 (^) Amoeba Bugger*
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
-(X) Brine Moccasin
-(@5, #) Carpalfish*
-(^) Defiled Asphyxiator*
+(X) Brine Moccasin !!!
+(@5, #) Carpalfish* !!!
+(#3, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod*
 (^) Defiled Watcher*
-(X) Hoarder
+(X) Hoarder !!!
 (X) Holy Governor
 (X) Holy Warrior
-(X) King Crab
-(#, ^2) Mildew Creeper
+(X) King Crab !!!
+(#, ^2) Mildew Creeper !!!
 (^) Mitoworm
-(X) Peat Lobber
+(X) Peat Lobber !!!
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
 (X) Rocket Machine
 (^) Savage Whip*
-(X) Sea Dragon
+(X) Sea Dragon !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
 (^) Torn Ghoul
@@ -304,7 +304,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(X) Mildew Armor
+(X) Mildew Armor !!!
 (X) Ruby Ranger Armor*
 
 (^) Blast Armor*
@@ -357,7 +357,6 @@ ACCESSORIES:
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
-(^) Decaying Scale*
 (^) Destructive Claws*
 (^) Dim Starlight*
 (^) Donor Wristband*
@@ -424,6 +423,7 @@ ACCESSORIES:
 (^) Trap Charm*
 (^) Turbo Reel*
 (^) Unsought Organ*
+(@5) Venom Fang* !!!
 
 (^) Dash Ravel*
 (^) Depth Ravel*
@@ -451,7 +451,7 @@ ACCESSORIES:
 (^) Mana Drive*
 (^) Protozoa Food*
 (^) Refactoring Pieces*
-(X) Retaliatory Tendril*
+(X) Retaliatory Tendril* !!!
 (^) Scrap Compactor*
 
 (^) Amebic Vial*
@@ -462,7 +462,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
 (^) Lazy Cloak*
-(X) Mildewy Diving Helmet*
+(X) Mildewy Diving Helmet* !!!
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
 (ᗢ) Stack of Shraps*
@@ -677,29 +677,29 @@ RANGED WEAPONS:
 (^) 3-in-1 Shotty
 
 (^) Acrid Impaler*
-(X) Adamantite Harpoon Gun*
+(X) Adamantite Harpoon Gun* !!!
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
 (^) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
-(X) Cobalt Harpoon Gun*
+(X) Cobalt Harpoon Gun* !!!
 (^) Dart Crossbow*
-(^) Dragon's Breath (replanning soon)
+(%3) Dragon's Breath (replanning soon) !!!
 (^) Firespit
 (X) Frequency
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
-(X) Mythril Harpoon Gun*
+(X) Mythril Harpoon Gun* !!!
 (X) Organ Donor
-(X) Orichalcum Harpoon Gun*
-(X) Palladium Harpoon Gun*
+(X) Orichalcum Harpoon Gun* !!!
+(X) Palladium Harpoon Gun* !!!
 (^) Sixth Spline
 (^) Spray 'N Pray*
 (^) Tiny Sniper
-(X) Titanium Harpoon Gun*
+(X) Titanium Harpoon Gun* !!!
 (X) Tripod Jawbow
 
 (^) Astoxo
@@ -741,7 +741,7 @@ MAGIC WEAPONS:
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
-(⛥) Innermost Manifest
+(⛥) Innermost Manifest !!!
 (^) Seam Beam
 (^) Shimmer Rod
 (X) Shinedown
@@ -796,8 +796,8 @@ SUMMONER WEAPONS:
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
 (#, @4/2 (not necessarily missing sprites, but I'd need confirmation that the incredibly sudden transitions between states are intended)) Forsaken Desire
-(X) Mildew Incantation
-(X) Mildew Whip
+(X) Mildew Incantation !!!
+(X) Mildew Whip !!!
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre*
@@ -864,7 +864,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(X) Cavitation Cannon
+(X) Cavitation Cannon !!!
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
@@ -934,13 +934,13 @@ TILES:
 (^) Endowood*
 (^) Felnum Ore*
 (^) Fiberglass Block*
-(#, ^2) Geyser Core Block*
+(#, ^2) Geyser Core Block* !!!
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
 (^) Lost Ore*
 (^) Marrowick*
-(#, ^2) Mildew Block*
+(#, ^2) Mildew Block* !!!
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
@@ -981,7 +981,7 @@ TILES:
 (X) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
-(X) Brine Water Fountain
+(X) Brine Water Fountain !!!
 (X) Bug Cage*
 (X) Cancer Block*
 (X) Cancer Furniture*
@@ -1060,11 +1060,11 @@ TILES:
 
 (^) A Perfect World
 
-(@, #, $3) Ancient Music Box (Brine Pool)
+(@, #, $3) Ancient Music Box (Brine Pool) !!!
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $3) Music Box (Abstract)
-(@, #, $3) Music Box (Brine Pool)
+(@, #, $3) Music Box (Brine Pool) !!!
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
@@ -1077,15 +1077,17 @@ TILES:
 (^) Music Box (Riven Hive)
 (@, #, $3) Otherworldly Music Box (Defiled Wastelands)
 
-(^) Defiled Amalgamation Trophy*
 (^) Defiled Amalgamation Relic*
+(^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
-(@, #3, 々) Miscreant Trophy*
+(X) Lost Diver Relic !!!
+(X) Lost Diver Trophy !!!
 (@, #3, 々) Miscreant Relic*
-(@, #3, 々) Quantux Trophy*
+(@, #3, 々) Miscreant Trophy*
 (@, #3, 々) Quantux Relic*
-(^) World Cracker Trophy*
+(@, #3, 々) Quantux Trophy*
 (^) World Cracker Relic*
+(^) World Cracker Trophy*
 ---
 
 
@@ -1184,15 +1186,15 @@ CONSUMABLES:
 (^) Purification Potion*
 (^) Voidsight Potion*
 
-(X) Foul Broth
-(X) Hearty Broth
-(X) Light Broth
-(X) Minty Broth
-(X) Plain Broth
-(X) Savory Broth
-(X) Sour Broth
-(X) Spicy Broth
-(X) Sweet Broth
+(X) Foul Broth !!!
+(X) Hearty Broth !!!
+(X) Light Broth !!!
+(X) Minty Broth !!!
+(X) Plain Broth !!!
+(X) Savory Broth !!!
+(X) Sour Broth !!!
+(X) Spicy Broth !!!
+(X) Sweet Broth !!!
 
 (^) Bileberry*
 (^) Blue Bovine*
@@ -1250,6 +1252,7 @@ CONSUMABLES:
 
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
+(X) Lost Diver Bag !!!
 (^) World Cracker Bag*
 ---
 
@@ -1257,7 +1260,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(X) Wet Wood (Mildew Blob)
+(X) Wet Wood (Mildew Blob) !!!
 
 (^) Amoeba Toy (Meberoid)*
 (X) Rusty Cross Necklace (Guardian Angel)
@@ -1317,28 +1320,30 @@ AMMO:
 
 UI:
 ---
-(X) Ashen Map/Bestiary Backdrop
 (^) Ashen Icon
+(X) Ashen Map/Bestiary Backdrop
 (X) Ashen Mines Icon
+(^) Brine Icon
+(X) Brine Map/Bestiary Backdrop !!!
 (X) Cosmos Map/Bestiary Backdrop
-(X) Dawn Map/Bestiary Backdrop
 (^) Dawn Icon
-(@5, ^3) Defiled Map/Bestiary Backdrop !!!
+(X) Dawn Map/Bestiary Backdrop
 (^) Defiled Caverns Icon
 (^) Defiled Desert Icon
+(@5, ^3) Defiled Map/Bestiary Backdrop !!!
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
-(X) Dusk Map/Bestiary Backdrop
 (^) Dusk Icon
+(X) Dusk Map/Bestiary Backdrop
 (^) Eutrophic Sea Icon
-(X) Fiberglass Map/Bestiary Backdrop !!!
 (^) Fiberglass Icon
+(X) Fiberglass Map/Bestiary Backdrop !!!
 (X) Fractured Isles Icon
-(^) Riven Map/Bestiary Backdrop
 (^) Riven Caverns Icon
 (^) Riven Desert Icon
 (^) Riven Hive Icon
+(^) Riven Map/Bestiary Backdrop
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
@@ -1353,7 +1358,7 @@ UI:
 MUSIC:
 ---
 ($2) Ashen Factory
-($2) Brine Pool
+($2) Brine Pool !!!
 (X) Cosmos
 (X) Cubekon Temple
 (X) Dawn
@@ -1372,7 +1377,7 @@ MUSIC:
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
-(X) Lost Diver
+(X) Lost Diver !!!
 (X) Miscreant
 (X) Quantux
 (^) World Cracker
