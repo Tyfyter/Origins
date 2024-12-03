@@ -10,9 +10,6 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public abstract class Quest : ModType {
-		/// <summary>
-		/// not yet synced, don't use until it is
-		/// </summary>
 		public virtual bool SaveToWorld => false;
 		public virtual bool Started => false;
 		public virtual bool Completed => false;

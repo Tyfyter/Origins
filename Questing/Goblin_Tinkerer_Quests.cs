@@ -292,6 +292,7 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
 		public override bool CanStart(NPC npc) {
+			return false;//TODO: implement
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0 && Main.hardMode && ModContent.GetInstance<Gun_Glove_Quest>().Completed;
 		}
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(

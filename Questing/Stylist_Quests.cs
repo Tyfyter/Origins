@@ -43,7 +43,7 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool CanStart(NPC npc) => npc.type == NPCID.Stylist && Stage == 0;
+		public override bool CanStart(NPC npc) => npc.type == NPCID.Stylist && Stage == 0 && false;//TODO: implement
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
@@ -120,7 +120,7 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool CanStart(NPC npc) => npc.type == NPCID.Stylist && !Started && ModContent.GetInstance<Magic_Hair_Spray_Quest>().Completed;
+		public override bool CanStart(NPC npc) => npc.type == NPCID.Stylist && !Started && ModContent.GetInstance<Magic_Hair_Spray_Quest>().Completed && false;//TODO: implement
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire", Main.LocalPlayer.name);
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
@@ -195,7 +195,7 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool CanStart(NPC npc) => npc.type == NPCID.Stylist && !Started && ModContent.GetInstance<Comb_Quest>().Completed;
+		public override bool CanStart(NPC npc) => npc.type == NPCID.Stylist && Main.hardMode && !Started /*&& ModContent.GetInstance<Comb_Quest>().Completed*/;
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire", Main.LocalPlayer.name);
 		public override void OnAccept(NPC npc) {
 			Stage = 1;

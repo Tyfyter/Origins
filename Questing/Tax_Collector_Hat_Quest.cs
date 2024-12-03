@@ -44,6 +44,7 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override bool CanStart(NPC npc) {
+			return false;//TODO: implement
 			if (Started) return false;
 			return npc.type == NPCID.PartyGirl &&
 				true && // replace with condition for prerequisite quests
