@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

@@ -630,10 +630,6 @@ namespace Origins {
 	public interface IMeleeCollisionDataNPC {
 		void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
 	}
-	interface IComplexMineDamageTile {
-		void MinePower(int i, int j, int minePower, ref int damage) {
-		}
-	}
 	public interface IWhipProjectile {
 		void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
 	}

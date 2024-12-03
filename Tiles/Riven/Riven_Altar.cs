@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;

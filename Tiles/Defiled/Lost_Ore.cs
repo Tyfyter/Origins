@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
