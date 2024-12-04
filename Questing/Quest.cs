@@ -55,6 +55,10 @@ namespace Origins.Questing {
 		#endregion events
 		public sealed override void SetupContent() {
 			SetStaticDefaults();
+			CompletedCondition = new Condition(
+				Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(Language.GetOrRegister(NameKey)),
+				() => Completed
+			);
 		}
 		protected sealed override void Register() {
 			if (SaveToWorld && Mod.Side != ModSide.Both) {
@@ -106,12 +110,8 @@ namespace Origins.Questing {
 		}
 		public virtual void SendSync(BinaryWriter writer) { }
 		public virtual void ReceiveSync(BinaryReader reader) { }
-		public static Condition QuestCondition<T>() where T : Quest {
-			return new Condition(
-				Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(ModContent.GetInstance<T>().NameValue),
-				() => ModContent.GetInstance<T>().Completed
-			);
-		}
+		public static Condition QuestCondition<T>() where T : Quest => ModContent.GetInstance<T>().CompletedCondition;
+		public Condition CompletedCondition { get; private set; }
 	}
 	public static class Questing {
 		public static bool questListSelected = false;
@@ -123,7 +123,8 @@ namespace Origins.Questing {
 		public static void EnterQuestList(NPC npc) {
 			if (CanEnterQuestList(npc)) {
 				questListSelected = true;
-				Main.npcChatText = Language.GetOrRegister($"Mods.Origins.Interface.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}").Value;
+				string textKey = $"Mods.Origins.Interface.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}";
+				if (Language.Exists(textKey)) Main.npcChatText = Language.GetOrRegister(textKey).Value;
 			} else {
 				questListSelected = false;
 				Main.npcChatText = npc.GetChat();
