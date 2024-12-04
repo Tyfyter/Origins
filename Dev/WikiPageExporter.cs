@@ -51,6 +51,7 @@ namespace Origins.Dev {
 			};
 			requiredTileWikiTextOverride[TileID.Bottles] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.Bottle");
 			recipeConditionWikiTextOverride[Condition.InGraveyard] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.EctoMist");
+			recipeConditionWikiTextOverride[RecipeConditions.ShimmerTransmutation] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.ShimmerTransmutation");
 		}
 		static PageTemplate wikiTemplate;
 		static DateTime wikiTemplateWriteTime;
@@ -63,7 +64,6 @@ namespace Origins.Dev {
 				return wikiTemplate;
 			}
 		}
-		public static readonly Condition ShimmerTransmutationWikiCondition = new(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerTransmutation"), () => false);
 		readonly static ConstructorInfo RecipeCtor = typeof(Recipe).GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, [typeof(Mod)]);
 		internal static Recipe CreateFakeRecipe(int result) {
 			Recipe recipe = (Recipe)RecipeCtor.Invoke([Origins.instance]);
@@ -1045,12 +1045,12 @@ namespace Origins.Dev {
 			}
 			for (int i = 0; i < ItemLoader.ItemCount; i++) {
 				if (ItemID.Sets.ShimmerTransformToItem[i] == item.type) {
-					recipes.Add(CreateFakeRecipe(item.type).AddIngredient(i).AddCondition(ShimmerTransmutationWikiCondition));
+					recipes.Add(CreateFakeRecipe(item.type).AddIngredient(i).AddCondition(RecipeConditions.ShimmerTransmutation));
 					break;
 				}
 			}
 			if (ItemID.Sets.ShimmerTransformToItem[item.type] != -1) {
-				usedIn.Add(CreateFakeRecipe(ItemID.Sets.ShimmerTransformToItem[item.type]).AddIngredient(item.type).AddCondition(ShimmerTransmutationWikiCondition));
+				usedIn.Add(CreateFakeRecipe(ItemID.Sets.ShimmerTransformToItem[item.type]).AddIngredient(item.type).AddCondition(RecipeConditions.ShimmerTransmutation));
 			}
 			return (recipes, usedIn);
 		}

@@ -39,13 +39,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 
             Recipe.Create(Type)
             .AddIngredient(ItemID.Coal, coalNumber)
-            .AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
+            .AddCondition(RecipeConditions.ShimmerTransmutation)
             .AddDecraftCondition(Condition.Hardmode)
             .Register();
 
             Recipe.Create(ItemID.Coal, coalNumber)
             .AddIngredient(Type)
-            .AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
+            .AddCondition(RecipeConditions.ShimmerTransmutation)
             .Register();
         }
 	}

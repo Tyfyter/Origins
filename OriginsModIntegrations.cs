@@ -56,6 +56,7 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("ItemSourceHelper", out Mod itemSourceHelper)) {
 				itemSourceHelper.Call("AddIconicWeapon", DamageClasses.Explosive.Type, (int)ItemID.Bomb);
+				itemSourceHelper.Call("AddShimmerFakeCondition", RecipeConditions.ShimmerTransmutation);
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
