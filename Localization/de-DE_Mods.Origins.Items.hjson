@@ -2979,7 +2979,7 @@ Bomb_Artifact: {
 
 Bone_Latcher: {
 	// DisplayName: Bone Latcher
-	// Tooltip: Beckons enemies toward you
+	// Tooltip: Beckons distant enemies toward you
 }
 
 Brainy_Staff: {
