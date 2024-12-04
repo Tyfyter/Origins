@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.NPCs;
 using Terraria;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 
 namespace Origins.Items.Other.Dyes {
     public class Rasterized_Dye : Dye_Item, ICustomWikiStat {
@@ -31,6 +32,7 @@ namespace Origins.Items.Other.Dyes {
 				}
 			))
 			.UseImage(Origins.cellNoiseTexture.asset);
+			ItemID.Sets.NonColorfulDyeItems.Add(Type);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 			Item.ResearchUnlockCount = 3;
 		}

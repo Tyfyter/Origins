@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Terraria;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 
 namespace Origins.Items.Other.Dyes {
     public class Acrid_Dye : Dye_Item, ICustomWikiStat {
@@ -17,6 +18,7 @@ namespace Origins.Items.Other.Dyes {
 				"Dissolve"
 			))
 			.UseImage(Origins.cellNoiseTexture.asset);
+			ItemID.Sets.NonColorfulDyeItems.Add(Type);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 			Item.ResearchUnlockCount = 3;
 		}
