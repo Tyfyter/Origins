@@ -9,6 +9,7 @@ namespace Origins.Items.Other.LootBags {
 	public class Defiled_Amalgamation_Bag : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

@@ -10,6 +10,7 @@ namespace Origins.Items.Other.LootBags {
 	public class Fiberglass_Weaver_Bag : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.BossBag[Type] = true;
+			ItemID.Sets.PreHardmodeLikeBossBag[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
