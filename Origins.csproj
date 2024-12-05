@@ -11,7 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AltLibrary">
-      <HintPath>..\ModAssemblies\AltLibrary_v1.1.dll</HintPath>
+      <HintPath>..\ModAssemblies\AltLibrary_v1.1.0.3.dll</HintPath>
     </Reference>
     <Reference Include="BetterDialogue">
       <HintPath>..\ModAssemblies\BetterDialogue_v1.1.5.3.dll</HintPath>

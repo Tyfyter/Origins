@@ -18,7 +18,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			TileObjectData.newTile.CoordinateHeights = [18, 18];
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(200, 200, 200), CreateMapEntryName());
 			RegisterItemDrop(-1);
@@ -33,7 +33,6 @@ namespace Origins.Tiles.Defiled {
 				damage = 0;
 			}
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}

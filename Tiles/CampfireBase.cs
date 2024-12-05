@@ -54,7 +54,7 @@ namespace Origins.Tiles {
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer) {
-			if (Main.tile[i, j].TileFrameY < 36) Main.SceneMetrics.HasCampfire = true;
+			if (!closer && Main.tile[i, j].TileFrameY < 36) Main.SceneMetrics.HasCampfire = true;
 		}
 
 		public override void MouseOver(int i, int j) {

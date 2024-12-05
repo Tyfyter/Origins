@@ -32,7 +32,7 @@ namespace Origins.Tiles.Banners {
 			AddMapEntry(new Color(13, 88, 130), Language.GetText("MapObject.Banner"));
 		}
 		public override void NearbyEffects(int i, int j, bool closer) {
-			if (closer) {
+			if (!closer) {
 				Main.SceneMetrics.NPCBannerBuff[npc.Type] = true;
 				Main.SceneMetrics.hasBanner = true;
 			}

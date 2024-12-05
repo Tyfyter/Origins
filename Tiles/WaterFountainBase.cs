@@ -23,7 +23,7 @@ namespace Origins.Tiles {
 		public static bool IsEnabled(int i, int j) => Main.tile[i, j].TileFrameY >= 72;
 		public static bool IsEnabled(Tile tile) => tile.TileFrameY >= 72;
 		public override void NearbyEffects(int i, int j, bool closer) {
-			if (IsEnabled(i, j)) Main.SceneMetrics.ActiveFountainColor = ModContent.GetInstance<TWaterStyle>().Slot;
+			if (closer && IsEnabled(i, j)) Main.SceneMetrics.ActiveFountainColor = ModContent.GetInstance<TWaterStyle>().Slot;
 		}
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
