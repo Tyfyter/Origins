@@ -162,28 +162,30 @@ namespace Origins {
 				return orig(key, obj);
 			};
 			On_ShopHelper.IsPlayerInEvilBiomes += (On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
-				if (Main.npc[player.talkNPC].type == MC.NPCType<Brine_Fiend>()) {
-					IShoppingBiome shoppingBiome = new DungeonBiome();
-					if (shoppingBiome.IsInBiome(player)) {
-						ShopMethods.AddHappinessReportText(self, "HateBiome", new {
-							BiomeName = ShopHelper.BiomeNameByKey(shoppingBiome.NameKey)
-						});
-					}
-					return false;
-				}
-				if (Main.npc[player.talkNPC].type == MC.NPCType<Defiled_Effigy>()) {
-					List<IShoppingBiome> dangerousBiomes = ShopHelper_EvilBiomes.DangerousBiomes;
-					for (int i = 0; i < dangerousBiomes.Count; i++) {
-						IShoppingBiome aShoppingBiome = dangerousBiomes[i];
-						if (aShoppingBiome == MC.GetInstance<Defiled_Wastelands>()) continue;
-						if (aShoppingBiome.IsInBiome(player)) {
+				if (ShopMethods._currentNPCBeingTalkedTo?.GetValue(self) is NPC talkNPC) {
+					if (talkNPC.type == MC.NPCType<Brine_Fiend>()) {
+						IShoppingBiome shoppingBiome = new DungeonBiome();
+						if (shoppingBiome.IsInBiome(player)) {
 							ShopMethods.AddHappinessReportText(self, "HateBiome", new {
-								BiomeName = ShopHelper.BiomeNameByKey(aShoppingBiome.NameKey)
+								BiomeName = ShopHelper.BiomeNameByKey(shoppingBiome.NameKey)
 							});
-							return true;
 						}
+						return false;
 					}
-					return false;
+					if (talkNPC.type == MC.NPCType<Defiled_Effigy>()) {
+						List<IShoppingBiome> dangerousBiomes = ShopHelper_EvilBiomes.DangerousBiomes;
+						for (int i = 0; i < dangerousBiomes.Count; i++) {
+							IShoppingBiome aShoppingBiome = dangerousBiomes[i];
+							if (aShoppingBiome == MC.GetInstance<Defiled_Wastelands>()) continue;
+							if (aShoppingBiome.IsInBiome(player)) {
+								ShopMethods.AddHappinessReportText(self, "HateBiome", new {
+									BiomeName = ShopHelper.BiomeNameByKey(aShoppingBiome.NameKey)
+								});
+								return true;
+							}
+						}
+						return false;
+					}
 				}
 				return orig(self, player);
 			};
