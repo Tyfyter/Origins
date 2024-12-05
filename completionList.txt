@@ -94,12 +94,13 @@ TOWN NPC Quests:
 ---
 (^) TOWN NPC QUEST MECHANICS
 (^) Arms Dealer - Live Fire
+(X) Arms Dealer - Three Times the Charm
 (^) Cyborg - Sensor Upgrade
 (^) Dryad - I’ll Give You a Deal
 (^) Dryad - Clearing the Way
 (^) Goblin Tinkerer - Reel In the Goods
 (^) Goblin Tinkerer - Lend a Hand?
-(^, 赏) Goblin Tinkerer - Explosive Result !!!
+(X) Goblin Tinkerer - Full Speed Ahead
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
 (^, 赏) Stylist - Running Dry !!!
@@ -381,8 +382,8 @@ ACCESSORIES:
 (^) Locket Necklace*
 (^) Lousy Liver*
 (^) Lover's Leap*
-(†) Magic Glove*
-(†) Magic Pain Glove*
+(^) Magic Glove*
+(^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
 (^) Messy Leech*
@@ -635,6 +636,7 @@ MELEE WEAPONS:
 (X) Gospel
 (^) Personal Laser Blade*
 (X) Pile Bunker
+(X) Rocket Lance
 (^) Terrarang
 (^) True Light Disc
 (^) True Waning Crescent
@@ -644,7 +646,6 @@ MELEE WEAPONS:
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
-(X) Rocket Lance
 (^) The Bird*
 ---
 
@@ -738,7 +739,7 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Chemical Laser
-(^) Communion*
+(#3, ^2) Communion* !!!
 (^) Dew Justice*
 (^) Dismay
 (⛥) Innermost Manifest !!!
@@ -869,6 +870,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Happy Bomb*
+(X) Partybringer !!!
 (X) Rattlesnake
 (^) Sonorous Shredder
 (^) Thermite Launcher*
