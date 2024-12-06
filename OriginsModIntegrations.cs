@@ -19,6 +19,8 @@ using Origins.Dev;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using ThoriumMod;
+using System.Reflection.Emit;
+using Terraria.DataStructures;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -96,6 +98,33 @@ namespace Origins {
 				modDemoUtils.Call("AddStatProvider", Origins.instance, (Item item) => {
 					return itemWikiProvider.GetStats(item.ModItem).First().Item2;
 				});
+			}
+
+			if (ModLoader.TryGetMod("CalamityOverhaul", out Mod calamityOverhaul)) {
+				MethodInfo HasPwoerEffect = calamityOverhaul.Code.GetType("CalamityOverhaul.Common.Effects.EffectLoader")?.GetMethod("HasPwoerEffect", BindingFlags.NonPublic | BindingFlags.Instance);
+				if (HasPwoerEffect is not null) {
+					MonoModHooks.Modify(HasPwoerEffect, il => {
+						ILCursor c = new(il);
+						ILLabel label = c.MarkLabel();
+						c.MoveBeforeLabels();
+						c.EmitDelegate(() => Main.gameMenu);
+						c.EmitBrfalse(label);
+						c.EmitLdcI4(0);
+						c.EmitRet();
+					});
+					/*Type[] types = [typeof(Func<,>).MakeGenericType(HasPwoerEffect.DeclaringType, typeof(bool)), HasPwoerEffect.DeclaringType, typeof(bool)];
+					DynamicMethod fixerMethod = new(
+						HasPwoerEffect.Name + "_Fix", typeof(bool),
+						types,
+					true);
+					ILGenerator gen = fixerMethod.GetILGenerator();
+					gen.Emit(OpCodes.Ldarg_0);
+
+					MonoModHooks.Add(HasPwoerEffect, fixerMethod.CreateDelegate(typeof(Func<,,>).MakeGenericType(types)));*/
+				}
+				try {
+				} catch {
+				}
 			}
 		}
 		public void Unload() {
