@@ -20,6 +20,10 @@ using Origins.Questing;
 using Origins.Items.Other.Dyes;
 using PegasusLib;
 using PegasusLib.Graphics;
+using static System.Net.Mime.MediaTypeNames;
+using ReLogic.OS;
+using Microsoft.Xna.Framework.Input;
+using System.Xml.Linq;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -27,27 +31,31 @@ namespace Origins.UI {
 		public static AutoCastingAsset<Texture2D> PageTexture;
 		public static AutoCastingAsset<Texture2D> TabsTexture;
 		UIElement baseElement;
-		TextSnippet[][] pages;
+		List<List<TextSnippet>> pages;
 		float yMargin;
-		float xMargin;
+		float xMarginOuter;
+		float xMarginInner;
+		float XMarginTotal => xMarginOuter + xMarginInner;
 		int pageOffset = 0;
 		int timeSinceSwitch = 0;
 		Journal_UI_Mode lastMode = Journal_UI_Mode.Normal_Page;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
 		const bool tabLayout = true;
+		Color inkColor;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
-			baseElement.Width.Set(0f, 0.875f);
-			baseElement.MaxWidth.Set(900f, 0f);
+			baseElement.Width.Set(0f, 0.55f);
+			baseElement.MaxWidth.Set(1600f, 0f);
 			baseElement.MinWidth.Set(700f, 0f);
-			baseElement.Top.Set(190f, 0f);
-			baseElement.Height.Set(-310f, 1f);
+			baseElement.Height.Set(50f, 0.65f);
 			baseElement.HAlign = 0.5f;
+			baseElement.VAlign = 0.65f;
 			Append(baseElement);
 			Recalculate();
-			xMargin = baseElement.GetDimensions().Width * 0.06f;
+			xMarginOuter = baseElement.GetDimensions().Width * 0.06f;
+			xMarginInner = xMarginOuter * 0.5f;
 			yMargin = baseElement.GetDimensions().Height * 0.1f;
 			//SetText(loremIpsum);
 			SwitchMode((Journal_UI_Mode)OriginClientConfig.Instance.DefaultJournalMode, "");
@@ -55,7 +63,7 @@ namespace Origins.UI {
 		public void SetText(string text) => SetText(text, Color.Black);
 		public void SetText(string text, Color baseColor) {
 			CalculatedStyle bounds = baseElement.GetDimensions();
-			bounds.Width = bounds.Width * 0.5f - xMargin * 2;
+			bounds.Width = bounds.Width * 0.5f - XMarginTotal;
 			bounds.Height -= yMargin * 2.5f;
 			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			Vector2 cursor = Vector2.Zero;
@@ -66,14 +74,14 @@ namespace Origins.UI {
 			float num3 = 0f;
 			List<TextSnippet> snippets = ChatManager.ParseMessage(text, baseColor);
 
-			List<TextSnippet[]> snippetPages = [];
+			List<List<TextSnippet>> snippetPages = [];
 			StringBuilder currentText = new();
 			List<TextSnippet> currentPage = [];
 			void finishPage() {
 				cursor = Vector2.Zero;
 				currentPage.Add(new TextSnippet(currentText.ToString(), baseColor));
 				currentText.Clear();
-				snippetPages.Add(currentPage.ToArray());
+				snippetPages.Add(currentPage.ToList());
 				currentPage.Clear();
 			}
 			for (int i = 0; i < snippets.Count; i++) {
@@ -180,12 +188,15 @@ namespace Origins.UI {
 				}
 			}
 			finishPage();
-			pages = snippetPages.ToArray();
+			pages = snippetPages.ToList();
 		}
-		public void SwitchMode(Journal_UI_Mode newMode, string key) {
-			lastMode = timeSinceSwitch == 0 ? lastMode : mode;
-			timeSinceSwitch = 0;
+		public void SwitchMode(Journal_UI_Mode newMode, string key, bool resetPageNumber = true) {
+			if (newMode != mode) {
+				lastMode = timeSinceSwitch == 0 ? lastMode : mode;
+				timeSinceSwitch = 0;
+			}
 			currentEffect = null;
+			if (resetPageNumber) pageOffset = 0;
 			switch (mode = newMode) {
 				case Journal_UI_Mode.Normal_Page: {
 					JournalEntry entry = Journal_Registry.Entries[key];
@@ -195,24 +206,15 @@ namespace Origins.UI {
 				break;
 
 				case Journal_UI_Mode.Index_Page: {
-					List<TextSnippet[]> snippetPages = [];
-					List<TextSnippet> currentPage = [];
-					int lineCount = 0;
 					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-					foreach (var entry in Journal_Registry.Entries.Keys) {
+					StringBuilder builder = new();
+					foreach (string entry in Journal_Registry.Entries.Keys) {
 						if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
 							continue;
 						}
-						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
-						currentPage.Add(new TextSnippet("\n"));
-						if (++lineCount > 16) {
-							snippetPages.Add(currentPage.ToArray());
-							currentPage = [];
-							lineCount = 0;
-						}
+						builder.Append($"[j:{entry}]\n");
 					}
-					snippetPages.Add(currentPage.ToArray());
-					pages = snippetPages.ToArray();
+					SetText(builder.ToString(), Color.Black);
 					break;
 				}
 
@@ -222,9 +224,9 @@ namespace Origins.UI {
 					pages = [
 							[
 								new Journal_Search_Snippet(
-									new CalculatedStyle(bounds.X + xMargin,
+									new CalculatedStyle(bounds.X + xMarginOuter,
 									bounds.Y + yMargin,
-									bounds.Width * 0.5f - xMargin * 2,
+									bounds.Width * 0.5f - XMarginTotal,
 									FontAssets.MouseText.Value.MeasureString("_").Y)
 								) {
 									Text = key ?? ""
@@ -237,12 +239,10 @@ namespace Origins.UI {
 				}
 
 				case Journal_UI_Mode.Quest_List: {
-					List<TextSnippet[]> snippetPages = [];
-					List<TextSnippet> currentPage = [];
-					int lineCount = 0;
 					List<Quest> activeQuests = [];
 					List<Quest> completedQuests = [];
-					foreach (var quest in Quest_Registry.Quests) {
+					StringBuilder builder = new();
+					foreach (Quest quest in Quest_Registry.Quests) {
 						if (quest.ShowInJournal()) {
 							if (quest.Completed) {
 								completedQuests.Add(quest);
@@ -252,34 +252,12 @@ namespace Origins.UI {
 						}
 					}
 					for (int i = 0; i < activeQuests.Count; i++) {
-						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(activeQuests[i], Color.Black, inJournal: true));
-						currentPage.Add(new TextSnippet("\n"));
-						if (++lineCount > 16) {
-							snippetPages.Add(currentPage.ToArray());
-							currentPage = [];
-							lineCount = 0;
-						}
+						builder.Append($"[q/inJournal:{activeQuests[i].FullName}]\n");
 					}
-					/*if (activeQuests.Count > 0 && completedQuests.Count > 0) {
-						if (++lineCount >= 16) {
-							snippetPages.Add(currentPage.ToArray());
-							currentPage = new List<TextSnippet>();
-							lineCount = 0;
-						} else {
-							currentPage.Add(new TextSnippet("______________", Color.Black));
-						}
-					}*/
 					for (int i = 0; i < completedQuests.Count; i++) {
-						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(completedQuests[i], new Color(25, 25, 25), true, true));
-						currentPage.Add(new TextSnippet("\n"));
-						if (++lineCount > 16) {
-							snippetPages.Add(currentPage.ToArray());
-							currentPage = [];
-							lineCount = 0;
-						}
+						builder.Append($"[q/completed,inJournal:{completedQuests[i].FullName}]\n");
 					}
-					snippetPages.Add(currentPage.ToArray());
-					pages = snippetPages.ToArray();
+					SetText(builder.ToString(), Color.Black);
 					break;
 				}
 				case Journal_UI_Mode.Quest_Page: {
@@ -290,7 +268,21 @@ namespace Origins.UI {
 				break;
 
 				case Journal_UI_Mode.Custom: {
-					SetText(OriginPlayer.LocalOriginPlayer.journalText);
+					pages = new(OriginPlayer.LocalOriginPlayer.journalText.Count);
+					int dye = 0;
+					inkColor = Color.Black;
+					if (OriginPlayer.LocalOriginPlayer.journalDye is Item dyeItem && !dyeItem.IsAir) {
+						dye = dyeItem.dye;
+						if (!ItemID.Sets.NonColorfulDyeItems.Contains(dyeItem.type)) {
+							inkColor = Color.White;
+						}
+					}
+					for (int i = 0; i < OriginPlayer.LocalOriginPlayer.journalText.Count; i++) {
+						if (i < OriginPlayer.LocalOriginPlayer.journalText.Count) {
+							pages.Add(ChatManager.ParseMessage(OriginPlayer.LocalOriginPlayer.journalText[i], inkColor));
+						}
+					}
+					currentEffect = GameShaders.Armor.GetSecondaryShader(dye, Main.LocalPlayer);
 				}
 				break;
 			}
@@ -312,10 +304,10 @@ namespace Origins.UI {
 			return outputText;
 		}
 		public void SetSearchResults(string query) {
-			List<TextSnippet[]> snippetPages = [];
+			List<List<TextSnippet>> snippetPages = [];
 			List<TextSnippet> currentPage = [];
 			int lineCount = 0;
-			if (pages.Length < 1 || pages[0].Length < 0 || pages[0][0] is not Journal_Search_Snippet) {
+			if (pages.Count < 1 || pages[0].Count < 0 || pages[0][0] is not Journal_Search_Snippet) {
 				SwitchMode(Journal_UI_Mode.Search_Page, query);
 			}
 			currentPage.Add(pages[0][0]);
@@ -329,16 +321,16 @@ namespace Origins.UI {
 				currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
 				currentPage.Add(new TextSnippet("\n"));
 				if (++lineCount > 16) {
-					snippetPages.Add(currentPage.ToArray());
+					snippetPages.Add(currentPage.ToList());
 					currentPage = [];
 					lineCount = 0;
 				}
 			}
-			snippetPages.Add(currentPage.ToArray());
-			pages = snippetPages.ToArray();
+			snippetPages.Add(currentPage.ToList());
+			pages = snippetPages;
 		}
 		public static string[] GetSearchResults(string query) {
-			if (string.IsNullOrWhiteSpace(query)) return Array.Empty<string>();
+			if (string.IsNullOrWhiteSpace(query)) return [];
 			List<(string key, int weight)> entries = [];
 			foreach (var item in Journal_Registry.Entries) {
 				int index = item.Value.GetQueryIndex(query);
@@ -412,30 +404,47 @@ namespace Origins.UI {
 			}
 			timeSinceSwitch++;
 			spriteBatch.Draw(PageTexture, bounds, Color.White);
-			int pageCount = pages?.Length ?? 0;
+			int pageCount = pages?.Count ?? 0;
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
 			bool shade = currentEffect is not null;
 			bool canDrawArrows = true;
 			try {
 				if (shade) Origins.shaderOroboros.Capture();
-				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - xMargin * 2;
+				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
-					ChatManager.DrawColorCodedString(spriteBatch,
-						FontAssets.MouseText.Value,
-						pages[i + pageOffset],
-						new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
-						Color.White,
-						0,
-						Vector2.Zero,
-						Vector2.One,
-						out int hoveredSnippet,
-						bounds.Width * 0.5f - xMargin * 2
-					);
-					if (hoveredSnippet >= 0 && hoveredSnippet < pages[i + pageOffset].Length) {
-						if (pages[i + pageOffset][hoveredSnippet] is TextSnippet currentSnippet) {
-							currentSnippet.OnHover();
-							if (Main.mouseLeft && Main.mouseLeftRelease) {
-								currentSnippet.OnClick();
+					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
+						DrawPageForEditing(spriteBatch,
+							FontAssets.MouseText.Value,
+							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin),
+							inkColor,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							bounds.Width * 0.5f - XMarginTotal
+						);
+					} else {
+						ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							pages[i + pageOffset].ToArray(),
+							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin),
+							Color.White,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							out int hoveredSnippet,
+							bounds.Width * 0.5f - XMarginTotal
+						);
+						if (hoveredSnippet >= 0 && hoveredSnippet < pages[i + pageOffset].Count) {
+							if (pages[i + pageOffset][hoveredSnippet] is TextSnippet currentSnippet) {
+								if (currentSnippet.CheckForHover) {
+									currentSnippet.OnHover();
+									if (Main.mouseLeft && Main.mouseLeftRelease) {
+										currentSnippet.OnClick();
+									}
+								} else if (mode == Journal_UI_Mode.Custom && Main.mouseLeft && Main.mouseLeftRelease) {
+									SetMemoFocus(i);
+									memoPage_clickPosition = Main.MouseScreen;
+								}
 							}
 						}
 					}
@@ -450,7 +459,7 @@ namespace Origins.UI {
 			#region arrows
 			if (canDrawArrows) {
 				if (pageOffset < pageCount - 2) {
-					Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+					Vector2 position = new Vector2(bounds.X + bounds.Width - xMarginOuter * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
 					//temp highlight
 					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
@@ -515,7 +524,7 @@ namespace Origins.UI {
 					);
 				}
 				if (pageOffset > 0) {
-					Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+					Vector2 position = new Vector2(bounds.X + xMarginOuter * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
 					//temp highlight
 					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
@@ -582,6 +591,233 @@ namespace Origins.UI {
 			}
 			#endregion arrows
 			spriteBatch.Restart(spriteBatchState);
+		}
+		int memoPage_selectedSide = 0;
+		int memoPage_cursorPosition = 0;
+		bool memoPage_focused = false;
+		Vector2? memoPage_clickPosition = null;
+		public void SetMemoFocus(int side) {
+			if (memoPage_focused) SwitchMode(Journal_UI_Mode.Custom, "", false);
+			memoPage_selectedSide = side;
+			memoPage_focused = side != -1;
+		}
+		void PasteInMemo(ref string text) {
+			string clipboard = Platform.Get<IClipboard>().Value;
+			text = text.Insert(memoPage_cursorPosition, clipboard);
+			memoPage_cursorPosition += clipboard.Length;
+		}
+		private Vector2 DrawPageForEditing(SpriteBatch spriteBatch, DynamicSpriteFont font, Vector2 position, Color baseColor, float rotation, Vector2 origin, Vector2 baseScale, float maxWidth) {
+			int num = -1;
+			Vector2 mousePos = Main.MouseScreen;
+			Vector2 currentPosition = position;
+			Vector2 result = currentPosition;
+			float spaceSize = font.MeasureString(" ").X;
+			Color color = baseColor;
+			float lineShortener = 0f;
+			string text = OriginPlayer.LocalOriginPlayer.journalText[memoPage_selectedSide + pageOffset];
+			string originalText = text;
+			bool exit = false;
+			if (memoPage_cursorPosition > text.Length) memoPage_cursorPosition = text.Length;
+			if (memoPage_focused) {
+				Main.CurrentInputTextTakerOverride = this;
+				Main.chatRelease = false;
+				PlayerInput.WritingText = true;
+				Main.instance.HandleIME();
+				string input = Main.GetInputText(" ", allowMultiLine: true);
+				if (Main.inputText.PressingControl()) {
+					if (JustPressed(Keys.V)) PasteInMemo(ref text);
+					else if (JustPressed(Keys.Left)) {
+						if (memoPage_cursorPosition <= 0) goto specialControls;
+						memoPage_cursorPosition--;
+						while (memoPage_cursorPosition > 0 && text[memoPage_cursorPosition - 1] != ' ') {
+							memoPage_cursorPosition--;
+						}
+					} else if (JustPressed(Keys.Right)) {
+						if (memoPage_cursorPosition >= text.Length) goto specialControls;
+						memoPage_cursorPosition++;
+						while (memoPage_cursorPosition < text.Length && text[memoPage_cursorPosition] != ' ') {
+							memoPage_cursorPosition++;
+						}
+					} else if (JustPressed(Keys.Back)) {
+						if (memoPage_cursorPosition <= 0) goto specialControls;
+						int length = 1;
+						memoPage_cursorPosition--;
+						while (memoPage_cursorPosition > 0 && text[memoPage_cursorPosition - 1] != ' ') {
+							memoPage_cursorPosition--;
+							length++;
+						}
+						text = text.Remove(memoPage_cursorPosition, length);
+					}
+					goto specialControls;
+				}
+				if (Main.inputText.PressingShift()) {
+					if (JustPressed(Keys.Insert)) {
+						PasteInMemo(ref text);
+						goto specialControls;
+					}
+				}
+				if (Pressing(Keys.Left)) {
+					if (memoPage_cursorPosition > 0) {
+						memoPage_cursorPosition--;
+					}
+				} else if (Pressing(Keys.Right)) {
+					if (memoPage_cursorPosition < text.Length) {
+						memoPage_cursorPosition++;
+					}
+				}
+
+				if (input.Length == 0 && memoPage_cursorPosition > 0) {
+					text = text.Remove(--memoPage_cursorPosition, 1);
+				} else if (input.Length == 2) {
+					text = text.Insert(memoPage_cursorPosition++, input[1].ToString());
+				} else if (JustPressed(Keys.Delete)) {
+					if (memoPage_cursorPosition < text.Length) {
+						text = text.Remove(memoPage_cursorPosition, 1);
+					}
+				}
+				if (JustPressed(Keys.Enter)) {
+					text = text.Insert(memoPage_cursorPosition++, "\n");
+				} else if (Main.inputTextEscape) {
+					exit = true;
+				}
+				specialControls:;
+			}
+			int bestClickPosMatch = -1;
+			float bestClickPosMatchDist = float.PositiveInfinity;
+			void DoFindClickPos(int index, Vector2 pos) {
+				//Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, pos, new(0, 0, 2, 2), Color.Red);
+				if (memoPage_clickPosition.HasValue) {
+					float distSQ = ((pos - memoPage_clickPosition.Value) * new Vector2(1, 20)).LengthSquared();
+					if (distSQ < bestClickPosMatchDist) {
+						bestClickPosMatchDist = distSQ;
+						bestClickPosMatch = index;
+					}
+				}
+			}
+			const char zwnj = '\u200C';//zero-width non-joiner
+			List<TextSnippet> snippets = ChatManager.ParseMessage(text.Insert(memoPage_cursorPosition, zwnj.ToString()), color);//sides.SelectMany(t => ChatManager.ParseMessage(t, color)).ToList();
+			int charIndex = 0;
+			for (int i = 0; i < snippets.Count; i++) {
+				TextSnippet textSnippet = snippets[i];
+				textSnippet.Update();
+				color = textSnippet.GetVisibleColor();
+				float scale = textSnippet.Scale;
+				if (textSnippet.UniqueDraw(justCheckingString: false, out Vector2 size, spriteBatch, currentPosition, color, baseScale.X * scale)) {
+					if (mousePos.Between(currentPosition, currentPosition + size)) {
+						num = i;
+					}
+					currentPosition.X += size.X;
+					result.X = Math.Max(result.X, currentPosition.X);
+					charIndex += textSnippet.TextOriginal.Length;
+					DoFindClickPos(charIndex, currentPosition);
+					continue;
+				}
+				string[] lines = textSnippet.Text.Split('\n');
+				bool flag = true;
+				for (int lineNum = 0; lineNum < lines.Length; lineNum++) {
+					DoFindClickPos(charIndex, currentPosition);
+					string line = lines[lineNum];
+					string[] array2 = line.Split(' ');
+					for (int k = 0; k < array2.Length; k++) {
+						if (k != 0) {
+							currentPosition.X += spaceSize * baseScale.X * scale;
+							DoFindClickPos(++charIndex, currentPosition);
+						}
+						if (maxWidth > 0f) {
+							float wordWidth = font.MeasureString(array2[k]).X * baseScale.X * scale;
+							if (currentPosition.X - position.X + wordWidth > maxWidth) {
+								currentPosition.X = position.X;
+								currentPosition.Y += font.LineSpacing * lineShortener * baseScale.Y;
+								result.Y = Math.Max(result.Y, currentPosition.Y);
+								lineShortener = 0f;
+								DoFindClickPos(charIndex, currentPosition);
+							}
+						}
+						if (lineShortener < scale) {
+							lineShortener = scale;
+						}
+						string[] zwnjSides = array2[k].Split(zwnj);
+						if (zwnjSides.Length == 1) {
+							spriteBatch.DrawString(font, array2[k], currentPosition, color, rotation, origin, baseScale * textSnippet.Scale * scale, SpriteEffects.None, 0f);
+						} else {
+							spriteBatch.DrawString(font, zwnjSides[0], currentPosition, color, rotation, origin, baseScale * textSnippet.Scale * scale, SpriteEffects.None, 0f);
+							Vector2 cursorOffset = new Vector2(font.MeasureString(zwnjSides[0]).X * baseScale.X * scale, 0);
+							Vector2 cursorSize = FontAssets.MouseText.Value.MeasureString("^");
+							spriteBatch.DrawString(
+								FontAssets.MouseText.Value,
+								"^",
+								currentPosition + cursorOffset + cursorSize * new Vector2(0f, 0.5f),
+								color.MultiplyRGBA(new(0.25f, 0.25f, 0.25f, 0.85f)),
+								0,
+								cursorSize * Vector2.UnitX * 0.5f,
+								scale,
+								SpriteEffects.None,
+							0);
+							spriteBatch.DrawString(font, zwnjSides[1], currentPosition + cursorOffset, color, rotation, origin, baseScale * textSnippet.Scale * scale, SpriteEffects.None, 0f);
+						}
+						Vector2 vector2 = font.MeasureString(array2[k]);
+						if (mousePos.Between(currentPosition, currentPosition + vector2)) {
+							num = i;
+						}
+						currentPosition.X += vector2.X * baseScale.X * scale;
+						charIndex += array2[k].Length;
+						DoFindClickPos(charIndex, currentPosition);
+						result.X = Math.Max(result.X, currentPosition.X);
+					}
+					if (lineNum < lines.Length - 1 && flag) {
+						currentPosition.Y += font.LineSpacing * lineShortener * baseScale.Y;
+						currentPosition.X = position.X;
+						result.Y = Math.Max(result.Y, currentPosition.Y);
+						lineShortener = 0f;
+						DoFindClickPos(charIndex, currentPosition);
+					}
+					flag = true;
+					charIndex++;
+				}
+			}
+			if (num >= 0) {
+				if (snippets[num] is TextSnippet currentSnippet) {
+					currentSnippet.OnHover();
+					if (Main.mouseLeft && Main.mouseLeftRelease) {
+						currentSnippet.OnClick();
+					}
+				}
+			}
+			if (memoPage_clickPosition.HasValue) {
+				memoPage_cursorPosition = bestClickPosMatch;
+				memoPage_clickPosition = null;
+			}
+			if (text != originalText) {
+				CalculatedStyle bounds = baseElement.GetDimensions();
+				if (result.Y - position.Y <= bounds.Height - yMargin * 2f) OriginPlayer.LocalOriginPlayer.journalText[memoPage_selectedSide + pageOffset] = text;
+			}
+			if (exit) SetMemoFocus(-1);
+			return result;
+		}
+		public static bool JustPressed(Keys key) => Main.inputText.IsKeyDown(key) && !Main.oldInputText.IsKeyDown(key);
+		Dictionary<Keys, (int count, float rate)> keyRates = [];
+		public bool Pressing(Keys key) {
+			if (Main.inputText.IsKeyDown(key)) {
+				if (!Main.oldInputText.IsKeyDown(key)) {
+					keyRates[key] = (15, 7);
+					return true;
+				}
+				if (!keyRates.TryGetValue(key, out (int count, float rate) rateData)) {
+					keyRates[key] = rateData = (15, 7);
+				}
+				rateData.rate -= 0.05f;
+				if (rateData.rate < 0f) rateData.rate = 0f;
+				if (--rateData.count <= 0) {
+					rateData.count = (int)Math.Round(rateData.rate);
+					keyRates[key] = rateData;
+					return true;
+				}
+				keyRates[key] = rateData;
+
+			} else if (Main.oldInputText.IsKeyDown(key)) {
+				keyRates[key] = (15, 7);
+			}
+			return false;
 		}
 		/*
 		static string loremIpsum =

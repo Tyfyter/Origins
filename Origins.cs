@@ -454,6 +454,7 @@ namespace Origins {
 						}
 					}
 				});*/
+				FontAssets.MouseText.Value.SpriteCharacters.TryAdd('\u200C'/*zero-width non-joiner*/, new(Asset<Texture2D>.DefaultValue, default, default, Vector3.Zero));
 			}
 			ChatManager.Register<Journal_Control_Handler>([
 				"jctrl"
