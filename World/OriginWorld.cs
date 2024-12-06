@@ -132,9 +132,9 @@ namespace Origins {
 					quest.SaveData(questTag);
 					if (questTag.Count > 0) {
 						questsTag.Add(quest.FullName, questTag);
-						Mod.Logger.Info($"Saving {quest.NameValue} to world with data: {questTag}");
+						if (!WorldGen.generatingWorld) Mod.Logger.Info($"Saving {quest.NameValue} to world with data: {questTag}");
 					} else {
-						Mod.Logger.Info($"Not saving {quest.NameValue}, no data to save");
+						if (!WorldGen.generatingWorld) Mod.Logger.Info($"Not saving {quest.NameValue}, no data to save");
 					}
 				}
 			}

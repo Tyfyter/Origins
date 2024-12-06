@@ -54,7 +54,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override bool PreAI() {
 			NPC.ai[0] += Main.rand.NextFloat(0, 1);
-			if (NPC.ai[0] > 210 && NPC.collideY) {
+			if (NPC.ai[0] > 210 && (NPC.collideY || NPC.velocity.Y == 0)) {
 				switch (NPC.aiAction) {
 					case 0:
 					NPC.aiAction = (int)(Main.GlobalTimeWrappedHourly % 2 + 1);

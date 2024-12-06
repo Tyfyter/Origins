@@ -187,7 +187,7 @@ namespace Origins.NPCs {
 				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 0.7f);
 			}
 			if (barnacleBuff) {
-				Vector2 vel = (npc.position - npc.oldPosition) * 0.2f;
+				Vector2 vel = (npc.velocity * 0.2f).WithMaxLength(8);
 				npc.position += npc.noTileCollide ? vel : Collision.AnyCollision(npc.position, vel, npc.width, npc.height);
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
