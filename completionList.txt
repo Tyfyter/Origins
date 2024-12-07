@@ -82,7 +82,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(ᗢ) Brine Fiend !!!
+(#2, ^2) Brine Fiend !!!
 (^, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -189,14 +189,16 @@ ENEMY NPCS:
 (^) Amoeba Bugger*
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
+(X) Beckonbug
 (X) Brine Moccasin !!!
-(@5, #) Carpalfish* !!!
+(X) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod*
 (^) Defiled Watcher*
+(X) Depth Crawler
 (X) Hoarder !!!
 (X) Holy Governor
 (X) Holy Warrior
@@ -207,11 +209,14 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
+(X) Riven Protoform (Crawler Form) !!!
+(X) Riven Protoform (Tank Form) !!!
 (X) Rocket Machine
 (^) Savage Whip*
 (X) Sea Dragon !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
+(X) Riven Gull
 (^) Torn Ghoul
 (^) Trijaw Shark*
 
@@ -425,6 +430,7 @@ ACCESSORIES:
 (^) Turbo Reel*
 (^) Unsought Organ*
 (@5) Venom Fang* !!!
+(X) Venom Shield !!!
 
 (^) Dash Ravel*
 (^) Depth Ravel*
@@ -687,9 +693,9 @@ RANGED WEAPONS:
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun* !!!
 (^) Dart Crossbow*
-(%3) Dragon's Breath (replanning soon) !!!
+(X) Dragon's Breath* !!!
 (^) Firespit
-(X) Frequency
+(X) Harpoon Burst Rifle !!!
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
@@ -697,6 +703,7 @@ RANGED WEAPONS:
 (X) Organ Donor
 (X) Orichalcum Harpoon Gun* !!!
 (X) Palladium Harpoon Gun* !!!
+(X) Riveiar
 (^) Sixth Spline
 (^) Spray 'N Pray*
 (^) Tiny Sniper
@@ -738,6 +745,8 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
+(X) Brine Haze !!!
+(X) Broadcast !!!
 (^) Chemical Laser
 (#3, ^2) Communion* !!!
 (^) Dew Justice*
@@ -796,12 +805,14 @@ SUMMONER WEAPONS:
 (^) Bomb Artifact
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
-(#, @4/2 (not necessarily missing sprites, but I'd need confirmation that the incredibly sudden transitions between states are intended)) Forsaken Desire
+(#, ^2) Forsaken Desire
+(X) Huff Puffer Bait !!!
 (X) Mildew Incantation !!!
 (X) Mildew Whip !!!
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre*
+(X) TV Remote
 (X) Wyvern Horn
 (^) Ziptie*
 
@@ -1041,6 +1052,7 @@ TILES:
 (X) Qube Generator*
 
 (^) Acetabularia*
+(X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Fissure*
 (^) Defiled Foliage
@@ -1050,6 +1062,7 @@ TILES:
 (ᗢ) Fungarust*
 (^) Gel Blister*
 (X) Heat Vent
+(X) Marrowick Coral
 (X) Moonshine*
 (^) Petrified Tree*
 (^) Riven Foliage
@@ -1162,11 +1175,13 @@ CRITTERS AND FISH:
 (^) Cicada 3301*
 
 (^) Bilemouth*
+(X) Bobbit Worm !!!
 (^) Bonehead Jellyfish*
 (^) Duskarp*
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
+(X) Toadfish !!!
 ---
 
 
@@ -1224,7 +1239,7 @@ CONSUMABLES:
 (#2, ^2, 々) The Button*
 
 (#2, ^2, 々) Ashen Loot Box*
-(X) Basic Crate*
+(X) Basic Crate* !!!
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box*
 (#2, ^2, 々) Crimson Loot Box*
