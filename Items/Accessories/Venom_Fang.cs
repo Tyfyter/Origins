@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Decaying_Scale : ModItem, ICustomWikiStat {
+	public class Venom_Fang : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat",
 			"ToxicSource"
@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.decayingScale = true;
+			originPlayer.venomFang = true;
 		}
 	}
 }

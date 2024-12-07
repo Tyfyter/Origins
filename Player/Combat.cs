@@ -233,9 +233,9 @@ namespace Origins {
 			if (symbioteSkull) {
 				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, 0.1f, this);
 			}
-			if (decayingScale || acridSet) {
+			if (venomFang || acridSet) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
-				if (decayingScale && acridSet) {
+				if (venomFang && acridSet) {
 					target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
 				}
 			}

@@ -103,7 +103,7 @@ namespace Origins {
 		public bool madHand = false;
 		public bool fiberglassDagger = false;
 		public bool advancedImaging = false;
-		public bool decayingScale = false;
+		public bool venomFang = false;
 		public bool lazyCloakVisible = false;
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
@@ -470,7 +470,7 @@ Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis m
 			madHand = false;
 			fiberglassDagger = false;
 			advancedImaging = false;
-			decayingScale = false;
+			venomFang = false;
 			lazyCloakVisible = false;
 			amebicVialVisible = false;
 			entangledEnergy = false;

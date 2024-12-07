@@ -209,8 +209,8 @@ Dash_Ravel: {
 		'''
 }
 
-Decaying_Scale: {
-	DisplayName: Decaying Scale
+Venom_Fang: {
+	DisplayName: Venom Fang
 	Tooltip:
 		'''
 		Attacks inflict 'Toxic Shock' on enemies

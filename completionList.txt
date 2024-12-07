@@ -429,7 +429,7 @@ ACCESSORIES:
 (^) Trap Charm*
 (^) Turbo Reel*
 (^) Unsought Organ*
-(@5) Venom Fang* !!!
+(^) Venom Fang*
 (X) Venom Shield !!!
 
 (^) Dash Ravel*
