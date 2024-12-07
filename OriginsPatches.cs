@@ -579,7 +579,17 @@ namespace Origins {
 					orig();
 				}
 			);
+			IL_PlayerDrawHelper.SetShaderForData += il => {
+				ILCursor c = new(il);
+				ILLabel label = c.MarkLabel();
+				c.MoveBeforeLabels();
+				c.EmitLdarg2();
+				c.EmitLdfld(typeof(DrawData).GetField(nameof(DrawData.texture)));
+				c.EmitBrtrue(label);
+				c.EmitRet();
+			};
 		}
+
 		private void On_FilterManager_BeginCapture1(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
 			orig(self, screenTarget1, clearColor);
 		}
