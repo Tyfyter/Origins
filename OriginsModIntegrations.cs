@@ -112,18 +112,22 @@ namespace Origins {
 						c.EmitLdcI4(0);
 						c.EmitRet();
 					});
-					/*Type[] types = [typeof(Func<,>).MakeGenericType(HasPwoerEffect.DeclaringType, typeof(bool)), HasPwoerEffect.DeclaringType, typeof(bool)];
-					DynamicMethod fixerMethod = new(
-						HasPwoerEffect.Name + "_Fix", typeof(bool),
-						types,
-					true);
-					ILGenerator gen = fixerMethod.GetILGenerator();
-					gen.Emit(OpCodes.Ldarg_0);
-
-					MonoModHooks.Add(HasPwoerEffect, fixerMethod.CreateDelegate(typeof(Func<,,>).MakeGenericType(types)));*/
 				}
-				try {
-				} catch {
+			}
+			if (ModLoader.TryGetMod("Aequus", out Mod aequus)) {
+				MethodInfo GetTotalStats = aequus.Code.GetType("Aequus.Common.DamageClasses.DamageClassStatFloat")?.GetMethod("GetTotalStats", BindingFlags.Public | BindingFlags.Instance, [typeof(DamageClass)]);
+				if (GetTotalStats is not null) {
+					MonoModHooks.Modify(GetTotalStats, il => {
+						ILCursor c = new(il);
+						if(c.TryGotoNext(MoveType.Before, 
+							i => i.MatchLdsfld(aequus.Code.GetType("Aequus.Common.DamageClasses.AequusDamageClasses"), "DamageClasses")
+						)) {
+							c.Remove();
+							c.Index++;
+							c.Remove();
+							c.EmitCall(typeof(DamageClassLoader).GetMethod(nameof(DamageClassLoader.GetDamageClass)));
+						}
+					});
 				}
 			}
 		}

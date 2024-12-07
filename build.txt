@@ -1,5 +1,5 @@
 author = Tyfyter2002 and chrersis
-version = 0.4.2.7
+version = 0.4.2.8
 displayName = Terraria Origins
 
 buildIgnore = *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Sounds\Music\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
