@@ -34,6 +34,7 @@ namespace Origins.Tiles.Brine {
 		public override int Value => Item.sellPrice(copper: 60);
 		public override int Rare => ItemRarityID.Green;
 		public override bool Hardmode => false;
+		public override bool HasTooltip => true;
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.ExplosivePowder)
 			.AddIngredient(this, 2)
