@@ -222,13 +222,13 @@ Dryad: {
 								
 			'{$Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire}'
 								
-			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
+			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			'''
-		Inquire: Hey [player:_], look. I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the {1}? If you follow through, I’ll reward you with access to something I've been hiding for a while now.
-		Start: Thanks. The {1} has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
+		Inquire: Hey [player:_], look. I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the [evil:world]? If you follow through, I’ll reward you with access to something I've been hiding for a while now.
+		Start: Thanks. The [evil:world] has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
 		ReadyToComplete: Hold on. Let me turn on my Dryad-instincts to see if you're lying...
-		Complete: Oh good, you've made some progress, but it's not enough. The {1} grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
+		Complete: Oh good, you've made some progress, but it's not enough. The [evil:world] grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
 	}
 
 	Bloombomb: {
@@ -240,11 +240,11 @@ Dryad: {
 								
 			'{$Mods.Origins.Quests.Dryad.Bloombomb.Inquire}'
 								
-			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
+			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Bloombomb]
 			'''
-		Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the {1} for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
-		Start: Oh. I didn't think you'd be dying to cleanse the {1} over some [itemname:Origins/Bloombomb]s, to be all that honest. Thanks anyway.
+		Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the [evil:world] for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
+		Start: Oh. I didn't think you'd be dying to cleanse the [evil:world] over some [itemname:Origins/Bloombomb]s, to be all that honest. Thanks anyway.
 		ReadyToComplete: Great work, Terrarian. You did good. However, I am unable to offer you [itemname:Origins/Bloombomb]s until you click that button above me.
 		Complete: Now. For your reward...
 	}

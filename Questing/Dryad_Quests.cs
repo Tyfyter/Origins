@@ -18,7 +18,7 @@ namespace Origins.Questing {
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.Dryad && !ShowInJournal();
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire", Main.LocalPlayer.name, WorldBiomeManager.GetWorldEvil(true).DisplayName);
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;// - set stage to 1 (kill harpies)
 			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Start");
@@ -37,7 +37,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Dryad.Cleansing_Station.Journal", //translation key
-				WorldBiomeManager.GetWorldEvil(true).DisplayName,
 				progress,
 				target,
 				StageTagOption(Stage >= 2) //used in a quest stage tag to show the stage as completed
@@ -70,6 +69,7 @@ namespace Origins.Questing {
 				progress += amount;
 				if (progress >= target) {
 					Stage = 2;
+					HasNotification = true;
 				}
 				ShouldSync = true;
 			}
@@ -87,7 +87,7 @@ namespace Origins.Questing {
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.Dryad && !ShowInJournal();
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire", Main.LocalPlayer.name, WorldBiomeManager.GetWorldEvil(true).DisplayName);
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;// - set stage to 1 (kill harpies)
 			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
@@ -106,7 +106,6 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				loc_key + "Journal", //translation key
-				WorldBiomeManager.GetWorldEvil(true).DisplayName,
 				progress,
 				target,
 				StageTagOption(Stage >= 2) //used in a quest stage tag to show the stage as completed
@@ -139,6 +138,7 @@ namespace Origins.Questing {
 				progress += amount;
 				if (progress >= target) {
 					Stage = 2;
+					HasNotification = true;
 				}
 				ShouldSync = true;
 			}

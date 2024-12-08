@@ -566,6 +566,9 @@ namespace Origins {
 			if (journalDye is not null) {
 				tag.Add("JournalDye", journalDye);
 			}
+			if (journalText is not null) {
+				tag.Add("JournalText", journalText);
+			}
 			if (unlockedJournalEntries is not null) {
 				tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
 			}
@@ -579,9 +582,9 @@ namespace Origins {
 					quest.SaveData(questTag);
 					if (questTag.Count > 0) {
 						questsTag.Add(quest.FullName, questTag);
-						if (!WorldGen.generatingWorld) Mod.Logger.Info($"Saving {quest.NameValue} to player with data: {questTag}");
+						if (!Main.gameMenu) Mod.Logger.Info($"Saving {quest.NameValue} to player with data: {questTag}");
 					} else {
-						if (!WorldGen.generatingWorld) Mod.Logger.Info($"Not saving {quest.NameValue}, no data to save");
+						if (!Main.gameMenu) Mod.Logger.Info($"Not saving {quest.NameValue}, no data to save");
 					}
 				}
 			}
@@ -615,6 +618,7 @@ namespace Origins {
 			if (tag.ContainsKey("journalUnlocked")) {
 				journalUnlocked = tag.Get<bool>("journalUnlocked");
 			}
+			journalText = tag.SafeGet<List<string>>("JournalText") ?? journalText;
 			questsTag = tag.SafeGet<TagCompound>("Quests");
 			if (tag.SafeGet<int>("TimeSinceLastDeath") is int timeSinceLastDeath) {
 				this.timeSinceLastDeath = timeSinceLastDeath;

@@ -823,7 +823,7 @@ namespace Origins {
 
 		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
 		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
-			if (args.Exception is IOException ioException && (ioException.Message.Contains("bytes caused by Origins in HandlePacket") || ioException.Message.Contains("bytes caused by ModDemoUtils in HandlePacket"))) {
+			if (args?.Exception is IOException ioException && ((ioException.Message?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (ioException.Message?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false))) {
 				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
 			}
 			orig(sender, args);
