@@ -565,7 +565,6 @@ namespace Origins {
 				}
 			);
 			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
-			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture1;
 			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
 				try {
 					if (self.Shader is not null) orig(self);
@@ -588,10 +587,6 @@ namespace Origins {
 				c.EmitBrtrue(label);
 				c.EmitRet();
 			};
-		}
-
-		private void On_FilterManager_BeginCapture1(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
-			orig(self, screenTarget1, clearColor);
 		}
 
 		delegate void orig_ModifyWeaponDamage(Player player, Item item, ref StatModifier damage);

@@ -18,7 +18,7 @@ namespace Origins.Tiles.Other {
 			Main.tileOreFinderPriority[Type] = 120;
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
-			AddMapEntry(new Color(60, 60, 60));
+			AddMapEntry(new Color(60, 60, 60), CreateMapEntryName());
 			MineResist = 3;
 		}
 	}

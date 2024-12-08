@@ -29,7 +29,7 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 700;
 			NPC.friendly = false;
 			NPC.value = Item.buyPrice(silver: 6, copper: 50);
-			Banner = NPCID.DesertGhoul;
+			Banner = Item.NPCtoBanner(NPCID.DesertGhoul);
 			AnimationType = NPCID.DesertGhoulCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Underground_Desert>().Type
