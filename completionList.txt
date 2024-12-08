@@ -191,7 +191,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
 (X) Brine Moccasin !!!
-(X) Carpalfish* !!!
+(#, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -339,7 +339,6 @@ ARMOR:
 ACCESSORIES:
 ---
 (^) Abyssal Anchor*
-
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
