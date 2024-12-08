@@ -349,6 +349,7 @@ ACCESSORIES:
 (^) Bomb Charm*
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
+(X) Bomber's Soul
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
 (#3, ^2) Bug Trapper* !!!
@@ -844,7 +845,7 @@ SUMMONER WEAPONS:
 (@5, ^3) Terratotem
 (X) Tonal Resonator
 
-NO POST ML SUMMONER CONTENT YET.
+(X) Laden Pressure Incantation
 ---
 
 
