@@ -15,6 +15,9 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
+			Main.tileOreFinderPriority[Type] = 120;
+			Main.tileSpelunker[Type] = true;
+			TileID.Sets.Ore[Type] = true;
 			AddMapEntry(new Color(60, 60, 60));
 			MineResist = 3;
 		}
