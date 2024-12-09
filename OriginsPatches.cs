@@ -73,6 +73,8 @@ using Terraria.GameContent.UI;
 using Origins.UI.Event;
 using Origins.UI;
 using ThoriumMod;
+using Origins.Items.Other.Consumables.Broths;
+using static Terraria.ID.ContentSamples.CreativeHelper;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -588,6 +590,7 @@ namespace Origins {
 				c.EmitBrtrue(label);
 				c.EmitRet();
 			};
+			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
 		}
 
 		private void On_FilterManager_BeginCapture1(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {

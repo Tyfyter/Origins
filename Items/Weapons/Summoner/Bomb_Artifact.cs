@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 
 		public int MaxLife { get; set; }
-		public int Life { get; set; }
+		public float Life { get; set; }
 		public override void SetStaticDefaults() {
 			Bomb_Artifact.projectileID = Type;
 			// DisplayName.SetDefault("Friendly Bomb");
@@ -106,7 +106,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			Origins.ForceFelnumShockOnShoot[Type] = true;
-			Origins.ArtifactMinion[Type] = true;
 		}
 
 		public sealed override void SetDefaults() {
@@ -311,7 +310,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.frame = 7 + (int)(Projectile.ai[0] / 6f);
 				if (++Projectile.ai[0] > 30) {
 					//Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, projectile.damage, 0, projectile.owner, 1, 1);
-					Projectile.DamageArtifactMinion(Life, noCombatText: true);
+					Projectile.DamageArtifactMinion(9999, noCombatText: true);
 				}
 			} else if (OnGround) {
 				Projectile.localAI[1]--;

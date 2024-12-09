@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Consumables.Broths;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
@@ -76,6 +77,13 @@ namespace Origins.NPCs.TownNPCs {
 				Brine_Pool.BestiaryBackground,
 				this.GetBestiaryFlavorText()
 			);
+		}
+		public override void AddShops() {
+			new NPCShop(Type)
+			.Add<Hearty_Broth>()
+			.Add<Sour_Broth>()
+			.Add<Foul_Broth>()
+			.Register();
 		}
 		public override string GetChat() {
 			WeightedRandom<string> chat = new();

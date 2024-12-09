@@ -66,6 +66,8 @@ namespace Origins {
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
 		static bool[] itemsThatAllowRemoteRightClick;
 		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
+		static bool[] brothBuffs;
+		public static bool[] BrothBuffs { get => brothBuffs; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -782,6 +784,7 @@ namespace Origins {
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
+			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);

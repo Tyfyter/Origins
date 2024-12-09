@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Weak_Shadowflame_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override string Texture => "Terraria/Images/Buff_153";
 		public override void SetStaticDefaults() {
 			ID = Type;
@@ -14,7 +14,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Soulhide_Weakened_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override string Texture => "Terraria/Images/Buff_153";
 		public override void SetStaticDefaults() {
 			ID = Type;

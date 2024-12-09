@@ -36,7 +36,7 @@ namespace Origins.Items.Other.Consumables.Food {
 	public class Irish_Cheddar_Buff : ModBuff, ICustomWikiStat {
 		public string CustomStatPath => nameof(Irish_Cheddar_Buff);
 		public override string Texture => "Origins/Buffs/Food/Irish_Cheddar_Buff";
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

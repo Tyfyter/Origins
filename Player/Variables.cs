@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables.Broths;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
@@ -302,6 +303,7 @@ namespace Origins {
 		public Vector2 tornOffset = default;
 		public bool swarmStatue = false;
 		public bool focusPotion = false;
+		public BrothBase broth = null;
 		#endregion
 
 		#region keybinds
@@ -623,6 +625,7 @@ namespace Origins {
 			flaskSalt = false;
 			swarmStatue = false;
 			focusPotion = false;
+			broth = null;
 
 			boatRockerAltUse = false;
 

@@ -961,6 +961,33 @@ Buffs: {
 		// DisplayName: Hibernal Incantation Buff
 		// Description: Mods.Origins.Buffs.Hibernal_Incantation_Buff.Description
 	}
+
+	Sour_Broth_Buff: {
+		// DisplayName: Sour Broth
+		/* Description:
+			'''
+			Increases minion critical strike chance by 10%
+			Artifact minions gain an additional 15% critical strike chance
+			''' */
+	}
+
+	Foul_Broth_Buff: {
+		// DisplayName: Foul Broth
+		/* Description:
+			'''
+			Increases minion damage by 50%
+			Reduces minion speed by 25%
+			''' */
+	}
+
+	Hearty_Broth_Buff: {
+		// DisplayName: Hearty Broth
+		/* Description:
+			'''
+			Increases minion speed by 10%
+			Increases artifact minion health by 20%
+			''' */
+	}
 }
 
 DamageClassName: {

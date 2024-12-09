@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Terratotem_Orb";
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
-		public int Life { get; set; }
+		public float Life { get; set; }
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting

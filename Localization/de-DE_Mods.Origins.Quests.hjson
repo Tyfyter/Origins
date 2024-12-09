@@ -1,3 +1,25 @@
+Guide: {
+	// Quest_Menu: Need some advice?
+
+	Journal: {
+		// Name: Journal Get!
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Guide.Journal.Name}
+			Client: [npcname:Guide]
+								
+			'{$Mods.Origins.Quests.Guide.Journal.Inquire}'
+								
+			- [qs/completed:Get a feather]
+			- [qs/completed:Get a book]
+			- [qs/completed:Get ink]
+			Unlocks: [i:Origins/Journal_Item]
+			''' */
+		// Inquire: "[player:_], are you having trouble keeping track of "
+		// Start: missingno
+	}
+}
+
 Merchant: {
 	// Quest_Menu: Got time to go on a little quest for me?
 

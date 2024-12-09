@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Corrupt_Assimilation_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
@@ -47,7 +47,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Crimson_Assimilation_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
@@ -87,7 +87,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Defiled_Assimilation_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
@@ -129,7 +129,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Riven_Assimilation_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

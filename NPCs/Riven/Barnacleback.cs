@@ -104,7 +104,7 @@ namespace Origins.NPCs.Riven {
 	}
 	public class Barnacled_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_32";
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

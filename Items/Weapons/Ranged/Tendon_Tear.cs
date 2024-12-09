@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Ranged {
         }
     }
 	public class Tendon_Tear_Swing : ModProjectile, IWhipProjectile {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override string Texture => "Origins/Items/Weapons/Ranged/Tendon_Tear_P";
 		public override void SetStaticDefaults() {
 			ID = Type;

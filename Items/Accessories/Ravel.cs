@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Movement"
 		];
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
@@ -90,7 +90,7 @@ namespace Origins.Items.Accessories {
 		public const float transformCounterSpeed = 1.75f;
 		public const float transformCounterMax = 4f;
 		public override string Texture => "Origins/Items/Accessories/Ravel";
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public static AutoCastingAsset<Texture2D> TransformTexture { get; private set; }
 		protected virtual void SetID() {
 			MountData.buff = ModContent.BuffType<Ravel_Mount_Buff>();

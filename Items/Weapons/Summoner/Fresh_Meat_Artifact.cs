@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		Vector2 stickPos = default;
 		float stickRot = 0;
 		public int MaxLife { get; set; }
-		public int Life { get; set; }
+		public float Life { get; set; }
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting
@@ -241,7 +241,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.height,
 					DustID.Blood
 				).shader = shader;
-			}
+			};
 		}
 	}
 	public class Fresh_Meat_Dog : ModProjectile {
@@ -271,6 +271,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
+			Origins.ArtifactMinion[Type] = true;
 			ID = Type;
 		}
 

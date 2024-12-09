@@ -14,7 +14,7 @@ using Terraria.UI.Chat;
 namespace Origins.Items.Other.Consumables {
 	public class Mojo_Flask : ModItem, ICustomWikiStat {
 		public const int cooldown_time = 5 * 60;
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public string[] Categories => [
 			"Potion"
 		];

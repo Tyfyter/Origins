@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Ninja_Ravel : Ravel {
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
             Item.ResearchUnlockCount = 1;
@@ -33,7 +33,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Ninja_Ravel_Mount : Ravel_Mount {
 		public override string Texture => "Origins/Items/Accessories/Ninja_Ravel";
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		protected override void SetID() {
 			MountData.buff = ModContent.BuffType<Ninja_Ravel_Mount_Buff>();
 			ID = Type;

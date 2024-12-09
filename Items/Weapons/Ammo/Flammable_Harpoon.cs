@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
 	public class Flammable_Harpoon : ModItem, ICustomWikiStat {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
         public string[] Categories => [
             "Harpoon"
         ];
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Flammable_Harpoon_P : Harpoon_P {
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
