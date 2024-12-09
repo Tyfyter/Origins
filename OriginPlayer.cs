@@ -629,7 +629,7 @@ namespace Origins {
 			rivenAssimilation = tag.SafeGet<float>("rivenAssimilation");
 			mojoInjection = tag.SafeGet<bool>("mojoInjection");
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
-				guid = new Guid(guidBytes);
+				guid = new Guid(guidBytes, false);
 			} else {
 				guid = Guid.NewGuid();
 			}
