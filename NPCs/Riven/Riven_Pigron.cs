@@ -25,7 +25,7 @@ namespace Origins.NPCs.Riven {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Ice_Biome>().Type
 			];
-			Banner = NPCID.PigronCorruption;
+			Banner = Item.NPCtoBanner(NPCID.PigronCorruption);
 			BannerItem = ItemID.PigronBanner;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

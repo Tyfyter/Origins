@@ -27,7 +27,7 @@ namespace Origins.NPCs.Defiled {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Ice_Biome>().Type
 			];
-			Banner = NPCID.PigronCorruption;
+			Banner = Item.NPCtoBanner(NPCID.PigronCorruption);
 			BannerItem = ItemID.PigronBanner;
 		}
 		public void Regenerate(ref int lifeRegen) {

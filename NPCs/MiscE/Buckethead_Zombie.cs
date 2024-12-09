@@ -22,7 +22,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.friendly = false;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;
-			Banner = NPCID.Zombie;
+			Banner = Item.NPCtoBanner(NPCID.Zombie);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if ((spawnInfo.Player.ZoneGraveyard || !Main.dayTime) && spawnInfo.Player.ZoneForest) {

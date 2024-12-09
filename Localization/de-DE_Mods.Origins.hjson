@@ -1598,6 +1598,8 @@ Tiles: {
 	// Ancient_Music_Box_RH: Ancient Music Box (Riven Hive)
 	// Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
 	// Lost_Ore.MapEntry: Lost Ore
+	// Carburite.MapEntry: Carburite
+	// Silicon_Ore.MapEntry: Silicon Ore
 }
 
 MapObject: {

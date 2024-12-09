@@ -32,7 +32,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = Item.buyPrice(silver: 6, copper: 50);
-			Banner = NPCID.DesertGhoul;
+			Banner = Item.NPCtoBanner(NPCID.DesertGhoul);
 			AnimationType = NPCID.DesertGhoulCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().Type

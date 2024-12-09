@@ -130,22 +130,6 @@ namespace Origins {
 					});
 				}
 			}
-
-			if (ModLoader.TryGetMod("VanillaQoL", out Mod vanillaQoL)) {
-				MethodInfo SetDefaults = vanillaQoL.Code.GetType("VanillaQoL.Gameplay.NonConsumableSummons")?.GetMethod("SetDefaults", BindingFlags.NonPublic | BindingFlags.Instance);
-				if (SetDefaults is not null) {
-					MonoModHooks.Modify(SetDefaults, il => {
-						ILCursor c = new(il);
-						ILLabel label = c.MarkLabel();
-						c.MoveBeforeLabels();
-						c.EmitLdarg1();
-						c.EmitLdfld(typeof(Item).GetField(nameof(Item.shoot)));
-						c.EmitLdcI4(-1);
-						c.EmitBneUn(label);
-						c.EmitRet();
-					});
-				}
-			}
 		}
 		public void Unload() {
 			instance = null;
