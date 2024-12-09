@@ -56,13 +56,13 @@ namespace Origins {
 					}
 
 					case add_void_lock:
-					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), fromNet: true);
+					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16), false), fromNet: true);
 					break;
 
 					case sync_void_locks: {
 						OriginSystem originSystem = ModContent.GetInstance<OriginSystem>();
 						for (int i = reader.ReadUInt16(); i-- > 0;) {
-							originSystem.TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), fromNet: true);
+							originSystem.TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16), false), fromNet: true);
 						}
 						break;
 					}
@@ -114,7 +114,7 @@ namespace Origins {
 					break;
 
 					case add_void_lock:
-					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16)), netOwner: whoAmI);
+					ModContent.GetInstance<OriginSystem>().TryAddVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), new Guid(reader.ReadBytes(16), false), netOwner: whoAmI);
 					break;
 
 					case remove_void_lock:
@@ -208,7 +208,7 @@ namespace Origins {
 					}
 					case sync_guid: {
 						OriginPlayer originPlayer = Main.player[reader.ReadByte()].GetModPlayer<OriginPlayer>();
-						originPlayer.guid = new(reader.ReadBytes(16));
+						originPlayer.guid = new(reader.ReadBytes(16), false);
 						// Forward the changes to the other clients
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients

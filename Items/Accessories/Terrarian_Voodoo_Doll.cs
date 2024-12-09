@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
@@ -16,6 +17,10 @@ namespace Origins.Items.Accessories {
 		];
 		Guid owner;
 		Player player;
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemSpawnDecaySpeed[Type] = 0;
+			ItemID.Sets.OverflowProtectionTimeOffset[Type] = -36000;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.rare = ItemRarityID.Green;
@@ -28,7 +33,7 @@ namespace Origins.Items.Accessories {
 			return true;
 		}
 		public OriginPlayer RefreshPlayer() {
-			if (player is null && OriginPlayer.playersByGuid.TryGetValue(owner, out int id)) {
+			if (player is null && owner != Guid.Empty && OriginPlayer.playersByGuid.TryGetValue(owner, out int id)) {
 				player = Main.player[id];
 			}
 			if (player is not null) {
@@ -58,19 +63,10 @@ namespace Origins.Items.Accessories {
 					int headX = (int)(Item.Center.X / 16f);
 					int headY = (int)((Item.position.Y + 1f) / 16f);
 					if (Item.position.Y / 16f < Main.UnderworldLayer && Main.tile[headX, headY] != null && Main.tile[headX, headY].LiquidType == LiquidID.Shimmer && Main.tile[headX, headY].LiquidAmount >= 0) {
-						player.AddBuff(353, 60);
+						player.AddBuff(BuffID.Shimmer, 60);
 					}
 				}
 				TryPickupItems();
-				/*Rectangle playerHitbox = player.Hitbox;
-				try {
-					player.Hitbox = Item.Hitbox;
-					originPlayer.isVoodooPickup = true;
-					PlayerMethods.GrabItems(player);
-				} finally {
-					player.Hitbox = playerHitbox;
-					originPlayer.isVoodooPickup = false;
-				}*/
 			}
 		}
 		void TryPickupItems() {
@@ -139,19 +135,49 @@ namespace Origins.Items.Accessories {
 			return !player.GetModPlayer<OriginPlayer>().isVoodooPickup;
 		}*/
 		public override void NetSend(BinaryWriter writer) {
-			writer.Write(owner.ToByteArray());
+			writer.Write(owner.ToByteArray(false));
 		}
 		public override void NetReceive(BinaryReader reader) {
-			owner = new Guid(reader.ReadBytes(16));
+			owner = new Guid(reader.ReadBytes(16), false);
 		}
 		public override void SaveData(TagCompound tag) {
-			tag.Add("owner", owner.ToByteArray());
+			tag.Add("owner", owner.ToByteArray(false));
 		}
 		public override void LoadData(TagCompound tag) {
 			if (tag.TryGet("owner", out byte[] guidBytes)) {
-				owner = new Guid(guidBytes);
+				owner = new Guid(guidBytes, false);
 			} else {
 				owner = Guid.Empty;
+			}
+		}
+		public class Voodoo_Doll_Persistence_System : ModSystem {
+			public override void SaveWorldData(TagCompound tag) {
+				List<TagCompound> dolls = [];
+				foreach (Item item in Main.ActiveItems) {
+					if (item.ModItem is Terrarian_Voodoo_Doll doll) {
+						dolls.Add(new() {
+							["Owner"] = doll.owner.ToByteArray(false),
+							["Position"] = item.position
+						});
+					}
+				}
+				tag.Add("Dolls", dolls);
+			}
+			public override void LoadWorldData(TagCompound tag) {
+				int type = ModContent.ItemType<Terrarian_Voodoo_Doll>();
+				if (tag.TryGet("Dolls", out List<TagCompound> dolls)) {
+					for (int i = 0; i < dolls.Count; i++) {
+						if (dolls[i].TryGet("Owner", out byte[] guidBytes) && dolls[i].TryGet("Position", out Vector2 position)) {
+							Item item = Main.item[Item.NewItem(
+								new EntitySource_Misc("persistence"),
+								position,
+								type
+							)];
+							if (item.ModItem is Terrarian_Voodoo_Doll doll) doll.owner = new Guid(guidBytes, false);
+							item.velocity = Vector2.Zero;
+						}
+					}
+				}
 			}
 		}
 	}
