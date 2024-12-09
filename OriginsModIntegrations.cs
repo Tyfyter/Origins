@@ -21,6 +21,8 @@ using Newtonsoft.Json.Linq;
 using ThoriumMod;
 using System.Reflection.Emit;
 using Terraria.DataStructures;
+using Mono.Cecil.Cil;
+using Mono.Cecil;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -59,6 +61,28 @@ namespace Origins {
 			if (ModLoader.TryGetMod("ItemSourceHelper", out Mod itemSourceHelper)) {
 				itemSourceHelper.Call("AddIconicWeapon", DamageClasses.Explosive.Type, (int)ItemID.Bomb);
 				itemSourceHelper.Call("AddShimmerFakeCondition", RecipeConditions.ShimmerTransmutation);
+			}
+			if (ModLoader.TryGetMod("ColoredDamageTypes", out Mod coloredDamageTypes)) {
+				static bool PushesDamageClass(ILContext il, Instruction instruction) {
+					if (instruction.MatchLdarg(out int arg)) return il.Method.Parameters[arg].ParameterType.FullName == il.Import(typeof(DamageClass)).FullName;
+					if (instruction.MatchLdloc(out int loc)) return il.Body.Variables[loc].VariableType.FullName == il.Import(typeof(DamageClass)).FullName;
+					if (instruction.MatchCallOrCallvirt(out MethodReference method)) return method.ReturnType.FullName == il.Import(typeof(DamageClass)).FullName;
+					if (instruction.MatchLdfld(out FieldReference field) || instruction.MatchLdsfld(out field)) return field.FieldType.FullName == il.Import(typeof(DamageClass)).FullName;
+					return false;
+				}
+				static void FixMethods(ILContext il) {
+					ILCursor c = new(il);
+					while (c.TryGotoNext(MoveType.Before,
+						i => i.MatchCallOrCallvirt<object>(nameof(ToString)) && PushesDamageClass(il, i.Previous)
+					)) {
+						c.Remove();
+						c.EmitCallvirt(typeof(ModType).GetMethod("get_" + nameof(ModType.FullName)));
+					}
+				}
+				foreach (MethodInfo method in coloredDamageTypes.GetType().GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)) {
+					MonoModHooks.Modify(method, FixMethods);
+				}
+				//MonoModHooks.Modify(coloredDamageTypes.GetType().GetMethod("LoadModdedDamageTypes", BindingFlags.Public | BindingFlags.Static), FixMethods);
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
