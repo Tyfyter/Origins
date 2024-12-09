@@ -15,8 +15,8 @@ Guide: {
 			- [qs/completed:Get ink]
 			Unlocks: [i:Origins/Journal_Item]
 			''' */
-		// Inquire: "[player:_], are you having trouble keeping track of "
-		// Start: missingno
+		// Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in."
+		// Start: You could use a book from the dungeon, a harpy feather, and squid ink to keep track of your quests.
 	}
 }
 
