@@ -818,8 +818,8 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (#, ^2) Forsaken Desire
 (X) Huff Puffer Bait !!!
-(X) Mildew Incantation !!!
-(X) Mildew Whip !!!
+(#, ^2) Mildew Incantation !!!
+(#, ^2) Mildew Whip !!!
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre*
