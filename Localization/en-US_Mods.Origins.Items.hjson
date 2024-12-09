@@ -209,8 +209,8 @@ Dash_Ravel: {
 		'''
 }
 
-Decaying_Scale: {
-	DisplayName: Decaying Scale
+Venom_Fang: {
+	DisplayName: Venom Fang
 	Tooltip:
 		'''
 		Attacks inflict 'Toxic Shock' on enemies
@@ -4683,3 +4683,30 @@ Glass_Cannon: {
 
 Royal_Gel_Buff: Summons a baby slime prince to fight for you
 Volatile_Gelatin_Buff: Struck enemies will detonate when struck by explosions or lit on fire
+
+Sour_Broth: {
+	DisplayName: Sour Broth
+	Tooltip:
+		'''
+		Increases minion critical strike chance by 10%
+		Artifact minions gain an additional 15% critical strike chance
+		'''
+}
+
+Foul_Broth: {
+	DisplayName: Foul Broth
+	Tooltip:
+		'''
+		Increases minion damage by 50%
+		Reduces minion speed by 25%
+		'''
+}
+
+Hearty_Broth: {
+	DisplayName: Hearty Broth
+	Tooltip:
+		'''
+		Increases minion speed by 10%
+		Increases artifact minion health by 20%
+		'''
+}

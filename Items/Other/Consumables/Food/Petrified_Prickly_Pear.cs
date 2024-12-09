@@ -47,7 +47,7 @@ namespace Origins.Items.Other.Consumables.Food {
     }
     public class Petrified_Prickly_Pear_Buff : ModBuff {
         public override string Texture => "Origins/Buffs/Food/Petrified_Prickly_Pear_Buff";
-        public static int ID { get; private set; } = -1;
+        public static int ID { get; private set; }
         public override void SetStaticDefaults() {
             ID = Type;
         }

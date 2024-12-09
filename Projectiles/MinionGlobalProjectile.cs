@@ -22,6 +22,8 @@ namespace Origins.Projectiles {
 		int timer = 0;
 		float bonusUpdateCounter = 0;
 		public float bonusUpdates = 0;
+		public float tempBonusUpdates = 0;
+		public float TotalBonusUpdates => bonusUpdates + tempBonusUpdates;
 		public override void Load() {
 			IL_Projectile.Update += IL_Projectile_Update;
 		}
@@ -34,9 +36,15 @@ namespace Origins.Projectiles {
 			c.EmitLdarg0();
 			c.EmitDelegate((int updates, Projectile proj) => {
 				if (proj.TryGetGlobalProjectile(out MinionGlobalProjectile global)) {
-					if (global.bonusUpdates != 0) {
-						global.bonusUpdateCounter += global.bonusUpdates * (updates + 1);
-						if (global.bonusUpdates > 0) {
+					if (proj.friendly && proj.TryGetOwner(out Player player)) {
+						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {
+							artifact.maxHealthModifier = StatModifier.Default;
+						}
+						player.OriginPlayer()?.broth?.PreUpdateMinion(proj);
+					}
+					if (global.TotalBonusUpdates != 0) {
+						global.bonusUpdateCounter += global.TotalBonusUpdates * (updates + 1);
+						if (global.TotalBonusUpdates > 0) {
 							while (global.bonusUpdateCounter > 1) {
 								global.bonusUpdateCounter--;
 								updates++;
@@ -47,6 +55,7 @@ namespace Origins.Projectiles {
 								updates--;
 							}
 						}
+						global.tempBonusUpdates = 0;
 					}
 				}
 				return updates;

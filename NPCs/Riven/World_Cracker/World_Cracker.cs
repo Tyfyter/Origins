@@ -598,7 +598,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public class Amoeball : ModProjectile {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override string Texture => typeof(Dew_Justice_P).GetDefaultTMLName();
 		public override string GlowTexture => Texture;
 		public AssimilationAmount Assimilation = 0.04f;

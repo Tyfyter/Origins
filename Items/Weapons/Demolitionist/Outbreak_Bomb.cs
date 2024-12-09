@@ -99,7 +99,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Outbreak_Bomb_Owner_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ToxicCloud3;
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			BuffID.Sets.TimeLeftDoesNotDecrease[Type] = true;
 			Main.debuff[Type] = true;

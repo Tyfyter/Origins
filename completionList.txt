@@ -82,7 +82,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(ᗢ) Brine Fiend !!!
+(#3, ^2) Brine Fiend !!!
 (^, 々) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -103,10 +103,10 @@ TOWN NPC Quests:
 (X) Goblin Tinkerer - Full Speed Ahead
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
-(^, 赏) Stylist - Running Dry !!!
-(^, 赏) Stylist - Slick Styling !!!
+(#3, ^2) Stylist - Running Dry !!!
+(#3, ^2) Stylist - Slick Styling !!!
 (^) Stylist - To Be Crystal Clear…
-(^, 赏) Party Girl - Livin' Up the Party !!!
+(#3, ^2) Party Girl - Livin' Up the Party !!!
 (^) Zoologist - Save the Critters!
 (^) Zoologist - Not Au-some…
 (^) Zoologist - Under the Starlight
@@ -189,14 +189,16 @@ ENEMY NPCS:
 (^) Amoeba Bugger*
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
+(X) Beckonbug
 (X) Brine Moccasin !!!
-(@5, #) Carpalfish* !!!
+(#, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
 (^) Defiled Squid*
 (^) Defiled Tripod*
 (^) Defiled Watcher*
+(X) Depth Crawler
 (X) Hoarder !!!
 (X) Holy Governor
 (X) Holy Warrior
@@ -207,11 +209,14 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
+(X) Riven Protoform (Crawler Form) !!!
+(X) Riven Protoform (Tank Form) !!!
 (X) Rocket Machine
 (^) Savage Whip*
 (X) Sea Dragon !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
+(X) Riven Gull
 (^) Torn Ghoul
 (^) Trijaw Shark*
 
@@ -305,6 +310,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
+(X) Extremophile Armor !!!
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor*
 
@@ -333,7 +339,6 @@ ARMOR:
 ACCESSORIES:
 ---
 (^) Abyssal Anchor*
-
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
@@ -344,13 +349,15 @@ ACCESSORIES:
 (^) Bomb Charm*
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
+(X) Bomber's Soul
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
-(^) Bug Trapper*
+(#3, ^2) Bug Trapper* !!!
 (X) Bundle of Evil
 (^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
+(X) Charm of Naivety !!!
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
 (^) Control Locus*
@@ -388,10 +395,17 @@ ACCESSORIES:
 (^) Makeover Choker*
 (^) Messy Leech*
 (^) Messy Magma Leech*
+(X) Mildew Heart !!!
 (^) Missile Armcannon*
+(X) Mithrafin (Cursed) !!!
+(X) Mithrafin (Uncursed) !!!
 (^) Nitro Crate*
 (^) No U Card*
+(X) Noxious Mithrafin (Cursed) !!!
+(X) Noxious Mithrafin (Uncursed) !!!
 (^) Olid Organ*
+(X) Ornamental Keepsake (Cursed) !!!
+(X) Ornamental Keepsake (Uncursed) !!!
 (^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
@@ -421,10 +435,12 @@ ACCESSORIES:
 (^) Superjump Cape*
 (^) Symbiote Skull*
 (^) Tainted Flesh*
+(X) Tender Flesh Heart !!!
 (^) Trap Charm*
 (^) Turbo Reel*
 (^) Unsought Organ*
-(@5) Venom Fang* !!!
+(^) Venom Fang*
+(X) Venom Shield !!!
 
 (^) Dash Ravel*
 (^) Depth Ravel*
@@ -687,9 +703,10 @@ RANGED WEAPONS:
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun* !!!
 (^) Dart Crossbow*
-(%3) Dragon's Breath (replanning soon) !!!
+(X) Dragon's Breath* !!!
 (^) Firespit
-(X) Frequency
+(X) Fumethrower !!!
+(X) Harpoon Burst Rifle !!!
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
@@ -697,6 +714,7 @@ RANGED WEAPONS:
 (X) Organ Donor
 (X) Orichalcum Harpoon Gun* !!!
 (X) Palladium Harpoon Gun* !!!
+(X) Riveiar
 (^) Sixth Spline
 (^) Spray 'N Pray*
 (^) Tiny Sniper
@@ -738,6 +756,8 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
+(X) Brine Haze !!!
+(X) Broadcast !!!
 (^) Chemical Laser
 (#3, ^2) Communion* !!!
 (^) Dew Justice*
@@ -796,12 +816,14 @@ SUMMONER WEAPONS:
 (^) Bomb Artifact
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
-(#, @4/2 (not necessarily missing sprites, but I'd need confirmation that the incredibly sudden transitions between states are intended)) Forsaken Desire
-(X) Mildew Incantation !!!
-(X) Mildew Whip !!!
+(#, ^2) Forsaken Desire
+(X) Huff Puffer Bait !!!
+(#, ^2) Mildew Incantation !!!
+(#, ^2) Mildew Whip !!!
 (X) Obsidian Bone
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre*
+(X) TV Remote
 (X) Wyvern Horn
 (^) Ziptie*
 
@@ -823,7 +845,7 @@ SUMMONER WEAPONS:
 (@5, ^3) Terratotem
 (X) Tonal Resonator
 
-NO POST ML SUMMONER CONTENT YET.
+(X) Laden Pressure Incantation
 ---
 
 
@@ -870,7 +892,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Happy Bomb*
-(X) Partybringer !!!
+(#, ^2) Partybringer !!!
 (X) Rattlesnake
 (^) Sonorous Shredder
 (^) Thermite Launcher*
@@ -1041,6 +1063,7 @@ TILES:
 (X) Qube Generator*
 
 (^) Acetabularia*
+(X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Fissure*
 (^) Defiled Foliage
@@ -1050,6 +1073,7 @@ TILES:
 (ᗢ) Fungarust*
 (^) Gel Blister*
 (X) Heat Vent
+(X) Marrowick Coral
 (X) Moonshine*
 (^) Petrified Tree*
 (^) Riven Foliage
@@ -1162,11 +1186,13 @@ CRITTERS AND FISH:
 (^) Cicada 3301*
 
 (^) Bilemouth*
+(X) Bobbit Worm !!!
 (^) Bonehead Jellyfish*
 (^) Duskarp*
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
+(X) Toadfish !!!
 ---
 
 
@@ -1188,15 +1214,15 @@ CONSUMABLES:
 (^) Purification Potion*
 (^) Voidsight Potion*
 
-(X) Foul Broth !!!
-(X) Hearty Broth !!!
-(X) Light Broth !!!
-(X) Minty Broth !!!
-(X) Plain Broth !!!
-(X) Savory Broth !!!
-(X) Sour Broth !!!
-(X) Spicy Broth !!!
-(X) Sweet Broth !!!
+(#, ^2) Foul Broth !!!
+(#, ^2) Hearty Broth !!!
+(#, ^2) Light Broth !!!
+(#, ^2) Minty Broth !!!
+(#, ^2) Plain Broth !!!
+(#, ^2) Savory Broth !!!
+(#, ^2) Sour Broth !!!
+(#, ^2) Spicy Broth !!!
+(#, ^2) Sweet Broth !!!
 
 (^) Bileberry*
 (^) Blue Bovine*
@@ -1224,7 +1250,7 @@ CONSUMABLES:
 (#2, ^2, 々) The Button*
 
 (#2, ^2, 々) Ashen Loot Box*
-(X) Basic Crate*
+(X) Basic Crate* !!!
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box*
 (#2, ^2, 々) Crimson Loot Box*

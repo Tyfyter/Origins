@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Impeding_Shrapnel_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			ID = Type;
@@ -40,7 +40,7 @@ namespace Origins.Buffs {
 	}
 	public class Impeding_Shrapnel_Shard : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.BoneGloveProj;
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

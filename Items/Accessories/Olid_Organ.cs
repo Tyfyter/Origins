@@ -19,12 +19,12 @@ namespace Origins.Items.Accessories {
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			player.GetCritChance(DamageClass.Generic) += 5f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.decayingScale = true;
+			originPlayer.venomFang = true;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(ItemID.PutridScent)
-			.AddIngredient(ModContent.ItemType<Decaying_Scale>())
+			.AddIngredient(ModContent.ItemType<Venom_Fang>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

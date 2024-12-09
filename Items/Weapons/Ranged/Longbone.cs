@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Bone_Shard : ModProjectile {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override string Texture => "Origins/Projectiles/Weapons/BoneS_hard";
 		public override void SetStaticDefaults() {
 			ID = Type;

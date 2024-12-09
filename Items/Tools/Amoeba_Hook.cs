@@ -19,7 +19,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Amoeba_Hook_P : ModProjectile {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
 		}

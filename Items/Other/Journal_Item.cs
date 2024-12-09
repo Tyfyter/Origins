@@ -14,9 +14,9 @@ namespace Origins.Items.Other {
 			ref bool isUnlocked = ref Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked;
 			if (!isUnlocked) {
 				isUnlocked = true;
-				Item.TurnToAir();
+				return true;
 			}
-			return true;
+			return false;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

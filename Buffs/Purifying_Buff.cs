@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Purifying_Buff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

@@ -66,6 +66,8 @@ namespace Origins {
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
 		static bool[] itemsThatAllowRemoteRightClick;
 		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
+		static bool[] brothBuffs;
+		public static bool[] BrothBuffs { get => brothBuffs; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -115,6 +117,7 @@ namespace Origins {
 			instance = this;
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
+			this.MusicAutoloadingEnabled = true;
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));
@@ -487,6 +490,9 @@ namespace Origins {
 			ChatManager.Register<Player_Head_Handler>([
 				"head"
 			]);
+			ChatManager.Register<Evil_Handler>([
+				"evil"
+			]);
 			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
 			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
@@ -611,7 +617,6 @@ namespace Origins {
 			}
 			unloadables.Clear();
 			tickers.Clear();
-			Music.UnloadMusic();
 			Main.OnPostDraw -= IncrementFrameCount;
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 			loggedErrors.Clear();
@@ -779,6 +784,7 @@ namespace Origins {
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
+			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
@@ -827,46 +833,23 @@ namespace Origins {
 			public static int RivenBoss;
 			public static int RivenOcean;
 			public static int AncientRiven;
-			public static List<int> musicIDs;
 			internal static void LoadMusic() {
-				musicIDs = [];
-				ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
-				static void SetMusic(ref int newID, int baseID) {
-					newID = ReserveMusicID();
-					if (Main.audioSystem is LegacyAudioSystem audioSystem) {
-						if (audioSystem.AudioTracks.Length <= newID) {
-							Array.Resize(ref audioSystem.AudioTracks, newID + 1);
-						}
-						Main.audioSystem.LoadCue(newID, "Music_" + baseID);
-						musicIDs.Add(newID);
-					}
+				static int GetMusicSlot(string path) {
+					MusicLoader.AddMusic(instance, path);
+					return MusicLoader.GetMusicSlot(instance, path);
 				}
-				SetMusic(ref Fiberglass, MusicID.Snow);
-
-				SetMusic(ref BrinePool, MusicID.Rain);
-
-				SetMusic(ref Dusk, MusicID.Eerie);
-
-				SetMusic(ref Defiled, MusicID.Corruption);
-				SetMusic(ref UndergroundDefiled, MusicID.UndergroundCorruption);
-				SetMusic(ref DefiledBoss, MusicID.OtherworldlyBoss1);
-				SetMusic(ref AncientDefiled, MusicID.OtherworldlyCorruption);
-
-				SetMusic(ref Riven, MusicID.Crimson);
-				SetMusic(ref UndergroundRiven, MusicID.UndergroundCrimson);
-				SetMusic(ref RivenBoss, MusicID.OtherworldlyBoss1);
-				SetMusic(ref RivenOcean, MusicID.OtherworldlyOcean);
-				SetMusic(ref AncientRiven, MusicID.OtherworldlyCrimson);
-			}
-			private static Func<int> ReserveMusicID;
-			internal static void UnloadMusic() {
-				ReserveMusicID = null;
-				if (Main.audioSystem is LegacyAudioSystem audioSystem) {
-					for (int i = 0; i < musicIDs.Count; i++) {
-						audioSystem.AudioTracks[musicIDs[i]].Stop(AudioStopOptions.Immediate);
-					}
-				}
-				musicIDs = null;
+				Fiberglass = GetMusicSlot("Music/The_Room_Before");
+				BrinePool = GetMusicSlot("Music/Only_the_Brave");
+				Dusk = GetMusicSlot("Music/Dancing_With_Ghosts");
+				Defiled = GetMusicSlot("Music/Stolen_Memories");
+				UndergroundDefiled = GetMusicSlot("Music/Heart_Of_The_Beast");
+				DefiledBoss = GetMusicSlot("Music/ADJUDICATE");
+				Riven = GetMusicSlot("Music/Pereunt_Unum_Scindendum");
+				UndergroundRiven = GetMusicSlot("Music/Festering_Hives");
+				RivenBoss = GetMusicSlot("Music/Ad_Laceratur");
+				RivenOcean = GetMusicSlot("Music/Sizzling_Waves");
+				AncientDefiled = GetMusicSlot("Music/Shattered_Topography_Old");
+				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}
 		}
 		public static class Sounds {

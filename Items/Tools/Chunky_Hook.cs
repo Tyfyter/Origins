@@ -21,7 +21,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Chunky_Hook_P : ModProjectile {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		AutoLoadingAsset<Texture2D> chain = typeof(Chunky_Hook_P).GetDefaultTMLName() + "_Chain";
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;

@@ -8,7 +8,7 @@ namespace Origins.Items.Other.Consumables.Food {
     public class Shattered_Stout : ModItem {
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
-			ItemID.Sets.FoodParticleColors[Type] = [
+			ItemID.Sets.DrinkParticleColors[Type] = [
 				new Color(81, 52, 161),
 				new Color(22, 18, 33)
 			];

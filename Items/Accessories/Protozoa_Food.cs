@@ -37,7 +37,7 @@ namespace Origins.Items.Accessories {
 	public class Mini_Protozoa_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Amoeba_Ball";
 		public override string GlowTexture => Texture;
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
 			// DisplayName.SetDefault("Little Protozoa");

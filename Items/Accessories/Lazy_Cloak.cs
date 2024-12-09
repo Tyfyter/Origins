@@ -46,7 +46,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Lazy_Cloak_P : ModProjectile {
 		public const int frameSpeed = 5;
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Eyeball_Staff.projectileID = Projectile.type;
 			// DisplayName.SetDefault("Lazy Cloak");
@@ -247,7 +247,7 @@ namespace Origins.Buffs {
 	public class Lazy_Cloak_Buff : ModBuff, ICustomWikiStat {
 		public string CustomStatPath => nameof(Lazy_Cloak_Buff);
 		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

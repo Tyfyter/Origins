@@ -1,3 +1,25 @@
+Guide: {
+	Quest_Menu: Need some advice?
+
+	Journal: {
+		Name: Journal Get!
+		Journal:
+			'''
+			{$Mods.Origins.Quests.Guide.Journal.Name}
+			Client: [npcname:Guide]
+								
+			'{$Mods.Origins.Quests.Guide.Journal.Inquire}'
+								
+			- [qs/completed:Get a feather]
+			- [qs/completed:Get a book]
+			- [qs/completed:Get ink]
+			Unlocks: [i:Origins/Journal_Item]
+			'''
+		Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in."
+		Start: You could use a book from the dungeon, a harpy feather, and squid ink to keep track of your quests.
+	}
+}
+
 Merchant: {
 	Quest_Menu: Got time to go on a little quest for me?
 
@@ -39,6 +61,8 @@ Merchant: {
 }
 
 Party_Girl: {
+	Quest_Menu: Hiya! You wanna party?! Me too!
+
 	Tax_Collector_Hat: {
 		Name: Livin' Up the Party
 		Journal:
@@ -49,7 +73,7 @@ Party_Girl: {
 			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Inquire}'
 								
 			- [qs{0}:Put a Party Hat on <npcname:TaxCollector>]
-			Unlocks: ...DELICIOUS BAKER'S DELIGHT
+			Unlocks: [i:Origins/Partybringer]
 			'''
 		Inquire: The party is ready and everything is set in place! But, something is missing... it's that old mister again. Try and cheer him up with a party hat, maybe that'll make him happy.
 		Start: Yay! Thank you for this, Terrarian! You're the best!
@@ -59,6 +83,7 @@ Party_Girl: {
 }
 
 Goblin_Tinkerer: {
+	Quest_Menu: Oh, Terrarian! Good to see you. There is much work to be done.
 	Generic.Mechanic: the Mechanic
 
 	Turbo_Reel: {
@@ -125,6 +150,8 @@ Goblin_Tinkerer: {
 }
 
 Arms_Dealer: {
+	Quest_Menu: What's up? You ready to make holes in some enemies?
+
 	Shardcannon: {
 		Name: Live Fire
 		Journal:
@@ -145,6 +172,8 @@ Arms_Dealer: {
 }
 
 Zoologist: {
+	Quest_Menu: Heyyy! You interested to save some critters, yah?
+
 	Discount_1_Quest: {
 		Name: Save the Critters!
 		Journal:
@@ -204,6 +233,8 @@ Zoologist: {
 }
 
 Dryad: {
+	Quest_Menu: As this world's righteous guardian, the responsibility of cleansing the evils is up to you. What will you do, Terrarian?
+
 	Cleansing_Station: {
 		Name: I’ll Give You a Deal
 		Journal:
@@ -213,13 +244,13 @@ Dryad: {
 								
 			'{$Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire}'
 								
-			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
+			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			'''
-		Inquire: Hey [player:_], look. I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the {1}? If you follow through, I’ll reward you with access to something I've been hiding for a while now.
-		Start: Thanks. The {1} has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
+		Inquire: Hey [player:_], look. I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the [evil:world]? If you follow through, I’ll reward you with access to something I've been hiding for a while now.
+		Start: Thanks. The [evil:world] has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
 		ReadyToComplete: Hold on. Let me turn on my Dryad-instincts to see if you're lying...
-		Complete: Oh good, you've made some progress, but it's not enough. The {1} grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
+		Complete: Oh good, you've made some progress, but it's not enough. The [evil:world] grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
 	}
 
 	Bloombomb: {
@@ -231,17 +262,19 @@ Dryad: {
 								
 			'{$Mods.Origins.Quests.Dryad.Bloombomb.Inquire}'
 								
-			- [qs{3}:Cleanse {2} blocks ({1}/{2})]
+			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Bloombomb]
 			'''
-		Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the {1} for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
-		Start: Oh. I didn't think you'd be dying to cleanse the {1} over some [itemname:Origins/Bloombomb]s, to be all that honest. Thanks anyway.
+		Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the [evil:world] for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
+		Start: Oh. I didn't think you'd be dying to cleanse the [evil:world] over some [itemname:Origins/Bloombomb]s, to be all that honest. Thanks anyway.
 		ReadyToComplete: Great work, Terrarian. You did good. However, I am unable to offer you [itemname:Origins/Bloombomb]s until you click that button above me.
 		Complete: Now. For your reward...
 	}
 }
 
 Stylist: {
+	Quest_Menu: You hear for a cut? No? You want to help..? Who even goes out of their way to thank a barber... I suppose I can have some help.
+
 	Magic_Hair_Spray: {
 		Name: Running Dry
 		Journal:
@@ -301,6 +334,8 @@ Stylist: {
 }
 
 Cyborg: {
+	Quest_Menu: There are some tasks I've assigned to an adventurer like yourself. Confirm or deny?
+
 	Advanced_Imaging: {
 		Name: Sensor Upgrade
 		Journal:

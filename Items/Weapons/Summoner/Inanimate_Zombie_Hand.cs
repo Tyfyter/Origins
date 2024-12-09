@@ -73,7 +73,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Friendly_Zombie : ModProjectile, IArtifactMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
-		public int Life { get; set; }
+		public float Life { get; set; }
 		public bool CanDie => true || ++Projectile.ai[2] >= 60 * 5;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;

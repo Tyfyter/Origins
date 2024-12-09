@@ -17,7 +17,7 @@ using PegasusLib.Graphics;
 
 namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			ID = Type;
@@ -155,7 +155,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Torn_Decay_Debuff : Torn_Debuff {
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		public override string Texture => "Origins/Buffs/Torn_Debuff";
 		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.{LocalizationCategory}.Torn_Debuff.DisplayName");
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.{LocalizationCategory}.Torn_Debuff.Description");

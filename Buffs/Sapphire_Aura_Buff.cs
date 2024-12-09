@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Sapphire_Aura_Buff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public string[] Categories => [
 			"GenericBoostBuff"
 		];

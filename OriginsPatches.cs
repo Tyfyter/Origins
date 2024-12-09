@@ -73,6 +73,8 @@ using Terraria.GameContent.UI;
 using Origins.UI.Event;
 using Origins.UI;
 using ThoriumMod;
+using Origins.Items.Other.Consumables.Broths;
+using static Terraria.ID.ContentSamples.CreativeHelper;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -587,6 +589,7 @@ namespace Origins {
 				c.EmitBrtrue(label);
 				c.EmitRet();
 			};
+			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
 		}
 
 		delegate void orig_ModifyWeaponDamage(Player player, Item item, ref StatModifier damage);
@@ -818,7 +821,7 @@ namespace Origins {
 
 		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
 		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
-			if (args.Exception is IOException ioException && (ioException.Message.Contains("bytes caused by Origins in HandlePacket") || ioException.Message.Contains("bytes caused by ModDemoUtils in HandlePacket"))) {
+			if (args?.Exception is IOException ioException && ((ioException.Message?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (ioException.Message?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false))) {
 				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
 			}
 			orig(sender, args);

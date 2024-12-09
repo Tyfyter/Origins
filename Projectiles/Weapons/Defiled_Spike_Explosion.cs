@@ -72,7 +72,7 @@ namespace Origins.Projectiles.Weapons {
 	}
 	public class Defiled_Spike_Explosion_Spike : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		Vector2 realPosition;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Spike Eruption");

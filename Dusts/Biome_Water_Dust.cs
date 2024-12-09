@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Dusts {
 	public class White_Water_Dust : ModDust {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
@@ -47,7 +47,7 @@ namespace Origins.Dusts {
 		}
 	}
 	public class Gooey_Water_Dust : ModDust {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

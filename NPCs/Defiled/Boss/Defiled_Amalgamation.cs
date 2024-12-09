@@ -716,7 +716,7 @@ namespace Origins.NPCs.Defiled.Boss {
 	public class Defiled_Spike_Explosion_Spike_Hostile : ModProjectile {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		Vector2 realPosition;
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;

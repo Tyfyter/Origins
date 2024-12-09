@@ -18,6 +18,7 @@ namespace Origins.Projectiles {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		bool isRespawned = false;
+		public StatModifier maxHealthModifier = StatModifier.Default;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is IArtifactMinion) Origins.ArtifactMinion[entity.type] = true;
 			return Origins.ArtifactMinion[entity.type];
@@ -91,7 +92,7 @@ namespace Origins.Projectiles {
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
-				artifact.Life = binaryReader.ReadInt32();
+				artifact.Life = binaryReader.ReadSingle();
 			}
 		}
 	}
@@ -118,7 +119,7 @@ namespace Origins.Projectiles {
 									if (artifact.Life > 0) {
 										Main.instance.DrawHealthBar(
 											position.X, position.Y,
-											artifact.Life,
+											(int)artifact.Life,
 											artifact.MaxLife,
 											light,
 											0.85f
@@ -139,7 +140,7 @@ namespace Origins.Projectiles {
 	}
 	public interface IArtifactMinion {
 		int MaxLife { get; set; }
-		int Life { get; set; }
+		float Life { get; set; }
 		void OnHurt(int damage, bool fromDoT) { }
 		bool CanDie => true;
 		void DrawDeadHealthBar(Vector2 position, float light) {
@@ -157,12 +158,12 @@ namespace Origins.Projectiles {
 	}
 	public static class ArtifactMinionExtensions {
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, bool fromDoT = false, bool noCombatText = false) {
-			minion.Life -= damage;
+			ModProjectile proj = minion as ModProjectile;
+			float healthModifiedDamage = damage * (minion.MaxLife / proj.Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().maxHealthModifier.ApplyTo(minion.MaxLife));
+			minion.Life -= healthModifiedDamage;
 			minion.OnHurt(damage, fromDoT);
-			if (minion is ModProjectile proj) {
-				if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
-				if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
-			}
+			if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
+			if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
 		}
 		public static void DamageArtifactMinion(this Projectile minion, int damage, bool fromDoT = false, bool noCombatText = false) {
 			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, fromDoT, noCombatText);

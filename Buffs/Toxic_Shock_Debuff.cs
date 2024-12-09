@@ -7,7 +7,7 @@ namespace Origins.Buffs {
 	public class Toxic_Shock_Debuff : ModBuff {
 		public const int stun_duration = 4;
 		public const int default_duration = 60;
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
@@ -21,7 +21,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Toxic_Shock_Strengthen_Debuff : ModBuff {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 			Main.buffNoTimeDisplay[Type] = true;

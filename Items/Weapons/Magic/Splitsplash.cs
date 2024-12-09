@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Splitsplash_P : ModProjectile {
-		public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; }
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
@@ -118,7 +118,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Splitsplash_Smol_P : Splitsplash_P {
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {

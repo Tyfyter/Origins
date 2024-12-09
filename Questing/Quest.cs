@@ -123,7 +123,7 @@ namespace Origins.Questing {
 		public static void EnterQuestList(NPC npc) {
 			if (CanEnterQuestList(npc)) {
 				questListSelected = true;
-				string textKey = $"Mods.Origins.Interface.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}";
+				string textKey = $"Mods.Origins.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}.Quest_Menu";
 				if (Language.Exists(textKey)) Main.npcChatText = Language.GetOrRegister(textKey).Value;
 			} else {
 				questListSelected = false;

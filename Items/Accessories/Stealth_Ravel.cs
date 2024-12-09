@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Stealth_Ravel : Ravel {
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
@@ -32,7 +32,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Stealth_Ravel_Mount : Ravel_Mount {
 		public override string Texture => "Origins/Items/Accessories/Stealth_Ravel";
-		public static new int ID { get; private set; } = -1;
+		public static new int ID { get; private set; }
 		protected override void SetID() {
 			MountData.buff = ModContent.BuffType<Stealth_Ravel_Mount_Buff>();
 			ID = Type;

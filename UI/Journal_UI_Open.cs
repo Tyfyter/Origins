@@ -165,8 +165,8 @@ namespace Origins.UI {
 						Vector2 value = font.MeasureString(words[j]);
 						cursor.X += value.X * baseScale.X * snippetScale;
 						result.X = Math.Max(result.X, cursor.X);
-						if (currentText.Length > 0) {
-							currentText.Append(" ");
+						if (currentText.Length > 0 || (j > 0 && words[j - 1] == "")) {
+							currentText.Append(' ');
 						}
 						currentText.Append(words[j]);
 					}
@@ -268,6 +268,13 @@ namespace Origins.UI {
 				break;
 
 				case Journal_UI_Mode.Custom: {
+					OriginPlayer.LocalOriginPlayer.journalText ??= [];
+					if (OriginPlayer.LocalOriginPlayer.journalText.Count == 0 || !string.IsNullOrWhiteSpace(OriginPlayer.LocalOriginPlayer.journalText[^1])) {
+						OriginPlayer.LocalOriginPlayer.journalText.Add("");
+					}
+					if (OriginPlayer.LocalOriginPlayer.journalText.Count % 2 != 0) {
+						OriginPlayer.LocalOriginPlayer.journalText.Add("");
+					}
 					pages = new(OriginPlayer.LocalOriginPlayer.journalText.Count);
 					int dye = 0;
 					inkColor = Color.Black;
@@ -351,7 +358,7 @@ namespace Origins.UI {
 				Texture2D texture = TabsTexture;
 				float pixelSize = bounds.Width / (256f * 2);
 				Journal_UI_Mode? switchMode = null;
-				int tabCount = DebugConfig.Instance.DebugMode ? 4 : 3;
+				int tabCount = 4;
 				for (int i = 0; i < tabCount; i++) {
 					Journal_UI_Mode tabMode = Journal_UI_Mode.Normal_Page;
 					bool active = false;
@@ -412,10 +419,11 @@ namespace Origins.UI {
 				if (shade) Origins.shaderOroboros.Capture();
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
+					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
 							FontAssets.MouseText.Value,
-							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin),
+							pagePos,
 							inkColor,
 							0,
 							Vector2.Zero,
@@ -426,7 +434,7 @@ namespace Origins.UI {
 						ChatManager.DrawColorCodedString(spriteBatch,
 							FontAssets.MouseText.Value,
 							pages[i + pageOffset].ToArray(),
-							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin),
+							pagePos,
 							Color.White,
 							0,
 							Vector2.Zero,
@@ -446,6 +454,12 @@ namespace Origins.UI {
 									memoPage_clickPosition = Main.MouseScreen;
 								}
 							}
+						}
+					}
+					if (mode == Journal_UI_Mode.Custom && Main.mouseLeft && Main.mouseLeftRelease && (!memoPage_focused || memoPage_selectedSide != i)) {
+						if (Main.mouseX > pagePos.X && Main.mouseX < pagePos.X + (bounds.Width * 0.5f - XMarginTotal) && Main.mouseY > pagePos.Y && Main.mouseY < pagePos.Y + bounds.Height) {
+							SetMemoFocus(i);
+							memoPage_cursorPosition = OriginPlayer.LocalOriginPlayer.journalText[memoPage_selectedSide + pageOffset].Length;
 						}
 					}
 				}
@@ -592,7 +606,7 @@ namespace Origins.UI {
 			#endregion arrows
 			spriteBatch.Restart(spriteBatchState);
 		}
-		int memoPage_selectedSide = 0;
+		int memoPage_selectedSide = -1;
 		int memoPage_cursorPosition = 0;
 		bool memoPage_focused = false;
 		Vector2? memoPage_clickPosition = null;
