@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Tiles.Cubekon;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -135,8 +136,7 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.FleshBlock);
-			Item.createTile = TileType<Riven_Flesh>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Flesh>());
 		}
 	}
 }

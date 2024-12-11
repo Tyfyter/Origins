@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Cubekon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,8 +21,7 @@ namespace Origins.Tiles.Dawn {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CobaltBrick);
-			Item.createTile = TileType<Harmony_Brick>();
+			Item.DefaultToPlaceableTile(TileType<Harmony_Brick>());
 		}
 	}
 }

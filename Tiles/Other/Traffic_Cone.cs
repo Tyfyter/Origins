@@ -102,8 +102,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Traffic_Cone_Item : ModItem {
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.LampPost);
-			Item.createTile = ModContent.TileType<Traffic_Cone>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Traffic_Cone>());
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

@@ -28,8 +28,7 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Wood);
-			Item.createTile = TileType<Marrowick>();
+			Item.DefaultToPlaceableTile(TileType<Marrowick>());
 		}
         public override void AddRecipes() {
             Recipe.Create(Type)

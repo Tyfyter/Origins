@@ -27,8 +27,7 @@ namespace Origins.Tiles.Other {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Batholith>();
+			Item.DefaultToPlaceableTile(TileType<Batholith>());
 		}
 	}
 }

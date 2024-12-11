@@ -23,9 +23,8 @@ namespace Origins.Tiles.Cubekon {
             Item.ResearchUnlockCount = 100;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.StoneBlock);
-            Item.createTile = ModContent.TileType<Qube>();
-            Item.rare = ButterscotchRarity.ID;
+			Item.DefaultToPlaceableTile(ModContent.TileType<Qube>());
+			Item.rare = ButterscotchRarity.ID;
         }
     }
 }

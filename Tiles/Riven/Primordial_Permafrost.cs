@@ -30,8 +30,7 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.PurpleIceBlock);
-			Item.createTile = TileType<Primordial_Permafrost>();
+			Item.DefaultToPlaceableTile(TileType<Primordial_Permafrost>());
 		}
 	}
 }

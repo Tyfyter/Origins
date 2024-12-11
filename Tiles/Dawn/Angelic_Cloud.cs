@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Cubekon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,8 +22,7 @@ namespace Origins.Tiles.Dawn {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Cloud);
-			Item.createTile = TileType<Angelic_Cloud>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Angelic_Cloud>());
 		}
 	}
 }

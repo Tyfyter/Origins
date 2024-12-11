@@ -40,8 +40,7 @@ namespace Origins.Tiles.Other {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Glass);
-			Item.createTile = TileType<Fiberglass_Tile>();
+			Item.DefaultToPlaceableTile(TileType<Fiberglass_Tile>());
 		}
 	}
 }

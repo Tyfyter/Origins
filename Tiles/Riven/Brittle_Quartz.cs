@@ -32,8 +32,7 @@ namespace Origins.Tiles.Riven {
             Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Brittle_Quartz>();
+			Item.DefaultToPlaceableTile(TileType<Brittle_Quartz>());
 		}
         public override void AddRecipes() {
 			//TODO: add the chlorophyte extractor recipes properly

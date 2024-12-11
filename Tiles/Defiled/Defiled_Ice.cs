@@ -32,8 +32,7 @@ namespace Origins.Tiles.Defiled {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Defiled_Ice>();
+			Item.DefaultToPlaceableTile(TileType<Defiled_Ice>());
 		}
 	}
 }

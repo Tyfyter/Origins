@@ -30,10 +30,9 @@ namespace Origins.Tiles.Other {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.DefaultToPlaceableTile(TileType<Carburite>());
 			Item.value = Item.sellPrice(silver: 1);
 			Item.rare = ItemRarityID.Blue;// to match the vanilla ores which require 55 pickaxe power to mine
-			Item.createTile = TileType<Carburite>();
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

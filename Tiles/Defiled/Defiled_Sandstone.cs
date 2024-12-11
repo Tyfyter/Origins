@@ -34,8 +34,7 @@ namespace Origins.Tiles.Defiled {
             Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Defiled_Sandstone>();
+			Item.DefaultToPlaceableTile(TileType<Defiled_Sandstone>());
 		}
         public override void AddRecipes() {
             CreateRecipe()

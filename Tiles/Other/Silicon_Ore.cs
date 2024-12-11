@@ -30,9 +30,9 @@ namespace Origins.Tiles.Other {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.DefaultToPlaceableTile(ModContent.TileType<Silicon_Ore>());
+			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(copper: 44);
-			Item.createTile = ModContent.TileType<Silicon_Ore>();
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

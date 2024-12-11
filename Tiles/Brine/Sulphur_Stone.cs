@@ -37,8 +37,7 @@ namespace Origins.Tiles.Brine {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Sulphur_Stone>();
+			Item.DefaultToPlaceableTile(TileType<Sulphur_Stone>());
 		}
 	}
 }
