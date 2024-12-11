@@ -1,14 +1,8 @@
-﻿using Origins.Buffs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.Dev;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Origins.Dev;
-using Terraria.DataStructures;
 
 namespace Origins.Items.Other.Consumables.Broths {
 	public abstract class BrothBase : ModItem, ICustomWikiStat {

@@ -68,9 +68,11 @@ BOSSES AND MINI-BOSSES:
 
 (%, ^2) Lost Diver !!!
 (X) Miscreant
+(X) Tearror
 
 (X) Crimson King
 (X) Duskord
+(X) Leviathan of the Riven
 (X) Logic Brane
 (X) Severus, the Dark One
 
@@ -170,7 +172,6 @@ ENEMY NPCS:
 (^) Graveshield Zombie
 (X) Junkie
 (X) Machine Gun Machine
-(^) Measly Moeba*
 (^) Optiphage
 (^) Pustule Jellyfish*
 (X) Riot Drone
@@ -195,6 +196,7 @@ ENEMY NPCS:
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
+(X) Defiled Shooter
 (^) Defiled Squid*
 (^) Defiled Tripod*
 (^) Defiled Watcher*
@@ -256,7 +258,7 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(^) Assimilation*
+(#3, ^2) Assimilation* !!! (Defiled Assimilation change)
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -821,6 +823,7 @@ SUMMONER WEAPONS:
 (#, ^2) Mildew Incantation !!!
 (#, ^2) Mildew Whip !!!
 (X) Obsidian Bone
+(X) Old Brine Rock !!!
 (X) Ornamental Riven Artifact
 (^) Scabcoral Lyre*
 (X) TV Remote
@@ -946,6 +949,7 @@ TILES:
 (^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
+(X) Defiled Regolith
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
@@ -1214,15 +1218,15 @@ CONSUMABLES:
 (^) Purification Potion*
 (^) Voidsight Potion*
 
-(#, ^2) Foul Broth !!!
-(#, ^2) Hearty Broth !!!
-(#, ^2) Light Broth !!!
-(#, ^2) Minty Broth !!!
-(#, ^2) Plain Broth !!!
-(#, ^2) Savory Broth !!!
-(#, ^2) Sour Broth !!!
-(#, ^2) Spicy Broth !!!
-(#, ^2) Sweet Broth !!!
+(^) Foul Broth*
+(^) Hearty Broth*
+(#, ^2) Light Broth* !!!
+(#, ^2) Minty Broth* !!!
+(#, ^2) Plain Broth* !!!
+(#, ^2) Savory Broth* !!!
+(^) Sour Broth*
+(#, ^2) Spicy Broth* !!!
+(#, ^2) Sweet Broth* !!!
 
 (^) Bileberry*
 (^) Blue Bovine*
@@ -1405,12 +1409,14 @@ MUSIC:
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
+(X) Leviathan of the Riven
 (X) Lost Diver !!!
 (X) Miscreant
 (X) Quantux
 (^) World Cracker
 (X) Scrapper
 (X) Severus
+(X) Tearror
 
 (X) Ashen Invasion
 (X) Corruption Invasion
