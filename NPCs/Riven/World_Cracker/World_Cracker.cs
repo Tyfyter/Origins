@@ -83,7 +83,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
 			Music = Origins.Music.RivenBoss;
-            NPC.value = Item.sellPrice(gold: 1);
+			NPC.value = Item.sellPrice(gold: 1);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
@@ -319,12 +319,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Amebic_Vial>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<World_Cracker_Relic_Item>()));
 
-            armorBreakDropRule = new LeadingSuccessRule();
+			armorBreakDropRule = new LeadingSuccessRule();
 
 			armorBreakDropRule.OnSuccess(new CommonDrop(ModContent.ItemType<Encrusted_Ore_Item>(), 2, 5, 12, 3));
 			armorBreakDropRule.OnSuccess(new CommonDrop(ModContent.ItemType<Riven_Carapace>(), 2, 2, 5, 3));
 		}
 		public override bool SpecialOnKill() {
+			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
+			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 			Mod.Logger.Info($"SpecialOnKill on {Main.netMode}, life: {NPC.life}");
 			int tailType = TailType;
 			float dist = float.PositiveInfinity;

@@ -526,9 +526,6 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions) {
-				if (genRand.NextBool(2)) {
-					spawnMeteor = true;
-				}
 				float fx = x * 16;
 				float fy = y * 16;
 

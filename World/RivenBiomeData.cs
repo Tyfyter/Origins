@@ -570,9 +570,6 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient && !noTileActions) {
-				if (genRand.NextBool(2)) {
-					spawnMeteor = true;
-				}
 				/*int num3 = Main.rand.Next(5);
 				if (!shadowOrbSmashed) {
 					num3 = 0;

@@ -506,6 +506,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override void OnKill() {
+			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
 		public void SpawnWisp(NPC npc) {
