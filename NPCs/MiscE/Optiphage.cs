@@ -37,6 +37,11 @@ namespace Origins.NPCs.MiscE {
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 			NPC.value = 34;
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
+			if (!spawnInfo.Player.ZoneCorrupt) return 0;
+			return 0.05f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),

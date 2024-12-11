@@ -82,6 +82,9 @@ namespace Origins {
 				foreach (MethodInfo method in coloredDamageTypes.GetType().GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)) {
 					MonoModHooks.Modify(method, FixMethods);
 				}
+				foreach (MethodInfo method in coloredDamageTypes.Code.GetType("ColoredDamageTypes.DamageTypes")?.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly) ?? []) {
+					MonoModHooks.Modify(method, FixMethods);
+				}
 				//MonoModHooks.Modify(coloredDamageTypes.GetType().GetMethod("LoadModdedDamageTypes", BindingFlags.Public | BindingFlags.Static), FixMethods);
 			}
 		}
