@@ -45,6 +45,7 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Encrusted_Ore>());
+			Item.rare = ItemRarityID.Blue;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

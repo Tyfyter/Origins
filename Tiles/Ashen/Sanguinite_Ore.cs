@@ -50,6 +50,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Sanguinite_Ore>());
+			Item.rare = ItemRarityID.Blue;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
