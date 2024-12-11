@@ -106,7 +106,6 @@ namespace Origins.World.BiomeData {
 			public const float Ghoul = 2;
 			public const float Cleaver = 0.5f;
 			public const float Barnacle = 0.5f;
-			public const float Moeba = 0.8f;
 			public const float Shark1 = 0.4f;
 			public const float Worm = 0.4f;
 			public const float Crawler = 0.8f;
@@ -571,9 +570,6 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient && !noTileActions) {
-				if (genRand.NextBool(2)) {
-					spawnMeteor = true;
-				}
 				/*int num3 = Main.rand.Next(5);
 				if (!shadowOrbSmashed) {
 					num3 = 0;

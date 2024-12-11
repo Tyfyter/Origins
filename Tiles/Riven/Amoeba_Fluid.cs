@@ -52,8 +52,7 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.FleshBlock);
-			Item.createTile = TileType<Amoeba_Fluid>();
+			Item.DefaultToPlaceableTile(TileType<Amoeba_Fluid>());
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)

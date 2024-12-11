@@ -32,8 +32,7 @@ namespace Origins.Tiles.Dusk {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Dusk_Stone>();
+			Item.DefaultToPlaceableTile(TileType<Dusk_Stone>());
 		}
 	}
 	public class Dusk_Stone_Liquid : Dusk_Stone {

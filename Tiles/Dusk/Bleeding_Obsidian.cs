@@ -15,6 +15,7 @@ namespace Origins.Tiles.Dusk {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
+			TileID.Sets.Ore[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			Main.tileMerge[Type][TileType<Dusk_Stone>()] = true;
 			Main.tileMerge[Type][TileType<Dusk_Stone_Liquid>()] = true;
@@ -42,8 +43,8 @@ namespace Origins.Tiles.Dusk {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Bleeding_Obsidian>();
+			Item.DefaultToPlaceableTile(TileType<Bleeding_Obsidian>());
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 6)

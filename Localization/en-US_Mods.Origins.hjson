@@ -1984,3 +1984,10 @@ SetBonuses: {
 		All explosive combat stats are increased by 50% while berserked
 		'''
 }
+
+ItemSourceFilter: {
+	CrimsonRarity.DisplayName: Crimson
+	CursedRarity.DisplayName: Cursed
+	ButterscotchRarity.DisplayName: Butterscotch
+	AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
+}

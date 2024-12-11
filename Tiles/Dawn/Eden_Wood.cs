@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Cubekon;
 using Origins.Walls;
 using Terraria;
 using Terraria.ID;
@@ -22,8 +23,7 @@ namespace Origins.Tiles.Dawn {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Wood);
-			Item.createTile = TileType<Eden_Wood>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Eden_Wood>());
 		}
         public override void AddRecipes() {
             Recipe.Create(Type)

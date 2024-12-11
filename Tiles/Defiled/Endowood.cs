@@ -24,8 +24,7 @@ namespace Origins.Tiles.Defiled {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Wood);
-			Item.createTile = TileType<Endowood>();
+			Item.DefaultToPlaceableTile(TileType<Endowood>());
 		}
         public override void AddRecipes() {
             Recipe.Create(Type)

@@ -44,8 +44,8 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CrimtaneOre);
-			Item.createTile = TileType<Encrusted_Ore>();
+			Item.DefaultToPlaceableTile(TileType<Encrusted_Ore>());
+			Item.rare = ItemRarityID.Blue;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

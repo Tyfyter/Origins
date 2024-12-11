@@ -15,6 +15,7 @@ namespace Origins.Tiles.Brine
 			Main.tileBlockLight[Type] = true;
 			Main.tileOreFinderPriority[Type] = 666;
 			Main.tileSpelunker[Type] = true;
+			TileID.Sets.Ore[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(79, 86, 207), CreateMapEntryName());
 			mergeID = TileID.Mud;
@@ -34,8 +35,8 @@ namespace Origins.Tiles.Brine
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.TitaniumOre);
-			Item.createTile = TileType<Eitrite_Ore>();
+			Item.DefaultToPlaceableTile(TileType<Eitrite_Ore>());
+			Item.rare = ItemRarityID.Orange;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

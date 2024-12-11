@@ -42,8 +42,8 @@ namespace Origins.Tiles.Defiled {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
         public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.DemoniteOre);
-			Item.createTile = TileType<Lost_Ore>();
+			Item.DefaultToPlaceableTile(TileType<Lost_Ore>());
+			Item.rare = ItemRarityID.Blue;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

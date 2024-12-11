@@ -45,8 +45,7 @@ namespace Origins.Tiles.Other {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.DemoniteOre);
-			Item.createTile = TileType<Felnum_Ore>();
+			Item.DefaultToPlaceableTile(TileType<Felnum_Ore>());
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {

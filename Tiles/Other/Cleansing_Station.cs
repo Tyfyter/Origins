@@ -122,9 +122,9 @@ namespace Origins.Tiles.Other {
 	public class Cleansing_Station_Item : ModItem {
 		
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.BoneTable);
+			Item.DefaultToPlaceableTile(ModContent.TileType<Cleansing_Station>());
 			Item.value = Item.sellPrice(gold: 1);
-			Item.createTile = ModContent.TileType<Cleansing_Station>();
+			Item.rare = ItemRarityID.Green;
 			Item.placeStyle = 0;
 		}
 	}

@@ -1,6 +1,8 @@
+If you enjoy Origins please leave a rating and share with your friends!
+
 Terraria Origins is a content mod that adds new ways of playing Terraria with content designed and balanced around the vanilla game. It is full of many alternative playstyles to complement the base game for you to enjoy. More content is planned in the future. You can see our completion list for what we have planned next: https://github.com/Tyfyter/Origins/blob/master/completionList.txt
 
-Origins is currently in its Open Beta version, still including 788 items, 78 NPCs, 178 tiles and 6 biomes. 
+Origins is currently in its Open Beta version, still including 788 items, 77 NPCs, 178 tiles and 6 biomes. 
 Additionally, there is a new explosive-themed Demolitionist class that has content throughout the entire game and is balanced with the other classes.
 
 Origins' content adds alternatives for nearly all areas of gameplay reinforced by its two new world evils: the Defiled Wastelands and Riven Hive. The Corruption and Crimson also have content added to make them melee and ranger-focused respectively while the Defiled is magic-focused and Riven being summoner-focused. It will be hard to not find something new and fun in Origins, even in its current Beta state.
@@ -16,5 +18,3 @@ This mod and its wiki are all made in collaboration between Tyfyter2002 and chre
 
 If you have any questions, comments or a bug you have found from anything Origins-related, please reach out to us through our Discord server! If you would rather not join the server, instead e-mail us at developmentorigins@gmail.com[quote=tModLoader Origins]
 Developed By Tyfyter2002 and chrersis[/quote]
-
-If you enjoy Origins please leave a rating and share with your friends!

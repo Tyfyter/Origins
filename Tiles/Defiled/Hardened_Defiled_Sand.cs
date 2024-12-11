@@ -26,8 +26,7 @@ namespace Origins.Tiles.Defiled {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Hardened_Defiled_Sand>();
+			Item.DefaultToPlaceableTile(TileType<Hardened_Defiled_Sand>());
 		}
 	}
 }

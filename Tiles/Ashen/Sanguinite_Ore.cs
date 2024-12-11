@@ -49,8 +49,8 @@ namespace Origins.Tiles.Ashen {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.DemoniteOre);
-			Item.createTile = TileType<Sanguinite_Ore>();
+			Item.DefaultToPlaceableTile(TileType<Sanguinite_Ore>());
+			Item.rare = ItemRarityID.Blue;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

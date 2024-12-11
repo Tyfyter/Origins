@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Cubekon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,8 +28,7 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Quartz>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Quartz>());
 		}
 	}
 }
