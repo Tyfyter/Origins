@@ -211,8 +211,8 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
-(X) Riven Protoform (Crawler Form) !!!
-(X) Riven Protoform (Tank Form) !!!
+(X) Riven Protoform (Crawler Form)
+(X) Riven Protoform (Tank Form)
 (X) Rocket Machine
 (^) Savage Whip*
 (X) Sea Dragon !!!
@@ -397,17 +397,17 @@ ACCESSORIES:
 (^) Makeover Choker*
 (^) Messy Leech*
 (^) Messy Magma Leech*
-(X) Mildew Heart !!!
+(#, ^2) Mildew Heart !!!
 (^) Missile Armcannon*
-(X) Mithrafin (Cursed) !!!
-(X) Mithrafin (Uncursed) !!!
+(#, ^2) Mithrafin (Cursed) !!!
+(#, ^2) Mithrafin (Uncursed) !!!
 (^) Nitro Crate*
 (^) No U Card*
-(X) Noxious Mithrafin (Cursed) !!!
-(X) Noxious Mithrafin (Uncursed) !!!
+(#, ^2) Noxious Mithrafin (Cursed) !!!
+(#, ^2) Noxious Mithrafin (Uncursed) !!!
 (^) Olid Organ*
-(X) Ornamental Keepsake (Cursed) !!!
-(X) Ornamental Keepsake (Uncursed) !!!
+(#, ^2) Ornamental Keepsake (Cursed) !!!
+(#, ^2) Ornamental Keepsake (Uncursed) !!!
 (^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
@@ -437,12 +437,12 @@ ACCESSORIES:
 (^) Superjump Cape*
 (^) Symbiote Skull*
 (^) Tainted Flesh*
-(X) Tender Flesh Heart !!!
+(#, ^2) Tender Flesh Heart !!!
 (^) Trap Charm*
 (^) Turbo Reel*
 (^) Unsought Organ*
 (^) Venom Fang*
-(X) Venom Shield !!!
+(#, ^2) Venom Shield !!!
 
 (^) Dash Ravel*
 (^) Depth Ravel*
@@ -470,7 +470,7 @@ ACCESSORIES:
 (^) Mana Drive*
 (^) Protozoa Food*
 (^) Refactoring Pieces*
-(X) Retaliatory Tendril* !!!
+(#, ^2) Retaliatory Tendril* !!!
 (^) Scrap Compactor*
 
 (^) Amebic Vial*
@@ -481,7 +481,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
 (^) Lazy Cloak*
-(X) Mildewy Diving Helmet* !!!
+(#, ^2) Mildewy Diving Helmet* !!!
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
 (ᗢ) Stack of Shraps*
@@ -512,16 +512,16 @@ VANITY:
 (X) Scrapper Head
 (X) Severus' Hat
 
-(X) Abyssal Outcast Set !!!
-(X) Amebic Protector Set !!!
+(X) Abyssal Outcast Set
+(X) Amebic Protector Set
 (X) Ashen Exploder Set
-(X) Chunk Protector Set !!!
+(X) Chunk Protector Set
 (X) Corrupted Knight Set
 (^) Cranivore Beanie
 (X) Crimson Ranger Set
-(X) Decay Protector Set !!!
+(X) Decay Protector Set
 (X) Defiled Sorcerer Set
-(X) Gore Protector Set !!!
+(X) Gore Protector Set
 (^) Newsboy Cap
 (X) Riven Druid Set
 (X) Steampunk Mechanist Set
@@ -696,14 +696,14 @@ RANGED WEAPONS:
 (^) 3-in-1 Shotty
 
 (^) Acrid Impaler*
-(X) Adamantite Harpoon Gun* !!!
+(#, ^2) Adamantite Harpoon Gun* !!!
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(^) Boat Rocker*
+(@5, ^3) Boat Rocker* !!!
 (^) Boiler
 (^) Cleaver Rifle
-(X) Cobalt Harpoon Gun* !!!
+(#, ^2) Cobalt Harpoon Gun* !!!
 (^) Dart Crossbow*
 (X) Dragon's Breath* !!!
 (^) Firespit
@@ -806,6 +806,7 @@ SUMMONER WEAPONS:
 (^) Fresh Meat Artifact
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
+(X) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (⛥) Ocean Amulet* !!!
@@ -815,7 +816,9 @@ SUMMONER WEAPONS:
 (^) Thread Rod
 (^) Woodsprite Staff
 
+(X) Acrid Spout !!!
 (^) Bomb Artifact
+(X) Brine Convergence Incantation !!!
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
 (#, ^2) Forsaken Desire
@@ -835,6 +838,7 @@ SUMMONER WEAPONS:
 (X) Controller/Patrol Bot Controller
 (X) Core of Cogs
 (X) Culltivator
+(X) Cursor Brick
 (X) Doom Incantation
 (X) Ego
 (@2/3, #2) Fiber Optic Whips

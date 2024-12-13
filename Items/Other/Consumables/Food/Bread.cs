@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +24,7 @@ namespace Origins.Items.Other.Consumables.Food {
 				60 * 60 * 8
 			);
 			Item.value = Item.sellPrice(silver: 1);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 		}
 	}
 }

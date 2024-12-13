@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Terraria;
 using Terraria.ID;
@@ -8,7 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
-    public class Carburite : OriginTile {
+	public class Carburite : OriginTile {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -18,7 +17,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			AddMapEntry(new Color(110, 57, 33), CreateMapEntryName());
-			MinPick = 55;
+			MinPick = 100;
 			MineResist = 3;
 		}
 	}
