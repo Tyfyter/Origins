@@ -71,6 +71,7 @@ namespace Origins.Tiles.Banners {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(tile.Type);
+			Item.rare = ItemRarityID.Blue;
 		}
 	}
 	public class BannerGlobalNPC : GlobalNPC {
