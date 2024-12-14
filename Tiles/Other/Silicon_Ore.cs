@@ -19,7 +19,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			AddMapEntry(new Color(60, 60, 60), CreateMapEntryName());
-			MineResist = 3;
+			MineResist = 2;
 		}
 	}
 	public class Silicon_Ore_Item : ModItem, ICustomWikiStat {
