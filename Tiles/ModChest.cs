@@ -158,7 +158,7 @@ namespace Origins.Tiles {
 			if (chestIndex < 0) {
 				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			} else {
-				if ((Main.chest[chestIndex].name?.Length ?? 0) > 0) {
+				if ((Main.chest[chestIndex].name?.Length ?? 0) <= 0) {
 					if (IsLockedChest(left, top)) player.cursorItemIconID = keyItem;
 					else player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type);
 					player.cursorItemIconText = "";
