@@ -314,7 +314,7 @@ namespace Origins {
 				}
 			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
-				Player.manaRegenDelay = (int)Player.maxRegenDelay;
+				//Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
 				Projectile.NewProjectileDirect(

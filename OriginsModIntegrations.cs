@@ -23,6 +23,7 @@ using System.Reflection.Emit;
 using Terraria.DataStructures;
 using Mono.Cecil.Cil;
 using Mono.Cecil;
+using Origins.Items;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -157,6 +158,15 @@ namespace Origins {
 					});
 				}
 			}
+			if (ModLoader.TryGetMod("SpiritMod", out Mod spiritMod)) {
+				if (spiritMod.Code.GetType("SpiritMod.GlobalClasses.Items.GlyphGlobalItem")?.GetMethod("CanBeAppliedTo", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static) is MethodInfo CanBeAppliedTo) {
+					MonoModHooks.Add(CanBeAppliedTo, (Func<Player, Item, bool> orig, Player player, Item item) => {
+						if (PrefixLoader.GetPrefix(item.prefix) is ICanReforgePrefix canReforgePrefix && !canReforgePrefix.CanReforge(item)) return false;
+						return orig(player, item);
+					});
+				}
+			}
+			if (ModLoader.HasMod("ferventarms")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.FerventArms"));
 		}
 		public void Unload() {
 			instance = null;

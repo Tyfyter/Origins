@@ -2189,7 +2189,7 @@ Teal_Solution: {
 	Tooltip: Spreads the Riven
 }
 
-White_Solution: {
+Gray_Solution: {
 	DisplayName: Gray Solution
 	Tooltip: Spreads the Defiled
 }
@@ -3467,11 +3467,6 @@ Neural_Network: {
 
 Eruption: {
 	DisplayName: Eruption
-	Tooltip: ""
-}
-
-Gray_Solution: {
-	DisplayName: Gray Solution
 	Tooltip: ""
 }
 
