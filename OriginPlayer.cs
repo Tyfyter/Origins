@@ -546,15 +546,7 @@ namespace Origins {
 			if (!journalUnlocked) {
 				return true;
 			}
-			bool unlockedEntry = unlockedJournalEntries.Contains(journalItem.EntryName);
-			if (Origins.InspectItemKey.JustPressed) {
-				if (!unlockedEntry) unlockedJournalEntries.Add(journalItem.EntryName);
-				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
-					Origins.OpenJournalEntry(journalItem.EntryName);
-				}
-				return false;
-			}
-			return !unlockedEntry;
+			return !unlockedJournalEntries.Contains(journalItem.EntryName);
 		}
 
 		public override void SaveData(TagCompound tag) {

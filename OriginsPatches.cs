@@ -75,6 +75,8 @@ using Origins.UI;
 using ThoriumMod;
 using Origins.Items.Other.Consumables.Broths;
 using static Terraria.ID.ContentSamples.CreativeHelper;
+using Terraria.UI;
+using Origins.Journal;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -590,6 +592,17 @@ namespace Origins {
 				c.EmitRet();
 			};
 			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
+			On_ItemSlot.MouseHover_ItemArray_int_int += On_ItemSlot_MouseHover_ItemArray_int_int;
+		}
+
+		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
+			orig(inv, context, slot);
+			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && InspectItemKey.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
+				OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Add(journalItem.EntryName);
+				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
+					OpenJournalEntry(journalItem.EntryName);
+				}
+			}
 		}
 
 		delegate void orig_ModifyWeaponDamage(Player player, Item item, ref StatModifier damage);
