@@ -2262,6 +2262,19 @@ namespace Origins {
 			}
 			return wr;
 		}
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, double weight)[] prefixCategories) {
+			WeightedRandom<int> wr = new(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				(PrefixCategory category, double weight) = prefixCategories[i];
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					wr.Add(pre, weight);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
+				}
+			}
+			return wr;
+		}
 		#region font
 		static FieldInfo _spriteCharacters;
 		static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
