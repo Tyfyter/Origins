@@ -31,7 +31,7 @@ namespace Origins.Items.Accessories {
 			originPlayer.protozoaFoodItem = Item;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
-			return OriginExtensions.GetAllPrefixes(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic, PrefixCategory.Accessory);
+			return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Magic, 1), (PrefixCategory.Accessory, 2));
 		}
 	}
 	public class Mini_Protozoa_P : ModProjectile {

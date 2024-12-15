@@ -506,6 +506,11 @@ namespace Origins.Items.Materials {
 		public override int Value => 0;
 		public override int Rare => ItemRarityID.Yellow;
 		public override bool Hardmode => true;
+		public override bool HasTooltip => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
+		}
 	}
 	public class Defiled_Key : Dawn_Key { }
 	public class Dusk_Key : Dawn_Key { }

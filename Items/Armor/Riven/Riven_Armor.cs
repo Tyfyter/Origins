@@ -35,7 +35,7 @@ namespace Origins.Items.Armor.Riven {
 			glowMaskColor = Color.White;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Riven_Coat>() && legs.type == ModContent.ItemType<Riven_Pants>();
+			return (body.type == ModContent.ItemType<Riven_Coat>() || body.type == ModContent.ItemType<Riven2_Coat>()) && (legs.type == ModContent.ItemType<Riven_Pants>() || legs.type == ModContent.ItemType<Riven2_Pants>());
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.Items.GenericTooltip.TornSeverity", 10);

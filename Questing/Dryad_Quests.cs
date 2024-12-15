@@ -3,6 +3,7 @@ using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 
@@ -85,7 +86,7 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override bool CanStart(NPC npc) {
-			return npc.type == NPCID.Dryad && !ShowInJournal();
+			return npc.type == NPCID.Dryad && ModContent.GetInstance<Cleansing_Station_Quest>().Completed && !ShowInJournal();
 		}
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override void OnAccept(NPC npc) {

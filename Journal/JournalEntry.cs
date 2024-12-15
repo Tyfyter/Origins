@@ -17,7 +17,7 @@ namespace Origins.Journal {
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
 			NameKey = $"Mods.{Mod.Name}.Journal.{TextKey}.Name";
-			if (!Language.Exists($"Mods.{Mod.Name}.Journal.Name." + TextKey)) {
+			if (!Language.Exists(NameKey)) {
 				NameKey = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
 			}
 			Language.GetOrRegister(NameKey);
