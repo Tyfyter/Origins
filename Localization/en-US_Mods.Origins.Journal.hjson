@@ -86,7 +86,7 @@ Lost_Ore: {
 			- Lost Ore is the primary metal material used by the Defiled entity to create the compound known as "Defiled Matter". Lost Ore is not a material directly tied in with the Defiled, and thus is impossible to be assimilated from. It is quite a versatile material, but cannot be utilized like many other metal materials available due to its mysterious properties.
 							
 		Characteristics: 
-			- Lost Ore, being derived from Iron Ore [i:Terraria/Iron_Ore_Item], shares little in common. Lost Ore is certainly lighter, more reflective, less dense, and significantly less conductive. It takes on a bright white coloration and is also very magnetic to allow for easy movement by the Defiled's means.
+			- Lost Ore, being derived from Iron Ore [i:IronOre], shares little in common. Lost Ore is certainly lighter, more reflective, less dense, and significantly less conductive. It takes on a bright white coloration and is also very magnetic to allow for easy movement by the Defiled's means.
 							
 		Origins: 
 			- Lost Ore occurs commonly in the Defiled Caverns and elsewhere in the world where the Defiled plans to propagate. In this case, Lost Ore serves as a catalyst to the Defiled's spread across the world. It additionally likes to keep Lost Ore in numerous reserves underground in hopes that they will not be tampered with. By extracting Lost Ore, an individual could slow the spread of the Defiled.
@@ -95,7 +95,7 @@ Lost_Ore: {
 			- Lost Ore's primary use is to serve as a readily available metal material to integrate into newly generated Defiled Matter. It is responsible for giving Defiled Matter its smooth, metallic appearance, which is a sign of the Matter's toughness. Lost Ore can alternatively be used as refined material, but the means of refining it are unknown as is its appearance. The main way to utilize Lost Ore's capabilities is to combine it with a live Defiled host, i. e. Undead Chunks [i:Origins/Undead_Chunk].
 							
 		History: 
-			- Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that resides there. After discovering a particular vein of Iron Ore [i:Terraria/Iron_Ore_Item], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive for its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
+			- Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that resides there. After discovering a particular vein of Iron Ore [i:IronOre], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive for its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
 		'''
 }
 
@@ -212,10 +212,10 @@ Felnum: {
 			- Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, isn’t too malleable, and possesses a worse thermal conductivity than its copper equivalent.
 						
 		Origins: 
-			- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:Terraria/Copper_Ore_Item] by blessing it at a Crystal Ball [i:Terraria/Crystal_Ball_Item].
+			- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:CopperOre] by blessing it at a Crystal Ball [i:CrystalBall].
 						
 		Chemistry:
-			- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Terraria/Ectoplasm] released by Dungeon Spirits [i:Terraria/Dungeon_Spirit]. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+			- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
 						
 		History: 
 			- Felnum is an artificial metal material conjured by the wizards of the Bastille (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.
