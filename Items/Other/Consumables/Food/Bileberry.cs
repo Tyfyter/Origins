@@ -15,6 +15,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			];
 			ItemID.Sets.IsFood[Type] = true;
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Ambrosia;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToFood(
