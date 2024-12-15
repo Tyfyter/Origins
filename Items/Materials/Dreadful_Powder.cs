@@ -95,5 +95,6 @@ namespace Origins.Items.Materials {
 				}
 			}
 		}
+		public override bool? CanCutTiles() => false;
 	}
 }
