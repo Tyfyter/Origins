@@ -2,9 +2,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using ThoriumMod.Projectiles;
 
 namespace Origins.Tiles.Defiled {
     public class Petrified_Tree : ModTree {
@@ -58,5 +60,8 @@ namespace Origins.Tiles.Defiled {
 	public class Petrified_Tree_Sapling : SaplingBase {
 		public override Color MapColor => new(200, 200, 200);
 		public override int[] ValidAnchorTypes => Petrified_Tree.AnchorTypes;
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			tileFrameX += 54;
+		}
 	}
 }

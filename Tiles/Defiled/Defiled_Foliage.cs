@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs.Critters;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -15,13 +16,15 @@ namespace Origins.Tiles.Defiled {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
+			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 			AddMapEntry(new Color(175, 175, 175));
 			HitSound = Origins.Sounds.DefiledIdle;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			int[] validTiles = [
 				ModContent.TileType<Defiled_Grass>(),
-				ModContent.TileType<Defiled_Stone>()
+				ModContent.TileType<Defiled_Stone>(),
+				ModContent.TileType<Defiled_Jungle_Grass>()
 			];
 
 			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
@@ -32,7 +35,7 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.addTile(Type);
 
 			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [..validTiles]);
-			//soundType = SoundID.Grass;
+			HitSound = Origins.Sounds.DefiledHurt;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 
@@ -58,10 +61,15 @@ namespace Origins.Tiles.Defiled {
 						case TileID.HallowedGrass:
 						Main.tile[i, j].TileType = TileID.HallowedPlants;
 						return true;
+						default:
+						if (anchorType == ModContent.TileType<Riven_Grass>()) {
+							Main.tile[i, j].TileType = (ushort)ModContent.TileType<Riven_Foliage>();
+							return true;
+						}
+						break;
 					}
-				} else {
-					WorldGen.KillTile(i, j, noItem: WorldGen.gen);
 				}
+				WorldGen.KillTile(i, j, noItem: WorldGen.gen);
 			}
 			return false;
 		}

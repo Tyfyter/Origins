@@ -29,7 +29,8 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Defiled_Grass>(),
-				TileType<Defiled_Stone>()
+				TileType<Defiled_Stone>(),
+				ModContent.TileType<Defiled_Jungle_Grass>()
 			];
 			TileObjectData.addTile(Type);
 

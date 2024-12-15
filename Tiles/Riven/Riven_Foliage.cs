@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using System.Linq;
 using Terraria;
@@ -20,12 +21,14 @@ namespace Origins.Tiles.Riven {
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
 			Main.tileLighted[Type] = true;
+			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 			AddMapEntry(new Color(20, 138, 220));
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			int[] validTiles = [
 				ModContent.TileType<Riven_Grass>(),
-				ModContent.TileType<Riven_Flesh>()
+				ModContent.TileType<Riven_Flesh>(),
+				ModContent.TileType<Riven_Jungle_Grass>(),
 			];
 
 			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
@@ -36,7 +39,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.RandomStyleRange = 6;
 
 			TileObjectData.addTile(Type);
-			//soundType = SoundID.NPCKilled;
+			HitSound = SoundID.Grass;
 			DustType = Riven_Hive.DefaultTileDust;
 
 			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [..validTiles]);
@@ -64,10 +67,15 @@ namespace Origins.Tiles.Riven {
 						case TileID.HallowedGrass:
 						Main.tile[i, j].TileType = TileID.HallowedPlants;
 						return true;
+						default:
+						if (anchorType == ModContent.TileType<Defiled_Grass>()) {
+							Main.tile[i, j].TileType = (ushort)ModContent.TileType<Defiled_Foliage>();
+							return true;
+						}
+						break;
 					}
-				} else {
-					WorldGen.KillTile(i, j, noItem: WorldGen.gen);
 				}
+				WorldGen.KillTile(i, j, noItem: WorldGen.gen);
 			}
 			return false;
 		}

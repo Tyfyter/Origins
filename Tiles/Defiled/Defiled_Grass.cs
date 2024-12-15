@@ -52,8 +52,12 @@ namespace Origins.Tiles.Defiled {
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid && Main.rand.NextBool(250)) {
-				above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
+				if (Main.rand.NextBool(250)) {
+					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+				} else {
+					above.ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
+				}
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
@@ -102,8 +106,12 @@ namespace Origins.Tiles.Defiled {
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid && Main.rand.NextBool(250)) {
-				above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
+				if (Main.rand.NextBool(250)) {
+					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+				} else {
+					above.ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
+				}
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
