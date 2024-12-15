@@ -1415,24 +1415,29 @@ namespace Origins {
 
 		delegate bool orig_ShakeTree(int x, int y, int type, ref bool createLeaves);
 		delegate bool hook_ShakeTree(orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves);
-		static FastStaticFieldInfo<WorldGen, int> numTreeShakes;
-		static FastStaticFieldInfo<WorldGen, int> maxTreeShakes;
-		static FastStaticFieldInfo<WorldGen, int[]> treeShakeX;
-		static FastStaticFieldInfo<WorldGen, int[]> treeShakeY;
+		static FastStaticFieldInfo<WorldGen, int> _numTreeShakes;
+		static FastStaticFieldInfo<WorldGen, int> _maxTreeShakes;
+		static FastStaticFieldInfo<WorldGen, int[]> _treeShakeX;
+		static FastStaticFieldInfo<WorldGen, int[]> _treeShakeY;
 		private static void WorldGen_ShakeTree(On_WorldGen.orig_ShakeTree orig, int i, int j) {
-			numTreeShakes ??= new("numTreeShakes", BindingFlags.NonPublic);
-			maxTreeShakes ??= new("maxTreeShakes", BindingFlags.NonPublic);
-			treeShakeX ??= new("treeShakeX", BindingFlags.NonPublic);
-			treeShakeY ??= new("treeShakeY", BindingFlags.NonPublic);
-			WorldGen.GetTreeBottom(i, j, out var x, out var y);
+			_numTreeShakes ??= new("numTreeShakes", BindingFlags.NonPublic);
+			_maxTreeShakes ??= new("maxTreeShakes", BindingFlags.NonPublic);
+			_treeShakeX ??= new("treeShakeX", BindingFlags.NonPublic);
+			_treeShakeY ??= new("treeShakeY", BindingFlags.NonPublic);
+			ref int numTreeShakes = ref _numTreeShakes.Value;
+			int maxTreeShakes = _maxTreeShakes.Value;
+			int[] treeShakeX = _treeShakeX.Value;
+			int[] treeShakeY = _treeShakeY.Value;
+			WorldGen.GetTreeBottom(i, j, out int x, out int y);
 			int tileType = Main.tile[x, y].TileType;
 			TreeTypes treeType = WorldGen.GetTreeType(tileType);
 			bool edgeC = false;
-			for (int k = 0; k < numTreeShakes.GetValue(); k++) {
-				if (treeShakeX.GetValue()[k] == x && treeShakeY.GetValue()[k] == y) {
+			for (int k = 0; k < numTreeShakes; k++) {
+				if (treeShakeX[k] == x && treeShakeY[k] == y) {
 					edgeC = true;
 				}
 			}
+			int origY = y;
 			y--;
 			while (y > 10 && Main.tile[x, y].HasTile && TileID.Sets.IsShakeable[Main.tile[x, y].TileType]) {
 				y--;
@@ -1441,7 +1446,7 @@ namespace Origins {
 			if (!WorldGen.IsTileALeafyTreeTop(x, y)) {
 				return;
 			}
-			bool edgeB = numTreeShakes.GetValue() == maxTreeShakes.GetValue();
+			bool edgeB = numTreeShakes == maxTreeShakes;
 			bool edgeA = Collision.SolidTiles(x - 2, x + 2, y - 2, y + 2);
 			ITree tree = PlantLoader.GetTree(tileType);
 			if (!(edgeA || edgeB || edgeC)) {
@@ -1449,6 +1454,9 @@ namespace Origins {
 					foreach (TreeShaking.TreeShakeLoot drop in TreeShaking.GetLoot(TreeShaking.ShakeLoot, tree)) {
 						Item.NewItem(new EntitySource_ShakeTree(i, j), i * 16, j * 16, 16, 16, drop.Type, WorldGen.genRand.Next(drop.Min, drop.Max));
 					}
+					treeShakeX[numTreeShakes] = x;
+					treeShakeY[numTreeShakes] = origY;
+					numTreeShakes++;
 				} else {
 					switch (vanillaIndex) {
 						case 0:
@@ -1502,10 +1510,10 @@ namespace Origins {
 					}
 				}
 			}
+			orig(i, j);
 			foreach (TreeShaking.TreeShakeLoot drop in TreeShaking.GetLoot(TreeShaking.DryShakeLoot, tree)) {
 				Item.NewItem(new EntitySource_ShakeTree(i, j), i * 16, j * 16, 16, 16, drop.Type, WorldGen.genRand.Next(drop.Min, drop.Max));
 			}
-			orig(i, j);
 		}
 		internal static bool PlantLoader_ShakeTree(int x, int y, int type, out int index, bool useRealRand = false) {
 			//getTreeBottom(i, j, out var x, out var y);
