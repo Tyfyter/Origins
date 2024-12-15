@@ -9,7 +9,7 @@ Captured_Mojo: {
 	// Name: Mojo
 	/* Text:
 		'''
-		Mojo (title)
+		[header:Mojo]
 		[i:Origins/Captured_Mojo] (enlarge to span top of page, working on custom image)
 
 		Overview: 
@@ -79,7 +79,7 @@ Lost_Ore: {
 	// Name: Lost Ore
 	/* Text:
 		'''
-		Lost Ore (title)
+		[header:Lost Ore]
 		[i:Origins/Lost_Ore_Item] [i:Origins/Defiled_Bar] (enlarge to span top of page)
 
 		Overview: 
@@ -155,7 +155,7 @@ Indicator: {
 
 /* Alkahest.Text:
 	'''
-	Alkahest (title)
+	[header:Alkahest]
 	[i:Origins/Alkahest] (enlarge to span top of page, working on custom image)
 
 	Overview: 
@@ -178,7 +178,7 @@ Black_Bile: {
 	// Name: Black Bile
 	/* Text:
 		'''
-		Black Bile (title)
+		[header:Black Bile]
 		[i:Origins/Black_Bile] (enlarge to span top of page, working on custom image)
 
 		Overview: 
