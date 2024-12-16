@@ -1354,6 +1354,22 @@ AMMO:
 (^) Teal Solution*
 ---
 
+CROSS-MOD CONTENT:
+---
+(X) Bomber's Soul
+(#, ^2) Defiled Storage Unit !!!
+(#, ^2) Defiled Storage Upgrade !!!
+(#, ^2) Encrusted Storage Unit !!!
+(#, ^2) Encrusted Storage Upgrade !!!
+(X) Exploder's Soul
+(X) Laden Pressure Incantation
+(X) Keytar !!!
+(#, ^2) Sanguinite Storage Unit !!!
+(#, ^2) Sanguinite Storage Upgrade !!!
+(^) Sonorous Shredder
+(X) Watered-down Keytar !!!
+---
+
 UI:
 ---
 (^) Ashen Icon
