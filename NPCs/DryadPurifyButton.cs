@@ -12,7 +12,7 @@ namespace Origins.Questing {
 		public override double Priority => 100.0;
 		public static long GetPrice(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			long price = (int)((originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation) * 10000);
+			long price = (int)((originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation) * 50000);
 			if (NPC.downedGolemBoss) {
 				price *= 8;
 			} else if (NPC.downedPlantBoss) {
@@ -63,6 +63,7 @@ namespace Origins.Questing {
 			return Language.GetOrRegister("Mods.Origins.Interface.DryadPurify").Format(text.Trim());
 		}
 		public override bool IsActive(NPC npc, Player player) {
+			//return false;
 			if (npc.type != NPCID.Dryad) return false;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			return originPlayer.CorruptionAssimilation > 0 || originPlayer.CrimsonAssimilation > 0 || originPlayer.DefiledAssimilation > 0 || originPlayer.RivenAssimilation > 0;

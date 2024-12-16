@@ -47,7 +47,7 @@ namespace Origins.World.BiomeData {
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Riven_Underground_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
-		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilRiven";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
 		public override string MapBackground => BackgroundPath;
@@ -637,6 +637,12 @@ namespace Origins.World.BiomeData {
 			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
 			destroyObject = false;
 		}
+	}
+	public class Riven_Hive_Water_Control : ModSceneEffect {
+		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
+		public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+		public override bool IsSceneEffectActive(Player player) => OriginSystem.rivenTiles > Riven_Hive.NeededTiles;
+		public override float GetWeight(Player player) => 1f;
 	}
 	#region variations
 	public class Underground_Riven_Hive_Biome : ModBiome {

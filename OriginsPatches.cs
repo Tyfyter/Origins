@@ -593,6 +593,11 @@ namespace Origins {
 			};
 			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
 			On_ItemSlot.MouseHover_ItemArray_int_int += On_ItemSlot_MouseHover_ItemArray_int_int;
+			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
+				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
+				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
+				return orig(ignoreFountains);
+			};
 		}
 
 		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
