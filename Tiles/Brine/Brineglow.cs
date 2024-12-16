@@ -103,7 +103,7 @@ namespace Origins.Tiles.Brine {
 			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(2)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {
 				if (TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
@@ -120,7 +120,7 @@ namespace Origins.Tiles.Brine {
 				WorldGen.KillTile(i, j);
 				return false;
 			}
-			List<(short x, short y)> frames = new List<(short x, short y)>{
+			List<(short x, short y)> frames = [
 				(0, 0),
 				(4, 0),
 				(5, 0),
@@ -147,7 +147,7 @@ namespace Origins.Tiles.Brine {
 				(8, 2),
 				(10, 2),
 				(11, 2),
-			};
+			];
 			if (below.TileIsType(Type)) {
 				frames.Remove(((short)(below.TileFrameX / 18), (short)(below.TileFrameY / 18)));
 			} else {
