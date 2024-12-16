@@ -66,7 +66,7 @@ BOSSES AND MINI-BOSSES:
 (X) Scrapper
 (^) World Cracker*
 
-(%, ^2) Lost Diver !!!
+(@5, #, $) Lost Diver !!!
 (X) Miscreant
 (X) Tearror
 
@@ -191,7 +191,7 @@ ENEMY NPCS:
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
-(X) Brine Moccasin !!!
+(X) Brine Serpent !!!
 (#, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
@@ -201,13 +201,12 @@ ENEMY NPCS:
 (^) Defiled Tripod*
 (^) Defiled Watcher*
 (X) Depth Crawler
-(X) Hoarder !!!
 (X) Holy Governor
 (X) Holy Warrior
 (X) King Crab !!!
 (#, ^2) Mildew Creeper !!!
 (^) Mitoworm
-(X) Peat Lobber !!!
+(X) Nasty Crawfish !!!
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
@@ -218,6 +217,7 @@ ENEMY NPCS:
 (X) Sea Dragon !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
+(X) Shotgunfish !!!
 (X) Riven Gull
 (^) Torn Ghoul
 (^) Trijaw Shark*
@@ -259,6 +259,7 @@ EVENTS:
 STATUS EFFECTS:
 ---
 (#3, ^2) Assimilation* !!! (Defiled Assimilation change)
+(X) Cavitation !!!
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -320,6 +321,7 @@ ARMOR:
 (X) Chambersite Armor*
 (X) Edenwood Armor*
 (@1/2/5, #3) Necromancer Armor*
+(X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
 
 (X) Ancient Chromtain Armor
@@ -351,7 +353,6 @@ ACCESSORIES:
 (^) Bomb Charm*
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
-(X) Bomber's Soul
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
 (#3, ^2) Bug Trapper* !!!
@@ -642,7 +643,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Crystal Cutters
-(^) Depth Charge
+(#3, ^2) Depth Charge !!! (Depth Charge now inflicts Cavitation)
 (X) Fair In Square
 (^) Knee Slapper*
 (^) Nematoclaw*
@@ -704,6 +705,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (#, ^2) Cobalt Harpoon Gun* !!!
+(X) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
 (X) Dragon's Breath* !!!
 (^) Firespit
@@ -712,6 +714,7 @@ RANGED WEAPONS:
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
+(X) Laser Line Bow !!!
 (X) Mythril Harpoon Gun* !!!
 (X) Organ Donor
 (X) Orichalcum Harpoon Gun* !!!
@@ -852,7 +855,7 @@ SUMMONER WEAPONS:
 (@5, ^3) Terratotem
 (X) Tonal Resonator
 
-(X) Laden Pressure Incantation
+NO POST-ML CONTENT YET.
 ---
 
 
@@ -868,6 +871,7 @@ EXPLOSIVE WEAPONS:
 (^) Brainade*
 (^) Cold Snap*
 (^) Eruption*
+(X) Eyenade !!!
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
 (^) Flashbang*
@@ -891,18 +895,17 @@ EXPLOSIVE WEAPONS:
 (^) Sticky Link Grenade*
 
 (^) Acrid Handcannon*
-(^) Alkaline Bomb*
-(^) Alkaline Grenade*
+(@5, ^3) Alkaline Bomb* !!!
+(@5, ^3) Alkaline Grenade* !!!
 (^) Boomphracken
-(X) Cavitation Cannon !!!
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Happy Bomb*
 (#, ^2) Partybringer !!!
 (X) Rattlesnake
-(^) Sonorous Shredder
 (^) Thermite Launcher*
+(X) Torpedo Tube !!!
 
 (X) Autohandcannon
 (^) Bomboomstick
@@ -1073,7 +1076,7 @@ TILES:
 (^) Acetabularia*
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
-(^) Defiled Fissure*
+(@5, ^3) Defiled Fissure* !!!
 (^) Defiled Foliage
 (^) Defiled Pot
 (X) Eden Tree*
@@ -1156,7 +1159,7 @@ MATERIALS:
 (^) Alkahest*
 (^) Black Bile*
 (^) Bleeding Obsidian Shard*
-(^) Bottled Brine*
+(@5, ^3) Alkaliphiliac Tissue !!! (was Bottled Brine, needs resprite and adjustments to recipes with it)
 (^) Brineglow*
 (^) Eitrite Bar*
 (^) Respyrite*
@@ -1220,6 +1223,8 @@ CONSUMABLES:
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
+(X) Super Mojo Flask
+(X) Mega Mojo Flask
 (^) Voidsight Potion*
 
 (^) Foul Broth*
@@ -1252,6 +1257,7 @@ CONSUMABLES:
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
+(X) Old Picture Frame !!!
 (#2, ^2, 々) Quantum Cell*
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*
@@ -1352,6 +1358,22 @@ AMMO:
 (^) Gray Solution*
 (X) Orange Solution
 (^) Teal Solution*
+---
+
+CROSS-MOD CONTENT:
+---
+(X) Bomber's Soul
+(X) Defiled Storage Unit !!!
+(X) Defiled Storage Upgrade !!!
+(X) Encrusted Storage Unit !!!
+(X) Encrusted Storage Upgrade !!!
+(X) Exploder's Soul
+(X) Laden Pressure Incantation
+(X) Keytar !!!
+(X) Sanguinite Storage Unit !!!
+(X) Sanguinite Storage Upgrade !!!
+(^) Sonorous Shredder
+(X) Watered-down Keytar !!!
 ---
 
 UI:
