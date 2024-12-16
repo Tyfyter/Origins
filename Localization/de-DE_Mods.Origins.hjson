@@ -383,6 +383,7 @@ Interface: {
 	// Quests: Quests
 	// AcceptQuest: Accept
 	// CompleteQuestGeneric: Complete quest
+	// DryadPurify: Purify ({0})
 }
 
 DeathMessage: {
