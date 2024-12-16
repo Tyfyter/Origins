@@ -415,8 +415,8 @@ namespace Origins.World {
 			double edgeStrength = Math.Pow(strength + 4, 2);
 			double decay = speed.Length();
 			int clearedCount = 1;
-			ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
-			ushort stoneWallID = (ushort)ModContent.WallType<Sulphur_Stone_Wall>();
+			ushort stoneID = (ushort)ModContent.TileType<Dolomite>();
+			ushort stoneWallID = (ushort)ModContent.WallType<Dolomite_Wall>();
 			while (clearedCount > 0 && length > 0) {
 				length -= decay;
 				int minX = (int)(pos.X - edgeStrength * 0.5);
