@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -15,7 +14,7 @@ namespace Origins.Tiles.Brine {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(18, 73, 56));
 			mergeID = TileID.Stone;
-			MinPick = 200;
+			MinPick = 195;
 			HitSound = SoundID.Dig;
 		}
 		public override bool CanExplode(int i, int j) {

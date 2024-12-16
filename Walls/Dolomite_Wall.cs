@@ -12,9 +12,10 @@ namespace Origins.Walls {
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);
-			if (tile.LiquidAmount == 0 || (tile.LiquidAmount < 255 && tile.LiquidType == LiquidID.Water)) {
+			if (j >= Main.worldSurface - 50 && (tile.LiquidAmount == 0 || (tile.LiquidAmount < 255 && tile.LiquidType == LiquidID.Water))) {
 				tile.LiquidAmount = 255;
 				tile.LiquidType = LiquidID.Water;
+				WorldGen.SquareTileFrame(i, j);
 			}
 		}
 	}

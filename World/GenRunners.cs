@@ -6,6 +6,10 @@ using Terraria;
 using static Origins.World.AdjID;
 using static Terraria.WorldGen;
 using System.Collections.Generic;
+using Origins.Tiles.Brine;
+using Origins.Walls;
+using Terraria.ModLoader;
+using Microsoft.VisualBasic;
 
 namespace Origins.World {
 	public class GenRunners {
@@ -408,14 +412,17 @@ namespace Origins.World {
 			int Y0 = int.MaxValue;
 			int Y1 = 0;
 			strength = Math.Pow(strength, 2);
+			double edgeStrength = Math.Pow(strength + 4, 2);
 			double decay = speed.Length();
 			int clearedCount = 1;
+			ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
+			ushort stoneWallID = (ushort)ModContent.WallType<Sulphur_Stone_Wall>();
 			while (clearedCount > 0 && length > 0) {
 				length -= decay;
-				int minX = (int)(pos.X - strength * 0.5);
-				int maxX = (int)(pos.X + strength * 0.5);
-				int minY = (int)(pos.Y - strength * 0.5);
-				int maxY = (int)(pos.Y + strength * 0.5);
+				int minX = (int)(pos.X - edgeStrength * 0.5);
+				int maxX = (int)(pos.X + edgeStrength * 0.5);
+				int minY = (int)(pos.Y - edgeStrength * 0.5);
+				int maxY = (int)(pos.Y + edgeStrength * 0.5);
 				if (minX < 1) {
 					minX = 1;
 				}
@@ -431,12 +438,28 @@ namespace Origins.World {
 				clearedCount = 0;
 				for (int l = minX; l < maxX; l++) {
 					for (int k = minY; k < maxY; k++) {
-						if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+						double dist = (Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2));
+						tile = Main.tile[l, k];
+						if (dist > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+							if (dist < edgeStrength && tile.HasTile && validTiles[tile.TileType] && WorldGen.CanKillTile(l, k)) {
+								tile.TileType = stoneID;
+								tile.WallType = stoneWallID;
+								if (l > X1) {
+									X1 = l;
+								} else if (l < X0) {
+									X0 = l;
+								}
+								if (k > Y1) {
+									Y1 = k;
+								} else if (k < Y0) {
+									Y0 = k;
+								}
+							}
 							continue;
 						}
-						tile = Main.tile[l, k];
 						if (tile.HasTile && validTiles[tile.TileType] && WorldGen.CanKillTile(l, k)) {
 							tile.HasTile = false;
+							tile.WallType = stoneWallID;
 							clearedCount++;
 							//WorldGen.SquareTileFrame(l,k);
 							if (l > X1) {
@@ -454,6 +477,8 @@ namespace Origins.World {
 				}
 				pos += speed;
 				strength += decay * strengthGrowth;
+				edgeStrength = Math.Sqrt(strength) + 1;
+				edgeStrength *= edgeStrength;
 			}
 			WorldGen.RangeFrame(X0, Y0, X1, Y1);
 			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);

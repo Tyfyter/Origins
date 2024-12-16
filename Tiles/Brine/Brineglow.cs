@@ -103,7 +103,7 @@ namespace Origins.Tiles.Brine {
 			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.1f; g = 0.24f; b = 0.35f;
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(2)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {
 				if (TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
@@ -114,12 +114,13 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Framing.GetTileSafely(i, j);
 			Tile below = Framing.GetTileSafely(i, j - 1);
-			if (!below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Dolomite>())) {
+			if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Dolomite>())) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}
-			List<(short x, short y)> frames = new List<(short x, short y)>{
+			List<(short x, short y)> frames = [
 				(0, 0),
 				(4, 0),
 				(5, 0),
@@ -146,11 +147,11 @@ namespace Origins.Tiles.Brine {
 				(8, 2),
 				(10, 2),
 				(11, 2),
-			};
+			];
 			if (below.TileIsType(Type)) {
 				frames.Remove(((short)(below.TileFrameX / 18), (short)(below.TileFrameY / 18)));
 			} else {
-				frames = new List<(short x, short y)>{
+				frames = [
 					(1, 2),
 					(2, 2),
 					(3, 2),
@@ -165,13 +166,13 @@ namespace Origins.Tiles.Brine {
 					(3, 4),
 					(4, 4),
 					(5, 4),
-				};
+				];
 			}
 			Tile above = Framing.GetTileSafely(i, j + 1);
 			if (above.TileIsType(Type)) {
 				frames.Remove(((short)(above.TileFrameX / 18), (short)(above.TileFrameY / 18)));
 			} else {
-				frames = new List<(short x, short y)>{
+				frames = [
 					(1, 0),
 					(2, 0),
 					(3, 0),
@@ -200,12 +201,13 @@ namespace Origins.Tiles.Brine {
 					(6, 4),
 					(7, 4),
 					(8, 4),
-				};
+				];
 			}
-			Tile tile = Framing.GetTileSafely(i, j);
-			(tile.TileFrameX, tile.TileFrameY) = WorldGen.genRand.Next(frames);
-			tile.TileFrameX *= 18;
-			tile.TileFrameY *= 18;
+			if (!frames.Contains(((short)(tile.TileFrameX / 18), (short)(tile.TileFrameY / 18)))) {
+				(tile.TileFrameX, tile.TileFrameY) = WorldGen.genRand.Next(frames);
+				tile.TileFrameX *= 18;
+				tile.TileFrameY *= 18;
+			}
 			return false;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {

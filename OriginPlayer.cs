@@ -377,8 +377,7 @@ namespace Origins {
 			Player.oldVelocity = Player.velocity;
 			rivenWet = false;
 			if ((Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet)) {
-				ModWaterStyle waterStyle = LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle);
-				if (waterStyle is Riven_Water_Style) {
+				if (Player.InModBiome<Riven_Hive>()) {
 					rivenWet = true;
 					/*if (GameModeData.ExpertMode) {
 						int duration = 432;
@@ -400,7 +399,7 @@ namespace Origins {
 					InflictTorn(Player, 188, 750, 1f, true);
 					Player.velocity *= 0.95f;
 					rivenAssimilation += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
-				} else if (waterStyle is Brine_Water_Style) {
+				} else if (Player.InModBiome<Brine_Pool>()) {
 					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
 				}
 			}

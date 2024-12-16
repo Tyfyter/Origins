@@ -3310,12 +3310,12 @@ Riven_Torch: {
 
 Bile_Torch: {
 	// DisplayName: Bile Torch
-	// Tooltip: ""
+	// Tooltip: Can be placed in water
 }
 
 Alkahest_Torch: {
 	// DisplayName: Alkahest Torch
-	// Tooltip: ""
+	// Tooltip: Can be placed in water
 }
 
 // Surveysprout.DisplayName: Surveysprout

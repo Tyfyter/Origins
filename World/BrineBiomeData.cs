@@ -502,4 +502,10 @@ namespace Origins.World.BiomeData {
 			}
 		}
 	}
+	public class Brine_Pool_Water_Control : ModSceneEffect {
+		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override bool IsSceneEffectActive(Player player) => OriginSystem.brineTiles > Brine_Pool.NeededTiles;
+		public override float GetWeight(Player player) => 1f;
+	}
 }
