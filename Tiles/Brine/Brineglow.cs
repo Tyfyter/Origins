@@ -86,7 +86,7 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
-				TileType<Sulphur_Stone>()
+				TileType<Dolomite>()
 			];
 			TileObjectData.newTile.AnchorAlternateTiles = [
 				Type
@@ -100,7 +100,7 @@ namespace Origins.Tiles.Brine {
 			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow_Item>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
+			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.1f; g = 0.24f; b = 0.35f;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(2)) {
@@ -115,7 +115,7 @@ namespace Origins.Tiles.Brine {
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile below = Framing.GetTileSafely(i, j - 1);
-			if (!below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Sulphur_Stone>())) {
+			if (!below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Dolomite>())) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}

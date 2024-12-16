@@ -145,18 +145,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Bottled_Brine : MaterialItem {
-		public override int ResearchUnlockCount => 30;
+	public class Alkaliphiliac_Tissue : MaterialItem {
+		public override int ResearchUnlockCount => 99;
 		public override int Value => Item.sellPrice(copper: 40);
 		public override bool Hardmode => false;
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-            .AddIngredient(ItemID.Bottle)
-            .AddIngredient(ItemID.Stinger, 2)
-            .AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>())
-            .AddTile(TileID.Bottles)
-            .Register();
-        }
     }
 	public class Bud_Barnacle : MaterialItem {
 		public override int ResearchUnlockCount => 30;
@@ -226,7 +218,7 @@ namespace Origins.Items.Materials {
             Recipe.Create(Type)
             .AddRecipeGroup("AdamantiteBars")
             .AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
-            .AddIngredient(ModContent.ItemType<Bottled_Brine>())
+            .AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 3)
             .AddTile(TileID.MythrilAnvil)
             .Register();
 		}

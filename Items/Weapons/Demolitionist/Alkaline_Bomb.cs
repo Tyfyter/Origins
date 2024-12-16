@@ -24,9 +24,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
-			.AddIngredient(ItemID.Bomb, 5)
-			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Bomb)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>())
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

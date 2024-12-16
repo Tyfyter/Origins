@@ -32,7 +32,7 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.OnlyInFullLiquid;
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
-				TileType<Sulphur_Stone>()
+				TileType<Dolomite>()
 			];
 			TileObjectData.addTile(Type);
 

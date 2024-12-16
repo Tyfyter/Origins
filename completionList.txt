@@ -259,6 +259,7 @@ EVENTS:
 STATUS EFFECTS:
 ---
 (#3, ^2) Assimilation* !!! (Defiled Assimilation change)
+(#, ^2) Cavitation !!!
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -998,6 +999,7 @@ TILES:
 (^) Defiled Grass Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
+(^) Dolomite Wall
 (^) Edenwood Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
@@ -1007,7 +1009,6 @@ TILES:
 (^) Quartz Wall
 (^) Riven Grass Wall
 (^) Spug Flesh Wall
-(^) Sulphur Stone Wall
 
 (^) Alkahest Torch*
 (X) Amoeba Buggy Cage*
@@ -1089,6 +1090,7 @@ TILES:
 (X) Scrapleaf Tree
 (^) Soulspore*
 (ᗢ) Surveysprout*
+(#, ^2) Underwater Vine !!!
 (^) Wilting Rose*
 (^) Wrycoral*
 

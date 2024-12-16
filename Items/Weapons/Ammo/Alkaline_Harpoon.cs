@@ -24,15 +24,15 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 8)
-			.AddRecipeGroup(RecipeGroupID.IronBar, 8)
-			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			Recipe.Create(Type, 2)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 2)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>())
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(Type, 8)
-			.AddIngredient(ModContent.ItemType<Harpoon>(), 8)
-			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			Recipe.Create(Type, 2)
+			.AddIngredient(ModContent.ItemType<Harpoon>(), 2)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>())
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

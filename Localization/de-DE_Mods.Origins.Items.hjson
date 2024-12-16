@@ -1455,7 +1455,7 @@ Bleeding_Obsidian_Shard: {
 	// Tooltip: "'Weakens those who touch it'"
 }
 
-// Bottled_Brine.DisplayName: Bottled Brine
+// Alkaliphiliac_Tissue.DisplayName: Alkaliphiliac Tissue
 
 Brineglow_Item: {
 	// DisplayName: Brineglow
@@ -3051,7 +3051,7 @@ Eitrite_Ore_Item: {
 	// Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 }
 
-Sulphur_Stone_Item: {
+Dolomite_Item: {
 	// DisplayName: Dolomite
 	// Tooltip: ""
 }
@@ -3283,8 +3283,8 @@ Riven_Flesh_Wall_Item: {
 	// Tooltip: ""
 }
 
-Sulphur_Stone_Wall_Item: {
-	// DisplayName: Sulphur Stone Wall
+Dolomite_Wall_Item: {
+	// DisplayName: Dolomite Wall
 	// Tooltip: ""
 }
 

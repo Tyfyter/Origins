@@ -33,15 +33,15 @@ namespace Origins.Items.Weapons.Magic {
 			Item.reuseDelay = 8;
 			Item.mana = 18;
 			Item.shoot = ModContent.ProjectileType<Acid_Shot>();
-			Item.value = Item.sellPrice(silver: 20, copper: 80);
+			Item.value = Item.sellPrice(gold: 2, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 8)
-			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15)
-			.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 10)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 38)
+			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 12)
+			.AddIngredient(ModContent.ItemType<Dolomite_Item>(), 25)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
