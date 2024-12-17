@@ -191,8 +191,8 @@ namespace Origins.Items.Accessories {
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.changeSize = true;
-			originPlayer.targetWidth = 20;
-			originPlayer.targetHeight = 20;
+			originPlayer.targetWidth = 15;
+			originPlayer.targetHeight = 15;
 		}
 	}
 }

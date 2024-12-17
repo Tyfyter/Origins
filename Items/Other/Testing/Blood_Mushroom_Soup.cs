@@ -80,6 +80,13 @@ namespace Origins.Items.Other.Testing {
 			Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 15 | p0:
+				parameters.Enqueue(Main.MouseWorld);
+				break;
+				case 15 | p1:
+				parameters.Enqueue(Main.MouseWorld);
+				Apply();
+				break;
 				case 14 | p0:
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
@@ -208,6 +215,10 @@ namespace Origins.Items.Other.Testing {
 			double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 15 | p0:
+				return $"ravel hole start point: {Player.tileTargetX}, {Player.tileTargetY}";
+				case 15 | p1:
+				return $"ravel hole end point: {Player.tileTargetX}, {Player.tileTargetY}";
 				case 14 | p0:
 				return $"spread riven grass: {Player.tileTargetX}, {Player.tileTargetY}";
 				case 13 | p0:
@@ -494,6 +505,10 @@ namespace Origins.Items.Other.Testing {
 				}
 				case 14: {
 					Riven_Hive.Gen.SpreadRivenGrass((int)parameters.Dequeue(), (int)parameters.Dequeue());
+					break;
+				}
+				case 15: {
+					Defiled_Wastelands.Gen.RavelConnection((Vector2)parameters.Dequeue(), (Vector2)parameters.Dequeue());
 					break;
 				}
 			}
