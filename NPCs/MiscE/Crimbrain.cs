@@ -30,7 +30,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 34;
 			NPC.height = 28;
 			NPC.friendly = false;
-			NPC.knockBackResist = 0.85f;
+			NPC.knockBackResist = 1f;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
@@ -54,6 +54,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
+			NPC.knockBackResist = 1f;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
