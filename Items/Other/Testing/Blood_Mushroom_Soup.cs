@@ -80,6 +80,11 @@ namespace Origins.Items.Other.Testing {
 			Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 16 | p0:
+				parameters.Enqueue(Player.tileTargetX);
+				parameters.Enqueue(Player.tileTargetY);
+				Apply();
+				break;
 				case 15 | p0:
 				parameters.Enqueue(Main.MouseWorld);
 				break;
@@ -215,6 +220,8 @@ namespace Origins.Items.Other.Testing {
 			double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 16 | p0:
+				return $"place brine pool opening: {Player.tileTargetX}, {Player.tileTargetY}";
 				case 15 | p0:
 				return $"ravel hole start point: {Player.tileTargetX}, {Player.tileTargetY}";
 				case 15 | p1:
@@ -509,6 +516,16 @@ namespace Origins.Items.Other.Testing {
 				}
 				case 15: {
 					Defiled_Wastelands.Gen.RavelConnection((Vector2)parameters.Dequeue(), (Vector2)parameters.Dequeue());
+					break;
+				}
+				case 16: {
+					GenRunners.OpeningRunner(
+						(int)parameters.Dequeue(), (int)parameters.Dequeue(),
+						Main.rand.NextFloat(4, 6),
+						Main.rand.NextFloat(0.95f, 1.2f),
+						-Vector2.UnitY.RotatedByRandom(0.15f),
+						75
+					);
 					break;
 				}
 			}
