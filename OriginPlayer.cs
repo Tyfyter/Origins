@@ -444,8 +444,7 @@ namespace Origins {
 			blastSetCharge = 0;
 		}
 		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
-			health = StatModifier.Default;
-			mana = StatModifier.Default;
+			base.ModifyMaxStats(out health, out mana);
 			mana.Base += quantumInjectors * Quantum_Injector.mana_per_use;
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
@@ -454,6 +453,11 @@ namespace Origins {
 						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
 					}, 1, 0);
 				}
+			}
+		}
+		public override void NaturalLifeRegen(ref float regen) {
+			if (tornCurrentSeverity > 0 && tornCurrentSeverity < 1) {
+				regen /= (1 - tornCurrentSeverity) * 0.85f + 0.15f;
 			}
 		}
 		public override void PostUpdateBuffs() {
