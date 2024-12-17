@@ -24,10 +24,10 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Corruption"
 				}, 40, 0);
 			}
-			player.GetDamage(DamageClass.Generic) -= Math.Min(percent / 2, 0);
-			player.GetAttackSpeed(DamageClass.Generic) -= Math.Min(percent / 2, 0);
-			player.GetCritChance(DamageClass.Generic) -= Math.Min(percent / 2, 0);
-			player.GetKnockback(DamageClass.Generic) -= Math.Min(percent / 2, 0);
+			player.GetDamage(DamageClass.Generic) -= percent / 2;
+			player.GetAttackSpeed(DamageClass.Generic) -= percent / 2;
+			player.GetCritChance(DamageClass.Generic) -= percent * 10;
+			player.GetKnockback(DamageClass.Generic) -= percent / 2;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CorruptionAssimilation;

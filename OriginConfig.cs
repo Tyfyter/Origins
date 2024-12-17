@@ -45,6 +45,9 @@ namespace Origins {
 
 		[Header("Other")]
 
+		[DefaultValue(true)]
+		public bool Assimilation = true;
+
 		[ReloadRequired]
 		[DefaultValue(true)]
 		public bool GrassMerge = true;

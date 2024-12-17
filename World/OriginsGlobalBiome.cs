@@ -6,20 +6,24 @@ using Terraria.ModLoader;
 
 namespace Origins.World {
 	public class OriginsGlobalBiome : GlobalBiome {
+		public static bool isConversionFromProjectile = false;
+		public static bool isConvertingProjectilePlayerOwned = false;
 		public override void PostConvertTile(AltBiome oldBiome, AltBiome newBiome, int i, int j) {
 			if (WorldGen.generatingWorld) return;
 			if (newBiome?.BiomeType != oldBiome?.BiomeType) {
-				if (ModContent.GetInstance<Cleansing_Station_Quest>() is Cleansing_Station_Quest cleansingStationQuest && cleansingStationQuest.ActiveForLocalPlayer) {
-					if (oldBiome?.BiomeType == BiomeType.Evil) {
-						cleansingStationQuest.UpdateProgress(1);
-					} else if (newBiome?.BiomeType == BiomeType.Evil) {
-						cleansingStationQuest.UpdateProgress(-1);
-					}
-				} else if (ModContent.GetInstance<Bloombomb_Quest>() is Bloombomb_Quest bloombombQuest && bloombombQuest.ActiveForLocalPlayer) {
-					if (oldBiome?.BiomeType == BiomeType.Evil) {
-						bloombombQuest.UpdateProgress(1);
-					} else if (newBiome?.BiomeType == BiomeType.Evil) {
-						bloombombQuest.UpdateProgress(-1);
+				if (isConversionFromProjectile && isConvertingProjectilePlayerOwned) {
+					if (ModContent.GetInstance<Cleansing_Station_Quest>() is Cleansing_Station_Quest cleansingStationQuest && cleansingStationQuest.ActiveForLocalPlayer) {
+						if (oldBiome?.BiomeType == BiomeType.Evil) {
+							cleansingStationQuest.UpdateProgress(1);
+						} else if (newBiome?.BiomeType == BiomeType.Evil) {
+							cleansingStationQuest.UpdateProgress(-1);
+						}
+					} else if (ModContent.GetInstance<Bloombomb_Quest>() is Bloombomb_Quest bloombombQuest && bloombombQuest.ActiveForLocalPlayer) {
+						if (oldBiome?.BiomeType == BiomeType.Evil) {
+							bloombombQuest.UpdateProgress(1);
+						} else if (newBiome?.BiomeType == BiomeType.Evil) {
+							bloombombQuest.UpdateProgress(-1);
+						}
 					}
 				}
 			}

@@ -13,6 +13,7 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.UI;
 using Origins.UI.SetBonus;
+using Origins.World;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -471,6 +472,7 @@ namespace Origins {
 			Time_Radices.Refresh();
 		}
 		public override void PreUpdateProjectiles() {
+			OriginsGlobalBiome.isConversionFromProjectile = true;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
@@ -480,6 +482,9 @@ namespace Origins {
 			ExplosiveGlobalProjectile.nextExplodingProjectiles.Clear();
 			Utils.Swap(ref Mitosis_P.nextMitosises, ref Mitosis_P.mitosises);
 			Mitosis_P.nextMitosises.Clear();
+		}
+		public override void PostUpdateProjectiles() {
+			OriginsGlobalBiome.isConversionFromProjectile = false;
 		}
 		FastStaticFieldInfo<Main, float> _minWind;
 		FastStaticFieldInfo<Main, float> _maxWind;

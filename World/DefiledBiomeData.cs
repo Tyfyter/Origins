@@ -33,6 +33,8 @@ using Origins.Tiles.Other;
 using AltLibrary;
 using Terraria.Localization;
 using AltLibrary.Core;
+using PegasusLib;
+using System.Collections;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -139,6 +141,7 @@ namespace Origins.World.BiomeData {
 				(int generation, (Vector2 position, Vector2 velocity) data) current;
 				(int generation, (Vector2 position, Vector2 velocity) data) next;
 				List<Vector2> fissureCheckSpots = new List<Vector2>();
+				List<Vector2> nodes = [];
 				Vector2 airCheckVec;
 				while (veins.Count > 0) {
 					current = veins.Dequeue();
@@ -153,7 +156,7 @@ namespace Origins.World.BiomeData {
 					}
 					switch (selector) {
 						case 0:
-						case 1: {
+						case 1: {//single vein
 							next = (current.generation + 1,
 								DefiledVeinRunner(
 									(int)current.data.position.X,
@@ -172,9 +175,10 @@ namespace Origins.World.BiomeData {
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
 							}
+							nodes.Add(next.data.position);
 							break;
-						}//single vein
-						case 2: {
+						}
+						case 2: {//split vein
 							next = (current.generation + 2,
 								DefiledVeinRunner(
 									(int)current.data.position.X,
@@ -211,9 +215,10 @@ namespace Origins.World.BiomeData {
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
 							}
+							nodes.Add(next.data.position);
 							break;
-						}//split vein
-						case 3: {
+						}
+						case 3: {//vein & cave
 							next = (current.generation + 2,
 								DefiledVeinRunner(
 									(int)current.data.position.X,
@@ -238,8 +243,9 @@ namespace Origins.World.BiomeData {
 							}
 							DefiledRib(next.data.position.X, next.data.position.Y, size * caveSize, 0.75f);
 							fissureCheckSpots.Add(next.data.position);
+							nodes.Add(next.data.position);
 							break;
-						}//vein & cave
+						}
 					}
 				}
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
@@ -269,6 +275,24 @@ namespace Origins.World.BiomeData {
 						}
 					}
 					fissureCheckSpots.RemoveAt(ch);
+				}
+				const float max_ravel_dist = 150;
+				Vector2 center = new(i * 16 + 8, j * 16 + 8);
+				for (int k = nodes.Count; k-->0;) {
+					Vector2 node = nodes[k].ToWorldCoordinates();
+					nodes.RemoveAt(k);
+					if (nodes.Count == 0) continue;
+					Vector2 dirToCenter = node.DirectionTo(center);
+					int tries = 10;
+					int target;
+					Vector2 targetNode;
+					do {
+						target = genRand.Next(nodes.Count);
+						targetNode = nodes[target].ToWorldCoordinates();
+					} while ((!node.IsWithin(targetNode, max_ravel_dist * 16) || Vector2.Dot(dirToCenter, targetNode.DirectionTo(center)) < 0) && tries-- > 0);
+					nodes.RemoveAt(target);
+					k--;
+					if (tries > 0) RavelConnection(node, targetNode);
 				}
 				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
 				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
@@ -494,6 +518,73 @@ namespace Origins.World.BiomeData {
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X0, Y0);
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
 				return (pos, speed);
+			}
+			static int index = 0;
+			public static void RavelConnection(Vector2 start, Vector2 end) {
+				Vector2 direction = end - start;
+				float distance = direction.Length();
+				direction /= distance;
+				float wallDistA = CollisionExt.Raymarch(start, direction, distance);
+				if (wallDistA == distance) return;
+				start += (wallDistA - 1) * direction;
+				end -= CollisionExt.Raymarch(end, -direction, distance) * direction;
+				Point tilePos = start.ToTileCoordinates();
+				Vector2 tileSubPos = (start - tilePos.ToWorldCoordinates(0, 0)) / 16;
+				static void DoLoopyThing(float currentSubPos, out float newSubPos, int currentTilePos, out int newTilePos, double direction) {
+					newTilePos = currentTilePos;
+					if (currentSubPos == 0 && direction < 0) {
+						newSubPos = 1;
+						newTilePos--;
+					} else if (currentSubPos == 1 && direction > 0) {
+						newSubPos = 0;
+						newTilePos++;
+					} else {
+						newSubPos = currentSubPos;
+					}
+				}
+				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
+				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
+				bool removedAnyTiles;
+				void Stamp() {
+					for (int x = -2; x <= 2; x++) {
+						for (int y = -2; y <= 2; y++) {
+							Tile tile = Framing.GetTileSafely(tilePos.X + x, tilePos.Y + y);
+							if (x != 0 || y != 0) {
+								if (tile.WallType != stoneWallID) tile.ResetToType(stoneID);
+							} else if (CanKillTile(tilePos.X + x, tilePos.Y + y)) {
+								tile.HasTile = false;
+								removedAnyTiles = true;
+							}
+							tile.WallType = stoneWallID;
+						}
+					}
+				}
+				if (RavelStep(tileSubPos, direction) == tileSubPos) {
+					DoLoopyThing(tileSubPos.X, out tileSubPos.X, tilePos.X, out tilePos.X, direction.X);
+					DoLoopyThing(tileSubPos.Y, out tileSubPos.Y, tilePos.Y, out tilePos.Y, direction.Y);
+				}
+				while (tilePos.ToWorldCoordinates().DistanceSQ(end) > 16 * 16) {
+					Vector2 next = RavelStep(tileSubPos, direction);
+					if (next == tileSubPos) break;
+					removedAnyTiles = false;
+					DoLoopyThing(next.Y, out next.Y, tilePos.Y, out tilePos.Y, direction.Y);
+					Stamp();
+					DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, direction.X);
+					Stamp();
+					if (!removedAnyTiles || !InWorld(tilePos.X, tilePos.Y)) break;
+					tileSubPos = next;
+				}
+			}
+			static Vector2 RavelStep(Vector2 pos, Vector2 direction) {
+				if (direction.X == 0) return new(pos.X, direction.Y > 0 ? 1 : 0);
+				if (direction.Y == 0) return new(direction.X > 0 ? 1 : 0, pos.Y);
+				double slope = direction.Y / direction.X;
+				int xVlaue = direction.X > 0 ? 1 : 0;
+				double yIntercept = pos.Y - slope * (pos.X - xVlaue);
+				if (yIntercept >= 0 && yIntercept <= 1) return new Vector2(xVlaue, (float)yIntercept);
+				int yVlaue = direction.Y > 0 ? 1 : 0;
+				double xIntercept = (pos.Y - yVlaue) / -slope + pos.X;
+				return new Vector2((float)xIntercept, yVlaue);
 			}
 		}
 

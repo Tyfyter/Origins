@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Items;
+using Origins.World;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata;
@@ -35,6 +36,7 @@ namespace Origins.Projectiles {
 			);
 			c.EmitLdarg0();
 			c.EmitDelegate((int updates, Projectile proj) => {
+				OriginsGlobalBiome.isConvertingProjectilePlayerOwned = !proj.hostile && !proj.npcProj && proj.owner != Main.maxPlayers;
 				if (proj.TryGetGlobalProjectile(out MinionGlobalProjectile global)) {
 					if (proj.friendly && proj.TryGetOwner(out Player player)) {
 						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {

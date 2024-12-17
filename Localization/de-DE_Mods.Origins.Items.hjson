@@ -1491,7 +1491,7 @@ Dusk_Key: {
 
 Dreadful_Powder: {
 	// DisplayName: Dreadful Powder
-	// Tooltip: Spreads the Defiled
+	// Tooltip: Spreads {§The_Defiled_Wastelands}
 }
 
 Eitrite_Bar: {
@@ -1578,7 +1578,7 @@ Sanguinite_Bar: {
 
 Sentient_Powder: {
 	// DisplayName: Sentient Powder
-	// Tooltip: Spreads the Riven
+	// Tooltip: Spreads the {§Riven_Hive}
 }
 
 Ash_Urn: {
@@ -1773,7 +1773,7 @@ Tasty_Vanilla_Shake: {
 
 Gooey_Water: {
 	// DisplayName: Gooey Water
-	// Tooltip: Spreads the Riven to some blocks
+	// Tooltip: Spreads the {§Riven_Hive} to some blocks
 }
 
 Holiday_Hair_Dye: {
@@ -1880,7 +1880,7 @@ Voidsight_Potion: {
 
 White_Water: {
 	// DisplayName: White Water
-	// Tooltip: Spreads the {§Defiled_Wastelands} to some blocks
+	// Tooltip: Spreads {§The_Defiled_Wastelands} to some blocks
 }
 
 High_Contrast_Dye: {
@@ -2186,12 +2186,12 @@ Starfuze: {
 
 Teal_Solution: {
 	// DisplayName: Teal Solution
-	// Tooltip: Spreads the Riven
+	// Tooltip: Spreads the {§Riven_Hive}
 }
 
 Gray_Solution: {
 	// DisplayName: Gray Solution
-	// Tooltip: Spreads the Defiled
+	// Tooltip: Spreads {§The_Defiled_Wastelands}
 }
 
 Abrasion_Blaster: {
@@ -3108,7 +3108,7 @@ Defiled_Ice_Item: {
 
 Lost_Ore_Item: {
 	// DisplayName: Lost Ore
-	// Tooltip: A strange metal warped to the curiosity of the Defiled
+	// Tooltip: A strange metal warped to the curiosity of {§The_Defiled_Wastelands}
 }
 
 Defiled_Pot_Item: {

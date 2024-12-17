@@ -562,17 +562,12 @@ UTILITIES:
 
 WINGS:
 ---
-(X) Acid Wings
-(X) Blighted Wings
+(X) Acrid Beam Thrusters !!!
 (X) Gills
 (X) Mutant Wings
 
-(X) Anti-Gravity Booster
-(X) Futuristic Jetpack
-
 (X) Ascendant Wings
 (X) Booster Pack
-(X) Celestine Wings
 (X) Fibron Thruster Array
 (X) Nova Backblaster
 ---
@@ -693,10 +688,11 @@ RANGED WEAPONS:
 (^) Tendon Tear
 (^) The Kruncher*
 (^) Threemoepeater
+(#, ^2) Unmisfire* !!!
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
-(^) Acrid Impaler*
+(#3, ^2) Acrid Impaler* !!! (needs glowmask code)
 (#, ^2) Adamantite Harpoon Gun* !!!
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
@@ -710,20 +706,20 @@ RANGED WEAPONS:
 (X) Dragon's Breath* !!!
 (^) Firespit
 (X) Fumethrower !!!
-(X) Harpoon Burst Rifle !!!
+(#, ^2) Harpoon Burst Rifle !!!
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
 (X) Laser Line Bow !!!
 (X) Mythril Harpoon Gun* !!!
 (X) Organ Donor
-(X) Orichalcum Harpoon Gun* !!!
-(X) Palladium Harpoon Gun* !!!
+(#, ^2) Orichalcum Harpoon Gun* !!!
+(#, ^2) Palladium Harpoon Gun* !!!
 (X) Riveiar
 (^) Sixth Spline
 (^) Spray 'N Pray*
 (^) Tiny Sniper
-(X) Titanium Harpoon Gun* !!!
+(#, ^2) Titanium Harpoon Gun* !!!
 (X) Tripod Jawbow
 
 (^) Astoxo

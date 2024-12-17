@@ -1668,7 +1668,7 @@ namespace Origins {
 		private void On_TileLightScanner_ApplyHellLight(On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor) {
 			Vector3 value = lightColor;
 			orig(self, tile, x, y, ref value);
-			if (OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed > 0) {
+			if ((OriginPlayer.LocalOriginPlayer?.ZoneVoidProgressSmoothed ?? 0) > 0) {
 				lightColor = Vector3.Lerp(value, lightColor, OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed * 1.5f);
 			} else {
 				lightColor = value;
