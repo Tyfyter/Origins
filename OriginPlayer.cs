@@ -309,17 +309,19 @@ namespace Origins {
 			}*/
 		}
 		public override void PreUpdate() {
-			if (corruptionAssimilation > 0) {
-				Player.AddBuff(ModContent.BuffType<Corrupt_Assimilation_Debuff>(), 5);
-			}
-			if (crimsonAssimilation > 0) {
-				Player.AddBuff(ModContent.BuffType<Crimson_Assimilation_Debuff>(), 5);
-			}
-			if (defiledAssimilation > 0) {
-				Player.AddBuff(ModContent.BuffType<Defiled_Assimilation_Debuff>(), 5);
-			}
-			if (rivenAssimilation > 0) {
-				Player.AddBuff(ModContent.BuffType<Riven_Assimilation_Debuff>(), 5);
+			if (OriginConfig.Instance.Assimilation) {
+				if (corruptionAssimilation > 0) {
+					Player.AddBuff(ModContent.BuffType<Corrupt_Assimilation_Debuff>(), 5);
+				}
+				if (crimsonAssimilation > 0) {
+					Player.AddBuff(ModContent.BuffType<Crimson_Assimilation_Debuff>(), 5);
+				}
+				if (defiledAssimilation > 0) {
+					Player.AddBuff(ModContent.BuffType<Defiled_Assimilation_Debuff>(), 5);
+				}
+				if (rivenAssimilation > 0) {
+					Player.AddBuff(ModContent.BuffType<Riven_Assimilation_Debuff>(), 5);
+				}
 			}
 			if (rivenWet) {
 				Player.gravity = 0.25f;
