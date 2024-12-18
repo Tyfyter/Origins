@@ -235,3 +235,26 @@ Cubekon_Tinkerer: {
 // Graveshield_Zombie.DisplayName: Graveshield Zombie
 // Enchanted_Fiberglass_Cannon.DisplayName: Enchanted Fiberglass Cannon
 // Ancient_Defiled_Flyer.DisplayName: Ancient Defiled Phantom
+
+Dryad: {
+	// AshenWorld: The Ashen is mechanizing the world and polluting it! You must stop the Factory.
+	// CorruptWorld: The Corruption seeks to turn this world into a devoid wasteland! You must eliminate the infection.
+	// CrimsonWorld: The Crimson is bleeding the world of its purity. You must heal the world of this gouge.
+	// DefiledWorld1: My kind barely banished the Defiled into the Dusk. Now it’s back from a disturbance and stronger than before…
+	// DefiledWorld2: The Defiled lives by its means, but even that is too much for the world…
+	// WindyDefiled: It’s never wind in the Defiled Wastelands, that’s breathing…
+	// DefiledHeartDown: That's it for the Defiled. Finish it up.
+	// BeforeDefeatS: Have you tried using purification powder on... wait a minute...
+	// BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
+	// BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
+
+	PurifySuccess: {
+		// 0: I thank you for not succumbing to evil. Hopefully this'll help keep the fight in you.
+		// 1: Long journey deep into evil's abode eh? Your bravery is inspiring.
+	}
+
+	NoSuccForYouess: {
+		// 0: What?! I CAN'T cleanse you all because you don't have enough to afford it? I'm not being sarcastic. Why does it work like that?
+		// 1: This stuff grows on trees, but it takes a really, really long time to make. Good thing you can respawn, right?
+	}
+}

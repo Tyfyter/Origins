@@ -2546,6 +2546,11 @@ namespace Origins {
 			text = null;
 			return false;
 		}
+		public static LocalizedText GetRandomText(string key) {
+			int i = 0;
+			while (Language.Exists($"{key}.{i}")) i++;
+			return Language.GetText($"{key}.{Main.rand.Next(i)}");
+		}
 		public static void GetMultiTileTopLeft(int i, int j, TileObjectData data, out int left, out int top) {
 			Tile tile = Main.tile[i, j];
 			int innerFrameY = tile.TileFrameY % data.CoordinateFullHeight;

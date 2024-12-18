@@ -35,9 +35,9 @@ namespace Origins.Questing {
 		public override void OnClick(NPC npc, Player player) {
 			if (player.BuyItem(GetPrice(player))) {
 				player.AddBuff(Purifying_Buff.ID, 120);
-				//TODO: add dialog for this too
+				Main.npcChatText = OriginExtensions.GetRandomText($"Mods.Origins.NPCs.Dryad.PurifySuccess").Value;
 			} else {
-				//TODO: add "you're too poor" dialog
+				Main.npcChatText = OriginExtensions.GetRandomText($"Mods.Origins.NPCs.Dryad.NoSuccForYouess").Value;
 			}
 		}
 		public override Color? OverrideColor(NPC npc, Player player) {
