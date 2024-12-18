@@ -1720,18 +1720,18 @@ Configs: {
 		}
 
 		RoyalGel: {
-			// Label: Royal Gel
-			// Tooltip: ""
+			// Label: Royal Gel Slime
+			// Tooltip: Allows Royal Gel to summon a slime minion
 		}
 
 		VolatileGelatin: {
-			// Label: Volatile Gelatin
-			// Tooltip: ""
+			// Label: Volatile Gelatin boosts
+			// Tooltip: Allows Volatile Gelatin's minion damage to count as explosive and benefit from bonuses
 		}
 
 		Assimilation: {
-			// Label: Assimilation
-			// Tooltip: ""
+			// Label: Assimilation mechanics
+			// Tooltip: Toggles between whether or not Assimilation will be active
 		}
 	}
 
