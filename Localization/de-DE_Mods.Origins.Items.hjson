@@ -4705,3 +4705,8 @@ Hearty_Broth: {
 		Increases artifact minion health by 20%
 		''' */
 }
+
+Partybringer: {
+	// DisplayName: Partybringer
+	// Tooltip: ""
+}
