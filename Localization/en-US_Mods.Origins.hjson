@@ -142,7 +142,6 @@ Dialogue: {
 		BeforeDefeatS: Have you tried using purification powder on... wait a minute...
 		BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
 		BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
-
 		PurifySuccess1: I thank you for not succumbing to evil. Hopefully this'll help keep the fight in you.
 		PurifySuccess2: Long journey deep into evil's abode eh? Your bravery is inspiring.
 		NoSuccForYouess1: What?! I CAN'T cleanse you all because you don't have enough to afford it? I'm not being sarcastic. Why does it work like that?
@@ -994,6 +993,11 @@ Buffs: {
 			Increases artifact minion health by 20%
 			'''
 	}
+
+	Blind_Debuff: {
+		DisplayName: Blind Debuff
+		Description: Mods.Origins.Buffs.Blind_Debuff.Description
+	}
 }
 
 DamageClassName: {
@@ -1397,6 +1401,10 @@ Projectiles: {
 	Enchanted_Fiberglass_Cannon_P.DisplayName: Enchanted Fiberglass Cannon
 	Pustule_Jelly_Explosion.DisplayName: Pustule Jelly Explosion
 	Partybringer_P.DisplayName: Partybringer P
+	Partybringer_P1.DisplayName: Partybringer P1
+	Partybringer_P2.DisplayName: Partybringer P2
+	Partybringer_P3.DisplayName: Partybringer P3
+	Partybringer_Fog.DisplayName: Partybringer Fog
 }
 
 Prefixes: {

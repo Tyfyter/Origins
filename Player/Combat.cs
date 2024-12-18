@@ -615,7 +615,7 @@ namespace Origins {
 						Player.MountedCenter,
 						(currentPos - Player.MountedCenter).WithMaxLength(12),
 						razorwireItem.shoot,
-						(int)(totalDamage / targets.Count) + 1,
+						(int)(totalDamage / Math.Min(targets.Count, 3)) + 1,
 						10,
 						Player.whoAmI
 					);
@@ -657,7 +657,7 @@ namespace Origins {
                         Player.MountedCenter,
                         (currentPos - Player.MountedCenter).WithMaxLength(12),
                         retributionShieldItem.shoot,
-                        (int)(totalDamage / targets.Count) + 1,
+                        (int)(totalDamage / Math.Min(targets.Count, 3)) + 1,
                         10,
                         Player.whoAmI
                     );

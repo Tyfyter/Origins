@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Hair;
-/*public class QuestUnlockHair<T> : ModHair where T : Quest {
+public class QuestUnlockHair<T> : ModHair where T : Quest {
 	public override bool AvailableDuringCharacterCreation => false;
 	public override IEnumerable<Condition> GetUnlockConditions() {
 		yield return Quest.QuestCondition<T>();
@@ -15,4 +15,4 @@ public class Pandora_Hair : QuestUnlockHair<Comb_Quest> { }
 public class Bonus_Hair_1 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
 public class Bonus_Hair_2 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
 public class Bonus_Hair_3 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
-public class Bonus_Hair_4 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }*/
+public class Bonus_Hair_4 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }

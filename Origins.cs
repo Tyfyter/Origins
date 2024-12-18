@@ -41,6 +41,7 @@ using Origins.Graphics;
 using MonoMod.Cil;
 using Origins.Items.Tools;
 using Microsoft.Xna.Framework.Audio;
+using Origins.Buffs;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -630,37 +631,41 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			int blindDebuff = ModContent.BuffType<Blind_Debuff>();
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];
-				if (immunityData is not null && (immunityData[BuffID.Confused] ?? false) && !RasterizeAdjustment.ContainsKey(i)) {
-					switch (i) {
-						case NPCID.KingSlime:
-						RasterizeAdjustment.Add(i, (12, 1f, 1f));
-						break;
+				if (immunityData is not null) {
+					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) immunityData[blindDebuff] = true;
+					if ((immunityData[BuffID.Confused] ?? false) && !RasterizeAdjustment.ContainsKey(i)) {
+						switch (i) {
+							case NPCID.KingSlime:
+							RasterizeAdjustment.Add(i, (12, 1f, 1f));
+							break;
 
-						case NPCID.QueenSlimeBoss:
-						RasterizeAdjustment.Add(i, (12, 0.05f, 0.5f));
-						break;
+							case NPCID.QueenSlimeBoss:
+							RasterizeAdjustment.Add(i, (12, 0.05f, 0.5f));
+							break;
 
-						case NPCID.QueenBee:
-						RasterizeAdjustment.Add(i, (16, 0.05f, 1f));
-						break;
+							case NPCID.QueenBee:
+							RasterizeAdjustment.Add(i, (16, 0.05f, 1f));
+							break;
 
-						case NPCID.EaterofWorldsHead:
-						RasterizeAdjustment.Add(i, (8, 0.5f, 1f));
-						break;
+							case NPCID.EaterofWorldsHead:
+							RasterizeAdjustment.Add(i, (8, 0.5f, 1f));
+							break;
 
-						case NPCID.Deerclops:
-						RasterizeAdjustment.Add(i, (8, 1f, 1f));
-						break;
+							case NPCID.Deerclops:
+							RasterizeAdjustment.Add(i, (8, 1f, 1f));
+							break;
 
-						case NPCID.Golem:
-						RasterizeAdjustment.Add(i, (16, 0f, 1f));
-						break;
+							case NPCID.Golem:
+							RasterizeAdjustment.Add(i, (16, 0f, 1f));
+							break;
 
-						default:
-						RasterizeAdjustment.Add(i, (8, 0.05f, 1f));
-						break;
+							default:
+							RasterizeAdjustment.Add(i, (8, 0.05f, 1f));
+							break;
+						}
 					}
 				}
 			}

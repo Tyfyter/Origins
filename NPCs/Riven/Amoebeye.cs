@@ -173,7 +173,7 @@ namespace Origins.NPCs.Riven {
 				return;
 			} else if (NPC.ai[0] != 0) {
 				NPC.target = (int)NPC.ai[0] - 1;
-				target = NPC.GetTargetData();
+				target = parent.GetTargetData();
 				if (NPC.ai[1] < 1) NPC.ai[1] += 0.05f;
 				NPC.Center = Vector2.Lerp(NPC.Center, target.Center, NPC.ai[1]);
 				if (target.Type == NPCTargetType.Player) {
@@ -186,7 +186,7 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.defense = NPC.defDefense;
 
-			target = NPC.GetTargetData();
+			target = parent.GetTargetData();
 			Vector2 targetPosition = target.Center;
 			NPC.ai[1] = 0;
 			if (++NPC.ai[2] >= 450) {
