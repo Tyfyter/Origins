@@ -8,7 +8,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Tax_Collector_Hat_Quest : Quest {
 		public override void Load() {
-			Terraria.On_NPC.UsesPartyHat += (orig, self) => {
+			On_NPC.UsesPartyHat += (orig, self) => {
 				if (self.type == NPCID.TaxCollector) {
 					if (self.ForcePartyHatOn) {
 						return true;
@@ -34,7 +34,7 @@ namespace Origins.Questing {
 				UpdateInventoryEvent = null;
 				switch (stage) {
 					case 1:
-					if (OriginSystem.Instance?.taxCollectorWearsPartyhat ?? false) {// in case someone somehow 
+					if (OriginSystem.Instance?.taxCollectorWearsPartyhat ?? false) { 
 						Stage = 2;
 					}
 					break;
@@ -44,8 +44,8 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override bool CanStart(NPC npc) {
-			return false;//TODO: implement
-			if (Started) return false;
+			return false;
+			if (LocalPlayerStarted || Completed) return false;
 			return npc.type == NPCID.PartyGirl &&
 				true && // replace with condition for prerequisite quests
 				NPC.AnyNPCs(NPCID.TaxCollector);

@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -10,9 +11,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Cleaver_Head : Cleaver, ICustomWikiStat {
+	public class Cleaver_Head : WormHead, IRivenEnemy, ICustomWikiStat {
+		public AssimilationAmount? Assimilation => 0.04f;
+		public override int BodyType => ModContent.NPCType<Cleaver_Body>();
+		public override int TailType => ModContent.NPCType<Cleaver_Tail>();
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Cleaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(0f, 8f),
@@ -32,6 +37,9 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
+		public override void AI() {
+			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
@@ -44,42 +52,52 @@ namespace Origins.NPCs.Riven {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
         }
-		public override void AI() {
-			//NPC.velocity *= 1.0033f;
-			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.localAI[0] == 0) {
-				NPC.localAI[0] = 1;
-				NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
-				NPC.ai[3] = NPC.whoAmI;
-				//NPC.realLife = NPC.whoAmI;
-				int current;
-				int last = NPC.whoAmI;
-				int type = ModContent.NPCType<Cleaver_Body>();
-				NPC.netUpdate = true;
-				for (int k = 0; k < 32; k++) {
-					current = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
-					Main.npc[current].ai[3] = NPC.whoAmI;
-					Main.npc[current].realLife = NPC.whoAmI;
-					Main.npc[current].ai[1] = last;
-					Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
-					Main.npc[last].ai[0] = current;
-					last = current;
-					Main.npc[current].netUpdate = true;
-				}
-				current = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Cleaver_Tail>(), NPC.whoAmI);
-				Main.npc[current].ai[3] = NPC.whoAmI;
-				Main.npc[current].realLife = NPC.whoAmI;
-				Main.npc[current].ai[1] = last;
-				Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
-				Main.npc[last].ai[0] = current;
-				Main.npc[current].netUpdate = true;
-			}
-		}
 		public void ModifyWikiStats(JObject data) {
 			data["SpriteWidth"] = 108;
 		}
+
+		public override void Init() {
+			MinSegmentLength = MaxSegmentLength = 32;
+			MoveSpeed = 5.5f;
+			Acceleration = 0.045f;
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			TryDeathEffect();
+		}
+		public void TryDeathEffect() {
+			if (NPC.life > 0 || NPC.aiAction == 1) return;
+			NPC.aiAction = 1;
+			NPC current = NPC;
+			Vector2 velocity = NPC.velocity * 1.25f;
+			float speed = velocity.Length();
+			HashSet<int> indecies = [];
+			int tailType = TailType;
+			while (current.ai[0] != 0) {
+				if (!indecies.Add(current.whoAmI)) break;
+				OriginExtensions.LerpEquals(
+					ref Gore.NewGoreDirect(
+						current.GetSource_Death(),
+						current.position,
+						velocity,
+						Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+					).velocity,
+					current.velocity,
+					0.5f
+				);
+				if (current.type == tailType) break;
+				NPC next = Main.npc[(int)current.ai[0]];
+				velocity = next.DirectionTo(current.Center) * speed;
+				current = next;
+			}
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
+		}
+		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 
-	internal class Cleaver_Body : Cleaver {
+	internal class Cleaver_Body : WormBody, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
@@ -88,9 +106,24 @@ namespace Origins.NPCs.Riven {
 			NPC.CloneDefaults(NPCID.DiggerBody);
 			NPC.width = NPC.height = 12;
 		}
+		public override void AI() {
+			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			(HeadSegment.ModNPC as Cleaver_Head).TryDeathEffect();
+		}
+		public override void Init() {
+			MoveSpeed = 5.5f;
+			Acceleration = 0.045f;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
+		}
+		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 
-	internal class Cleaver_Tail : Cleaver {
+	internal class Cleaver_Tail : WormTail, IRivenEnemy {
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
@@ -99,37 +132,15 @@ namespace Origins.NPCs.Riven {
 			NPC.CloneDefaults(NPCID.DiggerTail);
 			NPC.width = NPC.height = 12;
 		}
-	}
-
-	public abstract class Cleaver : ModNPC, IRivenEnemy {
-		public AssimilationAmount? Assimilation => 0.04f;
 		public override void AI() {
-			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
+			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
-			if (current.life < 0) {
-				int skip = Main.rand.Next(2);
-				while (current.ai[0] != 0) {
-					if (++skip >= 2){
-						deathEffect(current);
-						skip = 0;
-					}
-					current = Main.npc[(int)current.ai[0]];
-				}
-			}
+			(HeadSegment.ModNPC as Cleaver_Head).TryDeathEffect();
 		}
-		protected static void deathEffect(NPC npc) {
-			OriginExtensions.LerpEquals(
-				ref Gore.NewGoreDirect(
-					npc.GetSource_Death(),
-					npc.position,
-					npc.velocity,
-					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
-				).velocity,
-				npc.velocity,
-				0.5f
-			);
+		public override void Init() {
+			MoveSpeed = 5.5f;
+			Acceleration = 0.045f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);

@@ -135,7 +135,7 @@ OTHER:
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
-(O) Quest System General
+(^) Quest System General
 ---
 
 
@@ -149,6 +149,7 @@ ENEMY NPCS:
 (^) Bile Thrower*
 (^) Bottomfeeder*
 (^) Buckethead Zombie
+(#, ^2) Canninhound !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
@@ -253,7 +254,7 @@ EVENTS:
 
 (X) Test of the Ancients
 
-(X) Laser Tag
+(^) Laser Tag
 ---
 
 STATUS EFFECTS:

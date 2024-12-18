@@ -33,7 +33,7 @@ namespace Origins.Items.Accessories {
             player.statDefense += 8;
             player.moveSpeed *= 0.9f;
             player.jumpSpeedBoost -= 1.8f;
-        }
+		}
     }
 	public class Stone_Mask_Tile : ModTile, IItemObtainabilityProvider {
 		public const int NextStyleHeight = 40; // Calculated by adding all CoordinateHeights + CoordinatePaddingFix.Y applied to all of them + 2

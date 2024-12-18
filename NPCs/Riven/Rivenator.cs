@@ -75,16 +75,17 @@ namespace Origins.NPCs.Riven {
 				Main.npc[last].ai[0] = current;
 				Main.npc[current].netUpdate = true;
 			}
+			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.04f));
 		}
 		public override bool SpecialOnKill() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return false;
 			NPC current = NPC;
 			int bodyType = ModContent.NPCType<Rivenator_Body>();
-			HashSet<int> indecies = new();
+			HashSet<int> indecies = [];
 			while (current.ai[0] != 0) {
-				Mod.Logger.Info("Wormed the worm");
 				if (!indecies.Add(current.whoAmI)) break;
 				if (Main.rand.NextBool(9)) {
-					NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X + Main.rand.Next(NPC.width), (int)NPC.position.Y + Main.rand.Next(NPC.height), ModContent.NPCType<Cleaver_Head>());
+					NPC.NewNPC(NPC.GetSource_Death(), (int)current.position.X + Main.rand.Next(current.width), (int)current.position.Y + Main.rand.Next(current.height), ModContent.NPCType<Cleaver_Head>());
 				}
 				current = Main.npc[(int)current.ai[0]];
 				if (current.type != bodyType) break;
@@ -121,6 +122,7 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;
+			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.04f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
