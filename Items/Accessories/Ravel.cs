@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -25,25 +26,30 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
-			Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
+			Item.mountType = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
 			Item.hasVanityEffects = true;
             Item.glowMask = glowmask;
-        }
+			Item.useTime = Item.useAnimation = 20;
+			Item.useStyle = ItemUseStyleID.HoldUp;
+		}
+		public override bool? UseItem(Player player) {
+			player.OriginPlayer().vanityRavel = Type;
+			player.mount.SetMount(Item.mountType, player);
+			return false;
+		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ravelEquipped = true;
 			originPlayer.vanityRavel = Type;
-			bool inOtherRavel = false;
-			if (player.mount.Type == Item.shoot) {
+			if (player.mount.Type == Item.mountType) {
 				UpdateRaveled(player);
-			} else {
-				inOtherRavel = Ravel_Mount.RavelMounts.Contains(player.mount.Type);
+			} else if (Ravel_Mount.RavelMounts.Contains(player.mount.Type)) {
+				ToggleRavel(player);
 			}
-			if (originPlayer.doubleTapDown || inOtherRavel) ToggleRavel(player);
 		}
 		public void ToggleRavel(Player player) {
 			bool animated = OriginClientConfig.Instance.AnimatedRavel;
-			if (player.mount.Type == Item.shoot) {
+			if (player.mount.Type == Item.mountType) {
 				if (animated) {
 					player.mount._idleTime = -Ravel_Mount.transformAnimationFrames;
 					player.mount._idleTimeNext = 0;
@@ -54,7 +60,7 @@ namespace Origins.Items.Accessories {
 					player.mount.Dismount(player);
 				}
 			} else {
-				player.mount.SetMount(Item.shoot, player);
+				player.mount.SetMount(Item.mountType, player);
 				player.mount._idleTime = animated ? 0 : Ravel_Mount.transformAnimationFrames;
 				if (!animated) {
 					for (int i = 0; i < 40; i++) {
@@ -121,7 +127,7 @@ namespace Origins.Items.Accessories {
 
 			MountData.totalFrames = 1; // Amount of animation frames for the mount
 			MountData.playerYOffsets = [-22];
-			(RavelMounts ??= new()).Add(Type);
+			(RavelMounts ??= []).Add(Type);
 			if (!Main.dedServ && TransformTexture.Value is null) {
 				TransformTexture = Mod.Assets.Request<Texture2D>("Items/Accessories/Ravel_Morph");
 			}
@@ -170,8 +176,9 @@ namespace Origins.Items.Accessories {
 			Main.instance.LoadItem(vanityRavel);
 			texture = Terraria.GameContent.TextureAssets.Item[vanityRavel].Value;
 			drawOrigin = new Vector2(12, 12);
-			item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0);
-			item.shader = Mount.currentShader;
+			item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0) {
+				shader = Mount.currentShader
+			};
 			playerDrawData.Add(item);
 			return false;
 		}
@@ -193,6 +200,15 @@ namespace Origins.Items.Accessories {
 			originPlayer.changeSize = true;
 			originPlayer.targetWidth = 15;
 			originPlayer.targetHeight = 15;
+		}
+	}
+	public class Ravel_Projectile_Layer : PlayerDrawLayer {
+		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.OriginPlayer().ravel;
+		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.MountFront);
+		protected override void Draw(ref PlayerDrawSet drawInfo) {
+			if (drawInfo.drawPlayer.heldProj >= 0 && drawInfo.shadow == 0f) {
+				drawInfo.projectileDrawPosition = drawInfo.DrawDataCache.Count;
+			}
 		}
 	}
 }

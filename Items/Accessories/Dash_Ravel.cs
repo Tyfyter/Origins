@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -14,16 +15,16 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToAccessory();
+			base.SetDefaults();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 6);
-			Item.shoot = ModContent.MountType<Dash_Ravel_Mount>();
+			Item.mountType = ModContent.MountType<Dash_Ravel_Mount>();
 		}
 		public override void UpdateEquip(Player player) {
 			base.UpdateEquip(player);
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (originPlayer.dashDirection != 0) {
-				if (player.mount.Type != Item.shoot) ToggleRavel(player);
+				if (player.mount.Type != Item.mountType) ToggleRavel(player);
 				player.velocity.X = originPlayer.dashDirection * 8;
 				originPlayer.dashDelay = 20;
 			}
@@ -55,10 +56,10 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEffects(Player player) {
 			base.UpdateEffects(player);
-			if (Math.Abs(player.velocity.X) > MountData.dashSpeed) {
+			if (!player.velocity.IsWithin(Vector2.Zero, MountData.dashSpeed)) {
 				player.runAcceleration += 0.9f;
-				if (--player.mount._abilityCooldown < 0) {
-					player.mount._abilityCooldown = 15;
+				if (player.mount._abilityCooldown <= 0) {
+					player.mount._abilityCooldown = 2;
 					int dashDirection = Math.Sign(player.velocity.X);
 					Projectile.NewProjectile(
 						player.GetSource_Misc("ravel_dash"),
@@ -66,15 +67,19 @@ namespace Origins.Items.Accessories {
 						new Vector2(player.velocity.X, 0),
 						Dash_Ravel_P.ID,
 						50,
-						(player.velocity.X * dashDirection) + 5,
+						player.velocity.Length() + 5,
 						player.whoAmI
 					);
 				}
+				player.mount._abilityCooldown++;
+			} else {
+				player.mount._abilityCooldown = 0;
 			}
 		}
 	}
-	public class Dash_Ravel_P : ModProjectile {
+	public class Dash_Ravel_P : ModProjectile, IShadedProjectile {
 		public static int ID { get; private set; }
+		public int Shader => Main.player[Projectile.owner].cMount;
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
@@ -90,22 +95,34 @@ namespace Origins.Items.Accessories {
 			Projectile.knockBack = 14;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
+			DrawHeldProjInFrontOfHeldItemAndArms = true;
 		}
 		public override void AI() {
-			Projectile.alpha += 14;
+			Player player = Main.player[Projectile.owner];
+			if (Projectile.alpha == 0 && !player.velocity.IsWithin(Vector2.Zero, 10) && player.OriginPlayer().ravel) {
+				Projectile.timeLeft++;
+				Projectile.velocity = player.velocity;
+				Projectile.velocity.Y = 0f;
+				Projectile.Center = player.Center - Projectile.velocity * 0.5f;
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				Projectile.knockBack = player.velocity.Length() + 5;
+				player.heldProj = Projectile.whoAmI;
+			} else {
+				Projectile.alpha += 14;
+			}
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			hitbox.Inflate(4, 12);
+			hitbox.Inflate(12, 12);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-			int alpha = 255 - Projectile.alpha;
+			float alpha = ((255 - Projectile.alpha) / 255f) * 0.5f;
 			Main.EntitySpriteDraw(
 				texture,
 				Projectile.Center - Main.screenPosition,
 				null,
-				new Color(alpha, alpha, alpha, alpha),
-				Projectile.rotation,
+				new Color(alpha, alpha, alpha, alpha * 0.95f),
+				Projectile.rotation + (Projectile.velocity.X < 0 ? MathHelper.Pi : 0),
 				texture.Size() * 0.5f,
 				Projectile.scale,
 				Projectile.velocity.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,

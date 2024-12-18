@@ -226,6 +226,9 @@ namespace Origins {
 					}
 				}
 			}
+			if (Player.miscEquips[3]?.ModItem is Ravel ravel) {
+				ravel.UpdateEquip(Player);
+			}
 		}
 		public override void PostUpdateMiscEffects() {
 			if (cryostenHelmet) {

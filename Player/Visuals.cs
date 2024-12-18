@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;

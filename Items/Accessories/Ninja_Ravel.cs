@@ -12,10 +12,10 @@ namespace Origins.Items.Accessories {
 		}
         static short glowmask;
         public override void SetDefaults() {
-			Item.DefaultToAccessory();
+			base.SetDefaults();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 12);
-			Item.shoot = ModContent.MountType<Ninja_Ravel_Mount>();
+			Item.mountType = ModContent.MountType<Ninja_Ravel_Mount>();
             Item.glowMask = glowmask;
         }
 		protected override void UpdateRaveled(Player player) {
