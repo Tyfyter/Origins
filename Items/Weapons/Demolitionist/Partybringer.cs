@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -17,7 +14,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Partybringer : ModItem, ICustomWikiStat {
@@ -26,9 +22,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Partybringer_P>(34, 50, 8f, 46, 28, true);
-			Item.value = Item.sellPrice(silver: 24);
-			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration += 1;
+			Item.value = Item.buyPrice(gold: 7);
+			Item.rare = ItemRarityID.LightRed;
+			Item.ArmorPenetration += 5;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, -8f);
@@ -305,6 +301,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			const int volleys = 5;
 			const int shots_per_volley = 3;
 			const int time_per_volley = 45;
+			const int time_per_rocket = 9;
 			if (Projectile.wet) {
 				if (Collision.GetWaterLine(Projectile.Center.ToTileCoordinates(), out float waterLineHeight)) {
 					float num = Projectile.Center.Y;
@@ -377,7 +374,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 								Projectile.NewProjectile(
 									Projectile.GetSource_FromAI(),
 									Projectile.Center - Vector2.UnitY * 12,
-									diff.SafeNormalize(default) * 12,
+									diff.SafeNormalize(default).RotatedByRandom(0.05f) * 12,
 									//ModContent.ProjectileType<Partybringer_Turret_Rocket_Yellow>(),
 									Main.rand.Next(Partybringer_Turret_Rocket.Projectiles),
 									Projectile.damage / 2,
@@ -387,7 +384,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 								);
 							}
 							Projectile.ai[1] += 1;
-							Projectile.localAI[0] = 7;
+							Projectile.localAI[0] = time_per_rocket;
 						}
 					}
 				}
@@ -412,6 +409,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.velocity *= 0.93f;
 			if (Projectile.ai[0] < 10) Projectile.ai[0] += 2;
 			return false;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = false;
+			return true;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
@@ -523,84 +524,39 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 		public void DrawRocket(Color color, Color lightColor) {
-			Vector2 vector82 = Projectile.position + Projectile.Size / 2f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
-			Texture2D texture2D4 = TextureAssets.Projectile[Type].Value;
-			Rectangle rectangle22 = texture2D4.Frame(3);
-			Vector2 origin25 = rectangle22.Size() / 2f;
-			int num353 = (int)Projectile.ai[0];
-			Vector2 origin27 = new Vector2(rectangle22.Width / 2, 0f);
+			Vector2 position = Projectile.position + Projectile.Size / 2f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Rectangle frame = texture.Frame(3);
+			Vector2 origin = frame.Size() / 2f;
+			Vector2 origin2 = new(frame.Width / 2, 0f);
 			Vector2 halfSize = Projectile.Size / 2f;
 			Color bufferColor = color;
 			bufferColor.A = 127;
 			bufferColor *= 0.8f;
-			Rectangle value90 = rectangle22;
-			value90.X += value90.Width * 2;
-			for (int num354 = Projectile.oldPos.Length - 1; num354 > 0; num354--) {
-				Vector2 vector85 = Projectile.oldPos[num354] + halfSize;
-				if (!(vector85 == halfSize)) {
-					Vector2 value91 = Projectile.oldPos[num354 - 1] + halfSize;
-					float num355 = Projectile.oldRot[num354];
-					Vector2 scale14 = new Vector2(Vector2.Distance(vector85, value91) / (float)rectangle22.Width, 1f);
-					Color color98 = bufferColor * (1f - (float)num354 / (float)Projectile.oldPos.Length);
-					switch (num353) {
-						case 2: {
-							Vector2 vector86 = num355.ToRotationVector2();
-							int num356 = num354 + Projectile.timeLeft;
-							if (num356 < 0) {
-								num356 += 20 * (num356 / -20) + 20;
-							}
-							num356 %= 20;
-							float num357 = 0f;
-							scale14 *= 0.6f;
-							switch (num356) {
-								case 1:
-								num357 = 1f;
-								break;
-								case 2:
-								num357 = 2f;
-								break;
-								case 3:
-								num357 = 3f;
-								break;
-								case 4:
-								num357 = 2f;
-								break;
-								case 5:
-								num357 = 1f;
-								break;
-								case 7:
-								num357 = -1f;
-								break;
-								case 8:
-								num357 = -2f;
-								break;
-								case 9:
-								num357 = -3f;
-								break;
-								case 10:
-								num357 = -2f;
-								break;
-								case 11:
-								num357 = -1f;
-								break;
-							}
-							vector85 += vector86 * num357 * 4f;
-							break;
-						}
-						case 5:
-						scale14 *= 0.5f;
-						break;
-					}
-					Main.EntitySpriteDraw(texture2D4, vector85 - Main.screenPosition, value90, color98, num355, origin27, scale14, SpriteEffects.None);
+			Rectangle frame2 = frame;
+			frame2.X += frame2.Width * 2;
+			for (int i = Projectile.oldPos.Length - 1; i > 0; i--) {
+				if (Projectile.oldPos[i] != default) {
+					Vector2 oldPos1 = Projectile.oldPos[i] + halfSize;
+					Vector2 oldPos2 = Projectile.oldPos[i - 1] + halfSize;
+					Vector2 scale14 = new(Vector2.Distance(oldPos1, oldPos2) / frame.Width, 1f);
+					Main.EntitySpriteDraw(
+						texture,
+						oldPos1 - Main.screenPosition,
+						frame2,
+						bufferColor * (1f - i / (float)Projectile.oldPos.Length),
+						Projectile.oldRot[i],
+						origin2,
+						scale14 * 0.85f,
+						SpriteEffects.None
+					);
 				}
 			}
-
-
-			Main.EntitySpriteDraw(texture2D4, vector82, rectangle22, lightColor, Projectile.rotation, origin25, Projectile.scale, SpriteEffects.None);
-			rectangle22.X += rectangle22.Width;
+			Main.EntitySpriteDraw(texture, position, frame, lightColor, Projectile.rotation, origin, Projectile.scale * 0.85f, SpriteEffects.None);
+			frame.X += frame.Width;
 			bufferColor = color;
 			bufferColor.A = 80;
-			Main.EntitySpriteDraw(texture2D4, vector82, rectangle22, bufferColor, Projectile.rotation, origin25, Projectile.scale, SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, position, frame, bufferColor, Projectile.rotation, origin, Projectile.scale * 0.85f, SpriteEffects.None);
 		}
 		public abstract override void OnKill(int timeLeft);
 		public static Vector2[] Star(int spikes, float outerSize, float innerSize) {
@@ -625,6 +581,71 @@ namespace Origins.Items.Weapons.Demolitionist {
 					).noGravity = true;
 				}
 			}
+		}
+	}
+	public class Partybringer_Turret_Rocket_Red : Partybringer_Turret_Rocket {
+		public override Color Color => Color.Red;
+		public override void SetDefaults() {
+			base.SetDefaults();
+		}
+		public override void OnKill(int timeLeft) {
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
+			MakeShape(Color, 6, Star(2, 1, 1).Scaled(new(1, 1.5f)).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+		}
+	}
+	public class Partybringer_Turret_Rocket_Yellow : Partybringer_Turret_Rocket {
+		public override Color Color => Color.Gold;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.ArmorPenetration += 4;
+		}
+		public override void OnKill(int timeLeft) {
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
+			MakeShape(Color, 6, Star(3, 1, 0.3f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+		}
+	}
+	public class Partybringer_Turret_Rocket_Green : Partybringer_Turret_Rocket {
+		public override Color Color => Color.Lime;
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			if (Projectile.velocity.X != oldVelocity.X) Projectile.velocity.X = -oldVelocity.X;
+			if (Projectile.velocity.Y != oldVelocity.Y) Projectile.velocity.Y = -oldVelocity.Y;
+			return false;
+		}
+		public override void OnKill(int timeLeft) {
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
+			MakeShape(Color, 6, Star(4, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+		}
+	}
+	public class Partybringer_Turret_Rocket_Blue : Partybringer_Turret_Rocket {
+		public override Color Color => Color.DodgerBlue;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.extraUpdates++;
+		}
+		public override void OnKill(int timeLeft) {
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
+			MakeShape(Color, 6, Star(5, 1, 0.4f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+		}
+	}
+	public class Partybringer_Turret_Rocket_Purple : Partybringer_Turret_Rocket {
+		public override Color Color => Color.Magenta;
+		public override void AI() {
+			if (Target != -1) {
+				NPC target = Main.npc[Target];
+				if (target.CanBeChasedBy(Projectile)) {
+					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[Projectile.type];
+
+					Vector2 targetVelocity = (target.Center - Projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.083333336f);
+				} else {
+					Target = -1;
+				}
+			}
+			base.AI();
+		}
+		public override void OnKill(int timeLeft) {
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
+			MakeShape(Color, 6, Star(6, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
 		}
 	}
 	public class Partybringer_Turret_Rocket_Canister : Partybringer_Turret_Rocket, ICanisterProjectile {
@@ -654,286 +675,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			DrawRocket(canisterData.InnerColor, lightColor);
 		}
 		public override void OnKill(int timeLeft) {
-			MakeShape(Color, 8, Star(5, 1.5f, 0.5f).RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f)));
-		}
-	}
-	public class Partybringer_Turret_Rocket_Red : Partybringer_Turret_Rocket {
-		public override Color Color => Color.Red;
-		public override void AI() {
-			if (Target != -1) {
-				NPC target = Main.npc[Target];
-				if (target.CanBeChasedBy(Projectile)) {
-					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[Projectile.type];
-
-					Vector2 targetVelocity = (target.Center - Projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
-					Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.083333336f);
-				} else {
-					Target = -1;
-				}
-			}
-			base.AI();
-		}
-		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			Color color = Color;
-			Vector2[] directions = [
-				-Vector2.UnitY * 1.5f,
-				Vector2.UnitX,
-				Vector2.UnitY * 1.5f,
-				-Vector2.UnitX
-			];
-			MakeShape(color, 8, directions);
-			MakeShape(color, 16, directions);
-		}
-	}
-	public class Partybringer_Turret_Rocket_Purple : Partybringer_Turret_Rocket {
-		public override Color Color => Color.Magenta;
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Projectile.penetrate = 1;
-			Projectile.timeLeft = 5 * 15 + 14;
-		}
-		public override void AI() {
-			if (Projectile.timeLeft > 0 && Projectile.timeLeft % 15 == 0) {
-				if (Projectile.owner == Main.myPlayer) {
-					Projectile.NewProjectile(
-						Projectile.GetSource_FromAI(),
-						Projectile.Center,
-						Vector2.Zero,
-						ModContent.ProjectileType<Partybringer_Turret_Rocket_Purple_Explosion>(),
-						Projectile.damage - Projectile.damage / 4,
-						Projectile.knockBack,
-						Projectile.owner
-					);
-				}
-				if (Target != -1) {
-					NPC target = Main.npc[Target];
-					if (target.CanBeChasedBy(Projectile)) {
-						Vector2 targetVelocity = (target.Center - Projectile.Center).SafeNormalize(-Vector2.UnitY).RotatedByRandom(((Projectile.timeLeft / 15) - 1) * 0.3f) * 12;
-						Projectile.velocity = targetVelocity;
-					} else {
-						Target = -1;
-					}
-				}
-			}
-			base.AI();
-		}
-		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			Color color = Color;
-			float rot = Main.rand.NextFloat(-0.2f, 0.2f);
-			Vector2 scale = new(0.75f, 1f);
-			Vector2[] star = Star(6, 2, 0.75f).Scaled(scale).RotatedBy(rot);
-			MakeShape(color, 8, star);
-			for (int i = (timeLeft - 1) / 15; i-->0;) {
-				MakeShape(Color.White, 2, (GeometryUtils.Vec2FromPolar(10, (i + 1.15f) * -(MathHelper.TwoPi / 6)) * scale).RotatedBy(rot), star.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
-			}
-		}
-	}
-	public class Partybringer_Turret_Rocket_Purple_Explosion : Partybringer_Turret_Rocket {
-		public override Color Color => Color.White;
-		public override void SetStaticDefaults() { }
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Projectile.timeLeft = 1;
-		}
-		public override void AI() { }
-		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 64, false, SoundID.Item14, 0, 15, 0);
-			Color color = Color;
-			MakeShape(color, 2, Star(6, 2, 0.75f).Scaled(new(0.75f, 1f)).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
-		}
-	}
-	public class Partybringer_Turret_Rocket_Blue : Partybringer_Turret_Rocket {
-		public override Color Color => new(0, 172, 248);
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Projectile.timeLeft = 300;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (Target != -1 && source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parent) {
-				parent.ai[2] = -1;
-			}
-		}
-		public override void AI() {
-			if (++Projectile.ai[2] < 15) {
-				NPC target = Main.npc[Target];
-				if (target.CanBeChasedBy(Projectile)) {
-					float speed = 12f * Origins.HomingEffectivenessMultiplier[Projectile.type];
-					if (GeometryUtils.AngleToTarget(target.Center - Projectile.Center, speed, 0.12f, true) is float angle) {
-
-						Vector2 targetVelocity = GeometryUtils.Vec2FromPolar(speed, angle).SafeNormalize(default) * speed;
-						Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.25f);
-					} else {
-						Projectile.ai[1] = 1;
-						Projectile.extraUpdates++;
-					}
-				}
-			} else {
-				if (Projectile.ai[1] == 0) {
-					if (Projectile.velocity.Y > 4) {
-						Projectile.ai[1] = 1;
-						Projectile.extraUpdates++;
-					}
-				} else if (Target != -1) {
-					NPC target = Main.npc[Target];
-					if (target.CanBeChasedBy(Projectile)) {
-						float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[Projectile.type];
-
-						Vector2 targetVelocity = (target.Center - Projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
-						Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.083333336f);
-					} else {
-						Target = -1;
-					}
-				}
-				Projectile.velocity.Y += 0.12f;
-			}
-			base.AI();
-		}
-		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			Color color = Color;
-			Vector2[] directions = [
-				new Vector2(0f, -2f),
-				new Vector2(1.5f, -1.85f),
-				default,
-				default,
-				new Vector2(-0.8f, 2f),
-				default,
-				default
-			];
-			directions[2] = Vector2.Lerp(directions[1], directions[4], 0.6f);
-			directions[6] = Vector2.Lerp(directions[0], directions[4], 0.4f);
-			Vector2 offset = (directions[6] - directions[2]) * 0.5f;
-			offset.Y *= 0.5f;
-			directions[4] += offset;
-			directions[3] = directions[2] + offset;
-			directions[5] = directions[6] + offset;
-			if (Main.rand.NextBool()) directions = directions.Scaled(new(-1, 1));
-			MakeShape(color, 6, directions);
-		}
-	}
-	public class Partybringer_Turret_Rocket_Yellow : Partybringer_Turret_Rocket {
-		public override Color Color => Color.Gold;
-		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			if (Projectile.owner == Main.myPlayer) {
-				List<Vector2> projectiles = [];
-				int tries = 10;
-				while (projectiles.Count < 6 || --tries < 0) {
-					projectiles = OriginExtensions.FelisCatusSampling(Vector2.Zero, 8, 11, 4, 16);
-				}
-				for (int i = 0; i < projectiles.Count; i++) {
-					Projectile.NewProjectile(
-						Projectile.GetSource_FromAI(),
-						Projectile.Center,
-						projectiles[i],
-						ModContent.ProjectileType<Partybringer_Turret_Rocket_Yellow_Explosion>(),
-						Projectile.damage / 3,
-						Projectile.knockBack * 0.5f,
-						Projectile.owner,
-						ai1: Main.rand.NextFloat(30, 60)
-					);
-				}
-				for (int i = 0; i < 3; i++) {
-					Projectile.NewProjectile(
-						Projectile.GetSource_FromAI(),
-						Projectile.Center,
-						Main.rand.NextVector2Circular(6, 6),
-						ModContent.ProjectileType<Partybringer_Turret_Rocket_Yellow_Explosion>(),
-						Projectile.damage / 3,
-						Projectile.knockBack * 0.5f,
-						Projectile.owner,
-						ai1: Main.rand.NextFloat(30, 60)
-					);
-				}
-			}
-		}
-	}
-	public class Partybringer_Turret_Rocket_Yellow_Explosion : Partybringer_Turret_Rocket {
-		public override Color Color => Color.Gold;
-		public override void SetStaticDefaults() { }
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Projectile.friendly = false;
-			Projectile.tileCollide = false;
-			Projectile.hide = true;
-		}
-		public override void AI() {
-			if (--Projectile.ai[1] <= 0) Projectile.Kill();
-			Projectile.velocity *= 0.9f;
-		}
-		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 32, false, SoundID.Item40.WithPitchRange(-0.5f, 0.5f).WithVolume(1), 0, 0, 0);
-			Color color = Color;
-			for (int i = 0; i < 8; i++) {
-				Dust dust = Dust.NewDustDirect(
-					Projectile.Center,
-					0,
-					0,
-					ModContent.DustType<Sparkler_Dust>(),
-					newColor: color
-				);
-				dust.noGravity = false;
-				dust.velocity *= 5;
-				dust = Dust.NewDustDirect(
-					Projectile.Center,
-					0,
-					0,
-					ModContent.DustType<Sparkler_Dust>(),
-					newColor: color
-				);
-				dust.noGravity = true;
-				dust.velocity *= 3;
-			}
-		}
-	}
-	public class Sparkler_Dust : ModDust {
-		public override string Texture => typeof(Flare_Dust).GetDefaultTMLName();
-		public override bool Update(Dust dust) {
-			dust.fadeIn--;
-			if (!dust.noLight && !dust.noLightEmittence) {
-				float scale = dust.scale;
-				if (scale > 1f) scale = 1f;
-				Lighting.AddLight(dust.position, dust.color.ToVector3() * scale);
-			}
-			if (dust.noGravity) {
-				dust.velocity *= 0.93f;
-				if (dust.fadeIn == 0f) {
-					dust.scale += 0.0025f;
-				}
-			} else {
-				dust.velocity.X *= 0.95f;
-				if (dust.velocity.Y < 0) dust.velocity.Y *= 0.93f;
-				else dust.velocity.Y *= 0.96f;
-				dust.scale -= 0.0005f;
-			}
-			if (WorldGen.SolidTile(Framing.GetTileSafely(dust.position)) && !dust.noGravity) {
-				dust.scale *= 0.9f;
-				dust.velocity *= 0.25f;
-			}
-			return true;
-		}
-		public override bool MidUpdate(Dust dust) {
-			return true;
-		}
-		public override Color? GetAlpha(Dust dust, Color lightColor) {
-			return dust.color.MultiplyRGB(lightColor) with { A = 25 };
-		}
-		public override bool PreDraw(Dust dust) {
-			float trail = Math.Abs(dust.velocity.X) + Math.Abs(dust.velocity.Y);
-			trail *= 0.3f;
-			trail *= 10f;
-			if (trail > 10f) trail = 10f;
-			if (trail > -dust.fadeIn) trail = -dust.fadeIn;
-			Vector2 origin = new(4f, 4f);
-			Color color = dust.GetAlpha(Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16));
-			for (int k = 0; k < trail; k++) {
-				Vector2 pos = dust.position - dust.velocity * k;
-				float scale = dust.scale * (1f - k / 10f);
-				Main.spriteBatch.Draw(TextureAssets.Dust.Value, pos - Main.screenPosition, dust.frame, color, dust.rotation, origin, scale, SpriteEffects.None, 0f);
-			}
-			return false;
+			MakeShape(Color, 6, Star(7, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
 		}
 	}
 }
