@@ -1388,6 +1388,15 @@ Projectiles: {
 	Partybringer_P2.DisplayName: Partybringer P2
 	Partybringer_P3.DisplayName: Partybringer P3
 	Partybringer_Fog.DisplayName: Partybringer Fog
+	Partybringer_Turret.DisplayName: Partybringer Turret
+	Partybringer_Turret_Rocket_Red.DisplayName: Partybringer Turret Rocket Red
+	Partybringer_Turret_Rocket_Canister.DisplayName: Partybringer Turret Rocket Canister
+	Partybringer_Turret_Rocket_Purple.DisplayName: Partybringer Turret Rocket Purple
+	Partybringer_Turret_Rocket_Purple_Explosion.DisplayName: Partybringer Turret Rocket Purple Explosion
+	Partybringer_Turret_Rocket_Green.DisplayName: Partybringer Turret Rocket Green
+	Partybringer_Turret_Rocket_Blue.DisplayName: Partybringer Turret Rocket Blue
+	Partybringer_Turret_Rocket_Yellow.DisplayName: Partybringer Turret Rocket Yellow
+	Partybringer_Turret_Rocket_Yellow_Explosion.DisplayName: Partybringer Turret Rocket Yellow Explosion
 }
 
 Prefixes: {

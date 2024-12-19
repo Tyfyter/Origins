@@ -118,8 +118,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				}
 			} else if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile proj && proj.TryGetGlobalProjectile(out CanisterGlobalProjectile parentCanister)) {
 				CanisterID = parentCanister.CanisterID;
-			} else {
-				CanisterID = 0;
 			}
 		}
 		public override void AI(Projectile projectile) {

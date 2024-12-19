@@ -1690,6 +1690,27 @@ namespace Origins {
 			}
 			return points;
 		}
+		public static List<Vector2> FelisCatusSampling(Vector2 center, float range, int maxCount, float minSpread, float maxSpread) {
+			List<Vector2> points = new();
+			Queue<Vector2> newPoints = new();
+			newPoints.Enqueue(center);
+			int retries = 0;
+			for (int i = 0; i < maxCount; i++) {
+				if (!newPoints.Any()) break;
+				Vector2 next = newPoints.Peek() + Vec2FromPolar(Main.rand.NextFloat(MathHelper.TwoPi), Main.rand.NextFloat(minSpread, maxSpread));
+				if (!next.IsWithin(center, range) || points.Any((p) => p.DistanceSQ(next) < minSpread * minSpread)) {
+					if (++retries > 20) {
+						retries = 0;
+						newPoints.Dequeue();
+					}
+				} else {
+					retries = 0;
+					points.Add(next);
+					newPoints.Enqueue(next);
+				}
+			}
+			return points;
+		}
 		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
 			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
 				DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);
@@ -2668,6 +2689,34 @@ namespace Origins {
 			tileTriangles = null;
 			tileRectangles = null;
 		}
+		public static bool OverlapsAnyTiles(this Rectangle area, out List<Point> intersectingTiles, bool fallThrough = true) {
+			Rectangle checkArea = area;
+			Point topLeft = area.TopLeft().ToTileCoordinates();
+			Point bottomRight = area.BottomRight().ToTileCoordinates();
+			int minX = Utils.Clamp(topLeft.X, 0, Main.maxTilesX - 1);
+			int minY = Utils.Clamp(topLeft.Y, 0, Main.maxTilesY - 1);
+			int maxX = Utils.Clamp(bottomRight.X, 0, Main.maxTilesX - 1) - minX;
+			int maxY = Utils.Clamp(bottomRight.Y, 0, Main.maxTilesY - 1) - minY;
+			int cornerX = area.X - topLeft.X * 16;
+			int cornerY = area.Y - topLeft.Y * 16;
+			intersectingTiles = [];
+			for (int i = 0; i <= maxX; i++) {
+				for (int j = 0; j <= maxY; j++) {
+					Tile tile = Main.tile[i + minX, j + minY];
+					if (fallThrough && Main.tileSolidTop[tile.TileType]) continue;
+					if (tile != null && tile.HasSolidTile()) {
+						checkArea.X = i * -16 + cornerX;
+						checkArea.Y = j * -16 + cornerY;
+						if (tile.Slope != SlopeType.Solid) {
+							if (tileTriangles[(int)tile.Slope - 1].Intersects(checkArea)) intersectingTiles.Add(new(i + minX, j + minY));
+						} else {
+							if (tileRectangles[(int)tile.BlockType].Intersects(checkArea)) intersectingTiles.Add(new(i + minX, j + minY));
+						}
+					}
+				}
+			}
+			return intersectingTiles.Count > 0;
+		}
 		public static bool OverlapsAnyTiles(this Rectangle area, bool fallThrough = true, bool drawDebug = false) {
 			Rectangle checkArea = area;
 			Point topLeft = area.TopLeft().ToTileCoordinates();
@@ -2991,6 +3040,20 @@ namespace Origins {
 			return flag ? value : N.Zero;
 		}
 		public static Rectangle Scaled(this Rectangle rectangle, float by) => new((int)(rectangle.X * by), (int)(rectangle.Y * by), (int)(rectangle.Width * by), (int)(rectangle.Height * by));
+		public static Vector2[] Scaled(this Vector2[] vertices, Vector2 scale) {
+			Vector2[] output = new Vector2[vertices.Length];
+			for (int i = 0; i < vertices.Length; i++) {
+				output[i] = vertices[i] * scale;
+			}
+			return output;
+		}
+		public static Vector2[] RotatedBy(this Vector2[] vertices, float rotation, Vector2 origin = default) {
+			Vector2[] output = new Vector2[vertices.Length];
+			for (int i = 0; i < vertices.Length; i++) {
+				output[i] = vertices[i].RotatedBy(rotation, origin);
+			}
+			return output;
+		}
 	}
 	public static class ItemExtensions {
 		public static void CloneDefaultsKeepSlots(this Item self, int type) {
