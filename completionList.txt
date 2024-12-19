@@ -215,7 +215,7 @@ ENEMY NPCS:
 (X) Riven Protoform (Tank Form)
 (X) Rocket Machine
 (^) Savage Whip*
-(X) Sea Dragon !!!
+(#, ^2) Sea Dragon !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
 (X) Shotgunfish !!!
@@ -899,7 +899,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Happy Bomb*
-(#, ^2) Partybringer !!!
+(#3, ^2) Partybringer !!!
 (X) Rattlesnake
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
