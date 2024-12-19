@@ -30,8 +30,8 @@ namespace Origins.Tiles.Other {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Carburite>());
-			Item.value = Item.sellPrice(silver: 1);
-			Item.rare = ItemRarityID.Blue;// to match the vanilla ores which require 55 pickaxe power to mine
+			Item.value = Item.sellPrice(silver: 8);
+			Item.rare = ItemRarityID.Orange;
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

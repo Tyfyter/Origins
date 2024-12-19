@@ -37,6 +37,7 @@ namespace Origins.Tiles.Brine
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Eitrite_Ore>());
 			Item.rare = ItemRarityID.Orange;
+			Item.value = Item.sellPrice(silver: 16);
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";
