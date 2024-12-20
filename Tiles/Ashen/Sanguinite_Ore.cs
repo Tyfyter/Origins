@@ -51,6 +51,7 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Sanguinite_Ore>());
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(silver: 16);
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

@@ -44,6 +44,7 @@ namespace Origins.Tiles.Defiled {
         public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Lost_Ore>());
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(silver: 14);
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

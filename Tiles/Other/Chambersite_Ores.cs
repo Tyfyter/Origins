@@ -14,6 +14,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			Main.tileMerge[Type][StoneType] = true;
 			Main.tileMerge[StoneType][Type] = true;
+			TileID.Sets.Ore[Type] = true;
 			AddMapEntry(MapColor);
 			MinPick = 65;
 			MineResist = 2f;

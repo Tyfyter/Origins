@@ -254,7 +254,7 @@ Dryad: {
 	}
 
 	NoSuccForYouess: {
-		0: What?! I CAN'T cleanse you all because you don't have enough to afford it? I'm not being sarcastic. Why does it work like that?
+		0: What?! I CAN'T cleanse you at all because you don't have enough to afford it? I'm not being sarcastic. Why does it work like that?
 		1: This stuff grows on trees, but it takes a really, really long time to make. Good thing you can respawn, right?
 	}
 }

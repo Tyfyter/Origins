@@ -529,14 +529,10 @@ namespace Origins {
 			}
 			lotteryTicketItem = null;
 
-			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
-				Player.mount.Dismount(Player);
-			}
-			ravelEquipped = false;
+			
 			spiderRavel = false;
 			if (spiderRavelTime > 0) spiderRavelTime--;
 			doubleTapDownTimer++;
-			vanityRavel = -1;
 
 			if (explosiveArtery) {
 				explosiveArtery = false;
