@@ -192,7 +192,7 @@ ENEMY NPCS:
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
-(X) Brine Serpent !!!
+(#, ^2) Brine Serpent !!!
 (#, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
@@ -204,7 +204,7 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
-(X) King Crab !!!
+(#, ^2) King Crab !!!
 (#, ^2) Mildew Creeper !!!
 (^) Mitoworm
 (X) Nasty Crawfish !!!
