@@ -1,5 +1,10 @@
-﻿using Terraria;
+﻿using PegasusLib;
+using System.Collections.Generic;
+using System.Reflection;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Events;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -71,6 +76,18 @@ namespace Origins.Questing {
 		}
 		public override void SetStaticDefaults() {
 			NameKey = "Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Name";
+			FastFieldInfo<ShopHelper, PersonalityDatabase> _database = new("_database", BindingFlags.Public | BindingFlags.NonPublic);
+			List<IShopPersonalityTrait> shopModifiers = _database.GetValue(Main.ShopHelper).GetOrCreateProfileByNPCID(NPCID.PartyGirl).ShopModifiers;
+			for (int i = 0; i < shopModifiers.Count; i++) {
+				if (shopModifiers[i] is NPCPreferenceTrait nPCPreferenceTrait && nPCPreferenceTrait.NpcId == NPCID.TaxCollector) {
+					shopModifiers[i] = new ConditionalNPCPreferenceTrait() {
+						NpcId = nPCPreferenceTrait.NpcId,
+						Level = nPCPreferenceTrait.Level,
+						condition = CompletedCondition.Not()
+					};
+					break;
+				}
+			}
 		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills

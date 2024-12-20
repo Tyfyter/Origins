@@ -3,10 +3,13 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.Personalities;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Origins.Reflection;
 
 namespace Origins.Questing {
 	public abstract class Quest : ModType {
@@ -55,10 +58,6 @@ namespace Origins.Questing {
 		#endregion events
 		public sealed override void SetupContent() {
 			SetStaticDefaults();
-			CompletedCondition = new Condition(
-				Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(Language.GetOrRegister(NameKey)),
-				() => Completed
-			);
 		}
 		protected sealed override void Register() {
 			if (SaveToWorld && Mod.Side != ModSide.Both) {
@@ -111,7 +110,11 @@ namespace Origins.Questing {
 		public virtual void SendSync(BinaryWriter writer) { }
 		public virtual void ReceiveSync(BinaryReader reader) { }
 		public static Condition QuestCondition<T>() where T : Quest => ModContent.GetInstance<T>().CompletedCondition;
-		public Condition CompletedCondition { get; private set; }
+		private Condition completedCondition;
+		public Condition CompletedCondition => completedCondition ??= new Condition(
+			Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(Language.GetOrRegister(NameKey)),
+			() => Completed
+		);
 	}
 	public static class Questing {
 		public static bool questListSelected = false;
@@ -131,5 +134,16 @@ namespace Origins.Questing {
 			}
 		}
 		public static bool CanEnterQuestList(NPC npc) => Quest_Registry.Quests.Any(q => q.CanStart(npc) || (!q.Completed && q.CanComplete(npc)));
+	}
+	public class ConditionalNPCPreferenceTrait : NPCPreferenceTrait, IShopPersonalityTrait {
+		public Condition condition;
+		public new void ModifyShopPrice(HelperInfo info, ShopHelper shopHelperInstance) {
+			if (info.nearbyNPCsByType[NpcId] && Level != 0 && Enum.IsDefined(Level) && condition.IsMet()) {
+				ShopMethods.AddHappinessReportText(shopHelperInstance, $"{Level}NPC", new {
+					NPCName = NPC.GetFullnameByID(NpcId)
+				});
+				ShopMethods._currentPriceAdjustment.SetValue(shopHelperInstance, ShopMethods._currentPriceAdjustment.GetValue(shopHelperInstance) * NPCHappiness.AffectionLevelToPriceMultiplier[Level]);
+			}
+		}
 	}
 }
