@@ -1397,13 +1397,14 @@ Projectiles: {
 	// Partybringer_Turret_Rocket_Blue.DisplayName: Partybringer Turret
 	// Partybringer_Turret_Rocket_Yellow.DisplayName: Partybringer Turret
 	// Partybringer_Turret_Rocket_Yellow_Explosion.DisplayName: Partybringer Turret
-	// TUDFLOMD_Rocket_Blue.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
-	// TUDFLOMD_Rocket_Canister.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
-	// TUDFLOMD_Rocket_Purple.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
-	// TUDFLOMD_Rocket_Purple_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
-	// TUDFLOMD_Rocket_Red.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
-	// TUDFLOMD_Rocket_Yellow.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
-	// TUDFLOMD_Rocket_Yellow_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction}"
+	// TUDFLOMD_Rocket_Blue.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Canister.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Purple.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Purple_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Red.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Yellow.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Yellow_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Green.DisplayName: T U D F L O M D Rocket Green
 }
 
 Prefixes: {

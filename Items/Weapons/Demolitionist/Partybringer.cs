@@ -569,9 +569,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public void MakeShape(Color color, float scale, params Vector2[] vertices) => MakeShape(color, scale, Vector2.Zero, vertices);
 		public void MakeShape(Color color, float scale, Vector2 offset, params Vector2[] vertices) {
+			float spread = 0.25f / scale;
 			for (int i = 0; i < vertices.Length; i++) {
-				for (float j = 0; j < 1; j += 0.05f) {
-					Vector2 direction = (Vector2.Lerp(vertices[i], vertices[(i + 1) % vertices.Length], j) + offset) * scale;
+				Vector2 a = vertices[i];
+				Vector2 b = vertices[(i + 1) % vertices.Length];
+				float speed = spread / a.Distance(b);
+				for (float j = 0; j < 1; j += speed) {
+					Vector2 direction = (Vector2.Lerp(a, b, j) + offset) * scale;
 					Dust.NewDustPerfect(
 						Projectile.Center,
 						ModContent.DustType<Flare_Dust>(),
@@ -590,7 +594,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			MakeShape(Color, 6, Star(2, 1, 1).Scaled(new(1, 1.5f)).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			float extraRot = Main.rand.NextFloat(MathHelper.TwoPi);
+			MakeShape(Color, 6, Star(2, 1, 1).Scaled(new(1, 1.5f)).RotatedBy(extraRot));
+			if (Main.rand.NextBool()) MakeShape(Color, 3, Star(2, 1, 1).Scaled(new(1, 1.5f)).RotatedBy(extraRot));
 		}
 	}
 	public class Partybringer_Turret_Rocket_Yellow : Partybringer_Turret_Rocket {
@@ -601,7 +607,32 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			MakeShape(Color, 6, Star(3, 1, 0.3f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			if (Main.rand.NextBool()) {
+				MakeShape(Color, 6, Star(3, 1, 0.3f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			} else {
+				Color color = Color;
+				for (int i = 0; i < 30; i++) {
+					Dust dust = Dust.NewDustDirect(
+						Projectile.Center,
+						0,
+						0,
+						ModContent.DustType<Sparkler_Dust>(),
+						newColor: color
+					);
+					dust.noGravity = false;
+					dust.velocity = Main.rand.NextVector2Circular(1, 1) * 8;
+					dust = Dust.NewDustDirect(
+						Projectile.Center,
+						0,
+						0,
+						ModContent.DustType<Sparkler_Dust>(),
+						newColor: color,
+						Scale: 1.5f
+					);
+					dust.noGravity = true;
+					dust.velocity = Main.rand.NextVector2Circular(1, 1) * 10;
+				}
+			}
 		}
 	}
 	public class Partybringer_Turret_Rocket_Green : Partybringer_Turret_Rocket {
@@ -613,7 +644,32 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			MakeShape(Color, 6, Star(4, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			if (Main.rand.NextBool()) {
+				MakeShape(Color, 6, Star(4, 1, 0.3f).Scaled(new(1, 1.25f)).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			} else {
+				Color color = Color;
+				for (int i = 0; i < 30; i++) {
+					Dust dust = Dust.NewDustDirect(
+						Projectile.Center,
+						0,
+						0,
+						ModContent.DustType<Sparkler_Dust>(),
+						newColor: color
+					);
+					dust.noGravity = false;
+					dust.velocity = Main.rand.NextVector2Circular(1, 1) * 8;
+					dust = Dust.NewDustDirect(
+						Projectile.Center,
+						0,
+						0,
+						ModContent.DustType<Sparkler_Dust>(),
+						newColor: color,
+						Scale: 1.5f
+					);
+					dust.noGravity = true;
+					dust.velocity = Main.rand.NextVector2Circular(1, 1) * 10;
+				}
+			}
 		}
 	}
 	public class Partybringer_Turret_Rocket_Blue : Partybringer_Turret_Rocket {
@@ -624,7 +680,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			MakeShape(Color, 6, Star(5, 1, 0.4f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			if (Main.rand.NextBool()) {
+				MakeShape(Color, 6, Star(5, 1, 0.4f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			} else {
+				Vector2[] directions = [
+					new Vector2(0f, -2f),
+					new Vector2(1.25f, -1.85f),
+					new Vector2(0.12f, 0.46f),
+					new Vector2(-0.1f, 0.245f),
+					new Vector2(-1.02f, 1.785f),
+					new Vector2(-0.54f, -0.615f),
+					new Vector2(-0.32f, -0.4f)
+				];
+				if (Main.rand.NextBool()) directions = directions.Scaled(new(-1, 1));
+				MakeShape(Color, 4, directions.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
+			}
 		}
 	}
 	public class Partybringer_Turret_Rocket_Purple : Partybringer_Turret_Rocket {
@@ -645,7 +715,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			MakeShape(Color, 6, Star(6, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			Vector2[] vertices = Star(6, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+			MakeShape(Color, 6, vertices);
+			if (Main.rand.NextBool()) MakeShape(Color.White, 3, vertices.RotatedBy(MathHelper.Pi / 6));
 		}
 	}
 	public class Partybringer_Turret_Rocket_Canister : Partybringer_Turret_Rocket, ICanisterProjectile {
@@ -676,7 +748,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
-			MakeShape(Color, 6, Star(7, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			if (Main.rand.NextBool()) {
+				MakeShape(Color, 6, Star(7, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi)));
+			} else {
+				Color color = Color;
+				Vector2[] vertices = Star(5, 1, 0.5f).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+				MakeShape(color, 6, vertices);
+				MakeShape(color, 6, vertices.RotatedBy(MathHelper.Pi));
+			}
 		}
 	}
 }
