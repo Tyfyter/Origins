@@ -158,6 +158,9 @@ namespace Origins.Items.Accessories {
 			}
 			return false;
 		}
+		public override void Dismount(Player player, ref bool skipDust) {
+			base.Dismount(player, ref skipDust);
+		}
 		public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
 			//playerDrawData.Clear();
 			DrawData item;
@@ -181,6 +184,23 @@ namespace Origins.Items.Accessories {
 			};
 			playerDrawData.Add(item);
 			return false;
+		}
+		internal static void On_Mount_Dismount(On_Mount.orig_Dismount orig, Mount self, Player mountedPlayer) {
+			if (RavelMounts.Contains(self.Type)) {
+				if (!mountedPlayer.CanFitSpace(0)) return;
+				if (OriginClientConfig.Instance.AnimatedRavel) {
+					if (mountedPlayer.mount._idleTime != 0 || mountedPlayer.mount._idleTimeNext != 0) {
+						self._idleTime = -transformAnimationFrames;
+						self._idleTimeNext = 0;
+						return;
+					}
+				} else {
+					for (int i = 0; i < 40; i++) {
+						Dust.NewDustDirect(mountedPlayer.position, mountedPlayer.width, mountedPlayer.height, DustID.AncientLight).velocity *= 0.4f;
+					}
+				}
+			}
+			orig(self, mountedPlayer);
 		}
 	}
 	public class Ravel_Mount_Buff : ModBuff, ICustomWikiStat {

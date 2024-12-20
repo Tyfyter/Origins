@@ -598,8 +598,8 @@ namespace Origins {
 				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
 				return orig(ignoreFountains);
 			};
+			On_Mount.Dismount += Ravel_Mount.On_Mount_Dismount;
 		}
-
 		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
 			orig(inv, context, slot);
 			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && InspectItemKey.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
