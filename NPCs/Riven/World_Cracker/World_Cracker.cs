@@ -142,7 +142,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (!headNPC.HasValidTarget) return;
 			int target = headNPC.target;
 			Player playerTarget = Main.player[target];
-			int otherShotDelay = (Main.rand.Next(48, 60) / DifficultyMult) + 30;
+			int otherShotDelay = (Main.rand.Next(48, 60) / DifficultyMult) + 40;
 			int shotTime = (450 / DifficultyMult);
 			if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
 			npc.ai[2]++;
