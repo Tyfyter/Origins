@@ -196,6 +196,9 @@ namespace Origins.Questing {
 			}
 			time = time / 86400.0 * 24.0;
 			time = time - 7.5 - 12.0;
+			if (time < 0) {
+				time += 24.0;
+			}
 			int intTime = (int)time;
 			double deltaTime = time - intTime;
 			hour = intTime;

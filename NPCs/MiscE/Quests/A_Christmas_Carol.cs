@@ -257,7 +257,7 @@ namespace Origins.NPCs.MiscE.Quests {
 					ParticleOrchestraSettings particleSettings;
 					int taxCollectorID = ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>();
 					foreach (NPC other in Main.ActiveNPCs) {
-						if (other.type == taxCollectorID && other.Center.IsWithin(NPC.Center, 16 * 10)) {
+						if (other.type == taxCollectorID) {
 							particleSettings = new() {
 								PositionInWorld = other.Center
 							};
@@ -362,7 +362,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			if (NPC.life == NPC.lifeMax) {
 				int taxCollectorID = ModContent.NPCType<Spirit_Of_Christmas_Future_Tax_Collector>();
 				foreach (NPC other in Main.ActiveNPCs) {
-					if (other.type == taxCollectorID && other.Center.IsWithin(NPC.Center, 16 * 20)) {
+					if (other.type == taxCollectorID && other.Center.IsWithin(NPC.Center, 16 * 60)) {
 						NPC.spriteDirection = NPC.direction = Math.Sign(other.Center.X - NPC.Center.X);
 						return false;
 					}

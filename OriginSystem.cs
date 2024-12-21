@@ -258,7 +258,7 @@ namespace Origins {
 								} else {
 									ghost = ModContent.NPCType<Spirit_Of_Christmas_Past>();
 								}
-								NPC.NewNPC(Entity.GetSource_None(), other.homeTileX * 16 + Main.rand.Next(64, 96) * Main.rand.NextBool().ToDirectionInt(), other.homeTileY * 16 - Main.rand.Next(16), ghost);
+								NPC.NewNPC(Entity.GetSource_None(), (int)other.position.X + Main.rand.Next(64, 96) * Main.rand.NextBool().ToDirectionInt(), (int)other.position.Y - Main.rand.Next(16), ghost, ai3: -1000);
 								break;
 							}
 						}
@@ -268,7 +268,7 @@ namespace Origins {
 					if (stage == 3 && Spirit_Of_Christmas_Present.FindTeleportPosition(out int posX, out int posY, out _, out _)) {
 						posX *= 16;
 						posY *= 16;
-						NPC.NewNPC(Entity.GetSource_None(), posX, posY, ModContent.NPCType<Spirit_Of_Christmas_Present>());
+						NPC.NewNPC(Entity.GetSource_None(), posX, posY, ModContent.NPCType<Spirit_Of_Christmas_Present>(), ai3: -1000);
 						NPC.NewNPC(Entity.GetSource_None(), posX, posY, ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>());
 					}
 					break;

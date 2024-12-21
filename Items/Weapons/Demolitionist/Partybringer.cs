@@ -21,9 +21,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Partybringer_P>(34, 50, 8f, 46, 28, true);
+			Item.DefaultToCanisterLauncher<Partybringer_P>(40, 40, 8f, 46, 28, true);
 			Item.value = Item.buyPrice(gold: 7);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Yellow;
 			Item.ArmorPenetration += 5;
 		}
 		public override Vector2? HoldoutOffset() {
@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center,
 				Vector2.Zero,
 				ModContent.ProjectileType<Partybringer_Fog>(),
-				Projectile.damage / 3,
+				Projectile.damage,
 				1,
 				Projectile.owner
 			);
@@ -195,7 +195,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 						Projectile.Center,
 						GeometryUtils.Vec2FromPolar(8, rot * i + Main.rand.NextFloat(-0.1f, 0.1f)) + Main.rand.NextVector2Unit(),
 						type,
-						Projectile.damage / 5,
+						(Projectile.damage * 3) / 5,
 						6,
 						Projectile.owner
 					);
@@ -263,7 +263,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 						Projectile.Center,
 						GeometryUtils.Vec2FromPolar(speed, targets[i].angle),
 						ProjectileID.PartyGirlGrenade,
-						Projectile.damage / 2,
+						Projectile.damage * 2,
 						10
 					);
 				}

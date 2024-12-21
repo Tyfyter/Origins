@@ -366,6 +366,7 @@ Tax_Collector: {
 			Client: [npcname:TaxCollector]
 
 			'{$Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Inquire}'
+			He said the first spirit told him of the others: "Expect the first tonight, when the bell tolls one, expect the second on the stroke of two, The third, more mercurial, shall appear in his own good time."
 
 			- [qs{1}: Vanquish the spirits ({0}/4)]
 			- [qs{2}: Return to <npcname:TaxCollector>]
