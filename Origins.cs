@@ -69,6 +69,8 @@ namespace Origins {
 		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
 		static bool[] brothBuffs;
 		public static bool[] BrothBuffs { get => brothBuffs; }
+		static bool[] isFineWithCrowdedParties;
+		public static bool[] IsFineWithCrowdedParties { get => isFineWithCrowdedParties; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -571,11 +573,14 @@ namespace Origins {
 		public override void Unload() {
 			ExplosiveBaseDamage = null;
 			DamageModOnHit = null;
-			VanillaElements = null;
 			forceFelnumShockOnShoot = null;
+			VanillaElements = null;
 			flatDamageMultiplier = null;
 			RasterizeAdjustment = null;
 			homingEffectivenessMultiplier = null;
+			itemsThatAllowRemoteRightClick = null;
+			brothBuffs = null;
+			isFineWithCrowdedParties = null;
 			PotType = null;
 			PileType = null;
 			artifactMinion = null;
@@ -790,6 +795,7 @@ namespace Origins {
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
+			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);

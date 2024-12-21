@@ -58,6 +58,7 @@ namespace Origins.Questing {
 		#endregion events
 		public sealed override void SetupContent() {
 			SetStaticDefaults();
+			_ = NameValue;
 		}
 		protected sealed override void Register() {
 			if (SaveToWorld && Mod.Side != ModSide.Both) {
@@ -97,7 +98,7 @@ namespace Origins.Questing {
 		}
 		public void Sync(int toClient = -1, int ignoreClient = -1) {
 			if (Main.netMode == NetmodeID.SinglePlayer) return;
-			TagCompound dataTag = new();
+			TagCompound dataTag = [];
 			SaveData(dataTag);
 			Mod.Logger.Info($"Syncing {NameValue}, to {(toClient == -1 ? "everyone" : Main.player[toClient].name)} with data: {dataTag}");
 			ModPacket packet = Origins.instance.GetPacket();
@@ -117,19 +118,27 @@ namespace Origins.Questing {
 		);
 	}
 	public static class Questing {
-		public static bool questListSelected = false;
+		static bool questListSelected = false;
+		public static bool QuestListSelected {
+			get => questListSelected;
+			set {
+				questListSelected = value;
+				fromQuest = null;
+			}
+		}
+		public static Quest fromQuest = null;
 		public static Quest selectedQuest = null;
 		public static void ExitChat() {
-			questListSelected = false;
+			QuestListSelected = false;
 			selectedQuest = null;
 		}
 		public static void EnterQuestList(NPC npc) {
 			if (CanEnterQuestList(npc)) {
-				questListSelected = true;
+				QuestListSelected = true;
 				string textKey = $"Mods.Origins.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}.Quest_Menu";
 				if (Language.Exists(textKey)) Main.npcChatText = Language.GetOrRegister(textKey).Value;
 			} else {
-				questListSelected = false;
+				QuestListSelected = false;
 				Main.npcChatText = npc.GetChat();
 			}
 		}

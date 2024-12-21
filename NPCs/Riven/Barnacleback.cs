@@ -41,7 +41,7 @@ namespace Origins.NPCs.Riven {
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.type == Type) count++;
 			}
-			return rate / count;
+			return rate / (count * count);
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

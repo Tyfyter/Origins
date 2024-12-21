@@ -411,14 +411,13 @@ namespace Origins.UI {
 			}
 			timeSinceSwitch++;
 			spriteBatch.Draw(PageTexture, bounds, Color.White);
-			int pageCount = pages?.Count ?? 0;
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
 			bool shade = currentEffect is not null;
 			bool canDrawArrows = true;
 			try {
 				if (shade) Origins.shaderOroboros.Capture();
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
-				for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
+				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
 					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
@@ -472,7 +471,7 @@ namespace Origins.UI {
 			}
 			#region arrows
 			if (canDrawArrows) {
-				if (pageOffset < pageCount - 2) {
+				if (pageOffset < (pages?.Count ?? 0) - 2) {
 					Vector2 position = new Vector2(bounds.X + bounds.Width - xMarginOuter * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
 					//temp highlight

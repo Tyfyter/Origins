@@ -13,7 +13,7 @@ namespace Origins.Questing {
 		}
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister("Mods.Origins.Interface.Quests").Value;
 		public override bool IsActive(NPC npc, Player player) {
-			if (Questing.questListSelected) return false;
+			if (Questing.QuestListSelected) return false;
 			if (Questing.selectedQuest is not null) return false;
 			return Questing.CanEnterQuestList(npc);
 		}
@@ -31,7 +31,7 @@ namespace Origins.Questing {
 		}
 		public override string Text(NPC npc, Player player) => Quest.NameValue;
 		public override bool IsActive(NPC npc, Player player) {
-			if (!Questing.questListSelected) return false;
+			if (!Questing.QuestListSelected) return false;
 			if (Questing.selectedQuest is not null) return false;
 			return Quest.CanStart(npc) || (!Quest.Completed && Quest.CanComplete(npc));
 		}
@@ -66,7 +66,7 @@ namespace Origins.Questing {
 		public override double Priority => 99.9;
 		public override void OnClick(NPC npc, Player player) {
 			if (Questing.selectedQuest == null) {
-				Questing.questListSelected = false;
+				Questing.QuestListSelected = false;
 				Main.npcChatText = Main.npc[player.talkNPC].GetChat();
 			} else {
 				Questing.selectedQuest = null;
@@ -75,13 +75,13 @@ namespace Origins.Questing {
 		}
 		public override string Text(NPC npc, Player player) => Language.GetTextValue("UI.Back");
 		public override bool IsActive(NPC npc, Player player) {
-			if (!Questing.questListSelected && Questing.selectedQuest == null) return false;
+			if (!Questing.QuestListSelected && Questing.selectedQuest == null) return false;
 			return true;
 		}
 	}
 	public class QuestChatGlobalButton : GlobalChatButton {
 		public override bool? IsActive(ChatButton chatButton, NPC npc, Player player) {
-			if (Questing.questListSelected) return chatButton is QuestChatButton or QuestBackChatButton;
+			if (Questing.QuestListSelected) return chatButton is QuestChatButton or QuestBackChatButton;
 			return null;
 		}
 	}

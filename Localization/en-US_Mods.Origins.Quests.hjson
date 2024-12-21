@@ -72,13 +72,14 @@ Party_Girl: {
 								
 			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Inquire}'
 								
-			- [qs{0}:Put a Party Hat on <npcname:TaxCollector>]
+			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
 			Unlocks: [i:Origins/Partybringer]
 			'''
 		Inquire: The party is ready and everything is set in place! But, something is missing... it's that old mister again. Try and cheer him up with a party hat, maybe that'll make him happy.
 		Start: Yay! Thank you for this, Terrarian! You're the best!
 		ReadyToComplete: I think I see him with the hat on..!
 		Complete: Thank you so much, [player:_]! We can now have the best party ever thanks to you cheering that old man up!
+		RequestHatWearing: "{$ItemName.PartyHat}"
 	}
 }
 
@@ -353,5 +354,26 @@ Cyborg: {
 		Start: Process-start. Task 1 of 1.
 		ReadyToComplete: Please import the data medium into my built-in USB port located on my neck.
 		Complete: Sufficient. Thank you, Terrarian. I have comprised a blueprint that may benefit your combat prowess.
+	}
+}
+
+Tax_Collector: {
+	Tax_Collector_Ghosts_Quest: {
+		Name: A Night of Uninterrupted Sleep
+		Journal:
+			'''
+			{$Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Name}
+			Client: [npcname:TaxCollector]
+
+			'{$Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Inquire}'
+
+			- [qs{1}: Vanquish the spirits ({0}/4)]
+			- [qs{2}: Return to <npcname:TaxCollector>]
+			'''
+		Request: I shan't give something for nothing, if you want me to wear one of those ridiculous hats you'd best do something for me.
+		Inquire: Dreadful apparitions have been haunting me night after night, spouting humbug about "the common welfare" and "reclamation"; They haven't even the courtesy to all come at once and have it over swiftly; Rid me of them and I'll wear your frivolous hat.
+		Start: Good, now, if you will go about your business and allow me to go about mine.
+		ReadyToComplete: Well? Are the spirits gone?
+		Complete: Thank you, now I suppose it's time to hold up my end of the bargain.
 	}
 }
