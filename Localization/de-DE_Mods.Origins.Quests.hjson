@@ -72,7 +72,7 @@ Party_Girl: {
 								
 			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Inquire}'
 								
-			- [qs{0}:Put a Party Hat on <npcname:TaxCollector>]
+			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
 			Unlocks: [i:Origins/Partybringer]
 			''' */
 		// Inquire: The party is ready and everything is set in place! But, something is missing... it's that old mister again. Try and cheer him up with a party hat, maybe that'll make him happy.

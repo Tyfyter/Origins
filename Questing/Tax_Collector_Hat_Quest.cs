@@ -104,7 +104,7 @@ namespace Origins.Questing {
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister("Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.RequestHatWearing").Value;
 		public override bool IsActive(NPC npc, Player player) {
 			if (Questing.QuestListSelected) return false;
-			return npc.type == NPCID.TaxCollector && Quest.Stage == 1 && ModContent.GetInstance<Tax_Collector_Ghosts_Quest>().CanStart(npc);
+			return npc.type == NPCID.TaxCollector && Quest.Stage == 1 && !ModContent.GetInstance<Tax_Collector_Ghosts_Quest>().ShowInJournal();
 		}
 	}
 	public class Tax_Collector_Ghosts_Quest : Quest {
@@ -188,6 +188,18 @@ namespace Origins.Questing {
 		}
 		public override void ReceiveSync(BinaryReader reader) {
 			Stage = reader.ReadInt32();
+		}
+		public static void GetTime(out int hour, out int minute) {
+			double time = Main.time;
+			if (!Main.dayTime) {
+				time += 54000.0;
+			}
+			time = time / 86400.0 * 24.0;
+			time = time - 7.5 - 12.0;
+			int intTime = (int)time;
+			double deltaTime = time - intTime;
+			hour = intTime;
+			minute = (int)(deltaTime * 60.0);
 		}
 	}
 }

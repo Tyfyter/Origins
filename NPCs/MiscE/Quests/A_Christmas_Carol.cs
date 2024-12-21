@@ -37,7 +37,16 @@ namespace Origins.NPCs.MiscE.Quests {
 			return names;
 		}
 		public override bool PreAI() {
+			if (NPC.aiAction == 1) {
+				Tax_Collector_Ghosts_Quest.GetTime(out int hour, out _);
+				if (hour != 0 && ++NPC.alpha > 255) NPC.active = false;
+			}
+			NPC.aiAction = 1;
 			if (NPC.life == NPC.lifeMax) {
+				if (NPC.ai[3] == -1000) {
+					NPC.ai[3] = 0;
+					NPC.aiAction = 1;
+				}
 				float oldValue = MathF.Sin(NPC.ai[3]);
 				NPC.ai[3] += 0.02f;
 				NPC.velocity.Y = (MathF.Sin(NPC.ai[3]) - oldValue) * 8;
@@ -51,6 +60,8 @@ namespace Origins.NPCs.MiscE.Quests {
 			}
 			NPC.chaseable = true;
 			return true;
+		}
+		public override void AI() {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.Player.ZoneDungeon && !NPC.AnyNPCs(Type) && ModContent.GetInstance<Tax_Collector_Ghosts_Quest>().Stage == 1) {
@@ -85,7 +96,15 @@ namespace Origins.NPCs.MiscE.Quests {
 			Banner = Item.NPCtoBanner(NPCID.FairyCritterBlue);
 		}
 		public override bool PreAI() {
+			if (NPC.aiAction == 1) {
+				Tax_Collector_Ghosts_Quest.GetTime(out int hour, out _);
+				if (hour != 1 && ++NPC.alpha > 255) NPC.active = false;
+			}
 			if (NPC.life == NPC.lifeMax) {
+				if (NPC.ai[3] == -1000) {
+					NPC.ai[3] = 0;
+					NPC.aiAction = 1;
+				}
 				float oldValue = MathF.Sin(NPC.ai[3]);
 				NPC.ai[3] += 0.02f;
 				NPC.velocity.Y = (MathF.Sin(NPC.ai[3]) - oldValue) * 8;
@@ -99,6 +118,8 @@ namespace Origins.NPCs.MiscE.Quests {
 			}
 			NPC.chaseable = true;
 			return true;
+		}
+		public override void AI() {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.Player.ZoneHallow && !NPC.AnyNPCs(Type) && ModContent.GetInstance<Tax_Collector_Ghosts_Quest>().Stage == 2) {
@@ -179,82 +200,102 @@ namespace Origins.NPCs.MiscE.Quests {
 			AnimationType = NPCID.SantaClaus;
 			Banner = Item.NPCtoBanner(NPCID.SantaClaus);
 		}
-		public override bool PreAI() {
-			NPC.homeless = true;
-			if (NPC.justHit) {
-				int[] array = new int[200];
-				int otherNPCs = 0;
-				for (int i = 0; i < 200; i++) {
-					if (Main.npc[i].active && Main.npc[i].townNPC && !(Main.npc[i].type is NPCID.OldMan or NPCID.TaxCollector)) {
-						array[otherNPCs] = i;
-						otherNPCs++;
-					}
+		public static bool FindTeleportPosition(out int bestX, out int bestY, out int minValue, out int maxValue) {
+			int[] array = new int[200];
+			int otherNPCs = 0;
+			for (int i = 0; i < 200; i++) {
+				if (Main.npc[i].active && Main.npc[i].townNPC && !(Main.npc[i].type is NPCID.OldMan or NPCID.TaxCollector)) {
+					array[otherNPCs] = i;
+					otherNPCs++;
 				}
+			}
 
-				if (otherNPCs == 0) return true;
+			if (otherNPCs == 0) {
+				bestX = bestY = minValue = maxValue = 0;
+				return false;
+			}
 
-				int spawnNear = array[Main.rand.Next(otherNPCs)];
-				int bestX = Main.npc[spawnNear].homeTileX;
-				int bestY = Main.npc[spawnNear].homeTileY;
-				int minValue = bestX;
-				int maxValue = bestX;
-				int x = bestX;
-				int y = bestY;
-				while (x > bestX - 10 && (WorldGen.SolidTile(x, y) || Main.tileSolidTop[Main.tile[x, y].TileType]) && (!Main.tile[x, y - 1].HasTile || !Main.tileSolid[Main.tile[x, y - 1].TileType] || Main.tileSolidTop[Main.tile[x, y - 1].TileType]) && (!Main.tile[x, y - 2].HasTile || !Main.tileSolid[Main.tile[x, y - 2].TileType] || Main.tileSolidTop[Main.tile[x, y - 2].TileType]) && (!Main.tile[x, y - 3].HasTile || !Main.tileSolid[Main.tile[x, y - 3].TileType] || Main.tileSolidTop[Main.tile[x, y - 3].TileType])) {
-					minValue = x;
-					x--;
-				}
+			int spawnNear = array[Main.rand.Next(otherNPCs)];
+			bestX = Main.npc[spawnNear].homeTileX;
+			bestY = Main.npc[spawnNear].homeTileY;
+			minValue = bestX;
+			maxValue = bestX;
+			int x = bestX;
+			int y = bestY;
+			while (x > bestX - 10 && (WorldGen.SolidTile(x, y) || Main.tileSolidTop[Main.tile[x, y].TileType]) && (!Main.tile[x, y - 1].HasTile || !Main.tileSolid[Main.tile[x, y - 1].TileType] || Main.tileSolidTop[Main.tile[x, y - 1].TileType]) && (!Main.tile[x, y - 2].HasTile || !Main.tileSolid[Main.tile[x, y - 2].TileType] || Main.tileSolidTop[Main.tile[x, y - 2].TileType]) && (!Main.tile[x, y - 3].HasTile || !Main.tileSolid[Main.tile[x, y - 3].TileType] || Main.tileSolidTop[Main.tile[x, y - 3].TileType])) {
+				minValue = x;
+				x--;
+			}
 
-				for (int k = bestX; k < bestX + 10 && (WorldGen.SolidTile(k, y) || Main.tileSolidTop[Main.tile[k, y].TileType]) && (!Main.tile[k, y - 1].HasTile || !Main.tileSolid[Main.tile[k, y - 1].TileType] || Main.tileSolidTop[Main.tile[k, y - 1].TileType]) && (!Main.tile[k, y - 2].HasTile || !Main.tileSolid[Main.tile[k, y - 2].TileType] || Main.tileSolidTop[Main.tile[k, y - 2].TileType]) && (!Main.tile[k, y - 3].HasTile || !Main.tileSolid[Main.tile[k, y - 3].TileType] || Main.tileSolidTop[Main.tile[k, y - 3].TileType]); k++) {
-					maxValue = k;
-				}
+			for (int k = bestX; k < bestX + 10 && (WorldGen.SolidTile(k, y) || Main.tileSolidTop[Main.tile[k, y].TileType]) && (!Main.tile[k, y - 1].HasTile || !Main.tileSolid[Main.tile[k, y - 1].TileType] || Main.tileSolidTop[Main.tile[k, y - 1].TileType]) && (!Main.tile[k, y - 2].HasTile || !Main.tileSolid[Main.tile[k, y - 2].TileType] || Main.tileSolidTop[Main.tile[k, y - 2].TileType]) && (!Main.tile[k, y - 3].HasTile || !Main.tileSolid[Main.tile[k, y - 3].TileType] || Main.tileSolidTop[Main.tile[k, y - 3].TileType]); k++) {
+				maxValue = k;
+			}
 
-				for (int l = 0; l < 30; l++) {
-					int testX = Main.rand.Next(minValue, maxValue + 1);
-					if (l < 20) {
-						if (testX < bestX - 1 || testX > bestX + 1) {
-							bestX = testX;
-							break;
-						}
-					} else if (testX != bestX) {
+			for (int l = 0; l < 30; l++) {
+				int testX = Main.rand.Next(minValue, maxValue + 1);
+				if (l < 20) {
+					if (testX < bestX - 1 || testX > bestX + 1) {
 						bestX = testX;
 						break;
 					}
+				} else if (testX != bestX) {
+					bestX = testX;
+					break;
 				}
-				ParticleOrchestraSettings particleSettings;
-				int taxCollectorID = ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>();
-				foreach (NPC other in Main.ActiveNPCs) {
-					if (other.type == taxCollectorID && other.Center.IsWithin(NPC.Center, 16 * 10)) {
-						particleSettings = new() {
-							PositionInWorld = other.Center
-						};
-						ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
-						other.Teleport(new(bestX * 16, bestY * 16 - 32), -1);
-						ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
-						for (int l = 0; l < 30; l++) {
-							int testX = Main.rand.Next(minValue, maxValue + 1);
-							if (l < 20) {
-								if (testX < bestX - 1 || testX > bestX + 1) {
+			}
+			return true;
+		}
+		public override bool PreAI() {
+			NPC.homeless = true;
+			if (NPC.ai[3] == -1000) {
+				NPC.ai[3] = 0;
+				NPC.aiAction = 1;
+			}
+			_ = NPC.position;
+			if (NPC.justHit) {
+				if (FindTeleportPosition(out int bestX, out int bestY, out int minValue, out int maxValue)) {
+					ParticleOrchestraSettings particleSettings;
+					int taxCollectorID = ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>();
+					foreach (NPC other in Main.ActiveNPCs) {
+						if (other.type == taxCollectorID && other.Center.IsWithin(NPC.Center, 16 * 10)) {
+							particleSettings = new() {
+								PositionInWorld = other.Center
+							};
+							ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
+							other.Teleport(new(bestX * 16, bestY * 16 - 32), -1);
+							ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
+							for (int l = 0; l < 30; l++) {
+								int testX = Main.rand.Next(minValue, maxValue + 1);
+								if (l < 20) {
+									if (testX < bestX - 1 || testX > bestX + 1) {
+										bestX = testX;
+										break;
+									}
+								} else if (testX != bestX) {
 									bestX = testX;
 									break;
 								}
-							} else if (testX != bestX) {
-								bestX = testX;
-								break;
 							}
+							break;
 						}
-						break;
 					}
+					particleSettings = new() {
+						PositionInWorld = NPC.Center
+					};
+					ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
+					NPC.Teleport(new(bestX * 16, bestY * 16 - 32), -1);
+					ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
 				}
-				particleSettings = new() {
-					PositionInWorld = NPC.Center
-				};
-				ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
-				NPC.Teleport(new(bestX * 16, bestY * 16 - 32), -1);
-				ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, particleSettings);
 			}
 			NPC.chaseable = NPC.life != NPC.lifeMax;
 			return true;
+		}
+		public override void AI() {
+			if (NPC.aiAction == 1) {
+				Tax_Collector_Ghosts_Quest.GetTime(out int hour, out _);
+				if ((hour < 2 || Main.dayTime) && ++NPC.alpha > 255) NPC.active = false;
+			}
+			NPC.aiAction = 1;
 		}
 		public override bool CheckActive() {
 			return Main.dayTime;
