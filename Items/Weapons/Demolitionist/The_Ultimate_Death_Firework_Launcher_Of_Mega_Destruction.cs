@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 10, 12f, 46, 28, true);
 			Item.useAnimation *= 3;
-			Item.reuseDelay = Item.useTime * 2;
+			Item.reuseDelay = Item.useTime;
 			Item.value = Item.sellPrice(silver: 24);
 			Item.rare = ItemRarityID.Cyan;
 			Item.ArmorPenetration += 15;
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			type = Main.rand.Next(TUDFLOMD_Rocket.Projectiles);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			float distanceFromTarget = 16 * 10;
+			float distanceFromTarget = 16 * 17.5f;
 			int target = -1;
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.CanBeChasedBy()) {
@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddToList() => OriginSystem.Instance.ItemUseHUD.AddState(this);
 		public override bool IsActive() => Main.LocalPlayer.HeldItem.type == ModContent.ItemType<The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction>();
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
-			float distanceFromTarget = 16 * 10;
+			float distanceFromTarget = 16 * 17.5f;
 			NPC target = null;
 			PlayerInput.SetZoom_MouseInWorld();
 			foreach (NPC npc in Main.ActiveNPCs) {

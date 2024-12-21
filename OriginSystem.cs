@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
+using Origins.NPCs.MiscE.Quests;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
@@ -239,10 +240,41 @@ namespace Origins {
 		}
 		public override void PostUpdateInput() {
 		}
+		int lastHour = -1;
 		public override void PostUpdateTime() {
-			foreach (var quest in Quest_Registry.NetQuests) {
+			foreach (Quest quest in Quest_Registry.NetQuests) {
 				quest.CheckSync();
 			}
+			Tax_Collector_Ghosts_Quest.GetTime(out int hour, out _);
+			if (hour != lastHour && ModContent.GetInstance<Tax_Collector_Ghosts_Quest>()?.Stage is int stage) {
+				switch (hour) {
+					case 0 or 1:
+					if (stage == hour + 1) {
+						foreach (NPC other in Main.ActiveNPCs) {
+							if (other.type == NPCID.TaxCollector) {
+								int ghost;
+								if (hour == 0) {
+									ghost = ModContent.NPCType<Jacob_Marley>();
+								} else {
+									ghost = ModContent.NPCType<Spirit_Of_Christmas_Past>();
+								}
+								NPC.NewNPC(Entity.GetSource_None(), (int)other.position.X + Main.rand.Next(64, 96) * Main.rand.NextBool().ToDirectionInt(), (int)other.position.Y - Main.rand.Next(16), ghost, ai3: -1000);
+								break;
+							}
+						}
+					}
+					break;
+					case 2:
+					if (stage == 3 && Spirit_Of_Christmas_Present.FindTeleportPosition(out int posX, out int posY, out _, out _)) {
+						posX *= 16;
+						posY *= 16;
+						NPC.NewNPC(Entity.GetSource_None(), posX, posY, ModContent.NPCType<Spirit_Of_Christmas_Present>(), ai3: -1000);
+						NPC.NewNPC(Entity.GetSource_None(), posX, posY, ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>());
+					}
+					break;
+				}
+			}
+			lastHour = hour;
 		}
 		public override void PostUpdateEverything() {
 			for (int i = 0; i < Origins.tickers.Count; i++) {

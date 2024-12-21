@@ -111,7 +111,7 @@ namespace Origins.Questing {
 		}
 		public override string Text(NPC npc, Player player) => "missingno";
 		public override bool IsActive(NPC npc, Player player) {
-			if (Questing.questListSelected || npc.type != NPCID.ArmsDealer) return false;
+			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
 			static bool IsShardcannon(Item item) {
 				return item.type == Shardcannon.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
 			}

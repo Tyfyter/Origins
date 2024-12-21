@@ -58,7 +58,6 @@ namespace Origins {
 		public bool forceThunderstorm = false;
 		public int forceThunderstormDelay = 0;
 
-		public bool taxCollectorWearsPartyhat;
 		public bool unlockedBrineNPC = false;
 		public static int MimicSetLevel {
 			get {

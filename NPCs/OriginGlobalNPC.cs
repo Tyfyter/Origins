@@ -35,6 +35,7 @@ namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
 		public override void SetStaticDefaults() {
 			NPCHappiness.Get(NPCID.PartyGirl)
+			.SetNPCAffection(NPCID.SantaClaus, AffectionLevel.Love)
 			.SetBiomeAffection<SpaceBiome>(AffectionLevel.Love);
 		}
 		public static ShoppingSettings ShopHelper_GetShoppingSettings(On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
@@ -140,6 +141,10 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Mechanic: {
 					shop.Add<Fabricator_Item>(Condition.DownedMechBossAll);
+					break;
+				}
+				case NPCID.PartyGirl: {
+					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Hat_Quest>());
 					break;
 				}
 			}

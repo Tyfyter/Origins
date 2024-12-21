@@ -598,8 +598,26 @@ namespace Origins {
 				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
 				return orig(ignoreFountains);
 			};
+			On_Mount.Dismount += Ravel_Mount.On_Mount_Dismount;
+			IL_ShopHelper.ProcessMood += il => {
+				ILCursor c = new(il);
+				ILLabel label = default;
+				if (c.TryGotoNext(MoveType.After,
+					i => i.MatchLdloc(out _),
+					i => i.MatchLdcI4(3),
+					i => i.MatchBle(out label)
+				)) {
+					c.EmitLdarg2();
+					c.EmitDelegate((NPC npc) => {
+						if (BirthdayParty.PartyIsUp && IsFineWithCrowdedParties[npc.type]) return true;
+						return false;
+					});
+					c.EmitBrtrue(label);
+				} else {
+					LogError($"Could not find npcsWithinHouse > 3 comparison in ShopHelper.ProcessMood");
+				}
+			};
 		}
-
 		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
 			orig(inv, context, slot);
 			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && InspectItemKey.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {

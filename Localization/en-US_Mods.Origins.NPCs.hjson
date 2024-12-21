@@ -258,3 +258,25 @@ Dryad: {
 		1: This stuff grows on trees, but it takes a really, really long time to make. Good thing you can respawn, right?
 	}
 }
+
+Jacob_Marley.DisplayName: Ominous Spirit
+Spirit_Of_Christmas_Past.DisplayName: Spirit Of Christmas Past
+
+Spirit_Of_Christmas_Present: {
+	DisplayName: Spirit Of Christmas Present
+
+	TownNPCMood: {
+		Content: I am content.
+		NoHome: I hate not having a home.
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+}
+
+Spirit_Of_Christmas_Future.DisplayName: Spirit Of Christmas Yet To Come
+Spirit_Of_Christmas_Present_Tax_Collector.DisplayName: Spirit Of Christmas Present Tax Collector
+Spirit_Of_Christmas_Future_Tax_Collector.DisplayName: Spirit Of Christmas Future Tax Collector
