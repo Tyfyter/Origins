@@ -75,7 +75,7 @@ Party_Girl: {
 			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
 			Unlocks: [i:Origins/Partybringer]
 			'''
-		Inquire: The party is ready and everything is set in place! But, something is missing... it's that old mister again. Try and cheer him up with a party hat, maybe that'll make him happy.
+		Inquire: The party is ready and everything is set in place! But, something is missing... it's that old miser again. Try and cheer him up with a party hat, maybe that'll make him happy.
 		Start: Yay! Thank you for this, Terrarian! You're the best!
 		ReadyToComplete: I think I see him with the hat on..!
 		Complete: Thank you so much, [player:_]! We can now have the best party ever thanks to you cheering that old man up!
