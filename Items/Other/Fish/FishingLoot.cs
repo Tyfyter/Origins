@@ -71,6 +71,15 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Bonehead_Jellyfish>(), (_, attempt) => attempt.questFish == ItemType<Bonehead_Jellyfish>()),
 						new ItemFishingLoot(ItemType<Tearracuda>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
+				)),
+				#endregion riven
+				#region dusk
+				((player, _) => player.InModBiome<Dusk>() ? 1 : 0, new OrderedFishingLoot(
+					new LeadingConditionFishLoot(
+						new OrderedFishingLoot(
+						new ItemFishingLoot(ItemType<Duskarp>(), (_, attempt) => attempt.questFish == ItemType<Duskarp>()),
+						new ItemFishingLoot(ItemType<Duskarp>(), (_, _) => true)
+					), (_, attempt) => attempt.uncommon)
 				))
 				#endregion riven
 			)
@@ -85,12 +94,10 @@ namespace Origins.Items.Other.Fish {
 		public abstract IEnumerable<int> ReportDrops();
 		public abstract bool CatchFish(Player player, FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition);
 	}
-	public class ComboFishingLoot : FishingLootInfo {
-		List<(Func<Player, FishingAttempt, double> weight, FishingLootInfo loot)> loots;
+	public class ComboFishingLoot(IEnumerable<(Func<Player, FishingAttempt, double>, FishingLootInfo)> loots) : FishingLootInfo {
+		List<(Func<Player, FishingAttempt, double> weight, FishingLootInfo loot)> loots = loots as List<(Func<Player, FishingAttempt, double>, FishingLootInfo)> ?? loots.ToList();
 		public ComboFishingLoot(params (Func<Player, FishingAttempt, double>, FishingLootInfo)[] loots) : this(loots.AsEnumerable()) { }
-		public ComboFishingLoot(IEnumerable<(Func<Player, FishingAttempt, double>, FishingLootInfo)> loots) {
-			this.loots = loots as List<(Func<Player, FishingAttempt, double>, FishingLootInfo)> ?? loots.ToList();
-		}
+
 		public override IEnumerable<int> ReportDrops() {
 			return loots.SelectMany(l => l.loot.ReportDrops());
 		}
