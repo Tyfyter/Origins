@@ -419,6 +419,7 @@ namespace Origins.UI {
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
 					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
+					bool canEnterWritingMode = true;
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
 							FontAssets.MouseText.Value,
@@ -448,6 +449,7 @@ namespace Origins.UI {
 									if (Main.mouseLeft && Main.mouseLeftRelease) {
 										currentSnippet.OnClick();
 									}
+									if (Main.LocalPlayer.mouseInterface) canEnterWritingMode = false;
 								} else if (mode == Journal_UI_Mode.Custom && Main.mouseLeft && Main.mouseLeftRelease) {
 									SetMemoFocus(i);
 									memoPage_clickPosition = Main.MouseScreen;
@@ -455,7 +457,7 @@ namespace Origins.UI {
 							}
 						}
 					}
-					if (mode == Journal_UI_Mode.Custom && Main.mouseLeft && Main.mouseLeftRelease && (!memoPage_focused || memoPage_selectedSide != i)) {
+					if (mode == Journal_UI_Mode.Custom && canEnterWritingMode && Main.mouseLeft && Main.mouseLeftRelease && (!memoPage_focused || memoPage_selectedSide != i)) {
 						if (Main.mouseX > pagePos.X && Main.mouseX < pagePos.X + (bounds.Width * 0.5f - XMarginTotal) && Main.mouseY > pagePos.Y && Main.mouseY < pagePos.Y + bounds.Height) {
 							SetMemoFocus(i);
 							memoPage_cursorPosition = OriginPlayer.LocalOriginPlayer.journalText[memoPage_selectedSide + pageOffset].Length;
