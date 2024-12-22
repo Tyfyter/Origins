@@ -162,7 +162,7 @@ namespace Origins {
 			RiftBodyArmorID = ModContent.GetInstance<Bleeding_Obsidian_Breastplate>().Item.bodySlot;
 			RiftLegsArmorID = ModContent.GetInstance<Bleeding_Obsidian_Greaves>().Item.legSlot;
 			#endregion
-			Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
+			//Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
 			Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
 			Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
 			Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
