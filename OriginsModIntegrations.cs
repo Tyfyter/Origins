@@ -24,6 +24,12 @@ using Terraria.DataStructures;
 using Mono.Cecil.Cil;
 using Mono.Cecil;
 using Origins.Items;
+using Origins.Items.Other.Consumables;
+using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.Riven.World_Cracker;
+using AltLibrary.Common.Systems;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
+using AltLibrary.Common.AltBiomes;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -91,6 +97,78 @@ namespace Origins {
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
 		static bool DefaultCheckAprilFools() => DateTime.Today.Month == 4 && DateTime.Today.Day == 1;
+		public static void PostSetupContent(Mod mod) {
+			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
+				static Func<bool> IfEvil<T>() where T : AltBiome {
+					AltBiome biome = ModContent.GetInstance<T>();
+					return () => Main.drunkWorld || WorldBiomeManager.GetWorldEvil(true) == biome || ModLoader.HasMod("BothEvils");
+				}
+				bossChecklist.Call("LogBoss",
+					mod,
+					nameof(Defiled_Amalgamation).Replace("_", ""),
+					3f,
+					() => NPC.downedBoss2,
+					ModContent.NPCType<Defiled_Amalgamation>(),
+					new Dictionary<string, object> {
+						["availability"] = IfEvil<Defiled_Wastelands_Alt_Biome>()
+					}
+				);
+				Asset<Texture2D> wcHeadTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
+				Asset<Texture2D> wcBodyTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Body).GetDefaultTMLName());
+				Asset<Texture2D> wcTailTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Tail).GetDefaultTMLName());
+				Asset<Texture2D> wcArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
+				bossChecklist.Call("LogBoss",
+					mod,
+					"WorldCracker",
+					3f,
+					() => NPC.downedBoss2,
+					new List<int> { ModContent.NPCType<World_Cracker_Head>(), ModContent.NPCType<World_Cracker_Body>(), ModContent.NPCType<World_Cracker_Tail>() },
+					new Dictionary<string, object> {
+						["availability"] = IfEvil<Riven_Hive_Alt_Biome>(),
+						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+							void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
+								switch (@switch) {
+									case 0:
+									spriteBatch.Draw(
+										baseTexture,
+										position,
+										null,
+										color,
+										MathHelper.PiOver2,
+										baseTexture.Size() * 0.5f,
+										1,
+										0,
+									0);
+									break;
+									case 1:
+									Vector2 halfSize = frame.Size() / 2;
+									spriteBatch.Draw(
+										wcArmorTexture.Value,
+										position,
+										frame,
+										color,
+										MathHelper.PiOver2,
+										halfSize,
+										1,
+										0,
+									0);
+									break;
+								}
+							}
+							Vector2 center = area.Center();
+							Vector2 diff = new(0, 48);
+							for (int j = 0; j < 2; j++) {
+								DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
+								for (int i = 3; i-- > -2;) {
+									DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
+								}
+								DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
+							}
+						}
+					}
+				);
+			}
+		}
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicatorMod) && phaseIndicatorMod.RequestAssetIfExists("PhaseIndicator", out Asset<Texture2D> phaseIndicatorTexture)) {
 				instance.phaseIndicator = phaseIndicatorTexture;
@@ -167,6 +245,15 @@ namespace Origins {
 				}
 			}
 			if (ModLoader.HasMod("ferventarms")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.FerventArms"));
+			if (ModLoader.TryGetMod("Munchies", out Mod munchies)) {
+				munchies.Call("AddSingleConsumable",
+					Origins.instance,
+					"1.4.2",
+					ModContent.GetInstance<Mojo_Injection>(),
+					"player",
+					() => Main.LocalPlayer.OriginPlayer().mojoInjection
+				);
+			}
 		}
 		public void Unload() {
 			instance = null;

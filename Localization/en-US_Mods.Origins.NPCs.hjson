@@ -47,7 +47,12 @@ Rivenator_Head.DisplayName: Mitoworm
 Rivenator_Tail.DisplayName: Mitoworm
 Single_Cellular_Nautilus.DisplayName: Single-Cellular Nautilus
 World_Cracker_Body.DisplayName: World Cracker
-World_Cracker_Head.DisplayName: World Cracker
+
+World_Cracker_Head: {
+	DisplayName: World Cracker
+	BossChecklistIntegration.EntryName: World Cracker
+}
+
 World_Cracker_Tail.DisplayName: World Cracker
 Bottomfeeder.DisplayName: Bottomfeeder
 Spider_Amoeba.DisplayName: Spider Amoeba
