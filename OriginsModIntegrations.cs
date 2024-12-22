@@ -30,6 +30,9 @@ using Origins.NPCs.Riven.World_Cracker;
 using AltLibrary.Common.Systems;
 using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using AltLibrary.Common.AltBiomes;
+using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Tiles.BossDrops;
+using Origins.Items.Pets;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -110,7 +113,15 @@ namespace Origins {
 					() => NPC.downedBoss2,
 					ModContent.NPCType<Defiled_Amalgamation>(),
 					new Dictionary<string, object> {
-						["availability"] = IfEvil<Defiled_Wastelands_Alt_Biome>()
+						["availability"] = IfEvil<Defiled_Wastelands_Alt_Biome>(),
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Defiled_Amalgamation.BossChecklistIntegration.SpawnCondition"),
+						["spawnItems"] = ModContent.ItemType<Nerve_Impulse_Manipulator>(),
+						["collectibles"] = new List<int> {
+							ModContent.ItemType<Defiled_Amalgamation_Relic_Item>(),
+							ModContent.ItemType<Defiled_Amalgamation_Trophy_Item>(),
+							ModContent.ItemType<Defiled_Amalgamation_Mask>(),
+							ModContent.ItemType<Blockus_Tube>(),
+						}
 					}
 				);
 				Asset<Texture2D> wcHeadTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
@@ -125,6 +136,14 @@ namespace Origins {
 					new List<int> { ModContent.NPCType<World_Cracker_Head>(), ModContent.NPCType<World_Cracker_Body>(), ModContent.NPCType<World_Cracker_Tail>() },
 					new Dictionary<string, object> {
 						["availability"] = IfEvil<Riven_Hive_Alt_Biome>(),
+						["spawnItems"] = ModContent.ItemType<Sus_Ice_Cream>(),
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.World_Cracker_Head.BossChecklistIntegration.SpawnCondition"),
+						["collectibles"] = new List<int> {
+							ModContent.ItemType<World_Cracker_Relic_Item>(),
+							ModContent.ItemType<World_Cracker_Trophy_Item>(),
+							ModContent.ItemType<World_Cracker_Mask>(),
+							ModContent.ItemType<Fleshy_Globe>(),
+						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
 							void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
 								switch (@switch) {
