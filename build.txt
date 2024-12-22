@@ -1,9 +1,9 @@
 author = Moonlight Glint and chrersis
-version = 0.4.4
+version = 0.4.4.1
 displayName = Terraria Origins
 
 buildIgnore = *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Music\Legacy\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
 includePDB = false
 sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes
 modReferences = AltLibrary, BetterDialogue, PegasusLib
-weakReferences = ThoriumMod
+weakReferences = ThoriumMod, CalamityMod

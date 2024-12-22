@@ -262,32 +262,12 @@ namespace Origins.Items {
 			List<IItemDropRule> dropRules = itemLoot.Get(false);
 			switch (item.type) {
 				case ItemID.WallOfFleshBossBag: {
-					bool foundEmblem = false;
-					bool foundWeapon = false;
-					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-					dropRule.dropIds.Contains(ItemID.WarriorEmblem));
-					if (rules.Any()) {
-						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
-						if (rule is not null) {
-							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-							rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
-							foundEmblem = true;
-						}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.WarriorEmblem, ModContent.ItemType<Exploder_Emblem>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Emblem"), Lang.GetItemName(item.type)));
 					}
-					rules = dropRules.Where((r) =>
-					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-					dropRule.dropIds.Contains(ItemID.BreakerBlade));
-					if (rules.Any()) {
-						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
-						if (rule is not null) {
-							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-							rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
-							foundWeapon = true;
-						}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.BreakerBlade, ModContent.ItemType<Thermite_Launcher>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
 					}
-					if (!foundEmblem) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Emblem"), Lang.GetItemName(item.type)));
-					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
 					break;
 				}
 				case ItemID.EaterOfWorldsBossBag: {
@@ -299,14 +279,9 @@ namespace Origins.Items {
 					break;
 				}
 				case ItemID.QueenBeeBossBag: {
-					bool foundWeapon = false;
-					OneFromOptionsNotScaledWithLuckDropRule rule = dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(r => r.dropIds.Contains(ItemID.BeeGun));
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Bee_Afraid_Incantation>();
-						foundWeapon = true;
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.BeeGun, ModContent.ItemType<Bee_Afraid_Incantation>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
 					}
-					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
 					break;
 				}
 				case ItemID.LockBox: {

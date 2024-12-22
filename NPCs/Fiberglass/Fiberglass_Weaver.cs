@@ -236,7 +236,7 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
 			if (legs is null) return;
-			Rectangle legHitbox = new Rectangle(-4, -4, 8, 8);
+			Rectangle legHitbox = new(-4, -4, 8, 8);
 			for (int i = 0; i < 8; i++) {
 				Rectangle hitbox = legHitbox;
 				Vector2 legStart = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
