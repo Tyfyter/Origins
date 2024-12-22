@@ -301,7 +301,7 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void OnKill() {
 			ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver = true;
-			if (Main.netMode == NetmodeID.MultiplayerClient) NetMessage.SendData(MessageID.WorldData);
+			NetMessage.SendData(MessageID.WorldData);
 		}
 	}
 	public class Fiberglass_Thread : ModProjectile {
