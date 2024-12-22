@@ -7,11 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Shaped_Glass : ModItem {
-        public string[] Categories => [
-            "BossSummon"
-        ];
-        public override void SetStaticDefaults() {
+	public class Shaped_Glass : ModItem {
+		public string[] Categories => [
+			"BossSummon"
+		];
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 1;
 		}
@@ -20,17 +20,17 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			if (player.InModBiome<Fiberglass_Undergrowth>() && !NPC.AnyNPCs(ModContent.NPCType<Fiberglass_Weaver>())) {
-                SoundEngine.PlaySound(SoundID.Roar);
+				SoundEngine.PlaySound(SoundID.Roar);
 				player.SpawnBossOn(ModContent.NPCType<Fiberglass_Weaver>());
 				return true;
 			}
 			return false;
 		}
-        public override void AddRecipes() {
-            CreateRecipe()
-            .AddIngredient<Fiberglass_Item>(12)
-            .AddTile(TileID.WorkBenches)
-            .Register();
-        }
-    }
+		public override void AddRecipes() {
+			/*CreateRecipe()
+			.AddIngredient<Fiberglass_Item>(12)
+			.AddTile(TileID.WorkBenches)
+			.Register();*/
+		}
+	}
 }

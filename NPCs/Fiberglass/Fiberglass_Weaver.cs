@@ -299,6 +299,10 @@ namespace Origins.NPCs.Fiberglass {
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
 			}
 		}
+		public override void OnKill() {
+			ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver = true;
+			if (Main.netMode == NetmodeID.MultiplayerClient) NetMessage.SendData(MessageID.WorldData);
+		}
 	}
 	public class Fiberglass_Thread : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";

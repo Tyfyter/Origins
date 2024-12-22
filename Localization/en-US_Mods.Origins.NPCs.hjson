@@ -6,7 +6,7 @@ Chunky_Slime.DisplayName: Chunky Slime
 
 Defiled_Amalgamation: {
 	DisplayName: "{§Defiled} Amalgamation"
-	BossChecklistIntegration.SpawnCondition: Use [i:Origins/Nerve_Impulse_Manipulator] or break 3 Defiled Fissures in a {§Defiled_Wastelands} chasm.
+	BossChecklistIntegration.SpawnCondition: Use [i:Origins/Nerve_Impulse_Manipulator] or break 3 {§Defiled} Fissures in a {§Defiled_Wastelands} chasm.
 }
 
 Defiled_Brute.DisplayName: "{§Defiled} Krusher"
@@ -27,7 +27,12 @@ Shattered_Mummy.DisplayName: Shattered Mummy
 Enchanted_Fiberglass_Bow.DisplayName: Enchanted Fiberglass Bow
 Enchanted_Fiberglass_Pistol.DisplayName: Enchanted Fiberglass Pistol
 Enchanted_Fiberglass_Sword.DisplayName: Enchanted Fiberglass Sword
-Fiberglass_Weaver.DisplayName: Fiberglass Weaver
+
+Fiberglass_Weaver: {
+	DisplayName: Fiberglass Weaver
+	BossChecklistIntegration.SpawnCondition: Use [i:Origins/Shaped_Glass], or randomly in the Fiberglass Undergrowth.
+}
+
 Swarmer.DisplayName: Swarmer
 Buckethead_Zombie.DisplayName: Buckethead Zombie
 Conehead_Zombie.DisplayName: Conehead Zombie

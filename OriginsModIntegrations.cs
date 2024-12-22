@@ -33,6 +33,9 @@ using AltLibrary.Common.AltBiomes;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Tiles.BossDrops;
 using Origins.Items.Pets;
+using Origins.NPCs.Fiberglass;
+using Origins.NPCs;
+using PegasusLib.Graphics;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -182,6 +185,30 @@ namespace Origins {
 									DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
 								}
 								DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
+							}
+						}
+					}
+				);
+				Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
+				bossChecklist.Call("LogBoss",
+					mod,
+					nameof(Fiberglass_Weaver).Replace("_", ""),
+					2f,
+					() => ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver,
+					ModContent.NPCType<Fiberglass_Weaver>(),
+					new Dictionary<string, object> {
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
+						["spawnItems"] = ModContent.ItemType<Shaped_Glass>(),
+						["collectibles"] = new List<int> {
+							ModContent.ItemType<Fiberglass_Weaver_Head>()
+						},
+						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+							SpriteBatchState state = spriteBatch.GetState();
+							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+							try {
+								spriteBatch.Draw(texture.Value, area.Center(), null, color, 0, texture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+							} finally {
+								spriteBatch.Restart(state);
 							}
 						}
 					}
