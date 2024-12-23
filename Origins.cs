@@ -42,6 +42,7 @@ using MonoMod.Cil;
 using Origins.Items.Tools;
 using Microsoft.Xna.Framework.Audio;
 using Origins.Buffs;
+using PegasusLib;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -202,6 +203,7 @@ namespace Origins {
 			}
 			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
 			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
+			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
 		}
@@ -565,6 +567,7 @@ namespace Origins {
 			Music.LoadMusic();
 
 			Main.OnPostDraw += IncrementFrameCount;
+			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 #if DEBUG
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);

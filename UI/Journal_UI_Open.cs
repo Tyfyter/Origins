@@ -17,13 +17,10 @@ using System.Text;
 using Origins.Journal;
 using Terraria.Graphics.Shaders;
 using Origins.Questing;
-using Origins.Items.Other.Dyes;
 using PegasusLib;
 using PegasusLib.Graphics;
-using static System.Net.Mime.MediaTypeNames;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
-using System.Xml.Linq;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -622,6 +619,7 @@ namespace Origins.UI {
 			memoPage_cursorPosition += clipboard.Length;
 		}
 		private Vector2 DrawPageForEditing(SpriteBatch spriteBatch, DynamicSpriteFont font, Vector2 position, Color baseColor, float rotation, Vector2 origin, Vector2 baseScale, float maxWidth) {
+			WrappingTextSnippetSetup.SetWrappingData(position, maxWidth);
 			int num = -1;
 			Vector2 mousePos = Main.MouseScreen;
 			Vector2 currentPosition = position;
@@ -718,11 +716,18 @@ namespace Origins.UI {
 				color = textSnippet.GetVisibleColor();
 				float scale = textSnippet.Scale;
 				if (textSnippet.UniqueDraw(justCheckingString: false, out Vector2 size, spriteBatch, currentPosition, color, baseScale.X * scale)) {
-					if (mousePos.Between(currentPosition, currentPosition + size)) {
+					if (textSnippet is WrappingTextSnippet wrappingSnippet ? wrappingSnippet.IsHovered : mousePos.Between(currentPosition, currentPosition + size)) {
 						num = i;
 					}
 					currentPosition.X += size.X;
 					result.X = Math.Max(result.X, currentPosition.X);
+					if (maxWidth != -1) {
+						float lineSpacing = font.LineSpacing * scale;
+						while (currentPosition.X - position.X > maxWidth) {
+							currentPosition.X -= maxWidth;
+							currentPosition.Y += lineSpacing;
+						}
+					}
 					charIndex += textSnippet.TextOriginal.Length;
 					DoFindClickPos(charIndex, currentPosition);
 					continue;
