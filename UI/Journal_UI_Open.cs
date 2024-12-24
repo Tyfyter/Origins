@@ -38,7 +38,6 @@ namespace Origins.UI {
 		Journal_UI_Mode lastMode = Journal_UI_Mode.Normal_Page;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
-		const bool tabLayout = true;
 		Color inkColor;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
