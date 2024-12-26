@@ -233,7 +233,7 @@ namespace Origins.Items.Weapons.Melee {
 				case 0:
 				player.velocity = Vector2.Lerp(
 					Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor),
-					Projectile.velocity * 3f,
+					Projectile.velocity * 2.5f,
 					MathHelper.Lerp(swingFactor, 0, swingFactor)
 				);
 				break;
@@ -241,8 +241,16 @@ namespace Origins.Items.Weapons.Melee {
 				player.velocity = Vector2.Lerp(
 					player.velocity,
 					Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor * swingFactor),
-					MathHelper.Lerp(swingFactor * swingFactor, 0, swingFactor)
+					MathHelper.Lerp(swingFactor * swingFactor, 0, swingFactor * swingFactor)
 				);
+				if (player.itemTime < 15) {
+					player.immune = true;
+					player.immuneNoBlink = true;
+					for (int i = 0; i < player.hurtCooldowns.Length; i++) {
+						if (player.hurtCooldowns[i] < 2) player.hurtCooldowns[i] = 2;
+						if (player.immuneTime < player.hurtCooldowns[i]) player.immuneTime = player.hurtCooldowns[i];
+					}
+				}
 				break;
 			}
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
