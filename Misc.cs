@@ -1668,6 +1668,48 @@ namespace Origins {
 			if (self is Player player) return player.fullRotation;
 			return 0f;
 		}
+		public static void DrawFlamethrower(this Projectile projectile, Color color1, Color color2, Color color3, Color color4, bool flag = true, float scale = 1f) {
+			float num = 60f;
+			float num2 = 12f;
+			float fromMax = num + num2;
+			Texture2D value = TextureAssets.Projectile[projectile.type].Value;
+			float num3 = 0.35f;
+			float num4 = 0.7f;
+			float num5 = 0.85f;
+			float num6 = ((projectile.localAI[0] > num - 10f) ? 0.175f : 0.2f);
+			int verticalFrames = 7;
+			float num9 = Utils.Remap(projectile.localAI[0], num, fromMax, 1f, 0f);
+			float num10 = Math.Min(projectile.localAI[0], 20f);
+			float num11 = Utils.Remap(projectile.localAI[0], 0f, fromMax, 0f, 1f);
+			float num12 = Utils.Remap(num11, 0.2f, 0.5f, 0.25f, 1f);
+			Rectangle rectangle = (flag ? value.Frame(1, verticalFrames, 0, 3) : value.Frame(1, verticalFrames, 0, (int)Utils.Remap(num11, 0.5f, 1f, 3f, 5f)));
+			if (num11 >= 1f) return;
+			for (int i = 0; i < 2; i++) {
+				for (float num13 = 1f; num13 >= 0f; num13 -= num6) {
+					Color obj = ((num11 < 0.1f) ? Color.Lerp(Color.Transparent, color1, Utils.GetLerpValue(0f, 0.1f, num11, clamped: true)) : ((num11 < 0.2f) ? Color.Lerp(color1, color2, Utils.GetLerpValue(0.1f, 0.2f, num11, clamped: true)) : ((num11 < num3) ? color2 : ((num11 < num4) ? Color.Lerp(color2, color3, Utils.GetLerpValue(num3, num4, num11, clamped: true)) : ((num11 < num5) ? Color.Lerp(color3, color4, Utils.GetLerpValue(num4, num5, num11, clamped: true)) : ((!(num11 < 1f)) ? Color.Transparent : Color.Lerp(color4, Color.Transparent, Utils.GetLerpValue(num5, 1f, num11, clamped: true))))))));
+					float num14 = (1f - num13) * Utils.Remap(num11, 0f, 0.2f, 0f, 1f);
+					Vector2 vector = projectile.Center - Main.screenPosition + projectile.velocity * (0f - num10) * num13;
+					Color color5 = obj * num14;
+					Color color6 = color5;
+					if (flag) {
+						color6.A = (byte)Math.Min(color5.A + 80f * num14, 255f);
+					}
+					float num15 = 1f / num6 * (num13 + 1f);
+					float num16 = projectile.rotation + num13 * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly * num15 * 2f;
+					float num17 = projectile.rotation - num13 * MathHelper.PiOver2 - Main.GlobalTimeWrappedHourly * num15 * 2f;
+					switch (i) {
+						case 0:
+						Main.EntitySpriteDraw(value, vector + projectile.velocity * (0f - num10) * num6 * 0.5f, rectangle, color6 * num9 * 0.25f, num16 + (float)Math.PI / 4f, rectangle.Size() / 2f, num12 * scale, SpriteEffects.None);
+						Main.EntitySpriteDraw(value, vector, rectangle, color6 * num9, num17, rectangle.Size() / 2f, num12 * scale, SpriteEffects.None);
+						break;
+						case 1:
+						Main.EntitySpriteDraw(value, vector + projectile.velocity * (0f - num10) * num6 * 0.2f, rectangle, color5 * num9 * 0.25f, num16 + (float)Math.PI / 2f, rectangle.Size() / 2f, num12 * 0.75f * scale, SpriteEffects.None);
+						Main.EntitySpriteDraw(value, vector, rectangle, color5 * num9, num17 + (float)Math.PI / 2f, rectangle.Size() / 2f, num12 * 0.75f * scale, SpriteEffects.None);
+						break;
+					}
+				}
+			}
+		}
 		//named for the author of https://www.reddit.com/r/learnmath/comments/rrz697/topology_efficiently_create_a_set_of_random/
 		public static List<Vector2> FelisCatusSampling(Rectangle area, int maxCount, float minSpread, float maxSpread) {
 			List<Vector2> points = new();

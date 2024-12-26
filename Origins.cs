@@ -1,6 +1,4 @@
-global using Vector2 = Microsoft.Xna.Framework.Vector2;
-global using Color = Microsoft.Xna.Framework.Color;
-using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Origins.Gores.NPCs;
