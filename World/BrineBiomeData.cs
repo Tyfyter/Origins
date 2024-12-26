@@ -51,7 +51,7 @@ namespace Origins.World.BiomeData {
 					if (!cells.Any((v) => (v - pos).LengthSquared() < intolerance * intolerance)) {
 						SmallCave(
 							pos.X, pos.Y,
-							genRand.NextFloat(1.1f, 1.2f) * scale,
+							genRand.NextFloat(1.125f, 1.225f) * scale,
 							OriginExtensions.Vec2FromPolar(totalAngle, MathF.Pow(genRand.NextFloat(0.25f, 1f), 1.5f))
 						);
 						cells.Add(pos);
@@ -292,7 +292,6 @@ namespace Origins.World.BiomeData {
 				for (int x = (int)Math.Floor(i - totalSize); x < (int)Math.Ceiling(i + totalSize); x++) {
 					for (int y = (int)Math.Ceiling(j - totalSize); y < (int)Math.Floor(j + totalSize); y++) {
 						tile = Framing.GetTileSafely(x, y);
-						if (tile.HasTile && !WorldGen.CanKillTile(x, y)) continue;
 						Vector2 diff = new(y - j, x - i);
 						float distSQ = diff.LengthSquared() * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
 						float dist = (float)Math.Sqrt(distSQ);
@@ -300,12 +299,16 @@ namespace Origins.World.BiomeData {
 						if (dist > 20 * sizeMult) {
 							continue;
 						}
+						if (Main.tileFrameImportant[tile.TileType] || Main.tileSolidTop[tile.TileType] || !Main.tileSolid[tile.TileType]) {
+							tile.WallType = stoneWallID;
+							continue;
+						}
 						if (tile.WallType != stoneWallID) {
 							tile.ResetToType(stoneID);
 						}
 						tile.WallType = stoneWallID;
 						if (dist < 20 * sizeMult - 10f) {
-							tile.HasTile = false;
+							if (WorldGen.CanKillTile(x, y)) tile.HasTile = false;
 						} else if (dist < 20 * sizeMult - 9f) {
 							tile.ResetToType(genRand.NextBool(5) ? TileID.Mud : mossID);
 						} else if (dist < 20 * sizeMult - 7f) {
