@@ -282,9 +282,11 @@ namespace Origins.NPCs {
 			if (tornCurrentSeverity > 0) {
 				modifiers.FinalDamage /= 1 - tornCurrentSeverity;
 			}
-			if (npc.GetGlobalNPC<OriginGlobalNPC>().barnacleBuff) modifiers.Defense += 0.25f;
+			if (barnacleBuff) {
+				modifiers.Defense += 0.25f;
+				modifiers.Defense.Flat += 5;
+			}
 			if (amberDebuff) modifiers.Defense *= 0.5f;
-			if (barnacleBuff) modifiers.Defense.Flat += 5;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (projectile.IsMinionOrSentryRelated) {

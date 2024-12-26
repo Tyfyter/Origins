@@ -120,7 +120,7 @@ namespace Origins.NPCs {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {
-				modifiers.SourceDamage *= 1.7f;
+				modifiers.SourceDamage *= Main.masterMode ? 1.5f: (Main.expertMode ? 1.55f : 1.6f);
 			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
