@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
+	[LegacyName("Sulphur_Stone")]
 	public class Dolomite : OriginTile {
         public string[] Categories => [
             "Stone"

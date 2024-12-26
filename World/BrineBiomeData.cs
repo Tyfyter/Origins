@@ -39,11 +39,11 @@ namespace Origins.World.BiomeData {
 				maxGenY = int.MinValue;
 				float angle0 = genRand.NextFloat(MathHelper.TwoPi);
 				float scale = 1f;
-				List<Vector2> cells = new();
-				HashSet<Vector2> outerCells = new();
+				List<Vector2> cells = [];
+				HashSet<Vector2> outerCells = [];
 				for (float angle1 = genRand.NextFloat(6f, 8f); angle1 > 0; angle1 -= genRand.NextFloat(0.5f, 0.7f)) {
 					float totalAngle = angle0 + angle1;
-					float length = genRand.NextFloat(24f, 48f) * scale;
+					float length = genRand.NextFloat(20f, 40f) * scale;
 					genCave:
 					Vector2 offset = OriginExtensions.Vec2FromPolar(totalAngle, length * scale);
 					Vector2 pos = new(i + offset.X, j + offset.Y);
@@ -79,8 +79,7 @@ namespace Origins.World.BiomeData {
 						if (tile.HasTile && !WorldGen.CanKillTile(x, y)) continue;
 						Vector2 diff = new(y - j, x - i);
 						float distSQ = diff.LengthSquared() * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
-						float dist = (float)Math.Sqrt(distSQ);
-						if (dist > 55) {
+						if (distSQ > 55 * 55) {
 							continue;
 						}
 						if (tile.WallType != stoneWallID) {
