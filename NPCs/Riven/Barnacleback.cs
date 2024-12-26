@@ -34,24 +34,32 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			float rate = Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BarnBack;
 			if (rate == 0) return 0; // skip counting other barnaclebacks if it's already not going to spawn
 			int count = 1;
+			int maxCount = 2;
+			float bonusCount = 0;
+			if (!Main.expertMode) bonusCount += 0.5f;
+			if (!Main.masterMode) {
+				bonusCount += 0.5f;
+				maxCount = 1;
+			}
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.type == Type) count++;
+				if (count + 1 > maxCount) return 0;
 			}
-			return rate / (count * count);
-        }
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			return rate / (count + bonusCount);
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 2, 5));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Avulsion>(), 37));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Avulsion>(), 37));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}

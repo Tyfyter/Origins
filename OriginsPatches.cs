@@ -568,7 +568,7 @@ namespace Origins {
 					damage.Flat *= FlatDamageMultiplier[item.type];
 				}
 			);
-			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
+			//IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
 				try {
 					if (self.Shader is not null) orig(self);

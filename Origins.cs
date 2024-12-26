@@ -42,6 +42,7 @@ using MonoMod.Cil;
 using Origins.Items.Tools;
 using Microsoft.Xna.Framework.Audio;
 using Origins.Buffs;
+using PegasusLib;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -162,7 +163,7 @@ namespace Origins {
 			RiftBodyArmorID = ModContent.GetInstance<Bleeding_Obsidian_Breastplate>().Item.bodySlot;
 			RiftLegsArmorID = ModContent.GetInstance<Bleeding_Obsidian_Greaves>().Item.legSlot;
 			#endregion
-			Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
+			//Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
 			Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
 			Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
 			Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
@@ -202,6 +203,7 @@ namespace Origins {
 			}
 			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
 			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
+			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
 		}
@@ -565,6 +567,7 @@ namespace Origins {
 			Music.LoadMusic();
 
 			Main.OnPostDraw += IncrementFrameCount;
+			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 #if DEBUG
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
@@ -636,6 +639,7 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			OriginsModIntegrations.PostSetupContent(this);
 			int blindDebuff = ModContent.BuffType<Blind_Debuff>();
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];

@@ -3,7 +3,12 @@
 // Cicada_3301.DisplayName: Cicada 3301
 // Ancient_Defiled_Cyclops.DisplayName: Ancient {§Defiled} Cyclops
 // Chunky_Slime.DisplayName: Chunky Slime
-// Defiled_Amalgamation.DisplayName: "{§Defiled} Amalgamation"
+
+Defiled_Amalgamation: {
+	// DisplayName: "{§Defiled} Amalgamation"
+	// BossChecklistIntegration.SpawnCondition: Use [i:Origins/Nerve_Impulse_Manipulator] or break 3 {§Defiled} Fissures in a {§Defiled_Wastelands} chasm.
+}
+
 // Defiled_Brute.DisplayName: "{§Defiled} Krusher"
 // Defiled_Cyclops.DisplayName: "{§Defiled} Cyclops"
 // Defiled_Digger_Body.DisplayName: "{§Defiled} Digger"
@@ -22,7 +27,12 @@
 // Enchanted_Fiberglass_Bow.DisplayName: Enchanted Fiberglass Bow
 // Enchanted_Fiberglass_Pistol.DisplayName: Enchanted Fiberglass Pistol
 // Enchanted_Fiberglass_Sword.DisplayName: Enchanted Fiberglass Sword
-// Fiberglass_Weaver.DisplayName: Fiberglass Weaver
+
+Fiberglass_Weaver: {
+	// DisplayName: Fiberglass Weaver
+	// BossChecklistIntegration.SpawnCondition: Use [i:Origins/Shaped_Glass], or randomly in the Fiberglass Undergrowth.
+}
+
 // Swarmer.DisplayName: Swarmer
 // Buckethead_Zombie.DisplayName: Buckethead Zombie
 // Conehead_Zombie.DisplayName: Conehead Zombie
@@ -47,7 +57,16 @@
 // Rivenator_Tail.DisplayName: Mitoworm
 // Single_Cellular_Nautilus.DisplayName: Single-Cellular Nautilus
 // World_Cracker_Body.DisplayName: World Cracker
-// World_Cracker_Head.DisplayName: World Cracker
+
+World_Cracker_Head: {
+	// DisplayName: World Cracker
+
+	BossChecklistIntegration: {
+		// EntryName: World Cracker
+		// SpawnCondition: Use [i:Origins/Sus_Ice_Cream] or break 3 Gel Blisters in a {§Riven_Hive} chasm.
+	}
+}
+
 // World_Cracker_Tail.DisplayName: World Cracker
 // Bottomfeeder.DisplayName: Bottomfeeder
 // Spider_Amoeba.DisplayName: Spider Amoeba

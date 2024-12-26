@@ -98,7 +98,7 @@ namespace Origins.World.BiomeData {
 			public const float AmebSlime = 0.65f;
 			public const float Fighter = 1;
 			public const float Flajelly = 0.37f;
-			public const float BarnBack = 0.25f;
+			public const float BarnBack = 0.15f;
 			public const float Amoebeye = 0.25f;
 			public const float BlisterBoi = 0.75f;
 			public const float Seashell = 0.6f;

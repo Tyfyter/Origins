@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Other;
 using Origins.World;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -53,14 +54,9 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.QueenBee: {
 					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Emergency_Bee_Canister>(), 4));
-					bool foundWeapon = false;
-					OneFromOptionsNotScaledWithLuckDropRule rule = dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(r => r.dropIds.Contains(ItemID.BeeGun));
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Bee_Afraid_Incantation>();
-						foundWeapon = true;
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.BeeGun, ModContent.ItemType<Bee_Afraid_Incantation>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
 					}
-					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
 					break;
 				}
 				case NPCID.Deerclops:
@@ -82,37 +78,12 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.WallofFlesh: {
 					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Scribe_of_the_Meat_God>(), 4));
-					bool foundEmblem = false;
-					bool foundWeapon = false;
-					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-					r is LeadingConditionRule conditionRule &&
-					conditionRule.ChainedRules.Count != 0 &&
-					conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-					dropRule.dropIds.Contains(ItemID.WarriorEmblem));
-					if (rules.Any()) {
-						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
-						if (rule is not null) {
-							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-							rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
-							woFEmblemsCount = rule.dropIds.Length;
-							foundEmblem = true;
-						}
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.WarriorEmblem, ModContent.ItemType<Exploder_Emblem>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Emblem"), Lang.GetNPCName(npc.netID)));
 					}
-					rules = dropRules.Where((r) =>
-					r is LeadingConditionRule conditionRule &&
-					conditionRule.ChainedRules.Count != 0 &&
-					conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-					dropRule.dropIds.Contains(ItemID.BreakerBlade));
-					if (rules.Any()) {
-						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
-						if (rule is not null) {
-							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-							rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
-							foundWeapon = true;
-						}
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.BreakerBlade, ModContent.ItemType<Thermite_Launcher>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
 					}
-					if (!foundEmblem) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Emblem"), Lang.GetNPCName(npc.netID)));
-					if (!foundWeapon) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
 					break;
 				}
 
@@ -249,6 +220,36 @@ namespace Origins.NPCs {
 				harpoonRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Harpoon>(), 1, 15, 99));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 34));
 			}
+		}
+		public static bool AddToOneFromOptionsRule(List<IItemDropRule> dropRules, int targetContains, params int[] items) {
+			if (dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsNotScaledWithLuckDropRule rule) {
+				Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
+				for (int i = 0; i < items.Length; i++) {
+					rule.dropIds[^(i+ 1)] = items[i];
+				}
+				return true;
+			}
+			if (ModLoader.HasMod("CalamityMod") && AddToOneFromOptionsRuleCalamity(dropRules, targetContains, items)) return true;
+			return false;
+		}
+		static Predicate<IItemDropRule> DropsItem(int itemType) => dropRule => {
+			List<DropRateInfo> dropRates = [];
+			dropRule.ReportDroprates(dropRates, new DropRateInfoChainFeed(1));
+			for (int i = 0; i < dropRates.Count; i++) {
+				if (dropRates[i].itemId == itemType) return true;
+			}
+			return false;
+		};
+		[JITWhenModsEnabled("CalamityMod")]
+		static bool AddToOneFromOptionsRuleCalamity(List<IItemDropRule> dropRules, int targetContains, params int[] items) {
+			if (dropRules.FindDropRule<CalamityMod.DropHelper.AllOptionsAtOnceWithPityDropRule>(DropsItem(targetContains)) is CalamityMod.DropHelper.AllOptionsAtOnceWithPityDropRule rule) {
+				Array.Resize(ref rule.stacks, rule.stacks.Length + items.Length);
+				for (int i = 0; i < items.Length; i++) {
+					rule.stacks[^(i + 1)] = items[i];
+				}
+				return true;
+			}
+			return false;
 		}
 		public override void OnKill(NPC npc) {
 			switch (npc.type) {

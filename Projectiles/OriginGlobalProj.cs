@@ -197,11 +197,6 @@ namespace Origins.Projectiles {
 			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = Main.player[projectile.owner].OriginPlayer().felnumShock;
 		}
 		public override void AI(Projectile projectile) {
-			switch (projectile.aiStyle) {
-				case -1:
-				projectile.rotation = projectile.velocity.ToRotation();
-				break;
-			}
 			if (!isFromMitosis && !hasUsedMitosis && projectile.owner == Main.myPlayer && !ProjectileID.Sets.IsAWhip[projectile.type] && projectile.type != ModContent.ProjectileType<Mitosis_P>()) {
 				for (int i = 0; i < Mitosis_P.mitosises.Count; i++) {
 					if (projectile.Colliding(projectile.Hitbox, Main.projectile[Mitosis_P.mitosises[i]].Hitbox)) {

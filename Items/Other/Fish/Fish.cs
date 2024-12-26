@@ -1,4 +1,6 @@
-﻿using Origins.Items.Materials;
+﻿using AltLibrary.Common.Systems;
+using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -13,7 +15,7 @@ namespace Origins.Items.Other.Fish {
 			Item.DefaultToQuestFish();
 		}
 		public override bool IsAnglerQuestAvailable() {
-			return OriginSystem.HasDefiledWastelands;
+			return WorldBiomeManager.GetWorldEvil(true) == ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();
 		}
 		public override bool IsQuestFish() => true;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
@@ -34,7 +36,7 @@ namespace Origins.Items.Other.Fish {
 			Item.glowMask = glowmask;
 		}
 		public override bool IsAnglerQuestAvailable() {
-			return OriginSystem.HasRivenHive;
+			return WorldBiomeManager.GetWorldEvil(true) == ModContent.GetInstance<Riven_Hive_Alt_Biome>();
 		}
 		public override bool IsQuestFish() => true;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
@@ -47,12 +49,17 @@ namespace Origins.Items.Other.Fish {
 			Item.ResearchUnlockCount = 2;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToQuestFish();
+			Item.maxStack = Item.CommonMaxStack;
+			Item.width = 26;
+			Item.height = 26;
+			Item.rare = ItemRarityID.Orange;
+			Item.value = Item.sellPrice(silver: 20);
+			//Item.DefaultToQuestFish();
 		}
 		public override bool IsAnglerQuestAvailable() {
-			return false; //OriginSystem.WorldEvil == OriginSystem.dusk;
+			return false;
 		}
-		public override bool IsQuestFish() => true;
+		public override bool IsQuestFish() => false;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
 			description = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Description");
 			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Location");
@@ -97,7 +104,7 @@ namespace Origins.Items.Other.Fish {
 			Item.width = 26;
 			Item.height = 26;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(0, 0, 15);
+			Item.value = Item.sellPrice(silver: 15);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.SeafoodDinner)
@@ -122,7 +129,7 @@ namespace Origins.Items.Other.Fish {
 			Item.width = 26;
 			Item.height = 26;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(0, 0, 15);
+			Item.value = Item.sellPrice(silver: 15);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.SeafoodDinner)

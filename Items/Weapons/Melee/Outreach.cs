@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Melee {
                 }
             }
             Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
-            if (projOwner.itemAnimation == 0) {
+            if (projOwner.ItemAnimationEndingOrEnded) {
                 Projectile.Kill();
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);

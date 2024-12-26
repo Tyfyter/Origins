@@ -17,13 +17,10 @@ using System.Text;
 using Origins.Journal;
 using Terraria.Graphics.Shaders;
 using Origins.Questing;
-using Origins.Items.Other.Dyes;
 using PegasusLib;
 using PegasusLib.Graphics;
-using static System.Net.Mime.MediaTypeNames;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
-using System.Xml.Linq;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -41,7 +38,6 @@ namespace Origins.UI {
 		Journal_UI_Mode lastMode = Journal_UI_Mode.Normal_Page;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
-		const bool tabLayout = true;
 		Color inkColor;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
@@ -419,6 +415,7 @@ namespace Origins.UI {
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
 					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
+					bool canEnterWritingMode = true;
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
 							FontAssets.MouseText.Value,
@@ -448,6 +445,7 @@ namespace Origins.UI {
 									if (Main.mouseLeft && Main.mouseLeftRelease) {
 										currentSnippet.OnClick();
 									}
+									if (Main.LocalPlayer.mouseInterface) canEnterWritingMode = false;
 								} else if (mode == Journal_UI_Mode.Custom && Main.mouseLeft && Main.mouseLeftRelease) {
 									SetMemoFocus(i);
 									memoPage_clickPosition = Main.MouseScreen;
@@ -455,7 +453,7 @@ namespace Origins.UI {
 							}
 						}
 					}
-					if (mode == Journal_UI_Mode.Custom && Main.mouseLeft && Main.mouseLeftRelease && (!memoPage_focused || memoPage_selectedSide != i)) {
+					if (mode == Journal_UI_Mode.Custom && canEnterWritingMode && Main.mouseLeft && Main.mouseLeftRelease && (!memoPage_focused || memoPage_selectedSide != i)) {
 						if (Main.mouseX > pagePos.X && Main.mouseX < pagePos.X + (bounds.Width * 0.5f - XMarginTotal) && Main.mouseY > pagePos.Y && Main.mouseY < pagePos.Y + bounds.Height) {
 							SetMemoFocus(i);
 							memoPage_cursorPosition = OriginPlayer.LocalOriginPlayer.journalText[memoPage_selectedSide + pageOffset].Length;
@@ -620,6 +618,7 @@ namespace Origins.UI {
 			memoPage_cursorPosition += clipboard.Length;
 		}
 		private Vector2 DrawPageForEditing(SpriteBatch spriteBatch, DynamicSpriteFont font, Vector2 position, Color baseColor, float rotation, Vector2 origin, Vector2 baseScale, float maxWidth) {
+			WrappingTextSnippetSetup.SetWrappingData(position, maxWidth);
 			int num = -1;
 			Vector2 mousePos = Main.MouseScreen;
 			Vector2 currentPosition = position;
@@ -716,11 +715,18 @@ namespace Origins.UI {
 				color = textSnippet.GetVisibleColor();
 				float scale = textSnippet.Scale;
 				if (textSnippet.UniqueDraw(justCheckingString: false, out Vector2 size, spriteBatch, currentPosition, color, baseScale.X * scale)) {
-					if (mousePos.Between(currentPosition, currentPosition + size)) {
+					if (textSnippet is WrappingTextSnippet wrappingSnippet ? wrappingSnippet.IsHovered : mousePos.Between(currentPosition, currentPosition + size)) {
 						num = i;
 					}
 					currentPosition.X += size.X;
 					result.X = Math.Max(result.X, currentPosition.X);
+					if (maxWidth != -1) {
+						float lineSpacing = font.LineSpacing * scale;
+						while (currentPosition.X - position.X > maxWidth) {
+							currentPosition.X -= maxWidth;
+							currentPosition.Y += lineSpacing;
+						}
+					}
 					charIndex += textSnippet.TextOriginal.Length;
 					DoFindClickPos(charIndex, currentPosition);
 					continue;
