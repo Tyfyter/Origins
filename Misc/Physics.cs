@@ -6,23 +6,16 @@ namespace Origins.Misc {
 	public static class Physics {
 		public abstract class Gravity {
 			public abstract Vector2 Acceleration { get; }
-			public static ConstantGravity NormalGravity => new ConstantGravity(new Vector2(0, 0.06f));
+			public static ConstantGravity NormalGravity => new(new Vector2(0, 0.06f));
 		}
-		public class ConstantGravity : Gravity {
-			public Vector2 acceleration;
+		public class ConstantGravity(Vector2 acceleration) : Gravity {
+			public Vector2 acceleration = acceleration;
 			public override Vector2 Acceleration => acceleration;
-			public ConstantGravity(Vector2 acceleration) {
-				this.acceleration = acceleration;
-			}
 		}
-		public class EntityDirectionGravity : Gravity {
-			public Vector2 acceleration;
-			public Entity entity;
+		public class EntityDirectionGravity(Vector2 acceleration, Entity entity) : Gravity {
+			public Vector2 acceleration = acceleration;
+			public Entity entity = entity;
 			public override Vector2 Acceleration => acceleration * new Vector2(entity.direction, 1);
-			public EntityDirectionGravity(Vector2 acceleration, Entity entity) {
-				this.acceleration = acceleration;
-				this.entity = entity;
-			}
 		}
 		public abstract class AnchorPoint {
 			public abstract Vector2 WorldPosition { get; }
@@ -144,21 +137,13 @@ namespace Origins.Misc {
 				}
 				return delta;
 			}
-			public class Link {
-				public Vector2 position;
-				public Vector2 velocity;
-				public Gravity[] gravity;
-				public float length;
-				public float drag;
-				public float spring;
-				public Link(Vector2 position, Vector2 velocity, float length, Gravity[] gravity = null, float drag = 0.97f, float spring = 0.95f) {
-					this.position = position;
-					this.velocity = velocity;
-					this.gravity = gravity ?? [Gravity.NormalGravity];
-					this.length = length;
-					this.drag = drag;
-					this.spring = spring;
-				}
+			public class Link(Vector2 position, Vector2 velocity, float length, Physics.Gravity[] gravity = null, float drag = 0.97f, float spring = 0.95f) {
+				public Vector2 position = position;
+				public Vector2 velocity = velocity;
+				public Gravity[] gravity = gravity ?? [Gravity.NormalGravity];
+				public float length = length;
+				public float drag = drag;
+				public float spring = spring;
 			}
 		}
 	}

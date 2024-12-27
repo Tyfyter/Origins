@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.NPCs.ExoMechs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Defiled;
@@ -49,18 +50,17 @@ namespace Origins.NPCs.Brine {
 			NPC.height = 20;
 			NPC.catchItem = 0;
 			NPC.friendly = false;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
-			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.HitSound = SoundID.NPCHit19;
+			NPC.DeathSound = SoundID.NPCDeath22;
 			NPC.knockBackResist = 0.65f;
 			NPC.value = 76;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Defiled_Wastelands>().Type
+				ModContent.GetInstance<Brine_Pool>().Type
 			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
-			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Flyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Dragon);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
@@ -68,14 +68,8 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 19));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
 			NPC.TargetClosest();
 			Vector2 direction;
 			if (NPC.HasValidTarget && (NPC.ai[2] % 5) == 0) {
@@ -149,7 +143,7 @@ namespace Origins.NPCs.Brine {
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
 			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[2]) / 60;
-			if (NPC.frameCounter > 1) NPC.frameCounter = 0;
+			if (NPC.frameCounter > 60) NPC.frameCounter = 0;
 			NPC.frame = new Rectangle(0, (26 * (int)(frame * Main.npcFrameCount[Type])) % 182, 94, 26);
 			chains ??= new Physics.Chain[2];
 			for (int i = 0; i < chains.Length; i++) {
@@ -158,7 +152,6 @@ namespace Origins.NPCs.Brine {
 					SeaDragonAnchorPoint anchor = new(this, i);
 					const float spring = 0.5f;
 					Gravity[] gravity = [
-						Gravity.NormalGravity,
 						new SeaDragonStrandGravity(this, i)
 					];
 					switch (i) {
@@ -244,9 +237,9 @@ namespace Origins.NPCs.Brine {
 				for (int j = 0; j < chain.links.Length; j++) {
 					spriteBatch.Draw(
 						strandTexture,
-						chain.links[j].position - Main.screenPosition,
+						chain.links[j].position - screenPos,
 						strandTexture.Value.Frame(5, frameX: j + frameOffset),
-						new(Lighting.GetSubLight(chain.links[j].position)),
+						NPC.IsABestiaryIconDummy ? Color.White : new Color(Lighting.GetSubLight(chain.links[j].position)),
 						(chain.links[j].position - startPoint).ToRotation(),
 						origin,
 						1,
@@ -280,15 +273,18 @@ namespace Origins.NPCs.Brine {
 		public class SeaDragonStrandGravity(Sea_Dragon npc, int index) : Gravity {
 			public override Vector2 Acceleration {
 				get {
-					Vector2 dir = new Vector2(0, npc.NPC.spriteDirection).RotatedBy(npc.NPC.rotation) * 0.8f;
+					Vector2 dir = new Vector2(0, npc.NPC.spriteDirection).RotatedBy(npc.NPC.rotation) * 0.07f;
 					if (index == 0) dir *= -0.5f;
-					switch ((int)npc.NPC.ai[2]) {
-						case 0 or 40:
-						return -dir;
-						case 20:
-						return dir;
+					Vector2 grav = new Vector2(npc.NPC.spriteDirection, 0).RotatedBy(npc.NPC.rotation) * 0.1f;
+					int frame = npc.NPC.IsABestiaryIconDummy ? (int)npc.NPC.frameCounter : (int)npc.NPC.ai[2];
+					const int time = 9;
+					if (frame < time) {
+						return grav - dir;
 					}
-					return Vector2.Zero;
+					if (frame >= 20 && frame < 20 + time) {
+						return grav + dir;
+					}
+					return grav;
 				}
 			}
 		}

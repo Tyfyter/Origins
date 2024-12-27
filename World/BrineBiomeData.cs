@@ -29,6 +29,11 @@ namespace Origins.World.BiomeData {
 		public const int NeededTiles = 250;
 		public const int ShaderTileCount = 75;
 		public static class SpawnRates {
+			public const float Dragon = 0.6f;
+			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate) {
+				if (!spawnInfo.Water) return 0;
+				return spawnInfo.Player.InModBiome<Brine_Pool>() ? rate : 0f;
+			}
 		}
 		public static class Gen {
 			static int minGenX, maxGenX, minGenY, maxGenY;
