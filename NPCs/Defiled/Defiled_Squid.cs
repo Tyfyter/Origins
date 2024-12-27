@@ -56,7 +56,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.BlackInk));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public override bool CanHitNPC(NPC target) {
 			if (DefiledGlobalNPC.NPCTransformations.ContainsKey(target.type)) return false;
@@ -85,7 +85,8 @@ namespace Origins.NPCs.Defiled {
 								if (Mana >= 4f) {
 									NPC.DoFrames(1);
 									NPC.velocity = (NPC.Center - results.NearestNPC.Center).SafeNormalize(NPC.velocity / 8) * 8;
-									Mana -= 4f; Projectile.NewProjectile(
+									Mana -= 4f;
+									Projectile.NewProjectile(
 										NPC.GetSource_FromAI(),
 										NPC.Center,
 										NPC.velocity * -0.5f,

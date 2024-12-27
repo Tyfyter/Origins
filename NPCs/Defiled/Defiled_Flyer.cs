@@ -28,6 +28,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionYOverride = -28,
 				Velocity = 1f
 			};
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);

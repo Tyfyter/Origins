@@ -11,6 +11,7 @@ namespace Origins.NPCs.Defiled {
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BlueSlime, Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crimslime);
