@@ -22,21 +22,12 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Sea_Dragon : Glowing_Mod_NPC {
+	public class Sea_Dragon : Brine_Pool_NPC {
 		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
-		Vector2 TargetPos {
-			get => new(NPC.ai[0], NPC.ai[1]);
-			set {
-				NPC.ai[0] = value.X;
-				NPC.ai[1] = value.Y;
-			}
-		}
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(28, 0),
-				PortraitPositionXOverride = 0,
-				PortraitPositionYOverride = -28,
 				Velocity = 1f
 			};
 		}
@@ -70,43 +61,8 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 		}
 		public override void AI() {
-			NPC.TargetClosest();
+			DoTargeting();
 			Vector2 direction;
-			if (NPC.HasValidTarget && (NPC.ai[2] % 5) == 0) {
-				NPCAimedTarget targetData = NPC.GetTargetData();
-				Vector2 target = targetData.Center;
-				if (CollisionExt.CanHitRay(NPC.Center, target)) {
-					TargetPos = target;
-				} else {
-					Vector2 searchSize = new Vector2(48) * 16;
-					Vector2 searchStart = NPC.Center - searchSize;
-					searchStart = (searchStart / 16).Floor() * 16;
-					Point topLeft = searchStart.ToTileCoordinates();
-					Point bottomRight = (NPC.Center + searchSize).ToTileCoordinates();
-					HashSet<Point> validEnds = [];
-					foreach (Point point in Collision.GetTilesIn(targetData.Hitbox.TopLeft(), targetData.Hitbox.BottomRight())) {
-						validEnds.Add(point);
-					}
-					Point[] path = CollisionExtensions.GridBasedPathfinding(
-						CollisionExtensions.GeneratePathfindingGrid(topLeft, bottomRight, 1, 1),
-						searchSize.ToTileCoordinates(),
-						(target - searchStart).ToTileCoordinates(),
-						validEnds
-					);
-					if (path.Length > 0) {
-						for (int i = 0; i < path.Length && i < 10; i++) {
-							Vector2 pos = path[i].ToWorldCoordinates() + searchStart;
-							if (Collision.CanHitLine(NPC.position, 20, 20, pos - Vector2.One * 10, 20, 20)) {
-								TargetPos = pos;
-							} else {
-								break;
-							}
-						}
-					} else {
-						TargetPos = default;
-					}
-				}
-			}
 			if (NPC.wet) {
 				NPC.noGravity = true;
 				if (TargetPos != default) {
@@ -116,6 +72,7 @@ namespace Origins.NPCs.Brine {
 					float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int dir) * 0.75f;
 					NPC.velocity = NPC.velocity.RotatedBy(diff * dir) * (1 - diff * 0.1f);
 				} else {
+					if (NPC.collideX) NPC.velocity.X = -NPC.direction;
 					NPC.direction = Math.Sign(NPC.velocity.X);
 					if (NPC.direction == 0) NPC.direction = 1;
 					direction = Vector2.UnitX * NPC.direction;
@@ -143,7 +100,7 @@ namespace Origins.NPCs.Brine {
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
 			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[2]) / 60;
-			if (NPC.frameCounter > 60) NPC.frameCounter = 0;
+			if (NPC.frameCounter >= 40) NPC.frameCounter = 0;
 			NPC.frame = new Rectangle(0, (26 * (int)(frame * Main.npcFrameCount[Type])) % 182, 94, 26);
 			chains ??= new Physics.Chain[2];
 			for (int i = 0; i < chains.Length; i++) {

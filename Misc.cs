@@ -1606,6 +1606,10 @@ namespace Origins {
 			}
 			return count != 0 ? sum / count : sum;
 		}
+		public static void SwapClear<T>(ref List<T> working, ref List<T> finalized) {
+			Utils.Swap(ref working, ref finalized);
+			working.Clear();
+		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
 			return new Vector2((float)(magnitude * Math.Cos(theta)), (float)(magnitude * Math.Sin(theta)));
