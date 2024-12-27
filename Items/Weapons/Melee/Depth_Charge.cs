@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Buffs;
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -164,6 +165,9 @@ namespace Origins.Items.Weapons.Melee {
 					}
 				}
 			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;

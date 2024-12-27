@@ -304,6 +304,7 @@ namespace Origins {
 		public bool swarmStatue = false;
 		public bool focusPotion = false;
 		public BrothBase broth = null;
+		public bool cavitationDebuff = false;
 		#endregion
 
 		#region keybinds
@@ -621,6 +622,7 @@ namespace Origins {
 			flaskSalt = false;
 			swarmStatue = false;
 			focusPotion = false;
+			cavitationDebuff = false;
 			broth = null;
 
 			boatRockerAltUse = false;

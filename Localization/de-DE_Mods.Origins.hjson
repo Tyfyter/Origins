@@ -981,6 +981,11 @@ Buffs: {
 		// DisplayName: Blind Debuff
 		// Description: Mods.Origins.Buffs.Blind_Debuff.Description
 	}
+
+	Cavitation_Debuff: {
+		// DisplayName: Cavitation Debuff
+		// Description: Mods.Origins.Buffs.Cavitation_Debuff.Description
+	}
 }
 
 DamageClassName: {

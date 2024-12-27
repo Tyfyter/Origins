@@ -39,6 +39,7 @@ namespace Origins.NPCs {
 		public bool oldSlowDebuff = false;
 		public bool weakShadowflameDebuff = false;
 		public bool soulhideWeakenedDebuff = false;
+		public bool cavitationDebuff = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public bool amberDebuff = false;
@@ -86,6 +87,7 @@ namespace Origins.NPCs {
 			slowDebuff = false;
 			weakShadowflameDebuff = false;
 			soulhideWeakenedDebuff = false;
+			cavitationDebuff = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
@@ -172,6 +174,12 @@ namespace Origins.NPCs {
 						dust.scale *= 0.5f;
 					}
 				}
+			}
+			if (cavitationDebuff) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 66;
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				npc.lifeRegen -= 8;

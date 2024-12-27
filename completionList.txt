@@ -105,10 +105,10 @@ TOWN NPC Quests:
 (X) Goblin Tinkerer - Full Speed Ahead
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
-(#3, ^2) Stylist - Running Dry !!!
-(#3, ^2) Stylist - Slick Styling !!!
+(☻) Stylist - Running Dry !!!
+(☻) Stylist - Slick Styling !!!
 (^) Stylist - To Be Crystal Clear…
-(#3, ^2) Party Girl - Livin' Up the Party !!!
+(☻) Party Girl - Livin' Up the Party !!!
 (^) Zoologist - Save the Critters!
 (^) Zoologist - Not Au-some…
 (^) Zoologist - Under the Starlight
@@ -260,7 +260,7 @@ EVENTS:
 STATUS EFFECTS:
 ---
 (#3, ^2) Assimilation* !!! (Defiled Assimilation change)
-(#, ^2) Cavitation !!!
+(☻) Cavitation !!!
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -639,7 +639,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Crystal Cutters
-(#3, ^2) Depth Charge !!! (Depth Charge now inflicts Cavitation)
+(☻) Depth Charge !!! (Depth Charge now inflicts Cavitation)
 (X) Fair In Square
 (^) Knee Slapper*
 (^) Nematoclaw*

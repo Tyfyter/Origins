@@ -316,6 +316,9 @@ namespace Origins {
 			if (cursedCrown && Player.onFire) {
 				Player.lifeRegen -= 8;
 			}
+			if (cavitationDebuff) {
+				Player.lifeRegen -= 33;
+			}
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
