@@ -1,0 +1,296 @@
+﻿using CalamityMod.Items.Weapons.Magic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Armor.Defiled;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
+using Origins.Misc;
+using Origins.World.BiomeData;
+using PegasusLib;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Origins.Misc.Physics;
+
+namespace Origins.NPCs.Brine {
+	public class Sea_Dragon : Glowing_Mod_NPC {
+		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
+		Vector2 TargetPos {
+			get => new(NPC.ai[0], NPC.ai[1]);
+			set {
+				NPC.ai[0] = value.X;
+				NPC.ai[1] = value.Y;
+			}
+		}
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[NPC.type] = 7;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(28, 0),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = -28,
+				Velocity = 1f
+			};
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.Vulture);
+			NPC.aiStyle = -1;
+			NPC.lifeMax = 48;
+			NPC.defense = 10;
+			NPC.damage = 20;
+			NPC.width = 20;
+			NPC.height = 20;
+			NPC.catchItem = 0;
+			NPC.friendly = false;
+			NPC.HitSound = Origins.Sounds.DefiledHurt;
+			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.knockBackResist = 0.65f;
+			NPC.value = 76;
+			NPC.noGravity = true;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
+			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Flyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
+			]);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
+		}
+		public override void AI() {
+			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
+			NPC.TargetClosest();
+			Vector2 direction;
+			if (NPC.HasValidTarget && (NPC.ai[2] % 5) == 0) {
+				NPCAimedTarget targetData = NPC.GetTargetData();
+				Vector2 target = targetData.Center;
+				if (CollisionExt.CanHitRay(NPC.Center, target)) {
+					TargetPos = target;
+				} else {
+					Vector2 searchSize = new Vector2(48) * 16;
+					Vector2 searchStart = NPC.Center - searchSize;
+					searchStart = (searchStart / 16).Floor() * 16;
+					Point topLeft = searchStart.ToTileCoordinates();
+					Point bottomRight = (NPC.Center + searchSize).ToTileCoordinates();
+					HashSet<Point> validEnds = [];
+					foreach (Point point in Collision.GetTilesIn(targetData.Hitbox.TopLeft(), targetData.Hitbox.BottomRight())) {
+						validEnds.Add(point);
+					}
+					Point[] path = CollisionExtensions.GridBasedPathfinding(
+						CollisionExtensions.GeneratePathfindingGrid(topLeft, bottomRight, 1, 1),
+						searchSize.ToTileCoordinates(),
+						(target - searchStart).ToTileCoordinates(),
+						validEnds
+					);
+					if (path.Length > 0) {
+						for (int i = 0; i < path.Length && i < 10; i++) {
+							Vector2 pos = path[i].ToWorldCoordinates() + searchStart;
+							if (Collision.CanHitLine(NPC.position, 20, 20, pos - Vector2.One * 10, 20, 20)) {
+								TargetPos = pos;
+							} else {
+								break;
+							}
+						}
+					} else {
+						TargetPos = default;
+					}
+				}
+			}
+			if (NPC.wet) {
+				NPC.noGravity = true;
+				if (TargetPos != default) {
+					direction = NPC.DirectionTo(TargetPos);
+					float oldRot = NPC.rotation;
+					GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
+					float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int dir) * 0.75f;
+					NPC.velocity = NPC.velocity.RotatedBy(diff * dir) * (1 - diff * 0.1f);
+				} else {
+					NPC.direction = Math.Sign(NPC.velocity.X);
+					if (NPC.direction == 0) NPC.direction = 1;
+					direction = Vector2.UnitX * NPC.direction;
+					GeometryUtils.AngularSmoothing(ref NPC.rotation, MathHelper.PiOver2 - NPC.direction * MathHelper.PiOver2, 0.1f);
+				}
+				NPC.velocity *= 0.96f;
+				if (++NPC.ai[2] >= 40) {
+					NPC.velocity += direction * 2;
+					NPC.ai[2] = 0;
+				} else if (NPC.ai[2] == 20) {
+					NPC.velocity += direction * 2;
+				} else {
+					NPC.velocity += direction * 0.2f;
+				}
+				if (!Collision.WetCollision(NPC.position + NPC.velocity, 20, 20)) {
+					NPC.velocity += direction * 2;
+				}
+			} else {
+				NPC.noGravity = false;
+				NPC.rotation = NPC.velocity.ToRotation();
+				//NPC.rotation += 0.01f;
+			}
+			NPC.spriteDirection = Math.Sign(Math.Cos(NPC.rotation));
+		}
+		public override bool? CanFallThroughPlatforms() => true;
+		public override void FindFrame(int frameHeight) {
+			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[2]) / 60;
+			if (NPC.frameCounter > 1) NPC.frameCounter = 0;
+			NPC.frame = new Rectangle(0, (26 * (int)(frame * Main.npcFrameCount[Type])) % 182, 94, 26);
+			chains ??= new Physics.Chain[2];
+			for (int i = 0; i < chains.Length; i++) {
+				Physics.Chain chain = chains[i];
+				if (chain is null || chain.links[0].position.HasNaNs()) {
+					SeaDragonAnchorPoint anchor = new(this, i);
+					const float spring = 0.5f;
+					Gravity[] gravity = [
+						Gravity.NormalGravity,
+						new SeaDragonStrandGravity(this, i)
+					];
+					switch (i) {
+						case 0:
+						chains[i] = chain = new Physics.Chain() {
+							anchor = anchor,
+							links = [
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring),
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring),
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring),
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring),
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring)
+							]
+						};
+						break;
+
+						case 1:
+						chains[i] = chain = new Physics.Chain() {
+							anchor = anchor,
+							links = [
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring),
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring),
+								new(anchor.WorldPosition, default, 9.5f, gravity, drag: 0.93f, spring: spring)
+							]
+						};
+						break;
+					}
+				}
+				int kMax = 2;
+				for (int k = 0; k < kMax; k++) {
+					chain.Update();
+					if (kMax < 20 && (chain.links[0].position - chain.anchor.WorldPosition).LengthSquared() > 128 * 128) {
+						kMax++;
+					}
+				}
+			}
+		}
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
+			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
+		}
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			int halfWidth = NPC.width / 2;
+			int baseX = player.direction > 0 ? 0 : halfWidth;
+			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(yMult: -0.5f), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life < 0) {
+				for (int i = 0; i < 2; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
+				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
+			}
+		}
+		Physics.Chain[] chains;
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
+			if (NPC.spriteDirection == 1) {
+				spriteEffects |= SpriteEffects.FlipVertically;
+			}
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+			Vector2 halfSize = new(texture.Width * 0.5f, texture.Height / Main.npcFrameCount[NPC.type] / 2);
+			Vector2 position = new(NPC.position.X - screenPos.X + (NPC.width / 2) - texture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - texture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + NPC.gfxOffY);
+			Vector2 origin = new(halfSize.X * 1.6f, halfSize.Y);
+			spriteBatch.Draw(
+				TextureAssets.Npc[Type].Value,
+				position,
+				NPC.frame,
+				drawColor,
+				NPC.rotation,
+				origin,
+				NPC.scale,
+				spriteEffects,
+			0);
+			spriteEffects &= SpriteEffects.FlipVertically;
+			if (chains is null) return false;
+			for (int i = 1; i <= chains.Length; i++) {
+				Physics.Chain chain = chains[^i];
+				if (chain is null) continue;
+				Vector2 startPoint = chain.anchor.WorldPosition;
+				origin = strandTexture.Value.Size();
+				origin.X *= 0.2f;
+				origin.Y *= 0.5f;
+				int frameOffset = i == 2 ? 0 : 2;
+				for (int j = 0; j < chain.links.Length; j++) {
+					spriteBatch.Draw(
+						strandTexture,
+						chain.links[j].position - Main.screenPosition,
+						strandTexture.Value.Frame(5, frameX: j + frameOffset),
+						new(Lighting.GetSubLight(chain.links[j].position)),
+						(chain.links[j].position - startPoint).ToRotation(),
+						origin,
+						1,
+						spriteEffects,
+					0);
+					startPoint = chain.links[j].position;
+				}
+			}
+			return false;
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+
+		}
+		public class SeaDragonAnchorPoint(Sea_Dragon npc, int index) : AnchorPoint {
+			public override Vector2 WorldPosition {
+				get {
+					Vector2 offset = Vector2.Zero;
+					switch (index) {
+						case 0:
+						offset = new Vector2(-12, 0);
+						break;
+
+						case 1:
+						offset = new Vector2(-32, -2);
+						break;
+					}
+					return npc.NPC.Center + (offset * new Vector2(1, -npc.NPC.spriteDirection)).RotatedBy(npc.NPC.rotation);
+				}
+			}
+		}
+		public class SeaDragonStrandGravity(Sea_Dragon npc, int index) : Gravity {
+			public override Vector2 Acceleration {
+				get {
+					Vector2 dir = new Vector2(0, npc.NPC.spriteDirection).RotatedBy(npc.NPC.rotation) * 0.8f;
+					if (index == 0) dir *= -0.5f;
+					switch ((int)npc.NPC.ai[2]) {
+						case 0 or 40:
+						return -dir;
+						case 20:
+						return dir;
+					}
+					return Vector2.Zero;
+				}
+			}
+		}
+	}
+}

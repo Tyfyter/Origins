@@ -34,6 +34,13 @@ namespace Origins.Misc {
 			public Entity entity;
 			public Vector2 offset;
 		}
+		public class NPCAnchorPoint : AnchorPoint {
+			public override Vector2 WorldPosition {
+				get => npc.Center + (offset * new Vector2(npc.direction, 1)).RotatedBy(npc.rotation);
+			}
+			public NPC npc;
+			public Vector2 offset;
+		}
 		public class Chain {
 			public AnchorPoint anchor;
 			public Link[] links;

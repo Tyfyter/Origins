@@ -41,6 +41,7 @@ using Terraria.GameInput;
 using Microsoft.Xna.Framework.Input;
 using PegasusLib;
 using PegasusLib.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Origins {
 	#region classes
@@ -3095,6 +3096,111 @@ namespace Origins {
 				output[i] = vertices[i].RotatedBy(rotation, origin);
 			}
 			return output;
+		}
+		public static bool[,] GeneratePathfindingGrid(Point topLeft, Point bottomRight, int halfExtraWidth, int halfExtraHeight) {
+			bool[,] solidity = new bool[bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y];
+			for (int i = 0; i < solidity.GetLength(0); i++) {
+				for (int j = 0; j < solidity.GetLength(1); j++) {
+					for (int x = -halfExtraWidth; x <= halfExtraWidth; x++) {
+						for (int y = -halfExtraHeight; y <= halfExtraHeight; y++) {
+							Tile tile = Framing.GetTileSafely(topLeft.X + i + x, topLeft.Y + j + y);
+							if (tile.TileSolidness() == 2) solidity[i, j] = true;
+						}
+					}
+				}
+			}
+			return solidity;
+		}
+		public static Point[] GridBasedPathfinding(bool[,] solidTiles, Point start, Point target, HashSet<Point> alternateEnds = null) {
+			alternateEnds ??= [];
+			alternateEnds.Add(target);
+			PathfindingGrid grid = new(solidTiles);
+			PriorityQueue<Point, float> openList = new();
+			openList.Enqueue(start, 0);
+			grid[start].opened = true;
+			const float SQRT2 = 1.4142135623731f;
+			while (openList.TryDequeue(out Point pos, out _)) {
+				PathfindingNode node = grid[pos];
+				if (alternateEnds.Contains(pos)) {
+					Stack<Point> stack = new();
+					while (node.parent is not null) {
+						stack.Push(node.position);
+						node = node.parent;
+					}
+					return stack.ToArray();
+				}
+				if (node.closed) continue;
+				node.closed = true;
+				PathfindingNode[] neighbors = grid.GetNeigbors(pos);
+				for (int i = 0; i < neighbors.Length; ++i) {
+					PathfindingNode neighbor = neighbors[i];
+
+					// get the distance between current node and the neighbor
+					// and calculate the next g score
+					float ng = node.g + ((neighbor.position.X - node.position.X == 0 || neighbor.position.Y - node.position.Y == 0) ? 1 : SQRT2);
+
+					// check if the neighbor has not been inspected yet, or
+					// can be reached with smaller cost from the current node
+					if (!neighbor.opened || ng < neighbor.g) {
+						static float GetDist(Point a, Point b) {
+							int x = a.X - b.X;
+							int y = a.Y - b.Y;
+							return x * x + y * y;
+						}
+						neighbor.g = ng;
+						neighbor.h ??= GetDist(neighbor.position, target);
+						neighbor.f = neighbor.g + neighbor.h.Value;
+						neighbor.parent = node;
+
+						if (!neighbor.opened) {
+							openList.Enqueue(neighbor.position, neighbor.f);
+							neighbor.opened = true;
+						} else {
+							// the neighbor can be reached with smaller cost.
+							// Since its f value has been updated, we have to
+							// update its position in the open list
+							openList.Enqueue(neighbor.position, neighbor.f);
+						}
+					}
+				}
+			}
+			return [];
+		}
+		class PathfindingGrid(bool[,] grid) {
+			readonly PathfindingNode[,] nodes = new PathfindingNode[grid.GetLength(0), grid.GetLength(1)];
+			public ref PathfindingNode this[Point point] {
+				get {
+					ref PathfindingNode node = ref nodes[point.X, point.Y];
+					node ??= new(point);
+					return ref node;
+				}
+			}
+			public PathfindingNode[] GetNeigbors(Point point) {
+				PathfindingNode[] output = new PathfindingNode[4];
+				int i = 0;
+				void TryAdd(Point neighbor) {
+					if (neighbor.X < 0 || neighbor.Y < 0 || neighbor.X >= grid.GetLength(0) || neighbor.Y >= grid.GetLength(1)) return;
+					if (!grid[neighbor.X, neighbor.Y]) {
+						PathfindingNode node = this[neighbor];
+						if (!node.closed) output[i++] = node;
+					}
+				}
+				TryAdd(new(point.X, point.Y - 1));
+				TryAdd(new(point.X - 1, point.Y));
+				TryAdd(new(point.X, point.Y + 1));
+				TryAdd(new(point.X + 1, point.Y));
+				Array.Resize(ref output, i);
+				return output;
+			}
+		}
+		class PathfindingNode(Point position) {
+			public readonly Point position = position;
+			public float f;
+			public float? h;
+			public float g;
+			public bool closed;
+			public bool opened;
+			public PathfindingNode parent;
 		}
 	}
 	public static class ItemExtensions {
