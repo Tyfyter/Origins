@@ -712,7 +712,7 @@ namespace Origins.World.BiomeData {
 	}
 	#endregion variations
 	public class Riven_Hive_Alt_Biome : AltBiome, IItemObtainabilityProvider {
-		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
+		public override string WorldIcon => "Origins/UI/WorldGen/IconRiven";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
 		public override Color OuterColor => new(30, 176, 255);
