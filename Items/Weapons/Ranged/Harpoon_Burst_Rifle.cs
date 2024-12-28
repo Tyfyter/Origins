@@ -48,8 +48,6 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 			Item.channel = true;
 		}
-		public override void AddRecipes() {
-		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return Main.rand.NextBool(6);
