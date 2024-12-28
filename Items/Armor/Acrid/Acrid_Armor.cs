@@ -20,6 +20,7 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 			Origins.AddGlowMask(this);
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
@@ -81,6 +82,7 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 			Origins.AddGlowMask(this);
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -134,6 +136,7 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 			Origins.AddGlowMask(this);
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
@@ -187,6 +190,7 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 			Origins.AddGlowMask(this);
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 		public override void SetDefaults() {
 			Item.defense = 1;
@@ -240,6 +244,7 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 			Origins.AddGlowMask(this);
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 		public override void SetDefaults() {
 			Item.defense = 9;
@@ -285,6 +290,7 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
 			Origins.AddBreastplateGlowmask(this);
+			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = false;
 		}
         public override void SetDefaults() {
 			Item.defense = 18;
@@ -307,7 +313,8 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddLeggingGlowMask(this);
 			Origins.AddGlowMask(this);
-        }
+			ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = false;
+		}
         public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 1, silver: 80);

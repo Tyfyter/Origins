@@ -182,7 +182,7 @@ Arms_Dealer: {
 								
 			'{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Inquire}'
 								
-			- [qs{2}:Slay {1} Enemies with the <imperfect:Harpoon_Burst_Rifle> ({0}/{1})]
+			- [qs{2}:Slay {1} Enemies with the <imperfect:Origins/Harpoon_Burst_Rifle> ({0}/{1})]
 			Unlocks: [i:Origins/Harpoon_Burst_Rifle]
 			''' */
 		// Inquire: I'll be honest, [player:_], I've been pretty successful since I started selling the Shardcannon. Thanks to you, I've had time to go on vacation. But, vacation is over and I have a new prototype I need yah to test out. This one'll be fun.
