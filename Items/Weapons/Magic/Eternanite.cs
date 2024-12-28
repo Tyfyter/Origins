@@ -43,6 +43,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Flames);
 			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = 0;
+			Projectile.height = 0;
 			Projectile.aiStyle = 0;
 			//AIType = ProjectileID.Flames;
 		}
@@ -78,6 +80,13 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Rasterized_Debuff.ID, 24);
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			const float num = 60f;
+			const float num2 = 12f;
+			const float fromMax = num + num2;
+			int scaled = (int)(Utils.Remap(Utils.Remap(Projectile.localAI[0], 0f, fromMax, 0f, 1f), 0.2f, 0.5f, 0.25f, 1f) * 0.5f * 98);
+			hitbox.Inflate(scaled, scaled);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Projectile.DrawFlamethrower(new(22, 18, 33), new(31, 26, 45), new(43, 37, 61), new(22, 18, 33));

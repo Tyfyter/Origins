@@ -1679,9 +1679,9 @@ namespace Origins {
 			return 0f;
 		}
 		public static void DrawFlamethrower(this Projectile projectile, Color color1, Color color2, Color color3, Color color4, bool flag = true, float scale = 1f) {
-			float num = 60f;
-			float num2 = 12f;
-			float fromMax = num + num2;
+			const float num = 60f;
+			const float num2 = 12f;
+			const float fromMax = num + num2;
 			Texture2D value = TextureAssets.Projectile[projectile.type].Value;
 			float num3 = 0.35f;
 			float num4 = 0.7f;

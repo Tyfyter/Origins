@@ -42,9 +42,18 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.CloneDefaults(ProjectileID.Flames);
 			Projectile.DamageType = DamageClass.Magic;
 			AIType = ProjectileID.Flames;
+			Projectile.width = 0;
+			Projectile.height = 0;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, 240);
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			const float num = 60f;
+			const float num2 = 12f;
+			const float fromMax = num + num2;
+			int scaled = (int)(Utils.Remap(Utils.Remap(Projectile.localAI[0], 0f, fromMax, 0f, 1f), 0.2f, 0.5f, 0.25f, 1f) * 0.5f * 98);
+			hitbox.Inflate(scaled, scaled);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			MainReflection.DrawProj_Flamethrower(Projectile);
