@@ -486,6 +486,9 @@ namespace Origins {
 			ChatManager.Register<Item_Name_Handler>([
 				"itemname"
 			]);
+			ChatManager.Register<Imperfect_Item_Name_Handler>([
+				"imperfect"
+			]);
 			ChatManager.Register<Player_Name_Handler>([
 				"player",
 				"you"

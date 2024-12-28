@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shootSpeed = 11.75f;
 			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(gold: 1, silver: 60);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {

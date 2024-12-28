@@ -363,8 +363,11 @@ namespace Origins.Items {
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.life <= 0) {
-				if (projectile.GetGlobalProjectile<OriginGlobalProj>().fromItemType == ModContent.ItemType<Shardcannon>()) {
+				int fromItemType = projectile.GetGlobalProjectile<OriginGlobalProj>().fromItemType;
+				if (fromItemType == ModContent.ItemType<Shardcannon>()) {
 					ModContent.GetInstance<Shardcannon_Quest>().UpdateKillCount();
+				} else if (fromItemType == ModContent.ItemType<Harpoon_Burst_Rifle>()) {
+					ModContent.GetInstance<Harpoon_Burst_Rifle_Quest>().UpdateKillCount();
 				}
 			}
 		}

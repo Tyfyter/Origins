@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items;
 using Origins.Journal;
 using System.Security.Policy;
 using Terraria;
@@ -91,6 +92,44 @@ namespace Origins.UI {
 				return new Item_Name_Snippet(itemType, baseColor);
 			}
 			return new Item_Name_Snippet(-1, baseColor);
+		}
+	}
+	public class Imperfect_Item_Name_Handler : ITagHandler {
+		public class Imperfect_Item_Name_Snippet : TextSnippet {
+			readonly Item item;
+			int lastHovered = 0;
+			public Imperfect_Item_Name_Snippet(int type, Color color = default) : base() {
+				if (type == -1) {
+					Text = "Invalid Item type";
+					return;
+				}
+				item = ContentSamples.ItemsByType[type].Clone();
+				item.Prefix(ModContent.PrefixType<Imperfect_Prefix>());
+				Text = item.AffixName();
+				CheckForHover = true;
+				Color = color;
+			}
+			public override void Update() {
+				base.Update();
+				if (lastHovered > 0) lastHovered--;
+			}
+			public override void OnHover() {
+				base.OnHover();
+				lastHovered = 4;
+				Main.LocalPlayer.mouseInterface = true;
+				if (item is not null) {
+					Main.hoverItemName = $"{item.Name} [i:{item.type}]";
+					Main.HoverItem = item.Clone();
+					Main.HoverItem.SetNameOverride(Main.hoverItemName);
+					Main.instance.MouseText(Main.hoverItemName, item.rare, 0);
+				}
+			}
+		}
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			if ((int.TryParse(text, out int itemType) && itemType < ItemLoader.ItemCount) || ItemID.Search.TryGetId(text, out itemType)) {
+				return new Imperfect_Item_Name_Snippet(itemType, baseColor);
+			}
+			return new Imperfect_Item_Name_Snippet(-1, baseColor);
 		}
 	}
 }

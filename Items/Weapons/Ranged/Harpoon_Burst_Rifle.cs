@@ -15,6 +15,7 @@ using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Harpoon_Burst_Rifle : Harpoon_Gun {
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				if (proj.aiStyle != ProjAIStyleID.HeldProjectile) {
@@ -24,9 +25,10 @@ namespace Origins.Items.Weapons.Ranged {
 			});
 			ItemID.Sets.gunProj[Type] = true;
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.damage = 59;
+			Item.damage = 47;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 5;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -41,28 +43,21 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shootSpeed = 13.75f;
 			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(gold: 2, silver: 80);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 			Item.noUseGraphic = true;
 			Item.autoReuse = true;
 			Item.channel = true;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient(ItemID.TitaniumBar, 13)
-			.AddTile(TileID.MythrilAnvil)
-			.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return Main.rand.NextBool(6);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			type = Item.shoot;
+			if (player.ItemAnimationJustStarted) type = Item.shoot;
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI);
-			return false;
-		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) => true;
 		public override void OnConsumeAmmo(Item ammo, Player player) {
 			Harpoon_Burst_Rifle_P.consumed = true;
 		}
@@ -95,17 +90,23 @@ namespace Origins.Items.Weapons.Ranged {
 				if ((player.channel || originPlayer.currentActiveHarpoons != 0 || Projectile.ai[0] > 0) && !player.noItems && !player.CCed) {
 					Vector2 position = player.MountedCenter + ((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 12).Floor();
 					Projectile.position = position;
-					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
-					if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
-
-					Vector2 velocity = Vector2.Normalize(direction);
-					if (velocity.HasNaNs()) velocity = -Vector2.UnitY;
 
 
 					consumed = false;
-					if (Projectile.ai[1] > 0 && --Projectile.ai[0] <= 0 && player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float kKnockBack, out int usedAmmoItemId)) {
-						IEntitySource projectileSource = new EntitySource_ItemUse_WithAmmo(player, player.HeldItem, usedAmmoItemId);
-						Projectile.NewProjectile(projectileSource, position, velocity.SafeNormalize(default) * speed, projToShoot, damage, kKnockBack, Projectile.owner, ai1: consumed ? 1 : 0);
+					if (Projectile.ai[1] > 0 && --Projectile.ai[0] <= 0 && player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemId)) {
+						EntitySource_ItemUse_WithAmmo projectileSource = new(player, player.HeldItem, usedAmmoItemId);
+
+						Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
+						if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
+
+						Vector2 velocity = Vector2.Normalize(direction);
+						if (velocity.HasNaNs()) velocity = -Vector2.UnitY;
+						velocity *= speed;
+
+						CombinedHooks.ModifyShootStats(player, player.HeldItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockBack);
+						if (CombinedHooks.Shoot(player, player.HeldItem, projectileSource, position, velocity, projToShoot, damage, knockBack)) {
+							Projectile.NewProjectile(projectileSource, position, velocity, projToShoot, damage, knockBack, Projectile.owner, ai1: consumed ? 1 : 0);
+						}
 						Projectile.ai[2] = 1;
 						Projectile.ai[1]--;
 						if (Projectile.ai[1] > 0) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
