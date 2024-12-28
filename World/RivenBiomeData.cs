@@ -47,7 +47,7 @@ namespace Origins.World.BiomeData {
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Riven_Underground_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
-		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilRiven";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
 		public override string MapBackground => BackgroundPath;
@@ -59,8 +59,9 @@ namespace Origins.World.BiomeData {
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
 
-			return OriginSystem.rivenTiles > NeededTiles;
+			return IsActive;
 		}
+		public static bool IsActive => OriginSystem.rivenTiles > NeededTiles;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			//OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			//Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
@@ -651,8 +652,9 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
 		public override string BestiaryIcon => "Origins/UI/IconStonerRiven";
 		public override string MapBackground => BackgroundPath;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
-			return player.ZoneRockLayerHeight && player.InModBiome<Riven_Hive>();
+			return player.ZoneRockLayerHeight && Riven_Hive.IsActive;
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.99f;
@@ -665,7 +667,7 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/IconDesertRiven";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
-			return player.ZoneDesert && player.InModBiome<Riven_Hive>();
+			return player.ZoneDesert && Riven_Hive.IsActive;
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.99f;
@@ -678,7 +680,7 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/IconCatacombsRiven";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
-			return player.ZoneRockLayerHeight && player.ZoneDesert && player.InModBiome<Riven_Hive>();
+			return player.ZoneRockLayerHeight && player.ZoneDesert && Riven_Hive.IsActive;
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress;
@@ -691,7 +693,7 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/IconSnowRiven";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
-			return player.ZoneRockLayerHeight && player.ZoneSnow && player.InModBiome<Riven_Hive>();
+			return player.ZoneRockLayerHeight && player.ZoneSnow && Riven_Hive.IsActive;
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress;
@@ -704,10 +706,10 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Eutrophic_Sea";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
-			return player.ZoneBeach && player.InModBiome<Riven_Hive>();
+			return player.ZoneBeach && Riven_Hive.IsActive;
 		}
 		public override float GetWeight(Player player) {
-			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.99f;
+			return player.OriginPlayer().ZoneRivenProgress * 1f;
 		}
 	}
 	#endregion variations
