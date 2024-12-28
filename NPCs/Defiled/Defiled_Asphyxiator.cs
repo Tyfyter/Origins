@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if ((spawnInfo.SpawnTileX > WorldGen.oceanDistance && spawnInfo.SpawnTileX < Main.maxTilesX - WorldGen.oceanDistance && !spawnInfo.Water) || spawnInfo.DesertCave) return 0;
+			if ((spawnInfo.SpawnTileX > WorldGen.oceanDistance && spawnInfo.SpawnTileX < Main.maxTilesX - WorldGen.oceanDistance) || !spawnInfo.Water || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

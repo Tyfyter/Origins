@@ -49,7 +49,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int TripleDashCD {
 			get {
-				int inactiveTime = 420 / DifficultyMult;
+				int inactiveTime = 455 - DifficultyMult * 35;
 				if (DifficultyMult == 3) {
 					inactiveTime += 30;
 				}
@@ -115,13 +115,13 @@ namespace Origins.NPCs.Defiled.Boss {
 			switch (DifficultyMult) {
 				case 2:
 				NPC.lifeMax = (int)(4960 * balance * terriblyPlacedHookMult);
-				NPC.defense = 13;
+				// NPC.defense = 13;
 				NPC.damage = (int)(64 * terriblyPlacedHookMult);
 				break;
 
 				case 3:
 				NPC.lifeMax = (int)(7936 * balance * terriblyPlacedHookMult);
-				NPC.defense = 15;
+				// NPC.defense = 15;
 				NPC.damage = (int)(72 * terriblyPlacedHookMult);
 				break;
 			}

@@ -855,7 +855,7 @@ namespace Origins {
 					return MusicLoader.GetMusicSlot(instance, path);
 				}
 				Fiberglass = GetMusicSlot("Music/The_Room_Before");
-				BrinePool = GetMusicSlot("Music/Only_the_Brave");
+				BrinePool = GetMusicSlot("Music/Below_The_Brine");
 				Dusk = GetMusicSlot("Music/Dancing_With_Ghosts");
 				Defiled = GetMusicSlot("Music/Stolen_Memories");
 				UndergroundDefiled = GetMusicSlot("Music/Heart_Of_The_Beast");
@@ -863,7 +863,7 @@ namespace Origins {
 				Riven = GetMusicSlot("Music/Pereunt_Unum_Scindendum");
 				UndergroundRiven = GetMusicSlot("Music/Festering_Hives");
 				RivenBoss = GetMusicSlot("Music/Ad_Laceratur");
-				RivenOcean = GetMusicSlot("Music/Sizzling_Waves");
+				RivenOcean = GetMusicSlot("Music/This_Ocean_Of_Alkahest");
 				AncientDefiled = GetMusicSlot("Music/Shattered_Topography_Old");
 				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}

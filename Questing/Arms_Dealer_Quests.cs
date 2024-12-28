@@ -109,7 +109,7 @@ namespace Origins.Questing {
 			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
 			Shardcannon_Quest.GiveGun();
 		}
-		public override string Text(NPC npc, Player player) => "missingno";
+		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.ILostThatGunYouGaveMe");
 		public override bool IsActive(NPC npc, Player player) {
 			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
 			static bool IsShardcannon(Item item) {
