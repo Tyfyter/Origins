@@ -17,8 +17,10 @@ namespace Origins.Items.Weapons.Ranged {
     public class Harpoon_Burst_Rifle : Harpoon_Gun {
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
-				//global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
-				//global.extraGravity.Y -= 0.24f;
+				if (proj.aiStyle != ProjAIStyleID.HeldProjectile) {
+					global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
+					global.extraGravity.Y -= 0.24f;
+				}
 			});
 			ItemID.Sets.gunProj[Type] = true;
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
