@@ -1411,6 +1411,7 @@ Projectiles: {
 	// TUDFLOMD_Rocket_Yellow_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
 	// TUDFLOMD_Rocket_Green.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
 	// Eternanite_P.DisplayName: Eternanite P
+	// Felnum_Ore_Slime_Zap.DisplayName: Felnum Ore Slime Zap
 }
 
 Prefixes: {
