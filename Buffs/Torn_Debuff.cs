@@ -104,7 +104,7 @@ namespace Origins.Buffs {
 							player.position + new Vector2(0, player.gfxOffY),
 							player.fullRotation,
 							player.fullRotationOrigin,
-							scale: Main.GameViewMatrix.Zoom.X
+							scale: 1
 						);
 					} finally {
 						player.itemLocation = itemLocation;
