@@ -324,6 +324,10 @@ namespace Origins {
 
 		public int talkingPet = 0;
 		public int talkingPetTime = 0;
+		public int nextActiveHarpoons = 0;
+		public int currentActiveHarpoons = 0;
+		public Vector2 nextActiveHarpoonAveragePosition = default;
+		public Vector2 currentActiveHarpoonAveragePosition = default;
 		#endregion
 
 		#region visuals
@@ -574,6 +578,10 @@ namespace Origins {
 				if (protOSQuoteCooldown[i] > 0) protOSQuoteCooldown[i]--;
 			}
 			if (talkingPetTime > 0 && --talkingPetTime <= 0) talkingPet = -1;
+			currentActiveHarpoons = nextActiveHarpoons;
+			currentActiveHarpoonAveragePosition = nextActiveHarpoonAveragePosition / currentActiveHarpoons;
+			nextActiveHarpoons = 0;
+			nextActiveHarpoonAveragePosition = Vector2.Zero;
 
 			if (resinShieldCooldown > 0) resinShieldCooldown--;
 			resinShield = false;

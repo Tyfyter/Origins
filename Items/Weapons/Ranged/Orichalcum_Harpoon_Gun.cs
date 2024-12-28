@@ -1,53 +1,48 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
-		public new string[] Categories => [
-			"HarpoonGun",
-			"ToxicSource"
-		];
+    public class Orichalcum_Harpoon_Gun : Harpoon_Gun {
 		public override void SetStaticDefaults() {
-			Origins.AddGlowMask(this);
+			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
+				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
+				global.extraGravity.Y -= 0.23f;
+			});
 		}
 		public override void SetDefaults() {
-			Item.damage = 48;
+			Item.damage = 53;
+			Item.crit = 6;
 			Item.DamageType = DamageClass.Ranged;
-			Item.knockBack = 4;
+			Item.knockBack = 5;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.useAnimation = 3;
 			Item.useTime = 3;
 			Item.reuseDelay = 2;
-			Item.width = 58;
-			Item.height = 22;
+			Item.width = 56;
+			Item.height = 26;
 			Item.useAmmo = Harpoon.ID;
 			Item.shoot = Harpoon_P.ID;
-			Item.shootSpeed = 15.75f;
+			Item.shootSpeed = 12.75f;
 			Item.UseSound = SoundID.Item11;
-			Item.value = Item.sellPrice(gold: 3);
-			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 2, silver: 20);
+			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12)
+			.AddIngredient(ItemID.MythrilAnvil, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			return Main.rand.NextBool(7);
-		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (type == Item.shoot) {
-				type = Alkaline_Harpoon_P.ID;
-			}
+			return Main.rand.NextBool(6);
 		}
 	}
 }

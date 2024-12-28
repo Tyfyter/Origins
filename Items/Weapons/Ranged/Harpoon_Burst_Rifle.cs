@@ -1,0 +1,142 @@
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
+using ThoriumMod.Items.Donate;
+
+namespace Origins.Items.Weapons.Ranged {
+    public class Harpoon_Burst_Rifle : Harpoon_Gun {
+		public override void SetStaticDefaults() {
+			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
+				//global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
+				//global.extraGravity.Y -= 0.24f;
+			});
+			ItemID.Sets.gunProj[Type] = true;
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+		}
+		public override void SetDefaults() {
+			Item.damage = 59;
+			Item.DamageType = DamageClass.Ranged;
+			Item.knockBack = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.noMelee = true;
+			Item.useAnimation = 5;
+			Item.useTime = 5;
+			Item.reuseDelay = 2;
+			Item.width = 56;
+			Item.height = 26;
+			Item.useAmmo = Harpoon.ID;
+			Item.shoot = ModContent.ProjectileType<Harpoon_Burst_Rifle_P>();
+			Item.shootSpeed = 13.75f;
+			Item.UseSound = SoundID.Item11;
+			Item.value = Item.sellPrice(gold: 2, silver: 80);
+			Item.rare = ItemRarityID.Blue;
+			Item.noUseGraphic = true;
+			Item.autoReuse = true;
+			Item.channel = true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.TitaniumBar, 13)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+		public override bool CanConsumeAmmo(Item ammo, Player player) {
+			return Main.rand.NextBool(6);
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			type = Item.shoot;
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI);
+			return false;
+		}
+		public override void OnConsumeAmmo(Item ammo, Player player) {
+			Harpoon_Burst_Rifle_P.consumed = true;
+		}
+	}
+	public class Harpoon_Burst_Rifle_P : ModProjectile {
+		internal static bool consumed = false;
+		public override string Texture => typeof(Harpoon_Burst_Rifle).GetDefaultTMLName();
+		public override void SetDefaults() {
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.aiStyle = ProjAIStyleID.HeldProjectile;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.hide = true;
+			Projectile.ignoreWater = true;
+		}
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (Projectile.ai[2] != 0) {
+				SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.position);
+				Projectile.ai[2] = 0;
+			}
+			if (Projectile.ai[0] == 0 && originPlayer.currentActiveHarpoons == 0) {
+				Projectile.ai[1] = 3;
+			}
+			if (Main.myPlayer == Projectile.owner) {
+				if ((player.channel || originPlayer.currentActiveHarpoons != 0 || Projectile.ai[0] > 0) && !player.noItems && !player.CCed) {
+					Vector2 position = player.MountedCenter + ((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 12).Floor();
+					Projectile.position = position;
+					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
+					if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
+
+					Vector2 velocity = Vector2.Normalize(direction);
+					if (velocity.HasNaNs()) velocity = -Vector2.UnitY;
+
+
+					consumed = false;
+					if (Projectile.ai[1] > 0 && --Projectile.ai[0] <= 0 && player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float kKnockBack, out int usedAmmoItemId)) {
+						IEntitySource projectileSource = new EntitySource_ItemUse_WithAmmo(player, player.HeldItem, usedAmmoItemId);
+						Projectile.NewProjectile(projectileSource, position, velocity.SafeNormalize(default) * speed, projToShoot, damage, kKnockBack, Projectile.owner, ai1: consumed ? 1 : 0);
+						Projectile.ai[2] = 1;
+						Projectile.ai[1]--;
+						if (Projectile.ai[1] > 0) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+					}
+				} else {
+					Projectile.Kill();
+				}
+			}
+			if (originPlayer.currentActiveHarpoons > 0) {
+				Vector2 velocity = Projectile.position.DirectionTo(originPlayer.currentActiveHarpoonAveragePosition);
+				if (!velocity.HasNaNs()) Projectile.velocity = velocity;
+			}
+			Projectile.position.Y += player.gravDir * 2f;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override bool PreDraw(ref Color lightColor) {
+			SpriteEffects dir = Main.player[Projectile.owner].direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			if (Main.player[Projectile.owner].gravDir == -1f) {
+				dir ^= SpriteEffects.FlipVertically;
+			}
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 origin = new Vector2(27, 25);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.position - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation - MathHelper.PiOver2,
+				origin.Apply(dir, texture.Size()),
+				Projectile.scale,
+				dir
+			);
+			return false;
+		}
+	}
+}

@@ -1598,6 +1598,11 @@ namespace Origins {
 		public static Vector2 Clamp(this Vector2 value, Rectangle area) {
 			return new Vector2(MathHelper.Clamp(value.X, area.X, area.Right), MathHelper.Clamp(value.Y, area.Y, area.Bottom));
 		}
+		public static Vector2 Apply(this Vector2 value, SpriteEffects spriteEffects, Vector2 bounds) {
+			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) value.X = bounds.X - value.X;
+			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) value.Y = bounds.Y - value.Y;
+			return value;
+		}
 		public static Vector2 TakeAverage(this List<Vector2> vectors) {
 			Vector2 sum = default;
 			int count = vectors.Count;

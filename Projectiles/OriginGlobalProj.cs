@@ -53,6 +53,7 @@ namespace Origins.Projectiles {
 		public bool neuralNetworkEffect = false;
 		public bool neuralNetworkHit = false;
 		public Vector2? weakpointAnalyzerTarget = default;
+		public Vector2 extraGravity = default;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public override void Load() {
 			itemSourceEffects = [];
@@ -244,6 +245,14 @@ namespace Origins.Projectiles {
 				dust.noGravity = true;
 				dust.noLight = true;
 			}
+			switch (projectile.aiStyle) {
+				case ProjAIStyleID.Harpoon:
+				if (projectile.ai[1] >= 10f) goto default;
+				break;
+				default:
+				projectile.velocity += extraGravity;
+				break;
+			}
 		}
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			if (viperEffect) {
@@ -336,6 +345,12 @@ namespace Origins.Projectiles {
 			binaryWriter.Write(Prefix);
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
 			binaryWriter.Write((sbyte)updateCountBoost);
+
+			bitWriter.WriteBit(weakpointAnalyzerTarget.HasValue);
+			if (weakpointAnalyzerTarget.HasValue) binaryWriter.WriteVector2(weakpointAnalyzerTarget.Value);
+
+			bitWriter.WriteBit(extraGravity != default);
+			if (extraGravity != default) binaryWriter.WriteVector2(extraGravity);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
@@ -344,6 +359,10 @@ namespace Origins.Projectiles {
 			Prefix = binaryReader.ReadInt32();
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();
 			SetUpdateCountBoost(projectile, binaryReader.ReadSByte());
+
+			if (bitReader.ReadBit()) weakpointAnalyzerTarget = binaryReader.ReadVector2();
+
+			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
 		}
 		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
 			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;

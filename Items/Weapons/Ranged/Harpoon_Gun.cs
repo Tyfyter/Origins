@@ -51,6 +51,6 @@ namespace Origins.Items.Weapons.Ranged {
 			ModifyShotProjectile(Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: consume ? 1 : 0), source);
 			return false;
 		}
-		public virtual void ModifyShotProjectile(Projectile projectile, EntitySource_ItemUse_WithAmmo source) {}
+		public virtual void ModifyShotProjectile(Projectile projectile, EntitySource_ItemUse_WithAmmo source) { }
 	}
 }

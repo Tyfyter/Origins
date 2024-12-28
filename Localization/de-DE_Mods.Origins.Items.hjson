@@ -4720,3 +4720,38 @@ Eternanite: {
 	// DisplayName: Eternanite
 	// Tooltip: ""
 }
+
+Cobalt_Harpoon_Gun: {
+	// DisplayName: Cobalt Harpoon Gun
+	// Tooltip: ""
+}
+
+Palladium_Harpoon_Gun: {
+	// DisplayName: Palladium Harpoon Gun
+	// Tooltip: ""
+}
+
+Adamantite_Harpoon_Gun: {
+	// DisplayName: Adamantite Harpoon Gun
+	// Tooltip: ""
+}
+
+Mythril_Harpoon_Gun: {
+	// DisplayName: Mythril Harpoon Gun
+	// Tooltip: ""
+}
+
+Orichalcum_Harpoon_Gun: {
+	// DisplayName: Orichalcum Harpoon Gun
+	// Tooltip: ""
+}
+
+Titanium_Harpoon_Gun: {
+	// DisplayName: Titanium Harpoon Gun
+	// Tooltip: ""
+}
+
+Harpoon_Burst_Rifle: {
+	// DisplayName: Harpoon Burst Rifle
+	// Tooltip: ""
+}
