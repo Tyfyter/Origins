@@ -169,6 +169,8 @@ Arms_Dealer: {
 		Start: Thanks, buddy. Go shred up some zombies!
 		ReadyToComplete: All done? Not too bad?
 		Complete: Thanks for the info. I'll fix the imperfections, but otherwise sounds like it will sell big. If you liked it a lot, be sure to check out my wares.
+		WhereGun: mnissing dilgog
+		ILostThatGunYouGaveMe: missingno
 	}
 }
 
