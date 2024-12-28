@@ -15,25 +15,25 @@ namespace Origins.Items.Weapons.Magic {
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);
-			Item.damage = 38;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Eternanite_P>();
-			Item.mana = 14;
+			Item.mana = 17;
 			Item.useAmmo = AmmoID.None;
 			Item.noUseGraphic = false;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.knockBack = 8;
 			Item.shootSpeed = 14f;
-			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Orange;
+			Item.value = Item.sellPrice(gold: 4);
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item82;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient<Black_Bile>(9)
 			.AddIngredient<Eternabrite>()
-			.AddIngredient<Black_Bile>(5)
-			.AddIngredient(ItemID.SoulofNight, 5)
 			.AddTile(TileID.Bookcases)
 			.Register();
 		}

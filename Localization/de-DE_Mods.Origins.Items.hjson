@@ -4708,7 +4708,7 @@ Hearty_Broth: {
 
 Partybringer: {
 	// DisplayName: Partybringer
-	// Tooltip: ""
+	// Tooltip: Fires presents that bring pleasant surprises
 }
 
 The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
@@ -4718,40 +4718,68 @@ The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
 
 Eternanite: {
 	// DisplayName: Eternanite
-	// Tooltip: ""
+	// Tooltip: Casts a forceful cloud of gaseous black bile
 }
 
 Cobalt_Harpoon_Gun: {
 	// DisplayName: Cobalt Harpoon Gun
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		''' */
 }
 
 Palladium_Harpoon_Gun: {
 	// DisplayName: Palladium Harpoon Gun
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		85.7% chance not to consume ammo
+		''' */
 }
 
 Adamantite_Harpoon_Gun: {
 	// DisplayName: Adamantite Harpoon Gun
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
 }
 
 Mythril_Harpoon_Gun: {
 	// DisplayName: Mythril Harpoon Gun
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		''' */
 }
 
 Orichalcum_Harpoon_Gun: {
 	// DisplayName: Orichalcum Harpoon Gun
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
 }
 
 Titanium_Harpoon_Gun: {
 	// DisplayName: Titanium Harpoon Gun
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
 }
 
 Harpoon_Burst_Rifle: {
 	// DisplayName: Harpoon Burst Rifle
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
 }

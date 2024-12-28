@@ -706,34 +706,34 @@ RANGED WEAPONS:
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
-(#3, ^2) Acrid Impaler* !!! (needs glowmask code)
-(☻) Adamantite Harpoon Gun* !!!
+(^) Acrid Impaler*
+(^) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
 (@5, ^3) Boat Rocker* !!!
 (^) Boiler
 (^) Cleaver Rifle
-(☻) Cobalt Harpoon Gun* !!!
+(^) Cobalt Harpoon Gun*
 (X) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
 (X) Dragon's Breath* !!!
 (^) Firespit
 (X) Fumethrower !!!
-(☻) Harpoon Burst Rifle !!!
+(^) Harpoon Burst Rifle
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
 (X) Laser Line Bow !!!
-(@, ^3, ☻) Mythril Harpoon Gun* !!!
+(@, ^3) Mythril Harpoon Gun* !!!
 (X) Organ Donor
-(☻) Orichalcum Harpoon Gun* !!!
-(☻) Palladium Harpoon Gun* !!!
+(^) Orichalcum Harpoon Gun*
+(^) Palladium Harpoon Gun*
 (X) Riveiar
 (^) Sixth Spline
 (^) Spray 'N Pray*
 (^) Tiny Sniper
-(☻) Titanium Harpoon Gun* !!!
+(^) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 
 (^) Astoxo
@@ -777,7 +777,7 @@ MAGIC WEAPONS:
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
-(X) Eternanite
+(#3, ^2) Eternanite
 (⛥) Innermost Manifest !!!
 (X) Meta Arcanum
 (^) Seam Beam

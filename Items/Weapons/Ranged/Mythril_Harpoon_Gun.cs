@@ -1,13 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo;
+﻿using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Mythril_Harpoon_Gun : Harpoon_Gun {
+	public class Mythril_Harpoon_Gun : Harpoon_Gun {
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
@@ -35,7 +33,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.MythrilAnvil, 10)
+			.AddIngredient(ItemID.MythrilBar, 12)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
