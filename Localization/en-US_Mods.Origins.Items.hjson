@@ -4708,7 +4708,7 @@ Hearty_Broth: {
 
 Partybringer: {
 	DisplayName: Partybringer
-	Tooltip: ""
+	Tooltip: Fires presents that bring pleasant surprises
 }
 
 The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
@@ -4753,5 +4753,9 @@ Titanium_Harpoon_Gun: {
 
 Harpoon_Burst_Rifle: {
 	DisplayName: Harpoon Burst Rifle
-	Tooltip: ""
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		'''
 }
