@@ -66,6 +66,7 @@ BOSSES AND MINI-BOSSES:
 (X) Scrapper
 (^) World Cracker*
 
+(X) Corrupt Harvester
 (@5, #, $) Lost Diver !!!
 (X) Miscreant
 (X) Tearror
@@ -192,8 +193,8 @@ ENEMY NPCS:
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
-(X) Brine Serpent !!!
-(#, ^2) Carpalfish* !!!
+(#, ^2) Brine Serpent !!!
+(#2, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -215,7 +216,7 @@ ENEMY NPCS:
 (X) Riven Protoform (Tank Form)
 (X) Rocket Machine
 (^) Savage Whip*
-(X) Sea Dragon !!!
+(#3, ^2) Sea Dragon !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
 (X) Shotgunfish !!!
@@ -259,8 +260,13 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(#3, ^2) Assimilation* !!! (Defiled Assimilation change)
-(X) Cavitation !!!
+(%3) Ashen Assimilation
+(^) Corrupt Assimilation*
+(^) Crimson Assimilation*
+(#3, ^2) Defiled Assimilation* !!!
+(X) Hallowed Assimilation
+(^) Riven Assimilation*
+(#3, ^2) Cavitation !!!
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -310,11 +316,12 @@ ARMOR:
 (^) Soulhide Armor*
 (^) Tendon Armor*
 
-(X) Abysswalker Armor*
+(X) Abysswalker's Armor
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
 (X) Extremophile Armor !!!
+(X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor*
 
@@ -362,12 +369,13 @@ ACCESSORIES:
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
 (X) Charm of Naivety !!!
-(^) Cirrhosis' Abhorrence*
+(#3, ^2) Cirrhosis' Abhorrence* !!! (needs added functionality)
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
+(X) Crooked Mirror !!!
 (^) Danger Barrel*
 (^) Destructive Claws*
 (^) Dim Starlight*
@@ -376,6 +384,7 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag*
 (^) Exploder Emblem*
 (^) Explosive Artery*
+(X) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Futurephones*
@@ -565,7 +574,9 @@ WINGS:
 ---
 (X) Acrid Beam Thrusters !!!
 (X) Gills
+(X) Marrowick Mantle
 (X) Mutant Wings
+(X) Phantom Thrusters
 
 (X) Ascendant Wings
 (X) Booster Pack
@@ -628,6 +639,7 @@ MELEE WEAPONS:
 (^) Riverang*
 (^) Snapthrow*
 (#, ^2) Soul Snatcher* !!!
+(X) Soulslasher !!!
 (^) Spiker Sword*
 (^) Switchblade*
 (^) Triple Threat*
@@ -639,7 +651,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Crystal Cutters
-(#3, ^2) Depth Charge !!! (Depth Charge now inflicts Cavitation)
+(^) Depth Charge
 (X) Fair In Square
 (^) Knee Slapper*
 (^) Nematoclaw*
@@ -671,6 +683,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
+(X) Chipper Knives !!!
 (^) Endowood Bow
 (@5, ^3) Felnum Longbow
 (^) Fiberglass Bow
@@ -761,15 +774,19 @@ MAGIC WEAPONS:
 (X) Brine Haze !!!
 (X) Broadcast !!!
 (^) Chemical Laser
-(#3, ^2) Communion* !!!
+(^) Communion*
 (^) Dew Justice*
 (^) Dismay
+(X) Eternanite
 (⛥) Innermost Manifest !!!
+(X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
 (X) Shinedown
+(X) Siphon Staff
 (^) Splashid
 (^) Startillery
+(X) Symbiotic Staff
 
 (^) Amber of Embers
 (^) Breach
@@ -800,6 +817,7 @@ SUMMONER WEAPONS:
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
 (@5, ^3) Broken Terratotem
+(X) Defective Mortar Shell !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash*
@@ -809,18 +827,24 @@ SUMMONER WEAPONS:
 (X) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
+(X) Monolith Rod !!!
 (⛥) Ocean Amulet* !!!
+(X) Ocotillo Finger !!!
 (^) Ocotoral Bud*
 (^) Rotted Worm Staff
+(X) Shadow Cast !!!
+(X) Sunflower in a Pot !!!
 (^) Teardown*
 (^) Thread Rod
 (^) Woodsprite Staff
 
 (X) Acrid Spout !!!
+(X) Barnacled Purse
 (^) Bomb Artifact
 (X) Brine Convergence Incantation !!!
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
+(X) Fizzler Staff
 (#, ^2) Forsaken Desire
 (X) Huff Puffer Bait !!!
 (#, ^2) Mildew Incantation !!!
@@ -828,6 +852,7 @@ SUMMONER WEAPONS:
 (X) Obsidian Bone
 (X) Old Brine Rock !!!
 (X) Ornamental Riven Artifact
+(X) Riven Rain Rod
 (^) Scabcoral Lyre*
 (X) TV Remote
 (X) Wyvern Horn
@@ -851,6 +876,7 @@ SUMMONER WEAPONS:
 (X) Technomancer 4000
 (@5, ^3) Terratotem
 (X) Tonal Resonator
+(X) Vampire Fireflower in a Pot
 
 NO POST-ML CONTENT YET.
 ---
@@ -867,6 +893,7 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher
 (^) Brainade*
 (^) Cold Snap*
+(^) Defiled Spirit*
 (^) Eruption*
 (X) Eyenade !!!
 (^) Felnum Shock Grenade*
@@ -899,8 +926,8 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Happy Bomb*
-(#, ^2) Partybringer !!!
 (X) Rattlesnake
+(X) Shroomcannon
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
 
@@ -909,11 +936,13 @@ EXPLOSIVE WEAPONS:
 (^) Chlorodynamite*
 (X) Chlorophyte Handcannon
 (X) Firework Cannon
+(X) Flarefury
 (^) Mine Flayer*
 (^) Nova Cascade*
 (^) Nova Swarm
 (^) Nuclear Arm*
 (^) Omni-directional Claymore*
+(^) Partybringer
 (^) Rocodile
 (^) Self-Destruct*
 (X) Supernova
@@ -970,6 +999,7 @@ TILES:
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
+(X) Limestone !!!
 (^) Lost Ore*
 (^) Marrowick*
 (#, ^2) Mildew Block* !!!
@@ -1083,6 +1113,7 @@ TILES:
 (X) Heat Vent
 (X) Marrowick Coral
 (X) Moonshine*
+(X) Ocotillo !!!
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
@@ -1093,6 +1124,12 @@ TILES:
 (^) Wrycoral*
 
 (^) A Perfect World
+(X) Deceptive Beauty
+(X) Four Corners
+(X) Light And Dark
+(X) The Jungle's Glass Door !!!
+(X) There's Five of Them Now
+(X) What's Out There
 
 (@, #, $3) Ancient Music Box (Brine Pool) !!!
 (ᗢ) Ancient Music Box (Defiled Wastelands)
@@ -1141,6 +1178,7 @@ MATERIALS:
 (^) Felnum Bar*
 (^) Magic Hair Spray*
 (^) NE-8*
+(X) Ocotillo Flower !!!
 (^) Riven Carapace*
 (^) Riven Seeds*
 (^) Rubber*
@@ -1360,6 +1398,8 @@ AMMO:
 CROSS-MOD CONTENT:
 ---
 (X) Bomber's Soul
+(X) Defiled Wave
+(X) Exploder's Soul
 (X) Laden Pressure Incantation
 (X) Keytar !!!
 (^) Sonorous Shredder
@@ -1406,7 +1446,7 @@ UI:
 MUSIC:
 ---
 ($2) Ashen Factory
-($2) Brine Pool !!!
+(^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
 (X) Dawn

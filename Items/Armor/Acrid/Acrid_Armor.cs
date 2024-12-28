@@ -106,7 +106,7 @@ namespace Origins.Items.Armor.Acrid {
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
-			player.AddMaxBreath(63);
+			player.AddMaxBreath(180);
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;
 			}
