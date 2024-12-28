@@ -33,8 +33,13 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.MythrilBar, 12)
+			.AddIngredient(ItemID.MythrilBar, 10)
 			.AddTile(TileID.MythrilAnvil)
+			.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.MythrilAnvil, 10)
+			.AddTile(TileID.MythrilAnvil)
+			.AddCondition(OriginsModIntegrations.AprilFools)
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
