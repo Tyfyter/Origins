@@ -324,6 +324,9 @@ namespace Origins.NPCs {
 				if (beeIncantationDebuff) {
 					damageBoost += 5f;
 				}
+				if (beeIncantationDebuff) {
+					damageBoost += 7f;
+				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
 				}

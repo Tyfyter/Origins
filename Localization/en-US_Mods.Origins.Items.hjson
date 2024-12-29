@@ -4788,3 +4788,13 @@ Unmisfire: {
 	DisplayName: Unmisfire
 	Tooltip: ""
 }
+
+Mildew_Whip: {
+	DisplayName: Mildew Whip
+	Tooltip: 
+		'''
+		Has a chance to inflict Toxic Shock
+		7 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}
