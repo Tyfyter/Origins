@@ -412,12 +412,11 @@ namespace Origins.NPCs {
 			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
-				if (originPlayer.ZoneFiberglass) {
-					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword);
-					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), Fiberglass_Undergrowth.SpawnRates.Bow);
-					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), Fiberglass_Undergrowth.SpawnRates.Gun);
-					pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), Fiberglass_Undergrowth.SpawnRates.Spider);
-				}
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword);
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), Fiberglass_Undergrowth.SpawnRates.Bow);
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), Fiberglass_Undergrowth.SpawnRates.Gun);
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Cannon>(), Fiberglass_Undergrowth.SpawnRates.Gun);
+				pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), Fiberglass_Undergrowth.SpawnRates.Spider);
 				pool[0] = 0;
 				return;
 			}
