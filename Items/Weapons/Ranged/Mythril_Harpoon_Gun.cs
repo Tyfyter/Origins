@@ -36,6 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddIngredient(ItemID.MythrilBar, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
+
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.MythrilAnvil, 10)
 			.AddTile(TileID.MythrilAnvil)

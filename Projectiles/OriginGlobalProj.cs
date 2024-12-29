@@ -1,15 +1,18 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Graphics;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +26,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Projectiles {
-	public class OriginGlobalProj : GlobalProjectile {
+	public class OriginGlobalProj : GlobalProjectile, IDrawProjectileEffect {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 
@@ -54,6 +57,10 @@ namespace Origins.Projectiles {
 		public bool neuralNetworkHit = false;
 		public Vector2? weakpointAnalyzerTarget = default;
 		public Vector2 extraGravity = default;
+		public bool shouldUnmiss = false;
+		public int unmissTarget = -1;
+		public Vector2 unmissTargetPos = default;
+		public int unmissAnimation = 0;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public override void Load() {
 			itemSourceEffects = [];
@@ -196,6 +203,66 @@ namespace Origins.Projectiles {
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall)
 				projectile.damage = projectile.originalDamage;
 			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = Main.player[projectile.owner].OriginPlayer().felnumShock;
+			if (shouldUnmiss) {
+				if (Origins.MagicTripwireRange[projectile.type] >= 0) {
+					int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
+					if (magicTripwireRange == 0) magicTripwireRange = 48;
+					Rectangle magicTripwireHitbox = new(
+						(int)projectile.Center.X - magicTripwireRange,
+						(int)projectile.Center.Y - magicTripwireRange,
+						magicTripwireRange * 2,
+						magicTripwireRange * 2
+					);
+					int tripper = -1;
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (npc.CanBeChasedBy() && magicTripwireHitbox.Intersects(npc.Hitbox)) {
+							tripper = npc.whoAmI;
+							break;
+						}
+					}
+					if (tripper == -1) {
+						Player owner = Main.player[projectile.owner];
+						if (owner.hostile) {
+							foreach (Player player in Main.ActivePlayers) {
+								if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
+									tripper = player.whoAmI + Main.maxNPCs + 1;
+									break;
+								}
+							}
+						}
+					}
+					if (tripper != -1) {
+						unmissTarget = tripper;
+					} else if (unmissTarget != -1) {
+						Entity target = null;
+						if (unmissTarget > Main.maxNPCs + 1) {
+							int translatedTarget = unmissTarget - (Main.maxNPCs + 1);
+							if (Main.player.IndexInRange(translatedTarget)) {
+								Player playerTarget = Main.player[translatedTarget];
+								if (playerTarget.active && !playerTarget.dead && playerTarget.hostile && playerTarget.team != Main.player[projectile.owner].team) {
+									target = playerTarget;
+								}
+							}
+						} else {
+							if (Main.npc.IndexInRange(unmissTarget) && Main.npc[unmissTarget].CanBeChasedBy(projectile)) {
+								target = Main.npc[unmissTarget];
+							}
+						}
+						if (target is not null) {
+							unmissTargetPos = target.Center - projectile.velocity * 10;
+							if (++unmissAnimation == 8) {
+								shouldUnmiss = false;
+								(unmissTargetPos, projectile.Center) = (projectile.Center, unmissTargetPos);
+							}
+						} else {
+							unmissTarget = -1;
+							if (unmissAnimation > 0) unmissAnimation--;
+						}
+					}
+				}
+			} else if (unmissAnimation > 0) {
+				unmissAnimation--;
+			}
 		}
 		public override void AI(Projectile projectile) {
 			if (!isFromMitosis && !hasUsedMitosis && projectile.owner == Main.myPlayer && !ProjectileID.Sets.IsAWhip[projectile.type] && projectile.type != ModContent.ProjectileType<Mitosis_P>()) {
@@ -341,6 +408,7 @@ namespace Origins.Projectiles {
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			bitWriter.WriteBit(viperEffect);
 			bitWriter.WriteBit(isFromMitosis);
+			bitWriter.WriteBit(shouldUnmiss);
 
 			binaryWriter.Write(Prefix);
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
@@ -355,6 +423,7 @@ namespace Origins.Projectiles {
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
 			isFromMitosis = bitReader.ReadBit();
+			shouldUnmiss = bitReader.ReadBit();
 
 			Prefix = binaryReader.ReadInt32();
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();
@@ -420,6 +489,23 @@ namespace Origins.Projectiles {
 				if (controlPoints.Count % 2 == 1) {
 					Main.spriteBatch.DrawLightningArcBetween(controlPoints[0] - Main.screenPosition, controlPoints[1] - Main.screenPosition, Main.rand.NextFloat(-4, 4));
 				}
+			}
+		}
+		public void PrepareToDrawProjectile(Projectile projectile) {
+			if (unmissAnimation > 0) {
+				Origins.shaderOroboros.Capture();
+			}
+		}
+		public void FinishDrawingProjectile(Projectile projectile) {
+			if (unmissAnimation > 0) {
+				Vector2 velocity = projectile.velocity;
+				try {
+					projectile.velocity = unmissTargetPos - projectile.Center;
+					Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null), projectile);
+				} finally {
+					projectile.velocity = velocity;
+				}
+				Origins.shaderOroboros.Release();
 			}
 		}
 	}

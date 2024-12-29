@@ -4783,3 +4783,8 @@ Harpoon_Burst_Rifle: {
 		83.3% chance not to consume ammo
 		''' */
 }
+
+Unmisfire: {
+	// DisplayName: Unmisfire
+	// Tooltip: ""
+}
