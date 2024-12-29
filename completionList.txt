@@ -702,7 +702,7 @@ RANGED WEAPONS:
 (^) Tendon Tear
 (^) The Kruncher*
 (^) Threemoepeater
-(☻) Unmisfire* !!!
+(^) Unmisfire*
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
@@ -777,7 +777,7 @@ MAGIC WEAPONS:
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
-(☻) Eternanite
+(^) Eternanite
 (⛥) Innermost Manifest !!!
 (X) Meta Arcanum
 (^) Seam Beam
@@ -848,7 +848,7 @@ SUMMONER WEAPONS:
 (#, ^2) Forsaken Desire
 (X) Huff Puffer Bait !!!
 (#, ^2) Mildew Incantation !!!
-(#, ^2) Mildew Whip !!!
+(^) Mildew Whip
 (X) Obsidian Bone
 (X) Old Brine Rock !!!
 (X) Ornamental Riven Artifact
