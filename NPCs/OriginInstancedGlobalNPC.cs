@@ -65,6 +65,8 @@ namespace Origins.NPCs {
 			beeAfraidDebuff = false;
 			hibernalIncantationDebuff = false;
 			jointPopDebuff = false;
+			ziptieDebuff = false;
+			beeIncantationDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 				if (tornCurrentSeverity >= 1 && Main.netMode != NetmodeID.MultiplayerClient) {
