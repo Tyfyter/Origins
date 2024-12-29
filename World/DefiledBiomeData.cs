@@ -77,7 +77,7 @@ namespace Origins.World.BiomeData {
 			FissureDropRule = new OneFromRulesRule(1,
 				FirstFissureDropRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Infusion>()),
+				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Monolith_Rod>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Krakram>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Suspicious_Looking_Pebble>())
 			);

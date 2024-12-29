@@ -106,10 +106,11 @@ TOWN NPC Quests:
 (X) Goblin Tinkerer - Full Speed Ahead
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
-(☻) Stylist - Running Dry !!!
-(☻) Stylist - Slick Styling !!!
+(^) Party Girl - Livin' Up the Party
+(^) Stylist - Running Dry
+(^) Stylist - Slick Styling
 (^) Stylist - To Be Crystal Clear…
-(☻) Party Girl - Livin' Up the Party !!!
+(^) Tax Collector - A Night of Uninterrupted Sleep
 (^) Zoologist - Save the Critters!
 (^) Zoologist - Not Au-some…
 (^) Zoologist - Under the Starlight
@@ -170,6 +171,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
+(^) Felnum Slime
 (@5, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
@@ -650,7 +652,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(^) Crystal Cutters
+(#3, ^2) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
 (^) Knee Slapper*
@@ -683,7 +685,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
-(X) Chipper Knives !!!
+(#, ^2) Chipper Knife !!!
 (^) Endowood Bow
 (@5, ^3) Felnum Longbow
 (^) Fiberglass Bow
@@ -711,21 +713,21 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(@5, ^3) Boat Rocker* !!!
+(#3, ^2) Boat Rocker* !!! (needs alternate chains and alt)
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun*
 (X) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
-(X) Dragon's Breath* !!!
+(#, ^2) Dragon's Breath* !!!
 (^) Firespit
 (X) Fumethrower !!!
 (^) Harpoon Burst Rifle
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik*
-(X) Laser Line Bow !!!
-(@, ^3) Mythril Harpoon Gun* !!!
+(#, ^2) Laser Line Bow !!!
+(^) Mythril Harpoon Gun*
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun*
 (^) Palladium Harpoon Gun*
@@ -772,13 +774,13 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (X) Brine Haze !!!
-(X) Broadcast !!!
+(X) Broadcast
 (^) Chemical Laser
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
 (^) Eternanite
-(⛥) Innermost Manifest !!!
+(⛥) Innermost Manifest
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
@@ -827,9 +829,9 @@ SUMMONER WEAPONS:
 (X) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
-(X) Monolith Rod !!!
+(#, ^2) Monolith Rod !!!
 (⛥) Ocean Amulet* !!!
-(X) Ocotillo Finger !!!
+(#, ^2) Ocotillo Finger !!!
 (^) Ocotoral Bud*
 (^) Rotted Worm Staff
 (X) Shadow Cast !!!
@@ -895,7 +897,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
-(X) Eyenade !!!
+(#, ^2) Eyenade !!!
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
 (^) Flashbang*
@@ -919,12 +921,13 @@ EXPLOSIVE WEAPONS:
 (^) Sticky Link Grenade*
 
 (^) Acrid Handcannon*
-(@5, ^3) Alkaline Bomb* !!!
-(@5, ^3) Alkaline Grenade* !!!
+(^) Alkaline Bomb*
+(^) Alkaline Grenade*
 (^) Boomphracken
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
+(X) Grenade Lawnchair !!!
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
@@ -1043,7 +1046,7 @@ TILES:
 (X) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
-(X) Brine Water Fountain !!!
+(#, ^2) Brine Water Fountain !!!
 (X) Bug Cage*
 (X) Cancer Block*
 (X) Cancer Furniture*
@@ -1103,8 +1106,8 @@ TILES:
 (^) Acetabularia*
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
-(@5, ^3) Defiled Fissure* !!!
 (^) Defiled Foliage
+(#3, ^2) Defiled Relay !!!
 (^) Defiled Pot
 (X) Eden Tree*
 (^) Exoskeletal Tree*
