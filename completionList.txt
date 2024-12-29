@@ -702,7 +702,7 @@ RANGED WEAPONS:
 (^) Tendon Tear
 (^) The Kruncher*
 (^) Threemoepeater
-(#, ^2) Unmisfire* !!!
+(☻) Unmisfire* !!!
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
@@ -777,7 +777,7 @@ MAGIC WEAPONS:
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
-(#3, ^2) Eternanite
+(☻) Eternanite
 (⛥) Innermost Manifest !!!
 (X) Meta Arcanum
 (^) Seam Beam
