@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-	[LegacyName("Sulphur_Stone")]
+	[LegacyName("Sulphur_Stone", "Dolomite")]
 	public class Baryte : OriginTile {
         public string[] Categories => [
             "Stone"
@@ -32,6 +32,7 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 	}
+	[LegacyName("Sulphur_Stone_Item", "Dolomite_Item")]
 	public class Baryte_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

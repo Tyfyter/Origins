@@ -141,13 +141,15 @@ namespace Origins.NPCs.Brine {
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
 							if (NPC.ai[3] == 0) {
 								NPC.ai[3] = 1;
-								int item = Item.NewItem(
-									NPC.GetSource_OnHurt(null),
-									NPC.Center,
-									ModContent.ItemType<Venom_Fang>()
-								);
-								if (Main.netMode == NetmodeID.MultiplayerClient) {
-									NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+								if (Main.rand.NextBool(3)) {
+									int item = Item.NewItem(
+										NPC.GetSource_OnHurt(null),
+										NPC.Center,
+										ModContent.ItemType<Venom_Fang>()
+									);
+									if (Main.netMode == NetmodeID.MultiplayerClient) {
+										NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+									}
 								}
 							}
 							NPC.HitInfo hitInfo = NPC.GetIncomingStrikeModifiers(DamageClass.Default, 0).ToHitInfo(20, true, 0);

@@ -5,6 +5,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Blue_Bovine_Quest : Quest {
+		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -74,6 +75,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Lottery_Ticket_Quest : Quest {
+		public override bool SaveToWorld => true;
 		int stage = 0;
 		int progress = 0;
 		const int target = 10;

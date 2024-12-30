@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-	[LegacyName("Sulphur_Stone_Wall")]
+	[LegacyName("Sulphur_Stone_Wall", "Dolomite_Wall")]
 	public class Baryte_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
@@ -20,7 +20,7 @@ namespace Origins.Walls {
 			}
 		}
 	}
-	[LegacyName("Sulphur_Stone_Wall_Safe")]
+	[LegacyName("Sulphur_Stone_Wall_Safe", "Dolomite_Wall_Safe")]
 	public class Baryte_Wall_Safe : Defiled_Stone_Wall {
 		public override string Texture => "Origins/Walls/Baryte_Wall";
 		public override void SetStaticDefaults() {
@@ -28,7 +28,7 @@ namespace Origins.Walls {
 			Main.wallHouse[Type] = true;
 		}
 	}
-	[LegacyName("Sulphur_Stone_Wall_Item")]
+	[LegacyName("Sulphur_Stone_Wall_Item", "Dolomite_Wall_Item")]
 	public class Baryte_Wall_Item : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneWall);

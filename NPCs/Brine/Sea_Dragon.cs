@@ -104,16 +104,19 @@ namespace Origins.NPCs.Brine {
 			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[2]) / 60;
 			if (NPC.frameCounter >= 40) NPC.frameCounter = 0;
 			NPC.frame = new Rectangle(0, (26 * (int)(frame * Main.npcFrameCount[Type])) % 182, 94, 26);
-			chains ??= new Physics.Chain[2];
+			chains ??= new Physics.Chain[4];
 			for (int i = 0; i < chains.Length; i++) {
 				Physics.Chain chain = chains[i];
 				if (chain is null || chain.links[0].position.HasNaNs()) {
-					SeaDragonAnchorPoint anchor = new(this, i);
+					SeaDragonAnchorPoint anchor = new(this, i % 2);
 					const float spring = 0.5f;
 					Gravity[] gravity = [
-						new SeaDragonStrandGravity(this, i)
+						new SeaDragonStrandGravity(this, i * 20)
 					];
 					switch (i) {
+						case 2:
+						gravity[0] = new SeaDragonStrandGravity(this, (i - 2) * 20 + 10);
+						goto case 0;
 						case 0:
 						chains[i] = chain = new Physics.Chain() {
 							anchor = anchor,
@@ -127,6 +130,9 @@ namespace Origins.NPCs.Brine {
 						};
 						break;
 
+						case 3:
+						gravity[0] = new SeaDragonStrandGravity(this, (i - 2) * 20 + 10);
+						goto case 1;
 						case 1:
 						chains[i] = chain = new Physics.Chain() {
 							anchor = anchor,
@@ -233,13 +239,13 @@ namespace Origins.NPCs.Brine {
 				}
 			}
 		}
-		public class SeaDragonStrandGravity(Sea_Dragon npc, int index) : Gravity {
+		public class SeaDragonStrandGravity(Sea_Dragon npc, int offset) : Gravity {
 			public override Vector2 Acceleration {
 				get {
 					Vector2 dir = new Vector2(0, npc.NPC.spriteDirection).RotatedBy(npc.NPC.rotation) * 0.07f;
-					if (index == 0) dir *= -0.5f;
 					Vector2 grav = new Vector2(npc.NPC.spriteDirection, 0).RotatedBy(npc.NPC.rotation) * 0.1f;
 					int frame = npc.NPC.IsABestiaryIconDummy ? (int)npc.NPC.frameCounter : (int)npc.NPC.ai[2];
+					frame = (frame + offset) % 40;
 					const int time = 9;
 					if (frame < time) {
 						return grav - dir;
