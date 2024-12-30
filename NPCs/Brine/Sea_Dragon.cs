@@ -2,6 +2,7 @@
 using CalamityMod.NPCs.ExoMechs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
@@ -34,9 +35,9 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 48;
-			NPC.defense = 10;
-			NPC.damage = 20;
+			NPC.lifeMax = 320;
+			NPC.defense = 21;
+			NPC.damage = 60;
 			NPC.width = 20;
 			NPC.height = 20;
 			NPC.catchItem = 0;
@@ -44,7 +45,7 @@ namespace Origins.NPCs.Brine {
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath22;
 			NPC.knockBackResist = 0.65f;
-			NPC.value = 76;
+			NPC.value = 500;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
@@ -59,6 +60,7 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 3, 5));
 		}
 		public override void AI() {
 			DoTargeting();
@@ -145,6 +147,10 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+			target.AddBuff(BuffID.Venom, Main.rand.Next(119, 181));
+			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), Main.rand.Next(179, 241));
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

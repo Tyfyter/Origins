@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 38)
 			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 12)
-			.AddIngredient(ModContent.ItemType<Dolomite_Item>(), 25)
+			.AddIngredient(ModContent.ItemType<Baryte_Item>(), 25)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

@@ -84,8 +84,8 @@ namespace Origins.World.BiomeData {
 					genRand.NextFloat(1.4f, 1.6f) * scale,
 					OriginExtensions.Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), MathF.Pow(genRand.NextFloat(0.25f, 0.7f), 1.5f) * 1.5f)
 				);
-				ushort stoneID = (ushort)ModContent.TileType<Dolomite>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Dolomite_Wall>();
+				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
+				ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
 				Tile tile;
 				for (int x = (int)MathF.Floor(i - 55); x < (int)MathF.Ceiling(i + 55); x++) {
 					for (int y = (int)MathF.Ceiling(j - 55); y < (int)MathF.Floor(j + 55); y++) {
@@ -296,9 +296,9 @@ namespace Origins.World.BiomeData {
 				if (GenVars.structures is not null) GenVars.structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, maxGenY - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
-				ushort stoneID = (ushort)ModContent.TileType<Dolomite>();
+				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
 				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Dolomite_Wall>();
+				ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
 				float stretchScale = stretch.Length();
 				Vector2 stretchNorm = stretch / stretchScale;
 				float totalSize = 20 * sizeMult * (stretchScale + 1);
@@ -346,7 +346,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static Point BrineStart_Old(int i, int j, float sizeMult = 1f) {
-				ushort stoneID = (ushort)ModContent.TileType<Dolomite>();
+				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
 				ushort stoneWallID = WallID.BlueDungeonSlab;//(ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				int i2 = i + (int)(genRand.Next(-22, 22) * sizeMult);
 				int j2 = j + (int)(44 * sizeMult);

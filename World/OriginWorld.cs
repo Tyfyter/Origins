@@ -166,7 +166,7 @@ namespace Origins {
 				+ tileCounts[ModContent.TileType<Quartz>()]
 				+ tileCounts[ModContent.TileType<Primordial_Permafrost>()];
 
-			brineTiles = tileCounts[ModContent.TileType<Dolomite>()];
+			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
 			fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
 		}

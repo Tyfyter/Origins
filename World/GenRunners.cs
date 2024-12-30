@@ -416,8 +416,8 @@ namespace Origins.World {
 			if (Math.Abs(speed.Y) > 1) speed /= Math.Abs(speed.Y);
 			double decay = speed.Length();
 			int clearedCount = 1;
-			ushort stoneID = (ushort)ModContent.TileType<Dolomite>();
-			ushort stoneWallID = (ushort)ModContent.WallType<Dolomite_Wall>();
+			ushort stoneID = (ushort)ModContent.TileType<Baryte>();
+			ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
 			ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
 			ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
 			int wobble = genRand.Next(-4, 5);

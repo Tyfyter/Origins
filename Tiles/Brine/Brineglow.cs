@@ -86,7 +86,7 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
-				TileType<Dolomite>()
+				TileType<Baryte>()
 			];
 			TileObjectData.newTile.AnchorAlternateTiles = [
 				Type
@@ -116,7 +116,7 @@ namespace Origins.Tiles.Brine {
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			Tile below = Framing.GetTileSafely(i, j - 1);
-			if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Dolomite>())) {
+			if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Baryte>())) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}

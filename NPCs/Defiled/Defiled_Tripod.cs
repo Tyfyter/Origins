@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles;

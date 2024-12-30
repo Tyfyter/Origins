@@ -3051,8 +3051,8 @@ Eitrite_Ore_Item: {
 	// Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 }
 
-Dolomite_Item: {
-	// DisplayName: Dolomite
+Baryte_Item: {
+	// DisplayName: Baryte
 	// Tooltip: ""
 }
 
@@ -3283,8 +3283,8 @@ Riven_Flesh_Wall_Item: {
 	// Tooltip: ""
 }
 
-Dolomite_Wall_Item: {
-	// DisplayName: Dolomite Wall
+Baryte_Wall_Item: {
+	// DisplayName: Baryte Wall
 	// Tooltip: ""
 }
 

@@ -31,14 +31,13 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Velocity = 1f
 			};
-			//DefiledGlobalNPC.NPCTransformations.Add(Type, ModContent.NPCType<Defiled_Asphyxiator>());
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 48;
-			NPC.defense = 10;
-			NPC.damage = 20;
+			NPC.lifeMax = 358;
+			NPC.defense = 26;
+			NPC.damage = 65;
 			NPC.width = 30;
 			NPC.height = 30;
 			NPC.catchItem = 0;
@@ -46,7 +45,7 @@ namespace Origins.NPCs.Brine {
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath22;
 			NPC.knockBackResist = 0.65f;
-			NPC.value = 76;
+			NPC.value = 500;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
@@ -61,6 +60,7 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 3, 7));
 		}
 		public override void AI() {
 			if (NPC.ai[2] < 0) {

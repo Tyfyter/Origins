@@ -5,7 +5,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
 	[LegacyName("Sulphur_Stone")]
-	public class Dolomite : OriginTile {
+	public class Baryte : OriginTile {
         public string[] Categories => [
             "Stone"
         ];
@@ -32,12 +32,12 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 	}
-	public class Dolomite_Item : ModItem {
+	public class Baryte_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Dolomite>());
+			Item.DefaultToPlaceableTile(TileType<Baryte>());
 		}
 	}
 }

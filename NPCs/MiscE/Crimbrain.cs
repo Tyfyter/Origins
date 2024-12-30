@@ -1,16 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Weapons.Summoner;
-using Origins.World.BiomeData;
+﻿using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.MiscE {
-    public class Crimbrain : ModNPC {
+	public class Crimbrain : ModNPC {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
