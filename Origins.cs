@@ -41,6 +41,8 @@ using Origins.Items.Tools;
 using Microsoft.Xna.Framework.Audio;
 using Origins.Buffs;
 using PegasusLib;
+using Origins.Items.Other.Consumables;
+using CalamityMod.Items.Placeables.FurnitureAuric;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -607,6 +609,7 @@ namespace Origins {
 			BreastplateGlowMasks = null;
 			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
+			Music.musicDisplay = null;
 			instance = null;
 			Petrified_Tree.Unload();
 			OriginExtensions.unInitExt();
@@ -849,10 +852,22 @@ namespace Origins {
 			public static int RivenBoss;
 			public static int RivenOcean;
 			public static int AncientRiven;
+			internal static Mod musicDisplay;
 			internal static void LoadMusic() {
+				ModLoader.TryGetMod("MusicDisplay", out musicDisplay);
 				static int GetMusicSlot(string path) {
 					MusicLoader.AddMusic(instance, path);
-					return MusicLoader.GetMusicSlot(instance, path);
+					int slot = MusicLoader.GetMusicSlot(instance, path);
+					if (slot != -1 && musicDisplay is not null) {
+						string track = path.Split("/")[^1];
+						musicDisplay.Call("AddMusic",
+							(short)slot,
+							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
+							"chrersis",
+							Origins.instance.DisplayName
+						);
+					}
+					return slot;
 				}
 				Fiberglass = GetMusicSlot("Music/The_Room_Before");
 				BrinePool = GetMusicSlot("Music/Below_The_Brine");

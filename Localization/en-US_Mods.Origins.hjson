@@ -2025,3 +2025,60 @@ ItemSourceFilter: {
 	ButterscotchRarity.DisplayName: Butterscotch
 	AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
 }
+
+Music: {
+	The_Room_Before: {
+		Name: The Room Before
+		Subtitle: ""
+	}
+
+	Below_The_Brine: {
+		Name: Below The Brine
+		Subtitle: ""
+	}
+
+	Dancing_With_Ghosts: {
+		Name: Dancing With Ghosts
+		Subtitle: ""
+	}
+
+	Stolen_Memories: {
+		Name: Stolen Memories
+		Subtitle: ""
+	}
+
+	Heart_Of_The_Beast: {
+		Name: Heart Of The Beast
+		Subtitle: ""
+	}
+
+	ADJUDICATE: {
+		Name: ADJUDICATE
+		Subtitle: ""
+	}
+
+	Pereunt_Unum_Scindendum: {
+		Name: Pereunt Unum Scindendum
+		Subtitle: ""
+	}
+
+	Festering_Hives: {
+		Name: Festering Hives
+		Subtitle: ""
+	}
+
+	Ad_Laceratur: {
+		Name: Ad Laceratur
+		Subtitle: ""
+	}
+
+	This_Ocean_Of_Alkahest: {
+		Name: This Ocean Of Alkahest
+		Subtitle: ""
+	}
+
+	Shattered_Topography_Old: {
+		Name: Shattered Topography Old
+		Subtitle: ""
+	}
+}
