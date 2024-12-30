@@ -4,6 +4,7 @@ using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -53,8 +54,8 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override bool PreAI() {
-			NPC.ai[0] += Main.rand.NextFloat(0, 1);
-			if (NPC.ai[0] > 210 && (NPC.collideY || NPC.velocity.Y == 0)) {
+			NPC.localAI[0] += Main.rand.NextFloat(0, 1);
+			if (NPC.localAI[0] > 210 && (NPC.collideY || NPC.velocity.Y == 0)) {
 				switch (NPC.aiAction) {
 					case 0:
 					NPC.aiAction = (int)(Main.GlobalTimeWrappedHourly % 2 + 1);
@@ -63,20 +64,21 @@ namespace Origins.NPCs.Riven {
 						NPC.collideX = false;
 						NPC.collideY = false;
 					}
+					NPC.netUpdate = true;
 					break;
 					case 1:
 					case 2:
 					NPC.aiAction = 0;
 					break;
 				}
-				NPC.ai[0] = 0;
+				NPC.localAI[0] = 0;
 			}
 			if (NPC.aiAction != 0) {
 				if (NPC.aiAction == 1) {
 					NPC.velocity.X = MathHelper.Clamp(NPC.velocity.X + NPC.direction * 0.15f, -6, 6);
-					NPC.ai[0] += NPC.collideX ? 9 : 3;
+					NPC.localAI[0] += NPC.collideX ? 9 : 3;
 				} else if (NPC.collideX || NPC.collideY) {
-					NPC.ai[0] = 300;
+					NPC.localAI[0] = 300;
 				}
 				return false;
 
@@ -86,10 +88,15 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(NPC.localAI[0]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.localAI[0] = reader.ReadSingle();
 		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.aiAction != 0) {
