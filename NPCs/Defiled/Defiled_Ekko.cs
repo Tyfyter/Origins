@@ -52,7 +52,6 @@ namespace Origins.NPCs.Defiled {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			if (++NPC.frameCounter > 7) {

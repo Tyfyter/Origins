@@ -64,7 +64,6 @@ namespace Origins.NPCs.MiscE {
 			} else {
 				NPCAimedTarget target = NPC.GetTargetData();
 				NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
-				NPC.FaceTarget();
 				if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 				NPC.spriteDirection = NPC.direction;
 				NPC.hide = false;

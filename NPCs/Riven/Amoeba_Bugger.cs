@@ -42,7 +42,6 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(1100)) SoundEngine.PlaySound(SoundID.Zombie77.WithVolume(0.5f), NPC.Center);
-			NPC.FaceTarget();
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;

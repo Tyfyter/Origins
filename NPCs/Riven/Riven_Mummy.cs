@@ -48,7 +48,6 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 		}

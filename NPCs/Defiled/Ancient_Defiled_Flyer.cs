@@ -55,7 +55,6 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 14));
 		}
 		public override void AI() {
-			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
 		}
