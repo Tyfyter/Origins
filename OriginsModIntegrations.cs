@@ -193,7 +193,7 @@ namespace Origins {
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
-					2f,
+					2.1f,
 					() => ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver,
 					ModContent.NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
