@@ -19,6 +19,7 @@ namespace Origins.NPCs.Fiberglass {
 		int[] oldDir = new int[10];
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
+			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PossessedArmor);
@@ -29,6 +30,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.aiStyle = 0;//104;//10,
 			NPC.width = NPC.height = 27;
 			NPC.alpha = NPC.IsABestiaryIconDummy ? 0 : 200;
+			NPC.value += Item.buyPrice(silver: 1);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
@@ -61,7 +63,6 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
-			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
@@ -120,6 +121,7 @@ namespace Origins.NPCs.Fiberglass {
 		int[] oldDir = new int[10];
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
+			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PossessedArmor);
@@ -207,6 +209,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.noGravity = true;
 			NPC.knockBackResist /= 4;
 			NPC.width = NPC.height = 42;
+			NPC.value += Item.buyPrice(silver: 1);
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 			//npc.DeathSound = SoundID.DD2_DefeatScene;
 			SpawnModBiomes = [
@@ -333,7 +336,6 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
-			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
