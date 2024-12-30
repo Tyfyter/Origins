@@ -6,6 +6,7 @@ using Origins.Tiles;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -186,19 +187,29 @@ namespace Origins.NPCs.Defiled {
 			Mana = reader.ReadSingle();
 		}
 		bool phasing = false;
+		List<int> alteredTiles;
 		public void PreUpdateCollision() {
 			if (phasing = (NPC.targetRect.Top - NPC.Bottom.Y > 0 || !NPC.collideY)) {
-				for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
-					Main.tileSolidTop[OriginTile.DefiledTiles[i]] = true;
-					Main.tileSolid[OriginTile.DefiledTiles[i]] = false;
+				if (alteredTiles is null) {
+					alteredTiles = [];
+					for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
+						int tile = OriginTile.DefiledTiles[i];
+						if (Main.tileSolid[tile] && !Main.tileSolidTop[tile]) {
+							alteredTiles.Add(tile);
+						}
+					}
+				}
+				for (int i = 0; i < alteredTiles.Count; i++) {
+					Main.tileSolidTop[alteredTiles[i]] = true;
+					Main.tileSolid[alteredTiles[i]] = false;
 				}
 			}
 		}
 		public void PostUpdateCollision() {
 			if (phasing) {
-				for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
-					Main.tileSolidTop[OriginTile.DefiledTiles[i]] = false;
-					Main.tileSolid[OriginTile.DefiledTiles[i]] = true;
+				for (int i = 0; i < alteredTiles.Count; i++) {
+					Main.tileSolidTop[alteredTiles[i]] = false;
+					Main.tileSolid[alteredTiles[i]] = true;
 				}
 			}
 		}
