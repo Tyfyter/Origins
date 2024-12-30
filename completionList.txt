@@ -172,7 +172,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
-(X) Felnum Einheri !!!
+(#, ^2) Felnum Einheri !!!
 (X) Felnum Guardian !!!
 (^) Felnum Slime
 (@5, ^3) Flagellant*
