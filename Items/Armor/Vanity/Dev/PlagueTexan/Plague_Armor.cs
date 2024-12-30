@@ -28,6 +28,9 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 		public int HeadItemID => Type;
 		public int BodyItemID => ModContent.ItemType<Plague_Texan_Jacket>();
 		public int LegsItemID => ModContent.ItemType<Plague_Texan_Jeans>();
+		public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
