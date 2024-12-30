@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Journal;
+using Origins.NPCs.Defiled;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -21,6 +22,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.aggro -= 400;
 			player.calmed = true;
+			player.npcTypeNoAggro[ModContent.NPCType<Defiled_Tripod>()] = true;
 		}
 	}
 	public class Tripod_Nip_Entry : JournalEntry {

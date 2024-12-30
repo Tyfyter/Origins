@@ -1,12 +1,15 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -197,6 +200,19 @@ namespace Origins.NPCs.Defiled {
 					Main.tileSolidTop[OriginTile.DefiledTiles[i]] = false;
 					Main.tileSolid[OriginTile.DefiledTiles[i]] = true;
 				}
+			}
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Defiled_Tripod).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_AF";
+		public static AutoLoadingAsset<Texture2D> normalGlowTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_Glow";
+		public static AutoLoadingAsset<Texture2D> afGlowTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_AF_Glow";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				DrawGlow(spriteBatch, screenPos, afGlowTexture, NPC, GetGlowColor(drawColor));
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				DrawGlow(spriteBatch, screenPos, normalGlowTexture, NPC, GetGlowColor(drawColor));
 			}
 		}
 	}
