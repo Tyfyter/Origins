@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (X) Scrap Mercenary
 (X) Zombie Paladin
 
-(^) Defiled Amalgamation*
+(#3, ^2) Defiled Amalgamation* !!! (OOB tolerance)
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (^) World Cracker*
@@ -157,7 +157,7 @@ ENEMY NPCS:
 (^) Cleaver*
 (^) Conehead Zombie
 (^) Cranivore
-(^) Crimbrain
+(#3, ^2) Crimbrain !!!
 (^) Defiled Cyclops*
 (^) Defiled Digger
 (@4 (if it's going to act remotely like a player, it'd be best for its sprites to be separated similarly to player sprites)) Defiled Ekko*
@@ -928,6 +928,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
+(#3, ^2) Sonorous Shredder !!! (Thorium/vanilla separated functionality)
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
 
@@ -1414,9 +1415,6 @@ CROSS-MOD CONTENT:
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (X) Keytar !!!
-(#, ^2) Sanguinite Storage Unit !!!
-(#, ^2) Sanguinite Storage Upgrade !!!
-(^) Sonorous Shredder
 (X) Watered-down Keytar !!!
 ---
 

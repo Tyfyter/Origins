@@ -82,7 +82,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_DA>();
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 3100;
-			NPC.defense = 12;
+			NPC.defense = 14;
 			NPC.damage = 48;
 			NPC.width = 81;
 			NPC.height = 96;

@@ -12,7 +12,7 @@ namespace Origins.NPCs.MiscE {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
-			CrimsonGlobalNPC.AssimilationAmounts.Add(Type, 0.07f);
+			CrimsonGlobalNPC.AssimilationAmounts.Add(Type, 0.04f);
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, -16),
 				PortraitPositionYOverride = -32
@@ -35,7 +35,7 @@ namespace Origins.NPCs.MiscE {
 			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			target.AddBuff(BuffID.Confused, 50);
+			target.AddBuff(BuffID.Confused, 20);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
