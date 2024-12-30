@@ -160,17 +160,20 @@ ENEMY NPCS:
 (#3, ^2) Crimbrain !!!
 (^) Defiled Cyclops*
 (^) Defiled Digger
-(@4 (if it's going to act remotely like a player, it'd be best for its sprites to be separated similarly to player sprites)) Defiled Ekko*
+(#, ^2) Defiled Ekko* !!! (you already made the proper sprite format??)
 (^) Defiled Krusher*
 (^) Defiled Mite*
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
+(X) Draconess !!!
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Cannon
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
+(#, ^2) Felnum Einheri !!!
+(X) Felnum Guardian !!!
 (^) Felnum Slime
 (@5, ^3) Flagellant*
 (^) Graveshield Zombie
@@ -186,6 +189,8 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus*
 (^) Spider Amoeba*
 (X) Spiteful Flesh
+(X) Steam Pirate !!!
+(X) Steam Shooter !!!
 (X) Top Brass Protector
 (X) Worker Bot
 
