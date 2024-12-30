@@ -62,7 +62,6 @@ namespace Origins.NPCs.Defiled {
 			NPCAimedTarget target = NPC.GetTargetData();
 			NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
 			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.2f), NPC.Center);
-			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
 		}

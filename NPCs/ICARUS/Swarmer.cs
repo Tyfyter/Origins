@@ -20,7 +20,6 @@ namespace Origins.NPCs.ICARUS {
 			NPC.width = 18;
 			NPC.height = 18;
 			NPC.friendly = false;
-			NPC.FaceTarget();
 			NPC.spriteDirection = NPC.direction;
 		}
 

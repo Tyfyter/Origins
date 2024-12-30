@@ -63,7 +63,6 @@ namespace Origins.NPCs.Defiled {
 				attacking = true;
 			}
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			if (attacking) {

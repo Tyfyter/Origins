@@ -70,7 +70,6 @@ namespace Origins.NPCs.Defiled {
 				}
 			}
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			if (NPC.collideY) {

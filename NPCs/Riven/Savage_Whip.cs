@@ -222,6 +222,10 @@ namespace Origins.NPCs.Riven {
 			NPC.dontTakeDamage = true;
 		}
 		public override bool PreAI() {
+			if (NPC.realLife == -1) {
+				NPC.active = false;
+				return false;
+			}
 			NPC.dontTakeDamage = false;
 			DoGlow(NPC.Center);
 			NPC parentNPC = ParentNPC;

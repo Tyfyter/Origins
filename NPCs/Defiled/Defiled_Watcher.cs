@@ -78,9 +78,10 @@ namespace Origins.NPCs.Defiled {
 			Vector2? vectorToTargetPosition = null;
 			Vector2 targetPos = default;
 			if (NPC.HasValidTarget) {
-				Player target = Main.player[NPC.target];
+				NPCAimedTarget target = NPC.GetTargetData();
 				targetPos = NPC.Center.Clamp(target.Hitbox);
 				vectorToTargetPosition = targetPos - target.Center.Clamp(NPC.Hitbox);
+				if (NPC.confused) vectorToTargetPosition *= -1;
 			} else {
 				if (NPC.velocity.LengthSquared() < 0.001f && Main.rand.NextBool(10)) {
 					// If there is a case where it's not moving at all, give it a little "poke"

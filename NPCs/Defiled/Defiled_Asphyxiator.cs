@@ -4,6 +4,7 @@ using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -64,13 +65,15 @@ namespace Origins.NPCs.Defiled {
 		public override bool PreAI() {
 			NPC.TargetClosestUpgraded();
 			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
-				Player target = Main.player[NPC.target];
-				int level = Defiled_Asphyxiator_Debuff.GetLevel(target);
+				Player _target = Main.player[NPC.target];
+				int level = Defiled_Asphyxiator_Debuff.GetLevel(_target);
+				NPCAimedTarget target = NPC.GetTargetData();
 				int projectileType = ProjectileID.None;
 				float speed = 12f;
 				float inertia = 128f;
 				NPC.rotation = NPC.velocity.X * 0.1f;
-				Vector2 vectorToTargetPosition = target.MountedCenter - NPC.Center;
+				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
+				if (NPC.confused) vectorToTargetPosition *= -1;
 				NPC.spriteDirection = Math.Sign(vectorToTargetPosition.X);
 				float dist = vectorToTargetPosition.Length();
 				vectorToTargetPosition /= dist;
@@ -110,7 +113,7 @@ namespace Origins.NPCs.Defiled {
 									for (int i = Main.rand.Next(2, 4); i-- >0;) {
 										do {
 											projPos = target.Center + Main.rand.NextVector2CircularEdge(17 * 16, 17 * 16);
-										} while (!Collision.CanHitLine(projPos - new Vector2(18), 36, 36, target.position, target.width, target.height) && ++tries < 100);
+										} while (!Collision.CanHitLine(projPos - new Vector2(18), 36, 36, target.Hitbox.TopLeft(), target.Hitbox.Width, target.Hitbox.Height) && ++tries < 100);
 										Projectile.NewProjectile(
 											NPC.GetSource_FromAI(),
 											projPos,
@@ -118,7 +121,8 @@ namespace Origins.NPCs.Defiled {
 											projectileType,
 											20,
 											4,
-											ai1: target.whoAmI
+											ai1: target.Center.X,
+											ai2: target.Center.Y
 										);
 									}
 								}
@@ -187,7 +191,7 @@ namespace Origins.NPCs.Defiled {
 				Projectile.hostile = true;
 			} else {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WhiteTorch);
-				if (Projectile.ai[0] == delay - 5) Projectile.velocity = (Main.player[(int)Projectile.ai[1]].MountedCenter - Projectile.Center).SafeNormalize(default) * 10;
+				if (Projectile.ai[0] == delay - 5) Projectile.velocity = (new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center).SafeNormalize(default) * 10;
 				Projectile.hostile = false;
 				Projectile.hide = true;
 			}

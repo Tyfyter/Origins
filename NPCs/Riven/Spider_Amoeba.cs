@@ -56,7 +56,6 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)

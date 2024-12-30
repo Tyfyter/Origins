@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Buffs;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Flashbang : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -64,7 +65,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Confused, 220);
 			target.AddBuff(BuffID.Slow, 300);
-			target.AddBuff(BuffID.Darkness, 60);
+			target.AddBuff(BuffID.Darkness, 120);
+			target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 120);
 		}
 	}
 	public class Flash_P : ModProjectile {
