@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Acetabularia : OriginTile, IDefiledTile {
+    public class Acetabularia : OriginTile, IRivenTile {
         public string[] Categories => [
             "Plant"
         ];
