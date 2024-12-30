@@ -48,10 +48,10 @@ namespace Origins.NPCs.MiscE {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 17));
 		}
 		public override void AI() {
-			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
-			NPC.knockBackResist = 1f;
+			NPC.knockBackResist = 1.5f;
+			NPC.velocity *= 0.97f;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {

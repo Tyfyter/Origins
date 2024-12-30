@@ -66,7 +66,6 @@ namespace Origins.NPCs.Defiled {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;

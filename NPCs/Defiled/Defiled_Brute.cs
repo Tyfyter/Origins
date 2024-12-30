@@ -83,7 +83,6 @@ namespace Origins.NPCs.Defiled {
 			}
 			if(npc.localAI[3]>0)npc.localAI[3]--;*/
 			if (NPC.HasPlayerTarget) {
-				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
 			/*if(attacking) {
