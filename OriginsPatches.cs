@@ -617,7 +617,51 @@ namespace Origins {
 					LogError($"Could not find npcsWithinHouse > 3 comparison in ShopHelper.ProcessMood");
 				}
 			};
+			IL_WorldGen.SpawnThingsFromPot += IL_WorldGen_SpawnThingsFromPot;
 		}
+
+		private static void IL_WorldGen_SpawnThingsFromPot(ILContext il) {
+			ILCursor c = new(il);
+			int playerLoc = -1;
+			int countLoc = -1;
+			int typeLoc = -1;
+			ILLabel label = null;
+			int minConst = -1;
+			int maxConst = -1;
+			if (c.TryGotoNext(MoveType.After,
+				i => i.MatchLdloc(out playerLoc),
+				i => i.MatchCallOrCallvirt<Player>("get_" + nameof(Player.ZoneGlowshroom)),
+				i => i.MatchBrfalse(out label),
+				i => i.MatchLdloc(out countLoc),
+				i => i.MatchCallOrCallvirt<Main>("get_" + nameof(Main.rand)),
+				i => i.MatchLdcI4(out minConst),
+				i => i.MatchLdcI4(out maxConst),
+				i => i.MatchCallOrCallvirt<UnifiedRandom>(nameof(UnifiedRandom.Next)),
+				i => i.MatchAdd(),
+				i => i.MatchStloc(countLoc),
+				i => i.MatchLdcI4(ItemID.MushroomTorch),
+				i => i.MatchStloc(out typeLoc)
+			)) {
+				c.GotoLabel(label, MoveType.AfterLabel);
+				c.EmitLdloc(playerLoc);
+				c.EmitLdloca(countLoc);
+				c.EmitLdcI4(minConst);
+				c.EmitLdcI4(maxConst);
+				c.EmitLdloca(typeLoc);
+				c.EmitDelegate((Player player, ref int count, int minBonus, int maxBonus, ref int type) => {
+					if (player.InModBiome<Defiled_Wastelands>()) {
+						count += Main.rand.Next(minBonus, maxBonus);
+						type = ModContent.ItemType<Defiled_Torch>();
+					} else if (player.InModBiome<Riven_Hive>()) {
+						count += Main.rand.Next(minBonus, maxBonus);
+						type = ModContent.ItemType<Riven_Torch>();
+					}
+				});
+			} else {
+				LogError($"Could not find mushroom torch drop in WorldGen.SpawnThingsFromPot");
+			}
+		}
+
 		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
 			orig(inv, context, slot);
 			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && InspectItemKey.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {

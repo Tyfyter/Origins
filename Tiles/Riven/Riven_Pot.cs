@@ -1,10 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Reflection;
+using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -16,6 +20,7 @@ namespace Origins.Tiles.Riven {
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
+
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
@@ -50,8 +55,14 @@ namespace Origins.Tiles.Riven {
             HitSound = SoundID.NPCHit20;
 			//KillSound = SoundID.NPCDeath12;
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			WorldGen.CheckPot(i, j);
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			TileMethods.WorldGen_SpawnThingsFromPot(i, j, i, j, 0);
+			IEntitySource source = WorldGen.GetItemSource_FromTileBreak(i, j);
+			Vector2 basePos = new(i * 16, j * 16);
+			for (int index = 0; index < 3; index++) {
+				Origins.instance.SpawnGoreByName(source, basePos + new Vector2(Main.rand.Next(32), Main.rand.Next(32)), default, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
+				Origins.instance.SpawnGoreByName(source, basePos + new Vector2(Main.rand.Next(32), Main.rand.Next(32)), default, "Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4));
+			}
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.05f * GlowValue;
@@ -61,24 +72,21 @@ namespace Origins.Tiles.Riven {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Pot_Item : ModItem, ICustomWikiStat {
-		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
+	public class Riven_Pot_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
+		public IEnumerable<int> ProvideItemObtainability() => [Type];
+		public override string Texture => "Origins/Tiles/Riven/Riven_Pot";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
-
 		public override void SetDefaults() {
-			Item.width = 26;
-			Item.height = 22;
-			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
-			Item.value = 500;
-			Item.createTile = ModContent.TileType<Riven_Pot>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Pot>());
+		}
+		public override bool? UseItem(Player player) {
+			WorldGen.Place2x2(Player.tileTargetX, Player.tileTargetY, (ushort)Item.createTile, 0);
+			return base.UseItem(player);
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			tooltips.Add(new(Mod, "createTile", Item.createTile + ""));
 		}
 		public bool ShouldHavePage => false;
 	}

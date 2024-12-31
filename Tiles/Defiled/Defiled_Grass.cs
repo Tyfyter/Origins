@@ -48,11 +48,6 @@ namespace Origins.Tiles.Defiled {
 			Main.tile[i, j].SetHalfBlock(half);
 			Main.tile[i, j].SetSlope(slope);
 			NetMessage.SendTileSquare(-1, i, j, 1);
-			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				above.ResetToType((ushort)ModContent.TileType<Soulspore>());
-				WorldGen.TileFrame(i, j - 1);
-			}
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);

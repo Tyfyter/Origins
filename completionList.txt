@@ -1126,7 +1126,7 @@ TILES:
 (X) Scrapleaf Tree
 (^) Soulspore*
 (ᗢ) Surveysprout*
-(#, ^2) Underwater Vine !!!
+(☻) Underwater Vine !!!
 (^) Wilting Rose*
 (^) Wrycoral*
 
