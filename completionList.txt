@@ -899,7 +899,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
-(#, ^2) Eyenade !!!
+(☻) Eyenade !!!
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
 (^) Flashbang*
@@ -1048,7 +1048,7 @@ TILES:
 (X) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
-(#, ^2) Brine Water Fountain !!!
+(☻) Brine Water Fountain !!!
 (X) Bug Cage*
 (X) Cancer Block*
 (X) Cancer Furniture*

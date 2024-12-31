@@ -4808,3 +4808,8 @@ Eyenade: {
 	DisplayName: Eyenade
 	Tooltip: ""
 }
+
+Brine_Fountain_Item: {
+	DisplayName: Brine Fountain
+	Tooltip: ""
+}
