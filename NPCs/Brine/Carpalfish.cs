@@ -171,7 +171,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			float frame = ((int)++NPC.frameCounter) / 60;
+			float frame = ((int)++NPC.frameCounter) / 60f;
 			if (NPC.frameCounter >= 60) {
 				frame = 0;
 				NPC.frameCounter = 0;
