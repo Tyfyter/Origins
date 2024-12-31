@@ -1629,6 +1629,7 @@ Tiles: {
 	// Lost_Ore.MapEntry: Lost Ore
 	// Carburite.MapEntry: Carburite
 	// Silicon_Ore.MapEntry: Silicon Ore
+	// Underwater_Vine.MapEntry: Underwater Vine
 }
 
 MapObject: {

@@ -273,22 +273,27 @@ namespace Origins.World.BiomeData {
 					);
 				}
 				int vineTries = 0;
-				int vineTile = ModContent.TileType<Brineglow>();
+				int brineglowTile = ModContent.TileType<Brineglow>();
+				int vineTile = ModContent.TileType<Underwater_Vine>();
 				int vineCount = 0;
-				for (int k = genRand.Next(200, 300); k > 0;) {
+				for (int k = genRand.Next(400, 600); k > 0;) {
 					int posX = genRand.Next(minGenX, maxGenX);
 					int posY = genRand.Next(minGenY, maxGenY);
 					int length = 0;
 					bool isVine = false;
 					Tile currentTile;
-					for (; (currentTile = Framing.GetTileSafely(posX, posY)).HasTile; posY++) if (currentTile.TileType == vineTile) isVine = true;
-					if (!isVine) for (; TileObject.CanPlace(posX, posY, vineTile, 0, 0, out TileObject objectData, false, checkStay: true); posY++) {
-						objectData.style = 0;
-						objectData.alternate = 0;
-						objectData.random = 0;
-						TileObject.Place(objectData);
-						length++;
-						if (genRand.NextBool(12 - length)) break;
+					for (; (currentTile = Framing.GetTileSafely(posX, posY)).HasTile; posY++) if (currentTile.TileType == brineglowTile || currentTile.TileType == vineTile) isVine = true;
+					if (!isVine) {
+						int currentVineTile = WorldGen.genRand.NextBool(3) ? brineglowTile : vineTile;
+						for (; TileObject.CanPlace(posX, posY, currentVineTile, 0, 0, out TileObject objectData, false, checkStay: true); posY++) {
+							objectData.style = 0;
+							objectData.alternate = 0;
+							objectData.random = 0;
+							TileObject.Place(objectData);
+							if (Framing.GetTileSafely(posX, posY).TileType == currentVineTile) Framing.GetTileSafely(posX, posY).TileFrameX = -1;
+							length++;
+							if (genRand.NextBool(12 - length)) break;
+						}
 					}
 					if (length > 0 || ++vineTries > 1000) k--;
 					if (length > 0) vineCount++;
@@ -313,7 +318,7 @@ namespace Origins.World.BiomeData {
 						if (dist > 20 * sizeMult) {
 							continue;
 						}
-						if (Main.tileFrameImportant[tile.TileType] || Main.tileSolidTop[tile.TileType] || !Main.tileSolid[tile.TileType]) {
+						if (!Main.tileCut[tile.TileType] && (Main.tileFrameImportant[tile.TileType] || Main.tileSolidTop[tile.TileType] || !Main.tileSolid[tile.TileType])) {
 							tile.WallType = stoneWallID;
 							continue;
 						}

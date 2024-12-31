@@ -157,10 +157,10 @@ ENEMY NPCS:
 (^) Cleaver*
 (^) Conehead Zombie
 (^) Cranivore
-(#3, ^2) Crimbrain !!!
+(☻) Crimbrain !!!
 (^) Defiled Cyclops*
 (^) Defiled Digger
-(#, ^2) Defiled Ekko* !!! (you already made the proper sprite format??)
+(#, ^2) Defiled Ekko* !!! (sprite format would need to resemble player sprite format)
 (^) Defiled Krusher*
 (^) Defiled Mite*
 (^) Defiled Phantom*
@@ -201,7 +201,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
 (#, ^2) Brine Serpent !!!
-(#2, ^2) Carpalfish* !!!
+(☻) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
