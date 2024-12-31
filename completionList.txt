@@ -933,7 +933,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
-(#3, ^2) Sonorous Shredder !!! (Thorium/vanilla separated functionality)
+(☻) Sonorous Shredder !!!
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
 
@@ -1110,7 +1110,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
-(#3, ^2) Defiled Relay !!!
+(☻) Defiled Relay !!!
 (^) Defiled Pot
 (X) Eden Tree*
 (^) Exoskeletal Tree*

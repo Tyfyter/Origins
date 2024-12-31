@@ -465,30 +465,6 @@ namespace Origins {
 			altEmpowerment = false;
 		}
 	}
-	[ExtendsFromMod("ThoriumMod")]
-	public class OriginsThoriumGlobalNPC : GlobalNPC {
-		public override bool InstancePerEntity => true;
-		int sonorousShredderHitCount = 0;
-		int sonorousShredderHitTime = 0;
-		public override void ResetEffects(NPC npc) {
-			if(sonorousShredderHitTime > 0) {
-				if (--sonorousShredderHitTime <= 0) {
-					sonorousShredderHitCount = 0;
-				}
-			}
-		}
-		public bool SonorousShredderHit() {
-			if (sonorousShredderHitCount < 4) {
-				sonorousShredderHitCount++;
-				sonorousShredderHitTime = 300;
-				return false;
-			} else {
-				sonorousShredderHitCount = 0;
-				sonorousShredderHitTime = 0;
-				return true;
-			}
-		}
-	}
 	public interface IBardDamageClassOverride {
 		DamageClass DamageType { get; }
 	}
