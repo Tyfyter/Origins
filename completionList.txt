@@ -1121,8 +1121,8 @@ TILES:
 (X) Moonshine*
 (X) Ocotillo !!!
 (^) Petrified Tree*
-(#3, ^2) Riven Foliage !!!
-(#3, ^2) Riven Pot !!!
+(☻) Riven Foliage !!!
+(☻) Riven Pot !!!
 (X) Scrapleaf Tree
 (^) Soulspore*
 (ᗢ) Surveysprout*

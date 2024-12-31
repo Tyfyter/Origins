@@ -23,7 +23,7 @@ namespace Origins.Tiles.Riven {
 
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			}
 			Main.tileSpelunker[Type] = true;
 			Main.tileCut[Type] = true;
