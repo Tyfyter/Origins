@@ -4810,6 +4810,11 @@ Eyenade: {
 }
 
 Brine_Fountain_Item: {
-	// DisplayName: Brine Fountain Item
+	// DisplayName: Brine Fountain
+	// Tooltip: ""
+}
+
+Chipper_Knife: {
+	// DisplayName: Chipper Knife
 	// Tooltip: ""
 }

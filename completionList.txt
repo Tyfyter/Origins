@@ -687,7 +687,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
-(#, ^2) Chipper Knife !!!
+(☻) Chipper Knife !!!
 (^) Endowood Bow
 (@5, ^3) Felnum Longbow
 (^) Fiberglass Bow

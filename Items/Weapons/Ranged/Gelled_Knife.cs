@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Origins/Items/Weapons/Ranged/Gelled_Knife";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThrowingKnife);
+			AIType = ProjectileID.ThrowingKnife;
 		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
             if (Main.rand.NextBool(2)) {

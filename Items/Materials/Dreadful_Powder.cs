@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
@@ -28,7 +29,7 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.Bottles)
 			.Register();
 
-			Recipe.Create(ItemID.PoisonedKnife, 50)
+			Recipe.Create(ModContent.ItemType<Chipper_Knife>(), 50)
 			.AddIngredient(ItemID.ThrowingKnife, 50)
 			.AddIngredient(this)
 			.Register();
