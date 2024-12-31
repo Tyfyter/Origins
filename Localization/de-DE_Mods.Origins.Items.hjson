@@ -4798,3 +4798,8 @@ Mildew_Whip: {
 		{$CommonItemTooltip.Whips}
 		''' */
 }
+
+Defiled_Relay_Item: {
+	// DisplayName: Defiled Relay Item
+	// Tooltip: ""
+}

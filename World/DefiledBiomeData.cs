@@ -589,36 +589,9 @@ namespace Origins.World.BiomeData {
 		}
 
 		public static void CheckFissure(int i, int j, int type) {
-			if (destroyObject) {
-				return;
-			}
-			int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
-			int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
-			for (int k = 0; k < 2; k++) {
-				for (int l = 0; l < 2; l++) {
-					Tile tile = Main.tile[x + k, y + l];
-					if (tile != null && (!tile.HasUnactuatedTile || tile.TileType != type)) {
-						destroyObject = true;
-						break;
-					}
-				}
-				if (destroyObject) {
-					break;
-				}
-			}
-			if (!destroyObject) {
-				return;
-			}
-			for (int m = x; m < x + 2; m++) {
-				for (int n = y; n < y + 2; n++) {
-					if (Main.tile[m, n].TileType == type) {
-						KillTile(m, n);
-					}
-				}
-			}
 			if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions) {
-				float fx = x * 16;
-				float fy = y * 16;
+				float fx = i * 16;
+				float fy = j * 16;
 
 				float distance = -1f;
 				int player = 0;

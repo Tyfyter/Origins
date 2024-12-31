@@ -1630,6 +1630,7 @@ Tiles: {
 	// Carburite.MapEntry: Carburite
 	// Silicon_Ore.MapEntry: Silicon Ore
 	// Underwater_Vine.MapEntry: Underwater Vine
+	// Defiled_Relay.MapEntry: Defiled Relay
 }
 
 MapObject: {
