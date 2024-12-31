@@ -35,15 +35,15 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 358;
+			NPC.lifeMax = 300;
 			NPC.defense = 26;
 			NPC.damage = 65;
 			NPC.width = 30;
 			NPC.height = 30;
 			NPC.catchItem = 0;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.NPCHit19;
-			NPC.DeathSound = SoundID.NPCDeath22;
+			NPC.HitSound = SoundID.Item127;
+			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0.45f;
 			NPC.value = 500;
 			NPC.noGravity = true;
@@ -60,7 +60,7 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 3, 7));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4));
 		}
 		public override void AI() {
 			if (NPC.ai[2] < 0) {

@@ -4786,7 +4786,7 @@ Harpoon_Burst_Rifle: {
 
 Unmisfire: {
 	DisplayName: Unmisfire
-	Tooltip: ""
+	Tooltip: Still hits near-misses
 }
 
 Mildew_Whip: {
@@ -4806,7 +4806,7 @@ Defiled_Relay_Item: {
 
 Eyenade: {
 	DisplayName: Eyenade
-	Tooltip: ""
+	Tooltip: Flies towards nearby enemies
 }
 
 Brine_Fountain_Item: {
@@ -4816,5 +4816,5 @@ Brine_Fountain_Item: {
 
 Chipper_Knife: {
 	DisplayName: Chipper Knife
-	Tooltip: ""
+	Tooltip: Briefly rasters enemies
 }

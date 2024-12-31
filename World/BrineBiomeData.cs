@@ -137,7 +137,7 @@ namespace Origins.World.BiomeData {
 						if (currentTile.TileType == mossID || currentTile.TileType == TileID.Mud) {
 							//TODO directional ore runner that returns ore count
 							//TODO do it again if low total ore in cell and random chance
-							OreRunner((int)pos.X, (int)pos.Y, 4, 4, oreID);
+							OreRunner((int)pos.X, (int)pos.Y, 7, 5, oreID);
 						}
 					}
 				} finally {
@@ -328,11 +328,11 @@ namespace Origins.World.BiomeData {
 						tile.WallType = stoneWallID;
 						if (dist < 20 * sizeMult - 10f) {
 							if (WorldGen.CanKillTile(x, y)) tile.HasTile = false;
-						} else if (dist < 20 * sizeMult - 9f) {
-							tile.ResetToType(genRand.NextBool(5) ? TileID.Mud : mossID);
-						} else if (dist < 20 * sizeMult - 7f) {
+						} else if (dist < 20 * sizeMult - 6f) {
+							tile.ResetToType(mossID);
+						} /*else if (dist < 20 * sizeMult - 7f) {
 							tile.ResetToType(genRand.NextBool(5) ? mossID : TileID.Mud);
-						}
+						}*/
 						tile.LiquidType = LiquidID.Water;
 						tile.LiquidAmount = 255;
 						if (x > maxGenX) {

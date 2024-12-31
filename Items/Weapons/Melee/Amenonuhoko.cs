@@ -39,9 +39,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.Gungnir)
-			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 26)
-			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

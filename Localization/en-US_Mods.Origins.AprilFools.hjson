@@ -8,6 +8,7 @@ Generic: {
 	Hoarder: Chimney Smoker
 	Defiled_Antibody: Blŏkusland™ Employee
 	Defiled_Antibodies: Blŏkusland™ Employees
+	Defiled_Tripod: Blŏkusland™ Certified Weaponized Catgirl
 }
 
 Status_Messages: {
@@ -36,6 +37,7 @@ Items: {
 	Ancient_Kruncher.DisplayName: Cranker
 	Suspicious_Looking_Pebble.DisplayName: Sus Looking Unusually Round Pebble
 	Partybringer.Tooltip: Fires pleasants that bring present surprises
+	Unmisfire.Tooltip: Corrects your shitty aim
 }
 
 Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!

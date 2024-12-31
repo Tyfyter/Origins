@@ -79,6 +79,12 @@ namespace Origins.Items.Materials {
 			public override string TextKey => "Alkahest";
 		}
 	}
+	public class Alkaliphiliac_Tissue : MaterialItem {
+		public override int ResearchUnlockCount => 99;
+		public override int Value => Item.sellPrice(copper: 40);
+		public override bool Hardmode => false;
+		public override int Rare => ItemRarityID.Orange;
+	}
 	public class Bark : MaterialItem {
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
@@ -145,11 +151,6 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Alkaliphiliac_Tissue : MaterialItem {
-		public override int ResearchUnlockCount => 99;
-		public override int Value => Item.sellPrice(copper: 40);
-		public override bool Hardmode => false;
-    }
 	public class Bud_Barnacle : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);

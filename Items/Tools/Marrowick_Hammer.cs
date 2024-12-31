@@ -12,7 +12,7 @@ namespace Origins.Items.Tools {
 			Item.CloneDefaults(ItemID.ShadewoodHammer);
 			Item.damage = 7;
 			Item.DamageType = DamageClass.Melee;
-			Item.hammer = 45;
+			Item.hammer = 43;
 			Item.value = Item.sellPrice(copper: 10);
 		}
 		public override void AddRecipes() {

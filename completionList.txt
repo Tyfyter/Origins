@@ -152,15 +152,16 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Buckethead Zombie
 (#, ^2) Canninhound !!!
+(X) Catacomb Clearer !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
 (^) Conehead Zombie
 (^) Cranivore
-(☻) Crimbrain !!!
+(^) Crimbrain
 (^) Defiled Cyclops*
 (^) Defiled Digger
-(#, ^2) Defiled Ekko* !!! (sprite format would need to resemble player sprite format)
+(X) Defiled Ekko* !!!
 (^) Defiled Krusher*
 (^) Defiled Mite*
 (^) Defiled Phantom*
@@ -172,9 +173,10 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
+(X) Fae Nymph (Whimsical Girl) !!!
 (#, ^2) Felnum Einheri !!!
-(X) Felnum Guardian !!!
-(^) Felnum Slime
+(#, ^2) Felnum Guardian !!!
+(#3, ^2) Felnum Slime !!!
 (@5, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
@@ -201,7 +203,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
 (#, ^2) Brine Serpent !!!
-(☻) Carpalfish* !!!
+(^) Carpalfish*
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -393,10 +395,12 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag*
 (^) Exploder Emblem*
 (^) Explosive Artery*
+(X) Fairy Lotus !!!
 (X) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Futurephones*
+(X) Golden Lotus !!!
 (^) Grave Danger*
 (^) Gun Glove*
 (^) Haggard Artery*
@@ -687,7 +691,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
-(☻) Chipper Knife !!!
+(^) Chipper Knife
 (^) Endowood Bow
 (@5, ^3) Felnum Longbow
 (^) Fiberglass Bow
@@ -715,7 +719,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(#3, ^2) Boat Rocker* !!! (needs alternate chains and alt)
+(#3/4, ^2) Boat Rocker* !!! (needs alternate chains and alt)
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun*
@@ -899,7 +903,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
-(☻) Eyenade !!!
+(^) Eyenade
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
 (^) Flashbang*
@@ -933,7 +937,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
-(☻) Sonorous Shredder !!!
+(@5, ^3) Sonorous Shredder !!! (desperately need projectile resprite)
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
 
@@ -1048,7 +1052,7 @@ TILES:
 (X) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
-(☻) Brine Water Fountain !!!
+(^) Brine Water Fountain
 (X) Bug Cage*
 (X) Cancer Block*
 (X) Cancer Furniture*
@@ -1110,7 +1114,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
-(☻) Defiled Relay !!!
+(#3, ^2) Defiled Relay !!!
 (^) Defiled Pot
 (X) Eden Tree*
 (^) Exoskeletal Tree*
@@ -1121,12 +1125,12 @@ TILES:
 (X) Moonshine*
 (X) Ocotillo !!!
 (^) Petrified Tree*
-(☻) Riven Foliage !!!
-(☻) Riven Pot !!!
+(^) Riven Foliage
+(^) Riven Pot
 (X) Scrapleaf Tree
 (^) Soulspore*
 (ᗢ) Surveysprout*
-(☻) Underwater Vine !!!
+(^) Underwater Vine
 (^) Wilting Rose*
 (^) Wrycoral*
 

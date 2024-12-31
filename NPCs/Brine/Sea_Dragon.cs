@@ -35,7 +35,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 320;
+			NPC.lifeMax = 210;
 			NPC.defense = 21;
 			NPC.damage = 60;
 			NPC.width = 20;
@@ -60,7 +60,7 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 3, 5));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3));
 		}
 		public override void AI() {
 			DoTargeting();

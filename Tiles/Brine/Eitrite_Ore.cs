@@ -17,7 +17,7 @@ namespace Origins.Tiles.Brine
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			AddMapEntry(new Color(79, 86, 207), CreateMapEntryName());
+			AddMapEntry(new Color(8, 190, 151), CreateMapEntryName());
 			mergeID = TileID.Mud;
 			MinPick = 180;
 			HitSound = SoundID.Dig;

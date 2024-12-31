@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 46;
+			Item.damage = 39;
 			Item.shootSpeed *= 1.1f;
 			Item.value += Item.value / 3;
 			Item.shoot = ModContent.ProjectileType<Eyenade_P>();
@@ -27,8 +27,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 2)
-			.AddIngredient(ItemID.Grenade, 2)
+			Recipe.Create(Type, 3)
+			.AddIngredient(ItemID.Grenade, 3)
 			.AddIngredient(ItemID.Lens)
 			.AddTile(TileID.Anvils)
 			.Register();

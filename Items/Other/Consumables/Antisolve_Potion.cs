@@ -21,6 +21,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
+			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 8)
 			.AddIngredient(ModContent.ItemType<Brineglow_Item>())
 			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
