@@ -4803,3 +4803,8 @@ Defiled_Relay_Item: {
 	// DisplayName: Defiled Relay Item
 	// Tooltip: ""
 }
+
+Eyenade: {
+	// DisplayName: Eyenade
+	// Tooltip: ""
+}
