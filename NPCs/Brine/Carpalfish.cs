@@ -44,7 +44,7 @@ namespace Origins.NPCs.Brine {
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath22;
-			NPC.knockBackResist = 0.65f;
+			NPC.knockBackResist = 0.45f;
 			NPC.value = 500;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
@@ -165,6 +165,7 @@ namespace Origins.NPCs.Brine {
 			} else {
 				NPC.noGravity = false;
 				NPC.rotation = NPC.velocity.ToRotation();
+				if (NPC.collideY) NPC.velocity.X *= 0.9f;
 				//NPC.rotation += 0.01f;
 			}
 			NPC.spriteDirection = Math.Sign(Math.Cos(NPC.rotation));

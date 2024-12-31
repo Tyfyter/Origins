@@ -95,6 +95,7 @@ namespace Origins.NPCs.Brine {
 			} else {
 				NPC.noGravity = false;
 				NPC.rotation = NPC.velocity.ToRotation();
+				if (NPC.collideY) NPC.velocity.X *= 0.94f;
 				//NPC.rotation += 0.01f;
 			}
 			NPC.spriteDirection = Math.Sign(Math.Cos(NPC.rotation));

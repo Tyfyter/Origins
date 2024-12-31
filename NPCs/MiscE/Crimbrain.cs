@@ -27,7 +27,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 34;
 			NPC.height = 28;
 			NPC.friendly = false;
-			NPC.knockBackResist = 1f;
+			NPC.knockBackResist = 1.5f;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
