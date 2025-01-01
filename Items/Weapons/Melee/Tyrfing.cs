@@ -37,8 +37,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.damage = 88;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
-			Item.height = 42;
-			Item.useTime = 48;
+			Item.height = 68;
+			Item.useTime = 88;
 			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 9;

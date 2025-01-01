@@ -12,9 +12,11 @@ namespace Origins.Tiles.Brine {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileMerge[Type][TileID.Mud] = true;
+			Main.tileMerge[TileID.Mud][Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(18, 73, 56));
-			mergeID = TileID.Stone;
+			//mergeID = TileID.Mud;
 			MinPick = 195;
 			HitSound = SoundID.Dig;
 		}

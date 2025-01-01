@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 
 namespace Origins.Buffs {
 	public class Toxic_Shock_Debuff : ModBuff {
@@ -15,6 +16,8 @@ namespace Origins.Buffs {
 			player.GetModPlayer<OriginPlayer>().toxicShock = true;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
+			npc.lifeRegen -= 15;
+			npc.defense -= (int)(npc.defense * 0.2f);
 			if (!npc.buffImmune[BuffID.Confused] && Main.rand.NextBool(400)) {// roughly 15% chance each second
 				npc.GetGlobalNPC<OriginGlobalNPC>().toxicShockStunTime = Toxic_Shock_Debuff.stun_duration;
 			}

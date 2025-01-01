@@ -203,7 +203,7 @@ ENEMY NPCS:
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
 (#, ^2) Brine Serpent !!!
-(^) Carpalfish*
+(#3/4, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -440,6 +440,7 @@ ACCESSORIES:
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
+(X) Power Lotus !!!
 (^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
@@ -635,7 +636,7 @@ MELEE WEAPONS:
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
-(@5, ^3) Felnum Boar Spear
+(^) Felnum Boar Spear
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
@@ -693,7 +694,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Chipper Knife
 (^) Endowood Bow
-(@5, ^3) Felnum Longbow
+(^) Felnum Longbow
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
@@ -752,7 +753,7 @@ RANGED WEAPONS:
 (^) Laser Tag Gun
 (X) Shroomshot
 (X) Skewr
-(@5, ^3) Tolruk
+(^) Tolruk
 
 (X) Fulcrum
 (X) Journey's End
@@ -800,7 +801,7 @@ MAGIC WEAPONS:
 (^) Breach
 (X) Divine Lite
 (X) Ghost Trap
-(@5, ^3) Hævateinn
+(^) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File*
@@ -983,7 +984,7 @@ TILES:
 ---
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(@5, ^3) Baryte* !!!
+(#3, ^2) Baryte* !!!
 (^) Batholith*
 (^) Bleeding Obsidian*
 (^) Brittle Quartz*
@@ -1026,7 +1027,7 @@ TILES:
 (@5, ^3) Twilith*
 
 (^) Amebic Gel Wall
-(@5, ^3) Baryte Wall !!!
+(^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
 (^) Chambersite Gemspark Wall

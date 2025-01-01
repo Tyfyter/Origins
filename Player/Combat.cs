@@ -542,7 +542,8 @@ namespace Origins {
 			+25% mana shielding?
 			}*/
 			if (toxicShock) {
-				modifiers.ScalingArmorPenetration += 0.1f;
+				Player.lifeRegen -= 15;
+				modifiers.ScalingArmorPenetration += 0.2f;
 			}
 			if (ashenKBReduction) {
 				modifiers.Knockback -= 0.15f;

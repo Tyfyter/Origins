@@ -311,9 +311,9 @@ namespace Origins.Items {
 					});
 					if (rule is not null) {
 						Array.Resize(ref rule.options, rule.options.Length + 4);
-						rule.options[^4] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>());
-						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>());
-						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>());
+						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>());
+						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>());
+						//rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>());
 						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>());
 						foundMain = true;
 					}

@@ -141,7 +141,7 @@ namespace Origins.NPCs.Brine {
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
 							if (NPC.ai[3] == 0) {
 								NPC.ai[3] = 1;
-								if (Main.rand.NextBool(3)) {
+								if (Main.rand.NextBool(2)) {
 									int item = Item.NewItem(
 										NPC.GetSource_OnHurt(null),
 										NPC.Center,
