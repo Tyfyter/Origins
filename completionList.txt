@@ -221,6 +221,7 @@ ENEMY NPCS:
 (^) Shattered Mummy*
 (X) Shotgunfish !!!
 (X) Riven Gull
+(X) Rock Bottom !!!
 (^) Torn Ghoul
 (^) Trijaw Shark*
 
@@ -928,6 +929,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
+(@5, ^3, ᗢ) Sonorous Shredder !!! (desperately need projectile resprite)
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
 
@@ -947,6 +949,8 @@ EXPLOSIVE WEAPONS:
 (^) Self-Destruct*
 (X) Supernova
 (X) Thundershot
+(X) Ticking Bomb
+(X) Ticking Dynamite
 
 (@5, ^3) Black Hole Bomb*
 (@5, ^3) Caustica
@@ -975,6 +979,7 @@ TILES:
 (^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*
+(X) Bomb Trap !!!
 (^) Brittle Quartz*
 (^) Chambersite
 (X) Compacted Scrap*
@@ -999,6 +1004,7 @@ TILES:
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
+(X) Lihzarhd Bomb Trap
 (X) Limestone !!!
 (^) Lost Ore*
 (^) Marrowick*
@@ -1402,7 +1408,6 @@ CROSS-MOD CONTENT:
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (X) Keytar !!!
-(^) Sonorous Shredder
 (X) Watered-down Keytar !!!
 ---
 
