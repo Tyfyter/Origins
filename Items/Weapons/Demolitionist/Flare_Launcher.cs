@@ -30,12 +30,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			shimmer.canisterType = CanisterGlobalItem.RegisterCanister(ItemID.ShimmerFlare, new(Color.Black, Color.Black, ammo: shimmer));
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(14, 32, 14f, 44, 24);
+			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(24, 32, 14f, 44, 24);
 			Item.knockBack = 2;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 4;
+			Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

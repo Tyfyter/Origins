@@ -14,13 +14,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Bombardment_P>(2, 42, 11f, 48, 32);
-			Item.useTime = 7;
+			Item.DefaultToCanisterLauncher<Bombardment_P>(2, 40, 9f, 48, 32);
+			Item.useTime = 8;
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.UseSound = null;
-			Item.reuseDelay = 50;
+			Item.reuseDelay = 60;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, 0);

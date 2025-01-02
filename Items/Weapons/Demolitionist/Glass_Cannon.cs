@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 20);
 			Item.UseSound = SoundID.Item62.WithPitch(0.4f);
 			Item.reuseDelay = 50;
+			Item.ArmorPenetration += 2;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, 0);

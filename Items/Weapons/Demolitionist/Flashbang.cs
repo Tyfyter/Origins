@@ -1,14 +1,12 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Buffs;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Flashbang : ModItem, ICustomWikiStat {
+	public class Flashbang : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
