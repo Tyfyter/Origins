@@ -161,7 +161,7 @@ ENEMY NPCS:
 (^) Crimbrain
 (^) Defiled Cyclops*
 (^) Defiled Digger
-(X) Defiled Ekko* !!!
+(#, ^2) Defiled Ekko* !!!
 (^) Defiled Krusher*
 (^) Defiled Mite*
 (^) Defiled Phantom*
@@ -202,6 +202,7 @@ ENEMY NPCS:
 (@, #, 々) Angel
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
+(X) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
 (#3/4, ^2) Carpalfish* !!!
 (^) Defiled Asphyxiator*
@@ -214,6 +215,7 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
+(X) Leaf Snapper !!!
 (#, ^2) King Crab !!!
 (#, ^2) Mildew Creeper !!!
 (^) Mitoworm
@@ -379,14 +381,14 @@ ACCESSORIES:
 (^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
-(X) Charm of Naivety !!!
+(#, ^2) Charm of Naivety !!!
 (#3, ^2) Cirrhosis' Abhorrence* !!! (needs added functionality)
 (^) Comb*
 (^) Control Locus*
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
-(X) Crooked Mirror !!!
+(#, ^2) Crooked Mirror !!!
 (^) Danger Barrel*
 (^) Destructive Claws*
 (^) Dim Starlight*
@@ -395,12 +397,12 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag*
 (^) Exploder Emblem*
 (^) Explosive Artery*
-(X) Fairy Lotus !!!
-(X) Fissure Band !!!
+(#, ^2) Fairy Lotus !!!
+(#, ^2) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Futurephones*
-(X) Golden Lotus !!!
+(#, ^2) Golden Lotus !!!
 (^) Grave Danger*
 (^) Gun Glove*
 (^) Haggard Artery*
@@ -440,7 +442,7 @@ ACCESSORIES:
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
-(X) Power Lotus !!!
+(#, ^2) Power Lotus !!!
 (^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
@@ -1110,6 +1112,7 @@ TILES:
 (X) Flesh Shredder*
 (X) Interstellar Sampler*
 (X) Qube Generator*
+(X) Unsuspicious Bush !!!
 
 (^) Acetabularia*
 (X) Barnacle Infested Coral
@@ -1206,7 +1209,7 @@ MATERIALS:
 (^) Alkahest*
 (^) Black Bile*
 (^) Bleeding Obsidian Shard*
-(@5, ^3) Alkaliphiliac Tissue !!! (was Bottled Brine, needs resprite and adjustments to recipes with it)
+(^) Alkaliphiliac Tissue
 (^) Brineglow*
 (^) Eitrite Bar*
 (^) Respyrite*
@@ -1244,13 +1247,13 @@ CRITTERS AND FISH:
 (^) Cicada 3301*
 
 (^) Bilemouth*
-(X) Bobbit Worm !!!
+(#, ^2) Bobbit Worm !!!
 (^) Bonehead Jellyfish*
 (^) Duskarp*
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
-(X) Toadfish !!!
+(#, ^2) Toadfish !!!
 ---
 
 
@@ -1267,27 +1270,36 @@ CONSUMABLES:
 (^) Flask of Alkahest*
 (^) Flask of Black Bile*
 (^) Focus Potion*
+(#, ^2) Greater Summoning Potion !!!
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
+(#, ^2) Skimswim Potion !!!
 (X) Super Mojo Flask
 (X) Mega Mojo Flask
 (^) Voidsight Potion*
 
+(X) Astringent Broth
+(X) Bitter Broth
 (^) Foul Broth*
 (^) Hearty Broth*
 (#, ^2) Light Broth* !!!
+(X) Metallic Broth
 (#, ^2) Minty Broth* !!!
 (#, ^2) Plain Broth* !!!
+(X) Salty Broth
 (#, ^2) Savory Broth* !!!
+(X) Sharp Broth !!!
 (^) Sour Broth*
 (#, ^2) Spicy Broth* !!!
 (#, ^2) Sweet Broth* !!!
+(X) Umami Broth !!!
 
 (^) Bileberry*
 (^) Blue Bovine*
 (^) Bread*
 (^) Brine Cheese*
+(X) Ceaser Salad !!!
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*
@@ -1300,6 +1312,7 @@ CONSUMABLES:
 (^) Prickly Pear*
 (^) Shattered Stout*
 (^) Soul Spaghetti*
+(X) Sour Apple !!!
 (^) Vanilla Shake*
 
 (^) Broken Record*
