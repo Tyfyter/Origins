@@ -90,7 +90,7 @@ namespace Origins {
 						int Y;
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(250, 350);
-						if (GenVars.structures.CanPlace(new Rectangle(X - 32, Y - 32, 64, 64), 16) || ++tries > 1000) {
+						if (GenVars.structures.CanPlace(new Rectangle(X - 32 - (32 + 16), Y - (32 + 16), 64 + 16, 64 + 16)) || ++tries > 1000) {
 							Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
 							Fiberglass_Undergrowth.Gen.FiberglassStart(X, Y);
 							placed = true;

@@ -1414,7 +1414,7 @@ namespace Origins {
 					c.Emit(instruction.OpCode, instruction.Operand);
 					break;
 					case Mono.Cecil.Cil.Code.Call:
-					MethodBase placeCustomAlch = typeof(Origins).GetMethod("PlaceCustomAlch", BindingFlags.Public | BindingFlags.Static);
+					MethodBase placeCustomAlch = typeof(Origins).GetMethod(nameof(PlaceCustomAlch), BindingFlags.Public | BindingFlags.Static);
 					c.Emit(instruction.OpCode, placeCustomAlch);
 					break;
 					case Mono.Cecil.Cil.Code.Pop:
