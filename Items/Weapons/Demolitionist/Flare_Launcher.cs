@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Misc;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -292,14 +293,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Color glowColor = canisterData.InnerColor * alpha;
 			float boomFactor = 1f;
 			int timeLeft = isAfterEffect ? projectile.timeLeft : projectile.timeLeft + 9;
-			if (projectile.timeLeft < 10) {
-				boomFactor = Math.Min(projectile.timeLeft / 10f, 1);
+			if (timeLeft < 10) {
+				boomFactor = Math.Min(timeLeft / 10f, 1);
 				if (canisterData.Ammo is ModItem) {
 					boomFactor *= 1 + boomFactor;
 				}
 			}
+			Debugging.ChatOverhead($"Drawing, dist:{offScreenDist}");
 			if (offScreenDist > 16) {
-				if (!Collision.CanHitLine(center + (diff / offScreenDist) * 64, 0, 0, closest, 0, 0)) return;
+				Debugging.ChatOverhead($"Offscreen, dist:{offScreenDist}");
+				if (!CollisionExt.CanHitRay(center + (diff / offScreenDist) * 64, closest)) return;
+				Debugging.ChatOverhead($"Unobscured, dist:{offScreenDist}");
 				glowColor.A = 0;
 				float sqrt = MathF.Sqrt(offScreenDist / 32f);
 				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * boomFactor;
@@ -317,6 +321,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				);
 				return;
 			}
+			Debugging.ChatOverhead($"Onscreen, dist:{offScreenDist}");
 			glowColor.A = 0;
 			//boomFactor = MathF.Pow(boomFactor, 0.5f);
 			Main.EntitySpriteDraw(
