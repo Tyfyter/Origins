@@ -1,12 +1,10 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Impact_Grenade : ModItem, ICustomWikiStat {
+	public class Impact_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
@@ -25,8 +23,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
-			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 999;
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {

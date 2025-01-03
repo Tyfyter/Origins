@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 70);
 			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {

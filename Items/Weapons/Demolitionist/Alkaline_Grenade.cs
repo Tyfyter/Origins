@@ -22,7 +22,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Acid_Grenade_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 2)

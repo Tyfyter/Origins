@@ -23,7 +23,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Hellfire_Grenade_P>();
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = 999;
 			Item.glowMask = glowmask;
             Item.ArmorPenetration += 1;
         }

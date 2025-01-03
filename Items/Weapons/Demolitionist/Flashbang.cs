@@ -24,7 +24,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Flashbang_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 15);
-			Item.maxStack = 999;
             Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {

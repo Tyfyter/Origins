@@ -88,7 +88,7 @@ namespace Origins.NPCs {
 					shop.Add<Trash_Lid>(PeatSoldCondition(150));
 					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170), Condition.NotTheBeesWorld);
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode);
+					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode); // Lost Diver condition for both
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
 					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
 					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);

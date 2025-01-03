@@ -362,6 +362,7 @@ namespace Origins.Tiles.Brine {
 			Item.createTile = TileType<Brineglow>();
 
 			Item.maxStack = 9999;
+			Item.rare = ItemRarityID.Orange;
 		}
 	}
 }

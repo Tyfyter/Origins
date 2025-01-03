@@ -1,11 +1,9 @@
-using Origins.Items.Materials;
-using Origins.Projectiles.Weapons;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
 using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Eyenade : ModItem, ICustomWikiStat {
 		public string[] Categories => [
