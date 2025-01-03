@@ -96,7 +96,7 @@ namespace Origins.Dev {
 				(PageTemplate template, Dictionary<string, object> context) = provider.GetPage(item.ModItem);
 				if (context == null) continue;
 				if ((customWikiStat?.FullyGeneratable ?? false) || !File.Exists(pagePath)) {
-					WriteFileNoUnneededRewrites(GetWikiPagePath(pagePath), template.Resolve(context));
+					WriteFileNoUnneededRewrites(pagePath, template.Resolve(context));
 				} else {
 					TryUpdatingExistingPage(pagePath, template, context);
 				}
