@@ -1,3 +1,4 @@
+using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
@@ -10,6 +11,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -286,7 +288,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			CanisterData canisterData = projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile canister) ? canister.CanisterData : projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
 			if (canisterData is null) return;
 			Vector2 center = projectile.Center;
-			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+			Rectangle screen = new((int)Main.Camera.ScaledPosition.X, (int)Main.Camera.ScaledPosition.Y, (int)Main.Camera.ScaledSize.X, (int)Main.Camera.ScaledSize.Y);
 			Vector2 closest = screen.Contains(center) ? center : CollisionExtensions.GetCenterProjectedPoint(screen, center);
 			Vector2 diff = closest - center;
 			float offScreenDist = diff.Length();
@@ -299,11 +301,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					boomFactor *= 1 + boomFactor;
 				}
 			}
-			Debugging.ChatOverhead($"Drawing, dist:{offScreenDist}");
 			if (offScreenDist > 16) {
-				Debugging.ChatOverhead($"Offscreen, dist:{offScreenDist}");
 				if (!CollisionExt.CanHitRay(center + (diff / offScreenDist) * 64, closest)) return;
-				Debugging.ChatOverhead($"Unobscured, dist:{offScreenDist}");
 				glowColor.A = 0;
 				float sqrt = MathF.Sqrt(offScreenDist / 32f);
 				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * boomFactor;
@@ -321,7 +320,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				);
 				return;
 			}
-			Debugging.ChatOverhead($"Onscreen, dist:{offScreenDist}");
 			glowColor.A = 0;
 			//boomFactor = MathF.Pow(boomFactor, 0.5f);
 			Main.EntitySpriteDraw(
