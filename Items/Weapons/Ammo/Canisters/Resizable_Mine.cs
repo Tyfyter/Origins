@@ -13,16 +13,12 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.useStyle = ItemUseStyleID.None;
-			Item.damage = 14;
-			Item.ammo = Type;
+			Item.DefaultToCanister(14);
 			Item.shootSpeed = -1.3f;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(silver: 2, copper: 33);
 			Item.rare = ItemRarityID.Blue;
 			Item.ArmorPenetration += 1;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -47,7 +43,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
 			Item.rare = ItemRarityID.Green;
 			Item.ArmorPenetration += 2;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -69,7 +64,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 8, copper: 80);
 			Item.rare = ItemRarityID.Pink;
 			Item.ArmorPenetration += 3;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -91,7 +85,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 13);
 			Item.rare = ItemRarityID.Yellow;
 			Item.ArmorPenetration += 4;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -113,7 +106,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.value = Item.sellPrice(silver: 26);
 			Item.rare = ItemRarityID.Cyan;
 			Item.ArmorPenetration += 5;
-			Item.maxStack = 9999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 16)
