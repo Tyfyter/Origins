@@ -463,12 +463,12 @@ namespace Origins {
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {
 			Recipe.Create(ModContent.ItemType<Asylum_Whistle>())
-			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
+			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
 
 			Recipe.Create(ModContent.ItemType<Bomb_Handling_Device>())
-			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
+			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
