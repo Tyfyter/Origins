@@ -1747,6 +1747,11 @@ Configs: {
 			// Label: Assimilation mechanics
 			// Tooltip: Toggles between whether or not Assimilation will be active
 		}
+
+		GraveshieldZombiesDropAsItem: {
+			// Label: Graveshield Zombies Drop As Item
+			// Tooltip: ""
+		}
 	}
 
 	DebugConfig: {
