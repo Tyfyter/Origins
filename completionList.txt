@@ -67,7 +67,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(@5, #, $) Lost Diver !!!
+(@5, #, ^4) Lost Diver !!!
 (X) Miscreant
 (X) Tearror
 
@@ -150,12 +150,14 @@ ENEMY NPCS:
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (^) Bottomfeeder*
+(X) Boulder Mimic !!!
 (^) Buckethead Zombie
 (#, ^2) Canninhound !!!
 (X) Catacomb Clearer !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
+(X) Cloud Elemental !!!
 (^) Conehead Zombie
 (^) Cranivore
 (^) Crimbrain
@@ -171,6 +173,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Cannon
 (^) Enchanted Fiberglass Pistol
+(X) Enchanted Fiberglass Slime !!!
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
 (X) Fae Nymph (Whimsical Girl) !!!
@@ -189,6 +192,7 @@ ENEMY NPCS:
 (#, ^2, 々) Scanner Scout
 (^) Shattered Goldfish*
 (^) Single-Cellular Nautilus*
+(X) Slime Worm !!!
 (^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Steam Pirate !!!
@@ -196,6 +200,7 @@ ENEMY NPCS:
 (X) Top Brass Protector
 (X) Worker Bot
 
+(X) Airsnatcher !!!
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
@@ -232,6 +237,7 @@ ENEMY NPCS:
 (^) Shattered Mummy*
 (X) Shotgunfish !!!
 (X) Riven Gull
+(X) Rock Bottom !!!
 (^) Torn Ghoul
 (^) Trijaw Shark*
 
@@ -244,6 +250,7 @@ ENEMY NPCS:
 (^, 赏) Etherealizer
 (@2, #) Illusionary
 (X) Lamp Oil Tender
+(X) Meteor Crawler
 (X) Prosperer
 (X) Soulpine
 (X) Sploder
@@ -278,7 +285,7 @@ STATUS EFFECTS:
 (#3, ^2) Defiled Assimilation* !!! (Assimilation build-up over time)
 (X) Hallowed Assimilation
 (^) Riven Assimilation*
-(#3, ^2) Cavitation !!!
+(#3, ^2) Cavitation !!! (needs bubbly effect and sounds)
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -396,6 +403,8 @@ ACCESSORIES:
 (^) Donor Wristband*
 (^) Dryad's Inheritance*
 (^) Dysfunctional Endless Explosives Bag*
+(X) Eitrite Gun Magazine !!!
+(X) Evil Bar Gun Magazines !!!
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (#, ^2) Fairy Lotus !!!
@@ -406,6 +415,7 @@ ACCESSORIES:
 (#, ^2) Golden Lotus !!!
 (^) Grave Danger*
 (^) Gun Glove*
+(X) Gun Magazine !!!
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Hazard Charm*
@@ -417,6 +427,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
+(X) Lightning Ring !!!
 (^) Locket Necklace*
 (^) Lousy Liver*
 (^) Lover's Leap*
@@ -431,6 +442,7 @@ ACCESSORIES:
 (^) Missile Armcannon*
 (#, ^2) Mithrafin (Cursed) !!!
 (#, ^2) Mithrafin (Uncursed) !!!
+(X) Molten Gun Magazine !!!
 (X) Netlace
 (^) Nitro Crate*
 (^) No U Card*
@@ -458,12 +470,14 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)*
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
+(X) Shock Collar !!!
 (^) Slag Bucket (Cursed)*
 (^) Slag Bucket (Uncursed)*
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
+(X) Sparking Flame Barrel !!!
 (^) Speed Booster*
 (^) Super Turbo Reel*
 (^) Superjump Cape*
@@ -841,7 +855,7 @@ SUMMONER WEAPONS:
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Monolith Rod !!!
-(⛥) Ocean Amulet* !!!
+(X) Ocean Amulet* !!!
 (#, ^2) Ocotillo Finger !!!
 (^) Ocotoral Bud*
 (^) Rotted Worm Staff
@@ -943,7 +957,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
-(@5, ^3) Sonorous Shredder !!! (desperately need projectile resprite)
+(@5, ^3, ᗢ) Sonorous Shredder !!! (desperately need projectile resprite)
 (^) Thermite Launcher*
 (X) Torpedo Tube !!!
 
@@ -964,6 +978,8 @@ EXPLOSIVE WEAPONS:
 (^) Self-Destruct*
 (X) Supernova
 (X) Thundershot
+(X) Ticking Bomb
+(X) Ticking Dynamite
 
 (@5, ^3) Black Hole Bomb*
 (@5, ^3) Caustica
@@ -993,6 +1009,7 @@ TILES:
 (#3, ^2) Baryte* !!!
 (^) Batholith*
 (^) Bleeding Obsidian*
+(X) Bomb Trap !!!
 (^) Brittle Quartz*
 (^) Chambersite
 (X) Compacted Scrap*
@@ -1015,6 +1032,7 @@ TILES:
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
+(X) Lihzarhd Bomb Trap
 (X) Limestone !!!
 (^) Lost Ore*
 (^) Marrowick*
@@ -1029,6 +1047,7 @@ TILES:
 (^) Silica*
 (^) Silicon Ore*
 (X) Sootgrass*
+(X) Space Goo
 (^) Spug Flesh*
 (@5, ^3) Twilith*
 
@@ -1449,8 +1468,8 @@ CROSS-MOD CONTENT:
 (X) Defiled Wave
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
-(#, $, ^2) Keytar !!!
-(X) Watered-down Keytar !!!
+(#, ^2) Keytar !!!
+(X, ^4) Watered-down Keytar !!!
 ---
 
 UI:
@@ -1513,7 +1532,7 @@ MUSIC:
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
 (X) Leviathan of the Riven
-(X) Lost Diver !!!
+(^) Lost Diver
 (X) Miscreant
 (X) Quantux
 (^) World Cracker

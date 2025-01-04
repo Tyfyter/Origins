@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Layers;
 using Origins.Tiles.Other;
@@ -36,6 +35,7 @@ namespace Origins.Items.Accessories {
 			CreateRecipe()
 			.AddIngredient(ModContent.ItemType<Power_Core>())
 			.AddIngredient(ModContent.ItemType<Rubber>(), 6)
+			//.AddIngredient(ModContent.ItemType<Space_Goo_Item>(), 10)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}

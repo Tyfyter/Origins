@@ -2086,3 +2086,25 @@ Music: {
 		Subtitle: ""
 	}
 }
+
+DefiledRelaySignals: {
+	Security1: Here.
+	Security2: Found.
+	Security3: Send anti-bodies.
+	Security4: Threat.
+	Security5: Terrarian...
+	Security6: Relay 2, foriegn body.
+	Security7: Relay 5, initiate protocol.
+
+	Idle1: All conditions optimal.
+	Idle2: Hey. Those are-- memories.
+	Idle3: They are nothing more than our pet. Keep them occupied.
+	Idle4: The intruder will be here soon. Be alert.
+	Idle5: 
+
+	BeingDestroyed1: Stop.
+	BeingDestroyed2: This hurts us.
+	BeingDestroyed3: Alert core system.
+	BeingDestroyed4: Distress.
+	BeingDestroyed5: You will regret.
+}

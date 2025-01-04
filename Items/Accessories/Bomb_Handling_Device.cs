@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.Darksteel;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Handling_Device : ModItem, ICustomWikiStat {
@@ -19,6 +20,12 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
             Item.glowMask = glowmask;
         }
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.25f;

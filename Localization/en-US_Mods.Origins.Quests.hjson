@@ -99,7 +99,7 @@ Goblin_Tinkerer: {
 			- [qs{2}:Collect {1} Iron Bar ({0}/{1})]
 			- [qs{5}:Collect {4} Chains ({3}/{4})]
 			- [qs{8}:Collect {7} Adhesive Wrap ({6}/{7})]
-			- [qs{9}:Collect Gold Watch]
+			- [qs{9}:Collect Gold Watch or Platinum Watch]
 			Unlocks: [i:Origins/Turbo_Reel]
 			'''
 		Inquire: Hey human! I was wondering if you could possibly fetch me five iron or lead bars, two chains, some adhesive and a watch? I have a project I’m working on that you might want to join in on!
