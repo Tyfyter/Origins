@@ -3,7 +3,7 @@ using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Darksteel;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Asylum_Whistle : ModItem, IJournalEntryItem, ICustomWikiStat {
@@ -24,12 +24,6 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(gold: 1);
 		}
-		/*public override void AddRecipes() { if thorium condition
-			Recipe.Create(Type)
-			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}*/
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().asylumWhistle = true;
 			player.GetDamage(DamageClass.Summon) += 0.1f;

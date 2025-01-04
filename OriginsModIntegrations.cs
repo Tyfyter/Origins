@@ -38,6 +38,8 @@ using Origins.NPCs;
 using PegasusLib.Graphics;
 using ThoriumMod.Projectiles.Bard;
 using ThoriumMod.Items;
+using ThoriumMod.Items.Darksteel;
+using Origins.Items.Accessories;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -303,6 +305,9 @@ namespace Origins {
 				);
 			}
 		}
+		public static void AddRecipes() {
+			if (instance.thorium is not null) AddThoriumRecipes();
+		}
 		public void Unload() {
 			instance = null;
 			compatRecommendations = null;
@@ -455,6 +460,17 @@ namespace Origins {
 					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
 				}
 			}
+		}
+		static void AddThoriumRecipes() {
+			Recipe.Create(ModContent.ItemType<Asylum_Whistle>())
+			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
+
+			Recipe.Create(ModContent.ItemType<Bomb_Handling_Device>())
+			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public interface ICustomWikiDestination {

@@ -238,6 +238,7 @@ namespace Origins {
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();
+			OriginsModIntegrations.AddRecipes();
 		}
 		public override void PostUpdateInput() {
 		}

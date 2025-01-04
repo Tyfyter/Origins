@@ -20,12 +20,6 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
             Item.glowMask = glowmask;
         }
-		/*public override void AddRecipes() { if thorium condition
-			Recipe.Create(Type)
-			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}*/
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.25f;
