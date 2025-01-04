@@ -1007,6 +1007,7 @@ DamageClasses: {
 	Incantation.DisplayName: summon damage
 	Thrown_Explosive.DisplayName: explosive damage (thrown)
 	ExplosivePlus.DisplayName: explosive{0}
+	ExplosivePlusModded.DisplayName: explosive {0}
 	Melee_Magic.DisplayName: melee/magic damage
 }
 

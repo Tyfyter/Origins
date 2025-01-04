@@ -36,6 +36,8 @@ using Origins.Items.Pets;
 using Origins.NPCs.Fiberglass;
 using Origins.NPCs;
 using PegasusLib.Graphics;
+using ThoriumMod.Projectiles.Bard;
+using ThoriumMod.Items;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -391,7 +393,7 @@ namespace Origins {
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void LoadThorium() {
 			///TODO: redo bardness
-			/*MonoModHooks.Add(
+			MonoModHooks.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
 				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
 					orig(self);
@@ -408,7 +410,7 @@ namespace Origins {
 						self.Projectile.DamageType = classOverride.DamageType;
 					}
 				})
-			);*/
+			);
 			if (typeof(ThoriumPlayer).GetField(nameof(ThoriumPlayer.breathOverMax)) is not null) OriginExtensions.OnIncreaseMaxBreath += [JITWhenModsEnabled("ThoriumMod")] (player, _) => player.GetModPlayer<ThoriumMod.ThoriumPlayer>().breathOverMax = true;
 			(string name, float? assimilation)[] thoriumNPCs = [
 				("TheInnocent", 0.02f),
