@@ -2150,27 +2150,27 @@ Harpoon: {
 }
 
 Resizable_Mine_Five: {
-	// DisplayName: Resizable Mine Mk. V
+	// DisplayName: Resizable Mine VII
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
 Resizable_Mine_Four: {
-	// DisplayName: Resizable Mine Mk. IV
+	// DisplayName: Resizable Mine VI
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
 Resizable_Mine_One: {
-	// DisplayName: Resizable Mine Mk. I
+	// DisplayName: Resizable Mine I
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
 Resizable_Mine_Three: {
-	// DisplayName: Resizable Mine Mk. III
+	// DisplayName: Resizable Mine V
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
 Resizable_Mine_Two: {
-	// DisplayName: Resizable Mine Mk. II
+	// DisplayName: Resizable Mine II
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 

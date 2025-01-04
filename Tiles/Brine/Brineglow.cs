@@ -102,7 +102,7 @@ namespace Origins.Tiles.Brine {
 			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow_Item>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.1f; g = 0.24f; b = 0.35f;
+			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.19f; g = 0.33f; b = 0.44f;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {

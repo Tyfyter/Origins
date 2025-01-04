@@ -243,6 +243,7 @@ ENEMY NPCS:
 (@2/3, #) Electromancer
 (^, 赏) Etherealizer
 (@2, #) Illusionary
+(X) Lamp Oil Tender
 (X) Prosperer
 (X) Soulpine
 (X) Sploder
@@ -490,7 +491,7 @@ ACCESSORIES:
 (^) Entangled Energy*
 (^) Mana Drive*
 (^) Protozoa Food*
-(^) Refactoring Pieces*
+(#3, ^2) Refactoring Pieces* !!!
 (#, ^2) Retaliatory Tendril* !!!
 (^) Scrap Compactor*
 
@@ -638,7 +639,7 @@ MELEE WEAPONS:
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
-(^) Felnum Boar Spear
+(#3, ^2) Felnum Boar Spear !!!
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
@@ -653,6 +654,7 @@ MELEE WEAPONS:
 (X) Soulslasher !!!
 (^) Spiker Sword*
 (^) Switchblade*
+(#, ^2) Thunderbolt !!!
 (^) Triple Threat*
 (^) Tyrfing
 (^) Vorpal Sword (Cursed)*
@@ -667,7 +669,6 @@ MELEE WEAPONS:
 (^) Knee Slapper*
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
-(^) Telephone Pole*
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
@@ -675,10 +676,11 @@ MELEE WEAPONS:
 (^) Personal Laser Blade*
 (X) Pile Bunker
 (X) Rocket Lance
+(#3, ^2) Telephone Pole*
 (^) Terrarang
 (^) True Light Disc
 (^) True Waning Crescent
-(○) Tyrfing
+(○, #3, ^2) Tyrfing
 
 (X) Celestial Point
 (X) Chromakama
@@ -696,7 +698,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Chipper Knife
 (^) Endowood Bow
-(^) Felnum Longbow
+(#3, ^2) Felnum Longbow !!!
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
@@ -747,7 +749,7 @@ RANGED WEAPONS:
 (^) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 
-(^) Astoxo
+(#3, ^2) Astoxo
 (X) Disciple Maker*
 (^) Dreikan
 (X) EAC Thunder*
@@ -755,7 +757,7 @@ RANGED WEAPONS:
 (^) Laser Tag Gun
 (X) Shroomshot
 (X) Skewr
-(^) Tolruk
+(#3, ^2) Tolruk
 
 (X) Fulcrum
 (X) Journey's End
@@ -776,7 +778,7 @@ MAGIC WEAPONS:
 (^) Hot Potato
 (^) Infusion*
 (^) Low Signal*
-(^) Magnus
+(#3, ^2) Magnus !!!
 (^) Manasynk*
 (^) Splitsplash*
 (^) Tones of Agony
@@ -803,7 +805,7 @@ MAGIC WEAPONS:
 (^) Breach
 (X) Divine Lite
 (X) Ghost Trap
-(^) Hævateinn
+(#3, ^2) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File*
@@ -906,6 +908,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
+(X) Explosive Barrel !!!
 (^) Eyenade
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
@@ -954,6 +957,7 @@ EXPLOSIVE WEAPONS:
 (^) Nova Cascade*
 (^) Nova Swarm
 (^) Nuclear Arm*
+(X) Oil Drum
 (^) Omni-directional Claymore*
 (^) Partybringer
 (^) Rocodile
@@ -1271,6 +1275,7 @@ CONSUMABLES:
 (^) Flask of Black Bile*
 (^) Focus Potion*
 (#, ^2) Greater Summoning Potion !!!
+(#, ^2) Latchkey !!!
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
@@ -1285,6 +1290,7 @@ CONSUMABLES:
 (^) Hearty Broth*
 (#, ^2) Light Broth* !!!
 (X) Metallic Broth
+(X) Minishark Broth
 (#, ^2) Minty Broth* !!!
 (#, ^2) Plain Broth* !!!
 (X) Salty Broth
@@ -1293,7 +1299,7 @@ CONSUMABLES:
 (^) Sour Broth*
 (#, ^2) Spicy Broth* !!!
 (#, ^2) Sweet Broth* !!!
-(X) Umami Broth !!!
+(#, ^2) Umami Broth !!!
 
 (^) Bileberry*
 (^) Blue Bovine*
@@ -1312,19 +1318,19 @@ CONSUMABLES:
 (^) Prickly Pear*
 (^) Shattered Stout*
 (^) Soul Spaghetti*
-(X) Sour Apple !!!
+(#, ^2) Sour Apple !!!
 (^) Vanilla Shake*
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
-(X) Old Picture Frame !!!
+(#, ^2) Lost Picture Frame !!!
 (#2, ^2, 々) Quantum Cell*
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*
 (#2, ^2, 々) The Button*
 
 (#2, ^2, 々) Ashen Loot Box*
-(X) Basic Crate* !!!
+(#2, ^2) Basic Crate* !!!
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box*
 (#2, ^2, 々) Crimson Loot Box*
@@ -1388,14 +1394,19 @@ MOUNTS & PETS:
 
 AMMO:
 ---
+(#2, ^2) Bee Canister !!!
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*
+(#, ^2) Discharge Canister !!!
 (^) Explosive Harpoon*
 (^) Flammable Harpoon*
+(X) Foolean Canister
 (^) Harpoon*
 (^) Peatball*
-(^) Resizable Mine Mk. 1*
-(^) Resizable Mine Mk. 2*
+(^) Resizable Mine I*
+(^) Resizable Mine II*
+(#3, ^2) Resizable Mine III !!!
+(X) Resizable Mine IV !!!
 (^) Scrap*
 (^) Thermite Canister*
 
@@ -1417,13 +1428,14 @@ AMMO:
 (^) Ichor Canister*
 (X) Ichor Harpoon
 (^) Metal Slug*
-(^) Resizable Mine Mk. 3*
+(^) Resizable Mine III*
 
-(^) Resizable Mine Mk. 4*
+(^) Resizable Mine VI*
 
 (X) Homing Rocket I
 (X) Homing Rocket II
-(^) Resizable Mine Mk. 5*
+(^) Resizable Mine VII*
+(X) Resizable Mine VIII
 (#2, ^2, 々) Starfuze*
 
 (^) Gray Solution*
@@ -1437,7 +1449,7 @@ CROSS-MOD CONTENT:
 (X) Defiled Wave
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
-(X) Keytar !!!
+(#, $, ^2) Keytar !!!
 (X) Watered-down Keytar !!!
 ---
 
