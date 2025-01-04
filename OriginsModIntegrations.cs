@@ -397,7 +397,6 @@ namespace Origins {
 		delegate void hook_TileShine(orig_TileShine orig, ref Vector3 color, Tile tile);
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void LoadThorium() {
-			///TODO: redo bardness
 			MonoModHooks.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
 				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {

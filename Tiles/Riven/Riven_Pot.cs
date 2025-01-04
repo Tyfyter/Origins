@@ -69,6 +69,9 @@ namespace Origins.Tiles.Riven {
 			g = 0.0375f * GlowValue;
 			b = 0.015f * GlowValue;
 		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
+		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
