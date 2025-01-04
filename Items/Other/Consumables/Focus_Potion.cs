@@ -24,6 +24,7 @@ namespace Origins.Items.Other.Consumables {
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ItemID.FallenStar)
 			.AddIngredient(ModContent.ItemType<Brineglow_Item>())
+			//.AddIngredient(ModContent.ItemType<Toadfish>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}
