@@ -24,12 +24,12 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(gold: 1);
 		}
-		public override void AddRecipes() {
+		/*public override void AddRecipes() { if thorium condition
 			Recipe.Create(Type)
 			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
 			.AddTile(TileID.Anvils)
 			.Register();
-		}
+		}*/
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().asylumWhistle = true;
 			player.GetDamage(DamageClass.Summon) += 0.1f;
