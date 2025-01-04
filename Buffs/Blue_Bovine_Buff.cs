@@ -17,8 +17,8 @@ namespace Origins.Buffs {
 			if (player.wingsLogic == 0 || player.wingTimeMax <= 15) {
 				player.wingsLogic = 13;
 				player.wingTimeMax = 15;
-				player.wingTimeMax += 30;
 			}
+			player.wingTimeMax += 30;
 			player.noFallDmg = true;
 		}
 	}

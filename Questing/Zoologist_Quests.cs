@@ -215,7 +215,7 @@ namespace Origins.Questing {
 			Item[] inventory = Main.LocalPlayer.inventory;
 			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
 			ConsumeItems(inventory, ((i) => i.type == ItemID.EnchantedNightcrawler, wormTarget));
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Complete");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Complete", Main.LocalPlayer.Get2ndPersonReference("casual"));
 
 
 			int index = Item.NewItem(
