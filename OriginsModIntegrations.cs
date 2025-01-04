@@ -461,6 +461,7 @@ namespace Origins {
 				}
 			}
 		}
+		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {
 			Recipe.Create(ModContent.ItemType<Asylum_Whistle>())
 			.AddRecipeGroup(ModContent.ItemType<aDarksteelAlloy>(), 15)
