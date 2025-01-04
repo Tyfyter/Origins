@@ -130,6 +130,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.hide = true;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
+			Projectile.timeLeft = Projectile.SentryLifeTime;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			threads = new Thread[thread_count];

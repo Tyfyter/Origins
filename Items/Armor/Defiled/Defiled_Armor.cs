@@ -27,7 +27,7 @@ namespace Origins.Items.Armor.Defiled {
 			player.GetCritChance(DamageClass.Generic) += 5;
 		}
         public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
+			return (body.type == ModContent.ItemType<Defiled_Breastplate>() || body.type == ModContent.ItemType<Defiled2_Breastplate>()) && (legs.type == ModContent.ItemType<Defiled_Greaves>() || legs.type == ModContent.ItemType<Defiled2_Greaves>());
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Defiled");

@@ -27,6 +27,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
+
 namespace Origins {
 	public class OriginConfig : ModConfig {
 		public static OriginConfig Instance;
@@ -47,6 +48,11 @@ namespace Origins {
 
 		[DefaultValue(true)]
 		public bool Assimilation = true;
+
+		[DefaultValue(false)]
+		public bool GraveshieldZombiesDropAsItem = false;
+		[JsonIgnore]
+		public static bool GraveshieldZombiesShouldDropAsItem => Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
 
 		[ReloadRequired]
 		[DefaultValue(true)]

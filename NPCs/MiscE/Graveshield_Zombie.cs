@@ -53,8 +53,17 @@ namespace Origins.NPCs.MiscE {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
 			);
 		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(new LeadingConditionRule(new Condition()).WithOnSuccess(ItemDropRule.OneFromOptions(0, 
+				ItemID.Gravestone,
+				ItemID.Tombstone,
+				ItemID.Headstone,
+				ItemID.CrossGraveMarker,
+				ItemID.Obelisk
+			)));
+		}
 		public override void OnKill() {
-			NPC.DropTombstoneTownNPC(NetworkText.FromKey(Lang.misc[19].Key, NPC.GetFullNetName()));
+			if (!OriginConfig.GraveshieldZombiesShouldDropAsItem) NPC.DropTombstoneTownNPC(NetworkText.FromKey(Lang.misc[19].Key, NPC.GetFullNetName()));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0 || OriginsModIntegrations.CheckAprilFools()) {
@@ -63,6 +72,11 @@ namespace Origins.NPCs.MiscE {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);
 			}
+		}
+		public class Condition : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) => OriginConfig.GraveshieldZombiesShouldDropAsItem;
+			public bool CanShowItemDropInUI() => true;
+			public string GetConditionDescription() => null;
 		}
 	}
 }

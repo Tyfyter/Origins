@@ -95,7 +95,7 @@ namespace Origins {
 		public override string Name => name;
 
 		readonly DamageClass other = other;
-		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.DamageClasses.ExplosivePlus.DisplayName").WithFormatArgs(other.DisplayName);
+		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.DamageClasses.ExplosivePlus{(other.Mod is null ? "" : "Modded")}.DisplayName").WithFormatArgs(other.DisplayName);
 
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
 			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
