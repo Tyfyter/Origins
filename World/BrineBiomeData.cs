@@ -189,25 +189,30 @@ namespace Origins.World.BiomeData {
 					);
 				}
 				if (!WorldGen.remixWorldGen) {
-					int lowestScore = int.MaxValue;
-					Vector2 surfaceConnection = genRand.Next(cells.Where(v => v.Y < j).Select(
-							v => {
-								Vector2 v0 = v;
-								while (Framing.GetTileSafely(v0.ToPoint()).WallType == stoneWallID) {
-									v0.Y--;
+					List<Vector2> validSurfaceCells = [];
+					for (int index = 0; index < cells.Count; index++) {
+						Vector2 cell = cells[index];
+						if (cell.Y > j) continue;
+						bool foundAnyCompetition = false;
+						for (int index2 = 0; index2 < validSurfaceCells.Count; index2++) {
+							Vector2 otherCell = validSurfaceCells[index2];
+							if (Math.Abs(otherCell.X - cell.X) < 35) {
+								if (otherCell.Y > cell.Y) {
+									if (foundAnyCompetition) {
+										validSurfaceCells.RemoveAt(index2--);
+									} else {
+										validSurfaceCells[index2] = cell;
+									}
+									foundAnyCompetition = true;
+								} else {
+									foundAnyCompetition = true;
+									break;
 								}
-								int tileCount = 0;
-								Tile currentTile = Framing.GetTileSafely(v0.ToPoint());
-								while (currentTile.HasTile || currentTile.WallType != WallID.None) {
-									v0.Y--;
-									tileCount++;
-									currentTile = Framing.GetTileSafely(v0.ToPoint());
-								}
-								if (lowestScore > tileCount) lowestScore = tileCount;
-								return new Tuple<Vector2, int>(v, tileCount);
 							}
-						).Where(v => v.Item2 < lowestScore + 25).OrderBy(v => v.Item2).Take(3).Select(v => v.Item1).ToArray()
-					);
+						}
+						if (!foundAnyCompetition) validSurfaceCells.Add(cell);
+					}
+					Vector2 surfaceConnection = genRand.Next(validSurfaceCells);
 					// make sure the surface cell has 
 					{
 						List<Vector2> validOthers = cells.Where(v0 => {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Primitives;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,12 +13,26 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Relay : ModTile {
+	public class Defiled_Relay : ModTile, IGlowingModTile {
 		public static string message;
 		public static int messageIndex = 0;
 		public static int messageTimer = 0;
 		public static int ID { get; private set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White * GlowValue;
+		public float GlowValue => Main.tileFrame[Type] switch {
+			6 or 7 => 0.2f,
+			8 => 0.35f,
+			9 => 0.2f,
+			_ => 0.1f
+		};
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = Vector3.Max(color, Vector3.One * GlowValue);
+		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileHammer[Type] = true;
@@ -26,6 +42,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Height = 4;
+			TileObjectData.newTile.Origin = new(0, 3);
 			TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16];
 			//TileObjectData.newTile.AnchorBottom = new AnchorData();
 			TileObjectData.addTile(Type);
@@ -111,23 +128,16 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			World.BiomeData.Defiled_Wastelands.CheckFissure(i, j, Type);
+			Defiled_Wastelands.CheckFissure(i, j, Type);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			float light = 0.1f;
-			switch (Main.tileFrame[Type]) {
-				case 6 or 7:
-				light = 0.2f;
-				break;
-				case 8:
-				light = 0.35f;
-				break;
-				case 9:
-				light = 0.2f;
-				break;
-			}
-			r = g = b = light;
+			r = g = b = GlowValue;
 		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Defiled_Relay_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };

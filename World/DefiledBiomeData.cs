@@ -248,7 +248,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
-				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
+				ushort fissureID = (ushort)ModContent.TileType<Defiled_Relay>();
 				while (fisureCount < 6 && fissureCheckSpots.Count > 0) {
 					int ch = genRand.Next(fissureCheckSpots.Count);
 					for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
@@ -500,6 +500,9 @@ namespace Origins.World.BiomeData {
 					if (randomtwist || twist != 0.0) {
 						speed = randomtwist ? speed.RotatedBy(genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
 					}
+					if (direction.X > 0) {
+
+					}
 				}
 				if (X0 < 1) {
 					X0 = 1;
@@ -571,6 +574,27 @@ namespace Origins.World.BiomeData {
 					Stamp();
 					DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, direction.X);
 					Stamp();
+					Tile? obstructionTileX = null;
+					Tile? obstructionTileY = null;
+					switch (Math.Sign(direction.X)) {
+						case -1:
+						obstructionTileX = Framing.GetTileSafely(tilePos.X + 1, tilePos.Y);
+						break;
+						case 1:
+						obstructionTileX = Framing.GetTileSafely(tilePos.X - 1, tilePos.Y);
+						break;
+					}
+					switch (Math.Sign(direction.Y)) {
+						case -1:
+						obstructionTileY = Framing.GetTileSafely(tilePos.X, tilePos.Y + 1);
+						break;
+						case 1:
+						obstructionTileY = Framing.GetTileSafely(tilePos.X, tilePos.Y - 1);
+						break;
+					}
+					if ((obstructionTileX?.HasTile ?? false) && (obstructionTileY?.HasTile ?? false)) {
+						(WorldGen.genRand.NextBool() ? obstructionTileX : obstructionTileY).Value.ClearTile();
+					}
 					if (!removedAnyTiles || !InWorld(tilePos.X, tilePos.Y)) break;
 					tileSubPos = next;
 				}
