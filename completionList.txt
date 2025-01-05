@@ -406,8 +406,8 @@ ACCESSORIES:
 (^) Dryad's Inheritance*
 (^) Dysfunctional Endless Explosives Bag*
 (^) Eccentric Stone*
-(X) Eitrite Gun Magazine !!!
-(X) Evil Bar Gun Magazines !!!
+(#3, ^2) Eitrite Gun Magazine !!!
+(#3, ^2) Evil Bar Gun Magazines !!!
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (#, ^2) Fairy Lotus !!!
@@ -418,7 +418,7 @@ ACCESSORIES:
 (#, ^2) Golden Lotus !!!
 (^) Grave Danger*
 (^) Gun Glove*
-(X) Gun Magazine !!!
+(#3, ^2) Gun Magazine !!!
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Hazard Charm*
@@ -430,7 +430,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(X) Lightning Ring !!!
+(#, ^2) Lightning Ring !!!
 (^) Locket Necklace*
 (^) Lousy Liver*
 (^) Lover's Leap*
@@ -445,7 +445,7 @@ ACCESSORIES:
 (^) Missile Armcannon*
 (#, ^2) Mithrafin (Cursed) !!!
 (#, ^2) Mithrafin (Uncursed) !!!
-(X) Molten Gun Magazine !!!
+(#3, ^2) Molten Gun Magazine !!!
 (X) Netlace
 (^) Nitro Crate*
 (^) No U Card*
@@ -480,7 +480,7 @@ ACCESSORIES:
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
-(X) Sparking Flame Barrel !!!
+(#, ^2) Sparking Flame Barrel !!!
 (^) Speed Booster*
 (^) Spirit Shard*
 (^) Stone Mask*
@@ -588,7 +588,7 @@ UTILITIES:
 
 (X) Strange Backpack
 
-(X) Hydrolantern !!!
+(#, ^2) Hydrolantern !!!
 (^) Impenetrable Trashcan Lid
 (^) Indestructible Saddle
 (^) Salty Seed (Mitosis Node)
@@ -598,7 +598,7 @@ UTILITIES:
 
 WINGS:
 ---
-(X) Acrid Beam Thrusters !!!
+(#, ^2) Acrid Beam Thrusters !!!
 (X) Gills
 (X) Marrowick Mantle
 (X) Mutant Wings
@@ -665,7 +665,7 @@ MELEE WEAPONS:
 (^) Riverang*
 (^) Snapthrow*
 (#, ^2) Soul Snatcher* !!!
-(X) Soulslasher !!!
+(#, ^2) Soulslasher !!!
 (^) Spiker Sword*
 (^) Switchblade*
 (#, ^2) Thunderbolt !!!
@@ -798,7 +798,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(X) Brine Haze !!!
+(#, ^2) Brine Haze !!!
 (X) Broadcast
 (^) Chemical Laser
 (^) Communion*

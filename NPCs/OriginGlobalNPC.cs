@@ -128,6 +128,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.ArmsDealer: {
+					shop.Add(ModContent.ItemType<Gun_Magazine>());
 					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
 					shop.Add<Harpoon_Burst_Rifle>(Quest.QuestCondition<Harpoon_Burst_Rifle_Quest>());
 					break;
