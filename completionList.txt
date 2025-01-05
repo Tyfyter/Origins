@@ -151,14 +151,14 @@ ENEMY NPCS:
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (^) Bottomfeeder*
-(X) Boulder Mimic !!!
+(#, ^2) Boulder Mimic !!!
 (^) Buckethead Zombie
 (#, ^2) Canninhound !!!
 (X) Catacomb Clearer !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
-(X) Cloud Elemental !!!
+(#, ^2) Cloud Elemental !!!
 (^) Conehead Zombie
 (^) Cranivore
 (^) Crimbrain
@@ -177,10 +177,10 @@ ENEMY NPCS:
 (X) Enchanted Fiberglass Slime !!!
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
-(X) Fae Nymph (Whimsical Girl) !!!
+(#, ^2) Fae Nymph (Whimsical Girl) !!!
 (#, ^2) Felnum Einheri !!!
 (#, ^2) Felnum Guardian !!!
-(#3, ^2) Felnum Slime !!!
+(^) Felnum Ore Slime
 (@5, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
@@ -558,6 +558,7 @@ VANITY:
 (X) Crimson Ranger Set
 (X) Decay Protector Set
 (X) Defiled Sorcerer Set
+(#, ^2) Felnum Shock Glasses !!!
 (X) Gore Protector Set
 (^) Newsboy Cap
 (X) Riven Druid Set
@@ -958,9 +959,9 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
-(@5, ^3, ᗢ) Sonorous Shredder !!! (desperately need projectile resprite)
+(#3, ^2, ᗢ) Sonorous Shredder !!!
 (^) Thermite Launcher*
-(X) Torpedo Tube !!!
+(#, ^2) Torpedo Tube !!!
 
 (X) Autohandcannon
 (^) Bomboomstick

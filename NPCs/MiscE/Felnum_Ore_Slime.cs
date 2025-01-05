@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Reflection;
 using Origins.Tiles.Other;
 using PegasusLib;
@@ -80,13 +81,16 @@ namespace Origins.NPCs.MiscE {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 10, 20));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 1, 20));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			MainReflection.DrawNPC_SlimeItem(NPC, NPC.type, drawColor, 0);
 			return true;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 300);
 		}
 	}
 	public class Felnum_Ore_Slime_Zap : ModProjectile {
@@ -107,6 +111,9 @@ namespace Origins.NPCs.MiscE {
 				return true;
 			}
 			return null;
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 300);
 		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {

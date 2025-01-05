@@ -1,13 +1,12 @@
-using Microsoft.Xna.Framework;
+using Origins.Buffs;
+using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Felnum_Shock_Grenade : ModItem, ICustomWikiStat {
+	public class Felnum_Shock_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
@@ -21,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.damage = 32;
 			Item.shoot = ModContent.ProjectileType<Felnum_Shock_Grenade_P>();
 			Item.shootSpeed *= 1.5f;
-			Item.knockBack = 15f;
+			Item.knockBack = 5f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 70);
 			Item.rare = ItemRarityID.Green;
@@ -99,6 +98,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return Projectile.penetrate > 1 ? base.CanHitNPC(target) : false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 120);
 			Projectile.damage -= (int)((Projectile.Center - closest).Length() / 16f);
 			if (!Main.rand.NextBool(5)) Projectile.timeLeft += hit.Crit ? 2 : 1;
 			Vector2 dest = Projectile.Center;

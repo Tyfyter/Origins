@@ -1,11 +1,9 @@
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Eruption : ModItem, ICustomWikiStat {
 		public string[] Categories => [

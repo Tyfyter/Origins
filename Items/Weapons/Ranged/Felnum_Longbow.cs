@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Buffs;
 namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem, ICustomWikiStat {
 		public const int baseDamage = 19;
@@ -33,6 +34,10 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);
+		}
+
+		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 180);
 		}
 	}
 }

@@ -68,9 +68,9 @@ namespace Origins.NPCs.Defiled {
 				npc.lifeRegen -= 16;
 				damage += 4;
 			}
-			if (npc.HasBuff(ModContent.BuffType<Static_Shock_Debuff>())) {
+			/*if (npc.HasBuff(ModContent.BuffType<Static_Shock_Debuff>())) {
 				npc.lifeRegen -= 5; //needs other effects
-			}
+			}*/
 			if (npc.HasBuff(BuffID.Electrified)) {
 				npc.lifeRegen -= 20;
 			}
