@@ -38,7 +38,7 @@ namespace Origins.Layers {
 				Vector2 headgearOffset = Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height];
 				headgearOffset.Y -= 2f;
 				Position += headgearOffset * -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt();
-				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Breastplate_Glow_Body").Value;
+				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Breastplate_Body_Glow").Value;
 				item = new DrawData(Texture, Position, drawInfo.compTorsoFrame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
 				item.shader = drawInfo.cBody;
 				drawInfo.DrawDataCache.Add(item);
@@ -51,7 +51,7 @@ namespace Origins.Layers {
 				Vector2 headgearOffset = Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height];
 				headgearOffset.Y -= 2f;
 				Position += headgearOffset * -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt();
-				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Ancient_Felnum_Breastplate_Glow_Body").Value;
+				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Ancient_Felnum_Breastplate_Body_Glow").Value;
 				item = new DrawData(Texture, Position, drawInfo.compTorsoFrame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
 				item.shader = drawInfo.cBody;
 				drawInfo.DrawDataCache.Add(item);

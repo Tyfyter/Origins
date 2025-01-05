@@ -18,7 +18,7 @@ namespace Origins.Items.Armor.Felnum {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
-			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Head");
+			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Felnum {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
-			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Body");
+			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -106,7 +106,7 @@ namespace Origins.Items.Armor.Felnum {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
-			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Legs");
+			GlowMask = Origins.AddGlowMask(Texture + "_Legs_Glow");
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;

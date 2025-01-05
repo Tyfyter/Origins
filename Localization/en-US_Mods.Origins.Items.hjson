@@ -4833,3 +4833,43 @@ Ancient_Felnum_Helmet: {
 	DisplayName: Ancient Felnum Helmet
 	Tooltip: ""
 }
+
+Crimtane_Gun_Magazine: {
+	DisplayName: Crimtane Gun Magazine
+	Tooltip: ""
+}
+
+Defiled_Gun_Magazine: {
+	DisplayName: Defiled Gun Magazine
+	Tooltip: ""
+}
+
+Demonite_Gun_Magazine: {
+	DisplayName: Demonite Gun Magazine
+	Tooltip: ""
+}
+
+Eitrite_Gun_Magazine: {
+	DisplayName: Eitrite Gun Magazine
+	Tooltip: ""
+}
+
+Encrusted_Gun_Magazine: {
+	DisplayName: Encrusted Gun Magazine
+	Tooltip: ""
+}
+
+Gun_Magazine: {
+	DisplayName: Gun Magazine
+	Tooltip: ""
+}
+
+Molten_Gun_Magazine: {
+	DisplayName: Molten Gun Magazine
+	Tooltip: ""
+}
+
+Sanguinite_Gun_Magazine: {
+	DisplayName: Sanguinite Gun Magazine
+	Tooltip: ""
+}
