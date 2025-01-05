@@ -101,7 +101,8 @@ namespace Origins.Tiles.Defiled {
 			if (player.HeldItem.hammer >= 45) {
 				return true;
 			}
-			Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
+			PegasusLib.TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Framing.GetTileSafely(i, j)), out i, out j);
+			Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 2) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 			return false;
 		}
 
@@ -113,7 +114,19 @@ namespace Origins.Tiles.Defiled {
 			World.BiomeData.Defiled_Wastelands.CheckFissure(i, j, Type);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = g = b = 0.3f;
+			float light = 0.1f;
+			switch (Main.tileFrame[Type]) {
+				case 6 or 7:
+				light = 0.2f;
+				break;
+				case 8:
+				light = 0.35f;
+				break;
+				case 9:
+				light = 0.2f;
+				break;
+			}
+			r = g = b = light;
 		}
 	}
 	public class Defiled_Relay_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {

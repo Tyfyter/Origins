@@ -434,7 +434,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
 			} else {
-				NPC.EncourageDespawn(10);
+				NPC.EncourageDespawn(300);
 				if (++trappedTime > 30) {
 					NPC.noTileCollide = true;
 				}

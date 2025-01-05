@@ -39,7 +39,7 @@ namespace Origins.Projectiles.Misc {
 			WorldGen.TileFrame(x, y, true);
 			Framing.WallFrame(x, y, true);
 			Lighting.AddLight(Projectile.Center, 0.45f, 0.45f, 0.45f);
-			Dust dust = Dust.NewDustDirect(Projectile.Center, -0, 0, DustID.WhiteTorch, 0, 0, 125, new Color(80, 80, 80), 0.6f);
+			Dust dust = Dust.NewDustDirect(Projectile.position, -0, 0, DustID.WhiteTorch, 0, 0, 125, new Color(80, 80, 80), 0.6f);
 			dust.noGravity = true;
 			if (x == Target.X && y == Target.Y) {
 				Projectile.Kill();
