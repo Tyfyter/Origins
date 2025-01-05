@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
 	public class Felnum_Ore_Slime : ModNPC {
-		public override string Texture => "Terraria/Images/NPC_" + NPCID.BlueSlime;
+		//public override string Texture => "Terraria/Images/NPC_" + NPCID.BlueSlime;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;//maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 2;
@@ -28,7 +28,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.lifeMax = 45;
 			NPC.defense = 28;
 			NPC.damage = 14;
-			NPC.color = new(139, 69, 19, 100);
+			NPC.color = new(255, 255, 255, 200);
 			AIType = NPCID.BlueSlime;
 			AnimationType = NPCID.BlueSlime;
 		}
@@ -53,15 +53,17 @@ namespace Origins.NPCs.MiscE {
 				);
 				if (distance > 16 * 3 && distance < max_dist) {
 					NPC.Bottom = NPC.Bottom + Vector2.UnitY * distance;
-					Projectile.NewProjectile(
-						NPC.GetSource_FromThis(),
-						NPC.Bottom - Vector2.UnitY * 24,
-						Vector2.Zero,
-						ModContent.ProjectileType<Felnum_Ore_Slime_Zap>(),
-						NPC.damage,
-						6,
-						ai0: distance
-					);
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						Projectile.NewProjectile(
+							NPC.GetSource_FromThis(),
+							NPC.Bottom - Vector2.UnitY * 24,
+							Vector2.Zero,
+							ModContent.ProjectileType<Felnum_Ore_Slime_Zap>(),
+							NPC.damage,
+							6,
+							ai0: distance
+						);
+					}
 					SoundEngine.PlaySound(new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f), NPC.Center);
 					for (int i = 0; i < distance; i += Main.rand.Next(8, 12)) {
 						Dust.NewDust(NPC.Bottom - Vector2.UnitY * i, 0, 0, DustID.Electric, 0f, 0f, 0, Color.White, 0.5f);
