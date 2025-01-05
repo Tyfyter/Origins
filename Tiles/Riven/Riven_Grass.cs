@@ -59,6 +59,10 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Jungle_Grass : OriginTile, IRivenTile {
 		public override void SetStaticDefaults() {
+			if (ModLoader.HasMod("InfectedQualities")) {
+				TileID.Sets.JungleBiome[Type] = 1;
+				TileID.Sets.RemixJungleBiome[Type] = 1;
+			}
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;

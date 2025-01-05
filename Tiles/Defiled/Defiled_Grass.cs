@@ -63,6 +63,10 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Jungle_Grass : OriginTile, IDefiledTile {
 		public override void SetStaticDefaults() {
+			if (ModLoader.HasMod("InfectedQualities")) {
+				TileID.Sets.JungleBiome[Type] = 1;
+				TileID.Sets.RemixJungleBiome[Type] = 1;
+			}
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;

@@ -89,7 +89,6 @@ namespace Origins.NPCs.Brine {
 					} else if (Math.Sign(Math.Cos(NPC.rotation)) != Math.Sign(direction.X)) {
 						turnSpeed = MathHelper.Pi;
 					}
-					;
 					if (GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), turnSpeed) && Collision.CanHitLine(NPC.position, 30, 30, TargetPos - Vector2.One * 15, 30, 30)) {
 						canCharge = true;
 					}
@@ -152,7 +151,7 @@ namespace Origins.NPCs.Brine {
 									}
 								}
 							}
-							NPC.HitInfo hitInfo = NPC.GetIncomingStrikeModifiers(DamageClass.Default, 0).ToHitInfo(20, true, 0);
+							NPC.HitInfo hitInfo = NPC.GetIncomingStrikeModifiers(DamageClass.Default, 0).ToHitInfo(20, true, 0, true);
 							NPC.StrikeNPC(hitInfo, noPlayerInteraction: true);
 							if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendStrikeNPC(NPC, hitInfo);
 						}

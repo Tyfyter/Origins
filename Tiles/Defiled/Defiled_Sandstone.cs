@@ -10,6 +10,8 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Sandstone : OriginTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
+			TileID.Sets.SandBiome[Type] = 1;
+			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sandstone];
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;

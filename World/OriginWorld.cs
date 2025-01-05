@@ -154,6 +154,7 @@ namespace Origins {
 
 			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]
 				+ tileCounts[ModContent.TileType<Defiled_Grass>()]
+				+ tileCounts[ModContent.TileType<Defiled_Jungle_Grass>()]
 				+ tileCounts[ModContent.TileType<Defiled_Sand>()]
 				+ tileCounts[ModContent.TileType<Defiled_Sandstone>()]
 				+ tileCounts[ModContent.TileType<Hardened_Defiled_Sand>()]
@@ -161,6 +162,7 @@ namespace Origins {
 
 			rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()]
 				+ tileCounts[ModContent.TileType<Riven_Grass>()]
+				+ tileCounts[ModContent.TileType<Riven_Jungle_Grass>()]
 				+ tileCounts[ModContent.TileType<Silica>()]
 				+ tileCounts[ModContent.TileType<Brittle_Quartz>()]
 				+ tileCounts[ModContent.TileType<Quartz>()]

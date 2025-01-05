@@ -10,6 +10,8 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.SandBiome[Type] = 1;
+			TileID.Sets.isDesertBiomeSand[Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;

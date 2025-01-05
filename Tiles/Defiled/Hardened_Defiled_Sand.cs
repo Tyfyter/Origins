@@ -8,6 +8,8 @@ namespace Origins.Tiles.Defiled {
 	public class Hardened_Defiled_Sand : OriginTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
+			TileID.Sets.SandBiome[Type] = 1;
+			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
