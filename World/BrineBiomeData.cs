@@ -303,7 +303,7 @@ namespace Origins.World.BiomeData {
 					if (length > 0 || ++vineTries > 1000) k--;
 					if (length > 0) vineCount++;
 				}
-				if (GenVars.structures is not null) GenVars.structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, maxGenY - minGenY), 6);
+				GenVars.structures?.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, maxGenY - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
@@ -323,7 +323,7 @@ namespace Origins.World.BiomeData {
 						if (dist > 20 * sizeMult) {
 							continue;
 						}
-						if (!Main.tileCut[tile.TileType] && (Main.tileFrameImportant[tile.TileType] || Main.tileSolidTop[tile.TileType] || !Main.tileSolid[tile.TileType])) {
+						if ((!Main.tileCut[tile.TileType] && tile.TileType is not TileID.Trees or TileID.SmallPiles) && (Main.tileFrameImportant[tile.TileType] || Main.tileSolidTop[tile.TileType] || !Main.tileSolid[tile.TileType])) {
 							tile.WallType = stoneWallID;
 							continue;
 						}
