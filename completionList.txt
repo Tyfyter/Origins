@@ -68,7 +68,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(@5, #, ^4) Lost Diver !!!
+(#, ^2/4) Lost Diver !!!
 (X) Miscreant
 (X) Tearror
 
@@ -541,7 +541,7 @@ VANITY:
 (X) Duskord Mask
 (^) Fiberglass Weaver Head
 (X) I.C.A.R.U.S. Mask
-(X) Lost Diver Head
+(#, ^2) Lost Diver set !!!
 (X) Miscreant Mask
 (X) Quantux Mask
 (^) World Cracker Mask*
