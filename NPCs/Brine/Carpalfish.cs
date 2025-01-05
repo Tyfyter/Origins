@@ -78,7 +78,7 @@ namespace Origins.NPCs.Brine {
 				NPC.noGravity = true;
 				if (TargetPos != default) {
 					direction = NPC.DirectionTo(TargetPos);
-					float dir = Math.Abs(direction.X) * 0.5f;
+					float dir = Math.Abs(direction.X) * 2f;
 					direction.Y = MathHelper.Clamp(direction.Y, -dir, dir);
 					direction = direction.SafeNormalize(default);
 					float turnSpeed = 0.2f;
