@@ -140,7 +140,7 @@ namespace Origins.Projectiles {
 					}
 					if (bocShadows > 0) {
 						for (int i = bocShadows; i-- > 0;) {
-							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.1f, 0.1f);
+							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
 							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
 							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
 							bool free = itemUseSource.Player.IsAmmoFreeThisShot(itemUseSource.Item, new(ammoID), projectile.type);
