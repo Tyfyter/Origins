@@ -12,6 +12,14 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Buffs;
+using Origins.Items.Tools;
+using Origins.NPCs;
+using ReLogic.Content;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
+using PegasusLib;
+using Origins.NPCs.Defiled;
 namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 34;
@@ -23,9 +31,11 @@ namespace Origins.Items.Weapons.Magic {
 			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Felnum_Zap>(), 40, 32, true);
+			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Magnus_P>(), 40, Magnus_P.tick_motion, true);
 			Item.damage = baseDamage;
-			Item.UseSound = null;
+			Item.mana = 14;
+			Item.knockBack = 3;
+			Item.UseSound = SoundID.Item122.WithPitch(1).WithVolume(2);
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Green;
 		}
@@ -36,54 +46,41 @@ namespace Origins.Items.Weapons.Magic {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			//damage = damage.Scale(1.5f);
-		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-			return false;
-		}
 	}
-	public class Felnum_Zap : ModProjectile {
-		(Vector2?, Vector2)[] oldPos = new (Vector2?, Vector2)[7];
-		public override string Texture => "Terraria/Images/Projectile_3";
-		
+	public class Magnus_P : ModProjectile {
+		public const int tick_motion = 8;
+		const int max_length = 1200;
+		public override string Texture => "Origins/Projectiles/Weapons/Seam_Beam_P";
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
+			Origins.HomingEffectivenessMultiplier[Type] = 3.5f;
+			Mitosis_P.aiVariableResets[Type][1] = true;
+			ID = Type;
+		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
-			Projectile.width = 15;
-			Projectile.height = 15;
-			Projectile.aiStyle = 0;
-			Projectile.extraUpdates = 1;
-			Projectile.hostile = false;
-			Projectile.friendly = true;
-			Projectile.timeLeft *= 3;
-			Projectile.penetrate = -1;
+			Projectile.tileCollide = true;
+			Projectile.extraUpdates = 25;
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Projectile.friendly = false;
-			Projectile.tileCollide = false;
-			Projectile.position += oldVelocity;
-			Projectile.velocity = Vector2.Zero;
-			Projectile.timeLeft = 14;
-			return false;
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 1;
-			height = 1;
-			return true;
-		}
+
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
-			float targetWeight = 160;
+			float targetWeight = 160 + Math.Max(target.width, target.height);
+			targetWeight *= targetWeight;
 			Vector2 targetPos = default;
 			if (Main.player[Projectile.owner].DoHoming((target) => {
-				if (target is NPC npc && Projectile.localNPCImmunity[npc.whoAmI] != 0) return false;
+				if (target is not NPC npc || Projectile.localNPCImmunity[npc.whoAmI] != 0) return false;
 				Vector2 currentPos = target.Center;
-				float dist = Math.Abs(Projectile.Center.X - currentPos.X) + Math.Abs(Projectile.Center.Y - currentPos.Y);
+				float distMult = (target.wet || npc.ModNPC is IDefiledEnemy) ? 0.5f : 1f;
+				float dist = MathF.Pow((Projectile.Center.X - currentPos.X) * distMult, 2) + MathF.Pow((Projectile.Center.Y - currentPos.Y) * distMult, 2);
 				if (dist < targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
 					targetWeight = dist;
 					targetPos = currentPos;
@@ -92,55 +89,139 @@ namespace Origins.Items.Weapons.Magic {
 				return false;
 			}, false)) {
 				Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(default) * Projectile.velocity.Length();
+				this.target = Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
+				Projectile.damage = (int)(Projectile.damage * 0.9f);
+			} else {
+				int index = Math.Min((int)++Projectile.ai[1], Projectile.oldPos.Length);
+				Projectile.oldPos[^index] = Projectile.Center + Projectile.velocity;
+				Projectile.oldRot[^index] = Projectile.velocity.ToRotation();
+				StopMovement();
 			}
 		}
+
 		public override bool PreDraw(ref Color lightColor) {
-			int l = Math.Min(Projectile.timeLeft, 7);
-			if ((Projectile.timeLeft & 1) == 0) {
-				for (int i = l; --i > 0;) {
-					oldPos[i] = oldPos[i - 1];
-					oldPos[i].Item1 += oldPos[i].Item2;
-				}
-				Vector2 dir = Main.rand.NextVector2Unit();
-				oldPos[0] = (Projectile.Center + dir * 2, dir / 2);
-			}
-			List<Vector2> positions = oldPos.Where(i => i.Item1.HasValue).Select(i => i.Item1.Value - Main.screenPosition).ToList();
-			positions.Insert(0, Projectile.Center - Main.screenPosition);
-			Main.spriteBatch.DrawLightningArc(
-				positions.ToArray(),
-				null,
-				1f,
-				(0.15f, new Color(80, 204, 219, 0) * 0.5f),
-				(0.1f, new Color(80, 251, 255, 0) * 0.5f),
-				(0.05f, new Color(200, 255, 255, 0) * 0.5f));
-			for (int i = 0; i < positions.Count; i++) {
-				Lighting.AddLight(positions[i] + Main.screenPosition, 0.15f, 0.4f, 0.43f);
-			}
+			Magnus_P_Drawer drawer = default;
+			drawer.Draw(Projectile);
 			return false;
 		}
-		/// <summary>
-		/// The core function of drawing a laser
-		/// </summary>
-		public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, Vector2? uScale = null, float maxDist = 200f, Color color = default) {
-			Vector2 scale = uScale ?? new Vector2(0.66f, 0.66f);
-			Vector2 origin = start;
-			float maxl = (float)Math.Sqrt(Main.screenWidth * Main.screenWidth + Main.screenHeight * Main.screenHeight);
-			float r = unit.ToRotation();
-			float l = unit.Length() * 2.5f;
-			int t = Projectile.timeLeft > 10 ? 25 - Projectile.timeLeft : Projectile.timeLeft;
-			float s = Math.Min(t / 15f, 1f);
-			Vector2 perpUnit = unit.RotatedBy(MathHelper.PiOver2);
-			for (float i = 0; i <= maxDist; i += step) {
-				if (i * unit.Length() > maxl) break;
-				origin = start + i * unit;
-				spriteBatch.Draw(texture, origin - Main.screenPosition,
-					new Rectangle(0, 0, 1, 1), color, r,
-					new Vector2(0.5f, 0.5f), scale, 0, 0);
-				spriteBatch.Draw(texture, origin - Main.screenPosition + perpUnit * Main.rand.NextFloat(-1f, 1f),
-					new Rectangle(0, 0, 1, 1), color, r,
-					new Vector2(0.5f, 0.5f), scale, 0, 0);
-				Lighting.AddLight(origin, color.R / 255f, color.G / 255f, color.B / 255f);
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			hitbox.Inflate(2, 2);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			for (int i = 1; i < Projectile.ai[1] && i < Projectile.oldPos.Length; i++) {
+				Vector2 pos = Projectile.oldPos[^i];
+				if (pos == default) {
+					break;
+				} else if (projHitbox.Recentered(pos).Intersects(targetHitbox)) {
+					return true;
+				}
 			}
+			return null;
+		}
+		Vector2? target = null;
+		public override void AI() {
+			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
+			if (Projectile.numUpdates == -1 && ++Projectile.ai[2] >= 10) {
+				Projectile.Kill();
+				return;
+			}
+			if (Projectile.ai[0] != 1) {
+				if ((Projectile.numUpdates + 1) % 5 == 0) {
+					float speed = Projectile.velocity.Length();
+					if (speed != 0) Projectile.velocity = (target.Value - Projectile.Center).SafeNormalize(Projectile.velocity / speed).RotatedByRandom(0.3f) * speed;
+				}
+				if (++Projectile.ai[1] > ProjectileID.Sets.TrailCacheLength[Type]) {
+					StopMovement();
+				} else {
+					int index = (int)Projectile.ai[1];
+					Projectile.oldPos[^index] = Projectile.Center;
+					Projectile.oldRot[^index] = Projectile.velocity.ToRotation();
+				}
+			}
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Vector2 direction = oldVelocity.SafeNormalize(default);
+			if (direction != default) {
+				float[] samples = new float[3];
+				Collision.LaserScan(
+					Projectile.Center,
+					direction,
+					5,
+					32,
+					samples
+				);
+				if (samples.Average() > tick_motion * 0.5f) {
+					Projectile.Center += direction * tick_motion;
+					int index = Math.Min((int)++Projectile.ai[1], Projectile.oldPos.Length);
+					Projectile.oldPos[^index] = Projectile.Center;
+					Projectile.oldRot[^index] = oldVelocity.ToRotation();
+				}
+			}
+			StopMovement();
+			return false;
+		}
+		void StopMovement() {
+			Projectile.velocity = Vector2.Zero;
+			Projectile.ai[0] = 1;
+			Projectile.extraUpdates = 0;
+		}
+	}
+	public struct Magnus_P_Drawer {
+		public const int TotalIllusions = 1;
+
+		public const int FramesPerImportantTrail = 60;
+
+		private static VertexStrip _vertexStrip = new VertexStrip();
+
+		public float Length;
+		public void Draw(Projectile proj) {
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Beam"];
+			float uTime = (float)Main.timeForVisualEffects / 44;
+			int length = proj.oldPos.Length;
+			if (length == 0) return;
+			float[] rot = new float[length];
+			Vector2[] pos = new Vector2[length];
+			Vector2 unit = default;
+			int dustTimer = 0;
+			for (int i = 0; i < length; i++) {
+				Index reverseIndex = ^(i + 1);
+				if (proj.oldPos[reverseIndex] == default) {
+					length = i;
+					Array.Resize(ref rot, length);
+					Array.Resize(ref pos, length);
+					break;
+				}
+				rot[i] = proj.oldRot[reverseIndex];
+				pos[i] = proj.oldPos[reverseIndex] + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(-6, 6), rot[i] + MathHelper.PiOver2);
+				Lighting.AddLight(pos[i], 0.1f, 0.75f, 1f);
+				unit = new Vector2(1, 0).RotatedBy(rot[i]);
+				if (Main.rand.Next(++dustTimer) > 6) {
+					//Dust.NewDustPerfect(pos[i] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
+					dustTimer = Main.rand.NextBool() ? 2 : 0;
+				}
+			}
+			if (length == 0) return;
+			//Dust.NewDustPerfect(pos[length - 1] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
+			Asset<Texture2D> texture = TextureAssets.Extra[194];
+			miscShaderData.UseImage0(texture);
+			miscShaderData.UseShaderSpecificData(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
+			float endLength = (16f / Magnus_P.tick_motion) / length;
+			miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
+				16f / 48f,
+				endLength
+			));
+			miscShaderData.Apply();
+			_vertexStrip.PrepareStrip(pos, rot, StripColors, StripWidth, -Main.screenPosition, length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
+
+		private Color StripColors(float progressOnStrip) {
+			return new Color(0.1f, 0.75f, 1f, 0);
+		}
+
+		private float StripWidth(float progressOnStrip) {
+			return 16;
 		}
 	}
 }

@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace Origins.NPCs {
 		public bool soulhideWeakenedDebuff = false;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
+		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
@@ -95,6 +97,7 @@ namespace Origins.NPCs {
 			soulhideWeakenedDebuff = false;
 			cavitationDebuff = false;
 			staticShock = false;
+			staticShockDamage = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
@@ -195,6 +198,14 @@ namespace Origins.NPCs {
 					npc.lifeRegen -= 15;
 					damage += 2;
 				}
+			}
+			if (staticShock || staticShockDamage) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				int damageMult = 1 + npc.wet.ToInt() + (staticShock && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+				npc.lifeRegen -= 8 * damageMult;
+				if (damage < 3 * damageMult) damage = 3 * damageMult;
 			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {

@@ -4,17 +4,22 @@ using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
+using static Origins.Misc.Physics;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
 		public override void SetStaticDefaults() {
-			Origins.DamageBonusScale[Type] = 1.5f;
+			Origins.DamageBonusScale[Type] = 2f;
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
-			Item.damage = 0;
+			Item.damage = 20;
 			Item.DamageType = DamageClass.Generic;
 			Item.noMelee = true;
 			//Sets the poles fishing power
@@ -25,20 +30,39 @@ namespace Origins.Items.Tools {
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Green;
 		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			/*const float factor = 1.5f;
-			damage = new StatModifier(
-				(damage.Additive - 1) * factor + 1,
-				(damage.Multiplicative - 1) * factor + 1,
-				0,
-				(damage.Flat + damage.Base) * factor
-			);*/
-		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8)
 			.AddTile(TileID.Anvils)
 			.Register();
+		}
+		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
+			player.itemLocation -= new Vector2(player.direction * 10, 0);
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			int xPositionAdditive = 58;
+			float yPositionAdditive = 31f;
+			Vector2 lineOrigin = player.MountedCenter;
+			lineOrigin.Y += player.gfxOffY;
+			//This variable is used to account for Gravitation Potions
+			float gravity = player.gravDir;
+
+			if (gravity == -1f) {
+				lineOrigin.Y -= 12f;
+			}
+			lineOrigin.X += xPositionAdditive * player.direction;
+			if (player.direction < 0) {
+				lineOrigin.X -= 13f;
+			}
+			lineOrigin.Y -= yPositionAdditive * gravity;
+			position = player.RotatedRelativePoint(lineOrigin + new Vector2(8f), true) - new Vector2(8f);
+			velocity = (Main.MouseWorld - position).SafeNormalize(default) * velocity.Length();
+		}
+		public override void ModifyFishingLine(Projectile bobber, ref Vector2 lineOriginOffset, ref Color lineColor) {
+			int xPositionAdditive = 58;
+			float yPositionAdditive = 31f;
+			lineOriginOffset.X += xPositionAdditive;
+			lineOriginOffset.Y -= yPositionAdditive;
 		}
 	}
 	public class Lightning_Rod_Bobber : ModProjectile {
@@ -60,6 +84,35 @@ namespace Origins.Items.Tools {
 						item.velocity = Projectile.velocity;
 					}
 				}
+				Projectile.extraUpdates = 1;
+			} else if (Projectile.ai[2] == 0) {
+				int count = 0;
+				Vector2 oldPos = Projectile.position;
+				while (WorldGen.InWorld((int)(Projectile.position.X / 16), (int)(Projectile.position.Y / 16))) {
+					if (Collision.SlopeCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, fall: true) != new Vector4(Projectile.position, Projectile.velocity.X, Projectile.velocity.Y)) {
+						Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+						break;
+					}
+					if (Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, fallThrough: true, fall2: true) != Projectile.velocity) {
+						Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+						break;
+					}
+					Projectile.position += Projectile.velocity;
+					if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height)) {
+						break;
+					}
+					if (++count > 100) break;
+				}
+				SoundEngine.PlaySound(new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f), Projectile.Center);
+				Vector2 diff = oldPos - Projectile.position;
+				float distance = diff.Length();
+				for (int i = 0; i < distance; i += Main.rand.Next(8, 12)) {
+					Dust.NewDust(Projectile.Center + diff * (i / distance), 0, 0, DustID.Electric, 0f, 0f, 0, Color.White, 0.5f);
+				}
+				Projectile.ai[2] = 1;
+				if (Main.myPlayer == Projectile.owner) {
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, diff, ModContent.ProjectileType<Lightning_Rod_Bobber_Zap>(), Projectile.damage, Projectile.knockBack);
+				}
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -68,12 +121,9 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override bool PreDrawExtras() {
-			Color fishingLineColor = new(176, 225, 255);
-			Lighting.AddLight(Projectile.Center, 0, fishingLineColor.G * 0.0015f, fishingLineColor.B * 0.005f);
-
 			//Change these two values in order to change the origin of where the line is being drawn
-			int xPositionAdditive = 45;
-			float yPositionAdditive = 33f;
+			int xPositionAdditive = 58;
+			float yPositionAdditive = 31f;
 
 			Player player = Main.player[Projectile.owner];
 			if (!Projectile.bobber || player.inventory[player.selectedItem].holdStyle <= 0)
@@ -81,10 +131,13 @@ namespace Origins.Items.Tools {
 
 			Vector2 lineOrigin = player.MountedCenter;
 			lineOrigin.Y += player.gfxOffY;
-			int type = player.inventory[player.selectedItem].type;
 			//This variable is used to account for Gravitation Potions
 			float gravity = player.gravDir;
 
+			if (gravity == -1f) {
+				lineOrigin.Y -= 12f;
+			}
+			int type = player.inventory[player.selectedItem].type;
 			if (type == ModContent.ItemType<Lightning_Rod>()) {
 				lineOrigin.X += xPositionAdditive * player.direction;
 				if (player.direction < 0) {
@@ -92,83 +145,62 @@ namespace Origins.Items.Tools {
 				}
 				lineOrigin.Y -= yPositionAdditive * gravity;
 			}
-
-			if (gravity == -1f) {
-				lineOrigin.Y -= 12f;
-			}
-			// RotatedRelativePoint adjusts lineOrigin to account for player rotation.
 			lineOrigin = player.RotatedRelativePoint(lineOrigin + new Vector2(8f), true) - new Vector2(8f);
-			Vector2 playerToProjectile = Projectile.Center - lineOrigin;
-			bool canDraw = true;
-			if (playerToProjectile.X == 0f && playerToProjectile.Y == 0f)
-				return false;
-
-			float playerToProjectileMagnitude = playerToProjectile.Length();
-			playerToProjectileMagnitude = 12f / playerToProjectileMagnitude;
-			playerToProjectile *= playerToProjectileMagnitude;
-			lineOrigin -= playerToProjectile;
-			playerToProjectile = Projectile.Center - lineOrigin;
-
-			Vector2 lastArcPos = lineOrigin;
-
-			// This math draws the line, while allowing the line to sag.
-			int index = 0;
-			while (canDraw) {
-				index += 1;
-				float height = 12f;
-				float positionMagnitude = playerToProjectile.Length();
-				if (float.IsNaN(positionMagnitude) || float.IsNaN(positionMagnitude))
-					break;
-
-				if (positionMagnitude < 20f) {
-					height = positionMagnitude - 8f;
-					canDraw = false;
-				}
-				playerToProjectile *= 12f / positionMagnitude;
-				lineOrigin += playerToProjectile;
-				playerToProjectile.X = Projectile.position.X + Projectile.width * 0.5f - lineOrigin.X;
-				playerToProjectile.Y = Projectile.position.Y + Projectile.height * 0.1f - lineOrigin.Y;
-				if (positionMagnitude > 12f) {
-					float positionInverseMultiplier = 0.3f;
-					float absVelocitySum = Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y);
-					if (absVelocitySum > 16f) {
-						absVelocitySum = 16f;
-					}
-					absVelocitySum = 1f - absVelocitySum / 16f;
-					positionInverseMultiplier *= absVelocitySum;
-					absVelocitySum = positionMagnitude / 80f;
-					if (absVelocitySum > 1f) {
-						absVelocitySum = 1f;
-					}
-					positionInverseMultiplier *= absVelocitySum;
-					if (positionInverseMultiplier < 0f) {
-						positionInverseMultiplier = 0f;
-					}
-					absVelocitySum = 1f - Projectile.localAI[0] / 100f;
-					positionInverseMultiplier *= absVelocitySum;
-					if (playerToProjectile.Y > 0f) {
-						playerToProjectile.Y *= 1f + positionInverseMultiplier;
-						playerToProjectile.X *= 1f - positionInverseMultiplier;
-					} else {
-						absVelocitySum = Math.Abs(Projectile.velocity.X) / 3f;
-						if (absVelocitySum > 1f) {
-							absVelocitySum = 1f;
-						}
-						absVelocitySum -= 0.5f;
-						positionInverseMultiplier *= absVelocitySum;
-						if (positionInverseMultiplier > 0f) {
-							positionInverseMultiplier *= 2f;
-						}
-						playerToProjectile.Y *= 1f + positionInverseMultiplier;
-						playerToProjectile.X *= 1f - positionInverseMultiplier;
-					}
-				}
-				Color lineColor = Lighting.GetColor((int)lineOrigin.X / 16, (int)(lineOrigin.Y / 16f), fishingLineColor);
-				float rotation = playerToProjectile.ToRotation() - MathHelper.PiOver2;
-				Texture2D fishingLineTexture = TextureAssets.FishingLine.Value;
-				Main.EntitySpriteDraw(fishingLineTexture, new Vector2(lineOrigin.X - Main.screenPosition.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y - Main.screenPosition.Y + fishingLineTexture.Height * 0.5f), new Rectangle(0, 0, fishingLineTexture.Width, (int)height), lineColor, rotation, new Vector2(fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
-				Lighting.AddLight(new Vector2(lineOrigin.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y + fishingLineTexture.Height * 0.5f), 0, fishingLineColor.G * 0.0003f, fishingLineColor.B * 0.001f);
+			Main.spriteBatch.DrawLightningArcBetween(lineOrigin - Main.screenPosition, Projectile.Center - Main.screenPosition + Vector2.UnitX * 4, Main.rand.NextFloat(-4, 4));
+			return false;
+		}
+	}
+	public class Lightning_Rod_Bobber_Zap : ModProjectile {
+		public override string Texture => typeof(NPCs.MiscE.Felnum_Ore_Slime_Zap).GetDefaultTMLName() + "_Placeholder";
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 3;
+		}
+		public override void SetDefaults() {
+			Projectile.width = 48;
+			Projectile.height = 48;
+			Projectile.timeLeft = 9;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.velocity)) {
+				return true;
 			}
+			return null;
+		}
+		private static VertexStrip _vertexStrip = new();
+		public override bool PreDraw(ref Color lightColor) {
+			MiscShaderData miscShaderData = GameShaders.Misc["MagicMissile"];
+			miscShaderData.UseSaturation(-1f);
+			miscShaderData.UseOpacity(4);
+			miscShaderData.Apply();
+			int maxLength = (int)(Projectile.velocity.Length() / 2);
+			float[] oldRot = new float[maxLength];
+			Vector2[] oldPos = new Vector2[maxLength];
+			Vector2 start = Projectile.Center, end = Projectile.Center + Projectile.velocity;
+			float rotation = (start - end).ToRotation();
+			for (int i = 0; i < maxLength; i++) {
+				oldPos[i] = Vector2.Lerp(start, end, i / (float)maxLength);
+				oldRot[i] = rotation;
+			}
+			_vertexStrip.PrepareStrip(oldPos, oldRot, _ => new Color(80, 204, 219, 0), _ => 12, -Main.screenPosition, maxLength, includeBacksides: false);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: (9 - Projectile.timeLeft) / 3);
+			Vector2 direction = Projectile.velocity.SafeNormalize(default);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition - direction * 28,
+				frame,
+				new Color(255, 255, 255, 0),
+				Projectile.velocity.ToRotation() + MathHelper.PiOver2,
+				new Vector2(42, 72),
+				1,
+				SpriteEffects.None
+			);
 			return false;
 		}
 	}

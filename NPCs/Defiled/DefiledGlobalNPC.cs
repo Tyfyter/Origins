@@ -68,15 +68,13 @@ namespace Origins.NPCs.Defiled {
 				npc.lifeRegen -= 16;
 				damage += 4;
 			}
-			/*if (npc.HasBuff(ModContent.BuffType<Static_Shock_Debuff>())) {
-				npc.lifeRegen -= 5; //needs other effects
-			}*/
+			/* vanilla electrified debuff can't be inflicted on enemies, so it might cause issues if we actually use it on them, instead we'll make a new debuff like with slowed 
 			if (npc.HasBuff(BuffID.Electrified)) {
 				npc.lifeRegen -= 20;
 			}
 			if (npc.HasBuff(BuffID.Electrified) && npc.wet) {
 				npc.lifeRegen -= 40;
-			}
+			}*/
 			if (npc.shadowFlame) {
 				npc.lifeRegen += 15;
 			}

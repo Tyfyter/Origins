@@ -996,6 +996,11 @@ Buffs: {
 		// DisplayName: Static Shock Debuff
 		// Description: Mods.Origins.Buffs.Static_Shock_Debuff.Description
 	}
+
+	Static_Shock_Damage_Debuff: {
+		// DisplayName: Static Shock Damage Debuff
+		// Description: Mods.Origins.Buffs.Static_Shock_Damage_Debuff.Description
+	}
 }
 
 DamageClassName: {
@@ -1427,6 +1432,9 @@ Projectiles: {
 	// Mildew_Whip_P.DisplayName: Mildew Whip
 	// Eyenade_P.DisplayName: Eyenade
 	// Chipper_Knife_P.DisplayName: Chipper Knife
+	// Magnus_P.DisplayName: Magnus P
+	// Felnum_Hamaxe_P.DisplayName: Felnum Hamaxe P
+	// Lightning_Rod_Bobber_Zap.DisplayName: Lightning Rod Bobber Zap
 }
 
 Prefixes: {

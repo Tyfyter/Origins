@@ -306,6 +306,7 @@ namespace Origins {
 		public BrothBase broth = null;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
+		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
 		#endregion
 
@@ -633,6 +634,8 @@ namespace Origins {
 			swarmStatue = false;
 			focusPotion = false;
 			cavitationDebuff = false;
+			staticShock = false;
+			staticShockDamage = false;
 			broth = null;
 
 			boatRockerAltUse = false;

@@ -8,6 +8,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
 using System;
@@ -319,6 +320,14 @@ namespace Origins {
 			}
 			if (cavitationDebuff) {
 				Player.lifeRegen -= 33;
+			}
+
+			if (staticShock || staticShockDamage) {
+				if (Player.lifeRegen > 0) {
+					Player.lifeRegen = 0;
+				}
+				int damageMult = 1 + Player.wet.ToInt() + (staticShock && staticShockDamage).ToInt();
+				Player.lifeRegen -= 9 * damageMult;
 			}
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {

@@ -133,7 +133,7 @@ namespace Origins.NPCs.MiscE {
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type]);
+			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: (9 - Projectile.timeLeft) / 3);
 			Main.EntitySpriteDraw(
 				texture,
 				Projectile.Bottom - Main.screenPosition,
