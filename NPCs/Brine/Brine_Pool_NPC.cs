@@ -88,7 +88,7 @@ namespace Origins.NPCs.Brine {
 				if (pathfindingTime < pathfinding_frequency) pathfindingTime++;
 				if (CollisionExt.CanHitRay(NPC.Center, target)) {
 					TargetPos = target;
-				} else if (pathfindingTime > pathfinding_frequency) {
+				} else if (pathfindingTime >= pathfinding_frequency) {
 					pathfindingTime = 0;
 					Vector2 searchSize = new Vector2(48) * 16;
 					Vector2 searchStart = NPC.Center - searchSize;

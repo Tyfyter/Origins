@@ -1767,7 +1767,7 @@ Configs: {
 		}
 
 		GraveshieldZombiesDropAsItem: {
-			// Label: Graveshield Zombies drop Tombstones as items
+			// Label: Graveshield Zombie QOL
 			// Tooltip: Makes Graveshield Zombies drop their tombstones as items instead of as tiles
 		}
 	}
@@ -2102,12 +2102,14 @@ DefiledRelaySignals: {
 	// Security6: Relay 2, foriegn body.
 	// Security7: Relay 5, initiate protocol.
 	// Idle1: All conditions optimal.
-	// Idle2: Hey. Those are-- memories.
-	// Idle3: They are nothing more than our pet. Keep them occupied.
-	// Idle4: The intruder will be here soon. Be alert.
-	// Idle5: The day gets worse.
-	// Idle6: Looking forward to dopamine release next cycle.
-	// Idle7: BeingDestroyed1: Stop.
+	// Idle2: Hey. M-y memories.
+	// Idle3: Not more than our pet. Keep them occupied.
+	// Idle4: Intruder present shortly. Remain alert.
+	// Idle5: Day becomes progressively suboptimal.
+	// Idle6: Motivated, dopamine release next cycle.
+	// Idle7: File is missing. Not yet.
+	// Idle8: Absolution upon us.
+	// BeingDestroyed1: Stop.
 	// BeingDestroyed2: This hurts us.
 	// BeingDestroyed3: Alert core system.
 	// BeingDestroyed4: Distress.

@@ -67,3 +67,26 @@ Biomes: {
 		// TownNPCDialogueName: the place where Riven Jesus, our savior: {§Riven_Hive} can be found
 	}
 }
+
+DefiledRelaySignals: {
+	// Security1: Code word: male genitalia.
+	// Security2: WE FOUND THEM.
+	// Security3: Send dudes.
+	// Security4: Intruder up colon rn.
+	// Security5: Terrarian, wut doin'...
+	// Security6: Relay 69, foriegn body.
+	// Security7: Relay 401, time for liveliness up in here.
+	// Idle1: Your mother well last night.
+	// Idle2: Heyyyyyyyyy...
+	// Idle3: District Attorney interjects.
+	// Idle4: Get surprise ready.
+	// Idle5: WOOOOO. YEAH. DOPAMINE RELEASE. Okay, over now.
+	// Idle6: Sadge. Negatory dopamine release.
+	// Idle7: Also listen to MISSINGFILE!
+	// Idle8: Finally, good fucking news.
+	// BeingDestroyed1: Shalln't continue.
+	// BeingDestroyed2: WE SAY WHAT?!
+	// BeingDestroyed3: Blood be boilin'.
+	// BeingDestroyed4: HALP!
+	// BeingDestroyed5: Go away in profane language.
+}
