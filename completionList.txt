@@ -319,6 +319,7 @@ NPC DIALOGUE:
 ARMOR:
 ---
 (^) Ancient Defiled Armor*
+(^) Ancient Felnum Armor
 (^) Ancient Riven Armor*
 (^) Ashen Armor*
 (^) Cryosten Armor*
@@ -844,7 +845,7 @@ SUMMONER WEAPONS:
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
 (@5, ^3) Broken Terratotem
-(X) Defective Mortar Shell !!!
+(#, ^2) Defective Mortar Shell !!!
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash*
@@ -855,7 +856,7 @@ SUMMONER WEAPONS:
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Monolith Rod !!!
-(X) Ocean Amulet !!!
+(%3) Ocean Amulet !!!
 (#, ^2) Ocotillo Finger !!!
 (^) Ocotoral Bud*
 (^) Rotted Worm Staff

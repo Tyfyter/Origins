@@ -1,4 +1,5 @@
-﻿using Origins.NPCs.Defiled.Boss;
+﻿using Origins.Buffs;
+using Origins.NPCs.Defiled.Boss;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,14 +68,15 @@ namespace Origins.NPCs.Defiled {
 				npc.lifeRegen -= 16;
 				damage += 4;
 			}
-			/*if (npc.electrified) {
-				npc.lifeRegen -= 20;
-				damage += 20;
+			if (npc.HasBuff(ModContent.BuffType<Static_Shock_Debuff>())) {
+				npc.lifeRegen -= 5; //needs other effects
 			}
-			if (npc.electrified && npc.wet) {
+			if (npc.HasBuff(BuffID.Electrified)) {
+				npc.lifeRegen -= 20;
+			}
+			if (npc.HasBuff(BuffID.Electrified) && npc.wet) {
 				npc.lifeRegen -= 40;
-				damage += 20;
-			}*/
+			}
 			if (npc.shadowFlame) {
 				npc.lifeRegen += 15;
 			}
