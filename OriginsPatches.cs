@@ -77,6 +77,8 @@ using Origins.Items.Other.Consumables.Broths;
 using static Terraria.ID.ContentSamples.CreativeHelper;
 using Terraria.UI;
 using Origins.Journal;
+using Terraria.ModLoader.IO;
+using Origins.Items.Weapons.Demolitionist;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -618,6 +620,15 @@ namespace Origins {
 				}
 			};
 			IL_WorldGen.SpawnThingsFromPot += IL_WorldGen_SpawnThingsFromPot;
+			IL_Condition.PlayerCarriesItem += il => {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.Before, i => i.MatchNewobj<Condition>());
+				c.EmitLdarg0();
+				c.EmitDelegate<Func<Func<bool>, int, Func<bool>>>((orig, type) => {
+					if (type == ItemID.FlareGun) return () => orig() || Main.LocalPlayer.HasItem(ModContent.ItemType<Flare_Launcher>());
+					return orig;
+				});
+			};
 		}
 
 		private static void IL_WorldGen_SpawnThingsFromPot(ILContext il) {
