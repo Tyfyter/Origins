@@ -334,7 +334,7 @@ namespace Origins.Projectiles {
 				modifiers.SourceDamage *= 1 + extraBossDamage;
 			}
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2) {
-				modifiers.SourceDamage.Base += felnumBonus / Felnum_Helmet.shock_damage_divisor;
+				modifiers.SourceDamage.Base += (felnumBonus * (fromItemType >= 0 ? Origins.DamageBonusScale[fromItemType] : 1)) / Felnum_Helmet.shock_damage_divisor;
 				if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) {
 					Main.player[projectile.owner].OriginPlayer().usedFelnumShock = true;
 					SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);

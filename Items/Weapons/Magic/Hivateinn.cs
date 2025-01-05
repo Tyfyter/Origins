@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Magic {
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
+			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
@@ -33,9 +34,6 @@ namespace Origins.Items.Weapons.Magic {
 			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);

@@ -32,6 +32,7 @@ namespace Origins.Items.Weapons.Melee {
 			};
 			Main.RegisterItemAnimation(Item.type, animation);
 			Item.ResearchUnlockCount = 1;
+			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
 			Item.damage = 88;
@@ -101,9 +102,6 @@ namespace Origins.Items.Weapons.Melee {
 			if (frame == 5) {
 				hitbox = new Rectangle(0, 0, 0, 0);
 			}
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {

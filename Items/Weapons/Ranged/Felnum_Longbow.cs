@@ -11,7 +11,10 @@ namespace Origins.Items.Weapons.Ranged {
         public string[] Categories => [
             "Bow"
         ];
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
 			Item.damage = baseDamage;
 			Item.width = 18;
@@ -30,9 +33,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 	}
 }

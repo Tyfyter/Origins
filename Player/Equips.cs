@@ -3,10 +3,13 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -436,6 +439,7 @@ namespace Origins {
 				}
 			}
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
+			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player);
 			oldGravDir = Player.gravDir;
 		}
 		public override void UpdateDyes() {

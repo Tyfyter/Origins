@@ -991,6 +991,11 @@ Buffs: {
 		// DisplayName: Mildew Whip Buff
 		// Description: Mods.Origins.Buffs.Mildew_Whip_Buff.Description
 	}
+
+	Static_Shock_Debuff: {
+		// DisplayName: Static Shock Debuff
+		// Description: Mods.Origins.Buffs.Static_Shock_Debuff.Description
+	}
 }
 
 DamageClassName: {

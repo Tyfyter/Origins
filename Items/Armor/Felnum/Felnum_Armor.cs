@@ -8,14 +8,14 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Felnum {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Felnum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public const float shock_damage_divisor = 15f;
-        public string[] Categories => [
-            "ArmorSet",
-            "GenericBoostGear"
-        ];
-        public short GlowMask = -1;
+		public string[] Categories => [
+			"ArmorSet",
+			"GenericBoostGear"
+		];
+		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Head");
@@ -34,7 +34,7 @@ namespace Origins.Items.Armor.Felnum {
 			glowMaskColor = new Color(a, a, a, a);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Felnum_Breastplate>() && legs.type == ModContent.ItemType<Felnum_Greaves>();
+			return (body.type == ModContent.ItemType<Felnum_Breastplate>() || body.type == ModContent.ItemType<Ancient_Felnum_Breastplate>()) && (legs.type == ModContent.ItemType<Felnum_Greaves>() || legs.type == ModContent.ItemType<Ancient_Felnum_Greaves>());
 		}
 		public override void UpdateArmorSet(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -127,5 +127,21 @@ namespace Origins.Items.Armor.Felnum {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
+	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Ancient_Felnum_Helmet : Felnum_Helmet, IWikiArmorSet, INoSeperateWikiPage {
+		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Felnum_Helmet.Tooltip"));
+		public new string ArmorSetName => "Ancient_Felnum_Armor";
+		public new int HeadItemID => Type;
+		public new int BodyItemID => ModContent.ItemType<Ancient_Felnum_Breastplate>();
+		public new int LegsItemID => ModContent.ItemType<Ancient_Felnum_Greaves>();
+	}
+	[AutoloadEquip(EquipType.Body)]
+	public class Ancient_Felnum_Breastplate : Felnum_Breastplate {
+		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Felnum_Breastplate.Tooltip"));
+	}
+	[AutoloadEquip(EquipType.Legs)]
+	public class Ancient_Felnum_Greaves : Felnum_Greaves {
+		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Felnum_Greaves.Tooltip"));
 	}
 }

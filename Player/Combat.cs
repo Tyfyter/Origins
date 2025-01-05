@@ -18,6 +18,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using ThoriumMod.Empowerments;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -160,7 +161,7 @@ namespace Origins {
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;
 			if (felnumShock >= Felnum_Helmet.shock_damage_divisor * 2) {
-				modifiers.SourceDamage.Flat += (int)(felnumShock / Felnum_Helmet.shock_damage_divisor);
+				modifiers.SourceDamage.Flat += (int)((felnumShock * Origins.DamageBonusScale[item.type]) / Felnum_Helmet.shock_damage_divisor);
 				usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
 			}

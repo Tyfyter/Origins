@@ -4818,3 +4818,18 @@ Chipper_Knife: {
 	DisplayName: Chipper Knife
 	Tooltip: Briefly rasters enemies
 }
+
+Ancient_Felnum_Breastplate: {
+	DisplayName: Ancient Felnum Breastplate
+	Tooltip: ""
+}
+
+Ancient_Felnum_Greaves: {
+	DisplayName: Ancient Felnum Greaves
+	Tooltip: ""
+}
+
+Ancient_Felnum_Helmet: {
+	DisplayName: Ancient Felnum Helmet
+	Tooltip: ""
+}

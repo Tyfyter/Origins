@@ -21,9 +21,11 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
@@ -246,6 +248,7 @@ namespace Origins.NPCs {
 					}
 				}
 			}
+			if (staticShock) Static_Shock_Debuff.ProcessShocking(npc);
 		}
 		public override bool CheckDead(NPC npc) {
 			if (birdedTime > 0) {

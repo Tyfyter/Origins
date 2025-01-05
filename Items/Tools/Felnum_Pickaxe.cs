@@ -5,7 +5,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Felnum_Pickaxe : ModItem {
-		
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 13;
@@ -28,9 +30,6 @@ namespace Origins.Items.Tools {
         }
         public override float UseTimeMultiplier(Player player) {
 			return (player.pickSpeed - 1) * 0.75f + 1;
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 	}
 }

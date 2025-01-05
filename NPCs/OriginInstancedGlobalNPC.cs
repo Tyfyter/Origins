@@ -41,6 +41,8 @@ namespace Origins.NPCs {
 		public bool weakShadowflameDebuff = false;
 		public bool soulhideWeakenedDebuff = false;
 		public bool cavitationDebuff = false;
+		public bool staticShock = false;
+		public int staticShockTime = 0;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public bool amberDebuff = false;
@@ -92,6 +94,7 @@ namespace Origins.NPCs {
 			weakShadowflameDebuff = false;
 			soulhideWeakenedDebuff = false;
 			cavitationDebuff = false;
+			staticShock = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;

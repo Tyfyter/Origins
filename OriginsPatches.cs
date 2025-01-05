@@ -79,6 +79,7 @@ using Terraria.UI;
 using Origins.Journal;
 using Terraria.ModLoader.IO;
 using Origins.Items.Weapons.Demolitionist;
+using PegasusLib.Reflection;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -629,8 +630,18 @@ namespace Origins {
 					return orig;
 				});
 			};
+			IL_Player.GetWeaponDamage += il => {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.Before, i => i.MatchCall<StatModifier>(nameof(StatModifier.ApplyTo)));
+				MonoModMethods.SkipPrevArgument(c);
+				c.EmitLdarg1();
+				c.EmitDelegate<Modify_ApplyTo>((ref StatModifier modifier, Item item) => {
+					modifier = modifier.Scale(DamageBonusScale[item.type]);
+					return ref modifier;
+				});
+			};
 		}
-
+		delegate ref StatModifier Modify_ApplyTo(ref StatModifier modifier, Item item);
 		private static void IL_WorldGen_SpawnThingsFromPot(ILContext il) {
 			ILCursor c = new(il);
 			int playerLoc = -1;

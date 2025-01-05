@@ -305,6 +305,8 @@ namespace Origins {
 		public bool focusPotion = false;
 		public BrothBase broth = null;
 		public bool cavitationDebuff = false;
+		public bool staticShock = false;
+		public int staticShockTime = 0;
 		#endregion
 
 		#region keybinds

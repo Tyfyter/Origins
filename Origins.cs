@@ -68,6 +68,8 @@ namespace Origins {
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
 		static bool[] itemsThatAllowRemoteRightClick;
 		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
+		static float[] damageBonusScale;
+		public static float[] DamageBonusScale { get => damageBonusScale; }
 		static bool[] brothBuffs;
 		public static bool[] BrothBuffs { get => brothBuffs; }
 		static bool[] isFineWithCrowdedParties;
@@ -82,6 +84,9 @@ namespace Origins {
 		public static int FelnumHeadArmorID { get; private set; }
 		public static int FelnumBodyArmorID { get; private set; }
 		public static int FelnumLegsArmorID { get; private set; }
+		public static int AncientFelnumHeadArmorID { get; private set; }
+		public static int AncientFelnumBodyArmorID { get; private set; }
+		public static int AncientFelnumLegsArmorID { get; private set; }
 
 		public static int PlagueTexanJacketID { get; private set; }
 
@@ -158,6 +163,9 @@ namespace Origins {
 			FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().Item.headSlot;
 			FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().Item.bodySlot;
 			FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().Item.legSlot;
+			AncientFelnumHeadArmorID = ModContent.GetInstance<Ancient_Felnum_Helmet>().Item.headSlot;
+			AncientFelnumBodyArmorID = ModContent.GetInstance<Ancient_Felnum_Breastplate>().Item.bodySlot;
+			AncientFelnumLegsArmorID = ModContent.GetInstance<Ancient_Felnum_Greaves>().Item.legSlot;
 			PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().Item.bodySlot;
 			RiftHeadArmorID = ModContent.GetInstance<Bleeding_Obsidian_Helmet>().Item.headSlot;
 			RiftBodyArmorID = ModContent.GetInstance<Bleeding_Obsidian_Breastplate>().Item.bodySlot;
@@ -585,6 +593,7 @@ namespace Origins {
 			RasterizeAdjustment = null;
 			homingEffectivenessMultiplier = null;
 			itemsThatAllowRemoteRightClick = null;
+			damageBonusScale = null;
 			brothBuffs = null;
 			isFineWithCrowdedParties = null;
 			PotType = null;
@@ -802,6 +811,7 @@ namespace Origins {
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
+			damageBonusScale = ItemID.Sets.Factory.CreateFloatSet(1f);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();

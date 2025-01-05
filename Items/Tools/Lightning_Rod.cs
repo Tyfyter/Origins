@@ -9,6 +9,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			Item.damage = 0;
@@ -23,13 +26,13 @@ namespace Origins.Items.Tools {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			const float factor = 1.5f;
+			/*const float factor = 1.5f;
 			damage = new StatModifier(
 				(damage.Additive - 1) * factor + 1,
 				(damage.Multiplicative - 1) * factor + 1,
 				0,
 				(damage.Flat + damage.Base) * factor
-			);
+			);*/
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

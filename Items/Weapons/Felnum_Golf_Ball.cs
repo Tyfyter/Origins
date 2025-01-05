@@ -7,7 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons {
 	public class Felnum_Golf_Ball : ModItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBrown;
-		
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBall);
 			Item.damage = 20;
@@ -24,9 +26,6 @@ namespace Origins.Items.Weapons {
             .AddTile(TileID.Anvils)
             .Register();
         }
-        public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
-		}
 	}
 	public class Felnum_Golf_Ball_P : Golf_Ball_Projectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBrown;

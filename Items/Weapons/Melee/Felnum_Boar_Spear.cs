@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Melee {
 		public const int baseDamage = 18;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
+			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
 			Item.damage = baseDamage;
@@ -39,9 +40,6 @@ namespace Origins.Items.Weapons.Melee {
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 13)
 			.AddTile(TileID.Anvils)
 			.Register();
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 		public override bool MeleePrefix() => true;
 	}

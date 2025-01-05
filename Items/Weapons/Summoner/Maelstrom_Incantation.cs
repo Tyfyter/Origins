@@ -17,7 +17,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 19;
 			Item.DamageType = DamageClasses.Incantation;
@@ -41,11 +44,8 @@ namespace Origins.Items.Weapons.Summoner {
 			.AddTile(TileID.Bookcases)
 			.Register();
 		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
-		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item117.WithPitchRange(0.0f, 0.2f), position);//117
+			SoundEngine.PlaySound(SoundID.Item117.WithPitchRange(0.0f, 0.2f), position);
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemTime);
 			return false;
 		}

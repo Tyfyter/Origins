@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Buffs;
 namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 34;
@@ -19,11 +20,10 @@ namespace Origins.Items.Weapons.Magic {
         ];
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
-			Item.ResearchUnlockCount = 1;
+			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CrystalVileShard);
-			Item.shoot = ModContent.ProjectileType<Felnum_Zap>();
+			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Felnum_Zap>(), 40, 32, true);
 			Item.damage = baseDamage;
 			Item.UseSound = null;
 			Item.value = Item.sellPrice(silver: 60);
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
+			//damage = damage.Scale(1.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = -1;
 			Projectile.width = 15;
 			Projectile.height = 15;
 			Projectile.aiStyle = 0;
@@ -75,6 +75,24 @@ namespace Origins.Items.Weapons.Magic {
 			width = 1;
 			height = 1;
 			return true;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+			float targetWeight = 160;
+			Vector2 targetPos = default;
+			if (Main.player[Projectile.owner].DoHoming((target) => {
+				if (target is NPC npc && Projectile.localNPCImmunity[npc.whoAmI] != 0) return false;
+				Vector2 currentPos = target.Center;
+				float dist = Math.Abs(Projectile.Center.X - currentPos.X) + Math.Abs(Projectile.Center.Y - currentPos.Y);
+				if (dist < targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
+					targetWeight = dist;
+					targetPos = currentPos;
+					return true;
+				}
+				return false;
+			}, false)) {
+				Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(default) * Projectile.velocity.Length();
+			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			int l = Math.Min(Projectile.timeLeft, 7);
