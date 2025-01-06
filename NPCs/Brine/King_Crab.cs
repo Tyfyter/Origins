@@ -1,23 +1,8 @@
-﻿using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.NPCs.ExoMechs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Accessories;
-using Origins.Items.Armor.Defiled;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Weapons.Magic;
-using Origins.Misc;
-using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -35,9 +20,9 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 300;
+			NPC.lifeMax = 500;
 			NPC.defense = 26;
-			NPC.damage = 65;
+			NPC.damage = 67;
 			NPC.width = 62;
 			NPC.height = 68;
 			NPC.catchItem = 0;
@@ -60,7 +45,7 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 6));
 		}
 		public override bool CanTargetNPC(NPC npc) => CanHitNPC(npc);
 		public override bool CanTargetPlayer(Player player) => !player.invis;

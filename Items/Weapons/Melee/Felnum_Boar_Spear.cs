@@ -1,15 +1,13 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Armor.Felnum;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Armor.Felnum;
-using Origins.Projectiles;
-using Origins.Buffs;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
 		public const int baseDamage = 18;
@@ -22,8 +20,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.width = 48;
-			Item.height = 48;
+			Item.width = 62;
+			Item.height = 72;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;

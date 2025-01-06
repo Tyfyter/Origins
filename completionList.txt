@@ -3,25 +3,21 @@ SYMBOL KEY:
 @: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
 @2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
 @3: Needs resource (missing texture for shader/filter)
-@4: Resource needs modification (changing of the sprite format)
-@5: Resource needs modification (resprite)
+@4: Resource needs modification (resprite/reformat)
 
 #: Needs code (not implemented at all)
 #2: Needs code (partial implementation. Includes code of a re-used mechanic)
-#3: Needs code (needs changing to pre-existing code and/or needs to be finalized | Undecided plans)
-#4: Has bug or change specified in bugs channel
-#5: Code complete other than graphical code, for which it needs design
+#3: Has bug or change specified in bugs channel
+#4: Code complete other than graphical code, for which it needs design
 
-$: Needs sound (music not composed)
-$2: Needs sound (SFX not yet composed/implemented)
-$3: Needs sound (SFX/music is composed but not implemented)
+$: Needs sound (SFX/music not composed)
+$2: Needs sound (SFX/music is composed but not implemented)
 
-%: Insufficient planning (item-functionality/NPC-behavior misunderstood)
-%2: Insufficient planning (item-functionality/NPC-behavior absent from planner or wiki)
-%3: Insufficient planning (entirely unplanned and needing concept)
-%4: Insufficient planning (too similar to vanilla counterpart)
+%: Insufficient planning (item-functionality/NPC-behavior misunderstood or absent from planner)
+%2: Insufficient planning (entirely unplanned and needing concept)
+%3: Insufficient planning (too similar to vanilla counterpart)
 
-^: Completed (entirely completed)
+^: Completed
 ^2: Partial completion (sprites completed)
 ^3: Partial completion (code completed)
 ^4: Partial completion (sound completed)
@@ -34,51 +30,47 @@ X: No progress
 
 ☻: Pending review
 ♦: I don't think I did this as planned, pending review anyway
-?: requesting explanation
-♠: pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
+?: Requesting explanation
+♠: Pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
 ◘: Pending review before continuation
 ○: Implemented with temp stats/missing recipe/etc.
-†: needs testing (unicode hex code 2020)
+†: Needs testing (unicode hex code 2020)
 ᗢ: Implemented, but will need to be revisited in later update
-♫: rough implementation, functional, but needs polish (sound, balancing, etc.)
-⚐: needs banner (unicode hex code 2690)
-⚯: redundant? (unicode hex code 26AF)
-⛥: needs design discussion (unicode hex code 26E5)
-⚿: missing localization
-ᥢ: can't be implemented in a stable manner (unicode hex code 1962)
-々: missing prerequisite development (unicode hex code 3005)
-赏: missing loot (unicode hex code 8D4F)
+⚐: Needs banner (unicode hex code 2690)
+⛥: Needs design discussion (unicode hex code 26E5)
+⚿: Missing localization
+ᥢ: Can't be implemented in a stable manner (unicode hex code 1962)
+々: Missing prerequisite development (unicode hex code 3005)
+赏: Missing loot (unicode hex code 8D4F)
 
-[NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
+[NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once
+ + Additionally, specific requests can be mentioned in "()" after the entry]
 ---
 
 
 BOSSES AND MINI-BOSSES:
 ---
 (#, ^2, 々) Chambersite Sentinel
-(X, 々) Defiled Depressant
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
-(X) Scrap Mercenary
 (X) Zombie Paladin
 
-(#3, ^2) Defiled Amalgamation* !!! (OOB tolerance)
+(#2, ^2) Defiled Amalgamation* !!! (OOB tolerance)
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(#, ^2/4) Lost Diver !!!
+(#, ^2/4) Lost Diver/Mildew Carrion !!!
 (X) Miscreant
 (X) Tearror
 
 (X) Crimson King
 (X) Duskord
 (X) Leviathan of the Riven
-(X) Logic Brane
-(X) Severus, the Dark One
+(X) Mechamalgamation
 
-(%3) Origins final boss
+(%2) Origins final boss
 (X) I.C.A.R.U.S
 (X) Quantux
 ---
@@ -86,8 +78,8 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#3, ^2) Brine Fiend !!!
-(^, 々) Defiled Effigy
+(#2, ^2) Brine Fiend !!!
+(ᗢ) Defiled Effigy
 
 (%2, X) Dusk Trader
 
@@ -177,11 +169,11 @@ ENEMY NPCS:
 (X) Enchanted Fiberglass Slime !!!
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
-(#, ^2) Fae Nymph (Whimsical Girl) !!!
+(^) Fae Nymph (Whimsical Girl)
 (#, ^2) Felnum Einheri !!!
 (#, ^2) Felnum Guardian !!!
 (^) Felnum Ore Slime
-(@5, ^3) Flagellant*
+(@4, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
 (X) Machine Gun Machine
@@ -190,7 +182,7 @@ ENEMY NPCS:
 (X) Riot Drone
 (^) Riven Penguin*
 (^) Riven Protoform*
-(#, ^2, 々) Scanner Scout
+(X) Scanner Scout
 (^) Shattered Goldfish*
 (^) Single-Cellular Nautilus*
 (X) Slime Worm !!!
@@ -205,12 +197,12 @@ ENEMY NPCS:
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
-(@, #, 々) Angel
+(X) Angel
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
 (X) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
-(^) Carpalfish°
+(#2, ^2/4) Carpalfish° !!! (needs slamming SFX)
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -222,8 +214,8 @@ ENEMY NPCS:
 (X) Holy Governor
 (X) Holy Warrior
 (X) Leaf Snapper !!!
-(#, ^2) King Crab !!!
-(#3, ^2) Mildew Creeper !!!
+(#2, ^2) King Crab !!!
+(#2, ^2) Mildew Creeper !!!
 (^) Mitoworm
 (X) Nasty Crawfish !!!
 (^) Profaned Bident
@@ -233,7 +225,7 @@ ENEMY NPCS:
 (X) Riven Protoform (Tank Form)
 (X) Rocket Machine
 (^) Savage Whip*
-(#3, ^2) Sea Dragon° !!!
+(#2, ^2) Sea Dragon° !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
 (X) Shotgunfish !!!
@@ -260,7 +252,7 @@ ENEMY NPCS:
 
 (#, ^2, 々) Blox
 (#, ^2, 々) Cubix
-(#3, ^2, 々) I.C.A.R.U.S Swarm Drone
+(X) I.C.A.R.U.S Swarm Drone
 (#, ^2, 々) Tetrix
 ---
 
@@ -280,19 +272,19 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(%3) Ashen Assimilation
+(%2) Ashen Assimilation
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
-(#3, ^2) Defiled Assimilation* !!! (Assimilation build-up over time)
+(#2, ^2) Defiled Assimilation* !!! (Assimilation build-up over time)
 (X) Hallowed Assimilation
 (^) Riven Assimilation*
-(#3, ^2) Cavitation !!! (needs bubbly effect and sounds)
+(#2, ^2) Cavitation !!! (needs bubbly effect and sounds)
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
 (^) Mana Buffer
 (^) Rasterized*
-(#3, ^2) Shadefire
+(#2, ^2) Shadefire
 (^) Static Shock
 (^) Torn*
 (^) Totally Safe
@@ -349,7 +341,7 @@ ARMOR:
 (^) Blast Armor*
 (X) Chambersite Armor°
 (X) Edenwood Armor°
-(@1/2/5, #3) Necromancer Armor*
+(@4, #2) Necromancer Armor*
 (X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
 
@@ -357,7 +349,7 @@ ARMOR:
 (X) Ancient Eyndum Armor
 (X) Ascendant Armor°
 (^) Chromtain Armor°
-(@5, #2) Eyndum Armor°
+(@4, #2) Eyndum Armor°
 (X) Locus Armor°
 (X) Nano Armor°
 (^) Nova Armor*
@@ -386,14 +378,14 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
-(#3, ^2) Bug Trapper* !!!
+(#2, ^2) Bug Trapper* !!! (bug swarm effect)
 (X) Builder's Touch
 (X) Bundle of Evil
 (^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
 (#, ^2) Charm of Naivety !!!
-(#3, ^2) Cirrhosis' Abhorrence* !!! (needs added functionality)
+(#2, ^2) Cirrhosis' Abhorrence* !!! (needs added functionality)
 (^) Comb*
 (^) Control Locus°
 (^) Coologne*
@@ -407,8 +399,8 @@ ACCESSORIES:
 (^) Dryad's Inheritance*
 (^) Dysfunctional Endless Explosives Bag*
 (^) Eccentric Stone*
-(#3, ^2) Eitrite Gun Magazine !!!
-(#3, ^2) Evil Bar Gun Magazines !!!
+(#2, ^2) Eitrite Gun Magazine !!!
+(#2, ^2) Evil Bar Gun Magazines !!!
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (#, ^2) Fairy Lotus !!!
@@ -419,7 +411,7 @@ ACCESSORIES:
 (#, ^2) Golden Lotus !!!
 (^) Grave Danger*
 (^) Gun Glove*
-(#3, ^2) Gun Magazine !!!
+(#2, ^2) Gun Magazine !!!
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Hazard Charm*
@@ -446,7 +438,7 @@ ACCESSORIES:
 (^) Missile Armcannon*
 (#, ^2) Mithrafin (Cursed) !!!
 (#, ^2) Mithrafin (Uncursed) !!!
-(#3, ^2) Molten Gun Magazine !!!
+(#2, ^2) Molten Gun Magazine !!!
 (X) Netlace
 (^) Nitro Crate*
 (^) No U Card*
@@ -506,7 +498,7 @@ ACCESSORIES:
 (^) Entangled Energy*
 (^) Mana Drive°
 (^) Protozoa Food*
-(#3, ^2) Refactoring Pieces* !!!
+(#2, ^2) Refactoring Pieces* !!!
 (#, ^2) Retaliatory Tendril° !!!
 (^) Scrap Compactor°
 
@@ -585,7 +577,7 @@ UTILITIES:
 ---
 (^) Amoeba Hook*
 (^) Chunky Hook*
-(%3, ^2) Nano Hook
+(%2, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
 (X) Strange Backpack
@@ -636,7 +628,7 @@ TOOLS:
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(@5, ^3) Impactaxe
+(@4, ^3) Impactaxe
 
 (X) Ahe
 (X) Nova Bomb
@@ -655,7 +647,7 @@ MELEE WEAPONS:
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
-(#3, ^2) Felnum Boar Spear !!!
+(#2, ^2) Felnum Boar Spear !!! (sprite jank)
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
@@ -679,7 +671,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(#3, ^2) Crystal Cutters !!! (Orb fade effects)
+(#2, ^2) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
 (^) Knee Slapper*
@@ -689,14 +681,15 @@ MELEE WEAPONS:
 
 (X) Chiton Kursarigama
 (X) Gospel
+(X) Laser Tag Sabre
 (^) Personal Laser Blade*
 (X) Pile Bunker
 (X) Rocket Lance
-(#3, ^2) Telephone Pole*
+(#2, ^2) Telephone Pole*
 (^) Terrarang
 (^) True Light Disc
 (^) True Waning Crescent
-(○, #3, ^2) Tyrfing
+(○, #2, ^2) Tyrfing
 
 (X) Celestial Point
 (X) Chromakama
@@ -714,7 +707,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Chipper Knife
 (^) Endowood Bow
-(#3, ^2) Felnum Longbow !!!
+(^) Felnum Longbow
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
@@ -740,7 +733,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(#3/4, ^2) Boat Rocker° !!! (needs alternate chains and alt)
+(#2/4, ^2) Boat Rocker° !!! (needs alternate chains and alt)
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
@@ -765,15 +758,16 @@ RANGED WEAPONS:
 (^) Titanium Harpoon Gun°
 (X) Tripod Jawbow
 
-(#3, ^2) Astoxo
+(#2, ^2) Astoxo
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
 (X) Fungi Pipe
 (^) Laser Tag Gun
+(X) Laser Tag Shotgun
 (X) Shroomshot
 (X) Skewr
-(#3, ^2) Tolruk
+(#2, ^2) Tolruk
 
 (X) Fulcrum
 (X) Journey's End
@@ -794,7 +788,7 @@ MAGIC WEAPONS:
 (^) Hot Potato
 (^) Infusion*
 (^) Low Signal*
-(#3, ^2) Magnus !!!
+(^) Magnus
 (^) Manasynk*
 (^) Splitsplash*
 (^) Tones of Agony
@@ -821,7 +815,7 @@ MAGIC WEAPONS:
 (^) Breach
 (X) Divine Lite
 (X) Ghost Trap
-(#3, ^2) Hævateinn
+(#2, ^2) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File*
@@ -845,7 +839,7 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Brainy Staff*
-(@5, ^3) Broken Terratotem
+(@4, ^3) Broken Terratotem
 (#, ^2) Defective Mortar Shell !!!
 (^) Desert Crown*
 (^) Eyeball Staff
@@ -857,7 +851,7 @@ SUMMONER WEAPONS:
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Monolith Rod !!!
-(%3) Ocean Amulet !!!
+(%2) Ocean Amulet !!!
 (#, ^2) Ocotillo Finger !!!
 (^) Ocotoral Bud*
 (^) Rotted Worm Staff
@@ -903,7 +897,7 @@ SUMMONER WEAPONS:
 (X, @2, #2) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(@5, ^3) Terratotem
+(@4, ^3) Terratotem
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
@@ -948,7 +942,7 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
 
-(^) Acrid Handcannon*
+(@4, ^3) Acrid Handcannon* !!!
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
@@ -959,7 +953,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
-(#3, ^2, ᗢ) Sonorous Shredder !!!
+(#2, ^2, ᗢ) Sonorous Shredder !!!
 (^) Thermite Launcher*
 (#, ^2) Torpedo Tube !!!
 
@@ -983,10 +977,10 @@ EXPLOSIVE WEAPONS:
 (X) Ticking Bomb
 (X) Ticking Dynamite
 
-(@5, ^3) Black Hole Bomb
-(@5, ^3) Caustica
+(@4, ^3) Black Hole Bomb
+(@4, ^3) Caustica
 (^) Flakjack
-(@5, #) Starburst
+(@4, #) Starburst
 ---
 
 
@@ -1008,7 +1002,7 @@ TILES:
 ---
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(#3, ^2) Baryte* !!!
+(#2, ^2) Baryte* !!! (proper merging with mud)
 (^) Batholith°
 (^) Bleeding Obsidian*
 (X) Bomb Trap !!!
@@ -1038,7 +1032,7 @@ TILES:
 (X) Limestone !!!
 (^) Lost Ore*
 (^) Marrowick*
-(@5, #3) Mildew Block° !!!
+(@4, #2) Mildew Block° !!!
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
@@ -1051,7 +1045,7 @@ TILES:
 (X) Sootgrass°
 (X) Space Goo
 (^) Spug Flesh*
-(@5, ^3) Twilith*
+(@4, ^3) Twilith*
 
 (^) Amebic Gel Wall
 (^) Baryte Wall
@@ -1097,7 +1091,7 @@ TILES:
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
-(@5, ^3) Defiled Dungeon Chest*
+(@4, ^3) Defiled Dungeon Chest*
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain
@@ -1142,7 +1136,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
-(#3, ^2) Defiled Relay !!!
+(#2, ^2) Defiled Relay !!!
 (^) Defiled Pot
 (X) Eden Tree°
 (^) Exoskeletal Tree*
@@ -1170,32 +1164,34 @@ TILES:
 (X) There's Five of Them Now
 (X) What's Out There
 
-(@, #, $3) Ancient Music Box (Brine Pool) !!!
+(@, #, $2) Ancient Music Box (Brine Pool) !!!
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
-(@, #, $3) Music Box (Abstract)
-(@, #, $3) Music Box (Brine Pool) !!!
+(@, #, $2) Music Box (Abstract)
+(@, #, $2) Music Box (Brine Pool) !!!
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
 (^) Music Box (Defiled Caverns)
+(X) Music Box (Defiled Egregocide Route)
+(X) Music Box (Defiled Mimic Route)
 (^) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
-(@, #, $3) Music Box (Eutrophic Sea)
+(@, #, $2) Music Box (Eutrophic Sea)
 (X) Music Box (Fractured Isles)
-(@, #, $3) Music Box (Riven Dancer 2081)
+(@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(@, #, $3) Otherworldly Music Box (Defiled Wastelands)
+(@, #, $2) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
 (X) Lost Diver Relic !!!
 (X) Lost Diver Trophy !!!
-(@, #3, 々) Miscreant Relic*
-(@, #3, 々) Miscreant Trophy*
-(@, #3, 々) Quantux Relic*
-(@, #3, 々) Quantux Trophy*
+(々) Miscreant Relic*
+(々) Miscreant Trophy*
+(々) Quantux Relic*
+(々) Quantux Trophy*
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
@@ -1250,7 +1246,7 @@ MATERIALS:
 (X) Core Blueprint°
 (X) Endyean Ceramic°
 (X) Ethereal Ash°
-(@5, ^3) Fibron Plating°
+(@4, ^3) Fibron Plating°
 (^) Formium Bar°
 (^) Formium Scrap°
 (^) Lunar Token°
@@ -1283,9 +1279,10 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 ---
+(X) Crown Jewel !!!
 (^) Mojo Injection*
 (^) Quantum Injector°
-(%3) The Defiled Will°
+(%2) The Defiled Will°
 
 (^) Absorption Potion*
 (^) Ambition Potion*
@@ -1344,12 +1341,12 @@ CONSUMABLES:
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
 (#, ^2) Lost Picture Frame !!!
-(#2, ^2, 々) Quantum Cell°
+(X) Quantum Cell°
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*
-(#2, ^2, 々) The Button°
+(X) The Button°
 
-(#2, ^2, 々) Ashen Loot Box°
+(X) Ashen Loot Box°
 (#2, ^2) Basic Crate* !!!
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box°
@@ -1426,7 +1423,7 @@ AMMO:
 (^) Peatball*
 (^) Resizable Mine I*
 (^) Resizable Mine II*
-(#3, ^2) Resizable Mine III !!!
+(#2, ^2) Resizable Mine III !!!
 (X) Resizable Mine IV !!!
 (^) Scrap*
 (^) Thermite Canister*
@@ -1486,7 +1483,7 @@ UI:
 (X) Dawn Map/Bestiary Backdrop
 (^) Defiled Caverns Icon
 (^) Defiled Desert Icon
-(@5, ^3) Defiled Map/Bestiary Backdrop !!!
+(@4, ^3) Defiled Map/Bestiary Backdrop !!!
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
@@ -1513,19 +1510,20 @@ UI:
 
 MUSIC:
 ---
-($2) Ashen Factory
+(X) Ashen Factory
 (^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
 (X) Dawn
 (^) Defiled Caverns
 (^) Defiled Wastelands
-($3) Defiled Wastelands - Mimic Route
+(X) Defiled Wastelands - Egregocide Route
+(X) Defiled Wastelands - Mimic Route
 (^) Eutrophic Sea
 (^) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
-($2) The Dusk
+(X) The Dusk
 (X) Underground Riven Hive
 
 (X) Crimson King
@@ -1534,7 +1532,8 @@ MUSIC:
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
 (X) Leviathan of the Riven
-(^) Lost Diver
+(^) Lost Diver/Mildew Carrion
+(X) Mechamalgamation
 (X) Miscreant
 (X) Quantux
 (^) World Cracker
@@ -1545,7 +1544,7 @@ MUSIC:
 (X) Ashen Invasion
 (X) Corruption Invasion
 (X) Crimson Invasion
-($2) Defiled Invasion
+(X) Defiled Invasion
 (X) Laser Tag Event
 (X) Riven Invasion
 (X) Test of Ancients

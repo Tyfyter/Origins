@@ -1,16 +1,10 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Origins.NPCs.Brine;
-using Origins.Tiles.Other;
-using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class Fae_Nymph : ModNPC {
+	public class Fae_Nymph : ModNPC {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.Nymph] = Type;
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Nymph];
@@ -18,9 +12,9 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Nymph);
-			NPC.lifeMax = 45;
-			NPC.defense = 14;
-			NPC.damage = 14;
+			NPC.lifeMax = 300;
+			NPC.defense = 16;
+			NPC.damage = 35;
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
@@ -53,9 +47,9 @@ namespace Origins.NPCs.MiscE {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.LostGirl);
 			NPC.aiStyle = 0;
-			NPC.lifeMax = 45;
-			NPC.defense = 14;
-			NPC.damage = 14;
+			NPC.lifeMax = 250;
+			NPC.defense = 30;
+			NPC.damage = 10;
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;

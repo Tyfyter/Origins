@@ -2266,7 +2266,7 @@ Boomphracken: {
 	DisplayName: Boomphracken
 	Tooltip:
 		'''
-		Chance to throw an explosive when used
+		Allows you to quickly throw explosives in your inventory after use
 		'He works his work, I work mine'
 		'''
 }
