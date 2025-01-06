@@ -1,16 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Questing;
+﻿using Origins.Questing;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.NPCs.BossThePrimordials;
 
 namespace Origins.NPCs.MiscE.Quests {
 	public class Jacob_Marley : ModNPC {

@@ -210,7 +210,7 @@ ENEMY NPCS:
 (X) Beckonbug
 (X) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
-(#3/4, ^2) Carpalfish° !!!
+(^) Carpalfish°
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -223,7 +223,7 @@ ENEMY NPCS:
 (X) Holy Warrior
 (X) Leaf Snapper !!!
 (#, ^2) King Crab !!!
-(#, ^2) Mildew Creeper !!!
+(#3, ^2) Mildew Creeper !!!
 (^) Mitoworm
 (X) Nasty Crawfish !!!
 (^) Profaned Bident
@@ -293,7 +293,7 @@ STATUS EFFECTS:
 (^) Mana Buffer
 (^) Rasterized*
 (#3, ^2) Shadefire
-(#, ^2) Static Shock
+(^) Static Shock
 (^) Torn*
 (^) Totally Safe
 (^) Toxic Shock*

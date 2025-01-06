@@ -6,6 +6,7 @@ using Origins.Buffs;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Weapons.Melee;
 using Origins.Misc;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -61,6 +62,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40));
 		}
 		public override void AI() {
 			DoTargeting();

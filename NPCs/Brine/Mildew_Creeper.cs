@@ -37,9 +37,9 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 300;
-			NPC.defense = 26;
-			NPC.damage = 65;
+			NPC.lifeMax = 500;
+			NPC.defense = 24;
+			NPC.damage = 58;
 			NPC.width = 26;
 			NPC.height = 26;
 			NPC.catchItem = 0;
@@ -53,6 +53,11 @@ namespace Origins.NPCs.Brine {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
+			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
+			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Creeper);
