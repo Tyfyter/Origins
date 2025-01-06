@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +12,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
-			Item.damage = 13;
+			Item.damage = 21;
 			Item.DamageType = DamageClass.Melee;
 			Item.pick = 75;
 			Item.width = 36;
@@ -31,6 +32,9 @@ namespace Origins.Items.Tools {
         }
         public override float UseTimeMultiplier(Player player) {
 			return (player.pickSpeed - 1) * 0.75f + 1;
+		}
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
 		}
 	}
 }

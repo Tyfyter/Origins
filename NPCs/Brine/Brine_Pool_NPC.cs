@@ -36,6 +36,7 @@ namespace Origins.NPCs.Brine {
 		public virtual float RippleTargetWeight(float magnitude, float distance) {
 			return (magnitude / distance) * 7.5f;
 		}
+		public virtual bool CheckTargetLOS(Vector2 target) => CollisionExt.CanHitRay(NPC.Center, target);
 		public override void PostAI() {
 			int specialHitSetter = 1;
 			float damageMultiplier = 1f;
@@ -86,7 +87,7 @@ namespace Origins.NPCs.Brine {
 				NPCAimedTarget targetData = NPC.GetTargetData();
 				Vector2 target = targetData.Center;
 				if (pathfindingTime < pathfinding_frequency) pathfindingTime++;
-				if (CollisionExt.CanHitRay(NPC.Center, target)) {
+				if (CheckTargetLOS(target)) {
 					TargetPos = target;
 				} else if (pathfindingTime >= pathfinding_frequency) {
 					pathfindingTime = 0;

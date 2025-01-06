@@ -23,10 +23,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Misc.Physics;
-using static Origins.NPCs.Brine.Sea_Dragon;
 
 namespace Origins.NPCs.Brine {
-	public class Mildew_Creeper : Brine_Pool_NPC {
+	public class Mildew_Creeper : Brine_Pool_NPC, IMeleeCollisionDataNPC {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
@@ -67,6 +66,18 @@ namespace Origins.NPCs.Brine {
 				this.GetBestiaryFlavorText()
 			]);
 		}
+		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
+			if (npcRect.Intersects(victimHitbox)) return;
+			if (chain?.links is null) return;
+			npcRect = new(0, 0, 24, 24);
+			damageMultiplier = 0.5f;
+			for (int i = 0; i < chain.links.Length; i++) {
+				npcRect.X = (int)(chain.links[i].position.X - 12);
+				npcRect.Y = (int)(chain.links[i].position.Y - 12);
+				if (npcRect.Intersects(victimHitbox)) return;
+			}
+		}
+		public override bool CheckTargetLOS(Vector2 target) => true;
 		Physics.Chain chain;
 		public override void AI() {
 			DoTargeting();
@@ -173,8 +184,39 @@ namespace Origins.NPCs.Brine {
 			);
 			return false;
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life < 0) {
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					chain.anchor.WorldPosition,
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Mildew_Creeper)}_Gore_3"
+				);
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					chain.anchor.WorldPosition,
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Mildew_Creeper)}_Gore_2"
+				);
+				for (int i = 0; i < chain.links.Length - 1; i++) {
+					Origins.instance.SpawnGoreByName(
+						NPC.GetSource_Death(),
+						chain.links[i].position,
+						chain.links[i].velocity,
+						$"Gores/NPC/{nameof(Mildew_Creeper)}_Gore_2"
+					);
+				}
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center,
+					NPC.velocity,
+					$"Gores/NPC/{nameof(Mildew_Creeper)}_Gore_1"
+				);
+			}
+		}
 		public class NPCTargetGravity(Mildew_Creeper npc) : Gravity {
 			public override Vector2 Acceleration => (npc.TargetPos == default) ? Vector2.Zero : ((npc.TargetPos - npc.NPC.Center).SafeNormalize(default) * 0.3f);
 		}
 	}
+
 }

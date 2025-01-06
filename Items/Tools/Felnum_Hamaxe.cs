@@ -15,7 +15,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MoltenHamaxe);
-			Item.damage = 18;
+			Item.damage = 24;
 			Item.DamageType = DamageClass.Melee;
 			Item.pick = 0;
 			Item.hammer = 65;
@@ -56,6 +56,9 @@ namespace Origins.Items.Tools {
 			return player.altFunctionUse != 2;
 		}
 		public override bool CanShoot(Player player) => player.altFunctionUse == 2 && player.ItemUsesThisAnimation == 0;
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+		}
 	}
 	public class Felnum_Hamaxe_P : ModProjectile {
 		public override string Texture => typeof(Felnum_Hamaxe).GetDefaultTMLName();
