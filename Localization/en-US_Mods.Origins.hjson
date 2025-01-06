@@ -265,12 +265,12 @@ Dialogue: {
 		Idle_0: Cease this violence.
 		Idle_1: We're not done yet.
 		Idle_2: We are the same.
-		Idle_3: Leave a spot for you.
-		Idle_4: Running away won't help either of us.
-		Death_0: We're still here.
-		Death_1: Resistance is futile.
+		Idle_3: Leaving spot for you.
+		Idle_4: Running away does not help either.
+		Death_0: Still here.
+		Death_1: Resistance futile.
 		Death_2: One day.
-		Death_3: We keep going anyway.
+		Death_3: We keep going.
 	}
 }
 
@@ -339,29 +339,29 @@ TownNPCMood: {
 
 	Defiled_Effigy: {
 		Content: We aspire to waste time presently.
-		NoHome: Place of rest protects chunks from elements.
+		NoHome: Place of rest protects chunks from elements. Request you allocate resources for shelter.
 		FarFromHome: Terrarian, we are lost. Where resides village?
-		LoveSpace: Tension low, healthy heart rate.
-		DislikeCrowded: We are not appreciated here, Terrarian... allow space.
+		LoveSpace: Tension low, heart rate optimal.
+		DislikeCrowded: We not appreciated here, Terrarian... allow space.
 		HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
-		Ocean: Barrier to our prison rests beyond, Terrarian.
-		LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us.
+		Ocean: Barrier to our prison rests beyond, Terrarian. One day.
+		LoveBiome: Satisfactory. Spirits of our brothers and sisters welcome us.
 		LikeBiome: Anywhere remains optimal for home, so long as we are present.
 		HateBiome: Our chunks decay on this ground. Help us, Terrarian.
 		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
-		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
-		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
-		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
+		# HateBiome_Ashen: Shocked. Curious of this place... but, it bothers us. Break it.
+		# HateBiome_Corruption: Corruption. Opposite of desires, Terrarian. Cleanse it.
+		# HateBiome_Crimson: Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
 		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
 		
 		LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
 		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
-		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
+		# LikeNPC_WitchDoctor: "{NPCName} explored dark arts of Terraria. I value this."
 		
 		DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
 		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
 		
-		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
+		HateNPC: "{NPCName} is enemy. She desires a world exempt of us."
 	}
 }
 
@@ -423,13 +423,13 @@ Generic: {
 AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		DisplayName: "{§Defiled_Wastelands}"
-		Description: An alien entity that seeks out its growth in the Terrarian realm with its own way of life.
+		Description: The physical manifestation of an egregore that desires constant growth and endless survival through its unique way of life.
 		GenPassName: Defiledifying
 	}
 
 	Riven_Hive_Alt_Biome: {
 		DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
-		Description: A natural biome manifested by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
+		Description: A natural biome shapped by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
 		GenPassName: Blue Lobsterating
 	}
 
@@ -442,8 +442,8 @@ GuideAdvice: {
 		PA_Summon_Item: You can create suspicious looking ice cream using sentient powder and bud barnacles. Make sure you are in the riven hive before using it.
 		DAltar: Defiled altars can usually be found in the defiled wastelands. You will need to be near them to craft some items.
 		RAltar: Riven altars can usually be found in the riven hive. You will need to be near them to craft some items.
-		DFissure: Defiled fissures can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!
-		RLesion: Riven lesions can usually be found in the riven hive. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
+		DFissure: Defiled relays can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!
+		RLesion: Gel blisters can usually be found in the riven hive. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
 		Defiled_Heart: The Defiled quickly reclaims purified tiles until all Defiled Hearts are smashed. Find them in Caverns at the center of the system.
 		HardmodeAltarD: Make sure to smash any defiled altar you can find. Something good is bound to happen if you do!
 		HardmodeAltarR: Make sure to smash any riven altar you can find. Something good is bound to happen if you do!
