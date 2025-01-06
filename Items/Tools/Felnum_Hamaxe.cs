@@ -1,4 +1,5 @@
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using PegasusLib;
 using System;
@@ -8,7 +9,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Felnum_Hamaxe : ModItem {
+	public class Felnum_Hamaxe : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ToolWeapon"
+		];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
 			Origins.AddGlowMask(this);
@@ -72,6 +76,11 @@ namespace Origins.Items.Tools {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = 32;
+			height = 32;
+			return true;
 		}
 		public override void AI() {
 			Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
