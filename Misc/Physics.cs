@@ -20,6 +20,9 @@ namespace Origins.Misc {
 		public abstract class AnchorPoint {
 			public abstract Vector2 WorldPosition { get; }
 		}
+		public class WorldAnchorPoint(Vector2 position) : AnchorPoint {
+			public override Vector2 WorldPosition { get; } = position;
+		}
 		public class EntityAnchorPoint : AnchorPoint {
 			public override Vector2 WorldPosition {
 				get => entity.Center + offset * new Vector2(entity.direction, 1);

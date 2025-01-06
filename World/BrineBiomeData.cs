@@ -39,6 +39,7 @@ namespace Origins.World.BiomeData {
 		public static class SpawnRates {
 			public const float Carpalfish = 0.8f;
 			public const float Dragon = 0.6f;
+			public const float Creeper = 0.6f;
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate) {
 				if (!spawnInfo.Water) return 0;
 				return spawnInfo.Player.InModBiome<Brine_Pool>() ? rate : 0f;

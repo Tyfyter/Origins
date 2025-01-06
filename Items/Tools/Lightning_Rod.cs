@@ -9,7 +9,6 @@ using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using static Origins.Misc.Physics;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
@@ -68,6 +67,7 @@ namespace Origins.Items.Tools {
 	public class Lightning_Rod_Bobber : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
+			Projectile.DamageType = DamageClass.Generic;
 			DrawOriginOffsetY = -8;
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
