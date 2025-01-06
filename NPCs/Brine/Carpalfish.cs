@@ -22,6 +22,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
 	public class Carpalfish : Brine_Pool_NPC {
@@ -180,8 +181,24 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
-				for (int i = 0; i < 2; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
-				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center,
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Carpalfish)}_Gore_3"
+				);
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center + GeometryUtils.Vec2FromPolar(-16, NPC.rotation),
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Carpalfish)}_Gore_2"
+				);
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center + GeometryUtils.Vec2FromPolar(-32, NPC.rotation),
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Carpalfish)}_Gore_1"
+				);
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

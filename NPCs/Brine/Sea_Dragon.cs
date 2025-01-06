@@ -172,8 +172,40 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
-				for (int i = 0; i < 2; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
-				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center,
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Sea_Dragon)}_Gore_3"
+				);
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center + GeometryUtils.Vec2FromPolar(-16, NPC.rotation),
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Sea_Dragon)}_Gore_2"
+				);
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center + GeometryUtils.Vec2FromPolar(-32, NPC.rotation),
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Sea_Dragon)}_Gore_1"
+				);
+				int chainGore = Mod.GetGoreSlot($"Gores/NPC/{nameof(Sea_Dragon)}_Strand_Gore");
+				for (int i = 1; i <= chains.Length; i++) {
+					Physics.Chain chain = chains[^i];
+					if (chain is null) continue;
+					Vector2 startPoint = chain.anchor.WorldPosition;
+					int frameOffset = i == 2 ? 0 : 2;
+					for (int j = 0; j < chain.links.Length; j++) {
+						Gore gore = Gore.NewGoreDirect(
+							NPC.GetSource_Death(),
+							chain.links[j].position,
+							chain.links[j].velocity,
+							chainGore
+						);
+						gore.Frame = new(5, 1, (byte)(j + frameOffset), 0);
+					}
+				}
 			}
 		}
 		Physics.Chain[] chains;
