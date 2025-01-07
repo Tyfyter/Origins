@@ -640,6 +640,11 @@ namespace Origins {
 					return ref modifier;
 				});
 			};
+			On_Player.DoesPickTargetTransformOnKill += (orig, self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget) => {
+				if (orig(self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget)) return true;
+				if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && TileTransformsOnKill[tileTarget.TileType]) return true;
+				return false;
+			};
 		}
 		delegate ref StatModifier Modify_ApplyTo(ref StatModifier modifier, Item item);
 		private static void IL_WorldGen_SpawnThingsFromPot(ILContext il) {

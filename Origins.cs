@@ -74,6 +74,8 @@ namespace Origins {
 		public static bool[] BrothBuffs { get => brothBuffs; }
 		static bool[] isFineWithCrowdedParties;
 		public static bool[] IsFineWithCrowdedParties { get => isFineWithCrowdedParties; }
+		static bool[] tileTransformsOnKill;
+		public static bool[] TileTransformsOnKill { get => tileTransformsOnKill; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -814,6 +816,7 @@ namespace Origins {
 			damageBonusScale = ItemID.Sets.Factory.CreateFloatSet(1f);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
+			tileTransformsOnKill = TileID.Sets.Factory.CreateBoolSet(false);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
