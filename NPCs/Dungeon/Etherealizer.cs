@@ -111,7 +111,7 @@ namespace Origins.NPCs.Dungeon {
 							spawnPos,
 							diff.SafeNormalize(default) * 2,
 							Etherealizer_P.ID,
-							35,
+							Main.masterMode ? 25: (Main.expertMode ? 30 : 35),
 							0,
 							ai0: NPC.whoAmI
 						);
