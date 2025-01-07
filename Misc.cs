@@ -35,13 +35,8 @@ using Terraria.GameContent.Drawing;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Tiles.Banners;
 using Terraria.ObjectData;
-using static System.Net.Mime.MediaTypeNames;
-using Terraria.ModLoader.Utilities;
-using Terraria.GameInput;
-using Microsoft.Xna.Framework.Input;
 using PegasusLib;
 using PegasusLib.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Origins {
 	#region classes
@@ -3711,6 +3706,12 @@ namespace Origins {
 				if (ruleChildFinders.TryGetValue(dropRule.GetType(), out var ruleChildFinder) && ruleChildFinder(dropRule).FindDropRule(predicate) is T foundRule2) return foundRule2;
 			}
 			return null;
+		}
+		public static void Add(this OneFromRulesRule rule, params IItemDropRule[] rules) {
+			Array.Resize(ref rule.options, rule.options.Length + rules.Length);
+			for (int i = 1; i <= rules.Length; i++) {
+				rule.options[^i] = rules[^i];
+			}
 		}
 	}
 }

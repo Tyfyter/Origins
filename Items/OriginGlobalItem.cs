@@ -292,11 +292,12 @@ namespace Origins.Items {
 						return drops.Any(i => i.itemId == ItemID.Muramasa);
 					});
 					if (rule is not null) {
-						Array.Resize(ref rule.options, rule.options.Length + 4);
-						rule.options[^4] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Tones_Of_Agony>());
-						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Asylum_Whistle>());
-						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Launcher>());
-						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Handling_Device>());
+						rule.Add(
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Tones_Of_Agony>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Asylum_Whistle>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Launcher>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Handling_Device>())
+						);
 						foundMain = true;
 					}
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
@@ -310,11 +311,12 @@ namespace Origins.Items {
 						return drops.Any(i => i.itemId == ItemID.DarkLance);
 					});
 					if (rule is not null) {
-						Array.Resize(ref rule.options, rule.options.Length + 4);
-						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>());
-						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>());
-						//rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>());
-						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>());
+						rule.Add(
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>()),
+							//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>())
+						);
 						foundMain = true;
 					}
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
