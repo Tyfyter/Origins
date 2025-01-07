@@ -81,7 +81,7 @@ namespace Origins.NPCs.MiscE {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 1, 20));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 7, 14));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			MainReflection.DrawNPC_SlimeItem(NPC, NPC.type, drawColor, 0);
