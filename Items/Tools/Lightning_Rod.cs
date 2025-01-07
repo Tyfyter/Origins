@@ -9,6 +9,9 @@ using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Origins.Buffs;
+using PegasusLib;
+using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
@@ -65,6 +68,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Lightning_Rod_Bobber : ModProjectile {
+		public AutoLoadingAsset<Texture2D> glowTexture = typeof(Lightning_Rod_Bobber).GetDefaultTMLName() + "_Glow";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			Projectile.DamageType = DamageClass.Generic;
@@ -114,11 +118,13 @@ namespace Origins.Items.Tools {
 					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, diff, ModContent.ProjectileType<Lightning_Rod_Bobber_Zap>(), Projectile.damage, Projectile.knockBack);
 				}
 			}
+			Lighting.AddLight(Projectile.Center, 0.194f, 0.441f, 0.474f);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.ai[0] == 1) {
-				target.velocity = Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist);
+				target.DoCustomKnockback(Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist));
 			}
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(90, 120));
 		}
 		public override bool PreDrawExtras() {
 			//Change these two values in order to change the origin of where the line is being drawn
@@ -148,6 +154,19 @@ namespace Origins.Items.Tools {
 			lineOrigin = player.RotatedRelativePoint(lineOrigin + new Vector2(8f), true) - new Vector2(8f);
 			Main.spriteBatch.DrawLightningArcBetween(lineOrigin - Main.screenPosition, Projectile.Center - Main.screenPosition + Vector2.UnitX * 4, Main.rand.NextFloat(-4, 4));
 			return false;
+		}
+		public override void PostDraw(Color lightColor) {
+			float halfAvgWidth = (glowTexture.Value.Width - Projectile.width) * 0.5f + Projectile.width * 0.5f;
+			Main.EntitySpriteDraw(
+				glowTexture,
+				Projectile.position + new Vector2(halfAvgWidth + DrawOffsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
+				null,
+				new Color(250, 250, 250, Projectile.alpha),
+				Projectile.rotation,
+				new Vector2(halfAvgWidth, Projectile.height / 2  - DrawOriginOffsetY),
+				Projectile.scale,
+				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
 		}
 	}
 	public class Lightning_Rod_Bobber_Zap : ModProjectile {
@@ -202,6 +221,9 @@ namespace Origins.Items.Tools {
 				SpriteEffects.None
 			);
 			return false;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(180, 240));
 		}
 	}
 }

@@ -28,7 +28,7 @@ namespace Origins.Items.Tools {
 			Item.height = 38;
 			Item.useTime = 13;
 			Item.shoot = ModContent.ProjectileType<Felnum_Hamaxe_P>();
-			Item.shootSpeed = 8;
+			Item.shootSpeed = 9;
 			Item.useAnimation = 25;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(silver: 40);

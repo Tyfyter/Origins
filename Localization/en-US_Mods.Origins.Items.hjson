@@ -2052,7 +2052,11 @@ Dissector: {
 
 Felnum_Hamaxe: {
 	DisplayName: Felnum Hamaxe
-	Tooltip: "'Its strikes sound like thunder'"
+	Tooltip:
+		'''
+		<right> to throw
+		'Its strikes sound like thunder'
+		'''
 }
 
 Felnum_Pickaxe: {

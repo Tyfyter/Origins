@@ -90,7 +90,7 @@ namespace Origins.NPCs.MiscE {
 		public override void HitEffect(NPC.HitInfo hit) {
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 300);
+			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 240);
 		}
 	}
 	public class Felnum_Ore_Slime_Zap : ModProjectile {

@@ -119,6 +119,7 @@ namespace Origins.Items.Weapons.Magic {
 			return null;
 		}
 		Vector2? target = null;
+		int startupDelay = 5;
 		public override void AI() {
 			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
 			if (Projectile.numUpdates == -1 && ++Projectile.ai[2] >= 10) {
@@ -130,12 +131,16 @@ namespace Origins.Items.Weapons.Magic {
 					float speed = Projectile.velocity.Length();
 					if (speed != 0) Projectile.velocity = (target.Value - Projectile.Center).SafeNormalize(Projectile.velocity / speed).RotatedByRandom(0.3f) * speed;
 				}
-				if (++Projectile.ai[1] > ProjectileID.Sets.TrailCacheLength[Type]) {
-					StopMovement();
+				if (startupDelay > 0) {
+					startupDelay--;
 				} else {
-					int index = (int)Projectile.ai[1];
-					Projectile.oldPos[^index] = Projectile.Center;
-					Projectile.oldRot[^index] = Projectile.velocity.ToRotation();
+					if (++Projectile.ai[1] > ProjectileID.Sets.TrailCacheLength[Type]) {
+						StopMovement();
+					} else {
+						int index = (int)Projectile.ai[1];
+						Projectile.oldPos[^index] = Projectile.Center;
+						Projectile.oldRot[^index] = Projectile.velocity.ToRotation();
+					}
 				}
 			}
 		}
@@ -175,16 +180,14 @@ namespace Origins.Items.Weapons.Magic {
 
 		public float Length;
 		public void Draw(Projectile proj) {
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Beam"];
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Framed"];
 			float uTime = (float)Main.timeForVisualEffects / 44;
 			int length = proj.oldPos.Length;
-			if (length == 0) return;
+			if (length <= 0) return;
 			float[] rot = new float[length];
 			Vector2[] pos = new Vector2[length];
-			Vector2 unit = default;
-			int dustTimer = 0;
-			for (int i = 0; i < length; i++) {
-				Index reverseIndex = ^(i + 1);
+			for (int i = 0; i < length / 2; i++) {
+				Index reverseIndex = ^(i * 2 + 1);
 				if (proj.oldPos[reverseIndex] == default) {
 					length = i;
 					Array.Resize(ref rot, length);
@@ -194,34 +197,23 @@ namespace Origins.Items.Weapons.Magic {
 				rot[i] = proj.oldRot[reverseIndex];
 				pos[i] = proj.oldPos[reverseIndex] + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(-6, 6), rot[i] + MathHelper.PiOver2);
 				Lighting.AddLight(pos[i], 0.1f, 0.75f, 1f);
-				unit = new Vector2(1, 0).RotatedBy(rot[i]);
-				if (Main.rand.Next(++dustTimer) > 6) {
-					//Dust.NewDustPerfect(pos[i] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
-					dustTimer = Main.rand.NextBool() ? 2 : 0;
-				}
 			}
 			if (length == 0) return;
 			//Dust.NewDustPerfect(pos[length - 1] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
 			Asset<Texture2D> texture = TextureAssets.Extra[194];
 			miscShaderData.UseImage0(texture);
-			miscShaderData.UseShaderSpecificData(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
-			float endLength = (16f / Magnus_P.tick_motion) / length;
-			miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
-				16f / 48f,
-				endLength
-			));
+			//miscShaderData.UseShaderSpecificData(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
+			miscShaderData.Shader.Parameters["uAlphaMatrix0"]?.SetValue(new Vector4(1, 1, 1, 0));
+			miscShaderData.Shader.Parameters["uSourceRect0"]?.SetValue(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStrip(pos, rot, StripColors, StripWidth, -Main.screenPosition, length, includeBacksides: true);
+			_vertexStrip.PrepareStrip(pos, rot, _ => new Color(0.1f, 0.75f, 1f, 0.4f), _ => 12, -Main.screenPosition, length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			for (int i = 0; i < length / 2; i++) {
+				pos[i] = pos[i] + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(-6, 6), rot[i] + MathHelper.PiOver2);
+			}
+			_vertexStrip.PrepareStrip(pos, rot, _ => new Color(0.3f, 0.85f, 1f, 0), _ => 9, -Main.screenPosition, length, includeBacksides: true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-		}
-
-		private Color StripColors(float progressOnStrip) {
-			return new Color(0.1f, 0.75f, 1f, 0);
-		}
-
-		private float StripWidth(float progressOnStrip) {
-			return 16;
 		}
 	}
 }
