@@ -166,7 +166,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Cannon
 (^) Enchanted Fiberglass Pistol
-(X) Enchanted Fiberglass Slime !!!
+(#, ^2) Enchanted Fiberglass Slime !!!
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
 (^) Fae Nymph (Whimsical Girl)
@@ -185,7 +185,7 @@ ENEMY NPCS:
 (X) Scanner Scout
 (^) Shattered Goldfish*
 (^) Single-Cellular Nautilus*
-(X) Slime Worm !!!
+(#, ^2) Slime Worm !!!
 (^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Steam Pirate !!!
@@ -193,14 +193,14 @@ ENEMY NPCS:
 (X) Top Brass Protector
 (X) Worker Bot
 
-(X) Airsnatcher !!!
+(#, ^2) Airsnatcher !!!
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
 (X) Angel
 (^, ⚐) Barnacle Mound*
 (X) Beckonbug
-(X) Brine Latcher !!!
+(#, ^2) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
 (#2, ^2/4) Carpalfish° !!! (needs slamming SFX)
 (^) Defiled Asphyxiator*
@@ -217,7 +217,7 @@ ENEMY NPCS:
 (#2, ^2) King Crab !!!
 (#2, ^2) Mildew Creeper !!!
 (^) Mitoworm
-(X) Nasty Crawfish !!!
+(#, ^2) Nasty Crawdad !!!
 (^) Profaned Bident
 (^) Riven Mimic
 (^) Riven Pigron
@@ -228,7 +228,7 @@ ENEMY NPCS:
 (#2, ^2) Sea Dragon° !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
-(X) Shotgunfish !!!
+(#, ^2) Shotgunfish !!!
 (X) Riven Gull
 (X) Rock Bottom !!!
 (^) Torn Ghoul
@@ -735,6 +735,7 @@ RANGED WEAPONS:
 (X) Bloodshot
 (#2/4, ^2) Boat Rocker° !!! (needs alternate chains and alt)
 (^) Boiler
+(X) Boomboom !!!
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
 (X) Crawdaddy's Revenge !!!
@@ -1136,6 +1137,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
+(@4, #2, 々) Defiled Heart
 (#2, ^2) Defiled Relay !!!
 (^) Defiled Pot
 (X) Eden Tree°
