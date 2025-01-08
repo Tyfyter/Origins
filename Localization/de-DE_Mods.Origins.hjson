@@ -1432,10 +1432,10 @@ Projectiles: {
 	// Mildew_Whip_P.DisplayName: Mildew Whip
 	// Eyenade_P.DisplayName: Eyenade
 	// Chipper_Knife_P.DisplayName: Chipper Knife
-	// Magnus_P.DisplayName: Magnus P
-	// Felnum_Hamaxe_P.DisplayName: Felnum Hamaxe P
-	// Lightning_Rod_Bobber_Zap.DisplayName: Lightning Rod Bobber Zap
-	// Felnum_Guardian_P.DisplayName: Felnum Guardian P
+	// Magnus_P.DisplayName: Magnus
+	// Felnum_Hamaxe_P.DisplayName: Felnum Hamaxe
+	// Lightning_Rod_Bobber_Zap.DisplayName: Lightning Rod
+	// Felnum_Guardian_P.DisplayName: Felnum Guardian
 }
 
 Prefixes: {

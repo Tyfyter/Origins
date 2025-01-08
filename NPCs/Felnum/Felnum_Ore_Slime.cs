@@ -24,6 +24,7 @@ namespace Origins.NPCs.Felnum {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;//maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BlueSlime);

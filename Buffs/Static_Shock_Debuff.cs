@@ -72,10 +72,11 @@ namespace Origins.Buffs {
 					entityWet = player.wet;
 					entityHitbox = player.Hitbox;
 					foreach (Player other in Main.ActivePlayers) {
-						if (other == player) continue;
+						if (other == player || other.buffImmune[damageDebuffID]) continue;
 						if (ShouldInflict(other.Hitbox, other.wet)) other.AddBuff(damageDebuffID, 20);
 					}
 					foreach (NPC other in Main.ActiveNPCs) {
+						if (other.buffImmune[damageDebuffID]) continue;
 						if (other.friendly && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) {
 							other.AddBuff(damageDebuffID, 20);
 						}
@@ -91,17 +92,18 @@ namespace Origins.Buffs {
 					entityHitbox = npc.Hitbox;
 					if (npc.type == NPCID.TargetDummy || !npc.friendly) {
 						foreach (NPC other in Main.ActiveNPCs) {
-							if (other == npc) continue;
+							if (other == npc || other.buffImmune[damageDebuffID]) continue;
 							if ((other.type == NPCID.TargetDummy || !other.friendly) && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) {
 								other.AddBuff(damageDebuffID, 20);
 							}
 						}
 					} else {
 						foreach (Player other in Main.ActivePlayers) {
+							if (other.buffImmune[damageDebuffID]) continue;
 							if (ShouldInflict(other.Hitbox, other.wet)) other.AddBuff(damageDebuffID, 20);
 						}
 						foreach (NPC other in Main.ActiveNPCs) {
-							if (other == npc) continue;
+							if (other == npc || other.buffImmune[damageDebuffID]) continue;
 							if (!(other.type == NPCID.TargetDummy || other.friendly) && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) {
 								other.AddBuff(damageDebuffID, 20);
 							}
@@ -115,6 +117,9 @@ namespace Origins.Buffs {
 		public override string Texture => typeof(Static_Shock_Debuff).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			BuffID.Sets.GrantImmunityWith[Type] = [
+				ModContent.BuffType<Static_Shock_Debuff>()
+			];
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().staticShockDamage = true;

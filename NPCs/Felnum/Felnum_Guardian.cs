@@ -26,11 +26,13 @@ namespace Origins.NPCs.Felnum {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Felnum_Guardian).GetDefaultTMLName() + "_Glow";
 		public static HashSet<int> FriendlyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
-			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
+			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.FairyCritterBlue;
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			FriendlyNPCTypes.Add(Type);
 			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Ore_Slime>());
+			//FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Einheri>());
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
 		}
 		public override void Unload() => FriendlyNPCTypes = null;
 		public override void SetDefaults() {
@@ -52,7 +54,7 @@ namespace Origins.NPCs.Felnum {
 			NPC.DoFrames(4);
 		}
 		public override void AI() {
-			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => !player.OriginPlayer().felnumSet, npc => !FriendlyNPCTypes.Contains(npc.type) && npc.CanBeChasedBy());
+			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet, npc => !FriendlyNPCTypes.Contains(npc.type) && npc.CanBeChasedBy());
 			NPC.target = searchResults.NearestTargetIndex;
 			if (searchResults.FoundTarget) {
 				if (searchResults.NearestTargetHitbox.Center().IsWithin(NPC.Center, 16 * 100)) {
@@ -109,7 +111,7 @@ namespace Origins.NPCs.Felnum {
 								NPC.Center,
 								GeometryUtils.Vec2FromPolar(8, NPC.rotation),
 								ModContent.ProjectileType<Felnum_Guardian_P>(),
-								20,
+								40,
 								4
 							);
 						}
@@ -164,7 +166,7 @@ namespace Origins.NPCs.Felnum {
 				glowTexture,
 				NPC.Center - screenPos,
 				NPC.frame,
-				Color.White,
+				Color.White * (drawColor.A / 255f),
 				rotation,
 				origin,
 				NPC.scale,
@@ -200,6 +202,9 @@ namespace Origins.NPCs.Felnum {
 			Projectile.oldPos[^index] = Projectile.Center + Projectile.velocity;
 			Projectile.oldRot[^index] = Projectile.velocity.ToRotation();
 			StopMovement();
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.SourceDamage *= 0.5f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Static_Shock_Debuff.Inflict(target, Main.rand.Next(240, 300));
