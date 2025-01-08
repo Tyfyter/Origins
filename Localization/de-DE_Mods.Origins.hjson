@@ -513,7 +513,7 @@ Buffs: {
 
 	Defiled_Assimilation_Debuff: {
 		// DisplayName: Defiled Assimilation
-		// Description: You're being assimilated by the Defiled
+		// Description: You're being assimilated by {§The_Defiled_Wastelands}
 	}
 
 	Defiled_Blight_Buff: {
@@ -618,7 +618,7 @@ Buffs: {
 
 	Riven_Assimilation_Debuff: {
 		// DisplayName: Riven Assimilation
-		// Description: You're being assimilated by the Riven
+		// Description: You're being assimilated by the {§Riven_Hive}
 	}
 
 	Safe_Buff: {
@@ -1786,11 +1786,6 @@ Configs: {
 			// Label: Assimilation mechanics
 			// Tooltip: Toggles between whether or not Assimilation will be active
 		}
-
-		GraveshieldZombiesDropAsItem: {
-			// Label: Graveshield Zombie QOL
-			// Tooltip: Makes Graveshield Zombies drop their tombstones as items instead of as tiles
-		}
 	}
 
 	DebugConfig: {
@@ -1968,16 +1963,16 @@ Configs: {
 	}
 
 	ServerSideAccessibility: {
-		// DisplayName: Server Side Accessibility
+		// DisplayName: Accessibility (Server Side)
 
 		GraveshieldZombiesDropAsItem: {
-			// Label: Graveshield Zombies Drop As Item
-			// Tooltip: ""
+			// Label: Graveshield Zombie QOL
+			// Tooltip: Makes Graveshield Zombies drop their tombstones as items instead of as tiles
 		}
 
 		RivenAsimilationMultiplier: {
 			// Label: Riven Asimilation Multiplier
-			// Tooltip: ""
+			// Tooltip: Reduces the effect of Riven Assimilation
 		}
 	}
 }

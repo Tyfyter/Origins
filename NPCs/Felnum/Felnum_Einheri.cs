@@ -263,17 +263,18 @@ namespace Origins.NPCs.Felnum {
 				NPC.scale,
 				spriteEffects,
 			0);
-
-			spriteBatch.Draw(
-				attackTexture,
-				(NPC.Center + atkPosition) - screenPos,
-				attackTexture.Frame(verticalFrames: 4, frameY: atkFrame),
-				Color.White * (drawColor.A / 255f),
-				spearRotation,
-				atkOrigin,
-				NPC.scale,
-				spriteEffects,
-			0);
+			if (atkFrame >= -1) {
+				spriteBatch.Draw(
+					attackTexture,
+					(NPC.Center + atkPosition) - screenPos,
+					attackTexture.Frame(verticalFrames: 4, frameY: Math.Max(atkFrame, 0)),
+					Color.White * (drawColor.A / 255f),
+					spearRotation,
+					atkOrigin,
+					NPC.scale,
+					spriteEffects,
+				0);
+			}
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

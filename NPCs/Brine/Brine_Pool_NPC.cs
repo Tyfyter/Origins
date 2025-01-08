@@ -1,4 +1,5 @@
-﻿using Origins.Reflection;
+﻿using Origins.Buffs;
+using Origins.Reflection;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Origins.NPCs.Brine {
 		public static List<(Vector2 position, float magnitude)> Ripples { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
 		}
 		public override void Unload() {
 			Ripples = null;

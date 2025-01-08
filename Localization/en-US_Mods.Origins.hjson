@@ -1964,7 +1964,6 @@ Configs: {
 
 	ServerSideAccessibility: {
 		DisplayName: Accessibility (Server Side)
-		
 
 		GraveshieldZombiesDropAsItem: {
 			Label: Graveshield Zombie QOL
@@ -1973,7 +1972,7 @@ Configs: {
 
 		RivenAsimilationMultiplier: {
 			Label: Riven Asimilation Multiplier
-			Tooltip: "Reduces the effect of Riven Assimilation"
+			Tooltip: Reduces the effect of Riven Assimilation
 		}
 	}
 }

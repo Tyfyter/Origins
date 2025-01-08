@@ -308,3 +308,13 @@ Fae_Nymph.DisplayName: Fae Nymph
 Whimsical_Girl.DisplayName: Whimsical Girl
 Felnum_Guardian.DisplayName: Felnum Guardian
 Felnum_Einheri.DisplayName: Felnum Einheri
+
+Slime_Worm: {
+	DisplayName: "{0} Slorm"
+	Green: Green
+	Blue: Blue
+	Red: Red
+	Purple: Purple
+	Yellow: Yellow
+	Black: Black
+}

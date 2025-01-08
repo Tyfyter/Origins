@@ -157,6 +157,11 @@ namespace Origins.NPCs {
 		public int MaxSegmentLength { get; set; }
 
 		/// <summary>
+		/// The amount of segments present on the worm, including the head and tail segments
+		/// </summary>
+		public int SegmentCount { get; private set; }
+
+		/// <summary>
 		/// Whether the NPC ignores tile collision when attempting to "dig" through tiles, like how Wyverns work.
 		/// </summary>
 		public bool CanFly { get; set; }
@@ -279,6 +284,9 @@ namespace Origins.NPCs {
 								n.netUpdate = true;
 							}
 						}
+					} else {
+						SegmentCount = randomWormLength;
+						OnFinishSpawning();
 					}
 
 					// Set the player target for good measure
@@ -286,7 +294,7 @@ namespace Origins.NPCs {
 				}
 			}
 		}
-
+		public virtual void OnFinishSpawning() { }
 		protected bool HeadAI_CheckCollisionForDustSpawns() {
 			int minTilePosX = (int)(NPC.Left.X / 16) - 1;
 			int maxTilePosX = (int)(NPC.Right.X / 16) + 2;
@@ -556,6 +564,12 @@ namespace Origins.NPCs {
 				NPC.Center = Main.npc[closest].Center;
 			}
 			return false;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((int)SegmentCount);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			SegmentCount = reader.ReadInt32();
 		}
 	}
 
