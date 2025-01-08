@@ -1,6 +1,7 @@
 ﻿using Origins.NPCs;
 using Origins.NPCs.Defiled;
 using PegasusLib;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,9 +14,42 @@ namespace Origins.Buffs {
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.OriginPlayer().staticShock = true;
+			if (Main.rand.Next(4) < 1 + player.wet.ToInt() + player.HasBuff<Static_Shock_Damage_Debuff>().ToInt()) {
+				Vector2 offset = Main.rand.NextVector2FromRectangle(player.Hitbox) - player.Center;
+				Dust dust = Dust.NewDustPerfect(
+					player.Center - offset,
+					DustID.Electric,
+					Vector2.Zero,
+					Scale: 0.5f
+				);
+				dust.velocity += player.velocity;
+				dust.noGravity = true;
+			}
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().staticShock = true;
+			if (Main.rand.Next(4) < 1 + npc.wet.ToInt() + npc.HasBuff<Static_Shock_Damage_Debuff>().ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt()) {
+				Vector2 offset = Main.rand.NextVector2FromRectangle(npc.Hitbox) - npc.Center;
+				Dust dust = Dust.NewDustPerfect(
+					npc.Center - offset,
+					DustID.Electric,
+					Vector2.Zero,
+					Scale: 0.5f
+				);
+				dust.velocity += npc.velocity;
+				dust.noGravity = true;
+			}
+		}
+		public static void Inflict(Entity victim, int time) {
+			bool isDead = false;
+			if (victim is NPC npc) {
+				npc.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), time);
+				isDead = npc.life < 0;
+			} else if (victim is Player player) {
+				player.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), time);
+				isDead = player.dead || player.statLife < 0;
+			}
+			if (isDead) ProcessShocking(victim);
 		}
 		public static void ProcessShocking(Entity entity) {
 			int damageDebuffID = ModContent.BuffType<Static_Shock_Damage_Debuff>();

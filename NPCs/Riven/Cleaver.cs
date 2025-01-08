@@ -110,7 +110,7 @@ namespace Origins.NPCs.Riven {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Cleaver_Head).TryDeathEffect();
+			(HeadSegment.ModNPC as Cleaver_Head)?.TryDeathEffect();
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -136,7 +136,7 @@ namespace Origins.NPCs.Riven {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Cleaver_Head).TryDeathEffect();
+			(HeadSegment.ModNPC as Cleaver_Head)?.TryDeathEffect();
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;

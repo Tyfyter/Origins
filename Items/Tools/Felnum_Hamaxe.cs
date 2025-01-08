@@ -61,7 +61,7 @@ namespace Origins.Items.Tools {
 		}
 		public override bool CanShoot(Player player) => player.altFunctionUse == 2 && player.ItemUsesThisAnimation == 0;
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
 		}
 	}
 	public class Felnum_Hamaxe_P : ModProjectile {
@@ -75,7 +75,7 @@ namespace Origins.Items.Tools {
 			Projectile.penetrate = -1;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = 32;

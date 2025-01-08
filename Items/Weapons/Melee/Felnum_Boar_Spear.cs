@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 120);
+			Static_Shock_Debuff.Inflict(target, 120);
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int shockAmount = (int)(originPlayer.felnumShock / (Felnum_Helmet.shock_damage_divisor * 2));

@@ -51,13 +51,11 @@ namespace Origins.Items.Weapons.Magic {
 		public const int tick_motion = 8;
 		const int max_length = 1200;
 		public override string Texture => "Origins/Projectiles/Weapons/Seam_Beam_P";
-		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
 			Origins.HomingEffectivenessMultiplier[Type] = 3.5f;
 			Mitosis_P.aiVariableResets[Type][1] = true;
-			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
@@ -72,7 +70,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
 			float targetWeight = 160 + Math.Max(target.width, target.height);
 			targetWeight *= targetWeight;
 			Vector2 targetPos = default;
@@ -118,8 +116,8 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			return null;
 		}
-		Vector2? target = null;
-		int startupDelay = 5;
+		protected Vector2? target = null;
+		protected int startupDelay = 5;
 		public override void AI() {
 			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
 			if (Projectile.numUpdates == -1 && ++Projectile.ai[2] >= 10) {
@@ -165,7 +163,7 @@ namespace Origins.Items.Weapons.Magic {
 			StopMovement();
 			return false;
 		}
-		void StopMovement() {
+		protected void StopMovement() {
 			Projectile.velocity = Vector2.Zero;
 			Projectile.ai[0] = 1;
 			Projectile.extraUpdates = 0;

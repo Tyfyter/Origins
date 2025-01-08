@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return Projectile.penetrate > 1 ? base.CanHitNPC(target) : false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 120);
+			Static_Shock_Debuff.Inflict(target, 120);
 			Projectile.damage -= (int)((Projectile.Center - closest).Length() / 16f);
 			if (!Main.rand.NextBool(5)) Projectile.timeLeft += hit.Crit ? 2 : 1;
 			Vector2 dest = Projectile.Center;

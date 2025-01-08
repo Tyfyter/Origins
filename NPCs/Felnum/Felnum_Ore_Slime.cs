@@ -35,7 +35,7 @@ namespace Origins.NPCs.Felnum {
 			AnimationType = NPCID.BlueSlime;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) 				return 0.085f;
+			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.085f;
 			return 0;
 		}
 		public override void OnSpawn(IEntitySource source) {
@@ -89,7 +89,7 @@ namespace Origins.NPCs.Felnum {
 		public override void HitEffect(NPC.HitInfo hit) {
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 240);
+			Static_Shock_Debuff.Inflict(target, 240);
 		}
 	}
 	public class Felnum_Ore_Slime_Zap : ModProjectile {
@@ -106,11 +106,11 @@ namespace Origins.NPCs.Felnum {
 			Projectile.tileCollide = false;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center - Vector2.UnitY * Projectile.ai[0])) 				return true;
+			if (Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center - Vector2.UnitY * Projectile.ai[0])) return true;
 			return null;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 300);
+			Static_Shock_Debuff.Inflict(target, 300);
 		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {

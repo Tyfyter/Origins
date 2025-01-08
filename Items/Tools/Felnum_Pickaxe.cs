@@ -34,7 +34,7 @@ namespace Origins.Items.Tools {
 			return (player.pickSpeed - 1) * 0.75f + 1;
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(120, 210));
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
 		}
 	}
 }

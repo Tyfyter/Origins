@@ -33,9 +33,5 @@ namespace Origins.Items.Weapons.Ranged {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);
 		}
-
-		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), 180);
-		}
 	}
 }

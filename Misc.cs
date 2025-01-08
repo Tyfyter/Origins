@@ -691,6 +691,10 @@ namespace Origins {
 		///<summary>
 		///Doesn't move.
 		///</summary>
+		public const int ActuallyNone = -1;
+		///<summary>
+		///Doesn't move.
+		///</summary>
 		public const int None = 0;
 		///<summary>
 		/// Hops in one direction, slides on slopes, floats in water, follows player if damaged or it's nighttime. Grasshoppers, on the other hand, flees from nearby players.

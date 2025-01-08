@@ -22,7 +22,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
-			NPC.aiStyle = NPCAIStyleID.None;
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 475;
 			NPC.defense = 28;
 			NPC.damage = 49;
@@ -62,7 +62,7 @@ namespace Origins.NPCs.Defiled {
 			get => NPC.frame.Y / 58;
 			set => NPC.frame.Y = value * 58;
 		}
-		public override bool PreAI() {
+		public override void AI() {
 			NPC.TargetClosestUpgraded();
 			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
 				Player _target = Main.player[NPC.target];
@@ -137,7 +137,6 @@ namespace Origins.NPCs.Defiled {
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
 			}
-			return false;
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {

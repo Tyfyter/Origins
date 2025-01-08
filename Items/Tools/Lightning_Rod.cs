@@ -124,7 +124,7 @@ namespace Origins.Items.Tools {
 			if (Projectile.ai[0] == 1) {
 				target.DoCustomKnockback(Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist));
 			}
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(90, 120));
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(90, 120));
 		}
 		public override bool PreDrawExtras() {
 			//Change these two values in order to change the origin of where the line is being drawn
@@ -223,7 +223,7 @@ namespace Origins.Items.Tools {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), Main.rand.Next(180, 240));
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(180, 240));
 		}
 	}
 }
