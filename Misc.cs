@@ -1853,17 +1853,20 @@ namespace Origins {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
 		}
-		public static void DoFrames(this NPC self, int counterMax) {
+		public static void DoFrames(this NPC self, int counterMax, Range frames) {
 			int heightEtBuffer = self.frame.Height;
 			self.frameCounter += 1;
 			if (self.frameCounter >= counterMax) {
 				self.frame.Y += heightEtBuffer;
 				self.frameCounter = 0;
-				if (self.frame.Y >= heightEtBuffer * Main.npcFrameCount[self.type]) {
-					self.frame.Y = 0;
-				}
+			}
+			if (self.frame.Y >= heightEtBuffer * frames.End.Value) {
+				self.frame.Y = heightEtBuffer * frames.Start.Value;
+			} else if (self.frame.Y < heightEtBuffer * frames.Start.Value) {
+				self.frame.Y = heightEtBuffer * (frames.End.Value - 1);
 			}
 		}
+		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(self.Male ? "male" : "female")}");
 		}

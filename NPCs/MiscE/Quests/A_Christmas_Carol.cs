@@ -193,7 +193,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.chaseable = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath6;
-			AIType = NPCID.SantaClaus;
+			AIType = NPCID.Merchant;
 			AnimationType = NPCID.SantaClaus;
 			Banner = Item.NPCtoBanner(NPCID.SantaClaus);
 		}

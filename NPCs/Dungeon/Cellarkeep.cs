@@ -138,6 +138,7 @@ namespace Origins.NPCs.Dungeon {
 			NPC.height = NPC.width = 26;
 			NPC.knockBackResist = 0;
 			NPC.noGravity = true;
+			NPC.chaseable = false;
 		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
 			if (modifiers.DamageType.CountsAsClass<Explosive>()) modifiers.SetInstantKill();

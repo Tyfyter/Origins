@@ -20,9 +20,8 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Felnum {
 	public class Felnum_Ore_Slime : ModNPC {
-		//public override string Texture => "Terraria/Images/NPC_" + NPCID.BlueSlime;
 		public override void SetStaticDefaults() {
-			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;//maybe undead viking instead?
+			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
 			Main.npcFrameCount[NPC.type] = 2;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
 		}

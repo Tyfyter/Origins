@@ -64,8 +64,10 @@ namespace Origins.NPCs.Brine {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4));
 		}
 		public override void AI() {
+			NPC.knockBackResist = 0.45f;
 			if (NPC.ai[2] < 0) {
 				NPC.ai[2]++;
+				NPC.knockBackResist = 1f;
 				return;
 			}
 			const int charge_start_delay = 60;
@@ -121,6 +123,7 @@ namespace Origins.NPCs.Brine {
 				}
 				if (friction) NPC.velocity *= 0.96f;
 				if (NPC.ai[2] >= charge_start_delay + charge_startup_time) {
+					NPC.knockBackResist = 0f;
 					Vector2 velocity = NPC.velocity;
 					Vector4 slopeCollision = Collision.SlopeCollision(NPC.position, velocity, NPC.width, NPC.height);
 					velocity = slopeCollision.ZW();

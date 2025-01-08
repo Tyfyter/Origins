@@ -31,15 +31,15 @@ namespace Origins.NPCs.Felnum {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			FriendlyNPCTypes.Add(Type);
 			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Ore_Slime>());
-			//FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Einheri>());
+			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Einheri>());
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
 		}
 		public override void Unload() => FriendlyNPCTypes = null;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.lifeMax = 70;
-			NPC.defense = 28;
-			NPC.damage = 10;
+			NPC.lifeMax = 120;
+			NPC.defense = 32;
+			NPC.damage = 15;
 			NPC.width = 44;
 			NPC.height = 40;
 			NPC.HitSound = SoundID.NPCHit4;
@@ -53,8 +53,9 @@ namespace Origins.NPCs.Felnum {
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(4);
 		}
+		public override bool? CanFallThroughPlatforms() => true;
 		public override void AI() {
-			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet, npc => !FriendlyNPCTypes.Contains(npc.type) && npc.CanBeChasedBy());
+			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet, npc => !FriendlyNPCTypes.Contains(npc.type) && npc.chaseable);
 			NPC.target = searchResults.NearestTargetIndex;
 			if (searchResults.FoundTarget) {
 				if (searchResults.NearestTargetHitbox.Center().IsWithin(NPC.Center, 16 * 100)) {
