@@ -144,7 +144,7 @@ namespace Origins.Buffs {
 				}, 40, 0);
 			}
 			
-			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 5 : 1000, percent, true);
+			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 5 : 1000, percent * ServerSideAccessibility.Instance.RivenAsimilationMultiplier, true);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;

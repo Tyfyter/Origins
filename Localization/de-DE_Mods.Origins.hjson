@@ -1752,7 +1752,14 @@ Configs: {
 
 		WoodBuffs: {
 			// Label: Wooden item buffs
-			// Tooltip: Whether or not vanilla/modded wooden items recieve buffs from Origins
+			/* Tooltip:
+				'''
+				Whether or not vanilla/modded wooden items receive buffs from Origins
+				Currently affects:
+				Ebonwood armor
+				Shadewood armor
+				Pearlwood armor
+				''' */
 		}
 
 		GrassMerge: {
@@ -1956,6 +1963,20 @@ Configs: {
 
 		DisableDefiledWastelandsShader: {
 			// Label: Disable Defiled Wastelands Shader
+			// Tooltip: ""
+		}
+	}
+
+	ServerSideAccessibility: {
+		// DisplayName: Server Side Accessibility
+
+		GraveshieldZombiesDropAsItem: {
+			// Label: Graveshield Zombies Drop As Item
+			// Tooltip: ""
+		}
+
+		RivenAsimilationMultiplier: {
+			// Label: Riven Asimilation Multiplier
 			// Tooltip: ""
 		}
 	}

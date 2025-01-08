@@ -48,11 +48,8 @@ namespace Origins {
 
 		[DefaultValue(true)]
 		public bool Assimilation = true;
-
-		[DefaultValue(false)]
-		public bool GraveshieldZombiesDropAsItem = false;
 		[JsonIgnore]
-		public static bool GraveshieldZombiesShouldDropAsItem => Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
+		public static bool GraveshieldZombiesShouldDropAsItem => ServerSideAccessibility.Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
 
 		[ReloadRequired]
 		[DefaultValue(true)]
@@ -673,5 +670,15 @@ namespace Origins {
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 		[DefaultValue(false)]
 		public bool DisableDefiledWastelandsShader { get; set; }
+	}
+	public class ServerSideAccessibility : ModConfig {
+		public static ServerSideAccessibility Instance;
+		public override ConfigScope Mode => ConfigScope.ServerSide;
+
+		[DefaultValue(false)]
+		public bool GraveshieldZombiesDropAsItem = false;
+
+		[DefaultValue(1f), Range(0, 1)]
+		public float RivenAsimilationMultiplier = 1f;
 	}
 }
