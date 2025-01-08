@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
@@ -8,22 +7,18 @@ using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
-using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Other;
-using Origins.Water;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -39,7 +34,7 @@ namespace Origins {
 		public override void PreUpdateMovement() {
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
-				Player.velocity *= 1.0048f;
+				Player.velocity *= 1.006f;
 				Player.ignoreWater = true;
 			}
 			if (riptideSet && !Player.mount.Active) {

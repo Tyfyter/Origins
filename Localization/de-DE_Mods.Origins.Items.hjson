@@ -961,7 +961,7 @@ Acrid_Mask: {
 	/* Tooltip:
 		'''
 		10% increased summoning damage
-		+1 minion slot
+		+2 minion slots
 		Effects stronger when submerged
 		Emit a small aura of light
 		''' */
@@ -1287,7 +1287,7 @@ Riptide_Breastplate: {
 	/* Tooltip:
 		'''
 		Emit a small aura of light
-		+60 mana capacity
+		+40 mana capacity
 		''' */
 }
 
@@ -4071,7 +4071,7 @@ Blast_Breastplate: {
 	/* Tooltip:
 		'''
 		Immune to knockback
-		-5% self-damage
+		-10% self-damage
 		''' */
 }
 
@@ -4082,7 +4082,7 @@ Blast_Greaves: {
 		+25% movement speed
 		+2% acceleration
 		Increased jump speed
-		-5% self-damage
+		-10% self-damage
 		''' */
 }
 
@@ -4091,7 +4091,7 @@ Blast_Helmet: {
 	/* Tooltip:
 		'''
 		+10% generic critical strike chance
-		-5% self-damage
+		-10% self-damage
 		''' */
 }
 

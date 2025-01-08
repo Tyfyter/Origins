@@ -29,7 +29,7 @@ namespace Origins.Items.Armor.Blast {
 		}
         public override void UpdateEquip(Player player) {
 			player.GetCritChance(DamageClass.Generic) += 10f;
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.05f;
+            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.1f;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Blast_Breastplate>() && legs.type == ModContent.ItemType<Blast_Greaves>();
@@ -58,7 +58,7 @@ namespace Origins.Items.Armor.Blast {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.ChlorophyteBar, 12)
             .AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>())
-            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 2)
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 4)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
@@ -79,13 +79,13 @@ namespace Origins.Items.Armor.Blast {
 		}
 		public override void UpdateEquip(Player player) {
             player.noKnockback = true;
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.05f;
+            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.1f;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type)
             .AddIngredient(ItemID.ChlorophyteBar, 24)
             .AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>())
-            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 2)
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 6)
             .AddIngredient(ModContent.ItemType<Power_Core>(), 2)
             .AddIngredient(ModContent.ItemType<Rotor>(), 2)
 			.AddTile(ModContent.TileType<Fabricator>())
@@ -106,13 +106,13 @@ namespace Origins.Items.Armor.Blast {
 			player.moveSpeed += 0.25f;
 			player.runAcceleration += 0.02f;
 			player.jumpSpeedBoost += 2;
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.05f;
+            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.1f;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type)
             .AddIngredient(ItemID.ChlorophyteBar, 18)
             .AddIngredient(ModContent.ItemType<Blast_Resistant_Plate>())
-            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 2)
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 4)
             .AddIngredient(ModContent.ItemType<Rotor>(), 2)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();

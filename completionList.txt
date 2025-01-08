@@ -1156,7 +1156,7 @@ TILES:
 (ᗢ) Surveysprout*
 (^) Underwater Vine
 (^) Wilting Rose*
-(^) Wrycoral*
+(@5, ^3) Wrycoral*
 
 (^) A Perfect World
 (X) Deceptive Beauty

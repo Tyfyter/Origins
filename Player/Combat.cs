@@ -236,8 +236,11 @@ namespace Origins {
 			if (symbioteSkull) {
 				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, 0.1f, this);
 			}
-			if (venomFang || acridSet) {
-				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+			if (acridSet) {
+				target.AddBuff(Toxic_Shock_Debuff.ID, 300);
+			}
+			if (venomFang) {
+				target.AddBuff(Toxic_Shock_Debuff.ID, 180);
 				if (venomFang && acridSet) {
 					target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
 				}
@@ -551,7 +554,10 @@ namespace Origins {
 			} /*else if (pricklyPeared) {
 			+25% mana shielding?
 			}*/
-			if (toxicShock) {
+			if (toxicShock) { //Add stun
+				/*if (Main.rand.NextBool(400)) {// roughly 15% chance each second
+					Player.GetModPlayer<OriginPlayer>().stunTime;
+				}*/
 				Player.lifeRegen -= 15;
 				modifiers.ScalingArmorPenetration += 0.2f;
 			}

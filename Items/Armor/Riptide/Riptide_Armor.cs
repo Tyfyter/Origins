@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Riptide {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Riptide");
 			player.GetModPlayer<OriginPlayer>().riptideSet = true;
 			if (player.wet) {//TODO: rain
-				player.GetDamage(DamageClass.Magic) += 0.05f;
+				player.GetDamage(DamageClass.Magic) += 0.06f;
 			}
 		}
 		public override void ArmorSetShadows(Player player) {
@@ -45,7 +45,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-            .AddIngredient(ItemID.DivingHelmet)
+            .AddIngredient(ItemID.FallenStar, 11)
             .AddIngredient(ItemID.ShellPileBlock, 9)
 			.AddTile(TileID.Anvils)
 			.Register();
@@ -66,24 +66,12 @@ namespace Origins.Items.Armor.Riptide {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.statManaMax2 += 60;
+			player.statManaMax2 += 40;
 			Lighting.AddLight(player.Center, new Vector3(0, 1, 1));
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-            .AddIngredient(ItemID.BlueJellyfish)
-            .AddIngredient(ItemID.ShellPileBlock, 17)
-			.AddTile(TileID.Anvils)
-			.Register();
-
-			Recipe.Create(Type)
-            .AddIngredient(ItemID.GreenJellyfish)
-            .AddIngredient(ItemID.ShellPileBlock, 17)
-			.AddTile(TileID.Anvils)
-			.Register();
-
-			Recipe.Create(Type)
-            .AddIngredient(ItemID.PinkJellyfish)
+            .AddIngredient(ItemID.FallenStar, 24)
             .AddIngredient(ItemID.ShellPileBlock, 17)
 			.AddTile(TileID.Anvils)
 			.Register();
@@ -104,7 +92,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-            .AddIngredient(ItemID.Flipper)
+            .AddIngredient(ItemID.FallenStar, 20)
             .AddIngredient(ItemID.ShellPileBlock, 13)
 			.AddTile(TileID.Anvils)
 			.Register();

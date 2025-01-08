@@ -2004,14 +2004,14 @@ SetBonuses: {
 		''' */
 	/* Nova:
 		'''
-		Massively increased explosive blast radius
+		60% increased explosive blast radius
 		Explosive projectiles have a chance to be duplicated
 		Explosives home towards nearby enemies
 		''' */
 	// Chlorohpyte_Summoner: Increases your max number of minions by 2
 	/* Riptide:
 		'''
-		5% increased magic damage when submerged or in rain
+		6% increased magic damage when submerged or in rain
 		Grants the ability to dash, releasing a tidal wave
 		''' */
 	/* Sapphire:

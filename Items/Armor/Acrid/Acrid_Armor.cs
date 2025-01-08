@@ -131,7 +131,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Summon) += 0.1f;
-			player.maxMinions += 1;
+			player.maxMinions += 2;
 			if (player.wet) {
 				player.GetDamage(DamageClass.Summon) += 0.08f;
 				player.maxMinions += 1;
