@@ -80,6 +80,7 @@ using Origins.Journal;
 using Terraria.ModLoader.IO;
 using Origins.Items.Weapons.Demolitionist;
 using PegasusLib.Reflection;
+using Terraria.GameContent.Generation;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -646,6 +647,12 @@ namespace Origins {
 				return false;
 			};
 			IL_NPC.SpawnNPC += IL_NPC_SpawnNPC;
+			On_TrackGenerator.IsLocationInvalid += (orig, x, y) => {
+				if (orig(x, y)) return true;
+				Tile tile = Main.tile[x, y];
+				if ((tile.HasTile && TileBlocksMinecartTracks[tile.TileType]) || WallBlocksMinecartTracks[tile.WallType]) return true;
+				return false;
+			};
 		}
 
 		private static void IL_NPC_SpawnNPC(ILContext il) {

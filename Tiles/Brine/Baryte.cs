@@ -14,7 +14,8 @@ namespace Origins.Tiles.Brine {
 			Main.tileBlockLight[Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
-			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			Origins.TileBlocksMinecartTracks[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(new Color(18, 73, 56));
 			//mergeID = TileID.Mud;
 			MinPick = 195;

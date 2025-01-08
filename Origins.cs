@@ -76,6 +76,10 @@ namespace Origins {
 		public static bool[] IsFineWithCrowdedParties { get => isFineWithCrowdedParties; }
 		static bool[] tileTransformsOnKill;
 		public static bool[] TileTransformsOnKill { get => tileTransformsOnKill; }
+		static bool[] tileBlocksMinecartTracks;
+		public static bool[] TileBlocksMinecartTracks { get => tileBlocksMinecartTracks; }
+		static bool[] wallBlocksMinecartTracks;
+		public static bool[] WallBlocksMinecartTracks { get => wallBlocksMinecartTracks; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -817,6 +821,8 @@ namespace Origins {
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
 			tileTransformsOnKill = TileID.Sets.Factory.CreateBoolSet(false);
+			tileBlocksMinecartTracks = TileID.Sets.Factory.CreateBoolSet(false);
+			wallBlocksMinecartTracks = WallID.Sets.Factory.CreateBoolSet(false);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
