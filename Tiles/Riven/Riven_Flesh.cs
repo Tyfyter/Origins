@@ -127,6 +127,15 @@ namespace Origins.Tiles.Riven {
 				TileObject.Place(objectData);
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
+			Tile above = Framing.GetTileSafely(i, j - 1);
+			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
+				if (Main.rand.NextBool(250)) {
+					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+				} else {
+					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
+				}
+				WorldGen.TileFrame(i, j - 1);
+			}
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }

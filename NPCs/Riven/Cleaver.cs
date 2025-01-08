@@ -45,13 +45,13 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText()
 			);
 		}
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
-        }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
-        }
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
+		}
 		public void ModifyWikiStats(JObject data) {
 			data["SpriteWidth"] = 108;
 		}

@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Origins.Buffs;
 using PegasusLib;
-using ThoriumMod.Items.Donate;
+using Origins.NPCs.Felnum;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
@@ -170,7 +170,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Lightning_Rod_Bobber_Zap : ModProjectile {
-		public override string Texture => typeof(NPCs.MiscE.Felnum_Ore_Slime_Zap).GetDefaultTMLName() + "_Placeholder";
+		public override string Texture => typeof(Felnum_Ore_Slime_Zap).GetDefaultTMLName() + "_Placeholder";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 		}

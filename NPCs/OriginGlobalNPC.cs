@@ -415,6 +415,7 @@ namespace Origins.NPCs {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}*/
+		public static int aerialSpawnPosition = 0;
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {

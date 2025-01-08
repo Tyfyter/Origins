@@ -82,7 +82,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public void DoTargeting() {
 			const int pathfinding_frequency = 5;
-			TargetClosest(targetIsRipple && NPC.Center.IsWithin(TargetPos, Math.Max(NPC.width, NPC.height)));
+			TargetClosest(NPC.Center.IsWithin(TargetPos, Math.Max(NPC.width, NPC.height)));
 			if (NPC.HasValidTarget) {
 				NPCAimedTarget targetData = NPC.GetTargetData();
 				Vector2 target = targetData.Center;
@@ -120,6 +120,11 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			int spawnY = tileY * 16;
+			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
+			return NPC.NewNPC(null, tileX * 16 + 8, spawnY, NPC.type);
 		}
 	}
 }

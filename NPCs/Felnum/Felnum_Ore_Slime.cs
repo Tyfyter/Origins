@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins;
 using Origins.Buffs;
 using Origins.Reflection;
 using Origins.Tiles.Other;
@@ -17,7 +18,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.MiscE {
+namespace Origins.NPCs.Felnum {
 	public class Felnum_Ore_Slime : ModNPC {
 		//public override string Texture => "Terraria/Images/NPC_" + NPCID.BlueSlime;
 		public override void SetStaticDefaults() {
@@ -34,9 +35,7 @@ namespace Origins.NPCs.MiscE {
 			AnimationType = NPCID.BlueSlime;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) {
-				return 0.085f;
-			}
+			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) 				return 0.085f;
 			return 0;
 		}
 		public override void OnSpawn(IEntitySource source) {
@@ -65,7 +64,7 @@ namespace Origins.NPCs.MiscE {
 							ai0: distance
 						);
 					}
-					SoundEngine.PlaySound(new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f), NPC.Center);
+					SoundEngine.PlaySound(new SoundStyle(Main.rand.NextBool() ? $"Origins/Sounds/Custom/ThunderShot" : $"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f), NPC.Center);
 					for (int i = 0; i < distance; i += Main.rand.Next(8, 12)) {
 						Dust.NewDust(NPC.Bottom - Vector2.UnitY * i, 0, 0, DustID.Electric, 0f, 0f, 0, Color.White, 0.5f);
 					}
@@ -107,9 +106,7 @@ namespace Origins.NPCs.MiscE {
 			Projectile.tileCollide = false;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center - Vector2.UnitY * Projectile.ai[0])) {
-				return true;
-			}
+			if (Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center - Vector2.UnitY * Projectile.ai[0])) 				return true;
 			return null;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {

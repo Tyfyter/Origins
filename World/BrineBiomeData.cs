@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
+using Origins.NPCs;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
@@ -41,8 +42,9 @@ namespace Origins.World.BiomeData {
 			public const float Dragon = 0.6f;
 			public const float Creeper = 0.6f;
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate) {
-				if (!spawnInfo.Water) return 0;
-				return spawnInfo.Player.InModBiome<Brine_Pool>() ? rate : 0f;
+				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
+				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;
+				return rate;
 			}
 		}
 		public static class Gen {

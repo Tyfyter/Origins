@@ -52,6 +52,11 @@ namespace Origins.NPCs.Riven {
 				}
 			}
 		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			int spawnY = tileY * 16;
+			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
+			return NPC.NewNPC(null, tileX * 16 + 8, spawnY, NPC.type);
+		}
 		public override void AI() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (NPC.ai[1] == 0) {

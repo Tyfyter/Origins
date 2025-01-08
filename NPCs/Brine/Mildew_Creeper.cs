@@ -83,7 +83,8 @@ namespace Origins.NPCs.Brine {
 			DoTargeting();
 			if (chain is null) {
 				Gravity[] gravity = [
-					new ConstantGravity(Vector2.UnitY * -0.01f)
+					new ConstantGravity(Vector2.UnitY * -0.006f),
+					new ConstantGravity(directions[(int)NPC.ai[3]] * -0.008f),
 				];
 				List<Chain.Link> links = [];
 				Vector2 anchor = NPC.Center;
@@ -166,7 +167,7 @@ namespace Origins.NPCs.Brine {
 				chain.anchor.WorldPosition - screenPos,
 				new Rectangle(0, 60, 36, 18),
 				GetColor(chain.anchor.WorldPosition),
-				0,
+				directions[(int)NPC.ai[3]].ToRotation() - MathHelper.PiOver2,
 				new(18, 9),
 				1,
 				SpriteEffects.None
@@ -213,6 +214,30 @@ namespace Origins.NPCs.Brine {
 					$"Gores/NPC/{nameof(Mildew_Creeper)}_Gore_1"
 				);
 			}
+		}
+		Vector2[] directions = [
+			Vector2.UnitX,
+			-Vector2.UnitX,
+			Vector2.UnitY,
+			-Vector2.UnitY
+		];
+		public override int SpawnNPC(int tileX, int tileY) {
+			int spawnY = tileY * 16;
+			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
+			const float offsetLen = 0;
+			Vector2 basePos = new(tileX * 16 + 8, spawnY);
+			float dist = 800;
+			int directionIndex = 2;
+			Vector2 bestPosition = basePos + directions[directionIndex] * (dist - offsetLen);
+			for (int i = 0; i < directions.Length; i++) {
+				float newDist = CollisionExtensions.Raycast(basePos, directions[i], dist);
+				if (newDist < dist) {
+					dist = newDist;
+					bestPosition = basePos + directions[i] * (dist - offsetLen);
+					directionIndex = i;
+				}
+			}
+			return NPC.NewNPC(null, (int)bestPosition.X, (int)bestPosition.Y, NPC.type, ai3: directionIndex);
 		}
 		public class NPCTargetGravity(Mildew_Creeper npc) : Gravity {
 			public override Vector2 Acceleration => (npc.TargetPos == default) ? Vector2.Zero : ((npc.TargetPos - npc.NPC.Center).SafeNormalize(default) * 0.3f);
