@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Accessories {
+namespace Origins.Items.Mounts {
 	public class Depth_Ravel : Ravel {
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -36,7 +35,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Depth_Ravel_Mount : Ravel_Mount {
-		public override string Texture => "Origins/Items/Accessories/Depth_Ravel";
+		public override string Texture => "Origins/Items/Mounts/Depth_Ravel";
 		public static new int ID { get; private set; }
 		protected override void SetID() {
 			MountData.buff = ModContent.BuffType<Depth_Ravel_Mount_Buff>();

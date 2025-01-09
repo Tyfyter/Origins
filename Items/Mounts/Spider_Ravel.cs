@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Accessories {
+namespace Origins.Items.Mounts {
     public class Spider_Ravel : Ravel {
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -32,7 +32,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Spider_Ravel_Mount : Ravel_Mount {
-		public override string Texture => "Origins/Items/Accessories/Spider_Ravel";
+		public override string Texture => "Origins/Items/Mounts/Spider_Ravel";
 		public static new int ID { get; private set; }
 		protected override void SetID() {
 			MountData.buff = ModContent.BuffType<Spider_Ravel_Mount_Buff>();

@@ -75,12 +75,12 @@ Automated_Returns_Handler: {
 
 Blast_Resistant_Plate: {
 	DisplayName: Blast-Resistant Plate
-	Tooltip: Reduces explosive self-damage by 10%
+	Tooltip: Reduces explosive self-damage by 20%
 }
 
 Bomb_Charm: {
 	DisplayName: Bomb Charm
-	Tooltip: Reduces explosive self-damage by 15%
+	Tooltip: Reduces explosive self-damage by 20%
 }
 
 Bomb_Handling_Device: {
@@ -96,7 +96,7 @@ Boomerang_Magnet: {
 	DisplayName: Boomerang Magnet
 	Tooltip:
 		'''
-		Increased return speed for boomerangs and harpoons
+		Increased return speed for boomerangs and harpoon guns
 		Increases pickup range for items
 		'''
 }
@@ -337,7 +337,7 @@ Fleshy_Figurine: {
 	Tooltip:
 		'''
 		Attacks tenderize targets
-		{$Mods.Origins.Items.GenericTooltip.TornSeverity}
+		+20% Torn severity
 		'''
 }
 
@@ -579,7 +579,7 @@ No_U_Card: {
 	DisplayName: No U Card
 	Tooltip:
 		'''
-		Attackers receive 50% of incoming damage and debuffs regardless of immunity
+		Attackers receive all incoming damage and debuffs regardless of immunity
 		Immune to most debuffs
 		'''
 }
@@ -684,7 +684,7 @@ Ravel: {
 
 Razorwire: {
 	DisplayName: Razorwire
-	Tooltip: 67% of damage received is split across 3 enemies
+	Tooltip: All damage received is reflected to 3 nearby enemies
 }
 
 Rebreather: {
@@ -855,7 +855,7 @@ Symbiote_Skull: {
 
 Tainted_Flesh: {
 	DisplayName: Tainted Flesh
-	Tooltip: "{$Mods.Origins.Items.GenericTooltip.TornSeverity}"
+	Tooltip: +10% Torn severity
 }
 
 Third_Eye: {
@@ -874,7 +874,11 @@ Trap_Charm: {
 
 Tripod_Nip: {
 	DisplayName: Tripod Nip
-	Tooltip: Reduces enemy aggression and spawn rates
+	Tooltip:
+		'''
+		Reduces enemy aggression and spawn rates
+		Defiled Tripods become friendly
+		'''
 }
 
 Pneumatic_Bomb_Thrower: {
@@ -895,8 +899,9 @@ Unsought_Organ: {
 	DisplayName: Unsought Organ
 	Tooltip:
 		'''
-		Half of damage received is split across 3 enemies, inflicting 'Toxic Shock'
+		All damage received is reflected to 3 nearby enemies, inflicting 'Toxic Shock'
 		5% increased damage and critical strike chance
+		All attacks inflict Toxic Shock
 		Enemies are less likely to target you
 		'''
 }
@@ -1093,7 +1098,7 @@ Scavenger_Breastplate: {
 
 Scavenger_Helmet: {
 	DisplayName: Scavenger Goggles
-	Tooltip: +10% explosive critical strike chance
+	Tooltip: +8% explosive critical strike chance
 }
 
 Scavenger_Greaves: {
@@ -3529,7 +3534,7 @@ Shield_of_Retribution: {
 	Tooltip:
 		'''
 		Grants immunity to knockback and fire blocks
-		67% of damage received is redirected to 3 enemies
+		All damage received is reflected to 3 nearby enemies
 		'''
 }
 
@@ -3714,7 +3719,7 @@ Playtimes_Over: {
 	Tooltip:
 		'''
 		Attacks tenderize targets
-		+13% applied torn severity
+		+18% applied torn severity
 		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
 		'''
 }
@@ -3723,7 +3728,7 @@ Bomb_Charm_of_Regeneration: {
 	DisplayName: Bomb Charm of Regeneration
 	Tooltip:
 		'''
-		-15% self-damage
+		-20% self-damage
 		Rapidly regenerate life after taking self-damage
 		'''
 }
@@ -4589,7 +4594,7 @@ Slag_Bucket: {
 		40% damage reduction while above 80% of maximum life
 		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
 		Grants immunity to knockback, fire blocks, and impeding shrapnel
-		67% of damage received is redirected to 3 enemies
+		All damage received is reflected to 3 nearby enemies
 		You regenerate life while on fire
 		'''
 }

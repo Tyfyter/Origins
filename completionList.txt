@@ -170,9 +170,9 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
 (^) Fae Nymph (Whimsical Girl)
-(#, ^2) Felnum Einheri !!!
-(#, ^2) Felnum Guardian !!!
-(^) Felnum Ore Slime
+(#2, $2, ^2/3) Felnum Einheri !!! (this would be really cool with custom sounds and electric explosion death)
+(#2, $2, ^2/3) Felnum Guardian !!! (this would be really cool with custom sounds and electric explosion death)
+(#2, ^2) Felnum Ore Slime !!! (this would be really cool with electric explosion death)
 (@4, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
@@ -185,7 +185,7 @@ ENEMY NPCS:
 (X) Scanner Scout
 (^) Shattered Goldfish*
 (^) Single-Cellular Nautilus*
-(#, ^2) Slime Worm !!!
+(#2, ^2) Slime Worm !!!
 (^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Steam Pirate !!!
@@ -278,14 +278,14 @@ STATUS EFFECTS:
 (#2, ^2) Defiled Assimilation* !!! (Assimilation build-up over time)
 (X) Hallowed Assimilation
 (^) Riven Assimilation*
-(#2, ^2) Cavitation !!! (needs bubbly effect and sounds)
+(#2, $2, ^2) Cavitation !!! (needs bubbly effect and sounds)
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
 (^) Mana Buffer
 (^) Rasterized*
 (#2, ^2) Shadefire
-(^) Static Shock
+($2, ^2/3) Static Shock !!! (just needs Sounds)
 (^) Torn*
 (^) Totally Safe
 (^) Toxic Shock*

@@ -983,8 +983,8 @@ Buffs: {
 	}
 
 	Cavitation_Debuff: {
-		DisplayName: Cavitation Debuff
-		Description: Mods.Origins.Buffs.Cavitation_Debuff.Description
+		DisplayName: Cavitation
+		Description: You got the wind knocked out of you.
 	}
 
 	Mildew_Whip_Buff: {
@@ -993,13 +993,13 @@ Buffs: {
 	}
 
 	Static_Shock_Debuff: {
-		DisplayName: Static Shock Debuff
-		Description: Mods.Origins.Buffs.Static_Shock_Debuff.Description
+		DisplayName: Static Shock
+		Description: It hurts to be near conductors!
 	}
 
 	Static_Shock_Damage_Debuff: {
-		DisplayName: Static Shock Damage Debuff
-		Description: Mods.Origins.Buffs.Static_Shock_Damage_Debuff.Description
+		DisplayName: Static Shock
+		Description: It hurts to be near conductors!
 	}
 }
 
@@ -2128,8 +2128,8 @@ DefiledRelaySignals: {
 	Security2: Found.
 	Security3: Send anti-bodies.
 	Security4: Threat.
-	Security5: Terrarian...
-	Security6: Relay 2, foriegn body.
+	Security5: Terrarian.
+	Security6: Relay 2, foreign body.
 	Security7: Relay 5, initiate protocol.
 	Idle1: All conditions optimal.
 	Idle2: Hey. M-y memories.

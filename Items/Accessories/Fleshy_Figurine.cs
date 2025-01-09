@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
         }
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (!originPlayer.taintedFlesh2) originPlayer.tornStrengthBoost.Flat += 0.08f;
+			if (!originPlayer.taintedFlesh2) originPlayer.tornStrengthBoost.Flat += 0.1f;
 			originPlayer.taintedFlesh2 = true;
 			originPlayer.symbioteSkull = true;
 		}

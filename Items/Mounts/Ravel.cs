@@ -1,16 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
-using PegasusLib;
 using System;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-namespace Origins.Items.Accessories {
+namespace Origins.Items.Mounts {
 	public class Ravel : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Movement"
@@ -95,7 +93,7 @@ namespace Origins.Items.Accessories {
 		public const int transformAnimationFrames = 3;
 		public const float transformCounterSpeed = 1.75f;
 		public const float transformCounterMax = 4f;
-		public override string Texture => "Origins/Items/Accessories/Ravel";
+		public override string Texture => "Origins/Items/Mounts/Ravel";
 		public static int ID { get; private set; }
 		public static AutoCastingAsset<Texture2D> TransformTexture { get; private set; }
 		protected virtual void SetID() {
@@ -129,7 +127,7 @@ namespace Origins.Items.Accessories {
 			MountData.playerYOffsets = [-22];
 			(RavelMounts ??= []).Add(Type);
 			if (!Main.dedServ && TransformTexture.Value is null) {
-				TransformTexture = Mod.Assets.Request<Texture2D>("Items/Accessories/Ravel_Morph");
+				TransformTexture = Mod.Assets.Request<Texture2D>("Items/Mounts/Ravel_Morph");
 			}
 			SetID();
 		}

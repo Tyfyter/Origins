@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Mounts;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
@@ -17,8 +18,8 @@ using static Origins.OriginExtensions;
 namespace Origins {
     public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
-			if (bugZapper) {
-				Player.statDefense += (int)(tornCurrentSeverity * 30);
+			if (bugZapper && tornCurrentSeverity > 0) {
+				Player.statDefense *= 1.15f + tornCurrentSeverity;
 			}
 			if (donorWristband) {
 				Player.pStone = false;

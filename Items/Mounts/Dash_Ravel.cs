@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using PegasusLib;
 using System;
 using Terraria;
@@ -7,8 +6,8 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Accessories {
-    public class Dash_Ravel : Ravel {
+namespace Origins.Items.Mounts {
+	public class Dash_Ravel : Ravel {
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
@@ -42,7 +41,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Dash_Ravel_Mount : Ravel_Mount {
-		public override string Texture => "Origins/Items/Accessories/Dash_Ravel";
+		public override string Texture => "Origins/Items/Mounts/Dash_Ravel";
 		public static new int ID { get; private set; }
 		protected override void SetID() {
 			MountData.buff = ModContent.BuffType<Dash_Ravel_Mount_Buff>();

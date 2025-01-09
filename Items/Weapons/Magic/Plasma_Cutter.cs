@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Magic {
 			//dust.velocity *= 8f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.3f, Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.15f, Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			float tornCurrentSeverity = target.GetGlobalNPC<OriginGlobalNPC>().tornCurrentSeverity;

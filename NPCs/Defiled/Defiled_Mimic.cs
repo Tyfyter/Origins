@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
+﻿using Origins.Items.Mounts;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
@@ -11,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;

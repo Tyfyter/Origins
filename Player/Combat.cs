@@ -372,7 +372,7 @@ namespace Origins {
 				}
 				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>() && modifiers.SourceDamage.ApplyTo(proj.damage) < proj.damage / 5) {
-					modifiers.SourceDamage = new StatModifier(1, 0.2f);
+					modifiers.SourceDamage = new StatModifier(1, 0.1f);
 				}
 			}
 			if (shineSparkDashTime > 0) {
@@ -601,7 +601,7 @@ namespace Origins {
 			}
 			if (razorwire) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.Damage * 0.67f;
+				double totalDamage = info.Damage;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
@@ -643,7 +643,7 @@ namespace Origins {
 			}
             if (retributionShield) {
                 const float maxDist = 240 * 240;
-                double totalDamage = info.Damage * 0.5f;
+                double totalDamage = info.Damage;
                 List<(int id, float weight)> targets = new();
                 NPC npc;
                 for (int i = 0; i < Main.maxNPCs; i++) {
@@ -701,7 +701,7 @@ namespace Origins {
             }
 			if (unsoughtOrgan) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.Damage * 0.5f;
+				double totalDamage = info.Damage;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {

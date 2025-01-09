@@ -81,6 +81,7 @@ using Terraria.ModLoader.IO;
 using Origins.Items.Weapons.Demolitionist;
 using PegasusLib.Reflection;
 using Terraria.GameContent.Generation;
+using Origins.Items.Mounts;
 
 namespace Origins {
 	public partial class Origins : Mod {

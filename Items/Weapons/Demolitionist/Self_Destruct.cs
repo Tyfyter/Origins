@@ -1,15 +1,13 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.DataStructures;
-using Origins.Tiles.Other;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Self_Destruct : ModItem, ICustomWikiStat {
@@ -24,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.noMelee = true;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.damage = 125;
+			Item.damage = 261;
 			Item.crit = 24;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
