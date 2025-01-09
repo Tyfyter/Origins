@@ -23,7 +23,7 @@ using static Origins.Dev.WikiPageExporter;
 namespace Origins.Dev {
 	public class WikiPageExporter : ILoadable {
 		public static Dictionary<Type, Func<AbstractNPCShop, IEnumerable<AbstractNPCShop.Entry>>> ShopTypes { get; private set; } = [];
-		public delegate string WikiLinkFormatter(string name, string note, bool imageOnly);
+		public delegate string WikiLinkFormatter(string name, string note, bool imageOnly, bool canSpace = false);
 		public static DictionaryWithNull<Mod, WikiLinkFormatter> LinkFormatters { get; private set; } = [];
 		static List<(Type, WikiProvider)> typedDataProviders;
 		public static List<(Type type, WikiProvider provider)> TypedDataProviders => typedDataProviders ??= [];
@@ -37,13 +37,13 @@ namespace Origins.Dev {
 		public void Load(Mod mod) {
 			ShopTypes.Add(typeof(TravellingMerchantShop), shop => ((TravellingMerchantShop)shop).ActiveEntries);
 			ShopTypes.Add(typeof(NPCShop), shop => ((NPCShop)shop).Entries);
-			LinkFormatters[Origins.instance] = (t, note, imageOnly) => {
+			LinkFormatters[Origins.instance] = (t, note, imageOnly, _) => {
 				string formattedName = t.Replace(" ", "_");
 				return $"<a is=a-link image=$fromStats{(imageOnly ? " imageOnly" : "")}>{t}{(string.IsNullOrWhiteSpace(note) ? "" : $"<note>{note}</note>")}</a>";
 			};
-			LinkFormatters[null] = (t, note, imageOnly) => {
+			LinkFormatters[null] = (t, note, imageOnly, canSpace) => {
 				string formattedName = t.Replace(" ", "_");
-				return $"{(imageOnly ? " " : "")}<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
+				return $"{(imageOnly && canSpace ? " " : "")}<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
 			};
 			requiredTileWikiTextOverride[TileID.Bottles] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.Bottle");
 			recipeConditionWikiTextOverride[Condition.InGraveyard] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.EctoMist");
@@ -578,9 +578,40 @@ namespace Origins.Dev {
 			List<DropRateInfo> ruleList = [];
 			ratesInfo ??= new(1f);
 			for (int j = 0; j < rules.Count; j++) {
-				rules[j].ReportDroprates(ruleList, ratesInfo.Value);
+				try {
+					rules[j].ReportDroprates(ruleList, ratesInfo.Value);
+				} catch (Exception) { }
 			}
 			return ruleList;
+		}
+		public static void GetAllDropRates(this List<IItemDropRule> rules, out List<DropRateInfo> classic, out List<DropRateInfo> expert, out List<DropRateInfo> master, DropRateInfoChainFeed? ratesInfo = null) {
+			classic = [];
+			expert = [];
+			master = [];
+			ratesInfo ??= new(1f);
+			int gameMode = Main.GameMode;
+			try {
+				Main.GameMode = GameModeID.Normal;
+				for (int j = 0; j < rules.Count; j++) {
+					try {
+						rules[j].ReportDroprates(classic, ratesInfo.Value);
+					} catch (Exception) { }
+				}
+				Main.GameMode = GameModeID.Expert;
+				for (int j = 0; j < rules.Count; j++) {
+					try {
+						rules[j].ReportDroprates(expert, ratesInfo.Value);
+					} catch (Exception) { }
+				}
+				Main.GameMode = GameModeID.Master;
+				for (int j = 0; j < rules.Count; j++) {
+					try {
+						rules[j].ReportDroprates(master, ratesInfo.Value);
+					} catch (Exception) { }
+				}
+			} finally {
+				Main.GameMode = gameMode;
+			}
 		}
 		public static JArray FillWithLoot(this JArray self, List<DropRateInfo> loot, bool doRecursion = false) {
 			for (int i = 0; i < loot.Count; i++) {
@@ -619,7 +650,7 @@ namespace Origins.Dev {
 			if (recipeGroup != -1) {
 				text = $"<a is=a-link image=\"RecipeGroups/{RecipeGroupPage.GetRecipeGroupWikiName(recipeGroup)}\" href=Recipe_Groups>{RecipeGroup.recipeGroups[recipeGroup].GetText()}</a>";
 			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out WikiLinkFormatter formatter)) {
-				text = $"{formatter(item.Name, note, imageOnly)}";
+				text = $"{formatter(item.Name, note, imageOnly, item.stack > 1)}";
 				goto formatted;
 			} else {
 				text = item.Name;
