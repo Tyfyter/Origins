@@ -29,7 +29,8 @@ using static Origins.Dev.WikiPageExporter;
 
 namespace Origins.Dev {
 	public class WikiPageExporter : ILoadable {
-		public delegate string WikiLinkFormatter(string name);
+		public static Dictionary<Type, Func<AbstractNPCShop, IEnumerable<AbstractNPCShop.Entry>>> ShopTypes { get; private set; } = [];
+		public delegate string WikiLinkFormatter(string name, string note, bool imageOnly);
 		public static DictionaryWithNull<Mod, WikiLinkFormatter> LinkFormatters { get; private set; } = [];
 		static List<(Type, WikiProvider)> typedDataProviders;
 		public static List<(Type type, WikiProvider provider)> TypedDataProviders => typedDataProviders ??= [];
@@ -41,13 +42,15 @@ namespace Origins.Dev {
 		public static Dictionary<int, LocalizedText> requiredTileWikiTextOverride = [];
 		public static Dictionary<Condition, LocalizedText> recipeConditionWikiTextOverride = [];
 		public void Load(Mod mod) {
-			LinkFormatters[Origins.instance] = (t) => {
+			ShopTypes.Add(typeof(TravellingMerchantShop), shop => ((TravellingMerchantShop)shop).ActiveEntries);
+			ShopTypes.Add(typeof(NPCShop), shop => ((NPCShop)shop).Entries);
+			LinkFormatters[Origins.instance] = (t, note, imageOnly) => {
 				string formattedName = t.Replace(" ", "_");
-				return $"<a is=a-link image=$fromStats>{t}</a>";
+				return $"<a is=a-link image=$fromStats{(imageOnly ? " imageOnly" : "")}>{t}{(string.IsNullOrWhiteSpace(note) ? "" : $"<note>{note}</note>")}</a>";
 			};
-			LinkFormatters[null] = (t) => {
+			LinkFormatters[null] = (t, note, imageOnly) => {
 				string formattedName = t.Replace(" ", "_");
-				return $"<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
+				return $"{(imageOnly ? " " : "")}<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
 			};
 			requiredTileWikiTextOverride[TileID.Bottles] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.Bottle");
 			recipeConditionWikiTextOverride[Condition.InGraveyard] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.EctoMist");
@@ -465,7 +468,7 @@ namespace Origins.Dev {
 			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
 			string reqName = Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
 			if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
-				return formatter(reqName);
+				return formatter(reqName, null, false);
 			} else {
 				Origins.instance.Logger.Warn($"No wiki link formatter for mod {reqMod}, skipping requirement for {reqName}");
 			}
@@ -553,6 +556,83 @@ namespace Origins.Dev {
 				context[text.name] = text.text;
 			}
 			return (WikiTemplate, context);
+		}
+		static Dictionary<int, string> sourceCache = null;
+		static void GenerateSourceCache() {
+			if (sourceCache is not null) return;
+			Dictionary<int, StringBuilder> cache = [];
+			StringBuilder GetBuilder(int type) {
+				if (!cache.TryGetValue(type, out StringBuilder builder)) cache[type] = builder = new();
+				return builder;
+			}
+			for (int i = 0; i < Main.recipe.Length; i++) {
+				if (Main.recipe[i].createItem.ModItem?.Mod is Origins) {
+					StringBuilder sources = GetBuilder(Main.recipe[i].createItem.type);
+					RecipeRequirements reqs = new(Main.recipe[i]);
+					string reqsText = reqs.requirements.Length > 0 ? $"(@{string.Join(", ", reqs.requirements.Select(r => r.ToString()))})" : "";
+					if (sources.Length > 0) sources.Append("<div class=divider></div>");
+					sources.Append($"{string.Join("+", Main.recipe[i].requiredItem.Select(i => (i.stack > 1 ? i.stack.ToString() : "") + WikiExtensions.GetItemText(ContentSamples.ItemsByType[i.type], imageOnly: true)))}{reqsText}");
+				}
+			}
+			foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
+				if (ShopTypes.TryGetValue(shop.GetType(), out var func)) {
+					foreach (AbstractNPCShop.Entry entry in func(shop)) {
+						if (entry.Item.ModItem?.Mod is Origins) {
+							StringBuilder sources = GetBuilder(entry.Item.type);
+							if (sources.Length > 0) sources.Append("<div class=divider></div>");
+							sources.Append($"{WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[shop.NpcType])} (<a-coins>{entry.Item.GetStoreValue()}</a-coins>{string.Join(", ", entry.Conditions.Select(c => c.Description.Value))})");
+						}
+					}
+				}
+			}
+			for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
+				if (ItemLoader.GetItem(ItemID.Sets.ShimmerTransformToItem[i])?.Mod is Origins) {
+					StringBuilder sources = GetBuilder(ItemID.Sets.ShimmerTransformToItem[i]);
+					if (sources.Length > 0) sources.Append("<div class=divider></div>");
+					sources.Append(WikiExtensions.GetItemText(ContentSamples.ItemsByType[i]));
+					sources.Append(" (@ <a is=a-link href=https://terraria.wiki.gg/wiki/Shimmer>Shimmer</a>)");
+				}
+			}
+			for (int i = 0; i < ItemLoader.ItemCount; i++) {
+				List<IItemDropRule> rules = Main.ItemDropsDB.GetRulesForItemID(i);
+				if (rules?.Count > 0) {
+					List<DropRateInfo> drops = [];
+					for (int j = 0; j < rules.Count; j++) {
+						DropRateInfoChainFeed ratesInfo = new(1f);
+						try {
+							rules[j].ReportDroprates(drops, ratesInfo);
+						} catch (Exception) {}
+					}
+					for (int j = 0; j < drops.Count; j++) {
+						if (ItemLoader.GetItem(drops[j].itemId)?.Mod is not Origins) continue;
+						StringBuilder sources = GetBuilder(drops[j].itemId);
+						if (sources.Length > 0) sources.Append("<div class=divider></div>");
+						sources.Append(WikiExtensions.GetItemText(ContentSamples.ItemsByType[i]));
+						if ((drops[j].conditions?.Count ?? 0) > 0) sources.Append(" " + string.Join(", ", drops[j].conditions.Select(r => r.ToString())));
+					}
+				}
+			}
+			for (int i = 0; i < NPCLoader.NPCCount; i++) {
+				List<IItemDropRule> rules = Main.ItemDropsDB.GetRulesForNPCID(i);
+				if (rules?.Count > 0) {
+					List<DropRateInfo> drops = [];
+					for (int j = 0; j < rules.Count; j++) {
+						DropRateInfoChainFeed ratesInfo = new(1f);
+						try {
+							rules[j].ReportDroprates(drops, ratesInfo);
+						} catch (Exception) {}
+					}
+					for (int j = 0; j < drops.Count; j++) {
+						if (ItemLoader.GetItem(drops[j].itemId)?.Mod is not Origins) continue;
+						StringBuilder sources = GetBuilder(drops[j].itemId);
+						if (sources.Length > 0) sources.Append("<div class=divider></div>");
+						sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
+						if ((drops[j].conditions?.Count ?? 0) > 0) sources.Append(" " + string.Join(", ", drops[j].conditions.Select(r => r.ToString())));
+					}
+				}
+			}
+
+			sourceCache = new(cache.Select(kvp => new KeyValuePair<int, string>(kvp.Key, kvp.Value.ToString())));
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
 			Item item = modItem.Item;
@@ -664,9 +744,8 @@ namespace Origins.Dev {
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
 			if (item.createTile != -1) {
 				types.Add("Tile");
-				if (TileID.Sets.Torch[item.createTile]) {
-					types.Add("Torch");
-				}
+				if (TileID.Sets.Torch[item.createTile]) types.Add("Torch");
+				if (TileID.Sets.Ore[item.createTile]) types.Add("Ore");
 			}
 			if (item.expert) types.Add("Expert");
 			if (item.master) types.Add("Master");
@@ -732,6 +811,10 @@ namespace Origins.Dev {
 				string baseKey = $"WikiGenerator.Stats.{modItem.Mod?.Name}.{modItem.Name}.";
 				string key = baseKey + "Source";
 				if (Language.Exists(key)) data.AppendStat("Source", Language.GetTextValue(key), key);
+				else {
+					GenerateSourceCache();
+					if (sourceCache.TryGetValue(item.type, out string source)) data.AppendStat("Source", source, "");
+				}
 
 				key = baseKey + "Effect";
 				if (Language.Exists(key)) data.AppendStat("Effect", Language.GetTextValue(key), key);
@@ -982,22 +1065,28 @@ namespace Origins.Dev {
 			}
 			return self;
 		}
-		public static string GetItemText(Item item, string note = "") {
-			string name = item.Name;
+		public static string GetItemText(Item item, string note = "", bool imageOnly = false) {
 			string text = "";
 			int recipeGroup = item.GetGlobalItem<RecipeGroupTrackerGlobalItem>().recipeGroup;
 			if (recipeGroup != -1) {
 				text = $"<a is=a-link image=\"RecipeGroups/{RecipeGroupPage.GetRecipeGroupWikiName(recipeGroup)}\" href=Recipe_Groups>{RecipeGroup.recipeGroups[recipeGroup].GetText()}</a>";
-			} else if (item.ModItem?.Mod is Origins) {
-				text = $"<a is=a-link image=$fromStats>{name}{(string.IsNullOrWhiteSpace(note) ? "" : $"<note>{note}</note>")}</a>";
-			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
-				text = $"{formatter(item.Name)}";
+			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out WikiLinkFormatter formatter)) {
+				text = $"{formatter(item.Name, note, imageOnly)}";
 				goto formatted;
 			} else {
 				text = item.Name;
 			}
 			formatted:
 			if (item.stack != 1) text += $" ({item.stack})";
+			return text;
+		}
+		public static string GetNPCText(NPC npc, string note = "", bool imageOnly = false) {
+			string text = "";
+			if (WikiPageExporter.LinkFormatters.TryGetValue(npc.ModNPC?.Mod, out WikiLinkFormatter formatter)) {
+				text = $"{formatter(npc.TypeName, note, imageOnly)}";
+			} else {
+				text = npc.TypeName;
+			}
 			return text;
 		}
 		public static string GetBuffText(int type) {
