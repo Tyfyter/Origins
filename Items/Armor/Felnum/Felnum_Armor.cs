@@ -16,6 +16,7 @@ namespace Origins.Items.Armor.Felnum {
 			"GenericBoostGear"
 		];
 		public short GlowMask = -1;
+		protected virtual int CraftingStation => TileID.Anvils;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
@@ -60,7 +61,7 @@ namespace Origins.Items.Armor.Felnum {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15)
-			.AddTile(TileID.Anvils)
+			.AddTile(CraftingStation)
 			.Register();
 		}
 		public string ArmorSetName => "Felnum_Armor";
@@ -71,6 +72,7 @@ namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Body)]
 	public class Felnum_Breastplate : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
+		protected virtual int CraftingStation => TileID.Anvils;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
@@ -97,13 +99,14 @@ namespace Origins.Items.Armor.Felnum {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 25)
-			.AddTile(TileID.Anvils)
+			.AddTile(CraftingStation)
 			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Felnum_Greaves : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
+		protected virtual int CraftingStation => TileID.Anvils;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Legs_Glow");
@@ -124,13 +127,14 @@ namespace Origins.Items.Armor.Felnum {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 20)
-			.AddTile(TileID.Anvils)
+			.AddTile(CraftingStation)
 			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Ancient_Felnum_Helmet : Felnum_Helmet, IWikiArmorSet, INoSeperateWikiPage {
 		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Felnum_Helmet.Tooltip"));
+		protected override int CraftingStation => TileID.DemonAltar;
 		public new string ArmorSetName => "Ancient_Felnum_Armor";
 		public new int HeadItemID => Type;
 		public new int BodyItemID => ModContent.ItemType<Ancient_Felnum_Breastplate>();
@@ -139,9 +143,11 @@ namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Body)]
 	public class Ancient_Felnum_Breastplate : Felnum_Breastplate {
 		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Felnum_Breastplate.Tooltip"));
+		protected override int CraftingStation => TileID.DemonAltar;
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Ancient_Felnum_Greaves : Felnum_Greaves {
 		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Felnum_Greaves.Tooltip"));
+		protected override int CraftingStation => TileID.DemonAltar;
 	}
 }
