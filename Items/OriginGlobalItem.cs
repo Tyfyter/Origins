@@ -154,6 +154,11 @@ namespace Origins.Items {
 			}
 			if (Origins.itemGlowmasks[item.type] != 0) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
+		public override void ModifyItemScale(Item item, Player player, ref float scale) {
+			if (item.CountsAsClass(DamageClass.Melee)) {
+				if (player.OriginPlayer().soulhideHelmet) scale *= 1.1f;
+			}
+		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
 			if (player.nonTorch != -1 && player.inventory[player.nonTorch].type == Boomphracken.ID && player.HeldItem.CountsAsClass<Thrown_Explosive>()) {
 				player.selectItemOnNextUse = true;

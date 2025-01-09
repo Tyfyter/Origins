@@ -20,7 +20,7 @@ namespace Origins.Items.Armor.Soulhide {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.weaponSize(DamageClass.Melee) += 0.1f; !!!
+			player.OriginPlayer().soulhideHelmet = true;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Soulhide_Coat>() && legs.type == ModContent.ItemType<Soulhide_Guards>();

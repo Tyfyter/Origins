@@ -82,6 +82,7 @@ namespace Origins {
 		public bool acridSet = false;
 		public float necroSetAmount = 0f;
 		public bool soulhideSet = false;
+		public bool soulhideHelmet = false;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
 		public int setAbilityCooldown = 0;
@@ -441,6 +442,7 @@ namespace Origins {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
 			soulhideSet = false;
+			soulhideHelmet = false;
 			scavengerSet = false;
 			amberSet = false;
 			sapphireSet = false;
