@@ -42,7 +42,7 @@ namespace Origins.Dev {
 			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
-
+			
 			bool getGoodWorld = Main.getGoodWorld;
 			Main.getGoodWorld = false;
 			int gameMode = Main.GameMode;

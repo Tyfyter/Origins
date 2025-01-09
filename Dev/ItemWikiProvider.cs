@@ -57,12 +57,18 @@ namespace Origins.Dev {
 			return (WikiTemplate, context);
 		}
 		static Dictionary<int, string> sourceCache = null;
+		static Dictionary<int, JArray> dropsCache = null;
 		static void GenerateSourceCache() {
 			if (sourceCache is not null) return;
 			Dictionary<int, StringBuilder> cache = [];
+			Dictionary<int, JArray> dropCache = [];
 			StringBuilder GetBuilder(int type) {
 				if (!cache.TryGetValue(type, out StringBuilder builder)) cache[type] = builder = new();
 				return builder;
+			}
+			JArray GetDropCache(int type) {
+				if (!dropCache.TryGetValue(type, out JArray drop)) dropCache[type] = drop = [];
+				return drop;
 			}
 			for (int i = 0; i < Main.recipe.Length; i++) {
 				if (Main.recipe[i].createItem.ModItem?.Mod is Origins) {
@@ -107,31 +113,108 @@ namespace Origins.Dev {
 						StringBuilder sources = GetBuilder(drops[j].itemId);
 						if (sources.Length > 0) sources.Append("<div class=divider></div>");
 						sources.Append(WikiExtensions.GetItemText(ContentSamples.ItemsByType[i]));
-						if ((drops[j].conditions?.Count ?? 0) > 0) sources.Append(" " + string.Join(", ", drops[j].conditions.Select(r => r.ToString())));
+						string conditions = null;
+						if ((drops[j].conditions?.Count ?? 0) > 0) {
+							conditions = string.Join(", ", drops[j].conditions.Select(r => r.GetConditionDescription()));
+							sources.Append(" " + conditions);
+						}
+						JObject jobj = new() {
+							["Name"] = WikiExtensions.GetItemText(ContentSamples.ItemsByType[i]),
+							["Rate"] = drops[j].dropRate,
+							["Max"] = drops[j].stackMax,
+							["Min"] = drops[j].stackMin,
+							["Difficulty"] = "Normal"
+						};
+						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						GetDropCache(drops[j].itemId).Add(jobj);
+						jobj = (JObject)jobj.DeepClone();
+						jobj["Difficulty"] = "Expert";
+						GetDropCache(drops[j].itemId).Add(jobj);
+						jobj = (JObject)jobj.DeepClone();
+						jobj["Difficulty"] = "Master";
+						GetDropCache(drops[j].itemId).Add(jobj);
 					}
 				}
 			}
 			for (int i = 0; i < NPCLoader.NPCCount; i++) {
 				List<IItemDropRule> rules = Main.ItemDropsDB.GetRulesForNPCID(i);
 				if (rules?.Count > 0) {
-					List<DropRateInfo> drops = [];
-					for (int j = 0; j < rules.Count; j++) {
-						DropRateInfoChainFeed ratesInfo = new(1f);
-						try {
-							rules[j].ReportDroprates(drops, ratesInfo);
-						} catch (Exception) {}
+					rules.GetAllDropRates(out List<DropRateInfo> classic, out List<DropRateInfo> expert, out List<DropRateInfo> master);
+					classic.RemoveAll(static i => i.conditions?.Any(c => c is Conditions.IsExpert or Conditions.IsMasterMode) ?? false);
+					expert.RemoveAll(static i => i.conditions?.Any(c => c is Conditions.NotExpert or Conditions.IsMasterMode) ?? false);
+					master.RemoveAll(static i => i.conditions?.Any(c => c is Conditions.NotExpert or Conditions.NotMasterMode) ?? false);
+					HashSet<int> itemTypes = [];
+					for (int j = 0; j < classic.Count; j++) {
+						if (ItemLoader.GetItem(classic[j].itemId)?.Mod is not Origins) continue;
+						string conditions = null;
+						if ((classic[j].conditions?.Count ?? 0) > 0) {
+							conditions = string.Join(", ", classic[j].conditions.Select(r => r.GetConditionDescription()));
+						}
+						if (itemTypes.Add(classic[j].itemId)) {
+							StringBuilder sources = GetBuilder(classic[j].itemId);
+							if (sources.Length > 0) sources.Append("<div class=divider></div>");
+							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
+							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+						}
+						JObject jobj = new() {
+							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
+							["Rate"] = classic[j].dropRate,
+							["Max"] = classic[j].stackMax,
+							["Min"] = classic[j].stackMin,
+							["Difficulty"] = "Normal"
+						};
+						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						GetDropCache(classic[j].itemId).Add(jobj);
 					}
-					for (int j = 0; j < drops.Count; j++) {
-						if (ItemLoader.GetItem(drops[j].itemId)?.Mod is not Origins) continue;
-						StringBuilder sources = GetBuilder(drops[j].itemId);
-						if (sources.Length > 0) sources.Append("<div class=divider></div>");
-						sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
-						if ((drops[j].conditions?.Count ?? 0) > 0) sources.Append(" " + string.Join(", ", drops[j].conditions.Select(r => r.ToString())));
+					for (int j = 0; j < expert.Count; j++) {
+						if (ItemLoader.GetItem(expert[j].itemId)?.Mod is not Origins) continue;
+						string conditions = null;
+						if ((expert[j].conditions?.Count ?? 0) > 0) {
+							conditions = string.Join(", ", expert[j].conditions.Where(c => c is not Conditions.IsExpert).Select(r => r.GetConditionDescription()));
+						}
+						if (itemTypes.Add(expert[j].itemId)) {
+							StringBuilder sources = GetBuilder(expert[j].itemId);
+							if (sources.Length > 0) sources.Append("<div class=divider></div>");
+							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
+							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+						}
+						JObject jobj = new() {
+							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
+							["Rate"] = expert[j].dropRate,
+							["Max"] = expert[j].stackMax,
+							["Min"] = expert[j].stackMin,
+							["Difficulty"] = "Expert"
+						};
+						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						GetDropCache(expert[j].itemId).Add(jobj);
+					}
+					for (int j = 0; j < master.Count; j++) {
+						if (ItemLoader.GetItem(master[j].itemId)?.Mod is not Origins) continue;
+						string conditions = null;
+						if ((master[j].conditions?.Count ?? 0) > 0) {
+							conditions = string.Join(", ", master[j].conditions.Where(c => c is not Conditions.IsMasterMode).Select(r => r.GetConditionDescription()));
+						}
+						if (itemTypes.Add(master[j].itemId)) {
+							StringBuilder sources = GetBuilder(master[j].itemId);
+							if (sources.Length > 0) sources.Append("<div class=divider></div>");
+							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
+							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+						}
+						JObject jobj = new() {
+							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
+							["Rate"] = master[j].dropRate,
+							["Max"] = master[j].stackMax,
+							["Min"] = master[j].stackMin,
+							["Difficulty"] = "Master"
+						};
+						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						GetDropCache(master[j].itemId).Add(jobj);
 					}
 				}
 			}
 
 			sourceCache = new(cache.Select(kvp => new KeyValuePair<int, string>(kvp.Key, kvp.Value.ToString())));
+			dropsCache = dropCache;
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
 			Item item = modItem.Item;
@@ -309,11 +392,12 @@ namespace Origins.Dev {
 			{
 				string baseKey = $"WikiGenerator.Stats.{modItem.Mod?.Name}.{modItem.Name}.";
 				string key = baseKey + "Source";
+				GenerateSourceCache();
 				if (Language.Exists(key)) data.AppendStat("Source", Language.GetTextValue(key), key);
 				else {
-					GenerateSourceCache();
 					if (sourceCache.TryGetValue(item.type, out string source)) data.AppendStat("Source", source, "");
 				}
+				if (dropsCache.TryGetValue(item.type, out JArray dropSources)) data.AppendJStat<JArray>("DropSources", dropSources, []);
 
 				key = baseKey + "Effect";
 				if (Language.Exists(key)) data.AppendStat("Effect", Language.GetTextValue(key), key);
