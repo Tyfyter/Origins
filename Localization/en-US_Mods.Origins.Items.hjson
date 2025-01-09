@@ -3719,7 +3719,7 @@ Playtimes_Over: {
 	Tooltip:
 		'''
 		Attacks tenderize targets
-		+18% applied torn severity
+		+20% applied torn severity
 		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
 		'''
 }

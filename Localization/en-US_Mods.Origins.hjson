@@ -1971,8 +1971,8 @@ Configs: {
 		}
 
 		RivenAsimilationMultiplier: {
-			Label: Riven Asimilation Multiplier
-			Tooltip: Reduces the effect of Riven Assimilation
+			Label: Riven Assimilation Torn multiplier
+			Tooltip: Reduces the Torn severity applied by Riven Assimilation
 		}
 	}
 }
