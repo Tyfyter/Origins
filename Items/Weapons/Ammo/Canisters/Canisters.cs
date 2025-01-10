@@ -274,7 +274,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)
 			.AddIngredient(ItemID.Fireblossom)
-			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -360,9 +360,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
+			Recipe.Create(Type, 10)
 			.AddIngredient(ItemID.CursedFlame)
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -443,9 +443,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
+			Recipe.Create(Type, 10)
 			.AddIngredient(ItemID.Ichor)
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -474,9 +474,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
+			Recipe.Create(Type, 10)
 			.AddIngredient<Black_Bile>()
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -555,9 +555,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
+			Recipe.Create(Type, 10)
 			.AddIngredient<Alkahest>()
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -627,9 +627,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
+			Recipe.Create(Type, 10)
 			.AddIngredient<Brineglow_Item>()
-			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 5)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

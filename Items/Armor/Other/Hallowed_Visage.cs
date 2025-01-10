@@ -25,7 +25,7 @@ namespace Origins.Items.Armor.Other {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveProjectileSpeed += 0.15f;
-			player.GetCritChance(DamageClasses.Explosive) += 8;
+			player.GetCritChance(DamageClasses.Explosive) += 15;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ItemID.HallowedPlateMail && legs.type == ItemID.HallowedGreaves;

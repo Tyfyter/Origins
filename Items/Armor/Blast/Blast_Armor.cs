@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Blast {
 			Item.rare = ItemRarityID.Yellow;
 		}
         public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClass.Generic) += 10f;
+			player.GetCritChance(DamageClass.Generic) += 16f;
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.1f;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
