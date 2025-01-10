@@ -59,7 +59,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.Player.ZoneShimmer) {
-				return 0.085f;
+				return 0.0085f;
 			}
 			return 0;
 		}

@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.damage = 36;
+			Item.DamageType = DamageClass.Ranged;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.crit = 1;
 			Item.useAnimation = 35;

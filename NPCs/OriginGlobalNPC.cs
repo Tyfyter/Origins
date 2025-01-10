@@ -146,7 +146,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Mechanic: {
-					shop.Add<Fabricator_Item>(Condition.DownedMechBossAll);
+					shop.Add<Fabricator_Item>(Condition.DownedMechBossAny);
 					break;
 				}
 				case NPCID.PartyGirl: {
