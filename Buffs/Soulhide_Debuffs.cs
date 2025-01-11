@@ -3,14 +3,13 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
-	public class Weak_Shadowflame_Debuff : ModBuff {
+	public class Shadefire_Debuff : ModBuff {
 		public static int ID { get; private set; }
-		public override string Texture => "Terraria/Images/Buff_153";
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			npc.GetGlobalNPC<OriginGlobalNPC>().weakShadowflameDebuff = true;
+			npc.GetGlobalNPC<OriginGlobalNPC>().shadeFire = true;
 		}
 	}
 	public class Soulhide_Weakened_Debuff : ModBuff {
