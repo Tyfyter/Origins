@@ -1240,7 +1240,7 @@ Ancient_Hallowed_Visage: {
 	/* Tooltip:
 		'''
 		+15% explosive velocity
-		+8% explosive critical strike chance
+		+15% explosive critical strike chance
 		''' */
 }
 
@@ -1268,7 +1268,7 @@ Hallowed_Visage: {
 	/* Tooltip:
 		'''
 		+15% explosive velocity
-		+8% explosive critical strike chance
+		+15% explosive critical strike chance
 		''' */
 }
 
@@ -4095,7 +4095,7 @@ Blast_Helmet: {
 	// DisplayName: Blast Helmet
 	/* Tooltip:
 		'''
-		+10% generic critical strike chance
+		+16% generic critical strike chance
 		-10% self-damage
 		''' */
 }

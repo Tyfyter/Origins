@@ -55,10 +55,11 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(#2, ^2) Defiled Amalgamation* !!! (OOB tolerance)
+(#2, ^2) Defiled Amalgamation* !!! (OOB tolerance and arm glows)
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
-(^) World Cracker*
+(X) Shimmer Construct
+(#2, ^2) World Cracker* !!! (AI additions)
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
@@ -97,6 +98,7 @@ TOWN NPC Quests:
 (^) Goblin Tinkerer - Reel In the Goods
 (^) Goblin Tinkerer - Lend a Hand?
 (X) Goblin Tinkerer - Full Speed Ahead
+(X) Mechanic - Mile Wide, Tile Deep !!!
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
 (^) Party Girl - Livin' Up the Party
@@ -142,6 +144,7 @@ ENEMY NPCS:
 (^) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
+(X) Blotopus
 (^) Bottomfeeder*
 (#, ^2) Boulder Mimic !!!
 (^) Buckethead Zombie
@@ -152,8 +155,10 @@ ENEMY NPCS:
 (^) Cleaver*
 (#, ^2) Cloud Elemental !!!
 (^) Conehead Zombie
+(X) Corrupt Reaper
 (^) Cranivore
 (^) Crimbrain
+(X) Crying Creeper
 (^) Defiled Cyclops*
 (^) Defiled Digger
 (#, ^2) Defiled Ekko* !!!
@@ -178,14 +183,16 @@ ENEMY NPCS:
 (X) Junkie
 (X) Machine Gun Machine
 (^) Optiphage
+(X) Pinwheel
 (^) Pustule Jellyfish*
 (X) Riot Drone
 (^) Riven Penguin*
 (^) Riven Protoform*
 (X) Scanner Scout
 (^) Shattered Goldfish*
+(X) Shooter Creeper
 (^) Single-Cellular Nautilus*
-(#2, ^2) Slime Worm !!!
+(#2, ^2) Slime Worm !!! (needs bestiary sprite implementation)
 (^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Steam Pirate !!!
@@ -231,8 +238,10 @@ ENEMY NPCS:
 (#, ^2) Shotgunfish !!!
 (X) Riven Gull
 (X) Rock Bottom !!!
+(X) Rotting Husk
+(X) Tendon Terror
 (^) Torn Ghoul
-(^) Trijaw Shark*
+(#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
 
 (X) Annihilator
 (X) Clockwork
@@ -491,9 +500,7 @@ ACCESSORIES:
 (^) Venom Fang*
 (#, ^2) Venom Shield !!!
 
-(X) Ornament of Metamorphosis°
 (X) Sigil of the Machine°
-(X) Strange Feather°
 
 (^) Entangled Energy*
 (^) Mana Drive°
@@ -506,11 +513,11 @@ ACCESSORIES:
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
+(X) Faith Beads !!!
 (^) Fiberglass Dagger*
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
 (^) Lazy Cloak°
-(#, ^2) Mildewy Diving Helmet° !!!
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
 (ᗢ) Stack of Shraps°
@@ -647,7 +654,7 @@ MELEE WEAPONS:
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
-(#2, ^2) Felnum Boar Spear !!! (sprite jank)
+(#3, ^2) Felnum Boar Spear !!! (sprite jank)
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
@@ -671,6 +678,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
+(X) Boomboom !!!
 (#2, ^2) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
@@ -855,6 +863,7 @@ SUMMONER WEAPONS:
 (%2) Ocean Amulet !!!
 (#, ^2) Ocotillo Finger !!!
 (^) Ocotoral Bud*
+(X) Pinwheel Pole
 (^) Rotted Worm Staff
 (X) Shadow Cast !!!
 (X) Sunflower in a Pot !!!
@@ -981,6 +990,7 @@ EXPLOSIVE WEAPONS:
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
 (^) Flakjack
+(X) Shimmer Dynamite
 (@4, #) Starburst
 ---
 
@@ -1001,6 +1011,7 @@ GENERIC WEAPONS:
 
 TILES:
 ---
+(X) Aetherium Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (#2, ^2) Baryte* !!! (proper merging with mud)
@@ -1145,6 +1156,7 @@ TILES:
 (ᗢ) Fungarust*
 (^) Gel Blister*
 (X) Heat Vent
+(X) Hydrothermal Vent !!!
 (X) Marrowick Coral
 (X) Moonshine°
 (X) Ocotillo !!!
@@ -1155,8 +1167,9 @@ TILES:
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Underwater Vine
+(X) Venus Coral !!!
 (^) Wilting Rose*
-(@5, ^3) Wrycoral*
+(@4, ^3) Wrycoral*
 
 (^) A Perfect World
 (X) Deceptive Beauty
@@ -1203,6 +1216,7 @@ MATERIALS:
 ---
 (^) Acetabularia*
 (^) Adhesive Wrap*
+(X) Aetherium Bar
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
@@ -1414,6 +1428,9 @@ MOUNTS & PETS:
 
 AMMO:
 ---
+(X) Aether Arrow
+(X) Aether Bullet
+(X) Aether Canister
 (#2, ^2) Bee Canister !!!
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*

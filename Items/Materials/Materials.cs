@@ -486,8 +486,8 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Ectoplasm)
+			//.AddIngredient(ModContent.ItemType<Aetherium_Bar>())
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
-			//.AddIngredient(ModContent.ItemType<_Bar>(), 1)
 			.AddTile(TileID.AdamantiteForge)
 			.Register();
 		}
