@@ -293,7 +293,7 @@ STATUS EFFECTS:
 (X) Ionizing Radiation
 (^) Mana Buffer
 (^) Rasterized*
-(#2, ^2) Shadefire
+(^) Shadefire
 ($2, ^2/3) Static Shock !!! (just needs Sounds)
 (^) Torn*
 (^) Totally Safe

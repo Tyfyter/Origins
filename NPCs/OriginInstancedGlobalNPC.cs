@@ -39,7 +39,7 @@ namespace Origins.NPCs {
 		public bool slowDebuff = false;
 		public bool barnacleBuff = false;
 		public bool oldSlowDebuff = false;
-		public bool weakShadowflameDebuff = false;
+		public bool shadeFire = false;
 		public bool soulhideWeakenedDebuff = false;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
@@ -93,7 +93,7 @@ namespace Origins.NPCs {
 			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
-			weakShadowflameDebuff = false;
+			shadeFire = false;
 			soulhideWeakenedDebuff = false;
 			cavitationDebuff = false;
 			staticShock = false;
@@ -167,7 +167,7 @@ namespace Origins.NPCs {
 				}
 				npc.lifeRegen -= 4;
 			}
-			if (weakShadowflameDebuff) {
+			if (shadeFire) {
 				if (npc.lifeRegen > 0) {
 					npc.lifeRegen = 0;
 				}

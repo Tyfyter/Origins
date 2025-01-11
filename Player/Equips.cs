@@ -42,7 +42,7 @@ namespace Origins {
 					if (currentTarget.CanBeChasedBy()) {
 						float distSquared = (currentTarget.Center - Player.MountedCenter).LengthSquared();
 						if (distSquared < maxDistTiles * maxDistTiles) {
-							currentTarget.AddBuff(Weak_Shadowflame_Debuff.ID, 5);
+							currentTarget.AddBuff(Shadefire_Debuff.ID, 5);
 						}
 						if (distSquared < maxDistTiles2 * maxDistTiles2) {
 							currentTarget.AddBuff(Soulhide_Weakened_Debuff.ID, 5);
