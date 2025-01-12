@@ -24,6 +24,7 @@ using static Terraria.Utilities.NPCUtils;
 namespace Origins.NPCs.Felnum {
 	public class Felnum_Guardian : ModNPC {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Felnum_Guardian).GetDefaultTMLName() + "_Glow";
+		public override void Load() => this.AddBanner();
 		public static HashSet<int> FriendlyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.FairyCritterBlue;

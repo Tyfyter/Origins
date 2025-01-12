@@ -20,6 +20,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Felnum {
 	public class Felnum_Ore_Slime : ModNPC {
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
 			Main.npcFrameCount[NPC.type] = 2;

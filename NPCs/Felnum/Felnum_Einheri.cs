@@ -28,6 +28,7 @@ namespace Origins.NPCs.Felnum {
 		AutoLoadingAsset<Texture2D> attackTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Attac";
 		AutoLoadingAsset<Texture2D> spearTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Spear";
 		AutoLoadingAsset<Texture2D> spearGlowTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Spear_Glow";
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadViking;
 			Main.npcFrameCount[NPC.type] = 6;
