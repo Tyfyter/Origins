@@ -350,15 +350,15 @@ namespace Origins {
 				}
 				modifiers.SourceDamage /= damageMult;
 
+				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
 				if (minerSet) {
-					explosiveSelfDamage -= 0.2f;
-					explosiveSelfDamage = explosiveSelfDamage.CombineWith(
+					currentExplosiveSelfDamage -= 0.2f;
+					currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(
 						Player.GetDamage(DamageClasses.Explosive).GetInverse()
 					);
 					//damage = (int)(damage/explosiveDamage);
 					//damage-=damage/5;
 				}
-				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
 				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
 					Vector2 diff = proj.Center - Player.MountedCenter;
@@ -370,10 +370,13 @@ namespace Origins {
 						modifiers.DisableSound();
 					}
 				}
-				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
-				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>() && modifiers.SourceDamage.ApplyTo(proj.damage) < proj.damage / 5) {
-					modifiers.SourceDamage = new StatModifier(1, 0.1f);
+				const float min_self_destruct_mult = 0.1f;
+				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
+					modifiers.ScalingArmorPenetration += 1;
+					if (currentExplosiveSelfDamage.ApplyTo(proj.damage) < proj.damage * min_self_destruct_mult) currentExplosiveSelfDamage = new StatModifier(1, min_self_destruct_mult);
 				}
+				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
+				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
 			}
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;
