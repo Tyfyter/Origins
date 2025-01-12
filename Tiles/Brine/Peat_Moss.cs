@@ -10,7 +10,7 @@ namespace Origins.Tiles.Brine {
 			"Grass"
 		];
 		public override void SetStaticDefaults() {
-			Main.tileMergeDirt[Type] = true;
+			//Main.tileMergeDirt[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;

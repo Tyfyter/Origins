@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.6f;
+			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.4f;
 			player.GetModPlayer<OriginPlayer>().magicTripwire = true;
 		}
 		public override void AddRecipes() {

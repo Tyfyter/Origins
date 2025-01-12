@@ -17,7 +17,7 @@ ACME_Crate: {
 	DisplayName: ACME Crate
 	Tooltip:
 		'''
-		Greatly increased explosive blast radius
+		40% increased explosive blast radius
 		Explosives will detonate near enemies
 		'''
 }
@@ -170,7 +170,7 @@ CFHES: {
 	Tooltip:
 		'''
 		All explosives inflict 'On Fire!' and have a reduced fuse time
-		Greatly increased explosive blast radius
+		60% increased explosive blast radius
 		Explosives will detonate near enemies
 		'''
 }
@@ -572,7 +572,7 @@ Ninja_Ravel: {
 
 Nitro_Crate: {
 	DisplayName: Nitro Crate
-	Tooltip: Increases explosive blast radius by 40%
+	Tooltip: Increases explosive blast radius by 20%
 }
 
 No_U_Card: {
@@ -2159,12 +2159,12 @@ Harpoon: {
 }
 
 Resizable_Mine_Five: {
-	DisplayName: Resizable Mine VII
+	DisplayName: Resizable Mine V
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
 Resizable_Mine_Four: {
-	DisplayName: Resizable Mine VI
+	DisplayName: Resizable Mine IV
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
@@ -2174,7 +2174,7 @@ Resizable_Mine_One: {
 }
 
 Resizable_Mine_Three: {
-	DisplayName: Resizable Mine V
+	DisplayName: Resizable Mine III
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
@@ -4845,40 +4845,50 @@ Ancient_Felnum_Helmet: {
 
 Crimtane_Gun_Magazine: {
 	DisplayName: Crimtane Gun Magazine
-	Tooltip: ""
+	Tooltip: +10% ranged attack speed
 }
 
 Defiled_Gun_Magazine: {
 	DisplayName: Defiled Gun Magazine
-	Tooltip: ""
+	Tooltip: +10% ranged attack speed
 }
 
 Demonite_Gun_Magazine: {
 	DisplayName: Demonite Gun Magazine
-	Tooltip: ""
+	Tooltip: +10% ranged attack speed
 }
 
 Eitrite_Gun_Magazine: {
 	DisplayName: Eitrite Gun Magazine
-	Tooltip: ""
+	Tooltip: +20% ranged attack speed
 }
 
 Encrusted_Gun_Magazine: {
 	DisplayName: Encrusted Gun Magazine
-	Tooltip: ""
+	Tooltip: +10% ranged attack speed
 }
 
 Gun_Magazine: {
 	DisplayName: Gun Magazine
-	Tooltip: ""
+	Tooltip: +5% ranged attack speed
 }
 
 Molten_Gun_Magazine: {
 	DisplayName: Molten Gun Magazine
-	Tooltip: ""
+	Tooltip: +15% ranged attack speed
 }
 
 Sanguinite_Gun_Magazine: {
 	DisplayName: Sanguinite Gun Magazine
-	Tooltip: ""
+	Tooltip: +10% ranged attack speed
+}
+
+Resizable_Mine_Seven: {
+	DisplayName: Resizable Mine VII
+	Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Six: {
+	DisplayName: Resizable Mine VI
+	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
