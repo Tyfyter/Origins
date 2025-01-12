@@ -1044,8 +1044,8 @@ TILES:
 (#, ^2) Limestone !!!
 (^) Lost Ore*
 (^) Marrowick*
-(@4, #2) Mildew Block° !!!
-(#2, ^2) Peat Moss Block* !!!
+(#, ^2) Mildew Block° !!!
+(^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
 (^) Riven Cactus*
