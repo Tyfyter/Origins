@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -649,6 +650,76 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
 					projType,
 					(int)(projectile.damage * 0.35f),
+					0,
+					projectile.owner
+				);
+			}
+		}
+	}
+	public class Discharge_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		public CanisterData GetCanisterData => new(new(207, 110, 21), new(100, 222, 242));
+		public bool? Hardmode => false;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(26);
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.AddIngredient<Felnum_Bar>(3)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			}
+			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
+			int t = ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>();
+			for (int i = Main.rand.Next(2); i < 3; i++) {
+				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, t, (int)(projectile.damage * 0.5f), 6, projectile.owner);
+			}
+		}
+	}
+	public class Bee_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		public CanisterData GetCanisterData => new(new(212, 206, 37), new(38, 2, 44));
+		public bool? Hardmode => false;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(15);
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.BeeWax)
+			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.SilverBars, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			}
+			for (int i = 0; i < 4; i++) {
+				Projectile.NewProjectile(
+					projectile.GetSource_FromThis(),
+					projectile.Center,
+					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
+					Main.player[projectile.owner].beeType(),
+					(int)(projectile.damage * 0.15f),
 					0,
 					projectile.owner
 				);

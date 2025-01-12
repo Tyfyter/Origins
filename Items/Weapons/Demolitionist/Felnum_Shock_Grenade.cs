@@ -80,10 +80,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.DamageType = DamageClasses.ThrownExplosive;
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = 3;
-			Projectile.width = Projectile.height = 20;
+			Projectile.width = Projectile.height = 0;
 			Projectile.penetrate = 2;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 30;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 5;
 		}
 		public override void AI() {
 			if (Projectile.penetrate == 1) {
@@ -91,30 +91,29 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			closest = Projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-			return (Projectile.Center - closest).Length() <= 96;
+			closest = Projectile.position.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
+			return (Projectile.position - closest).Length() <= 96;
 		}
 		public override bool? CanHitNPC(NPC target) {
 			return Projectile.penetrate > 1 ? base.CanHitNPC(target) : false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Static_Shock_Debuff.Inflict(target, 120);
-			Projectile.damage -= (int)((Projectile.Center - closest).Length() / 16f);
+			Projectile.damage -= (int)((Projectile.position - closest).Length() / 16f);
 			if (!Main.rand.NextBool(5)) Projectile.timeLeft += hit.Crit ? 2 : 1;
-			Vector2 dest = Projectile.Center;
-			Projectile.Center = Vector2.Lerp(closest, new Vector2(target.position.X + Main.rand.NextFloat(target.width), target.position.Y + Main.rand.NextFloat(target.height)), 0.5f);
-			for (int i = 0; i < 16; i++) {
-				Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i / 16f), 226, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
-			}
+			Vector2 dest = Vector2.Lerp(closest, new Vector2(target.position.X + Main.rand.NextFloat(target.width), target.position.Y + Main.rand.NextFloat(target.height)), 0.5f);
+			Projectile.ai[0] = dest.X;
+			Projectile.ai[1] = dest.Y;
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			if (Projectile.ai[0] == 0 && Projectile.ai[1] == 0) return false;
+			Vector2 dest = new(Projectile.ai[0], Projectile.ai[1]);
 			Main.spriteBatch.DrawLightningArcBetween(
-				Projectile.oldPosition - Main.screenPosition,
 				Projectile.position - Main.screenPosition,
+				dest - Main.screenPosition,
 				Main.rand.NextFloat(-4, 4));
-			Vector2 dest = (Projectile.oldPosition - Projectile.position) + new Vector2(Projectile.width, Projectile.height) / 2;
-			for (int i = 0; i < 16; i++) {
-				Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i / 16f), 226, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
+			for (int i = 0; i < 8; i++) {
+				Dust.NewDustPerfect(Vector2.Lerp(Projectile.position, dest, i / 8f), 226, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
 			}
 			return false;
 		}

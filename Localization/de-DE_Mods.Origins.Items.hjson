@@ -4892,3 +4892,13 @@ Resizable_Mine_Six: {
 	// DisplayName: Resizable Mine VI
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
+
+Bee_Canister: {
+	// DisplayName: Bee Canister
+	// Tooltip: ""
+}
+
+Discharge_Canister: {
+	// DisplayName: Discharge Canister
+	// Tooltip: ""
+}
