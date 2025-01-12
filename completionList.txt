@@ -1167,7 +1167,7 @@ TILES:
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Underwater Vine
-(X) Venus Coral !!!
+(#, ^2) Venus Coral !!!
 (^) Wilting Rose*
 (@4, ^3) Wrycoral*
 
@@ -1179,11 +1179,11 @@ TILES:
 (X) There's Five of Them Now
 (X) What's Out There
 
-(@, #, $2) Ancient Music Box (Brine Pool) !!!
+(#, $2) Ancient Music Box (Brine Pool) !!!
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(@, #, $2) Music Box (Brine Pool) !!!
+(#, $2) Music Box (Brine Pool) !!!
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
@@ -1328,7 +1328,7 @@ CONSUMABLES:
 (#, ^2) Plain Broth° !!!
 (X) Salty Broth
 (#, ^2) Savory Broth° !!!
-(X) Sharp Broth !!!
+(#, ^2) Sharp Broth !!!
 (^) Sour Broth*
 (#, ^2) Spicy Broth° !!!
 (#, ^2) Sweet Broth° !!!
@@ -1496,7 +1496,7 @@ UI:
 (X) Ashen Map/Bestiary Backdrop
 (X) Ashen Mines Icon
 (^) Brine Icon
-(X) Brine Map/Bestiary Backdrop !!!
+(#, ^2) Brine Map/Bestiary Backdrop !!!
 (X) Cosmos Map/Bestiary Backdrop
 (^) Dawn Icon
 (X) Dawn Map/Bestiary Backdrop
