@@ -53,7 +53,7 @@ namespace Origins.Tiles.Other {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Fabricator>());
-			Item.value = Item.buyPrice(platinum: 1);
+			Item.value = Item.buyPrice(platinum: 2);
 			Item.rare = ItemRarityID.LightPurple;
 		}
 	}
