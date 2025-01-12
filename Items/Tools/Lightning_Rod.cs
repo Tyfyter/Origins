@@ -107,7 +107,7 @@ namespace Origins.Items.Tools {
 					}
 					if (++count > 100) break;
 				}
-				SoundEngine.PlaySound(new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f), Projectile.Center);
+				SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), Projectile.Center);
 				Vector2 diff = oldPos - Projectile.position;
 				float distance = diff.Length();
 				for (int i = 0; i < distance; i += Main.rand.Next(8, 12)) {

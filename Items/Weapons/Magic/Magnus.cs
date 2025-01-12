@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Magic {
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Magnus_P>(), 40, Magnus_P.tick_motion, true);
@@ -38,6 +39,10 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = SoundID.Item122.WithPitch(1).WithVolume(2);
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Green;
+		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), player.MountedCenter);
+			return null;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

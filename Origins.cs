@@ -580,6 +580,14 @@ namespace Origins {
 			Sounds.LaserTag.Score = new SoundStyle("Origins/Sounds/Custom/LaserTag/Score", SoundType.Sound) {
 				MaxInstances = 0
 			};
+			Sounds.Lightning = new SoundStyle("Origins/Sounds/Custom/ThunderShot", SoundType.Sound) {
+				MaxInstances = 0
+			}.WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f);
+			Sounds.LightningSounds = [
+				Sounds.Lightning,
+				new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f),
+				SoundID.Item122.WithPitchRange(0.8f, 1).WithVolume(2)
+			];
 			//OriginExtensions.initClone();
 			Music.LoadMusic();
 
@@ -921,6 +929,11 @@ namespace Origins {
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 			public static SoundStyle IMustScream = SoundID.Roar;
 
+			public static SoundStyle Lightning = SoundID.Roar;
+			public static SoundStyle[] LightningSounds = [];
+			public static void Unload() {
+				LightningSounds = null;
+			}
 			public static class LaserTag {
 				public static SoundStyle Hurt = SoundID.DSTMaleHurt;
 				public static SoundStyle Death = SoundID.DD2_KoboldDeath;

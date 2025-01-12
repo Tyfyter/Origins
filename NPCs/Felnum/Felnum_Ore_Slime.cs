@@ -20,6 +20,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Felnum {
 	public class Felnum_Ore_Slime : ModNPC {
+		SoundStyle vanillaSound = new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
@@ -65,7 +66,7 @@ namespace Origins.NPCs.Felnum {
 							ai0: distance
 						);
 					}
-					SoundEngine.PlaySound(new SoundStyle(Main.rand.NextBool() ? $"Origins/Sounds/Custom/ThunderShot" : $"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f), NPC.Center);
+					SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), NPC.Center);
 					for (int i = 0; i < distance; i += Main.rand.Next(8, 12)) {
 						Dust.NewDust(NPC.Bottom - Vector2.UnitY * i, 0, 0, DustID.Electric, 0f, 0f, 0, Color.White, 0.5f);
 					}
