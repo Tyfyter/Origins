@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Ranged;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles;
@@ -83,6 +84,11 @@ namespace Origins {
 					);
 					break;
 
+					case sync_neural_network: {
+						Neural_Network_Buff.SetTime(Main.player[reader.ReadByte()], reader.ReadByte());
+					}
+					break;
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -121,23 +127,32 @@ namespace Origins {
 					ModContent.GetInstance<OriginSystem>().RemoveVoidLock(new(reader.ReadInt32(), reader.ReadInt32()), netOwner: whoAmI);
 					break;
 
-					case custom_combat_text:
-					ModPacket packet = GetPacket();
-					packet.Write(custom_combat_text);
+					case custom_combat_text: {
+						ModPacket packet = GetPacket();
+						packet.Write(custom_combat_text);
 
-					packet.Write(reader.ReadInt32());
-					packet.Write(reader.ReadInt32());
-					packet.Write(reader.ReadInt32());
-					packet.Write(reader.ReadInt32());
+						packet.Write(reader.ReadInt32());
+						packet.Write(reader.ReadInt32());
+						packet.Write(reader.ReadInt32());
+						packet.Write(reader.ReadInt32());
 
-					packet.Write(reader.ReadUInt32());
+						packet.Write(reader.ReadUInt32());
 
-					packet.Write(reader.ReadInt32());
+						packet.Write(reader.ReadInt32());
 
-					packet.Write(reader.ReadBoolean());
+						packet.Write(reader.ReadBoolean());
 
-					packet.Write(reader.ReadBoolean());
-					packet.Send(-1, whoAmI);
+						packet.Write(reader.ReadBoolean());
+						packet.Send(-1, whoAmI);
+					}
+					break;
+
+					case sync_neural_network: {
+						ModPacket packet = GetPacket();
+						packet.Write(reader.ReadByte());
+						packet.Write(reader.ReadByte());
+						packet.Send(-1, whoAmI);
+					}
 					break;
 
 					default:
@@ -346,6 +361,7 @@ namespace Origins {
 			internal const byte sync_void_locks = 18;
 			internal const byte custom_knockback = 19;
 			internal const byte custom_combat_text = 20;
+			internal const byte sync_neural_network = 21;
 		}
 	}
 }

@@ -392,7 +392,9 @@ namespace Origins.Projectiles {
 			}
 			if (neuralNetworkEffect && !neuralNetworkHit) {
 				neuralNetworkEffect = false;
-				Main.player[projectile.owner].ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
+				if (projectile.owner == Main.myPlayer) {
+					Main.player[projectile.owner].ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
+				}
 			}
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
