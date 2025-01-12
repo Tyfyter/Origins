@@ -133,7 +133,7 @@ namespace Origins.Items.Weapons.Melee {
 
 		public bool IsExploding() => false;
 	}
-	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile {
+	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile, ISelfDamageEffectProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
@@ -150,22 +150,8 @@ namespace Origins.Items.Weapons.Melee {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 				Projectile.ai[0] = 1;
 			}
-			if (Projectile.owner == Main.myPlayer && Projectile.ai[1] == 0) {
-				Player player = Main.LocalPlayer;
-				if (player.active && !player.dead && !player.immune) {
-					Rectangle projHitbox = Projectile.Hitbox;
-					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
-					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
-					if (projHitbox.Intersects(playerHitbox)) {
-						player.Hurt(
-							PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),
-							Main.DamageVar(Projectile.damage, -player.luck),
-							Math.Sign(player.Center.X - Projectile.Center.X),
-							true
-						);
-						Projectile.ai[1] = 1;
-					}
-				}
+			if (Projectile.ai[1] == 0) {
+				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -173,6 +159,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
+		public void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt) {
+			if (player.wet) player.AddBuff(Cavitation_Debuff.ID, 90);
+			Projectile.ai[1] = 1;
+		}
 	}
 	public class Depth_Charge_Chain : ModGore {
 		public override void OnSpawn(Gore gore, IEntitySource source) {

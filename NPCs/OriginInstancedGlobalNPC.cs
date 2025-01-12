@@ -190,13 +190,15 @@ namespace Origins.NPCs {
 					npc.lifeRegen = 0;
 				}
 				npc.lifeRegen -= 66;
-			}
-			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
-				npc.lifeRegen -= 15;
-				damage += 2;
-				if (npc.HasBuff(Toxic_Shock_Strengthen_Debuff.ID)) {
-					npc.lifeRegen -= 15;
-					damage += 2;
+				if (damage < 3) damage = 3;
+				Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.BreatheBubble, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+				dust.noGravity = true;
+				dust.velocity *= 0.75f;
+				dust.velocity.X *= 0.75f;
+				dust.velocity.Y -= 1f;
+				if (Main.rand.NextBool(4)) {
+					dust.noGravity = false;
+					dust.scale *= 0.5f;
 				}
 			}
 			if (staticShock || staticShockDamage) {
@@ -206,6 +208,14 @@ namespace Origins.NPCs {
 				int damageMult = 1 + npc.wet.ToInt() + (staticShock && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
 				npc.lifeRegen -= 8 * damageMult;
 				if (damage < 3 * damageMult) damage = 3 * damageMult;
+			}
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				npc.lifeRegen -= 15;
+				damage += 2;
+				if (npc.HasBuff(Toxic_Shock_Strengthen_Debuff.ID)) {
+					npc.lifeRegen -= 15;
+					damage += 2;
+				}
 			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {
