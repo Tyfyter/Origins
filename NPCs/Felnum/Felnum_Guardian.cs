@@ -7,6 +7,7 @@ using Origins.NPCs.Defiled;
 using Origins.Reflection;
 using Origins.Tiles.Other;
 using PegasusLib;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -55,6 +56,7 @@ namespace Origins.NPCs.Felnum {
 			NPC.DoFrames(4);
 		}
 		public override bool? CanFallThroughPlatforms() => true;
+		SlotId soundSlot;
 		public override void AI() {
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet, npc => !FriendlyNPCTypes.Contains(npc.type) && npc.chaseable);
 			NPC.target = searchResults.NearestTargetIndex;
@@ -105,6 +107,12 @@ namespace Origins.NPCs.Felnum {
 					dust.scale -= chargeFactor;
 					dust.velocity += NPC.velocity;
 					dust.noGravity = true;
+					if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) {
+						sound.Pitch = 1 - chargeFactor * 1.5f;
+						sound.Position = NPC.Center;
+					} else {
+						soundSlot = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, NPC.Center);
+					}
 					if (NPC.ai[0] > 120) {
 						NPC.ai[0] = 0;
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
@@ -117,10 +125,11 @@ namespace Origins.NPCs.Felnum {
 								4
 							);
 						}
-						SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), NPC.Center);
+						SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), NPC.Center);
 					}
 				} else {
 					NPC.rotation = vectorToTargetPosition.ToRotation();
+					if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) sound.Stop();
 				}
 				vectorToTargetPosition *= speed;
 				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;

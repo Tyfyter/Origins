@@ -585,9 +585,16 @@ namespace Origins {
 			}.WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f);
 			Sounds.LightningSounds = [
 				Sounds.Lightning,
-				new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f),
-				SoundID.Item122.WithPitchRange(0.8f, 1).WithVolume(2)
+				new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f)
 			];
+			Sounds.LightningCharging = new SoundStyle("Origins/Sounds/Custom/ChargedUp", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true
+			};
+			Sounds.LightningChargingSoft = new SoundStyle("Origins/Sounds/Custom/ChargedUpSmol", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true
+			};
 			//OriginExtensions.initClone();
 			Music.LoadMusic();
 
@@ -930,6 +937,8 @@ namespace Origins {
 			public static SoundStyle IMustScream = SoundID.Roar;
 
 			public static SoundStyle Lightning = SoundID.Roar;
+			public static SoundStyle LightningCharging = SoundID.Roar;
+			public static SoundStyle LightningChargingSoft = SoundID.Roar;
 			public static SoundStyle[] LightningSounds = [];
 			public static void Unload() {
 				LightningSounds = null;

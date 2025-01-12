@@ -318,6 +318,7 @@ namespace Origins {
 
 		#region other items
 		public int laserBladeCharge = 0;
+		public int tolrukCharge = 0;
 		public bool boatRockerAltUse = false;
 		public int mojoFlaskCount = 5;
 		public int mojoFlaskCountMax = 5;
@@ -681,6 +682,7 @@ namespace Origins {
 				strangeToothCooldown--;
 
 			if (laserBladeCharge > 0 && !Player.ItemAnimationActive) laserBladeCharge--;
+			if (tolrukCharge > 0 && !Player.ItemAnimationActive) tolrukCharge--;
 
 			if (rapidSpawnFrames > 0)
 				rapidSpawnFrames--;

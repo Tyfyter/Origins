@@ -5,6 +5,7 @@ using Origins.Buffs;
 using Origins.Reflection;
 using Origins.Tiles.Other;
 using PegasusLib;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -20,7 +21,6 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Felnum {
 	public class Felnum_Ore_Slime : ModNPC {
-		SoundStyle vanillaSound = new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;

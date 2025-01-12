@@ -54,9 +54,9 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Magnus_P : ModProjectile {
 		public const int tick_motion = 8;
-		const int max_length = 1200;
 		public override string Texture => "Origins/Projectiles/Weapons/Seam_Beam_P";
 		public override void SetStaticDefaults() {
+			const int max_length = 1200;
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
 			Origins.HomingEffectivenessMultiplier[Type] = 3.5f;
@@ -123,6 +123,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		protected Vector2? target = null;
 		protected int startupDelay = 5;
+		protected float randomArcing = 0.3f;
 		public override void AI() {
 			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
 			if (Projectile.numUpdates == -1 && ++Projectile.ai[2] >= 10) {
@@ -130,9 +131,9 @@ namespace Origins.Items.Weapons.Magic {
 				return;
 			}
 			if (Projectile.ai[0] != 1) {
-				if ((Projectile.numUpdates + 1) % 5 == 0) {
+				if ((Projectile.numUpdates + 1) % 5 == 0 && startupDelay <= 0) {
 					float speed = Projectile.velocity.Length();
-					if (speed != 0) Projectile.velocity = (target.Value - Projectile.Center).SafeNormalize(Projectile.velocity / speed).RotatedByRandom(0.3f) * speed;
+					if (speed != 0) Projectile.velocity = (target.Value - Projectile.Center).SafeNormalize(Projectile.velocity / speed).RotatedByRandom(randomArcing) * speed;
 				}
 				if (startupDelay > 0) {
 					startupDelay--;
