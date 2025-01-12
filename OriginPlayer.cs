@@ -443,7 +443,7 @@ namespace Origins {
 			mana.Base += quantumInjectors * Quantum_Injector.mana_per_use;
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
-				if (tornCurrentSeverity >= 1) {
+				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer) {
 					Player.KillMe(new KeyedPlayerDeathReason() {
 						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
 					}, 1, 0);
