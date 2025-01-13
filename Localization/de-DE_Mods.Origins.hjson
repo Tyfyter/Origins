@@ -429,7 +429,7 @@ AltBiomes: {
 
 	Riven_Hive_Alt_Biome: {
 		// DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
-		// Description: A natural biome manifested by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
+		// Description: A natural biome shaped by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
 		// GenPassName: Blue Lobsterating
 	}
 
@@ -721,7 +721,7 @@ Buffs: {
 		// Description: 10% chance to dodge. Less likely to be targeted
 	}
 
-	Soulhide_Debuff: {
+	Shadefire_Debuff: {
 		// DisplayName: Shadefire
 		// Description: The flame doesn't go out in the dark
 	}
@@ -980,6 +980,11 @@ Buffs: {
 	Blind_Debuff: {
 		// DisplayName: Blind Debuff
 		// Description: Mods.Origins.Buffs.Blind_Debuff.Description
+	}
+
+	Soulhide_Debuff: {
+		// Description: Mods.Origins.Buffs.Soulhide_Debuff.Description
+		// DisplayName: Soulhide Debuff
 	}
 }
 
@@ -1548,6 +1553,11 @@ Biomes: {
 		// DisplayName: Defiled Wastelands Ocean
 		// TownNPCDialogueName: the Defiled Ocean
 	}
+}
+
+CaptureBiomeChoice: {
+	// Defiled: The Defiled
+	// Riven: The Riven
 }
 
 Tiles: {
