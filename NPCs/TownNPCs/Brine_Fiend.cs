@@ -60,6 +60,9 @@ namespace Origins.NPCs.TownNPCs {
 			NPC.HitSound = SoundID.NPCHit26;
 			NPC.DeathSound = SoundID.NPCDeath29;
 			AnimationType = NPCID.BestiaryGirl;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Brine_Pool>().Type
+			];
 		}
 		public override bool PreAI() {
 			NPC.wet = false;
@@ -74,7 +77,6 @@ namespace Origins.NPCs.TownNPCs {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
 			bestiaryEntry.AddTags(
-				Brine_Pool.BestiaryBackground,
 				this.GetBestiaryFlavorText()
 			);
 		}

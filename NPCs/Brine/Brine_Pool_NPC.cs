@@ -1,5 +1,6 @@
 ﻿using Origins.Buffs;
 using Origins.Reflection;
+using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,11 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+		}
+		public override void SetDefaults() {
+			SpawnModBiomes = [
+				ModContent.GetInstance<Brine_Pool>().Type
+			];
 		}
 		public override void Unload() {
 			Ripples = null;

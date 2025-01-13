@@ -19,16 +19,11 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconBrine";
 		public override int Music => Origins.Music.BrinePool;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public static SpawnConditionBestiaryInfoElement BestiaryBackground { get; private set; }
+		public override string BackgroundPath => "Origins/UI/MapBGs/Brine_Pool";
+		public override string MapBackground => BackgroundPath;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Defiled_Underground_Background>();
-		public override void Load() {
-			BestiaryBackground = new SpawnConditionBestiaryInfoElement("Mods.Origins.Bestiary_Biomes.Brine_Pool", 0, "Images/MapBG1");
-		}
-		public override void Unload() {
-			BestiaryBackground = null;
-		}
 		public override bool IsBiomeActive(Player player) {
 			return OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 		}
