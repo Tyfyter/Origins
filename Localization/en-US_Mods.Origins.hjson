@@ -411,7 +411,8 @@ Generic: {
 	Dusk: Dusk
 	Defiled: Defiled
 	Defiled_Wastelands: Defiled Wastelands
-	The_Defiled_Wastelands: the {$Mods.Origins.Generic.Defiled_Wastelands}
+	the_Defiled_Wastelands: the {$Mods.Origins.Generic.Defiled_Wastelands}
+	The_Defiled_Wastelands: The {$Mods.Origins.Generic.Defiled_Wastelands}
 	Arms_Dealer: the Arms Dealer
 	Defiled_Antibody: Defiled Antibody
 	Defiled_Antibodies: Defiled Antibodies
@@ -1556,8 +1557,8 @@ Biomes: {
 }
 
 CaptureBiomeChoice: {
-	Defiled: The Defiled
-	Riven: The Riven
+	Defiled: "{§The_Defiled_Wastelands}"
+	Riven: The {§Riven_Hive}
 }
 
 Tiles: {

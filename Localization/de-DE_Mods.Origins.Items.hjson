@@ -1491,7 +1491,7 @@ Dusk_Key: {
 
 Dreadful_Powder: {
 	// DisplayName: Dreadful Powder
-	// Tooltip: Spreads {§The_Defiled_Wastelands}
+	// Tooltip: Spreads {§the_Defiled_Wastelands}
 }
 
 Eitrite_Bar: {
@@ -1880,7 +1880,7 @@ Voidsight_Potion: {
 
 White_Water: {
 	// DisplayName: White Water
-	// Tooltip: Spreads {§The_Defiled_Wastelands} to some blocks
+	// Tooltip: Spreads {§the_Defiled_Wastelands} to some blocks
 }
 
 High_Contrast_Dye: {
@@ -2191,7 +2191,7 @@ Teal_Solution: {
 
 Gray_Solution: {
 	// DisplayName: Gray Solution
-	// Tooltip: Spreads {§The_Defiled_Wastelands}
+	// Tooltip: Spreads {§the_Defiled_Wastelands}
 }
 
 Abrasion_Blaster: {
@@ -3108,7 +3108,7 @@ Defiled_Ice_Item: {
 
 Lost_Ore_Item: {
 	// DisplayName: Lost Ore
-	// Tooltip: A strange metal warped to the curiosity of {§The_Defiled_Wastelands}
+	// Tooltip: A strange metal warped to the curiosity of {§the_Defiled_Wastelands}
 }
 
 Defiled_Pot_Item: {

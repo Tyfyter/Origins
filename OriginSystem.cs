@@ -477,6 +477,7 @@ namespace Origins {
 			texts["Dusk"] = texts["Mods.Origins.Generic.Dusk"];
 			texts["Defiled"] = texts["Mods.Origins.Generic.Defiled"];
 			texts["Defiled_Wastelands"] = texts["Mods.Origins.Generic.Defiled_Wastelands"];
+			texts["the_Defiled_Wastelands"] = texts["Mods.Origins.Generic.the_Defiled_Wastelands"];
 			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];
 			if (OriginsModIntegrations.CheckAprilFools()) {
 				foreach (var text in texts.ToList()) {
