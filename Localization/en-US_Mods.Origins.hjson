@@ -981,6 +981,11 @@ Buffs: {
 		DisplayName: Blind Debuff
 		Description: Mods.Origins.Buffs.Blind_Debuff.Description
 	}
+
+	Soulhide_Debuff: {
+		Description: Mods.Origins.Buffs.Soulhide_Debuff.Description
+		DisplayName: Soulhide Debuff
+	}
 }
 
 DamageClassName: {
@@ -1548,6 +1553,11 @@ Biomes: {
 		DisplayName: Defiled Wastelands Ocean
 		TownNPCDialogueName: the Defiled Ocean
 	}
+}
+
+CaptureBiomeChoice: {
+	Defiled: The Defiled
+	Riven: The Riven
 }
 
 Tiles: {
