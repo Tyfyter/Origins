@@ -4,7 +4,7 @@
 // Bile_Thrower: During a Blood Moon, the Defiled grows rampantly and is able to deviate from its pure forms warping more unique entities, like penguins, to its will.
 // Riven_Penguin: During a Blood Moon, the Riven Hive is able to overcome its weakness of the cold and spread, forcing normally docile penguins to adapt.
 // Ancient_Defiled_Cyclops: An older design of the Defiled Cyclops before the {§Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer.
-// Defiled_Amalgamation: A Defiled creature so old every part of it has changed tens of thousands of times. Rightfully so, it is disturbed and even hostile to other Defiled anti-bodies.
+// Defiled_Amalgamation: A murderous super-organism just trying to protect its home.
 // Chunky_Slime: A slime desaturated of its color due to contact with black bile. It now spends the rest of its days to the {§Defiled} will.
 // Defiled_Brute: A stumbling defender of the Wastelands. It will be summoned if other {§Defiled} antibodies struggle.
 // Defiled_Cyclops: The face of the {§Defiled}. A deadly antibody that handles the smallest threats.
@@ -13,7 +13,7 @@
 // Defiled_Flyer: A great antibody for reaching airborne or hard-to-reach threats. This may have once been a flying creature like a bird.
 // Defiled_Mite: Dweller of the {§Defiled} Caverns. Hard to spot as it does not move until prey draws near.
 // Defiled_Swarmer: Not commonly found in the Wastelands. They appear when a massive {§Defiled} entity is in distress.
-// Defiled_Tripod: Inspired by the Amalgamation's feral nature, the Defiled decided to start replicating the same effect in a new, more cunning anti-body by densely packing it with black bile. These are the last things any traveler would want to encounter.
+// Defiled_Tripod: Fast and hard-hitting, the Tripod is the last defense of the {§Defiled} before more extreme measures are taken. It is the last thing any traveler would want to encounter.
 // Defiled_Wisp: A rare entity that is released only once its former vessel has been dislodged from its bile interior.
 // Enchanted_Trident: A weapon directly forged by the {§Defiled}. This weapon is a machination of its curiosity.
 // Shattered_Goldfish: Goldfish warp to the Defiled Will when exposed to a Blood Moon, becoming another one of its antibodies.
@@ -31,6 +31,7 @@
 // Bottomfeeder: Goldfish naturally evolve into dangerous, insolveable carnivores in the Riven Hive which is only further catalyzed by the Blood Moon.
 // Cleaver_Head: A vicious defender of the Riven Hive, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory.
 // Flagellant: A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it.
+// Measly_Moeba: Small and nearly undetectable in its natural habitat of the pools of the Riven Hive, this variant of the Primordial Amoeba swims to facilitate the process of assimilation or digestion.
 // Pustule_Jelly: A jellyfish that has adapted to the Riven Hive. The pustule is delicate and explodes whenever it needs to defend itself.
 // Riven_Fighter: The first creature born in the abominable Riven Hive. It is a very agile protector of its home.
 // Riven_Mummy: It was only a matter of time before the Riven got to the body. It now wanders aimlessly in the Rivenated deserts in search of new hosts.
@@ -50,23 +51,7 @@
 // Defiled_Watcher: The Watcher is a more direct way for the Defiled to look out for any foreign bodies that don't belong. Mainly, it's a way for the Defiled to prevent its heart from being destroyed by the Terrarian.
 // Graveshield_Zombie: Nobody asked him questions. The headstone was well within his deathright.
 // Ancient_Defiled_Flyer: An older design of the Defiled Phantom before the {§Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer.
-// Jacob_Marley: The Tax Collector's old business partner here to warn him to change his act before the ghosts do it.
-// Spirit_Of_Christmas_Past: This one is unassuming, but is a grim reminder of one's past transgressions.
-// Spirit_Of_Christmas_Present: This one's presence often instills those to reflect upon how they are to their most present self.
-// Spirit_Of_Christmas_Future: This one is no benevolent nor malevolent presence. No, only to offer those one last chance to understand the Christmas spirit.
-// Sea_Dragon: Dangerous, slug-like creature of the Brine Pool. It prefers to eat plastic and has deadly nematocysts all over its body.
-// Carpalfish: A brutish fish that has evolved to work with as little of a brain as possible. Where it lacks smarts, it's got all the myomeres.
-// Felnum_Ore_Slime: Many claim felnum is the reason why lightning exists, but it's these slimes that are why lightning strikes the ground.
-// Mildew_Creeper: Sifts through the harsh waters of the Brine Pool in search for any unsuspecting victims.
-// King_Crab: The apex predator of the Brine Pool. Its hard, chitonous shell not only protects it from the toxic brine but also any creatures that dare test it.
-// Fae_Nymph: Not your average nymph. I think she's just happy to see you... she seems to have quite the grip. Uh oh.
-// Whimsical_Girl: She's got her head in the clouds so bad she found herself deep underground. She seems to have fancied fairies for friends to keep her company.
-// Felnum_Guardian: A sentinel manifested by the felnum itself. It indiscriminately attacks anything that gets too close to felnum deposits.
-// Felnum_Einheri: The soul of a long lost warrior brought to the skies to continue serving the gods.
-// Slime_Worm_Head: What's better than one slime? Multiple slimes stacked on top of each other! What's better than multiple slimes stacked on top of each other? A SLIME WORM!
-// World_Cracker: An eel-like creature born in the Eutrophic Sea. It spends its time dissolving the world and bringing back the nutrients to the Hive to catalyze the spread of the ecosystem.
-// Enchanted_Fiberglass_Bow: A bow made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
-// Enchanted_Fiberglass_Sword: A sword made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
-// Enchanted_Fiberglass_Pistol: A pistol made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
-// Glass_Cannon: A cannon made of fiberglass enchanted by the spirit of the Undergrowth for pure malicious intent.
-// Fiberglass_Weaver: A giant, spider-like entity responsible for carefully weaving the fiberglass undergrowth together.
+// Jacob_Marley: bestiary text here
+// Spirit_Of_Christmas_Past: bestiary text here
+// Spirit_Of_Christmas_Present: bestiary text here
+// Spirit_Of_Christmas_Future: bestiary text here

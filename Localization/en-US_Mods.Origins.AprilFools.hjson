@@ -3,6 +3,7 @@ Generic: {
 	Dusk: Duck
 	Defiled: Blŏkus
 	Defiled_Wastelands: Blŏkusland™
+	the_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
 	The_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
 	Defiled_Amalgamation: District Attorney
 	Defiled_Antibody: Blŏkusland™ Employee
