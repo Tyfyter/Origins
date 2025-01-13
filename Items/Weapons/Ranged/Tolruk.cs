@@ -110,11 +110,10 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Tolruk_Bolt : Magnus_P {
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			const int max_length = 1200 * 2;
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
-			Origins.HomingEffectivenessMultiplier[Type] = 3.5f;
-			Mitosis_P.aiVariableResets[Type][1] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

@@ -111,7 +111,7 @@ namespace Origins.NPCs.Felnum {
 						sound.Pitch = 1 - chargeFactor * 1.5f;
 						sound.Position = NPC.Center;
 					} else {
-						soundSlot = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, NPC.Center);
+						soundSlot = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, NPC.Center, soundInstance => NPC.active && NPC.life > 0);
 					}
 					if (NPC.ai[0] > 120) {
 						NPC.ai[0] = 0;
