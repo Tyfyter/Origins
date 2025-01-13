@@ -98,7 +98,6 @@ TOWN NPC Quests:
 (^) Goblin Tinkerer - Reel In the Goods
 (^) Goblin Tinkerer - Lend a Hand?
 (X) Goblin Tinkerer - Full Speed Ahead
-(X) Mechanic - Mile Wide, Tile Deep !!!
 (^) Merchant - To the Skies!
 (^) Merchant - The Greatest Sin of All, Gambling
 (^) Party Girl - Livin' Up the Party
@@ -175,8 +174,8 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
 (^) Fae Nymph (Whimsical Girl)
-(#2, $2, ^2/3) Felnum Einheri !!! (this would be really cool with custom sounds and electric explosion death)
-(#2, $2, ^2/3) Felnum Guardian !!! (this would be really cool with custom sounds and electric explosion death)
+(#2, ^2/4) Felnum Einheri !!! (this would be really cool with electric explosion death)
+(#2, ^2/4) Felnum Guardian !!! (this would be really cool with electric explosion death)
 (#2, ^2) Felnum Ore Slime !!! (this would be really cool with electric explosion death)
 (@4, ^3) Flagellant*
 (^) Graveshield Zombie
@@ -209,7 +208,7 @@ ENEMY NPCS:
 (X) Beckonbug
 (#, ^2) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
-(#2, ^2/4) Carpalfish° !!! (needs slamming SFX)
+(#2, $2, ^2) Carpalfish° !!! (needs slamming SFX)
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -237,7 +236,7 @@ ENEMY NPCS:
 (^) Shattered Mummy*
 (#, ^2) Shotgunfish !!!
 (X) Riven Gull
-(X) Rock Bottom !!!
+(#, ^2) Rock Bottom !!!
 (X) Rotting Husk
 (X) Tendon Terror
 (^) Torn Ghoul
@@ -513,7 +512,7 @@ ACCESSORIES:
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
-(X) Faith Beads !!!
+(#, ^2) Faith Beads !!!
 (^) Fiberglass Dagger*
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
@@ -1431,10 +1430,10 @@ AMMO:
 (X) Aether Arrow
 (X) Aether Bullet
 (X) Aether Canister
-(#2, ^2) Bee Canister !!!
+(^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*
-(#, ^2) Discharge Canister !!!
+(^) Discharge Canister
 (^) Explosive Harpoon*
 (^) Flammable Harpoon*
 (X) Foolean Canister

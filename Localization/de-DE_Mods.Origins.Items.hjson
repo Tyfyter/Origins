@@ -4895,10 +4895,10 @@ Resizable_Mine_Six: {
 
 Bee_Canister: {
 	// DisplayName: Bee Canister
-	// Tooltip: ""
+	// Tooltip: Releases bees in its wake
 }
 
 Discharge_Canister: {
 	// DisplayName: Discharge Canister
-	// Tooltip: ""
+	// Tooltip: Inflicts Static Shock to enemies in its blast
 }
