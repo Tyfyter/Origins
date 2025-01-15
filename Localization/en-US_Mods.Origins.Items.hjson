@@ -4902,3 +4902,16 @@ Discharge_Canister: {
 	DisplayName: Discharge Canister
 	Tooltip: Inflicts Static Shock to enemies in its blast
 }
+
+MiningHelmet.BuffTooltip: 3% increased explosive critical strike chance
+MiningShirt.BuffTooltip: 5% increased explosive damage
+RainCoat.BuffTooltip:
+	'''
+	5% increased damage
+	2% increased damage during rain
+	'''
+RainHat.BuffTooltip:
+	'''
+	5% increased damage
+	2% increased damage during rain
+	'''

@@ -15,7 +15,7 @@ namespace Origins.Tiles {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileLighted[Type] = true;
-			//TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.WaterFountain, 0));
 			TileObjectData.newTile.Height = Height;

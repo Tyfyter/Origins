@@ -43,6 +43,7 @@ using Origins.Buffs;
 using PegasusLib;
 using Origins.Items.Other.Consumables;
 using CalamityMod.Items.Placeables.FurnitureAuric;
+using Origins.Items;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -602,6 +603,7 @@ namespace Origins {
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 #if DEBUG
+			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 #endif
 		}

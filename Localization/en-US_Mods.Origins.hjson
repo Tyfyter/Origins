@@ -1773,6 +1773,11 @@ Configs: {
 				'''
 		}
 
+		RainSetBuff: {
+			Label: Rain Set
+			Tooltip: ""
+		}
+
 		GrassMerge: {
 			Label: Universal Grass Merge
 			Tooltip: Forces grass to merge with other types of grass

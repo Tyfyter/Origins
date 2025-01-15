@@ -37,6 +37,8 @@ namespace Origins {
 
 		[DefaultValue(true)]
 		public bool WoodBuffs = true;
+		[DefaultValue(true)]
+		public bool RainSetBuff = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool RoyalGel = true;

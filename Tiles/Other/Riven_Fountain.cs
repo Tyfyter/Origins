@@ -19,6 +19,12 @@ namespace Origins.Tiles.Other {
 		public Riven_Fountain() : base() {
 			glowTexture = Texture + "_Glow";
 		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 8 - (frame + 1) % Frames) {
+				frameCounter = 0;
+				frame = (frame + 1) % Frames;
+			}
+		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}

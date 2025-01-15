@@ -95,6 +95,7 @@ namespace Origins {
 		public const float blast_set_charge_gain = 0.8f;
 		public const float blast_set_charge_decay = 12;
 		public bool blastSetActive = false;
+		public bool rainSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -455,6 +456,7 @@ namespace Origins {
 			}
 			if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
 			blastSet = false;
+			rainSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
