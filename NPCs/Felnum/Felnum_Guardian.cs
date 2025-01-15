@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
+using Origins.Dusts;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
 using Origins.Reflection;
@@ -188,6 +189,7 @@ namespace Origins.NPCs.Felnum {
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				SoundEngine.PlaySound(SoundID.NPCHit37, NPC.Center);
+				Dust.NewDustPerfect(NPC.Center, ModContent.DustType<Felnum_Enemy_Death_Dust>());
 			} else {
 				SoundEngine.PlaySound(SoundID.NPCHit34, NPC.Center);
 			}

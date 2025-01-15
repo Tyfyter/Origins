@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -29,7 +30,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.autoReuse = true;
 			Item.useTurn = false;
 			Item.shootSpeed = 3;
-			Item.shoot = ModContent.ProjectileType<Felnum_Boar_Spear_Stab>();
+			Item.shoot = ModContent.ProjectileType<Felnum_Boar_Spear_P>();
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
@@ -42,8 +43,9 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool MeleePrefix() => true;
 	}
-	public class Felnum_Boar_Spear_Stab : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Melee/Felnum_Boar_Spear_P";
+	[LegacyName("Felnum_Boar_Spear_Stab")]
+	public class Felnum_Boar_Spear_P : ModProjectile {
+		AutoLoadingAsset<Texture2D> glowTexture = typeof(Felnum_Boar_Spear_P).GetDefaultTMLName() + "_Glow";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
@@ -94,7 +96,28 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, (Projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, Projectile.rotation, new Vector2(62, 8), Projectile.scale, SpriteEffects.None, 0);
+			Vector2 origin = new(57, 5);
+			float rotation = Projectile.rotation + MathHelper.ToRadians(4.27f);
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				rotation,
+				origin,
+				Projectile.scale,
+				SpriteEffects.None
+			);
+			Main.EntitySpriteDraw(
+				glowTexture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				Color.White,
+				rotation,
+				origin,
+				Projectile.scale,
+				SpriteEffects.None
+			);
 			return false;
 		}
 	}
