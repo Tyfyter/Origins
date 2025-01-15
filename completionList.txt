@@ -341,7 +341,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(X) Extremophile Armor !!!
+(X, ?) Extremophile Armor !!!
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -677,7 +677,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(X) Boomboom !!!
+(X, ?) Boomboom !!!
 (#2, ^2) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
@@ -742,7 +742,7 @@ RANGED WEAPONS:
 (X) Bloodshot
 (#2/4, ^2) Boat Rocker° !!! (needs alternate chains and alt)
 (^) Boiler
-(X) Boomboom !!!
+(X, ?) Boomboom !!!
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
 (X) Crawdaddy's Revenge !!!
@@ -865,7 +865,7 @@ SUMMONER WEAPONS:
 (X) Pinwheel Pole
 (^) Rotted Worm Staff
 (X) Shadow Cast !!!
-(X) Sunflower in a Pot !!!
+(X, ?) Sunflower in a Pot !!!
 (^) Teardown*
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -1141,7 +1141,7 @@ TILES:
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
 (X) Qube Generator°
-(X) Unsuspicious Bush !!!
+(X, ?) Unsuspicious Bush !!!
 
 (^) Acetabularia*
 (X) Barnacle Infested Coral
@@ -1174,7 +1174,7 @@ TILES:
 (X) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
-(X) The Jungle's Glass Door !!!
+(X, ?) The Jungle's Glass Door !!!
 (X) There's Five of Them Now
 (X) What's Out There
 
