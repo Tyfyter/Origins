@@ -1087,8 +1087,8 @@ TILES:
 (^) Bile Torch*
 (^) Brine Water Fountain
 (X) Bug Cage°
-(X) Cancer Block°
-(X) Cancer Furniture°
+(X) Cancer Block° !!!
+(X) Cancer Furniture° !!!
 (X) Chambersite Bunny Cage°
 (X) Chambersite Gem Lock°
 (^) Chambersite Gemspark°
@@ -1122,8 +1122,8 @@ TILES:
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
 (X) Ravel Locker
-(X) Residue Block°
-(X) Residue Furniture°
+(X) Residue Block° !!!
+(X) Residue Furniture° !!!
 (^) Riven Campfire*
 (^) Riven Dungeon Chest*
 (^) Riven Torch*

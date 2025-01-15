@@ -778,6 +778,7 @@ namespace Origins.World.BiomeData {
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Lost_Ore>();
 			BiomeOreItem = ModContent.ItemType<Lost_Ore_Item>();
+			BiomeOreBrick = ModContent.TileType<Lost_Brick>();
 			AltarTile = ModContent.TileType<Defiled_Altar>();
 
 			BiomeChestItem = ModContent.ItemType<Missing_File>();

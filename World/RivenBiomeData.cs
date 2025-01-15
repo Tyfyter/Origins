@@ -733,9 +733,13 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
 
+			BiomeFlesh = ModContent.TileType<Amoeba_Fluid>();
+			BiomeFleshWall = ModContent.WallType<Amebic_Gel_Wall>();
+
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Encrusted_Ore>();
 			BiomeOreItem = ModContent.ItemType<Encrusted_Ore_Item>();
+			BiomeOreBrick = ModContent.TileType<Encrusted_Brick>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 
 			BiomeChestItem = ModContent.ItemType<Plasma_Cutter>();
