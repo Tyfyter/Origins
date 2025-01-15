@@ -35,7 +35,8 @@ namespace Origins.World.BiomeData {
 		public static class SpawnRates {
 			public const float Carpalfish = 0.8f;
 			public const float Dragon = 0.6f;
-			public const float Creeper = 0.6f;
+			public const float Creeper = 0/*.6f*/;
+			public const float Crab = 0/*.6f*/;
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
 				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;

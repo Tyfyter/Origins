@@ -37,7 +37,7 @@ namespace Origins.NPCs.Brine {
 			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Carpalfish);
+			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Crab);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
