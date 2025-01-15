@@ -23,7 +23,6 @@ namespace Origins.NPCs.Defiled {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 			NPC.lifeMax = NPC.life = 20;
 			NPC.defense = 8;
@@ -31,7 +30,6 @@ namespace Origins.NPCs.Defiled {
 			NPC.width = 28;
 			NPC.height = 26;
 			NPC.friendly = false;
-			NPC.catchItem = 0;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			SpawnModBiomes = [

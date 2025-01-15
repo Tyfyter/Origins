@@ -17,7 +17,6 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[NPC.type] = 2;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = NPCAIStyleID.Bat;
 			NPC.lifeMax = 45;
 			NPC.defense = 8;

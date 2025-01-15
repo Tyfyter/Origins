@@ -22,7 +22,6 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 44;
 			NPC.defense = 12;
