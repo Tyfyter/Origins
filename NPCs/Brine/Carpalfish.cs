@@ -25,7 +25,8 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Carpalfish : Brine_Pool_NPC {
+	public class Carpalfish : Brine_Pool_NPC, IItemObtainabilityProvider {
+		public IEnumerable<int> ProvideItemObtainability() => [ModContent.ItemType<Venom_Fang>()];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 16;

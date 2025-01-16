@@ -85,7 +85,7 @@ namespace Origins.World.BiomeData {
 				);
 				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
-				Tile tile;
+				/*Tile tile;
 				for (int x = (int)MathF.Floor(i - 55); x < (int)MathF.Ceiling(i + 55); x++) {
 					for (int y = (int)MathF.Ceiling(j - 55); y < (int)MathF.Floor(j + 55); y++) {
 						tile = Framing.GetTileSafely(x, y);
@@ -100,45 +100,49 @@ namespace Origins.World.BiomeData {
 						}
 						tile.WallType = stoneWallID;
 					}
-				}
+				}*/
 				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
-				ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
 				int cellCount = cells.Count;
-				List<Vector2> cellsForOre = cells.ToList();
-				bool[] validOreTiles = TileID.Sets.Factory.CreateBoolSet(stoneID, TileID.Mud, mossID);
 				bool[] canBeClearedDuringOreRunner = TileID.Sets.CanBeClearedDuringOreRunner; 
 				try {
-					TileID.Sets.CanBeClearedDuringOreRunner = validOreTiles;
-					for (int i0 = genRand.Next((int)(cellCount * 0.8f), cellCount); i0 > 0; i0--) {
-						float oreAngle;
-						Vector2 pos = genRand.Next(cellsForOre);
-						cellsForOre.Remove(pos);
-						if (outerCells.Contains(pos)) {
-							float centerAngle = (new Vector2(i, j) - pos).ToRotation();
-							oreAngle = genRand.NextFloat(centerAngle - MathHelper.PiOver2, centerAngle + MathHelper.PiOver2);
-						} else {
-							oreAngle = genRand.NextFloat(MathHelper.TwoPi);
-						}
-						Vector2 step = OriginExtensions.Vec2FromPolar(oreAngle, 1);
-						Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
-						while (!currentTile.HasTile) {
-							pos += step;
-							currentTile = Framing.GetTileSafely(pos.ToPoint());
-						}
-						int stepCount = 0;
-						Vector2 endPos = pos;
-						while (currentTile.HasTile && stepCount < 5) {
-							endPos += step;
-							stepCount++;
-							currentTile = Framing.GetTileSafely(pos.ToPoint());
-						}
-						pos = (pos + endPos) / 2;
-						if (currentTile.TileType == mossID || currentTile.TileType == TileID.Mud) {
-							//TODO directional ore runner that returns ore count
-							//TODO do it again if low total ore in cell and random chance
-							OreRunner((int)pos.X, (int)pos.Y, 7, 5, oreID);
+					void DoOre(ushort oreID, bool[] validOreTiles, double strength = 7, int steps = 5) {
+						List<Vector2> cellsForOre = cells.ToList();
+						TileID.Sets.CanBeClearedDuringOreRunner = validOreTiles;
+						for (int i0 = genRand.Next((int)(cellCount * 0.8f), cellCount); i0 > 0; i0--) {
+							float oreAngle;
+							Vector2 pos = genRand.Next(cellsForOre);
+							cellsForOre.Remove(pos);
+							if (oreID != stoneID && outerCells.Contains(pos)) {
+								float centerAngle = (new Vector2(i, j) - pos).ToRotation();
+								oreAngle = genRand.NextFloat(centerAngle - MathHelper.PiOver2, centerAngle + MathHelper.PiOver2);
+							} else {
+								oreAngle = genRand.NextFloat(MathHelper.TwoPi);
+							}
+							Vector2 step = OriginExtensions.Vec2FromPolar(oreAngle, 1);
+							Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+							while (!currentTile.HasTile) {
+								pos += step;
+								currentTile = Framing.GetTileSafely(pos.ToPoint());
+							}
+							int stepCount = 0;
+							Vector2 endPos = pos;
+							while (currentTile.HasTile && stepCount < 5) {
+								endPos += step;
+								stepCount++;
+								currentTile = Framing.GetTileSafely(pos.ToPoint());
+							}
+							pos = (pos + endPos) / 2;
+							if (currentTile.TileType == mossID || currentTile.TileType == TileID.Mud) {
+								//TODO directional ore runner that returns ore count
+								//TODO do it again if low total ore in cell and random chance
+								OreRunner((int)pos.X, (int)pos.Y, strength, steps, oreID);
+							}
 						}
 					}
+					bool[] validOreTiles = TileID.Sets.Factory.CreateBoolSet(stoneID, TileID.Mud, mossID);
+					DoOre((ushort)ModContent.TileType<Eitrite_Ore>(), validOreTiles);
+					validOreTiles[stoneID] = false;
+					DoOre(stoneID, validOreTiles, steps: 3);
 				} finally {
 					TileID.Sets.CanBeClearedDuringOreRunner = canBeClearedDuringOreRunner;
 				}
@@ -302,12 +306,22 @@ namespace Origins.World.BiomeData {
 					if (length > 0 || ++vineTries > 1000) k--;
 					if (length > 0) vineCount++;
 				}
+				ushort replacementWallID = (ushort)ModContent.WallType<Replacement_Wall>();
+				for (int x = minGenX; x < maxGenX; x++) {
+					for (int y = minGenY; y < maxGenY; y++) {
+						Tile tile = Main.tile[x, y];
+						if (tile.WallType == replacementWallID) {
+							tile.WallType = (ushort)tile.Get<TemporaryWallData>().value;
+						}
+					}
+				}
 				GenVars.structures?.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, maxGenY - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
 				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
+				ushort replacementWallID = (ushort)ModContent.WallType<Replacement_Wall>();
 				float stretchScale = stretch.Length();
 				Vector2 stretchNorm = stretch / stretchScale;
 				float totalSize = 20 * sizeMult * (stretchScale + 1);
@@ -324,12 +338,31 @@ namespace Origins.World.BiomeData {
 						}
 						if ((!Main.tileCut[tile.TileType] && tile.TileType is not TileID.Trees or TileID.SmallPiles) && (Main.tileFrameImportant[tile.TileType] || Main.tileSolidTop[tile.TileType] || !Main.tileSolid[tile.TileType])) {
 							tile.WallType = stoneWallID;
+							switch (tile.TileType) {
+								case TileID.SmallPiles or TileID.LargePiles or TileID.LargePiles2:
+								break;
+								default:
+								if (TileID.Sets.Boulders[tile.TileType]) {
+									break;
+								}
+								continue;
+							}
+							tile.HasTile = false;
+							if (dist <= 19 * sizeMult) tile.WallType = stoneWallID;
+							else {
+								tile.Get<TemporaryWallData>().value = tile.WallType;
+								tile.WallType = replacementWallID;
+							}
 							continue;
 						}
-						if (tile.WallType != stoneWallID) {
+						if (tile.WallType != stoneWallID && tile.WallType != replacementWallID) {
 							tile.ResetToType(stoneID);
 						}
-						tile.WallType = stoneWallID;
+						if (dist <= 19 * sizeMult) tile.WallType = stoneWallID;
+						else {
+							tile.Get<TemporaryWallData>().value = tile.WallType;
+							tile.WallType = replacementWallID;
+						}
 						if (dist < 20 * sizeMult - 10f) {
 							if (WorldGen.CanKillTile(x, y)) tile.HasTile = false;
 						} else if (dist < 20 * sizeMult - 6f) {

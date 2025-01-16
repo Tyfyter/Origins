@@ -1,22 +1,72 @@
-Buffs/Friendly_Zombie_Buff
+Buffs/Brine_Latcher_Debuff
+Buffs/Greater_Summoning_Buff
 Buffs/Nano_Buff
 Buffs/Ocean_Buff
+Buffs/Skimswim_Buff
 
+Hair/HairSource/ExampleHair
+Hair/HairSource/Hair_Template
+Hair/HairSource/Hair1
+Hair/HairSource/Hair1_Hatted
+Hair/HairSource/Hair2
+Hair/HairSource/Hair2_Hatted
+Hair/HairSource/Hair3
+Hair/HairSource/Hair3_Hatted
+Hair/HairSource/Hair4
+Hair/HairSource/Hair4_Hatted
+Hair/HairSource/Hair5
+Hair/HairSource/Hair5_Hatted
+Hair/HairSource/Hair6
+Hair/HairSource/Hair6_Hatted
+
+Items/Accessories/Acrid_Beam_Thrusters
+Items/Accessories/Acrid_Beam_Thrusters_Glow
+Items/Accessories/Acrid_Beam_Thrusters_Wings
+Items/Accessories/Acrid_Beam_Thrusters_Wings_Glow
 Items/Accessories/Binding_Book_P
 Items/Accessories/Binding_Book_P2
 Items/Accessories/Brine_Leafed_Clover
 Items/Accessories/Bug_Trapper_Bug
+Items/Accessories/Charm_of_Naivety
+Items/Accessories/Charm_of_Naivety_HandsOn
+Items/Accessories/Crooked_Mirror
 Items/Accessories/Drill_Ravel
+Items/Accessories/Fairy_Lotus
+Items/Accessories/Fairy_Lotus_Face
+Items/Accessories/Faith_Beads
+Items/Accessories/Faith_Beads_Neck
+Items/Accessories/Fissure_Band
+Items/Accessories/Fissure_Band_HandsOn
+Items/Accessories/Golden_Lotus
+Items/Accessories/Golden_Lotus_Face
 Items/Accessories/Gun_Glove_HandsOn_Glow
+Items/Accessories/Lightning_Ring
+Items/Accessories/Mildew_Heart
+Items/Accessories/Mithrafin
+Items/Accessories/Mithrafin_Uncursed
+Items/Accessories/Noxious_Mithrafin
+Items/Accessories/Noxious_Mithrafin_Uncursed
+Items/Accessories/Ornamental_Keepsake
+Items/Accessories/Ornamental_Keepsake_Uncursed
+Items/Accessories/Power_Lotus
+Items/Accessories/Power_Lotus_Face
 Items/Accessories/Protomind_P_Glow
+Items/Accessories/Retaliatory_Tendril
+Items/Accessories/Sparking_Flame_Barrel
+Items/Accessories/Sparking_Flame_Barrel_Back
+Items/Accessories/Sparking_Flame_Barrel_Back_Glow
 Items/Accessories/Speed_Booster_Back
 Items/Accessories/Speed_Booster_Back_Glow
 Items/Accessories/Speed_Booster_Glow
 Items/Accessories/Strange_Computer_Laser
+Items/Accessories/Tender_Flesh_Heart
+Items/Accessories/Tender_Flesh_Heart_Glow
 Items/Accessories/Timbre_of_Hell
 Items/Accessories/Timbre_of_Hell_Glow
 Items/Accessories/Timbre_of_Hell_HandsOff - Copy
 Items/Accessories/Timbre_of_Hell_HandsOff_Glow
+Items/Accessories/Venom_Shield
+Items/Accessories/Venom_Shield_Shield
 
 Items/Armor/Acrid/Acrid_Breastplate_Glow
 
@@ -44,7 +94,7 @@ Items/Armor/Fiberglass/Fiberglass_Body_Arms
 Items/Armor/Fiberglass/Fiberglass_Body_Body_still
 Items/Armor/Fiberglass/Fiberglass_Body_Female
 
-Items/Armor/Lost/Mana_Buffer_Buff
+Items/Armor/Lost/Defiled_Exhaustion_Buff
 
 Items/Armor/Myth/Wings_46
 
@@ -52,26 +102,79 @@ Items/Armor/Ruby/ArmorTemplate_v1
 Items/Armor/Ruby/Item_178
 
 Items/Armor/Vanity/BossMasks/Head_Temp
+Items/Armor/Vanity/BossMasks/Lost_Diver_Body
+Items/Armor/Vanity/BossMasks/Lost_Diver_Chest
+Items/Armor/Vanity/BossMasks/Lost_Diver_Greaves
+Items/Armor/Vanity/BossMasks/Lost_Diver_Head
+Items/Armor/Vanity/BossMasks/Lost_Diver_Helmet
+Items/Armor/Vanity/BossMasks/Lost_Diver_Legs
 
-Items/Armor/Vanity/Dev/First_Dream
+Items/Armor/Vanity/Dev/cher/Armor_Conversion
+Items/Armor/Vanity/Dev/cher/ArmorTemplate_v1
+Items/Armor/Vanity/Dev/cher/First_Dream
+
+Items/Armor/Vanity/Other/Felnum_Shock_Glasses
+Items/Armor/Vanity/Other/Felnum_Shock_Glasses_Head
 
 Items/Materials/Valkyrum_Bar_WIP
+
+Items/Mounts/LancerWIP
+
+Items/Other/Consumables/Broths/Broth_Example
+Items/Other/Consumables/Broths/BrothTemplate
+Items/Other/Consumables/Broths/Light_Broth
+Items/Other/Consumables/Broths/Light_Broth_buff
+Items/Other/Consumables/Broths/Minty_Broth
+Items/Other/Consumables/Broths/Minty_Broth_Buff
+Items/Other/Consumables/Broths/Plain_Broth
+Items/Other/Consumables/Broths/Plain_Broth_Buff
+Items/Other/Consumables/Broths/Savory_Broth
+Items/Other/Consumables/Broths/Savory_Broth_Buff
+Items/Other/Consumables/Broths/Sharp_Broth
+Items/Other/Consumables/Broths/Sharp_Broth_Buff
+Items/Other/Consumables/Broths/Spicy_Broth
+Items/Other/Consumables/Broths/Spicy_Broth_Buff
+Items/Other/Consumables/Broths/Sweet_Broth
+Items/Other/Consumables/Broths/Sweet_Broth_Buff
+Items/Other/Consumables/Broths/Umami_Broth
+Items/Other/Consumables/Broths/Umami_Broth_Buff
+
+Items/Other/Consumables/Food/Sour_Apple
 
 Items/Other/Consumables/HolidayHairs/AntiCorruptionDay_Hair
 Items/Other/Consumables/HolidayHairs/MentalHealthAwarenessDay_Hair
 Items/Other/Consumables/HolidayHairs/Player_Hair_Example
 Items/Other/Consumables/Bowl_of_Soup
-Items/Other/Consumables/Captured_Mojo
+Items/Other/Consumables/Crown_Jewel
+Items/Other/Consumables/Crown_Jewel_Glow
+Items/Other/Consumables/Greater_Summoning_Potion
+Items/Other/Consumables/Hydrolantern
+Items/Other/Consumables/Hydrolantern_Use
+Items/Other/Consumables/Hydrolantern_Use_Glow
+Items/Other/Consumables/Latchkey
+Items/Other/Consumables/Latchkey_Glow
+Items/Other/Consumables/Lost_Picture_Frame
+Items/Other/Consumables/Skimswim_Potion
+
+Items/Other/Fish/Basic_Crate
+Items/Other/Fish/Bobbit_Worm
+Items/Other/Fish/Toadfish
+
+Items/Other/LootBags/Lost_Diver_Bag
 
 Items/Pets/Chee_Toy_Flying
 Items/Pets/Chromatic_Pangolin_Flying
 Items/Pets/Meberoid_Glow
+Items/Pets/Mildew_Blob
+Items/Pets/Rusty_Cross_Necklace
 Items/Pets/Salty_Seed
 Items/Pets/Self_Contained_Universe_Glow
 Items/Pets/Walking_Furnace_Glow
+Items/Pets/Wet_Wood
 
 Items/Tools/Black_Light
 Items/Tools/Chunky_Hook_P_Chain
+Items/Tools/Lightning_Rod_Bobber_Glow
 Items/Tools/Mitosis_P_Seed
 Items/Tools/Nano_Hook
 Items/Tools/Nano_Hook_Glow
@@ -90,6 +193,12 @@ Items/Weapons/Ammo/Canisters/Resizable_Mine_P
 Items/Weapons/Ammo/Scrap_2
 Items/Weapons/Ammo/Scrap_3
 
+Items/Weapons/Crossmod/Keytar
+Items/Weapons/Crossmod/Keytar_Bass_P
+Items/Weapons/Crossmod/Keytar_Lead_P
+Items/Weapons/Crossmod/Keytar_Synth_P
+Items/Weapons/Crossmod/Watered_Down_Keytar
+
 Items/Weapons/Demolitionist/Abrasion_Blaster_Charge1
 Items/Weapons/Demolitionist/Abrasion_Blaster_Charge2
 Items/Weapons/Demolitionist/Abrasion_Blaster_Charge3
@@ -100,25 +209,29 @@ Items/Weapons/Demolitionist/Cold_Snap_P_Inner
 Items/Weapons/Demolitionist/Cold_Snap_P_Outer
 Items/Weapons/Demolitionist/Crystal_Grenade_Blue
 Items/Weapons/Demolitionist/Crystal_Grenade_Pink
-Items/Weapons/Demolitionist/DD_Dreikan
-Items/Weapons/Demolitionist/DD_Dreikan_Glow
 Items/Weapons/Demolitionist/Eruption_P_Inner
 Items/Weapons/Demolitionist/Eruption_P_Outer
 Items/Weapons/Demolitionist/Example_Dyna
 Items/Weapons/Demolitionist/Flare_Launcher_P_Inner
 Items/Weapons/Demolitionist/Flare_Launcher_P_Outer
+Items/Weapons/Demolitionist/Glass_Cannon_P_Inner
+Items/Weapons/Demolitionist/Glass_Cannon_P_Outer
 Items/Weapons/Demolitionist/Internal_Combustionfish_P
 Items/Weapons/Demolitionist/Meteor_P
 Items/Weapons/Demolitionist/Meteor_P2
 Items/Weapons/Demolitionist/Meteor_P2_Cooling_Effect
 Items/Weapons/Demolitionist/Mine_Flayer_Use
 Items/Weapons/Demolitionist/Nuclear_Arm_HandsOn_Glow
+Items/Weapons/Demolitionist/Partybringer_P_Inner
+Items/Weapons/Demolitionist/Partybringer_P_Outer
 Items/Weapons/Demolitionist/Shrapnel_Dust
 Items/Weapons/Demolitionist/Shrapnel_Dust_2
 Items/Weapons/Demolitionist/Shrapnel_Dust_3
-Items/Weapons/Demolitionist/Sonorous_Shredder
 Items/Weapons/Demolitionist/Starburst
 Items/Weapons/Demolitionist/Starburst_Glow
+Items/Weapons/Demolitionist/Torpedo_Tube
+Items/Weapons/Demolitionist/Torpedo_Tube_Alt
+Items/Weapons/Demolitionist/Torpedo_Tube_P
 
 Items/Weapons/Felnum/Tier2/Felnum_Broadsword
 Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B
@@ -140,33 +253,47 @@ Items/Weapons/Felnum/Tolruk_Glow_Old/Tolruk_Glow_9
 Items/Weapons/Felnum/Felnum_Sword
 Items/Weapons/Felnum/Felnum_Wand_Dark
 
+Items/Weapons/Magic/Brine_Haze
+Items/Weapons/Magic/Communion_P
 Items/Weapons/Magic/Eaterboros_Segment_Attached
 Items/Weapons/Magic/Infusion_A
 Items/Weapons/Magic/Ion_Minigun
 Items/Weapons/Magic/Ion_Minigun_P
-Items/Weapons/Magic/LTGP
 Items/Weapons/Magic/Missing_File_UI
 Items/Weapons/Magic/Missing_File_Use
 Items/Weapons/Magic/Phantom_Fury_P2
 Items/Weapons/Magic/Unending_Energy
 
+Items/Weapons/Melee/Chromakama
 Items/Weapons/Melee/Chromtain_Smasher
 Items/Weapons/Melee/Defiled_Biome_Blade
+Items/Weapons/Melee/Felnum_Boar_Spear_P_Glow
 Items/Weapons/Melee/Knee_Slapper_Head_Glow
 Items/Weapons/Melee/Riven_Biome_Blade
 Items/Weapons/Melee/Singulus
 Items/Weapons/Melee/Singulus_Glow
+Items/Weapons/Melee/Soul_Snatcher
+Items/Weapons/Melee/Soul_Snatcher_P
+Items/Weapons/Melee/Soulslasher
+Items/Weapons/Melee/Soulslasher_P
 
+Items/Weapons/Ranged/Boat_Rocker_Alt
+Items/Weapons/Ranged/Boat_Rocker_Chain
+Items/Weapons/Ranged/Crawdaddys_Revenge
+Items/Weapons/Ranged/Crawdaddys_Revenge_P
+Items/Weapons/Ranged/Dragons_Breath
+Items/Weapons/Ranged/Dragons_Breath_Glow
 Items/Weapons/Ranged/Firespit_Old
-Items/Weapons/Ranged/Hallowed_Cleaver_Alt
+Items/Weapons/Ranged/Laser_Line_Bow
+Items/Weapons/Ranged/Laser_Line_Bow_Glow
 Items/Weapons/Ranged/Sleetfire_P
 Items/Weapons/Ranged/Tendon_Tear_Old
 
+Items/Weapons/Summoner/Minions/Ashen_Mortar_Barrel
+Items/Weapons/Summoner/Minions/Ashen_Mortar_Base
 Items/Weapons/Summoner/Minions/Barnacle_Turret_Base_Glow
 Items/Weapons/Summoner/Minions/Barnacle_Turret_Head
 Items/Weapons/Summoner/Minions/Barnacle_Turret_Head_Glow
-Items/Weapons/Summoner/Minions/Calico
-Items/Weapons/Summoner/Minions/Calico_Glow
 Items/Weapons/Summoner/Minions/Cluesy_Attack
 Items/Weapons/Summoner/Minions/Cluesy_Fall
 Items/Weapons/Summoner/Minions/Cluesy_Walk
@@ -174,7 +301,8 @@ Items/Weapons/Summoner/Minions/Flying_Exoskeleton_Glow
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Attac
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Look
 Items/Weapons/Summoner/Minions/Fresh_Meat_Dog_Run
-Items/Weapons/Summoner/Minions/Friendly_Zombie
+Items/Weapons/Summoner/Minions/Friendly_Monolith
+Items/Weapons/Summoner/Minions/Friendly_Monolith_Glow
 Items/Weapons/Summoner/Minions/Happy_Boi_Glow
 Items/Weapons/Summoner/Minions/Ocean_Elemental
 Items/Weapons/Summoner/Minions/Ocean_Elemental_Glow
@@ -183,26 +311,74 @@ Items/Weapons/Summoner/Minions/Woodsprite_Glow
 Items/Weapons/Summoner/Amebolize_Incantation_Smol
 Items/Weapons/Summoner/Amebolize_Incantation_Smol_Glow
 Items/Weapons/Summoner/Bee_Afraid_Incantation_Smol
+Items/Weapons/Summoner/Defective_Mortar_Shell
 Items/Weapons/Summoner/Fiber_Optic_Whip
 Items/Weapons/Summoner/Forsaken_Desire
 Items/Weapons/Summoner/Forsaken_Desire_Use
-Items/Weapons/Summoner/Inanimate_Zombie_Hand
-Items/Weapons/Summoner/Maelstrom_Incantation_Large_P
+Items/Weapons/Summoner/Hibernal_Incantation_Smol
 Items/Weapons/Summoner/Maelstrom_Incantation_Smol
+Items/Weapons/Summoner/Mildew_Incantation
+Items/Weapons/Summoner/Mildew_Incantation_P
+Items/Weapons/Summoner/Mildew_Incantation_Smol
+Items/Weapons/Summoner/Monolith_Rod
+Items/Weapons/Summoner/Monolith_Rod_Glow
 Items/Weapons/Summoner/Ocean_Amulet
+Items/Weapons/Summoner/Ocotillo_Finger
+Items/Weapons/Summoner/Ocotillo_Finger_P
 Items/Weapons/Summoner/Scabcoral_Lyre_Branch
 Items/Weapons/Summoner/Scabcoral_Lyre_Node_Glow
-Items/Weapons/Summoner/Stubborn_Flower
-Items/Weapons/Summoner/Stubborn_Flower_Use
 Items/Weapons/Generic_Weapon_P
 
-NPCs/Brine/Brine_WIP
-NPCs/Brine/Lost_Diver_Interact
-NPCs/Brine/Lost_Diver_Phase_2
-NPCs/Brine/Lost_Diver_Tentacle
-NPCs/Brine/Lost_Diver_Transition
-NPCs/Brine/Lost_Diver_Walking
-NPCs/Brine/Mildew_Creeper
+Music/89_Defiled_Otherworldly
+Music/Abstract
+Music/Ad_Laceratur
+Music/ADJUDICATE
+Music/Anomaly_Detected
+Music/Below_The_Brine
+Music/Dancing_With_Ghosts
+Music/Festering_Hives
+Music/Heart_Of_The_Beast
+Music/Heart_Of_The_Beast_Old
+Music/Living_By_a_Nerve
+Music/Pereunt_Unum_Scindendum
+Music/Rivendancer_2081
+Music/Shattered_Topography_Old
+Music/Stolen_Memories
+Music/The_Room_Before
+Music/This_Ocean_Of_Alkahest
+
+NPCs/Brine/Boss/Lost_Diver_
+NPCs/Brine/Boss/Lost_Diver_Back
+NPCs/Brine/Boss/Lost_Diver_Body
+NPCs/Brine/Boss/Lost_Diver_Head
+NPCs/Brine/Boss/Lost_Diver_Legs
+NPCs/Brine/Boss/Lost_Diver_Transformation
+NPCs/Brine/Boss/Lost_Diver_Transformation_AF
+NPCs/Brine/Boss/Mildew_Carrion_Body
+NPCs/Brine/Boss/Mildew_Carrion_Body_AF
+NPCs/Brine/Boss/Mildew_Carrion_Cell1
+NPCs/Brine/Boss/Mildew_Carrion_Cell2
+NPCs/Brine/Boss/Mildew_Carrion_Spore
+NPCs/Brine/Boss/Mildew_Carrion_Tendril
+NPCs/Brine/Boss/Mildew_Carrion_Tentacle
+NPCs/Brine/Boss/Mildew_Carrion_Tentacle_AF
+NPCs/Brine/Boss/Rock_Bottom
+NPCs/Brine/Airsnatcher
+NPCs/Brine/Brine_Latcher
+NPCs/Brine/Brine_Serpent_Body
+NPCs/Brine/Brine_Serpent_Fin_Body
+NPCs/Brine/Brine_Serpent_Fin_Head
+NPCs/Brine/Brine_Serpent_Fin_Tail1
+NPCs/Brine/Brine_Serpent_Fin_Tail2
+NPCs/Brine/Brine_Serpent_Head
+NPCs/Brine/Brine_Serpent_Tail1
+NPCs/Brine/Brine_Serpent_Tail2
+NPCs/Brine/King_Crab_Arm
+NPCs/Brine/King_Crab_Claw
+NPCs/Brine/Nasty_Crawdad
+NPCs/Brine/Sea_Dragon_Strand
+NPCs/Brine/Shotgunfish
+NPCs/Brine/Thing_of_nightmares_Ill_keep_in_the_backlog
 
 NPCs/Cubekon/Blox
 NPCs/Cubekon/Blox_Glow
@@ -216,14 +392,22 @@ NPCs/Cubekon/Tetrix_Glow
 NPCs/Dawn/Angel_WIP
 
 NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm
+NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow
+NPCs/Defiled/Boss/Defiled_Amalgamation_resprite
 NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm
+NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P1_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P2_Glow
 NPCs/Defiled/Defiled_Asphyxiator_P3_Glow
 NPCs/Defiled/Defiled_Cyclops_Old
+NPCs/Defiled/Defiled_Ekko_Body
+NPCs/Defiled/Defiled_Ekko_Head
+NPCs/Defiled/Defiled_Ekko_Head_Glow
 NPCs/Defiled/Defiled_Ekko_Interact
+NPCs/Defiled/Defiled_Ekko_Legs
 NPCs/Defiled/Defiled_Ekko_Parts
-NPCs/Defiled/Defiled_Flyer_Old
+NPCs/Defiled/Defiled_Tripod_AF
+NPCs/Defiled/Defiled_Tripod_AF_Glow
 
 NPCs/Dungeon/Cellarkeep_Throw
 NPCs/Dungeon/Electromancer
@@ -235,22 +419,16 @@ NPCs/Dungeon/Illusionary_Glow
 NPCs/Dusk/Duskord
 NPCs/Dusk/Supine
 
+NPCs/Felnum/Felnum_Einheri_Attac
+NPCs/Felnum/Felnum_Einheri_Glow
+NPCs/Felnum/Felnum_Einheri_Glow_Over
+NPCs/Felnum/Felnum_Einheri_Spear
+NPCs/Felnum/Felnum_Einheri_Spear_Glow
+NPCs/Felnum/Felnum_Guardian_Glow
+
+NPCs/Fiberglass/Enchanted_Fiberglass_Slime
 NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower
 NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper
-
-NPCs/ICARUS/ICARUS
-NPCs/ICARUS/ICARUS_Glow
-NPCs/ICARUS/ICARUS_Left
-NPCs/ICARUS/ICARUS_Left_Glow
-NPCs/ICARUS/ICARUS_Pupil
-NPCs/ICARUS/ICARUS_Right
-NPCs/ICARUS/ICARUS_Right_Glow
-NPCs/ICARUS/ICARUS_Shield
-NPCs/ICARUS/ICARUS-export
-NPCs/ICARUS/ICARUS-export-export
-NPCs/ICARUS/Scanner_Scout
-NPCs/ICARUS/Scanner_Scout_Glow
-NPCs/ICARUS/Swarmer_Glow
 
 NPCs/MiscB/Chambersite_Sentinel
 NPCs/MiscB/Grand_Corruptor
@@ -258,15 +436,22 @@ NPCs/MiscB/Ichor_Storm
 NPCs/MiscB/NPC_Unknown
 NPCs/MiscB/Severus
 
+NPCs/MiscE/Boulder_Mimic
+NPCs/MiscE/Boulder_Mimic_Glow
+NPCs/MiscE/Canninhound
+NPCs/MiscE/Cloud_Elemental
+NPCs/MiscE/Cloud_Elemental_Fingergun
+NPCs/MiscE/NPC_48
+
 NPCs/Nova Pillar/Nova_Pillar_Glow
 NPCs/Nova Pillar/Nova_Pillar_Head_Boss
 
 NPCs/Riven/Amoebeye_Glow
 NPCs/Riven/Barnacle_Mound_Glow
-NPCs/Riven/Barnacleback_Glow
-NPCs/Riven/Pustule_Jelly_Alt
-NPCs/Riven/Pustule_Jelly_Alt_Glow
-NPCs/Riven/Trijaw_Shark_Glow
+NPCs/Riven/Riven_Fighter_AF
+NPCs/Riven/Riven_Fighter_AF_Glow
+NPCs/Riven/Trijaw_Shark_Feesh
+NPCs/Riven/Trijaw_Shark_Feesh_Glow
 
 Projectiles/Ammo/Acorn_P
 Projectiles/Ammo/Defiled_Bolt_P
@@ -276,6 +461,7 @@ Projectiles/Ammo/Leaf3_P
 Projectiles/Ammo/Starburst1_P
 
 Projectiles/Misc/Amoeba_Chain_End
+Projectiles/Misc/Beeg_Bubbel
 Projectiles/Misc/Nano_Chain_End
 Projectiles/Misc/Nano_Chain_End_Glow
 Projectiles/Misc/Nano_Chain1
@@ -284,10 +470,7 @@ Projectiles/Misc/Quantum_Chain_End_Glow
 Projectiles/Misc/Quantum_Chain1
 Projectiles/Misc/Quantum_Chain2
 Projectiles/Misc/Quantum_Chain2_Glow
-
-Projectiles/Mounts/FalconWIP1
-Projectiles/Mounts/FalconWIP2
-Projectiles/Mounts/LancerWIP
+Projectiles/Misc/Smol_Bubbel
 
 Projectiles/Weapons/Black_Hole_Bomb_P
 Projectiles/Weapons/Bright_Sword_Cast_P
@@ -300,10 +483,18 @@ Projectiles/Weapons/Water_Cast_P
 
 Sounds/Custom/Ambience/DefiledAmbience
 Sounds/Custom/Ambience/RivenAmbience
+
+Sounds/Custom/LaserTag/Death
+Sounds/Custom/LaserTag/Hurt
+Sounds/Custom/LaserTag/Score
 Sounds/Custom/BeckoningRoar
 Sounds/Custom/BlockusLand
+Sounds/Custom/BubblyBlast
 Sounds/Custom/BurstCannon
+Sounds/Custom/ChargedUp
+Sounds/Custom/ChargedUpSmol
 Sounds/Custom/ChorusRoar
+Sounds/Custom/DeathByBubbles
 Sounds/Custom/DeepBoom
 Sounds/Custom/Defiled_Hurt1
 Sounds/Custom/Defiled_Hurt2
@@ -312,13 +503,24 @@ Sounds/Custom/Defiled_Idle3
 Sounds/Custom/Defiled_Kill1
 Sounds/Custom/Defiled_Sample
 Sounds/Custom/EnergyRipple
-Sounds/Custom/Heart_of_the_Beast
+Sounds/Custom/EvilFish
+Sounds/Custom/GrandSlam
 Sounds/Custom/HeavyCannon
 Sounds/Custom/IMustScream
+Sounds/Custom/KeytarBass
+Sounds/Custom/KeytarLead
+Sounds/Custom/KeytarSynth
+Sounds/Custom/Laughter
 Sounds/Custom/PhaserCrash
 Sounds/Custom/PowerUp
 Sounds/Custom/RivenBass
 Sounds/Custom/ShrapnelFest
+Sounds/Custom/SonarPing
+Sounds/Custom/ThunderShot
+
+Sounds/Music/Carrion_Awakened
+Sounds/Music/Carrion_Awakened_Finish
+Sounds/Music/Mildewy_Situation
 
 Sounds/Seer/SeerAlarm
 Sounds/Seer/SeerHum
@@ -328,6 +530,7 @@ Sounds/Seer/SeerScan
 
 Textures/All_Torn
 Textures/Cell_Noise
+Textures/Enemy_Blind_Indicator
 Textures/Enemy_Slow_Indicator
 Textures/Example
 Textures/Glow_Intensity
@@ -339,12 +542,18 @@ Textures/Torn_Example
 
 Tiles/Banners/Barnacle_Mound_Banner
 Tiles/Banners/Barnacle_Mound_Banner_Item
+Tiles/Banners/Fae_Nymph_Banner
+Tiles/Banners/Fae_Nymph_Banner_Item
+
+Tiles/BossDrops/Lost_Diver_Relic
+Tiles/BossDrops/Lost_Diver_Relic_Item
+Tiles/BossDrops/Lost_Diver_Trophy
+Tiles/BossDrops/Lost_Diver_Trophy_Item
 
 Tiles/Brine/Brineglow_Item_Glow
-Tiles/Brine/Geyser_Core
-Tiles/Brine/Geyser_Core_Item
 Tiles/Brine/Mildew
 Tiles/Brine/Mildew_Item
+Tiles/Brine/Venus_Coral
 
 Tiles/Cubekon/Cubekon_Chest
 
@@ -412,6 +621,9 @@ Tiles/FromIndex/TOILET_ITEM
 Tiles/FromIndex/Work_Bench
 Tiles/FromIndex/Work_Bench_Item
 
+Tiles/Limestone/Limestone
+Tiles/Limestone/Limestone_Item
+
 Tiles/Marrowick/Marrowick_Candelabra_Glow
 Tiles/Marrowick/Marrowick_Candle_Glow
 Tiles/Marrowick/Marrowick_Chandelier_Glow
@@ -420,9 +632,16 @@ Tiles/Marrowick/Marrowick_Lantern_Glow
 Tiles/Marrowick/Marrowick_Table_Glow
 Tiles/Marrowick/Marrowick_Table_Item_Glow
 
+Tiles/MusicBoxes/Ancient_Music_Box_BP
+Tiles/MusicBoxes/Ancient_Music_Box_BP_Glow
+Tiles/MusicBoxes/Ancient_Music_Box_BP_Item
+Tiles/MusicBoxes/Music_Box_BP
+Tiles/MusicBoxes/Music_Box_BP_Item
 Tiles/MusicBoxes/Music_Box_DW_Old
 Tiles/MusicBoxes/Music_Box_DW_Old_Item
 
+Tiles/Other/Bomb_Trap
+Tiles/Other/Bomb_Trap_Item
 Tiles/Other/Chambersite_Ore_Chunkrock_Item
 Tiles/Other/Chambersite_Ore_Crimstone_Item
 Tiles/Other/Chambersite_Ore_Ebonstone_Item
@@ -434,8 +653,12 @@ Tiles/Other/Fiberglass_Tile_Ish
 Tiles/Other/Fiberglass_Tile_New_Frames
 Tiles/Other/Fiberglass_Vines
 Tiles/Other/Glass
+Tiles/Other/Laser_Tag_Base_Console_Glow
+Tiles/Other/Laser_Tag_Console_Glow
 Tiles/Other/Nova_Accumulator_Glow
 Tiles/Other/Nova_Monolith_Item
+Tiles/Other/Ocotillo
+Tiles/Other/Ocotillo_Flower
 Tiles/Other/Riven_Fountain_Glow
 
 Tiles/Riven/Exoskeletal_Tree
@@ -451,12 +674,12 @@ Tiles/Riven/Riven_Cactus_Fruit_Glow
 Tiles/Riven/Riven_Cactus_Glow
 Tiles/Riven/Riven_Campfire_Flame
 Tiles/Riven/Riven_Flesh_Item_Glow
-Tiles/Riven/Riven_Pot_Glow
 
 UI/Lore/Journal_Arrows
 UI/Lore/Journal_Scroll
 UI/Lore/Journal_Search
 
+UI/MapBGs/Brine_Pool
 UI/MapBGs/Defiled_Ocean
 UI/MapBGs/Defiled_Snow
 UI/MapBGs/Defiled_Wastelands_Desert
@@ -468,26 +691,25 @@ UI/MapBGs/Riven_Hive_Caverns
 
 UI/SetBonus/Berserker_Meter
 
-UI/WorldGen/IconBrine
 UI/WorldGen/IconDawn
 UI/WorldGen/IconDefiledCrimson
 UI/WorldGen/IconDefiledHallow
 UI/WorldGen/IconDefiledRiven
 UI/WorldGen/IconDusk
 UI/WorldGen/IconEvilAshen
-UI/WorldGen/IconFiberglass
 UI/WorldGen/IconHallowDefiledCrimson
-UI/WorldGen/IconRiven
 UI/WorldGen/IconRivenCorruption
 UI/WorldGen/IconRivenHallow
 UI/WorldGen/IconTemplate
 UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven
-UI/Brine_Cloud
 UI/Cleaver_Preview
 UI/Defiled_Digger_Preview
-UI/Fiberglass_Weaver_Preview
+UI/Heart_Mildew
+UI/HP_Mildew
 UI/Rivenator_Preview
+UI/Savage_Whip_Preview
+UI/Slime_Worm_Preview
 UI/World_Cracker_Preview
 
 Walls/Chambersite_Crimstone_Wall_Item

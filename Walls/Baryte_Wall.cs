@@ -1,4 +1,5 @@
-﻿using Origins.Tiles.Brine;
+﻿using Origins.Items.Other.Testing;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -45,5 +46,32 @@ namespace Origins.Walls {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
+	}
+	public class Replacement_Wall : ModWall {
+		public override string Texture => "Terraria/Images/Wall_1";
+		public override bool WallFrame(int i, int j, bool randomizeFrame, ref int style, ref int frameNumber) {
+			Tile tile = Main.tile[i, j];
+			tile.WallType = (ushort)tile.Get<TemporaryWallData>().value;
+			return false;
+		}
+	}
+	public class Replacement_Wall_Item : TestingItem {
+		public override string Texture => "Terraria/Images/Wall_1";
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.StoneWall);
+			Item.createWall = -1;
+		}
+		public override bool? UseItem(Player player) {
+			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+			ushort type = (ushort)WallType<Replacement_Wall>();
+			if (tile.WallType != type) {
+				tile.Get<TemporaryWallData>().value = tile.WallType;
+				tile.WallType = type;
+			}
+			return true;
+		}
+	}
+	public struct TemporaryWallData : ITileData {
+		public int value;
 	}
 }

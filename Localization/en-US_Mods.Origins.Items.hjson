@@ -4920,3 +4920,8 @@ Hydrothermal_Vent_Item: {
 	DisplayName: Hydrothermal Vent Item
 	Tooltip: ""
 }
+
+Replacement_Wall_Item: {
+	DisplayName: Replacement Wall Item
+	Tooltip: ""
+}

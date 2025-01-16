@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -15,7 +17,8 @@ namespace Origins.Tiles {
 		static Dictionary<int, AutoLoadingAsset<Texture2D>> stalactiteTextures;
 		public override void SetStaticDefaults() {
 			stalactiteTextures = new() {
-				[ModContent.TileType<Defiled_Ice>()] = "Origins/Tiles/Defiled/Defiled_Icicle"
+				[ModContent.TileType<Defiled_Ice>()] = "Origins/Tiles/Defiled/Defiled_Icicle",
+				[ModContent.TileType<Primordial_Permafrost>()] = "Origins/Tiles/Riven/Primordial_Permafrost_Icicle"
 			};
 		}
 		public override void Unload() {
@@ -55,9 +58,11 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			/*if () {
-
-			}*/
+			Tile tile = Main.tile[i, j];
+			if (tile.WallType == ModContent.WallType<Baryte_Wall>()) {
+				tile.LiquidAmount = 255;
+				tile.LiquidType = LiquidID.Water;
+			}
 		}
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
 			switch (type) {

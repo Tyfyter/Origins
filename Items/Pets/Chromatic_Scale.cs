@@ -28,7 +28,7 @@ namespace Origins.Items.Pets {
 			Item.width = 32;
 			Item.height = 32;
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Cyan;// dev items are cyan rarity, despite being expert exclusive
+			Item.rare = AltCyanRarity.ID;// dev items are cyan rarity, despite being expert exclusive
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
 		}
