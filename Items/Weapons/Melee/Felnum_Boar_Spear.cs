@@ -5,6 +5,7 @@ using Origins.Items.Armor.Felnum;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using PegasusLib;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -72,8 +73,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
-				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {
-					movementFactor -= 2.6f;
+				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 3) {
+					movementFactor -= 2.8f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
 					movementFactor += 2.8f;
 				}
