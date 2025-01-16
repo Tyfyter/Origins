@@ -1775,8 +1775,8 @@ Configs: {
 		}
 
 		RainSetBuff: {
-			// Label: Rain Set
-			// Tooltip: ""
+			// Label: Rain armor buffs
+			// Tooltip: Gives Rain armor pieces bonuses and a set bonus when equipped together
 		}
 
 		GrassMerge: {

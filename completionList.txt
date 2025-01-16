@@ -55,7 +55,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(#2, ^2) Defiled Amalgamation* !!! (OOB tolerance and arm glows)
+(#2, ^2) Defiled Amalgamation* !!! (arm glows)
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (X) Shimmer Construct
@@ -174,9 +174,9 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
 (^) Fae Nymph (Whimsical Girl)
-(#2, ^2/4) Felnum Einheri !!! (this would be really cool with electric explosion death)
-(#2, ^2/4) Felnum Guardian !!! (this would be really cool with electric explosion death)
-(#2, ^2) Felnum Ore Slime !!! (this would be really cool with electric explosion death)
+(^) Felnum Einheri
+(^) Felnum Guardian
+(^) Felnum Ore Slime
 (@4, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
@@ -341,7 +341,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(X, ?) Extremophile Armor !!!
+(X) Extremophile Armor !!!
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -653,7 +653,7 @@ MELEE WEAPONS:
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
-(#3, ^2) Felnum Boar Spear !!! (sprite jank)
+(#3, ^2) Felnum Boar Spear !!! (has fixed sprites)
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
@@ -677,7 +677,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(X, ?) Boomboom !!!
+(X) Boomboom !!!
 (#2, ^2) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
@@ -742,10 +742,9 @@ RANGED WEAPONS:
 (X) Bloodshot
 (#2/4, ^2) Boat Rocker° !!! (needs alternate chains and alt)
 (^) Boiler
-(X, ?) Boomboom !!!
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
-(X) Crawdaddy's Revenge !!!
+(#, ^2) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
 (^) Firespit
@@ -855,7 +854,7 @@ SUMMONER WEAPONS:
 (^) Fresh Meat Artifact
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
-(X) Inject Incantation !!!
+(#, ^2) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Monolith Rod !!!
@@ -864,8 +863,8 @@ SUMMONER WEAPONS:
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
 (^) Rotted Worm Staff
-(X) Shadow Cast !!!
-(X, ?) Sunflower in a Pot !!!
+(X) Shadow Cast
+(X) Sunflower in a Pot !!!
 (^) Teardown*
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -1141,7 +1140,7 @@ TILES:
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
 (X) Qube Generator°
-(X, ?) Unsuspicious Bush !!!
+(X) Unsuspicious Bush !!!
 
 (^) Acetabularia*
 (X) Barnacle Infested Coral
@@ -1174,7 +1173,7 @@ TILES:
 (X) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
-(X, ?) The Jungle's Glass Door !!!
+(X) The Jungle's Glass Door !!!
 (X) There's Five of Them Now
 (X) What's Out There
 

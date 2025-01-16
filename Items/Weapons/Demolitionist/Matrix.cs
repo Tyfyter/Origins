@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Matrix_P>(14, 50, 8f, 46, 18, true);
+			Item.DefaultToCanisterLauncher<Matrix_P>(18, 50, 8f, 46, 18, true);
 			Item.value = Item.sellPrice(silver: 24);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;

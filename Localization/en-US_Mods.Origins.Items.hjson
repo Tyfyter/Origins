@@ -3209,7 +3209,7 @@ Laser_Tag_Console_Item: {
 
 Traffic_Cone_Item: {
 	DisplayName: Traffic Cone
-	Tooltip: ""
+	Tooltip: Slows enemies when placed
 }
 
 Acetabularia_Item: {
@@ -3219,7 +3219,7 @@ Acetabularia_Item: {
 
 Amoeba_Fluid_Item: {
 	DisplayName: Amoeba Fluid
-	Tooltip: ""
+	Tooltip: Bouncy! Bouncy! Bouncy!
 }
 
 Encrusted_Ore_Item: {
@@ -3641,7 +3641,7 @@ Sunflower_Seed_Shooter: {
 	Tooltip:
 		'''
 		Uses sunflowers as ammo
-		25% chance not to consume ammo
+		80% chance not to consume ammo
 		'''
 }
 

@@ -1,11 +1,9 @@
+using Origins.Dev;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
-using Terraria.Audio;
 namespace Origins.Items.Weapons.Ranged {
 	public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -16,7 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
-			Item.damage = 10;
+			Item.damage = 12;
 			Item.crit -= 4;
 			Item.width = 64;
 			Item.height = 22;
@@ -34,7 +32,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = null;
 		}
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			return !Main.rand.NextBool(3);
+			return Main.rand.NextBool(5);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item11, position);

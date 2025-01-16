@@ -1,20 +1,15 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Harpoon_Burst_Rifle : Harpoon_Gun {
+	public class Harpoon_Burst_Rifle : Harpoon_Gun {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
