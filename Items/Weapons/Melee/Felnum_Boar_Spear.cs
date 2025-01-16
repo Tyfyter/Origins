@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.damage = baseDamage;
@@ -72,9 +73,9 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {
-					movementFactor -= 2.5f;
+					movementFactor -= 2.6f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 2.7f;
+					movementFactor += 2.8f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
@@ -96,8 +97,8 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2 origin = new(57, 5);
-			float rotation = Projectile.rotation + MathHelper.ToRadians(4.27f);
+			Vector2 origin = new(73, 5);
+			float rotation = Projectile.rotation;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
