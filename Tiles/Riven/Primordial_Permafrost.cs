@@ -20,6 +20,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(100, 200, 200));
 			mergeID = TileID.IceBlock;
 			DustType = DustID.Water_Snow;
+			HitSound = SoundID.Item50;
 		}
 		public override void FloorVisuals(Player player) {
 			player.slippy = true;

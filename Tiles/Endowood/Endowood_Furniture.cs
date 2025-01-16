@@ -17,6 +17,7 @@ namespace Origins.Tiles.Endowood {
 				.AddIngredient(item.type, 2)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Door : DoorBase {
@@ -28,6 +29,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Grandfather_Clock : ClockBase {
@@ -41,6 +43,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Chair : ChairBase {
@@ -52,6 +55,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Toilet : ChairBase {
@@ -64,6 +68,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 		public override void HitWire(int i, int j) {
 			ToiletHitWire(i, j);
@@ -80,6 +85,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Bathtub : FurnitureBase {
@@ -92,6 +98,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Sink : FurnitureBase {
@@ -105,6 +112,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Candle : LightFurnitureBase {
@@ -118,6 +126,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -138,6 +147,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -158,6 +168,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -179,6 +190,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Anvils)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -199,6 +211,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -219,6 +232,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Piano : FurnitureBase {
@@ -232,6 +246,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Table : FurnitureBase {
@@ -244,6 +259,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Work_Bench : FurnitureBase {
@@ -255,6 +271,7 @@ namespace Origins.Tiles.Endowood {
 				.AddIngredient<Endowood_Item>(10)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Dresser : DresserBase {
@@ -266,6 +283,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Bed : BedBase {
@@ -278,6 +296,7 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Chest : ModChest {
@@ -285,6 +304,7 @@ namespace Origins.Tiles.Endowood {
 			base.SetStaticDefaults();
 			AddMapEntry(new Color(200, 200, 200), CreateMapEntryName(), MapChestName);
 			AdjTiles = [TileID.Containers];
+			DustType = DustID.t_Granite;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 	}

@@ -4915,3 +4915,8 @@ Discharge_Canister: {
 	5% increased damage
 	2% increased damage during rain
 	''' */
+
+Hydrothermal_Vent_Item: {
+	// DisplayName: Hydrothermal Vent Item
+	// Tooltip: ""
+}

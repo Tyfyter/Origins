@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -29,6 +30,7 @@ namespace Origins.Tiles.Defiled {
 			ID = Type;
 			AnimationFrameHeight = 144 / 4;
 			HitSound = Origins.Sounds.DefiledIdle;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 9) {

@@ -13,6 +13,7 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Sandstone;//what wall type this wall is considered to be when blending
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(115, 115, 115));
+			DustType = DustID.Ghost;
 		}
 	}
 	public class Quartz_Wall_Safe : Brittle_Quartz_Wall {

@@ -22,6 +22,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
+			DustType = DustID.Ghost;
 		}
 	}
 	public class Quartz_Item : ModItem {

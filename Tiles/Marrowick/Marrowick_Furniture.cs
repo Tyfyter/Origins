@@ -20,6 +20,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddIngredient(item.type, 2)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Door : DoorBase {
@@ -31,6 +32,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Grandfather_Clock : ClockBase {
@@ -44,6 +46,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Chair : ChairBase {
@@ -55,6 +58,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Toilet : ChairBase {
@@ -67,6 +71,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 		public override void HitWire(int i, int j) {
 			ToiletHitWire(i, j);
@@ -83,6 +88,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Bathtub : FurnitureBase {
@@ -95,6 +101,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Sink : FurnitureBase {
@@ -108,6 +115,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Candle : LightFurnitureBase, IGlowingModTile {
@@ -121,6 +129,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -143,6 +152,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             if (IsOn(Main.tile[i, j])) {
@@ -170,6 +180,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             if (IsOn(Main.tile[i, j])) {
@@ -198,6 +209,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Anvils)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             if (IsOn(Main.tile[i, j])) {
@@ -225,6 +237,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             if (IsOn(Main.tile[i, j])) {
@@ -252,6 +265,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Piano : FurnitureBase {
@@ -265,6 +279,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Table : FurnitureBase, IGlowingModTile {
@@ -277,6 +292,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.WorkBenches)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
@@ -294,6 +310,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddIngredient<Marrowick_Item>(10)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
@@ -311,6 +328,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Bed : BedBase {
@@ -323,6 +341,7 @@ namespace Origins.Tiles.Marrowick {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Chest : ModChest {
@@ -330,6 +349,7 @@ namespace Origins.Tiles.Marrowick {
 			base.SetStaticDefaults();
 			AddMapEntry(new Color(200, 200, 200), CreateMapEntryName(), MapChestName);
 			AdjTiles = [TileID.Containers];
+			DustType = DustID.TintablePaint;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 	}

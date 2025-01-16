@@ -82,6 +82,7 @@ using Origins.Items.Weapons.Demolitionist;
 using PegasusLib.Reflection;
 using Terraria.GameContent.Generation;
 using Origins.Items.Mounts;
+using BetterDialogue.UI;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -654,6 +655,13 @@ namespace Origins {
 				if ((tile.HasTile && TileBlocksMinecartTracks[tile.TileType]) || WallBlocksMinecartTracks[tile.WallType]) return true;
 				return false;
 			};
+			if (ModLoader.GetMod(nameof(BetterDialogue)).Version == new Version(1, 1, 6, 1)) MonoModHooks.Modify(typeof(BetterDialogue.BetterDialogue).Assembly.GetType("BetterDialogue.UI.DialogueCycleButtonUI").GetMethod("Draw", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static), 
+				il => new ILCursor(il)
+				.EmitLdsfld(typeof(Main).GetField(nameof(Main.editChest)))
+				.EmitBrfalse(MonoFuckery.DefineLabel(il, out ILLabel label))
+				.EmitRet()
+				.MarkLabel(label)
+			);
 		}
 
 		private static void IL_NPC_SpawnNPC(ILContext il) {

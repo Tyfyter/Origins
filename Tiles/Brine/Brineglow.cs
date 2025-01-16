@@ -96,7 +96,7 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;
-			DustType = DustID.JungleGrass;
+			DustType = DustID.GrassBlades;
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow_Item>());

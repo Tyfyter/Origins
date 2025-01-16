@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
@@ -24,6 +25,7 @@ namespace Origins.Tiles.Defiled {
 			RegisterItemDrop(-1);
 			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {

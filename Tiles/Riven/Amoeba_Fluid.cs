@@ -32,6 +32,7 @@ namespace Origins.Tiles.Riven {
 			MinPick = 10;
 			MineResist = 8f;
 			HitSound = SoundID.NPCHit13;
+			DustType = DustID.Water_Desert;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.002f;

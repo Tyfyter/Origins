@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,8 @@ namespace Origins.Walls {
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(40, 140, 200));
+			DustType = DustID.GemEmerald;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 	}
 	public class Riven_Flesh_Wall_Safe : Riven_Flesh_Wall {

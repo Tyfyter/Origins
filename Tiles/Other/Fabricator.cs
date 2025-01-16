@@ -28,6 +28,7 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(68, 68, 68), CreateMapEntryName());
+			DustType = DustID.Lead;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 4) {

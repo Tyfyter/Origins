@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +22,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}
 	public class Hardened_Defiled_Sand_Item : ModItem {

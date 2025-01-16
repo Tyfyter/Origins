@@ -8,9 +8,11 @@ namespace Origins.Walls {
     public class Fiberglass_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			AddMapEntry(new Color(16, 83, 122));
+			HitSound = SoundID.Shatter;
+			DustType = DustID.Glass;
 		}
 	}
-	public class Fiberglass_Wall_Safe : Defiled_Stone_Wall {
+	public class Fiberglass_Wall_Safe : Fiberglass_Wall {
 		public override string Texture => "Origins/Walls/Fiberglass_Wall";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

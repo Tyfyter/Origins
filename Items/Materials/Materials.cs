@@ -187,7 +187,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.WhiteTorch);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -200,7 +200,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Mythril);
 		}
 
 		public override void SetStaticDefaults() {
@@ -243,7 +243,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Astra);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -263,7 +263,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Electric);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -418,7 +418,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Torch);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -432,7 +432,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Lead);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

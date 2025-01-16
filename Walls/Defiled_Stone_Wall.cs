@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,7 @@ namespace Origins.Walls {
 			Origins.WallHammerRequirement[Type] = 70;
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(150, 150, 150));
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}
 	public class Defiled_Stone_Wall_Safe : Defiled_Stone_Wall {

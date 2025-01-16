@@ -10,6 +10,7 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Wood;
 			AddMapEntry(new Color(30, 10, 30));
 			Main.wallHouse[Type] = true;
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Wall_Item : ModItem {

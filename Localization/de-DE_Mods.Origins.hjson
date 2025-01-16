@@ -1659,6 +1659,7 @@ Tiles: {
 	// Silicon_Ore.MapEntry: Silicon Ore
 	// Underwater_Vine.MapEntry: Underwater Vine
 	// Defiled_Relay.MapEntry: Defiled Relay
+	// Hydrothermal_Vent.MapEntry: Hydrothermal Vent
 }
 
 MapObject: {

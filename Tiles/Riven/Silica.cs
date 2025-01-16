@@ -31,8 +31,8 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.ChecksForMerge[Type] = true;
 
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
-			DustType = DustID.Bone;
 			AddMapEntry(new Color(194, 200, 200));
+			DustType = DustID.Ghost;
 		}
 
 		public override bool HasWalkDust() {

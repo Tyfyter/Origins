@@ -25,7 +25,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(150, 150, 150));
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
-			DustType = Riven_Hive.DefaultTileDust;
+			DustType = DustID.Ghost;
 		}
 	}
 	public class Brittle_Quartz_Item : ModItem {

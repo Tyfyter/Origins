@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -33,6 +34,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
 			AddDefiledTile();
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {

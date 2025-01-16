@@ -17,6 +17,7 @@ namespace Origins.Tiles.Brine {
 			RegisterItemDrop(ItemType<Peat_Moss_Item>());
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
+			DustType = DustID.GrassBlades;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile) {

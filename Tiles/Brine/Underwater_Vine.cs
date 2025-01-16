@@ -50,7 +50,7 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;
-			DustType = DustID.JungleGrass;
+			DustType = DustID.GrassBlades;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {

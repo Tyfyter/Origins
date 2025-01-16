@@ -35,9 +35,6 @@ namespace Origins.Items.Other.Fish {
 	public class Chunky_Crate_Tile : Fishing_Crate_Tile<Chunky_Crate> {
 		public override string Texture => "Origins/Items/Other/Fish/Chunky_Crate";
 		public override Color MapColor => new Color(200, 200, 200);
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Chunky_Crate>());
-		}
 	}
 	#endregion
 	#region bilious crate
@@ -62,9 +59,6 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Bilious_Crate_Tile : Fishing_Crate_Tile<Bilious_Crate> {
 		public override Color MapColor => new Color(100, 100, 100);
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Chunky_Crate>());
-		}
 	}
 	#endregion
 	#region crusty crate
@@ -95,9 +89,6 @@ namespace Origins.Items.Other.Fish {
 	public class Crusty_Crate_Tile : Fishing_Crate_Tile<Crusty_Crate> {
 		public override string Texture => "Origins/Items/Other/Fish/Crusty_Crate";
 		public override Color MapColor => new Color(0, 125, 165);
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Crusty_Crate>());
-		}
 	}
 	#endregion
 	#region festering crate
@@ -125,9 +116,6 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Festering_Crate_Tile : Fishing_Crate_Tile<Festering_Crate> {
 		public override Color MapColor => new Color(100, 100, 100);
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Chunky_Crate>());
-		}
 	}
 	#endregion
 	public abstract class Fishing_Crate_Item<TTile> : ModItem, ICustomWikiStat where TTile : ModTile {

@@ -179,9 +179,9 @@ namespace Origins {
 			RiftLegsArmorID = ModContent.GetInstance<Bleeding_Obsidian_Greaves>().Item.legSlot;
 			#endregion
 			//Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
-			Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
-			Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
-			Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
+			//Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
+			//Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
+			//Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
 			for (int oID = 0; oID < OriginTile.IDs.Count; oID++) {
 				OriginTile oT = OriginTile.IDs[oID];
 				if (oT.mergeID == oT.Type) continue;
@@ -193,9 +193,8 @@ namespace Origins {
 				for (int i = 0; i < TileLoader.TileCount; i++) {
 					if (Main.tileMerge[oT.mergeID][i]) {
 						Main.tileMerge[i][oT.Type] = true;
-						Main.tileMerge[oT.Type][i] = true;
-					} else if (Main.tileMerge[i][oT.mergeID]) {
-						Main.tileMerge[oT.Type][i] = true;
+					}
+					if (Main.tileMerge[i][oT.mergeID]) {
 						Main.tileMerge[i][oT.Type] = true;
 					}
 				}

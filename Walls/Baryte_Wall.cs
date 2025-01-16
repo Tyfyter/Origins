@@ -13,6 +13,7 @@ namespace Origins.Walls {
 			Origins.WallBlocksMinecartTracks[Type] = true;
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(6, 26, 19));
+			DustType = DustID.GreenMoss;
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);

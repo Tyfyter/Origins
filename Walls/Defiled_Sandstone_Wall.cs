@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Defiled;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +14,7 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Sandstone;//what wall type this wall is considered to be when blending
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(115, 115, 115));
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}
 	public class Defiled_Sandstone_Wall_Safe : Defiled_Sandstone_Wall {

@@ -22,6 +22,7 @@ namespace Origins.Tiles.Defiled {
 			mergeID = TileID.IceBlock;
 			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			HitSound = SoundID.Item50;
 		}
 		public override void FloorVisuals(Player player) {
 			player.slippy = true;

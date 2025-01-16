@@ -24,7 +24,8 @@ namespace Origins.Tiles.Other {
 			Main.tileMergeDirt[Type] = false;
 			AddMapEntry(new Color(42, 116, 160));
             HitSound = SoundID.Shatter;
-        }
+			DustType = DustID.Everscream;
+		}
 		/*public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
 			//spriteBatch.Draw(VineTexture, new Vector2((i + 12) * 16, (j + 12) * 16) - Main.screenPosition, new Rectangle(curr.TileFrameX * 18, curr.TileFrameY * 18, 16, 16), Lighting.GetColor(i, j));

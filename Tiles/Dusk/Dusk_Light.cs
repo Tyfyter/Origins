@@ -15,6 +15,7 @@ namespace Origins.Tiles.Dusk {
 			Main.tileLighted[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(95, 17, 125));
+			DustType = DustID.ShimmerTorch;
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

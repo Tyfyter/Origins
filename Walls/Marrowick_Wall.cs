@@ -10,6 +10,7 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Wood;
 			AddMapEntry(new Color(130, 110, 90));
 			Main.wallHouse[Type] = true;
+			DustType = DustID.TintablePaint;
 		}
 	}
 	public class Marrowick_Wall_Item : ModItem {

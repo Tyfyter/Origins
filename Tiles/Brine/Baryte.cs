@@ -20,6 +20,7 @@ namespace Origins.Tiles.Brine {
 			//mergeID = TileID.Mud;
 			MinPick = 195;
 			HitSound = SoundID.Dig;
+			DustType = DustID.GreenMoss;
 		}
 		public override bool CanExplode(int i, int j) {
 			return false;

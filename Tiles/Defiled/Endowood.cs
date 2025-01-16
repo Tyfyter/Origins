@@ -17,6 +17,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(40, 10, 40));
 			mergeID = TileID.WoodBlock;
+			DustType = DustID.t_Granite;
 		}
 	}
 	public class Endowood_Item : ModItem {

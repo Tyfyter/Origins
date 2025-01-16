@@ -19,6 +19,7 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(110, 57, 33), CreateMapEntryName());
 			MinPick = 100;
 			MineResist = 3;
+			DustType = DustID.t_Lihzahrd;
 		}
 	}
 	public class Carburite_Item : ModItem, ICustomWikiStat {

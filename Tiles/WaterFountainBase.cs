@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
@@ -19,10 +20,12 @@ namespace Origins.Tiles {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.WaterFountain, 0));
 			TileObjectData.newTile.Height = Height;
+			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, Height).ToArray();
 			TileObjectData.newTile.Origin = new(1, Height - 1);
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(6, 157, 44), Language.GetText("MapObject.WaterFountain"));
+			DustType = DustID.Stone;
 		}
 		public static bool IsEnabled(int i, int j) => Main.tile[i, j].TileFrameY >= 72;
 		public static bool IsEnabled(Tile tile) => tile.TileFrameY >= 72;
