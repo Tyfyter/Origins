@@ -261,7 +261,7 @@ namespace Origins {
 				}
 			}
 			if (target.life <= 0) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.KillEnemyEvent is not null) {
 						quest.KillEnemyEvent(target);
 					}

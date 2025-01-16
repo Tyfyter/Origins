@@ -195,11 +195,25 @@ namespace Origins.NPCs {
 				default:
 				break;
 			}
-			switch (npc.type) {
-				case NPCID.Zombie:
+			bool alreadyAddedHandDrop = false;
+			switch (NPCID.FromNetId(npc.netID)) {
+				case NPCID.Zombie or NPCID.FemaleZombie or NPCID.BaldZombie or NPCID.PincushionZombie or NPCID.SlimedZombie or NPCID.SwampZombie or NPCID.TwiggyZombie or NPCID.TorchZombie:
+				case NPCID.ZombieDoctor or NPCID.ZombieSuperman or NPCID.ZombiePixie or NPCID.ZombieXmas or NPCID.ZombieSweater:
+				case NPCID.ZombieRaincoat or NPCID.ZombieEskimo or NPCID.ZombieMushroom or NPCID.ZombieMushroomHat or NPCID.BloodZombie:
+				case NPCID.MaggotZombie:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Inanimate_Zombie_Hand>(), 5000));
+				if (!alreadyAddedHandDrop) npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Inanimate_Zombie_Hand>(), 4000));
 				break;
+
+				case NPCID.ArmedTorchZombie or NPCID.ArmedZombie or NPCID.ArmedZombieCenx or NPCID.ArmedZombieEskimo or NPCID.ArmedZombiePincussion or NPCID.ArmedZombieSlimed or NPCID.ArmedZombieSwamp or NPCID.ArmedZombieTwiggy:
+				alreadyAddedHandDrop = true;
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Inanimate_Zombie_Hand>(), 3000));
+				goto case NPCID.MaggotZombie;
+
+				case NPCID.TheBride or NPCID.TheGroom or NPCID.DoctorBones or NPCID.Eyezor:
+				alreadyAddedHandDrop = true;
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Inanimate_Zombie_Hand>(), 100));
+				goto case NPCID.MaggotZombie;
 
 				case NPCID.DemonEye:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
