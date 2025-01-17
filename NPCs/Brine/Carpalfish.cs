@@ -152,6 +152,7 @@ namespace Origins.NPCs.Brine {
 									if (Main.netMode == NetmodeID.MultiplayerClient) {
 										NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
 									}
+									SoundEngine.PlaySound(Origins.Sounds.Bonk, NPC.Center);
 								}
 							}
 							NPC.HitInfo hitInfo = NPC.GetIncomingStrikeModifiers(DamageClass.Default, 0).ToHitInfo(20, true, 0, true);

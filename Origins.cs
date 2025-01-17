@@ -595,6 +595,10 @@ namespace Origins {
 				MaxInstances = 0,
 				IsLooped = true
 			};
+			Sounds.Bonk = new SoundStyle("Origins/Sounds/Custom/GrandSlam", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchVariance = 0.4f
+			};
 			//OriginExtensions.initClone();
 			Music.LoadMusic();
 
@@ -941,6 +945,8 @@ namespace Origins {
 			public static SoundStyle LightningCharging = SoundID.Roar;
 			public static SoundStyle LightningChargingSoft = SoundID.Roar;
 			public static SoundStyle[] LightningSounds = [];
+
+			public static SoundStyle Bonk = SoundID.Roar;
 			public static void Unload() {
 				LightningSounds = null;
 			}
