@@ -29,7 +29,6 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 160;
 			NPC.defense = 28;
@@ -42,6 +41,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.value = 2300;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];

@@ -19,7 +19,6 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 16;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 180;
 			NPC.defense = 18;
@@ -27,7 +26,6 @@ namespace Origins.NPCs.Defiled {
 			NPC.damage = 60;
 			NPC.width = 20;
 			NPC.height = 44;
-			NPC.value = 700;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;

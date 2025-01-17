@@ -35,14 +35,12 @@ namespace Origins.NPCs.Brine {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 300;
 			NPC.defense = 26;
 			NPC.damage = 65;
 			NPC.width = 30;
 			NPC.height = 30;
-			NPC.catchItem = 0;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.Item127;
 			NPC.DeathSound = SoundID.NPCDeath1;

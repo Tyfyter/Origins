@@ -77,7 +77,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_DA>();
 			NPC.aiStyle = NPCAIStyleID.None;

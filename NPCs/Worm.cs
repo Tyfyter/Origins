@@ -1,4 +1,6 @@
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using Terraria;
@@ -6,6 +8,8 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
+using ThoriumMod.Empowerments;
 
 //from ExampleMod, meant to be copied into other mods
 namespace Origins.NPCs {
@@ -571,6 +575,14 @@ namespace Origins.NPCs {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			SegmentCount = reader.ReadInt32();
 		}
+		public override void SetDefaults() {
+			NPC.aiStyle = 6;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0f;
+			NPC.behindTiles = true;
+		}
 	}
 
 	public abstract class WormBody : Worm {
@@ -656,6 +668,16 @@ namespace Origins.NPCs {
 			if (!SharesImmunityFrames) return;
 			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
 		}
+		public override void SetDefaults() {
+			NPC.aiStyle = 6;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0f;
+			NPC.behindTiles = true;
+			NPC.dontCountMe = true;
+			NPC.lifeMax = 200;
+		}
 	}
 
 	// Since the body and tail segments share the same AI
@@ -700,6 +722,16 @@ namespace Origins.NPCs {
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			if (!SharesImmunityFrames) return;
 			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
+		}
+		public override void SetDefaults() {
+			NPC.aiStyle = 6;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0f;
+			NPC.behindTiles = true;
+			NPC.dontCountMe = true;
+			NPC.lifeMax = 200;
 		}
 	}
 }

@@ -34,7 +34,6 @@ namespace Origins.NPCs.Defiled {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.None;//NPCAIStyleID.Fighter;
 			NPC.lifeMax = 475;
 			NPC.defense = 28;
@@ -46,6 +45,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 2300;
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
@@ -80,6 +80,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(400)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
+			if (Main.rand.NextBool(1600)) SoundEngine.PlaySound(SoundID.Zombie124, NPC.Center);
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
 				NPC.spriteDirection = NPC.direction;

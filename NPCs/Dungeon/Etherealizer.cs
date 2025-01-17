@@ -30,7 +30,6 @@ namespace Origins.NPCs.Dungeon {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Caster;
 			NPC.lifeMax = 300;
 			NPC.defense = 17;

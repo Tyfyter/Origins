@@ -31,13 +31,19 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Squid);
+			NPC.width = 26;
+			NPC.height = 26;
+			NPC.aiStyle = 18;
 			NPC.damage = 75;
 			NPC.lifeMax = 165;
 			NPC.defense = 22;
 			NPC.knockBackResist = 0;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(2.1f, 2.35f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(2.1f, 2.35f);
+			NPC.value = 100f;
+			NPC.alpha = 20;
+			NPC.rarity = 1;
+			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Defiled_Wastelands_Ocean>().Type

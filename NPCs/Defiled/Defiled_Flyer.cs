@@ -33,7 +33,6 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
 			NPC.defense = 10;

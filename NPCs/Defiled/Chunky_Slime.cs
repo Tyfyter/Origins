@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -14,13 +15,13 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BlueSlime, Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Crimslime);
 			NPC.lifeMax = 60;
 			NPC.defense = 6;
 			NPC.damage = 30;
 			NPC.width = 32;
 			NPC.height = 24;
 			NPC.friendly = false;
+			NPC.alpha = 55;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;

@@ -73,7 +73,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			normalDropRule = null;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerHead);
+			base.SetDefaults();
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_WC>();
 			NPC.width = NPC.height = 60;
@@ -370,7 +370,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerBody);
+			base.SetDefaults();
 			NPC.width = NPC.height = 48;
 			NPC.damage = 20;
 			NPC.defense = 100;
@@ -429,7 +429,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerTail);
+			base.SetDefaults();
 			NPC.width = NPC.height = 60;
 			NPC.damage = 38;
 			NPC.defense = 20;

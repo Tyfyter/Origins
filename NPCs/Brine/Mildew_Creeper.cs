@@ -2,6 +2,7 @@
 using CalamityMod.NPCs.ExoMechs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
@@ -34,19 +35,17 @@ namespace Origins.NPCs.Brine {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 500;
 			NPC.defense = 24;
 			NPC.damage = 58;
 			NPC.width = 26;
 			NPC.height = 26;
-			NPC.catchItem = 0;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.Item127;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 1f;
-			NPC.value = 500;
+			NPC.value = 5000;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			SpawnModBiomes = [

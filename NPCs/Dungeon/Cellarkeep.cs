@@ -19,7 +19,7 @@ namespace Origins.NPCs.Dungeon {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
+			NPC.CloneDefaults(NPCID.AngryBones);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 81;
 			NPC.defense = 10;
@@ -29,6 +29,7 @@ namespace Origins.NPCs.Dungeon {
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit2;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
+			NPC.knockBackResist = 0.5f;
 			NPC.value = 90;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {

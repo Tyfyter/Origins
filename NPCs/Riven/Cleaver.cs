@@ -25,13 +25,14 @@ namespace Origins.NPCs.Riven {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerHead);
+			base.SetDefaults();
 			NPC.width = NPC.height = 12;
 			NPC.lifeMax = 50;
 			NPC.defense = 7;
 			NPC.damage = 23;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath23;
+			//NPC.scale = 0.9f;
 			NPC.value = 70;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
@@ -103,7 +104,7 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerBody);
+			base.SetDefaults();
 			NPC.width = NPC.height = 12;
 		}
 		public override void AI() {
@@ -129,7 +130,7 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerTail);
+			base.SetDefaults();
 			NPC.width = NPC.height = 12;
 		}
 		public override void AI() {

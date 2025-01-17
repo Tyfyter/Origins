@@ -30,13 +30,14 @@ namespace Origins.NPCs.MiscE {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerHead);
+			base.SetDefaults();
 			NPC.width = NPC.height = 24;
 			NPC.lifeMax = 50;
 			NPC.defense = 7;
 			NPC.damage = 23;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath23;
+			//NPC.scale = 0.9f;
 			NPC.value = 70;
 			NPC.alpha = 175;
 		}
@@ -155,16 +156,18 @@ namespace Origins.NPCs.MiscE {
 			}
 		}
 	}
-
-	internal class Slime_Worm_Body : WormBody {
+	public class Slime_Worm_Body : WormBody {
 		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayName");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerBody);
+			base.SetDefaults();
 			NPC.width = NPC.height = 24;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath23;
+			//NPC.scale = 0.9f;
 		}
 		public override void AI() {
 			if (!Main.npc.IndexInRange(NPC.realLife)) return;
@@ -188,8 +191,11 @@ namespace Origins.NPCs.MiscE {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerTail);
+			base.SetDefaults();
 			NPC.width = NPC.height = 24;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath23;
+			//NPC.scale = 0.9f;
 		}
 		public override void AI() {
 			if (!Main.npc.IndexInRange(NPC.realLife)) return;

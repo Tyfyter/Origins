@@ -20,11 +20,14 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
+			NPC.width = 22;
+			NPC.height = 22;
 			NPC.lifeMax = 80;
 			NPC.defense = 8;
 			NPC.damage = 38;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
+			NPC.scale = 0.9f;
 			NPC.value = 140;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type

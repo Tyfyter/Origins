@@ -19,7 +19,6 @@ namespace Origins.NPCs.MiscE {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DemonEye);
 			NPC.aiStyle = 86;
 			NPC.lifeMax = 36;
 			NPC.defense = 10;
@@ -27,7 +26,10 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 34;
 			NPC.height = 28;
 			NPC.friendly = false;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 1.5f;
+			NPC.value = 75;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;

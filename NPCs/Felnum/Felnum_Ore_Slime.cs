@@ -5,6 +5,7 @@ using Origins.Buffs;
 using Origins.Reflection;
 using Origins.Tiles.Other;
 using PegasusLib;
+using PegasusLib.ID;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -23,16 +24,23 @@ namespace Origins.NPCs.Felnum {
 	public class Felnum_Ore_Slime : ModNPC {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.ShimmerSlime;
-			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.ShimmerSlime;
+			NPCID.Sets.CanConvertIntoCopperSlimeTownNPC[Type] = true;
+			Main.npcFrameCount[Type] = 2;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.BlueSlime);
+			NPC.width = 24;
+			NPC.height = 18;
+			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.lifeMax = 45;
 			NPC.defense = 28;
 			NPC.damage = 14;
 			NPC.color = new(255, 255, 255, 200);
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.alpha = 175;
+			NPC.value = 25f;
 			AIType = NPCID.BlueSlime;
 			AnimationType = NPCID.BlueSlime;
 		}
