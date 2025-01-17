@@ -213,7 +213,7 @@ Venom_Fang: {
 	DisplayName: Venom Fang
 	Tooltip:
 		'''
-		Attacks inflict 'Toxic Shock' on enemies
+		Attacks inflict Toxic Shock
 		Effects are stronger while Acrid Armor is equipped
 		'''
 }
@@ -4928,5 +4928,9 @@ Replacement_Wall_Item: {
 
 Lightning_Ring: {
 	DisplayName: Lightning Ring
-	Tooltip: ""
+	Tooltip:
+	'''
+	Attacks inflict weak Static Shock
+	Strengthens Static Shock from other sources
+	'''
 }
