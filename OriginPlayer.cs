@@ -664,6 +664,7 @@ namespace Origins {
 				ModContent.ItemType<Amber_Dye>(),
 				ModContent.ItemType<High_Contrast_Dye>(),
 				ModContent.ItemType<Rasterized_Dye>(),// temp
+				ModContent.ItemType<Shimmer_Dye>(),
 			]);
 		}
 		public override bool CanUseItem(Item item) {
