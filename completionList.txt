@@ -1504,7 +1504,7 @@ UI:
 (X) Ashen Map/Bestiary Backdrop
 (X) Ashen Mines Icon
 (^) Brine Icon
-(#, ^2) Brine Map/Bestiary Backdrop !!!
+(^) Brine Map/Bestiary Backdrop
 (X) Cosmos Map/Bestiary Backdrop
 (^) Dawn Icon
 (X) Dawn Map/Bestiary Backdrop
