@@ -19,7 +19,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MoltenHamaxe);
-			Item.damage = 24;
+			Item.damage = 27;
 			Item.DamageType = DamageClass.Melee;
 			Item.pick = 0;
 			Item.hammer = 65;
@@ -78,8 +78,8 @@ namespace Origins.Items.Tools {
 			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 32;
-			height = 32;
+			width = 24;
+			height = 24;
 			return true;
 		}
 		public override void AI() {

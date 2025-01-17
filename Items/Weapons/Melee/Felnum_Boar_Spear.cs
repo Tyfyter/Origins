@@ -12,14 +12,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
-		public const int baseDamage = 18;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = baseDamage;
+			Item.damage = 30;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -57,6 +56,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.aiStyle = 0;
+			Projectile.extraUpdates = 1;
 			Projectile.scale = 1f;
 		}
 		public float movementFactor {
@@ -74,9 +74,9 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 3) {
-					movementFactor -= 4.4f;
+					movementFactor -= 2.2f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 4.4f;
+					movementFactor += 2.2f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
