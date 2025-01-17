@@ -250,6 +250,9 @@ namespace Origins {
 		public bool slagBucketCursed = false;
 		public bool slagBucket = false;
 		public bool scrapBarrierDebuff = false;
+		public float gunSpeedBonus = 0;
+		public bool eitriteGunMagazine = false;
+
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
 		public int laserTagPoints = 0;
@@ -630,6 +633,8 @@ namespace Origins {
 			slagBucketCursed = false;
 			slagBucket = false;
 			scrapBarrierDebuff = false;
+			gunSpeedBonus = 0;
+			eitriteGunMagazine = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {

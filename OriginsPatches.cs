@@ -662,8 +662,8 @@ namespace Origins {
 				.EmitRet()
 				.MarkLabel(label)
 			);
+			IL_Player.ItemCheck_OwnerOnlyCode += Eitrite_Gun_Magazine.IL_Player_ItemCheck_OwnerOnlyCode;
 		}
-
 		private static void IL_NPC_SpawnNPC(ILContext il) {
 			ILCursor c = new(il);
 			int startYPosition = -1;

@@ -63,6 +63,7 @@ namespace Origins {
 		}
 		public override void Unload() {
 			queuedUIStates = null;
+			EvilGunMagazineRecipeGroup = null;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.MiningHelmet)
@@ -289,6 +290,7 @@ namespace Origins {
 		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
 		public static int EvilBoomerangRecipeGroupID { get; private set; }
+		public static RecipeGroup EvilGunMagazineRecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilGunMagazines").Value, ItemID.MagicQuiver);
 		public override void AddRecipeGroups() {
 			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
 				ItemID.AmberStaff,
@@ -306,6 +308,8 @@ namespace Origins {
 				ModContent.ItemType<Riverang>(),
 				ModContent.ItemType<Orbital_Saw>(),
 			]));
+			EvilGunMagazineRecipeGroup.ValidItems.Remove(ItemID.MagicQuiver);
+			RecipeGroup.RegisterGroup("Origins:Evil Gun Magazines", EvilGunMagazineRecipeGroup);
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;

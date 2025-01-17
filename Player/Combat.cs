@@ -26,6 +26,17 @@ namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		#region stats
 		bool focusPotionThisUse = false;
+		public override float UseAnimationMultiplier(Item item) {
+			if (eitriteGunMagazine && item.useTime != item.useAnimation && item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) {
+				return (item.useAnimation + item.useTime) / (float)item.useAnimation;
+			}
+			return 1f;
+		}
+		public override float UseSpeedMultiplier(Item item) {
+			float speed = 1f;
+			if (item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) speed += gunSpeedBonus;
+			return speed;
+		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
 				damage.Flat += Player.statDefense / 2;
@@ -656,49 +667,49 @@ namespace Origins {
 					);
 				}
 			}
-            if (retributionShield) {
-                const float maxDist = 240 * 240;
-                double totalDamage = info.Damage;
-                List<(int id, float weight)> targets = new();
-                NPC npc;
-                for (int i = 0; i < Main.maxNPCs; i++) {
-                    npc = Main.npc[i];
-                    if (npc.CanBeChasedBy(retributionShieldItem)) {
-                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
-                        Vector2 diff = currentPos - Player.MountedCenter;
-                        float dist = diff.LengthSquared();
-                        if (dist > maxDist) continue;
-                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
-                        if (totalDamage / 3 > npc.life) {
-                            currentWeight = 0;
-                        }
-                        if (targets.Count >= 3) {
-                            for (int j = 0; j < 3; j++) {
-                                if (targets[j].weight < currentWeight) {
-                                    targets.Insert(j, (i, currentWeight));
-                                    break;
-                                }
-                            }
-                        } else {
-                            targets.Add((i, currentWeight));
-                        }
-                    }
-                }
-                for (int i = 0; i < 3; i++) {
-                    if (i >= targets.Count) break;
-                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
-                    Projectile.NewProjectile(
-                        Player.GetSource_Accessory(retributionShieldItem),
-                        Player.MountedCenter,
-                        (currentPos - Player.MountedCenter).WithMaxLength(12),
-                        retributionShieldItem.shoot,
-                        (int)(totalDamage / Math.Min(targets.Count, 3)) + 1,
-                        10,
-                        Player.whoAmI
-                    );
-                }
-            }
-            if (cinderSealItem is not null) {
+			if (retributionShield) {
+				const float maxDist = 240 * 240;
+				double totalDamage = info.Damage;
+				List<(int id, float weight)> targets = new();
+				NPC npc;
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					npc = Main.npc[i];
+					if (npc.CanBeChasedBy(retributionShieldItem)) {
+						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+						Vector2 diff = currentPos - Player.MountedCenter;
+						float dist = diff.LengthSquared();
+						if (dist > maxDist) continue;
+						float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+						if (totalDamage / 3 > npc.life) {
+							currentWeight = 0;
+						}
+						if (targets.Count >= 3) {
+							for (int j = 0; j < 3; j++) {
+								if (targets[j].weight < currentWeight) {
+									targets.Insert(j, (i, currentWeight));
+									break;
+								}
+							}
+						} else {
+							targets.Add((i, currentWeight));
+						}
+					}
+				}
+				for (int i = 0; i < 3; i++) {
+					if (i >= targets.Count) break;
+					Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+					Projectile.NewProjectile(
+						Player.GetSource_Accessory(retributionShieldItem),
+						Player.MountedCenter,
+						(currentPos - Player.MountedCenter).WithMaxLength(12),
+						retributionShieldItem.shoot,
+						(int)(totalDamage / Math.Min(targets.Count, 3)) + 1,
+						10,
+						Player.whoAmI
+					);
+				}
+			}
+			if (cinderSealItem is not null) {
 				cinderSealItem.ModItem.Shoot(
 					Player,
 					Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as EntitySource_ItemUse_WithAmmo,
@@ -708,12 +719,12 @@ namespace Origins {
 					Player.GetWeaponDamage(cinderSealItem),
 					Player.GetWeaponKnockback(cinderSealItem)
 				);
-                if (Main.rand.NextBool(5)) {
-                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash);
-                    dust.noGravity = true;
-                    dust.velocity *= 0.1f;
-                }
-            }
+				if (Main.rand.NextBool(5)) {
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash);
+					dust.noGravity = true;
+					dust.velocity *= 0.1f;
+				}
+			}
 			if (unsoughtOrgan) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.Damage;
@@ -757,8 +768,8 @@ namespace Origins {
 				}
 			}
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
-                   bombCharminItLifeRegenCount += info.SourceDamage;
-            }
+				   bombCharminItLifeRegenCount += info.SourceDamage;
+			}
 			if (coreGenerator && !isSelfDamage) {
 				int ammoType = coreGeneratorItem.useAmmo;
 				try {
@@ -786,7 +797,7 @@ namespace Origins {
 				}
 			}
 
-            preHitBuffs = [];
+			preHitBuffs = [];
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
 			}

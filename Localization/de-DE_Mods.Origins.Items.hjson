@@ -4846,45 +4846,19 @@ Ancient_Felnum_Helmet: {
 	// Tooltip: ""
 }
 
-Crimtane_Gun_Magazine: {
-	// DisplayName: Crimtane Gun Magazine
-	// Tooltip: +10% ranged attack speed
-}
-
-Defiled_Gun_Magazine: {
-	// DisplayName: Defiled Gun Magazine
-	// Tooltip: +10% ranged attack speed
-}
-
-Demonite_Gun_Magazine: {
-	// DisplayName: Demonite Gun Magazine
-	// Tooltip: +10% ranged attack speed
-}
-
-Eitrite_Gun_Magazine: {
-	// DisplayName: Eitrite Gun Magazine
-	// Tooltip: +20% ranged attack speed
-}
-
-Encrusted_Gun_Magazine: {
-	// DisplayName: Encrusted Gun Magazine
-	// Tooltip: +10% ranged attack speed
-}
+// Crimtane_Gun_Magazine.DisplayName: Crimtane Gun Magazine
+// Defiled_Gun_Magazine.DisplayName: Defiled Gun Magazine
+// Demonite_Gun_Magazine.DisplayName: Demonite Gun Magazine
+// Eitrite_Gun_Magazine.DisplayName: Eitrite Gun Magazine
+// Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
 
 Gun_Magazine: {
 	// DisplayName: Gun Magazine
-	// Tooltip: +5% ranged attack speed
+	// Tooltip: +{0:P0} ranged attack speed
 }
 
-Molten_Gun_Magazine: {
-	// DisplayName: Molten Gun Magazine
-	// Tooltip: +15% ranged attack speed
-}
-
-Sanguinite_Gun_Magazine: {
-	// DisplayName: Sanguinite Gun Magazine
-	// Tooltip: +10% ranged attack speed
-}
+// Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
+// Sanguinite_Gun_Magazine.DisplayName: Sanguinite Gun Magazine
 
 Resizable_Mine_Seven: {
 	// DisplayName: Resizable Mine VII
