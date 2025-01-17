@@ -25,10 +25,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, 0);
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.4f), player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 			velocity = velocity.RotatedByRandom(0.25f);
-			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.4f), position);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

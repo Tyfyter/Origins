@@ -40,6 +40,10 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item36.WithPitch(0.5f), player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Vector2 perp = velocity.SafeNormalize(default);
 			position += perp * 48;
@@ -55,7 +59,6 @@ namespace Origins.Items.Weapons.Magic {
 					player.whoAmI
 				);
 			}
-			SoundEngine.PlaySound(SoundID.Item36.WithPitch(0.5f), position);
 			return false;
 		}
 	}

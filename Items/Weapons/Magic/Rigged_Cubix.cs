@@ -45,8 +45,12 @@ namespace Origins.Items.Weapons.Magic {
             .AddIngredient(ModContent.ItemType<Formium_Bar>(), 25)
             .AddTile(TileID.LunarCraftingStation) //Interstellar Sampler
             .Register();
-        }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(Origins.Sounds.PhaserCrash, player.itemLocation);
+			return null;
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = velocity.RotatedByRandom(0.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -54,7 +58,6 @@ namespace Origins.Items.Weapons.Magic {
 				return false;
 			}
 			player.manaRegenDelay = (int)player.maxRegenDelay;
-			SoundEngine.PlaySound(Origins.Sounds.PhaserCrash, position);
 			return true;
 		}
 	}

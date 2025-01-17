@@ -41,9 +41,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return consumeFromProjectile || player.ItemUsesThisAnimation == 1;
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Abrasion_Blaster_Charge_P.ID;
-			SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), position);
 			//SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
 			//Item.UseSound = Origins.Sounds.EnergyRipple;
 			int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;

@@ -40,7 +40,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (type == ModContent.ProjectileType<Impact_Bomb_P>()) {
 					type = ModContent.ProjectileType<Impact_Bomb_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), position);
 					damage += damage / 2;
 					knockback *= 3;
 					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
@@ -82,9 +81,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 					proj.GetGlobalProjectile<ExplosiveGlobalProjectile>().selfDamageModifier *= 0;
 					return false;
 				}
-			}
-			if (type == ModContent.ProjectileType<Acid_Bomb_P>()) {
-				damage -= 15;
 			}
 			return true;
 		}
@@ -177,7 +173,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = 8;
 			Projectile.width = Projectile.height = 5;
-			Projectile.penetrate = 1;
+			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
 			if (Main.netMode != NetmodeID.Server && !TextureAssets.Projectile[694].IsLoaded) {
 				Main.instance.LoadProjectile(694);
@@ -188,6 +184,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 unit = Projectile.velocity.SafeNormalize(Vector2.Zero);
 			Projectile.Center = player.MountedCenter + unit * 36 + unit.RotatedBy(MathHelper.PiOver2 * player.direction) * -2;
 			Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.soundDelay <= 0) {
+				SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), Projectile.Center);
+				Projectile.soundDelay = Projectile.timeLeft * 20;
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Vector2 closest = (Projectile.Center + Projectile.velocity * 2).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());

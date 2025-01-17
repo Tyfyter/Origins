@@ -73,10 +73,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
+		public override bool? UseItem(Player player) {
+			Vector2 position = player.itemLocation;
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
 			type = Item.shoot;
-			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
 	}
 	public class Mine_Flayer_P : ModProjectile, IIsExplodingProjectile, ICanisterProjectile {

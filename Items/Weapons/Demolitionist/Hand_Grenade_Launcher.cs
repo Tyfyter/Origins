@@ -50,7 +50,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (type == ModContent.ProjectileType<Impact_Grenade_P>()) {
 					type = ModContent.ProjectileType<Impact_Grenade_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), position);
 					damage *= 10;
 					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
@@ -181,6 +180,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 unit = Projectile.velocity.SafeNormalize(Vector2.Zero);
 			Projectile.Center = player.MountedCenter + unit * 36 + unit.RotatedBy(MathHelper.PiOver2 * player.direction) * -2;
 			Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.soundDelay <= 0) {
+				SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), Projectile.Center);
+				Projectile.soundDelay = Projectile.timeLeft * 20;
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Vector2 closest = (Projectile.Center + Projectile.velocity * 2).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());

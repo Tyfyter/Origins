@@ -40,11 +40,14 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.glowMask = glowmask;
 		}
 		public override bool CanUseItem(Player player) => Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY).HasFullSolidTile();
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item177.WithPitchRange(-1, -0.9f), player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
 				Projectile.NewProjectile(source, position, default, type, Item.damage, Item.knockBack, player.whoAmI, Player.tileTargetX, Player.tileTargetY);
 				player.UpdateMaxTurrets();
-				SoundEngine.PlaySound(SoundID.Item177.WithPitchRange(-1, -0.9f), position);
 			}
 			return false;
 		}

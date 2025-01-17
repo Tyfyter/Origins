@@ -164,13 +164,16 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return true;
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item1, player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (!player.controlUseItem) {
 				player.itemAnimation = 0;
 				player.itemTime = 0;
 				return false;
 			}
-			SoundEngine.PlaySound(SoundID.Item1, position);
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.ItemUsesThisAnimation == 1 ? 1 : -1);
 			return false;
 		}

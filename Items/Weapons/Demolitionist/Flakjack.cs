@@ -56,10 +56,13 @@ namespace Origins.Items.Weapons.Demolitionist {
             .AddIngredient(ModContent.ItemType<Qube_Item>(), 48)
             .AddTile(TileID.LunarCraftingStation) // Interstellar Sampler
             .Register();
-        }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			SoundEngine.PlaySound(SoundID.Item40, position);
-			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
+		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item40, player.itemLocation);
+			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), player.itemLocation);
+			return null;
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 perp = velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(default);
 			if (player.ItemUsesThisAnimation == 1) {
 				position += perp * player.direction * 2;

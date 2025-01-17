@@ -168,8 +168,11 @@ namespace Origins.Items.Weapons.Melee {
 		int times = 0;
 		float dir = 0;
 		int switchbackSlot = -1;
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item1, player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item1, position);
 			if (times > 0) {
 				velocity = OriginExtensions.Vec2FromPolar(dir, velocity.Length());
 				times--;

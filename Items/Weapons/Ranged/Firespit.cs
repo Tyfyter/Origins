@@ -38,6 +38,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.consumeAmmoOnFirstShotOnly = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item20, player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.itemAnimationMax - player.itemAnimation > 9) return;
 			Vector2 offset = Vector2.Normalize(velocity);
@@ -47,7 +51,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.itemAnimationMax - player.itemAnimation > 9) return false;
-			SoundEngine.PlaySound(SoundID.Item20, position);
 			Lava_Shot.damageType = DamageClass.Ranged;
 			return true;
 		}

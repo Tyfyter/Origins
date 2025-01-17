@@ -33,10 +33,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-16, 2);
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item40, player.itemLocation);
+			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == ProjectileID.Bullet) type = Item.shoot;
-			SoundEngine.PlaySound(SoundID.Item40, position);
-			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
 		}
 	}
 	public class Dreikan_Shot : ModProjectile {

@@ -34,9 +34,9 @@ namespace Origins.Items.Weapons.Ranged {
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return Main.rand.NextBool(5);
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item11, position);
-			return true;
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item11, player.itemLocation);
+			return null;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

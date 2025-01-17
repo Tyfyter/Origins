@@ -35,8 +35,12 @@ namespace Origins.Items.Weapons.Magic {
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
+		public override bool? UseItem(Player player) {
+			Vector2 position = player.itemLocation;
+			SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), position);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
 			Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.5f) * Main.rand.NextFloat(0.9f, 1.1f), type, damage, knockback, player.whoAmI, velocity.ToRotation(), Main.rand.NextFloat());
 			return false;
 		}
@@ -53,6 +57,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = true;
 			Projectile.timeLeft /= 3;
 			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 5;
 		}
 		public override void AI() {
 			Projectile.type = ProjectileID.CultistBossLightningOrbArc;

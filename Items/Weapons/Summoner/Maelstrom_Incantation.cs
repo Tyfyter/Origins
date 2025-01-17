@@ -44,8 +44,11 @@ namespace Origins.Items.Weapons.Summoner {
 			.AddTile(TileID.Bookcases)
 			.Register();
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item117.WithPitchRange(0.0f, 0.2f), player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item117.WithPitchRange(0.0f, 0.2f), position);
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemTime);
 			return false;
 		}
