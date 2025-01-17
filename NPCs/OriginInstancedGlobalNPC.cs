@@ -129,8 +129,7 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers) {
-			if (weakenedOnSpawn) return;
-			if (soulhideWeakenedDebuff) {
+			if (soulhideWeakenedDebuff && !weakenedOnSpawn) {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {
@@ -138,8 +137,7 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
-			if (weakenedOnSpawn) return;
-			if (soulhideWeakenedDebuff) {
+			if (soulhideWeakenedDebuff && !weakenedOnSpawn) {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {

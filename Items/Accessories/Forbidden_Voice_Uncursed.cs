@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
@@ -49,7 +50,7 @@ namespace Origins.Items.Accessories {
 			Projectile.tileCollide = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Weak, 180);
+			target.AddBuff(Soulhide_Weakened_Debuff.ID, 180);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Dust dust = Dust.NewDustDirect(Projectile.position + new Vector2(0, 2f), Projectile.width, Projectile.height, DustID.CorruptGibs, Projectile.velocity.X * 0.1f, Projectile.velocity.Y * 0.1f, 80, Scale: 1.3f);

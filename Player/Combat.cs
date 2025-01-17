@@ -246,7 +246,7 @@ namespace Origins {
 				}
 			}
 			if (lightningRing) {
-				target.AddBuff(ModContent.BuffType<Mini_Static_Shock_Debuff>(), Main.rand.NextBool(3) ? 180 : 2);
+				target.AddBuff(ModContent.BuffType<Mini_Static_Shock_Debuff>(), 180);
 			}
 			if (messyLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
