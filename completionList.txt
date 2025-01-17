@@ -394,7 +394,7 @@ ACCESSORIES:
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
 (#, ^2) Charm of Naivety !!!
-(#2, ^2) Cirrhosis' Abhorrence* !!! (needs added functionality)
+(^) Cirrhosis' Abhorrence*
 (^) Comb*
 (^) Control Locus°
 (^) Coologne*
@@ -475,7 +475,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)*
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
-(X) Shock Collar !!!
+(#, ^2) Shock Collar !!!
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
 (^) Sniper's Mark*
@@ -950,7 +950,7 @@ EXPLOSIVE WEAPONS:
 (@2, ^3) Outbreak Bomb* (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)
 (^) Peatball*
 (^) Potato Mine*
-(X) Rubber Dynamite !!!
+(#, ^2) Rubber Dynamite !!!
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
 
