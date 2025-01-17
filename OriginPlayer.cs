@@ -660,12 +660,10 @@ namespace Origins {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
 		}
 		public override void GetDyeTraderReward(List<int> rewardPool) {
-			rewardPool.AddRange([
-				ModContent.ItemType<Amber_Dye>(),
-				ModContent.ItemType<High_Contrast_Dye>(),
-				ModContent.ItemType<Rasterized_Dye>(),// temp
-				ModContent.ItemType<Shimmer_Dye>(),
-			]);
+			for (int i = 0; i < Dye_Item.dyeItems.Count; i++) {
+				Dye_Item dyeItem = Dye_Item.dyeItems[i];
+				if (dyeItem.AddToDyeTrader(Player)) rewardPool.Add(dyeItem.Type);
+			}
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {
