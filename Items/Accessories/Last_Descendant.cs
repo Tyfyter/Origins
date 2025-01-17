@@ -23,7 +23,8 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 		public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().guardedHeart = true;
+			player.GetDamage(DamageClass.Generic) *= 1.05f;
+			player.GetModPlayer<OriginPlayer>().guardedHeart = true;
             player.longInvince = true;
 			player.starCloakItem = Item;
 			player.starCloakItem_starVeilOverrideItem = Item;

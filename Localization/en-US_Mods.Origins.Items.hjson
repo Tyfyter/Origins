@@ -177,12 +177,12 @@ CFHES: {
 
 Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
-	Tooltip: The five nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+	Tooltip: Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
 }
 
 Comb: {
 	DisplayName: Comb
-	Tooltip: 3% increased damage
+	Tooltip: 5% increased damage
 }
 
 Coologne: {
@@ -255,6 +255,7 @@ Dryads_Inheritance: {
 	DisplayName: Dryad's Inheritance
 	Tooltip:
 		'''
+		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Emit a damaging aura that inflicts poison
 		'''
@@ -375,7 +376,6 @@ Haggard_Artery: {
 	Tooltip:
 		'''
 		All attacks inflict Bleeding
-		Prevents Defiled enemies from regenerating
 		Nearby bleeding enemies occasionally explode
 		'''
 }
@@ -436,6 +436,7 @@ Last_Descendant: {
 	DisplayName: Last Descendant
 	Tooltip:
 		'''
+		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Additionally causes stars to fall after taking damage
 		'''
@@ -452,18 +453,23 @@ Lazy_Cloak: {
 
 Locket_Necklace: {
 	DisplayName: Locket Necklace
-	Tooltip: Increases damage and movement speed after taking damage
+	Tooltip:
+		'''
+		5% increased damage
+		Increases damage and movement speed after taking damage
+		'''
 }
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: The four nearest enemies will be afflicted with Rasterized
+	Tooltip: Four of the nearest enemies will be afflicted with Rasterized
 }
 
 Lovers_Leap: {
 	DisplayName: Lover's Leap
 	Tooltip:
 		'''
+		5% increased damage
 		The wearer can run super fast and even faster after taking damage
 		Allows the player to dash into the enemy
 		Double tap a direction
@@ -507,20 +513,12 @@ Mana_Drive: {
 
 Messy_Leech: {
 	DisplayName: Messy Leech
-	Tooltip:
-		'''
-		All attacks inflict Bleeding
-		Prevents Defiled enemies from regenerating
-		'''
+	Tooltip: All attacks inflict Bleeding
 }
 
 Messy_Magma_Leech: {
 	DisplayName: Messy Magma Leech
-	Tooltip:
-		'''
-		All attacks inflict Bleeding and set enemies ablaze
-		Prevents Defiled enemies from regenerating
-		'''
+	Tooltip: All attacks inflict Bleeding and set enemies ablaze
 }
 
 Missile_Armcannon: {
@@ -4405,6 +4403,7 @@ Speed_Booster: {
 		The wearer can run super fast and even faster after taking damage
 		Allows the user to climb walls and dash into enemies
 		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		5% increased damage
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash
 		'''
@@ -4499,7 +4498,11 @@ Phantom_Fury: {
 
 ASH_Attack_Relay: {
 	DisplayName: A.S.H. Attack Relay
-	Tooltip: Releases explosive ashes that home towards your aggressors upon taking damage
+	Tooltip:
+		'''
+		+5% damage
+		Releases explosive ashes that home towards your aggressors upon taking damage
+		'''
 }
 
 Indestructible_Saddle: {
@@ -4929,8 +4932,8 @@ Replacement_Wall_Item: {
 Lightning_Ring: {
 	DisplayName: Lightning Ring
 	Tooltip:
-	'''
-	Attacks inflict weak Static Shock
-	Strengthens Static Shock from other sources
-	'''
+		'''
+		All attacks inflict Static Shock
+		Increases the shock chain range when using items that already inflict it
+		'''
 }

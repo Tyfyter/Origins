@@ -15,11 +15,11 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 28);
-			Item.value = Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(silver: 20);
+			Item.rare = ItemRarityID.White;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Generic) *= 1.03f;
+			player.GetDamage(DamageClass.Generic) *= 1.05f;
 		}
 	}
 }

@@ -63,13 +63,14 @@ BOSSES AND MINI-BOSSES:
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
-(X) Miscreant
-(X) Tearror
 
 (X) Crimson King
 (X) Duskord
 (X) Leviathan of the Riven
 (X) Mechamalgamation
+(X) Miscreant
+(X) Seer
+(X) Tearror
 
 (%2) Origins final boss
 (X) I.C.A.R.U.S
@@ -333,11 +334,11 @@ ARMOR:
 (^) Mythic Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
+(X) Rubber Armor !!!
 (ᗢ) Scavenger Armor*
 (^) Soulhide Armor*
 (^) Tendon Armor*
 
-(X) Abysswalker's Armor°
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
@@ -431,7 +432,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(#, ^2) Lightning Ring !!!
+(^) Lightning Ring
 (^) Locket Necklace*
 (^) Lousy Liver*
 (^) Lover's Leap*
@@ -631,6 +632,7 @@ TOOLS:
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
+(X) Acrid Laser Rod !!!
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
@@ -653,7 +655,7 @@ MELEE WEAPONS:
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
-(#3, ^2) Felnum Boar Spear !!! (has fixed sprites)
+(^) Felnum Boar Spear
 (^) Fiberglass Sword
 (^) Hemorang
 (^) Krakram*
@@ -758,6 +760,7 @@ RANGED WEAPONS:
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun°
 (^) Palladium Harpoon Gun°
+(X) Ritualmaker
 (X) Riveiar
 (^) Sixth Spline
 (^) Spray 'N Pray°
@@ -864,7 +867,7 @@ SUMMONER WEAPONS:
 (X) Pinwheel Pole
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(X) Sunflower in a Pot !!!
+(@2, #) Sunflower in a Pot !!!
 (^) Teardown*
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -947,6 +950,7 @@ EXPLOSIVE WEAPONS:
 (@2, ^3) Outbreak Bomb* (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)
 (^) Peatball*
 (^) Potato Mine*
+(X) Rubber Dynamite !!!
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
 
@@ -1084,6 +1088,7 @@ TILES:
 (X) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
+(X) Brine Dungeon Chest !!!
 (^) Brine Water Fountain
 (X) Bug Cage°
 (X) Cancer Block° !!!
@@ -1102,6 +1107,7 @@ TILES:
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (@4, ^3) Defiled Dungeon Chest*
+(X) Defiled Monolith !!!
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain
@@ -1249,6 +1255,8 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
+(X) Corium Bar !!!
+(X) Geothermal Sludge !!!
 (^) Nova Fragment*
 (^) Power Core*
 (^) Rotor*
@@ -1294,6 +1302,7 @@ CRITTERS AND FISH:
 CONSUMABLES:
 ---
 (#, ^2) Crown Jewel !!!
+(X) Evil DNA
 (^) Mojo Injection*
 (^) Quantum Injector°
 (%2) The Defiled Will°
@@ -1382,6 +1391,7 @@ CONSUMABLES:
 (^) White Water*
 
 (X) Ashen Key
+(X) Brine Key !!!
 (^) Dawn Key°
 (^) Defiled Key*
 (^) Dusk Key°

@@ -17,7 +17,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClasses.Explosive) += 0.05f;
+			player.GetDamage(DamageClasses.Explosive) += 0.15f;
+			player.GetArmorPenetration(DamageClasses.Explosive) -= 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.AvengerEmblem)

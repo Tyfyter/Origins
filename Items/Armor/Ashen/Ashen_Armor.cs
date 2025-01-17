@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Ashen
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Ashen");
             player.GetModPlayer<OriginPlayer>().ashenKBReduction = true;
             player.GetKnockback(DamageClass.Generic) += 0.15f;
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
+            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.4f;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type)

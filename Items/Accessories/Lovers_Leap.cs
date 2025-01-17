@@ -25,6 +25,7 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 		public override void UpdateEquip(Player player) {
+			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.accRunSpeed = 6f;
 			player.rocketBoots = player.vanityRocketBoots = 2;

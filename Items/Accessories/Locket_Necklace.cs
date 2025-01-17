@@ -23,6 +23,7 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 		public override void UpdateEquip(Player player) {
+			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			player.GetModPlayer<OriginPlayer>().guardedHeart = true;
 		}
 	}

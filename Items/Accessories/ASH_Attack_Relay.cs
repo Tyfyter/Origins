@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Layers;
 using System;
 using Terraria;
@@ -19,9 +18,8 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(28, 34);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
-
 			Item.shoot = ModContent.ProjectileType<ASH_Attack_Relay_Dust>();
-			Item.damage = 24;
+			Item.damage = 17;
 			Item.ArmorPenetration = 6;
 			Item.knockBack = 6;
 			Item.useTime = 12;
@@ -29,6 +27,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.GetModPlayer<OriginPlayer>().cinderSealItem = Item;
+		}
+		public override void UpdateEquip(Player player) {
+			player.GetDamage(DamageClass.Generic) *= 1.05f;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Projectile.NewProjectile(
@@ -44,8 +45,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Seal_Of_Cinders>()
 			.AddIngredient<Comb>()
+			.AddIngredient<Seal_Of_Cinders>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
@@ -55,7 +56,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
-			Projectile.timeLeft = 30;
+			Projectile.timeLeft = 15;
 			Projectile.width = Projectile.height = 6;
 		}
 		public override void AI() {
