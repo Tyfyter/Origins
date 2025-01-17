@@ -13,8 +13,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void UpdateEquip(Player player) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.lightningRing = true;
+			player.OriginPlayer().lightningRing = true;
 		}
 	}
 }
