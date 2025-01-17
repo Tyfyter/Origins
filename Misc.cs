@@ -3690,6 +3690,10 @@ namespace Origins {
 				npc.ai[0] = 1f;
 			}
 		}
+		public static void DrawGlowingNPCPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
+			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
+			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
+		}
 	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {

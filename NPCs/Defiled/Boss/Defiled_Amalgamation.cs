@@ -36,7 +36,9 @@ namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
 	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
+		static AutoLoadingAsset<Texture2D> RightArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
+		static AutoLoadingAsset<Texture2D> LeftArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
 		public string CustomSpritePath => "DefiledAmalg";
 		public AssimilationAmount? Assimilation => 0.04f;
 		public static bool spawnDA = false;
@@ -572,26 +574,26 @@ namespace Origins.NPCs.Defiled.Boss {
 			base.PostDraw(spriteBatch, screenPos, drawColor);
 			drawColor *= (255 - NPC.alpha) / 255f;
 			bool dir = NPC.spriteDirection == 1;
-			Rectangle armsFrame = new Rectangle(0, armFrame * 96, 30, 94);
-			Main.EntitySpriteDraw(RightArmTexture,
+			Rectangle armsFrame = new(0, armFrame * 96, 30, 94);
+			spriteBatch.DrawGlowingNPCPart(RightArmTexture, RightArmGlowTexture,
 				NPC.Center - new Vector2(-46 * NPC.spriteDirection, 12) * NPC.scale - screenPos,
 				armsFrame,
-				drawColor,
+				drawColor, Color.White,
 				rightArmRot * NPC.spriteDirection,
 				new Vector2(dir ? 7 : 23, 19),
 				NPC.scale,
-				dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-			0);
+				dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+			);
 
-			Main.EntitySpriteDraw(LeftArmTexture,
+			spriteBatch.DrawGlowingNPCPart(LeftArmTexture, LeftArmGlowTexture,
 				NPC.Center - new Vector2(36 * NPC.spriteDirection, 0) * NPC.scale - screenPos,
 				armsFrame,
-				drawColor,
+				drawColor, Color.White,
 				-leftArmRot * NPC.spriteDirection,
 				new Vector2(dir ? 23 : 7, 19),
 				NPC.scale,
-				dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-			0);
+				dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+			);
 		}
 	}
 	public class Boss_Bar_DA : ModBossBar {
