@@ -12,32 +12,31 @@ namespace Origins.Buffs {
 	public class Static_Shock_Debuff : ModBuff {
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			BuffID.Sets.GrantImmunityWith[Type] = [
+				BuffID.Electrified
+			];
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.OriginPlayer().staticShock = true;
-			if (Main.rand.Next(4) < 1 + player.wet.ToInt() + player.HasBuff<Static_Shock_Damage_Debuff>().ToInt()) {
-				Vector2 offset = Main.rand.NextVector2FromRectangle(player.Hitbox) - player.Center;
-				Dust dust = Dust.NewDustPerfect(
-					player.Center - offset,
-					DustID.Electric,
-					Vector2.Zero,
-					Scale: 0.5f
-				);
-				dust.velocity += player.velocity;
-				dust.noGravity = true;
-			}
+			DoDust(player);
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().staticShock = true;
-			if (Main.rand.Next(4) < 1 + npc.wet.ToInt() + npc.HasBuff<Static_Shock_Damage_Debuff>().ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt()) {
-				Vector2 offset = Main.rand.NextVector2FromRectangle(npc.Hitbox) - npc.Center;
+			DoDust(npc);
+		}
+		public static void DoDust(Entity entity) {
+			int zappiness = 1 + entity.wet.ToInt();
+			if (entity is NPC npc) zappiness += npc.HasBuff<Static_Shock_Damage_Debuff>().ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+			else if (entity is Player player) zappiness += player.HasBuff<Static_Shock_Damage_Debuff>().ToInt();
+			if (Main.rand.Next(4) < zappiness) {
+				Vector2 offset = Main.rand.NextVector2FromRectangle(entity.Hitbox) - entity.Center;
 				Dust dust = Dust.NewDustPerfect(
-					npc.Center - offset,
+					entity.Center - offset,
 					DustID.Electric,
 					Vector2.Zero,
 					Scale: 0.5f
 				);
-				dust.velocity += npc.velocity;
+				dust.velocity += entity.velocity;
 				dust.noGravity = true;
 			}
 		}
@@ -52,14 +51,14 @@ namespace Origins.Buffs {
 			}
 			if (isDead) ProcessShocking(victim);
 		}
-		public static void ProcessShocking(Entity entity) {
+		public static void ProcessShocking(Entity entity, float baseRange = 5) {
 			int damageDebuffID = ModContent.BuffType<Static_Shock_Damage_Debuff>();
 			Rectangle entityHitbox;
 			bool entityWet;
 			bool ShouldInflict(Rectangle hitbox, bool wet) {
 				Vector2 pointA = hitbox.Center().Clamp(entityHitbox);
 				Vector2 pointB = entityHitbox.Center().Clamp(hitbox);
-				if (pointA.IsWithin(pointB, 16 * ((entityWet || wet) ? 10 : 5))) {
+				if (pointA.IsWithin(pointB, 16 * baseRange * ((entityWet || wet) ? 2 : 1))) {
 					if (!Main.dedServ && Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), pointA, pointB)) Dust.NewDustPerfect(pointA, ModContent.DustType<Static_Shock_Arc_Dust>(), pointB);
 					return Main.netMode != NetmodeID.MultiplayerClient;
 				}
@@ -127,6 +126,25 @@ namespace Origins.Buffs {
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().staticShockDamage = true;
+		}
+	}
+	public class Mini_Static_Shock_Debuff : Static_Shock_Debuff {
+		public override string Texture => typeof(Static_Shock_Debuff).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			BuffID.Sets.GrantImmunityWith[Type] = [
+				ModContent.BuffType<Static_Shock_Debuff>()
+			];
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.OriginPlayer().miniStaticShock = true;
+			if (player.HasBuff<Static_Shock_Debuff>()) player.buffTime[buffIndex] = 2;
+			else DoDust(player);
+		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			npc.GetGlobalNPC<OriginGlobalNPC>().miniStaticShock = true;
+			if (npc.HasBuff<Static_Shock_Debuff>()) npc.buffTime[buffIndex] = 2;
+			else DoDust(npc);
 		}
 	}
 	public class Static_Shock_Arc_Dust : ModDust {

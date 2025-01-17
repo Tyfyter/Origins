@@ -4925,3 +4925,8 @@ Replacement_Wall_Item: {
 	DisplayName: Replacement Wall Item
 	Tooltip: ""
 }
+
+Lightning_Ring: {
+	DisplayName: Lightning Ring
+	Tooltip: ""
+}

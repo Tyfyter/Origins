@@ -248,7 +248,8 @@ namespace Origins.NPCs {
 					}
 				}
 			}
-			if (staticShock) Static_Shock_Debuff.ProcessShocking(npc);
+			if (staticShock) Static_Shock_Debuff.ProcessShocking(npc, miniStaticShock ? 7 : 5);
+			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(npc, 2);
 		}
 		public override bool CheckDead(NPC npc) {
 			if (birdedTime > 0) {

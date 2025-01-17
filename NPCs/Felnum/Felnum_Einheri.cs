@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
 using Origins.Dusts;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
 using Origins.Reflection;
@@ -60,7 +61,7 @@ namespace Origins.NPCs.Felnum {
 			return time > 0;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.085f;
+			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.4f;
 			return 0;
 		}
 		public override void FindFrame(int frameHeight) {
@@ -97,7 +98,11 @@ namespace Origins.NPCs.Felnum {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void AI() {
-			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet, npc => !Felnum_Guardian.FriendlyNPCTypes.Contains(npc.type) && npc.chaseable);
+			NPC dummyTarget = null;
+			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All,
+				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet,
+				npc => Felnum_Guardian.ShouldChaseNPC(npc, NPC.Center, ref dummyTarget)
+			);
 			NPC.target = searchResults.NearestTargetIndex;
 			if (searchResults.FoundTarget) {
 				if (searchResults.NearestTargetHitbox.Center().IsWithin(NPC.Center, 16 * 100)) {
@@ -108,6 +113,9 @@ namespace Origins.NPCs.Felnum {
 				} else {
 					NPC.target = -1;
 				}
+			} else if (dummyTarget is not null) {
+				NPC.target = dummyTarget.WhoAmIToTargettingIndex;
+				NPC.targetRect = dummyTarget.Hitbox;
 			}
 			if (NPC.HasValidTarget) {
 				NPCAimedTarget target = NPC.GetTargetData();
@@ -173,6 +181,7 @@ namespace Origins.NPCs.Felnum {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 7, 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Lightning_Ring>(), 20));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = TextureAssets.Npc[Type].Value;

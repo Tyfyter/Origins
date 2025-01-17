@@ -50,7 +50,7 @@ namespace Origins.NPCs.Felnum {
 			NPC.noGravity = true;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.085f;
+			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.4f;
 			return 0;
 		}
 		public override void FindFrame(int frameHeight) {
@@ -58,8 +58,20 @@ namespace Origins.NPCs.Felnum {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		SlotId soundSlot;
+		public static bool ShouldChaseNPC(NPC npc, Vector2 center, ref NPC dummyTarget) {
+			if (npc.type == NPCID.TargetDummy) {
+				if (npc.DistanceSQ(center) < (dummyTarget?.DistanceSQ(center) ?? float.PositiveInfinity)) dummyTarget = npc;
+				return false;
+			}
+			if (!FriendlyNPCTypes.Contains(npc.type) && npc.chaseable) return true;
+			return false;
+		}
 		public override void AI() {
-			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All, player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet, npc => !FriendlyNPCTypes.Contains(npc.type) && npc.chaseable);
+			NPC dummyTarget = null;
+			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All,
+				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet,
+				npc => ShouldChaseNPC(npc, NPC.Center, ref dummyTarget)
+			);
 			NPC.target = searchResults.NearestTargetIndex;
 			if (searchResults.FoundTarget) {
 				if (searchResults.NearestTargetHitbox.Center().IsWithin(NPC.Center, 16 * 100)) {
@@ -70,6 +82,9 @@ namespace Origins.NPCs.Felnum {
 				} else {
 					NPC.target = -1;
 				}
+			} else if (dummyTarget is not null) {
+				NPC.target = dummyTarget.WhoAmIToTargettingIndex;
+				NPC.targetRect = dummyTarget.Hitbox;
 			}
 			if (NPC.HasValidTarget) {
 				NPCAimedTarget target = NPC.GetTargetData();

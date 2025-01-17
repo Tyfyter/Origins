@@ -87,6 +87,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.Kill();
 				return;
 			}
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.type == Type && other.owner == Projectile.owner && other.Hitbox.Intersects(Projectile.Hitbox)) {
+					Projectile.velocity.X += Math.Sign(Projectile.position.X - other.position.X) * 0.03f;
+				}
+			}
 			#endregion
 
 			#region Find target
@@ -282,7 +287,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Barnacle_Turret_Shot : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.SentryShot[Type] = true;
 		}

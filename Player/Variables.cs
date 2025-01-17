@@ -107,6 +107,7 @@ namespace Origins {
 		public bool fiberglassDagger = false;
 		public bool advancedImaging = false;
 		public bool venomFang = false;
+		public bool lightningRing = false;
 		public bool lazyCloakVisible = false;
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
@@ -308,6 +309,7 @@ namespace Origins {
 		public BrothBase broth = null;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
+		public bool miniStaticShock = false;
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
 		#endregion
@@ -478,6 +480,7 @@ namespace Origins {
 			fiberglassDagger = false;
 			advancedImaging = false;
 			venomFang = false;
+			lightningRing = false;
 			lazyCloakVisible = false;
 			amebicVialVisible = false;
 			entangledEnergy = false;
@@ -640,6 +643,7 @@ namespace Origins {
 			focusPotion = false;
 			cavitationDebuff = false;
 			staticShock = false;
+			miniStaticShock = false;
 			staticShockDamage = false;
 			broth = null;
 

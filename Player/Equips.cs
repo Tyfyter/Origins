@@ -440,7 +440,8 @@ namespace Origins {
 				}
 			}
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
-			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player);
+			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player, miniStaticShock ? 7 : 5);
+			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(Player, 2);
 			oldGravDir = Player.gravDir;
 		}
 		public override void UpdateDyes() {

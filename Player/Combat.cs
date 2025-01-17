@@ -245,6 +245,9 @@ namespace Origins {
 					target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
 				}
 			}
+			if (lightningRing) {
+				target.AddBuff(ModContent.BuffType<Mini_Static_Shock_Debuff>(), Main.rand.NextBool(3) ? 180 : 2);
+			}
 			if (messyLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
 			}
@@ -334,11 +337,11 @@ namespace Origins {
 				}
 			}
 
-			if (staticShock || staticShockDamage) {
+			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (Player.lifeRegen > 0) {
 					Player.lifeRegen = 0;
 				}
-				int damageMult = 1 + Player.wet.ToInt() + (staticShock && staticShockDamage).ToInt();
+				int damageMult = 1 + Player.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt();
 				Player.lifeRegen -= 9 * damageMult;
 			}
 		}

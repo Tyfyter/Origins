@@ -43,6 +43,7 @@ namespace Origins.NPCs {
 		public bool soulhideWeakenedDebuff = false;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
+		public bool miniStaticShock = false;
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
 		public const float soulhideWeakenAmount = 0.15f;
@@ -97,6 +98,7 @@ namespace Origins.NPCs {
 			soulhideWeakenedDebuff = false;
 			cavitationDebuff = false;
 			staticShock = false;
+			miniStaticShock = false;
 			staticShockDamage = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
@@ -201,11 +203,11 @@ namespace Origins.NPCs {
 					dust.scale *= 0.5f;
 				}
 			}
-			if (staticShock || staticShockDamage) {
+			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (npc.lifeRegen > 0) {
 					npc.lifeRegen = 0;
 				}
-				int damageMult = 1 + npc.wet.ToInt() + (staticShock && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+				int damageMult = 1 + npc.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
 				npc.lifeRegen -= 8 * damageMult;
 				if (damage < 3 * damageMult) damage = 3 * damageMult;
 			}

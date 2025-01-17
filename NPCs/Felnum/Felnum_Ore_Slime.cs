@@ -37,7 +37,7 @@ namespace Origins.NPCs.Felnum {
 			AnimationType = NPCID.BlueSlime;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.085f;
+			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.4f;
 			return 0;
 		}
 		public override void OnSpawn(IEntitySource source) {

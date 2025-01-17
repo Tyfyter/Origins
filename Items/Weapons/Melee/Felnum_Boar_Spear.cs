@@ -74,9 +74,9 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 3) {
-					movementFactor -= 2.8f;
+					movementFactor -= 4.4f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 2.8f;
+					movementFactor += 4.4f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2 origin = new(73, 5);
+			Vector2 origin = new(105, 5);
 			float rotation = Projectile.rotation;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
