@@ -58,6 +58,8 @@ namespace Origins.Dev {
 		}
 		static Dictionary<int, string> sourceCache = null;
 		static Dictionary<int, JArray> dropsCache = null;
+		static Dictionary<int, JArray> recipesCache = null;
+		static Dictionary<int, JArray> usedInCache = null;
 		static void GenerateSourceCache() {
 			if (sourceCache is not null) return;
 			Dictionary<int, StringBuilder> cache = [];
@@ -215,6 +217,57 @@ namespace Origins.Dev {
 
 			sourceCache = new(cache.Select(kvp => new KeyValuePair<int, string>(kvp.Key, kvp.Value.ToString())));
 			dropsCache = dropCache;
+			GenerateRecipesCache();
+		}
+		static void GenerateRecipesCache() {
+			static JArray CreateRecipeEntry(List<Recipe> recipes) {
+				JArray allRecipesJson = [];
+				foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
+					JObject recipeJson = [];
+					if (group.Key.requirements.Length > 0) {
+						JArray stationsJson = [];
+						foreach (RecipeRequirement requirement in group.Key.requirements) {
+							if (string.IsNullOrEmpty(requirement.ToString())) continue;
+							stationsJson.Add($"`{requirement}`");
+						}
+						recipeJson.Add("stations", stationsJson);
+					}
+
+					JArray itemsJson = [];
+					foreach (Recipe recipe in group) {
+						JObject resultsObject = [];
+						resultsObject.Add("result", $"`{WikiExtensions.GetItemText(recipe.createItem)}`");
+
+						JArray ingredientsJson = [];
+						foreach (Item requiredItem in recipe.requiredItem) {
+							ingredientsJson.Add($"`{WikiExtensions.GetItemText(requiredItem)}`");
+						}
+						resultsObject.Add("ingredients", ingredientsJson);
+
+						itemsJson.Add(resultsObject);
+					}
+					recipeJson.Add("items", itemsJson);
+					allRecipesJson.Add(recipeJson);
+				}
+				return allRecipesJson;
+			}
+
+			Dictionary<int, JArray> recipesDict = [];
+			Dictionary<int, JArray> usedInDict = [];
+			for (int i = 0; i < ItemLoader.ItemCount; i++) {
+				Item item = ContentSamples.ItemsByType[i];
+				if (item?.ModItem?.Mod is not Origins) continue;
+
+				(List<Recipe> recipes, List<Recipe> usedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[i]);
+				JArray recipeData = CreateRecipeEntry(recipes);
+				if (recipeData.Count > 0) recipesDict.Add(i, recipeData);
+
+				JArray usedInData = CreateRecipeEntry(usedIn);
+				if (usedInData.Count > 0) usedInDict.Add(i, usedInData);
+			}
+
+			recipesCache = recipesDict;
+			usedInCache = usedInDict;
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
 			Item item = modItem.Item;
@@ -398,6 +451,8 @@ namespace Origins.Dev {
 					if (sourceCache.TryGetValue(item.type, out string source)) data.AppendStat("Source", source, "");
 				}
 				if (dropsCache.TryGetValue(item.type, out JArray dropSources)) data.AppendJStat<JArray>("DropSources", dropSources, []);
+				if (recipesCache.TryGetValue(item.type, out JArray recipes)) data.AppendJStat<JArray>("Recipes", recipes, []);
+				if (usedInCache.TryGetValue(item.type, out JArray usedIn)) data.AppendJStat<JArray>("UsedIn", usedIn, []);
 
 				key = baseKey + "Effect";
 				if (Language.Exists(key)) data.AppendStat("Effect", Language.GetTextValue(key), key);
