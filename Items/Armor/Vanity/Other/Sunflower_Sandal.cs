@@ -13,6 +13,7 @@ namespace Origins.Items.Armor.Vanity.Other {
 		public bool HasFemaleVersion => false;
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Green;
+			Item.vanity = true;
 		}
 	}
 }

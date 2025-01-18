@@ -798,9 +798,9 @@ namespace Origins {
 		public static short AddGlowMask(ModTexturedType content, string suffix = "_Glow") {
 			return AddGlowMask(content.Texture + suffix);
 		}
-		internal static void AddHelmetGlowmask(ModItem modItem) => AddHelmetGlowmask(modItem.Item.headSlot, $"{modItem.Texture}_{EquipType.Head}_Glow");
-		internal static void AddBreastplateGlowmask(ModItem modItem) => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}_Glow");
-		internal static void AddLeggingGlowMask(ModItem modItem) => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}_Glow");
+		internal static void AddHelmetGlowmask(ModItem modItem, string suffix = "_Glow") => AddHelmetGlowmask(modItem.Item.headSlot, $"{modItem.Texture}_{EquipType.Head}{suffix}");
+		internal static void AddBreastplateGlowmask(ModItem modItem, string suffix = "_Glow") => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}{suffix}");
+		internal static void AddLeggingGlowMask(ModItem modItem, string suffix = "_Glow") => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}{suffix}");
 		internal static void AddHelmetGlowmask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
 				HelmetGlowMasks.Add(armorID, asset);

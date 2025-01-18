@@ -4933,3 +4933,8 @@ Rubber_Dynamite: {
 	// DisplayName: Rubber Dynamite
 	// Tooltip: "'Dynamite for babies.'"
 }
+
+Felnum_Shock_Glasses: {
+	// DisplayName: Felnum Shock Glasses
+	// Tooltip: ""
+}
