@@ -4928,3 +4928,8 @@ Felnum_Sword: {
 	// DisplayName: Thunderbolt
 	// Tooltip: <right> to stab
 }
+
+Rubber_Dynamite: {
+	// DisplayName: Rubber Dynamite
+	// Tooltip: "'Dynamite for babies.'"
+}
