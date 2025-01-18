@@ -76,7 +76,7 @@ namespace Origins.Items.Accessories {
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
 			originPlayer.explosiveBlastRadius += 0.15f;
 			player.GetKnockback(DamageClasses.Explosive) += 0.2f;
-			originPlayer.explosiveProjectileSpeed += 0.3f;
+			originPlayer.explosiveProjectileSpeed += 0.25f;
 
 			originPlayer.destructiveClaws = true;
 			originPlayer.gunGlove = true;

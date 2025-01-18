@@ -525,7 +525,7 @@ Missile_Armcannon: {
 	// DisplayName: Missile Armcannon
 	/* Tooltip:
 		'''
-		30% increased explosive throwing velocity
+		25% increased explosive throwing velocity
 		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases explosive attack speed
@@ -3906,7 +3906,7 @@ CORE_Generator: {
 	// DisplayName: CORE Generator
 	/* Tooltip:
 		'''
-		30% increased explosive throwing velocity
+		25% increased explosive throwing velocity
 		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases damage, movement speed, and length of invincibility after taking damage
@@ -4926,7 +4926,11 @@ Lightning_Ring: {
 
 Felnum_Sword: {
 	// DisplayName: Thunderbolt
-	// Tooltip: <right> to stab
+	/* Tooltip:
+		'''
+		Inflicts Static Shock
+		<right> to stab
+		''' */
 }
 
 Rubber_Dynamite: {

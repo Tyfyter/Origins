@@ -25,12 +25,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Rubber_Dynamite_P>();
 			Item.shootSpeed *= 1.75f;
 			Item.knockBack = 8f;
-			Item.value = Item.sellPrice(silver: 8);
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(silver: 5);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 15)
-			.AddIngredient(ItemID.Dynamite, 15)
+			Recipe.Create(Type, 8)
+			.AddIngredient(ItemID.Dynamite, 8)
 			.AddIngredient<Rubber>()
 			.AddTile(TileID.Anvils)
 			.Register();
