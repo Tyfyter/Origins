@@ -41,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.Items.{nameof(Rubber_Dynamite)}.DisplayName");
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
+			Origins.MagicTripwireDetonationStyle[Type] = 1;
 			ProjectileID.Sets.Explosive[Type] = true;
 		}
 		public override void SetDefaults() {

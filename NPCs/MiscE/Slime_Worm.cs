@@ -140,11 +140,11 @@ namespace Origins.NPCs.MiscE {
 			while (current.ai[0] != 0) {
 				if (!indecies.Add(current.whoAmI)) break;
 				OriginExtensions.LerpEquals(
-					ref Gore.NewGoreDirect(
-						current.GetSource_Death(),
+					ref Dust.NewDustPerfect(
 						current.position,
-						velocity,
-						Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+						DustID.t_Slime,
+						velocity + Main.rand.NextVector2Circular(4, 4),
+						newColor: NPC.color
 					).velocity,
 					current.velocity,
 					0.5f
