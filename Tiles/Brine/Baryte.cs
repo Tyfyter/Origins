@@ -19,7 +19,7 @@ namespace Origins.Tiles.Brine {
 			AddMapEntry(new Color(18, 73, 56));
 			//mergeID = TileID.Mud;
 			MinPick = 195;
-			HitSound = SoundID.Dig;
+			HitSound = SoundID.Tink;
 			DustType = DustID.GreenMoss;
 		}
 		public override bool CanExplode(int i, int j) {

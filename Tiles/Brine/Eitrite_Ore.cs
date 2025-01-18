@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Terraria;
 using Terraria.ID;
@@ -7,9 +6,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Origins.Tiles.Brine
-{
-    public class Eitrite_Ore : OriginTile {
+namespace Origins.Tiles.Brine {
+	public class Eitrite_Ore : OriginTile {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -19,7 +17,7 @@ namespace Origins.Tiles.Brine
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(8, 190, 151), CreateMapEntryName());
 			MinPick = 180;
-			HitSound = SoundID.Dig;
+			HitSound = SoundID.Tink;
 			DustType = DustID.Mythril;
 		}
 		public override bool CanExplode(int i, int j) {

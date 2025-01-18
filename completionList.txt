@@ -55,7 +55,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(#2, ^2) Defiled Amalgamation* !!! (arm glows)
+(^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (X) Shimmer Construct
@@ -209,7 +209,7 @@ ENEMY NPCS:
 (X) Beckonbug
 (#, ^2) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
-(#2, $2, ^2) Carpalfish° !!! (needs slamming SFX)
+(^) Carpalfish°
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic
 (^) Defiled Pigron
@@ -284,7 +284,7 @@ STATUS EFFECTS:
 (%2) Ashen Assimilation
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
-(#2, ^2) Defiled Assimilation* !!! (Assimilation build-up over time)
+(^) Defiled Assimilation*
 (X) Hallowed Assimilation
 (^) Riven Assimilation*
 (#2, $2, ^2) Cavitation !!! (needs bubbly effect and sounds)
@@ -408,8 +408,8 @@ ACCESSORIES:
 (^) Dryad's Inheritance*
 (^) Dysfunctional Endless Explosives Bag*
 (^) Eccentric Stone*
-(#2, ^2) Eitrite Gun Magazine !!!
-(#2, ^2) Evil Bar Gun Magazines !!!
+(^) Eitrite Gun Magazine
+(^) Evil Bar Gun Magazines
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (#, ^2) Fairy Lotus !!!
@@ -420,7 +420,7 @@ ACCESSORIES:
 (#, ^2) Golden Lotus !!!
 (^) Grave Danger*
 (^) Gun Glove*
-(#2, ^2) Gun Magazine !!!
+(^) Gun Magazine
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Hazard Charm*
@@ -432,6 +432,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
+(ᗢ) Lazy Cloak°
 (^) Lightning Ring
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -445,17 +446,14 @@ ACCESSORIES:
 (#, ^2) Mildew Heart !!!
 (X) Mindweights
 (^) Missile Armcannon*
-(#, ^2) Mithrafin (Cursed) !!!
-(#, ^2) Mithrafin (Uncursed) !!!
-(#2, ^2) Molten Gun Magazine !!!
+(#, ^2) Mithrafin !!!
+(^) Molten Gun Magazine
 (X) Netlace
 (^) Nitro Crate*
 (^) No U Card*
-(#, ^2) Noxious Mithrafin (Cursed) !!!
-(#, ^2) Noxious Mithrafin (Uncursed) !!!
+(#, ^2) Noxious Mithrafin !!!
 (^) Olid Organ*
-(#, ^2) Ornamental Keepsake (Cursed) !!!
-(#, ^2) Ornamental Keepsake (Uncursed) !!!
+(#, ^2) Ornamental Keepsake !!!
 (^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
@@ -475,7 +473,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)*
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
-(#, ^2) Shock Collar !!!
+(^) Shock Collar
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
 (^) Sniper's Mark*
@@ -515,9 +513,8 @@ ACCESSORIES:
 (^) Emergency Bee Canister*
 (#, ^2) Faith Beads !!!
 (^) Fiberglass Dagger*
-(^) Forbidden Voice (Cursed)*
-(^) Forbidden Voice (Uncursed)*
-(^) Lazy Cloak°
+(#2, ^2) Forbidden Voice (Cursed)* !!! (rework to both)
+(#2, ^2) Forbidden Voice (Uncursed)* !!!
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
 (ᗢ) Stack of Shraps°
@@ -686,9 +683,11 @@ MELEE WEAPONS:
 (^) Knee Slapper*
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
+(X) Soulfire Saw
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
+(X) Executioner
 (X) Gospel
 (X) Laser Tag Sabre
 (^) Personal Laser Blade*
@@ -1013,7 +1012,7 @@ GENERIC WEAPONS:
 
 TILES:
 ---
-(X) Aetherium Ore
+(X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (#2, ^2) Baryte* !!! (proper merging with mud)
@@ -1220,7 +1219,7 @@ MATERIALS:
 ---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(X) Aetherium Bar
+(X) Aetherite Bar
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
