@@ -74,8 +74,13 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 	}
-	public class Eitrite_Gun_Magazine : Gun_Magazine { //extra bullet function
+	public class Eitrite_Gun_Magazine : Gun_Magazine {
 		public override float SpeedBonus => 0.2f;
+		public override LocalizedText Tooltip => Language.GetOrRegister("Mods.Origins.Items.CombineTooltips")
+			.WithFormatArgs(
+				base.Tooltip,
+				this.GetLocalization(nameof(Tooltip))
+			);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 24);
 			Item.value = Item.sellPrice(gold: 1);
