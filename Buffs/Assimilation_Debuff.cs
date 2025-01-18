@@ -110,6 +110,7 @@ namespace Origins.Buffs {
 			if (percent >= 0.5) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
+			originPlayer.DefiledAssimilation += percent * 0.0000444f;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().DefiledAssimilation;
