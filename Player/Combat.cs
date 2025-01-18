@@ -768,7 +768,7 @@ namespace Origins {
 				}
 			}
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
-				   bombCharminItLifeRegenCount += info.SourceDamage;
+				   bombCharminItLifeRegenCount += info.Damage;
 			}
 			if (coreGenerator && !isSelfDamage) {
 				int ammoType = coreGeneratorItem.useAmmo;
