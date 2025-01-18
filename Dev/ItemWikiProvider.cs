@@ -228,7 +228,7 @@ namespace Origins.Dev {
 						JArray stationsJson = [];
 						foreach (RecipeRequirement requirement in group.Key.requirements) {
 							if (string.IsNullOrEmpty(requirement.ToString())) continue;
-							stationsJson.Add($"`{requirement}`");
+							stationsJson.Add($"{requirement}");
 						}
 						recipeJson.Add("stations", stationsJson);
 					}
@@ -236,11 +236,11 @@ namespace Origins.Dev {
 					JArray itemsJson = [];
 					foreach (Recipe recipe in group) {
 						JObject resultsObject = [];
-						resultsObject.Add("result", $"`{WikiExtensions.GetItemText(recipe.createItem)}`");
+						resultsObject.Add("result", $"{WikiExtensions.GetItemText(recipe.createItem)}");
 
 						JArray ingredientsJson = [];
 						foreach (Item requiredItem in recipe.requiredItem) {
-							ingredientsJson.Add($"`{WikiExtensions.GetItemText(requiredItem)}`");
+							ingredientsJson.Add($"{WikiExtensions.GetItemText(requiredItem)}");
 						}
 						resultsObject.Add("ingredients", ingredientsJson);
 
