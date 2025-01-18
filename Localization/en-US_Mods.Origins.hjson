@@ -1448,6 +1448,7 @@ Projectiles: {
 	Felnum_Hamaxe_P.DisplayName: Felnum Hamaxe
 	Lightning_Rod_Bobber_Zap.DisplayName: Lightning Rod
 	Felnum_Guardian_P.DisplayName: Felnum Guardian
+	Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
 }
 
 Prefixes: {

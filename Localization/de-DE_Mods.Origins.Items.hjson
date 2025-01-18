@@ -4923,3 +4923,8 @@ Lightning_Ring: {
 	{1}
 	''' */
 // Shock_Collar.DisplayName: Shock Collar
+
+Felnum_Sword: {
+	// DisplayName: Thunderbolt
+	// Tooltip: <right> to stab
+}
