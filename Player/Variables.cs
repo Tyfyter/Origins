@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
@@ -331,6 +332,11 @@ namespace Origins {
 
 		public int quantumInjectors = 0;
 		public bool mojoInjection = false;
+		public bool MojoInjectionEnabled {
+			get => Player.BuilderToggleState<Mojo_Injection_Toggle>() == 0;
+			set => Player.BuilderToggleState<Mojo_Injection_Toggle>() = (!value).ToInt();
+		}
+		public bool MojoInjectionActive => mojoInjection && MojoInjectionEnabled;
 		public int defiledWill = 0;
 
 		public int talkingPet = 0;

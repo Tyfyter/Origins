@@ -2677,6 +2677,9 @@ namespace Origins {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
+		public static ref int BuilderToggleState<TToggle>(this Player player) where TToggle : BuilderToggle {
+			return ref player.builderAccStatus[ModContent.GetInstance<TToggle>().Type];
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

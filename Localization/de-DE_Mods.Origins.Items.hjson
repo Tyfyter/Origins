@@ -547,6 +547,8 @@ Salty_Seed: {
 Mojo_Injection: {
 	// DisplayName: Mojo Injection
 	// Tooltip: Slowly reduces assimilation
+	// Toggle_On: "{$Mods.Origins.Items.Mojo_Injection.DisplayName} on"
+	// Toggle_Off: "{$Mods.Origins.Items.Mojo_Injection.DisplayName} off"
 }
 
 Mysterious_Spray: {
@@ -4846,17 +4848,20 @@ Ancient_Felnum_Helmet: {
 	// Tooltip: ""
 }
 
+Gun_Magazine: {
+	// DisplayName: Gun Magazine
+	// Tooltip: +{0:P0} gun attack speed
+}
+
+Eitrite_Gun_Magazine: {
+	// DisplayName: Eitrite Gun Magazine
+	// Tooltip: Burst guns fire an extra round
+}
+
 // Crimtane_Gun_Magazine.DisplayName: Crimtane Gun Magazine
 // Defiled_Gun_Magazine.DisplayName: Defiled Gun Magazine
 // Demonite_Gun_Magazine.DisplayName: Demonite Gun Magazine
-// Eitrite_Gun_Magazine.DisplayName: Eitrite Gun Magazine
 // Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
-
-Gun_Magazine: {
-	// DisplayName: Gun Magazine
-	// Tooltip: +{0:P0} ranged attack speed
-}
-
 // Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
 // Sanguinite_Gun_Magazine.DisplayName: Sanguinite Gun Magazine
 

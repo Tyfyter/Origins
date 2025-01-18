@@ -1,7 +1,11 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Mojo_Injection : ModItem, ICustomWikiStat {
@@ -38,6 +42,26 @@ namespace Origins.Items.Other.Consumables {
 			originPlayer.CrimsonAssimilation -= Math.Min(healing, originPlayer.CrimsonAssimilation);
 			originPlayer.DefiledAssimilation -= Math.Min(healing, originPlayer.DefiledAssimilation);
 			originPlayer.RivenAssimilation -= Math.Min(healing, originPlayer.RivenAssimilation);
+		}
+	}
+	public class Mojo_Injection_Toggle : BuilderToggle {
+		public override string HoverTexture => Texture;
+		public override bool Active() => OriginPlayer.LocalOriginPlayer?.mojoInjection ?? false;
+		public override string DisplayValue() => Language.GetOrRegister($"Mods.Origins.Items.{nameof(Mojo_Injection)}.Toggle_" + (CurrentState == 0 ? "On" : "Off")).Value;
+		public override bool Draw(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {
+			drawParams.Frame.Y = 0;
+			drawParams.Frame.Height = 18;
+			switch (CurrentState) {
+				case 1://disabled
+				drawParams.Color = drawParams.Color.MultiplyRGB(Color.Gray);
+				break;
+			}
+			return true;
+		}
+		public override bool DrawHover(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {
+			drawParams.Frame.Y = 20;
+			drawParams.Frame.Height = 18;
+			return true;
 		}
 	}
 }

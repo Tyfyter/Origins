@@ -463,7 +463,7 @@ namespace Origins {
 					}
 				}
 			}
-			if (mojoInjection) Mojo_Injection.UpdateEffect(this);
+			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {

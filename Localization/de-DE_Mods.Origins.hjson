@@ -25,7 +25,7 @@ ModMenu: {
 RecipeGroups: {
 	// GemStaves: Any Gem Staff
 	// EvilBoomerangs: Any Evil Boomerang
-	// EvilGunMagazines: Mods.Origins.RecipeGroups.EvilGunMagazines
+	// EvilGunMagazines: Any Evil Gun Magazine
 }
 
 Status_Messages: {
