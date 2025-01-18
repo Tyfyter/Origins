@@ -76,8 +76,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Eitrite_Gun_Magazine : Gun_Magazine {
 		public override float SpeedBonus => 0.2f;
-		public override LocalizedText Tooltip => Language.GetOrRegister("Mods.Origins.Items.CombineTooltips")
-			.WithFormatArgs(
+		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				base.Tooltip,
 				this.GetLocalization(nameof(Tooltip))
 			);

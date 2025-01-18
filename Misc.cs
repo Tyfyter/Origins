@@ -2621,6 +2621,18 @@ namespace Origins {
 			text = null;
 			return false;
 		}
+		public static LocalizedText CombineTooltips(params LocalizedText[] parts) {
+			switch (parts.Length) {
+				case 0:
+				return LocalizedText.Empty;
+
+				case 1:
+				return parts[0];
+
+				default:
+				return Language.GetOrRegister("Mods.Origins.Items.CombineTooltips").WithFormatArgs(parts[0], CombineTooltips(parts[1..]));
+			}
+		}
 		public static LocalizedText GetRandomText(string key) {
 			int i = 0;
 			while (Language.Exists($"{key}.{i}")) i++;
