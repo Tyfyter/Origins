@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Relay : ModTile, IGlowingModTile {
@@ -92,16 +93,32 @@ namespace Origins.Tiles.Defiled {
 				}
 				return;
 			}
+			if (++messageTimer > Main.rand.Next(60 * 60, 60 * 60 * 10)) {// a minute to 10 minutes
+				DisplayMessage("Idle");
+			}
 			if (++frameCounter >= 9) {
 				frameCounter = 0;
 				frame = (frame + 1) % 6;
 			}
 		}
 		public static void DisplayMessage(string key) {
-			string text = Regex.Replace(Language.GetOrRegister(key).Value, "", " ");
+			WeightedRandom<string> chat = new();
+			chat.AddNPCDialogue("Mods.Origins.DefiledRelaySignals." + key);
+			DisplayText(chat);
+		}
+		public static void DisplayText(string text) {
+			text = text.ToUpperInvariant();
+			switch (text) {
+				case "SOS":
+				message = "...---...";
+				messageIndex = 0;
+				messageTimer = 0;
+				return;
+			}
+			text = Regex.Replace(text, "(?:<(\\w+)>)|", " ");
 			StringBuilder builder = new();
 			for (int i = 0; i < text.Length; i++) {
-				string charKey = "MorseLookup." + text[i].ToString().ToUpperInvariant();
+				string charKey = "MorseLookup." + text[i].ToString();
 				if (Language.Exists(charKey)) {
 					builder.Append(Language.GetOrRegister(charKey).Value);
 				} else {
@@ -110,17 +127,22 @@ namespace Origins.Tiles.Defiled {
 			}
 			message = builder.ToString();
 			messageIndex = 0;
+			messageTimer = 0;
 			Main.tileFrameCounter[ModContent.TileType<Defiled_Relay>()] = 0;
 		}
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
 			Player player = Main.LocalPlayer;
-			DisplayMessage("please stop");
 			if (player.HeldItem.hammer >= 45) {
 				return true;
 			}
-			PegasusLib.TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Framing.GetTileSafely(i, j)), out i, out j);
-			Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 2) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 			return false;
+		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			DisplayMessage("BeingDestroyed");
+			if (fail && !effectOnly) {
+				PegasusLib.TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Framing.GetTileSafely(i, j)), out i, out j);
+				Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 2) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
+			}
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
