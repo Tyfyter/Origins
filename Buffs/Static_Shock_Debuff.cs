@@ -59,7 +59,10 @@ namespace Origins.Buffs {
 				Vector2 pointA = hitbox.Center().Clamp(entityHitbox);
 				Vector2 pointB = entityHitbox.Center().Clamp(hitbox);
 				if (pointA.IsWithin(pointB, 16 * baseRange * ((entityWet || wet) ? 2 : 1))) {
-					if (!Main.dedServ && Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), pointA, pointB)) Dust.NewDustPerfect(pointA, ModContent.DustType<Static_Shock_Arc_Dust>(), pointB);
+					if (!Main.dedServ && Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), pointA, pointB)) {
+						Dust.NewDustPerfect(pointA, ModContent.DustType<Static_Shock_Arc_Dust>(), pointB);
+						SoundEngine.PlaySound(Origins.Sounds.LittleZap, (pointA + pointB) * 0.5f);
+					}
 					return Main.netMode != NetmodeID.MultiplayerClient;
 				}
 				return false;

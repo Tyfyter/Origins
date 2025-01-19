@@ -595,6 +595,11 @@ namespace Origins {
 				MaxInstances = 0,
 				IsLooped = true
 			};
+			Sounds.LittleZap = new SoundStyle("Origins/Sounds/Custom/ChainZap", SoundType.Sound) {
+				MaxInstances = 5,
+				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
+				PitchVariance = 0.4f
+			};
 			Sounds.Bonk = new SoundStyle("Origins/Sounds/Custom/GrandSlam", SoundType.Sound) {
 				MaxInstances = 0,
 				PitchVariance = 0.4f
@@ -945,6 +950,7 @@ namespace Origins {
 			public static SoundStyle LightningCharging = SoundID.Roar;
 			public static SoundStyle LightningChargingSoft = SoundID.Roar;
 			public static SoundStyle[] LightningSounds = [];
+			public static SoundStyle LittleZap = SoundID.Roar;
 
 			public static SoundStyle Bonk = SoundID.Roar;
 			public static void Unload() {
