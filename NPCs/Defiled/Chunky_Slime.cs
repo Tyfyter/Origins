@@ -15,6 +15,7 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BlueSlime, Type);
 		}
 		public override void SetDefaults() {
+			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.lifeMax = 60;
 			NPC.defense = 6;
 			NPC.damage = 30;
