@@ -1,17 +1,14 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
+using PegasusLib;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
-using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -25,7 +22,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;
-			Item.ArmorPenetration = 8;
+			Item.ArmorPenetration = 14;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.mana = 3;
 			Item.noMelee = true;
