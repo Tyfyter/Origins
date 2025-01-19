@@ -1,13 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
 	public class Brainy_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
@@ -46,8 +44,6 @@ namespace Origins.Buffs {
 	public class Brainy_Buff : ModBuff, ICustomWikiStat {
 		public string CustomStatPath => nameof(Brainy_Buff);
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crimbrain");
-			// Description.SetDefault("The crimbrain will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Brainy_Staff.buffID = Type;
@@ -69,7 +65,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public const int frameSpeed = 4;
 		public override void SetStaticDefaults() {
 			Brainy_Staff.projectileID = Projectile.type;
-			// DisplayName.SetDefault("Brainchild");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 			// This is necessary for right-click targeting
@@ -85,12 +80,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 		public sealed override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.width = 46;
-			Projectile.height = 34;
+			Projectile.width = 34;
+			Projectile.height = 26;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 2f;
+			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 14;

@@ -7,6 +7,7 @@ using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -26,7 +27,7 @@ namespace Origins.Items.Tools {
 			"ToolWeapon"
 		];
 		public override void SetDefaults() {
-			Item.damage = 32;
+			Item.damage = 54;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -40,10 +41,19 @@ namespace Origins.Items.Tools {
 			Item.knockBack = 12f;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 8);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 0;
 			Item.autoReuse = true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 18)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rotor>(), 4)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 12)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public override bool MeleePrefix() => true;
 		public bool? Hardmode => false;

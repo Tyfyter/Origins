@@ -161,7 +161,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay) {
-			projType = ModContent.ProjectileType<Acid_Shot>();
+			projType = ModContent.ProjectileType<Brine_Droplet>();
 			attackDelay = 1;
 		}
 

@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 24;
 			Item.reuseDelay = 8;
 			Item.mana = 18;
-			Item.shoot = ModContent.ProjectileType<Acid_Shot>();
+			Item.shoot = ModContent.ProjectileType<Brine_Droplet>();
 			Item.value = Item.sellPrice(gold: 2, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;

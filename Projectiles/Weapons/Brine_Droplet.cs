@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Projectiles.Weapons {
-	public class Acid_Shot : ModProjectile, IElementalProjectile {
+	public class Brine_Droplet : ModProjectile, IElementalProjectile {
 		public ushort Element => Elements.Acid;
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
@@ -64,7 +64,7 @@ namespace Origins.Projectiles.Weapons {
 			if (Projectile.ai[1] <= 0) {
 				Projectile.penetrate = 0;
 			}
-			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 180);
 			Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f * Projectile.scale);
 			dust.shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
 			dust.noGravity = false;

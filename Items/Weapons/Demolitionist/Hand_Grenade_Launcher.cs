@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 				if (type == ModContent.ProjectileType<Acid_Grenade_P>()) {
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					type = ModContent.ProjectileType<Acid_Shot>();
+					type = ModContent.ProjectileType<Brine_Droplet>();
 					damage -= 20;
 					for (int i = Main.rand.Next(2); ++i < 5;) {
 						Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 2, knockback, player.whoAmI).scale = 0.85f;

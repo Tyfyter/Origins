@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			int t = ModContent.ProjectileType<Acid_Shot>();
+			int t = ModContent.ProjectileType<Brine_Droplet>();
 			for (int i = Main.rand.Next(1); i < 3; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 5, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f;
 		}
 	}

@@ -419,7 +419,7 @@ namespace Origins.Projectiles {
 				if (acridHandcannon) {
 					const int count = 6;
 					const float portion = MathHelper.TwoPi / count;
-					int projType = ModContent.ProjectileType<Acid_Shot>();
+					int projType = ModContent.ProjectileType<Brine_Droplet>();
 					for (int i = 0; i < count; i++) {
 						Projectile.NewProjectile(
 							projectile.GetSource_Death(),

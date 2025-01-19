@@ -149,7 +149,7 @@ ENEMY NPCS:
 (#, ^2) Boulder Mimic !!!
 (^) Buckethead Zombie
 (#, ^2) Canninhound !!!
-(X) Catacomb Clearer !!!
+(#, ^2) Catacomb Clearer !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
@@ -350,6 +350,7 @@ ARMOR:
 (^) Blast Armor*
 (X) Chambersite Armor°
 (X) Edenwood Armor°
+(X) Mimic Armor
 (@4, #2) Necromancer Armor*
 (X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
@@ -449,6 +450,7 @@ ACCESSORIES:
 (#, ^2) Mithrafin !!!
 (^) Molten Gun Magazine
 (X) Netlace
+(X) Nightsky Cloak
 (^) Nitro Crate*
 (^) No U Card*
 (#, ^2) Noxious Mithrafin !!!
@@ -481,7 +483,7 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (^) Sparking Flame Barrel
-(@2, #2) Speed Booster* !!!
+(#2, ^2) Speed Booster* !!!
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
@@ -629,11 +631,11 @@ TOOLS:
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
-(X) Acrid Laser Rod !!!
+(#, ^2) Acrid Laser Rod !!!
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(@4, ^3) Impactaxe
+(#2, ^2) Impactaxe
 
 (X) Ahe
 (X) Nova Bomb
@@ -676,7 +678,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(X) Boomboom !!!
+(#, ^2) Boomboom !!!
 (#2, ^2) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
@@ -749,7 +751,7 @@ RANGED WEAPONS:
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
 (^) Firespit
-(X) Fumethrower !!!
+(#, ^2) Fumethrower !!!
 (^) Harpoon Burst Rifle
 (^) HNO-3 "Viper"
 (^) Incision*
@@ -816,7 +818,7 @@ MAGIC WEAPONS:
 (^) Shimmer Rod
 (X) Shinedown
 (X) Siphon Staff
-(^) Splashid
+(#2, ^2) Splashid !!!
 (^) Startillery
 (X) Symbiotic Staff
 
@@ -847,7 +849,7 @@ SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
-(^) Brainy Staff*
+(#2, ^2) Brainy Staff* !!! (minion direction facing)
 (@4, ^3) Broken Terratotem
 (#, ^2) Defective Mortar Shell !!!
 (^) Desert Crown*
@@ -964,6 +966,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (X) Shroomcannon
+(X) Sonar Dynamite !!!
 (#2, ^2, ᗢ) Sonorous Shredder !!! (Needs projectile anims)
 (^) Thermite Launcher*
 (#, ^2) Torpedo Tube !!!
@@ -1087,6 +1090,7 @@ TILES:
 (X) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
+(X) Bilious Incense
 (X) Brine Dungeon Chest !!!
 (^) Brine Water Fountain
 (X) Bug Cage°
@@ -1254,7 +1258,6 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(X) Corium Bar !!!
 (X) Geothermal Sludge !!!
 (^) Nova Fragment*
 (^) Power Core*

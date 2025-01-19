@@ -642,7 +642,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			if (projectile.ModProjectile is ICanisterProjectile canister) {
 				canister.DefaultExplosion(projectile);
 			}
-			int projType = ModContent.ProjectileType<Projectiles.Weapons.Acid_Shot>();
+			int projType = ModContent.ProjectileType<Projectiles.Weapons.Brine_Droplet>();
 			for (int i = 0; i < 6; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
