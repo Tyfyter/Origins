@@ -1,5 +1,7 @@
-﻿using Terraria;
+﻿using Origins.Items.Accessories;
+using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -27,6 +29,9 @@ namespace Origins.NPCs.MiscE {
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Fairy_Lotus>(), 2, 1));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {

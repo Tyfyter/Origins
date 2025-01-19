@@ -253,6 +253,7 @@ namespace Origins {
 		public bool scrapBarrierDebuff = false;
 		public float gunSpeedBonus = 0;
 		public bool eitriteGunMagazine = false;
+		public bool fairyLotus = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -641,6 +642,7 @@ namespace Origins {
 			scrapBarrierDebuff = false;
 			gunSpeedBonus = 0;
 			eitriteGunMagazine = false;
+			fairyLotus = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {

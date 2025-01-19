@@ -4940,3 +4940,8 @@ Felnum_Shock_Glasses: {
 }
 
 Sparking_Flame_Barrel.DisplayName: Sparking Flame Barrel
+
+Fairy_Lotus: {
+	DisplayName: Fairy Lotus
+	Tooltip: Attracts helpful fairies
+}

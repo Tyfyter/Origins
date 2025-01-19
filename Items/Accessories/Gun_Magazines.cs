@@ -112,12 +112,7 @@ namespace Origins.Items.Accessories {
 					});
 				}
 			} catch (Exception e) {
-#if DEBUG
-#pragma warning disable CS0162 // Unreachable code detected
-				throw;
-#endif
-				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(nameof(IL_Player_ItemCheck_OwnerOnlyCode), e));
-#pragma warning restore CS0162 // Unreachable code detected
+				if (Origins.LogLoadingILError(nameof(IL_Player_ItemCheck_OwnerOnlyCode), e)) throw;
 			}
 		}
 	}

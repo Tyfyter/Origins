@@ -663,6 +663,7 @@ namespace Origins {
 				.MarkLabel(label)
 			);
 			IL_Player.ItemCheck_OwnerOnlyCode += Eitrite_Gun_Magazine.IL_Player_ItemCheck_OwnerOnlyCode;
+			IL_NPC.SpawnNPC_CheckToSpawnUndergroundFairy += Fairy_Lotus.IL_NPC_SpawnNPC_CheckToSpawnUndergroundFairy;
 		}
 		private static void IL_NPC_SpawnNPC(ILContext il) {
 			ILCursor c = new(il);

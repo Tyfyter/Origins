@@ -974,5 +974,13 @@ namespace Origins {
 			instance.Logger.Warn(message.Value);
 			loadingWarnings.Add(message);
 		}
+		public static bool LogLoadingILError(string methodName, Exception exception) {
+#if DEBUG
+			return true;
+#else
+			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName, exception));
+			return false;
+#endif
+		}
 	}
 }
