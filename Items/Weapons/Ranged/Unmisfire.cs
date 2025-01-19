@@ -1,12 +1,6 @@
-﻿using CalamityMod.Projectiles.Magic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
 using Origins.Projectiles;
-using System;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 

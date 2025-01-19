@@ -227,7 +227,7 @@ namespace Origins.NPCs {
 				Projectile proj = null;
 				for (int i = 0; i < globalNPC.infusionSpikes.Count; i++) {
 					proj = Main.projectile[globalNPC.infusionSpikes[i]];
-					damage += proj.damage * 0.55f;
+					damage += proj.damage * 0.75f;
 					proj.Kill();
 				}
 				Projectile.NewProjectile(proj.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
