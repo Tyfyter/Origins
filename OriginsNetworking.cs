@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles;
+using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using System;
 using System.IO;
@@ -89,6 +90,11 @@ namespace Origins {
 					}
 					break;
 
+					case defiled_relay_message: {
+						Defiled_Relay.DisplayMessage(reader.ReadString());
+					}
+					break;
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -151,6 +157,13 @@ namespace Origins {
 						ModPacket packet = GetPacket();
 						packet.Write(reader.ReadByte());
 						packet.Write(reader.ReadByte());
+						packet.Send(-1, whoAmI);
+					}
+					break;
+
+					case defiled_relay_message: {
+						ModPacket packet = GetPacket();
+						packet.Write(reader.ReadString());
 						packet.Send(-1, whoAmI);
 					}
 					break;
@@ -362,6 +375,7 @@ namespace Origins {
 			internal const byte custom_knockback = 19;
 			internal const byte custom_combat_text = 20;
 			internal const byte sync_neural_network = 21;
+			internal const byte defiled_relay_message = 22;
 		}
 	}
 }

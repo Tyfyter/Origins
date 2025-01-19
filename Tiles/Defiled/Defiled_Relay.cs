@@ -101,10 +101,27 @@ namespace Origins.Tiles.Defiled {
 				frame = (frame + 1) % 6;
 			}
 		}
-		public static void DisplayMessage(string key) {
-			WeightedRandom<string> chat = new();
-			chat.AddNPCDialogue("Mods.Origins.DefiledRelaySignals." + key);
-			DisplayText(chat);
+		public static string GetDialogueKey(string key) {
+			WeightedRandom<string> random = new();
+			if (Language.Exists(key)) {
+				random.Add(key);
+			} else {
+				int i = 1;
+				while (Language.Exists(key + i)) {
+					random.Add(key + i);
+					i++;
+				}
+			}
+			return random;
+		}
+		public static void DisplayMessage(string key, bool fromNet = false) {
+			if (!fromNet) {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(key);
+				packet.Send();
+			}
+			key = GetDialogueKey("Mods.Origins.DefiledRelaySignals." + key);
+			DisplayText(Language.GetTextValue(key));
 		}
 		public static void DisplayText(string text) {
 			text = text.ToUpperInvariant();
@@ -130,16 +147,14 @@ namespace Origins.Tiles.Defiled {
 			messageTimer = 0;
 			Main.tileFrameCounter[ModContent.TileType<Defiled_Relay>()] = 0;
 		}
-		public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
-			Player player = Main.LocalPlayer;
-			if (player.HeldItem.hammer >= 45) {
-				return true;
-			}
-			return false;
-		}
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged) => Main.LocalPlayer.HeldItem.hammer >= 45;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			DisplayMessage("BeingDestroyed");
 			if (fail && !effectOnly) {
+				if (CanKillTile(i, j, ref fail)) {
+					DisplayMessage("BeingDestroyed");
+				} else {
+					DisplayMessage("Security");
+				}
 				PegasusLib.TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Framing.GetTileSafely(i, j)), out i, out j);
 				Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 2) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 			}
