@@ -47,8 +47,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Sonorous_Shredder_Projectile : ModProjectile {
+		public const int frame_time = 5;
+		public const int frame_count = 7;
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = frame_count;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.width = 16;
@@ -73,6 +78,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
 			Projectile.spriteDirection = Projectile.direction;
+			if (++Projectile.frameCounter >= frame_time) {
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
@@ -130,6 +138,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override BardInstrumentType InstrumentType => BardInstrumentType.String;
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = Sonorous_Shredder_Projectile.frame_count;
+		}
 		public override void SetBardDefaults() {
 			Projectile.width = 16;
 			Projectile.height = 16;
@@ -160,6 +171,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
 			Projectile.spriteDirection = Projectile.direction;
+			if (++Projectile.frameCounter >= Sonorous_Shredder_Projectile.frame_time) {
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
