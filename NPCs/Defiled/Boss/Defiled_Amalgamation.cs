@@ -602,6 +602,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
 			return Asset<Texture2D>.Empty;
 		}
+		AutoLoadingAsset<Texture2D> tickTexture = typeof(Boss_Bar_DA).GetDefaultTMLName() + "_Tick";
 		public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax) {
 			NPC owner = Main.npc[info.npcIndexToAimAt];
 			if (owner.type != Defiled_Amalgamation.ID || (lastTickPercent < 0 && isDead)) return false;
@@ -625,27 +626,25 @@ namespace Origins.NPCs.Defiled.Boss {
 			return life > 0;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams) {
-			if (OriginsModIntegrations.PhaseIndicator?.Value is Texture2D phaseIndicator) {
-				int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
-				Vector2 barSize = new Vector2(456, 22);
-				Vector2 barPos = drawParams.BarCenter - barSize * new Vector2(0.5f, 0);
-				Vector2 origin = phaseIndicator.Size() / 2;
-				float tickPercent = 1f / tickCount;
-				float lifePercentToShow = drawParams.Life / drawParams.LifeMax;
-				for (float f = 0; f < lifePercentToShow; f += tickPercent) {
-					if (f == 0f) continue;
-					float animFactor = Math.Min((lifePercentToShow - f) / tickPercent, 1);
-					spriteBatch.Draw(
-						phaseIndicator,
-						barPos + barSize * new Vector2(f, 0),
-						null,
-						new Color(animFactor, animFactor, animFactor, animFactor),
-						0f,
-						origin,
-						2f - animFactor,
-						SpriteEffects.None,
-					0f);
-				}
+			int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
+			Vector2 barSize = new(456, 22);
+			Vector2 barPos = drawParams.BarCenter - barSize * new Vector2(0.5f, 0);
+			Vector2 origin = tickTexture.Value.Size() / 2;
+			float tickPercent = 1f / tickCount;
+			float lifePercentToShow = drawParams.Life / drawParams.LifeMax;
+			for (float f = 0; f < lifePercentToShow; f += tickPercent) {
+				if (f == 0f) continue;
+				float animFactor = Math.Min((lifePercentToShow - f) / tickPercent, 1);
+				spriteBatch.Draw(
+					tickTexture,
+					barPos + barSize * new Vector2(f, 0),
+					null,
+					new Color(animFactor, animFactor, animFactor, animFactor),
+					0f,
+					origin,
+					2f - animFactor,
+					SpriteEffects.None,
+				0f);
 			}
 		}
 	}
