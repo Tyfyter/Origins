@@ -104,9 +104,6 @@ namespace Origins {
 		}
 		public override void LeftClick(UIMouseEvent evt) {
 			opened = true;
-			string json = JsonConvert.SerializeObject(OriginConfig.Instance, default(JsonSerializerSettings));
-			OriginConfig config = new();
-			JsonConvert.PopulateObject(json, config, default(JsonSerializerSettings));
 		}
 		public override void Update(GameTime gameTime) {
 			SetHeight();

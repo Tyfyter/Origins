@@ -53,9 +53,11 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool Assimilation = true;
 
+		[Header("Balance")]
+
 		[JsonDefaultDictionaryKeyValue("{\"Mod\": \"Terraria\", \"Name\": \"GenericDamageClass\"}")]
 		[JsonIgnore, ShowDespiteJsonIgnore]
-		public Dictionary<DamageClassDefinition, float> StatShareRatio = new() {
+		public Dictionary<DamageClassDefinition, float> StatShareRatio { get; set; } = new() {
 			[new("Terraria/SummonDamageClass")] = 0.5f
 		};
 

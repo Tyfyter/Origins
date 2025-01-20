@@ -1766,7 +1766,8 @@ Configs: {
 		Headers: {
 			VanillaBuffs: Vanilla Modifications
 			Other: Other
-			Debugging: Debugging Header
+			Debugging: Debugging
+			Balance: Balance
 		}
 
 		WoodBuffs: {
@@ -1812,8 +1813,8 @@ Configs: {
 		}
 
 		StatShareRatio: {
-			Label: Stat Share Ratio
-			Tooltip: ""
+			Label: Stat Share Multipliers
+			Tooltip: These values will determine how much bonuses for the class contribute to generic damage when using stat-sharing effects
 		}
 	}
 
