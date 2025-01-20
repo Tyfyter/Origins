@@ -177,6 +177,7 @@ namespace Origins {
 
 			Recipe.Create(ItemID.Coal)
 			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.DisableDecraft()
 			.Register();
 
 			Recipe.Create(ItemID.Torch, 5)

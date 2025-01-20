@@ -9,6 +9,7 @@ using Origins.LootConditions;
 using Origins.Reflection;
 using Origins.UI;
 using Origins.UI.Event;
+using PegasusLib;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
+using Terraria.ModLoader.IO;
 
 namespace Origins {
 	public class OriginConfig : ModConfig {
@@ -50,6 +52,13 @@ namespace Origins {
 
 		[DefaultValue(true)]
 		public bool Assimilation = true;
+
+		[JsonDefaultDictionaryKeyValue("{\"Mod\": \"Terraria\", \"Name\": \"GenericDamageClass\"}")]
+		[JsonIgnore, ShowDespiteJsonIgnore]
+		public Dictionary<DamageClassDefinition, float> StatShareRatio = new() {
+			[new("Terraria/SummonDamageClass")] = 0.5f
+		};
+
 		[JsonIgnore]
 		public static bool GraveshieldZombiesShouldDropAsItem => ServerSideAccessibility.Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
 
@@ -62,6 +71,36 @@ namespace Origins {
 			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
 			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
+		}
+		static string BalanceSaveBath => Path.Combine(ConfigManager.ModConfigPath, "OriginsBalanceConfig" + ".nbt");
+		public override void OnLoaded() {
+			LoadFromFile();
+		}
+		internal void LoadFromFile() {
+			if (File.Exists(BalanceSaveBath)) Load(TagIO.FromFile(BalanceSaveBath));
+		}
+		internal void SaveToFile() {
+			TagCompound balanceData = [];
+			Save(balanceData);
+			TagIO.ToFile(balanceData, BalanceSaveBath);
+		}
+		internal void Save(TagCompound tag) {
+			TagCompound statShareData = [];
+			foreach (KeyValuePair<DamageClassDefinition, float> item in StatShareRatio) {
+				statShareData[item.Key.ToString()] = item.Value;
+			}
+			tag[nameof(StatShareRatio)] = statShareData;
+		}
+		internal void Load(TagCompound tag) {
+			StatShareRatio = [];
+			foreach (KeyValuePair<string, object> item in tag.SafeGet<TagCompound>(nameof(StatShareRatio), [])) {
+				StatShareRatio[DamageClassDefinition.FromString(item.Key)] = item.Value is float value ? value : 1;
+			}
+		}
+		internal void CloneTo(OriginConfig clone) {
+			TagCompound balanceData = [];
+			Save(balanceData);
+			clone.Load(balanceData);
 		}
 	}
 	public class OriginClientConfig : ModConfig {

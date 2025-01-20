@@ -93,7 +93,7 @@ namespace Origins.Tiles.Defiled {
 				}
 				return;
 			}
-			if (++messageTimer > Main.rand.Next(60 * 60, 60 * 60 * 10)) {// a minute to 10 minutes
+			if (++messageTimer > Main.rand.Next(20 * 60, 60 * 60 * 3)) {// a minute to 10 minutes
 				DisplayMessage("Idle");
 			}
 			if (++frameCounter >= 9) {

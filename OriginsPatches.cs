@@ -83,6 +83,7 @@ using PegasusLib.Reflection;
 using Terraria.GameContent.Generation;
 using Origins.Items.Mounts;
 using BetterDialogue.UI;
+using Terraria.ModLoader.Config;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -664,6 +665,19 @@ namespace Origins {
 			);
 			IL_Player.ItemCheck_OwnerOnlyCode += Eitrite_Gun_Magazine.IL_Player_ItemCheck_OwnerOnlyCode;
 			IL_NPC.SpawnNPC_CheckToSpawnUndergroundFairy += Fairy_Lotus.IL_NPC_SpawnNPC_CheckToSpawnUndergroundFairy;
+			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("Save", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Action<ModConfig> orig, ModConfig pendingConfig) => {
+				orig(pendingConfig);
+				if (pendingConfig is OriginConfig realPendingConfig) realPendingConfig.SaveToFile();
+			});
+			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("Load", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Action<ModConfig> orig, ModConfig pendingConfig) => {
+				orig(pendingConfig);
+				if (pendingConfig is OriginConfig realPendingConfig) realPendingConfig.LoadFromFile();
+			});
+			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("GeneratePopulatedClone", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Func<ModConfig, ModConfig> orig, ModConfig original) => {
+				ModConfig config = orig(original);
+				if (original is OriginConfig originConfig && config is OriginConfig newConfig) originConfig.CloneTo(newConfig);
+				return config;
+			});
 		}
 		private static void IL_NPC_SpawnNPC(ILContext il) {
 			ILCursor c = new(il);

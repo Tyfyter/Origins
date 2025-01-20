@@ -40,8 +40,8 @@ namespace Origins.Items.Other.Fish {
 		}
 		public override bool IsQuestFish() => true;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
-			description = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead.Description");
-			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead.Location");
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead_Jellyfish.Description");
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead_Jellyfish.Location");
 		}
 	}
 	public class Duskarp : ModItem {

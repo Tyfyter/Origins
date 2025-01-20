@@ -355,16 +355,18 @@ namespace Origins {
 					if (damageClass == DamageClass.Generic) {
 						continue;
 					}
-					Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * statSharePercent;
-					Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * statSharePercent;
+					float currentStatSharePercent = statSharePercent;
+					if (OriginConfig.Instance.StatShareRatio.TryGetValue(new(damageClass.FullName), out float multiplier)) currentStatSharePercent *= multiplier;
+					Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * currentStatSharePercent;
+					Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * currentStatSharePercent;
 
-					Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(statSharePercent));
-					Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - statSharePercent);
+					Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(currentStatSharePercent));
+					Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - currentStatSharePercent);
 
-					Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
-					Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+					Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * currentStatSharePercent;
+					Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * currentStatSharePercent;
 
-					float crit = Player.GetCritChance(damageClass) * statSharePercent;
+					float crit = Player.GetCritChance(damageClass) * currentStatSharePercent;
 					Player.GetCritChance(DamageClass.Generic) += crit;
 					Player.GetCritChance(damageClass) -= crit;
 				}

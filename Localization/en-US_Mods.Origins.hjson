@@ -1810,6 +1810,11 @@ Configs: {
 			Label: Assimilation mechanics
 			Tooltip: Toggles between whether or not Assimilation will be active
 		}
+
+		StatShareRatio: {
+			Label: Stat Share Ratio
+			Tooltip: ""
+		}
 	}
 
 	DebugConfig: {
@@ -1997,6 +2002,30 @@ Configs: {
 		RivenAsimilationMultiplier: {
 			Label: Riven Assimilation Torn multiplier
 			Tooltip: Reduces the Torn severity applied by Riven Assimilation
+		}
+	}
+
+	DamageClassDefinition: {
+		Tooltip: ""
+
+		IsUnloaded: {
+			Label: Is Unloaded
+			Tooltip: ""
+		}
+
+		FullName: {
+			Label: Full Name
+			Tooltip: ""
+		}
+
+		DamageClass: {
+			Label: Damage Class
+			Tooltip: ""
+		}
+
+		DisplayName: {
+			Label: Display Name
+			Tooltip: ""
 		}
 	}
 }

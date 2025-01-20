@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -246,6 +247,22 @@ namespace Origins.NPCs {
 							}
 						}
 					}
+				}
+			}
+			if (Main.dedServ && OriginPlayer.LocalOriginPlayer is not null) {
+				Color color = Color.HotPink;
+				switch (npc.type) {
+					case NPCID.FairyCritterGreen:
+					color = Color.LimeGreen;
+					goto case NPCID.FairyCritterPink;
+
+					case NPCID.FairyCritterBlue:
+					color = Color.HotPink;
+					goto case NPCID.FairyCritterPink;
+
+					case NPCID.FairyCritterPink:
+					Lighting.AddLight(npc.Center, color.ToVector3() * 1.4f);
+					break;
 				}
 			}
 			if (staticShock) Static_Shock_Debuff.ProcessShocking(npc, miniStaticShock ? 7 : 5);

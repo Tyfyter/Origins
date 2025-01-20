@@ -12,14 +12,17 @@ namespace Origins.Reflection {
 		public delegate UIPanel _MakeSeparateListPanel(object item, object subitem, PropertyFieldWrapper memberInfo, IList array, int index, Func<string> AbridgedTextDisplayFunction);
 		public static _SwitchToSubConfig SwitchToSubConfig { get; private set; }
 		public static _MakeSeparateListPanel MakeSeparateListPanel { get; private set; }
+		public static Action<string> SetTooltip { get; private set; }
 		public void Load(Mod mod) {
 			Type type = typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.UI.UIModConfig");
 			SwitchToSubConfig = type.GetMethod(nameof(SwitchToSubConfig), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<_SwitchToSubConfig>();
 			MakeSeparateListPanel = type.GetMethod(nameof(MakeSeparateListPanel), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<_MakeSeparateListPanel>();
+			SetTooltip = type.GetProperty("Tooltip", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).GetSetMethod().CreateDelegate<Action<string>>();
 		}
 		public void Unload() {
 			SwitchToSubConfig = null;
 			MakeSeparateListPanel = null;
+			SetTooltip = null;
 		}
 	}
 }
