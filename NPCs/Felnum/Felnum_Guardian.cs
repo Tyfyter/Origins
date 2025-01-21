@@ -180,7 +180,7 @@ namespace Origins.NPCs.Felnum {
 				rotation += MathHelper.Pi;
 			}
 			spriteBatch.Draw(
-				TextureAssets.Npc[Type].Value,
+				texture,
 				NPC.Center - screenPos,
 				NPC.frame,
 				drawColor,

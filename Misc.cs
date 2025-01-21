@@ -2692,6 +2692,15 @@ namespace Origins {
 		public static ref int BuilderToggleState<TToggle>(this Player player) where TToggle : BuilderToggle {
 			return ref player.builderAccStatus[ModContent.GetInstance<TToggle>().Type];
 		}
+		public static Vector2 ApplyToOrigin(this SpriteEffects spriteEffects, Vector2 origin, Rectangle frame) {
+			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) {
+				origin.X = frame.Width - origin.X;
+			}
+			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) {
+				origin.Y = frame.Height - origin.Y;
+			}
+			return origin;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
