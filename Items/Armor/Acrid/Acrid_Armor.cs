@@ -43,7 +43,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
-			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddIngredient(ModContent.ItemType<Materials.Rubber>(), 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -182,7 +182,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 26)
-			.AddIngredient(ModContent.ItemType<Rubber>(), 30)
+			.AddIngredient(ModContent.ItemType<Materials.Rubber>(), 30)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -205,7 +205,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)
-			.AddIngredient(ModContent.ItemType<Rubber>(), 20)
+			.AddIngredient(ModContent.ItemType<Materials.Rubber>(), 20)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

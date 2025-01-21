@@ -97,6 +97,8 @@ namespace Origins {
 		public const float blast_set_charge_decay = 12;
 		public bool blastSetActive = false;
 		public bool rainSet = false;
+		public bool rubberBody = false;
+		public int nearTrafficCone = 0;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -469,6 +471,8 @@ namespace Origins {
 			if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
 			blastSet = false;
 			rainSet = false;
+			rubberBody = false;
+			if (nearTrafficCone > 0) nearTrafficCone--;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {

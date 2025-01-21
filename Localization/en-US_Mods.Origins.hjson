@@ -2111,6 +2111,11 @@ SetBonuses: {
 		Allows you to go berserk after recieving any kind of damage
 		All explosive combat stats are increased by 50% while berserked
 		'''
+	Rubber:
+		'''
+		Immunity to Static Shock and Electrified
+		Reduces damage taken by 5%
+		'''
 }
 
 ItemSourceFilter: {

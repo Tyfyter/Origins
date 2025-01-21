@@ -361,6 +361,7 @@ namespace Origins {
 				modifiers.SourceDamage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
+			if (rubberBody) modifiers.SourceDamage *= 0.9f;
 			hitIsSelfDamage = false;
 			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
 				hitIsSelfDamage = true;

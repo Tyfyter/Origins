@@ -88,6 +88,11 @@ namespace Origins.Tiles.Other {
 					}
 				}
 			}
+			foreach (Player player in Main.ActivePlayers) {
+				if (Projectile.position.DistanceSQ(Projectile.position.Clamp(player.Hitbox)) < range * range) {
+					player.OriginPlayer().nearTrafficCone = 30;
+				}
+			}
 			Projectile.timeLeft = 5;
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			Point16 tilePos = Projectile.position.ToTileCoordinates16();

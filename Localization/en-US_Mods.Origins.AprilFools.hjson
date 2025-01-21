@@ -103,3 +103,9 @@ DefiledRelaySignals: {
 	BeingDestroyed4: HALP!
 	BeingDestroyed5: Go away in profane language.
 }
+
+SetBonuses.Rubber:
+	'''
+	Immunity to Static Shock, Electrified, and traffic laws
+	Reduces damage taken by 5%
+	'''

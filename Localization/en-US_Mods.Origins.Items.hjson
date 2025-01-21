@@ -4949,3 +4949,18 @@ Fairy_Lotus: {
 	DisplayName: Fairy Lotus
 	Tooltip: Attracts helpful fairies and makes them glow brighter
 }
+
+Rubber_Breastplate: {
+	DisplayName: Rubber Breastplate
+	Tooltip: Reduces damage taken from projectiles by 10%
+}
+
+Rubber_Greaves: {
+	DisplayName: Rubber Greaves
+	Tooltip: 5% increased damage
+}
+
+Rubber_Helmet: {
+	DisplayName: Rubber Helmet
+	Tooltip: 5% increased critical strike chance
+}
