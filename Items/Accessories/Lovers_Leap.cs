@@ -11,8 +11,8 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 24);
-			Item.damage = 30;
-			Item.knockBack = 2;
+			Item.damage = 50;
+			Item.knockBack = 6;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 			Item.accessory = true;

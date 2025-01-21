@@ -22,10 +22,10 @@ namespace Origins.Tiles.Defiled {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White * GlowValue;
 		public float GlowValue => Main.tileFrame[Type] switch {
-			6 or 7 => 0.2f,
-			8 => 0.35f,
-			9 => 0.2f,
-			_ => 0.1f
+			6 or 7 => 0.3f,
+			8 => 0.5f,
+			9 => 0.38f,
+			_ => 0.24f
 		};
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = Vector3.Max(color, Vector3.One * GlowValue);

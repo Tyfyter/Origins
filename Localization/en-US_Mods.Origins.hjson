@@ -1813,7 +1813,7 @@ Configs: {
 		}
 
 		StatShareRatio: {
-			Label: Stat Share Multipliers
+			Label: Stat share multipliers
 			Tooltip: These values will determine how much bonuses for the class contribute to generic damage when using stat-sharing effects
 		}
 	}

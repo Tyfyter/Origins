@@ -204,7 +204,7 @@ Dash_Ravel: {
 	DisplayName: Dash Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball that damages enemies as it moves
+		Use the mount key to transform into a small, rolling ball that damages enemies as it moves
 		Double tap a direction to dash and instantly morph
 		'''
 }
@@ -222,7 +222,7 @@ Depth_Ravel: {
 	DisplayName: Depth Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		Grants extreme underwater capabilities
 		'''
 }
@@ -568,7 +568,7 @@ Ninja_Ravel: {
 	DisplayName: Ninja Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		You may cling to walls and ceilings when raveled
 		Enemies are less likely to target you while raveled
 		'''
@@ -683,7 +683,7 @@ Protozoa_Food: {
 
 Ravel: {
 	DisplayName: Ravel
-	Tooltip: Double tap down to transform into a small, rolling ball
+	Tooltip: Use the mount key to transform into a small, rolling ball
 }
 
 Razorwire: {
@@ -785,14 +785,14 @@ Shrap_Stack: {
 
 Speed_Ravel: {
 	DisplayName: Speed Ravel
-	Tooltip: Double tap down to transform into a small, rolling ball that moves very fast
+	Tooltip: Use the mount key to transform into a small, rolling ball that moves very fast
 }
 
 Spider_Ravel: {
 	DisplayName: Spider Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		You may cling to walls and ceilings when raveled
 		'''
 }
@@ -806,7 +806,7 @@ Stealth_Ravel: {
 	DisplayName: Stealth Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		Enemies are much less likely to target you when raveled
 		'''
 }
@@ -4947,5 +4947,5 @@ Sparking_Flame_Barrel.DisplayName: Sparking Flame Barrel
 
 Fairy_Lotus: {
 	DisplayName: Fairy Lotus
-	Tooltip: Attracts helpful fairies
+	Tooltip: Attracts helpful fairies and makes them glow brighter
 }

@@ -294,7 +294,7 @@ STATUS EFFECTS:
 (^) Mana Buffer
 (^) Rasterized*
 (^) Shadefire
-($2, ^2/3) Static Shock !!! (just needs Sounds)
+(^) Static Shock
 (^) Torn*
 (^) Totally Safe
 (^) Toxic Shock*
@@ -413,7 +413,7 @@ ACCESSORIES:
 (^) Evil Bar Gun Magazines
 (^) Exploder Emblem*
 (^) Explosive Artery*
-(#, ^2) Fairy Lotus !!!
+(^) Fairy Lotus
 (#, ^2) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
@@ -563,6 +563,7 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals
 
+(#, ^2) First Dream
 (^) Tyfyter's Set
 
 (^) Acrid Dye
@@ -1156,7 +1157,7 @@ TILES:
 (^) Brineglow Vine*
 (^) Defiled Foliage
 (@4, #2, 々) Defiled Heart
-(#2, ^2) Defiled Relay !!!
+(^) Defiled Relay
 (^) Defiled Pot
 (X) Eden Tree°
 (^) Exoskeletal Tree*
