@@ -2100,7 +2100,11 @@ SetBonuses: {
 		'''
 	Souldhide: Nearby enemies are weakened and afflicted with Shadowflame
 	Tendon: Mobility is based on remaining health
-	Miner: 20% reduced self-damage
+	Miner:
+		'''
+
+		20% reduced self-damage
+		'''
 	Pearlwood:
 		'''
 		15% increased damage
