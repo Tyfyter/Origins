@@ -62,7 +62,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			//Projectile.CloneDefaults(ProjectileID.FrostHydra);
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 46;

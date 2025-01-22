@@ -131,7 +131,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 76);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 77);
 			}
@@ -310,7 +310,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + Vector2.UnitY * 20f, NPC.velocity, 1340);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + Vector2.UnitY * 20f, NPC.velocity, 1340);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + Vector2.UnitY * 34f, NPC.velocity, 1341);

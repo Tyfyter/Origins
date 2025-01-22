@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 34;
 			Projectile.height = 40;

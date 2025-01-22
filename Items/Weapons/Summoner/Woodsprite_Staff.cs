@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 18;
 			Projectile.height = 28;

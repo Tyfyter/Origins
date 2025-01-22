@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Origins.ForceFelnumShockOnShoot[Type] = true;
 			ID = Type;
 		}
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			MaxLife = 60 * 15;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
@@ -275,7 +275,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 76;
 			Projectile.height = 40;

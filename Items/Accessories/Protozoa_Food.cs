@@ -52,7 +52,7 @@ namespace Origins.Items.Accessories {
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 8;
 			Projectile.height = 8;

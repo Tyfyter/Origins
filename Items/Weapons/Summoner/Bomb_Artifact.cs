@@ -105,7 +105,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Origins.ForceFelnumShockOnShoot[Type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 30;
 			Projectile.height = 48;

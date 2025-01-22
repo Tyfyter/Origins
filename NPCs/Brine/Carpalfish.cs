@@ -183,7 +183,7 @@ namespace Origins.NPCs.Brine {
 			NPC.frame = new Rectangle(0, 30 * (int)(frame * Main.npcFrameCount[Type]), 80, 30);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Origins.instance.SpawnGoreByName(
 					NPC.GetSource_Death(),
 					NPC.Center,

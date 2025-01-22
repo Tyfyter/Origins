@@ -65,7 +65,7 @@ namespace Origins.Items.Pets {
 			Main.projPet[Type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.timeLeft = 5;
 			Projectile.width = 48;
 			Projectile.height = 40;

@@ -552,8 +552,13 @@ namespace Origins {
 						Main.windSpeedTarget = MathHelper.Clamp(Main.windSpeedTarget, -0.8f, 0.8f);
 					}
 				}
-			}else if (forceThunderstormDelay > 0) {
+			} else if (forceThunderstormDelay > 0) {
 				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
+			}
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.OriginPlayer() is OriginPlayer originPlayer) {
+					originPlayer.oldNearbyActiveNPCs = player.nearbyActiveNPCs;
+				}
 			}
 		}
 		bool hasLoggedPUP = false;

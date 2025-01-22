@@ -289,7 +289,7 @@ namespace Origins.NPCs.Felnum {
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				SoundEngine.PlaySound(SoundID.NPCHit37, NPC.Center);
 				Dust.NewDustPerfect(NPC.Center, ModContent.DustType<Felnum_Enemy_Death_Dust>());
 			} else {

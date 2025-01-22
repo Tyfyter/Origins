@@ -185,7 +185,7 @@ namespace Origins.NPCs.Brine {
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Origins.instance.SpawnGoreByName(
 					NPC.GetSource_Death(),
 					chain.anchor.WorldPosition,

@@ -66,7 +66,7 @@ namespace Origins.NPCs.MiscE {
 			if (!OriginConfig.GraveshieldZombiesShouldDropAsItem) NPC.DropTombstoneTownNPC(NetworkText.FromKey(Lang.misc[19].Key, NPC.GetFullNetName()));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0 || OriginsModIntegrations.CheckAprilFools()) {
+			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);

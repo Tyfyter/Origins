@@ -45,7 +45,7 @@ namespace Origins.NPCs.Riven {
 			OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.9f);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 5; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
 			}
 		}

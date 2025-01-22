@@ -154,9 +154,9 @@ namespace Origins.NPCs.Felnum {
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				SoundEngine.PlaySound(SoundID.NPCHit37, NPC.Center);
-				//Dust.NewDustPerfect(NPC.Center, ModContent.DustType<Felnum_Enemy_Death_Dust>());
+				Dust.NewDustPerfect(NPC.Center, ModContent.DustType<Felnum_Enemy_Death_Dust>());
 
 				for (int i = 0; i < 20; i++) {
 					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, 0f, 50, Color.White, 1.5f);

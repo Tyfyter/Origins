@@ -554,7 +554,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_OnHurt(player), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				SpawnGore(NPC.Center + new Vector2(NPC.spriteDirection * -30, -20), 1);
 				SpawnGore(NPC.Center + new Vector2(NPC.spriteDirection * 15, 18), 2);
 				SpawnGore(NPC.Center + new Vector2(NPC.spriteDirection * -4, -22), 3);

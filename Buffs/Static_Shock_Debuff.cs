@@ -44,7 +44,7 @@ namespace Origins.Buffs {
 			bool isDead = false;
 			if (victim is NPC npc) {
 				npc.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), time);
-				isDead = npc.life < 0;
+				isDead = npc.life <= 0;
 			} else if (victim is Player player) {
 				player.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), time);
 				isDead = player.dead || player.statLife < 0;
