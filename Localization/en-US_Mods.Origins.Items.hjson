@@ -1016,23 +1016,31 @@ Chromtain_Helmet: {
 	Tooltip: ""
 }
 
+Cryosten_Helmet: {
+	DisplayName: Cryosten Helmet
+	Tooltip:
+		'''
+		+20% explosive blast radius
+		Increased life regeneration
+		'''
+}
+
 Cryosten_Breastplate: {
 	DisplayName: Cryosten Breastplate
-	Tooltip: 12% increased maximum life
+	Tooltip:
+		'''
+		+20% explosive blast radius
+		8% increased maximum life
+		'''
 }
 
 Cryosten_Greaves: {
 	DisplayName: Cryosten Greaves
 	Tooltip:
 		'''
-		5% increased movement speed
+		10% increased movement speed
 		Increased movement speed on ice
 		'''
-}
-
-Cryosten_Helmet: {
-	DisplayName: Cryosten Helmet
-	Tooltip: Increased life regeneration
 }
 
 Ashen_Breastplate: {
@@ -4967,4 +4975,19 @@ Rubber_Greaves: {
 Rubber_Helmet: {
 	DisplayName: Rubber Helmet
 	Tooltip: 5% increased critical strike chance
+}
+
+Pink_Cryosten_Helmet: {
+	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Helmet.DisplayName}
+	Tooltip: "{$Mods.Origins.Items.Cryosten_Helmet.Tooltip}"
+}
+
+Pink_Cryosten_Breastplate: {
+	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Breastplate.DisplayName}
+	Tooltip: "{$Mods.Origins.Items.Cryosten_Breastplate.Tooltip}"
+}
+
+Pink_Cryosten_Greaves: {
+	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Greaves.DisplayName}
+	Tooltip: "{$Mods.Origins.Items.Cryosten_Greaves.Tooltip}"
 }

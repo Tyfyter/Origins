@@ -11,6 +11,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Ices[Type] = true;
 			TileID.Sets.IcesSlush[Type] = true;
 			TileID.Sets.IcesSnow[Type] = true;
+			TileID.Sets.IceSkateSlippery[Type] = true;
 			TileID.Sets.Conversion.Ice[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -21,9 +22,6 @@ namespace Origins.Tiles.Riven {
 			mergeID = TileID.IceBlock;
 			DustType = DustID.Water_Snow;
 			HitSound = SoundID.Item50;
-		}
-		public override void FloorVisuals(Player player) {
-			player.slippy = true;
 		}
 	}
 	public class Primordial_Permafrost_Item : ModItem {

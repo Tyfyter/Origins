@@ -4968,3 +4968,18 @@ Rubber_Helmet: {
 	// DisplayName: Rubber Helmet
 	// Tooltip: 5% increased critical strike chance
 }
+
+Pink_Cryosten_Breastplate: {
+	// DisplayName: Pink Cryosten Breastplate
+	// Tooltip: ""
+}
+
+Pink_Cryosten_Greaves: {
+	// DisplayName: Pink Cryosten Greaves
+	// Tooltip: ""
+}
+
+Pink_Cryosten_Helmet: {
+	// DisplayName: Pink Cryosten Helmet
+	// Tooltip: ""
+}

@@ -185,7 +185,7 @@ namespace Origins.Items {
 		}
 		public override bool OnPickup(Item item, Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (originPlayer.cryostenSet) {
+			if (originPlayer.oldCryostenSet) {
 				if (item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.SugarPlum) {
 					originPlayer.cryostenLifeRegenCount += 60;
 				}

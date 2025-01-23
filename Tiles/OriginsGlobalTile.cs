@@ -139,5 +139,7 @@ namespace Origins.Tiles {
 			}
 			return null;
 		}
+		public override void FloorVisuals(int type, Player player) {
+		}
 	}
 }

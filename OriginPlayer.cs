@@ -449,6 +449,9 @@ namespace Origins {
 					}, 1, 0);
 				}
 			}
+			if (cryostenBody) {
+				health *= 1.08f;
+			}
 		}
 		public override void NaturalLifeRegen(ref float regen) {
 			if (tornCurrentSeverity > 0 && tornCurrentSeverity < 1) {

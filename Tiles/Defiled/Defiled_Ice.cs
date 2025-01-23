@@ -12,6 +12,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.Ices[Type] = true;
 			TileID.Sets.IcesSlush[Type] = true;
 			TileID.Sets.IcesSnow[Type] = true;
+			TileID.Sets.IceSkateSlippery[Type] = true;
 			TileID.Sets.Conversion.Ice[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -23,9 +24,6 @@ namespace Origins.Tiles.Defiled {
 			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			HitSound = SoundID.Item50;
-		}
-		public override void FloorVisuals(Player player) {
-			player.slippy = true;
 		}
 	}
 	public class Defiled_Ice_Item : ModItem {

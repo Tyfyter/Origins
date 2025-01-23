@@ -236,7 +236,7 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateMiscEffects() {
-			if (cryostenHelmet) {
+			if (oldCryostenHelmet) {
 				if (Player.statLife != Player.statLifeMax2) {
 					bool buffed = cryostenLifeRegenCount > 0;
 					int visualTime = (int)Main.timeForVisualEffects % (buffed ? 15 : 60);
@@ -547,7 +547,7 @@ namespace Origins {
 			}
 		}
 		public override void UpdateLifeRegen() {
-			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
+			if (oldCryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
 			if (bombCharminItLifeRegenCount > 0) {
 				Player.lifeRegenCount += 24;
 				const float offsetMult = 1;

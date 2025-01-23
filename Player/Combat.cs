@@ -321,6 +321,9 @@ namespace Origins {
 					}
 				}
 			}
+			if (cryostenSet) {
+				target.AddBuff(BuffID.Frostburn, Main.rand.Next(60 * 5, 60 * 14 + 1));
+			}
 		}
 		#endregion
 		#region receiving

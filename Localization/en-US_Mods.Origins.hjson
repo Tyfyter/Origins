@@ -2070,8 +2070,9 @@ SetBonuses: {
 		'''
 	Cryosten:
 		'''
-		Life restoration from hearts increased
-		Cannot be frozen or chilled
+		Attacks cause frostburn
+		+10% explosive velocity
+		Immunity to Frozen and Chilled
 		'''
 	Defiled: Greatly increased maximum life
 	Encrusted: Increases minion damage by up to 30% when over half health
