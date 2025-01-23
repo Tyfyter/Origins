@@ -129,6 +129,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.lifeMax /= 4;
+			this.CopyBanner<Riven_Fighter>();
 		}
 	}
 	public class Amebic_Slime_WC : Amebic_Slime {
@@ -142,6 +143,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.lifeMax /= 4;
+			this.CopyBanner<Amebic_Slime>();
 		}
 	}
 	public class Amoeba_Bugger_WC : Amoeba_Bugger {
