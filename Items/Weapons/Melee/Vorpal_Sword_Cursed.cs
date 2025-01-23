@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Cursed_Vorpal_Sword_Slash>();
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 0f;
+			Item.knockBack = float.Epsilon;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = CursedRarity.ID;
@@ -213,6 +213,7 @@ namespace Origins.Items.Weapons.Melee {
 				Item.autoReuse = true;
 			}
 		}
+		public override bool MeleePrefix() => true;
 		public bool? Hardmode => false;
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {

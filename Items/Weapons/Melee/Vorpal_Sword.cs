@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Vorpal_Sword_Slash>();
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 0f;
+			Item.knockBack = float.Epsilon;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
@@ -177,6 +177,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.ItemUsesThisAnimation == 1 ? 1 : -1);
 			return false;
 		}
+		public override bool MeleePrefix() => true;
 		public bool? Hardmode => false;
 	}
 	public class Vorpal_Sword_Slash : ModProjectile {
