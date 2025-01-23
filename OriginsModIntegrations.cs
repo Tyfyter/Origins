@@ -62,6 +62,12 @@ namespace Origins {
 			set => instance.checkAprilFools = value;
 		}
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
+		ModKeybind goToKeybindKeybind;
+		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
+		Action<ModKeybind> goToKeybind;
+		public static void GoToKeybind(ModKeybind keybind) {
+			instance.goToKeybind?.Invoke(keybind);
+		}
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
@@ -220,8 +226,9 @@ namespace Origins {
 			}
 		}
 		public static void LateLoad() {
-			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicatorMod) && phaseIndicatorMod.RequestAssetIfExists("PhaseIndicator", out Asset<Texture2D> phaseIndicatorTexture)) {
-				instance.phaseIndicator = phaseIndicatorTexture;
+			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {
+				instance.goToKeybindKeybind = keybind;
+				instance.goToKeybind = (keybind) => controllerConfigurator.Call("OPENKEYBINDSTOSEARCH", keybind);
 			}
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
 				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Defiled_Wastelands>());

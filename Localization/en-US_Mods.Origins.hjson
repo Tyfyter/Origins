@@ -420,7 +420,7 @@ Generic: {
 	Definite_Article: the {0}
 	VariableAssimilation: Variable
 	BuffTime: $60!:{0:0.##} seconds$
-	UnboundKey: "\"{0}\" (not bound)"
+	UnboundKey: '''"{0}" (not bound)'''
 }
 
 AltBiomes: {

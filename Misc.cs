@@ -38,6 +38,7 @@ using Terraria.ObjectData;
 using PegasusLib;
 using PegasusLib.Graphics;
 using Terraria.GameInput;
+using Terraria.UI;
 
 namespace Origins {
 	#region classes
@@ -3759,6 +3760,9 @@ namespace Origins {
 			string substitution = keybind.GetAssignedKeys(inputMode).FirstOrDefault() ?? Language.GetOrRegister("Mods.Origins.Generic.UnboundKey").Format(keybind.DisplayName);
 			foreach (TooltipLine line in tooltips) {
 				line.Text = line.Text.Replace("<key>", substitution);
+			}
+			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+				OriginsModIntegrations.GoToKeybind(keybind);
 			}
 		}
 	}

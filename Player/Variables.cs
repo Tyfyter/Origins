@@ -237,6 +237,7 @@ namespace Origins {
 		//public bool isVoodooPickup = false;
 		public bool primordialSoup = false;
 		public bool bugZapper = false;
+		public int bugZapperFlyTime = 0;
 		public bool bombCharminIt = false;
 		public bool cursedVoice = false;
 		public Item cursedVoiceItem = null;
@@ -633,6 +634,7 @@ namespace Origins {
 			pickupRangeBoost = 0;
 			primordialSoup = false;
 			bugZapper = false;
+			if (bugZapperFlyTime > 0) bugZapperFlyTime--;
 			bombCharminIt = false;
 			cursedVoice = false;
 			cursedVoiceItem = null;
