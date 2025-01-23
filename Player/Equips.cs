@@ -307,6 +307,13 @@ namespace Origins {
 						Player.whoAmI
 					);
 					cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
+					bool longerExpertDebuff = BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType];
+					try {
+						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = false;
+						Player.AddBuff(cursedVoiceItem.buffType, cursedVoiceCooldown);
+					} finally {
+						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = longerExpertDebuff;
+					}
 				}
 			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {

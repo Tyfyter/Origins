@@ -6,6 +6,7 @@ using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
+using SteelSeries.GameSense.DeviceZone;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -37,6 +38,7 @@ namespace Origins.NPCs {
 		public float tornTarget = 0.7f;
 		public Vector2 tornOffset = default;
 		public bool slowDebuff = false;
+		public bool silencedDebuff = false;
 		public bool barnacleBuff = false;
 		public bool oldSlowDebuff = false;
 		public bool shadeFire = false;
@@ -94,6 +96,7 @@ namespace Origins.NPCs {
 			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
+			silencedDebuff = false;
 			shadeFire = false;
 			soulhideWeakenedDebuff = false;
 			cavitationDebuff = false;
@@ -147,9 +150,13 @@ namespace Origins.NPCs {
 		public override void OnSpawn(NPC npc, IEntitySource source) {
 			if (source is EntitySource_Parent parentSource) {
 				if (parentSource.Entity is NPC parentNPC) {
-					if ((!npc.chaseable || npc.lifeMax <= 5) && parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
+					OriginGlobalNPC parentGlobal = parentNPC.GetGlobalNPC<OriginGlobalNPC>();
+					if ((!npc.chaseable || npc.lifeMax <= 5) && parentGlobal.soulhideWeakenedDebuff) {
 						npc.damage = (int)(npc.damage * (1f - soulhideWeakenAmount));
 						weakenedOnSpawn = true;
+					}
+					if (parentGlobal.silencedDebuff && NPCID.Sets.ProjectileNPC[npc.type]) {
+						npc.life = 0;
 					}
 				}
 			}
@@ -243,18 +250,32 @@ namespace Origins.NPCs {
 			return true;
 		}
 		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Textures/Enemy_Slow_Indicator";
+		AutoLoadingAsset<Texture2D> silencedIndicator = "Origins/Textures/Enemy_Silenced_Indicator";
+		AutoLoadingAsset<Texture2D> blindIndicator = "Origins/Textures/Enemy_Blind_Indicator";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (slowDebuff) {
+			List<Texture2D> indicators = [];
+			Vector2 pos = Vector2.Zero;
+			void AddIndicator(Texture2D indicator) {
+				indicators.Add(indicator);
+				pos.X -= indicator.Width * 0.5f;
+			}
+			if (slowDebuff) AddIndicator(slowIndicator);
+			if (silencedDebuff) AddIndicator(silencedIndicator);
+			if (npc.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal) && blindGlobal.IsReallyBlinded) AddIndicator(blindIndicator);
+			for (int i = 0; i < indicators.Count; i++) {
+				Texture2D indicator = indicators[i];
+				pos.X += indicator.Width * 0.5f;
 				Main.EntitySpriteDraw(
-					slowIndicator,
-					npc.Top - new Vector2(0, 24) - screenPos,
+					indicator,
+					npc.Top + pos - new Vector2(0, 24) - screenPos,
 					null,
 					new Color(225, 180, 255, 180),
 					0,
-					new Vector2(14, 9),
+					indicator.Size() * 0.5f,
 					1,
 					SpriteEffects.None
 				);
+				pos.X += indicator.Width * 0.5f;
 			}
 		}
 		public void FillShaders(NPC npc, List<ArmorShaderData> shaders) {

@@ -37,20 +37,6 @@ namespace Origins.Buffs {
 		public override void ResetEffects(NPC npc) {
 			blinded = false;
 		}
-		AutoLoadingAsset<Texture2D> blindIndicator = "Origins/Textures/Enemy_Blind_Indicator";
-		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (blindable && blinded) {
-				Main.EntitySpriteDraw(
-					blindIndicator,
-					npc.Top - new Vector2(0, 24) - screenPos,
-					null,
-					new Color(225, 180, 255, 180),
-					0,
-					new Vector2(14, 9),
-					1,
-					SpriteEffects.None
-				);
-			}
-		}
+		public bool IsReallyBlinded => blindable && blinded;
 	}
 }

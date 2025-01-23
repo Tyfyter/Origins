@@ -1014,6 +1014,11 @@ Buffs: {
 		DisplayName: Static Shack
 		Description: Those don't tend to move
 	}
+
+	Silenced_Debuff: {
+		DisplayName: Silenced Debuff
+		Description: Mods.Origins.Buffs.Silenced_Debuff.Description
+	}
 }
 
 DamageClassName: {

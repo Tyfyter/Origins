@@ -190,8 +190,12 @@ namespace Origins.Projectiles {
 						}
 					}
 				} else if (source_Parent.Entity is NPC parentNPC) {
-					if (parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
+					OriginGlobalNPC globalNPC = parentNPC.GetGlobalNPC<OriginGlobalNPC>();
+					if (globalNPC.soulhideWeakenedDebuff) {
 						projectile.damage = (int)(projectile.damage * (1f - OriginGlobalNPC.soulhideWeakenAmount));
+					}
+					if (globalNPC.silencedDebuff && projectile.damage > 0 && !projectile.netImportant) {
+						projectile.timeLeft = 1;
 					}
 				}
 			}

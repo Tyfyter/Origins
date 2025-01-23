@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Journal;
+using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.ThrownItems;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
 	public class Forbidden_Voice : ModItem, IJournalEntryItem, ICustomWikiStat {
@@ -22,7 +25,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 32);
 			Item.damage = 50;
-			Item.DamageType = DamageClass.Generic;
+			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 7;
 			Item.useTime = 15 * 60;
 			Item.mana = 20;
@@ -43,19 +46,25 @@ namespace Origins.Items.Accessories {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.SubstituteKeybind(Keybindings.ForbiddenVoice);
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Forbidden_Voice_P : ModProjectile {
 		public override string Texture => "Origins/Items/Accessories/Forbidden_Voice";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PurificationPowder);
 			Projectile.aiStyle = 0;
-			Projectile.width = 20 * 16;
+			Projectile.width = 25 * 16;
 			Projectile.height = Projectile.width;
-			Projectile.DamageType = DamageClass.Generic;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.timeLeft = 7;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
+			Projectile.localNPCHitCooldown = -1;
+			Projectile.usesLocalNPCImmunity = true;
 		}
 		public override void AI() {
 			if (Projectile.soundDelay <= 0) {
@@ -65,6 +74,21 @@ namespace Origins.Items.Accessories {
 					Projectile.Center, 10f, 6f, 30, 1000f, 2f, nameof(Forbidden_Voice)
 				));
 			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(Silenced_Debuff.ID, 10 * 60);
+			if (target.realLife != -1) {
+				foreach (NPC other in Main.ActiveNPCs) {
+					if (other.realLife == target.realLife) other.AddBuff(Silenced_Debuff.ID, 10 * 60);
+				}
+			}
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.Silenced, 10 * 60);
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			float factor = (Projectile.scale - 1) * 0.5f;
+			hitbox.Inflate((int)(hitbox.Width * factor), (int)(hitbox.Height * factor));
 		}
 	}
 	public class Forbidden_Voice_Entry : JournalEntry {
