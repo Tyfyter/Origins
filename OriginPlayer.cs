@@ -120,11 +120,11 @@ namespace Origins {
 					}
 				}
 			} else if (loversLeap) {
-				Player.dashType = 0;
-				Player.dashTime = 0;
 				const int loversLeapDuration = 6;
 				const float loversLeapSpeed = 12f;
 				if (collidingX || collidingY) {
+					Player.dashType = 0;
+					Player.dashTime = 0;
 					if ((dashDirection != 0 && (Player.velocity.X * dashDirection < loversLeapSpeed)) || (dashDirectionY != 0 && (Player.velocity.Y * dashDirectionY < loversLeapSpeed))) {
 						//Player.dashDelay = -1;
 						//Player.dash = 2;
