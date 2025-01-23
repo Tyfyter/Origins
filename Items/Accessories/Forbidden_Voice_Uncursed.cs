@@ -23,16 +23,14 @@ namespace Origins.Items.Accessories {
 			Item.useTime = 48;
 			Item.mana = 10;
 			Item.shootSpeed = 4;
-			Item.shoot = ModContent.ProjectileType<Forbidden_Voice_Uncursed_P>();
 			Item.rare = ItemRarityID.Blue;
 			Item.master = true;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.UseSound = SoundID.NPCDeath9;
 		}
 		public override void UpdateEquip(Player player) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.cursedVoice = true;
-			originPlayer.cursedVoiceItem = Item;
+			player.OriginPlayer().meleeScaleMultiplier *= 1.2f;
+			player.GetDamage(DamageClass.Melee) *= 0.1f;
 		}
 	}
 	public class Forbidden_Voice_Uncursed_P : ModProjectile {

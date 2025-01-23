@@ -16,7 +16,7 @@ namespace Origins.Items.Armor.Blast {
 		];
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
-			Origins.AddHelmetGlowmask(BerserkerModeHead, "Items/Armor/Blast/Blast_Helmet_Head_Berserker_Glow");
+			Origins.AddHelmetGlowmask(BerserkerModeHead, "Origins/Items/Armor/Blast/Blast_Helmet_Head_Berserker_Glow");
         }
         public static int BerserkerModeHead { get; private set; }
 		public override void Load() {

@@ -83,7 +83,6 @@ namespace Origins {
 		public bool acridSet = false;
 		public float necroSetAmount = 0f;
 		public bool soulhideSet = false;
-		public bool soulhideHelmet = false;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
 		public int setAbilityCooldown = 0;
@@ -254,6 +253,7 @@ namespace Origins {
 		public bool slagBucket = false;
 		public bool scrapBarrierDebuff = false;
 		public float gunSpeedBonus = 0;
+		public float meleeScaleMultiplier = 1;
 		public bool eitriteGunMagazine = false;
 		public bool fairyLotus = false;
 
@@ -459,7 +459,6 @@ namespace Origins {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
 			soulhideSet = false;
-			soulhideHelmet = false;
 			scavengerSet = false;
 			amberSet = false;
 			sapphireSet = false;
@@ -646,6 +645,7 @@ namespace Origins {
 			slagBucket = false;
 			scrapBarrierDebuff = false;
 			gunSpeedBonus = 0;
+			meleeScaleMultiplier = 1;
 			eitriteGunMagazine = false;
 			fairyLotus = false;
 			if (laserTagVest) {

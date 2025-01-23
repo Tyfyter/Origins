@@ -85,8 +85,6 @@ namespace Origins {
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
 		public static Dictionary<int, (ushort pileType, int minStyle, int maxStyle)> PileType { get; private set; }
-		public static ModKeybind SetBonusTriggerKey { get; private set; }
-		public static ModKeybind InspectItemKey { get; private set; }
 		#region Armor IDs
 		public static int FelnumHeadArmorID { get; private set; }
 		public static int FelnumBodyArmorID { get; private set; }
@@ -515,8 +513,6 @@ namespace Origins {
 			ChatManager.Register<Evil_Handler>([
 				"evil"
 			]);
-			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
-			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

@@ -745,7 +745,7 @@ namespace Origins {
 
 		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
 			orig(inv, context, slot);
-			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && InspectItemKey.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
+			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && Keybindings.InspectItem.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
 				OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Add(journalItem.EntryName);
 				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
 					OpenJournalEntry(journalItem.EntryName);
