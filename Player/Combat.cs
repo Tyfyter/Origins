@@ -771,6 +771,14 @@ namespace Origins {
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
 				   bombCharminItLifeRegenCount += info.Damage;
 			}
+			if (Player.whoAmI == info.DamageSource.SourcePlayerIndex && OriginsModIntegrations.CheckAprilFools()) {
+				const int damage_required = 400;
+				aprilFoolsRubberDynamiteTracker += info.Damage;
+				while (aprilFoolsRubberDynamiteTracker >= damage_required) {
+					aprilFoolsRubberDynamiteTracker -= damage_required;
+					Player.QuickSpawnItem(Player.GetSource_OnHurt(info.DamageSource), ModContent.ItemType<Rubber_Dynamite>());
+				}
+			}
 			if (coreGenerator && !isSelfDamage) {
 				int ammoType = coreGeneratorItem.useAmmo;
 				try {

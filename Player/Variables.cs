@@ -350,6 +350,7 @@ namespace Origins {
 		public int currentActiveHarpoons = 0;
 		public Vector2 nextActiveHarpoonAveragePosition = default;
 		public Vector2 currentActiveHarpoonAveragePosition = default;
+		public float aprilFoolsRubberDynamiteTracker = 0;
 		#endregion
 
 		#region visuals
