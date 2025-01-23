@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Core;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
@@ -52,6 +53,7 @@ namespace Origins.NPCs.TownNPCs {
 				.SetNPCAffection(NPCID.Truffle, AffectionLevel.Hate)
 			//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
+			InvalidateNPCHousing.NPCTypeIgnoresAllEvil.Add(Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.WitchDoctor);

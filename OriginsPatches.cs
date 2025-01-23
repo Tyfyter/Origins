@@ -135,23 +135,6 @@ namespace Origins {
 				}
 			};*/
 			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, [typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool)]), (hook_DropItem)CommonCode_DropItem);
-			On_WorldGen.ScoreRoom += (On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
-				npcScoringRoom = npcTypeAskingToScoreRoom;
-				orig(ignoreNPC, npcTypeAskingToScoreRoom);
-			};
-			On_WorldGen.GetTileTypeCountByCategory += (On_WorldGen.orig_GetTileTypeCountByCategory orig, int[] tileTypeCounts, TileScanGroup group) => {
-				if (group == TileScanGroup.TotalGoodEvil) {
-					int defiledTiles = tileTypeCounts[MC.TileType<Defiled_Stone>()] + tileTypeCounts[MC.TileType<Defiled_Grass>()] + tileTypeCounts[MC.TileType<Defiled_Sand>()] + tileTypeCounts[MC.TileType<Defiled_Ice>()];
-					int rivenTiles = tileTypeCounts[MC.TileType<Riven_Flesh>()];
-
-					if (npcScoringRoom == MC.NPCType<Brine_Fiend>()) {
-						return orig(tileTypeCounts, TileScanGroup.Hallow);
-					}
-
-					return orig(tileTypeCounts, group) - (defiledTiles + rivenTiles);
-				}
-				return orig(tileTypeCounts, group);
-			};
 			On_ShopHelper.BiomeNameByKey += (On_ShopHelper.orig_BiomeNameByKey orig, string biomeNameKey) => {
 				lastBiomeNameKey = biomeNameKey;
 				return orig(biomeNameKey);
