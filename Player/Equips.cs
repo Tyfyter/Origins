@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
@@ -292,32 +293,20 @@ namespace Origins {
 					explosiveArteryCount = -1;
 				}
 			}
-			if (cursedVoice) {
+			if (cursedVoice && Main.myPlayer == Player.whoAmI) {
 				Player.AddBuff(cursedVoiceItem.buffType, 5);
-				const float maxDist = 256 * 256;
-				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Player.CheckMana(cursedVoiceItem.mana, false)) {
-					bool foundTarget = false;
-					Player.DoHoming((target) => {
-						if (foundTarget) return false;
-						Vector2 diff = target.Center - Player.MountedCenter;
-						if (diff.LengthSquared() < maxDist) {
-							Player.CheckMana(cursedVoiceItem.mana, true);
-							Player.manaRegenDelay = (int)Player.maxRegenDelay;
-							Projectile.NewProjectileDirect(
-								Player.GetSource_Accessory(cursedVoiceItem),
-								mouthPosition,
-								diff.SafeNormalize(default) * cursedVoiceItem.shootSpeed,
-								cursedVoiceItem.shoot,
-								Player.GetWeaponDamage(cursedVoiceItem),
-								Player.GetWeaponKnockback(cursedVoiceItem),
-								Player.whoAmI
-							);
-							if (cursedVoiceItem.UseSound.HasValue) SoundEngine.PlaySound(cursedVoiceItem.UseSound);
-							foundTarget = true;
-						}
-						return foundTarget;
-					});
-					cursedVoiceCooldown = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
+				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Keybindings.ForbiddenVoice.JustPressed && Player.CheckMana(cursedVoiceItem.mana, true)) {
+					Player.manaRegenDelay = (int)Player.maxRegenDelay;
+					Projectile.NewProjectileDirect(
+						Player.GetSource_Accessory(cursedVoiceItem),
+						mouthPosition,
+						Vector2.Zero,
+						cursedVoiceItem.shoot,
+						Player.GetWeaponDamage(cursedVoiceItem),
+						Player.GetWeaponKnockback(cursedVoiceItem),
+						Player.whoAmI
+					);
+					cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
 				}
 			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {

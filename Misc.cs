@@ -37,6 +37,7 @@ using Origins.Tiles.Banners;
 using Terraria.ObjectData;
 using PegasusLib;
 using PegasusLib.Graphics;
+using Terraria.GameInput;
 
 namespace Origins {
 	#region classes
@@ -3746,6 +3747,18 @@ namespace Origins {
 			Array.Resize(ref rule.options, rule.options.Length + rules.Length);
 			for (int i = 1; i <= rules.Length; i++) {
 				rule.options[^i] = rules[^i];
+			}
+		}
+		public static void SubstituteKeybind(this List<TooltipLine> tooltips, ModKeybind keybind) {
+			InputMode inputMode = InputMode.Keyboard;
+			switch (PlayerInput.CurrentInputMode) {
+				case InputMode.XBoxGamepad or InputMode.XBoxGamepadUI:
+				inputMode = InputMode.XBoxGamepad;
+				break;
+			}
+			string substitution = keybind.GetAssignedKeys(inputMode).FirstOrDefault() ?? Language.GetOrRegister("Mods.Origins.Generic.UnboundKey").Format(keybind.DisplayName);
+			foreach (TooltipLine line in tooltips) {
+				line.Text = line.Text.Replace("<key>", substitution);
 			}
 		}
 	}

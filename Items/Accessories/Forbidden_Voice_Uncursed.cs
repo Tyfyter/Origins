@@ -3,8 +3,11 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
+using PegasusLib;
+using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
@@ -17,20 +20,19 @@ namespace Origins.Items.Accessories {
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
 			base.SetDefaults();
-			Item.damage = 35;
-			Item.DamageType = DamageClass.Generic;
-			Item.knockBack = 4;
+			Item.damage = -1;
+			Item.DamageType = DamageClass.Default;
+			Item.knockBack = 0;
 			Item.useTime = 48;
-			Item.mana = 10;
-			Item.shootSpeed = 4;
+			Item.mana = 0;
+			Item.shootSpeed = 0;
 			Item.rare = ItemRarityID.Blue;
 			Item.master = true;
 			Item.value = Item.sellPrice(gold: 2);
-			Item.UseSound = SoundID.NPCDeath9;
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().meleeScaleMultiplier *= 1.2f;
-			player.GetDamage(DamageClass.Melee) *= 0.1f;
+			player.GetDamage(DamageClass.Melee) += 0.1f;
 		}
 	}
 	public class Forbidden_Voice_Uncursed_P : ModProjectile {

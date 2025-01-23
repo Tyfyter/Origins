@@ -10,6 +10,8 @@ namespace Origins {
 	public class Keybindings : ILoadable {
 		[Keybind("Trigger Set Bonus", "Q")]
 		public static ModKeybind TriggerSetBonus { get; private set; }
+		[Keybind("Forbidden Voice", "F")]
+		public static ModKeybind ForbiddenVoice { get; private set; }
 		[Keybind("Inspect Item", "Mouse3")]
 		public static ModKeybind InspectItem { get; private set; }
 		public void Load(Mod mod) {

@@ -121,6 +121,9 @@ namespace Origins {
 		[DefaultValue(0.1f), Range(0, 1), Increment(0.05f)]
 		public float DefiledShaderNoise = 0.1f;
 
+		[DefaultValue(1f), Range(0, 2), Increment(0.1f)]
+		public float ScreenShakeMultiplier = 1f;
+
 		[DefaultValue(true)]
 		public bool ExtraGooeyRivenGores = true;
 

@@ -420,6 +420,7 @@ Generic: {
 	// Definite_Article: the {0}
 	// VariableAssimilation: Variable
 	// BuffTime: $60!:{0:0.##} seconds$
+	// UnboundKey: "{0} (not bound)"
 }
 
 AltBiomes: {
@@ -1686,6 +1687,7 @@ MapObject: {
 Keybinds: {
 	// "Trigger Set Bonus.DisplayName": Trigger set bonus ability
 	// "Inspect Item.DisplayName": Inspect item
+	// "Forbidden Voice.DisplayName": Forbidden  Voice
 }
 
 Configs: {
@@ -1757,6 +1759,11 @@ Configs: {
 
 		DefiledShaderNoise: {
 			// Label: Defiled Wastelands Shader Noise
+			// Tooltip: ""
+		}
+
+		ScreenShakeMultiplier: {
+			// Label: Screen Shake Multiplier
 			// Tooltip: ""
 		}
 	}

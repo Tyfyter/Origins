@@ -3795,7 +3795,7 @@ Gelled_Knife: {
 
 Forbidden_Voice: {
 	DisplayName: Forbidden Voice
-	Tooltip: You are Silenced, but the mouth will attack for you
+	Tooltip: You are Silenced, press <key> to silence everyone else too
 }
 
 Snipers_Mark: {
@@ -4327,7 +4327,11 @@ Communion: {
 
 Forbidden_Voice_Uncursed: {
 	DisplayName: Forbidden Voice
-	Tooltip: The mouth will spit at nearby enemies
+	Tooltip:
+		'''
+		10% increased melee damage
+		Increases the size of melee weapons
+		'''
 }
 
 Breach: {

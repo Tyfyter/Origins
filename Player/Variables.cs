@@ -241,6 +241,7 @@ namespace Origins {
 		public bool cursedVoice = false;
 		public Item cursedVoiceItem = null;
 		public int cursedVoiceCooldown = 0;
+		public int cursedVoiceCooldownMax = 0;
 		public bool futurephones = false;
 		public bool coreGenerator = false;
 		public Item coreGeneratorItem = null;
