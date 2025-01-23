@@ -17,7 +17,7 @@ namespace Origins.Items.Tools {
 			Item.pick = 80;
 			Item.width = 34;
 			Item.height = 32;
-			Item.useTime = 13;
+			Item.useTime = 12;
 			Item.useAnimation = 24;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(silver: 30);
