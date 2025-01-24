@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem, ICustomWikiStat {
@@ -17,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToLauncher(23, 45, 48, 22, false);
+			Item.DefaultToLauncher(18, 45, 48, 22, false);
 			Item.crit = 4;
 			Item.useTime = 1;
 			Item.shootSpeed = 15;
@@ -28,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = null;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration += 2;
+			//Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

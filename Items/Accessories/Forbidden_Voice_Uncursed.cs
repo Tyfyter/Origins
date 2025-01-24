@@ -31,7 +31,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
-			player.OriginPlayer().meleeScaleMultiplier *= 1.2f;
+			player.OriginPlayer().meleeScaleMultiplier *= 1.25f;
 			player.GetDamage(DamageClass.Melee) += 0.1f;
 		}
 	}

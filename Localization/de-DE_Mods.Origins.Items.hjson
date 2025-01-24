@@ -1016,23 +1016,31 @@ Chromtain_Helmet: {
 	// Tooltip: ""
 }
 
+Cryosten_Helmet: {
+	// DisplayName: Cryosten Helmet
+	/* Tooltip:
+		'''
+		+20% explosive blast radius
+		Increased life regeneration
+		''' */
+}
+
 Cryosten_Breastplate: {
 	// DisplayName: Cryosten Breastplate
-	// Tooltip: 12% increased maximum life
+	/* Tooltip:
+		'''
+		+20% explosive blast radius
+		8% increased maximum life
+		''' */
 }
 
 Cryosten_Greaves: {
 	// DisplayName: Cryosten Greaves
 	/* Tooltip:
 		'''
-		5% increased movement speed
+		10% increased movement speed
 		Increased movement speed on ice
 		''' */
-}
-
-Cryosten_Helmet: {
-	// DisplayName: Cryosten Helmet
-	// Tooltip: Increased life regeneration
 }
 
 Ashen_Breastplate: {
@@ -3795,7 +3803,11 @@ Gelled_Knife: {
 
 Forbidden_Voice: {
 	// DisplayName: Forbidden Voice
-	// Tooltip: You are Silenced, press <key> to silence everyone else too
+	/* Tooltip:
+		'''
+		You are Silenced, press <key> to silence everyone else too
+		Gain up to 10% damage resistance over time by not speaking
+		''' */
 }
 
 Snipers_Mark: {
@@ -4331,6 +4343,7 @@ Forbidden_Voice_Uncursed: {
 		'''
 		10% increased melee damage
 		Increases the size of melee weapons
+		Your attacks weaken enemies
 		''' */
 }
 
@@ -4969,17 +4982,17 @@ Rubber_Helmet: {
 	// Tooltip: 5% increased critical strike chance
 }
 
+Pink_Cryosten_Helmet: {
+	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Helmet.DisplayName}
+	// Tooltip: "{$Mods.Origins.Items.Cryosten_Helmet.Tooltip}"
+}
+
 Pink_Cryosten_Breastplate: {
-	// DisplayName: Pink Cryosten Breastplate
-	// Tooltip: ""
+	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Breastplate.DisplayName}
+	// Tooltip: "{$Mods.Origins.Items.Cryosten_Breastplate.Tooltip}"
 }
 
 Pink_Cryosten_Greaves: {
-	// DisplayName: Pink Cryosten Greaves
-	// Tooltip: ""
-}
-
-Pink_Cryosten_Helmet: {
-	// DisplayName: Pink Cryosten Helmet
-	// Tooltip: ""
+	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Greaves.DisplayName}
+	// Tooltip: "{$Mods.Origins.Items.Cryosten_Greaves.Tooltip}"
 }

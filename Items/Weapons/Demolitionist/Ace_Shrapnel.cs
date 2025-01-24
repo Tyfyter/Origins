@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
@@ -14,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToLauncher(18, 20, 54, 26);
+			Item.DefaultToLauncher(12, 20, 54, 26);
 			Item.useTime = 1;
 			Item.shoot = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
 			Item.shootSpeed = 2;
@@ -22,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.consumeAmmoOnFirstShotOnly = true;
-			Item.ArmorPenetration += 2;
+			Item.ArmorPenetration += 5;
 			Item.reuseDelay = 0;
 			Item.autoReuse = true;
 		}

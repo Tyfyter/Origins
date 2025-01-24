@@ -1,20 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameInput;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.ThrownItems;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
 	public class Forbidden_Voice : ModItem, IJournalEntryItem, ICustomWikiStat {
@@ -24,16 +20,16 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Forbidden_Voice_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 32);
-			Item.damage = 50;
+			Item.damage = 76;
 			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 7;
 			Item.useTime = 15 * 60;
-			Item.mana = 20;
+			Item.mana = 140;
 			Item.shootSpeed = 4;
 			Item.shoot = ModContent.ProjectileType<Forbidden_Voice_P>();
 			Item.buffType = BuffID.Silenced;
 			Item.rare = CursedRarity.ID;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override bool CanUseItem(Player player) => false;
 		public override void UpdateEquip(Player player) {
@@ -69,7 +65,7 @@ namespace Origins.Items.Accessories {
 		public override void AI() {
 			if (Projectile.soundDelay <= 0) {
 				Projectile.soundDelay = Projectile.timeLeft + 1;
-				SoundEngine.PlaySound(Main.rand.NextFromList(SoundID.Zombie121, SoundID.Zombie122, SoundID.Zombie123).WithPitchRange(0.8f, 1f));
+				SoundEngine.PlaySound(Main.rand.NextFromList(SoundID.Zombie121, SoundID.Zombie122, SoundID.Zombie123).WithPitchRange(0.2f, 0.35f).WithVolume(0.5f));
 				Main.instance.CameraModifiers.Add(new CameraShakeModifier(
 					Projectile.Center, 10f, 6f, 30, 1000f, 2f, nameof(Forbidden_Voice)
 				));

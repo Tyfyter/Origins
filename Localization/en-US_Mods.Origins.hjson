@@ -1768,8 +1768,8 @@ Configs: {
 		}
 
 		ScreenShakeMultiplier: {
-			Label: Screen Shake Multiplier
-			Tooltip: ""
+			Label: Screen shake multiplier
+			Tooltip: Changes how much your screen shakes.
 		}
 	}
 

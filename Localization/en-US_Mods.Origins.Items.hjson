@@ -3803,7 +3803,11 @@ Gelled_Knife: {
 
 Forbidden_Voice: {
 	DisplayName: Forbidden Voice
-	Tooltip: You are Silenced, press <key> to silence everyone else too
+	Tooltip:
+		'''
+		You are Silenced, press <key> to silence everyone else too
+		Gain up to 10% damage resistance over time by not speaking
+		'''
 }
 
 Snipers_Mark: {
@@ -4339,6 +4343,7 @@ Forbidden_Voice_Uncursed: {
 		'''
 		10% increased melee damage
 		Increases the size of melee weapons
+		Your attacks weaken enemies
 		'''
 }
 

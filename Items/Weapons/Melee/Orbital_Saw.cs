@@ -1,19 +1,17 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-    public class Orbital_Saw : ModItem, ICustomWikiStat {
+	public class Orbital_Saw : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Boomerang"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;
-			Item.damage = 14;
+			Item.damage = 16;
 			Item.width = 20;
 			Item.height = 22;
 			Item.useTime = 13;
@@ -24,6 +22,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

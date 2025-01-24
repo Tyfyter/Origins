@@ -120,6 +120,7 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
+(X) Eskimo Armor is now craftable !!!
 (^) Explosive Defense Punishment (increased affliction from defense)*
 (^) Harpoon (new weapon to introduce sub-class)*
 (^) Proximity Mine Launcher to use Canisters*
@@ -129,6 +130,7 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
+(X) Accessory Jump Speed Modifiers !!!
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
@@ -153,7 +155,7 @@ ENEMY NPCS:
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
-(#, ^2) Cloud Elemental !!!
+(^) Cloud Elemental
 (^) Conehead Zombie
 (X) Corrupt Reaper
 (^) Cranivore
@@ -171,7 +173,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Cannon
 (^) Enchanted Fiberglass Pistol
-(#, ^2) Enchanted Fiberglass Slime !!!
+(#, ^2) Enchanted Fiberglass Slime
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
 (^) Fae Nymph (Whimsical Girl)
@@ -334,7 +336,7 @@ ARMOR:
 (^) Mythic Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
-(#, ^2) Rubber Armor !!!
+(^) Rubber Armor
 (ᗢ) Scavenger Armor*
 (^) Soulhide Armor*
 (^) Tendon Armor*
@@ -388,7 +390,7 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
-(#2, ^2) Bug Trapper* !!! (bug swarm effect)
+(^) Bug Trapper*
 (X) Builder's Touch
 (X) Bundle of Evil
 (^) C.F.H.E.S.*
@@ -414,16 +416,21 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus
+(X) Fallacious Vase !!!
+(X) Feather Cape !!!
+(X) Feathery Crest !!!
 (#, ^2) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
+(X) Full Send !!!
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
 (^) Grave Danger*
-(^) Gun Glove*
+(#2, ^2) Gun Glove* !!! (randomized shooting offset)
 (^) Gun Magazine
 (^) Haggard Artery*
 (^) Handy Helper*
+(X) Harpy Horseshoe Balloon !!!
 (^) Hazard Charm*
 (^) Headphones*
 (^) Helium Tank*
@@ -456,6 +463,7 @@ ACCESSORIES:
 (#, ^2) Noxious Mithrafin !!!
 (^) Olid Organ*
 (#, ^2) Ornamental Keepsake !!!
+(X) Party Ring Balloon !!!
 (^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
@@ -467,8 +475,10 @@ ACCESSORIES:
 (^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
+(X) Rebreather Gear !!!
 (^) Resin Shield*
 (^) Return To Sender*
+(X) Rockstar Choker !!!
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
@@ -476,6 +486,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
 (^) Shock Collar
+(X) Shotgun Glove !!!
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
 (^) Sniper's Mark*
@@ -515,8 +526,8 @@ ACCESSORIES:
 (^) Emergency Bee Canister*
 (#, ^2) Faith Beads !!!
 (^) Fiberglass Dagger*
-(#2, ^2) Forbidden Voice (Cursed)* !!! (rework to both)
-(#2, ^2) Forbidden Voice (Uncursed)* !!!
+(^) Forbidden Voice (Cursed)*
+(^) Forbidden Voice (Uncursed)*
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
 (ᗢ) Stack of Shraps°
@@ -966,6 +977,7 @@ EXPLOSIVE WEAPONS:
 (X) Grenade Lawnchair !!!
 (^) Happy Bomb*
 (X) Rattlesnake
+(X) Rocket Rile !!!
 (X) Shroomcannon
 (X) Sonar Dynamite !!!
 (#2, ^2, ᗢ) Sonorous Shredder !!! (Needs projectile anims)
@@ -1191,19 +1203,15 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(#, $2) Music Box (Brine Pool) !!!
-(X) Music Box (Cosmos)
-(X) Music Box (Cubekon Temple)
-(X) Music Box (Dawn)
-(^) Music Box (Defiled Caverns)
-(X) Music Box (Defiled Egregocide Route)
-(X) Music Box (Defiled Mimic Route)
-(^) Music Box (Defiled Wastelands)
+(#, $2) Music Box (Brine Pool Vol. 1/2) !!! (both volumes)
+($2) Music Box (Defiled Caverns Vol. 1/2) (both volumes)
+(X) Music Box (Defiled Egregocide Route Vol. 1)
+(X) Music Box (Defiled Mimic Route Vol. 1)
+($2) Music Box (Defiled Wastelands Vol. 1/2) (both volumes)
 (X) Music Box (Dusk)
-(@, #, $2) Music Box (Eutrophic Sea)
-(X) Music Box (Fractured Isles)
+(@, #, $2) Music Box (Eutrophic Sea Vol. 1/2) (both volumes)
 (@, #, $2) Music Box (Riven Dancer 2081)
-(^) Music Box (Riven Hive)
+($2) Music Box (Riven Hive Vol. 1/2) (both volumes)
 (@, #, $2) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
