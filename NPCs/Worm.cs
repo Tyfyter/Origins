@@ -10,6 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 using ThoriumMod.Empowerments;
+using Origins.NPCs.Riven.World_Cracker;
+using System.Collections.Generic;
 
 //from ExampleMod, meant to be copied into other mods
 namespace Origins.NPCs {
@@ -186,6 +188,10 @@ namespace Origins.NPCs {
 		/// If not <see langword="null"/>, this NPC will target the given world position instead of its player target
 		/// </summary>
 		public Vector2? ForcedTargetPosition { get; set; }
+		/// <summary>
+		/// Whether the NPC shares its debuffs across segments
+		/// </summary>
+		public virtual bool SharesDebuffs => false;
 
 		/// <summary>
 		/// Override this method to use custom body-spawning code.<br/>
@@ -230,6 +236,47 @@ namespace Origins.NPCs {
 			HeadAI_CheckTargetDistance(ref collision);
 
 			HeadAI_Movement(collision);
+			if (SharesDebuffs) {
+				NPC current = NPC;
+				List<NPC> parts = new(SegmentCount);
+				int[] buffType = new int[NPC.buffType.Length];
+				int[] buffTime = new int[NPC.buffType.Length];
+				int buffIndex = 0;
+				int tailType = TailType;
+				while (current is not null) {
+					if (current.realLife != NPC.whoAmI) break;
+					parts.Add(current);
+					for (int i = 0; i < current.buffTime.Length && buffIndex < buffTime.Length; i++) {
+						int time = current.buffTime[i];
+						if (time > 0) {
+							int type = current.buffType[i];
+							bool found = false;
+							for (int j = 0; j < buffType.Length && !found; j++) {
+								if (buffType[j] == type) {
+									found = true;
+									if (time > buffTime[j]) {
+										buffType[j] = type;
+										buffTime[j] = time;
+									}
+								}
+							}
+							if (!found) {
+								buffType[buffIndex] = type;
+								buffTime[buffIndex] = time;
+								buffIndex++;
+							}
+						}
+					}
+					current = current.type == tailType || !Main.npc.IndexInRange((int)current.ai[0]) ? null : Main.npc[(int)current.ai[0]];
+				}
+				for (int i = 0; i < parts.Count; i++) {
+					current = parts[i];
+					for (int j = 0; j < buffTime.Length; j++) {
+						current.buffTime[j] = buffTime[j];
+						current.buffType[j] = buffType[j];
+					}
+				}
+			}
 		}
 
 		protected void HeadAI_SpawnSegments() {

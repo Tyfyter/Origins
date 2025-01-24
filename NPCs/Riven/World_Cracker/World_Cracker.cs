@@ -1,4 +1,5 @@
 using CalamityMod.NPCs.TownNPCs;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
@@ -19,6 +20,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -29,6 +31,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.HealerItems;
 using Tyfyter.Utils;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
@@ -42,6 +45,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override int BodyType => ModContent.NPCType<World_Cracker_Body>();
 		public override int TailType => ModContent.NPCType<World_Cracker_Tail>();
+		public override bool SharesDebuffs => true;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int DifficultyScaledSegmentCount => 13 + 2 * DifficultyMult;
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
@@ -495,6 +499,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.frameCounter = Main.rand.Next(2);
 			CommonWormInit(this);
 		}
+		public override void UpdateLifeRegen(ref int damage) {
+			damage = ushort.MaxValue;
+			NPC.lifeRegen = 0;
+			NPC.lifeRegenCount = 0;
+		}
 	}
 	public class World_Cracker_Tail : WormTail, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.10f;
@@ -550,6 +559,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void Init() {
 			CommonWormInit(this);
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			damage = ushort.MaxValue;
+			NPC.lifeRegen = 0;
+			NPC.lifeRegenCount = 0;
 		}
 	}
 	public class Boss_Bar_WC : ModBossBar {
@@ -690,8 +704,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 2;
-			Projectile.width = 30;
-			Projectile.height = 30;
+			Projectile.width = 16;
+			Projectile.height = 16;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = (60 * DifficultyMult) + 90;
 			Projectile.scale = (1 + 0.1f * DifficultyMult);
