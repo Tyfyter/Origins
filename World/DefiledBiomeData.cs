@@ -757,6 +757,7 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Defiled_Ice>(), TileID.IceBlock);
 
+			GERunnerConversion.Add(TileID.Silt, ModContent.TileType<Defiled_Sand>());
 
 			BiomeFlesh = TileID.SilverBrick;
 			BiomeFleshWall = WallID.SilverBrick;
