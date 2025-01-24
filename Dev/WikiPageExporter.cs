@@ -454,6 +454,7 @@ namespace Origins.Dev {
 	}
 	public abstract record class RecipeRequirement {
 		public abstract override string ToString();
+		public virtual string ToStringCompact() => ToString();
 	}
 	public record TileRecipeRequirement(int Tile) : RecipeRequirement {
 		public override string ToString() {
@@ -467,9 +468,23 @@ namespace Origins.Dev {
 			}
 			return string.Empty;
 		}
+		public override string ToStringCompact() {
+			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) {
+				string key = text.Key + ".Compact";
+				return Language.Exists(key) ? Language.GetTextValue(key) : ToString();
+			}
+			return ToString();
+		}
 	}
 	public record ConditionRecipeRequirement(Condition Condition) : RecipeRequirement {
 		public override string ToString() => recipeConditionWikiTextOverride.TryGetValue(Condition, out LocalizedText text) ? text.Value : Condition.Description.Value;
+		public override string ToStringCompact() {
+			if (recipeConditionWikiTextOverride.TryGetValue(Condition, out LocalizedText text)) {
+				string key = text.Key + ".Compact";
+				return Language.Exists(key) ? Language.GetTextValue(key) : ToString();
+			}
+			return ToString();
+		}
 	}
 	public class DictionaryWithNull<TKey, TValue> : Dictionary<TKey, TValue> {
 		bool hasNullValue;

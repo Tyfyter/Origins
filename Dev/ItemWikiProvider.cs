@@ -76,7 +76,7 @@ namespace Origins.Dev {
 				if (Main.recipe[i].createItem.ModItem?.Mod is Origins) {
 					StringBuilder sources = GetBuilder(Main.recipe[i].createItem.type);
 					RecipeRequirements reqs = new(Main.recipe[i]);
-					string reqsText = reqs.requirements.Length > 0 ? $" (@ {string.Join(", ", reqs.requirements.Select(r => r.ToString()))})" : "";
+					string reqsText = reqs.requirements.Length > 0 ? $" (@ {string.Join(", ", reqs.requirements.Select(r => r.ToStringCompact()))})" : "";
 					if (sources.Length > 0) sources.Append("<div class=divider></div>");
 					sources.Append($"{string.Join(" + ", Main.recipe[i].requiredItem.Select(i => (i.stack > 1 ? $"({i.stack})" : "") + " " + WikiExtensions.GetItemText(ContentSamples.ItemsByType[i.type], imageOnly: true)))}{reqsText}");
 				}
