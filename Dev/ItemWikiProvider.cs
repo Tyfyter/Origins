@@ -119,7 +119,7 @@ namespace Origins.Dev {
 						sources.Append(WikiExtensions.GetItemText(ContentSamples.ItemsByType[i]));
 						string conditions = null;
 						if ((drops[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", drops[j].conditions.Select(r => r.GetConditionDescription()));
+							conditions = string.Join(", ", drops[j].conditions.Select(ConvertSourceCondition));
 							sources.Append(" " + conditions);
 						}
 						JObject jobj = new() {
@@ -152,7 +152,7 @@ namespace Origins.Dev {
 						if (ItemLoader.GetItem(classic[j].itemId)?.Mod is not Origins) continue;
 						string conditions = null;
 						if ((classic[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", classic[j].conditions.Select(r => r.GetConditionDescription()));
+							conditions = string.Join(", ", classic[j].conditions.Select(ConvertSourceCondition).Where(c => !string.IsNullOrEmpty(c)));
 						}
 						if (itemTypes.Add(classic[j].itemId)) {
 							StringBuilder sources = GetBuilder(classic[j].itemId);
@@ -172,15 +172,17 @@ namespace Origins.Dev {
 					}
 					for (int j = 0; j < expert.Count; j++) {
 						if (ItemLoader.GetItem(expert[j].itemId)?.Mod is not Origins) continue;
-						string conditions = null;
+						string dropConditions = null;
+						string sourceConditions = null;
 						if ((expert[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", expert[j].conditions.Where(c => c is not Conditions.IsExpert).Select(r => r.GetConditionDescription()));
+							dropConditions = string.Join(", ", expert[j].conditions.Where(c => c is not Conditions.IsExpert).Select(r => r.GetConditionDescription()));
+							sourceConditions = string.Join(", ", expert[j].conditions.Select(ConvertSourceCondition).Where(c => !string.IsNullOrEmpty(c)));
 						}
 						if (itemTypes.Add(expert[j].itemId)) {
 							StringBuilder sources = GetBuilder(expert[j].itemId);
 							if (sources.Length > 0) sources.Append("<div class=divider></div>");
 							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
-							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+							if (!string.IsNullOrEmpty(sourceConditions)) sources.Append(" " + sourceConditions);
 						}
 						JObject jobj = new() {
 							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
@@ -189,20 +191,22 @@ namespace Origins.Dev {
 							["Min"] = expert[j].stackMin,
 							["Difficulty"] = "Expert"
 						};
-						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						if (!string.IsNullOrEmpty(dropConditions)) jobj["Notes"] = dropConditions;
 						GetDropCache(expert[j].itemId).Add(jobj);
 					}
 					for (int j = 0; j < master.Count; j++) {
 						if (ItemLoader.GetItem(master[j].itemId)?.Mod is not Origins) continue;
-						string conditions = null;
+						string dropConditions = null;
+						string sourceConditions = null;
 						if ((master[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", master[j].conditions.Where(c => c is not Conditions.IsMasterMode).Select(r => r.GetConditionDescription()));
+							dropConditions = string.Join(", ", master[j].conditions.Where(c => c is not Conditions.IsMasterMode).Select(r => r.GetConditionDescription()));
+							sourceConditions = string.Join(", ", master[j].conditions.Select(ConvertSourceCondition).Where(c => !string.IsNullOrEmpty(c)));
 						}
 						if (itemTypes.Add(master[j].itemId)) {
 							StringBuilder sources = GetBuilder(master[j].itemId);
 							if (sources.Length > 0) sources.Append("<div class=divider></div>");
 							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
-							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+							if (!string.IsNullOrEmpty(sourceConditions)) sources.Append(" " + sourceConditions);
 						}
 						JObject jobj = new() {
 							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
@@ -211,10 +215,15 @@ namespace Origins.Dev {
 							["Min"] = master[j].stackMin,
 							["Difficulty"] = "Master"
 						};
-						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						if (!string.IsNullOrEmpty(dropConditions)) jobj["Notes"] = dropConditions;
 						GetDropCache(master[j].itemId).Add(jobj);
 					}
 				}
+			}
+			static string ConvertSourceCondition(IItemDropRuleCondition condition) {
+				string conditionName = condition.GetType().Name;
+				string key = $"WikiGenerator.Generic.DropConditions.{conditionName}";
+				return Language.Exists(key) ? Language.GetTextValue(key) : condition.GetConditionDescription();
 			}
 			(int chestId, float flags) currentKey = default;
 			foreach (var action in ChestLoot.Actions) {
