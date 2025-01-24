@@ -98,6 +98,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 420;
 			Projectile.scale = 0.5f;
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 5;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.penetrate = -1;
