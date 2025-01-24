@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles.Cubekon;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -143,6 +144,7 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Flesh_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Flesh>());

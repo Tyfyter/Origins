@@ -3,6 +3,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Walls;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -23,6 +24,7 @@ namespace Origins.Tiles.Defiled {
 	public class Endowood_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Wood;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Endowood>());

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,6 +25,17 @@ namespace Origins.Walls {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GlassWall);
 			Item.createWall = WallType<Fiberglass_Wall_Safe>();
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 4)
+			.AddIngredient(ItemType<Fiberglass_Item>())
+			.AddTile(TileID.WorkBenches)
+			.Register();
+
+			Recipe.Create(ItemType<Fiberglass_Item>(), 1)
+			.AddIngredient(Type, 4)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -29,6 +30,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Ice_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Ice>());

@@ -41,8 +41,12 @@ namespace Origins.Walls {
 			Item.createWall = WallType<Baryte_Wall_Safe>();
 		}
 		public override void AddRecipes() {
-			CreateRecipe()
+			CreateRecipe(4)
 			.AddIngredient<Baryte_Item>()
+			.AddTile(TileID.WorkBenches)
+			.Register();
+			Recipe.Create(ModContent.ItemType<Baryte_Item>())
+			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}

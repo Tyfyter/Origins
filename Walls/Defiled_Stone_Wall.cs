@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -28,6 +30,17 @@ namespace Origins.Walls {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneWall);
 			Item.createWall = WallType<Defiled_Stone_Wall_Safe>();
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 4)
+			.AddIngredient(ItemType<Defiled_Stone_Item>())
+			.AddTile(TileID.WorkBenches)
+			.Register();
+
+			Recipe.Create(ItemType<Defiled_Stone_Item>(), 1)
+			.AddIngredient(Type, 4)
+			.AddTile(TileID.WorkBenches)
+			.Register();
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using Origins.Walls;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -31,38 +32,12 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Sandstone_Item : ModItem {
 		public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Sand_Item>()] = ModContent.ItemType<Defiled_Sandstone_Item>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Sandstone_Item>()] = ModContent.ItemType<Defiled_Sand_Item>();
-            Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.Sandstone, Type);
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Sandstone>());
 		}
-        public override void AddRecipes() {
-            CreateRecipe()
-            .AddIngredient(ItemID.Sandstone)
-            .AddTile(TileID.ChlorophyteExtractinator)
-            .Register();
-
-            CreateRecipe()
-            .AddIngredient(ItemID.CorruptSandstone)
-            .AddTile(TileID.ChlorophyteExtractinator)
-            .Register();
-
-            CreateRecipe()
-            .AddIngredient(ItemID.CrimsonSandstone)
-			.AddTile(TileID.ChlorophyteExtractinator)
-            .Register();
-
-            //CreateRecipe()
-            //.AddIngredient(ModContent.ItemType<Brittle_Quartz>())
-            //.AddTile(TileID.ChlorophyteExtractinator)
-            //.Register();
-
-            //CreateRecipe()
-            //.AddIngredient(ModContent.ItemType<Ashen_Sandstone>())
-            //.AddTile(TileID.ChlorophyteExtractinator)
-            //.Register();
-        }
     }
 }

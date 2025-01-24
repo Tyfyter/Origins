@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -48,6 +49,7 @@ namespace Origins.Tiles.Defiled {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemID.Sets.SandgunAmmoProjectileData[Type] = new(ProjectileType<Defiled_Sand_Ball_Gun>(), 10);
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.SandBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Sand>());

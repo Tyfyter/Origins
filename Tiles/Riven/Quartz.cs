@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Cubekon;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -28,6 +29,7 @@ namespace Origins.Tiles.Riven {
 	public class Quartz_Item : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Silica_Item>();
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.HardenedSand, Type);
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
