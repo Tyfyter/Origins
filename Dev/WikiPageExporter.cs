@@ -427,7 +427,7 @@ namespace Origins.Dev {
 	}
 	public class RecipeRequirements(Recipe recipe) {
 		public readonly RecipeRequirement[] requirements =
-				recipe.requiredTile.Select(t => new TileRecipeRequirement(t))
+				recipe.requiredTile.DefaultIfEmpty(-1).Select(t => new TileRecipeRequirement(t))
 				.Concat(recipe.Conditions.Select(c => (RecipeRequirement)new ConditionRecipeRequirement(c))
 				).ToArray();
 
@@ -459,7 +459,7 @@ namespace Origins.Dev {
 		public override string ToString() {
 			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) return text.Value;
 			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
-			string reqName = Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
+			string reqName = Tile == -1 ? "By Hand" : Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
 			if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
 				return formatter(reqName, null, false);
 			} else {
