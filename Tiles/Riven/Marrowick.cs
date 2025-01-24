@@ -33,23 +33,13 @@ namespace Origins.Tiles.Riven {
 			Item.DefaultToPlaceableTile(TileType<Marrowick>());
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Marrowick_Wall_Item>(), 4)
-			.AddTile(TileID.WorkBenches)
-			.Register();
-
-			Recipe.Create(ModContent.ItemType<Marrowick_Wall_Item>(), 4)
-			.AddIngredient(this)
-			.AddTile(TileID.WorkBenches)
-			.Register();
-
 			Recipe.Create(ModContent.ItemType<Marrowick_Bow>())
-			.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 10)
+			.AddIngredient(Type, 10)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
 			Recipe.Create(ModContent.ItemType<Marrowick_Sword>())
-			.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 7)
+			.AddIngredient(Type, 7)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
