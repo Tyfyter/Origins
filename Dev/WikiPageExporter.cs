@@ -383,6 +383,11 @@ namespace Origins.Dev {
 				object value = context[name];
 				if (value is List<Recipe> recipes) {
 					StringBuilder builder = new();
+					if (context.TryGetValue("Name", out object wikiName)) {
+						string usedIn = name == "UsedIn" ? " usedIn" : "";
+						builder.Append($"<a-recipes src=\"{wikiName}\"{usedIn}></a-recipes>");
+						return builder.ToString();
+					}				
 					builder.AppendLine("<a-recipes>");
 					bool firstStation = true;
 					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
