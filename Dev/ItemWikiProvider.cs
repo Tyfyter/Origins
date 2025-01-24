@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.Dev.WikiPageExporter;
+using static Tyfyter.Utils.ChestLootCache;
 
 namespace Origins.Dev {
 	public class ItemWikiProvider : WikiProvider<ModItem> {
 		public override string PageName(ModItem modItem) {
 			if (modItem.Item.rare == CursedRarity.ID) {
-				return WikiPageExporter.GetWikiName(modItem) + " (Cursed)";
+				return WikiPageExporter.GetWikiName(modItem) + "_(Cursed)";
 			}
 			return WikiPageExporter.GetWikiName(modItem);
 		}
@@ -73,7 +75,7 @@ namespace Origins.Dev {
 				return drop;
 			}
 			for (int i = 0; i < Main.recipe.Length; i++) {
-				if (Main.recipe[i].createItem.ModItem?.Mod is Origins) {
+				if (Main.recipe[i].createItem.ModItem?.Mod is Origins && Main.recipe[i]?.Mod is Origins) {
 					StringBuilder sources = GetBuilder(Main.recipe[i].createItem.type);
 					RecipeRequirements reqs = new(Main.recipe[i]);
 					string reqsText = reqs.requirements.Length > 0 ? $"(@{string.Join(", ", reqs.requirements.Select(r => r.ToString()))})" : "";
@@ -214,6 +216,46 @@ namespace Origins.Dev {
 					}
 				}
 			}
+			(int chestId, float flags) currentKey = default;
+			foreach (var action in ChestLoot.Actions) {
+				if (action.action == LootQueueAction.CHANGE_QUEUE) {
+					currentKey = (action.param, action.weight);
+					continue;
+				}
+				if (action.action == LootQueueAction.ENQUEUE) {
+					StringBuilder sources = GetBuilder(action.param);
+					if (sources.Length > 0) sources.Append("<div class=divider></div>");
+					string chest = ConvertChest(currentKey.chestId);
+					string flags = ConvertFlags(currentKey.flags);
+					sources.Append($"Any {chest}");
+					if (!string.IsNullOrEmpty(flags)) sources.Append($" {flags}");
+				}
+			}
+
+			static string ConvertChest(int chestId) {
+				string key = $"WikiGenerator.Generic.Tiles.ChestId.{ChestID.Search.GetName(chestId)}";
+				if (!Language.Exists(key) || !ChestID.Search.ContainsId(chestId)) return null;
+				return Language.GetTextValue(key);
+			}
+
+			static string ConvertFlags(float flags) {
+				int typeVar = (int)flags;
+				string pyramid = Language.GetTextValue($"WikiGenerator.Generic.Link.Pyramid");
+				string pyramidCondition = (typeVar & 0b0011) switch {
+					0b0011 => $"in a {pyramid}",
+					0b0001 => $"not in a {pyramid}",
+					_ => ""
+				};
+				string cavern = Language.GetTextValue($"WikiGenerator.Generic.Link.Cavern");
+				string heightCondition = (typeVar & 0b1100) switch {
+					0b0100 => $"above the {cavern} layer",
+					0b1100 => $"in the {cavern} layer",
+					_ => ""
+				};
+				return string.Join(" and ",
+					new string[] { pyramidCondition, heightCondition }
+					.Where(s => !string.IsNullOrEmpty(s)));
+			}
 
 			sourceCache = new(cache.Select(kvp => new KeyValuePair<int, string>(kvp.Key, kvp.Value.ToString())));
 			dropsCache = dropCache;
@@ -228,7 +270,7 @@ namespace Origins.Dev {
 						JArray stationsJson = [];
 						foreach (RecipeRequirement requirement in group.Key.requirements) {
 							if (string.IsNullOrEmpty(requirement.ToString())) continue;
-							stationsJson.Add($"`{requirement}`");
+							stationsJson.Add($"{requirement}");
 						}
 						recipeJson.Add("stations", stationsJson);
 					}
@@ -236,11 +278,11 @@ namespace Origins.Dev {
 					JArray itemsJson = [];
 					foreach (Recipe recipe in group) {
 						JObject resultsObject = [];
-						resultsObject.Add("result", $"`{WikiExtensions.GetItemText(recipe.createItem)}`");
+						resultsObject.Add("result", $"{WikiExtensions.GetItemText(recipe.createItem)}");
 
 						JArray ingredientsJson = [];
 						foreach (Item requiredItem in recipe.requiredItem) {
-							ingredientsJson.Add($"`{WikiExtensions.GetItemText(requiredItem)}`");
+							ingredientsJson.Add($"{WikiExtensions.GetItemText(requiredItem)}");
 						}
 						resultsObject.Add("ingredients", ingredientsJson);
 

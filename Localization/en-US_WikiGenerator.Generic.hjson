@@ -1,4 +1,9 @@
-Link.Hardmode: <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode>Hardmode</a>
+Link: {
+	Hardmode: <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode>Hardmode</a>
+	Pyramid: <a is=a-link href=https://terraria.wiki.gg/wiki/Pyramid>Pyramid</a>
+	Cavern: <a is=a-link href=https://terraria.wiki.gg/wiki/Cavern>Cavern</a>
+}
+
 ImmuneToNormalBuffs: All <a is=a-link>debuffs</a> except Whip debuffs
 ImmuneToAllBuffs: All <a is=a-link>debuffs</a>
 
