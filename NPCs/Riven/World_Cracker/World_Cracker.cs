@@ -190,15 +190,16 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			Player playerTarget = Main.player[target];
 			int otherShotDelay = (Main.rand.Next(32, 40) / DifficultyMult) + 60;
-			int shotTime = 900 / (DifficultyMult + 1);
+			int shotTime = 1125 / (DifficultyMult + 2);
 			if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
 			npc.ai[2]++;
 			Vector2 size = playerTarget.Size;
 			Vector2 targetPos = playerTarget.position - size * 0.5f;
 			int projType = Amoeball.ID;
-			if (Main.masterMode && (npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
+			if ((npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
 				shotTime = 328;
-				if (npc.localAI[2] == -1) npc.localAI[2] = (!Main.rand.NextBool(4) && playerTarget.OriginPlayer().oldNearbyActiveNPCs < DifficultyScaledSegmentCount + 4 + DifficultyMult).ToInt();
+				bool canSpawnBubble = playerTarget.OriginPlayer().oldNearbyActiveNPCs < DifficultyScaledSegmentCount + 4 + DifficultyMult;
+				if (npc.localAI[2] == -1) npc.localAI[2] = ((!Main.rand.NextBool(4) && canSpawnBubble) || !Main.masterMode).ToInt();
 				if (npc.localAI[2] == 0) {
 					float diameter = npc.width * 0.75f;
 					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
@@ -218,7 +219,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					float cutOffRot = (playerTarget.velocity.SafeNormalize(Vector2.Zero) * 32 - npc.Center).ToRotation();
 					GeometryUtils.AngleDif(directRot, cutOffRot, out int dir);
 					targetPos = targetPos.RotatedBy(dir * 0.5f, npc.Center);
-				} else {
+				} else if (canSpawnBubble) {
 					float diameter = npc.width * 0.75f;
 					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
 					Dust dust = Dust.NewDustPerfect(
@@ -312,7 +313,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.HitModifiers apMods = new();
 			apMods.ArmorPenetration += armorPenetration;
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
-			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
+			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), hit.Crit ? 3 : 0), 0);
 			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit, fromNet);
 			if (Main.netMode != NetmodeID.Server) SoundEngine.PlaySound(SoundID.NPCHit2, npc.Center);
 			if (npc.ai[3] <= 0) {

@@ -93,7 +93,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					);
 				}
 			} else if (npcType == ModContent.NPCType<World_Cracker_Exoskeleton_WC>()) {
-				for (int i = 0; i < 2; i++) {
+				for (int i = 0; i < 2 * healthPercent; i++) {
 					int index = NPC.NewNPC(
 						NPC.GetSource_Death(),
 						(int)NPC.Center.X,
