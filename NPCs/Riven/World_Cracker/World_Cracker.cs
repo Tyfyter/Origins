@@ -84,7 +84,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_WC>();
 			NPC.width = NPC.height = 60;
-			NPC.damage = 33;
+			NPC.damage = 30;
 			NPC.defense = 100;
 			NPC.lifeMax = 3800;
 			NPC.aiStyle = -1;
@@ -266,7 +266,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 							npc.Center,
 							velocity,
 							projType,
-							10 + (DifficultyMult * 2), // for some reason NPC projectile damage is just arbitrarily doubled
+							9 + DifficultyMult, // for some reason NPC projectile damage is just arbitrarily doubled
 							0f
 						);
 						if (projType != Amoeball.ID) npc.localAI[2] = -1;
