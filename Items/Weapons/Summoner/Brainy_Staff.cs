@@ -229,6 +229,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.frame = 0;
 				}
 			}
+			Projectile.spriteDirection = Projectile.direction;
 			#endregion
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
