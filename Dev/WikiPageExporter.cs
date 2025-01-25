@@ -457,6 +457,7 @@ namespace Origins.Dev {
 	}
 	public record TileRecipeRequirement(int Tile) : RecipeRequirement {
 		public override string ToString() {
+			if (Main.dedServ) return string.Empty;
 			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) return text.Value;
 			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
 			string reqName = Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
