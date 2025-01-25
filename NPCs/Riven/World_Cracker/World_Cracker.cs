@@ -175,7 +175,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			int target = headNPC.target;
 			if (npc.ai[3] <= 0 && npc.localAI[3] == 0 && !(npc.realLife == -1 || npc.realLife == npc.whoAmI)) {
 				npc.localAI[3] = 1;
-				if ((Main.netMode != NetmodeID.MultiplayerClient) && Main.rand.Next(2) < DifficultyMult) {
+				if ((Main.netMode != NetmodeID.MultiplayerClient) && Main.rand.Next(3) < DifficultyMult) {
 					NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<World_Cracker_Exoskeleton>());
 				}
 			}
