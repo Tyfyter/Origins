@@ -91,6 +91,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.GravityMultiplier *= 0.5f;
 			Music = Origins.Music.RivenBoss;
 			NPC.value = Item.sellPrice(gold: 1);
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.Roar;
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
@@ -116,6 +119,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				NPC.lifeMax = (int)(8250 * balance * terriblyPlacedHookMult);
 				break;
 			}
+		}
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
+			modifiers.Knockback.Base -= 12;
+			modifiers.ModifyHitInfo += (ref NPC.HitInfo hit) => {
+				if (hit.Damage < 100) hit.Knockback = 0;
+			};
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
@@ -305,6 +314,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
 			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
 			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit, fromNet);
+			if (Main.netMode != NetmodeID.Server) SoundEngine.PlaySound(SoundID.NPCHit2, npc.Center);
 			if (npc.ai[3] <= 0) {
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					DropAttemptInfo dropInfo = default;
@@ -454,6 +464,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.damage = 20;
 			NPC.defense = 100;
 			NPC.aiStyle = -1;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.Roar;
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
@@ -518,6 +530,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.damage = 38;
 			NPC.defense = 20;
 			NPC.aiStyle = -1;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.Roar;
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;

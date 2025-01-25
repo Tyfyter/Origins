@@ -104,6 +104,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
