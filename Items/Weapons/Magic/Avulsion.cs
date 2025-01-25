@@ -45,8 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
             Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 5)
-            .AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15)
+            .AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 8)
             .AddTile(TileID.Anvils)
             .Register();
         }

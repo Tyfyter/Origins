@@ -92,7 +92,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Music = Origins.Music.RivenBoss;
 			NPC.value = Item.sellPrice(gold: 1);
 			NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.Roar;
+			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -466,7 +466,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.defense = 100;
 			NPC.aiStyle = -1;
 			NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.Roar;
+			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
@@ -532,7 +532,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.defense = 20;
 			NPC.aiStyle = -1;
 			NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.Roar;
+			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;

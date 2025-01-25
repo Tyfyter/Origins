@@ -1,19 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Summoner;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
-using PegasusLib;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Exoskeleton : Glowing_Mod_NPC, IRivenEnemy {
-		public AssimilationAmount? Assimilation => 0.06f;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
@@ -23,7 +20,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 30;
-			NPC.damage = 20;
+			NPC.damage = 11;
 			NPC.width = 28;
 			NPC.height = 28;
 			NPC.noTileCollide = true;
@@ -93,7 +90,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			#region Movement
 			// Default movement parameters (here for attacking)
 			if (NPC.justHit) NPC.ai[1] = 0;
-			float speed = 6 + World_Cracker_Head.DifficultyMult;
+			float speed = 5 + World_Cracker_Head.DifficultyMult;
 			float turnSpeed = 0.6f + Math.Min(NPC.ai[1] / 180f, World_Cracker_Head.DifficultyMult / 6f);
 			float currentSpeed = NPC.velocity.Length();
 			if (foundTarget) {

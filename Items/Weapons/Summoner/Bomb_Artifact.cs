@@ -24,16 +24,16 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 80;
+			Item.damage = 65;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-			Item.mana = 40;
+			Item.mana = 36;
 			Item.width = 24;
 			Item.height = 38;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = buffID;
 			Item.shoot = projectileID;

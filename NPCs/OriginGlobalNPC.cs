@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Riven;
@@ -88,7 +89,8 @@ namespace Origins.NPCs {
 					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
 					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-					shop.Add<Trash_Lid>(PeatSoldCondition(150));
+					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));
+					shop.Add<Trash_Lid>(PeatSoldCondition(160));
 					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170), Condition.NotTheBeesWorld);
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode); // Lost Diver condition for both
