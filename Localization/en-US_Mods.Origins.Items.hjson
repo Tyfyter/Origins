@@ -4550,7 +4550,7 @@ Scrap_Barrier: {
 
 Scrap_Barrier_Uncursed: {
 	DisplayName: Scrap Barrier
-	Tooltip: 5% damage reduction and slightly increased life regeneration
+	Tooltip: 15% damage reduction and increased life regeneration
 }
 
 Laser_Tag_Vest: {
@@ -4625,9 +4625,9 @@ Slag_Bucket_Uncursed: {
 	DisplayName: Slag Bucket
 	Tooltip:
 		'''
-		5% damage reduction and slightly increased life regeneration
+		15% damage reduction and increased life regeneration
 		Grants immunity to knockback, fire blocks, and impeding shrapnel
-		67% of damage received is redirected to 3 enemies
+		All damage received is reflected to 3 nearby enemies
 		You regenerate life while on fire
 		'''
 }

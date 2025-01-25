@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (X) Shimmer Construct
-(#2, ^2) World Cracker* !!! (AI additions)
+(^) World Cracker*
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
