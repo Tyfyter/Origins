@@ -182,7 +182,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (headNPC?.active != true) return;
 			if (!headNPC.HasValidTarget) return;
 			int target = headNPC.target;
-			if (npc.ai[3] <= 0 && npc.localAI[3] == 0 && !(npc.realLife == -1 || npc.realLife == npc.whoAmI)) {
+			bool isHead = npc.realLife == -1 || npc.realLife == npc.whoAmI;
+			if (npc.ai[3] <= 0 && npc.localAI[3] == 0 && !isHead) {
 				npc.localAI[3] = 1;
 				if ((Main.netMode != NetmodeID.MultiplayerClient) && Main.rand.Next(3) < DifficultyMult) {
 					NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<World_Cracker_Exoskeleton>());
@@ -196,14 +197,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Vector2 size = playerTarget.Size;
 			Vector2 targetPos = playerTarget.position - size * 0.5f;
 			int projType = Amoeball.ID;
-			if ((npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
-				if (DifficultyMult == 2) {
-					shotTime = 240;
-				} else {
-					shotTime = 328;
+			if (isHead && npc.ai[2] > shotTime) {
+				if (npc.localAI[2] == -1) {
+					bool canSpawnBubble = playerTarget.OriginPlayer().oldNearbyActiveNPCs < DifficultyScaledSegmentCount + 4 + DifficultyMult;
+					npc.localAI[2] = ((!Main.rand.NextBool(4) && canSpawnBubble) || !Main.masterMode).ToInt();
+					if (!canSpawnBubble && !Main.masterMode && npc.localAI[2] == 1) {
+						npc.localAI[2] = -1;
+					}
 				}
-				bool canSpawnBubble = playerTarget.OriginPlayer().oldNearbyActiveNPCs < DifficultyScaledSegmentCount + 4 + DifficultyMult;
-				if (npc.localAI[2] == -1) npc.localAI[2] = ((!Main.rand.NextBool(4) && canSpawnBubble) || !Main.masterMode).ToInt();
+				if (npc.localAI[2] == -1) shotTime += 100; //duration of charge-up effect
 				if (npc.localAI[2] == 0) {
 					float diameter = npc.width * 0.75f;
 					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
@@ -223,7 +225,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					float cutOffRot = (playerTarget.velocity.SafeNormalize(Vector2.Zero) * 32 - npc.Center).ToRotation();
 					GeometryUtils.AngleDif(directRot, cutOffRot, out int dir);
 					targetPos = targetPos.RotatedBy(dir * 0.5f, npc.Center);
-				} else if (canSpawnBubble) {
+				} else if (npc.localAI[2] == 1) {
 					float diameter = npc.width * 0.75f;
 					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
 					Dust dust = Dust.NewDustPerfect(
@@ -238,8 +240,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 			if (npc.ai[2] > shotTime && Collision.CanHitLine(targetPos + size * 0.5f, playerTarget.width, playerTarget.height, npc.Center, 8, 8)) {
+				bool succeeded = projType != -1;
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					if (projType == -1) {
+						succeeded = false;
 						float dist = 0;
 						Vector2 direction = default;
 						const float min_dist = 16 * 15;
@@ -260,6 +264,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 								ai2: npc.Center.Y + direction.Y * dist
 							);
 							npc.localAI[2] = -1;
+							succeeded = true;
+							npc.netUpdate = true;
 						}
 					} else {
 						Vector2 velocity = Vector2.Normalize(targetPos - npc.Center);
@@ -273,7 +279,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 							9 + DifficultyMult, // for some reason NPC projectile damage is just arbitrarily doubled
 							0f
 						);
-						if (projType != Amoeball.ID) npc.localAI[2] = -1;
+						if (isHead) npc.localAI[2] = -1;
 					}
 					if (projType == -1 || projType == Amoeball.ID) {
 						SoundEngine.PlaySound(Main.rand.NextBool() ? SoundID.Item111 : SoundID.Item112, npc.Center);
@@ -281,11 +287,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple, npc.Center);
 					}
 				}
-				npc.ai[2] = -otherShotDelay;
+				if (succeeded) npc.ai[2] = -otherShotDelay;
 				NPC current = headNPC;
 				int tailType = ModContent.NPCType<World_Cracker_Tail>();
 				while (current is not null) {
-					if (!Main.masterMode || current != headNPC) current.ai[2] -= otherShotDelay;
+					if (current != headNPC) current.ai[2] -= otherShotDelay;
+					if (!Main.npc.IndexInRange((int)current.ai[0])) break;
 					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
 			}

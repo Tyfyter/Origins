@@ -189,8 +189,8 @@ namespace Origins.Gores.NPCs {
 				Dust dust = Main.dust[cachedDusts.Pop()];
 				float dustAlpha = dust.alpha / 255f;
 				dustAlpha *= dustAlpha;
-				if (dust.type >= DustID.Count) spriteBatch.Draw(
-					DustLoader.GetDust(dust.type).Texture2D.Value,
+				if (dust.type >= DustID.Count && DustLoader.GetDust(dust.type) is ModDust modDust) spriteBatch.Draw(
+					modDust.Texture2D.Value,
 					(dust.position - Main.screenPosition),
 					Color.White * (1 - dustAlpha)
 				);

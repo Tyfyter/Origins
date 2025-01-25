@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.owner == Main.myPlayer) {
 				Rectangle hitbox = Projectile.Hitbox;
 				if (!Projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile global) || !global.CanisterData.HasSpecialEffect) {
-					const int height = 16 * 10;
+					const int height = 16 * 15;
 					hitbox.Y -= height;
 					hitbox.Height += height;
 				}
