@@ -98,6 +98,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Grass_Seeds : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.GrassSeeds[Type] = true;
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
@@ -114,6 +115,7 @@ namespace Origins.Tiles.Riven {
 				tileType = (ushort)ModContent.TileType<Riven_Jungle_Grass>();
 				break;
 			}
+			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
 			return true;
 		}
 	}

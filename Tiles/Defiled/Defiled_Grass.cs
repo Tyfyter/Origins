@@ -111,6 +111,10 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Defiled_Grass_Seeds : ModItem {
+		public override void SetStaticDefaults() {
+			ItemID.Sets.GrassSeeds[Type] = true;
+			Item.ResearchUnlockCount = 25;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CorruptSeeds);
 		}
@@ -124,6 +128,7 @@ namespace Origins.Tiles.Defiled {
 				tileType = (ushort)ModContent.TileType<Defiled_Jungle_Grass>();
 				break;
 			}
+			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
 			return true;
 		}
 	}
