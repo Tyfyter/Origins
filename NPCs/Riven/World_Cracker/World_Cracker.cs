@@ -191,13 +191,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Player playerTarget = Main.player[target];
 			int otherShotDelay = (Main.rand.Next(32, 40) / DifficultyMult) + 60;
 			int shotTime = 1125 / (DifficultyMult + 2);
-			if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
+			//if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
 			npc.ai[2]++;
 			Vector2 size = playerTarget.Size;
 			Vector2 targetPos = playerTarget.position - size * 0.5f;
 			int projType = Amoeball.ID;
 			if ((npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
-				shotTime = 328;
+				if (DifficultyMult == 2) {
+					shotTime = 240;
+				} else {
+					shotTime = 328;
+				}
 				bool canSpawnBubble = playerTarget.OriginPlayer().oldNearbyActiveNPCs < DifficultyScaledSegmentCount + 4 + DifficultyMult;
 				if (npc.localAI[2] == -1) npc.localAI[2] = ((!Main.rand.NextBool(4) && canSpawnBubble) || !Main.masterMode).ToInt();
 				if (npc.localAI[2] == 0) {

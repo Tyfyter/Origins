@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
@@ -14,7 +13,6 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
 	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntryItem, ICustomWikiStat {
         public string[] Categories => [
@@ -24,7 +22,7 @@ namespace Origins.Items.Weapons.Melee {
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
-			Item.damage = 17;
+			Item.damage = 28;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;

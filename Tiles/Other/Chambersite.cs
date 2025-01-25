@@ -1,13 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using System.Linq;
+﻿using Origins.Items.Materials;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Tiles.Other {
 	public class Chambersite : OriginTile {

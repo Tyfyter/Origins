@@ -425,7 +425,7 @@ ACCESSORIES:
 (X) Full Send !!!
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
-(^) Grave Danger*
+(⛥) Grave Danger* !!!
 (#2, ^2) Gun Glove* !!! (randomized shooting offset)
 (^) Gun Magazine
 (^) Haggard Artery*
@@ -861,7 +861,8 @@ SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
-(#2, ^2) Brainy Staff* !!! (minion direction facing)
+(^) Bomb Artifact
+(^) Brainy Staff*
 (@4, ^3) Broken Terratotem
 (#, ^2) Defective Mortar Shell !!!
 (^) Desert Crown*
@@ -887,7 +888,6 @@ SUMMONER WEAPONS:
 
 (X) Acrid Spout !!!
 (X) Barnacled Purse
-(^) Bomb Artifact
 (X) Brine Convergence Incantation !!!
 (X) Deep Ocean Pearl
 (X) Entropy Incantation

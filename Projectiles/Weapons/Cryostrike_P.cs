@@ -61,5 +61,8 @@ namespace Origins.Projectiles.Weapons {
 		bool PokeAngle(Vector2 velocity) {
 			return NormDot(velocity, Vec2FromPolar(Projectile.rotation - MathHelper.PiOver2)) > 1f - margin;
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Frostburn, 180);
+		}
 	}
 }
