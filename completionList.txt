@@ -1210,6 +1210,7 @@ TILES:
 ($2) Music Box (Defiled Wastelands Vol. 1/2) (both volumes)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea Vol. 1/2) (both volumes)
+(X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 ($2) Music Box (Riven Hive Vol. 1/2) (both volumes)
 (@, #, $2) Otherworldly Music Box (Defiled Wastelands)
