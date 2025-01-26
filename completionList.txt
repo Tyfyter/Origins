@@ -151,14 +151,14 @@ ENEMY NPCS:
 (X) Blotopus
 (^) Bottomfeeder*
 (#, ^2) Boulder Mimic !!!
-(^) Buckethead Zombie
+(^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
 (#, ^2) Catacomb Clearer !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
 (^) Cloud Elemental°
-(^) Conehead Zombie
+(^) Conehead Zombie°
 (X) Corrupt Reaper
 (^) Cranivore
 (^) Crimbrain
@@ -181,7 +181,7 @@ ENEMY NPCS:
 (^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri
 (^) Felnum Guardian
-(^) Felnum Ore Slime
+(^) Felnum Slime
 (@4, ^3) Flagellant*
 (^) Graveshield Zombie
 (X) Junkie
@@ -356,7 +356,7 @@ ARMOR:
 (X) Chambersite Armor°
 (X) Edenwood Armor°
 (X) Mimic Armor
-(@4, #2) Necromancer Armor*
+(#2, ^2) Necromancer Armor*
 (X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
 
@@ -444,6 +444,7 @@ ACCESSORIES:
 (^) Laser Tag Vest*
 (^) Last Descendent*
 (ᗢ) Lazy Cloak°
+(X) Liar's Tongue
 (^) Lightning Ring
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -918,6 +919,7 @@ SUMMONER WEAPONS:
 (X) Ego
 (@2/3, #2) Fiber Optic Whips
 (X) Ingress Incantation
+(X) Mojo Mask Staff
 (X) Peeping Tom's Incantation
 (X) Ribatar
 (X) Seraphim Song
@@ -1580,7 +1582,7 @@ MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Scrapper
-(X) Severus
+(X) Seer
 (X) Tearror
 
 (X) Ashen Invasion
