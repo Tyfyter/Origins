@@ -128,13 +128,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
-			if (ArmorHealthPercent > 0.5f) {
-				NPC.defense = 100;
-			} else if (ArmorHealthPercent > 0f) {
-				NPC.defense = 50;
-			} else {
-				NPC.defense = 0;
-			}
+			NPC.defense = 100 * (int)(ArmorHealthPercent);
 			//ForcedTargetPosition = Main.MouseWorld;
 			//Acceleration = 1;
 			SetBaseSpeed();
@@ -481,10 +475,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
-			if (ArmorHealthPercent > 0.5f) {
-				NPC.defense = 100;
-			} else if (ArmorHealthPercent > 0f) {
-				NPC.defense = 54;
+			if (ArmorHealthPercent > 0f) {
+				NPC.defense = 100 * (int)(ArmorHealthPercent);
 			} else {
 				NPC.defense = 8;
 			}
@@ -547,13 +539,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
-			if (ArmorHealthPercent > 0.5f) {
-				NPC.defense = 20;
-			} else if (ArmorHealthPercent > 0f) {
-				NPC.defense = 10;
-			} else {
-				NPC.defense = 0;
-			}
+			NPC.defense = 20 * (int)(ArmorHealthPercent);
 			NPC.life = NPC.lifeMax - 1;
 
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;

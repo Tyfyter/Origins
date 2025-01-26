@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (X) Shimmer Construct
-(#2, ^2/4) World Cracker* !!! (Amniotic Sac needs glow)
+(#2, ^2/4) World Cracker* !!! (Amniotic Sac needs glow and proper animation)
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
@@ -90,7 +90,8 @@ TOWN NPCs:
 
 TOWN NPC Quests:
 ---
-(^) TOWN NPC QUEST MECHANICS
+(^) TOWN NPC QUEST MECHANICS°
+
 (^) Arms Dealer - Live Fire
 (X) Arms Dealer - Three Times the Charm
 (^) Cyborg - Sensor Upgrade
@@ -130,11 +131,12 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
-(X) Accessory Jump Speed Modifiers !!!
+(X) Accessory Jump Speed Modifiers° !!!
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
 (^) Quest System General
+(#2) Summoner Plus Modifiers* !!! (not all of them present)
 ---
 
 
@@ -155,7 +157,7 @@ ENEMY NPCS:
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
-(^) Cloud Elemental
+(^) Cloud Elemental°
 (^) Conehead Zombie
 (X) Corrupt Reaper
 (^) Cranivore
@@ -176,7 +178,7 @@ ENEMY NPCS:
 (#, ^2) Enchanted Fiberglass Slime
 (^) Enchanted Fiberglass Sword
 (X) Exhaust Drone
-(^) Fae Nymph (Whimsical Girl)
+(^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri
 (^) Felnum Guardian
 (^) Felnum Ore Slime

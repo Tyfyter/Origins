@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
 using Origins.Dusts;
+using Origins.Items.Armor.Vanity.Other;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
 using Origins.Reflection;
@@ -122,6 +123,7 @@ namespace Origins.NPCs.Felnum {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 7, 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Shock_Glasses>(), 20));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects spriteEffects = SpriteEffects.None;

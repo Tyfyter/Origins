@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.Audio;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Happy_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -47,6 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
+			SoundEngine.PlaySound(Main.rand.NextFromList(SoundID.Zombie121, SoundID.Zombie122, SoundID.Zombie123).WithPitchRange(1.1f, 1.25f).WithVolume(0.5f));
 		}
 	}
 }
