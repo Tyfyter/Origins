@@ -1,6 +1,7 @@
 ﻿using Origins.Dev;
 using Origins.Water;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
@@ -14,6 +15,7 @@ namespace Origins.Tiles.Other {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Brine_Fountain>());
+			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(gold: 4);
 		}
 	}
