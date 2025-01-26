@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 28);
 			Item.value = Item.sellPrice(silver: 20);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
