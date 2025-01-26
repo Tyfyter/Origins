@@ -15,7 +15,6 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int buffID = 0;
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 3;
@@ -45,8 +44,6 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Woodsprite_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Woodsprite");
-			// Description.SetDefault("The woodsprite will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -270,7 +267,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), Math.Max(damageDone / 3, 1), 0, Projectile.owner);
+			int healing = Main.rand.RandomRound(damageDone / 3f);
+			if (healing > 0) Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), healing, 0, Projectile.owner);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width -= 2;
