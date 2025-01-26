@@ -8,3 +8,14 @@ Link: {
 	// block: <a is=a-link href=https://terraria.wiki.gg/wiki/Blocks>block</a>
 	// explosives: <a is=a-link href=https://terraria.wiki.gg/wiki/Explosives_(class)>explosives</a>
 }
+
+ChestId: {
+	// Normal: <a is=a-link href=https://terraria.wiki.gg/wiki/Wooden_Chest>Wooden Chest</a>
+	// LivingWood: <a is=a-link href=https://terraria.wiki.gg/wiki/Living_Wood_Chest>Living Wood Chest</a>
+	// LockedShadow: <a is=a-link href=https://terraria.wiki.gg/wiki/Locked_Shadow_Chest>Locked Shadow Chest</a>
+	// Ice: <a is=a-link href=https://terraria.wiki.gg/wiki/Ice_Chest>Ice Chest</a>
+	// Gold: <a is=a-link href=https://terraria.wiki.gg/wiki/Gold_Chest>Gold Chest</a>
+	// DeadMan: <a is=a-link href=https://terraria.wiki.gg/wiki/Dead_Man's_Chest>Dead Man's Chest</a>
+	// LockedGold: <a is=a-link href=https://terraria.wiki.gg/wiki/Locked_Gold_Chest>Locked Gold Chest</a>
+	// LockedHallow: <a is=a-link href=https://terraria.wiki.gg/wiki/Locked_Hallowed_Chest>Locked Hallow Chest</a>
+}

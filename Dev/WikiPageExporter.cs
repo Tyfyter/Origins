@@ -383,6 +383,11 @@ namespace Origins.Dev {
 				object value = context[name];
 				if (value is List<Recipe> recipes) {
 					StringBuilder builder = new();
+					if (context.TryGetValue("Name", out object wikiName)) {
+						string usedIn = name == "UsedIn" ? " usedIn" : "";
+						builder.Append($"<a-recipes src=\"{wikiName}\"{usedIn}></a-recipes>");
+						return builder.ToString();
+					}				
 					builder.AppendLine("<a-recipes>");
 					bool firstStation = true;
 					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
@@ -427,7 +432,7 @@ namespace Origins.Dev {
 	}
 	public class RecipeRequirements(Recipe recipe) {
 		public readonly RecipeRequirement[] requirements =
-				recipe.requiredTile.Select(t => new TileRecipeRequirement(t))
+				recipe.requiredTile.DefaultIfEmpty(-1).Select(t => new TileRecipeRequirement(t))
 				.Concat(recipe.Conditions.Select(c => (RecipeRequirement)new ConditionRecipeRequirement(c))
 				).ToArray();
 
@@ -454,13 +459,14 @@ namespace Origins.Dev {
 	}
 	public abstract record class RecipeRequirement {
 		public abstract override string ToString();
+		public virtual string ToStringCompact() => ToString();
 	}
 	public record TileRecipeRequirement(int Tile) : RecipeRequirement {
 		public override string ToString() {
 			if (Main.dedServ) return string.Empty;
 			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) return text.Value;
 			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
-			string reqName = Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
+			string reqName = Tile == -1 ? "By Hand" : Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));
 			if (LinkFormatters.TryGetValue(reqMod, out WikiLinkFormatter formatter)) {
 				return formatter(reqName, null, false);
 			} else {
@@ -468,9 +474,23 @@ namespace Origins.Dev {
 			}
 			return string.Empty;
 		}
+		public override string ToStringCompact() {
+			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) {
+				string key = text.Key + ".Compact";
+				return Language.Exists(key) ? Language.GetTextValue(key) : ToString();
+			}
+			return ToString();
+		}
 	}
 	public record ConditionRecipeRequirement(Condition Condition) : RecipeRequirement {
 		public override string ToString() => recipeConditionWikiTextOverride.TryGetValue(Condition, out LocalizedText text) ? text.Value : Condition.Description.Value;
+		public override string ToStringCompact() {
+			if (recipeConditionWikiTextOverride.TryGetValue(Condition, out LocalizedText text)) {
+				string key = text.Key + ".Compact";
+				return Language.Exists(key) ? Language.GetTextValue(key) : ToString();
+			}
+			return ToString();
+		}
 	}
 	public class DictionaryWithNull<TKey, TValue> : Dictionary<TKey, TValue> {
 		bool hasNullValue;

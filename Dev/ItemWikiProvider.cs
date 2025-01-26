@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,13 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.Dev.WikiPageExporter;
+using static Tyfyter.Utils.ChestLootCache;
 
 namespace Origins.Dev {
 	public class ItemWikiProvider : WikiProvider<ModItem> {
 		public override string PageName(ModItem modItem) {
 			if (modItem.Item.rare == CursedRarity.ID) {
-				return WikiPageExporter.GetWikiName(modItem) + " (Cursed)";
+				return WikiPageExporter.GetWikiName(modItem) + "_(Cursed)";
 			}
 			return WikiPageExporter.GetWikiName(modItem);
 		}
@@ -58,6 +60,8 @@ namespace Origins.Dev {
 		}
 		static Dictionary<int, string> sourceCache = null;
 		static Dictionary<int, JArray> dropsCache = null;
+		static Dictionary<int, JArray> recipesCache = null;
+		static Dictionary<int, JArray> usedInCache = null;
 		static void GenerateSourceCache() {
 			if (sourceCache is not null) return;
 			Dictionary<int, StringBuilder> cache = [];
@@ -71,12 +75,12 @@ namespace Origins.Dev {
 				return drop;
 			}
 			for (int i = 0; i < Main.recipe.Length; i++) {
-				if (Main.recipe[i].createItem.ModItem?.Mod is Origins) {
+				if (Main.recipe[i].createItem.ModItem?.Mod is Origins && Main.recipe[i]?.Mod is Origins) {
 					StringBuilder sources = GetBuilder(Main.recipe[i].createItem.type);
 					RecipeRequirements reqs = new(Main.recipe[i]);
-					string reqsText = reqs.requirements.Length > 0 ? $"(@{string.Join(", ", reqs.requirements.Select(r => r.ToString()))})" : "";
+					string reqsText = reqs.requirements.Length > 0 ? $" (@ {string.Join(", ", reqs.requirements.Select(r => r.ToStringCompact()))})" : "";
 					if (sources.Length > 0) sources.Append("<div class=divider></div>");
-					sources.Append($"{string.Join("+", Main.recipe[i].requiredItem.Select(i => (i.stack > 1 ? i.stack.ToString() : "") + WikiExtensions.GetItemText(ContentSamples.ItemsByType[i.type], imageOnly: true)))}{reqsText}");
+					sources.Append($"{string.Join(" + ", Main.recipe[i].requiredItem.Select(i => (i.stack > 1 ? $"({i.stack})" : "") + " " + WikiExtensions.GetItemText(ContentSamples.ItemsByType[i.type], imageOnly: true)))}{reqsText}");
 				}
 			}
 			foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
@@ -115,7 +119,7 @@ namespace Origins.Dev {
 						sources.Append(WikiExtensions.GetItemText(ContentSamples.ItemsByType[i]));
 						string conditions = null;
 						if ((drops[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", drops[j].conditions.Select(r => r.GetConditionDescription()));
+							conditions = string.Join(", ", drops[j].conditions.Select(ConvertSourceCondition));
 							sources.Append(" " + conditions);
 						}
 						JObject jobj = new() {
@@ -148,7 +152,7 @@ namespace Origins.Dev {
 						if (ItemLoader.GetItem(classic[j].itemId)?.Mod is not Origins) continue;
 						string conditions = null;
 						if ((classic[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", classic[j].conditions.Select(r => r.GetConditionDescription()));
+							conditions = string.Join(", ", classic[j].conditions.Select(ConvertSourceCondition).Where(c => !string.IsNullOrEmpty(c)));
 						}
 						if (itemTypes.Add(classic[j].itemId)) {
 							StringBuilder sources = GetBuilder(classic[j].itemId);
@@ -168,15 +172,17 @@ namespace Origins.Dev {
 					}
 					for (int j = 0; j < expert.Count; j++) {
 						if (ItemLoader.GetItem(expert[j].itemId)?.Mod is not Origins) continue;
-						string conditions = null;
+						string dropConditions = null;
+						string sourceConditions = null;
 						if ((expert[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", expert[j].conditions.Where(c => c is not Conditions.IsExpert).Select(r => r.GetConditionDescription()));
+							dropConditions = string.Join(", ", expert[j].conditions.Where(c => c is not Conditions.IsExpert).Select(r => r.GetConditionDescription()));
+							sourceConditions = string.Join(", ", expert[j].conditions.Select(ConvertSourceCondition).Where(c => !string.IsNullOrEmpty(c)));
 						}
 						if (itemTypes.Add(expert[j].itemId)) {
 							StringBuilder sources = GetBuilder(expert[j].itemId);
 							if (sources.Length > 0) sources.Append("<div class=divider></div>");
 							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
-							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+							if (!string.IsNullOrEmpty(sourceConditions)) sources.Append(" " + sourceConditions);
 						}
 						JObject jobj = new() {
 							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
@@ -185,20 +191,22 @@ namespace Origins.Dev {
 							["Min"] = expert[j].stackMin,
 							["Difficulty"] = "Expert"
 						};
-						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						if (!string.IsNullOrEmpty(dropConditions)) jobj["Notes"] = dropConditions;
 						GetDropCache(expert[j].itemId).Add(jobj);
 					}
 					for (int j = 0; j < master.Count; j++) {
 						if (ItemLoader.GetItem(master[j].itemId)?.Mod is not Origins) continue;
-						string conditions = null;
+						string dropConditions = null;
+						string sourceConditions = null;
 						if ((master[j].conditions?.Count ?? 0) > 0) {
-							conditions = string.Join(", ", master[j].conditions.Where(c => c is not Conditions.IsMasterMode).Select(r => r.GetConditionDescription()));
+							dropConditions = string.Join(", ", master[j].conditions.Where(c => c is not Conditions.IsMasterMode).Select(r => r.GetConditionDescription()));
+							sourceConditions = string.Join(", ", master[j].conditions.Select(ConvertSourceCondition).Where(c => !string.IsNullOrEmpty(c)));
 						}
 						if (itemTypes.Add(master[j].itemId)) {
 							StringBuilder sources = GetBuilder(master[j].itemId);
 							if (sources.Length > 0) sources.Append("<div class=divider></div>");
 							sources.Append(WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]));
-							if (!string.IsNullOrEmpty(conditions)) sources.Append(" " + conditions);
+							if (!string.IsNullOrEmpty(sourceConditions)) sources.Append(" " + sourceConditions);
 						}
 						JObject jobj = new() {
 							["Name"] = WikiExtensions.GetNPCText(ContentSamples.NpcsByNetId[i]),
@@ -207,14 +215,110 @@ namespace Origins.Dev {
 							["Min"] = master[j].stackMin,
 							["Difficulty"] = "Master"
 						};
-						if (!string.IsNullOrEmpty(conditions)) jobj["Notes"] = conditions;
+						if (!string.IsNullOrEmpty(dropConditions)) jobj["Notes"] = dropConditions;
 						GetDropCache(master[j].itemId).Add(jobj);
 					}
 				}
 			}
+			static string ConvertSourceCondition(IItemDropRuleCondition condition) {
+				string conditionName = condition.GetType().Name;
+				string key = $"WikiGenerator.Generic.DropConditions.{conditionName}";
+				return Language.Exists(key) ? Language.GetTextValue(key) : condition.GetConditionDescription();
+			}
+			(int chestId, float flags) currentKey = default;
+			foreach (var action in ChestLoot.Actions) {
+				if (action.action == LootQueueAction.CHANGE_QUEUE) {
+					currentKey = (action.param, action.weight);
+					continue;
+				}
+				if (action.action == LootQueueAction.ENQUEUE) {
+					StringBuilder sources = GetBuilder(action.param);
+					if (sources.Length > 0) sources.Append("<div class=divider></div>");
+					string chest = ConvertChest(currentKey.chestId);
+					string flags = ConvertFlags(currentKey.flags);
+					sources.Append($"Any {chest}");
+					if (!string.IsNullOrEmpty(flags)) sources.Append($" {flags}");
+				}
+			}
+
+			static string ConvertChest(int chestId) {
+				string key = $"WikiGenerator.Generic.Tiles.ChestId.{ChestID.Search.GetName(chestId)}";
+				if (!Language.Exists(key) || !ChestID.Search.ContainsId(chestId)) return null;
+				return Language.GetTextValue(key);
+			}
+
+			static string ConvertFlags(float flags) {
+				int typeVar = (int)flags;
+				string pyramid = Language.GetTextValue($"WikiGenerator.Generic.Link.Pyramid");
+				string pyramidCondition = (typeVar & 0b0011) switch {
+					0b0011 => $"in a {pyramid}",
+					0b0001 => $"not in a {pyramid}",
+					_ => ""
+				};
+				string cavern = Language.GetTextValue($"WikiGenerator.Generic.Link.Cavern");
+				string heightCondition = (typeVar & 0b1100) switch {
+					0b0100 => $"above the {cavern} layer",
+					0b1100 => $"in the {cavern} layer",
+					_ => ""
+				};
+				return string.Join(" and ",
+					new string[] { pyramidCondition, heightCondition }
+					.Where(s => !string.IsNullOrEmpty(s)));
+			}
 
 			sourceCache = new(cache.Select(kvp => new KeyValuePair<int, string>(kvp.Key, kvp.Value.ToString())));
 			dropsCache = dropCache;
+			GenerateRecipesCache();
+		}
+		static void GenerateRecipesCache() {
+			static JArray CreateRecipeEntry(List<Recipe> recipes) {
+				JArray allRecipesJson = [];
+				foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
+					JObject recipeJson = [];
+					if (group.Key.requirements.Length > 0) {
+						JArray stationsJson = [];
+						foreach (RecipeRequirement requirement in group.Key.requirements) {
+							if (string.IsNullOrEmpty(requirement.ToString())) continue;
+							stationsJson.Add($"{requirement}");
+						}
+						recipeJson.Add("stations", stationsJson);
+					}
+
+					JArray itemsJson = [];
+					foreach (Recipe recipe in group) {
+						JObject resultsObject = [];
+						resultsObject.Add("result", $"{WikiExtensions.GetItemText(recipe.createItem)}");
+
+						JArray ingredientsJson = [];
+						foreach (Item requiredItem in recipe.requiredItem) {
+							ingredientsJson.Add($"{WikiExtensions.GetItemText(requiredItem)}");
+						}
+						resultsObject.Add("ingredients", ingredientsJson);
+
+						itemsJson.Add(resultsObject);
+					}
+					recipeJson.Add("items", itemsJson);
+					allRecipesJson.Add(recipeJson);
+				}
+				return allRecipesJson;
+			}
+
+			Dictionary<int, JArray> recipesDict = [];
+			Dictionary<int, JArray> usedInDict = [];
+			for (int i = 0; i < ItemLoader.ItemCount; i++) {
+				Item item = ContentSamples.ItemsByType[i];
+				if (item?.ModItem?.Mod is not Origins) continue;
+
+				(List<Recipe> recipes, List<Recipe> usedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[i]);
+				JArray recipeData = CreateRecipeEntry(recipes);
+				if (recipeData.Count > 0) recipesDict.Add(i, recipeData);
+
+				JArray usedInData = CreateRecipeEntry(usedIn);
+				if (usedInData.Count > 0) usedInDict.Add(i, usedInData);
+			}
+
+			recipesCache = recipesDict;
+			usedInCache = usedInDict;
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
 			Item item = modItem.Item;
@@ -398,6 +502,8 @@ namespace Origins.Dev {
 					if (sourceCache.TryGetValue(item.type, out string source)) data.AppendStat("Source", source, "");
 				}
 				if (dropsCache.TryGetValue(item.type, out JArray dropSources)) data.AppendJStat<JArray>("DropSources", dropSources, []);
+				if (recipesCache.TryGetValue(item.type, out JArray recipes)) data.AppendJStat<JArray>("Recipes", recipes, []);
+				if (usedInCache.TryGetValue(item.type, out JArray usedIn)) data.AppendJStat<JArray>("UsedIn", usedIn, []);
 
 				key = baseKey + "Effect";
 				if (Language.Exists(key)) data.AppendStat("Effect", Language.GetTextValue(key), key);
