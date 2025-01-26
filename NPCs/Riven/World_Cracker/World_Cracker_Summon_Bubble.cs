@@ -13,8 +13,7 @@ using PegasusLib;
 using Terraria.Localization;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Summon_Bubble : ModNPC, IRivenEnemy {
-		public override string Texture => "Origins/NPCs/Riven/World_Cracker/Amniotic_Sac";
+	public class World_Cracker_Summon_Bubble : Glowing_Mod_NPC, IRivenEnemy {
 		public static int ID { get; private set; }
 		public static List<int> ValidSpawns { get; private set; } = [];
 		public override void SetStaticDefaults() {
@@ -35,13 +34,13 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax = 75;
 			NPC.defense = 0;
 			NPC.damage = 0;
-			NPC.width = 58;
-			NPC.height = 58;
+			NPC.width = 50;
+			NPC.height = 50;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath15;
 			NPC.knockBackResist = 0.01f;
-			NPC.scale = 0.85f;
+			NPC.scale = 0.95f;
 			NPC.value = 0;
 		}
 		public static int HatchTime => 360 - 60 * World_Cracker_Head.DifficultyMult;
@@ -64,13 +63,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -1.2f;
 			if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -1.2f;
 
-			if (++NPC.frameCounter > 6) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 60) % 240, 58, 58);
-				NPC.frameCounter = 0;
-			}
+			NPC.DoFrames(6);
 			NPC.spriteDirection = 1;
 		}
-		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void HitEffect(NPC.HitInfo hit) {
 			for (int i = (int)((NPC.life <= 0 ? 12 : 4) * Main.gfxQuality); i-- > 0;) {
 				Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, Main.rand.Next(R_Effect_Blood1.GoreIDs));
@@ -117,6 +112,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				NetMessage.SendData(MessageID.SyncNPC, number: index);
 			}
 		}
+		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 	public class Riven_Fighter_WC : Riven_Fighter {
 		public override string Texture => typeof(Riven_Fighter).GetDefaultTMLName();

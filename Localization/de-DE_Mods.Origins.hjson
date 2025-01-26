@@ -2198,6 +2198,14 @@ Music: {
 		// Name: Shattered Topography Old
 		// Subtitle: ""
 	}
+
+	// Deep_Luminance.Name: Deep Luminance
+	// Wasteland.Name: Wasteland
+	// Dread_Heart.Name: Dread Heart
+	// Skin.Name: Skin
+	// Internal_Organism.Name: Internal Organism
+	// Frayed_And_Stretched.Name: Frayed And Stretched
+	// Alkahest.Name: Alkahest
 }
 
 DefiledRelaySignals: {

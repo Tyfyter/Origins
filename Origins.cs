@@ -909,16 +909,34 @@ namespace Origins {
 					}
 					return slot;
 				}
+				static int GetMusicSlotNew(string path) {
+					path = "Sounds/Music/Volume II/" + path;
+					MusicLoader.AddMusic(instance, path);
+					int slot = MusicLoader.GetMusicSlot(instance, path);
+					if (slot != -1 && musicDisplay is not null) {
+						string track = path.Split("/")[^1];
+						musicDisplay.Call("AddMusic",
+							(short)slot,
+							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
+							"gojisturba",
+							Origins.instance.DisplayName
+						);
+					}
+					return slot;
+				}
 				Fiberglass = GetMusicSlot("Music/The_Room_Before");
-				BrinePool = GetMusicSlot("Music/Below_The_Brine");
+				BrinePool = GetMusicSlotNew("Deep_Luminance");
 				Dusk = GetMusicSlot("Music/Dancing_With_Ghosts");
-				Defiled = GetMusicSlot("Music/Stolen_Memories");
-				UndergroundDefiled = GetMusicSlot("Music/Heart_Of_The_Beast");
-				DefiledBoss = GetMusicSlot("Music/ADJUDICATE");
-				Riven = GetMusicSlot("Music/Pereunt_Unum_Scindendum");
-				UndergroundRiven = GetMusicSlot("Music/Festering_Hives");
-				RivenBoss = GetMusicSlot("Music/Ad_Laceratur");
-				RivenOcean = GetMusicSlot("Music/This_Ocean_Of_Alkahest");
+
+				Defiled = GetMusicSlotNew("Wasteland");
+				UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
+				DefiledBoss = GetMusicSlotNew("ADJUDICATE");
+
+				Riven = GetMusicSlotNew("Skin");
+				UndergroundRiven = GetMusicSlotNew("Internal_Organism");
+				RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
+				RivenOcean = GetMusicSlotNew("Alkahest");
+
 				AncientDefiled = GetMusicSlot("Music/Shattered_Topography_Old");
 				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}
