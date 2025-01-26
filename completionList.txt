@@ -1552,8 +1552,9 @@ UI:
 (^) Origins Mod Browser Logo
 ---
 
-MUSIC:
+VOLUME I MUSIC:
 ---
+
 (X) Ashen Factory
 (^) Brine Pool
 (X) Cosmos
@@ -1581,6 +1582,49 @@ MUSIC:
 (X) Miscreant
 (X) Quantux
 (^) World Cracker
+(X) Scrapper
+(X) Seer
+(X) Tearror
+
+(X) Ashen Invasion
+(X) Corruption Invasion
+(X) Crimson Invasion
+(X) Defiled Invasion
+(X) Laser Tag Event
+(X) Riven Invasion
+(X) Test of Ancients
+---
+
+VOLUME II MUSIC:
+---
+
+(X) Ashen Factory
+($2) Brine Pool
+(X) Cosmos
+(X) Cubekon Temple
+(X) Dawn
+($2) Defiled Caverns
+($2) Defiled Wastelands
+(X) Defiled Wastelands - Egregocide Route
+(X) Defiled Wastelands - Mimic Route
+($2) Eutrophic Sea
+(X) Fiberglass Caves
+(X) Fractured Isles
+($2) Riven Hive
+(X) The Dusk
+($2) Underground Riven Hive
+
+(X) Crimson King
+($2) Defiled Amalgamation
+(X) Duskord
+(X) Fiberglass Weaver
+(X) I.C.A.R.U.S
+(X) Leviathan of the Riven
+($2) Lost Diver/Mildew Carrion
+(X) Mechamalgamation
+(X) Miscreant
+(X) Quantux
+($2) World Cracker
 (X) Scrapper
 (X) Seer
 (X) Tearror
