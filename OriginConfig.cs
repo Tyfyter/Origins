@@ -9,6 +9,7 @@ using Origins.LootConditions;
 using Origins.Reflection;
 using Origins.UI;
 using Origins.UI.Event;
+using PegasusLib;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
+using Terraria.ModLoader.IO;
 
 namespace Origins {
 	public class OriginConfig : ModConfig {
@@ -37,6 +39,8 @@ namespace Origins {
 
 		[DefaultValue(true)]
 		public bool WoodBuffs = true;
+		[DefaultValue(true)]
+		public bool RainSetBuff = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool RoyalGel = true;
@@ -49,10 +53,16 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool Assimilation = true;
 
-		[DefaultValue(false)]
-		public bool GraveshieldZombiesDropAsItem = false;
+		[Header("Balance")]
+
+		[JsonDefaultDictionaryKeyValue("{\"Mod\": \"Terraria\", \"Name\": \"GenericDamageClass\"}")]
+		[JsonIgnore, ShowDespiteJsonIgnore]
+		public Dictionary<DamageClassDefinition, float> StatShareRatio { get; set; } = new() {
+			[new("Terraria/SummonDamageClass")] = 0.5f
+		};
+
 		[JsonIgnore]
-		public static bool GraveshieldZombiesShouldDropAsItem => Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
+		public static bool GraveshieldZombiesShouldDropAsItem => ServerSideAccessibility.Instance.GraveshieldZombiesDropAsItem && !Main.getGoodWorld;
 
 		[ReloadRequired]
 		[DefaultValue(true)]
@@ -63,6 +73,36 @@ namespace Origins {
 			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
 			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
+		}
+		static string BalanceSaveBath => Path.Combine(ConfigManager.ModConfigPath, "OriginsBalanceConfig" + ".nbt");
+		public override void OnLoaded() {
+			LoadFromFile();
+		}
+		internal void LoadFromFile() {
+			if (File.Exists(BalanceSaveBath)) Load(TagIO.FromFile(BalanceSaveBath));
+		}
+		internal void SaveToFile() {
+			TagCompound balanceData = [];
+			Save(balanceData);
+			TagIO.ToFile(balanceData, BalanceSaveBath);
+		}
+		internal void Save(TagCompound tag) {
+			TagCompound statShareData = [];
+			foreach (KeyValuePair<DamageClassDefinition, float> item in StatShareRatio) {
+				statShareData[item.Key.ToString()] = item.Value;
+			}
+			tag[nameof(StatShareRatio)] = statShareData;
+		}
+		internal void Load(TagCompound tag) {
+			StatShareRatio = [];
+			foreach (KeyValuePair<string, object> item in tag.SafeGet<TagCompound>(nameof(StatShareRatio), [])) {
+				StatShareRatio[DamageClassDefinition.FromString(item.Key)] = item.Value is float value ? value : 1;
+			}
+		}
+		internal void CloneTo(OriginConfig clone) {
+			TagCompound balanceData = [];
+			Save(balanceData);
+			clone.Load(balanceData);
 		}
 	}
 	public class OriginClientConfig : ModConfig {
@@ -80,6 +120,9 @@ namespace Origins {
 
 		[DefaultValue(0.1f), Range(0, 1), Increment(0.05f)]
 		public float DefiledShaderNoise = 0.1f;
+
+		[DefaultValue(1f), Range(0, 2), Increment(0.1f)]
+		public float ScreenShakeMultiplier = 1f;
 
 		[DefaultValue(true)]
 		public bool ExtraGooeyRivenGores = true;
@@ -673,5 +716,15 @@ namespace Origins {
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 		[DefaultValue(false)]
 		public bool DisableDefiledWastelandsShader { get; set; }
+	}
+	public class ServerSideAccessibility : ModConfig {
+		public static ServerSideAccessibility Instance;
+		public override ConfigScope Mode => ConfigScope.ServerSide;
+
+		[DefaultValue(false)]
+		public bool GraveshieldZombiesDropAsItem = false;
+
+		[DefaultValue(1f), Range(0, 1)]
+		public float RivenAsimilationMultiplier = 1f;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -20,6 +21,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Origins.TileTransformsOnKill[Type] = true;
 			HitSound = Origins.Sounds.DefiledIdle;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
@@ -32,23 +34,17 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
 			AddDefiledTile();
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			fail = true;
-			noItem = true;
+			if (fail && !effectOnly) {
+				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
+			}
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
 			if (originWorld is not null) {
 				originWorld.defiledAltResurgenceTiles ??= [];
 				originWorld.defiledAltResurgenceTiles.Add((i, j, Type, TileID.Dirt));
 			}
-			bool half = Main.tile[i, j].IsHalfBlock;
-			SlopeType slope = Main.tile[i, j].Slope;
-			Main.tile[i, j].ResetToType(TileID.Dirt);
-			WorldGen.SquareTileFrame(i, j);
-			Main.tile[i, j].SetHalfBlock(half);
-			Main.tile[i, j].SetSlope(slope);
-			NetMessage.SendTileSquare(-1, i, j, 1);
-
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -64,6 +60,10 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Jungle_Grass : OriginTile, IDefiledTile {
 		public override void SetStaticDefaults() {
+			if (ModLoader.HasMod("InfectedQualities")) {
+				TileID.Sets.JungleBiome[Type] = 1;
+				TileID.Sets.RemixJungleBiome[Type] = 1;
+			}
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -74,6 +74,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Origins.TileTransformsOnKill[Type] = true;
 			HitSound = Origins.Sounds.DefiledIdle;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
@@ -88,21 +89,14 @@ namespace Origins.Tiles.Defiled {
 			AddDefiledTile();
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			fail = true;
-			noItem = true;
+			if (fail && !effectOnly) {
+				Framing.GetTileSafely(i, j).TileType = TileID.Mud;
+			}
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
 			if (originWorld is not null) {
 				originWorld.defiledAltResurgenceTiles ??= [];
 				originWorld.defiledAltResurgenceTiles.Add((i, j, Type, TileID.Mud));
 			}
-			bool half = Main.tile[i, j].IsHalfBlock;
-			SlopeType slope = Main.tile[i, j].Slope;
-			Main.tile[i, j].ResetToType(TileID.Mud);
-			WorldGen.SquareTileFrame(i, j);
-			Main.tile[i, j].SetHalfBlock(half);
-			Main.tile[i, j].SetSlope(slope);
-			NetMessage.SendTileSquare(-1, i, j, 1);
-
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -117,6 +111,10 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Defiled_Grass_Seeds : ModItem {
+		public override void SetStaticDefaults() {
+			ItemID.Sets.GrassSeeds[Type] = true;
+			Item.ResearchUnlockCount = 25;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CorruptSeeds);
 		}
@@ -130,6 +128,7 @@ namespace Origins.Tiles.Defiled {
 				tileType = (ushort)ModContent.TileType<Defiled_Jungle_Grass>();
 				break;
 			}
+			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
 			return true;
 		}
 	}

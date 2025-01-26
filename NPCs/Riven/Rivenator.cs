@@ -13,6 +13,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
+	/// <summary>
+	/// TODO: use <see cref="Worm"/>
+	/// </summary>
 	public class Rivenator_Head : Rivenator, ICustomWikiStat {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -23,9 +26,12 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
+			NPC.width = 22;
+			NPC.height = 22;
 			NPC.lifeMax = 634;
 			NPC.defense = 18;
 			NPC.damage = 52;
+			NPC.scale = 0.9f;
 			NPC.value = 1000;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
@@ -125,7 +131,7 @@ namespace Origins.NPCs.Riven {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.04f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
 				while (current.ai[0] != 0) {
 					current.velocity = current.oldVelocity;

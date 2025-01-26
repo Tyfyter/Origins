@@ -45,7 +45,7 @@ namespace Origins.Items.Pets {
 			ProjectileID.Sets.LightPet[Projectile.type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.width = 28;
 			Projectile.height = 34;
 			Projectile.tileCollide = false;

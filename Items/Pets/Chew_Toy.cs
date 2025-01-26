@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Items.Armor.Vanity.Dev;
 using Origins.Items.Pets;
 using Origins.LootConditions;
 using Origins.Tiles;
@@ -19,13 +21,9 @@ using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
 
 namespace Origins.Items.Pets {
-	public class Chee_Set : ModItem {
-		public override string Texture => typeof(Chew_Toy).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
-				new DropAsSetRule(Type)
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chew_Toy>()))
-			]).ToArray();
+	public class Chee_Set : DevSet<Chew_Toy> {
+		public override IEnumerable<int> GetDrops() {
+			yield return ModContent.ItemType<Chew_Toy>();
 		}
 	}
 	public class Chew_Toy : ModItem, ICustomWikiStat, ICustomPetFrames {
@@ -89,7 +87,7 @@ namespace Origins.Items.Pets {
 			Main.projPet[Type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.width = 48;
 			Projectile.height = 32;
 			Projectile.tileCollide = true;

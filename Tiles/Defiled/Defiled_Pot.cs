@@ -1,4 +1,6 @@
 ﻿using Origins.Dev;
+using Origins.Reflection;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -34,13 +36,21 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);*/
+			HitSound = Origins.Sounds.DefiledIdle;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			WorldGen.CheckPot(i, j);
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			TileMethods.WorldGen_SpawnThingsFromPot(i, j, i, j, 0);
+			IEntitySource source = WorldGen.GetItemSource_FromTileBreak(i, j);
+			Vector2 basePos = new(i * 16, j * 16);
+			for (int index = 0; index < 3; index++) {
+				Origins.instance.SpawnGoreByName(source, basePos + new Vector2(Main.rand.Next(32), Main.rand.Next(32)), default, $"Gores/NPCs/DF{Main.rand.Next(1, 4)}_Gore");
+				Origins.instance.SpawnGoreByName(source, basePos + new Vector2(Main.rand.Next(32), Main.rand.Next(32)), default, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
+			}
 		}
 	}
 	public class Defiled_Pot_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+		public IEnumerable<int> ProvideItemObtainability() => [Type];
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

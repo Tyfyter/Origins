@@ -77,6 +77,13 @@ using Origins.Items.Other.Consumables.Broths;
 using static Terraria.ID.ContentSamples.CreativeHelper;
 using Terraria.UI;
 using Origins.Journal;
+using Terraria.ModLoader.IO;
+using Origins.Items.Weapons.Demolitionist;
+using PegasusLib.Reflection;
+using Terraria.GameContent.Generation;
+using Origins.Items.Mounts;
+using BetterDialogue.UI;
+using Terraria.ModLoader.Config;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -128,23 +135,6 @@ namespace Origins {
 				}
 			};*/
 			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, [typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool)]), (hook_DropItem)CommonCode_DropItem);
-			On_WorldGen.ScoreRoom += (On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
-				npcScoringRoom = npcTypeAskingToScoreRoom;
-				orig(ignoreNPC, npcTypeAskingToScoreRoom);
-			};
-			On_WorldGen.GetTileTypeCountByCategory += (On_WorldGen.orig_GetTileTypeCountByCategory orig, int[] tileTypeCounts, TileScanGroup group) => {
-				if (group == TileScanGroup.TotalGoodEvil) {
-					int defiledTiles = tileTypeCounts[MC.TileType<Defiled_Stone>()] + tileTypeCounts[MC.TileType<Defiled_Grass>()] + tileTypeCounts[MC.TileType<Defiled_Sand>()] + tileTypeCounts[MC.TileType<Defiled_Ice>()];
-					int rivenTiles = tileTypeCounts[MC.TileType<Riven_Flesh>()];
-
-					if (npcScoringRoom == MC.NPCType<Brine_Fiend>()) {
-						return orig(tileTypeCounts, TileScanGroup.Hallow);
-					}
-
-					return orig(tileTypeCounts, group) - (defiledTiles + rivenTiles);
-				}
-				return orig(tileTypeCounts, group);
-			};
 			On_ShopHelper.BiomeNameByKey += (On_ShopHelper.orig_BiomeNameByKey orig, string biomeNameKey) => {
 				lastBiomeNameKey = biomeNameKey;
 				return orig(biomeNameKey);
@@ -617,10 +607,128 @@ namespace Origins {
 					LogError($"Could not find npcsWithinHouse > 3 comparison in ShopHelper.ProcessMood");
 				}
 			};
+			IL_WorldGen.SpawnThingsFromPot += IL_WorldGen_SpawnThingsFromPot;
+			IL_Condition.PlayerCarriesItem += il => {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.Before, i => i.MatchNewobj<Condition>());
+				c.EmitLdarg0();
+				c.EmitDelegate<Func<Func<bool>, int, Func<bool>>>((orig, type) => {
+					if (type == ItemID.FlareGun) return () => orig() || Main.LocalPlayer.HasItem(ModContent.ItemType<Flare_Launcher>());
+					return orig;
+				});
+			};
+			IL_Player.GetWeaponDamage += il => {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.Before, i => i.MatchCall<StatModifier>(nameof(StatModifier.ApplyTo)));
+				MonoModMethods.SkipPrevArgument(c);
+				c.EmitLdarg1();
+				c.EmitDelegate<Modify_ApplyTo>((ref StatModifier modifier, Item item) => {
+					modifier = modifier.Scale(DamageBonusScale[item.type]);
+					return ref modifier;
+				});
+			};
+			On_Player.DoesPickTargetTransformOnKill += (orig, self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget) => {
+				if (orig(self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget)) return true;
+				if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && TileTransformsOnKill[tileTarget.TileType]) return true;
+				return false;
+			};
+			IL_NPC.SpawnNPC += IL_NPC_SpawnNPC;
+			On_TrackGenerator.IsLocationInvalid += (orig, x, y) => {
+				if (orig(x, y)) return true;
+				Tile tile = Main.tile[x, y];
+				if ((tile.HasTile && TileBlocksMinecartTracks[tile.TileType]) || WallBlocksMinecartTracks[tile.WallType]) return true;
+				return false;
+			};
+			if (ModLoader.GetMod(nameof(BetterDialogue)).Version == new Version(1, 1, 6, 1)) MonoModHooks.Modify(typeof(BetterDialogue.BetterDialogue).Assembly.GetType("BetterDialogue.UI.DialogueCycleButtonUI").GetMethod("Draw", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static), 
+				il => new ILCursor(il)
+				.EmitLdsfld(typeof(Main).GetField(nameof(Main.editChest)))
+				.EmitBrfalse(MonoFuckery.DefineLabel(il, out ILLabel label))
+				.EmitRet()
+				.MarkLabel(label)
+			);
+			IL_Player.ItemCheck_OwnerOnlyCode += Eitrite_Gun_Magazine.IL_Player_ItemCheck_OwnerOnlyCode;
+			IL_NPC.SpawnNPC_CheckToSpawnUndergroundFairy += Fairy_Lotus.IL_NPC_SpawnNPC_CheckToSpawnUndergroundFairy;
+			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("Save", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Action<ModConfig> orig, ModConfig pendingConfig) => {
+				orig(pendingConfig);
+				if (pendingConfig is OriginConfig realPendingConfig) realPendingConfig.SaveToFile();
+			});
+			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("Load", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Action<ModConfig> orig, ModConfig pendingConfig) => {
+				orig(pendingConfig);
+				if (pendingConfig is OriginConfig realPendingConfig) realPendingConfig.LoadFromFile();
+			});
+			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("GeneratePopulatedClone", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Func<ModConfig, ModConfig> orig, ModConfig original) => {
+				ModConfig config = orig(original);
+				if (original is OriginConfig originConfig && config is OriginConfig newConfig) originConfig.CloneTo(newConfig);
+				return config;
+			});
 		}
+		private static void IL_NPC_SpawnNPC(ILContext il) {
+			ILCursor c = new(il);
+			int startYPosition = -1;
+			int yPosition = -1;
+			if (c.TryGotoNext(MoveType.Before,
+				il => il.MatchLdloc(out startYPosition),
+				il => il.MatchStloc(out yPosition),
+				il => il.MatchBr(out _),
+				il => il.MatchLdsflda<Main>(nameof(Main.tile)),
+				il => il.MatchLdloc(out _),
+				il => il.MatchLdloc(out yPosition),
+				il => il.MatchCall<Tilemap>("get_Item")
+			)) {
+				c.Index += 2;
+				c.EmitLdloc(startYPosition);
+				c.EmitStsfld(typeof(OriginGlobalNPC).GetField(nameof(OriginGlobalNPC.aerialSpawnPosition)));
+			} else {
+				LogError($"Could not find search for ground in NPC.SpawnNPC");
+			}
+		}
+
+		delegate ref StatModifier Modify_ApplyTo(ref StatModifier modifier, Item item);
+		private static void IL_WorldGen_SpawnThingsFromPot(ILContext il) {
+			ILCursor c = new(il);
+			int playerLoc = -1;
+			int countLoc = -1;
+			int typeLoc = -1;
+			ILLabel label = null;
+			int minConst = -1;
+			int maxConst = -1;
+			if (c.TryGotoNext(MoveType.After,
+				i => i.MatchLdloc(out playerLoc),
+				i => i.MatchCallOrCallvirt<Player>("get_" + nameof(Player.ZoneGlowshroom)),
+				i => i.MatchBrfalse(out label),
+				i => i.MatchLdloc(out countLoc),
+				i => i.MatchCallOrCallvirt<Main>("get_" + nameof(Main.rand)),
+				i => i.MatchLdcI4(out minConst),
+				i => i.MatchLdcI4(out maxConst),
+				i => i.MatchCallOrCallvirt<UnifiedRandom>(nameof(UnifiedRandom.Next)),
+				i => i.MatchAdd(),
+				i => i.MatchStloc(countLoc),
+				i => i.MatchLdcI4(ItemID.MushroomTorch),
+				i => i.MatchStloc(out typeLoc)
+			)) {
+				c.GotoLabel(label, MoveType.AfterLabel);
+				c.EmitLdloc(playerLoc);
+				c.EmitLdloca(countLoc);
+				c.EmitLdcI4(minConst);
+				c.EmitLdcI4(maxConst);
+				c.EmitLdloca(typeLoc);
+				c.EmitDelegate((Player player, ref int count, int minBonus, int maxBonus, ref int type) => {
+					if (player.InModBiome<Defiled_Wastelands>()) {
+						count += Main.rand.Next(minBonus, maxBonus);
+						type = ModContent.ItemType<Defiled_Torch>();
+					} else if (player.InModBiome<Riven_Hive>()) {
+						count += Main.rand.Next(minBonus, maxBonus);
+						type = ModContent.ItemType<Riven_Torch>();
+					}
+				});
+			} else {
+				LogError($"Could not find mushroom torch drop in WorldGen.SpawnThingsFromPot");
+			}
+		}
+
 		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
 			orig(inv, context, slot);
-			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && InspectItemKey.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
+			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && Keybindings.InspectItem.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
 				OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Add(journalItem.EntryName);
 				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
 					OpenJournalEntry(journalItem.EntryName);
@@ -1370,7 +1478,7 @@ namespace Origins {
 					c.Emit(instruction.OpCode, instruction.Operand);
 					break;
 					case Mono.Cecil.Cil.Code.Call:
-					MethodBase placeCustomAlch = typeof(Origins).GetMethod("PlaceCustomAlch", BindingFlags.Public | BindingFlags.Static);
+					MethodBase placeCustomAlch = typeof(Origins).GetMethod(nameof(PlaceCustomAlch), BindingFlags.Public | BindingFlags.Static);
 					c.Emit(instruction.OpCode, placeCustomAlch);
 					break;
 					case Mono.Cecil.Cil.Code.Pop:

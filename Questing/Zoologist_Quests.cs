@@ -8,6 +8,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Discount_1_Quest : Quest {
+		public override bool SaveToWorld => false;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -85,6 +86,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Discount_2_Quest : Quest {
+		public override bool SaveToWorld => false;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -161,6 +163,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Eccentric_Stone_Quest : Quest, IItemObtainabilityProvider {
+		public override bool SaveToWorld => false;
 		//backing field for Stage property
 		int stage = 0;
 

@@ -214,7 +214,7 @@ namespace Origins.Tiles.MusicBoxes {
 		];
 		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientRiven;
-		public override int DustType => Defiled_Wastelands.DefaultTileDust;
+		public override int DustType => DustID.SolarFlare;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public static float GlowLightValue(Tile tile) {
 			int frameNumberOffset = tile.TileFrameX >= 36 ? 1 : 0;

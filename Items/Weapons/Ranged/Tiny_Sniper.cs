@@ -53,6 +53,10 @@ namespace Origins.Items.Weapons.Ranged {
 				}
 			}
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == ProjectileID.Bullet) type = ProjectileID.BulletHighVelocity;
 			float i0 = CombinedHooks.TotalUseAnimationMultiplier(player, Item);
@@ -60,7 +64,6 @@ namespace Origins.Items.Weapons.Ranged {
 				Debugging.ChatOverhead("they fixed it", 30);
 			}
 			player.velocity -= velocity * 0.2f;
-			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
 		}
 	}
 }

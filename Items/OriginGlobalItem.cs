@@ -22,6 +22,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ID.ContentSamples.CreativeHelper;
 
 namespace Origins.Items {
@@ -154,6 +155,11 @@ namespace Origins.Items {
 			}
 			if (Origins.itemGlowmasks[item.type] != 0) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
+		public override void ModifyItemScale(Item item, Player player, ref float scale) {
+			if (item.CountsAsClass(DamageClass.Melee)) {
+				scale *= player.OriginPlayer().meleeScaleMultiplier;
+			}
+		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
 			if (player.nonTorch != -1 && player.inventory[player.nonTorch].type == Boomphracken.ID && player.HeldItem.CountsAsClass<Thrown_Explosive>()) {
 				player.selectItemOnNextUse = true;
@@ -169,11 +175,17 @@ namespace Origins.Items {
 				case ItemID.MiningShirt:
 				player.GetDamage(DamageClasses.Explosive) += 0.05f;
 				break;
+				case ItemID.RainHat:
+				player.GetDamage(DamageClass.Generic) += Main.raining ? 0.07f : 0.05f;
+				break;
+				case ItemID.RainCoat:
+				player.GetDamage(DamageClass.Generic) += Main.raining ? 0.07f : 0.05f;
+				break;
 			}
 		}
 		public override bool OnPickup(Item item, Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (originPlayer.cryostenSet) {
+			if (originPlayer.oldCryostenSet) {
 				if (item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.SugarPlum) {
 					originPlayer.cryostenLifeRegenCount += 60;
 				}
@@ -198,6 +210,7 @@ namespace Origins.Items {
 		public override string IsArmorSet(Item head, Item body, Item leg) {
 			if (head.type == ItemID.MiningHelmet && body.type == ItemID.MiningShirt && leg.type == ItemID.MiningPants) return "miner";
 			if (OriginConfig.Instance.WoodBuffs && head.type == ItemID.PearlwoodHelmet && body.type == ItemID.PearlwoodBreastplate && leg.type == ItemID.PearlwoodGreaves) return "pearlwood";
+			if (head.type == ItemID.RainHat && body.type == ItemID.RainCoat) return "rain";
 			return "";
 		}
 		public override void UpdateArmorSet(Player player, string set) {
@@ -206,30 +219,67 @@ namespace Origins.Items {
 				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Miner");
 				player.GetModPlayer<OriginPlayer>().minerSet = true;
 				return;
-			}
-			if (OriginConfig.Instance.WoodBuffs && set == "pearlwood") {
-				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Pearlwood");
-				player.GetDamage(DamageClass.Generic) += 0.15f;
-				player.endurance += (1 - player.endurance) * 0.05f;
+				case "pearlwood":
+				if (OriginConfig.Instance.WoodBuffs) {
+					player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Pearlwood");
+					player.GetDamage(DamageClass.Generic) += 0.15f;
+					player.endurance += (1 - player.endurance) * 0.05f;
+					return;
+				}
+				break;
+				case "rain":
+				if (OriginConfig.Instance.RainSetBuff) {
+					player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.RainBuff") + "\n";
+					if (Main.raining) player.moveSpeed += 0.35f;
+				}
+				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Rain");
+				player.OriginPlayer().rainSet = true;
 				return;
 			}
 		}
-		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
-			try {
-				switch (item.type) {
-					case ItemID.MiningHelmet:
-					tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "3% increased explosive critical strike chance"));
-					break;
-					case ItemID.MiningShirt:
-					tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "5% increased explosive damage"));
-					break;
-					case ItemID.Harpoon:
-					tooltips.Insert(5, new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Harpoon_Gun.VanillaTooltip")));
-					break;
+		public static void AddVanillaTooltips(int itemType, List<TooltipLine> tooltips, bool forceAll = false) {
+			void Insert(string target, string name, string textKey, bool after = true) {
+				int index = tooltips.FindIndex(line => line.Name == target);
+				TooltipLine line = new(Origins.instance, "name", Language.GetOrRegister(textKey).Value);
+				if (index == -1) {
+					tooltips.Add(line);
+					return;
 				}
-			} catch (Exception e) {
-				Mod.Logger.Error(e);
+				tooltips.Insert(index + after.ToInt(), line);
 			}
+			void Add(string name, string textKey) {
+				int index = tooltips.FindLastIndex(line => line.Name.StartsWith("Tooltip"));
+				TooltipLine line = new(Origins.instance, "name", Language.GetOrRegister(textKey).Value);
+				if (index == -1) {
+					tooltips.Add(line);
+					return;
+				}
+				tooltips.Insert(index + 1, line);
+			}
+			switch (itemType) {
+				case ItemID.MiningHelmet:
+				Add("Tooltip1", "Mods.Origins.Items.MiningHelmet.BuffTooltip");
+				break;
+				case ItemID.MiningShirt:
+				Add("Tooltip1", "Mods.Origins.Items.MiningShirt.BuffTooltip");
+				break;
+				case ItemID.RainHat:
+				if (forceAll || OriginConfig.Instance.RainSetBuff) {
+					Add("Tooltip0", "Mods.Origins.Items.RainHat.BuffTooltip");
+				}
+				break;
+				case ItemID.RainCoat:
+				if (forceAll || OriginConfig.Instance.RainSetBuff) {
+					Add("Tooltip0", "Mods.Origins.Items.RainCoat.BuffTooltip");
+				}
+				break;
+				case ItemID.Harpoon:
+				Add("Tooltip0", "Mods.Origins.Items.Harpoon_Gun.VanillaTooltip");
+				break;
+			}
+		}
+		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
+			AddVanillaTooltips(item.type, tooltips);
 			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
 				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
 			}
@@ -292,11 +342,12 @@ namespace Origins.Items {
 						return drops.Any(i => i.itemId == ItemID.Muramasa);
 					});
 					if (rule is not null) {
-						Array.Resize(ref rule.options, rule.options.Length + 4);
-						rule.options[^4] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Tones_Of_Agony>());
-						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Asylum_Whistle>());
-						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Launcher>());
-						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Handling_Device>());
+						rule.Add(
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Tones_Of_Agony>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Asylum_Whistle>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Launcher>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Bomb_Handling_Device>())
+						);
 						foundMain = true;
 					}
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
@@ -310,11 +361,12 @@ namespace Origins.Items {
 						return drops.Any(i => i.itemId == ItemID.DarkLance);
 					});
 					if (rule is not null) {
-						Array.Resize(ref rule.options, rule.options.Length + 4);
-						rule.options[^4] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>());
-						rule.options[^3] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>());
-						rule.options[^2] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>());
-						rule.options[^1] = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>());
+						rule.Add(
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>()),
+							//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>())
+						);
 						foundMain = true;
 					}
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));

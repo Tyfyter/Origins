@@ -1,16 +1,12 @@
-using Microsoft.Xna.Framework;
-using Origins.Tiles.Brine;
+using Origins.Dev;
+using Origins.Projectiles;
+using PegasusLib;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Projectiles;
-using Tyfyter.Utils;
-using System.IO;
-using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Sticky_Link_Grenade : ModItem, ICustomWikiStat {
+	public class Sticky_Link_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
@@ -30,7 +26,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
 			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 999;
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {

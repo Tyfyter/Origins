@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.Darksteel;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Handling_Device : ModItem, ICustomWikiStat {

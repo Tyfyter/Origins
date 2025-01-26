@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles.Cubekon;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -127,6 +128,15 @@ namespace Origins.Tiles.Riven {
 				TileObject.Place(objectData);
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
+			Tile above = Framing.GetTileSafely(i, j - 1);
+			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
+				if (Main.rand.NextBool(250)) {
+					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+				} else {
+					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
+				}
+				WorldGen.TileFrame(i, j - 1);
+			}
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
@@ -134,6 +144,7 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Flesh_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Flesh>());

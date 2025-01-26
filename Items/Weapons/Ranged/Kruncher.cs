@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
@@ -17,7 +16,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 6;
+			Item.damage = 4;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;
 			Item.crit = -1;

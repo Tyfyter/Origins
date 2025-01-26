@@ -2,14 +2,16 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 
 namespace Origins.Buffs {
 	public class Toxic_Shock_Debuff : ModBuff {
-		public const int stun_duration = 4;
+		public const int stun_duration = 30;
 		public const int default_duration = 60;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
+			Main.debuff[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().toxicShock = true;

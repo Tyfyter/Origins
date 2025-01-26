@@ -27,6 +27,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.magmaLeech = true;
 			originPlayer.lousyLiverCount = 5;
 			originPlayer.lousyLiverDebuffs.Add((Lousy_Liver_Debuff.ID, 9));
 			originPlayer.lousyLiverDebuffs.Add((BuffID.OnFire, 15));

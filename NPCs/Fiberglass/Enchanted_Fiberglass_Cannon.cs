@@ -20,6 +20,7 @@ using Mono.Cecil;
 using ThoriumMod.Empowerments;
 using Terraria.Audio;
 using Origins.Dusts;
+using Newtonsoft.Json.Linq;
 
 namespace Origins.NPCs.Fiberglass {
 	public class Enchanted_Fiberglass_Cannon : ModNPC {
@@ -29,13 +30,16 @@ namespace Origins.NPCs.Fiberglass {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.PossessedArmor);
 			NPC.aiStyle = 0;
 			NPC.damage = 10;
 			NPC.life = NPC.lifeMax = 57;
 			NPC.defense = 10;
 			NPC.noGravity = true;
 			NPC.width = NPC.height = 27;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.knockBackResist = 0.4f;
+			NPC.value = 500f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
@@ -89,7 +93,7 @@ namespace Origins.NPCs.Fiberglass {
 			if (hit.Damage > NPC.life * 2f) {
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore");
 			}
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");

@@ -34,6 +34,7 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(81, 81, 81), CreateMapEntryName());
+			DustType = DustID.Lead;
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => CheckInteract(true, i, j);
 		public override bool RightClick(int i, int j) => CheckInteract(false, i, j);

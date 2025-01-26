@@ -39,7 +39,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
-			player.endurance += (1 - player.endurance) * 0.05f;
+			player.endurance += (1 - player.endurance) * 0.15f;
 			player.lifeRegen += 4;
 		}
 	}

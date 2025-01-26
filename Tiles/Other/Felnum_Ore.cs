@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -24,7 +25,8 @@ namespace Origins.Tiles.Other {
 			mergeID = TileID.Demonite;
             MinPick = 65;
             MineResist = 3;
-        }
+			DustType = DustID.Electric;
+		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (!Main.tile[i, j].HasTile) return;
 			float v = (float)Math.Sin((Main.time - i) / 45) * 2;

@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -39,6 +40,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Stone_Item : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Stone>());

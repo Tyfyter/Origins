@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -15,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 
 			Item.shoot = ModContent.ProjectileType<Seal_Of_Cinders_Dust>();
-			Item.damage = 24;
+			Item.damage = 16;
 			Item.ArmorPenetration = 6;
 			Item.knockBack = 6;
 			Item.useTime = 15;
@@ -41,7 +40,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
-			Projectile.timeLeft = 30;
+			Projectile.timeLeft = 10;
 			Projectile.width = Projectile.height = 6;
 		}
 		public override void AI() {

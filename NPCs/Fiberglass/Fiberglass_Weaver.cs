@@ -55,7 +55,6 @@ namespace Origins.NPCs.Fiberglass {
 			weaponDropRule = null;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.PossessedArmor);
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -65,6 +64,8 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.aiStyle = 0;
 			NPC.width = NPC.height = 68;
 			NPC.knockBackResist = 0.1f;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.value = Item.buyPrice(gold: 5);
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
@@ -291,7 +292,7 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG1_Gore");
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG2_Gore");
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/FG3_Gore");

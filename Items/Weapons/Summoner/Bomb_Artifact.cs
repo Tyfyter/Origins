@@ -24,16 +24,16 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 80;
+			Item.damage = 65;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-			Item.mana = 40;
+			Item.mana = 36;
 			Item.width = 24;
 			Item.height = 38;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
@@ -51,8 +51,6 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Friendly_Bomb_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Friendly Bomb");
-			// Description.SetDefault("The bomb will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Bomb_Artifact.buffID = Type;
@@ -93,7 +91,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public float Life { get; set; }
 		public override void SetStaticDefaults() {
 			Bomb_Artifact.projectileID = Type;
-			// DisplayName.SetDefault("Friendly Bomb");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 11;
@@ -108,7 +105,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Origins.ForceFelnumShockOnShoot[Type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 30;
 			Projectile.height = 48;

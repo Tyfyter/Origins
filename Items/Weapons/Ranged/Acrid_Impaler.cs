@@ -7,12 +7,15 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
-        public new string[] Categories => [
-            "HarpoonGun",
+	public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
+		public new string[] Categories => [
+			"HarpoonGun",
 			"ToxicSource"
-        ];
-        public override void SetDefaults() {
+		];
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
+		public override void SetDefaults() {
 			Item.damage = 48;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
@@ -31,13 +34,13 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
 		}
-        public override void AddRecipes() {
-            Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
-        }
-        public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return Main.rand.NextBool(7);
 		}

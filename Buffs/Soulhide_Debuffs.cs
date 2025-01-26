@@ -6,6 +6,7 @@ namespace Origins.Buffs {
 	public class Shadefire_Debuff : ModBuff {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
@@ -16,6 +17,7 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override string Texture => "Terraria/Images/Buff_153";
 		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

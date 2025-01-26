@@ -19,8 +19,6 @@ namespace Origins.Tiles {
 				IDs = new List<OriginTile>() { this };
 			}
 			mergeID = Type;
-		}
-		protected void AddDefiledTile() {
 			if (this is IDefiledTile) {
 				if (DefiledTiles != null) {
 					DefiledTiles.Add(Type);
@@ -28,6 +26,8 @@ namespace Origins.Tiles {
 					DefiledTiles = [Type];
 				}
 			}
+		}
+		protected void AddDefiledTile() {
 		}
 	}
 	//temp solution

@@ -1,4 +1,5 @@
 using Origins.Dev;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -11,20 +12,24 @@ namespace Origins.Items.Armor.Cryosten {
             "ArmorSet"
         ];
         public override void SetDefaults() {
-			Item.defense = 2;
-			Item.value = Item.sellPrice(silver: 7);
+			Item.defense = 4;
+			Item.value = Item.sellPrice(1, silver: 50);
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().cryostenHelmet = true;
+			player.OriginPlayer().explosiveBlastRadius += 0.2f;
+			player.lifeRegenCount += 4;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Cryosten_Breastplate>() && legs.type == ModContent.ItemType<Cryosten_Greaves>();
+			if (body.type != ModContent.ItemType<Cryosten_Breastplate>() && body.type != ModContent.ItemType<Pink_Cryosten_Breastplate>()) return false;
+			return legs.type == ModContent.ItemType<Cryosten_Greaves>() || legs.type == ModContent.ItemType<Pink_Cryosten_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Cryosten");
-			player.GetModPlayer<OriginPlayer>().cryostenSet = true;
-			if (player.HasBuff(BuffID.Chilled)) player.buffTime[player.FindBuffIndex(BuffID.Chilled)]--;
-			if (player.HasBuff(BuffID.Frozen)) player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.cryostenSet = true;
+			originPlayer.explosiveProjectileSpeed += 0.1f;
+			player.buffImmune[BuffID.Chilled] = true;
+			player.buffImmune[BuffID.Frozen] = true;
 		}
 		public override void ArmorSetShadows(Player player) {
 			if (Main.rand.NextBool(5)) {
@@ -38,9 +43,9 @@ namespace Origins.Items.Armor.Cryosten {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.IceBlock, 45)
+			.AddIngredient(ItemID.EskimoHood)
+			.AddIngredient(ItemID.IceBlock, 30)
             .AddIngredient(ItemID.LifeCrystal)
-            .AddIngredient(ItemID.Shiverthorn, 4)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -51,39 +56,74 @@ namespace Origins.Items.Armor.Cryosten {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Cryosten_Breastplate : ModItem, INoSeperateWikiPage {
-		
 		public override void SetDefaults() {
-			Item.defense = 3;
-			Item.value = Item.sellPrice(silver: 7);
+			Item.defense = 4;
+			Item.value = Item.sellPrice(1, silver: 50);
 		}
 		public override void UpdateEquip(Player player) {
-			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.12);
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.cryostenBody = true;
+			originPlayer.explosiveBlastRadius += 0.2f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.IceBlock, 60)
-            .AddIngredient(ItemID.LifeCrystal)
-            .AddIngredient(ItemID.Shiverthorn, 6)
+			.AddIngredient(ItemID.EskimoCoat)
+			.AddIngredient(ItemID.IceBlock, 40)
+			.AddIngredient(ItemID.LifeCrystal)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Cryosten_Greaves : ModItem, INoSeperateWikiPage {
-		
 		public override void SetDefaults() {
-			Item.defense = 2;
-			Item.value = Item.sellPrice(silver: 7);
+			Item.defense = 4;
+			Item.value = Item.sellPrice(1, silver: 50);
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.05f;
-			player.iceSkate = true;
+			player.moveSpeed += 0.1f;
+			if (player.slippy) {
+				player.moveSpeed += 0.05f;
+			}
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
+			.AddIngredient(ItemID.EskimoPants)
+			.AddIngredient(ItemID.IceBlock, 20)
+			.AddIngredient(ItemID.LifeCrystal)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Pink_Cryosten_Helmet : Cryosten_Helmet {
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.PinkEskimoHood)
 			.AddIngredient(ItemID.IceBlock, 30)
-            .AddIngredient(ItemID.LifeCrystal)
-            .AddIngredient(ItemID.Shiverthorn, 2)
+			.AddIngredient(ItemID.LifeCrystal)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+	}
+	[AutoloadEquip(EquipType.Body)]
+	public class Pink_Cryosten_Breastplate : Cryosten_Breastplate {
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.PinkEskimoCoat)
+			.AddIngredient(ItemID.IceBlock, 40)
+			.AddIngredient(ItemID.LifeCrystal)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+	}
+	[AutoloadEquip(EquipType.Legs)]
+	public class Pink_Cryosten_Greaves : Cryosten_Greaves {
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.PinkEskimoPants)
+			.AddIngredient(ItemID.IceBlock, 20)
+			.AddIngredient(ItemID.LifeCrystal)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

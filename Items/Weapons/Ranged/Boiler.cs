@@ -9,10 +9,10 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Boiler : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public string[] Categories => [
-            "Gun"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"Gun"
+		];
+		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 		}
@@ -33,10 +33,13 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.consumeAmmoOnFirstShotOnly = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(2, 0);
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item41, player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 offset = Vector2.Normalize(velocity);
 			offset = offset * 24 + offset.RotatedBy(-MathHelper.PiOver2 * player.direction) * 8;
-			SoundEngine.PlaySound(SoundID.Item41, position + offset);
 			position += offset;
 			Item.reuseDelay = 36;
 			Lava_Shot.damageType = DamageClass.Ranged;

@@ -14,12 +14,20 @@ using PegasusLib.Graphics;
 
 namespace Origins.Items.Other.Dyes {
 	public abstract class Dye_Item : ModItem {
+		internal static List<Dye_Item> dyeItems = [];
 		public virtual bool UseShaderOnSelf => false;
 		public override void SetDefaults() {
 			int dye = Item.dye;
 			Item.CloneDefaults(ItemID.RedandBlackDye);
 			Item.dye = dye;
 		}
+		public override void Load() {
+			dyeItems.Add(this);
+		}
+		public override void Unload() {
+			dyeItems = null;
+		}
+		public virtual bool AddToDyeTrader(Player player) => true;
 		SpriteBatchState lastState;
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (!UseShaderOnSelf) {

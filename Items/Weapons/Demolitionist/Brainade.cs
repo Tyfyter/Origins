@@ -1,12 +1,10 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Brainade : ModItem, ICustomWikiStat {
+	public class Brainade : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
@@ -23,7 +21,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 25)

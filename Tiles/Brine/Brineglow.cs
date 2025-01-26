@@ -15,7 +15,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brineglow : OriginTile, IDefiledTile, IGlowingModTile {
+    public class Brineglow : OriginTile, IGlowingModTile {
         public string[] Categories => [
             "Plant"
         ];
@@ -24,8 +24,8 @@ namespace Origins.Tiles.Brine {
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, 0);
 		}
-		public static bool Glows(Tile tile) {
-			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+		public static bool Glows(int frameNumX, int frameNumY) {
+			switch ((frameNumX, frameNumY)) {
 				case (0, 0):
 				case (3, 0):
 				case (4, 0):
@@ -60,6 +60,7 @@ namespace Origins.Tiles.Brine {
 			}
 			return false;
 		}
+		public static bool Glows(Tile tile) => Glows(tile.TileFrameX / 18, tile.TileFrameY / 18);
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
@@ -86,7 +87,8 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
-				TileType<Sulphur_Stone>()
+				TileType<Baryte>(),
+				TileID.Mud,
 			];
 			TileObjectData.newTile.AnchorAlternateTiles = [
 				Type
@@ -94,13 +96,13 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;
-			DustType = DustID.JungleGrass;
+			DustType = DustID.GrassBlades;
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow_Item>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
+			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.19f; g = 0.33f; b = 0.44f;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {
@@ -116,11 +118,12 @@ namespace Origins.Tiles.Brine {
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			Tile below = Framing.GetTileSafely(i, j - 1);
-			if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Sulphur_Stone>())) {
+			if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Baryte>())) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}
-			List<(short x, short y)> frames = [
+			bool alreadyGlows = tile.TileFrameX < 0 ? WorldGen.genRand.NextBool(3) : Glows(tile);
+			List<(int x, int y)> frames = [
 				(0, 0),
 				(4, 0),
 				(5, 0),
@@ -149,7 +152,7 @@ namespace Origins.Tiles.Brine {
 				(11, 2),
 			];
 			if (below.TileIsType(Type)) {
-				frames.Remove(((short)(below.TileFrameX / 18), (short)(below.TileFrameY / 18)));
+				frames.Remove((below.TileFrameX / 18, below.TileFrameY / 18));
 			} else {
 				frames = [
 					(1, 2),
@@ -170,7 +173,7 @@ namespace Origins.Tiles.Brine {
 			}
 			Tile above = Framing.GetTileSafely(i, j + 1);
 			if (above.TileIsType(Type)) {
-				frames.Remove(((short)(above.TileFrameX / 18), (short)(above.TileFrameY / 18)));
+				frames.Remove((above.TileFrameX / 18, above.TileFrameY / 18));
 			} else {
 				frames = [
 					(1, 0),
@@ -203,10 +206,16 @@ namespace Origins.Tiles.Brine {
 					(8, 4),
 				];
 			}
-			if (!frames.Contains(((short)(tile.TileFrameX / 18), (short)(tile.TileFrameY / 18)))) {
-				(tile.TileFrameX, tile.TileFrameY) = WorldGen.genRand.Next(frames);
-				tile.TileFrameX *= 18;
-				tile.TileFrameY *= 18;
+			if (!frames.Contains((tile.TileFrameX / 18, tile.TileFrameY / 18))) {
+				int frameNumX = -1;
+				int frameNumY = 0;
+				while (frames.Count > 0 && (frameNumX == -1 || (Glows(frameNumX, frameNumY) != alreadyGlows))) {
+					int index = WorldGen.genRand.Next(frames.Count);
+					(frameNumX, frameNumY) = frames[index];
+					frames.RemoveAt(index);
+				}
+				tile.TileFrameX = (short)(frameNumX * 18);
+				tile.TileFrameY = (short)(frameNumY * 18);
 			}
 			return false;
 		}
@@ -353,6 +362,7 @@ namespace Origins.Tiles.Brine {
 			Item.createTile = TileType<Brineglow>();
 
 			Item.maxStack = 9999;
+			Item.rare = ItemRarityID.Orange;
 		}
 	}
 }

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -28,9 +30,9 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionYOverride = -28,
 				Velocity = 1f
 			};
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Vulture);
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
 			NPC.defense = 10;
@@ -69,6 +71,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Infusion>(), 38));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
@@ -211,7 +214,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(yMult: -0.5f), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 2; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}

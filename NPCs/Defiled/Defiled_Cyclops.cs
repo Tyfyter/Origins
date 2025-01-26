@@ -21,7 +21,6 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 110;
 			NPC.defense = 8;
@@ -32,6 +31,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 90;
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
@@ -100,7 +100,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_OnHit(NPC), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}

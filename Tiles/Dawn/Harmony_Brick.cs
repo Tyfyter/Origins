@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Cubekon;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,8 @@ namespace Origins.Tiles.Dawn {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(150, 30, 75));
+			DustType = DustID.Ice_Red;
+			HitSound = SoundID.Tink;
 		}
 	}
 	public class Harmony_Brick_Item : ModItem {

@@ -14,15 +14,14 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Tools {
 	public class Strainer : ModItem {
-		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LaserDrill);
 			Item.damage = 13;
 			Item.DamageType = DamageClass.Melee;
-			Item.pick = 75;
+			Item.pick = 65;
 			Item.width = 36;
 			Item.height = 24;
-			Item.useTime = 13;
+			Item.useTime = 15;
 			Item.useAnimation = 22;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(silver: 40);
@@ -83,8 +82,8 @@ namespace Origins.Items.Tools {
 						float tileBoost = player.HeldItem.tileBoost;
 						Vector2 tileRange = new Vector2(Player.tileRangeX + tileBoost, Player.tileRangeY + tileBoost) * 16;
 						Vector2 mouseOffset = Main.MouseWorld - playerCenter;
-
-						if (GetIntersectionPoints(Vector2.Zero, mouseOffset, -tileRange, tileRange, out var intersections)) {
+						
+						if (GeometryUtils.GetIntersectionPoints(Vector2.Zero, mouseOffset, -tileRange, tileRange, out List<Vector2> intersections)) {
 							offset = (PolarVec2)intersections[0];
 						} else {
 							offset = (PolarVec2)mouseOffset;

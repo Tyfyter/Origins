@@ -23,6 +23,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(40, 148, 207), name);
 			mergeID = TileID.Crimtane;
 			HitSound = SoundID.Tink;
+			DustType = DustID.Astra;
         }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.02f * GlowValue;

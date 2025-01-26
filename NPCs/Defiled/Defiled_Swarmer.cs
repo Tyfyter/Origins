@@ -23,7 +23,6 @@ namespace Origins.NPCs.Defiled {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 			NPC.lifeMax = NPC.life = 20;
 			NPC.defense = 8;
@@ -31,7 +30,6 @@ namespace Origins.NPCs.Defiled {
 			NPC.width = 28;
 			NPC.height = 26;
 			NPC.friendly = false;
-			NPC.catchItem = 0;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			SpawnModBiomes = [
@@ -53,6 +51,7 @@ namespace Origins.NPCs.Defiled {
 				this.GetBestiaryFlavorText()
 			);
 		}
+		public override bool? CanFallThroughPlatforms() => true;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 2, 2, 4));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Lost_Ore_Item>(), 2, 2, 4));
@@ -86,7 +85,7 @@ namespace Origins.NPCs.Defiled {
 			Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
 		}

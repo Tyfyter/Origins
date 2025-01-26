@@ -21,6 +21,7 @@ namespace Origins.Items.Accessories {
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			player.GetCritChance(DamageClass.Generic) += 5f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.venomFang = true;
 			originPlayer.unsoughtOrgan = true;
 			originPlayer.unsoughtOrganItem = Item;
 		}
@@ -44,9 +45,6 @@ namespace Origins.Items.Accessories {
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
 		}
 	}
 }

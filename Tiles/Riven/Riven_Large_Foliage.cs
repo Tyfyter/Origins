@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs.Critters;
+using Origins.World.BiomeData;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,8 +11,17 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Large_Foliage : ModTile {
+	public class Riven_Large_Foliage : ModTile, IGlowingModTile {
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
+		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = false;
 			Main.tileNoFail[Type] = true;
@@ -48,5 +60,10 @@ namespace Origins.Tiles.Riven {
 			}
 			yield break;
 		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }

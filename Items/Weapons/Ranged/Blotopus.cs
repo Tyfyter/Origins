@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
 		];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			Origins.FlatDamageMultiplier[Type] = 4f / 8f;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.PurpleClubberfish] = ModContent.ItemType<Blotopus>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Blotopus>()] = ModContent.ItemType<Manasynk>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Manasynk>()] = ModContent.ItemType<Ocotoral_Bud>();

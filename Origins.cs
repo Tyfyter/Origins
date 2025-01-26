@@ -1,6 +1,4 @@
-global using Vector2 = Microsoft.Xna.Framework.Vector2;
-global using Color = Microsoft.Xna.Framework.Color;
-using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Origins.Gores.NPCs;
@@ -43,6 +41,9 @@ using Origins.Items.Tools;
 using Microsoft.Xna.Framework.Audio;
 using Origins.Buffs;
 using PegasusLib;
+using Origins.Items.Other.Consumables;
+using CalamityMod.Items.Placeables.FurnitureAuric;
+using Origins.Items;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -68,20 +69,29 @@ namespace Origins {
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
 		static bool[] itemsThatAllowRemoteRightClick;
 		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
+		static float[] damageBonusScale;
+		public static float[] DamageBonusScale { get => damageBonusScale; }
 		static bool[] brothBuffs;
 		public static bool[] BrothBuffs { get => brothBuffs; }
 		static bool[] isFineWithCrowdedParties;
 		public static bool[] IsFineWithCrowdedParties { get => isFineWithCrowdedParties; }
+		static bool[] tileTransformsOnKill;
+		public static bool[] TileTransformsOnKill { get => tileTransformsOnKill; }
+		static bool[] tileBlocksMinecartTracks;
+		public static bool[] TileBlocksMinecartTracks { get => tileBlocksMinecartTracks; }
+		static bool[] wallBlocksMinecartTracks;
+		public static bool[] WallBlocksMinecartTracks { get => wallBlocksMinecartTracks; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
 		public static Dictionary<int, (ushort pileType, int minStyle, int maxStyle)> PileType { get; private set; }
-		public static ModKeybind SetBonusTriggerKey { get; private set; }
-		public static ModKeybind InspectItemKey { get; private set; }
 		#region Armor IDs
 		public static int FelnumHeadArmorID { get; private set; }
 		public static int FelnumBodyArmorID { get; private set; }
 		public static int FelnumLegsArmorID { get; private set; }
+		public static int AncientFelnumHeadArmorID { get; private set; }
+		public static int AncientFelnumBodyArmorID { get; private set; }
+		public static int AncientFelnumLegsArmorID { get; private set; }
 
 		public static int PlagueTexanJacketID { get; private set; }
 
@@ -158,15 +168,18 @@ namespace Origins {
 			FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().Item.headSlot;
 			FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().Item.bodySlot;
 			FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().Item.legSlot;
+			AncientFelnumHeadArmorID = ModContent.GetInstance<Ancient_Felnum_Helmet>().Item.headSlot;
+			AncientFelnumBodyArmorID = ModContent.GetInstance<Ancient_Felnum_Breastplate>().Item.bodySlot;
+			AncientFelnumLegsArmorID = ModContent.GetInstance<Ancient_Felnum_Greaves>().Item.legSlot;
 			PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().Item.bodySlot;
 			RiftHeadArmorID = ModContent.GetInstance<Bleeding_Obsidian_Helmet>().Item.headSlot;
 			RiftBodyArmorID = ModContent.GetInstance<Bleeding_Obsidian_Breastplate>().Item.bodySlot;
 			RiftLegsArmorID = ModContent.GetInstance<Bleeding_Obsidian_Greaves>().Item.legSlot;
 			#endregion
 			//Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
-			Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
-			Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
-			Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
+			//Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
+			//Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
+			//Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
 			for (int oID = 0; oID < OriginTile.IDs.Count; oID++) {
 				OriginTile oT = OriginTile.IDs[oID];
 				if (oT.mergeID == oT.Type) continue;
@@ -178,9 +191,8 @@ namespace Origins {
 				for (int i = 0; i < TileLoader.TileCount; i++) {
 					if (Main.tileMerge[oT.mergeID][i]) {
 						Main.tileMerge[i][oT.Type] = true;
-						Main.tileMerge[oT.Type][i] = true;
-					} else if (Main.tileMerge[i][oT.mergeID]) {
-						Main.tileMerge[oT.Type][i] = true;
+					}
+					if (Main.tileMerge[i][oT.mergeID]) {
 						Main.tileMerge[i][oT.Type] = true;
 					}
 				}
@@ -488,6 +500,9 @@ namespace Origins {
 			ChatManager.Register<Item_Name_Handler>([
 				"itemname"
 			]);
+			ChatManager.Register<Imperfect_Item_Name_Handler>([
+				"imperfect"
+			]);
 			ChatManager.Register<Player_Name_Handler>([
 				"player",
 				"you"
@@ -498,8 +513,6 @@ namespace Origins {
 			ChatManager.Register<Evil_Handler>([
 				"evil"
 			]);
-			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
-			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
@@ -563,6 +576,30 @@ namespace Origins {
 			Sounds.LaserTag.Score = new SoundStyle("Origins/Sounds/Custom/LaserTag/Score", SoundType.Sound) {
 				MaxInstances = 0
 			};
+			Sounds.Lightning = new SoundStyle("Origins/Sounds/Custom/ThunderShot", SoundType.Sound) {
+				MaxInstances = 0
+			}.WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f);
+			Sounds.LightningSounds = [
+				Sounds.Lightning,
+				new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f)
+			];
+			Sounds.LightningCharging = new SoundStyle("Origins/Sounds/Custom/ChargedUp", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true
+			};
+			Sounds.LightningChargingSoft = new SoundStyle("Origins/Sounds/Custom/ChargedUpSmol", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true
+			};
+			Sounds.LittleZap = new SoundStyle("Origins/Sounds/Custom/ChainZap", SoundType.Sound) {
+				MaxInstances = 5,
+				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
+				PitchVariance = 0.4f
+			};
+			Sounds.Bonk = new SoundStyle("Origins/Sounds/Custom/GrandSlam", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchVariance = 0.4f
+			};
 			//OriginExtensions.initClone();
 			Music.LoadMusic();
 
@@ -570,6 +607,7 @@ namespace Origins {
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 #if DEBUG
+			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 #endif
 		}
@@ -582,6 +620,7 @@ namespace Origins {
 			RasterizeAdjustment = null;
 			homingEffectivenessMultiplier = null;
 			itemsThatAllowRemoteRightClick = null;
+			damageBonusScale = null;
 			brothBuffs = null;
 			isFineWithCrowdedParties = null;
 			PotType = null;
@@ -606,6 +645,7 @@ namespace Origins {
 			BreastplateGlowMasks = null;
 			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
+			Music.musicDisplay = null;
 			instance = null;
 			Petrified_Tree.Unload();
 			OriginExtensions.unInitExt();
@@ -759,9 +799,9 @@ namespace Origins {
 		public static short AddGlowMask(ModTexturedType content, string suffix = "_Glow") {
 			return AddGlowMask(content.Texture + suffix);
 		}
-		internal static void AddHelmetGlowmask(ModItem modItem) => AddHelmetGlowmask(modItem.Item.headSlot, $"{modItem.Texture}_{EquipType.Head}_Glow");
-		internal static void AddBreastplateGlowmask(ModItem modItem) => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}_Glow");
-		internal static void AddLeggingGlowMask(ModItem modItem) => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}_Glow");
+		internal static void AddHelmetGlowmask(ModItem modItem, string suffix = "_Glow") => AddHelmetGlowmask(modItem.Item.headSlot, $"{modItem.Texture}_{EquipType.Head}{suffix}");
+		internal static void AddBreastplateGlowmask(ModItem modItem, string suffix = "_Glow") => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}{suffix}");
+		internal static void AddLeggingGlowMask(ModItem modItem, string suffix = "_Glow") => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}{suffix}");
 		internal static void AddHelmetGlowmask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
 				HelmetGlowMasks.Add(armorID, asset);
@@ -798,8 +838,12 @@ namespace Origins {
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
+			damageBonusScale = ItemID.Sets.Factory.CreateFloatSet(1f);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
+			tileTransformsOnKill = TileID.Sets.Factory.CreateBoolSet(false);
+			tileBlocksMinecartTracks = TileID.Sets.Factory.CreateBoolSet(false);
+			wallBlocksMinecartTracks = WallID.Sets.Factory.CreateBoolSet(false);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
@@ -848,21 +892,51 @@ namespace Origins {
 			public static int RivenBoss;
 			public static int RivenOcean;
 			public static int AncientRiven;
+			internal static Mod musicDisplay;
 			internal static void LoadMusic() {
+				ModLoader.TryGetMod("MusicDisplay", out musicDisplay);
 				static int GetMusicSlot(string path) {
 					MusicLoader.AddMusic(instance, path);
-					return MusicLoader.GetMusicSlot(instance, path);
+					int slot = MusicLoader.GetMusicSlot(instance, path);
+					if (slot != -1 && musicDisplay is not null) {
+						string track = path.Split("/")[^1];
+						musicDisplay.Call("AddMusic",
+							(short)slot,
+							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
+							"chrersis",
+							Origins.instance.DisplayName
+						);
+					}
+					return slot;
+				}
+				static int GetMusicSlotNew(string path) {
+					path = "Sounds/Music/Volume II/" + path;
+					MusicLoader.AddMusic(instance, path);
+					int slot = MusicLoader.GetMusicSlot(instance, path);
+					if (slot != -1 && musicDisplay is not null) {
+						string track = path.Split("/")[^1];
+						musicDisplay.Call("AddMusic",
+							(short)slot,
+							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
+							"gojisturba",
+							Origins.instance.DisplayName
+						);
+					}
+					return slot;
 				}
 				Fiberglass = GetMusicSlot("Music/The_Room_Before");
-				BrinePool = GetMusicSlot("Music/Below_The_Brine");
+				BrinePool = GetMusicSlotNew("Deep_Luminance");
 				Dusk = GetMusicSlot("Music/Dancing_With_Ghosts");
-				Defiled = GetMusicSlot("Music/Stolen_Memories");
-				UndergroundDefiled = GetMusicSlot("Music/Heart_Of_The_Beast");
-				DefiledBoss = GetMusicSlot("Music/ADJUDICATE");
-				Riven = GetMusicSlot("Music/Pereunt_Unum_Scindendum");
-				UndergroundRiven = GetMusicSlot("Music/Festering_Hives");
-				RivenBoss = GetMusicSlot("Music/Ad_Laceratur");
-				RivenOcean = GetMusicSlot("Music/This_Ocean_Of_Alkahest");
+
+				Defiled = GetMusicSlotNew("Wasteland");
+				UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
+				DefiledBoss = GetMusicSlotNew("ADJUDICATE");
+
+				Riven = GetMusicSlotNew("Skin");
+				UndergroundRiven = GetMusicSlotNew("Internal_Organism");
+				RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
+				RivenOcean = GetMusicSlotNew("Alkahest");
+
 				AncientDefiled = GetMusicSlot("Music/Shattered_Topography_Old");
 				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}
@@ -886,6 +960,16 @@ namespace Origins {
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 			public static SoundStyle IMustScream = SoundID.Roar;
 
+			public static SoundStyle Lightning = SoundID.Roar;
+			public static SoundStyle LightningCharging = SoundID.Roar;
+			public static SoundStyle LightningChargingSoft = SoundID.Roar;
+			public static SoundStyle[] LightningSounds = [];
+			public static SoundStyle LittleZap = SoundID.Roar;
+
+			public static SoundStyle Bonk = SoundID.Roar;
+			public static void Unload() {
+				LightningSounds = null;
+			}
 			public static class LaserTag {
 				public static SoundStyle Hurt = SoundID.DSTMaleHurt;
 				public static SoundStyle Death = SoundID.DD2_KoboldDeath;
@@ -909,6 +993,14 @@ namespace Origins {
 		public static void LogLoadingWarning(LocalizedText message) {
 			instance.Logger.Warn(message.Value);
 			loadingWarnings.Add(message);
+		}
+		public static bool LogLoadingILError(string methodName, Exception exception) {
+#if DEBUG
+			return true;
+#else
+			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName, exception));
+			return false;
+#endif
 		}
 	}
 }

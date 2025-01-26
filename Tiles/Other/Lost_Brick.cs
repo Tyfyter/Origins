@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(151, 151, 151));
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}
 	public class Lost_Brick_Item : ModItem {

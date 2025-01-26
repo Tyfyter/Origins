@@ -17,7 +17,7 @@ ACME_Crate: {
 	DisplayName: ACME Crate
 	Tooltip:
 		'''
-		Greatly increased explosive blast radius
+		40% increased explosive blast radius
 		Explosives will detonate near enemies
 		'''
 }
@@ -75,12 +75,12 @@ Automated_Returns_Handler: {
 
 Blast_Resistant_Plate: {
 	DisplayName: Blast-Resistant Plate
-	Tooltip: Reduces explosive self-damage by 10%
+	Tooltip: Reduces explosive self-damage by 20%
 }
 
 Bomb_Charm: {
 	DisplayName: Bomb Charm
-	Tooltip: Reduces explosive self-damage by 15%
+	Tooltip: Reduces explosive self-damage by 20%
 }
 
 Bomb_Handling_Device: {
@@ -96,7 +96,7 @@ Boomerang_Magnet: {
 	DisplayName: Boomerang Magnet
 	Tooltip:
 		'''
-		Increased return speed for boomerangs and harpoons
+		Increased return speed for boomerangs and harpoon guns
 		Increases pickup range for items
 		'''
 }
@@ -170,19 +170,19 @@ CFHES: {
 	Tooltip:
 		'''
 		All explosives inflict 'On Fire!' and have a reduced fuse time
-		Greatly increased explosive blast radius
+		60% increased explosive blast radius
 		Explosives will detonate near enemies
 		'''
 }
 
 Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
-	Tooltip: The five nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+	Tooltip: Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
 }
 
 Comb: {
 	DisplayName: Comb
-	Tooltip: 3% increased damage
+	Tooltip: 5% increased damage
 }
 
 Coologne: {
@@ -204,7 +204,7 @@ Dash_Ravel: {
 	DisplayName: Dash Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball that damages enemies as it moves
+		Use the mount key to transform into a small, rolling ball that damages enemies as it moves
 		Double tap a direction to dash and instantly morph
 		'''
 }
@@ -213,7 +213,7 @@ Venom_Fang: {
 	DisplayName: Venom Fang
 	Tooltip:
 		'''
-		Attacks inflict 'Toxic Shock' on enemies
+		Attacks inflict Toxic Shock
 		Effects are stronger while Acrid Armor is equipped
 		'''
 }
@@ -222,7 +222,7 @@ Depth_Ravel: {
 	DisplayName: Depth Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		Grants extreme underwater capabilities
 		'''
 }
@@ -255,6 +255,7 @@ Dryads_Inheritance: {
 	DisplayName: Dryad's Inheritance
 	Tooltip:
 		'''
+		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Emit a damaging aura that inflicts poison
 		'''
@@ -281,7 +282,11 @@ Entangled_Energy: {
 
 Exploder_Emblem: {
 	DisplayName: Exploder Emblem
-	Tooltip: 5% increased explosive damage
+	Tooltip:
+		'''
+		15% increased explosive damage
+		Reduces armor penetration by 3
+		'''
 }
 
 Explosive_Artery: {
@@ -337,7 +342,7 @@ Fleshy_Figurine: {
 	Tooltip:
 		'''
 		Attacks tenderize targets
-		{$Mods.Origins.Items.GenericTooltip.TornSeverity}
+		+20% Torn severity
 		'''
 }
 
@@ -375,7 +380,6 @@ Haggard_Artery: {
 	Tooltip:
 		'''
 		All attacks inflict Bleeding
-		Prevents Defiled enemies from regenerating
 		Nearby bleeding enemies occasionally explode
 		'''
 }
@@ -436,6 +440,7 @@ Last_Descendant: {
 	DisplayName: Last Descendant
 	Tooltip:
 		'''
+		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Additionally causes stars to fall after taking damage
 		'''
@@ -452,18 +457,23 @@ Lazy_Cloak: {
 
 Locket_Necklace: {
 	DisplayName: Locket Necklace
-	Tooltip: Increases damage and movement speed after taking damage
+	Tooltip:
+		'''
+		5% increased damage
+		Increases damage and movement speed after taking damage
+		'''
 }
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: The four nearest enemies will be afflicted with Rasterized
+	Tooltip: Four of the nearest enemies will be afflicted with Rasterized
 }
 
 Lovers_Leap: {
 	DisplayName: Lover's Leap
 	Tooltip:
 		'''
+		5% increased damage
 		The wearer can run super fast and even faster after taking damage
 		Allows the player to dash into the enemy
 		Double tap a direction
@@ -507,27 +517,19 @@ Mana_Drive: {
 
 Messy_Leech: {
 	DisplayName: Messy Leech
-	Tooltip:
-		'''
-		All attacks inflict Bleeding
-		Prevents Defiled enemies from regenerating
-		'''
+	Tooltip: All attacks inflict Bleeding
 }
 
 Messy_Magma_Leech: {
 	DisplayName: Messy Magma Leech
-	Tooltip:
-		'''
-		All attacks inflict Bleeding and set enemies ablaze
-		Prevents Defiled enemies from regenerating
-		'''
+	Tooltip: All attacks inflict Bleeding and set enemies ablaze
 }
 
 Missile_Armcannon: {
 	DisplayName: Missile Armcannon
 	Tooltip:
 		'''
-		30% increased explosive throwing velocity
+		25% increased explosive throwing velocity
 		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases explosive attack speed
@@ -549,6 +551,8 @@ Salty_Seed: {
 Mojo_Injection: {
 	DisplayName: Mojo Injection
 	Tooltip: Slowly reduces assimilation
+	Toggle_On: "{$Mods.Origins.Items.Mojo_Injection.DisplayName} on"
+	Toggle_Off: "{$Mods.Origins.Items.Mojo_Injection.DisplayName} off"
 }
 
 Mysterious_Spray: {
@@ -564,7 +568,7 @@ Ninja_Ravel: {
 	DisplayName: Ninja Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		You may cling to walls and ceilings when raveled
 		Enemies are less likely to target you while raveled
 		'''
@@ -572,14 +576,14 @@ Ninja_Ravel: {
 
 Nitro_Crate: {
 	DisplayName: Nitro Crate
-	Tooltip: Increases explosive blast radius by 40%
+	Tooltip: Increases explosive blast radius by 20%
 }
 
 No_U_Card: {
 	DisplayName: No U Card
 	Tooltip:
 		'''
-		Attackers receive 50% of incoming damage and debuffs regardless of immunity
+		Attackers receive all incoming damage and debuffs regardless of immunity
 		Immune to most debuffs
 		'''
 }
@@ -679,12 +683,12 @@ Protozoa_Food: {
 
 Ravel: {
 	DisplayName: Ravel
-	Tooltip: Double tap down to transform into a small, rolling ball
+	Tooltip: Use the mount key to transform into a small, rolling ball
 }
 
 Razorwire: {
 	DisplayName: Razorwire
-	Tooltip: 67% of damage received is split across 3 enemies
+	Tooltip: All damage received is reflected to 3 nearby enemies
 }
 
 Rebreather: {
@@ -781,14 +785,14 @@ Shrap_Stack: {
 
 Speed_Ravel: {
 	DisplayName: Speed Ravel
-	Tooltip: Double tap down to transform into a small, rolling ball that moves very fast
+	Tooltip: Use the mount key to transform into a small, rolling ball that moves very fast
 }
 
 Spider_Ravel: {
 	DisplayName: Spider Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		You may cling to walls and ceilings when raveled
 		'''
 }
@@ -802,7 +806,7 @@ Stealth_Ravel: {
 	DisplayName: Stealth Ravel
 	Tooltip:
 		'''
-		Double tap down to transform into a small, rolling ball
+		Use the mount key to transform into a small, rolling ball
 		Enemies are much less likely to target you when raveled
 		'''
 }
@@ -855,7 +859,7 @@ Symbiote_Skull: {
 
 Tainted_Flesh: {
 	DisplayName: Tainted Flesh
-	Tooltip: "{$Mods.Origins.Items.GenericTooltip.TornSeverity}"
+	Tooltip: +10% Torn severity
 }
 
 Third_Eye: {
@@ -874,7 +878,11 @@ Trap_Charm: {
 
 Tripod_Nip: {
 	DisplayName: Tripod Nip
-	Tooltip: Reduces enemy aggression and spawn rates
+	Tooltip:
+		'''
+		Reduces enemy aggression and spawn rates
+		Defiled Tripods become friendly
+		'''
 }
 
 Pneumatic_Bomb_Thrower: {
@@ -895,8 +903,9 @@ Unsought_Organ: {
 	DisplayName: Unsought Organ
 	Tooltip:
 		'''
-		Half of damage received is split across 3 enemies, inflicting 'Toxic Shock'
+		All damage received is reflected to 3 nearby enemies, inflicting 'Toxic Shock'
 		5% increased damage and critical strike chance
+		All attacks inflict Toxic Shock
 		Enemies are less likely to target you
 		'''
 }
@@ -961,7 +970,7 @@ Acrid_Mask: {
 	Tooltip:
 		'''
 		10% increased summoning damage
-		+1 minion slot
+		+2 minion slots
 		Effects stronger when submerged
 		Emit a small aura of light
 		'''
@@ -1007,23 +1016,31 @@ Chromtain_Helmet: {
 	Tooltip: ""
 }
 
+Cryosten_Helmet: {
+	DisplayName: Cryosten Helmet
+	Tooltip:
+		'''
+		+20% explosive blast radius
+		Increased life regeneration
+		'''
+}
+
 Cryosten_Breastplate: {
 	DisplayName: Cryosten Breastplate
-	Tooltip: 12% increased maximum life
+	Tooltip:
+		'''
+		+20% explosive blast radius
+		8% increased maximum life
+		'''
 }
 
 Cryosten_Greaves: {
 	DisplayName: Cryosten Greaves
 	Tooltip:
 		'''
-		5% increased movement speed
+		10% increased movement speed
 		Increased movement speed on ice
 		'''
-}
-
-Cryosten_Helmet: {
-	DisplayName: Cryosten Helmet
-	Tooltip: Increased life regeneration
 }
 
 Ashen_Breastplate: {
@@ -1093,7 +1110,7 @@ Scavenger_Breastplate: {
 
 Scavenger_Helmet: {
 	DisplayName: Scavenger Goggles
-	Tooltip: +10% explosive critical strike chance
+	Tooltip: +8% explosive critical strike chance
 }
 
 Scavenger_Greaves: {
@@ -1235,7 +1252,7 @@ Ancient_Hallowed_Visage: {
 	Tooltip:
 		'''
 		+15% explosive velocity
-		+8% explosive critical strike chance
+		+15% explosive critical strike chance
 		'''
 }
 
@@ -1263,7 +1280,7 @@ Hallowed_Visage: {
 	Tooltip:
 		'''
 		+15% explosive velocity
-		+8% explosive critical strike chance
+		+15% explosive critical strike chance
 		'''
 }
 
@@ -1287,7 +1304,7 @@ Riptide_Breastplate: {
 	Tooltip:
 		'''
 		Emit a small aura of light
-		+60 mana capacity
+		+40 mana capacity
 		'''
 }
 
@@ -1455,7 +1472,7 @@ Bleeding_Obsidian_Shard: {
 	Tooltip: "'Weakens those who touch it'"
 }
 
-Bottled_Brine.DisplayName: Bottled Brine
+Alkaliphiliac_Tissue.DisplayName: Alkaliphiliac Tissue
 
 Brineglow_Item: {
 	DisplayName: Brineglow
@@ -2052,7 +2069,11 @@ Dissector: {
 
 Felnum_Hamaxe: {
 	DisplayName: Felnum Hamaxe
-	Tooltip: "'Its strikes sound like thunder'"
+	Tooltip:
+		'''
+		<right> to throw
+		'Its strikes sound like thunder'
+		'''
 }
 
 Felnum_Pickaxe: {
@@ -2149,28 +2170,38 @@ Harpoon: {
 	Tooltip: Used as ammo for harpoon guns
 }
 
-Resizable_Mine_Five: {
-	DisplayName: Resizable Mine Mk. V
+Resizable_Mine_Wood: {
+	DisplayName: Resizable Mine I
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
-Resizable_Mine_Four: {
-	DisplayName: Resizable Mine Mk. IV
+Resizable_Mine_Iron: {
+	DisplayName: Resizable Mine II
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
-Resizable_Mine_One: {
-	DisplayName: Resizable Mine Mk. I
+Resizable_Mine_Evil: {
+	DisplayName: Resizable Mine III
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
-Resizable_Mine_Three: {
-	DisplayName: Resizable Mine Mk. III
+Resizable_Mine_Hellstone: {
+	DisplayName: Resizable Mine IV
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
-Resizable_Mine_Two: {
-	DisplayName: Resizable Mine Mk. II
+Resizable_Mine_Bleeding_Obsidian: {
+	DisplayName: Resizable Mine V
+	Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Chlorophyte: {
+	DisplayName: Resizable Mine VI
+	Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Luminite: {
+	DisplayName: Resizable Mine VII
 	Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
@@ -2266,7 +2297,7 @@ Boomphracken: {
 	DisplayName: Boomphracken
 	Tooltip:
 		'''
-		Chance to throw an explosive when used
+		Allows you to quickly throw explosives in your inventory after use
 		'He works his work, I work mine'
 		'''
 }
@@ -2984,11 +3015,7 @@ Bone_Latcher: {
 
 Brainy_Staff: {
 	DisplayName: Brainy Staff
-	Tooltip:
-		'''
-		Summons a mini crimbrain to fight for you
-		Uses 2 minion slots
-		'''
+	Tooltip: Summons a mini crimbrain to fight for you
 }
 
 Eyeball_Staff: {
@@ -3051,8 +3078,8 @@ Eitrite_Ore_Item: {
 	Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 }
 
-Sulphur_Stone_Item: {
-	DisplayName: Dolomite
+Baryte_Item: {
+	DisplayName: Baryte
 	Tooltip: ""
 }
 
@@ -3200,7 +3227,7 @@ Laser_Tag_Console_Item: {
 
 Traffic_Cone_Item: {
 	DisplayName: Traffic Cone
-	Tooltip: ""
+	Tooltip: Slows enemies when placed
 }
 
 Acetabularia_Item: {
@@ -3210,7 +3237,7 @@ Acetabularia_Item: {
 
 Amoeba_Fluid_Item: {
 	DisplayName: Amoeba Fluid
-	Tooltip: ""
+	Tooltip: Bouncy! Bouncy! Bouncy!
 }
 
 Encrusted_Ore_Item: {
@@ -3283,8 +3310,8 @@ Riven_Flesh_Wall_Item: {
 	Tooltip: ""
 }
 
-Sulphur_Stone_Wall_Item: {
-	DisplayName: Sulphur Stone Wall
+Baryte_Wall_Item: {
+	DisplayName: Baryte Wall
 	Tooltip: ""
 }
 
@@ -3525,7 +3552,7 @@ Shield_of_Retribution: {
 	Tooltip:
 		'''
 		Grants immunity to knockback and fire blocks
-		67% of damage received is redirected to 3 enemies
+		All damage received is reflected to 3 nearby enemies
 		'''
 }
 
@@ -3632,7 +3659,7 @@ Sunflower_Seed_Shooter: {
 	Tooltip:
 		'''
 		Uses sunflowers as ammo
-		25% chance not to consume ammo
+		80% chance not to consume ammo
 		'''
 }
 
@@ -3710,7 +3737,7 @@ Playtimes_Over: {
 	Tooltip:
 		'''
 		Attacks tenderize targets
-		+13% applied torn severity
+		+20% applied torn severity
 		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
 		'''
 }
@@ -3719,7 +3746,7 @@ Bomb_Charm_of_Regeneration: {
 	DisplayName: Bomb Charm of Regeneration
 	Tooltip:
 		'''
-		-15% self-damage
+		-20% self-damage
 		Rapidly regenerate life after taking self-damage
 		'''
 }
@@ -3786,7 +3813,11 @@ Gelled_Knife: {
 
 Forbidden_Voice: {
 	DisplayName: Forbidden Voice
-	Tooltip: You are Silenced, but the mouth will attack for you
+	Tooltip:
+		'''
+		You are Silenced, press <key> to silence everyone else too
+		Gain up to 10% damage resistance over time by not speaking
+		'''
 }
 
 Snipers_Mark: {
@@ -3897,7 +3928,7 @@ CORE_Generator: {
 	DisplayName: CORE Generator
 	Tooltip:
 		'''
-		30% increased explosive throwing velocity
+		25% increased explosive throwing velocity
 		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases damage, movement speed, and length of invincibility after taking damage
@@ -4067,7 +4098,7 @@ Blast_Breastplate: {
 	Tooltip:
 		'''
 		Immune to knockback
-		-5% self-damage
+		-10% self-damage
 		'''
 }
 
@@ -4078,7 +4109,7 @@ Blast_Greaves: {
 		+25% movement speed
 		+2% acceleration
 		Increased jump speed
-		-5% self-damage
+		-10% self-damage
 		'''
 }
 
@@ -4086,8 +4117,8 @@ Blast_Helmet: {
 	DisplayName: Blast Helmet
 	Tooltip:
 		'''
-		+10% generic critical strike chance
-		-5% self-damage
+		+16% generic critical strike chance
+		-10% self-damage
 		'''
 }
 
@@ -4318,7 +4349,12 @@ Communion: {
 
 Forbidden_Voice_Uncursed: {
 	DisplayName: Forbidden Voice
-	Tooltip: The mouth will spit at nearby enemies
+	Tooltip:
+		'''
+		10% increased melee damage
+		Increases the size of melee weapons
+		Your attacks weaken enemies
+		'''
 }
 
 Breach: {
@@ -4396,6 +4432,7 @@ Speed_Booster: {
 		The wearer can run super fast and even faster after taking damage
 		Allows the user to climb walls and dash into enemies
 		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		5% increased damage
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash
 		'''
@@ -4490,7 +4527,11 @@ Phantom_Fury: {
 
 ASH_Attack_Relay: {
 	DisplayName: A.S.H. Attack Relay
-	Tooltip: Releases explosive ashes that home towards your aggressors upon taking damage
+	Tooltip:
+		'''
+		+5% damage
+		Releases explosive ashes that home towards your aggressors upon taking damage
+		'''
 }
 
 Indestructible_Saddle: {
@@ -4519,7 +4560,7 @@ Scrap_Barrier: {
 
 Scrap_Barrier_Uncursed: {
 	DisplayName: Scrap Barrier
-	Tooltip: 5% damage reduction and slightly increased life regeneration
+	Tooltip: 15% damage reduction and increased life regeneration
 }
 
 Laser_Tag_Vest: {
@@ -4585,7 +4626,7 @@ Slag_Bucket: {
 		40% damage reduction while above 80% of maximum life
 		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
 		Grants immunity to knockback, fire blocks, and impeding shrapnel
-		67% of damage received is redirected to 3 enemies
+		All damage received is reflected to 3 nearby enemies
 		You regenerate life while on fire
 		'''
 }
@@ -4594,9 +4635,9 @@ Slag_Bucket_Uncursed: {
 	DisplayName: Slag Bucket
 	Tooltip:
 		'''
-		5% damage reduction and slightly increased life regeneration
+		15% damage reduction and increased life regeneration
 		Grants immunity to knockback, fire blocks, and impeding shrapnel
-		67% of damage received is redirected to 3 enemies
+		All damage received is reflected to 3 nearby enemies
 		You regenerate life while on fire
 		'''
 }
@@ -4708,10 +4749,250 @@ Hearty_Broth: {
 
 Partybringer: {
 	DisplayName: Partybringer
-	Tooltip: ""
+	Tooltip: Fires presents that bring pleasant surprises
 }
 
 The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
 	DisplayName: The Ultimate Death Firework Launcher Of Mega Destruction™ (Patent Pending)
 	Tooltip: ""
+}
+
+Eternanite: {
+	DisplayName: Eternanite
+	Tooltip: Casts a forceful cloud of gaseous black bile
+}
+
+Cobalt_Harpoon_Gun: {
+	DisplayName: Cobalt Harpoon Gun
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		'''
+}
+
+Palladium_Harpoon_Gun: {
+	DisplayName: Palladium Harpoon Gun
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		85.7% chance not to consume ammo
+		'''
+}
+
+Adamantite_Harpoon_Gun: {
+	DisplayName: Adamantite Harpoon Gun
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		'''
+}
+
+Mythril_Harpoon_Gun: {
+	DisplayName: Mythril Harpoon Gun
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		'''
+}
+
+Orichalcum_Harpoon_Gun: {
+	DisplayName: Orichalcum Harpoon Gun
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		'''
+}
+
+Titanium_Harpoon_Gun: {
+	DisplayName: Titanium Harpoon Gun
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		'''
+}
+
+Harpoon_Burst_Rifle: {
+	DisplayName: Harpoon Burst Rifle
+	Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		'''
+}
+
+Unmisfire: {
+	DisplayName: Unmisfire
+	Tooltip: Still hits near-misses
+}
+
+Mildew_Whip: {
+	DisplayName: Mildew Whip
+	Tooltip:
+		'''
+		Has a chance to inflict Toxic Shock
+		7 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}
+
+Defiled_Relay_Item: {
+	DisplayName: Defiled Relay Item
+	Tooltip: ""
+}
+
+Eyenade: {
+	DisplayName: Eyenade
+	Tooltip: Flies towards nearby enemies
+}
+
+Brine_Fountain_Item: {
+	DisplayName: Brine Fountain
+	Tooltip: ""
+}
+
+Chipper_Knife: {
+	DisplayName: Chipper Knife
+	Tooltip: Briefly rasters enemies
+}
+
+Ancient_Felnum_Breastplate: {
+	DisplayName: Ancient Felnum Breastplate
+	Tooltip: ""
+}
+
+Ancient_Felnum_Greaves: {
+	DisplayName: Ancient Felnum Greaves
+	Tooltip: ""
+}
+
+Ancient_Felnum_Helmet: {
+	DisplayName: Ancient Felnum Helmet
+	Tooltip: ""
+}
+
+Gun_Magazine: {
+	DisplayName: Gun Magazine
+	Tooltip: +{0:P0} gun attack speed
+}
+
+Eitrite_Gun_Magazine: {
+	DisplayName: Eitrite Gun Magazine
+	Tooltip: Burst guns fire an extra round
+}
+
+Crimtane_Gun_Magazine.DisplayName: Crimtane Gun Magazine
+Defiled_Gun_Magazine.DisplayName: Defiled Gun Magazine
+Demonite_Gun_Magazine.DisplayName: Demonite Gun Magazine
+Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
+Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
+Sanguinite_Gun_Magazine.DisplayName: Sanguinite Gun Magazine
+
+Bee_Canister: {
+	DisplayName: Bee Canister
+	Tooltip: Releases bees in its wake
+}
+
+Discharge_Canister: {
+	DisplayName: Discharge Canister
+	Tooltip: Inflicts Static Shock to enemies in its blast
+}
+
+MiningHelmet.BuffTooltip: 3% increased explosive critical strike chance
+MiningShirt.BuffTooltip: 5% increased explosive damage
+RainCoat.BuffTooltip:
+	'''
+	5% increased damage
+	2% increased damage during rain
+	'''
+RainHat.BuffTooltip:
+	'''
+	5% increased damage
+	2% increased damage during rain
+	'''
+
+Hydrothermal_Vent_Item: {
+	DisplayName: Hydrothermal Vent Item
+	Tooltip: ""
+}
+
+Replacement_Wall_Item: {
+	DisplayName: Replacement Wall Item
+	Tooltip: ""
+}
+
+Lightning_Ring: {
+	DisplayName: Lightning Ring
+	Tooltip:
+		'''
+		All attacks inflict Static Shock
+		Increases the shock chain range when using items that already inflict it
+		'''
+}
+
+CombineTooltips:
+	'''
+	{0}
+	{1}
+	'''
+Shock_Collar.DisplayName: Shock Collar
+
+Felnum_Sword: {
+	DisplayName: Thunderbolt
+	Tooltip:
+		'''
+		Inflicts Static Shock
+		<right> to stab
+		'''
+}
+
+Rubber_Dynamite: {
+	DisplayName: Rubber Dynamite
+	Tooltip: "'Dynamite for babies.'"
+}
+
+Felnum_Shock_Glasses: {
+	DisplayName: Felnum Shock Glasses
+	Tooltip: ""
+}
+
+Sparking_Flame_Barrel.DisplayName: Sparking Flame Barrel
+
+Fairy_Lotus: {
+	DisplayName: Fairy Lotus
+	Tooltip: Attracts helpful fairies and makes them glow brighter
+}
+
+Rubber_Breastplate: {
+	DisplayName: Rubber Breastplate
+	Tooltip: Reduces damage taken from projectiles by 10%
+}
+
+Rubber_Greaves: {
+	DisplayName: Rubber Greaves
+	Tooltip: 5% increased damage
+}
+
+Rubber_Helmet: {
+	DisplayName: Rubber Helmet
+	Tooltip: 5% increased critical strike chance
+}
+
+Pink_Cryosten_Helmet: {
+	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Helmet.DisplayName}
+	Tooltip: "{$Mods.Origins.Items.Cryosten_Helmet.Tooltip}"
+}
+
+Pink_Cryosten_Breastplate: {
+	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Breastplate.DisplayName}
+	Tooltip: "{$Mods.Origins.Items.Cryosten_Breastplate.Tooltip}"
+}
+
+Pink_Cryosten_Greaves: {
+	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Greaves.DisplayName}
+	Tooltip: "{$Mods.Origins.Items.Cryosten_Greaves.Tooltip}"
 }

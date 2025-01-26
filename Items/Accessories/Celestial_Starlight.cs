@@ -8,10 +8,15 @@ namespace Origins.Items.Accessories {
 			"Vitality",
 			"MagicBoostAcc"
 		];
+		static short glowmask;
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 3, silver: 30);
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

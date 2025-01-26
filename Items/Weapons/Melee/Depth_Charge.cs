@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Buffs;
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -59,6 +60,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 36;
 			Projectile.height = 36;
 			Projectile.penetrate = -1;
+			Projectile.ignoreWater = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.ai[0] != ai_state_spinning) Projectile.penetrate = 0;
@@ -102,17 +104,17 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.knockBack * 2,
 					Projectile.owner
 				);
-			}
-			Vector2 chainDrawPosition = Projectile.Center;
-			Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
-			List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
-			for (int i = 0; i < chainPositions.Count; i++) {
-				Gore.NewGore(
-					Projectile.GetSource_Death(),
-					chainPositions[i],
-					Projectile.velocity * 0.1f,
-					ModContent.GoreType<Depth_Charge_Chain>()
-				);
+				Vector2 chainDrawPosition = Projectile.Center;
+				Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
+				List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
+				for (int i = 0; i < chainPositions.Count; i++) {
+					Gore.NewGore(
+						Projectile.GetSource_Death(),
+						chainPositions[i],
+						Projectile.velocity * 0.1f,
+						ModContent.GoreType<Depth_Charge_Chain>()
+					);
+				}
 			}
 		}
 		List<Vector2> GetChainPositions(Vector2 chainDrawPosition, Vector2 vectorFromProjectileToPlayerArms) {
@@ -131,7 +133,7 @@ namespace Origins.Items.Weapons.Melee {
 
 		public bool IsExploding() => false;
 	}
-	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile {
+	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile, ISelfDamageEffectProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
@@ -141,32 +143,26 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 				Projectile.ai[0] = 1;
 			}
-			if (Projectile.owner == Main.myPlayer && Projectile.ai[1] == 0) {
-				Player player = Main.LocalPlayer;
-				if (player.active && !player.dead && !player.immune) {
-					Rectangle projHitbox = Projectile.Hitbox;
-					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
-					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
-					if (projHitbox.Intersects(playerHitbox)) {
-						player.Hurt(
-							PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),
-							Main.DamageVar(Projectile.damage, -player.luck),
-							Math.Sign(player.Center.X - Projectile.Center.X),
-							true
-						);
-						Projectile.ai[1] = 1;
-					}
-				}
+			if (Projectile.ai[1] == 0) {
+				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
+		public void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt) {
+			if (player.wet) player.AddBuff(Cavitation_Debuff.ID, 90);
+			Projectile.ai[1] = 1;
+		}
 	}
 	public class Depth_Charge_Chain : ModGore {
 		public override void OnSpawn(Gore gore, IEntitySource source) {

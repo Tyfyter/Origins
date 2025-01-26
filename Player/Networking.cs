@@ -65,11 +65,22 @@ namespace Origins {
 				}
 			}
 		}
+		public bool CheckAssimilationDesync(OriginPlayer clone) {
+			const float significant_threshold = 0.01f;
+			return Math.Abs(clone.corruptionAssimilation - corruptionAssimilation) > significant_threshold
+				|| Math.Abs(clone.crimsonAssimilation - crimsonAssimilation) > significant_threshold
+				|| Math.Abs(clone.defiledAssimilation - defiledAssimilation) > significant_threshold
+				|| Math.Abs(clone.rivenAssimilation - rivenAssimilation) > significant_threshold;
+		}
 		public override void CopyClientState(ModPlayer targetCopy) {
 			OriginPlayer clone = (OriginPlayer)targetCopy;// shoot this one
+			clone.mojoInjection = mojoInjection;
+			clone.MojoInjectionEnabled = MojoInjectionEnabled;
 			clone.quantumInjectors = quantumInjectors;
 			clone.defiledWill = defiledWill;
-			if (!Player.HasBuff(Purifying_Buff.ID)) {
+			clone.tornTarget = tornTarget;
+			clone.tornSeverityRate = tornSeverityRate;
+			if (CheckAssimilationDesync(clone) && !Player.HasBuff(Purifying_Buff.ID)) {
 				clone.corruptionAssimilation = corruptionAssimilation;
 				clone.crimsonAssimilation = crimsonAssimilation;
 				clone.defiledAssimilation = defiledAssimilation;
@@ -82,15 +93,12 @@ namespace Origins {
 			PlayerSyncDatas syncDatas = 0;
 			PlayerVisualSyncDatas visualSyncDatas = 0;
 			if (clone.mojoInjection != mojoInjection) syncDatas |= MojoInjection;
+			if (clone.MojoInjectionEnabled != MojoInjectionEnabled) syncDatas |= MojoInjectionToggled;
 			if (clone.quantumInjectors != quantumInjectors) syncDatas |= QuantumInjectors;
 			if (clone.defiledWill != defiledWill) syncDatas |= DefiledWills;
+			if (clone.tornTarget != tornTarget || clone.tornSeverityRate != tornSeverityRate) syncDatas |= Torn;
 
-			if ((clone.corruptionAssimilation != corruptionAssimilation ||
-				clone.crimsonAssimilation != crimsonAssimilation ||
-				clone.defiledAssimilation != defiledAssimilation ||
-				clone.rivenAssimilation != rivenAssimilation)
-				&& !Player.HasBuff(Purifying_Buff.ID)
-				) syncDatas |= Assimilation;
+			if (CheckAssimilationDesync(clone) && !Player.HasBuff(Purifying_Buff.ID)) syncDatas |= Assimilation;
 
 			if (clone.blastSetActive != blastSetActive) visualSyncDatas |= BlastSetActive;
 
@@ -117,8 +125,13 @@ namespace Origins {
 			packet.Write((byte)Player.whoAmI);
 			packet.Write((ushort)syncDatas);
 			if (syncDatas.HasFlag(MojoInjection)) packet.Write(mojoInjection);
+			if (syncDatas.HasFlag(MojoInjectionToggled)) packet.Write(MojoInjectionEnabled);
 			if (syncDatas.HasFlag(QuantumInjectors)) packet.Write((byte)quantumInjectors);
 			if (syncDatas.HasFlag(DefiledWills)) packet.Write((byte)defiledWill);
+			if (syncDatas.HasFlag(Torn)) {
+				packet.Write(tornTarget);
+				packet.Write(tornSeverityRate);
+			}
 			if (syncDatas.HasFlag(Assimilation)) { // by sending it with a precision of 1% we can put all of the assimilations in the 4 bytes one of them would take with full precision with very little inaccuracy
 				packet.Write((byte)(corruptionAssimilation * 100));
 				packet.Write((byte)(crimsonAssimilation * 100));
@@ -135,8 +148,13 @@ namespace Origins {
 		public void ReceivePlayerSync(BinaryReader reader) {
 			PlayerSyncDatas syncDatas = (PlayerSyncDatas)reader.ReadUInt16();
 			if (syncDatas.HasFlag(MojoInjection)) mojoInjection = reader.ReadBoolean();
+			if (syncDatas.HasFlag(MojoInjectionToggled)) MojoInjectionEnabled = reader.ReadBoolean();
 			if (syncDatas.HasFlag(QuantumInjectors)) quantumInjectors = reader.ReadByte();
 			if (syncDatas.HasFlag(DefiledWills)) defiledWill = reader.ReadByte();
+			if (syncDatas.HasFlag(Torn)) {
+				tornTarget = reader.ReadSingle();
+				tornSeverityRate = reader.ReadSingle();
+			}
 			if (syncDatas.HasFlag(Assimilation)) {
 				corruptionAssimilation = reader.ReadByte() / 100f;
 				crimsonAssimilation = reader.ReadByte() / 100f;
@@ -150,10 +168,12 @@ namespace Origins {
 	}
 	[Flags]
 	public enum PlayerSyncDatas : ushort {
-		Assimilation     = 0b00000001,
-		MojoInjection    = 0b00100000,
-		DefiledWills     = 0b01000000,
-		QuantumInjectors = 0b10000000,
+		Assimilation		 = 0b00000001,
+		Torn				 = 0b00000010,
+		MojoInjectionToggled = 0b00000100,
+		MojoInjection		 = 0b00100000,
+		DefiledWills		 = 0b01000000,
+		QuantumInjectors	 = 0b10000000,
 	}
 	[Flags]
 	public enum PlayerVisualSyncDatas : ushort {

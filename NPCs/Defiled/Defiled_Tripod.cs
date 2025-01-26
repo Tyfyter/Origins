@@ -1,13 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -31,7 +34,6 @@ namespace Origins.NPCs.Defiled {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.None;//NPCAIStyleID.Fighter;
 			NPC.lifeMax = 475;
 			NPC.defense = 28;
@@ -43,6 +45,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 2300;
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
@@ -77,6 +80,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(400)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
+			if (Main.rand.NextBool(1600)) SoundEngine.PlaySound(SoundID.Zombie124, NPC.Center);
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget) {
 				NPC.spriteDirection = NPC.direction;
@@ -172,7 +176,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
@@ -184,20 +188,43 @@ namespace Origins.NPCs.Defiled {
 			Mana = reader.ReadSingle();
 		}
 		bool phasing = false;
+		List<int> alteredTiles;
 		public void PreUpdateCollision() {
 			if (phasing = (NPC.targetRect.Top - NPC.Bottom.Y > 0 || !NPC.collideY)) {
-				for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
-					Main.tileSolidTop[OriginTile.DefiledTiles[i]] = true;
-					Main.tileSolid[OriginTile.DefiledTiles[i]] = false;
+				if (alteredTiles is null) {
+					alteredTiles = [];
+					for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
+						int tile = OriginTile.DefiledTiles[i];
+						if (Main.tileSolid[tile] && !Main.tileSolidTop[tile]) {
+							alteredTiles.Add(tile);
+						}
+					}
+				}
+				for (int i = 0; i < alteredTiles.Count; i++) {
+					Main.tileSolidTop[alteredTiles[i]] = true;
+					Main.tileSolid[alteredTiles[i]] = false;
 				}
 			}
 		}
 		public void PostUpdateCollision() {
 			if (phasing) {
-				for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
-					Main.tileSolidTop[OriginTile.DefiledTiles[i]] = false;
-					Main.tileSolid[OriginTile.DefiledTiles[i]] = true;
+				for (int i = 0; i < alteredTiles.Count; i++) {
+					Main.tileSolidTop[alteredTiles[i]] = false;
+					Main.tileSolid[alteredTiles[i]] = true;
 				}
+			}
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Defiled_Tripod).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_AF";
+		public static AutoLoadingAsset<Texture2D> normalGlowTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_Glow";
+		public static AutoLoadingAsset<Texture2D> afGlowTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_AF_Glow";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				DrawGlow(spriteBatch, screenPos, afGlowTexture, NPC, GetGlowColor(drawColor));
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				DrawGlow(spriteBatch, screenPos, normalGlowTexture, NPC, GetGlowColor(drawColor));
 			}
 		}
 	}

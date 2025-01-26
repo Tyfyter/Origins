@@ -37,14 +37,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.DisableDecraft()
 			.Register();
 
-            Recipe.Create(Type)
-            .AddIngredient(ItemID.Coal, coalNumber)
+            Recipe.Create(Type, coalNumber)
+            .AddIngredient(ItemID.Coal)
             .AddCondition(RecipeConditions.ShimmerTransmutation)
             .AddDecraftCondition(Condition.Hardmode)
             .Register();
 
-            Recipe.Create(ItemID.Coal, coalNumber)
-            .AddIngredient(Type)
+            Recipe.Create(ItemID.Coal)
+            .AddIngredient(Type, coalNumber)
             .AddCondition(RecipeConditions.ShimmerTransmutation)
             .Register();
         }

@@ -77,7 +77,7 @@ namespace Origins.World.BiomeData {
 			FissureDropRule = new OneFromRulesRule(1,
 				FirstFissureDropRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Infusion>()),
+				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Monolith_Rod>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Krakram>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Suspicious_Looking_Pebble>())
 			);
@@ -248,7 +248,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
-				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
+				ushort fissureID = (ushort)ModContent.TileType<Defiled_Relay>();
 				while (fisureCount < 6 && fissureCheckSpots.Count > 0) {
 					int ch = genRand.Next(fissureCheckSpots.Count);
 					for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
@@ -500,6 +500,9 @@ namespace Origins.World.BiomeData {
 					if (randomtwist || twist != 0.0) {
 						speed = randomtwist ? speed.RotatedBy(genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
 					}
+					if (direction.X > 0) {
+
+					}
 				}
 				if (X0 < 1) {
 					X0 = 1;
@@ -571,6 +574,27 @@ namespace Origins.World.BiomeData {
 					Stamp();
 					DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, direction.X);
 					Stamp();
+					Tile? obstructionTileX = null;
+					Tile? obstructionTileY = null;
+					switch (Math.Sign(direction.X)) {
+						case -1:
+						obstructionTileX = Framing.GetTileSafely(tilePos.X + 1, tilePos.Y);
+						break;
+						case 1:
+						obstructionTileX = Framing.GetTileSafely(tilePos.X - 1, tilePos.Y);
+						break;
+					}
+					switch (Math.Sign(direction.Y)) {
+						case -1:
+						obstructionTileY = Framing.GetTileSafely(tilePos.X, tilePos.Y + 1);
+						break;
+						case 1:
+						obstructionTileY = Framing.GetTileSafely(tilePos.X, tilePos.Y - 1);
+						break;
+					}
+					if ((obstructionTileX?.HasTile ?? false) && (obstructionTileY?.HasTile ?? false)) {
+						(WorldGen.genRand.NextBool() ? obstructionTileX : obstructionTileY).Value.ClearTile();
+					}
 					if (!removedAnyTiles || !InWorld(tilePos.X, tilePos.Y)) break;
 					tileSubPos = next;
 				}
@@ -589,36 +613,9 @@ namespace Origins.World.BiomeData {
 		}
 
 		public static void CheckFissure(int i, int j, int type) {
-			if (destroyObject) {
-				return;
-			}
-			int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
-			int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
-			for (int k = 0; k < 2; k++) {
-				for (int l = 0; l < 2; l++) {
-					Tile tile = Main.tile[x + k, y + l];
-					if (tile != null && (!tile.HasUnactuatedTile || tile.TileType != type)) {
-						destroyObject = true;
-						break;
-					}
-				}
-				if (destroyObject) {
-					break;
-				}
-			}
-			if (!destroyObject) {
-				return;
-			}
-			for (int m = x; m < x + 2; m++) {
-				for (int n = y; n < y + 2; n++) {
-					if (Main.tile[m, n].TileType == type) {
-						KillTile(m, n);
-					}
-				}
-			}
 			if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions) {
-				float fx = x * 16;
-				float fy = y * 16;
+				float fx = i * 16;
+				float fy = j * 16;
 
 				float distance = -1f;
 				int player = 0;
@@ -760,6 +757,7 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Defiled_Ice>(), TileID.IceBlock);
 
+			GERunnerConversion.Add(TileID.Silt, ModContent.TileType<Defiled_Sand>());
 
 			BiomeFlesh = TileID.SilverBrick;
 			BiomeFleshWall = WallID.SilverBrick;
@@ -781,6 +779,7 @@ namespace Origins.World.BiomeData {
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Lost_Ore>();
 			BiomeOreItem = ModContent.ItemType<Lost_Ore_Item>();
+			BiomeOreBrick = ModContent.TileType<Lost_Brick>();
 			AltarTile = ModContent.TileType<Defiled_Altar>();
 
 			BiomeChestItem = ModContent.ItemType<Missing_File>();

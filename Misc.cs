@@ -35,12 +35,10 @@ using Terraria.GameContent.Drawing;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Tiles.Banners;
 using Terraria.ObjectData;
-using static System.Net.Mime.MediaTypeNames;
-using Terraria.ModLoader.Utilities;
-using Terraria.GameInput;
-using Microsoft.Xna.Framework.Input;
 using PegasusLib;
 using PegasusLib.Graphics;
+using Terraria.GameInput;
+using Terraria.UI;
 
 namespace Origins {
 	#region classes
@@ -692,6 +690,10 @@ namespace Origins {
 		public const byte TopRight = 4;
 	}
 	public static class NPCAIStyleID {
+		///<summary>
+		///Doesn't move.
+		///</summary>
+		public const int ActuallyNone = -1;
 		///<summary>
 		///Doesn't move.
 		///</summary>
@@ -1597,6 +1599,11 @@ namespace Origins {
 		public static Vector2 Clamp(this Vector2 value, Rectangle area) {
 			return new Vector2(MathHelper.Clamp(value.X, area.X, area.Right), MathHelper.Clamp(value.Y, area.Y, area.Bottom));
 		}
+		public static Vector2 Apply(this Vector2 value, SpriteEffects spriteEffects, Vector2 bounds) {
+			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) value.X = bounds.X - value.X;
+			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) value.Y = bounds.Y - value.Y;
+			return value;
+		}
 		public static Vector2 TakeAverage(this List<Vector2> vectors) {
 			Vector2 sum = default;
 			int count = vectors.Count;
@@ -1604,6 +1611,10 @@ namespace Origins {
 				sum += vectors[i];
 			}
 			return count != 0 ? sum / count : sum;
+		}
+		public static void SwapClear<T>(ref List<T> working, ref List<T> finalized) {
+			Utils.Swap(ref working, ref finalized);
+			working.Clear();
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
@@ -1667,6 +1678,48 @@ namespace Origins {
 			if (self is Projectile projectile) return projectile.oldRot.Length >= 1 ? projectile.oldRot[0] : projectile.rotation;
 			if (self is Player player) return player.fullRotation;
 			return 0f;
+		}
+		public static void DrawFlamethrower(this Projectile projectile, Color color1, Color color2, Color color3, Color color4, bool flag = true, float scale = 1f) {
+			const float num = 60f;
+			const float num2 = 12f;
+			const float fromMax = num + num2;
+			Texture2D value = TextureAssets.Projectile[projectile.type].Value;
+			float num3 = 0.35f;
+			float num4 = 0.7f;
+			float num5 = 0.85f;
+			float num6 = ((projectile.localAI[0] > num - 10f) ? 0.175f : 0.2f);
+			int verticalFrames = 7;
+			float num9 = Utils.Remap(projectile.localAI[0], num, fromMax, 1f, 0f);
+			float num10 = Math.Min(projectile.localAI[0], 20f);
+			float num11 = Utils.Remap(projectile.localAI[0], 0f, fromMax, 0f, 1f);
+			float num12 = Utils.Remap(num11, 0.2f, 0.5f, 0.25f, 1f);
+			Rectangle rectangle = (flag ? value.Frame(1, verticalFrames, 0, 3) : value.Frame(1, verticalFrames, 0, (int)Utils.Remap(num11, 0.5f, 1f, 3f, 5f)));
+			if (num11 >= 1f) return;
+			for (int i = 0; i < 2; i++) {
+				for (float num13 = 1f; num13 >= 0f; num13 -= num6) {
+					Color obj = ((num11 < 0.1f) ? Color.Lerp(Color.Transparent, color1, Utils.GetLerpValue(0f, 0.1f, num11, clamped: true)) : ((num11 < 0.2f) ? Color.Lerp(color1, color2, Utils.GetLerpValue(0.1f, 0.2f, num11, clamped: true)) : ((num11 < num3) ? color2 : ((num11 < num4) ? Color.Lerp(color2, color3, Utils.GetLerpValue(num3, num4, num11, clamped: true)) : ((num11 < num5) ? Color.Lerp(color3, color4, Utils.GetLerpValue(num4, num5, num11, clamped: true)) : ((!(num11 < 1f)) ? Color.Transparent : Color.Lerp(color4, Color.Transparent, Utils.GetLerpValue(num5, 1f, num11, clamped: true))))))));
+					float num14 = (1f - num13) * Utils.Remap(num11, 0f, 0.2f, 0f, 1f);
+					Vector2 vector = projectile.Center - Main.screenPosition + projectile.velocity * (0f - num10) * num13;
+					Color color5 = obj * num14;
+					Color color6 = color5;
+					if (flag) {
+						color6.A = (byte)Math.Min(color5.A + 80f * num14, 255f);
+					}
+					float num15 = 1f / num6 * (num13 + 1f);
+					float num16 = projectile.rotation + num13 * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly * num15 * 2f;
+					float num17 = projectile.rotation - num13 * MathHelper.PiOver2 - Main.GlobalTimeWrappedHourly * num15 * 2f;
+					switch (i) {
+						case 0:
+						Main.EntitySpriteDraw(value, vector + projectile.velocity * (0f - num10) * num6 * 0.5f, rectangle, color6 * num9 * 0.25f, num16 + (float)Math.PI / 4f, rectangle.Size() / 2f, num12 * scale, SpriteEffects.None);
+						Main.EntitySpriteDraw(value, vector, rectangle, color6 * num9, num17, rectangle.Size() / 2f, num12 * scale, SpriteEffects.None);
+						break;
+						case 1:
+						Main.EntitySpriteDraw(value, vector + projectile.velocity * (0f - num10) * num6 * 0.2f, rectangle, color5 * num9 * 0.25f, num16 + (float)Math.PI / 2f, rectangle.Size() / 2f, num12 * 0.75f * scale, SpriteEffects.None);
+						Main.EntitySpriteDraw(value, vector, rectangle, color5 * num9, num17 + (float)Math.PI / 2f, rectangle.Size() / 2f, num12 * 0.75f * scale, SpriteEffects.None);
+						break;
+					}
+				}
+			}
 		}
 		//named for the author of https://www.reddit.com/r/learnmath/comments/rrz697/topology_efficiently_create_a_set_of_random/
 		public static List<Vector2> FelisCatusSampling(Rectangle area, int maxCount, float minSpread, float maxSpread) {
@@ -1802,17 +1855,20 @@ namespace Origins {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
 		}
-		public static void DoFrames(this NPC self, int counterMax) {
+		public static void DoFrames(this NPC self, int counterMax, Range frames) {
 			int heightEtBuffer = self.frame.Height;
 			self.frameCounter += 1;
 			if (self.frameCounter >= counterMax) {
 				self.frame.Y += heightEtBuffer;
 				self.frameCounter = 0;
-				if (self.frame.Y >= heightEtBuffer * Main.npcFrameCount[self.type]) {
-					self.frame.Y = 0;
-				}
+			}
+			if (self.frame.Y >= heightEtBuffer * frames.End.Value) {
+				self.frame.Y = heightEtBuffer * frames.Start.Value;
+			} else if (self.frame.Y < heightEtBuffer * frames.Start.Value) {
+				self.frame.Y = heightEtBuffer * (frames.End.Value - 1);
 			}
 		}
+		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(self.Male ? "male" : "female")}");
 		}
@@ -2567,6 +2623,18 @@ namespace Origins {
 			text = null;
 			return false;
 		}
+		public static LocalizedText CombineTooltips(params LocalizedText[] parts) {
+			switch (parts.Length) {
+				case 0:
+				return LocalizedText.Empty;
+
+				case 1:
+				return parts[0];
+
+				default:
+				return Language.GetOrRegister("Mods.Origins.Items.CombineTooltips").WithFormatArgs(parts[0], CombineTooltips(parts[1..]));
+			}
+		}
 		public static LocalizedText GetRandomText(string key) {
 			int i = 0;
 			while (Language.Exists($"{key}.{i}")) i++;
@@ -2622,6 +2690,18 @@ namespace Origins {
 				packet.Write(dot);
 				packet.Send(-1, Main.myPlayer);
 			}
+		}
+		public static ref int BuilderToggleState<TToggle>(this Player player) where TToggle : BuilderToggle {
+			return ref player.builderAccStatus[ModContent.GetInstance<TToggle>().Type];
+		}
+		public static Vector2 ApplyToOrigin(this SpriteEffects spriteEffects, Vector2 origin, Rectangle frame) {
+			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) {
+				origin.X = frame.Width - origin.X;
+			}
+			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) {
+				origin.Y = frame.Height - origin.Y;
+			}
+			return origin;
 		}
 	}
 	public static class ShopExtensions {
@@ -3054,6 +3134,111 @@ namespace Origins {
 			}
 			return output;
 		}
+		public static bool[,] GeneratePathfindingGrid(Point topLeft, Point bottomRight, int halfExtraWidth, int halfExtraHeight) {
+			bool[,] solidity = new bool[bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y];
+			for (int i = 0; i < solidity.GetLength(0); i++) {
+				for (int j = 0; j < solidity.GetLength(1); j++) {
+					for (int x = -halfExtraWidth; x <= halfExtraWidth; x++) {
+						for (int y = -halfExtraHeight; y <= halfExtraHeight; y++) {
+							Tile tile = Framing.GetTileSafely(topLeft.X + i + x, topLeft.Y + j + y);
+							if (tile.TileSolidness() == 2) solidity[i, j] = true;
+						}
+					}
+				}
+			}
+			return solidity;
+		}
+		public static Point[] GridBasedPathfinding(bool[,] solidTiles, Point start, Point target, HashSet<Point> alternateEnds = null) {
+			alternateEnds ??= [];
+			alternateEnds.Add(target);
+			PathfindingGrid grid = new(solidTiles);
+			PriorityQueue<Point, float> openList = new();
+			openList.Enqueue(start, 0);
+			grid[start].opened = true;
+			const float SQRT2 = 1.4142135623731f;
+			while (openList.TryDequeue(out Point pos, out _)) {
+				PathfindingNode node = grid[pos];
+				if (alternateEnds.Contains(pos)) {
+					Stack<Point> stack = new();
+					while (node.parent is not null) {
+						stack.Push(node.position);
+						node = node.parent;
+					}
+					return stack.ToArray();
+				}
+				if (node.closed) continue;
+				node.closed = true;
+				PathfindingNode[] neighbors = grid.GetNeigbors(pos);
+				for (int i = 0; i < neighbors.Length; ++i) {
+					PathfindingNode neighbor = neighbors[i];
+
+					// get the distance between current node and the neighbor
+					// and calculate the next g score
+					float ng = node.g + ((neighbor.position.X - node.position.X == 0 || neighbor.position.Y - node.position.Y == 0) ? 1 : SQRT2);
+
+					// check if the neighbor has not been inspected yet, or
+					// can be reached with smaller cost from the current node
+					if (!neighbor.opened || ng < neighbor.g) {
+						static float GetDist(Point a, Point b) {
+							int x = a.X - b.X;
+							int y = a.Y - b.Y;
+							return x * x + y * y;
+						}
+						neighbor.g = ng;
+						neighbor.h ??= GetDist(neighbor.position, target);
+						neighbor.f = neighbor.g + neighbor.h.Value;
+						neighbor.parent = node;
+
+						if (!neighbor.opened) {
+							openList.Enqueue(neighbor.position, neighbor.f);
+							neighbor.opened = true;
+						} else {
+							// the neighbor can be reached with smaller cost.
+							// Since its f value has been updated, we have to
+							// update its position in the open list
+							openList.Enqueue(neighbor.position, neighbor.f);
+						}
+					}
+				}
+			}
+			return [];
+		}
+		class PathfindingGrid(bool[,] grid) {
+			readonly PathfindingNode[,] nodes = new PathfindingNode[grid.GetLength(0), grid.GetLength(1)];
+			public ref PathfindingNode this[Point point] {
+				get {
+					ref PathfindingNode node = ref nodes[point.X, point.Y];
+					node ??= new(point);
+					return ref node;
+				}
+			}
+			public PathfindingNode[] GetNeigbors(Point point) {
+				PathfindingNode[] output = new PathfindingNode[4];
+				int i = 0;
+				void TryAdd(Point neighbor) {
+					if (neighbor.X < 0 || neighbor.Y < 0 || neighbor.X >= grid.GetLength(0) || neighbor.Y >= grid.GetLength(1)) return;
+					if (!grid[neighbor.X, neighbor.Y]) {
+						PathfindingNode node = this[neighbor];
+						if (!node.closed) output[i++] = node;
+					}
+				}
+				TryAdd(new(point.X, point.Y - 1));
+				TryAdd(new(point.X - 1, point.Y));
+				TryAdd(new(point.X, point.Y + 1));
+				TryAdd(new(point.X + 1, point.Y));
+				Array.Resize(ref output, i);
+				return output;
+			}
+		}
+		class PathfindingNode(Point position) {
+			public readonly Point position = position;
+			public float f;
+			public float? h;
+			public float g;
+			public bool closed;
+			public bool opened;
+			public PathfindingNode parent;
+		}
 	}
 	public static class ItemExtensions {
 		public static void CloneDefaultsKeepSlots(this Item self, int type) {
@@ -3082,7 +3267,7 @@ namespace Origins {
 			self.shootSpeed = shootSpeed;
 			self.autoReuse = autoReuse;
 			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			self.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			self.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
 			self.useStyle = ItemUseStyleID.Shoot;
 			self.UseSound = SoundID.Item61;
 			self.noMelee = true;
@@ -3096,7 +3281,7 @@ namespace Origins {
 			self.width = width;
 			self.height = height;
 			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			self.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			self.ammo = ModContent.ItemType<Resizable_Mine_Wood>();
 			self.maxStack = Item.CommonMaxStack;
 			self.consumable = true;
 		}
@@ -3531,6 +3716,10 @@ namespace Origins {
 				npc.ai[0] = 1f;
 			}
 		}
+		public static void DrawGlowingNPCPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
+			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
+			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
+		}
 	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {
@@ -3554,6 +3743,27 @@ namespace Origins {
 				if (ruleChildFinders.TryGetValue(dropRule.GetType(), out var ruleChildFinder) && ruleChildFinder(dropRule).FindDropRule(predicate) is T foundRule2) return foundRule2;
 			}
 			return null;
+		}
+		public static void Add(this OneFromRulesRule rule, params IItemDropRule[] rules) {
+			Array.Resize(ref rule.options, rule.options.Length + rules.Length);
+			for (int i = 1; i <= rules.Length; i++) {
+				rule.options[^i] = rules[^i];
+			}
+		}
+		public static void SubstituteKeybind(this List<TooltipLine> tooltips, ModKeybind keybind) {
+			InputMode inputMode = InputMode.Keyboard;
+			switch (PlayerInput.CurrentInputMode) {
+				case InputMode.XBoxGamepad or InputMode.XBoxGamepadUI:
+				inputMode = InputMode.XBoxGamepad;
+				break;
+			}
+			string substitution = keybind.GetAssignedKeys(inputMode).FirstOrDefault() ?? Language.GetOrRegister("Mods.Origins.Generic.UnboundKey").Format(keybind.DisplayName);
+			foreach (TooltipLine line in tooltips) {
+				line.Text = line.Text.Replace("<key>", substitution);
+			}
+			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+				OriginsModIntegrations.GoToKeybind(keybind);
+			}
 		}
 	}
 }

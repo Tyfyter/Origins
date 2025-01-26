@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using System;
@@ -8,11 +8,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Reflection;
-using Terraria.Chat;
-using Terraria.UI.Chat;
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem, ICustomWikiStat {
 		static short glowmask;
@@ -52,6 +47,7 @@ namespace Origins.Items.Weapons.Magic {
 			.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 18)
 			.AddIngredient(ModContent.ItemType<Power_Core>())
 			.AddIngredient(ModContent.ItemType<Rubber>(), 12)
+			//.AddIngredient(ModContent.ItemType<Space_Goo_Item>(), 10)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}

@@ -79,6 +79,12 @@ namespace Origins.Items.Materials {
 			public override string TextKey => "Alkahest";
 		}
 	}
+	public class Alkaliphiliac_Tissue : MaterialItem {
+		public override int ResearchUnlockCount => 99;
+		public override int Value => Item.sellPrice(copper: 40);
+		public override bool Hardmode => false;
+		public override int Rare => ItemRarityID.Orange;
+	}
 	public class Bark : MaterialItem {
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
@@ -145,19 +151,6 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Bottled_Brine : MaterialItem {
-		public override int ResearchUnlockCount => 30;
-		public override int Value => Item.sellPrice(copper: 40);
-		public override bool Hardmode => false;
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-            .AddIngredient(ItemID.Bottle)
-            .AddIngredient(ItemID.Stinger, 2)
-            .AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>())
-            .AddTile(TileID.Bottles)
-            .Register();
-        }
-    }
 	public class Bud_Barnacle : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
@@ -194,7 +187,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.WhiteTorch);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -207,7 +200,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Mythril);
 		}
 
 		public override void SetStaticDefaults() {
@@ -226,7 +219,7 @@ namespace Origins.Items.Materials {
             Recipe.Create(Type)
             .AddRecipeGroup("AdamantiteBars")
             .AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
-            .AddIngredient(ModContent.ItemType<Bottled_Brine>())
+            .AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 3)
             .AddTile(TileID.MythrilAnvil)
             .Register();
 		}
@@ -250,7 +243,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Astra);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -270,7 +263,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Electric);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -425,7 +418,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Torch);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -439,7 +432,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Lead);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -493,8 +486,8 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Ectoplasm)
+			//.AddIngredient(ModContent.ItemType<Aetherium_Bar>())
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
-			//.AddIngredient(ModContent.ItemType<_Bar>(), 1)
 			.AddTile(TileID.AdamantiteForge)
 			.Register();
 		}

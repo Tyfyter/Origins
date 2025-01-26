@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
+﻿using Origins.Items.Mounts;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
@@ -11,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
@@ -52,7 +51,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}

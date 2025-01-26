@@ -23,5 +23,8 @@ namespace Origins.Reflection {
 			} while (delta != 1);
 			return count;
 		}
+		public static ILLabel DefineLabel(ILContext il, out ILLabel label) {
+			return label = il.DefineLabel();
+		}
 	}
 }

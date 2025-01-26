@@ -25,7 +25,7 @@ namespace Origins.World {
 			(CHANGE_QUEUE, ChestID.LockedShadow, 0b0000),
 			(ENQUEUE, ModContent.ItemType<Boiler>(), 0.5f),
 			(ENQUEUE, ModContent.ItemType<Firespit>(), 0.5f),
-			(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 0.5f),
+			//(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 0.5f),
 			(ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 0.5f),
 
 			(CHANGE_QUEUE, ChestID.Ice, 0b0000),
@@ -55,7 +55,10 @@ namespace Origins.World {
 			(ENQUEUE, ModContent.ItemType<The_Calibrator>(), 1f),
 
 			(CHANGE_QUEUE, ChestID.Gold, 0b0011), 
-			(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 0.3f)
+			(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 0.3f),
+
+			/*(CHANGE_QUEUE, ChestID.Water, 0b0000),
+			(ENQUEUE, ModContent.ItemType<Ocean_Amulet>(), 1f)*/
 		];
 		public IEnumerable<int> ProvideItemObtainability() => Actions.Where(a => a.action == ENQUEUE).Select(a => a.param);
 		public void Load(Mod mod) { }

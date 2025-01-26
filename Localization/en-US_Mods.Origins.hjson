@@ -25,6 +25,7 @@ ModMenu: {
 RecipeGroups: {
 	GemStaves: Any Gem Staff
 	EvilBoomerangs: Any Evil Boomerang
+	EvilGunMagazines: Any Evil Gun Magazine
 }
 
 Status_Messages: {
@@ -265,12 +266,12 @@ Dialogue: {
 		Idle_0: Cease this violence.
 		Idle_1: We're not done yet.
 		Idle_2: We are the same.
-		Idle_3: Leave a spot for you.
-		Idle_4: Running away won't help either of us.
-		Death_0: We're still here.
-		Death_1: Resistance is futile.
+		Idle_3: Leaving spot for you.
+		Idle_4: Running away does not help either.
+		Death_0: Still here.
+		Death_1: Resistance futile.
 		Death_2: One day.
-		Death_3: We keep going anyway.
+		Death_3: We keep going.
 	}
 }
 
@@ -339,29 +340,29 @@ TownNPCMood: {
 
 	Defiled_Effigy: {
 		Content: We aspire to waste time presently.
-		NoHome: Place of rest protects chunks from elements.
+		NoHome: Place of rest protects chunks from elements. Request you allocate resources for shelter.
 		FarFromHome: Terrarian, we are lost. Where resides village?
-		LoveSpace: Tension low, healthy heart rate.
-		DislikeCrowded: We are not appreciated here, Terrarian... allow space.
+		LoveSpace: Tension low, heart rate optimal.
+		DislikeCrowded: We not appreciated here, Terrarian... allow space.
 		HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
-		Ocean: Barrier to our prison rests beyond, Terrarian.
-		LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us.
+		Ocean: Barrier to our prison rests beyond, Terrarian. One day.
+		LoveBiome: Satisfactory. Spirits of our brothers and sisters welcome us.
 		LikeBiome: Anywhere remains optimal for home, so long as we are present.
 		HateBiome: Our chunks decay on this ground. Help us, Terrarian.
 		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
-		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
-		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
-		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
+		# HateBiome_Ashen: Shocked. Curious of this place... but, it bothers us. Break it.
+		# HateBiome_Corruption: Corruption. Opposite of desires, Terrarian. Cleanse it.
+		# HateBiome_Crimson: Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
 		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
 		
 		LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
 		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
-		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
+		# LikeNPC_WitchDoctor: "{NPCName} explored dark arts of Terraria. I value this."
 		
 		DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
 		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
 		
-		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
+		HateNPC: "{NPCName} is enemy. She desires a world exempt of us."
 	}
 }
 
@@ -419,12 +420,13 @@ Generic: {
 	Definite_Article: the {0}
 	VariableAssimilation: Variable
 	BuffTime: $60!:{0:0.##} seconds$
+	UnboundKey: '''"{0}" (not bound)'''
 }
 
 AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		DisplayName: "{§Defiled_Wastelands}"
-		Description: An alien entity that seeks out its growth in the Terrarian realm with its own way of life.
+		Description: The physical manifestation of an egregore that desires constant growth and endless survival through its unique way of life.
 		GenPassName: Defiledifying
 	}
 
@@ -443,8 +445,8 @@ GuideAdvice: {
 		PA_Summon_Item: You can create suspicious looking ice cream using sentient powder and bud barnacles. Make sure you are in the riven hive before using it.
 		DAltar: Defiled altars can usually be found in the defiled wastelands. You will need to be near them to craft some items.
 		RAltar: Riven altars can usually be found in the riven hive. You will need to be near them to craft some items.
-		DFissure: Defiled fissures can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!
-		RLesion: Riven lesions can usually be found in the riven hive. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
+		DFissure: Defiled relays can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!
+		RLesion: Gel blisters can usually be found in the riven hive. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
 		Defiled_Heart: The Defiled quickly reclaims purified tiles until all Defiled Hearts are smashed. Find them in Caverns at the center of the system.
 		HardmodeAltarD: Make sure to smash any defiled altar you can find. Something good is bound to happen if you do!
 		HardmodeAltarR: Make sure to smash any riven altar you can find. Something good is bound to happen if you do!
@@ -514,7 +516,7 @@ Buffs: {
 
 	Defiled_Assimilation_Debuff: {
 		DisplayName: Defiled Assimilation
-		Description: You're being assimilated by the Defiled
+		Description: You're being assimilated by {§The_Defiled_Wastelands}
 	}
 
 	Defiled_Blight_Buff: {
@@ -619,7 +621,7 @@ Buffs: {
 
 	Riven_Assimilation_Debuff: {
 		DisplayName: Riven Assimilation
-		Description: You're being assimilated by the Riven
+		Description: You're being assimilated by the {§Riven_Hive}
 	}
 
 	Safe_Buff: {
@@ -983,9 +985,39 @@ Buffs: {
 		Description: Mods.Origins.Buffs.Blind_Debuff.Description
 	}
 
+	Cavitation_Debuff: {
+		DisplayName: Cavitation
+		Description: You got the wind knocked out of you.
+	}
+
+	Mildew_Whip_Buff: {
+		DisplayName: Mildew Whip Buff
+		Description: Mods.Origins.Buffs.Mildew_Whip_Buff.Description
+	}
+
+	Static_Shock_Debuff: {
+		DisplayName: Static Shock
+		Description: It hurts to be near conductors!
+	}
+
+	Static_Shock_Damage_Debuff: {
+		DisplayName: Static Shock
+		Description: It hurts to be near conductors!
+	}
+
 	Soulhide_Debuff: {
-		Description: Mods.Origins.Buffs.Soulhide_Debuff.Description
 		DisplayName: Soulhide Debuff
+		Description: Mods.Origins.Buffs.Soulhide_Debuff.Description
+	}
+
+	Mini_Static_Shock_Debuff: {
+		DisplayName: Static Shack
+		Description: Those don't tend to move
+	}
+
+	Silenced_Debuff: {
+		DisplayName: Silenced Debuff
+		Description: Mods.Origins.Buffs.Silenced_Debuff.Description
 	}
 }
 
@@ -1165,7 +1197,7 @@ Projectiles: {
 	Decimator_P.DisplayName: Decimator
 	Depth_Charge_Explosion.DisplayName: Depth Charge
 	Depth_Charge_P.DisplayName: Depth Charge
-	Felnum_Boar_Spear_Stab.DisplayName: Felnum Boar Spear
+	Felnum_Boar_Spear_P.DisplayName: Felnum Boar Spear
 	Knee_Slapper_P.DisplayName: Knee Slapper
 	Krakram_P.DisplayName: Krakram
 	Personal_Laser_Blade_P.DisplayName: Personal Laser Blade
@@ -1207,7 +1239,7 @@ Projectiles: {
 	Defiled_Wastelands_Signal.DisplayName: Nerve Impulse
 	Felnum_Shock_Arc.DisplayName: Felnum Shock Arc
 	Felnum_Shock_Leader.DisplayName: Felnum Shock
-	Acid_Shot.DisplayName: Acid Shot
+	Brine_Droplet.DisplayName: Brine Droplet
 	Cryostrike_P.DisplayName: Cryostrike
 	Defiled_Spike_Explosion.DisplayName: Defiled Spike Explosion
 	Defiled_Spike_Explosion_Spike.DisplayName: "{§Defiled} Spike Eruption"
@@ -1412,6 +1444,18 @@ Projectiles: {
 	TUDFLOMD_Rocket_Yellow.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
 	TUDFLOMD_Rocket_Yellow_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
 	TUDFLOMD_Rocket_Green.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	Eternanite_P.DisplayName: Eternanite
+	Felnum_Ore_Slime_Zap.DisplayName: Felnum Slime
+	Harpoon_Burst_Rifle_P.DisplayName: Harpoon Burst Rifle P
+	Mildew_Whip_P.DisplayName: Mildew Whip
+	Eyenade_P.DisplayName: Eyenade
+	Chipper_Knife_P.DisplayName: Chipper Knife
+	Magnus_P.DisplayName: Magnus
+	Felnum_Hamaxe_P.DisplayName: Felnum Hamaxe
+	Lightning_Rod_Bobber_Zap.DisplayName: Lightning Rod
+	Felnum_Guardian_P.DisplayName: Felnum Guardian
+	Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
+	Cloud_Elemental_P.DisplayName: Cloud Elemental
 }
 
 Prefixes: {
@@ -1627,6 +1671,9 @@ Tiles: {
 	Lost_Ore.MapEntry: Lost Ore
 	Carburite.MapEntry: Carburite
 	Silicon_Ore.MapEntry: Silicon Ore
+	Underwater_Vine.MapEntry: Underwater Vine
+	Defiled_Relay.MapEntry: Defiled Relay
+	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
 }
 
 MapObject: {
@@ -1645,6 +1692,7 @@ MapObject: {
 Keybinds: {
 	"Trigger Set Bonus.DisplayName": Trigger set bonus ability
 	"Inspect Item.DisplayName": Inspect item
+	"Forbidden Voice.DisplayName": Use Forbidden Voice
 }
 
 Configs: {
@@ -1718,6 +1766,11 @@ Configs: {
 			Label: Defiled Wastelands Shader Noise
 			Tooltip: ""
 		}
+
+		ScreenShakeMultiplier: {
+			Label: Screen shake multiplier
+			Tooltip: Changes how much your screen shakes.
+		}
 	}
 
 	OriginConfig: {
@@ -1726,12 +1779,25 @@ Configs: {
 		Headers: {
 			VanillaBuffs: Vanilla Modifications
 			Other: Other
-			Debugging: Debugging Header
+			Debugging: Debugging
+			Balance: Balance
 		}
 
 		WoodBuffs: {
 			Label: Wooden item buffs
-			Tooltip: Whether or not vanilla/modded wooden items recieve buffs from Origins
+			Tooltip:
+				'''
+				Whether or not vanilla/modded wooden items receive buffs from Origins
+				Currently affects:
+				Ebonwood armor
+				Shadewood armor
+				Pearlwood armor
+				'''
+		}
+
+		RainSetBuff: {
+			Label: Rain armor buffs
+			Tooltip: Gives Rain armor pieces bonuses and a set bonus when equipped together
 		}
 
 		GrassMerge: {
@@ -1759,9 +1825,9 @@ Configs: {
 			Tooltip: Toggles between whether or not Assimilation will be active
 		}
 
-		GraveshieldZombiesDropAsItem: {
-			Label: Graveshield Zombies Drop Tombstones As Items
-			Tooltip: ""
+		StatShareRatio: {
+			Label: Stat share multipliers
+			Tooltip: These values will determine how much bonuses for the class contribute to generic damage when using stat-sharing effects
 		}
 	}
 
@@ -1938,6 +2004,44 @@ Configs: {
 			Tooltip: ""
 		}
 	}
+
+	ServerSideAccessibility: {
+		DisplayName: Accessibility (Server Side)
+
+		GraveshieldZombiesDropAsItem: {
+			Label: Graveshield Zombie QOL
+			Tooltip: Makes Graveshield Zombies drop their tombstones as items instead of as tiles
+		}
+
+		RivenAsimilationMultiplier: {
+			Label: Riven Assimilation Torn multiplier
+			Tooltip: Reduces the Torn severity applied by Riven Assimilation
+		}
+	}
+
+	DamageClassDefinition: {
+		Tooltip: ""
+
+		IsUnloaded: {
+			Label: Is Unloaded
+			Tooltip: ""
+		}
+
+		FullName: {
+			Label: Full Name
+			Tooltip: ""
+		}
+
+		DamageClass: {
+			Label: Damage Class
+			Tooltip: ""
+		}
+
+		DisplayName: {
+			Label: Display Name
+			Tooltip: ""
+		}
+	}
 }
 
 SetBonuses: {
@@ -1966,8 +2070,9 @@ SetBonuses: {
 		'''
 	Cryosten:
 		'''
-		Life restoration from hearts increased
-		Cannot be frozen or chilled
+		Attacks cause frostburn
+		+10% explosive velocity
+		Immunity to Frozen and Chilled
 		'''
 	Defiled: Greatly increased maximum life
 	Encrusted: Increases minion damage by up to 30% when over half health
@@ -1984,14 +2089,14 @@ SetBonuses: {
 		'''
 	Nova:
 		'''
-		Massively increased explosive blast radius
+		60% increased explosive blast radius
 		Explosive projectiles have a chance to be duplicated
 		Explosives home towards nearby enemies
 		'''
 	Chlorohpyte_Summoner: Increases your max number of minions by 2
 	Riptide:
 		'''
-		5% increased magic damage when submerged or in rain
+		6% increased magic damage when submerged or in rain
 		Grants the ability to dash, releasing a tidal wave
 		'''
 	Sapphire:
@@ -2008,7 +2113,11 @@ SetBonuses: {
 		'''
 	Souldhide: Nearby enemies are weakened and afflicted with Shadowflame
 	Tendon: Mobility is based on remaining health
-	Miner: 20% reduced self-damage
+	Miner:
+		'''
+
+		20% reduced self-damage
+		'''
 	Pearlwood:
 		'''
 		15% increased damage
@@ -2020,6 +2129,11 @@ SetBonuses: {
 		Allows you to go berserk after recieving any kind of damage
 		All explosive combat stats are increased by 50% while berserked
 		'''
+	Rubber:
+		'''
+		Immunity to Static Shock and Electrified
+		Reduces damage taken by 5%
+		'''
 }
 
 ItemSourceFilter: {
@@ -2027,4 +2141,92 @@ ItemSourceFilter: {
 	CursedRarity.DisplayName: Cursed
 	ButterscotchRarity.DisplayName: Butterscotch
 	AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
+}
+
+Music: {
+	The_Room_Before: {
+		Name: The Room Before
+		Subtitle: ""
+	}
+
+	Below_The_Brine: {
+		Name: Below The Brine
+		Subtitle: ""
+	}
+
+	Dancing_With_Ghosts: {
+		Name: Dancing With Ghosts
+		Subtitle: ""
+	}
+
+	Stolen_Memories: {
+		Name: Stolen Memories
+		Subtitle: ""
+	}
+
+	Heart_Of_The_Beast: {
+		Name: Heart Of The Beast
+		Subtitle: ""
+	}
+
+	ADJUDICATE: {
+		Name: ADJUDICATE
+		Subtitle: ""
+	}
+
+	Pereunt_Unum_Scindendum: {
+		Name: Pereunt Unum Scindendum
+		Subtitle: ""
+	}
+
+	Festering_Hives: {
+		Name: Festering Hives
+		Subtitle: ""
+	}
+
+	Ad_Laceratur: {
+		Name: Ad Laceratur
+		Subtitle: ""
+	}
+
+	This_Ocean_Of_Alkahest: {
+		Name: This Ocean Of Alkahest
+		Subtitle: ""
+	}
+
+	Shattered_Topography_Old: {
+		Name: Shattered Topography Old
+		Subtitle: ""
+	}
+
+	Deep_Luminance.Name: Deep Luminance
+	Wasteland.Name: Wasteland
+	Dread_Heart.Name: Dread Heart
+	Skin.Name: Skin
+	Internal_Organism.Name: Internal Organism
+	Frayed_And_Stretched.Name: Frayed And Stretched
+	Alkahest.Name: Alkahest
+}
+
+DefiledRelaySignals: {
+	Security1: Here.
+	Security2: Found.
+	Security3: Send anti-bodies.
+	Security4: Threat.
+	Security5: Terrarian.
+	Security6: Relay 2, foreign body.
+	Security7: Relay 5, initiate protocol.
+	Idle1: All conditions optimal.
+	Idle2: Hey. M-y memories.
+	Idle3: Not more than our pet. Keep them occupied.
+	Idle4: Intruder present shortly. Remain alert.
+	Idle5: Day becomes progressively suboptimal.
+	Idle6: Motivated, dopamine release next cycle.
+	Idle7: File is missing. Not yet.
+	Idle8: Absolution upon us.
+	BeingDestroyed1: Stop.
+	BeingDestroyed2: This hurts us.
+	BeingDestroyed3: Alert core system.
+	BeingDestroyed4: Distress.
+	BeingDestroyed5: You will regret.
 }

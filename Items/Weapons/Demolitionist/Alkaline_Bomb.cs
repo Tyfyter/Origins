@@ -24,9 +24,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
-			.AddIngredient(ItemID.Bomb, 5)
-			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Bomb)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>())
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			int t = ModContent.ProjectileType<Acid_Shot>();
+			int t = ModContent.ProjectileType<Brine_Droplet>();
 			for (int i = Main.rand.Next(3); i < 6; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f;
 		}
 	}

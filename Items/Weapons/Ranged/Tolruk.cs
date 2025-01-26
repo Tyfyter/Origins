@@ -8,11 +8,14 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+using ReLogic.Utilities;
+using Origins.Items.Weapons.Magic;
+using Origins.Buffs;
+using Origins.Items.Tools;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem, ICustomWikiStat {
-		int charge = 0;
 		public static short[] glowmasks;
         public string[] Categories => [
             "Gun"
@@ -31,7 +34,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Origins.AddGlowMask(Texture + "_Glow_9"),
 				Origins.AddGlowMask(Texture + "_Glow_10")
 			];
-			Item.ResearchUnlockCount = 1;
+			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
 			Item.damage = 37;
@@ -58,115 +61,68 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
-		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
-			if (charge > 0) {
-				charge--;
-			}
-		}
+		SlotId soundSlot;
 		public override void HoldItem(Player player) {
+			int charge = player.OriginPlayer().tolrukCharge;
 			Item.glowMask = glowmasks[Math.Min(charge / 4, 10)];
+			if (charge > 0) {
+				if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) {
+					float chargeFactor = charge / 40f;
+					sound.Volume = chargeFactor * 1f;
+					sound.Pitch = chargeFactor * 0.2f;
+					sound.Position = player.Center;
+				} else {
+					soundSlot = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, player.Center);
+				}
+			} else if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) {
+				sound.Stop();
+			}
 		}
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(-12, 0);
+			return new Vector2(-12, -2);
 		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1f).WithVolume(0.01f), player.itemLocation);
+			boltShot = false;
+			ref int charge = ref player.OriginPlayer().tolrukCharge;
+			if (charge >= 40) {
+				charge = 0;
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(2), player.itemLocation);
+				SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), player.itemLocation);
+				boltShot = true;
+			} else charge += 4;
+			return null;
+		}
+		bool boltShot = false;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			Vector2 offset = velocity.SafeNormalize(Vector2.Zero);
+			position -= offset.RotatedBy(MathHelper.PiOver2) * player.direction * 2;
+			damage += player.OriginPlayer().tolrukCharge;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Vector2 offset = velocity.SafeNormalize(Vector2.Zero);
-			position -= offset.RotatedBy(MathHelper.PiOver2) * player.direction * 3;
-			Projectile p = Projectile.NewProjectileDirect(source, position, velocity, type, damage + charge, knockback, player.whoAmI);
-			if (p.penetrate > 0 && Main.rand.NextBool(5 - charge / 10)) {
-				p.penetrate++;
-				p.localNPCHitCooldown = 10;
-				p.usesLocalNPCImmunity = true;
-			}
-			SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(1f).WithVolume(0.15f), position);
-			if (charge >= 40) {
-				Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<Tolruk_Bolt>(), damage * 3, knockback, player.whoAmI);
-				charge = 0;
-				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(2), position);
-				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(3), position);
-			} else charge += 4;
-			return false;
+			if (boltShot) Projectile.NewProjectileDirect(source, position, velocity.SafeNormalize(velocity / 16) * 8, ModContent.ProjectileType<Tolruk_Bolt>(), damage * 3, knockback, player.whoAmI);
+			return true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			Item.glowMask = glowmasks[Math.Min(Main.LocalPlayer.OriginPlayer().tolrukCharge / 4, 10)];
 			if (Item.glowMask > -1) spriteBatch.Draw(TextureAssets.GlowMask[Item.glowMask].Value, position, frame, drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
 		}
 	}
-	public class Tolruk_Bolt : ModProjectile {
-		(Vector2?, Vector2)[] oldPos = new (Vector2?, Vector2)[14];
-		public override string Texture => "Terraria/Images/Projectile_3";
-		
+	public class Tolruk_Bolt : Magnus_P {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			const int max_length = 1200 * 2;
+			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
+		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
+			base.SetDefaults();
+			startupDelay = 8;
+			randomArcing = 0.1f;
 			Projectile.DamageType = DamageClass.Ranged;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
-			Projectile.width = 15;
-			Projectile.height = 15;
-			Projectile.aiStyle = 0;
-			Projectile.extraUpdates = 5;
-			Projectile.hostile = false;
-			Projectile.friendly = true;
-			Projectile.timeLeft *= 3;
-			Projectile.penetrate = -1;
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Projectile.friendly = false;
-			Projectile.tileCollide = false;
-			Projectile.position += oldVelocity;
-			Projectile.velocity = Vector2.Zero;
-			Projectile.timeLeft = 14;
-			return false;
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 1;
-			height = 1;
-			return true;
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			int l = Math.Min(Projectile.timeLeft, 14);
-			for (int i = l; --i > 0;) {
-				oldPos[i] = oldPos[i - 1];
-				oldPos[i].Item1 += oldPos[i].Item2;
-			}
-			Vector2 dir = Main.rand.NextVector2Unit();
-			oldPos[0] = (Projectile.Center + dir * 3, dir);
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value;
-			Vector2 displ = Vector2.Zero;
-			for (int i = l; --i > 0;) {
-				if (oldPos[i].Item1.HasValue) {
-					displ = oldPos[i - 1].Item1.Value - oldPos[i].Item1.Value;
-					DrawLaser(Main.spriteBatch, texture, oldPos[i].Item1.Value, Vector2.Normalize(displ), 1, new Vector2(2, 2), displ.Length(), Color.Aqua);
-				}
-			}
-			if (oldPos[0].Item1.HasValue) {
-				displ = Projectile.Center - oldPos[0].Item1.Value + Main.rand.NextVector2Unit() * 2;
-				DrawLaser(Main.spriteBatch, texture, oldPos[0].Item1.Value, Vector2.Normalize(displ), 1, new Vector2(2, 2), displ.Length(), Color.Aqua);
-			}
-			return false;
-		}
-		public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, Vector2? uScale = null, float maxDist = 200f, Color color = default) {
-			Vector2 scale = uScale ?? new Vector2(0.66f, 0.66f);
-			Vector2 origin = start;
-			float maxl = (float)Math.Sqrt(Main.screenWidth * Main.screenWidth + Main.screenHeight * Main.screenHeight);
-			float r = unit.ToRotation();
-			float l = unit.Length() * 2.5f;
-			int t = Projectile.timeLeft > 10 ? 25 - Projectile.timeLeft : Projectile.timeLeft;
-			float s = Math.Min(t / 15f, 1f);
-			Vector2 perpUnit = unit.RotatedBy(MathHelper.PiOver2);
-			for (float i = 0; i <= maxDist; i += step) {
-				if (i * unit.Length() > maxl) break;
-				origin = start + i * unit;
-				spriteBatch.Draw(texture, origin - Main.screenPosition,
-					new Rectangle(0, 0, 1, 1), color, r,
-					new Vector2(0.5f, 0.5f), scale, 0, 0);
-				spriteBatch.Draw(texture, origin - Main.screenPosition + perpUnit * Main.rand.NextFloat(-1f, 1f),
-					new Rectangle(0, 0, 1, 1), color, r,
-					new Vector2(0.5f, 0.5f), scale, 0, 0);
-				Lighting.AddLight(origin, color.R / 255f, color.G / 255f, color.B / 255f);
-			}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(180, 300));
 		}
 	}
 }

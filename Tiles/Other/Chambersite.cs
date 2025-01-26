@@ -1,13 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using System.Linq;
+﻿using Origins.Items.Materials;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Tiles.Other {
 	public class Chambersite : OriginTile {
@@ -21,6 +15,7 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(10, 60, 25));
 			MinPick = 35;
 			MineResist = 3;
+			DustType = DustID.GemEmerald;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];

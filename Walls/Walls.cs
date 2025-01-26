@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Other;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,7 @@ namespace Origins.Walls {
         public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
         public override Color MapColor => new Color(185, 185, 185);
 		public override bool CanBeReplacedByWallSpread => false;
+		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 		public override void SetStaticDefaults() {
             base.SetStaticDefaults();
 			WallID.Sets.Conversion.Grass[Type] = true;
@@ -19,6 +21,7 @@ namespace Origins.Walls {
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override Color MapColor => new Color(40, 140, 200);
 		public override bool CanBeReplacedByWallSpread => false;
+		public override int DustType => Riven_Hive.DefaultTileDust;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			WallID.Sets.Conversion.Grass[Type] = true;
@@ -30,6 +33,7 @@ namespace Origins.Walls {
 		public override Color MapColor => new Color(28, 22, 31);
 		public override bool CanBeReplacedByWallSpread => false;
 		public override int TileItem => ModContent.ItemType<Batholith_Item>();
+		public override int DustType => DustID.t_Granite;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallBlend[Type] = WallID.Stone;
@@ -40,6 +44,7 @@ namespace Origins.Walls {
 		public override Color MapColor => new(49, 184, 191);
 		public override bool CanBeReplacedByWallSpread => false;
 		public override int TileItem => ModContent.ItemType<Chambersite_Gemspark_Item>();
+		public override int DustType => DustID.GemEmerald;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallBlend[Type] = WallID.TopazGemspark;
@@ -57,6 +62,7 @@ namespace Origins.Walls {
 		public override Color MapColor => new(15, 67, 69);
 		public override bool CanBeReplacedByWallSpread => false;
 		public override int TileItem => ModContent.ItemType<Chambersite_Gemspark_Item>();
+		public override int DustType => DustID.GemEmerald;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallBlend[Type] = WallID.TopazGemspark;

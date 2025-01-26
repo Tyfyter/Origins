@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -10,6 +11,8 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.SandBiome[Type] = 1;
+			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.HardenedSand];
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.Sandstone[Type] = true;
@@ -23,43 +26,17 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(150, 150, 150));
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
-			DustType = Riven_Hive.DefaultTileDust;
+			DustType = DustID.Ghost;
 		}
 	}
 	public class Brittle_Quartz_Item : ModItem {
 		public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Silica_Item>();
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.Sandstone, Type);
             Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Brittle_Quartz>());
 		}
-        public override void AddRecipes() {
-			//TODO: add the chlorophyte extractor recipes properly
-            CreateRecipe()
-            .AddIngredient(ItemID.Sandstone)
-            .AddTile(TileID.ChlorophyteExtractinator)
-            .Register();
-
-            CreateRecipe()
-            .AddIngredient(ItemID.CorruptSandstone)
-            .AddTile(TileID.ChlorophyteExtractinator)
-            .Register();
-
-            CreateRecipe()
-            .AddIngredient(ItemID.CrimsonSandstone)
-			.AddTile(TileID.ChlorophyteExtractinator)
-            .Register();
-
-            //CreateRecipe()
-            //.AddIngredient(ModContent.ItemType<Brittle_Quartz>())
-            //.AddTile(TileID.ChlorophyteExtractinator)
-            //.Register();
-
-            //CreateRecipe()
-            //.AddIngredient(ModContent.ItemType<Ashen_Sandstone>())
-            //.AddTile(TileID.ChlorophyteExtractinator)
-            //.Register();
-        }
-    }
+	}
 }

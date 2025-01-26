@@ -24,7 +24,7 @@ namespace Origins.Items.Armor.Scavenger {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClasses.Explosive) += 10;
+			player.GetCritChance(DamageClasses.Explosive) += 8;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Scavenger_Breastplate>() && legs.type == ModContent.ItemType<Scavenger_Greaves>();

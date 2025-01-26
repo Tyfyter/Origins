@@ -341,7 +341,7 @@ namespace Origins.Dev {
 				}
 				if (weaponType == WeaponTypes.None) {
 					if (item.CountsAsClass(DamageClasses.Explosive)) {
-						if (item.useAmmo == ModContent.ItemType<Resizable_Mine_One>()) {
+						if (item.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
 							weaponType = WeaponTypes.CanisterLauncher;
 						} else if (item.CountsAsClass(DamageClasses.ThrownExplosive)) {
 							weaponType = WeaponTypes.ThrownExplosive;
@@ -398,7 +398,7 @@ namespace Origins.Dev {
 								weaponType = WeaponTypes.HarpoonGun;
 							} else if (item.useAmmo == AmmoID.Rocket) {
 								weaponType = WeaponTypes.RocketLauncher;
-							} else if (item.useAmmo == ModContent.ItemType<Resizable_Mine_One>()) {
+							} else if (item.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
 								weaponType = WeaponTypes.CanisterLauncher;
 							}
 							break;

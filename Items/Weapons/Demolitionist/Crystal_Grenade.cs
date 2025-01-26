@@ -28,7 +28,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 5f;
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 999;
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {

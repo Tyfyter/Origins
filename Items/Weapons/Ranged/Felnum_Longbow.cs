@@ -1,17 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem, ICustomWikiStat {
 		public const int baseDamage = 19;
         public string[] Categories => [
             "Bow"
         ];
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
 			Item.damage = baseDamage;
 			Item.width = 18;
@@ -30,9 +32,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 	}
 }

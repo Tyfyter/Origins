@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
@@ -8,22 +7,18 @@ using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
-using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Other;
-using Origins.Water;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -39,7 +34,7 @@ namespace Origins {
 		public override void PreUpdateMovement() {
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
-				Player.velocity *= 1.0048f;
+				Player.velocity *= 1.006f;
 				Player.ignoreWater = true;
 			}
 			if (riptideSet && !Player.mount.Active) {
@@ -125,11 +120,11 @@ namespace Origins {
 					}
 				}
 			} else if (loversLeap) {
-				Player.dashType = 0;
-				Player.dashTime = 0;
 				const int loversLeapDuration = 6;
 				const float loversLeapSpeed = 12f;
 				if (collidingX || collidingY) {
+					Player.dashType = 0;
+					Player.dashTime = 0;
 					if ((dashDirection != 0 && (Player.velocity.X * dashDirection < loversLeapSpeed)) || (dashDirectionY != 0 && (Player.velocity.Y * dashDirectionY < loversLeapSpeed))) {
 						//Player.dashDelay = -1;
 						//Player.dash = 2;
@@ -448,11 +443,14 @@ namespace Origins {
 			mana.Base += quantumInjectors * Quantum_Injector.mana_per_use;
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
-				if (tornCurrentSeverity >= 1) {
+				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer) {
 					Player.KillMe(new KeyedPlayerDeathReason() {
 						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
 					}, 1, 0);
 				}
+			}
+			if (cryostenBody) {
+				health *= 1.08f;
 			}
 		}
 		public override void NaturalLifeRegen(ref float regen) {
@@ -468,7 +466,7 @@ namespace Origins {
 					}
 				}
 			}
-			if (mojoInjection) Mojo_Injection.UpdateEffect(this);
+			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {
@@ -486,7 +484,7 @@ namespace Origins {
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;
-			controlTriggerSetBonus = Origins.SetBonusTriggerKey.Current;
+			controlTriggerSetBonus = Keybindings.TriggerSetBonus.Current;
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
 				TriggerSetBonus();
 			}
@@ -665,11 +663,10 @@ namespace Origins {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
 		}
 		public override void GetDyeTraderReward(List<int> rewardPool) {
-			rewardPool.AddRange([
-				ModContent.ItemType<Amber_Dye>(),
-				ModContent.ItemType<High_Contrast_Dye>(),
-				ModContent.ItemType<Rasterized_Dye>(),// temp
-			]);
+			for (int i = 0; i < Dye_Item.dyeItems.Count; i++) {
+				Dye_Item dyeItem = Dye_Item.dyeItems[i];
+				if (dyeItem.AddToDyeTrader(Player)) rewardPool.Add(dyeItem.Type);
+			}
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {

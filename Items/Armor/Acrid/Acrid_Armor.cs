@@ -19,6 +19,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 			Origins.AddGlowMask(this);
+			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(gold: 3);
@@ -42,7 +43,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 13)
-			.AddIngredient(ModContent.ItemType<Rubber>(), 10)
+			.AddIngredient(ModContent.ItemType<Materials.Rubber>(), 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -130,7 +131,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Summon) += 0.1f;
-			player.maxMinions += 1;
+			player.maxMinions += 2;
 			if (player.wet) {
 				player.GetDamage(DamageClass.Summon) += 0.08f;
 				player.maxMinions += 1;
@@ -168,6 +169,7 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
 			Origins.AddBreastplateGlowmask(this);
+			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = false;
 		}
         public override void SetDefaults() {
 			Item.defense = 18;
@@ -180,7 +182,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 26)
-			.AddIngredient(ModContent.ItemType<Rubber>(), 30)
+			.AddIngredient(ModContent.ItemType<Materials.Rubber>(), 30)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -190,7 +192,8 @@ namespace Origins.Items.Armor.Acrid {
         public override void SetStaticDefaults() {
 			Origins.AddLeggingGlowMask(this);
 			Origins.AddGlowMask(this);
-        }
+			ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = false;
+		}
         public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 1, silver: 80);
@@ -202,7 +205,7 @@ namespace Origins.Items.Armor.Acrid {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)
-			.AddIngredient(ModContent.ItemType<Rubber>(), 20)
+			.AddIngredient(ModContent.ItemType<Materials.Rubber>(), 20)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

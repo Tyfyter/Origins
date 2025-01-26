@@ -1,12 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Mounts;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -14,8 +19,8 @@ using static Origins.OriginExtensions;
 namespace Origins {
     public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
-			if (bugZapper) {
-				Player.statDefense += (int)(tornCurrentSeverity * 30);
+			if (bugZapper && tornCurrentSeverity > 0) {
+				Player.statDefense *= 1.15f + tornCurrentSeverity;
 			}
 			if (donorWristband) {
 				Player.pStone = false;
@@ -231,7 +236,7 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateMiscEffects() {
-			if (cryostenHelmet) {
+			if (oldCryostenHelmet) {
 				if (Player.statLife != Player.statLifeMax2) {
 					bool buffed = cryostenLifeRegenCount > 0;
 					int visualTime = (int)Main.timeForVisualEffects % (buffed ? 15 : 60);
@@ -288,32 +293,27 @@ namespace Origins {
 					explosiveArteryCount = -1;
 				}
 			}
-			if (cursedVoice) {
+			if (cursedVoice && Main.myPlayer == Player.whoAmI) {
 				Player.AddBuff(cursedVoiceItem.buffType, 5);
-				const float maxDist = 256 * 256;
-				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Player.CheckMana(cursedVoiceItem.mana, false)) {
-					bool foundTarget = false;
-					Player.DoHoming((target) => {
-						if (foundTarget) return false;
-						Vector2 diff = target.Center - Player.MountedCenter;
-						if (diff.LengthSquared() < maxDist) {
-							Player.CheckMana(cursedVoiceItem.mana, true);
-							Player.manaRegenDelay = (int)Player.maxRegenDelay;
-							Projectile.NewProjectileDirect(
-								Player.GetSource_Accessory(cursedVoiceItem),
-								mouthPosition,
-								diff.SafeNormalize(default) * cursedVoiceItem.shootSpeed,
-								cursedVoiceItem.shoot,
-								Player.GetWeaponDamage(cursedVoiceItem),
-								Player.GetWeaponKnockback(cursedVoiceItem),
-								Player.whoAmI
-							);
-							if (cursedVoiceItem.UseSound.HasValue) SoundEngine.PlaySound(cursedVoiceItem.UseSound);
-							foundTarget = true;
-						}
-						return foundTarget;
-					});
-					cursedVoiceCooldown = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
+				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Keybindings.ForbiddenVoice.JustPressed && Player.CheckMana(cursedVoiceItem.mana, true)) {
+					Player.manaRegenDelay = (int)Player.maxRegenDelay;
+					Projectile.NewProjectileDirect(
+						Player.GetSource_Accessory(cursedVoiceItem),
+						mouthPosition,
+						Vector2.Zero,
+						cursedVoiceItem.shoot,
+						Player.GetWeaponDamage(cursedVoiceItem),
+						Player.GetWeaponKnockback(cursedVoiceItem),
+						Player.whoAmI
+					);
+					cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
+					bool longerExpertDebuff = BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType];
+					try {
+						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = false;
+						Player.AddBuff(cursedVoiceItem.buffType, cursedVoiceCooldown);
+					} finally {
+						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = longerExpertDebuff;
+					}
 				}
 			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
@@ -351,16 +351,18 @@ namespace Origins {
 					if (damageClass == DamageClass.Generic) {
 						continue;
 					}
-					Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * statSharePercent;
-					Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * statSharePercent;
+					float currentStatSharePercent = statSharePercent;
+					if (OriginConfig.Instance.StatShareRatio.TryGetValue(new(damageClass.FullName), out float multiplier)) currentStatSharePercent *= multiplier;
+					Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * currentStatSharePercent;
+					Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * currentStatSharePercent;
 
-					Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(statSharePercent));
-					Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - statSharePercent);
+					Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(currentStatSharePercent));
+					Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - currentStatSharePercent);
 
-					Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
-					Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+					Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * currentStatSharePercent;
+					Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * currentStatSharePercent;
 
-					float crit = Player.GetCritChance(damageClass) * statSharePercent;
+					float crit = Player.GetCritChance(damageClass) * currentStatSharePercent;
 					Player.GetCritChance(DamageClass.Generic) += crit;
 					Player.GetCritChance(damageClass) -= crit;
 				}
@@ -436,6 +438,8 @@ namespace Origins {
 				}
 			}
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
+			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player, miniStaticShock ? 7 : 5);
+			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(Player, 2);
 			oldGravDir = Player.gravDir;
 		}
 		public override void UpdateDyes() {
@@ -543,7 +547,7 @@ namespace Origins {
 			}
 		}
 		public override void UpdateLifeRegen() {
-			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
+			if (oldCryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
 			if (bombCharminItLifeRegenCount > 0) {
 				Player.lifeRegenCount += 24;
 				const float offsetMult = 1;

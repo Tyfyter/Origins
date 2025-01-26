@@ -64,15 +64,11 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override void AI() {
-			const float maxDistTiles = 45f * 16;
 			const float maxDistTiles2 = 60f * 16;
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC currentTarget = Main.npc[i];
 				if (currentTarget.CanBeChasedBy() && currentTarget.ModNPC is IRivenEnemy) {
 					float distSquared = (currentTarget.Center - NPC.Center).LengthSquared();
-					if (distSquared < maxDistTiles * maxDistTiles) {
-						currentTarget.AddBuff(Barnacled_Buff.ID, 5);
-					}
 					if (distSquared < maxDistTiles2 * maxDistTiles2) {
 						currentTarget.AddBuff(Barnacled_Buff.ID, 5);
 						if (Main.rand.NextBool(6)) {
@@ -103,7 +99,7 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4));
 			}

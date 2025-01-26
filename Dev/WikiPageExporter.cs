@@ -92,7 +92,7 @@ namespace Origins.Dev {
 				(PageTemplate template, Dictionary<string, object> context) = provider.GetPage(item.ModItem);
 				if (context == null) continue;
 				if ((customWikiStat?.FullyGeneratable ?? false) || !File.Exists(pagePath)) {
-					WriteFileNoUnneededRewrites(GetWikiPagePath(pagePath), template.Resolve(context));
+					WriteFileNoUnneededRewrites(pagePath, template.Resolve(context));
 				} else {
 					TryUpdatingExistingPage(pagePath, template, context);
 				}
@@ -463,6 +463,7 @@ namespace Origins.Dev {
 	}
 	public record TileRecipeRequirement(int Tile) : RecipeRequirement {
 		public override string ToString() {
+			if (Main.dedServ) return string.Empty;
 			if (requiredTileWikiTextOverride.TryGetValue(Tile, out LocalizedText text)) return text.Value;
 			Mod reqMod = TileLoader.GetTile(Tile)?.Mod;
 			string reqName = Tile == -1 ? "By Hand" : Lang.GetMapObjectName(MapHelper.TileToLookup(Tile, 0));

@@ -62,7 +62,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			//Projectile.CloneDefaults(ProjectileID.FrostHydra);
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 32;
@@ -86,6 +86,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {
 				Projectile.Kill();
 				return;
+			}
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.type == Type && other.owner == Projectile.owner && other.Hitbox.Intersects(Projectile.Hitbox)) {
+					Projectile.velocity.X += Math.Sign(Projectile.position.X - other.position.X) * 0.03f;
+				}
 			}
 			#endregion
 
@@ -282,7 +287,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Barnacle_Turret_Shot : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.SentryShot[Type] = true;
 		}

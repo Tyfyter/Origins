@@ -62,7 +62,7 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 40;
 			Projectile.height = 28;

@@ -63,7 +63,7 @@ namespace Origins.Buffs {
 			}
 			if (Main.rand.NextFloat(0.5f, 2f) < percent) {
 				if (Main.rand.NextBool(2)) {
-					player.AddBuff(BuffID.Confused, Main.rand.Next(24, 69) * (1 + (int)percent));
+					player.AddBuff(BuffID.Confused, Main.rand.Next(24, 48) * (1 + (int)percent));
 				} else {
 					player.AddBuff(BuffID.Bleeding, Main.rand.Next(48, 138) * (1 + (int)percent));
 				}
@@ -110,6 +110,7 @@ namespace Origins.Buffs {
 			if (percent >= 0.5) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
+			originPlayer.DefiledAssimilation += percent * 0.0000444f;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().DefiledAssimilation;
@@ -144,7 +145,7 @@ namespace Origins.Buffs {
 				}, 40, 0);
 			}
 			
-			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 5 : 1000, percent, true);
+			OriginPlayer.InflictTorn(player, 60, originPlayer.timeSinceRivenAssimilated < 5 ? 5 : 1000, percent * ServerSideAccessibility.Instance.RivenAsimilationMultiplier, true);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;

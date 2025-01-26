@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.Localization;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Dungeon_Chest : ModChest {
@@ -18,6 +19,7 @@ namespace Origins.Tiles.Defiled {
 			//disableSmartCursor = true;
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Defiled_Key>();
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 	}

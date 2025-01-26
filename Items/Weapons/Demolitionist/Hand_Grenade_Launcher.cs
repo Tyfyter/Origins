@@ -13,6 +13,9 @@ using static Origins.OriginExtensions;
 
 using Origins.Dev;
 using PegasusLib;
+using Origins.Projectiles;
+using System.Reflection.Emit;
+using MonoMod.Utils;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -32,9 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Orange;
 			Item.glowMask = glowmask;
 		}
-		public override bool AltFunctionUse(Player player) {
-			return true;
-		}
+		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
 				if (type == ModContent.ProjectileType<Felnum_Shock_Grenade_P>()) {
@@ -42,20 +43,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 					damage += (damage - 16) * 2;
 					type = ModContent.ProjectileType<Awe_Grenade_P>();
 					velocity *= 1.25f;
-					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+					knockback *= 3;
+					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
 				if (type == ModContent.ProjectileType<Impact_Grenade_P>()) {
 					type = ModContent.ProjectileType<Impact_Grenade_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), position);
 					damage *= 10;
 					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
 				if (type == ModContent.ProjectileType<Acid_Grenade_P>()) {
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					type = ModContent.ProjectileType<Acid_Shot>();
+					type = ModContent.ProjectileType<Brine_Droplet>();
 					damage -= 20;
 					for (int i = Main.rand.Next(2); ++i < 5;) {
 						Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 2, knockback, player.whoAmI).scale = 0.85f;
@@ -75,7 +76,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 			if (type == ModContent.ProjectileType<Acid_Grenade_P>()) {
-				damage -= 15;
+				damage -= 15;// not doing anything, also, why is it here?
 			}
 			return true;
 		}
@@ -85,6 +86,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Awe Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
+			ProjectileID.Sets.Explosive[Type] = true;
+			ProjectileID.Sets.RocketsSkipDamageForPlayers[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
@@ -92,26 +95,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 45;
 			Projectile.penetrate = 1;
 		}
-		public override void OnSpawn(IEntitySource source) {
-			oldVelocity = Projectile.velocity;
-		}
 		public override void AI() {
-			float diff = (Projectile.velocity - oldVelocity).LengthSquared();
-			if (diff > 256) {
+			if (Projectile.localAI[0] != 0 && !Projectile.velocity.WithinRange(oldVelocity, 16)) {
 				Projectile.timeLeft = 0;
 			}
+			Projectile.localAI[0] = 1;
 			oldVelocity = Projectile.velocity;
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			return true;
-		}
+		public override bool OnTileCollide(Vector2 oldVelocity) => true;
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item38.WithVolume(0.75f), Projectile.Center);
 			SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(5), Projectile.Center);
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Grenade_Blast>(), Projectile.damage, 24, Projectile.owner);
 		}
 	}
-	public class Awe_Grenade_Blast : ModProjectile {
+	public class Awe_Grenade_Blast : ModProjectile, ISelfDamageEffectProjectile {
 		
 		public override string Texture => "Origins/Projectiles/Pixel";
 		const int duration = 15;
@@ -119,7 +117,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.friendly = true;
-			Projectile.hostile = true;
+			Projectile.hostile = false;
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = duration;
 			Projectile.width = Projectile.height = 160;
@@ -132,18 +130,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 closest = Projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
 			return (Projectile.Center - closest).Length() <= 160 * ((duration - Projectile.timeLeft) / (float)duration) * Projectile.scale;
 		}
-		public override bool? CanHitNPC(NPC target) {
-			return target.friendly ? false : base.CanHitNPC(target);
-		}
-		public override bool CanHitPlayer(Player target) {
-			Vector2 closest = Projectile.Center.Clamp(target.TopLeft, target.BottomRight);
-			return (Projectile.Center - closest).Length() <= 160 * ((duration - Projectile.timeLeft) / (float)duration) * Projectile.scale;
-		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 1 - ((duration - Projectile.timeLeft) / (float)duration) * 0.6f;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.SourceDamage *= 1 - ((duration - Projectile.timeLeft) / (float)duration) * 0.95f;
+		}
+		public override void AI() {
+			if (Projectile.localAI[0] == 0) ExplosiveGlobalProjectile.DealSelfDamage(Projectile, ImmunityCooldownID.DD2OgreKnockback);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Main.spriteBatch.Restart(
@@ -158,6 +152,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			data.Draw(Main.spriteBatch);
 			Main.spriteBatch.Restart();
 			return false;
+		}
+
+		public void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt) {
+			if (damageDealt > 0) Projectile.localAI[0] = 1;
 		}
 	}
 	public class Impact_Grenade_Blast : ModProjectile {
@@ -182,6 +180,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 unit = Projectile.velocity.SafeNormalize(Vector2.Zero);
 			Projectile.Center = player.MountedCenter + unit * 36 + unit.RotatedBy(MathHelper.PiOver2 * player.direction) * -2;
 			Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.soundDelay <= 0) {
+				SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), Projectile.Center);
+				Projectile.soundDelay = Projectile.timeLeft * 20;
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Vector2 closest = (Projectile.Center + Projectile.velocity * 2).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());

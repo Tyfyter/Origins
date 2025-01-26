@@ -28,11 +28,12 @@ namespace Origins.Tiles.Brine {
 			AddMapEntry(new Color(28, 128, 56), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
+			TileObjectData.newTile.AnchorAlternateTiles = [];
 			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.OnlyInFullLiquid;
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Peat_Moss>(),
-				TileType<Sulphur_Stone>()
+				TileType<Baryte>()
 			];
 			TileObjectData.addTile(Type);
 

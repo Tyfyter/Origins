@@ -1,17 +1,13 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Magic;
+using Origins.Projectiles;
+using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using System;
-using System.IO;
-using Origins.Projectiles;
-using Origins.Items.Weapons.Magic;
 namespace Origins.Items.Weapons.Melee {
 	public class Ripper_Lance : ModItem, ICustomWikiStat {
 		static short glowmask;

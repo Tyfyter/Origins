@@ -132,8 +132,7 @@ namespace Origins.Items.Weapons.Magic {
 				);
 				if (samples.Average() > tick_motion * 0.5f) {
 					Projectile.Center += direction * tick_motion;
-					int index = (int)++Projectile.ai[1];
-					Projectile.oldPos[^index] = Projectile.Center;
+					int index = Math.Min((int)++Projectile.ai[1], Projectile.oldPos.Length);
 					Projectile.oldRot[^index] = oldVelocity.ToRotation();
 				}
 			}

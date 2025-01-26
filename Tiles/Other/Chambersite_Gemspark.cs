@@ -14,7 +14,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
 			AddMapEntry(new Color(55, 204, 212));
-			DustType = DustID.GemSapphire;//TODO: Chambersite gem dust
+			DustType = DustID.GemEmerald;//TODO: Chambersite gem dust
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			const float strength = 1f;

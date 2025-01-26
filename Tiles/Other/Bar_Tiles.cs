@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -34,11 +36,12 @@ namespace Origins.Tiles.Other {
 				AddMapEntry(color.Value, displayName);
 			}
 		}
-		public static int AddBarTile(ModItem item, Color? color = null) {
+		public static int AddBarTile(ModItem item, Color? color = null, int dust = -1) {
 			Bar_Tile tile = new(item.Name, item.DisplayName, color);
 			if (!Main.dedServ && !ModContent.HasAsset(tile.Texture)) {
 				throw new System.Exception($"Tried to add bar tile with texture \"{tile.Texture}\", but that no texture exists at that path");
 			}
+			if (dust != -1) tile.DustType = dust;
 			item.Mod.AddContent(tile);
 			return tile.Type;
 		}

@@ -6,9 +6,11 @@ Generic: {
 	// the_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
 	// The_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
 	// Defiled_Amalgamation: District Attorney
-	// Hoarder: Chimney Smoker
 	// Defiled_Antibody: Blŏkusland™ Employee
 	// Defiled_Antibodies: Blŏkusland™ Employees
+	// Defiled_Tripod: Blŏkusland™ Certified Weaponized Catgirl
+	// Mildew_Carrion: Mildew Chadlion
+	// Riven_Fighter: Riven Knownolimitsoform
 }
 
 Status_Messages: {
@@ -36,6 +38,10 @@ Items: {
 	// Kruncher.DisplayName: Crunker
 	// Ancient_Kruncher.DisplayName: Cranker
 	// Suspicious_Looking_Pebble.DisplayName: Sus Looking Unusually Round Pebble
+	// Partybringer.Tooltip: Fires pleasants that bring present surprises
+	// Unmisfire.Tooltip: Corrects your shitty aim
+	// Spirit_Shard.DisplayName: SpiritS hard
+	// Terrarian_Voodoo_Doll.Tooltip: Should be thrown in lava or amebic gel
 }
 
 // Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!
@@ -65,3 +71,41 @@ Biomes: {
 		// TownNPCDialogueName: the place where Riven Jesus, our savior: {§Riven_Hive} can be found
 	}
 }
+
+/* Buffs.Optiphage_Debuff.Description:
+	'''
+	It's eating them.
+	And then it's going to eat me!
+	(voracious gobbling)
+	Oh, my God!
+	I don't like this place, not one bit.
+	''' */
+
+DefiledRelaySignals: {
+	// Security1: Code word: male genitalia.
+	// Security2: WE FOUND THEM.
+	// Security3: Send dudes.
+	// Security4: Intruder up colon rn.
+	// Security5: Terrarian, wut doin'...
+	// Security6: Relay 69, foriegn body.
+	// Security7: Relay 401, time for liveliness up in here.
+	// Idle1: Your mother well last night.
+	// Idle2: Heyyyyyyyyy...
+	// Idle3: District Attorney interjects.
+	// Idle4: Get surprise ready.
+	// Idle5: WOOOOO. YEAH. DOPAMINE RELEASE. Okay, over now.
+	// Idle6: Sadge. Negatory dopamine release.
+	// Idle7: Also listen to MISSINGFILE!
+	// Idle8: Finally, good fucking news.
+	// BeingDestroyed1: Shalln't continue.
+	// BeingDestroyed2: WE SAY WHAT?!
+	// BeingDestroyed3: Blood be boilin'.
+	// BeingDestroyed4: HALP!
+	// BeingDestroyed5: Go away in profane language.
+}
+
+/* SetBonuses.Rubber:
+	'''
+	Immunity to Static Shock, Electrified, and traffic laws
+	Reduces damage taken by 5%
+	''' */

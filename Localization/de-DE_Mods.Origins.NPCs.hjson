@@ -299,3 +299,27 @@ Spirit_Of_Christmas_Present: {
 // Spirit_Of_Christmas_Future.DisplayName: Spirit Of Christmas Yet To Come
 // Spirit_Of_Christmas_Present_Tax_Collector.DisplayName: Spirit Of Christmas Present Tax Collector
 // Spirit_Of_Christmas_Future_Tax_Collector.DisplayName: Spirit Of Christmas Future Tax Collector
+// Sea_Dragon.DisplayName: Sea Dragon
+// Carpalfish.DisplayName: Carpalfish
+// Felnum_Ore_Slime.DisplayName: Felnum Slime
+// Mildew_Creeper.DisplayName: Mildew Creeper
+// King_Crab.DisplayName: King Crab
+// Fae_Nymph.DisplayName: Fae Nymph
+// Whimsical_Girl.DisplayName: Whimsical Girl
+// Felnum_Guardian.DisplayName: Felnum Guardian
+// Felnum_Einheri.DisplayName: Felnum Einheri
+
+Slime_Worm: {
+	// DisplayName: Slorm
+	// DisplayNameFormattable: "{0} Slorm"
+	// Green: Green
+	// Blue: Blue
+	// Red: Red
+	// Purple: Purple
+	// Yellow: Yellow
+	// Black: Black
+}
+
+// Cloud_Elemental.DisplayName: Cloud Elemental
+// World_Cracker_Exoskeleton.DisplayName: Flying Exoskeleton
+// World_Cracker_Summon_Bubble.DisplayName: Amniotic Sac

@@ -88,6 +88,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.CanBeChasedBy(Projectile, true)) hitEnemies.Add(target.whoAmI);
 			target.AddBuff(Ziptie_Buff.ID, 240);
+			Projectile.damage = (int)(Projectile.damage * 0.8);
 		}
 		public override void OnKill(int timeLeft) {
 			if (hitEnemies.Count >= 3) {

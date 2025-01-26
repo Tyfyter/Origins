@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AltLibrary.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
@@ -31,6 +32,7 @@ namespace Origins.NPCs.TownNPCs {
 				.SetBiomeAffection<Defiled_Wastelands>(AffectionLevel.Love)
 				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
+			InvalidateNPCHousing.NPCTypeIgnoresSpecificBiome.Add(Type, [ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>()]);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.WitchDoctor);

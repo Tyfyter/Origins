@@ -1,6 +1,8 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Defiled;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
@@ -10,10 +12,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
 	public class Dreadful_Powder : ModItem {
-        public string[] Categories => [
-            "ExpendableTool"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"ExpendableTool"
+		];
+		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 		}
@@ -27,11 +29,11 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.Bottles)
 			.Register();
 
-            Recipe.Create(ItemID.PoisonedKnife, 50)
-            .AddIngredient(ItemID.ThrowingKnife, 50)
-            .AddIngredient(this)
-            .Register();
-        }
+			Recipe.Create(ModContent.ItemType<Chipper_Knife>(), 50)
+			.AddIngredient(ItemID.ThrowingKnife, 50)
+			.AddIngredient(this)
+			.Register();
+		}
 	}
 	public class Defiled_Powder_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VilePowder;
@@ -58,6 +60,14 @@ namespace Origins.Items.Materials {
 						50,
 						new Color(0.7f, 0.7f, 0.7f, 0.1f)
 					);
+				}
+			}
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				Rectangle hitbox = Projectile.Hitbox;
+				foreach (NPC target in Main.ActiveNPCs) {
+					if (target.Hitbox.Intersects(hitbox) && DefiledGlobalNPC.NPCTransformations.TryGetValue(target.type, out int targetType)) {
+						target.Transform(targetType);
+					}
 				}
 			}
 			if (Main.myPlayer != Projectile.owner) return;

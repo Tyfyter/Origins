@@ -24,6 +24,7 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(new Color(255, 165, 0), name);
 			mergeID = TileID.Demonite;
 			DustType = DustID.Torch;
+			//DustType = DustID.Palladium;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 1f;

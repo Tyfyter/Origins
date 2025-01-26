@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Pets;
 using Origins.LootConditions;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -9,17 +10,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
-	public class Plague_Texan_Set : ModItem {
-		public override string Texture => typeof(Plague_Texan_Mask).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
-				new DropAsSetRule(Type)
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Mask>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jacket>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Jeans>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Plague_Texan_Sight>()))
-				.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Chromatic_Scale>()))
-			]).ToArray();
+	public class Plague_Texan_Set : DevSet<Plague_Texan_Mask> {
+		public override IEnumerable<int> GetDrops() {
+			yield return ModContent.ItemType<Plague_Texan_Mask>();
+			yield return ModContent.ItemType<Plague_Texan_Jacket>();
+			yield return ModContent.ItemType<Plague_Texan_Jeans>();
+			yield return ModContent.ItemType<Plague_Texan_Sight>();
+			yield return ModContent.ItemType<Chromatic_Scale>();
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]

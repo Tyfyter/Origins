@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -17,6 +18,8 @@ namespace Origins.Tiles.Riven {
 
 			// Sand specific properties
 			Main.tileSand[Type] = true;
+			TileID.Sets.SandBiome[Type] = 1;
+			TileID.Sets.isDesertBiomeSand[Type] = true;
 			TileID.Sets.Conversion.Sand[Type] = true; // Allows Clentaminator solutions to convert this tile to their respective Sand tiles.
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true; // Allows Sandshark enemies to "swim" in this sand.
 			TileID.Sets.CanBeDugByShovel[Type] = true;
@@ -29,8 +32,8 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.ChecksForMerge[Type] = true;
 
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
-			DustType = DustID.Bone;
 			AddMapEntry(new Color(194, 200, 200));
+			DustType = DustID.Ghost;
 		}
 
 		public override bool HasWalkDust() {
@@ -45,6 +48,7 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemID.Sets.SandgunAmmoProjectileData[Type] = new(ProjectileType<Silica_Ball_Gun>(), 10);
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.SandBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Silica>());

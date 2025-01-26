@@ -1,16 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Questing;
+﻿using Origins.Questing;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.NPCs.BossThePrimordials;
 
 namespace Origins.NPCs.MiscE.Quests {
 	public class Jacob_Marley : ModNPC {
@@ -134,7 +131,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 76);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 77);
 			}
@@ -196,7 +193,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.chaseable = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath6;
-			AIType = NPCID.SantaClaus;
+			AIType = NPCID.Merchant;
 			AnimationType = NPCID.SantaClaus;
 			Banner = Item.NPCtoBanner(NPCID.SantaClaus);
 		}
@@ -313,7 +310,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + Vector2.UnitY * 20f, NPC.velocity, 1340);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + Vector2.UnitY * 20f, NPC.velocity, 1340);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + Vector2.UnitY * 34f, NPC.velocity, 1341);

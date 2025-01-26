@@ -48,6 +48,7 @@ namespace Origins.UI.SetBonus {
 			pos.X = ((int)pos.X) / scale.X;
 			pos.Y = ((int)pos.Y) / scale.Y;
 			int frameOffset = originPlayer.blastSetActive ? activeYOffset : 0;
+			float chargePercent = originPlayer.blastSetCharge / OriginPlayer.blast_set_charge_max;
 			spriteBatch.Draw(
 				texture,
 				pos + new Vector2(barStartXOffset, 0),
@@ -55,7 +56,7 @@ namespace Origins.UI.SetBonus {
 				white,
 				0,
 				default,
-				new Vector2((int)((originPlayer.blastSetCharge / OriginPlayer.blast_set_charge_max) * barMaxWidth), 1),
+				new Vector2((int)(chargePercent * barMaxWidth + chargePercent), 1),
 				0,
 			0);
 			spriteBatch.Draw(

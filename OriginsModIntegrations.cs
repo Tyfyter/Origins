@@ -38,6 +38,8 @@ using Origins.NPCs;
 using PegasusLib.Graphics;
 using ThoriumMod.Projectiles.Bard;
 using ThoriumMod.Items;
+using ThoriumMod.Items.Darksteel;
+using Origins.Items.Accessories;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -60,6 +62,12 @@ namespace Origins {
 			set => instance.checkAprilFools = value;
 		}
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
+		ModKeybind goToKeybindKeybind;
+		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
+		Action<ModKeybind> goToKeybind;
+		public static void GoToKeybind(ModKeybind keybind) {
+			instance.goToKeybind?.Invoke(keybind);
+		}
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
@@ -218,8 +226,9 @@ namespace Origins {
 			}
 		}
 		public static void LateLoad() {
-			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicatorMod) && phaseIndicatorMod.RequestAssetIfExists("PhaseIndicator", out Asset<Texture2D> phaseIndicatorTexture)) {
-				instance.phaseIndicator = phaseIndicatorTexture;
+			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {
+				instance.goToKeybindKeybind = keybind;
+				instance.goToKeybind = (keybind) => controllerConfigurator.Call("OPENKEYBINDSTOSEARCH", keybind);
 			}
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
 				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Defiled_Wastelands>());
@@ -302,6 +311,9 @@ namespace Origins {
 					() => Main.LocalPlayer.OriginPlayer().mojoInjection
 				);
 			}
+		}
+		public static void AddRecipes() {
+			if (instance.thorium is not null) AddThoriumRecipes();
 		}
 		public void Unload() {
 			instance = null;
@@ -392,7 +404,6 @@ namespace Origins {
 		delegate void hook_TileShine(orig_TileShine orig, ref Vector3 color, Tile tile);
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void LoadThorium() {
-			///TODO: redo bardness
 			MonoModHooks.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
 				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
@@ -456,6 +467,18 @@ namespace Origins {
 				}
 			}
 		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		static void AddThoriumRecipes() {
+			Recipe.Create(ModContent.ItemType<Asylum_Whistle>())
+			.AddIngredient<aDarksteelAlloy>(15)
+			.AddTile(TileID.Anvils)
+			.Register();
+
+			Recipe.Create(ModContent.ItemType<Bomb_Handling_Device>())
+			.AddIngredient<aDarksteelAlloy>(15)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
 	}
 	public interface ICustomWikiDestination {
 		string WikiPageName { get; }
@@ -465,30 +488,6 @@ namespace Origins {
 		public bool altEmpowerment = false;
 		public override void ResetEffects() {
 			altEmpowerment = false;
-		}
-	}
-	[ExtendsFromMod("ThoriumMod")]
-	public class OriginsThoriumGlobalNPC : GlobalNPC {
-		public override bool InstancePerEntity => true;
-		int sonorousShredderHitCount = 0;
-		int sonorousShredderHitTime = 0;
-		public override void ResetEffects(NPC npc) {
-			if(sonorousShredderHitTime > 0) {
-				if (--sonorousShredderHitTime <= 0) {
-					sonorousShredderHitCount = 0;
-				}
-			}
-		}
-		public bool SonorousShredderHit() {
-			if (sonorousShredderHitCount < 4) {
-				sonorousShredderHitCount++;
-				sonorousShredderHitTime = 300;
-				return false;
-			} else {
-				sonorousShredderHitCount = 0;
-				sonorousShredderHitTime = 0;
-				return true;
-			}
 		}
 	}
 	public interface IBardDamageClassOverride {

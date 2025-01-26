@@ -4,7 +4,9 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
+using SteelSeries.GameSense.DeviceZone;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -28,6 +30,7 @@ namespace Origins.NPCs {
 		internal bool jointPopDebuff = false;
 		internal bool ziptieDebuff = false;
 		internal bool beeIncantationDebuff = false;
+		internal bool mildewWhipDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;
@@ -35,10 +38,16 @@ namespace Origins.NPCs {
 		public float tornTarget = 0.7f;
 		public Vector2 tornOffset = default;
 		public bool slowDebuff = false;
+		public bool silencedDebuff = false;
 		public bool barnacleBuff = false;
 		public bool oldSlowDebuff = false;
 		public bool shadeFire = false;
 		public bool soulhideWeakenedDebuff = false;
+		public bool cavitationDebuff = false;
+		public bool staticShock = false;
+		public bool miniStaticShock = false;
+		public bool staticShockDamage = false;
+		public int staticShockTime = 0;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public bool amberDebuff = false;
@@ -66,6 +75,7 @@ namespace Origins.NPCs {
 			jointPopDebuff = false;
 			ziptieDebuff = false;
 			beeIncantationDebuff = false;
+			mildewWhipDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 				if (tornCurrentSeverity >= 1 && Main.netMode != NetmodeID.MultiplayerClient) {
@@ -86,8 +96,13 @@ namespace Origins.NPCs {
 			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
+			silencedDebuff = false;
 			shadeFire = false;
 			soulhideWeakenedDebuff = false;
+			cavitationDebuff = false;
+			staticShock = false;
+			miniStaticShock = false;
+			staticShockDamage = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
@@ -117,8 +132,7 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers) {
-			if (weakenedOnSpawn) return;
-			if (soulhideWeakenedDebuff) {
+			if (soulhideWeakenedDebuff && !weakenedOnSpawn) {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {
@@ -126,8 +140,7 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
-			if (weakenedOnSpawn) return;
-			if (soulhideWeakenedDebuff) {
+			if (soulhideWeakenedDebuff && !weakenedOnSpawn) {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {
@@ -137,9 +150,13 @@ namespace Origins.NPCs {
 		public override void OnSpawn(NPC npc, IEntitySource source) {
 			if (source is EntitySource_Parent parentSource) {
 				if (parentSource.Entity is NPC parentNPC) {
-					if ((!npc.chaseable || npc.lifeMax <= 5) && parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
+					OriginGlobalNPC parentGlobal = parentNPC.GetGlobalNPC<OriginGlobalNPC>();
+					if ((!npc.chaseable || npc.lifeMax <= 5) && parentGlobal.soulhideWeakenedDebuff) {
 						npc.damage = (int)(npc.damage * (1f - soulhideWeakenAmount));
 						weakenedOnSpawn = true;
+					}
+					if (parentGlobal.silencedDebuff && NPCID.Sets.ProjectileNPC[npc.type]) {
+						npc.life = 0;
 					}
 				}
 			}
@@ -175,12 +192,36 @@ namespace Origins.NPCs {
 					}
 				}
 			}
+			if (cavitationDebuff) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 66;
+				if (damage < 3) damage = 3;
+				Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.BreatheBubble, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+				dust.noGravity = true;
+				dust.velocity *= 0.75f;
+				dust.velocity.X *= 0.75f;
+				dust.velocity.Y -= 1f;
+				if (Main.rand.NextBool(4)) {
+					dust.noGravity = false;
+					dust.scale *= 0.5f;
+				}
+			}
+			if (staticShock || miniStaticShock || staticShockDamage) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				int damageMult = 1 + npc.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+				npc.lifeRegen -= 8 * damageMult;
+				if (damage < 3 * damageMult) damage = 3 * damageMult;
+			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
-				npc.lifeRegen -= 8;
-				damage += 1;
+				npc.lifeRegen -= 15;
+				damage += 2;
 				if (npc.HasBuff(Toxic_Shock_Strengthen_Debuff.ID)) {
-					npc.lifeRegen -= 8;
-					damage += 1;
+					npc.lifeRegen -= 15;
+					damage += 2;
 				}
 			}
 		}
@@ -193,7 +234,7 @@ namespace Origins.NPCs {
 				Projectile proj = null;
 				for (int i = 0; i < globalNPC.infusionSpikes.Count; i++) {
 					proj = Main.projectile[globalNPC.infusionSpikes[i]];
-					damage += proj.damage * 0.55f;
+					damage += proj.damage * 0.75f;
 					proj.Kill();
 				}
 				Projectile.NewProjectile(proj.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
@@ -209,18 +250,32 @@ namespace Origins.NPCs {
 			return true;
 		}
 		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Textures/Enemy_Slow_Indicator";
+		AutoLoadingAsset<Texture2D> silencedIndicator = "Origins/Textures/Enemy_Silenced_Indicator";
+		AutoLoadingAsset<Texture2D> blindIndicator = "Origins/Textures/Enemy_Blind_Indicator";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (slowDebuff) {
+			List<Texture2D> indicators = [];
+			Vector2 pos = Vector2.Zero;
+			void AddIndicator(Texture2D indicator) {
+				indicators.Add(indicator);
+				pos.X -= indicator.Width * 0.5f;
+			}
+			if (slowDebuff) AddIndicator(slowIndicator);
+			if (silencedDebuff) AddIndicator(silencedIndicator);
+			if (npc.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal) && blindGlobal.IsReallyBlinded) AddIndicator(blindIndicator);
+			for (int i = 0; i < indicators.Count; i++) {
+				Texture2D indicator = indicators[i];
+				pos.X += indicator.Width * 0.5f;
 				Main.EntitySpriteDraw(
-					slowIndicator,
-					npc.Top - new Vector2(0, 24) - screenPos,
+					indicator,
+					npc.Top + pos - new Vector2(0, 24) - screenPos,
 					null,
 					new Color(225, 180, 255, 180),
 					0,
-					new Vector2(14, 9),
+					indicator.Size() * 0.5f,
 					1,
 					SpriteEffects.None
 				);
+				pos.X += indicator.Width * 0.5f;
 			}
 		}
 		public void FillShaders(NPC npc, List<ArmorShaderData> shaders) {

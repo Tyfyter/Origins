@@ -18,6 +18,7 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.Stone));
 			RegisterItemDrop(ItemType<Chambersite_Item>());
+			DustType = DustID.GemEmerald;
 			//AddChambersite.Add(WallID.Stone, Type);
 		}
 		public static void AddChild(int type, AltBiome biome) {
@@ -36,6 +37,7 @@ namespace Origins.Walls {
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CrimsonAltBiome>());
 			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimstoneUnsafe, Type);
+			DustType = DustID.GemEmerald;
 		}
 	}
 	public class Chambersite_Ebonstone_Wall : ModWall {
@@ -45,6 +47,7 @@ namespace Origins.Walls {
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CorruptionAltBiome>());
 			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add(WallID.EbonstoneUnsafe, Type);
+			DustType = DustID.GemEmerald;
 		}
 	}
 	public class Chambersite_Defiled_Stone_Wall : ModWall {
@@ -53,6 +56,7 @@ namespace Origins.Walls {
 			AddMapEntry(new Color(150, 150, 150));
 			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Defiled_Stone_Wall>(), Type);
+			DustType = DustID.GemEmerald;
 		}
 	}
 	public class Chambersite_Riven_Flesh_Wall : ModWall {
@@ -61,6 +65,7 @@ namespace Origins.Walls {
 			AddMapEntry(new Color(40, 140, 200));
 			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Riven_Flesh_Wall>(), Type);
+			DustType = DustID.GemEmerald;
 		}
 	}
 }

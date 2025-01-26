@@ -8,6 +8,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
 using System;
@@ -18,12 +19,24 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using ThoriumMod.Empowerments;
 using static Origins.OriginExtensions;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		#region stats
 		bool focusPotionThisUse = false;
+		public override float UseAnimationMultiplier(Item item) {
+			if (eitriteGunMagazine && item.useTime != item.useAnimation && item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) {
+				return (item.useAnimation + item.useTime) / (float)item.useAnimation;
+			}
+			return 1f;
+		}
+		public override float UseSpeedMultiplier(Item item) {
+			float speed = 1f;
+			if (item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) speed += gunSpeedBonus;
+			return speed;
+		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
 				damage.Flat += Player.statDefense / 2;
@@ -160,7 +173,7 @@ namespace Origins {
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;
 			if (felnumShock >= Felnum_Helmet.shock_damage_divisor * 2) {
-				modifiers.SourceDamage.Flat += (int)(felnumShock / Felnum_Helmet.shock_damage_divisor);
+				modifiers.SourceDamage.Flat += (int)((felnumShock * Origins.DamageBonusScale[item.type]) / Felnum_Helmet.shock_damage_divisor);
 				usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
 			}
@@ -234,11 +247,17 @@ namespace Origins {
 			if (symbioteSkull) {
 				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, 0.1f, this);
 			}
-			if (venomFang || acridSet) {
-				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+			if (acridSet) {
+				target.AddBuff(Toxic_Shock_Debuff.ID, 300);
+			}
+			if (venomFang) {
+				target.AddBuff(Toxic_Shock_Debuff.ID, 180);
 				if (venomFang && acridSet) {
 					target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
 				}
+			}
+			if (lightningRing) {
+				target.AddBuff(ModContent.BuffType<Mini_Static_Shock_Debuff>(), 180);
 			}
 			if (messyLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
@@ -256,7 +275,7 @@ namespace Origins {
 				}
 			}
 			if (target.life <= 0) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.KillEnemyEvent is not null) {
 						quest.KillEnemyEvent(target);
 					}
@@ -302,6 +321,9 @@ namespace Origins {
 					}
 				}
 			}
+			if (cryostenSet) {
+				target.AddBuff(BuffID.Frostburn, Main.rand.Next(60 * 5, 60 * 14 + 1));
+			}
 		}
 		#endregion
 		#region receiving
@@ -316,12 +338,33 @@ namespace Origins {
 			if (cursedCrown && Player.onFire) {
 				Player.lifeRegen -= 8;
 			}
+			if (cavitationDebuff) {
+				Player.lifeRegen -= 33;
+				Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X - 2f, Player.position.Y - 2f), Player.width + 4, Player.height + 4, DustID.BreatheBubble, Player.velocity.X * 0.3f, Player.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+				dust.noGravity = true;
+				dust.velocity *= 0.75f;
+				dust.velocity.X *= 0.75f;
+				dust.velocity.Y -= 1f;
+				if (Main.rand.NextBool(4)) {
+					dust.noGravity = false;
+					dust.scale *= 0.5f;
+				}
+			}
+
+			if (staticShock || miniStaticShock || staticShockDamage) {
+				if (Player.lifeRegen > 0) {
+					Player.lifeRegen = 0;
+				}
+				int damageMult = 1 + Player.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt();
+				Player.lifeRegen -= 9 * damageMult;
+			}
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
 				modifiers.SourceDamage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
+			if (rubberBody) modifiers.SourceDamage *= 0.9f;
 			hitIsSelfDamage = false;
 			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
 				hitIsSelfDamage = true;
@@ -334,15 +377,15 @@ namespace Origins {
 				}
 				modifiers.SourceDamage /= damageMult;
 
+				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
 				if (minerSet) {
-					explosiveSelfDamage -= 0.2f;
-					explosiveSelfDamage = explosiveSelfDamage.CombineWith(
+					currentExplosiveSelfDamage -= 0.2f;
+					currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(
 						Player.GetDamage(DamageClasses.Explosive).GetInverse()
 					);
 					//damage = (int)(damage/explosiveDamage);
 					//damage-=damage/5;
 				}
-				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
 				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
 					Vector2 diff = proj.Center - Player.MountedCenter;
@@ -354,10 +397,13 @@ namespace Origins {
 						modifiers.DisableSound();
 					}
 				}
-				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
-				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>() && modifiers.SourceDamage.ApplyTo(proj.damage) < proj.damage / 5) {
-					modifiers.SourceDamage = new StatModifier(1, 0.2f);
+				const float min_self_destruct_mult = 0.1f;
+				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
+					modifiers.ScalingArmorPenetration += 1;
+					if (currentExplosiveSelfDamage.ApplyTo(proj.damage) < proj.damage * min_self_destruct_mult) currentExplosiveSelfDamage = new StatModifier(1, min_self_destruct_mult);
 				}
+				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
+				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
 			}
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;
@@ -538,8 +584,12 @@ namespace Origins {
 			} /*else if (pricklyPeared) {
 			+25% mana shielding?
 			}*/
-			if (toxicShock) {
-				modifiers.ScalingArmorPenetration += 0.1f;
+			if (toxicShock) { //Add stun
+				/*if (Main.rand.NextBool(400)) {// roughly 15% chance each second
+					Player.GetModPlayer<OriginPlayer>().stunTime;
+				}*/
+				Player.lifeRegen -= 15;
+				modifiers.ScalingArmorPenetration += 0.2f;
 			}
 			if (ashenKBReduction) {
 				modifiers.Knockback -= 0.15f;
@@ -581,7 +631,7 @@ namespace Origins {
 			}
 			if (razorwire) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.Damage * 0.67f;
+				double totalDamage = info.Damage;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
@@ -621,49 +671,49 @@ namespace Origins {
 					);
 				}
 			}
-            if (retributionShield) {
-                const float maxDist = 240 * 240;
-                double totalDamage = info.Damage * 0.5f;
-                List<(int id, float weight)> targets = new();
-                NPC npc;
-                for (int i = 0; i < Main.maxNPCs; i++) {
-                    npc = Main.npc[i];
-                    if (npc.CanBeChasedBy(retributionShieldItem)) {
-                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
-                        Vector2 diff = currentPos - Player.MountedCenter;
-                        float dist = diff.LengthSquared();
-                        if (dist > maxDist) continue;
-                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
-                        if (totalDamage / 3 > npc.life) {
-                            currentWeight = 0;
-                        }
-                        if (targets.Count >= 3) {
-                            for (int j = 0; j < 3; j++) {
-                                if (targets[j].weight < currentWeight) {
-                                    targets.Insert(j, (i, currentWeight));
-                                    break;
-                                }
-                            }
-                        } else {
-                            targets.Add((i, currentWeight));
-                        }
-                    }
-                }
-                for (int i = 0; i < 3; i++) {
-                    if (i >= targets.Count) break;
-                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
-                    Projectile.NewProjectile(
-                        Player.GetSource_Accessory(retributionShieldItem),
-                        Player.MountedCenter,
-                        (currentPos - Player.MountedCenter).WithMaxLength(12),
-                        retributionShieldItem.shoot,
-                        (int)(totalDamage / Math.Min(targets.Count, 3)) + 1,
-                        10,
-                        Player.whoAmI
-                    );
-                }
-            }
-            if (cinderSealItem is not null) {
+			if (retributionShield) {
+				const float maxDist = 240 * 240;
+				double totalDamage = info.Damage;
+				List<(int id, float weight)> targets = new();
+				NPC npc;
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					npc = Main.npc[i];
+					if (npc.CanBeChasedBy(retributionShieldItem)) {
+						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+						Vector2 diff = currentPos - Player.MountedCenter;
+						float dist = diff.LengthSquared();
+						if (dist > maxDist) continue;
+						float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+						if (totalDamage / 3 > npc.life) {
+							currentWeight = 0;
+						}
+						if (targets.Count >= 3) {
+							for (int j = 0; j < 3; j++) {
+								if (targets[j].weight < currentWeight) {
+									targets.Insert(j, (i, currentWeight));
+									break;
+								}
+							}
+						} else {
+							targets.Add((i, currentWeight));
+						}
+					}
+				}
+				for (int i = 0; i < 3; i++) {
+					if (i >= targets.Count) break;
+					Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+					Projectile.NewProjectile(
+						Player.GetSource_Accessory(retributionShieldItem),
+						Player.MountedCenter,
+						(currentPos - Player.MountedCenter).WithMaxLength(12),
+						retributionShieldItem.shoot,
+						(int)(totalDamage / Math.Min(targets.Count, 3)) + 1,
+						10,
+						Player.whoAmI
+					);
+				}
+			}
+			if (cinderSealItem is not null) {
 				cinderSealItem.ModItem.Shoot(
 					Player,
 					Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as EntitySource_ItemUse_WithAmmo,
@@ -673,15 +723,15 @@ namespace Origins {
 					Player.GetWeaponDamage(cinderSealItem),
 					Player.GetWeaponKnockback(cinderSealItem)
 				);
-                if (Main.rand.NextBool(5)) {
-                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash);
-                    dust.noGravity = true;
-                    dust.velocity *= 0.1f;
-                }
-            }
+				if (Main.rand.NextBool(5)) {
+					Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash);
+					dust.noGravity = true;
+					dust.velocity *= 0.1f;
+				}
+			}
 			if (unsoughtOrgan) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.Damage * 0.5f;
+				double totalDamage = info.Damage;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
@@ -722,12 +772,20 @@ namespace Origins {
 				}
 			}
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
-                   bombCharminItLifeRegenCount += info.SourceDamage;
-            }
+				   bombCharminItLifeRegenCount += info.Damage;
+			}
+			if (Player.whoAmI == info.DamageSource.SourcePlayerIndex && OriginsModIntegrations.CheckAprilFools()) {
+				const int damage_required = 400;
+				aprilFoolsRubberDynamiteTracker += info.Damage;
+				while (aprilFoolsRubberDynamiteTracker >= damage_required) {
+					aprilFoolsRubberDynamiteTracker -= damage_required;
+					Player.QuickSpawnItem(Player.GetSource_OnHurt(info.DamageSource), ModContent.ItemType<Rubber_Dynamite>());
+				}
+			}
 			if (coreGenerator && !isSelfDamage) {
 				int ammoType = coreGeneratorItem.useAmmo;
 				try {
-					coreGeneratorItem.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+					coreGeneratorItem.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
 					if (Player.PickAmmo(coreGeneratorItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId)) {
 						int manaCost = Player.GetManaCost(coreGeneratorItem);
 						if (CombinedHooks.CanShoot(Player, coreGeneratorItem) && Player.CheckMana(manaCost, true)) {
@@ -751,7 +809,7 @@ namespace Origins {
 				}
 			}
 
-            preHitBuffs = [];
+			preHitBuffs = [];
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
 			}

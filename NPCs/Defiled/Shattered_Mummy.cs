@@ -19,7 +19,6 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 16;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 180;
 			NPC.defense = 18;
@@ -27,7 +26,6 @@ namespace Origins.NPCs.Defiled {
 			NPC.damage = 60;
 			NPC.width = 20;
 			NPC.height = 44;
-			NPC.value = 700;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
@@ -73,7 +71,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}

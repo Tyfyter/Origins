@@ -38,6 +38,7 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(6, 157, 44), CreateMapEntryName());
+			DustType = DustID.GrassBlades;
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
 			return CanUse(Main.LocalPlayer);

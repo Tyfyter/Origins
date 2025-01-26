@@ -1,12 +1,10 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Impact_Bomb : ModItem, ICustomWikiStat {
+	public class Impact_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsBomb",
@@ -23,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Impact_Bomb_P>();
 			Item.shootSpeed *= 1.75f;
 			Item.knockBack = 13f;
-			Item.value = Item.sellPrice(silver: 1);
+			Item.value = Item.sellPrice(silver: 4);
 			Item.rare = ItemRarityID.Green;
             Item.ArmorPenetration += 3;
         }

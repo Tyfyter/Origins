@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 24);
-			Item.damage = 42;
+			Item.damage = 48;
 			Item.knockBack = 3;
 			Item.value = Item.sellPrice(gold: 14);
 			Item.rare = ItemRarityID.Yellow;
@@ -26,6 +26,7 @@ namespace Origins.Items.Accessories {
 			.Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
+			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.hasMagiluminescence = true;
 			if (player.accRunSpeed < 6f) player.accRunSpeed = 6f;

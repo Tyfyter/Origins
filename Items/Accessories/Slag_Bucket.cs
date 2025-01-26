@@ -71,7 +71,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			player.noKnockback = true;
 			player.fireWalk = true;
-			player.endurance += (1 - player.endurance) * 0.05f;
+			player.endurance += (1 - player.endurance) * 0.15f;
 			player.lifeRegen += 4;
 			originPlayer.slagBucket = true;
 			originPlayer.retributionShield = true;

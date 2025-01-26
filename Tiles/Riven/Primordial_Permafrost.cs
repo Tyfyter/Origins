@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -11,6 +12,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Ices[Type] = true;
 			TileID.Sets.IcesSlush[Type] = true;
 			TileID.Sets.IcesSnow[Type] = true;
+			TileID.Sets.IceSkateSlippery[Type] = true;
 			TileID.Sets.Conversion.Ice[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -20,14 +22,13 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(100, 200, 200));
 			mergeID = TileID.IceBlock;
 			DustType = DustID.Water_Snow;
-		}
-		public override void FloorVisuals(Player player) {
-			player.slippy = true;
+			HitSound = SoundID.Item50;
 		}
 	}
 	public class Primordial_Permafrost_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Primordial_Permafrost>());

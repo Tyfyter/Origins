@@ -21,6 +21,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Origins.TileTransformsOnKill[Type] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
 					Main.tileMerge[Type][i] = true;
@@ -33,18 +34,6 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
 			DustType = Riven_Hive.DefaultTileDust;
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			fail = true;
-			noItem = true;
-			bool half = Main.tile[i, j].IsHalfBlock;
-			SlopeType slope = Main.tile[i, j].Slope;
-			Main.tile[i, j].ResetToType(TileID.Dirt);
-			WorldGen.SquareTileFrame(i, j);
-			Main.tile[i, j].SetHalfBlock(half);
-			Main.tile[i, j].SetSlope(slope);
-			NetMessage.SendTileSquare(-1, i, j, 1);
-
-		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
@@ -56,9 +45,18 @@ namespace Origins.Tiles.Riven {
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			if (fail && !effectOnly) {
+				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
+			}
+		}
 	}
 	public class Riven_Jungle_Grass : OriginTile, IRivenTile {
 		public override void SetStaticDefaults() {
+			if (ModLoader.HasMod("InfectedQualities")) {
+				TileID.Sets.JungleBiome[Type] = 1;
+				TileID.Sets.RemixJungleBiome[Type] = 1;
+			}
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -69,6 +67,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Origins.TileTransformsOnKill[Type] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
 					Main.tileMerge[Type][i] = true;
@@ -81,16 +80,9 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			fail = true;
-			noItem = true;
-			bool half = Main.tile[i, j].IsHalfBlock;
-			SlopeType slope = Main.tile[i, j].Slope;
-			Main.tile[i, j].ResetToType(TileID.Mud);
-			WorldGen.SquareTileFrame(i, j);
-			Main.tile[i, j].SetHalfBlock(half);
-			Main.tile[i, j].SetSlope(slope);
-			NetMessage.SendTileSquare(-1, i, j, 1);
-
+			if (fail && !effectOnly) {
+				Framing.GetTileSafely(i, j).TileType = TileID.Mud;
+			}
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -106,6 +98,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Grass_Seeds : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.GrassSeeds[Type] = true;
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
@@ -122,6 +115,7 @@ namespace Origins.Tiles.Riven {
 				tileType = (ushort)ModContent.TileType<Riven_Jungle_Grass>();
 				break;
 			}
+			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
 			return true;
 		}
 	}

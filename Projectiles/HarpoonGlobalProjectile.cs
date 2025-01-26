@@ -102,6 +102,15 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
+		public override void PostAI(Projectile projectile) {
+			if (projectile.aiStyle == ProjAIStyleID.Harpoon && Main.player.IndexInRange(projectile.owner)) {
+				Player owner = Main.player[projectile.owner];
+				if (owner.OriginPlayer() is OriginPlayer originPlayer) {
+					originPlayer.nextActiveHarpoons++;
+					originPlayer.nextActiveHarpoonAveragePosition += projectile.Center;
+				}
+			}
+		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			justHit = true;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);

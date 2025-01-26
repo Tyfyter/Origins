@@ -1,10 +1,16 @@
-﻿using System;
+﻿using PegasusLib;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
+using Terraria.ModLoader.IO;
 
 namespace Origins {
 	public class DamageClasses : ILoadable {
@@ -19,11 +25,10 @@ namespace Origins {
 		public static DamageClass RangedMagic => rangedMagic ??= ModContent.GetInstance<Ranged_Magic>();
 		public static DamageClass Incantation => incantation ??= ModContent.GetInstance<Incantation>();
 		public static DamageClass MeleeMagic => meleeMagic ??= ModContent.GetInstance<Melee_Magic>();
-		static FieldInfo _damageClasses;
-		static FieldInfo _DamageClasses => _damageClasses ??= typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic);
-		public static List<DamageClass> All => (List<DamageClass>)_DamageClasses.GetValue(null);
+		public static DamageClassList All => new();
+		public static HashSet<DamageClass> HideInConfig { get; private set; } = [];
 		public void Load(Mod mod) {
-			List<DamageClass> damageClasses = All;
+			IList<DamageClass> damageClasses = All;
 			int len = damageClasses.Count;
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
 			mod.AddContent(explosive = new Explosive());
@@ -38,6 +43,7 @@ namespace Origins {
 					} else {
 						ExplosiveVersion.Add(other, ExplosivePlus.CreateAndRegister(other));
 					}
+					HideInConfig.Add(ExplosiveVersion[other]);
 				}
 			}
 		}
@@ -46,8 +52,48 @@ namespace Origins {
 			explosive = null;
 			ExplosiveVersion = null;
 			rangedMagic = null;
-			_damageClasses = null;
+			HideInConfig = null;
 		}
+	}
+	public readonly struct DamageClassList : IList<DamageClass> {
+		public readonly DamageClass this[int index] {
+			get => DamageClassLoader.GetDamageClass(index);
+			set => throw new InvalidOperationException();
+		}
+		public int Count => DamageClassLoader.DamageClassCount;
+		public bool IsReadOnly => true;
+
+		public bool Contains(DamageClass item) {
+			throw new NotImplementedException();
+		}
+		public void CopyTo(DamageClass[] array, int arrayIndex) {
+			for (int i = 0; i < Count; i++) {
+				array[i + arrayIndex] = this[i];
+			}
+		}
+		public int IndexOf(DamageClass item) {
+			for (int i = 0; i < Count; i++) {
+				if (Equals(item, this[i])) return i;
+			}
+			return -1;
+		}
+		public IEnumerator<DamageClass> GetEnumerator() => new Enumerator();
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+		struct Enumerator : IEnumerator<DamageClass> {
+			public readonly DamageClass Current => DamageClassLoader.GetDamageClass(index);
+			readonly object IEnumerator.Current => DamageClassLoader.GetDamageClass(index);
+			int index;
+			public readonly void Dispose() { }
+			public bool MoveNext() => ++index < DamageClassLoader.DamageClassCount;
+			public void Reset() {
+				index = 0;
+			}
+		}
+		public void Add(DamageClass item) => throw new InvalidOperationException();
+		public void Clear() => throw new InvalidOperationException();
+		public void Insert(int index, DamageClass item) => throw new InvalidOperationException();
+		public bool Remove(DamageClass item) => throw new InvalidOperationException();
+		public void RemoveAt(int index) => throw new InvalidOperationException();
 	}
 	public class DamageClass_Equality_Comparer : IEqualityComparer<DamageClass> {
 		public bool Equals(DamageClass x, DamageClass y) => x.Type == y.Type;

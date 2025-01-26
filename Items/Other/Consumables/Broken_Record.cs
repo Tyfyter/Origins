@@ -17,8 +17,8 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Ash_Urn>(), 30)
 			.AddIngredient(ModContent.ItemType<Biocomponent10>(), 15)
+			.AddIngredient(ModContent.ItemType<Ash_Urn>(), 30)
 			.AddTile(TileID.DemonAltar)
 			.Register();
 		}

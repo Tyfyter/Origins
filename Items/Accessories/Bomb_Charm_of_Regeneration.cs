@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
             .Register();
         }
         public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
 			player.lifeRegen += 1;
             player.GetModPlayer<OriginPlayer>().bombCharminIt = true;
         }

@@ -21,7 +21,7 @@ namespace Origins.NPCs {
             Main.npcFrameCount[Type] = 11;
         }
 
-        public sealed override void SetDefaults() {
+        public override void SetDefaults() {
             NPC.width = 30;
             NPC.height = 48;
             NPC.noTileCollide = false;

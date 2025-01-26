@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
+using Origins.NPCs.Brine;
 using Origins.NPCs.MiscE.Quests;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -62,6 +63,7 @@ namespace Origins {
 		}
 		public override void Unload() {
 			queuedUIStates = null;
+			EvilGunMagazineRecipeGroup = null;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.MiningHelmet)
@@ -78,6 +80,24 @@ namespace Origins {
 			Recipe.Create(ItemID.MiningPants)
 			.AddIngredient(ItemID.Leather, 15)
 			.AddTile(TileID.WorkBenches)
+			.Register();
+
+			Recipe.Create(ItemID.EskimoHood)
+			.AddIngredient(ItemID.FlinxFur, 5)
+			.AddIngredient(ItemID.Leather, 12)
+			.AddTile(TileID.Loom)
+			.Register();
+
+			Recipe.Create(ItemID.EskimoCoat)
+			.AddIngredient(ItemID.FlinxFur, 5)
+			.AddIngredient(ItemID.Leather, 12)
+			.AddTile(TileID.Loom)
+			.Register();
+
+			Recipe.Create(ItemID.EskimoPants)
+			.AddIngredient(ItemID.FlinxFur, 5)
+			.AddIngredient(ItemID.Leather, 12)
+			.AddTile(TileID.Loom)
 			.Register();
 
 			Recipe.Create(ItemID.GoldShortsword)
@@ -175,6 +195,7 @@ namespace Origins {
 
 			Recipe.Create(ItemID.Coal)
 			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.DisableDecraft()
 			.Register();
 
 			Recipe.Create(ItemID.Torch, 5)
@@ -237,6 +258,7 @@ namespace Origins {
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();
+			OriginsModIntegrations.AddRecipes();
 		}
 		public override void PostUpdateInput() {
 		}
@@ -287,6 +309,7 @@ namespace Origins {
 		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
 		public static int EvilBoomerangRecipeGroupID { get; private set; }
+		public static RecipeGroup EvilGunMagazineRecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilGunMagazines").Value, ItemID.MagicQuiver);
 		public override void AddRecipeGroups() {
 			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
 				ItemID.AmberStaff,
@@ -304,6 +327,8 @@ namespace Origins {
 				ModContent.ItemType<Riverang>(),
 				ModContent.ItemType<Orbital_Saw>(),
 			]));
+			EvilGunMagazineRecipeGroup.ValidItems.Remove(ItemID.MagicQuiver);
+			RecipeGroup.RegisterGroup("Origins:Evil Gun Magazines", EvilGunMagazineRecipeGroup);
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
@@ -511,13 +536,17 @@ namespace Origins {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
 			}
-			Utils.Swap(ref ExplosiveGlobalProjectile.nextExplodingProjectiles, ref ExplosiveGlobalProjectile.explodingProjectiles);
-			ExplosiveGlobalProjectile.nextExplodingProjectiles.Clear();
-			Utils.Swap(ref Mitosis_P.nextMitosises, ref Mitosis_P.mitosises);
-			Mitosis_P.nextMitosises.Clear();
+			OriginExtensions.SwapClear(ref ExplosiveGlobalProjectile.nextExplodingProjectiles, ref ExplosiveGlobalProjectile.explodingProjectiles);
+			OriginExtensions.SwapClear(ref Mitosis_P.nextMitosises, ref Mitosis_P.mitosises);
+			Brine_Pool_NPC.Ripples.Clear();
 		}
 		public override void PostUpdateProjectiles() {
 			OriginsGlobalBiome.isConversionFromProjectile = false;
+			foreach (Projectile projectile in Main.ActiveProjectiles) {
+				if ((projectile.wet || (projectile.ignoreWater && Collision.WetCollision(projectile.position, projectile.width, projectile.height))) && ProjectileID.Sets.CanDistortWater[projectile.type] && !ProjectileID.Sets.NoLiquidDistortion[projectile.type]) {
+					Brine_Pool_NPC.Ripples.Add((projectile.Center, projectile.velocity.Length()));
+				}
+			}
 		}
 		FastStaticFieldInfo<Main, float> _minWind;
 		FastStaticFieldInfo<Main, float> _maxWind;
@@ -541,8 +570,13 @@ namespace Origins {
 						Main.windSpeedTarget = MathHelper.Clamp(Main.windSpeedTarget, -0.8f, 0.8f);
 					}
 				}
-			}else if (forceThunderstormDelay > 0) {
+			} else if (forceThunderstormDelay > 0) {
 				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
+			}
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.OriginPlayer() is OriginPlayer originPlayer) {
+					originPlayer.oldNearbyActiveNPCs = player.nearbyActiveNPCs;
+				}
 			}
 		}
 		bool hasLoggedPUP = false;

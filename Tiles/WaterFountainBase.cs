@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ObjectInteractions;
@@ -9,16 +10,22 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles {
 	public abstract class WaterFountainBase<TWaterStyle> : ModTile where TWaterStyle : ModWaterStyle {
+		public virtual int Height => 4;
+		public virtual int Frames => 6;
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileLighted[Type] = true;
-			//TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.WaterFountain, 0));
+			TileObjectData.newTile.Height = Height;
+			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, Height).ToArray();
+			TileObjectData.newTile.Origin = new(1, Height - 1);
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(6, 157, 44), Language.GetText("MapObject.WaterFountain"));
+			DustType = DustID.Stone;
 		}
 		public static bool IsEnabled(int i, int j) => Main.tile[i, j].TileFrameY >= 72;
 		public static bool IsEnabled(Tile tile) => tile.TileFrameY >= 72;
@@ -45,15 +52,16 @@ namespace Origins.Tiles {
 
 		// ToggleTile is a method that contains code shared by HitWire and RightClick, since they both toggle the state of the tile.
 		// Note that TileFrameY doesn't necessarily match up with the image that is drawn, AnimateTile and AnimateIndividualTile contribute to the drawing decisions.
-		public static void ToggleTile(int i, int j) {
+		public void ToggleTile(int i, int j) {
 			Tile tile = Main.tile[i, j];
+			int height = Height * 18;
 			int topX = i - tile.TileFrameX % 36 / 18;
-			int topY = j - tile.TileFrameY % 72 / 18;
+			int topY = j - tile.TileFrameY % height / 18;
 
-			short frameAdjustment = (short)(tile.TileFrameY >= 72 ? -72 : 72);
+			short frameAdjustment = (short)(tile.TileFrameY >= height ? -height : height);
 
 			for (int x = topX; x < topX + 2; x++) {
-				for (int y = topY; y < topY + 4; y++) {
+				for (int y = topY; y < topY + Height; y++) {
 					Main.tile[x, y].TileFrameY += frameAdjustment;
 
 					if (Wiring.running) {
@@ -70,13 +78,13 @@ namespace Origins.Tiles {
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 4) {
 				frameCounter = 0;
-				frame = ++frame % 6;
+				frame = (frame + 1) % Frames;
 			}
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameY >= 72) {
-				frameYOffset = Main.tileFrame[type] * 72;
+			if (tile.TileFrameY >= Height * 18) {
+				frameYOffset = Main.tileFrame[type] * Height * 18;
 			} else {
 				frameYOffset = 0;
 			}

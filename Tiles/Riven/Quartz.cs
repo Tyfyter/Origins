@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Cubekon;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -10,6 +11,8 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.SandBiome[Type] = 1;
+			TileID.Sets.isDesertBiomeSand[Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -20,11 +23,13 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
+			DustType = DustID.Ghost;
 		}
 	}
 	public class Quartz_Item : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Silica_Item>();
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.HardenedSand, Type);
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {

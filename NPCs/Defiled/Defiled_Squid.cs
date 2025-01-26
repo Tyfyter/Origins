@@ -31,13 +31,19 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Squid);
+			NPC.width = 26;
+			NPC.height = 26;
+			NPC.aiStyle = 18;
 			NPC.damage = 75;
 			NPC.lifeMax = 165;
 			NPC.defense = 22;
 			NPC.knockBackResist = 0;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(2.1f, 2.35f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(2.1f, 2.35f);
+			NPC.value = 100f;
+			NPC.alpha = 20;
+			NPC.rarity = 1;
+			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Defiled_Wastelands_Ocean>().Type
@@ -56,7 +62,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.BlackInk));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public override bool CanHitNPC(NPC target) {
 			if (DefiledGlobalNPC.NPCTransformations.ContainsKey(target.type)) return false;
@@ -85,7 +91,8 @@ namespace Origins.NPCs.Defiled {
 								if (Mana >= 4f) {
 									NPC.DoFrames(1);
 									NPC.velocity = (NPC.Center - results.NearestNPC.Center).SafeNormalize(NPC.velocity / 8) * 8;
-									Mana -= 4f; Projectile.NewProjectile(
+									Mana -= 4f;
+									Projectile.NewProjectile(
 										NPC.GetSource_FromAI(),
 										NPC.Center,
 										NPC.velocity * -0.5f,

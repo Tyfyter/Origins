@@ -1,16 +1,14 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Dusts;
+using Origins.Gores.NPCs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-using Origins.Dev;
-using Origins.Gores.NPCs;
-using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;

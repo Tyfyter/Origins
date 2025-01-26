@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Acetabularia : OriginTile, IDefiledTile {
+    public class Acetabularia : OriginTile, IRivenTile {
         public string[] Categories => [
             "Plant"
         ];
@@ -28,6 +28,7 @@ namespace Origins.Tiles.Riven {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorValidTiles = [
+				TileType<Riven_Flesh>(),
 				TileType<Riven_Grass>(),
 				TileType<Riven_Jungle_Grass>(),
 			];

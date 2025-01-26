@@ -28,7 +28,7 @@ namespace Origins.Items.Pets {
 			Item.width = 32;
 			Item.height = 32;
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Cyan;// dev items are cyan rarity, despite being expert exclusive
+			Item.rare = AltCyanRarity.ID;// dev items are cyan rarity, despite being expert exclusive
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
 		}
@@ -72,7 +72,7 @@ namespace Origins.Items.Pets {
 			Main.projPet[Type] = true;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.width = 46;
 			Projectile.height = 26;
 			Projectile.tileCollide = true;

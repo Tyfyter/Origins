@@ -17,6 +17,8 @@ namespace Origins.Tiles.Other {
 			mergeID = TileID.Stone;
 			MinPick = 235;
 			MineResist = 4;
+			DustType = DustID.t_Granite;
+			HitSound = SoundID.Tink;
 		}
 		public override bool CanExplode(int i, int j) {
 			return false;

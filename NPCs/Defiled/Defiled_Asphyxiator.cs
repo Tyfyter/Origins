@@ -21,8 +21,7 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
-			NPC.aiStyle = NPCAIStyleID.None;
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 475;
 			NPC.defense = 28;
 			NPC.damage = 49;
@@ -32,6 +31,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
 			NPC.value = 2300;
+			NPC.knockBackResist = 0.5f;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
@@ -62,7 +62,7 @@ namespace Origins.NPCs.Defiled {
 			get => NPC.frame.Y / 58;
 			set => NPC.frame.Y = value * 58;
 		}
-		public override bool PreAI() {
+		public override void AI() {
 			NPC.TargetClosestUpgraded();
 			if (NPC.HasValidTarget && NPC.HasPlayerTarget) {
 				Player _target = Main.player[NPC.target];
@@ -137,7 +137,6 @@ namespace Origins.NPCs.Defiled {
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
 			}
-			return false;
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
@@ -170,7 +169,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(yMult: -0.5f), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}

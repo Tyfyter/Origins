@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Core;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
@@ -52,6 +53,7 @@ namespace Origins.NPCs.TownNPCs {
 				.SetNPCAffection(NPCID.Truffle, AffectionLevel.Hate)
 			//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
+			InvalidateNPCHousing.NPCTypeIgnoresAllEvil.Add(Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.WitchDoctor);
@@ -60,6 +62,9 @@ namespace Origins.NPCs.TownNPCs {
 			NPC.HitSound = SoundID.NPCHit26;
 			NPC.DeathSound = SoundID.NPCDeath29;
 			AnimationType = NPCID.BestiaryGirl;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Brine_Pool>().Type
+			];
 		}
 		public override bool PreAI() {
 			NPC.wet = false;
@@ -74,7 +79,6 @@ namespace Origins.NPCs.TownNPCs {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
 			bestiaryEntry.AddTags(
-				Brine_Pool.BestiaryBackground,
 				this.GetBestiaryFlavorText()
 			);
 		}
@@ -159,7 +163,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay) {
-			projType = ModContent.ProjectileType<Acid_Shot>();
+			projType = ModContent.ProjectileType<Brine_Droplet>();
 			attackDelay = 1;
 		}
 

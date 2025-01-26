@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
@@ -14,7 +13,6 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
 	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntryItem, ICustomWikiStat {
         public string[] Categories => [
@@ -24,7 +22,7 @@ namespace Origins.Items.Weapons.Melee {
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {
-			Item.damage = 17;
+			Item.damage = 28;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -35,7 +33,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Vorpal_Sword_Slash>();
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 0f;
+			Item.knockBack = float.Epsilon;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
@@ -164,16 +162,20 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return true;
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item1, player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (!player.controlUseItem) {
 				player.itemAnimation = 0;
 				player.itemTime = 0;
 				return false;
 			}
-			SoundEngine.PlaySound(SoundID.Item1, position);
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.ItemUsesThisAnimation == 1 ? 1 : -1);
 			return false;
 		}
+		public override bool MeleePrefix() => true;
 		public bool? Hardmode => false;
 	}
 	public class Vorpal_Sword_Slash : ModProjectile {

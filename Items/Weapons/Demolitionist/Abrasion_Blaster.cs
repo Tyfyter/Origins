@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem, ICustomWikiStat {
@@ -17,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToLauncher(23, 45, 48, 22, false);
+			Item.DefaultToLauncher(18, 45, 48, 22, false);
 			Item.crit = 4;
 			Item.useTime = 1;
 			Item.shootSpeed = 15;
@@ -28,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = null;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration += 2;
+			//Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -41,9 +40,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return consumeFromProjectile || player.ItemUsesThisAnimation == 1;
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), player.itemLocation);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Abrasion_Blaster_Charge_P.ID;
-			SoundEngine.PlaySound(SoundID.Item132.WithVolume(0.5f).WithPitch(0.5f /** projectile.ai[0]*/), position);
 			//SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
 			//Item.UseSound = Origins.Sounds.EnergyRipple;
 			int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;

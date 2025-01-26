@@ -1,28 +1,24 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Weapons.Summoner;
-using Origins.World.BiomeData;
+﻿using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.MiscE {
-    public class Crimbrain : ModNPC {
+	public class Crimbrain : ModNPC {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
-			CrimsonGlobalNPC.AssimilationAmounts.Add(Type, 0.07f);
+			CrimsonGlobalNPC.AssimilationAmounts.Add(Type, 0.04f);
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, -16),
 				PortraitPositionYOverride = -32
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DemonEye);
 			NPC.aiStyle = 86;
 			NPC.lifeMax = 36;
 			NPC.defense = 10;
@@ -30,7 +26,10 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 34;
 			NPC.height = 28;
 			NPC.friendly = false;
-			NPC.knockBackResist = 1f;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.knockBackResist = 1.5f;
+			NPC.value = 75;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
@@ -38,7 +37,7 @@ namespace Origins.NPCs.MiscE {
 			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			target.AddBuff(BuffID.Confused, 50);
+			target.AddBuff(BuffID.Confused, 20);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

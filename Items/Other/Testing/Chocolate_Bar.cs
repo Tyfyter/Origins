@@ -73,6 +73,24 @@ namespace Origins.Items.Other.Testing {
 			}
 			return false;
 		}
+		public override void HoldItem(Player player) {
+			switch (mode) {
+				case 2: {
+					Point topLeft = Main.screenPosition.ToTileCoordinates();
+					Point bottomRight = (Main.screenPosition + Main.ScreenSize.ToVector2()).ToTileCoordinates();
+					bool[,] grid = CollisionExtensions.GeneratePathfindingGrid(topLeft, bottomRight, 1, 1);
+					Point[] path = CollisionExtensions.GridBasedPathfinding(
+						grid,
+						(Main.LocalPlayer.MountedCenter - Main.screenPosition).ToTileCoordinates(),
+						Main.MouseScreen.ToTileCoordinates()
+					);
+					for (int i = 0; i < path.Length; i++) {
+						Dust.NewDustPerfect(path[i].ToWorldCoordinates() + Main.screenPosition - new Vector2(Main.screenPosition.X % 16, Main.screenPosition.Y % 16), 6, Vector2.Zero).noGravity = true;
+					}
+				}
+				break;
+			}
+		}
 		public void DrawAnimations(ref PlayerDrawSet drawInfo) {
 			AutoCastingAsset<Texture2D> upperLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
 			AutoCastingAsset<Texture2D> lowerLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
@@ -81,18 +99,14 @@ namespace Origins.Items.Other.Testing {
 				case 0: {
 					Player player = Main.LocalPlayer;
 					Vector2 start = player.Right;
-					if (arm is null) {
-						arm = new Arm() {
-							bone0 = new PolarVec2(upperLegLength, upperLegAngle),
-							bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
-						};
-					}
-					if (arm2 is null) {
-						arm2 = new Arm() {
-							bone0 = new PolarVec2(upperLegLength, upperLegAngle),
-							bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
-						};
-					}
+					arm ??= new Arm() {
+						bone0 = new PolarVec2(upperLegLength, upperLegAngle),
+						bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
+					};
+					arm2 ??= new Arm() {
+						bone0 = new PolarVec2(upperLegLength, upperLegAngle),
+						bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
+					};
 					arm.start = start;
 					float[] targets = arm.GetTargetAngles(target);
 					OriginExtensions.AngularSmoothing(ref arm.bone0.Theta, targets[0], 0.2f);

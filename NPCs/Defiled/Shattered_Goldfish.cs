@@ -8,6 +8,7 @@ namespace Origins.NPCs.Defiled {
 	public class Shattered_Goldfish : Glowing_Mod_NPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Goldfish, Type);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
@@ -61,7 +62,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
-            if (NPC.life < 0)
+            if (NPC.life <= 0)
             {
                 for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
                 for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));

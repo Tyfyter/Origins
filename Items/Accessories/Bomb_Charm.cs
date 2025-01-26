@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
 		}
 	}
 }

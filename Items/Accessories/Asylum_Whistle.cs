@@ -1,9 +1,9 @@
 ﻿using Origins.Dev;
 using Origins.Journal;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Asylum_Whistle : ModItem, IJournalEntryItem, ICustomWikiStat {

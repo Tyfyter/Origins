@@ -1,27 +1,29 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Armor.Felnum;
 using Origins.Items.Materials;
+using Origins.Projectiles;
+using PegasusLib;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Armor.Felnum;
-using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
-		public const int baseDamage = 18;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
+			Origins.DamageBonusScale[Type] = 1.5f;
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = baseDamage;
+			Item.damage = 30;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.width = 48;
-			Item.height = 48;
+			Item.width = 62;
+			Item.height = 72;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -29,7 +31,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.autoReuse = true;
 			Item.useTurn = false;
 			Item.shootSpeed = 3;
-			Item.shoot = ModContent.ProjectileType<Felnum_Boar_Spear_Stab>();
+			Item.shoot = ModContent.ProjectileType<Felnum_Boar_Spear_P>();
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
@@ -40,13 +42,11 @@ namespace Origins.Items.Weapons.Melee {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
-		}
 		public override bool MeleePrefix() => true;
 	}
-	public class Felnum_Boar_Spear_Stab : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Melee/Felnum_Boar_Spear_P";
+	[LegacyName("Felnum_Boar_Spear_Stab")]
+	public class Felnum_Boar_Spear_P : ModProjectile {
+		AutoLoadingAsset<Texture2D> glowTexture = typeof(Felnum_Boar_Spear_P).GetDefaultTMLName() + "_Glow";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
@@ -56,6 +56,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.aiStyle = 0;
+			Projectile.extraUpdates = 1;
 			Projectile.scale = 1f;
 		}
 		public float movementFactor {
@@ -72,10 +73,10 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
-				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {
-					movementFactor -= 2.5f;
+				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 3) {
+					movementFactor -= 2.2f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 2.7f;
+					movementFactor += 2.2f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
@@ -88,6 +89,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			Static_Shock_Debuff.Inflict(target, 120);
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int shockAmount = (int)(originPlayer.felnumShock / (Felnum_Helmet.shock_damage_divisor * 2));
@@ -96,7 +98,28 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, (Projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, Projectile.rotation, new Vector2(62, 8), Projectile.scale, SpriteEffects.None, 0);
+			Vector2 origin = new(105, 5);
+			float rotation = Projectile.rotation;
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				rotation,
+				origin,
+				Projectile.scale,
+				SpriteEffects.None
+			);
+			Main.EntitySpriteDraw(
+				glowTexture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				Color.White,
+				rotation,
+				origin,
+				Projectile.scale,
+				SpriteEffects.None
+			);
 			return false;
 		}
 	}

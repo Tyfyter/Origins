@@ -8,6 +8,7 @@ namespace Origins.Walls {
     public class Harmony_Brick_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			AddMapEntry(new Color(120, 20, 60));
+			DustType = DustID.Ice_Red;
 		}
 	}
 	public class Harmony_Brick_Wall_Safe : Harmony_Brick_Wall {

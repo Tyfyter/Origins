@@ -13,7 +13,7 @@ using Origins.Reflection;
 
 namespace Origins.Questing {
 	public abstract class Quest : ModType {
-		public virtual bool SaveToWorld => false;
+		public virtual bool SaveToWorld => true;
 		public virtual bool Started => false;
 		public virtual bool Completed => false;
 		public virtual string CompleteButtonText => Language.GetOrRegister("Mods.Origins.Interface.CompleteQuestGeneric").Value;

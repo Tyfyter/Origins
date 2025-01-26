@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -11,15 +12,17 @@ namespace Origins.NPCs.Defiled {
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BlueSlime, Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Crimslime);
+			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.lifeMax = 60;
 			NPC.defense = 6;
 			NPC.damage = 30;
 			NPC.width = 32;
 			NPC.height = 24;
 			NPC.friendly = false;
+			NPC.alpha = 55;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;
@@ -51,7 +54,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 2, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}

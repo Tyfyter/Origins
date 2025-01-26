@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 4;
 			Item.useAnimation = 40;
 			Item.knockBack = 4f;
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
 			Item.shoot = ModContent.ProjectileType<Mine_Flayer_P>();
 			Item.shootSpeed = 9f;
 			Item.rare = ItemRarityID.Pink;
@@ -73,10 +73,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
+		public override bool? UseItem(Player player) {
+			Vector2 position = player.itemLocation;
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
+			return null;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
 			type = Item.shoot;
-			SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
 	}
 	public class Mine_Flayer_P : ModProjectile, IIsExplodingProjectile, ICanisterProjectile {
@@ -94,6 +98,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 420;
 			Projectile.scale = 0.5f;
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 5;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.penetrate = -1;

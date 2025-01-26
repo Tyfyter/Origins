@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -5,10 +6,13 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Felnum_Pickaxe : ModItem {
-		
+		public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+			Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
-			Item.damage = 13;
+			Item.damage = 21;
 			Item.DamageType = DamageClass.Melee;
 			Item.pick = 75;
 			Item.width = 36;
@@ -29,8 +33,8 @@ namespace Origins.Items.Tools {
         public override float UseTimeMultiplier(Player player) {
 			return (player.pickSpeed - 1) * 0.75f + 1;
 		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
 		}
 	}
 }

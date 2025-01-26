@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 26);
 			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }
 		public override void UpdateEquip(Player player) {

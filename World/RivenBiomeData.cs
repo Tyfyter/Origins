@@ -714,7 +714,7 @@ namespace Origins.World.BiomeData {
 	}
 	#endregion variations
 	public class Riven_Hive_Alt_Biome : AltBiome, IItemObtainabilityProvider {
-		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
+		public override string WorldIcon => "Origins/UI/WorldGen/IconRiven";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
 		public override Color OuterColor => new(30, 176, 255);
@@ -733,9 +733,15 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
 
+			GERunnerConversion.Add(TileID.Silt, ModContent.TileType<Silica>());
+
+			BiomeFlesh = ModContent.TileType<Amoeba_Fluid>();
+			BiomeFleshWall = ModContent.WallType<Amebic_Gel_Wall>();
+
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Encrusted_Ore>();
 			BiomeOreItem = ModContent.ItemType<Encrusted_Ore_Item>();
+			BiomeOreBrick = ModContent.TileType<Encrusted_Brick>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 
 			BiomeChestItem = ModContent.ItemType<Plasma_Cutter>();

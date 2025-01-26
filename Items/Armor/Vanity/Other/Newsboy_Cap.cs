@@ -11,8 +11,12 @@ namespace Origins.Items.Armor.Vanity.Other {
 		public int BodyItemID => ItemID.None;
 		public int LegsItemID => ItemID.None;
 		public bool HasFemaleVersion => false;
+		public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Green;
+			Item.vanity = true;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

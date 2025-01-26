@@ -12,7 +12,6 @@ Boat_Rocker
 Bomb_Artifact
 Bouncy_Explosive_Golf_Ball
 Brine_Cheese
-Broken_Terratotem
 Bug_Item
 Chambersite_Stone_Wall_Item
 Chocolate_Bar
@@ -25,12 +24,15 @@ Control_Locus: [Stack of Shraps]
 Corruption_Loot_Box
 Cranivore_Beanie
 Crimson_Loot_Box
-Decaying_Scale
+Crimtane_Gun_Magazine
+Defiled_Gun_Magazine
 Defiled_Loot_Box
+Demonite_Gun_Magazine
 Depth_Charge
 Dreikan
-Duskarp
+Eitrite_Gun_Magazine
 Element36_Bundle: [Fibron Plating]
+Encrusted_Gun_Magazine
 Explosive_Golf_Ball
 Eyndum_Breastplate
 Eyndum_Greaves
@@ -56,33 +58,30 @@ Magic_Pain_Glove
 Mana_Drive
 Manasynk_Pickup
 Matrix
-Nematoclaw
+Mildew_Whip
+Molten_Gun_Magazine
 NPC_Spawner
-Olid_Organ: [Decaying Scale]
 Phantom_Fury
 Potato_Launcher
-Quantum_Cell
 Rasterized_Dye
 Remote_Golf_Ball
 Riven_Cactus_Item
 Riven_Loot_Box
-Riven_Pot_Item
-Rusty_Cross_Necklace
+Sanguinite_Gun_Magazine
 Scrap_Compactor
 Shimmer_Dye
 Sixth_Spline
 SMART_Wrench
+Sonorous_Shredder
 Spray_N_Pray
 Stack_of_Shraps
 Starfuze
 Strange_Computer
 Sunflower_Sandal
 Switchblade_Shortsword
-Terratotem: [Broken Terratotem]
 The_Bird
-The_Button
 The_Defiled_Will
+The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction
+TileEntityDebugger
 Tyrfing
-Unsought_Organ: [Olid Organ]
-Voidsight_Potion: [Duskarp]
 World_Cracker_Mask2

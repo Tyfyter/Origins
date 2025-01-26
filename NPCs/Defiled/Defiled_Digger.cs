@@ -20,11 +20,14 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
+			NPC.width = 22;
+			NPC.height = 22;
 			NPC.lifeMax = 80;
 			NPC.defense = 8;
 			NPC.damage = 38;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
+			NPC.scale = 0.9f;
 			NPC.value = 140;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
@@ -186,7 +189,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				NPC current = Main.npc[NPC.realLife];
 				while (current.ai[0] != 0) {
 					deathEffect(current);

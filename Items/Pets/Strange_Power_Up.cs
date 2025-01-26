@@ -72,7 +72,7 @@ namespace Origins.Items.Pets {
 			ProjectileID.Sets.MinionSacrificable[Type] = false;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.timeLeft = 5;
 			Projectile.width = 20;

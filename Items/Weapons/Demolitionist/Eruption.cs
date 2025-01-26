@@ -1,11 +1,9 @@
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Eruption : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -52,9 +50,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (Projectile.owner == Main.myPlayer) {
+				Rectangle hitbox = Projectile.Hitbox;
+				if (!Projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile global) || !global.CanisterData.HasSpecialEffect) {
+					const int height = 16 * 15;
+					hitbox.Y -= height;
+					hitbox.Height += height;
+				}
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy(Projectile) && npc.Hitbox.Intersects(Projectile.Hitbox)) {
+					if (npc.CanBeChasedBy(Projectile) && npc.Hitbox.Intersects(hitbox) && Collision.CanHit(hitbox.Location.ToVector2(), hitbox.Width, hitbox.Height, npc.position, npc.width, npc.height)) {
 						Projectile.Kill();
 						return;
 					}

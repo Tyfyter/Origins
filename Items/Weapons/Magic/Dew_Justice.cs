@@ -10,6 +10,7 @@ using Origins.World.BiomeData;
 using Origins.Gores.NPCs;
 using Origins.Projectiles;
 using Terraria.Audio;
+using Origins.NPCs;
 
 namespace Origins.Items.Weapons.Magic {
     public class Dew_Justice : ModItem, ICustomWikiStat {
@@ -105,6 +106,7 @@ namespace Origins.Items.Weapons.Magic {
 		Entity collisionEntity = null;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Slow_Debuff.ID, 240);
+			OriginGlobalNPC.InflictTorn(target, 75);
 			collisionEntity = target;
 			Projectile.Kill();
 		}

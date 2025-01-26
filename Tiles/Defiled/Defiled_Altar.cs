@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
@@ -24,6 +25,7 @@ namespace Origins.Tiles.Defiled {
 			RegisterItemDrop(-1);
 			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {
@@ -45,7 +47,8 @@ namespace Origins.Tiles.Defiled {
 		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Defiled_Altar_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+		public IEnumerable<int> ProvideItemObtainability() => [Type];
+		public bool ShouldHavePage => false;
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
@@ -64,7 +67,5 @@ namespace Origins.Tiles.Defiled {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Defiled_Altar>();
 		}
-
-		public bool ShouldHavePage => false;
 	}
 }

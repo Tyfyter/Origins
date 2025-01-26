@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Ranged {
 					global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
 				}
 			});
+			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Tsunami);
@@ -43,9 +44,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, 0);
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.Scale(1.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Vector2 offset = velocity.SafeNormalize(Vector2.Zero) * 18;

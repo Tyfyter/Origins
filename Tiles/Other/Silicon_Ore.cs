@@ -20,6 +20,7 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.Ore[Type] = true;
 			AddMapEntry(new Color(60, 60, 60), CreateMapEntryName());
 			MineResist = 2;
+			DustType = DustID.Lead;
 		}
 	}
 	public class Silicon_Ore_Item : ModItem, ICustomWikiStat {

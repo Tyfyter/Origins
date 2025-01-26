@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Origins.ForceFelnumShockOnShoot[Type] = true;
 			ID = Type;
 		}
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			MaxLife = 60 * 15;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
@@ -275,7 +275,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 		}
 
-		public sealed override void SetDefaults() {
+		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 76;
 			Projectile.height = 40;
@@ -526,6 +526,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				ModContent.DustType<Meat_Dog_Gore3>(),
 				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
 			).shader = shaderData;
+			for (int i = Main.rand.Next(16, 25); i >= 0; i--) {
+				Dust.NewDustDirect(
+					Projectile.position + Vector2.One * 2,
+					Projectile.width - 4,
+					Projectile.height - 4,
+					DustID.Blood,
+					Projectile.velocity.X,
+					Projectile.velocity.Y
+				).shader = shaderData;
+			}
 		}
 	}
 }

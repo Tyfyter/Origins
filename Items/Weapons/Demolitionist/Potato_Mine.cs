@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.CloneDefaults(ItemID.LandMine);
 			Item.damage = 50;
 			Item.createTile = ModContent.TileType<Potato_Mine_Tile>();
-			Item.value = Item.sellPrice(silver: 50);
+			Item.value = Item.sellPrice(silver: 1,  copper: 20);
 			Item.rare = ItemRarityID.Blue;
 			Item.ammo = ModContent.ItemType<Potato>();
 			Item.notAmmo = true;

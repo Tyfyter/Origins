@@ -1,10 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
@@ -15,7 +13,7 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);
-			Item.value = Item.sellPrice(gold: 3);
+			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.damage -= 8;
 			Item.DamageType = DamageClass.Magic;
@@ -31,13 +29,16 @@ namespace Origins.Items.Accessories {
 			originPlayer.gunGloveItem = Item;
 			player.manaCost -= 0.08f;
 			player.manaFlower = true;
+
             player.GetAttackSpeed(DamageClass.Melee) += 0.12f;
 			player.autoReuseGlove = true;
-        }
+			player.GetKnockback(DamageClass.Melee) += 1f;
+			player.OriginPlayer().meleeScaleMultiplier *= 1.1f;
+		}
 		public override void AddRecipes() {
 			return; //todo: implement item
 			CreateRecipe()
-			.AddIngredient(ItemID.FeralClaws)
+			.AddIngredient(ItemID.PowerGlove)
 			.AddIngredient(ModContent.ItemType<Magic_Glove>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();

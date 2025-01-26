@@ -1,6 +1,7 @@
 ﻿using Origins.Dev;
 using Origins.Layers;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
@@ -28,7 +29,17 @@ namespace Origins.Items.Accessories {
 			.Register();
         }
         public override void UpdateAccessory(Player player, bool isHidden) {
-            player.GetModPlayer<OriginPlayer>().bugZapper = true;
+			player.OriginPlayer().bugZapper = true;
+			if (!isHidden) UpdateVanity(player);
         }
+		public override void UpdateVanity(Player player) {
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (originPlayer.bugZapperFlyTime <= 0) {
+				ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.PooFly, new ParticleOrchestraSettings {
+					PositionInWorld = player.MountedCenter + new Vector2(12 * player.direction, 12 * player.gravDir)
+				});
+				originPlayer.bugZapperFlyTime = 15;
+			}
+		}
 	}
 }

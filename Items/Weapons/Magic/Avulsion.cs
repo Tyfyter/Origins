@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
     public class Avulsion : ModItem, ICustomWikiStat {
         static short glowmask;
@@ -36,10 +37,15 @@ namespace Origins.Items.Weapons.Magic {
 			Item.autoReuse = true;
             Item.glowMask = glowmask;
         }
-        public override void AddRecipes() {
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			Vector2 vel = velocity.SafeNormalize(default);
+			if (vel != default) {
+				position += vel * CollisionExt.Raymarch(position, vel, 56);
+			}
+		}
+		public override void AddRecipes() {
             Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 5)
-            .AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15)
+            .AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 8)
             .AddTile(TileID.Anvils)
             .Register();
         }

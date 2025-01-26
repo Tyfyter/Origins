@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.IceBlock, 30)
-			.AddIngredient(ItemID.Shiverthorn, 5)
+			.AddIngredient(ItemID.ExplosivePowder, 15)
+			.AddIngredient(ItemID.IceBlock, 40)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

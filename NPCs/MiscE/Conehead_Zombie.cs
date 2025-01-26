@@ -42,7 +42,7 @@ namespace Origins.NPCs.MiscE {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Traffic_Cone_Item>(), 15));
         }
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0 || OriginsModIntegrations.CheckAprilFools()) {
+			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);

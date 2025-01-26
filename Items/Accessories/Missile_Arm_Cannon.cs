@@ -40,7 +40,7 @@ namespace Origins.Items.Accessories {
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
             player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.15f;
 			player.GetKnockback(DamageClasses.Explosive) += 0.2f;
-            originPlayer.explosiveThrowSpeed += 0.3f;
+            originPlayer.explosiveThrowSpeed += 0.25f;
             originPlayer.destructiveClaws = true;
 			originPlayer.gunGlove = true;
 			originPlayer.gunGloveItem = Item;

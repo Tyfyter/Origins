@@ -1,14 +1,17 @@
+using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Misc;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,12 +33,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			shimmer.canisterType = CanisterGlobalItem.RegisterCanister(ItemID.ShimmerFlare, new(Color.Black, Color.Black, ammo: shimmer));
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(14, 32, 14f, 44, 24);
+			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(24, 32, 14f, 44, 24);
 			Item.knockBack = 2;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 4;
+			Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -285,21 +288,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 			CanisterData canisterData = projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile canister) ? canister.CanisterData : projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
 			if (canisterData is null) return;
 			Vector2 center = projectile.Center;
-			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
+			Rectangle screen = new((int)Main.Camera.ScaledPosition.X, (int)Main.Camera.ScaledPosition.Y, (int)Main.Camera.ScaledSize.X, (int)Main.Camera.ScaledSize.Y);
 			Vector2 closest = screen.Contains(center) ? center : CollisionExtensions.GetCenterProjectedPoint(screen, center);
 			Vector2 diff = closest - center;
 			float offScreenDist = diff.Length();
 			Color glowColor = canisterData.InnerColor * alpha;
 			float boomFactor = 1f;
 			int timeLeft = isAfterEffect ? projectile.timeLeft : projectile.timeLeft + 9;
-			if (projectile.timeLeft < 10) {
-				boomFactor = Math.Min(projectile.timeLeft / 10f, 1);
+			if (timeLeft < 10) {
+				boomFactor = Math.Min(timeLeft / 10f, 1);
 				if (canisterData.Ammo is ModItem) {
 					boomFactor *= 1 + boomFactor;
 				}
 			}
 			if (offScreenDist > 16) {
-				if (!Collision.CanHitLine(center + (diff / offScreenDist) * 64, 0, 0, closest, 0, 0)) return;
+				if (!CollisionExt.CanHitRay(center + (diff / offScreenDist) * 64, closest)) return;
 				glowColor.A = 0;
 				float sqrt = MathF.Sqrt(offScreenDist / 32f);
 				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * boomFactor;

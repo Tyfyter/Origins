@@ -25,8 +25,7 @@ namespace Origins.NPCs.MiscE {
 			HeadTexture = null;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DemonEye);
-			NPC.aiStyle = 85;
+			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 			NPC.lifeMax = 28;
 			NPC.defense = 5;
 			NPC.damage = 16;
@@ -34,7 +33,9 @@ namespace Origins.NPCs.MiscE {
 			NPC.height = 32;
 			NPC.friendly = false;
 			NPC.noGravity = true;
-			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.knockBackResist = 0.8f;
 			NPC.value = 56;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {

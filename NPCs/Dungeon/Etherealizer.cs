@@ -30,7 +30,6 @@ namespace Origins.NPCs.Dungeon {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Caster;
 			NPC.lifeMax = 300;
 			NPC.defense = 17;
@@ -111,7 +110,7 @@ namespace Origins.NPCs.Dungeon {
 							spawnPos,
 							diff.SafeNormalize(default) * 2,
 							Etherealizer_P.ID,
-							35,
+							Main.masterMode ? 25: (Main.expertMode ? 30 : 35),
 							0,
 							ai0: NPC.whoAmI
 						);

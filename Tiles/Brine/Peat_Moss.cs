@@ -10,13 +10,14 @@ namespace Origins.Tiles.Brine {
 			"Grass"
 		];
 		public override void SetStaticDefaults() {
-			Main.tileMergeDirt[Type] = true;
+			//Main.tileMergeDirt[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			RegisterItemDrop(ItemType<Peat_Moss_Item>());
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
+			DustType = DustID.GrassBlades;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile) {

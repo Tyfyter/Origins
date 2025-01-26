@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -10,6 +11,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Riven;
@@ -21,9 +23,11 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
@@ -85,10 +89,11 @@ namespace Origins.NPCs {
 					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
 					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-					shop.Add<Trash_Lid>(PeatSoldCondition(150));
+					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));
+					shop.Add<Trash_Lid>(PeatSoldCondition(160));
 					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170), Condition.NotTheBeesWorld);
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode);
+					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode); // Lost Diver condition for both
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
 					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
 					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
@@ -119,7 +124,8 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.SkeletonMerchant: {
-					//shop.Add<Trash_Lid>(Condition.MoonPhaseFull);
+					shop.Add(ItemID.BlackInk);
+					shop.Add<Trash_Lid>(Condition.MoonPhaseFull);
 					break;
 				}
 				case NPCID.Golfer: {
@@ -127,7 +133,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.ArmsDealer: {
+					shop.Add(ModContent.ItemType<Gun_Magazine>());
 					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
+					shop.Add<Harpoon_Burst_Rifle>(Quest.QuestCondition<Harpoon_Burst_Rifle_Quest>());
 					break;
 				}
 				case NPCID.Stylist: {
@@ -137,10 +145,11 @@ namespace Origins.NPCs {
 				case NPCID.WitchDoctor: {
 					shop.InsertAfter<Defiled_Fountain_Item>(ItemID.CorruptWaterFountain);
 					shop.InsertAfter<Riven_Fountain_Item>(ModContent.ItemType<Defiled_Fountain_Item>());
+					shop.InsertAfter<Brine_Fountain_Item>(ModContent.ItemType<Riven_Fountain_Item>());
 					break;
 				}
 				case NPCID.Mechanic: {
-					shop.Add<Fabricator_Item>(Condition.DownedMechBossAll);
+					shop.Add<Fabricator_Item>(Condition.DownedMechBossAny);
 					break;
 				}
 				case NPCID.PartyGirl: {
@@ -242,6 +251,24 @@ namespace Origins.NPCs {
 					}
 				}
 			}
+			if (Main.dedServ && OriginPlayer.LocalOriginPlayer is not null) {
+				Color color = Color.HotPink;
+				switch (npc.type) {
+					case NPCID.FairyCritterGreen:
+					color = Color.LimeGreen;
+					goto case NPCID.FairyCritterPink;
+
+					case NPCID.FairyCritterBlue:
+					color = Color.HotPink;
+					goto case NPCID.FairyCritterPink;
+
+					case NPCID.FairyCritterPink:
+					Lighting.AddLight(npc.Center, color.ToVector3() * 1.4f);
+					break;
+				}
+			}
+			if (staticShock) Static_Shock_Debuff.ProcessShocking(npc, miniStaticShock ? 7 : 5);
+			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(npc, 2);
 		}
 		public override bool CheckDead(NPC npc) {
 			if (birdedTime > 0) {
@@ -321,6 +348,9 @@ namespace Origins.NPCs {
 				}
 				if (beeIncantationDebuff) {
 					damageBoost += 5f;
+				}
+				if (beeIncantationDebuff) {
+					damageBoost += 7f;
 				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
@@ -405,6 +435,7 @@ namespace Origins.NPCs {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}*/
+		public static int aerialSpawnPosition = 0;
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {

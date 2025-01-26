@@ -21,9 +21,10 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Bottled_Brine>())
-			.AddIngredient(ModContent.ItemType<Brineglow_Item>())
-			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 8)
+			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 10)
+			//.AddIngredient(ModContent.ItemType<Toadfish>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}

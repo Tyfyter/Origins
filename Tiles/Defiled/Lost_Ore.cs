@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
 using PegasusLib;

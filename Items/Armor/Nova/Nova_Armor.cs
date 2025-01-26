@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Nova {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Nova");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.explosiveBlastRadius.Base += 32;
-			originPlayer.explosiveBlastRadius *= 2f;
+			originPlayer.explosiveBlastRadius += 0.6f;
 			originPlayer.novaSet = true;
 		}
 		public override void AddRecipes() {
@@ -61,7 +61,7 @@ namespace Origins.Items.Armor.Nova {
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClasses.Explosive) += 0.04f;
 			player.GetCritChance(DamageClasses.Explosive) += 0.04f;
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.45f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.6f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

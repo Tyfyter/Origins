@@ -25,13 +25,14 @@ namespace Origins.NPCs.Riven {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerHead);
+			base.SetDefaults();
 			NPC.width = NPC.height = 12;
 			NPC.lifeMax = 50;
 			NPC.defense = 7;
 			NPC.damage = 23;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath23;
+			//NPC.scale = 0.9f;
 			NPC.value = 70;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
@@ -45,13 +46,13 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText()
 			);
 		}
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
-        }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
-        }
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
+		}
 		public void ModifyWikiStats(JObject data) {
 			data["SpriteWidth"] = 108;
 		}
@@ -103,14 +104,14 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerBody);
+			base.SetDefaults();
 			NPC.width = NPC.height = 12;
 		}
 		public override void AI() {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Cleaver_Head).TryDeathEffect();
+			(HeadSegment.ModNPC as Cleaver_Head)?.TryDeathEffect();
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -129,14 +130,14 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerTail);
+			base.SetDefaults();
 			NPC.width = NPC.height = 12;
 		}
 		public override void AI() {
 			Lighting.AddLight(NPC.Center, Riven_Hive.ColoredGlow(0.02f));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Cleaver_Head).TryDeathEffect();
+			(HeadSegment.ModNPC as Cleaver_Head)?.TryDeathEffect();
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;

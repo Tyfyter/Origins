@@ -419,7 +419,7 @@ namespace Origins.Projectiles {
 				if (acridHandcannon) {
 					const int count = 6;
 					const float portion = MathHelper.TwoPi / count;
-					int projType = ModContent.ProjectileType<Acid_Shot>();
+					int projType = ModContent.ProjectileType<Brine_Droplet>();
 					for (int i = 0; i < count; i++) {
 						Projectile.NewProjectile(
 							projectile.GetSource_Death(),
@@ -877,7 +877,7 @@ namespace Origins.Projectiles {
 					Rectangle projHitbox = projectile.Hitbox;
 					ProjectileLoader.ModifyDamageHitbox(projectile, ref projHitbox);
 					Rectangle playerHitbox = new((int)player.position.X, (int)player.position.Y, player.width, player.height);
-					if (projHitbox.Intersects(playerHitbox)) {
+					if (projectile.Colliding(projHitbox, playerHitbox)) {
 						double damageDealt = player.Hurt(
 							PlayerDeathReason.ByProjectile(Main.myPlayer, projectile.whoAmI),
 							Main.DamageVar(projectile.damage, -player.luck),

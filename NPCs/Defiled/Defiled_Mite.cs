@@ -22,7 +22,6 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 44;
 			NPC.defense = 12;
@@ -121,7 +120,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life < 0) {
+			if (NPC.life <= 0) {
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/DF1_Gore");
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));

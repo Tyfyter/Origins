@@ -1,7 +1,10 @@
+using CalamityMod.NPCs.TownNPCs;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
@@ -17,6 +20,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -27,6 +31,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.HealerItems;
 using Tyfyter.Utils;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
@@ -40,7 +45,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override int BodyType => ModContent.NPCType<World_Cracker_Body>();
 		public override int TailType => ModContent.NPCType<World_Cracker_Tail>();
+		public override bool SharesDebuffs => true;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		public static int DifficultyScaledSegmentCount => 13 + 2 * DifficultyMult;
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
 		public static AutoCastingAsset<Texture2D> HPBarArmorTexture { get; private set; }
 		public static int MaxArmorHealth {
@@ -73,17 +80,20 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			normalDropRule = null;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerHead);
+			base.SetDefaults();
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_WC>();
 			NPC.width = NPC.height = 60;
-			NPC.damage = 33;
+			NPC.damage = 30;
 			NPC.defense = 100;
 			NPC.lifeMax = 3800;
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
 			Music = Origins.Music.RivenBoss;
 			NPC.value = Item.sellPrice(gold: 1);
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
@@ -110,15 +120,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				break;
 			}
 		}
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
+			modifiers.Knockback.Base -= 12;
+			modifiers.ModifyHitInfo += (ref NPC.HitInfo hit) => {
+				if (hit.Damage < 100) hit.Knockback = 0;
+			};
+		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
-			if (ArmorHealthPercent > 0.5f) {
-				NPC.defense = 100;
-			} else if (ArmorHealthPercent > 0f) {
-				NPC.defense = 50;
-			} else {
-				NPC.defense = 0;
-			}
+			NPC.defense = 100 * (int)(ArmorHealthPercent);
 			//ForcedTargetPosition = Main.MouseWorld;
 			//Acceleration = 1;
 			SetBaseSpeed();
@@ -132,6 +142,30 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			float dot = Vector2.Dot(NPC.velocity.SafeNormalize(default), (ForcedTargetPosition.Value - NPC.Center).SafeNormalize(default));
 			CanFly = dot > 0.5f;
 
+			if (NPC.localAI[3] < (((NPC.lifeMax - NPC.life) * DifficultyMult) / NPC.lifeMax) && NPC.Center.WithinRange(ForcedTargetPosition ?? NPC.Center, 45f * 16)) {
+				float dist = 0;
+				Vector2 direction = default;
+				const float min_dist = 16 * 15;
+				const float max_dist = 16 * 50;
+				int tries = 0;
+				while (dist < min_dist && ++tries < 100) {
+					direction = Main.rand.NextVector2Unit();
+					dist = CollisionExt.Raymarch(NPC.Center, direction, max_dist);
+				}
+				if (dist >= min_dist) {
+					dist = min_dist + (dist - min_dist) * Main.rand.NextFloat(1);
+					NPC.NewNPC(
+						NPC.GetSource_FromAI(),
+						(int)NPC.Center.X,
+						(int)NPC.Center.Y,
+						ModContent.NPCType<World_Cracker_Summon_Bubble>(),
+						ai0: ModContent.NPCType<Barnacleback>(),
+						ai1: NPC.Center.X + direction.X * dist,
+						ai2: NPC.Center.Y + direction.Y * dist
+					);
+					NPC.localAI[3] += 0.5f;
+				}
+			}
 			ProcessShoot(NPC);
 
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
@@ -139,60 +173,120 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public static void ProcessShoot(NPC npc) {
 			NPC headNPC = npc.realLife >= 0 ? Main.npc[npc.realLife] : npc;
+			if (headNPC?.active != true) return;
 			if (!headNPC.HasValidTarget) return;
 			int target = headNPC.target;
+			bool isHead = npc.realLife == -1 || npc.realLife == npc.whoAmI;
+			if (npc.ai[3] <= 0 && npc.localAI[3] == 0 && !isHead) {
+				npc.localAI[3] = 1;
+				if ((Main.netMode != NetmodeID.MultiplayerClient) && Main.rand.Next(3) < DifficultyMult) {
+					NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<World_Cracker_Exoskeleton>());
+				}
+			}
 			Player playerTarget = Main.player[target];
-			int otherShotDelay = (Main.rand.Next(48, 60) / DifficultyMult) + 40;
-			int shotTime = (450 / DifficultyMult);
-			if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
+			int otherShotDelay = (Main.rand.Next(32, 40) / DifficultyMult) + 60;
+			int shotTime = 1125 / (DifficultyMult + 2);
+			//if (Main.expertMode && npc.ai[3] <= 0) shotTime = 240;
 			npc.ai[2]++;
 			Vector2 size = playerTarget.Size;
 			Vector2 targetPos = playerTarget.position - size * 0.5f;
 			int projType = Amoeball.ID;
-			if (Main.masterMode && (npc.realLife == -1 || npc.realLife == npc.whoAmI) && npc.ai[2] > shotTime) {
-				shotTime = 328;
-				float diameter = npc.width * 0.75f;
-				Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
-				Dust dust = Dust.NewDustPerfect(
-					npc.Center - offset,
-					DustID.BlueTorch,
-					offset * 0.125f
-				);
-				dust.velocity += npc.velocity;
-				dust.noGravity = true;
-				if (npc.ai[2] + 60 > shotTime) {
-					dust.velocity = dust.velocity.RotatedByRandom(0.15f) * 2;
-					dust.scale *= 1.25f;
+			if (isHead && npc.ai[2] > shotTime) {
+				if (npc.localAI[2] == -1) {
+					bool canSpawnBubble = playerTarget.OriginPlayer().oldNearbyActiveNPCs < DifficultyScaledSegmentCount + 4 + DifficultyMult;
+					npc.localAI[2] = ((!Main.rand.NextBool(4) && canSpawnBubble) || !Main.masterMode).ToInt();
+					if (!canSpawnBubble && !Main.masterMode && npc.localAI[2] == 1) {
+						npc.localAI[2] = -1;
+					}
 				}
-				projType = ModContent.ProjectileType<World_Cracker_Beam>();
-				float directRot = (targetPos - npc.Center).ToRotation();
-				float cutOffRot = (playerTarget.velocity.SafeNormalize(Vector2.Zero) * 32 - npc.Center).ToRotation();
-				GeometryUtils.AngleDif(directRot, cutOffRot, out int dir);
-				targetPos = targetPos.RotatedBy(dir * 0.5f, npc.Center);
+				if (npc.localAI[2] == -1) shotTime += 100; //duration of charge-up effect
+				if (npc.localAI[2] == 0) {
+					float diameter = npc.width * 0.75f;
+					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
+					Dust dust = Dust.NewDustPerfect(
+						npc.Center - offset,
+						DustID.BlueTorch,
+						offset * 0.125f
+					);
+					dust.velocity += npc.velocity;
+					dust.noGravity = true;
+					if (npc.ai[2] + 60 > shotTime) {
+						dust.velocity = dust.velocity.RotatedByRandom(0.15f) * 2;
+						dust.scale *= 1.25f;
+					}
+					projType = ModContent.ProjectileType<World_Cracker_Beam>();
+					float directRot = (targetPos - npc.Center).ToRotation();
+					float cutOffRot = (playerTarget.velocity.SafeNormalize(Vector2.Zero) * 32 - npc.Center).ToRotation();
+					GeometryUtils.AngleDif(directRot, cutOffRot, out int dir);
+					targetPos = targetPos.RotatedBy(dir * 0.5f, npc.Center);
+				} else if (npc.localAI[2] == 1) {
+					float diameter = npc.width * 0.75f;
+					Vector2 offset = Main.rand.NextVector2CircularEdge(diameter, diameter) * Main.rand.NextFloat(0.9f, 1f);
+					Dust dust = Dust.NewDustPerfect(
+						npc.Center - offset,
+						ModContent.DustType<World_Cracker_Summon_Dust>(),
+						offset * 0.125f,
+						newColor: Color.Cyan
+					);
+					dust.velocity += npc.velocity;
+					dust.noGravity = true;
+					projType = -1;
+				}
 			}
 			if (npc.ai[2] > shotTime && Collision.CanHitLine(targetPos + size * 0.5f, playerTarget.width, playerTarget.height, npc.Center, 8, 8)) {
-				SoundEngine.PlaySound(
-					projType == Amoeball.ID ? Origins.Sounds.DefiledIdle.WithPitchRange(0.4f, 0.6f) : Origins.Sounds.EnergyRipple,
-					npc.Center
-				);
+				bool succeeded = projType != -1;
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
-					Vector2 velocity = Vector2.Normalize(targetPos - npc.Center);
-					if (projType == Amoeball.ID) velocity = velocity.RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f);
-					else velocity *= 8;
-					Projectile.NewProjectileDirect(
-						npc.GetSource_FromAI(),
-						npc.Center,
-						velocity,
-						projType,
-						10 + (DifficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
-						0f
-					);
+					if (projType == -1) {
+						succeeded = false;
+						float dist = 0;
+						Vector2 direction = default;
+						const float min_dist = 16 * 15;
+						const float max_dist = 16 * 50;
+						int tries = 0;
+						while (dist < min_dist && ++tries < 100) {
+							direction = Main.rand.NextVector2CircularEdge(1, 1);
+							dist = CollisionExt.Raymarch(npc.Center, direction, max_dist);
+						}
+						if (dist >= min_dist) {
+							dist = min_dist + (dist - min_dist) * Main.rand.NextFloat(1);
+							NPC.NewNPC(
+								npc.GetSource_FromAI(),
+								(int)npc.Center.X,
+								(int)npc.Center.Y,
+								ModContent.NPCType<World_Cracker_Summon_Bubble>(),
+								ai1: npc.Center.X + direction.X * dist,
+								ai2: npc.Center.Y + direction.Y * dist
+							);
+							npc.localAI[2] = -1;
+							succeeded = true;
+							npc.netUpdate = true;
+						}
+					} else {
+						Vector2 velocity = Vector2.Normalize(targetPos - npc.Center);
+						if (projType == Amoeball.ID) velocity = velocity.RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f);
+						else velocity *= 8;
+						Projectile.NewProjectileDirect(
+							npc.GetSource_FromAI(),
+							npc.Center,
+							velocity,
+							projType,
+							9 + DifficultyMult, // for some reason NPC projectile damage is just arbitrarily doubled
+							0f
+						);
+						if (isHead) npc.localAI[2] = -1;
+					}
+					if (projType == -1 || projType == Amoeball.ID) {
+						SoundEngine.PlaySound(Main.rand.NextBool() ? SoundID.Item111 : SoundID.Item112, npc.Center);
+					} else {
+						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple, npc.Center);
+					}
 				}
-				npc.ai[2] = -otherShotDelay;
+				if (succeeded) npc.ai[2] = -otherShotDelay;
 				NPC current = headNPC;
 				int tailType = ModContent.NPCType<World_Cracker_Tail>();
 				while (current is not null) {
-					if (!Main.masterMode || current != headNPC) current.ai[2] -= otherShotDelay;
+					if (current != headNPC) current.ai[2] -= otherShotDelay;
+					if (!Main.npc.IndexInRange((int)current.ai[0])) break;
 					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
 			}
@@ -224,8 +318,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.HitModifiers apMods = new();
 			apMods.ArmorPenetration += armorPenetration;
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
-			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
+			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), hit.Crit ? 3 : 0), 0);
 			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit, fromNet);
+			if (Main.netMode != NetmodeID.Server) SoundEngine.PlaySound(SoundID.NPCHit2, npc.Center);
 			if (npc.ai[3] <= 0) {
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					DropAttemptInfo dropInfo = default;
@@ -292,11 +387,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(0, 0, 102, 58), NPC);
 		}
 		void SetBaseSpeed() {
-			MoveSpeed = 15.5f + DifficultyMult;
-			Acceleration = 0.2f + 0.05f * DifficultyMult;
+			MoveSpeed = 15.5f + DifficultyMult * 0.5f;
+			Acceleration = 0.2f + 0.025f * DifficultyMult;
 		}
 		public override void Init() {
-			MinSegmentLength = MaxSegmentLength = 13 + 2 * DifficultyMult;
+			MinSegmentLength = MaxSegmentLength = DifficultyScaledSegmentCount;
 			SetBaseSpeed();
 			CommonWormInit(this);
 		}
@@ -370,18 +465,18 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerBody);
+			base.SetDefaults();
 			NPC.width = NPC.height = 48;
 			NPC.damage = 20;
 			NPC.defense = 100;
 			NPC.aiStyle = -1;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
-			if (ArmorHealthPercent > 0.5f) {
-				NPC.defense = 100;
-			} else if (ArmorHealthPercent > 0f) {
-				NPC.defense = 54;
+			if (ArmorHealthPercent > 0f) {
+				NPC.defense = 100 * (int)(ArmorHealthPercent);
 			} else {
 				NPC.defense = 8;
 			}
@@ -420,6 +515,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.frameCounter = Main.rand.Next(2);
 			CommonWormInit(this);
 		}
+		public override void UpdateLifeRegen(ref int damage) {
+			damage = ushort.MaxValue;
+			NPC.lifeRegen = 0;
+			NPC.lifeRegenCount = 0;
+		}
 	}
 	public class World_Cracker_Tail : WormTail, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.10f;
@@ -429,21 +529,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DiggerTail);
+			base.SetDefaults();
 			NPC.width = NPC.height = 60;
 			NPC.damage = 38;
 			NPC.defense = 20;
 			NPC.aiStyle = -1;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
-			if (ArmorHealthPercent > 0.5f) {
-				NPC.defense = 20;
-			} else if (ArmorHealthPercent > 0f) {
-				NPC.defense = 10;
-			} else {
-				NPC.defense = 0;
-			}
+			NPC.defense = 20 * (int)(ArmorHealthPercent);
 			NPC.life = NPC.lifeMax - 1;
 
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;
@@ -475,6 +571,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void Init() {
 			CommonWormInit(this);
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			damage = ushort.MaxValue;
+			NPC.lifeRegen = 0;
+			NPC.lifeRegenCount = 0;
 		}
 	}
 	public class Boss_Bar_WC : ModBossBar {
@@ -614,12 +715,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Projectile.hostile = true;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = 0;
-			Projectile.penetrate = (2 * DifficultyMult);
-			Projectile.width = 30;
-			Projectile.height = 30;
+			Projectile.penetrate = 2;
+			Projectile.width = 16;
+			Projectile.height = 16;
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = (60 * DifficultyMult) + 90;
-			Projectile.scale = (float)(1 + 0.1f * DifficultyMult);
+			Projectile.scale = (1 + 0.1f * DifficultyMult);
 			Projectile.alpha = 150;
 			Projectile.extraUpdates = 0;
 		}
@@ -634,7 +735,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Main.expertMode ^ Main.masterMode) return true;
+			if (Main.expertMode) return true;
 			float speed = oldVelocity.Length();
 			Projectile.velocity = Projectile.velocity + Projectile.velocity - oldVelocity;
 			Projectile.velocity *= speed / Projectile.velocity.Length();

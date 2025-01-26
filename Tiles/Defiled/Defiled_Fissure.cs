@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -29,6 +30,7 @@ namespace Origins.Tiles.Defiled {
 			ID = Type;
 			AnimationFrameHeight = 144 / 4;
 			HitSound = Origins.Sounds.DefiledIdle;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 9) {
@@ -60,17 +62,11 @@ namespace Origins.Tiles.Defiled {
 		public override void NearbyEffects(int i, int j, bool closer) {
 			//Projectile.NewProjectile(spawnSource: this, new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 		}
-
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
-
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			if (noBreak) {
-				return true;
-			}
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			World.BiomeData.Defiled_Wastelands.CheckFissure(i, j, Type);
-			return true;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.3f;

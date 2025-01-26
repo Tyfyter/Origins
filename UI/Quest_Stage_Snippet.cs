@@ -33,10 +33,10 @@ namespace Origins.UI {
 				snippets.CopyTo(_snippets, 1);
 				position.X = BasePosition.X;
 				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, _snippets, position, color, 0, Vector2.Zero, new(scale), out int hoveredSnippet, maxWidth, completed);
-				if (hoveredSnippet >= 0 && hoveredSnippet < snippets.Length && snippets[hoveredSnippet].CheckForHover) {
-					snippets[hoveredSnippet].OnHover();
+				if (hoveredSnippet >= 0 && hoveredSnippet < _snippets.Length && _snippets[hoveredSnippet].CheckForHover) {
+					_snippets[hoveredSnippet].OnHover();
 					if (Main.mouseLeft && Main.mouseLeftRelease) {
-						snippets[hoveredSnippet].OnClick();
+						_snippets[hoveredSnippet].OnClick();
 					}
 				}
 				if (completed) {

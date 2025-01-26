@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
@@ -59,8 +60,10 @@ namespace Origins {
 		#region armor/set bonuses
 		public bool ashenKBReduction = false;
 		public bool fiberglassSet = false;
+		public bool oldCryostenSet = false;
+		public bool oldCryostenHelmet = false;
 		public bool cryostenSet = false;
-		public bool cryostenHelmet = false;
+		public bool cryostenBody = false;
 		public bool felnumSet = false;
 		public float felnumShock = 0;
 		public bool usedFelnumShock = false;
@@ -94,6 +97,9 @@ namespace Origins {
 		public const float blast_set_charge_gain = 0.8f;
 		public const float blast_set_charge_decay = 12;
 		public bool blastSetActive = false;
+		public bool rainSet = false;
+		public bool rubberBody = false;
+		public int nearTrafficCone = 0;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -105,6 +111,7 @@ namespace Origins {
 		public bool fiberglassDagger = false;
 		public bool advancedImaging = false;
 		public bool venomFang = false;
+		public bool lightningRing = false;
 		public bool lazyCloakVisible = false;
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
@@ -232,10 +239,12 @@ namespace Origins {
 		//public bool isVoodooPickup = false;
 		public bool primordialSoup = false;
 		public bool bugZapper = false;
+		public int bugZapperFlyTime = 0;
 		public bool bombCharminIt = false;
 		public bool cursedVoice = false;
 		public Item cursedVoiceItem = null;
 		public int cursedVoiceCooldown = 0;
+		public int cursedVoiceCooldownMax = 0;
 		public bool futurephones = false;
 		public bool coreGenerator = false;
 		public Item coreGeneratorItem = null;
@@ -247,6 +256,11 @@ namespace Origins {
 		public bool slagBucketCursed = false;
 		public bool slagBucket = false;
 		public bool scrapBarrierDebuff = false;
+		public float gunSpeedBonus = 0;
+		public float meleeScaleMultiplier = 1;
+		public bool eitriteGunMagazine = false;
+		public bool fairyLotus = false;
+
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
 		public int laserTagPoints = 0;
@@ -304,6 +318,11 @@ namespace Origins {
 		public bool swarmStatue = false;
 		public bool focusPotion = false;
 		public BrothBase broth = null;
+		public bool cavitationDebuff = false;
+		public bool staticShock = false;
+		public bool miniStaticShock = false;
+		public bool staticShockDamage = false;
+		public int staticShockTime = 0;
 		#endregion
 
 		#region keybinds
@@ -313,16 +332,27 @@ namespace Origins {
 
 		#region other items
 		public int laserBladeCharge = 0;
+		public int tolrukCharge = 0;
 		public bool boatRockerAltUse = false;
 		public int mojoFlaskCount = 5;
 		public int mojoFlaskCountMax = 5;
 
 		public int quantumInjectors = 0;
 		public bool mojoInjection = false;
+		public bool MojoInjectionEnabled {
+			get => Player.BuilderToggleState<Mojo_Injection_Toggle>() == 0;
+			set => Player.BuilderToggleState<Mojo_Injection_Toggle>() = (!value).ToInt();
+		}
+		public bool MojoInjectionActive => mojoInjection && MojoInjectionEnabled;
 		public int defiledWill = 0;
 
 		public int talkingPet = 0;
 		public int talkingPetTime = 0;
+		public int nextActiveHarpoons = 0;
+		public int currentActiveHarpoons = 0;
+		public Vector2 nextActiveHarpoonAveragePosition = default;
+		public Vector2 currentActiveHarpoonAveragePosition = default;
+		public float aprilFoolsRubberDynamiteTracker = 0;
 		#endregion
 
 		#region visuals
@@ -380,14 +410,17 @@ namespace Origins {
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
+		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
 			if (felnumSet) oldBonuses |= 2;
 			fiberglassSet = false;
+			oldCryostenSet = false;
+			oldCryostenHelmet = false;
 			cryostenSet = false;
-			cryostenHelmet = false;
+			cryostenBody = false;
 			oldFelnumShock = felnumShock;
 			if (!felnumSet || usedFelnumShock) {
 				felnumShock = 0;
@@ -444,6 +477,9 @@ namespace Origins {
 			}
 			if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
 			blastSet = false;
+			rainSet = false;
+			rubberBody = false;
+			if (nearTrafficCone > 0) nearTrafficCone--;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
@@ -465,6 +501,7 @@ namespace Origins {
 			fiberglassDagger = false;
 			advancedImaging = false;
 			venomFang = false;
+			lightningRing = false;
 			lazyCloakVisible = false;
 			amebicVialVisible = false;
 			entangledEnergy = false;
@@ -573,6 +610,10 @@ namespace Origins {
 				if (protOSQuoteCooldown[i] > 0) protOSQuoteCooldown[i]--;
 			}
 			if (talkingPetTime > 0 && --talkingPetTime <= 0) talkingPet = -1;
+			currentActiveHarpoons = nextActiveHarpoons;
+			currentActiveHarpoonAveragePosition = nextActiveHarpoonAveragePosition / currentActiveHarpoons;
+			nextActiveHarpoons = 0;
+			nextActiveHarpoonAveragePosition = Vector2.Zero;
 
 			if (resinShieldCooldown > 0) resinShieldCooldown--;
 			resinShield = false;
@@ -598,6 +639,7 @@ namespace Origins {
 			pickupRangeBoost = 0;
 			primordialSoup = false;
 			bugZapper = false;
+			if (bugZapperFlyTime > 0) bugZapperFlyTime--;
 			bombCharminIt = false;
 			cursedVoice = false;
 			cursedVoiceItem = null;
@@ -610,6 +652,10 @@ namespace Origins {
 			slagBucketCursed = false;
 			slagBucket = false;
 			scrapBarrierDebuff = false;
+			gunSpeedBonus = 0;
+			meleeScaleMultiplier = 1;
+			eitriteGunMagazine = false;
+			fairyLotus = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {
@@ -621,6 +667,10 @@ namespace Origins {
 			flaskSalt = false;
 			swarmStatue = false;
 			focusPotion = false;
+			cavitationDebuff = false;
+			staticShock = false;
+			miniStaticShock = false;
+			staticShockDamage = false;
 			broth = null;
 
 			boatRockerAltUse = false;
@@ -664,6 +714,7 @@ namespace Origins {
 				strangeToothCooldown--;
 
 			if (laserBladeCharge > 0 && !Player.ItemAnimationActive) laserBladeCharge--;
+			if (tolrukCharge > 0 && !Player.ItemAnimationActive) tolrukCharge--;
 
 			if (rapidSpawnFrames > 0)
 				rapidSpawnFrames--;

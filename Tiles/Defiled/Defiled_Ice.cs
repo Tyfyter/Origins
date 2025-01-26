@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -12,6 +13,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.Ices[Type] = true;
 			TileID.Sets.IcesSlush[Type] = true;
 			TileID.Sets.IcesSnow[Type] = true;
+			TileID.Sets.IceSkateSlippery[Type] = true;
 			TileID.Sets.Conversion.Ice[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMergeDirt[Type] = true;
@@ -22,14 +24,13 @@ namespace Origins.Tiles.Defiled {
 			mergeID = TileID.IceBlock;
 			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
-		}
-		public override void FloorVisuals(Player player) {
-			player.slippy = true;
+			HitSound = SoundID.Item50;
 		}
 	}
 	public class Defiled_Ice_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Ice>());

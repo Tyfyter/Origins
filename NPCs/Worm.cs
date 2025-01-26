@@ -1,4 +1,6 @@
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using Terraria;
@@ -6,6 +8,10 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
+using ThoriumMod.Empowerments;
+using Origins.NPCs.Riven.World_Cracker;
+using System.Collections.Generic;
 
 //from ExampleMod, meant to be copied into other mods
 namespace Origins.NPCs {
@@ -157,6 +163,11 @@ namespace Origins.NPCs {
 		public int MaxSegmentLength { get; set; }
 
 		/// <summary>
+		/// The amount of segments present on the worm, including the head and tail segments
+		/// </summary>
+		public int SegmentCount { get; private set; }
+
+		/// <summary>
 		/// Whether the NPC ignores tile collision when attempting to "dig" through tiles, like how Wyverns work.
 		/// </summary>
 		public bool CanFly { get; set; }
@@ -177,6 +188,10 @@ namespace Origins.NPCs {
 		/// If not <see langword="null"/>, this NPC will target the given world position instead of its player target
 		/// </summary>
 		public Vector2? ForcedTargetPosition { get; set; }
+		/// <summary>
+		/// Whether the NPC shares its debuffs across segments
+		/// </summary>
+		public virtual bool SharesDebuffs => false;
 
 		/// <summary>
 		/// Override this method to use custom body-spawning code.<br/>
@@ -221,6 +236,47 @@ namespace Origins.NPCs {
 			HeadAI_CheckTargetDistance(ref collision);
 
 			HeadAI_Movement(collision);
+			if (SharesDebuffs) {
+				NPC current = NPC;
+				List<NPC> parts = new(SegmentCount);
+				int[] buffType = new int[NPC.buffType.Length];
+				int[] buffTime = new int[NPC.buffType.Length];
+				int buffIndex = 0;
+				int tailType = TailType;
+				while (current is not null) {
+					if (current.realLife != NPC.whoAmI) break;
+					parts.Add(current);
+					for (int i = 0; i < current.buffTime.Length && buffIndex < buffTime.Length; i++) {
+						int time = current.buffTime[i];
+						if (time > 0) {
+							int type = current.buffType[i];
+							bool found = false;
+							for (int j = 0; j < buffType.Length && !found; j++) {
+								if (buffType[j] == type) {
+									found = true;
+									if (time > buffTime[j]) {
+										buffType[j] = type;
+										buffTime[j] = time;
+									}
+								}
+							}
+							if (!found) {
+								buffType[buffIndex] = type;
+								buffTime[buffIndex] = time;
+								buffIndex++;
+							}
+						}
+					}
+					current = current.type == tailType || !Main.npc.IndexInRange((int)current.ai[0]) ? null : Main.npc[(int)current.ai[0]];
+				}
+				for (int i = 0; i < parts.Count; i++) {
+					current = parts[i];
+					for (int j = 0; j < buffTime.Length; j++) {
+						current.buffTime[j] = buffTime[j];
+						current.buffType[j] = buffType[j];
+					}
+				}
+			}
 		}
 
 		protected void HeadAI_SpawnSegments() {
@@ -279,6 +335,9 @@ namespace Origins.NPCs {
 								n.netUpdate = true;
 							}
 						}
+					} else {
+						SegmentCount = randomWormLength;
+						OnFinishSpawning();
 					}
 
 					// Set the player target for good measure
@@ -286,7 +345,7 @@ namespace Origins.NPCs {
 				}
 			}
 		}
-
+		public virtual void OnFinishSpawning() { }
 		protected bool HeadAI_CheckCollisionForDustSpawns() {
 			int minTilePosX = (int)(NPC.Left.X / 16) - 1;
 			int maxTilePosX = (int)(NPC.Right.X / 16) + 2;
@@ -557,6 +616,20 @@ namespace Origins.NPCs {
 			}
 			return false;
 		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((int)SegmentCount);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			SegmentCount = reader.ReadInt32();
+		}
+		public override void SetDefaults() {
+			NPC.aiStyle = 6;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0f;
+			NPC.behindTiles = true;
+		}
 	}
 
 	public abstract class WormBody : Worm {
@@ -642,6 +715,16 @@ namespace Origins.NPCs {
 			if (!SharesImmunityFrames) return;
 			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
 		}
+		public override void SetDefaults() {
+			NPC.aiStyle = 6;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0f;
+			NPC.behindTiles = true;
+			NPC.dontCountMe = true;
+			NPC.lifeMax = 200;
+		}
 	}
 
 	// Since the body and tail segments share the same AI
@@ -686,6 +769,16 @@ namespace Origins.NPCs {
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			if (!SharesImmunityFrames) return;
 			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
+		}
+		public override void SetDefaults() {
+			NPC.aiStyle = 6;
+			NPC.netAlways = true;
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.knockBackResist = 0f;
+			NPC.behindTiles = true;
+			NPC.dontCountMe = true;
+			NPC.lifeMax = 200;
 		}
 	}
 }

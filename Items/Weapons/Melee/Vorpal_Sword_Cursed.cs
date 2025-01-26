@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Cursed_Vorpal_Sword_Slash>();
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 0f;
+			Item.knockBack = float.Epsilon;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = CursedRarity.ID;
@@ -168,8 +168,11 @@ namespace Origins.Items.Weapons.Melee {
 		int times = 0;
 		float dir = 0;
 		int switchbackSlot = -1;
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item1, player.itemLocation);
+			return null;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item1, position);
 			if (times > 0) {
 				velocity = OriginExtensions.Vec2FromPolar(dir, velocity.Length());
 				times--;
@@ -210,6 +213,7 @@ namespace Origins.Items.Weapons.Melee {
 				Item.autoReuse = true;
 			}
 		}
+		public override bool MeleePrefix() => true;
 		public bool? Hardmode => false;
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {
