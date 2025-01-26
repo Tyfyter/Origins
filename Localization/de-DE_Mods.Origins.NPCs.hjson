@@ -310,7 +310,8 @@ Spirit_Of_Christmas_Present: {
 // Felnum_Einheri.DisplayName: Felnum Einheri
 
 Slime_Worm: {
-	// DisplayName: "{0} Slorm"
+	// DisplayName: Slorm
+	// DisplayNameFormattable: "{0} Slorm"
 	// Green: Green
 	// Blue: Blue
 	// Red: Red

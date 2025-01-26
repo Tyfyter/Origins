@@ -26,7 +26,7 @@ namespace Origins.NPCs.MiscE {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Slime_Worm_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(0f, 8f),
-				PortraitPositionYOverride = 28f
+				PortraitPositionYOverride = 0f
 			};
 		}
 		public override void SetDefaults() {
@@ -73,7 +73,7 @@ namespace Origins.NPCs.MiscE {
 				colorName = "Black";
 				break;
 			}
-			NPC.GivenName = string.Format(NPC.TypeName, Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm." + colorName).Value);
+			NPC.GivenName = Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm.DisplayNameFormattable").Format(Language.GetOrRegister("Mods.Origins.NPCs.Slime_Worm." + colorName));
 		}
 		public override bool SpecialOnKill() {
 			int bodyType = BodyType;
