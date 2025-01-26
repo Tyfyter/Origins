@@ -7,7 +7,8 @@ using Origins.Dev;
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 namespace Origins.Items.Weapons.Ammo.Canisters {
-	public class Resizable_Mine_One : ModItem, ICanisterAmmo {
+	[LegacyName("Resizable_Mine_One")]
+	public class Resizable_Mine_Wood : ModItem, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(219, 131, 72), new(255, 193, 97), false);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
@@ -29,7 +30,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 	}
-	public class Resizable_Mine_Two : ModItem, ICustomWikiStat, ICanisterAmmo {
+	[LegacyName("Resizable_Mine_Two")]
+	public class Resizable_Mine_Iron : ModItem, ICustomWikiStat, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(188, 171, 167), new(246, 69, 84), false);
 		public string[] Categories => [
 			"Canistah"
@@ -53,7 +55,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 	}
-	public class Resizable_Mine_Three : ModItem, ICustomWikiStat, ICanisterAmmo {
+	public class Resizable_Mine_Evil : ModItem, ICustomWikiStat, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(212, 33, 88), new(255, 108, 163), false);
 		public string[] Categories => [
 			"Canistah"
@@ -101,7 +103,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 	}
-	public class Resizable_Mine_Four : ModItem, ICanisterAmmo {
+	public class Resizable_Mine_Hellstone : ModItem, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(106, 20, 20), new(255, 165, 0), false);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
@@ -122,7 +124,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 	}
-	public class Resizable_Mine_Five : ModItem, ICanisterAmmo {
+	[LegacyName("Resizable_Mine_Three")]
+	public class Resizable_Mine_Bleeding_Obsidian : ModItem, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(141, 22, 38), new(163, 108, 255), false);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
@@ -143,7 +146,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 	}
-	public class Resizable_Mine_Six : ModItem, ICanisterAmmo {
+	[LegacyName("Resizable_Mine_Four")]
+	public class Resizable_Mine_Chlorophyte : ModItem, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(161, 236, 0), new(97, 255, 238), false);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
@@ -164,7 +168,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 	}
-	public class Resizable_Mine_Seven : ModItem, ICanisterAmmo {
+	[LegacyName("Resizable_Mine_Five")]
+	public class Resizable_Mine_Luminite : ModItem, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(223, 218, 205), new(97, 255, 133), false);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

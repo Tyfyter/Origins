@@ -785,7 +785,7 @@ namespace Origins {
 			if (coreGenerator && !isSelfDamage) {
 				int ammoType = coreGeneratorItem.useAmmo;
 				try {
-					coreGeneratorItem.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+					coreGeneratorItem.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
 					if (Player.PickAmmo(coreGeneratorItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId)) {
 						int manaCost = Player.GetManaCost(coreGeneratorItem);
 						if (CombinedHooks.CanShoot(Player, coreGeneratorItem) && Player.CheckMana(manaCost, true)) {

@@ -3267,7 +3267,7 @@ namespace Origins {
 			self.shootSpeed = shootSpeed;
 			self.autoReuse = autoReuse;
 			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			self.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			self.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
 			self.useStyle = ItemUseStyleID.Shoot;
 			self.UseSound = SoundID.Item61;
 			self.noMelee = true;
@@ -3281,7 +3281,7 @@ namespace Origins {
 			self.width = width;
 			self.height = height;
 			self.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			self.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			self.ammo = ModContent.ItemType<Resizable_Mine_Wood>();
 			self.maxStack = Item.CommonMaxStack;
 			self.consumable = true;
 		}

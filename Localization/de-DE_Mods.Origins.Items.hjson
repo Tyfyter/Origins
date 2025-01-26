@@ -2170,28 +2170,38 @@ Harpoon: {
 	// Tooltip: Used as ammo for harpoon guns
 }
 
-Resizable_Mine_Five: {
-	// DisplayName: Resizable Mine V
-	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
-}
-
-Resizable_Mine_Four: {
-	// DisplayName: Resizable Mine IV
-	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
-}
-
-Resizable_Mine_One: {
+Resizable_Mine_Wood: {
 	// DisplayName: Resizable Mine I
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
-Resizable_Mine_Three: {
+Resizable_Mine_Iron: {
+	// DisplayName: Resizable Mine II
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Evil: {
 	// DisplayName: Resizable Mine III
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
-Resizable_Mine_Two: {
-	// DisplayName: Resizable Mine II
+Resizable_Mine_Hellstone: {
+	// DisplayName: Resizable Mine IV
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Bleeding_Obsidian: {
+	// DisplayName: Resizable Mine V
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Chlorophyte: {
+	// DisplayName: Resizable Mine VI
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Luminite: {
+	// DisplayName: Resizable Mine VII
 	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
 }
 
@@ -4881,16 +4891,6 @@ Eitrite_Gun_Magazine: {
 // Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
 // Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
 // Sanguinite_Gun_Magazine.DisplayName: Sanguinite Gun Magazine
-
-Resizable_Mine_Seven: {
-	// DisplayName: Resizable Mine VII
-	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
-}
-
-Resizable_Mine_Six: {
-	// DisplayName: Resizable Mine VI
-	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
-}
 
 Bee_Canister: {
 	// DisplayName: Bee Canister

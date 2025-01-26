@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 4;
 			Item.useAnimation = 40;
 			Item.knockBack = 4f;
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.useAmmo = ModContent.ItemType<Resizable_Mine_Wood>();
 			Item.shoot = ModContent.ProjectileType<Mine_Flayer_P>();
 			Item.shootSpeed = 9f;
 			Item.rare = ItemRarityID.Pink;
