@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
@@ -60,6 +61,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Center = player.MountedCenter;
 			Projectile.velocity = player.velocity;
 			player.heldProj = Projectile.whoAmI;
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 10f, 18f, 30, 1000f, 2f, nameof(Self_Destruct)
+			));
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return false;

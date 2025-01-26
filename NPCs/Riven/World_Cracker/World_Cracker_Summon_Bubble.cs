@@ -14,7 +14,7 @@ using Terraria.Localization;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Summon_Bubble : ModNPC, IRivenEnemy {
-		public override string Texture => typeof(Amoebeye_P).GetDefaultTMLName();
+		public override string Texture => "Origins/NPCs/Riven/World_Cracker/Amniotic_Sac";
 		public static int ID { get; private set; }
 		public static List<int> ValidSpawns { get; private set; } = [];
 		public override void SetStaticDefaults() {

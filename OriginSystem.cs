@@ -82,6 +82,24 @@ namespace Origins {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
+			Recipe.Create(ItemID.EskimoHood)
+			.AddIngredient(ItemID.FlinxFur, 5)
+			.AddIngredient(ItemID.Leather, 12)
+			.AddTile(TileID.Loom)
+			.Register();
+
+			Recipe.Create(ItemID.EskimoCoat)
+			.AddIngredient(ItemID.FlinxFur, 5)
+			.AddIngredient(ItemID.Leather, 12)
+			.AddTile(TileID.Loom)
+			.Register();
+
+			Recipe.Create(ItemID.EskimoPants)
+			.AddIngredient(ItemID.FlinxFur, 5)
+			.AddIngredient(ItemID.Leather, 12)
+			.AddTile(TileID.Loom)
+			.Register();
+
 			Recipe.Create(ItemID.GoldShortsword)
 			.AddIngredient(ItemID.EnchantedSword)
 			.AddTile(TileID.BewitchingTable)

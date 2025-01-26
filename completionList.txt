@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (X) Shimmer Construct
-(^) World Cracker*
+(#2, ^2/4) World Cracker* !!! (Amniotic Sac needs glow)
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
@@ -120,10 +120,10 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
-(X) Eskimo Armor is now craftable !!!
 (^) Explosive Defense Punishment (increased affliction from defense)*
 (^) Harpoon (new weapon to introduce sub-class)*
 (^) Proximity Mine Launcher to use Canisters*
+(^) Snow Armor is now craftable°
 (^) Wooden armor buffs*
 ---
 
@@ -334,6 +334,7 @@ ARMOR:
 (^) Lost Armor*
 (^) Marrowick Armor*
 (^) Mythic Armor*
+(^) Pink Cryosten Armor
 (^) Riptide Armor*
 (^) Riven Armor*
 (^) Rubber Armor
@@ -647,7 +648,7 @@ TOOLS:
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(#2, ^2) Impactaxe
+(#2, ^2) Impactaxe (holdout offset)
 
 (X) Ahe
 (X) Nova Bomb
@@ -980,7 +981,7 @@ EXPLOSIVE WEAPONS:
 (X) Rocket Rile !!!
 (X) Shroomcannon
 (X) Sonar Dynamite !!!
-(#2, ^2, ᗢ) Sonorous Shredder !!! (Needs projectile anims)
+(ᗢ) Sonorous Shredder
 (^) Thermite Launcher*
 (#, ^2) Torpedo Tube !!!
 
@@ -1004,7 +1005,7 @@ EXPLOSIVE WEAPONS:
 (X) Ticking Bomb
 (X) Ticking Dynamite
 
-(@4, ^3) Black Hole Bomb
+(@4, ^3) Black Hole Bomb°
 (@4, ^3) Caustica
 (^) Flakjack
 (X) Shimmer Dynamite
