@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Tiles.Other;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -9,6 +11,20 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles {
+	public abstract class WaterFountainItem<TFountainTile> : ModItem, ICustomWikiStat where TFountainTile : ModTile {
+		public string[] Categories => [
+			"WaterFountain"
+		];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+			ModContent.GetInstance<TFountainTile>().RegisterItemDrop(Type);
+		}
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(ModContent.TileType<TFountainTile>());
+			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.buyPrice(gold: 4);
+		}
+	}
 	public abstract class WaterFountainBase<TWaterStyle> : ModTile where TWaterStyle : ModWaterStyle {
 		public virtual int Height => 4;
 		public virtual int Frames => 6;
