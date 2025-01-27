@@ -436,7 +436,7 @@ ACCESSORIES:
 (X) Harpy Horseshoe Balloon !!!
 (^) Hazard Charm*
 (^) Headphones*
-(^) Helium Tank*
+(#2, ^2) Helium Tank* !!! (added functionality with balloons)
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
 (X) Laden Crown
@@ -1067,7 +1067,7 @@ TILES:
 (^) Lost Ore*
 (^) Marrowick*
 (#, ^2) Mildew Block° !!!
-(^) Peat Moss Block*
+(#2, ^2) Peat Moss Block* !!! (explosion when mined)
 (^) Primordial Permafrost*
 (^) Quartz Block*
 (^) Riven Cactus*

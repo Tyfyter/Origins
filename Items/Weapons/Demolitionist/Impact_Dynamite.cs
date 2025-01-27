@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
-			Item.damage = 75;
+			Item.damage = 70;
 			Item.useTime = (int)(Item.useTime * 0.75);
 			Item.useAnimation = (int)(Item.useAnimation * 0.75);
 			Item.shoot = ModContent.ProjectileType<Impact_Dynamite_P>();
@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 16f;
 			Item.value = Item.sellPrice(silver: 8);
 			Item.rare = ItemRarityID.Green;
-            Item.ArmorPenetration += 3;
+            //Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 3)
