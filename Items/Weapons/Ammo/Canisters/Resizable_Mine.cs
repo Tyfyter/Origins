@@ -15,7 +15,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Grenade);
 			Item.DefaultToCanister(14);
 			Item.shootSpeed = -1.3f;
 			Item.knockBack = 2f;
