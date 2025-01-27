@@ -99,7 +99,7 @@ namespace Origins.NPCs.Defiled {
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			AssimilationAmount amount = GetAssimilationAmount(npc);
 			if (amount != default) {
-				target.GetModPlayer<OriginPlayer>().DefiledAssimilation += amount.GetValue(npc, target);
+				target.GetAssimilation<Defiled_Assimilation>().Percent += amount.GetValue(npc, target);
 			}
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
 				defiledEnemy.DrainMana(target);

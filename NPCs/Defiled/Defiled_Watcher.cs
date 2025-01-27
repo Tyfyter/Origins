@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
@@ -194,7 +195,7 @@ namespace Origins.NPCs.Defiled {
 			Projectile.Center = Main.npc[(int)Projectile.ai[2]].Center;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().DefiledAssimilation += Assimilation.GetValue(null, target);
+			target.GetAssimilation<Defiled_Assimilation>().Percent += Assimilation.GetValue(null, target);
 		}
 	}
 }

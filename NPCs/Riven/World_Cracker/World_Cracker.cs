@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Accessories;
@@ -743,7 +744,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
+			target.GetAssimilation<Riven_Assimilation>().Percent += Assimilation.GetValue(null, target);
 			Projectile.Kill();
 			//Projectile.penetrate--;
 		}
@@ -776,7 +777,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			OriginPlayer.InflictTorn(target, 300);
-			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
+			target.GetAssimilation<Riven_Assimilation>().Percent += Assimilation.GetValue(null, target);
 		}
 	}
 }

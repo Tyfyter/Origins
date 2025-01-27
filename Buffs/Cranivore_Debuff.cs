@@ -12,7 +12,7 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) {
 			player.blind = true;
 			player.lifeRegen -= 16;
-			Main.LocalPlayer.GetModPlayer<OriginPlayer>().CorruptionAssimilation += 0.0002f;
+			player.GetAssimilation<Corrupt_Assimilation>().Percent += 0.0002f;
 		}
 	}
 }

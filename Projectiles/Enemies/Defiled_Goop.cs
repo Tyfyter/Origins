@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.NPCs;
 using Terraria;
 using Terraria.ID;
@@ -30,7 +31,7 @@ namespace Origins.Projectiles.Enemies {
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().DefiledAssimilation += Assimilation.GetValue(null, target);
+			target.GetAssimilation<Defiled_Assimilation>().Percent += Assimilation.GetValue(null, target);
 		}
 	}
 }

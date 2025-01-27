@@ -20,41 +20,25 @@ namespace Origins {
 
 		#region assimilation
 		public const float assimilation_max = 1f;
-		float corruptionAssimilation = 0; // corruption
-		float crimsonAssimilation = 0; // crimson
-		float defiledAssimilation = 0; // defiled
-		float rivenAssimilation = 0; // riven
-									 // properties so that effects which change how much assimilation a player receives can be implemented more easily
-		public float CorruptionAssimilation {
-			get => corruptionAssimilation;
-			set {
-				corruptionAssimilation = value;
-			}
-		}
-		public float CrimsonAssimilation {
-			get => crimsonAssimilation;
-			set {
-				crimsonAssimilation = value;
-			}
-		}
-		public float DefiledAssimilation {
-			get => defiledAssimilation;
-			set {
-				defiledAssimilation = value;
-			}
-		}
-		public float RivenAssimilation {
-			get => rivenAssimilation;
-			set {
-				if (rivenAssimilation < value) timeSinceRivenAssimilated = 0;
-				rivenAssimilation = value;
-			}
-		}
-		public float corruptionAssimilationDebuffMult = 1f;
-		public float crimsonAssimilationDebuffMult = 1f;
-		public float defiledAssimilationDebuffMult = 1f;
-		public float rivenAssimilationDebuffMult = 1f;
 		public int timeSinceRivenAssimilated = 0;
+		AssimilationInfo[] assimilationData = [];
+		void ValidateAssimilations() {
+			if (assimilationData.Length != AssimilationLoader.Debuffs.Count) {
+				assimilationData = new AssimilationInfo[AssimilationLoader.Debuffs.Count];
+				for (int i = 0; i < assimilationData.Length; i++) {
+					assimilationData[i] = new(AssimilationLoader.Debuffs[i], Player);
+				}
+			}
+		}
+		public AssimilationInfo GetAssimilation(int type) {
+			ValidateAssimilations();
+			return assimilationData[type];
+		}
+		public AssimilationInfo GetAssimilation<TDebuff>() where TDebuff : AssimilationDebuff => GetAssimilation(ModContent.GetInstance<TDebuff>().AssimilationType);
+		public IEnumerable<AssimilationInfo> IterateAssimilation() {
+			ValidateAssimilations();
+			return assimilationData;
+		}
 		#endregion assimilation
 
 		#region armor/set bonuses
@@ -677,10 +661,9 @@ namespace Origins {
 
 			manaShielding = 0f;
 
-			corruptionAssimilationDebuffMult = 1f;
-			crimsonAssimilationDebuffMult = 1f;
-			defiledAssimilationDebuffMult = 1f;
-			rivenAssimilationDebuffMult = 1f;
+			foreach (AssimilationInfo info in IterateAssimilation()) {
+				info.ResetEffects();
+			}
 			timeSinceRivenAssimilated++;
 
 			explosiveProjectileSpeed = StatModifier.Default;

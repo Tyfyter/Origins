@@ -502,6 +502,13 @@ Buffs: {
 	Corrupt_Assimilation_Debuff: {
 		DisplayName: Corrupt Assimilation
 		Description: You're being assimilated by the Corruption
+		DeathMessage: Corrupt Assimilation Debuff
+	}
+
+	Corrupt_Assimilation: {
+		DeathMessage: Corrupt Assimilation
+		DisplayName: Corrupt Assimilation
+		Description: Mods.Origins.Buffs.Corrupt_Assimilation.Description
 	}
 
 	Cranivore_Debuff: {
@@ -512,11 +519,25 @@ Buffs: {
 	Crimson_Assimilation_Debuff: {
 		DisplayName: Crimson Assimilation
 		Description: You're being assimilated by the Crimson
+		DeathMessage: Crimson Assimilation Debuff
+	}
+
+	Crimson_Assimilation: {
+		DeathMessage: Crimson Assimilation
+		DisplayName: Crimson Assimilation
+		Description: Mods.Origins.Buffs.Crimson_Assimilation.Description
 	}
 
 	Defiled_Assimilation_Debuff: {
 		DisplayName: Defiled Assimilation
 		Description: You're being assimilated by {§The_Defiled_Wastelands}
+		DeathMessage: Defiled Assimilation Debuff
+	}
+
+	Defiled_Assimilation: {
+		DeathMessage: Defiled Assimilation
+		DisplayName: Defiled Assimilation
+		Description: Mods.Origins.Buffs.Defiled_Assimilation.Description
 	}
 
 	Defiled_Blight_Buff: {
@@ -622,6 +643,13 @@ Buffs: {
 	Riven_Assimilation_Debuff: {
 		DisplayName: Riven Assimilation
 		Description: You're being assimilated by the {§Riven_Hive}
+		DeathMessage: Riven Assimilation Debuff
+	}
+
+	Riven_Assimilation: {
+		DeathMessage: Riven Assimilation
+		DisplayName: Riven Assimilation
+		Description: Mods.Origins.Buffs.Riven_Assimilation.Description
 	}
 
 	Safe_Buff: {

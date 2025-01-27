@@ -5,6 +5,7 @@ using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.World.BiomeData;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -78,8 +79,11 @@ namespace Origins.Tiles.Other {
 				Main.NewText(Language.GetTextValue("Mods.Origins.Status_Messages.Cleansing_Station_Invalid_Location"));
 				return false;
 			}
-			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			float assimilationTotal = originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation;
+			OriginPlayer originPlayer = Main.LocalPlayer.OriginPlayer();
+			float assimilationTotal = 0;
+			foreach (AssimilationInfo info in originPlayer.IterateAssimilation()) {
+				assimilationTotal += info.Percent;
+			}
 			if (assimilationTotal > 0 || originPlayer.mojoFlaskCount < originPlayer.mojoFlaskCountMax) {
 				for (int k = 0; k < 3 + 6 * assimilationTotal; k++) {
 					Vector2 pos = new Vector2(i + Main.rand.NextFloat(1), j + Main.rand.NextFloat(1)) * 16;

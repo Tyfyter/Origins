@@ -84,7 +84,7 @@ namespace Origins.NPCs.Riven {
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			AssimilationAmount amount = GetAssimilationAmount(npc);
 			if (amount != default) {
-				target.GetModPlayer<OriginPlayer>().RivenAssimilation += amount.GetValue(npc, target);
+				target.GetAssimilation<Riven_Assimilation>().Percent += amount.GetValue(npc, target);
 			}
 		}
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {

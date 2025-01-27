@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Materials;
 using Origins.Projectiles.Enemies;
@@ -152,7 +153,7 @@ namespace Origins.NPCs.Defiled {
 			Projectile.aiStyle = 0;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().DefiledAssimilation += Assimilation.GetValue(null, target);
+			target.GetAssimilation<Defiled_Assimilation>().Percent += Assimilation.GetValue(null, target);
 			target.AddBuff(BuffID.Darkness, 600);
 			target.AddBuff(BuffID.Weak, 240);
 		}

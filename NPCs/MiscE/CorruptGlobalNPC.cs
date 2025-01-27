@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -110,7 +111,7 @@ namespace Origins.NPCs.MiscE {
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			AssimilationAmount amount = GetAssimilationAmount(npc);
 			if (amount != default) {
-				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
+				target.GetAssimilation<Corrupt_Assimilation>().Percent += amount.GetValue(npc, target);
 			}
 		}
 		public AssimilationAmount GetAssimilationAmount(NPC npc) {

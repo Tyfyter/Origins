@@ -67,10 +67,10 @@ namespace Origins {
 		}
 		public bool CheckAssimilationDesync(OriginPlayer clone) {
 			const float significant_threshold = 0.01f;
-			return Math.Abs(clone.corruptionAssimilation - corruptionAssimilation) > significant_threshold
-				|| Math.Abs(clone.crimsonAssimilation - crimsonAssimilation) > significant_threshold
-				|| Math.Abs(clone.defiledAssimilation - defiledAssimilation) > significant_threshold
-				|| Math.Abs(clone.rivenAssimilation - rivenAssimilation) > significant_threshold;
+			foreach (AssimilationInfo info in IterateAssimilation()) {
+				if (Math.Abs(clone.GetAssimilation(info.Type.AssimilationType).Percent - info.Percent) > significant_threshold) return true;
+			}
+			return false;
 		}
 		public override void CopyClientState(ModPlayer targetCopy) {
 			OriginPlayer clone = (OriginPlayer)targetCopy;// shoot this one
@@ -81,10 +81,9 @@ namespace Origins {
 			clone.tornTarget = tornTarget;
 			clone.tornSeverityRate = tornSeverityRate;
 			if (CheckAssimilationDesync(clone) && !Player.HasBuff(Purifying_Buff.ID)) {
-				clone.corruptionAssimilation = corruptionAssimilation;
-				clone.crimsonAssimilation = crimsonAssimilation;
-				clone.defiledAssimilation = defiledAssimilation;
-				clone.rivenAssimilation = rivenAssimilation;
+				foreach (AssimilationInfo info in IterateAssimilation()) {
+					clone.GetAssimilation(info.Type.AssimilationType).Percent = info.Percent;
+				}
 			}
 			clone.blastSetActive = blastSetActive;
 		}
@@ -133,10 +132,9 @@ namespace Origins {
 				packet.Write(tornSeverityRate);
 			}
 			if (syncDatas.HasFlag(Assimilation)) { // by sending it with a precision of 1% we can put all of the assimilations in the 4 bytes one of them would take with full precision with very little inaccuracy
-				packet.Write((byte)(corruptionAssimilation * 100));
-				packet.Write((byte)(crimsonAssimilation * 100));
-				packet.Write((byte)(defiledAssimilation * 100));
-				packet.Write((byte)(rivenAssimilation * 100));
+				foreach (AssimilationInfo info in IterateAssimilation()) {
+					packet.Write((byte)(info.Percent * 100));
+				}
 			}
 
 			packet.Write((ushort)visualSyncDatas);
@@ -156,10 +154,9 @@ namespace Origins {
 				tornSeverityRate = reader.ReadSingle();
 			}
 			if (syncDatas.HasFlag(Assimilation)) {
-				corruptionAssimilation = reader.ReadByte() / 100f;
-				crimsonAssimilation = reader.ReadByte() / 100f;
-				defiledAssimilation = reader.ReadByte() / 100f;
-				rivenAssimilation = reader.ReadByte() / 100f;
+				foreach (AssimilationInfo info in IterateAssimilation()) {
+					info.Percent = reader.ReadByte() / 100f;
+				}
 			}
 
 			PlayerVisualSyncDatas visualSyncDatas = (PlayerVisualSyncDatas)reader.ReadUInt16();

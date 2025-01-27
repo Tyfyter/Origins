@@ -124,6 +124,11 @@ namespace Origins.NPCs {
 		Rectangle AssimilationTextureFrame => new(0, 0, 30, 30);
 		AssimilationAmount GetAssimilationAmount(NPC npc);
 	}
+	public record struct AssimilationData(int AssimilationType, AssimilationAmount Amount) {
+		public readonly void Inflict(NPC attacker, Player victim) {
+			victim.OriginPlayer().InflictAssimilation((ushort)AssimilationType, Amount.GetValue(attacker, victim));
+		}
+	}
 	public readonly struct AssimilationAmount {
 		public Func<NPC, Player, float> Function { get; init; }
 		public float ClassicAmount { get; init; }

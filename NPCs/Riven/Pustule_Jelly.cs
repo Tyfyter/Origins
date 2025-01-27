@@ -13,6 +13,7 @@ using PegasusLib;
 using Terraria.Audio;
 using Origins.Projectiles;
 using Origins.Gores.NPCs;
+using Origins.Buffs;
 
 namespace Origins.NPCs.Riven {
 	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy {
@@ -127,7 +128,7 @@ namespace Origins.NPCs.Riven {
 		public override bool Hostile => true;
 		public override SoundStyle? Sound => null;
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
+			target.GetAssimilation<Riven_Assimilation>().Percent += Assimilation.GetValue(null, target);
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
