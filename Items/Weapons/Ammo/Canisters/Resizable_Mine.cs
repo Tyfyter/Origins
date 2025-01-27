@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using AltLibrary.Common.Systems;
 namespace Origins.Items.Weapons.Ammo.Canisters {
 	[LegacyName("Resizable_Mine_One")]
 	public class Resizable_Mine_Wood : ModItem, ICanisterAmmo {
@@ -74,31 +75,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
 			.AddIngredient(ItemID.ExplosivePowder)
-			.AddIngredient(ItemID.DemoniteBar, 2)
-			.AddTile(TileID.Anvils)
-			.Register();
-
-			Recipe.Create(Type, 8)
-			.AddIngredient(ItemID.ExplosivePowder)
-			.AddIngredient(ItemID.CrimtaneBar, 2)
-			.AddTile(TileID.Anvils)
-			.Register();
-
-			Recipe.Create(Type, 8)
-			.AddIngredient(ItemID.ExplosivePowder)
-			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 2)
-			.AddTile(TileID.Anvils)
-			.Register();
-
-			Recipe.Create(Type, 8)
-			.AddIngredient(ItemID.ExplosivePowder)
-			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 2)
-			.AddTile(TileID.Anvils)
-			.Register();
-
-			Recipe.Create(Type, 8)
-			.AddIngredient(ItemID.ExplosivePowder)
-			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 2)
+			.AddRecipeGroup(RecipeGroups.EvilBars, 2)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
