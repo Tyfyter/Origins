@@ -925,7 +925,7 @@ namespace Origins {
 					}
 					return slot;
 				}
-				Fiberglass = GetMusicSlot("Music/The_Room_Before");
+				Fiberglass = GetMusicSlotNew("Skulking");
 				BrinePool = GetMusicSlotNew("Deep_Luminance");
 				Dusk = GetMusicSlot("Music/Dancing_With_Ghosts");
 

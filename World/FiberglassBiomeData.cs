@@ -48,9 +48,9 @@ namespace Origins.World.BiomeData {
 				while (tiles.Count > 0) {
 					(int x, int y) = tiles.Pop();
 					Tile tile = Framing.GetTileSafely(x, y);
-					if (TileID.Sets.IsATreeTrunk[tile.TileType] || (Math.Pow(x - i, 2) + Math.Pow(y - j, 2) < maxRange * maxRange)) {
+					if (TileID.Sets.IsATreeTrunk[tile.TileType] || (Math.Abs(x - i) * 2.1f + Math.Pow(y - j, 2) < maxRange * maxRange)) {
 						if (clear) {
-							if (OriginExtensions.IsTileReplacable(x, y) && !tile.TileIsType(tileType)) {
+							if (OriginExtensions.IsTileReplacable(x, y)) {
 								if (tile.HasTile) {
 									tiles.Push((x - 1, y));
 									tiles.Push((x, y - 1));
@@ -77,12 +77,12 @@ namespace Origins.World.BiomeData {
 				tiles.Push((i, j));
 				while (tiles.Count > 0) {
 					(int x, int y) = tiles.Pop();
-					double distSq = Math.Pow(x - i, 2) + Math.Pow(y - j, 2);
+					double distSq = Math.Abs(x - i) * 2f + Math.Pow(y - j, 2);
 					if ((distSq < maxRange * maxRange)) {
 						Tile tile = Framing.GetTileSafely(x, y);
 						if (force) {
 							tile.WallType = wallType;
-							if (distSq < Math.Pow(maxRange / 2, 2) || !WorldGen.genRand.NextBool(16)) {
+							if (distSq < Math.Pow(maxRange / 2, 2) || !WorldGen.genRand.NextBool(2)) {
 								SpreadFiberglass(x, y, true, 8);
 							} else {
 								SpreadFiberglass(x, y, false, 2);
