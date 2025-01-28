@@ -1267,7 +1267,7 @@ namespace Origins {
 			if (rainedOnPlayer && rivenRain) {
 				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 				bool extraStrength = Main.remixWorld || (Main.masterMode && NPC.npcsFoundForCheckActive[MC.NPCType<World_Cracker_Head>()]);
-				originPlayer.RivenAssimilation += extraStrength ? 0.01f : 0.003f;
+				originPlayer.GetAssimilation<Riven_Assimilation>().Percent += extraStrength ? 0.01f : 0.003f;
 				int duration = extraStrength ? 30 : 15;
 				int targetTime = extraStrength ? 480 : 1440;
 				OriginPlayer.InflictTorn(player, duration, targetTime, 1);

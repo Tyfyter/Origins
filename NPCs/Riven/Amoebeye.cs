@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Gores.NPCs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
@@ -178,7 +179,7 @@ namespace Origins.NPCs.Riven {
 				NPC.Center = Vector2.Lerp(NPC.Center, target.Center, NPC.ai[1]);
 				if (target.Type == NPCTargetType.Player) {
 					Player playerTarget =  Main.player[NPC.target];
-					playerTarget.GetModPlayer<OriginPlayer>().RivenAssimilation += 0.05f / 60f;
+					playerTarget.GetAssimilation<Riven_Assimilation>().Percent += 0.05f / 60f;
 					playerTarget.velocity *= 0.95f;
 				}
 				NPC.defense = 40;

@@ -376,6 +376,13 @@ namespace Origins.Projectiles {
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
 			return ownerSafe ? target.whoAmI != projectile.owner : true;
 		}
+		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
+			if (BiomeNPCGlobals.ProjectileAssimilationAmounts.TryGetValue(projectile.type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
+				foreach (KeyValuePair<int, AssimilationAmount> value in assimilationValues) {
+					target.GetAssimilation(value.Key).Percent += value.Value.GetValue(projectile, target);
+				}
+			}
+		}
 		public override bool PreKill(Projectile projectile, int timeLeft) {
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor && projectile.type == ProjectileID.WaterGun) {//projectile.aiStyle==60
 				OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();

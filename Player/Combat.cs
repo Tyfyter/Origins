@@ -425,16 +425,16 @@ namespace Origins {
 		}
 		public void OnHitByAnyProjectile(Projectile proj) {
 			if (proj.type == ProjectileID.UnholyWater) {
-				InflictAssimilation(0, 0.075f);
+				InflictAssimilation<Corrupt_Assimilation>(0.075f);
 				proj.Kill();
 			} else if (proj.type == ProjectileID.BloodWater) {
-				InflictAssimilation(1, 0.075f);
+				InflictAssimilation<Crimson_Assimilation>(0.075f);
 				proj.Kill();
 			} else if (proj.type == ModContent.ProjectileType<White_Water_P>()) {
-				InflictAssimilation(2, 0.075f);
+				InflictAssimilation<Defiled_Assimilation>(0.075f);
 				proj.Kill();
 			} else if (proj.type == ModContent.ProjectileType<Gooey_Water_P>()) {
-				InflictAssimilation(3, 0.075f);
+				InflictAssimilation<Riven_Assimilation>(0.075f);
 				proj.Kill();
 			}
 		}
@@ -827,7 +827,7 @@ namespace Origins {
 			}
 			if (Origins.hurtCollisionCrimsonVine) {
 				Origins.hurtCollisionCrimsonVine = false;
-				CrimsonAssimilation += 0.03f;
+				GetAssimilation<Crimson_Assimilation>().Percent += 0.03f;
 			}
 			if (blastSet) {
 				blastSetCharge += info.Damage * blast_set_charge_gain;

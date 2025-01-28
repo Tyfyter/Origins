@@ -146,7 +146,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			#region General behavior
 			Vector2 idlePosition = player.Bottom;
-			idlePosition.X -= 48f * player.direction;
+			idlePosition.X -= 48f * player.direction + player.direction * Projectile.width * (Projectile.minionPos + 1);
 			idlePosition.Y -= 25 * Projectile.scale;
 
 			// Teleport to player if distance is too big
@@ -169,17 +169,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.ai[1] = 0;
 			}
 
-			// If your minion is flying, you want to do this independently of any conditions
-			float overlapVelocity = 0.04f;
-			for (int i = 0; i < Main.maxProjectiles; i++) {
-				// Fix overlap with other minions
-				Projectile other = Main.projectile[i];
-				if (i != Projectile.whoAmI && other.active && other.owner == Projectile.owner && Math.Abs(Projectile.position.X - other.position.X) + Math.Abs(Projectile.position.Y - other.position.Y) < Projectile.width) {
-					if (Projectile.position.X < other.position.X) Projectile.velocity.X -= overlapVelocity;
-					else Projectile.velocity.X += overlapVelocity;
-
-					if (Projectile.position.Y < other.position.Y) Projectile.velocity.Y -= overlapVelocity;
-					else Projectile.velocity.Y += overlapVelocity;
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.type == Type && other.owner == Projectile.owner && other.Hitbox.Intersects(Projectile.Hitbox)) {
+					Projectile.velocity.X += Math.Sign(Projectile.position.X - other.position.X) * 0.06f;
 				}
 			}
 			#endregion

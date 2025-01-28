@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class CorruptGlobalNPC : GlobalNPC, IAssimilationProvider {
-		public string AssimilationName => "CorruptionAssimilation";
-		public string AssimilationTexture => "Terraria/Images/UI/Bestiary/Icon_Tags_Shadow";
-		public Rectangle AssimilationTextureFrame => new(30 * 7, 0, 30, 30);
+    public class CorruptGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; } = [
 			NPCID.EaterofSouls,
 			NPCID.CorruptBunny,
@@ -41,30 +39,32 @@ namespace Origins.NPCs.MiscE {
 
 			NPCID.PigronCorruption,
 		];
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = new() {
-			[NPCID.Clinger] = 0.11f,
-			[NPCID.CorruptGoldfish] = 0.05f,
-			[NPCID.Corruptor] = 0.09f,
-			[NPCID.CorruptSlime] = 0.04f,
-			[NPCID.DesertGhoulCorruption] = 0.06f,
-			[NPCID.DevourerHead] = 0.05f,
-			[NPCID.DevourerBody] = 0.04f,
-			[NPCID.DevourerTail] = 0.05f,
-			[NPCID.EaterofSouls] = 0.07f,
-			[NPCID.EaterofWorldsHead] = 0.07f,
-			[NPCID.EaterofWorldsBody] = 0.05f,
-			[NPCID.EaterofWorldsTail] = 0.07f,
-			[NPCID.Slimeling] = 0.03f,
-			[NPCID.Slimer] = 0.06f,
-			[NPCID.VileSpit] = 0.14f,
-			[NPCID.VileSpitEaterOfWorlds] = 0.05f,
-		};
 		public override void Load() {
-			BiomeNPCGlobals.assimilationProviders.Add(this);
+			static void AddAssimilation(int npc, AssimilationAmount amount) => AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(npc, amount);
+			AddAssimilation(NPCID.Clinger, 0.11f);
+			AddAssimilation(NPCID.CorruptGoldfish, 0.05f);
+			AddAssimilation(NPCID.Corruptor, 0.09f);
+			AddAssimilation(NPCID.CorruptSlime, 0.04f);
+			AddAssimilation(NPCID.DesertGhoulCorruption, 0.06f);
+			AddAssimilation(NPCID.DarkMummy, 0.08f);
+			AddAssimilation(NPCID.SandsharkCorrupt, 0.09f);
+			AddAssimilation(NPCID.DevourerHead, 0.05f);
+			AddAssimilation(NPCID.DevourerBody, 0.04f);
+			AddAssimilation(NPCID.DevourerTail, 0.05f);
+			AddAssimilation(NPCID.SeekerHead, 0.10f);
+			AddAssimilation(NPCID.SeekerBody, 0.08f);
+			AddAssimilation(NPCID.SeekerTail, 0.10f);
+			AddAssimilation(NPCID.EaterofSouls, 0.07f);
+			AddAssimilation(NPCID.EaterofWorldsHead, 0.07f);
+			AddAssimilation(NPCID.EaterofWorldsBody, 0.05f);
+			AddAssimilation(NPCID.EaterofWorldsTail, 0.07f);
+			AddAssimilation(NPCID.Slimeling, 0.03f);
+			AddAssimilation(NPCID.Slimer, 0.06f);
+			AddAssimilation(NPCID.VileSpit, 0.14f);
+			AddAssimilation(NPCID.VileSpitEaterOfWorlds, 0.05f);
 		}
 		public override void Unload() {
 			NPCTypes = null;
-			AssimilationAmounts = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
@@ -106,20 +106,6 @@ namespace Origins.NPCs.MiscE {
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
-		}
-		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			AssimilationAmount amount = GetAssimilationAmount(npc);
-			if (amount != default) {
-				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
-			}
-		}
-		public AssimilationAmount GetAssimilationAmount(NPC npc) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				return amount;
-			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
-				return amount;
-			}
-			return default;
 		}
 	}
 }

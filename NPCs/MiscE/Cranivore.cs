@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using PegasusLib;
 using System;
 using Terraria;
@@ -13,13 +14,12 @@ namespace Origins.NPCs.MiscE {
     public class Cranivore : ModNPC {
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cranivore");
 			Main.npcFrameCount[Type] = 2;
 			if (!Main.dedServ) {
 				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Cranivore_Head");
 			}
 			CorruptGlobalNPC.NPCTypes.Add(Type);
-			CorruptGlobalNPC.AssimilationAmounts.Add(Type, 0.03f);
+			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.03f);
 		}
 		public override void Unload() {
 			HeadTexture = null;

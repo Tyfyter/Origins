@@ -1,5 +1,6 @@
 ﻿using BetterDialogue.UI;
 using Origins.Buffs;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +13,11 @@ namespace Origins.Questing {
 		public override double Priority => 100.0;
 		public static long GetPrice(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			long price = (int)((originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation) * 50000);
+			float assimilationTotal = 0;
+			foreach (AssimilationInfo info in originPlayer.IterateAssimilation()) {
+				assimilationTotal += info.Percent;
+			}
+			long price = (int)(assimilationTotal * 50000);
 			if (NPC.downedGolemBoss) {
 				price *= 8;
 			} else if (NPC.downedPlantBoss) {
@@ -66,7 +71,10 @@ namespace Origins.Questing {
 			//return false;
 			if (npc.type != NPCID.Dryad) return false;
 			OriginPlayer originPlayer = player.OriginPlayer();
-			return originPlayer.CorruptionAssimilation > 0 || originPlayer.CrimsonAssimilation > 0 || originPlayer.DefiledAssimilation > 0 || originPlayer.RivenAssimilation > 0;
+			foreach (AssimilationInfo info in originPlayer.IterateAssimilation()) {
+				if (info.Percent > 0) return true;
+			}
+			return false;
 		}
 	}
 }

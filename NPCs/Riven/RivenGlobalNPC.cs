@@ -9,24 +9,13 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class RivenGlobalNPC : GlobalNPC, IAssimilationProvider {
-		public string AssimilationName => "RivenAssimilation";
-		public string AssimilationTexture => "Origins/UI/WorldGen/IconEvilRiven";
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = [];
-		public override void Load() {
-			BiomeNPCGlobals.assimilationProviders.Add(this);
-		}
-		public override void Unload() {
-			AssimilationAmounts = null;
-		}
+    public class RivenGlobalNPC : GlobalNPC {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			if (entity.ModNPC is IRivenEnemy rivenEnemy) {
 				if (rivenEnemy.Assimilation is AssimilationAmount amount) {
-					if (AssimilationAmounts.TryGetValue(entity.type, out AssimilationAmount assimilationAmount)) {
-						if (assimilationAmount != amount) Origins.LogError($"Tried to give entity type {entity.type} ({entity.TypeName}) two different assimilation amounts: {assimilationAmount}, {amount}");
-					} else {
-						AssimilationAmounts.Add(entity.type, amount);
-					}
+					BiomeNPCGlobals.NPCAssimilationAmounts[entity.type] = new() {
+						[ModContent.GetInstance<Riven_Assimilation>().AssimilationType] = amount
+					};
 				}
 				return true;
 			}
@@ -80,20 +69,6 @@ namespace Origins.NPCs.Riven {
 			if (npc.HasBuff(Barnacled_Buff.ID)) {
 				npc.lifeRegen += 6;
 			}
-		}
-		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			AssimilationAmount amount = GetAssimilationAmount(npc);
-			if (amount != default) {
-				target.GetModPlayer<OriginPlayer>().RivenAssimilation += amount.GetValue(npc, target);
-			}
-		}
-		public AssimilationAmount GetAssimilationAmount(NPC npc) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				return amount;
-			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
-				return amount;
-			}
-			return default;
 		}
 	}
 	public interface IRivenEnemy {

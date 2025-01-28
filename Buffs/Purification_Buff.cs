@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
@@ -8,16 +9,11 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.buffImmune[ModContent.BuffType<Corrupt_Assimilation_Debuff>()] = true;
-			player.buffImmune[ModContent.BuffType<Crimson_Assimilation_Debuff>()] = true;
-			player.buffImmune[ModContent.BuffType<Defiled_Assimilation_Debuff>()] = true;
-			player.buffImmune[ModContent.BuffType<Riven_Assimilation_Debuff>()] = true;
-
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.CorruptionAssimilation = 0;
-			originPlayer.CrimsonAssimilation = 0;
-			originPlayer.DefiledAssimilation = 0;
-			originPlayer.RivenAssimilation = 0;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			foreach (AssimilationInfo info in originPlayer.IterateAssimilation()) {
+				player.buffImmune[info.Type.Type] = true;
+				info.Percent = 0;
+			}
 			originPlayer.tornSeverityDecayRate = 0.5f / 1f;
 		}
 	}

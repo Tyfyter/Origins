@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using System;
 using Terraria;
@@ -38,10 +39,13 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public static void UpdateEffect(OriginPlayer originPlayer) {
-			originPlayer.CorruptionAssimilation -= Math.Min(healing, originPlayer.CorruptionAssimilation);
+			foreach (AssimilationInfo info in originPlayer.IterateAssimilation()) {
+				info.Percent -= Math.Min(healing, info.Percent);
+			}
+			/*originPlayer.CorruptionAssimilation -= Math.Min(healing, originPlayer.CorruptionAssimilation);
 			originPlayer.CrimsonAssimilation -= Math.Min(healing, originPlayer.CrimsonAssimilation);
 			originPlayer.DefiledAssimilation -= Math.Min(healing, originPlayer.DefiledAssimilation);
-			originPlayer.RivenAssimilation -= Math.Min(healing, originPlayer.RivenAssimilation);
+			originPlayer.RivenAssimilation -= Math.Min(healing, originPlayer.RivenAssimilation);*/
 		}
 	}
 	public class Mojo_Injection_Toggle : BuilderToggle {

@@ -9,11 +9,13 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
+using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -305,17 +307,8 @@ namespace Origins {
 		}
 		public override void PreUpdate() {
 			if (OriginConfig.Instance.Assimilation) {
-				if (corruptionAssimilation > 0) {
-					Player.AddBuff(ModContent.BuffType<Corrupt_Assimilation_Debuff>(), 5);
-				}
-				if (crimsonAssimilation > 0) {
-					Player.AddBuff(ModContent.BuffType<Crimson_Assimilation_Debuff>(), 5);
-				}
-				if (defiledAssimilation > 0) {
-					Player.AddBuff(ModContent.BuffType<Defiled_Assimilation_Debuff>(), 5);
-				}
-				if (rivenAssimilation > 0) {
-					Player.AddBuff(ModContent.BuffType<Riven_Assimilation_Debuff>(), 5);
+				foreach (AssimilationInfo info in IterateAssimilation()) {
+					if (info.Percent > 0) Player.AddBuff(info.Type.Type, 5);
 				}
 			}
 			if (rivenWet) {
@@ -395,7 +388,7 @@ namespace Origins {
 					}*/
 					InflictTorn(Player, 188, 750, 1f, true);
 					Player.velocity *= 0.95f;
-					rivenAssimilation += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
+					GetAssimilation<Riven_Assimilation>().Percent += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
 				} else if (Player.InModBiome<Brine_Pool>()) {
 					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
 				}
@@ -430,10 +423,9 @@ namespace Origins {
 			tornTarget = 0f;
 			mojoFlaskCount = mojoFlaskCountMax;
 
-			corruptionAssimilation = 0;
-			crimsonAssimilation = 0;
-			defiledAssimilation = 0;
-			rivenAssimilation = 0;
+			foreach (AssimilationInfo info in IterateAssimilation()) {
+				info.Percent = 0;
+			}
 
 			selfDamageRally = 0;
 			blastSetCharge = 0;
@@ -460,7 +452,7 @@ namespace Origins {
 		}
 		public override void PostUpdateBuffs() {
 			if (Player.whoAmI == Main.myPlayer) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.PreUpdateInventoryEvent is not null) {
 						quest.PreUpdateInventoryEvent();
 					}
@@ -601,10 +593,11 @@ namespace Origins {
 				tag.Add("Quests", questsTag);
 			}
 			tag.Add("TimeSinceLastDeath", timeSinceLastDeath);
-			tag.Add("corruptionAssimilation", corruptionAssimilation);
-			tag.Add("crimsonAssimilation", crimsonAssimilation);
-			tag.Add("defiledAssimilation", defiledAssimilation);
-			tag.Add("rivenAssimilation", rivenAssimilation);
+			TagCompound assimilations = [];
+			foreach (AssimilationInfo info in IterateAssimilation()) {
+				assimilations[info.Type.FullName] = info.Percent;
+			}
+			tag.Add("Assimilations", assimilations);
 			tag.Add("mojoInjection", mojoInjection);
 			tag.Add("GUID", guid.ToByteArray());
 		}
@@ -632,10 +625,11 @@ namespace Origins {
 			if (tag.SafeGet<int>("TimeSinceLastDeath") is int timeSinceLastDeath) {
 				this.timeSinceLastDeath = timeSinceLastDeath;
 			}
-			corruptionAssimilation = tag.SafeGet<float>("corruptionAssimilation");
-			crimsonAssimilation = tag.SafeGet<float>("crimsonAssimilation");
-			defiledAssimilation = tag.SafeGet<float>("defiledAssimilation");
-			rivenAssimilation = tag.SafeGet<float>("rivenAssimilation");
+			if (tag.TryGet("Assimilations", out TagCompound assimilations)) {
+				foreach (AssimilationInfo info in IterateAssimilation()) {
+					info.Percent = assimilations.SafeGet<float>(info.Type.FullName);
+				}
+			}
 			mojoInjection = tag.SafeGet<bool>("mojoInjection");
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
 				guid = new Guid(guidBytes, false);
@@ -705,26 +699,14 @@ namespace Origins {
 		public override void PostItemCheck() {
 			ItemChecking = false;
 		}
-		public void InflictAssimilation(byte assimilationType, float assimilationAmount) {
-			switch (assimilationType) {
-				case 0:
-				CorruptionAssimilation += assimilationAmount;
-				break;
-				case 1:
-				CrimsonAssimilation += assimilationAmount;
-				break;
-				case 2:
-				DefiledAssimilation += assimilationAmount;
-				break;
-				case 3:
-				RivenAssimilation += assimilationAmount;
-				break;
-			}
+		public void InflictAssimilation<TAssimilation>(float assimilationAmount) where TAssimilation : AssimilationDebuff => InflictAssimilation((ushort)ModContent.GetInstance<TAssimilation>().AssimilationType, assimilationAmount);
+		public void InflictAssimilation(ushort assimilationType, float assimilationAmount) {
+			GetAssimilation(assimilationType).Percent += assimilationAmount;
 			if (Main.netMode == NetmodeID.SinglePlayer || Player.whoAmI == Main.myPlayer) return;
 			ModPacket packet = Origins.instance.GetPacket();
 			packet.Write(Origins.NetMessageType.inflict_assimilation);
 			packet.Write((byte)Player.whoAmI);
-			packet.Write(assimilationType);
+			packet.Write((ushort)assimilationType);
 			packet.Write(assimilationAmount);
 			packet.Send(Player.whoAmI, Main.myPlayer);
 		}

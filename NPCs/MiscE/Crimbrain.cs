@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Summoner;
+﻿using Origins.Buffs;
+using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -12,7 +13,7 @@ namespace Origins.NPCs.MiscE {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
-			CrimsonGlobalNPC.AssimilationAmounts.Add(Type, 0.04f);
+			AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(Type, 0.04f);
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, -16),
 				PortraitPositionYOverride = -32

@@ -220,11 +220,13 @@ namespace Origins {
 			_ = OriginExtensions.StrikethroughFont;
 		}
 		public override void Load() {
+			AssimilationLoader.Load();
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Riven", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Riven"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Dusk", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Dusk"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands"));
-			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "the {0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands")); 
+			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.The_Defiled_Wastelands")); 
+			LocalizationMethods.BindArgs(Language.GetOrRegister("the_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.the_Defiled_Wastelands")); 
 
 			RasterizeAdjustment = [];
 			ExplosiveBaseDamage = [];
@@ -612,6 +614,7 @@ namespace Origins {
 #endif
 		}
 		public override void Unload() {
+			AssimilationLoader.Unload();
 			ExplosiveBaseDamage = null;
 			DamageModOnHit = null;
 			forceFelnumShockOnShoot = null;
@@ -659,8 +662,6 @@ namespace Origins {
 			eyndumCoreUITexture = null;
 			eyndumCoreTexture = null;
 			CloudBottoms = null;
-			BiomeNPCGlobals.assimilationProviders.Clear();
-			BiomeNPCGlobals.assimilationProviders.TrimExcess();
 			foreach (IUnloadable unloadable in unloadables) {
 				unloadable.Unload();
 			}

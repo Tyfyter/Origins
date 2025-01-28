@@ -530,6 +530,13 @@ namespace Origins.NPCs {
 				spawnRate = 1;
 			}
 		}
+		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
+			if (BiomeNPCGlobals.NPCAssimilationAmounts.TryGetValue(npc.type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
+				foreach (KeyValuePair<int, AssimilationAmount> value in assimilationValues) {
+					target.GetAssimilation(value.Key).Percent += value.Value.GetValue(npc, target);
+				}
+			}
+		}
 		public static Condition PeatSoldCondition(int amount) {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.PeatSoldCondition").WithFormatArgs(amount),

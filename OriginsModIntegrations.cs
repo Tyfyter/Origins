@@ -40,6 +40,7 @@ using ThoriumMod.Projectiles.Bard;
 using ThoriumMod.Items;
 using ThoriumMod.Items.Darksteel;
 using Origins.Items.Accessories;
+using Origins.Buffs;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -224,6 +225,43 @@ namespace Origins {
 					}
 				);
 			}
+			void AddModdedNPCAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount, HashSet<int> set = null) where TDebuff : AssimilationDebuff {
+				if (NPCID.Search.TryGetId(name, out int id)) {
+					set?.Add(id);
+					if (assimilationAmount != default) AssimilationLoader.AddNPCAssimilation<TDebuff>(id, assimilationAmount);
+				}
+			}
+			void AddModdedProjectileAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount, string creditNPC) where TDebuff : AssimilationDebuff {
+				if (ProjectileID.Search.TryGetId(name, out int id)) {
+					AssimilationLoader.AddProjectileAssimilation<TDebuff>(id, assimilationAmount);
+					if (NPCID.Search.TryGetId(creditNPC, out id)) {
+						BiomeNPCGlobals.assimilationDisplayOverrides.TryAdd(id, []);
+						BiomeNPCGlobals.assimilationDisplayOverrides[id][ModContent.GetInstance<TDebuff>().AssimilationType] = assimilationAmount;
+					}
+				}
+			}
+			void AddModdedDebuffAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount) where TDebuff : AssimilationDebuff {
+				if (BuffID.Search.TryGetId(name, out int id)) {
+					AssimilationLoader.AddProjectileAssimilation<TDebuff>(id, assimilationAmount);
+				}
+			}
+			AddModdedProjectileAssimilation<Corrupt_Assimilation>("ThoriumMod/VileSpit", 0.06f, "ThoriumMod/VileFloater");
+			AddModdedProjectileAssimilation<Corrupt_Assimilation>("ThoriumMod/VileSpitCold", 0.05f, "ThoriumMod/ChilledSpitter");
+			AddModdedNPCAssimilation<Corrupt_Assimilation>("SpiritMod/Masticator", 0.06f, CorruptGlobalNPC.NPCTypes);
+			AddModdedProjectileAssimilation<Corrupt_Assimilation>("SpiritMod/CorruptVomitProj", 0.08f, "SpiritMod/Masticator");
+			AddModdedNPCAssimilation<Corrupt_Assimilation>("SpiritMod/Vilemoth", 0.04f, CorruptGlobalNPC.NPCTypes);
+			AddModdedNPCAssimilation<Corrupt_Assimilation>("SpiritMod/VileWasp", 0.04f, CorruptGlobalNPC.NPCTypes);
+			AddModdedNPCAssimilation<Corrupt_Assimilation>("SpiritMod/Teratoma", 0.05f, CorruptGlobalNPC.NPCTypes);
+			AddModdedProjectileAssimilation<Corrupt_Assimilation>("SpiritMod/TeratomaProj", 0.07f, "SpiritMod/Teratoma");
+			AddModdedNPCAssimilation<Corrupt_Assimilation>("SpiritMod/PurpleClubberfish", 0.05f, CorruptGlobalNPC.NPCTypes);
+			AddModdedNPCAssimilation<Corrupt_Assimilation>("SpiritMod/Toxikarp", 0.03f, CorruptGlobalNPC.NPCTypes);
+			AddModdedDebuffAssimilation<Corrupt_Assimilation>("SpiritMod/Crystallization", 0.01f / 60f);
+
+			AddModdedNPCAssimilation<Crimson_Assimilation>("SpiritMod/Spewer", default, CrimsonGlobalNPC.NPCTypes);
+			AddModdedProjectileAssimilation<Crimson_Assimilation>("SpiritMod/VomitProj", 0.08f, "SpiritMod/Spewer");
+			AddModdedNPCAssimilation<Crimson_Assimilation>("SpiritMod/CrimsonTrapper", default, CrimsonGlobalNPC.NPCTypes);
+			AddModdedProjectileAssimilation<Crimson_Assimilation>("SpiritMod/ArterialBloodClump", 0.08f, "SpiritMod/CrimsonTrapper");
+			AddModdedNPCAssimilation<Crimson_Assimilation>("SpiritMod/Bladetongue", default, CrimsonGlobalNPC.NPCTypes);
 		}
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {
@@ -430,7 +468,7 @@ namespace Origins {
 				("FrostWormTail", null),
 				("SnowEater", 0.03f),
 				("TheStarved", 0.10f),
-				("HorrificCharger", null),
+				("HorrificCharger", 0.02f),
 				("VileFloater", null),
 				("ChilledSpitter", null),
 				("Freezer", 0.09f),
@@ -440,7 +478,7 @@ namespace Origins {
 				(string name, float? assimilation) = thoriumNPCs[i];
 				if (Thorium.TryFind(name, out ModNPC npc)) {
 					CorruptGlobalNPC.NPCTypes.Add(npc.Type);
-					if (assimilation.HasValue) CorruptGlobalNPC.AssimilationAmounts.Add(npc.Type, assimilation.Value);
+					if (assimilation.HasValue) AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(npc.Type, assimilation.Value);
 				} else {
 					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
 				}
@@ -452,7 +490,7 @@ namespace Origins {
 				("Coolmera", null),
 				("FrozenFace", null),
 				("BlisterPod", null),
-				("Blister", 0.01f),
+				("Blister", 0.04f),
 				("Coldling", null),
 				("FrozenGross", null),
 				("EpiDermon", null)
@@ -461,7 +499,7 @@ namespace Origins {
 				(string name, float? assimilation) = thoriumNPCs[i];
 				if (Thorium.TryFind(name, out ModNPC npc)) {
 					CrimsonGlobalNPC.NPCTypes.Add(npc.Type);
-					if (assimilation.HasValue) CrimsonGlobalNPC.AssimilationAmounts.Add(npc.Type, assimilation.Value);
+					if (assimilation.HasValue) AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(npc.Type, assimilation.Value);
 				} else {
 					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
 				}

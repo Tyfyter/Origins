@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.NPCs;
+using Origins.NPCs.Defiled;
+using Origins.NPCs.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +14,7 @@ namespace Origins.Projectiles.Enemies {
 		public AssimilationAmount Assimilation = assimilation_amount;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+			this.AddAssimilation<Defiled_Assimilation>(Assimilation);
 		}
 		public override void SetDefaults() {
 			Projectile.hostile = true;
@@ -28,9 +32,6 @@ namespace Origins.Projectiles.Enemies {
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
 			}
-		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().DefiledAssimilation += Assimilation.GetValue(null, target);
 		}
 	}
 }

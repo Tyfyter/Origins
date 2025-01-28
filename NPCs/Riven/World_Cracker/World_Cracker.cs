@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Accessories;
@@ -706,6 +707,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override string GlowTexture => Texture;
 		public AssimilationAmount Assimilation = 0.04f;
 		public override void SetStaticDefaults() {
+			this.AddAssimilation<Riven_Assimilation>(Assimilation);
 			Main.projFrames[Type] = 7;
 			ID = Type;
 		}
@@ -743,9 +745,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
 			Projectile.Kill();
-			//Projectile.penetrate--;
 		}
 		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0 && OriginClientConfig.Instance.ExtraGooeyRivenGores) {
@@ -769,6 +769,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	}
 	public class World_Cracker_Beam : Seam_Beam_Beam {
 		public AssimilationAmount Assimilation = 0.06f;
+		public override void SetStaticDefaults() {
+			this.AddAssimilation<Riven_Assimilation>(Assimilation);
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.friendly = false;
@@ -776,7 +779,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			OriginPlayer.InflictTorn(target, 300);
-			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
 		}
 	}
 }

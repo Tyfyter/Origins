@@ -29,14 +29,5 @@ namespace Origins.Tiles.Other {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Fountain_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"WaterFountain"
-		];
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Fountain>());
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.buyPrice(gold: 4);
-		}
-	}
+	public class Riven_Fountain_Item : WaterFountainItem<Riven_Fountain> { }
 }

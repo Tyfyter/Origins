@@ -249,7 +249,7 @@ namespace Origins {
 						break;
 					}
 					case inflict_assimilation:
-					Main.player[reader.ReadByte()].OriginPlayer().InflictAssimilation(reader.ReadByte(), reader.ReadSingle());
+					Main.player[reader.ReadByte()].OriginPlayer().InflictAssimilation(reader.ReadUInt16(), reader.ReadSingle());
 					break;
 
 					case start_laser_tag or end_laser_tag:
