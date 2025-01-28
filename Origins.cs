@@ -566,7 +566,8 @@ namespace Origins {
 				MaxInstances = 0
 			};
 			Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
-				MaxInstances = 0,
+				MaxInstances = 5,
+				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
 				Volume = 0.75f
 			};
 			Sounds.LaserTag.Hurt = new SoundStyle("Origins/Sounds/Custom/LaserTag/Hurt", SoundType.Sound) {
