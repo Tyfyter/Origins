@@ -28,7 +28,7 @@ namespace Origins.NPCs.Defiled {
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Squid, Type);
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
-				[ModContent.GetInstance<DefiledGlobalNPC>()] = Squid_Bile_P.assimilation_amount
+				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Squid_Bile_P.assimilation_amount
 			});
 		}
 		public override void SetDefaults() {
@@ -146,6 +146,9 @@ namespace Origins.NPCs.Defiled {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VilePowder;
 		public const float assimilation_amount = 0.06f;
 		public AssimilationAmount Assimilation = assimilation_amount;
+		public override void SetStaticDefaults() {
+			this.AddAssimilation<Defiled_Assimilation>(Assimilation);
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.VilePowder);
 			Projectile.friendly = true;
@@ -153,7 +156,6 @@ namespace Origins.NPCs.Defiled {
 			Projectile.aiStyle = 0;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetAssimilation<Defiled_Assimilation>().Percent += Assimilation.GetValue(null, target);
 			target.AddBuff(BuffID.Darkness, 600);
 			target.AddBuff(BuffID.Weak, 240);
 		}

@@ -662,8 +662,6 @@ namespace Origins {
 			eyndumCoreUITexture = null;
 			eyndumCoreTexture = null;
 			CloudBottoms = null;
-			BiomeNPCGlobals.assimilationProviders.Clear();
-			BiomeNPCGlobals.assimilationProviders.TrimExcess();
 			foreach (IUnloadable unloadable in unloadables) {
 				unloadable.Unload();
 			}

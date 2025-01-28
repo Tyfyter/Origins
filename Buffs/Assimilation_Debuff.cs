@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.NPCs;
+using PegasusLib;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -32,6 +35,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Defiled_Assimilation : AssimilationDebuff {
+		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override void Update(Player player, float percent) {
 			if (percent >= 0.125 /*&& Main.rand.NextFloat(0, 200) < percent - 0.125*/) {
 				player.AddBuff(BuffID.Weak, 300);
@@ -46,6 +50,7 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Riven_Assimilation : AssimilationDebuff {
+		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilRiven";
 		public override void OnChanged(Player player, float oldValue, float newValue) {
 			if (oldValue < newValue) player.OriginPlayer().timeSinceRivenAssimilated = 0;
 		}
@@ -66,12 +71,51 @@ namespace Origins.Buffs {
 		}
 		public static AssimilationInfo GetAssimilation(this Player player, int type) => player.OriginPlayer().GetAssimilation(type);
 		public static AssimilationInfo GetAssimilation<TDebuff>(this Player player) where TDebuff : AssimilationDebuff => player.OriginPlayer().GetAssimilation<TDebuff>();
+		public static void AddNPCAssimilation<TDebuff>(int type, AssimilationAmount amount) where TDebuff : AssimilationDebuff {
+			BiomeNPCGlobals.NPCAssimilationAmounts.TryAdd(type, []);
+			BiomeNPCGlobals.NPCAssimilationAmounts[type].TryAdd(ModContent.GetInstance<TDebuff>().AssimilationType, amount);
+		}
+		public static void AddProjectileAssimilation<TDebuff>(int type, AssimilationAmount amount) where TDebuff : AssimilationDebuff {
+			BiomeNPCGlobals.ProjectileAssimilationAmounts.TryAdd(type, []);
+			BiomeNPCGlobals.ProjectileAssimilationAmounts[type].TryAdd(ModContent.GetInstance<TDebuff>().AssimilationType, amount);
+		}
+		public static void AddDebuffAssimilation<TDebuff>(int type, AssimilationAmount amount) where TDebuff : AssimilationDebuff {
+			BiomeNPCGlobals.DebuffAssimilationAmounts.TryAdd(type, []);
+			BiomeNPCGlobals.DebuffAssimilationAmounts[type].TryAdd(ModContent.GetInstance<TDebuff>().AssimilationType, amount);
+		}
+		public static void AddAssimilation<TDebuff>(this ModNPC npc, AssimilationAmount amount) where TDebuff : AssimilationDebuff => AddNPCAssimilation<TDebuff>(npc.Type, amount);
+		public static void AddAssimilation<TDebuff>(this ModProjectile projectile, AssimilationAmount amount) where TDebuff : AssimilationDebuff => AddProjectileAssimilation<TDebuff>(projectile.Type, amount);
+	}
+	[Autoload(false)]
+	public class AssimilationStat(AssimilationDebuff debuff) : BestiaryCombatStat {
+		public override string Texture => debuff.BestiaryStatTexture;
+		public override string Name => $"{debuff.Name}_BestiaryStat";
+		public override LocalizedText DisplayName => debuff.DisplayName;
+		AssimilationAmount? GetValue(NPC npc) {
+			AssimilationAmount value;
+			Dictionary<int, AssimilationAmount> dict;
+			if (BiomeNPCGlobals.assimilationDisplayOverrides.TryGetValue(npc.netID, out dict) && dict.TryGetValue(debuff.AssimilationType, out value)) return value;
+			if (BiomeNPCGlobals.NPCAssimilationAmounts.TryGetValue(npc.netID, out dict) && dict.TryGetValue(debuff.AssimilationType, out value)) return value;
+			if (BiomeNPCGlobals.assimilationDisplayOverrides.TryGetValue(npc.type, out dict) && dict.TryGetValue(debuff.AssimilationType, out value)) return value;
+			if (BiomeNPCGlobals.NPCAssimilationAmounts.TryGetValue(npc.type, out dict) && dict.TryGetValue(debuff.AssimilationType, out value)) return value;
+			return null;
+		}
+		public override string GetDisplayText(NPC npc) {
+			return GetValue(npc)?.GetText()?.ToString();
+		}
+		public override bool ShouldDisplay(NPC npc) {
+			return GetValue(npc).HasValue;
+		}
 	}
 	public abstract class AssimilationDebuff : ModBuff {
 		public virtual LocalizedText DeathMessage => this.GetLocalization(nameof(DeathMessage), PrettyPrintName);
+		public virtual string BestiaryStatTexture => Texture + "_BestiaryStat";
 		public int AssimilationType { get; internal set; } = -1;
-		public override void SetStaticDefaults() {
+		public override void Load() {
 			AssimilationLoader.Register(this);
+			Mod.AddContent(new AssimilationStat(this));
+		}
+		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.buffNoSave[Type] = true;
@@ -106,6 +150,18 @@ namespace Origins.Buffs {
 				0.8f,
 				SpriteEffects.None,
 			0f);
+		}
+	}
+	public class AssimilationGlobalBuff : GlobalBuff {
+		public override void Update(int type, Player player, ref int buffIndex) {
+			if (BiomeNPCGlobals.ProjectileAssimilationAmounts.TryGetValue(type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
+				foreach (KeyValuePair<int, AssimilationAmount> value in assimilationValues) {
+					player.GetAssimilation(value.Key).Percent += value.Value.GetValue(null, player);
+				}
+			}
+		}
+		public override void ModifyBuffText(int type, ref string buffName, ref string tip, ref int rare) {
+			tip += "\n" + BuffID.Search.GetName(type);
 		}
 	}
 	public class AssimilationInfo(AssimilationDebuff type, Player player) {

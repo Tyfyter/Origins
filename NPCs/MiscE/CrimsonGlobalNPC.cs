@@ -6,10 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class CrimsonGlobalNPC : GlobalNPC, IAssimilationProvider {
-		public string AssimilationName => "CrimsonAssimilation";
-		public string AssimilationTexture => "Terraria/Images/UI/Bestiary/Icon_Tags_Shadow";
-		public Rectangle AssimilationTextureFrame => new(30 * 12, 0, 30, 30);
+    public class CrimsonGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; } = [
 			NPCID.BloodCrawler,
 			NPCID.BloodCrawlerWall,
@@ -36,27 +33,27 @@ namespace Origins.NPCs.MiscE {
 
 			NPCID.PigronCrimson,
 		];
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = new() {
-			[NPCID.BloodCrawler] = 0.05f,
-			[NPCID.BloodFeeder] = 0.06f,
-			[NPCID.BloodJelly] = 0.08f,
-			[NPCID.BrainofCthulhu] = 0.16f,
-			[NPCID.Creeper] = 0.002f,
-			[NPCID.Crimera] = 0.05f,
-			[NPCID.Crimslime] = 0.06f,
-			[NPCID.CrimsonGoldfish] = 0.05f,
-			[NPCID.DesertGhoulCrimson] = 0.06f,
-			[NPCID.FaceMonster] = 0.08f,
-			[NPCID.FloatyGross] = 0.08f,
-			[NPCID.Herpling] = 0.06f,
-			[NPCID.IchorSticker] = 0.06f,
-		};
 		public override void Load() {
-			BiomeNPCGlobals.assimilationProviders.Add(this);
+			static void AddAssimilation(int npc, AssimilationAmount amount) => AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(npc, amount);
+			AddAssimilation(NPCID.BloodCrawler, 0.05f);
+			AddAssimilation(NPCID.BloodCrawlerWall, 0.05f);
+			AddAssimilation(NPCID.BloodFeeder, 0.06f);
+			AddAssimilation(NPCID.BloodJelly, 0.08f);
+			AddAssimilation(NPCID.BloodMummy, 0.08f);
+			AddAssimilation(NPCID.SandsharkCrimson, 0.09f);
+			AddAssimilation(NPCID.BrainofCthulhu, 0.16f);
+			AddAssimilation(NPCID.Creeper, 0.002f);
+			AddAssimilation(NPCID.Crimera, 0.05f);
+			AddAssimilation(NPCID.Crimslime, 0.06f);
+			AddAssimilation(NPCID.CrimsonGoldfish, 0.05f);
+			AddAssimilation(NPCID.DesertGhoulCrimson, 0.06f);
+			AddAssimilation(NPCID.FaceMonster, 0.08f);
+			AddAssimilation(NPCID.FloatyGross, 0.08f);
+			AddAssimilation(NPCID.Herpling, 0.06f);
+			AddAssimilation(NPCID.IchorSticker, 0.06f);
 		}
 		public override void Unload() {
 			NPCTypes = null;
-			AssimilationAmounts = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
@@ -104,20 +101,6 @@ namespace Origins.NPCs.MiscE {
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
-		}
-		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			AssimilationAmount amount = GetAssimilationAmount(npc);
-			if (amount != default) {
-				target.GetAssimilation<Crimson_Assimilation>().Percent += amount.GetValue(npc, target);
-			}
-		}
-		public AssimilationAmount GetAssimilationAmount(NPC npc) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				return amount;
-			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
-				return amount;
-			}
-			return default;
 		}
 	}
 }

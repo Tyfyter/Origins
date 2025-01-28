@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.NPCs;
 using System.Collections.Generic;
 using Terraria;
@@ -93,19 +94,27 @@ namespace Origins.Dev {
 				Main.getGoodWorld = getGoodWorld;
 				NPCID.Sets.DontDoHardmodeScaling[npc.type] = dontDoHardmodeScaling;
 			}
-			for (int i = 0; i < BiomeNPCGlobals.assimilationProviders.Count; i++) {
-				if (npc.TryGetGlobalNPC((GlobalNPC)BiomeNPCGlobals.assimilationProviders[i], out GlobalNPC gNPC) && gNPC is IAssimilationProvider assimilationProvider) {
-					AssimilationAmount amount = assimilationProvider.GetAssimilationAmount(npc);
-					if (amount != default) {
-						string assName = assimilationProvider.AssimilationName;
-						if (amount.Function is not null) {
-							data.Add(assName, "variable");
-							continue;
-						}
-						data.Add(assName, amount.ClassicAmount);
-						if (amount.ExpertAmount.HasValue) expertData.Add(assName, amount.ExpertAmount.Value);
-						if (amount.MasterAmount.HasValue) masterData.Add(assName, amount.MasterAmount.Value);
+			Dictionary<int, AssimilationAmount> assimilations = [];
+			if (BiomeNPCGlobals.assimilationDisplayOverrides.TryGetValue(npc.type, out Dictionary<int, AssimilationAmount> _assimilations)) {
+				foreach (KeyValuePair<int, AssimilationAmount> item in _assimilations) {
+					assimilations.TryAdd(item.Key, item.Value);
+				}
+			}
+			if (BiomeNPCGlobals.NPCAssimilationAmounts.TryGetValue(npc.type, out _assimilations)) {
+				foreach (KeyValuePair<int, AssimilationAmount> item in _assimilations) {
+					assimilations.TryAdd(item.Key, item.Value);
+				}
+			}
+			foreach (KeyValuePair<int, AssimilationAmount> item in assimilations) {
+				if (item.Value != default) {
+					string assName = AssimilationLoader.Debuffs[item.Key].DisplayName.Value;
+					if (item.Value.Function is not null) {
+						data.Add(assName, "variable");
+						continue;
 					}
+					data.Add(assName, item.Value.ClassicAmount);
+					if (item.Value.ExpertAmount.HasValue) expertData.Add(assName, item.Value.ExpertAmount.Value);
+					if (item.Value.MasterAmount.HasValue) masterData.Add(assName, item.Value.MasterAmount.Value);
 				}
 			}
 			data.AppendJStat("Expert", expertData, []);

@@ -375,13 +375,6 @@ Interface: {
 }
 
 DeathMessage: {
-	Assimilation: {
-		Corruption: "{0} was turned into a shell of their former self by the Corruption."
-		Crimson: "{0} was consumed by the Crimson's lies."
-		Defiled: "{0} was warped to the Defiled Will."
-		Riven: "{0} became one with the Riven Hive's ecosystem."
-	}
-
 	Barnacle_Mound: "{0} cannot watch where they are going."
 	Defiled_Mite: "{0} cannot watch where they are going."
 	Self_Damage_0: "{0} got a little too excited."
@@ -397,13 +390,6 @@ DeathMessage: {
 	Torn_4: "{0} got dissolved."
 	Tripod_0: "{0} forgot the tripod nip."
 	Tripod_1: "{0} got rekt by a Defiled Tripod."
-}
-
-Assimilation: {
-	CrimsonAssimilation: Crimson Assimilation
-	CorruptionAssimilation: Corrupt Assimilation
-	DefiledAssimilation: Defiled Assimilation
-	RivenAssimilation: Riven Assimilation
 }
 
 Generic: {
@@ -499,16 +485,10 @@ Buffs: {
 		Description: It's rather dashing
 	}
 
-	Corrupt_Assimilation_Debuff: {
+	Corrupt_Assimilation: {
 		DisplayName: Corrupt Assimilation
 		Description: You're being assimilated by the Corruption
-		DeathMessage: Corrupt Assimilation Debuff
-	}
-
-	Corrupt_Assimilation: {
-		DeathMessage: Corrupt Assimilation
-		DisplayName: Corrupt Assimilation
-		Description: Mods.Origins.Buffs.Corrupt_Assimilation.Description
+		DeathMessage: "{0} was turned into a shell of their former self by the Corruption."
 	}
 
 	Cranivore_Debuff: {
@@ -516,28 +496,16 @@ Buffs: {
 		Description: It's on your face!
 	}
 
-	Crimson_Assimilation_Debuff: {
+	Crimson_Assimilation: {
 		DisplayName: Crimson Assimilation
 		Description: You're being assimilated by the Crimson
-		DeathMessage: Crimson Assimilation Debuff
-	}
-
-	Crimson_Assimilation: {
-		DeathMessage: Crimson Assimilation
-		DisplayName: Crimson Assimilation
-		Description: Mods.Origins.Buffs.Crimson_Assimilation.Description
-	}
-
-	Defiled_Assimilation_Debuff: {
-		DisplayName: Defiled Assimilation
-		Description: You're being assimilated by {§The_Defiled_Wastelands}
-		DeathMessage: Defiled Assimilation Debuff
+		DeathMessage: "{0} was consumed by the Crimson's lies."
 	}
 
 	Defiled_Assimilation: {
-		DeathMessage: Defiled Assimilation
 		DisplayName: Defiled Assimilation
-		Description: Mods.Origins.Buffs.Defiled_Assimilation.Description
+		Description: You're being assimilated by {§The_Defiled_Wastelands}
+		DeathMessage: "{0} was warped to the Defiled Will."
 	}
 
 	Defiled_Blight_Buff: {
@@ -640,16 +608,10 @@ Buffs: {
 		Description: There goes all your bandwidth...
 	}
 
-	Riven_Assimilation_Debuff: {
+	Riven_Assimilation: {
 		DisplayName: Riven Assimilation
 		Description: You're being assimilated by the {§Riven_Hive}
-		DeathMessage: Riven Assimilation Debuff
-	}
-
-	Riven_Assimilation: {
-		DeathMessage: Riven Assimilation
-		DisplayName: Riven Assimilation
-		Description: Mods.Origins.Buffs.Riven_Assimilation.Description
+		DeathMessage: "{0} became one with the Riven Hive's ecosystem."
 	}
 
 	Safe_Buff: {

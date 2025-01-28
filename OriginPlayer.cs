@@ -9,6 +9,7 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
+using Origins.NPCs;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
@@ -451,7 +452,7 @@ namespace Origins {
 		}
 		public override void PostUpdateBuffs() {
 			if (Player.whoAmI == Main.myPlayer) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.PreUpdateInventoryEvent is not null) {
 						quest.PreUpdateInventoryEvent();
 					}

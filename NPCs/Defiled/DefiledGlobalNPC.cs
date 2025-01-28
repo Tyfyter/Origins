@@ -9,28 +9,21 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.NPCs.Defiled {
-	public class DefiledGlobalNPC : GlobalNPC, IAssimilationProvider {
-		public string AssimilationName => "DefiledAssimilation";
-		public string AssimilationTexture => "Origins/UI/WorldGen/IconEvilDefiled";
-		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; } = [];
+	public class DefiledGlobalNPC : GlobalNPC {
 		public static Dictionary<int, int> NPCTransformations { get; private set; } = [];
 		public override void Load() {
 			hasErroredAboutWrongNPC = [];
-			BiomeNPCGlobals.assimilationProviders.Add(this);
 		}
 		public override void Unload() {
-			AssimilationAmounts = null;
 			NPCTransformations = null;
 			hasErroredAboutWrongNPC = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			if (entity.ModNPC is IDefiledEnemy defiledEnemy) {
 				if (defiledEnemy.Assimilation is AssimilationAmount amount) {
-					if (AssimilationAmounts.TryGetValue(entity.type, out AssimilationAmount assimilationAmount)) {
-						if (assimilationAmount != amount) Origins.LogError($"Tried to give entity type {entity.type} ({entity.TypeName}) two different assimilation amounts: {assimilationAmount}, {amount}");
-					} else {
-						AssimilationAmounts.Add(entity.type, amount);
-					}
+					BiomeNPCGlobals.NPCAssimilationAmounts[entity.type] = new() {
+						[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = amount
+					};
 				}
 				return true;
 			}
@@ -97,21 +90,9 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
-			AssimilationAmount amount = GetAssimilationAmount(npc);
-			if (amount != default) {
-				target.GetAssimilation<Defiled_Assimilation>().Percent += amount.GetValue(npc, target);
-			}
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
 				defiledEnemy.DrainMana(target);
 			}
-		}
-		public AssimilationAmount GetAssimilationAmount(NPC npc) {
-			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
-				return amount;
-			} else if (AssimilationAmounts.TryGetValue(0, out amount)) {
-				return amount;
-			}
-			return default;
 		}
 		public override void OnKill(NPC npc) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {

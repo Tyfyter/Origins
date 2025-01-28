@@ -7,12 +7,13 @@ namespace Origins.Buffs {
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
+			AssimilationLoader.AddDebuffAssimilation<Corrupt_Assimilation>(Type, 0.006f / 60);
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.blind = true;
 			player.lifeRegen -= 9;
-			player.GetAssimilation<Corrupt_Assimilation>().Percent += 0.0001f;
+			//player.GetAssimilation<Corrupt_Assimilation>().Percent += 0.0001f;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Projectiles.Enemies;
 using PegasusLib;
 using Terraria;
@@ -22,7 +23,7 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Penguin, Type);
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.PenguinBlack, Type);
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
-				[ModContent.GetInstance<DefiledGlobalNPC>()] = Defiled_Goop.assimilation_amount
+				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Defiled_Goop.assimilation_amount
 			});
 		}
 		public override void SetDefaults() {

@@ -26,7 +26,7 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
-				[ModContent.GetInstance<DefiledGlobalNPC>()] = Defiled_Watcher_Spikes.assimilation_amount
+				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Defiled_Watcher_Spikes.assimilation_amount
 			});
 		}
 		public override void SetDefaults() {
@@ -149,6 +149,9 @@ namespace Origins.NPCs.Defiled {
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public const float assimilation_amount = 0.05f;
 		public AssimilationAmount Assimilation = assimilation_amount;
+		public override void SetStaticDefaults() {
+			this.AddAssimilation<Defiled_Assimilation>(Assimilation);
+		}
 		public override void SetDefaults() {
 			Projectile.timeLeft = 600;
 			Projectile.usesLocalNPCImmunity = true;
@@ -193,9 +196,6 @@ namespace Origins.NPCs.Defiled {
 				Projectile.localAI[0]++;
 			}
 			Projectile.Center = Main.npc[(int)Projectile.ai[2]].Center;
-		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetAssimilation<Defiled_Assimilation>().Percent += Assimilation.GetValue(null, target);
 		}
 	}
 }

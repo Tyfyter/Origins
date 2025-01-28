@@ -127,8 +127,8 @@ namespace Origins.NPCs.Riven {
 		public override int Size => size;
 		public override bool Hostile => true;
 		public override SoundStyle? Sound => null;
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.GetAssimilation<Riven_Assimilation>().Percent += Assimilation.GetValue(null, target);
+		public override void SetStaticDefaults() {
+			this.AddAssimilation<Riven_Assimilation>(Assimilation);
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {

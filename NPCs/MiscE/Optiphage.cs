@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
@@ -13,13 +14,12 @@ namespace Origins.NPCs.MiscE {
     public class Optiphage : ModNPC {
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Optiphage");
 			Main.npcFrameCount[Type] = 2;
 			if (!Main.dedServ) {
 				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Optiphage_Head");
 			}
 			CorruptGlobalNPC.NPCTypes.Add(Type);
-			CorruptGlobalNPC.AssimilationAmounts.Add(Type, 0.02f);
+			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.02f);
 		}
 		public override void Unload() {
 			HeadTexture = null;
@@ -59,7 +59,7 @@ namespace Origins.NPCs.MiscE {
 				}else if (NPC.ai[0] == 1f) {
 					Player targetPlayer = Main.player[NPC.target];
 					NPC.BottomRight = targetPlayer.Center;
-					targetPlayer.AddBuff(Buffs.Optiphage_Debuff.ID, 5);
+					targetPlayer.AddBuff(Optiphage_Debuff.ID, 5);
 				}
 			} else {
 				NPCAimedTarget target = NPC.GetTargetData();
