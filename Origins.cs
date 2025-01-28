@@ -985,7 +985,7 @@ namespace Origins {
 				Vol2.RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
 				Vol2.RivenOcean = GetMusicSlotNew("Alkahest");
 
-				Vol2.AncientDefiled = GetMusicSlotOld("Music/Shattered_Topography_Old");
+				Vol2.AncientDefiled = GetMusicSlotOld("Shattered_Topography_Old");
 				Vol2.AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}
 		}
