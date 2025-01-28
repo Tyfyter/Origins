@@ -381,8 +381,6 @@ namespace Origins.Projectiles {
 				foreach (KeyValuePair<int, AssimilationAmount> value in assimilationValues) {
 					target.GetAssimilation(value.Key).Percent += value.Value.GetValue(projectile, target);
 				}
-			} else {
-				Main.NewText(ProjectileID.Search.GetName(projectile.type));
 			}
 		}
 		public override bool PreKill(Projectile projectile, int timeLeft) {

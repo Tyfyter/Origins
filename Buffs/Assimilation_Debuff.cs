@@ -160,9 +160,9 @@ namespace Origins.Buffs {
 				}
 			}
 		}
-		public override void ModifyBuffText(int type, ref string buffName, ref string tip, ref int rare) {
+		/*public override void ModifyBuffText(int type, ref string buffName, ref string tip, ref int rare) {
 			tip += "\n" + BuffID.Search.GetName(type);
-		}
+		}*/
 	}
 	public class AssimilationInfo(AssimilationDebuff type, Player player) {
 		float currentValue;
