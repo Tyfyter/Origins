@@ -974,7 +974,7 @@ namespace Origins {
 
 				Vol2.Fiberglass = GetMusicSlotNew("Skulking");
 				Vol2.BrinePool = GetMusicSlotNew("Deep_Luminance");
-				Dusk = GetMusicSlotOld("Music/Dancing_With_Ghosts");
+				Dusk = GetMusicSlotOld("Dancing_With_Ghosts");
 
 				Vol2.Defiled = GetMusicSlotNew("Wasteland");
 				Vol2.UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
