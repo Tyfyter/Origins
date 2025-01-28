@@ -1761,6 +1761,11 @@ Configs: {
 			Label: Screen shake multiplier
 			Tooltip: Changes how much your screen shakes.
 		}
+
+		OldSoundtrack: {
+			Label: Old Soundtrack
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

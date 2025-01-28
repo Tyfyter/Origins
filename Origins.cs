@@ -741,6 +741,7 @@ namespace Origins {
 			NPC self = Main.npc[enemyIndex];
 			MeleeCollisionNPCData.knockbackMult = 1f;
 			if (self.ModNPC is IMeleeCollisionDataNPC meleeNPC) {
+				orig(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect);
 				meleeNPC.GetMeleeCollisionData(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect, ref MeleeCollisionNPCData.knockbackMult);
 			} else {
 				orig(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect);

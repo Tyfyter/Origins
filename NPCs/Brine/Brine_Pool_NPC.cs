@@ -36,6 +36,7 @@ namespace Origins.NPCs.Brine {
 			return target.type != Type;
 		}
 		public virtual bool CanTargetNPC(NPC npc) {
+			if (npc.type == NPCID.TargetDummy) return false;
 			return npc.wet && CanHitNPC(npc);
 		}
 		public virtual bool CanTargetPlayer(Player player) {

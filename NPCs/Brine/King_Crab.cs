@@ -1,15 +1,21 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine {
-	public class King_Crab : Brine_Pool_NPC, IMeleeCollisionDataNPC {
+	public class King_Crab : Brine_Pool_NPC {
+		static readonly AutoLoadingAsset<Texture2D> armTexture = typeof(King_Crab).GetDefaultTMLName() + "_Arm";
+		static readonly AutoLoadingAsset<Texture2D> clawTexture = typeof(King_Crab).GetDefaultTMLName() + "_Claw";
+		public float AttackTime => NPC.ai[1] / 30;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 5;
@@ -21,7 +27,7 @@ namespace Origins.NPCs.Brine {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 500;
 			NPC.defense = 26;
-			NPC.damage = 67;
+			NPC.damage = 96;
 			NPC.width = 62;
 			NPC.height = 68;
 			NPC.friendly = false;
@@ -45,7 +51,7 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 6));
 		}
-		public override bool CanTargetNPC(NPC npc) => CanHitNPC(npc);
+		public override bool CanTargetNPC(NPC npc) => npc.type != NPCID.TargetDummy && CanHitNPC(npc);
 		public override bool CanTargetPlayer(Player player) => !player.invis;
 		public int Frame {
 			get => NPC.frame.Y / NPC.frame.Height;
@@ -57,11 +63,9 @@ namespace Origins.NPCs.Brine {
 			bool walkLeft = NPC.direction == -1;
 			bool walkRight = NPC.direction == 1;
 			bool hasBarrier = false;
-			DoTargeting();
+			if (NPC.ai[1] <= 0) DoTargeting();
 			bool foundTarget = TargetPos != default;
-			if (NPC.ai[1] > 0f) {
-				NPC.ai[1] -= 1f;
-			} else {
+			if (NPC.ai[1] <= 0f) {
 				if (foundTarget) {
 					targetIsBelow = TargetPos.Y > NPC.position.Y + NPC.height;
 				}
@@ -82,7 +86,30 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
-			if (NPC.ai[1] != 0f) {
+			if (AttackTime > 0 || (foundTarget && (NPC.Center + NPC.velocity - Vector2.UnitY * 16).WithinRange(TargetPos, 96))) {
+				if (NPC.ai[1] <= 0) {
+					if (--NPC.ai[1] < -5) {
+						Vector2 dir = TargetPos - (NPC.Center - Vector2.UnitY * 16 + Vector2.UnitX * 32 * NPC.direction);
+						NPC.aiAction = 0;
+						dir.Y *= 1.2f;
+						dir.X = Math.Abs(dir.X);
+						if (dir.Y > dir.X) {
+							NPC.aiAction = -1;
+						} else if (dir.Y < -dir.X) {
+							NPC.aiAction = 1;
+						}
+						NPC.ai[1] = 1;
+					}
+				} else {
+					NPC.ai[1]++;
+					if (AttackTime > 1) {
+						NPC.ai[1] = 0;
+					}
+				}
+			} else if (NPC.ai[1] < 0) {
+				NPC.ai[1] = 0;
+			}
+			if (NPC.ai[1] > 0f) {
 				walkLeft = false;
 				walkRight = false;
 			}
@@ -212,6 +239,28 @@ namespace Origins.NPCs.Brine {
 			}
 			if (NPC.direction != 0) NPC.spriteDirection = NPC.direction;
 		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			bool af = OriginsModIntegrations.CheckAprilFools();
+			float attackTime = AttackTime;
+			switch ((int)(attackTime * 3)) {
+				case 1:
+				if (af) goto case 2;
+				break;
+				case 2:
+				Rectangle clawHitbox = npcHitbox;
+				clawHitbox.Inflate(-11, -13);
+				clawHitbox.Y -= 16;
+				clawHitbox.Offset((GeometryUtils.Vec2FromPolar(64, NPC.aiAction * -MathHelper.PiOver4) * new Vector2(NPC.direction, 1)).ToPoint());
+				if (clawHitbox.Intersects(victimHitbox)) {
+					if (af) immunityCooldownSlot = ImmunityCooldownID.DD2OgreKnockback;
+					npcHitbox = clawHitbox;
+					return true;
+				}
+				break;
+			}
+			damageMultiplier *= 0.5f;
+			return true;
+		}
 		public override void FindFrame(int frameHeight) {
 			
 		}
@@ -222,11 +271,119 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			
+			SpriteEffects inactiveArmEffects = NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
+			SpriteEffects activeArmEffects = inactiveArmEffects ^ SpriteEffects.FlipVertically;
+			Vector2 attachPoint = NPC.Center - screenPos;
+			attachPoint.Y -= 15;
+			attachPoint.Y += NPC.gfxOffY;
+			float attackTime = AttackTime;
+			Vector2[] inactiveArm = new Vector2[5];
+			Vector2[] activeArm = new Vector2[5];
+			inactiveArm[0] = attachPoint - new Vector2(7 * NPC.spriteDirection, 0);
+			activeArm[0] = attachPoint + new Vector2(12 * NPC.spriteDirection, 0);
+			FastRandom rand = new(NPC.frame.Y);
+			float rot = ((rand.Next(120) % 4) * 0.05f + 0.3f) * -NPC.spriteDirection;
+			inactiveArm[1] = inactiveArm[0] + new Vector2(0, 16).RotatedBy(rot * -2);
+			inactiveArm[2] = inactiveArm[1] + new Vector2(0, 10).RotatedBy(rot * -1);
+			inactiveArm[3] = inactiveArm[2] + new Vector2(0, 16).RotatedBy(rot * 0);
+			inactiveArm[4] = inactiveArm[3] + new Vector2(0, 24).RotatedBy(rot * 1);
+			int inactiveClawFrame = rand.Next(3);
+			int activeClawFrame = rand.Next(3);
+			if (attackTime <= 0) {
+				rot = ((rand.Next(120) % 4) * 0.05f + 0.3f) * NPC.spriteDirection;
+				activeArm[1] = activeArm[0] + new Vector2(0, 16).RotatedBy(rot * -2);
+				activeArm[2] = activeArm[1] + new Vector2(0, 10).RotatedBy(rot * -1);
+				activeArm[3] = activeArm[2] + new Vector2(0, 16).RotatedBy(rot * 0);
+				activeArm[4] = activeArm[3] + new Vector2(0, 24).RotatedBy(rot * 1);
+			} else {
+				if (OriginsModIntegrations.CheckAprilFools()) {
+					switch ((int)(attackTime * 3)) {
+						case 0:
+						activeArm[1] = activeArm[0] + new Vector2(0, 16).RotatedBy(0.25f);
+						activeArm[2] = activeArm[1] + new Vector2(0, 10).RotatedBy(0.25f);
+						activeArm[3] = activeArm[2] + new Vector2(0, 16).RotatedBy(0.25f);
+						activeArm[4] = activeArm[3] + new Vector2(0, 24).RotatedBy(0.25f);
+						break;
+						default:
+						activeArm[1] = activeArm[0] + new Vector2(16 * NPC.direction, 0).RotatedBy(rot * -2);
+						activeArm[2] = activeArm[1] + new Vector2(10 * NPC.direction, 0).RotatedBy(rot * -1);
+						activeArm[3] = activeArm[2] + new Vector2(16 * NPC.direction, 0).RotatedBy(rot * 0);
+						activeArm[4] = activeArm[3] + new Vector2(24 * NPC.direction, 0).RotatedBy(rot * 1);
+						break;
+					}
+				} else {
+					rot = -MathHelper.PiOver4 * NPC.aiAction * NPC.spriteDirection;
+					switch ((int)(attackTime * 3)) {
+						case 0:
+						activeArm[1] = activeArm[0] + new Vector2(0, 16).RotatedBy(0.15f * NPC.spriteDirection + rot * 0.2f);
+						activeArm[2] = activeArm[1] + new Vector2(0, 10).RotatedBy(0.05f * NPC.spriteDirection + rot * 0.2f);
+						activeArm[3] = activeArm[2] + new Vector2(0, 16).RotatedBy(-0.25f * NPC.spriteDirection + rot * 0.2f);
+						activeArm[4] = activeArm[3] + new Vector2(0, 24).RotatedBy(-0.45f * NPC.spriteDirection + rot * 0.2f);
+						activeClawFrame = 2;
+						break;
+						case 1:
+						activeArm[1] = activeArm[0] + new Vector2(0, 16).RotatedBy(-0.35f * NPC.spriteDirection + rot * 0.7f);
+						activeArm[2] = activeArm[1] + new Vector2(0, 10).RotatedBy(-0.45f * NPC.spriteDirection + rot * 0.7f);
+						activeArm[3] = activeArm[2] + new Vector2(0, 16).RotatedBy(-0.55f * NPC.spriteDirection + rot * 0.7f);
+						activeArm[4] = activeArm[3] + new Vector2(0, 24).RotatedBy(-0.65f * NPC.spriteDirection + rot * 0.7f);
+						activeClawFrame = 1;
+						break;
+						default:
+						activeArm[1] = activeArm[0] + new Vector2(16 * NPC.direction, 0).RotatedBy(rot);
+						activeArm[2] = activeArm[1] + new Vector2(10 * NPC.direction, 0).RotatedBy(rot);
+						activeArm[3] = activeArm[2] + new Vector2(16 * NPC.direction, 0).RotatedBy(rot);
+						activeArm[4] = activeArm[3] + new Vector2(24 * NPC.direction, 0).RotatedBy(rot);
+						activeClawFrame = 0;
+						break;
+					}
+				}
+			}
+			void DrawArm(Vector2[] arm, int index, Rectangle frame, Texture2D texture, SpriteEffects flip) {
+				spriteBatch.Draw(
+					texture,
+					arm[index],
+					frame,
+					drawColor,
+					(arm[index + 1] - arm[index]).ToRotation(),
+					new Vector2(4, frame.Height * 0.5f),
+					1,
+					flip,
+				0);
+			}
+			DrawArm(inactiveArm, 0, new Rectangle(0, 6, 20, 12), armTexture, inactiveArmEffects);
+			DrawArm(inactiveArm, 1, new Rectangle(22, 4, 18, 16), armTexture, inactiveArmEffects);
+			DrawArm(inactiveArm, 2, new Rectangle(42, 2, 24, 18), armTexture, inactiveArmEffects);
+			DrawArm(inactiveArm, 3, new Rectangle(0, 38 * inactiveClawFrame, 32, 32), clawTexture, inactiveArmEffects);
+
+			DrawArm(activeArm, 0, new Rectangle(0, 6, 20, 12), armTexture, activeArmEffects);
+			DrawArm(activeArm, 1, new Rectangle(22, 4, 18, 16), armTexture, activeArmEffects);
+			DrawArm(activeArm, 2, new Rectangle(42, 2, 24, 18), armTexture, activeArmEffects);
+			DrawArm(activeArm, 3, new Rectangle(0, 38 * activeClawFrame, 32, 32), clawTexture, activeArmEffects);
 		}
 
 		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
-			
+
+		}
+		public class Arm {
+			public Vector2 start;
+			public Vector2 end;
+			public void MoveByStart(Vector2 target) {
+				Vector2 diff = target - start;
+				start += diff;
+				end += diff;
+			}
+			public void MoveByEnd(Vector2 target) {
+				Vector2 diff = target - end;
+				start += diff;
+				end += diff;
+			}
+			public void DoIKMove(Vector2 target, float maxSpeed) {
+				Vector2 diff = target - end;
+				Vector2 newPos = end + diff.WithMaxLength(maxSpeed);
+				float angleDiff = GeometryUtils.AngleDif((end - start).ToRotation(), (target - start).ToRotation(), out int dir);
+				end = end.RotatedBy(angleDiff * dir, start);
+				MoveByEnd(newPos);
+			}
 		}
 	}
 }
