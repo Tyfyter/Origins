@@ -878,26 +878,61 @@ namespace Origins {
 			}
 		}
 		public static class Music {
-			public static int Fiberglass;
+			public static int Fiberglass => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Fiberglass : Vol2.Fiberglass;
 
-			public static int BrinePool;
+			public static int BrinePool => OriginClientConfig.Instance.OldSoundtrack ? Vol1.BrinePool : Vol2.BrinePool;
 
 			public static int Dusk;
 
-			public static int Defiled;
-			public static int UndergroundDefiled;
-			public static int DefiledBoss;
-			public static int AncientDefiled;
+			public static int Defiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Defiled : Vol2.Defiled;
+			public static int UndergroundDefiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundDefiled : Vol2.UndergroundDefiled;
+			public static int DefiledBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.DefiledBoss : Vol2.DefiledBoss;
+			public static int AncientDefiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.AncientDefiled : Vol2.AncientDefiled;
 
-			public static int Riven;
-			public static int UndergroundRiven;
-			public static int RivenBoss;
-			public static int RivenOcean;
-			public static int AncientRiven;
+			public static int Riven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Riven : Vol2.Riven;
+			public static int UndergroundRiven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundRiven : Vol2.UndergroundRiven;
+			public static int RivenBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenBoss : Vol2.RivenBoss;
+			public static int RivenOcean => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenOcean : Vol2.RivenOcean;
+			public static int AncientRiven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.AncientRiven : Vol2.AncientRiven;
+
+			public static class Vol2 {
+				public static int Fiberglass;
+
+				public static int BrinePool;
+
+				public static int Defiled;
+				public static int UndergroundDefiled;
+				public static int DefiledBoss;
+				public static int AncientDefiled;
+
+				public static int Riven;
+				public static int UndergroundRiven;
+				public static int RivenBoss;
+				public static int RivenOcean;
+				public static int AncientRiven;
+			}
+			public static class Vol1 {
+				public static int Fiberglass;
+
+				public static int BrinePool;
+
+				public static int Defiled;
+				public static int UndergroundDefiled;
+				public static int DefiledBoss;
+				public static int AncientDefiled;
+
+				public static int Riven;
+				public static int UndergroundRiven;
+				public static int RivenBoss;
+				public static int RivenOcean;
+				public static int AncientRiven;
+			}
+
 			internal static Mod musicDisplay;
 			internal static void LoadMusic() {
 				ModLoader.TryGetMod("MusicDisplay", out musicDisplay);
-				static int GetMusicSlot(string path) {
+				static int GetMusicSlotOld(string path) {
+					path = "Music/" + path;
 					MusicLoader.AddMusic(instance, path);
 					int slot = MusicLoader.GetMusicSlot(instance, path);
 					if (slot != -1 && musicDisplay is not null) {
@@ -926,21 +961,32 @@ namespace Origins {
 					}
 					return slot;
 				}
-				Fiberglass = GetMusicSlotNew("Skulking");
-				BrinePool = GetMusicSlotNew("Deep_Luminance");
-				Dusk = GetMusicSlot("Music/Dancing_With_Ghosts");
+				Vol1.Fiberglass = GetMusicSlotOld("The_Room_Before");
+				Vol1.BrinePool = GetMusicSlotOld("Below_The_Brine");
+				Vol1.Defiled = GetMusicSlotOld("Stolen_Memories");
+				Vol1.UndergroundDefiled = GetMusicSlotOld("Heart_Of_The_Beast");
+				Vol1.DefiledBoss = GetMusicSlotOld("ADJUDICATE");
+				Vol1.Riven = GetMusicSlotOld("Pereunt_Unum_Scindendum");
+				Vol1.UndergroundRiven = GetMusicSlotOld("Festering_Hives");
+				Vol1.RivenBoss = GetMusicSlotOld("Ad_Laceratur");
+				Vol1.RivenOcean = GetMusicSlotOld("This_Ocean_Of_Alkahest");
 
-				Defiled = GetMusicSlotNew("Wasteland");
-				UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
-				DefiledBoss = GetMusicSlotNew("ADJUDICATE");
 
-				Riven = GetMusicSlotNew("Skin");
-				UndergroundRiven = GetMusicSlotNew("Internal_Organism");
-				RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
-				RivenOcean = GetMusicSlotNew("Alkahest");
+				Vol2.Fiberglass = GetMusicSlotNew("Skulking");
+				Vol2.BrinePool = GetMusicSlotNew("Deep_Luminance");
+				Dusk = GetMusicSlotOld("Music/Dancing_With_Ghosts");
 
-				AncientDefiled = GetMusicSlot("Music/Shattered_Topography_Old");
-				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
+				Vol2.Defiled = GetMusicSlotNew("Wasteland");
+				Vol2.UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
+				Vol2.DefiledBoss = GetMusicSlotNew("ADJUDICATE");
+
+				Vol2.Riven = GetMusicSlotNew("Skin");
+				Vol2.UndergroundRiven = GetMusicSlotNew("Internal_Organism");
+				Vol2.RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
+				Vol2.RivenOcean = GetMusicSlotNew("Alkahest");
+
+				Vol2.AncientDefiled = GetMusicSlotOld("Music/Shattered_Topography_Old");
+				Vol2.AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}
 		}
 		public static class Sounds {

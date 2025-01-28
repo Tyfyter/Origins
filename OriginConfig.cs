@@ -130,6 +130,9 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool TwentyFourHourTime = false;
 
+		[DefaultValue(false)]
+		public bool OldSoundtrack = false;
+
 		public LaserTagConfig laserTagConfig = new();
 
 		[Header("Journal")]
