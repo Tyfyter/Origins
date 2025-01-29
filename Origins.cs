@@ -888,13 +888,13 @@ namespace Origins {
 			public static int Defiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Defiled : Vol2.Defiled;
 			public static int UndergroundDefiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundDefiled : Vol2.UndergroundDefiled;
 			public static int DefiledBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.DefiledBoss : Vol2.DefiledBoss;
-			public static int AncientDefiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.AncientDefiled : Vol2.AncientDefiled;
+			public static int AncientDefiled;
 
 			public static int Riven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Riven : Vol2.Riven;
 			public static int UndergroundRiven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundRiven : Vol2.UndergroundRiven;
 			public static int RivenBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenBoss : Vol2.RivenBoss;
 			public static int RivenOcean => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenOcean : Vol2.RivenOcean;
-			public static int AncientRiven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.AncientRiven : Vol2.AncientRiven;
+			public static int AncientRiven;
 
 			public static class Vol2 {
 				public static int Fiberglass;
@@ -904,13 +904,11 @@ namespace Origins {
 				public static int Defiled;
 				public static int UndergroundDefiled;
 				public static int DefiledBoss;
-				public static int AncientDefiled;
 
 				public static int Riven;
 				public static int UndergroundRiven;
 				public static int RivenBoss;
 				public static int RivenOcean;
-				public static int AncientRiven;
 			}
 			public static class Vol1 {
 				public static int Fiberglass;
@@ -920,13 +918,11 @@ namespace Origins {
 				public static int Defiled;
 				public static int UndergroundDefiled;
 				public static int DefiledBoss;
-				public static int AncientDefiled;
 
 				public static int Riven;
 				public static int UndergroundRiven;
 				public static int RivenBoss;
 				public static int RivenOcean;
-				public static int AncientRiven;
 			}
 
 			internal static Mod musicDisplay;
@@ -986,8 +982,8 @@ namespace Origins {
 				Vol2.RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
 				Vol2.RivenOcean = GetMusicSlotNew("Alkahest");
 
-				Vol2.AncientDefiled = GetMusicSlotOld("Shattered_Topography_Old");
-				Vol2.AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
+				AncientDefiled = GetMusicSlotOld("Shattered_Topography_Old");
+				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
 			}
 		}
 		public static class Sounds {
