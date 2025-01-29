@@ -1763,8 +1763,8 @@ Configs: {
 		}
 
 		OldSoundtrack: {
-			Label: Old Soundtrack
-			Tooltip: ""
+			Label: Volume 1 to Volume 2 Music toggle
+			Tooltip: Toggles between the different soundtracks of Terraria Origins. 'On' is Vol. 1, 'Off' is Vol. 2.
 		}
 	}
 
@@ -2065,7 +2065,7 @@ SetBonuses: {
 		'''
 	Cryosten:
 		'''
-		Attacks cause frostburn
+		Attacks inflict frostburn
 		+10% explosive velocity
 		Immunity to Frozen and Chilled
 		'''
