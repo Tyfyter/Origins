@@ -156,33 +156,32 @@ ENEMY NPCS:
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
-(^) Cloud Elemental°
+(#3, ^2) Cloud Elemental° !!! (unable to damage other enemies)
 (^) Conehead Zombie°
 (X) Corrupt Reaper
-(^) Cranivore°
-(^) Crimbrain°
+(^) Cranivore*
+(^) Crimbrain*
 (X) Crying Creeper
 (^) Defiled Cyclops*
-(^) Defiled Digger°
-(#, ^2) Defiled Ekko* !!!
+(^) Defiled Digger*
 (^) Defiled Krusher*
 (^) Defiled Mite*
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
 (X) Draconess !!!
-(^) Enchanted Fiberglass Bow
-(^) Enchanted Fiberglass Cannon
-(^) Enchanted Fiberglass Pistol
+(^) Enchanted Fiberglass Bow*
+(^) Enchanted Fiberglass Cannon*
+(^) Enchanted Fiberglass Pistol*
 (#, ^2) Enchanted Fiberglass Slime
-(^) Enchanted Fiberglass Sword
+(^) Enchanted Fiberglass Sword*
 (^) Fae Nymph (Whimsical Girl)°
-(^) Felnum Einheri
-(^) Felnum Guardian
-(^) Felnum Slime
+(^) Felnum Einheri*
+(^) Felnum Guardian*
+(^) Felnum Slime*
 (@4, ^3) Flagellant*
-(^) Graveshield Zombie
-(^) Optiphage
+(^) Graveshield Zombie*
+(^) Optiphage*
 (X) Pinwheel
 (^) Pustule Jellyfish*
 (^) Riven Penguin*
@@ -191,7 +190,7 @@ ENEMY NPCS:
 (^) Shattered Goldfish*
 (X) Shooter Creeper
 (^) Single-Cellular Nautilus*
-(^) Slime Worm (Slorm)
+(^) Slime Worm (Slorm)*
 (^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Steam Pirate !!!
@@ -208,8 +207,8 @@ ENEMY NPCS:
 (#, ^2) Brine Serpent !!!
 (^) Carpalfish°
 (^) Defiled Asphyxiator*
-(^) Defiled Mimic
-(^) Defiled Pigron
+(^) Defiled Mimic*
+(^) Defiled Pigron*
 (X) Defiled Shooter
 (^) Defiled Squid*
 (^) Defiled Tripod*
@@ -220,22 +219,22 @@ ENEMY NPCS:
 (X) Leaf Snapper !!!
 (#2, ^2) King Crab !!!
 (#2, ^2) Mildew Creeper !!!
-(^) Mitoworm
+(^) Mitoworm*
 (#, ^2) Nasty Crawdad !!!
 (^) Profaned Bident
-(^) Riven Mimic
-(^) Riven Pigron
+(X) Riven Gull
+(^) Riven Mimic*
+(^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
+(#, ^2) Rock Bottom !!!
 (X) Rocket Machine
+(X) Rotting Husk
 (^) Savage Whip*
 (#2, ^2) Sea Dragon° !!!
 (^) Shattered Ghoul
 (^) Shattered Mummy*
 (#, ^2) Shotgunfish !!!
-(X) Riven Gull
-(#, ^2) Rock Bottom !!!
-(X) Rotting Husk
 (X) Tendon Terror
 (^) Torn Ghoul
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
@@ -866,6 +865,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
+(X) Guardian Rod !!!
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!
