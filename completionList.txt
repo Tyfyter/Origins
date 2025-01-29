@@ -57,7 +57,6 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver* !!!
-(X) Scrapper
 (X) Shimmer Construct
 (#2, ^2/4) World Cracker* !!! (Amniotic Sac needs glow and proper animation)
 
@@ -135,7 +134,7 @@ OTHER:
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
-(^) Quest System General
+(^) Quest System General°
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
 ---
 
@@ -160,11 +159,11 @@ ENEMY NPCS:
 (^) Cloud Elemental°
 (^) Conehead Zombie°
 (X) Corrupt Reaper
-(^) Cranivore
-(^) Crimbrain
+(^) Cranivore°
+(^) Crimbrain°
 (X) Crying Creeper
 (^) Defiled Cyclops*
-(^) Defiled Digger
+(^) Defiled Digger°
 (#, ^2) Defiled Ekko* !!!
 (^) Defiled Krusher*
 (^) Defiled Mite*
@@ -177,19 +176,15 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Pistol
 (#, ^2) Enchanted Fiberglass Slime
 (^) Enchanted Fiberglass Sword
-(X) Exhaust Drone
 (^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri
 (^) Felnum Guardian
 (^) Felnum Slime
 (@4, ^3) Flagellant*
 (^) Graveshield Zombie
-(X) Junkie
-(X) Machine Gun Machine
 (^) Optiphage
 (X) Pinwheel
 (^) Pustule Jellyfish*
-(X) Riot Drone
 (^) Riven Penguin*
 (^) Riven Protoform*
 (X) Scanner Scout
@@ -201,8 +196,6 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (X) Steam Pirate !!!
 (X) Steam Shooter !!!
-(X) Top Brass Protector
-(X) Worker Bot
 
 (#, ^2) Airsnatcher !!!
 (^) Amoebeye*
@@ -434,7 +427,7 @@ ACCESSORIES:
 (^) Haggard Artery*
 (^) Handy Helper*
 (X) Harpy Horseshoe Balloon !!!
-(^) Hazard Charm*
+(#2, ^2) Hazard Charm* !!! (added functionality)
 (^) Headphones*
 (#2, ^2) Helium Tank* !!! (added functionality with balloons)
 (^) I-WTPA Standard*
@@ -508,7 +501,7 @@ ACCESSORIES:
 (^) Tainted Flesh*
 (#, ^2) Tender Flesh Heart !!!
 (X) Timbre of Hell°
-(^) Trap Charm*
+(#2, ^2) Trap Charm* !!! (added functionality)
 (^) Tripod Nip*
 (^) Turbo Reel*
 (^) Unsought Organ*
@@ -766,6 +759,7 @@ RANGED WEAPONS:
 (#, ^2) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
+(#2, ^2) Fifth Spline
 (^) Firespit
 (#, ^2) Fumethrower !!!
 (^) Harpoon Burst Rifle
@@ -779,7 +773,6 @@ RANGED WEAPONS:
 (^) Palladium Harpoon Gun°
 (X) Ritualmaker
 (X) Riveiar
-(^) Sixth Spline
 (^) Spray 'N Pray°
 (^) Tiny Sniper
 (^) Titanium Harpoon Gun°
@@ -1005,6 +998,7 @@ EXPLOSIVE WEAPONS:
 (^) Rocodile
 (^) Self-Destruct*
 (X) Supernova
+(X) The Heatseeker
 (X) Thundershot
 (X) Ticking Bomb
 (X) Ticking Dynamite
