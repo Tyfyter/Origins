@@ -65,6 +65,22 @@ namespace Origins.Items.Other.Fish {
 			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Location");
 		}
 	}
+	public class Bobbit_Worm : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 2;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToQuestFish();
+		}
+		public override bool IsAnglerQuestAvailable() {
+			return Main.hardMode;
+		}
+		public override bool IsQuestFish() => true;
+		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Bobbit_Worm.Description");
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bobbit_Worm.Location");
+		}
+	}
 	public class Tire : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ExtractinatorMode[Type] = 1;
@@ -166,6 +182,24 @@ namespace Origins.Items.Other.Fish {
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ItemID.Daybloom)
 			.AddIngredient(this)
+			.AddTile(TileID.CookingPots)
+			.Register();
+		}
+	}
+	public class Toadfish : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 3;
+		}
+		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
+			Item.width = 26;
+			Item.height = 26;
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(silver: 30);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.SeafoodDinner)
+			.AddIngredient(this, 2)
 			.AddTile(TileID.CookingPots)
 			.Register();
 		}

@@ -4996,3 +4996,13 @@ Pink_Cryosten_Greaves: {
 	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Greaves.DisplayName}
 	// Tooltip: "{$Mods.Origins.Items.Cryosten_Greaves.Tooltip}"
 }
+
+Bobbit_Worm: {
+	// DisplayName: Bobbit Worm
+	// Tooltip: ""
+}
+
+Toadfish: {
+	// DisplayName: Toadfish
+	// Tooltip: ""
+}

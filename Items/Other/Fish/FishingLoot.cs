@@ -20,18 +20,18 @@ namespace Origins.Items.Other.Fish {
 		static FishingLootInfo _pool;
 		public static FishingLootInfo lastProcessedLoot;
 		public static FishingLootInfo Pool => _pool ??= new OrderedFishingLoot(
-			#region jungle
+		#region jungle
 			new LeadingConditionFishLoot(
 				new ItemFishingLoot(ItemType<Messy_Leech>(), (player, attempt) => (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) && Main.rand.NextBool(10)),
 			(player, _) => player.ZoneJungle),
-			#endregion jungle
+		#endregion jungle
 
 			new LeadingConditionFishLoot(new ComboFishingLoot(
 				((_, _) => 1, new ItemFishingLoot(ItemType<Tire>(), (_, _) => Main.rand.NextBool(4)))
 			), (_, attempt) => attempt.rolledItemDrop >= ItemID.OldShoe && attempt.rolledItemDrop <= ItemID.TinCan),
 
 			new ComboFishingLoot(
-				#region defiled
+		#region defiled
 				((player, _) => player.InModBiome<Defiled_Wastelands>() ? 1 : 0, new OrderedFishingLoot(
 					new LeadingConditionFishLoot(
 							new LeadingConditionFishLoot(
@@ -51,8 +51,8 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Bilemouth>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
 				)),
-				#endregion defiled
-				#region riven
+		#endregion defiled
+		#region riven
 				((player, _) => player.InModBiome<Riven_Hive>() ? 1 : 0, new OrderedFishingLoot(
 					new LeadingConditionFishLoot(
 							new LeadingConditionFishLoot(
@@ -72,16 +72,25 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Tearracuda>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
 				)),
-				#endregion riven
-				#region dusk
+		#endregion riven
+		#region dusk
 				((player, _) => player.InModBiome<Dusk>() ? 1 : 0, new OrderedFishingLoot(
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
 						new ItemFishingLoot(ItemType<Duskarp>(), (_, attempt) => attempt.questFish == ItemType<Duskarp>()),
 						new ItemFishingLoot(ItemType<Duskarp>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
+				)),
+		#endregion dusk
+		#region brine
+				((player, _) => player.InModBiome<Brine_Pool>() ? 1 : 0, new OrderedFishingLoot(
+					new LeadingConditionFishLoot(
+						new OrderedFishingLoot(
+						new ItemFishingLoot(ItemType<Bobbit_Worm>(), (_, attempt) => attempt.questFish == ItemType<Bobbit_Worm>()),
+						new ItemFishingLoot(ItemType<Toadfish>(), (_, _) => true)
+					), (_, attempt) => attempt.uncommon)
 				))
-				#endregion riven
+		#endregion brine
 			)
 		);
 		public IEnumerable<int> ProvideItemObtainability() => Pool.ReportDrops();

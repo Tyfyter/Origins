@@ -3721,6 +3721,66 @@ namespace Origins {
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
 		}
 	}
+	public static class TileExtenstions {
+		public record class MergeMatcher(int Up, int Down, int Left, int Right, int? UpLeft = null, int? UpRight = null, int? DownLeft = null, int? DownRight = null) {
+			public int Match(int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
+				if (up != Up) return 0;
+				if (down != Down) return 0;
+				if (left != Left) return 0;
+				if (right != Right) return 0;
+				if (upLeft != UpLeft) return 1;
+				if (upRight != UpRight) return 1;
+				if (upLeft != UpLeft) return 1;
+				if (downRight != DownRight) return 1;
+				return 2;
+			}
+		}
+		public static void DoFrameCheck(int i, int j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, params (int tileType, int frameType)[] map) {
+			void FixFraming(out int frame, int x, int y) {
+				Tile tile = Framing.GetTileSafely(x, y);
+				frame = -1;
+				if (!tile.HasTile) return;
+				for (int i = 0; i < map.Length; i++) {
+					if (tile.TileType == map[i].tileType) {
+						frame = map[i].frameType;
+						return;
+					}
+				}
+			}
+			FixFraming(out up, i, j - 1);
+			FixFraming(out down, i, j + 1);
+			FixFraming(out left, i - 1, j);
+			FixFraming(out right, i + 1, j);
+
+			FixFraming(out upLeft, i - 1, j - 1);
+			FixFraming(out upRight, i + 1, j - 1);
+			FixFraming(out downLeft, i - 1, j + 1);
+			FixFraming(out downRight, i + 1, j + 1);
+		}
+		public static void DoFraming(int i, int j, bool resetFrame, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight, params (MergeMatcher match, Point first, Point offset)[] frames) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (resetFrame) tile.TileFrameNumber = WorldGen.genRand.Next(0, 3);
+			int frameNumber = tile.TileFrameNumber;
+			Point bestMatch = default;
+			int matchQuality = 0;
+			for (int k = 0; k < frames.Length; k++) {
+				int currentQuality = frames[k].match.Match(up, down, left, right, upLeft, upRight, downLeft, downRight);
+				if (currentQuality > matchQuality) {
+					bestMatch = frames[k].first;
+					bestMatch.OffsetBy(frames[k].offset.X * frameNumber, frames[k].offset.Y * frameNumber);
+					matchQuality = currentQuality;
+					if (matchQuality >= 2) break;
+				}
+			}
+			if (matchQuality == 0) return;
+			tile.TileFrameX = (short)(bestMatch.X * 18);
+			tile.TileFrameY = (short)(bestMatch.Y * 18);
+		}
+		public static void DoFraming(int i, int j, bool resetFrame, (int tileType, int frameType)[] map, params (MergeMatcher match, Point first, Point offset)[] frames) {
+			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
+			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
+		}
+	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {
 			self.Mod.AddContent(new Banner(self));

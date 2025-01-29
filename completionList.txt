@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Scrapper
 (X) Shimmer Construct
-(#2, ^2/4) World Cracker* !!! (Amniotic Sac needs glow and proper animation)
+(☻) World Cracker* !!!
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
@@ -1036,7 +1036,7 @@ TILES:
 (X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(#2, ^2) Baryte* !!! (proper merging with mud)
+(☻) Baryte* !!!
 (^) Batholith°
 (^) Bleeding Obsidian*
 (#, ^2) Bomb Trap !!!
@@ -1306,13 +1306,13 @@ CRITTERS AND FISH:
 (^) Cicada 3301*
 
 (^) Bilemouth*
-(#, ^2) Bobbit Worm !!!
+(☻) Bobbit Worm !!!
 (^) Bonehead Jellyfish*
 (^) Duskarp°
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
-(#, ^2) Toadfish !!!
+(☻) Toadfish !!!
 ---
 
 
