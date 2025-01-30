@@ -56,6 +56,7 @@ namespace Origins.Items.Other.Testing {
 									}
 								}
 								Set(type, Vector2.Zero);
+								Framing.GetTileSafely((int)pos.X, (int)pos.Y).TileColor = PaintID.DeepRedPaint;
 								Set(missingConfigurations[index].up, -Vector2.UnitY);
 								Set(missingConfigurations[index].down, Vector2.UnitY);
 								Set(missingConfigurations[index].left, -Vector2.UnitX);
@@ -75,6 +76,7 @@ namespace Origins.Items.Other.Testing {
 									}
 								}
 								Set(type, Vector2.Zero);
+								if (index >= allConfigurations.Count - missingConfigurations.Count) Framing.GetTileSafely((int)pos.X, (int)pos.Y).TileColor = PaintID.DeepRedPaint;
 								Set(allConfigurations[index].up, -Vector2.UnitY);
 								Set(allConfigurations[index].down, Vector2.UnitY);
 								Set(allConfigurations[index].left, -Vector2.UnitX);
@@ -96,6 +98,7 @@ namespace Origins.Items.Other.Testing {
 							}
 						}
 						Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY).ResetToType((ushort)type);
+						Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY).TileColor = PaintID.DeepRedPaint;
 						Set(Player.tileTargetX, Player.tileTargetY - 1, missingConfigurations[mode].up);
 						Set(Player.tileTargetX, Player.tileTargetY + 1, missingConfigurations[mode].down);
 						Set(Player.tileTargetX - 1, Player.tileTargetY, missingConfigurations[mode].left);

@@ -89,8 +89,8 @@ namespace Origins.Tiles.Brine {
 				(Merge(NONE, NONE, _MUD, _MUD), new Point(9, 11), right),
 				(Merge(_MUD, _MUD, NONE, NONE), new Point(6, 12), down),
 				(Merge(NONE, NONE, _MUD, NONE), new Point(0, 13), right),
-				(Merge(NONE, NONE, NONE, _MUD), new Point(3, 14), right),
-				(Merge(NONE, NONE, _MUD, ROCK), new Point(0, 13), right),
+				(Merge(NONE, NONE, NONE, _MUD), new Point(3, 13), right),
+				(Merge(NONE, NONE, _MUD, ROCK), new Point(0, 14), right),
 				(Merge(NONE, NONE, ROCK, _MUD), new Point(3, 14), right),
 
 				(Merge(NONE, ROCK, NONE, _MUD), new Point(0, 3), new Point(2, 0)),
