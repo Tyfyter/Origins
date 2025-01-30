@@ -39,6 +39,8 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using Terraria.GameInput;
 using Terraria.UI;
+using Origins.Items.Other.Testing;
+using Stubble.Core.Helpers;
 
 namespace Origins {
 	#region classes
@@ -3777,6 +3779,48 @@ namespace Origins {
 			tile.TileFrameY = (short)(bestMatch.Y * 18);
 		}
 		public static void DoFraming(int i, int j, bool resetFrame, (int tileType, int frameType)[] map, params (MergeMatcher match, Point first, Point offset)[] frames) {
+#if DEBUG
+			List<int> types = [-1];
+			for (int k = 0; k < map.Length; k++) {
+				if (!types.Contains(map[k].frameType)) types.Add(map[k].frameType);
+			}
+			List<(int up, int down, int left, int right)> missingConfigurations = [];
+			for (int l = 0; l < types.Count; l++) {
+				for (int r = 0; r < types.Count; r++) {
+					for (int u = 0; u < types.Count; u++) {
+						for (int d = 0; d < types.Count; d++) {
+							bool foundMatch = false;
+							for (int k = 0; k < frames.Length && !foundMatch; k++) {
+								if (frames[k].match.Match(types[u], types[d], types[l], types[r], -1, -1, -1, -1) > 0) {
+									foundMatch = true;
+								}
+							}
+							if (!foundMatch) missingConfigurations.Add((types[u], types[d], types[l], types[r]));
+						}
+					}
+				}
+			}
+			if (missingConfigurations.Count > 0) {
+				Framing_Tester.type = Framing.GetTileSafely(i, j).TileType;
+				Dictionary<int, int> rev = new() {
+					[-1] = -1
+				};
+				for (int k = 0; k < map.Length && rev.Count < types.Count; k++) {
+					rev.TryAdd(map[k].frameType, map[k].tileType);
+				}
+				Framing_Tester.missingConfigurations = missingConfigurations.Select(v => (rev[v.up], rev[v.down], rev[v.left], rev[v.right])).ToList();
+				Framing_Tester.allConfigurations = frames.Select(v => {
+					List<(Vector2, int)> extras = [];
+					if (v.match.UpLeft.HasValue) extras.Add((new(-1, -1), rev[v.match.UpLeft.Value]));
+					if (v.match.UpRight.HasValue) extras.Add((new(1, -1), rev[v.match.UpRight.Value]));
+					if (v.match.DownLeft.HasValue) extras.Add((new(-1, 1), rev[v.match.DownLeft.Value]));
+					if (v.match.DownRight.HasValue) extras.Add((new(1, 1), rev[v.match.DownRight.Value]));
+					return (rev[v.match.Up], rev[v.match.Down], rev[v.match.Left], rev[v.match.Right], extras);
+				}).ToList();
+				List<(Vector2, int)> empty = [];
+				Framing_Tester.allConfigurations.AddRange(Framing_Tester.missingConfigurations.Select(v => (v.up, v.down, v.left, v.right, empty)));
+			}
+#endif
 			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
 		}

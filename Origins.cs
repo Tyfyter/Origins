@@ -1047,5 +1047,14 @@ namespace Origins {
 			return false;
 #endif
 		}
+		// for DevHelper
+		static string DevHelpBrokenReason {
+			get {
+#if DEBUG
+				return "Mod was last built in DEBUG configuration";
+#endif
+				return null;
+			}
+		}
 	}
 }
