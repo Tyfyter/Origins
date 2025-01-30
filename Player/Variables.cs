@@ -349,6 +349,7 @@ namespace Origins {
 		public Item journalDye = null;
 
 		public bool itemLayerWrench = false;
+		public int itemComboAnimationTime = 0;
 		public bool plagueSight = false;
 		public bool plagueSightLight = false;
 
@@ -676,6 +677,10 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
+
+			if (itemComboAnimationTime > 0)
+				itemComboAnimationTime--;
+
 			if (cryostenLifeRegenCount > 0)
 				cryostenLifeRegenCount--;
 			if (bombCharminItLifeRegenCount > 0)
