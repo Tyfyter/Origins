@@ -240,7 +240,7 @@ ENEMY NPCS:
 
 (X) Clockwork
 (@2/3, #) Electromancer
-(^, 赏) Etherealizer
+(^, 赏) Etherealizer*
 (@2, #) Illusionary
 (X) Lamp Oil Tender
 (X) Meteor Crawler
@@ -1296,13 +1296,13 @@ CRITTERS AND FISH:
 (^) Cicada 3301*
 
 (^) Bilemouth*
-(☻) Bobbit Worm !!!
+(^) Bobbit Worm
 (^) Bonehead Jellyfish*
 (^) Duskarp°
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
-(☻) Toadfish !!!
+(^) Toadfish
 ---
 
 

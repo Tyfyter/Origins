@@ -14,6 +14,7 @@ namespace Origins.Items.Armor.Cryosten {
         public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(1, silver: 50);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().explosiveBlastRadius += 0.2f;
@@ -59,6 +60,7 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(1, silver: 50);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -79,6 +81,7 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(1, silver: 50);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.1f;
