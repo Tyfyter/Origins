@@ -3738,10 +3738,10 @@ namespace Origins {
 			}
 		}
 		public static void DoFrameCheck(int i, int j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, params (int tileType, int frameType)[] map) {
-			void FixFraming(out int frame, int x, int y) {
+			void FixFraming(out int frame, int x, int y, params BlockType[] invalidBlockTypes) {
 				Tile tile = Framing.GetTileSafely(x, y);
 				frame = -1;
-				if (!tile.HasTile) return;
+				if (!tile.HasTile || invalidBlockTypes.Contains(tile.BlockType)) return;
 				for (int i = 0; i < map.Length; i++) {
 					if (tile.TileType == map[i].tileType) {
 						frame = map[i].frameType;
@@ -3749,10 +3749,33 @@ namespace Origins {
 					}
 				}
 			}
-			FixFraming(out up, i, j - 1);
-			FixFraming(out down, i, j + 1);
-			FixFraming(out left, i - 1, j);
-			FixFraming(out right, i + 1, j);
+			FixFraming(out up, i, j - 1, BlockType.SlopeUpLeft, BlockType.SlopeUpRight);
+			FixFraming(out down, i, j + 1, BlockType.HalfBlock, BlockType.SlopeDownLeft, BlockType.SlopeDownRight);
+			FixFraming(out left, i - 1, j, BlockType.HalfBlock, BlockType.SlopeUpLeft, BlockType.SlopeDownLeft);
+			FixFraming(out right, i + 1, j, BlockType.HalfBlock, BlockType.SlopeUpRight, BlockType.SlopeDownRight);
+			switch (Framing.GetTileSafely(i, j).BlockType) {
+				case BlockType.HalfBlock:
+				up = -1;
+				left = -1;
+				right = -1;
+				break;
+				case BlockType.SlopeDownLeft:
+				up = -1;
+				right = -1;
+				break;
+				case BlockType.SlopeDownRight:
+				up = -1;
+				left = -1;
+				break;
+				case BlockType.SlopeUpLeft:
+				down = -1;
+				right = -1;
+				break;
+				case BlockType.SlopeUpRight:
+				down = -1;
+				left = -1;
+				break;
+			}
 
 			FixFraming(out upLeft, i - 1, j - 1);
 			FixFraming(out upRight, i + 1, j - 1);

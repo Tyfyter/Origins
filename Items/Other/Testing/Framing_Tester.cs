@@ -154,9 +154,11 @@ namespace Origins.Items.Other.Testing {
 					"Origins: Framing Tester",
 					delegate {
 						Rectangle frame = new(162, 54, 16, 16);
+						int totalIndex = 0;
 						switch (Framing_Tester.mode - Framing_Tester.missingConfigurations.Count) {
 							case 0:
 							foreach ((Vector2 pos, int index) in Framing_Tester.IterateAllFrameTestPositions()) {
+								totalIndex = index;
 								void Draw(int type, Vector2 offset) {
 									if (type == -1) return;
 									Main.instance.LoadTiles(type);
@@ -171,6 +173,7 @@ namespace Origins.Items.Other.Testing {
 							break;
 							case 1:
 							foreach ((Vector2 pos, int index) in Framing_Tester.IterateAllFrameTestPositions()) {
+								totalIndex = index;
 								void Draw(int type, Vector2 offset) {
 									if (type == -1) return;
 									Main.instance.LoadTiles(type);

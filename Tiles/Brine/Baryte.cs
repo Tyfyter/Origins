@@ -15,7 +15,6 @@ namespace Origins.Tiles.Brine {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
-			Main.tileMergeDirt[Type] = true;
 			Origins.TileBlocksMinecartTracks[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(new Color(18, 73, 56));
@@ -80,7 +79,7 @@ namespace Origins.Tiles.Brine {
 				(Merge(ROCK, _MUD, _MUD, _MUD), new Point(11, 8), down),
 				(Merge(_MUD, _MUD, ROCK, _MUD), new Point(12, 8), down),
 				(Merge(ROCK, ROCK, _MUD, _MUD), new Point(10, 7), down),
-				(Merge(_MUD, _MUD, ROCK, ROCK), new Point(8, 9), down),
+				(Merge(_MUD, _MUD, ROCK, ROCK), new Point(8, 10), right),
 				(Merge(NONE, ROCK, _MUD, ROCK), new Point(0, 11), right),
 				(Merge(NONE, ROCK, ROCK, _MUD), new Point(3, 11), right),
 				(Merge(ROCK, NONE, _MUD, ROCK), new Point(0, 12), right),
