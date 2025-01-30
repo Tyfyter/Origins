@@ -3733,6 +3733,7 @@ namespace Origins {
 				if (upLeft != UpLeft) return 1;
 				if (upRight != UpRight) return 1;
 				if (upLeft != UpLeft) return 1;
+				if (downLeft != DownLeft) return 1;
 				if (downRight != DownRight) return 1;
 				return 2;
 			}
