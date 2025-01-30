@@ -65,6 +65,7 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
@@ -174,6 +175,7 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new AnyPlayerInteraction(), ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
@@ -342,6 +344,7 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;

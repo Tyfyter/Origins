@@ -1,11 +1,9 @@
 ﻿using MonoMod.Cil;
 using Origins.Dev;
-using Origins.Items.Materials;
 using PegasusLib.Reflection;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]

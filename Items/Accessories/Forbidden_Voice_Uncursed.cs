@@ -1,13 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Melee;
 using Origins.Journal;
-using PegasusLib;
-using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {

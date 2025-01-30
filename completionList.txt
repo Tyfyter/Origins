@@ -221,39 +221,31 @@ ENEMY NPCS:
 (#2, ^2) Mildew Creeper !!!
 (^) Mitoworm*
 (#, ^2) Nasty Crawdad !!!
-(^) Profaned Bident
+(^) Profaned Bident*
 (X) Riven Gull
 (^) Riven Mimic*
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
 (#, ^2) Rock Bottom !!!
-(X) Rocket Machine
 (X) Rotting Husk
 (^) Savage Whip*
 (#2, ^2) Sea Dragon° !!!
-(^) Shattered Ghoul
+(^) Shattered Ghoul*
 (^) Shattered Mummy*
 (#, ^2) Shotgunfish !!!
 (X) Tendon Terror
-(^) Torn Ghoul
+(^) Torn Ghoul*
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
 
-(X) Annihilator
 (X) Clockwork
-(X) Clustroid
-(X) Duskoo
-(X) Dynaray
 (@2/3, #) Electromancer
 (^, 赏) Etherealizer
 (@2, #) Illusionary
 (X) Lamp Oil Tender
 (X) Meteor Crawler
 (X) Prosperer
-(X) Soulpine
-(X) Sploder
 (X) Tiny Skeleton Sniper
-(X) Volstroy
 
 (#, ^2, 々) Blox
 (#, ^2, 々) Cubix
@@ -657,13 +649,13 @@ MELEE WEAPONS:
 ---
 (^) Baseball Bat*
 (^) Bone Latcher*
-(^) Broken Fiberglass Sword
+(^) Broken Fiberglass Sword*
 (^) Cyah Nara
 (^) Dark Spiral
 (^) Decimator*
 (^) Endowood Sword
 (^) Felnum Boar Spear
-(^) Fiberglass Sword
+(^) Fiberglass Sword*
 (^) Hemorang
 (^) Krakram*
 (^) Marrowick Sword
@@ -726,8 +718,8 @@ RANGED WEAPONS:
 (^) Chipper Knife
 (^) Endowood Bow
 (^) Felnum Longbow
-(^) Fiberglass Bow
-(^) Fiberglass Pistol
+(^) Fiberglass Bow*
+(^) Fiberglass Pistol*
 (^) Fiberglass Shard*
 (^) Gelled Knife*
 (^) Harpoon Gun*
@@ -743,6 +735,7 @@ RANGED WEAPONS:
 (^) The Kruncher*
 (^) Threemoepeater
 (^) Unmisfire*
+(^) Unstrung Fiberglass Bow*
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
@@ -880,7 +873,7 @@ SUMMONER WEAPONS:
 (X) Shadow Cast
 (@2, #) Sunflower in a Pot !!!
 (^) Teardown*
-(^) Thread Rod
+(^) Thread Rod*
 (^) Woodsprite Staff
 
 (X) Acrid Spout !!!
@@ -946,7 +939,7 @@ EXPLOSIVE WEAPONS:
 (^) Flare Launcher
 (^) Flashbang*
 (^) Floaty Bomb*
-(^) 'Glass Cannon
+(^) Glass Cannon*
 (^) Hand Grenade Launcher
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
@@ -1194,7 +1187,7 @@ TILES:
 (X) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
-(X) The Jungle's Glass Door !!!
+(X) The Jungle's Window !!!
 (X) There's Five of Them Now
 (X) What's Out There
 
@@ -1209,6 +1202,7 @@ TILES:
 ($2) Music Box (Defiled Wastelands Vol. 1/2) (both volumes)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea Vol. 1/2) (both volumes)
+(@, #, $2) Music Box (Fiberglass Undergrowth Vol. 1/2) !!!
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 ($2) Music Box (Riven Hive Vol. 1/2) (both volumes)
@@ -1217,6 +1211,8 @@ TILES:
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
+(X) Fiberglass Weaver Relic !!!
+(X) Fiberglass Weaver Trophy !!!
 (#, ^2) Lost Diver Relic !!!
 (#2, ^2) Lost Diver Trophy !!!
 (々) Miscreant Relic*
@@ -1539,7 +1535,7 @@ UI:
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
 (^) Underground Defiled Background
-(@ (needs 4 textures)) Underground Fiberglass Background !!!
+(X) Underground Fiberglass Background !!!
 (^) Underground Riven Background
 
 (^) 30x30 Origins Icon
