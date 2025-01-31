@@ -666,9 +666,10 @@ namespace Origins {
 		}
 
 		static bool shouldDoHeliumSound = false;
+		static float heliumSoundPitch = 0f;
 		private static ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
 			if (shouldDoHeliumSound) {
-				SoundStyle styleCopy = style.WithPitchOffset(1f);
+				SoundStyle styleCopy = style.WithPitchOffset(heliumSoundPitch);
 				return orig(ref styleCopy, position, updateCallback);
 			} else {
 				return orig(ref style, position, updateCallback);
@@ -677,7 +678,9 @@ namespace Origins {
 		private static void On_Player_Hurt_HurtInfo_bool(On_Player.orig_Hurt_HurtInfo_bool orig, Player self, Player.HurtInfo info, bool quiet) {
 			try {
 				if (!self.stoned && !self.frostArmor && !self.boneArmor) {
-					shouldDoHeliumSound = self.OriginPlayer().heliumTank;
+					OriginPlayer originPlayer = self.OriginPlayer();
+					shouldDoHeliumSound = originPlayer.heliumTank;
+					heliumSoundPitch = originPlayer.heliumTankStrength;
 				}
 				orig(self, info, quiet);
 			} finally {

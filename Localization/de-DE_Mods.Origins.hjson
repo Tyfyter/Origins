@@ -1449,6 +1449,7 @@ Projectiles: {
 	// Shotgunfish_P.DisplayName: Shotgunfish P
 	// Ashen_Mortar.DisplayName: Ashen Mortar
 	// Ashen_Mortar_P.DisplayName: Ashen Mortar P
+	// Fiberglass_Sword_P.DisplayName: Fiberglass Sword
 }
 
 Prefixes: {
