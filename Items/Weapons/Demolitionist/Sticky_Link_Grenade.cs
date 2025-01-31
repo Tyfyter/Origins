@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 35;
+			Item.damage = 55;
 			Item.useTime = (int)(Item.useTime * 0.75);
 			Item.useAnimation = (int)(Item.useAnimation * 0.75);
 			Item.shoot = ModContent.ProjectileType<Sticky_Link_Grenade_P>();
@@ -25,8 +25,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
-			Item.rare = ItemRarityID.Green;
-            Item.ArmorPenetration += 3;
+			Item.rare = ItemRarityID.Blue;
+            //Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)

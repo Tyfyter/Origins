@@ -58,7 +58,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Shimmer Construct
-(☻) World Cracker* !!!
+(^) World Cracker*
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
@@ -91,16 +91,16 @@ TOWN NPC Quests:
 ---
 (^) TOWN NPC QUEST MECHANICS°
 
-(^) Arms Dealer - Live Fire
-(X) Arms Dealer - Three Times the Charm
-(^) Cyborg - Sensor Upgrade
-(^) Dryad - I’ll Give You a Deal
-(^) Dryad - Clearing the Way
-(^) Goblin Tinkerer - Reel In the Goods
-(^) Goblin Tinkerer - Lend a Hand?
+(^) Arms Dealer - Live Fire*
+(X) Arms Dealer - Three Times the Charm*
+(^) Cyborg - Sensor Upgrade*
+(^) Dryad - I’ll Give You a Deal*
+(^) Dryad - Clearing the Way*
+(^) Goblin Tinkerer - Reel In the Goods*
+(^) Goblin Tinkerer - Lend a Hand?*
 (X) Goblin Tinkerer - Full Speed Ahead
-(^) Merchant - To the Skies!
-(^) Merchant - The Greatest Sin of All, Gambling
+(^) Merchant - To the Skies!*
+(^) Merchant - The Greatest Sin of All, Gambling*
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
@@ -134,7 +134,7 @@ OTHER:
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
-(^) Quest System General°
+(^) Quest System General*
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
 ---
 
@@ -180,6 +180,7 @@ ENEMY NPCS:
 (^) Felnum Guardian*
 (^) Felnum Slime*
 (@4, ^3) Flagellant*
+(^) Flying Exoskeleton*
 (^) Graveshield Zombie*
 (^) Optiphage*
 (X) Pinwheel
@@ -220,7 +221,7 @@ ENEMY NPCS:
 (#2, ^2) King Crab !!!
 (#2, ^2) Mildew Creeper !!!
 (^) Mitoworm*
-(☻) Nasty Crawdad !!!
+(^) Nasty Crawdad
 (^) Profaned Bident*
 (X) Riven Gull
 (^) Riven Mimic*
@@ -230,10 +231,10 @@ ENEMY NPCS:
 (#, ^2) Rock Bottom !!!
 (X) Rotting Husk
 (^) Savage Whip*
-(#2, ^2) Sea Dragon° !!!
+(^) Sea Dragon°
 (^) Shattered Ghoul*
 (^) Shattered Mummy*
-(☻) Shotgunfish !!!
+(#2, ^2) Shotgunfish !!! (ultra-sensitivity to ripples and animations)
 (X) Tendon Terror
 (^) Torn Ghoul*
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
@@ -279,7 +280,7 @@ STATUS EFFECTS:
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
-(^) Mana Buffer
+(^) Mana Buffer*
 (^) Rasterized*
 (^) Shadefire
 (^) Static Shock
@@ -537,7 +538,7 @@ VANITY:
 ---
 (^) Defiled Amalgamation Mask*
 (X) Duskord Mask
-(^) Fiberglass Weaver Head
+(^) Fiberglass Weaver Head*
 (X) I.C.A.R.U.S. Mask
 (#, ^2) Lost Diver set !!!
 (X) Miscreant Mask
@@ -853,7 +854,7 @@ SUMMONER WEAPONS:
 (^) Bomb Artifact
 (^) Brainy Staff*
 (@4, ^3) Broken Terratotem
-(#, ^2) Defective Mortar Shell !!!
+(^) Defective Mortar Shell
 (^) Desert Crown*
 (^) Eyeball Staff
 (^) Flagellash*
@@ -1023,7 +1024,7 @@ TILES:
 (X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(☻) Baryte* !!!
+(@, #2) Baryte* !!!
 (^) Batholith°
 (^) Bleeding Obsidian*
 (#, ^2) Bomb Trap !!!
@@ -1054,7 +1055,7 @@ TILES:
 (^) Lost Ore*
 (^) Marrowick*
 (#, ^2) Mildew Block° !!!
-(#2, ^2) Peat Moss Block* !!! (explosion when mined)
+(#2/3, ^2) Peat Moss Block* !!! (explosion when mined, bug with merging with vines)
 (^) Primordial Permafrost*
 (^) Quartz Block*
 (^) Riven Cactus*
@@ -1211,10 +1212,10 @@ TILES:
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
-(X) Fiberglass Weaver Relic !!!
-(X) Fiberglass Weaver Trophy !!!
-(#, ^2) Lost Diver Relic !!!
-(#2, ^2) Lost Diver Trophy !!!
+(X) Fiberglass Weaver Relic* !!!
+(X) Fiberglass Weaver Trophy* !!!
+(#, ^2) Lost Diver Relic* !!!
+(#2, ^2) Lost Diver Trophy* !!!
 (々) Miscreant Relic*
 (々) Miscreant Trophy*
 (々) Quantux Relic*
@@ -1299,6 +1300,7 @@ CRITTERS AND FISH:
 (^) Bobbit Worm
 (^) Bonehead Jellyfish*
 (^) Duskarp°
+(X) Fiberbass !!!
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
@@ -1417,6 +1419,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
+(X) Terlet Paper !!!
 (#, ^2) Wet Wood (Mildew Blob) !!!
 
 (^) Amoeba Toy (Meberoid)*
@@ -1572,7 +1575,6 @@ VOLUME I MUSIC:
 (X) Miscreant
 (X) Quantux
 (^) World Cracker
-(X) Scrapper
 (X) Seer
 (X) Tearror
 
@@ -1589,23 +1591,23 @@ VOLUME II MUSIC:
 ---
 
 (X) Ashen Factory
-($2) Brine Pool
+(^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
 (X) Dawn
-($2) Defiled Caverns
-($2) Defiled Wastelands
+(^) Defiled Caverns
+(^) Defiled Wastelands
 (X) Defiled Wastelands - Egregocide Route
 (X) Defiled Wastelands - Mimic Route
-($2) Eutrophic Sea
-(X) Fiberglass Caves
+(^) Eutrophic Sea
+(^) Fiberglass Caves
 (X) Fractured Isles
-($2) Riven Hive
+(^) Riven Hive
 (X) The Dusk
-($2) Underground Riven Hive
+(^) Underground Riven Hive
 
 (X) Crimson King
-($2) Defiled Amalgamation
+(^) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
@@ -1614,8 +1616,7 @@ VOLUME II MUSIC:
 (X) Mechamalgamation
 (X) Miscreant
 (X) Quantux
-($2) World Cracker
-(X) Scrapper
+(^) World Cracker
 (X) Seer
 (X) Tearror
 

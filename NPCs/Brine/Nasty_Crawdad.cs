@@ -52,6 +52,7 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 2)
+				//ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Crawdaddys_Revenge>(), 40)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && CanHitNPC(other);

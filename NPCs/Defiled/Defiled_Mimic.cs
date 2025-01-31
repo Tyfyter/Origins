@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,6 +37,11 @@ namespace Origins.NPCs.Defiled {
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }

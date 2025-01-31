@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
-using Origins.Tiles.Brine;
+using Origins.Dev;
+using Origins.Projectiles;
+using Origins.Tiles.Ashen;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Projectiles;
-using Tyfyter.Utils;
-using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Link_Grenade : ModItem, ICustomWikiStat {
+	public class Link_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsGrenade",
@@ -20,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 35;
+			Item.damage = 55;
 			Item.useTime = (int)(Item.useTime * 0.75);
 			Item.useAnimation = (int)(Item.useAnimation * 0.75);
 			Item.shoot = ModContent.ProjectileType<Link_Grenade_P>();
@@ -28,14 +25,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
-			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 999;
-            Item.ArmorPenetration += 3;
+			Item.rare = ItemRarityID.Blue;
+            //Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
 			.AddIngredient(ItemID.Grenade, 8)
-			.AddIngredient(ModContent.ItemType<Peat_Moss_Item>())
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>())
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

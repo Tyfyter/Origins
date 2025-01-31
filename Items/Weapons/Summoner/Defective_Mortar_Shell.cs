@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.Projectiles;
 using PegasusLib;
@@ -40,6 +41,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<NE8>(), 9)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
@@ -205,6 +213,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.width = 8;
 			Projectile.height = 8;
 			Projectile.aiStyle = 0;
+			Projectile.scale *= 0.8f;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;

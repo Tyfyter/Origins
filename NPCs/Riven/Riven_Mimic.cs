@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,6 +39,11 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
