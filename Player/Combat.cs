@@ -550,11 +550,6 @@ namespace Origins {
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
 				modifiers.SourceDamage *= 2;
 			}
-			if (heliumTank) {
-				if (!Player.stoned && !Player.frostArmor && !Player.boneArmor) {
-					modifiers.DisableSound();
-				}
-			}
 			allManaDamage = false;
 			manaDamageToTake = 0;
 			if (manaShielding > 0) {
@@ -614,17 +609,6 @@ namespace Origins {
 			}
 			if (info.PvP && info.CooldownCounter == ImmunityCooldownID.WrongBugNet) {
 				Player.hurtCooldowns[ImmunityCooldownID.WrongBugNet] = Player.longInvince ? 10 : 6;
-			}
-			if (heliumTank) {
-				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
-					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);
-				} else if (Main.dontStarveWorld) {
-					SoundStyle style = (Player.Male ? SoundID.DSTMaleHurt : SoundID.DSTFemaleHurt).WithPitch(1);
-					SoundEngine.PlaySound(in style, Player.position);
-				} else {
-					SoundEngine.PlaySound((Player.Male ? SoundID.PlayerHit : SoundID.FemaleHit).WithPitch(1), Player.position);
-				}
-				Player.eyeHelper.BlinkBecausePlayerGotHurt();
 			}
 			if (guardedHeart) {
 				Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);

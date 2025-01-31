@@ -661,7 +661,30 @@ namespace Origins {
 				if (original is OriginConfig originConfig && config is OriginConfig newConfig) originConfig.CloneTo(newConfig);
 				return config;
 			});
+			On_Player.Hurt_HurtInfo_bool += On_Player_Hurt_HurtInfo_bool;
+			On_SoundEngine.PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback += On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1;
 		}
+
+		static bool shouldDoHeliumSound = false;
+		private static ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
+			if (shouldDoHeliumSound) {
+				SoundStyle styleCopy = style.WithPitchOffset(1f);
+				return orig(ref styleCopy, position, updateCallback);
+			} else {
+				return orig(ref style, position, updateCallback);
+			}
+		}
+		private static void On_Player_Hurt_HurtInfo_bool(On_Player.orig_Hurt_HurtInfo_bool orig, Player self, Player.HurtInfo info, bool quiet) {
+			try {
+				if (!self.stoned && !self.frostArmor && !self.boneArmor) {
+					shouldDoHeliumSound = self.OriginPlayer().heliumTank;
+				}
+				orig(self, info, quiet);
+			} finally {
+				shouldDoHeliumSound = false;
+			}
+		}
+
 		private static void IL_NPC_SpawnNPC(ILContext il) {
 			ILCursor c = new(il);
 			int startYPosition = -1;

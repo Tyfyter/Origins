@@ -13,10 +13,13 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.buffImmune[BuffID.Suffocation] = true;
 			player.AddMaxBreath(257);
-			player.GetModPlayer<OriginPlayer>().heliumTank = true;
+			if (!hideVisual) player.OriginPlayer().heliumTank = true;
+		}
+		public override void UpdateVanity(Player player) {
+			player.OriginPlayer().heliumTank = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
