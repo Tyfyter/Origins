@@ -87,6 +87,7 @@ namespace Origins.NPCs.Brine {
 						targetIsRipple = true;
 					}
 				}
+				NPC.targetRect = new((int)TargetPos.X - 8, (int)TargetPos.Y - 8, 16, 16);
 			}
 		}
 		public void DoTargeting() {

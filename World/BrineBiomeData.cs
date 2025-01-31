@@ -39,6 +39,7 @@ namespace Origins.World.BiomeData {
 			public const float Creeper = 0.6f;
 			public const float Crab = 0.6f;
 			public const float A_GUN = 0.9f; // yes, this is a reference
+			public const float Crawdad = 0.9f;
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate, bool needsMoss = false) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
 				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;

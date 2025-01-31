@@ -220,7 +220,7 @@ ENEMY NPCS:
 (#2, ^2) King Crab !!!
 (#2, ^2) Mildew Creeper !!!
 (^) Mitoworm*
-(#, ^2) Nasty Crawdad !!!
+(☻) Nasty Crawdad !!!
 (^) Profaned Bident*
 (X) Riven Gull
 (^) Riven Mimic*
@@ -233,7 +233,7 @@ ENEMY NPCS:
 (#2, ^2) Sea Dragon° !!!
 (^) Shattered Ghoul*
 (^) Shattered Mummy*
-(#, ^2) Shotgunfish !!!
+(☻) Shotgunfish !!!
 (X) Tendon Terror
 (^) Torn Ghoul*
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
