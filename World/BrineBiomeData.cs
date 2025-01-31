@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod;
+using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
 using Origins.NPCs;
 using Origins.Tiles.Brine;
@@ -37,9 +38,55 @@ namespace Origins.World.BiomeData {
 			public const float Dragon = 0.6f;
 			public const float Creeper = 0.6f;
 			public const float Crab = 0.6f;
-			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate) {
+			public const float A_GUN = 0.9f; // yes, this is a reference
+			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate, bool needsMoss = false) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
 				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;
+				if (needsMoss) {
+					Point basePos = new(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
+					Point pos = basePos;
+					static bool SearchForMoss(Point pos) {
+						int mossType = ModContent.TileType<Peat_Moss>();
+						for (int i = -3; i < 4; i++) {
+							for (int j = -3; j < 4; j++) {
+								if (Framing.GetTileSafely(pos.X + i, pos.Y + j).TileIsType(mossType)) return true;
+							}
+						}
+						return false;
+					}
+					for (int i = 0; i < 10; i++) {
+						pos.Y += 1;
+						if (Framing.GetTileSafely(pos).HasTile) {
+							if (SearchForMoss(pos)) return rate;
+							break;
+						}
+					}
+					pos = basePos;
+					for (int i = 0; i < 10; i++) {
+						pos.X += 1;
+						if (Framing.GetTileSafely(pos).HasTile) {
+							if (SearchForMoss(pos)) return rate;
+							break;
+						}
+					}
+					pos = basePos;
+					for (int i = 0; i < 10; i++) {
+						pos.X -= 1;
+						if (Framing.GetTileSafely(pos).HasTile) {
+							if (SearchForMoss(pos)) return rate;
+							break;
+						}
+					}
+					pos = basePos;
+					for (int i = 0; i < 10; i++) {
+						pos.Y -= 1;
+						if (Framing.GetTileSafely(pos).HasTile) {
+							if (SearchForMoss(pos)) return rate;
+							break;
+						}
+					}
+					return 0;
+				}
 				return rate;
 			}
 		}

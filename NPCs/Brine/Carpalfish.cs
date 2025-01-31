@@ -60,7 +60,9 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4));
+			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4)
+			));
 		}
 		public override void AI() {
 			NPC.knockBackResist = 0.45f;

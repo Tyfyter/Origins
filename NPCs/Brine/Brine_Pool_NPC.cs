@@ -16,8 +16,8 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Brine {
 	public abstract class Brine_Pool_NPC : ModNPC {
-		int pathfindingTime = 0;
-		bool targetIsRipple = false;
+		public int pathfindingTime = 0;
+		public bool targetIsRipple = false;
 		public Vector2 TargetPos { get; set; }
 		public static List<(Vector2 position, float magnitude)> Ripples { get; private set; } = [];
 		public override void SetStaticDefaults() {
@@ -35,9 +35,9 @@ namespace Origins.NPCs.Brine {
 		public override bool CanHitNPC(NPC target) {
 			return target.type != Type;
 		}
-		public virtual bool CanTargetNPC(NPC npc) {
-			if (npc.type == NPCID.TargetDummy) return false;
-			return npc.wet && CanHitNPC(npc);
+		public virtual bool CanTargetNPC(NPC other) {
+			if (other.type == NPCID.TargetDummy) return false;
+			return other.wet && CanHitNPC(other);
 		}
 		public virtual bool CanTargetPlayer(Player player) {
 			return player.wet && !player.invis;
@@ -129,6 +129,12 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.WritePackedVector2(TargetPos);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			TargetPos = reader.ReadPackedVector2();
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
 			int spawnY = tileY * 16;

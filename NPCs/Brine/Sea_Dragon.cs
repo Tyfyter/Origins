@@ -61,8 +61,11 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40));
+			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40)
+			));
 		}
 		public override void AI() {
 			DoTargeting();

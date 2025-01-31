@@ -268,6 +268,9 @@ namespace Origins {
 				instance.goToKeybindKeybind = keybind;
 				instance.goToKeybind = (keybind) => controllerConfigurator.Call("OPENKEYBINDSTOSEARCH", keybind);
 			}
+			if (ModLoader.TryGetMod("GlobalLootViewer", out Mod globalLootViewer)) {
+				globalLootViewer.Call("IgnoreConditionWhenHighLighting", DropConditions.PlayerInteraction);
+			}
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
 				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Defiled_Wastelands>());
 				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Riven_Hive>());

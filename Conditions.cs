@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -13,7 +14,21 @@ namespace Origins {
 		public static Condition ShimmerTransmutation { get; private set; } = new Condition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerTransmutation"), () => false);
 		public void Load(Mod mod) { }
 		public void Unload() {
-			foreach (FieldInfo item in GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Static)) {
+			foreach (FieldInfo item in GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+				item.SetValue(null, null);
+			}
+		}
+	}
+	public class DropConditions : ILoadable {
+		public class PlayerInteractionCondition : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) => info.npc?.GetWereThereAnyInteractions() ?? true;
+			public bool CanShowItemDropInUI() => true;
+			public string GetConditionDescription() => null;
+		}
+		public static IItemDropRuleCondition PlayerInteraction { get; private set; } = new PlayerInteractionCondition();
+		public void Load(Mod mod) { }
+		public void Unload() {
+			foreach (FieldInfo item in GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
 				item.SetValue(null, null);
 			}
 		}

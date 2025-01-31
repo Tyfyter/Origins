@@ -49,9 +49,11 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 6));
+			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 6)
+			));
 		}
-		public override bool CanTargetNPC(NPC npc) => npc.type != NPCID.TargetDummy && CanHitNPC(npc);
+		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && CanHitNPC(other);
 		public override bool CanTargetPlayer(Player player) => !player.invis;
 		public int Frame {
 			get => NPC.frame.Y / NPC.frame.Height;
