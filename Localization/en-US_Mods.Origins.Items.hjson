@@ -5011,3 +5011,8 @@ Framing_Tester: {
 	DisplayName: Framing Tester
 	Tooltip: ""
 }
+
+Defective_Mortar_Shell: {
+	DisplayName: Defective Mortar Shell
+	Tooltip: ""
+}

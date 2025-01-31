@@ -46,11 +46,12 @@ namespace Origins.NPCs.Felnum {
 			NPC.DoFrames(4);
 		}
 		public override bool? CanFallThroughPlatforms() => true;
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.playerInteraction[target.whoAmI] || !target.OriginPlayer().felnumEnemiesFriendly;
 		Vector2 ShoulderPos => NPC.Center - new Vector2(9 * NPC.spriteDirection, 7);
 		public override void AI() {
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All,
-				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet,
-				null
+				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumEnemiesFriendly,
+				npc => npc.CanBeChasedBy()
 			);
 			NPC.target = searchResults.NearestTargetIndex;
 			if (searchResults.FoundTarget) {
@@ -170,5 +171,6 @@ namespace Origins.NPCs.Felnum {
 			base.SetDefaults();
 			Projectile.friendly = false;
 		}
+		public override bool CanHitPlayer(Player target) => !target.OriginPlayer().felnumEnemiesFriendly;
 	}
 }

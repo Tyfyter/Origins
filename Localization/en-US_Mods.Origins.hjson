@@ -1447,6 +1447,8 @@ Projectiles: {
 	Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
 	Cloud_Elemental_P.DisplayName: Cloud Elemental
 	Shotgunfish_P.DisplayName: Shotgunfish P
+	Ashen_Mortar.DisplayName: Ashen Mortar
+	Ashen_Mortar_P.DisplayName: Ashen Mortar P
 }
 
 Prefixes: {

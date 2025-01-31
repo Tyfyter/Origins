@@ -19,5 +19,8 @@ namespace Origins.Items.Armor.Vanity.Other {
 			Item.rare = ItemRarityID.Orange;
 			Item.vanity = true;
 		}
+		public override void UpdateEquip(Player player) {
+			player.OriginPlayer().felnumEnemiesFriendly = true;
+		}
 	}
 }

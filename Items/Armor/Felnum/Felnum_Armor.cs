@@ -41,6 +41,7 @@ namespace Origins.Items.Armor.Felnum {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Felnum");
 			originPlayer.felnumSet = true;
+			originPlayer.felnumEnemiesFriendly = true;
 			if (player.velocity.Length() > 4) {
 				originPlayer.felnumShock += player.velocity.Length() / 4;
 			} else if (originPlayer.felnumShock > 0) {

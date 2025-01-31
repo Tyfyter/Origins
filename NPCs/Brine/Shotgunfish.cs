@@ -152,9 +152,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[2]) / 45;
-			if (NPC.frameCounter >= 40) NPC.frameCounter = 0;
-			NPC.frame = new Rectangle(0, 32 * (int)(frame * Main.npcFrameCount[Type]), 62, 30);
+			if (NPC.wet) NPC.DoFrames(6);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

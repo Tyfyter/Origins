@@ -49,6 +49,7 @@ namespace Origins {
 		public bool cryostenSet = false;
 		public bool cryostenBody = false;
 		public bool felnumSet = false;
+		public bool felnumEnemiesFriendly = false;
 		public float felnumShock = 0;
 		public bool usedFelnumShock = false;
 		public float oldFelnumShock = 0;
@@ -433,6 +434,7 @@ namespace Origins {
 
 			ashenKBReduction = false;
 			felnumSet = false;
+			felnumEnemiesFriendly = false;
 			minerSet = false;
 			lostSet = false;
 			refactoringPieces = false;

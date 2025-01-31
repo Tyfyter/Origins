@@ -3803,7 +3803,7 @@ namespace Origins {
 			tile.TileFrameY = (short)(bestMatch.Y * 18);
 		}
 		public static void DoFraming(int i, int j, bool resetFrame, (int tileType, int frameType)[] map, params (MergeMatcher match, Point first, Point offset)[] frames) {
-#if DEBUG
+#if DEBUG && false
 			List<int> types = [-1];
 			for (int k = 0; k < map.Length; k++) {
 				if (!types.Contains(map[k].frameType)) types.Add(map[k].frameType);
