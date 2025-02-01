@@ -404,13 +404,13 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus
-(X) Fallacious Vase !!!
-(X) Feather Cape !!!
-(X) Feathery Crest !!!
+(#, ^2) Fallacious Vase !!!
+(#, ^2) Feather Cape !!!
+(#, ^2) Feathery Crest !!!
 (#, ^2) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
-(X) Full Send !!!
+(#, ^2) Full Send !!!
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
@@ -452,7 +452,7 @@ ACCESSORIES:
 (#, ^2) Noxious Mithrafin !!!
 (^) Olid Organ*
 (#, ^2) Ornamental Keepsake !!!
-(X) Party Ring Balloon !!!
+(#, ^2) Party Ring Balloon !!!
 (^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
@@ -467,7 +467,7 @@ ACCESSORIES:
 (X) Rebreather Gear !!!
 (^) Resin Shield*
 (^) Return To Sender*
-(X) Rockstar Choker !!!
+(#, ^2) Rockstar Choker !!!
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
@@ -475,7 +475,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
 (^) Shock Collar
-(X) Shotgun Glove !!!
+(#, ^2) Shotgun Glove !!!
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
 (^) Sniper's Mark*
@@ -872,7 +872,7 @@ SUMMONER WEAPONS:
 (X) Pinwheel Pole
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(@2, #) Sunflower in a Pot !!!
+(#, ^2) Sunflower in a Pot !!!
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff
