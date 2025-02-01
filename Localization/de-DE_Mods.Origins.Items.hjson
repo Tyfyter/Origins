@@ -177,7 +177,11 @@ CFHES: {
 
 Cirrhosis_Abhorrence: {
 	// DisplayName: Cirrhosis' Abhorrence
-	// Tooltip: Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+	/* Tooltip:
+		'''
+		All attacks inflict Bleeding and set enemies ablaze
+		Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+		''' */
 }
 
 Comb: {

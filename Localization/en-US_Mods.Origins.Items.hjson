@@ -177,7 +177,11 @@ CFHES: {
 
 Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
-	Tooltip: Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+	Tooltip:
+		'''
+		All attacks inflict Bleeding and set enemies ablaze
+		Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+		'''
 }
 
 Comb: {
@@ -4957,7 +4961,7 @@ Rubber_Dynamite: {
 
 Felnum_Shock_Glasses: {
 	DisplayName: Felnum Shock Glasses
-	Tooltip: ""
+	Tooltip: Felnum enemies become friendly when worn
 }
 
 Sparking_Flame_Barrel.DisplayName: Sparking Flame Barrel
@@ -5014,5 +5018,5 @@ Framing_Tester: {
 
 Defective_Mortar_Shell: {
 	DisplayName: Defective Mortar Shell
-	Tooltip: ""
+	Tooltip: Summons a mortar turret to fight for you
 }

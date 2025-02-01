@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Gores.NPCs;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.Projectiles;
@@ -69,6 +71,9 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.ai[2] = float.NaN;
 		}
 		public override void AI() {
+			/*Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 2f, 18f, 15, 1000f, -1f, nameof(Amoebash)
+			));*/
 			Player player = Main.player[Projectile.owner];
 			if (player.dead) {
 				Projectile.active = false;

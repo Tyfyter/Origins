@@ -194,7 +194,6 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)*
 (^) Spider Amoeba*
 (X) Spiteful Flesh
-(X) Steam Pirate !!!
 (X) Steam Shooter !!!
 
 (#, ^2) Airsnatcher !!!
@@ -344,6 +343,7 @@ ARMOR:
 (#2, ^2) Necromancer Armor*
 (X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
+(X) Warlord Armor
 
 (X) Ancient Chromtain Armor
 (X) Ancient Eyndum Armor
@@ -745,7 +745,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(#2/4, ^2) Boat Rocker° !!! (needs alternate chains and alt)
+(#2, ^2) Boat Rocker !!! (alt)
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
@@ -859,7 +859,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
-(X) Guardian Rod !!!
+(#, ^2) Guardian Rod !!!
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!
@@ -877,14 +877,14 @@ SUMMONER WEAPONS:
 (^) Thread Rod*
 (^) Woodsprite Staff
 
-(X) Acrid Spout !!!
+(#, ^2) Acrid Spout !!!
 (X) Barnacled Purse
-(X) Brine Convergence Incantation !!!
+(#, ^2) Brine Convergence Incantation !!!
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(X) Huff Puffer Bait !!!
+(#, ^2) Huff Puffer Bait !!!
 (#, ^2) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
@@ -904,7 +904,7 @@ SUMMONER WEAPONS:
 (X) Cursor Brick
 (X) Doom Incantation
 (X) Ego
-(@2/3, #2) Fiber Optic Whips
+(X) Fiber Optic Whips
 (X) Ingress Incantation
 (X) Mojo Mask Staff
 (X) Peeping Tom's Incantation
@@ -1007,7 +1007,7 @@ EXPLOSIVE WEAPONS:
 
 GENERIC WEAPONS:
 ---
-(^) Generic Weapon
+(^) Generic Weapon*
 (^) Potato Launcher*
 
 (X) Hyperstatic Gauss Cannon
