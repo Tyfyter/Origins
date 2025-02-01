@@ -1,12 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ranged;
 using PegasusLib;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
@@ -16,6 +20,8 @@ namespace Origins.Projectiles {
 		bool slamming = false;
 		bool justHit = false;
 		public bool bloodletter = false;
+		public int chainFrameSeed = -1;
+		public FastRandom chainRandom;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -30,6 +36,9 @@ namespace Origins.Projectiles {
 				projectile.ai[0] = 0;
 			}
 			justHit = false;
+			if (chainFrameSeed == -1) {
+				chainFrameSeed = Main.rand.Next(0, ushort.MaxValue);
+			}
 			return true;
 		}
 		public override void AI(Projectile projectile) {
@@ -68,6 +77,7 @@ namespace Origins.Projectiles {
 					projectile.velocity = diff * speed / speedFactor;
 					projectile.penetrate = 10;
 					slamming = true;
+					projectile.netUpdate = true;
 				}
 			}
 			if (bloodletter) {
@@ -140,6 +150,65 @@ namespace Origins.Projectiles {
 			slamming = bitReader.ReadBit();
 			justHit = bitReader.ReadBit();
 			bloodletter = bitReader.ReadBit();
+		}
+		public override bool PreDrawExtras(Projectile projectile) {
+			Player player = Main.player[projectile.owner];
+			if (player.HeldItem?.ModItem is Harpoon_Gun harpoonGun && harpoonGun.ChainTexture.Exists) {
+				float num129 = projectile.position.X + 8f;
+				float num130 = projectile.position.Y + 2f;
+				float velocityX = projectile.velocity.X;
+				float velocityY = projectile.velocity.Y;
+				if (velocityX == 0f && velocityY == 0f) {
+					velocityY = 0.0001f;
+				}
+
+				float dist = MathF.Sqrt(velocityX * velocityX + velocityY * velocityY);
+				dist = 20f / dist;
+				if (projectile.ai[0] == 0f) {
+					num129 -= projectile.velocity.X * dist;
+					num130 -= projectile.velocity.Y * dist;
+				} else {
+					num129 += projectile.velocity.X * dist;
+					num130 += projectile.velocity.Y * dist;
+				}
+
+				Vector2 pos = new(num129, num130);
+				velocityX = player.MountedCenter.X - pos.X;
+				velocityY = player.MountedCenter.Y - pos.Y;
+				float rotation = MathF.Atan2(velocityY, velocityX) - 1.57f;
+				if (projectile.alpha == 0) {
+					int direction = projectile.Center.X < player.MountedCenter.X ? 1 : -1;
+
+					player.itemRotation = MathF.Atan2(velocityY * direction, velocityX * direction);
+				}
+				Texture2D chain = harpoonGun.ChainTexture;
+				int i = 0;
+				do {
+					dist = MathF.Sqrt(velocityX * velocityX + velocityY * velocityY);
+					if (float.IsNaN(dist) || dist < 25f) break;
+
+					dist = chain.Height / dist;
+					velocityX *= dist;
+					velocityY *= dist;
+					pos.X += velocityX;
+					pos.Y += velocityY;
+					velocityX = player.MountedCenter.X - pos.X;
+					velocityY = player.MountedCenter.Y - pos.Y;
+					Rectangle frame = chain.Frame(harpoonGun.ChainFrames, frameX: harpoonGun.GetChainFrame(i, this, projectile));
+					Main.EntitySpriteDraw(
+						chain,
+						pos - Main.screenPosition,
+						frame,
+						Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f)),
+						rotation,
+						frame.Size() * 0.5f,
+						1f,
+						SpriteEffects.None
+					);
+				} while (++i < 400);
+				return false;
+			}
+			return true;
 		}
 	}
 }

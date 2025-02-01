@@ -4,14 +4,22 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+using PegasusLib;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Projectiles;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Harpoon_Gun : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "HarpoonGun"
         ];
-        public override void SetStaticDefaults() {
+		protected override bool CloneNewInstances => true;
+		public AutoLoadingAsset<Texture2D> ChainTexture { get; private set; }
+		public int ChainFrames { get; protected set; } = 1;
+		public override void AutoStaticDefaults() {
+			base.AutoStaticDefaults();
+			ChainTexture = Texture + "_Chain";
 			if (GetType() != typeof(Harpoon_Gun)) return;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Harpoon;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Harpoon] = Type;
@@ -52,5 +60,6 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		public virtual void ModifyShotProjectile(Projectile projectile, EntitySource_ItemUse_WithAmmo source) { }
+		public virtual int GetChainFrame(int index, HarpoonGlobalProjectile global, Projectile projectile) => index % ChainFrames;
 	}
 }

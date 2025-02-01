@@ -5,12 +5,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Ranged {
     public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
         public new string[] Categories => [
             "HarpoonGun"
         ];
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			ChainFrames = 3;
+		}
+		public override void SetDefaults() {
 			Item.damage = 48;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
@@ -35,8 +39,14 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			if (player.controlUseTile && player.releaseUseTile) {
-				player.GetModPlayer<OriginPlayer>().boatRockerAltUse = true;
+				player.OriginPlayer().boatRockerAltUse = true;
 			}
+		}
+		public override int GetChainFrame(int index, HarpoonGlobalProjectile global, Projectile projectile) {
+			if (index == 0) {
+				global.chainRandom = new(global.chainFrameSeed);
+			}
+			return global.chainRandom.Next(ChainFrames);
 		}
 	}
 }

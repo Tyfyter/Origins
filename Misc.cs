@@ -253,6 +253,7 @@ namespace Origins {
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
 	}
+	[Obsolete($"Use PegasusLib.AutoLoadingAsset<T> instead")]
 	public struct AutoLoadingAsset<T> : IUnloadable where T : class {
 		public readonly bool IsLoaded => asset.Value?.IsLoaded ?? false;
 		public T Value {
