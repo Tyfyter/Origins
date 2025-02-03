@@ -58,7 +58,7 @@ namespace Origins {
 		[JsonDefaultDictionaryKeyValue("{\"Mod\": \"Terraria\", \"Name\": \"GenericDamageClass\"}")]
 		[JsonIgnore, ShowDespiteJsonIgnore]
 		public Dictionary<DamageClassDefinition, float> StatShareRatio { get; set; } = new() {
-			[new("Terraria/SummonDamageClass")] = 0.5f
+			[new("Terraria/SummonDamageClass")] = 0.25f
 		};
 
 		[JsonIgnore]
