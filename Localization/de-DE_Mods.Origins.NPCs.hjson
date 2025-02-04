@@ -278,10 +278,10 @@ Dryad: {
 }
 
 // Jacob_Marley.DisplayName: Ominous Spirit
-// Spirit_Of_Christmas_Past.DisplayName: Spirit Of Christmas Past
+// Spirit_Of_Christmas_Past.DisplayName: Spirit of Christmas Past
 
 Spirit_Of_Christmas_Present: {
-	// DisplayName: Spirit Of Christmas Present
+	// DisplayName: Spirit of Christmas Present
 
 	TownNPCMood: {
 		// Content: I am content.
@@ -295,9 +295,9 @@ Spirit_Of_Christmas_Present: {
 	}
 }
 
-// Spirit_Of_Christmas_Future.DisplayName: Spirit Of Christmas Yet To Come
-// Spirit_Of_Christmas_Present_Tax_Collector.DisplayName: Spirit Of Christmas Present Tax Collector
-// Spirit_Of_Christmas_Future_Tax_Collector.DisplayName: Spirit Of Christmas Future Tax Collector
+// Spirit_Of_Christmas_Future.DisplayName: Spirit of Christmas Yet-to-come
+// Spirit_Of_Christmas_Present_Tax_Collector.DisplayName: Spirit of Christmas Present Tax Collector
+// Spirit_Of_Christmas_Future_Tax_Collector.DisplayName: Spirit of Christmas Future Tax Collector
 // Sea_Dragon.DisplayName: Sea Dragon
 // Carpalfish.DisplayName: Carpalfish
 // Felnum_Ore_Slime.DisplayName: Felnum Slime

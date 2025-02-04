@@ -24,7 +24,20 @@ namespace Origins.Items.Weapons.Magic {
 			"OtherMagic"
 		];
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() => ID = Type;
+		public static Dictionary<int, int> NPCTypeAliases { get; private set; } = [];
+		public override void SetStaticDefaults() {
+			ID = Type;
+			NPCTypeAliases[NPCID.LihzahrdCrawler] = NPCID.Lihzahrd;
+			NPCTypeAliases[NPCID.GolemFistLeft] = NPCID.Golem;
+			NPCTypeAliases[NPCID.GolemFistRight] = NPCID.Golem;
+			NPCTypeAliases[NPCID.GolemHead] = NPCID.Golem;
+			NPCTypeAliases[NPCID.MoonLordHand] = NPCID.MoonLordCore;
+			NPCTypeAliases[NPCID.MoonLordHead] = NPCID.MoonLordCore;
+			NPCTypeAliases[NPCID.MoonLordLeechBlob] = NPCID.MoonLordCore;
+		}
+		public override void Unload() {
+			NPCTypeAliases = null;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
@@ -53,7 +66,7 @@ namespace Origins.Items.Weapons.Magic {
 					case NPCID.CultistBoss or NPCID.CultistBossClone or NPCID.CultistDevote or NPCID.CultistArcherBlue or NPCID.CultistArcherWhite:
 					return !npc.active || npc.DistanceSQ(Main.LocalPlayer.MountedCenter) > (Main.screenWidth * Main.screenWidth) + (Main.screenHeight * Main.screenHeight);
 				}
-				return !npc.CanBeChasedBy(typeof(Missing_File_UI)) || BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(npc.netID)?.Icon is null;
+				return !npc.CanBeChasedBy(typeof(Missing_File_UI)) || BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out int type) ? type : npc.netID)?.Icon is null;
 			}
 			if (targets.Count == 0) {
 				HashSet<int> realNPCs = [];
@@ -61,9 +74,10 @@ namespace Origins.Items.Weapons.Magic {
 				Rectangle screenArea = new(margin, margin, Main.screenWidth - margin * 2, Main.screenHeight - margin * 2);
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (IsInvalidNPC(npc)) continue;
-					if (realNPCs.Add(npc.netID)) {
+					if (!Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out int npcType)) npcType = npc.netID;
+					if (realNPCs.Add(npcType)) {
 						targets.Add(new(
-							npc.netID,
+							npcType,
 							Main.rand.NextVector2FromRectangle(screenArea),
 							Main.rand.NextFloat(4),
 							false
@@ -151,19 +165,20 @@ namespace Origins.Items.Weapons.Magic {
 						} else {
 							currentNPCColor = hoverColor;
 						}
-						if (BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(target.NetID)?.Icon is not null) {
+						if (!Missing_File.NPCTypeAliases.TryGetValue(target.NetID, out int npcType)) npcType = target.NetID;
+						if (BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(npcType)?.Icon is not null) {
 							Rectangle frame = texture.Frame(verticalFrames: 4, frameY: (int)target.Frame);
 							frame.Height -= 1;
 							data.sourceRect = frame;
 							NPCExtensions.DrawBestiaryIcon(
 								spriteBatch,
-								target.NetID,
+								npcType,
 								new((int)((target.Position.X - 32) / _scale.X), (int)((target.Position.Y - 32) / _scale.Y), 64, 64),
 								true,
 								data
 							);
 						} else {
-							NPC npc = ContentSamples.NpcsByNetId[target.NetID];
+							NPC npc = ContentSamples.NpcsByNetId[npcType];
 							Vector2 position = npc.Size * 0.5f - (target.Position * scale);
 							Main.instance.DrawNPCDirect(spriteBatch, npc, true, position);
 							Main.instance.DrawNPCDirect(spriteBatch, npc, false, position);
@@ -175,7 +190,7 @@ namespace Origins.Items.Weapons.Magic {
 								IEntitySource source = Main.LocalPlayer.GetSource_ItemUse(item);
 								int damage = Main.LocalPlayer.GetWeaponDamage(item);
 								foreach (NPC targetNPC in Main.ActiveNPCs) {
-									if (targetNPC.netID == target.NetID) {
+									if ((Missing_File.NPCTypeAliases.TryGetValue(targetNPC.netID, out int type) ? type : targetNPC.netID) == npcType) {
 										SoundEngine.PlaySound(SoundID.Meowmere, targetNPC.Center);
 										Projectile.NewProjectile(
 											source,
