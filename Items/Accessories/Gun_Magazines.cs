@@ -1,6 +1,7 @@
 ﻿using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
 using Origins.Tiles.Brine;
 using System;
 using System.Collections.Generic;
@@ -80,6 +81,11 @@ namespace Origins.Items.Accessories {
 				base.Tooltip,
 				this.GetLocalization(nameof(Tooltip))
 			);
+		public override void SetStaticDefaults() {
+			AmmoID.Sets.IsBullet[ItemID.Sunflower] = true;
+			AmmoID.Sets.IsBullet[ItemID.Fireblossom] = true;
+			AmmoID.Sets.IsBullet[ModContent.ItemType<Harpoon>()] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 24);
 			Item.value = Item.sellPrice(gold: 1);

@@ -72,7 +72,7 @@ BOSSES AND MINI-BOSSES:
 (X) Tearror
 
 (%2) Origins final boss
-(X) I.C.A.R.U.S
+(X) I.C.A.R.U.S.
 (X) Quantux
 ---
 
@@ -249,7 +249,7 @@ ENEMY NPCS:
 
 (#, ^2, 々) Blox
 (#, ^2, 々) Cubix
-(X) I.C.A.R.U.S Swarm Drone
+(X) I.C.A.R.U.S. Swarm Drone
 (#, ^2, 々) Tetrix
 ---
 
@@ -270,24 +270,21 @@ EVENTS:
 STATUS EFFECTS:
 ---
 (%2) Ashen Assimilation
+(#2, $2, ^2) Cavitation !!! (needs bubbly effect and sounds)
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
 (^) Defiled Assimilation*
 (X) Hallowed Assimilation
-(^) Riven Assimilation*
-(#2, $2, ^2) Cavitation !!! (needs bubbly effect and sounds)
-(X) Celestial Flames
 (^) Impeding Shrapnel*
-(X) Ionizing Radiation
 (^) Mana Buffer*
+(X) Quantum Flames
 (^) Rasterized*
-(^) Shadefire
-(^) Static Shock
+(^) Riven Assimilation*
+(^) Shadefire*
+(^) Static Shock*
 (^) Torn*
-(^) Totally Safe
+(^) Totally Safe*
 (^) Toxic Shock*
-(X) Whiplash
-(X) Workout
 ---
 
 
@@ -399,7 +396,7 @@ ACCESSORIES:
 (^) Dryad's Inheritance*
 (^) Dysfunctional Endless Explosives Bag*
 (^) Eccentric Stone*
-(^) Eitrite Gun Magazine
+(^) Eitrite Gun Magazine*
 (^) Evil Bar Gun Magazines
 (^) Exploder Emblem*
 (^) Explosive Artery*
@@ -729,7 +726,7 @@ RANGED WEAPONS:
 (^) Marrowick Bow
 (^) Neural Network*
 (^) Riven Splitter*
-(^) Shardcannon
+(^) Shardcannon*
 (^) Sleetfire
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear
@@ -755,7 +752,7 @@ RANGED WEAPONS:
 (#2, ^2) Fifth Spline
 (^) Firespit
 (#, ^2) Fumethrower !!!
-(^) Harpoon Burst Rifle
+(^) Harpoon Burst Rifle*
 (^) HNO-3 "Viper"
 (^) Incision*
 (X) Left Klik°
@@ -1568,7 +1565,7 @@ VOLUME I MUSIC:
 (^) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Weaver
-(X) I.C.A.R.U.S
+(X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
 (^) Lost Diver/Mildew Carrion
 (X) Mechamalgamation
@@ -1610,7 +1607,7 @@ VOLUME II MUSIC:
 (^) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Weaver
-(X) I.C.A.R.U.S
+(X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
 ($2) Lost Diver/Mildew Carrion
 (X) Mechamalgamation
