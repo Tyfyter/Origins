@@ -23,13 +23,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.width = 28;
 			Item.height = 30;
-			Item.useTime = 24;
-			Item.useAnimation = 24;
+			Item.useTime = 40;
+			Item.useAnimation = 40;
 			Item.reuseDelay = 8;
-			Item.mana = 16;
+			Item.mana = 24;
 			Item.shoot = ModContent.ProjectileType<Caustica_P>();
 			Item.value = Item.sellPrice(gold: 10);
-			Item.rare = ButterscotchRarity.ID;
+			Item.rare = ItemRarityID.Lime;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			int a = Main.rand.Next(5, 7);

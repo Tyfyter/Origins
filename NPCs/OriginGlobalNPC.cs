@@ -96,7 +96,7 @@ namespace Origins.NPCs {
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode); // Lost Diver condition for both
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
 					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
-					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
+					shop.Add<Caustica>(PeatSoldCondition(999), Condition.DownedGolem);
 					break;
 				}
 				case NPCID.Steampunker: {
