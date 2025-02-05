@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
@@ -19,12 +20,17 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
 	public class Shotgunfish : Brine_Pool_NPC {
+		[CloneByReference]
+		public HashSet<int> PreyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Velocity = 1f
 			};
+			TargetNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
+			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
+			PreyNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -68,8 +74,9 @@ namespace Origins.NPCs.Brine {
 			if (NPC.wet) {
 				bool flipTargetRotation = false;
 				NPC.noGravity = true;
+				bool targetIsPrey = TargetPos != default && !targetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
 				if (TargetPos != default) {
-					if (!NPC.WithinRange(TargetPos, 16 * 12) || (targetIsRipple && NPC.ai[1] > 0)) {
+					if ((!targetIsPrey && !NPC.WithinRange(TargetPos, 16 * 12)) || (targetIsRipple && NPC.ai[1] > 0)) {
 						TargetPos = default;
 					} else if (NPC.HasPlayerTarget) {
 						Player target = Main.player[NPC.target];
@@ -84,7 +91,7 @@ namespace Origins.NPCs.Brine {
 					if (NPC.ai[1] <= 0) {
 						direction *= -1;
 					}
-					if (NPC.ai[1] > 0) {
+					if (NPC.ai[1] > 0 && canSeeTarget) {
 						flipTargetRotation = true;
 						if (GeometryUtils.AngleDif(NPC.rotation, direction.ToRotation(), out _) < 1f && ++NPC.ai[0] >= 40) {
 							NPC.ai[0] = 0;
@@ -108,10 +115,21 @@ namespace Origins.NPCs.Brine {
 						direction *= -0.1f;
 					} else {
 						NPC.ai[0] = 0;
+						//Dust.NewDust(TargetPos, 0, 0, 6);
+						if (targetIsPrey && canSeeTarget) {
+							if (TargetPos.IsWithin(NPC.Center, 80)) {
+								flipTargetRotation = true;
+							} else {
+								direction *= -1;
+							}
+						}
 					}
 				} else {
 					NPC.ai[0] = 0;
-					if (NPC.collideX) NPC.velocity.X = -NPC.direction;
+					if (NPC.collideX && Math.Abs(NPC.velocity.X) > Math.Abs(NPC.velocity.Y) * 0.25f) {
+						NPC.velocity.X = -NPC.direction;
+						NPC.rotation += MathHelper.Pi;
+					}
 					NPC.direction = Math.Sign(NPC.velocity.X);
 					if (NPC.direction == 0) NPC.direction = 1;
 					direction = Vector2.UnitX * NPC.direction;
@@ -119,20 +137,43 @@ namespace Origins.NPCs.Brine {
 				if (NPC.ai[3] > 150) {
 					float dist = 16 * 25;
 					int mossType = ModContent.TileType<Peat_Moss>();
-					for (int i = -3; i < 4; i++) {
-						Vector2 dir = Vector2.UnitX.RotatedBy(NPC.rotation + i * 0.5f);
+					for (int i = -3; i < 3; i++) {
+						Vector2 dir = Vector2.UnitX.RotatedBy(NPC.rotation + i * 0.5f * NPC.direction);
 						float newDist = CollisionExt.Raymarch(NPC.Center, dir, dist);
-						if (newDist < dist && Framing.GetTileSafely(NPC.Center + dir * dist * 2).TileIsType(mossType)) {
+						//OriginExtensions.DrawDebugLine(NPC.Center, NPC.Center + dir * newDist);
+						if (TargetPos == default) {
+							newDist *= 1 + (i * 0.01f);
+						} else {
+							newDist *= 1 - Vector2.Dot(direction, dir);
+						}
+						if (newDist < dist && Framing.GetTileSafely(NPC.Center + dir * (newDist + 2)).TileIsType(mossType)) {
 							dist = newDist;
 							direction = dir;
 						}
 					}
 					if (dist < 28) {
-						NPC.ai[3] = 0;
+						NPC.ai[3] = Main.rand.NextFloat(0, 30);
 						if (NPC.ai[1] < 3) NPC.ai[1]++;
+						NPC.netUpdate = true;
 					}
 				} else {
 					NPC.ai[3]++;
+					if (!flipTargetRotation) {
+						const float dist = 16 * 4;
+						float tileAvoidance = 0;
+						for (int i = -3; i < 4; i++) {
+							if (i == 0) continue;
+							Vector2 dir = Vector2.UnitX.RotatedBy(NPC.rotation + i * 0.5f * NPC.direction);
+							float newDist = CollisionExt.Raymarch(NPC.Center, dir, dist);
+							//OriginExtensions.DrawDebugLine(NPC.Center, NPC.Center + dir * newDist);
+							if (newDist < dist && Framing.GetTileSafely(NPC.Center + dir * (newDist + 2)).HasFullSolidTile()) {
+								tileAvoidance += dist / (newDist * i + 1);
+							}
+						}
+						if (tileAvoidance != 0) {
+							direction = direction.RotatedBy(Math.Clamp(tileAvoidance * -0.5f * NPC.direction, -MathHelper.PiOver2, MathHelper.PiOver2));
+						}
+					}
 				}
 				float oldRot = NPC.rotation;
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation() + (flipTargetRotation ? MathHelper.Pi : 0), 0.1f);
@@ -207,6 +248,7 @@ namespace Origins.NPCs.Brine {
 			Projectile.ignoreWater = true;
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.hostile = true;
+			Projectile.npcProj = true;
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;

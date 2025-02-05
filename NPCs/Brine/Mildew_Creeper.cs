@@ -33,6 +33,8 @@ namespace Origins.NPCs.Brine {
 				Position = Vector2.UnitY * -16,
 				PortraitPositionYOverride = -32
 			};
+			TargetNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
+			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;

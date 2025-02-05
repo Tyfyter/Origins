@@ -18,8 +18,12 @@ namespace Origins.NPCs.Brine {
 	public abstract class Brine_Pool_NPC : ModNPC {
 		public int pathfindingTime = 0;
 		public bool targetIsRipple = false;
+		public bool canSeeTarget = false;
 		public Vector2 TargetPos { get; set; }
 		public static List<(Vector2 position, float magnitude)> Ripples { get; private set; } = [];
+		[CloneByReference]
+		public HashSet<int> TargetNPCTypes { get; private set; } = [];
+		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
@@ -32,9 +36,7 @@ namespace Origins.NPCs.Brine {
 		public override void Unload() {
 			Ripples = null;
 		}
-		public override bool CanHitNPC(NPC target) {
-			return target.type != Type;
-		}
+		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type);
 		public virtual bool CanTargetNPC(NPC other) {
 			if (other.type == NPCID.TargetDummy) return false;
 			return other.wet && CanHitNPC(other);
@@ -97,8 +99,10 @@ namespace Origins.NPCs.Brine {
 				NPCAimedTarget targetData = NPC.GetTargetData();
 				Vector2 target = targetData.Center;
 				if (pathfindingTime < pathfinding_frequency) pathfindingTime++;
+				canSeeTarget = false;
 				if (CheckTargetLOS(target)) {
 					TargetPos = target;
+					canSeeTarget = true;
 				} else if (pathfindingTime >= pathfinding_frequency) {
 					pathfindingTime = 0;
 					Vector2 searchSize = new Vector2(48) * 16;

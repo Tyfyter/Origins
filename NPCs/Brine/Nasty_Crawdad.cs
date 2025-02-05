@@ -9,6 +9,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -19,12 +20,16 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
 	public class Nasty_Crawdad : Brine_Pool_NPC {
+		[CloneByReference]
+		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 9;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Velocity = 1f
 			};
+			TargetNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
+			PredatorNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crawdad);
@@ -93,6 +98,9 @@ namespace Origins.NPCs.Brine {
 					} else if (xDirectionToTarget > 10f) {
 						walkRight = true;
 						walkLeft = false;
+					}
+					if (!targetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
+						(walkRight, walkLeft) = (walkLeft, walkRight);
 					}
 					if (TargetPos.Y < NPC.Center.Y - 100f && Math.Sign(xDirectionToTarget) != -Math.Sign(NPC.velocity.X) && Math.Abs(xDirectionToTarget) < 50 && NPC.velocity.Y == 0) {
 						NPC.velocity.Y = -10f;

@@ -33,6 +33,8 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Velocity = 1f
 			};
+			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
+			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
