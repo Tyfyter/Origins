@@ -1,14 +1,23 @@
-﻿using Origins.Dev;
+﻿using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Dev.WikiPageExporter;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
-	public class Scrap_Barrier : ModItem, ICustomWikiStat {
+	public class Scrap_Barrier : ModItem, ICustomWikiStat, ICustomLinkFormat {
 		public string[] Categories => [
 			"Combat"
 		];
+		void ICustomWikiStat.ModifyWikiStats(JObject data) {
+			data["Name"] = ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " ");
+		}
+		WikiLinkFormatter ICustomLinkFormat.CustomFormatter => new LinkInfo(
+			Name: ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " "),
+			Image: LinkInfo.FromStats)
+			.Formatter();
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(48, 36);
 			Item.rare = CursedRarity.ID;

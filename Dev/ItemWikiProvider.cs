@@ -456,6 +456,9 @@ namespace Origins.Dev {
 				}
 				data.Add("PlacementSize", new JArray(width, height));
 			}
+			if (item.createWall != -1) {
+				types.Add("Wall");
+			}
 			data.AppendStat("Defense", item.defense, 0);
 			if (item.headSlot != -1) {
 				data.Add("ArmorSlot", "Helmet");
