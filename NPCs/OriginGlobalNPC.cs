@@ -346,11 +346,11 @@ namespace Origins.NPCs {
 				if (ziptieDebuff) {
 					damageBoost += 6f;
 				}
-				if (beeIncantationDebuff) {
-					damageBoost += 5f;
-				}
-				if (beeIncantationDebuff) {
+				if (mildewWhipDebuff) {
 					damageBoost += 7f;
+				}
+				if (ocotilloFingerDebuff) {
+					damageBoost += 2f;
 				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;

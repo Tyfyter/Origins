@@ -4392,6 +4392,7 @@ Bee_Afraid_Incantation: {
 		'''
 		Summons a swarm of bees to your cursor
 		6 summon tag damage
+		{$CommonItemTooltip.Whips}
 		''' */
 }
 
@@ -5024,4 +5025,19 @@ Defective_Mortar_Shell: {
 Sour_Apple: {
 	// DisplayName: Sour Apple
 	// Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
+
+Ocotillo_Item: {
+	// DisplayName: Ocotillo Item
+	// Tooltip: ""
+}
+
+Ocotillo_Finger: {
+	// DisplayName: Ocotillo Finger
+	/* Tooltip:
+		'''
+		Has a chance to inflict Bleeding
+		2 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
 }

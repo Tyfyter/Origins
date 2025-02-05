@@ -1009,6 +1009,11 @@ Buffs: {
 		DisplayName: Silenced Debuff
 		Description: Mods.Origins.Buffs.Silenced_Debuff.Description
 	}
+
+	Ocotillo_Finger_Buff: {
+		DisplayName: Ocotillo Finger Buff
+		Description: Mods.Origins.Buffs.Ocotillo_Finger_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1451,6 +1456,7 @@ Projectiles: {
 	Ashen_Mortar_P.DisplayName: Ashen Mortar P
 	Fiberglass_Sword_P.DisplayName: Fiberglass Sword
 	Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
+	Ocotillo_Finger_P.DisplayName: Ocotillo Finger
 }
 
 Prefixes: {
@@ -1669,6 +1675,7 @@ Tiles: {
 	Underwater_Vine.MapEntry: Underwater Vine
 	Defiled_Relay.MapEntry: Defiled Relay
 	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
+	Ocotillo.DisplayName: Ocotillo
 }
 
 MapObject: {

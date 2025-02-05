@@ -865,7 +865,7 @@ SUMMONER WEAPONS:
 (^) Maelstrom Incantation
 (#, ^2) Monolith Rod !!!
 (%2) Ocean Amulet !!!
-(#, ^2) Ocotillo Finger !!!
+(☻) Ocotillo Finger !!!
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
 (^) Rotted Worm Staff
