@@ -1450,6 +1450,7 @@ Projectiles: {
 	Ashen_Mortar.DisplayName: Ashen Mortar
 	Ashen_Mortar_P.DisplayName: Ashen Mortar P
 	Fiberglass_Sword_P.DisplayName: Fiberglass Sword
+	Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
 }
 
 Prefixes: {

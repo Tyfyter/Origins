@@ -1054,7 +1054,7 @@ TILES:
 (^) Lost Ore*
 (^) Marrowick*
 (#, ^2) Mildew Block° !!!
-(#2/3, ^2) Peat Moss Block* !!! (explosion when mined, bug with merging with vines)
+(☻) Peat Moss Block* !!! (explosion when mined, bug with merging with vines)
 (^) Primordial Permafrost*
 (^) Quartz Block*
 (^) Riven Cactus*

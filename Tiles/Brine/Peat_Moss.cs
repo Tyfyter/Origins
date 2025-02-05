@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
@@ -18,6 +21,18 @@ namespace Origins.Tiles.Brine {
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
 			DustType = DustID.GrassBlades;
+		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			if (!fail) {
+				Projectile.NewProjectile(
+					WorldGen.GetItemSource_FromTileBreak(i, j),
+					new Vector2(i * 16 + 8, j * 16 + 8),
+					Vector2.Zero,
+					ProjectileType<Peat_Moss_Tile_Explosion>(),
+					30,
+					4
+				);
+			}
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
@@ -43,5 +58,15 @@ namespace Origins.Tiles.Brine {
 			.DisableDecraft()
 			.Register();
 		}
+	}
+	public class Peat_Moss_Tile_Explosion : ExplosionProjectile {
+		public override DamageClass DamageType => DamageClasses.Explosive;
+		public override int Size => 48;
+		public override SoundStyle? Sound => SoundID.Item14.WithVolume(0.66f);
+		public override bool Hostile => true;
+		public override int FireDustAmount => 0;
+		public override int SmokeDustAmount => 15;
+		public override int SmokeGoreAmount => 2;
+		public override int SelfDamageCooldownCounter => ImmunityCooldownID.TileContactDamage;
 	}
 }
