@@ -22,7 +22,6 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 165, 0), name);
-			mergeID = TileID.Demonite;
 			DustType = DustID.Torch;
 			//DustType = DustID.Palladium;
 		}

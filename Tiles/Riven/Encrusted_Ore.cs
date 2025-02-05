@@ -21,7 +21,6 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(40, 148, 207), name);
-			mergeID = TileID.Crimtane;
 			HitSound = SoundID.Tink;
 			DustType = DustID.Astra;
         }

@@ -22,7 +22,6 @@ namespace Origins.Tiles.Other {
 			Main.tileSpelunker[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(160, 116, 42), name);
-			mergeID = TileID.Demonite;
             MinPick = 65;
             MineResist = 3;
 			DustType = DustID.Electric;

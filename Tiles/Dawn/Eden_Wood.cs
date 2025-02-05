@@ -16,7 +16,6 @@ namespace Origins.Tiles.Dawn {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(150, 40, 40));
-			mergeID = TileID.WoodBlock;
 		}
 	}
 	public class Eden_Wood_Item : ModItem {
