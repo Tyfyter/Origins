@@ -217,8 +217,8 @@ ENEMY NPCS:
 (X) Holy Governor
 (X) Holy Warrior
 (X) Leaf Snapper !!!
-(#2, ^2) King Crab !!!
-(#2, ^2) Mildew Creeper !!!
+(^) King Crab
+(#3, ^2) Mildew Creeper !!!
 (^) Mitoworm*
 (^) Nasty Crawdad
 (^) Profaned Bident*
@@ -361,7 +361,7 @@ ARMOR:
 ACCESSORIES:
 ---
 (X) 5G Broadband Wi-Fi Router
-(^) Abyssal Anchor*
+(#2, ^2) Abyssal Anchor* !!! (added fall speed through liquids)
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
@@ -449,6 +449,7 @@ ACCESSORIES:
 (#, ^2) Noxious Mithrafin !!!
 (^) Olid Organ*
 (#, ^2) Ornamental Keepsake !!!
+(X) Parasite Arm
 (#, ^2) Party Ring Balloon !!!
 (^) Plasma Bag*
 (^) Playtime's Over*
@@ -659,7 +660,7 @@ MELEE WEAPONS:
 (^) Marrowick Sword
 (^) Nineball*
 (^) Orbital Saw
-(^) Outreach*
+(X) Piston Rod !!!
 (^) Ripper Lance*
 (^) Riverang*
 (^) Snapthrow*
@@ -997,6 +998,7 @@ EXPLOSIVE WEAPONS:
 (@4, ^3) Black Hole Bomb°
 (@4, ^3) Caustica
 (^) Flakjack
+(X) Helix
 (X) Shimmer Dynamite
 (@4, #) Starburst
 ---
