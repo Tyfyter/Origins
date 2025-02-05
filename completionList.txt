@@ -1366,7 +1366,7 @@ CONSUMABLES:
 (^) Prickly Pear*
 (^) Shattered Stout*
 (^) Soul Spaghetti*
-(#, ^2) Sour Apple !!!
+(☻) Sour Apple !!!
 (^) Vanilla Shake*
 
 (^) Broken Record*

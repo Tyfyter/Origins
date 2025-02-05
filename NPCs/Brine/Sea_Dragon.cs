@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Melee;
 using Origins.Misc;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -17,6 +19,7 @@ using static Origins.Misc.Physics;
 namespace Origins.NPCs.Brine {
 	public class Sea_Dragon : Brine_Pool_NPC {
 		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
+		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 7;
@@ -26,6 +29,7 @@ namespace Origins.NPCs.Brine {
 				Velocity = 1f
 			};
 			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
+			PredatorNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
@@ -57,6 +61,8 @@ namespace Origins.NPCs.Brine {
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3)
 			).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40)
+			).WithOnSuccess(
+				new LeadingConditionRule(new Conditions.IsHardmode()).WithOnSuccess(ItemDropRule.Food(ModContent.ItemType<Sour_Apple>(), 40))
 			));
 		}
 		public override void AI() {
@@ -64,20 +70,37 @@ namespace Origins.NPCs.Brine {
 			Vector2 direction;
 			if (NPC.wet) {
 				NPC.noGravity = true;
+				if (TargetPos != default && !(NPC.HasValidTarget || targetIsRipple)) TargetPos = default;
 				if (TargetPos != default) {
 					direction = NPC.DirectionTo(TargetPos);
-					float oldRot = NPC.rotation;
-					GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
-					float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int dir) * 0.75f;
-					NPC.velocity = NPC.velocity.RotatedBy(diff * dir) * (1 - diff * 0.1f);
+					if (!targetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
+						direction *= -1;
+					}
 				} else {
 					if (NPC.collideX) NPC.velocity.X = -NPC.direction;
 					NPC.direction = Math.Sign(NPC.velocity.X);
 					if (NPC.direction == 0) NPC.direction = 1;
 					direction = Vector2.UnitX * NPC.direction;
-					GeometryUtils.AngularSmoothing(ref NPC.rotation, MathHelper.PiOver2 - NPC.direction * MathHelper.PiOver2, 0.1f);
 				}
 				NPC.velocity *= 0.96f;
+				const float dist = 16 * 4;
+				float tileAvoidance = 0;
+				for (int i = -3; i < 4; i++) {
+					if (i == 0) continue;
+					Vector2 dir = Vector2.UnitX.RotatedBy(NPC.rotation + i * 0.5f * NPC.direction);
+					float newDist = CollisionExt.Raymarch(NPC.Center, dir, dist);
+					//OriginExtensions.DrawDebugLine(NPC.Center, NPC.Center + dir * newDist);
+					if (newDist < dist && Framing.GetTileSafely(NPC.Center + dir * (newDist + 2)).HasFullSolidTile()) {
+						tileAvoidance += dist / (newDist * i + 1);
+					}
+				}
+				if (tileAvoidance != 0) {
+					direction = direction.RotatedBy(Math.Clamp(tileAvoidance * -0.5f * NPC.direction, -MathHelper.PiOver2, MathHelper.PiOver2));
+				}
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
+				float oldRot = NPC.rotation;
+				float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int bankDir) * 0.75f;
+				NPC.velocity = NPC.velocity.RotatedBy(diff * bankDir) * (1 - diff * 0.1f);
 				if (++NPC.ai[2] >= 40) {
 					NPC.velocity += direction * 2;
 					NPC.ai[2] = 0;

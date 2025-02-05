@@ -94,7 +94,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public void DoTargeting() {
 			const int pathfinding_frequency = 5;
-			TargetClosest(NPC.Center.IsWithin(TargetPos, Math.Max(NPC.width, NPC.height)));
+			TargetClosest(NPC.Center.IsWithin(TargetPos, Math.Max(NPC.width * 2, NPC.height * 2)));
 			if (NPC.HasValidTarget) {
 				NPCAimedTarget targetData = NPC.GetTargetData();
 				Vector2 target = targetData.Center;

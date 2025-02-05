@@ -5020,3 +5020,8 @@ Defective_Mortar_Shell: {
 	DisplayName: Defective Mortar Shell
 	Tooltip: Summons a mortar turret to fight for you
 }
+
+Sour_Apple: {
+	DisplayName: Sour Apple
+	Tooltip: "{$CommonItemTooltip.MediumStats}"
+}

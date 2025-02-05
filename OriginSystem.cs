@@ -2,6 +2,7 @@
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.Brine;
@@ -333,12 +334,26 @@ namespace Origins {
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
 			CursedFlameRecipeGroupID = ALRecipeGroups.CursedFlames.RegisteredId;
-			RecipeGroup sandGroup = RecipeGroup.recipeGroups[RecipeGroupID.Sand];
-			sandGroup.ValidItems.Add(ModContent.ItemType<Defiled_Sand_Item>());
-			sandGroup.ValidItems.Add(ModContent.ItemType<Silica_Item>());
-			RecipeGroup woodGroup = RecipeGroup.recipeGroups[RecipeGroupID.Wood];
-			woodGroup.ValidItems.Add(ModContent.ItemType<Endowood_Item>());
-			woodGroup.ValidItems.Add(ModContent.ItemType<Marrowick_Item>());
+			static void AddItemsToGroup(RecipeGroup group, params int[] items) {
+				for (int i = 0; i < items.Length; i++) {
+					group.ValidItems.Add(items[i]);
+				}
+			}
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Sand],
+				ModContent.ItemType<Defiled_Sand_Item>(),
+				ModContent.ItemType<Silica_Item>()
+			);
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Wood],
+				ModContent.ItemType<Endowood_Item>(),
+				ModContent.ItemType<Marrowick_Item>()
+			);
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Fruit],
+				ModContent.ItemType<Bileberry>(),
+				ModContent.ItemType<Pawpaw>(),
+				ModContent.ItemType<Periven>(),
+				ModContent.ItemType<Prickly_Pear>(),
+				ModContent.ItemType<Sour_Apple>()
+			);
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;

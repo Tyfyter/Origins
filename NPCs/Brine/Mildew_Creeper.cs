@@ -33,8 +33,6 @@ namespace Origins.NPCs.Brine {
 				Position = Vector2.UnitY * -16,
 				PortraitPositionYOverride = -32
 			};
-			TargetNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
-			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
@@ -54,6 +52,8 @@ namespace Origins.NPCs.Brine {
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
 		}
+		// Mildew Creepers can and will attack anything
+		public override bool CanHitNPC(NPC target) => true;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
