@@ -120,6 +120,9 @@ namespace Origins.Dev {
 			data.AppendJStat("Expert", expertData, []);
 			data.AppendJStat("Master", masterData, []);
 
+			JArray environments = WikiExtensions.GetEnvironment(ContentSamples.NpcsByNetId[modNPC.Type]);
+			data.AppendJStat("Environment", environments, []);
+
 			customStat?.ModifyWikiStats(data);
 			if (!data.ContainsKey("SpriteWidth")) data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
 			if (!data.ContainsKey("InternalName")) data.AppendStat("InternalName", modNPC?.Name, null);
