@@ -15,6 +15,10 @@ RecipeConditions: {
 
 	EctoMist: <a href=https://terraria.wiki.gg/wiki/Ecto_Mist>Ecto Mist</a>
 	ShimmerTransmutation: <a is=a-link href=Shimmer>Shimmer Transmutation</a>
+	Anvils: <a is=a-link href=https://terraria.wiki.gg/wiki/Anvils>Any Anvil</a>
+	MythrilAnvil: <a is=a-link href=https://terraria.wiki.gg/wiki/Hardmode_Anvil>Any Hardmode Anvil</a>
+	WorkBenches: <a is=a-link href=Work_Benches>Work Bench</a>
+	RivenWater: <a is="a-link" image="Tiles/Riven_Water">Riven Water</a>
 }
 
 DropConditions: {

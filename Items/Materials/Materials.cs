@@ -169,7 +169,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Pink;
 		public override bool Hardmode => true;
 	}
-	public class Chromtain_Bar : MaterialItem {
+	public class Chromtain_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
@@ -178,9 +181,10 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 	}
-	public class Defiled_Bar : MaterialItem {
+	public class Defiled_Bar : MaterialItem, ICustomWikiStat {
         public string[] Categories => [
-            "LoreItem"
+            "LoreItem",
+			"Bar"
         ];
         public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
@@ -196,7 +200,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Eitrite_Bar : MaterialItem {
+	public class Eitrite_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
@@ -237,7 +244,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Encrusted_Bar : MaterialItem {
+	public class Encrusted_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override bool Hardmode => false;
@@ -252,9 +262,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Felnum_Bar : MaterialItem, IJournalEntryItem {
+	public class Felnum_Bar : MaterialItem, IJournalEntryItem, ICustomWikiStat {
         public string[] Categories => [
-            "LoreItem"
+            "LoreItem",
+			"Bar"
         ];
         public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
@@ -277,7 +288,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 	}
-	public class Formium_Bar : MaterialItem {
+	public class Formium_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
@@ -412,7 +426,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Sanguinite_Bar : MaterialItem {
+	public class Sanguinite_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override bool Hardmode => false;
@@ -427,7 +444,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Silicon_Bar : MaterialItem {
+	public class Silicon_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 1, copper: 32);
 		public override bool Hardmode => false;
 		public override void Load() {
@@ -474,7 +494,10 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
 	}
-	public class Valkyrum_Bar : MaterialItem {
+	public class Valkyrum_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ItemRarityID.Yellow;

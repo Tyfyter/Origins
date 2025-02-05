@@ -46,8 +46,12 @@ namespace Origins.Dev {
 				return $"{(imageOnly && canSpace ? " " : "")}<a is=a-link href=\"https://terraria.wiki.gg/wiki/{formattedName}\">{t}</a>";
 			};
 			requiredTileWikiTextOverride[TileID.Bottles] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.Bottle");
+			requiredTileWikiTextOverride[TileID.Anvils] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.Anvils");
+			requiredTileWikiTextOverride[TileID.MythrilAnvil] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.MythrilAnvil");
+			requiredTileWikiTextOverride[TileID.WorkBenches] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.WorkBenches");
 			recipeConditionWikiTextOverride[Condition.InGraveyard] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.EctoMist");
 			recipeConditionWikiTextOverride[RecipeConditions.ShimmerTransmutation] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.ShimmerTransmutation");
+			recipeConditionWikiTextOverride[RecipeConditions.RivenWater] = Language.GetOrRegister("WikiGenerator.Generic.RecipeConditions.RivenWater");
 		}
 		static PageTemplate wikiTemplate;
 		static DateTime wikiTemplateWriteTime;
@@ -237,6 +241,16 @@ namespace Origins.Dev {
 			if (intensity > 1) light /= intensity;
 			data.Add("LightIntensity", $"{intensity * 100:0.#}%");
 			data.Add("LightColor", new JArray() { light.X, light.Y, light.Z });
+		}
+		public static bool TryGetLinkFormat(Mod mod, ICustomLinkFormat customFormat, out WikiLinkFormatter format) {
+			if (customFormat is not null && customFormat.CustomFormatter is not null) {
+				format = customFormat.CustomFormatter;
+				return true;
+			} 
+			if (LinkFormatters.TryGetValue(mod, out format)) {
+				return true;
+			}
+			return false;
 		}
 	}
 	public class PageTemplate(string text) {
@@ -517,6 +531,32 @@ namespace Origins.Dev {
 			return base.TryGetValue(key, out value);
 		}
 	}
+	public record LinkInfo (string Name, string Href = null, string Image = null, string Note = null) {
+		public static string FromStats = "$fromStats";
+		public WikiLinkFormatter Formatter() => (string nameIn, string noteIn, bool imageOnlyIn, bool canSpaceIn) => {
+			StringBuilder builder = new();
+			string formattedName = Name.Replace(" ", "_");
+			static string Attribute(string name, string value) => value is not null ? $"{name}={value}" : "";
+			static string EmptyAttribute(string name, bool condition) => condition ? name : "";
+			builder.Append('<');
+			string attributes = string.Join(' ',
+				new string[] { EmptyAttribute("a", true),
+				Attribute("is", "a-link"),
+				Attribute("href", Href),
+				Attribute("image", Image),
+				EmptyAttribute("imageOnly", imageOnlyIn) }
+				.Where(s => !string.IsNullOrEmpty(s)));
+			builder.Append(attributes);
+			builder.Append('>');
+			builder.Append(Name);
+			builder.Append(string.IsNullOrWhiteSpace(Note) ? "" : $"<note>{Note}</note>");
+			builder.Append("</a>");
+			return builder.ToString();
+		};
+	}
+	public interface ICustomLinkFormat {
+		WikiLinkFormatter CustomFormatter => null;
+	}
 	public interface ICustomWikiStat {
 		bool Buyable => false;
 		void ModifyWikiStats(JObject data) { }
@@ -670,7 +710,7 @@ namespace Origins.Dev {
 			int recipeGroup = item.GetGlobalItem<RecipeGroupTrackerGlobalItem>().recipeGroup;
 			if (recipeGroup != -1) {
 				text = $"<a is=a-link image=\"RecipeGroups/{RecipeGroupPage.GetRecipeGroupWikiName(recipeGroup)}\" href=Recipe_Groups>{RecipeGroup.recipeGroups[recipeGroup].GetText()}</a>";
-			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out WikiLinkFormatter formatter)) {
+			} else if (WikiPageExporter.TryGetLinkFormat(item.ModItem?.Mod, item.ModItem as ICustomLinkFormat, out WikiLinkFormatter formatter)) {
 				text = $"{formatter(item.Name, note, imageOnly, item.stack > 1)}";
 				goto formatted;
 			} else {
@@ -719,6 +759,7 @@ namespace Origins.Dev {
 			for (int i = 0; i < Main.recipe.Length; i++) {
 				Recipe recipe = Main.recipe[i];
 				if (recipe.Disabled) continue;
+				if (recipe.Mod is not null and not Origins) continue;
 				if (recipe.HasResult(item.type)) {
 					recipes.Add(recipe);
 				}

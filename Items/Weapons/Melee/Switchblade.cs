@@ -12,6 +12,7 @@ using Terraria.Audio;
 using Origins.Items.Tools;
 using System.Collections.Generic;
 using Origins.Projectiles;
+using Newtonsoft.Json.Linq;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
@@ -61,6 +62,13 @@ namespace Origins.Items.Weapons.Melee {
 		public string[] Categories => [
 			"Sword"
 		];
+
+		void ICustomWikiStat.ModifyWikiStats(JObject data) {
+			data["Name"] = "Switchblade (Retracted)";
+		}
+
+		string ICustomWikiStat.CustomStatPath => "Switchblade_Shortsword";
+
 		public override void SetStaticDefaults() {
 			PrefixLegacy.ItemSets.SwordsHammersAxesPicks[Type] = true;
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

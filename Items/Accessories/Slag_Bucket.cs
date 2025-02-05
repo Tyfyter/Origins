@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Melee;
@@ -12,14 +13,22 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Origins.Dev.WikiPageExporter;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
-	public class Slag_Bucket : ModItem, ICustomWikiStat {
+	public class Slag_Bucket : ModItem, ICustomWikiStat, ICustomLinkFormat {
 		static short glowmask;
 		public string[] Categories => [
 			"Combat"
 		];
+		void ICustomWikiStat.ModifyWikiStats(JObject data) {
+			data["Name"] = ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " ");
+		}
+		WikiLinkFormatter ICustomLinkFormat.CustomFormatter => new LinkInfo(
+			Name: ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " "),
+			Image: LinkInfo.FromStats)
+			.Formatter();
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask<Shield_Glow_Layer>(Item.shieldSlot, Texture + "_Shield_Glow");

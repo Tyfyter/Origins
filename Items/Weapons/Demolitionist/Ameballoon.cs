@@ -38,10 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 20)
-			.AddCondition(
-			   Language.GetOrRegister("Mods.Origins.Conditions.RivenWater"),
-			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
-			)
+			.AddCondition(RecipeConditions.RivenWater)
 			.AddIngredient(ModContent.ItemType<Rubber>())
 			.AddTile(TileID.WorkBenches)
 			.Register();
