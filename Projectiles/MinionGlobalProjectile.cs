@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Items;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.World;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,8 @@ namespace Origins.Projectiles {
 		public float bonusUpdates = 0;
 		public float tempBonusUpdates = 0;
 		public float TotalBonusUpdates => bonusUpdates + tempBonusUpdates;
+		public int relayRodTime = 0;
+		public int relayRodStrength = 0;
 		public override void Load() {
 			IL_Projectile.Update += IL_Projectile_Update;
 		}
@@ -80,7 +83,11 @@ namespace Origins.Projectiles {
 		public override void PostAI(Projectile projectile) {
 			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is MinionPrefix artifactPrefix) {
 				artifactPrefix.UpdateProjectile(projectile, timer);
-				if (projectile.numUpdates == -1) timer++;
+			}
+			if (projectile.numUpdates == -1) {
+				timer++;
+				if (relayRodTime > 0) relayRodTime--;
+				if (relayRodTime <= 0) relayRodStrength = 0;
 			}
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {

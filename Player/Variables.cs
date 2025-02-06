@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
@@ -309,6 +310,7 @@ namespace Origins {
 		public bool miniStaticShock = false;
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
+		public int relayRodStrength = 0;
 		#endregion
 
 		#region keybinds
@@ -659,6 +661,7 @@ namespace Origins {
 			staticShock = false;
 			miniStaticShock = false;
 			staticShockDamage = false;
+			if (!Player.HasBuff<Relay_Rod_Buff>()) relayRodStrength = 0;
 			broth = null;
 
 			boatRockerAltUse = false;

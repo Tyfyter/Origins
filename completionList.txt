@@ -863,7 +863,7 @@ SUMMONER WEAPONS:
 (#, ^2) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
-(#, ^2) Monolith Rod !!!
+(# (partial implementation, ), ^2) Relay Rod !!!
 (%2) Ocean Amulet !!!
 (^) Ocotillo Finger
 (^) Ocotoral Bud*

@@ -1019,6 +1019,11 @@ Buffs: {
 		DisplayName: Brine Incantation Buff
 		Description: Mods.Origins.Buffs.Brine_Incantation_Buff.Description
 	}
+
+	Relay_Rod_Buff: {
+		DisplayName: Relay Rod Buff
+		Description: Mods.Origins.Buffs.Relay_Rod_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1464,6 +1469,8 @@ Projectiles: {
 	Ocotillo_Finger_P.DisplayName: Ocotillo Finger
 	Brine_Convergence_Incantation_P.DisplayName: Brine Convergence
 	Brine_Convergence_Incantation_Spawn_P.DisplayName: Brine Convergence Incantation
+	Friendly_Monolith.DisplayName: Friendly Relay
+	Friendly_Relay_Signal.DisplayName: Friendly Relay Signal
 }
 
 Prefixes: {

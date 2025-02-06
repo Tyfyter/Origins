@@ -5051,3 +5051,10 @@ Brine_Convergence_Incantation: {
 		{$CommonItemTooltip.Whips}
 		''' */
 }
+
+Monolith_Rod: {
+	// DisplayName: Relay Rod
+	// Tooltip: ""
+	// StrengthTooltip: "{0:P0} strength"
+	// StrengthPrefixTooltip: "{0} strength"
+}

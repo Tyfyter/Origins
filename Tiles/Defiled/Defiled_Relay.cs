@@ -21,7 +21,8 @@ namespace Origins.Tiles.Defiled {
 		public static int ID { get; private set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White * GlowValue;
-		public float GlowValue => Main.tileFrame[Type] switch {
+		public float GlowValue => GetGlowValue(Main.tileFrame[Type]);
+		public static float GetGlowValue(int frame) => frame switch {
 			6 or 7 => 0.3f,
 			8 => 0.5f,
 			9 => 0.38f,
