@@ -5041,3 +5041,13 @@ Ocotillo_Finger: {
 		{$CommonItemTooltip.Whips}
 		'''
 }
+
+Brine_Convergence_Incantation: {
+	DisplayName: Brine Convergence Incantation
+	Tooltip:
+		'''
+		Inflicts Toxic Shock
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}

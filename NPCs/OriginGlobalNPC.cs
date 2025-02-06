@@ -352,6 +352,9 @@ namespace Origins.NPCs {
 				if (ocotilloFingerDebuff) {
 					damageBoost += 2f;
 				}
+				if (brineIncantationDebuff) {
+					damageBoost += 6f;
+				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
 				}

@@ -31,6 +31,7 @@ namespace Origins.NPCs {
 		internal bool ziptieDebuff = false;
 		internal bool mildewWhipDebuff = false;
 		internal bool ocotilloFingerDebuff = false;
+		internal bool brineIncantationDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;
@@ -76,6 +77,7 @@ namespace Origins.NPCs {
 			ziptieDebuff = false;
 			mildewWhipDebuff = false;
 			ocotilloFingerDebuff = false;
+			brineIncantationDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 				if (tornCurrentSeverity >= 1 && Main.netMode != NetmodeID.MultiplayerClient) {

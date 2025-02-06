@@ -877,7 +877,7 @@ SUMMONER WEAPONS:
 
 (#, ^2) Acrid Spout !!!
 (X) Barnacled Purse
-(#, ^2) Brine Convergence Incantation !!!
+(☻) Brine Convergence Incantation !!!
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
 (X) Fizzler Staff

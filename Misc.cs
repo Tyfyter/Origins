@@ -2706,6 +2706,10 @@ namespace Origins {
 			}
 			return origin;
 		}
+		public static void Deconstruct(this Vector2 vector, out float X, out float Y) {
+			X = vector.X;
+			Y = vector.Y;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

@@ -1014,6 +1014,11 @@ Buffs: {
 		// DisplayName: Ocotillo Finger Buff
 		// Description: Mods.Origins.Buffs.Ocotillo_Finger_Buff.Description
 	}
+
+	Brine_Incantation_Buff: {
+		// DisplayName: Brine Incantation Buff
+		// Description: Mods.Origins.Buffs.Brine_Incantation_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1457,6 +1462,8 @@ Projectiles: {
 	// Fiberglass_Sword_P.DisplayName: Fiberglass Sword
 	// Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
 	// Ocotillo_Finger_P.DisplayName: Ocotillo Finger
+	// Brine_Convergence_Incantation_P.DisplayName: Brine Convergence
+	// Brine_Convergence_Incantation_Spawn_P.DisplayName: Brine Convergence Incantation
 }
 
 Prefixes: {
