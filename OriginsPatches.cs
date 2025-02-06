@@ -663,6 +663,9 @@ namespace Origins {
 			});
 			On_Player.Hurt_HurtInfo_bool += On_Player_Hurt_HurtInfo_bool;
 			On_SoundEngine.PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback += On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1;
+			On_Item.FitsAmmoSlot += (orig, self) => {
+				return orig(self) || self.ammo == ItemID.Grenade;
+			};
 		}
 
 		static bool shouldDoHeliumSound = false;
