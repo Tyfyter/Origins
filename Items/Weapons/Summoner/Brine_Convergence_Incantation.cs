@@ -194,6 +194,10 @@ namespace Origins.Items.Weapons.Summoner {
 				}
 				Projectile.velocity = (Vector2)velocity;
 			}
+			if (++Projectile.frameCounter >= 6) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
