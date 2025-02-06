@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -72,11 +74,20 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Sixth_Spline_Soldering_Iron : Sixth_Spline_Nut {
 		public override void SetStaticDefaults() {
-			Sixth_Spline.Projectiles.Add(new(Type, 0.9f, 0.9f), 0.5f);
+			Sixth_Spline.Projectiles.Add(new(Type, 0.9f, 0.9f), 0.75f);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire3, 300);
 			target.AddBuff(BuffID.Bleeding, 300);
+		}
+	}
+	public class Sixth_Spline_Battery : Sixth_Spline_Nut {
+		public override string Texture => typeof(Power_Core).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Sixth_Spline.Projectiles.Add(new(Type, 1.2f, 0.6f), 0.5f);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Static_Shock_Debuff.Inflict(target, 300);
 		}
 	}
 }
