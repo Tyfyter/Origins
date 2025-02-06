@@ -815,8 +815,8 @@ Buffs: {
 	}
 
 	Juvenile_Amalgamation_Buff: {
-		DisplayName: Juvenile Amalgamation
-		Description: The Juvenile Amalgamation is protecting your holes!
+		DisplayName: Baby Amalgamation
+		Description: The Baby Amalgamation is protecting your holes!
 	}
 
 	Amber_Debuff: {

@@ -865,7 +865,7 @@ SUMMONER WEAPONS:
 (^) Maelstrom Incantation
 (#, ^2) Monolith Rod !!!
 (%2) Ocean Amulet !!!
-(☻) Ocotillo Finger !!!
+(^) Ocotillo Finger
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
 (^) Rotted Worm Staff
@@ -877,7 +877,7 @@ SUMMONER WEAPONS:
 
 (#, ^2) Acrid Spout !!!
 (X) Barnacled Purse
-(☻) Brine Convergence Incantation !!!
+(^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
 (X) Entropy Incantation
 (X) Fizzler Staff
@@ -1171,7 +1171,7 @@ TILES:
 (#, ^2) Hydrothermal Vent !!!
 (X) Marrowick Coral
 (X) Moonshine°
-(#, ^2) Ocotillo !!!
+(#2, ^2) Ocotillo !!!
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
@@ -1366,7 +1366,7 @@ CONSUMABLES:
 (^) Prickly Pear*
 (^) Shattered Stout*
 (^) Soul Spaghetti*
-(☻) Sour Apple !!!
+(^) Sour Apple
 (^) Vanilla Shake*
 
 (^) Broken Record*

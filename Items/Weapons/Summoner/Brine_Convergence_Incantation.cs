@@ -21,9 +21,9 @@ namespace Origins.Items.Weapons.Summoner {
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
-			Item.damage = 19;
+			Item.damage = 35;
 			Item.DamageType = DamageClasses.Incantation;
-			Item.knockBack = 4;
+			Item.knockBack = 3;
 			Item.shoot = ModContent.ProjectileType<Brine_Convergence_Incantation_Spawn_P>();
 			Item.noUseGraphic = true;
 			Item.shootSpeed = 8f;
@@ -31,8 +31,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.mana = 20;
 			Item.useTime = 38;
 			Item.useAnimation = 38;
-			Item.rare = ItemRarityID.Lime;
-			Item.value = Item.sellPrice(silver: 60);
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 1);
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			Item.UseSound = SoundID.Item8;
 		}
@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Summoner {
 						return false;
 					});
 					int type = ModContent.ProjectileType<Brine_Convergence_Incantation_P>();
-					int count = Main.rand.Next(5, 8);
+					int count = Main.rand.Next(4, 7);
 					for (int i = 0; i < count; i++) {
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromThis(),
@@ -161,6 +161,18 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 		}
 		public override void AI() {
+			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
+			for (int i = 0; i < 2; i++) {
+				Dust dust = Dust.NewDustDirect(Projectile.position, 1, 1, DustID.Electric);
+				dust.position = Projectile.position - Projectile.velocity * (i * 0.5f);
+				dust.position.X += Projectile.width / 2;
+				dust.position.Y += Projectile.height / 2;
+				dust.scale = Main.rand.NextFloat(0.65f, 0.65f);
+				dust.velocity = dust.velocity * 0.2f + Projectile.velocity * 0.1f;
+				dust.shader = shader;
+				dust.noGravity = false;
+				dust.noLight = true;
+			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (++Projectile.ai[0] < 120) {
 				float targetDist = 5 * 16;
@@ -184,7 +196,7 @@ namespace Origins.Items.Weapons.Summoner {
 				float target = MathF.Atan2(Projectile.ai[2] - Projectile.Center.Y, Projectile.ai[1] - Projectile.Center.X);
 				float diff = GeometryUtils.AngleDif(velocity.Theta, target, out int dir);
 
-				float rate = 0.002f + velocity.R * 0.0010f * Origins.HomingEffectivenessMultiplier[Projectile.type] + Projectile.ai[0] * 0.0001f;
+				float rate = 0.002f + velocity.R * 0.001f * Origins.HomingEffectivenessMultiplier[Projectile.type] + Projectile.ai[0] * 0.0001f;
 				diff = Math.Abs(diff);
 				float aRate = Math.Abs(rate);
 				if (diff < aRate) {
