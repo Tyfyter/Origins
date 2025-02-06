@@ -232,6 +232,7 @@ namespace Origins.NPCs.Brine {
 			if (NPC.spriteDirection == 1) {
 				spriteEffects |= SpriteEffects.FlipVertically;
 			}
+			if (NPC.IsABestiaryIconDummy) NPC.rotation = NPC.velocity.ToRotation();
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Vector2 halfSize = new(texture.Width * 0.5f, texture.Height / Main.npcFrameCount[NPC.type] / 2);
 			Vector2 position = new(NPC.position.X - screenPos.X + (NPC.width / 2) - texture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - texture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + NPC.gfxOffY);
@@ -278,6 +279,7 @@ namespace Origins.NPCs.Brine {
 		public class SeaDragonAnchorPoint(Sea_Dragon npc, int index) : AnchorPoint {
 			public override Vector2 WorldPosition {
 				get {
+					if (npc.NPC.IsABestiaryIconDummy) npc.NPC.rotation = npc.NPC.velocity.ToRotation();
 					Vector2 offset = Vector2.Zero;
 					switch (index) {
 						case 0:
@@ -295,6 +297,7 @@ namespace Origins.NPCs.Brine {
 		public class SeaDragonStrandGravity(Sea_Dragon npc, int offset) : Gravity {
 			public override Vector2 Acceleration {
 				get {
+					if (npc.NPC.IsABestiaryIconDummy) npc.NPC.rotation = npc.NPC.velocity.ToRotation();
 					Vector2 dir = new Vector2(0, npc.NPC.spriteDirection).RotatedBy(npc.NPC.rotation) * 0.07f;
 					Vector2 grav = new Vector2(npc.NPC.spriteDirection, 0).RotatedBy(npc.NPC.rotation) * 0.1f;
 					int frame = npc.NPC.IsABestiaryIconDummy ? (int)npc.NPC.frameCounter : (int)npc.NPC.ai[2];
