@@ -630,7 +630,7 @@ TOOLS:
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
-(#, ^2) Acrid Laser Rod !!!
+(☻) Acrid Laser Rod !!!
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
