@@ -194,7 +194,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);//sets the projectile stat values to those of Ruby Bolts
+			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.penetrate = 2;//when projectile.penetrate reaches 0 the projectile is destroyed
 			Projectile.extraUpdates = 1;

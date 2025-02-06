@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Items.Other.Testing;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -29,7 +32,7 @@ namespace Origins.Tiles.Brine {
 					new Vector2(i * 16 + 8, j * 16 + 8),
 					Vector2.Zero,
 					ProjectileType<Peat_Moss_Tile_Explosion>(),
-					30,
+					20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier),
 					4
 				);
 			}
@@ -68,5 +71,16 @@ namespace Origins.Tiles.Brine {
 		public override int SmokeDustAmount => 15;
 		public override int SmokeGoreAmount => 2;
 		public override int SelfDamageCooldownCounter => ImmunityCooldownID.TileContactDamage;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.friendly = true;
+			Projectile.trap = true;
+		}
+	}
+	public class Peat_Moss_Debug_Item : TestingItem {
+		public override string Texture => typeof(Peat_Moss_Item).GetDefaultTMLName();
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss>());
+		}
 	}
 }

@@ -166,7 +166,7 @@ namespace Origins.NPCs.Fiberglass {
 				for (int i = Main.rand.Next(4, 7); i >= 0; i--) {
 					speed = speed.RotatedByRandom(0.25f);
 					int proj =
-					Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_P>(), 9, 3f, NPC.target);
+					Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_P>(), (int)(9 * ContentExtensions.DifficultyDamageMultiplier), 3f, NPC.target);
 					Main.projectile[proj].hostile = true;
 					Main.projectile[proj].friendly = false;
 					Main.projectile[proj].hide = false;

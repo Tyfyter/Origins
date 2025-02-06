@@ -104,7 +104,7 @@ namespace Origins.NPCs.Brine {
 										NPC.Center,
 										velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(0.9f, 1f),
 										type,
-										40,
+										(int)(40 * ContentExtensions.DifficultyDamageMultiplier),
 										1
 									);
 								}

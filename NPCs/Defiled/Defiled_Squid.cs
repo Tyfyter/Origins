@@ -98,7 +98,7 @@ namespace Origins.NPCs.Defiled {
 										NPC.Center,
 										NPC.velocity * -0.5f,
 										ModContent.ProjectileType<Squid_Bile_P>(),
-										12,
+										(int)(12 * ContentExtensions.DifficultyDamageMultiplier),
 										3
 									);
 

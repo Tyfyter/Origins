@@ -63,7 +63,7 @@ namespace Origins.NPCs.Fiberglass {
 								NPC.Center,
 								velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(0.9f, 1f),
 								type,
-								60,
+								(int)(60 * ContentExtensions.DifficultyDamageMultiplier),
 								1
 							);
 						}

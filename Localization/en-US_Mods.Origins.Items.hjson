@@ -5058,3 +5058,8 @@ Monolith_Rod: {
 	StrengthTooltip: "{0:P0} strength"
 	StrengthPrefixTooltip: "{0} strength"
 }
+
+Peat_Moss_Debug_Item: {
+	DisplayName: Peat Moss Debug Item
+	Tooltip: ""
+}

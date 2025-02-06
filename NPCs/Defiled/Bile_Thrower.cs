@@ -53,7 +53,7 @@ namespace Origins.NPCs.Defiled {
 								spawnPos,
 								new Vector2(speed, 0).RotatedBy(angle),
 								ModContent.ProjectileType<Defiled_Goop>(),
-								12,
+								(int)(12 * ContentExtensions.DifficultyDamageMultiplier),
 								3
 							);
 						}

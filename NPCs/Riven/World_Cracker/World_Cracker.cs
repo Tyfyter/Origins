@@ -271,7 +271,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 							npc.Center,
 							velocity,
 							projType,
-							9 + DifficultyMult, // for some reason NPC projectile damage is just arbitrarily doubled
+							(int)((9 + DifficultyMult) * ContentExtensions.DifficultyDamageMultiplier), // for some reason NPC projectile damage is just arbitrarily doubled
 							0f
 						);
 						if (isHead) npc.localAI[2] = -1;

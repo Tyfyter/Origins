@@ -105,12 +105,13 @@ namespace Origins.NPCs.Dungeon {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
 						Vector2 spawnPos = NPC.Top + new Vector2(NPC.direction * 8, 20);
 						Vector2 diff = NPC.GetTargetData().Center - spawnPos;
+						float difficultyMultiplier = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 4);
 						ProjectileID = Projectile.NewProjectile(
 							NPC.GetSource_FromAI(),
 							spawnPos,
 							diff.SafeNormalize(default) * 2,
 							Etherealizer_P.ID,
-							Main.masterMode ? 25: (Main.expertMode ? 30 : 35),
+							(int)((40 - 5 * difficultyMultiplier) * difficultyMultiplier),
 							0,
 							ai0: NPC.whoAmI
 						);

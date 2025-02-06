@@ -666,6 +666,11 @@ namespace Origins {
 			On_Item.FitsAmmoSlot += (orig, self) => {
 				return orig(self) || self.ammo == ItemID.Grenade;
 			};
+			On_Player.HurtModifiers.ToHurtInfo += HurtModifiers_ToHurtInfo;
+		}
+
+		private Player.HurtInfo HurtModifiers_ToHurtInfo(On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) {
+			return orig(ref self, damage, defense, defenseEffectiveness, knockback, knockbackImmune);
 		}
 
 		static bool shouldDoHeliumSound = false;

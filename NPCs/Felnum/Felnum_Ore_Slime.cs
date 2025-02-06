@@ -51,7 +51,7 @@ namespace Origins.NPCs.Felnum {
 		Vector2 oldVelocity;
 		public override void AI() {
 			if (oldVelocity.Y < 0 && NPC.velocity.Y >= 0) {
-				const float max_dist = 16 * 50;
+				const float max_dist = 16 * 250;
 				float distance = Math.Min(Math.Min(
 					CollisionExt.Raymarch(NPC.BottomLeft, Vector2.UnitY, max_dist),
 					CollisionExt.Raymarch(NPC.Bottom, Vector2.UnitY, max_dist)

@@ -96,6 +96,9 @@ namespace Origins.Projectiles {
 				projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 				break;
 			}
+			if (projectile.ModProjectile?.Mod is Origins) {
+				ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type] = true;
+			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			felnumBonus = MainReflection._currentPlayerOverride.GetValue() is null ? 0 : Main.CurrentPlayer.OriginPlayer().felnumShock;

@@ -119,7 +119,7 @@ namespace Origins.NPCs.Defiled {
 											projPos,
 											default,
 											projectileType,
-											20,
+											(int)(20 * ContentExtensions.DifficultyDamageMultiplier),
 											4,
 											ai1: target.Center.X,
 											ai2: target.Center.Y

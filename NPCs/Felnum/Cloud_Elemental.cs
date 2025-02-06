@@ -88,7 +88,7 @@ namespace Origins.NPCs.Felnum {
 								ShoulderPos,
 								GeometryUtils.Vec2FromPolar(8, NPC.rotation),
 								ModContent.ProjectileType<Cloud_Elemental_P>(),
-								30,
+								20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier),
 								4
 							);
 						}

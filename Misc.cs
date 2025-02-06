@@ -41,6 +41,7 @@ using Terraria.GameInput;
 using Terraria.UI;
 using Origins.Items.Other.Testing;
 using Stubble.Core.Helpers;
+using Terraria.GameContent.Creative;
 
 namespace Origins {
 	#region classes
@@ -3896,6 +3897,17 @@ namespace Origins {
 			}
 			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
 				OriginsModIntegrations.GoToKeybind(keybind);
+			}
+		}
+		public static float DifficultyDamageMultiplier {
+			get {
+				if (Main.GameModeInfo.IsJourneyMode) {
+					CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+					if (power.GetIsUnlocked()) {
+						return power.StrengthMultiplierToGiveNPCs;
+					}
+				}
+				return Main.GameModeInfo.EnemyDamageMultiplier;
 			}
 		}
 	}

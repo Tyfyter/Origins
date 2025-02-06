@@ -366,7 +366,7 @@ namespace Origins {
 			}
 			if (rubberBody) modifiers.SourceDamage *= 0.9f;
 			hitIsSelfDamage = false;
-			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
+			if (proj.owner == Player.whoAmI && !proj.hostile && proj.CountsAsClass(DamageClasses.Explosive)) {
 				hitIsSelfDamage = true;
 				float damageMult = Main.GameModeInfo.EnemyDamageMultiplier;
 				if (Main.GameModeInfo.IsJourneyMode) {

@@ -187,7 +187,7 @@ namespace Origins.NPCs.Fiberglass {
 									position,
 									velocity,
 									projectileType,
-									10,
+									(int)(10 * ContentExtensions.DifficultyDamageMultiplier),
 									0,
 									Main.myPlayer,
 									ai0: -velocity.X,

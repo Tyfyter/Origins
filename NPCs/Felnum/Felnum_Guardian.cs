@@ -137,7 +137,7 @@ namespace Origins.NPCs.Felnum {
 								NPC.Center,
 								GeometryUtils.Vec2FromPolar(8, NPC.rotation),
 								ModContent.ProjectileType<Felnum_Guardian_P>(),
-								40,
+								(int)(40 * ContentExtensions.DifficultyDamageMultiplier),
 								4
 							);
 						}

@@ -305,12 +305,13 @@ namespace Origins.NPCs.Defiled.Boss {
 							case 70:
 							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
+								float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
 								Projectile.NewProjectileDirect(
 									NPC.GetSource_FromAI(),
 									NPC.Center,
 									Vector2.Normalize(NPC.targetRect.Center() - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
 									ModContent.ProjectileType<Low_Signal_Hostile>(),
-									22 - (difficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
+									(int)((22 - (realDifficultyMult * 3)) * realDifficultyMult), // for some reason NPC projectile damage is just arbitrarily doubled
 									0f,
 									Main.myPlayer
 								).tileCollide = Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 8, 8);
@@ -734,7 +735,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 0;
 			Projectile.hide = true;
-			Projectile.npcProj = true;
+			Projectile.npcProj = false;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
 			Projectile.DamageType = DamageClass.Default;
