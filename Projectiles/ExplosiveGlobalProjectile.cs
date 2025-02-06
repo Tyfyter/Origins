@@ -917,6 +917,7 @@ namespace Origins.Projectiles {
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.hide = true;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount, smokeGoreAmount: SmokeGoreAmount);

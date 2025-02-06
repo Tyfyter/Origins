@@ -634,7 +634,7 @@ TOOLS:
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(#2, ^2) Impactaxe (holdout offset)
+(☻) Impactaxe
 
 (X) Ahe
 (X) Nova Bomb
@@ -747,7 +747,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
-(#, ^2) Crawdaddy's Revenge !!!
+(☻) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
 (#2, ^2) Fifth Spline
