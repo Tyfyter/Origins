@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Fiberglass;
 using Origins.Projectiles;
 using Origins.Tiles.Brine;
@@ -57,7 +58,8 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 2)
-				//ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Crawdaddys_Revenge>(), 40)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Crawdaddys_Revenge>(), 40)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && CanHitNPC(other);

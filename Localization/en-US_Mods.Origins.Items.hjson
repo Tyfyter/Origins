@@ -5063,3 +5063,8 @@ Peat_Moss_Debug_Item: {
 	DisplayName: Peat Moss Debug Item
 	Tooltip: ""
 }
+
+Crawdaddys_Revenge: {
+	DisplayName: Crawdaddy's Revenge
+	Tooltip: ""
+}

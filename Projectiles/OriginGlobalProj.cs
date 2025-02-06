@@ -55,6 +55,7 @@ namespace Origins.Projectiles {
 		}
 		public bool neuralNetworkEffect = false;
 		public bool neuralNetworkHit = false;
+		public bool crawdadNetworkEffect = false;
 		public Vector2? weakpointAnalyzerTarget = default;
 		public Vector2 extraGravity = default;
 		public bool shouldUnmiss = false;
@@ -109,7 +110,7 @@ namespace Origins.Projectiles {
 				weakpointAnalyzerTarget = Main.MouseWorld;
 			}
 			if (source is EntitySource_ItemUse itemUseSource) {
-				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out var itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
+				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
 				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && originPlayer.entangledEnergy) {
 					fiberglassLifesteal = true;
@@ -170,6 +171,7 @@ namespace Origins.Projectiles {
 					Prefix = parentGlobalProjectile.Prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
+					neuralNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -366,6 +368,22 @@ namespace Origins.Projectiles {
 			if (viperEffect) {
 				if (hit.Crit || Main.rand.Next(0, 9) == 0) {
 					target.AddBuff(Toxic_Shock_Debuff.ID, 450);
+				}
+			}
+			if (crawdadNetworkEffect) {
+				ref int crawdadNetworkCount = ref Main.player[projectile.owner].OriginPlayer().crawdadNetworkCount;
+				if (++crawdadNetworkCount >= 7) {
+					crawdadNetworkCount = 0;
+					if (projectile.owner == Main.myPlayer) {
+						Projectile.NewProjectile(
+							projectile.GetSource_OnHit(target),
+							projectile.Center,
+							projectile.velocity,
+							ModContent.ProjectileType<Crawdaddys_Revenge_P>(),
+							projectile.damage,
+							projectile.knockBack
+						);
+					}
 				}
 			}
 			if (neuralNetworkEffect) {
