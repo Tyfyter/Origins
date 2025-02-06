@@ -222,6 +222,7 @@ namespace Origins.NPCs.Brine {
 			if (NPC.spriteDirection != 1) {
 				spriteEffects |= SpriteEffects.FlipVertically;
 			}
+			if (NPC.IsABestiaryIconDummy) NPC.rotation = NPC.velocity.ToRotation();
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Vector2 halfSize = new(texture.Width * 0.5f, (texture.Height / Main.npcFrameCount[NPC.type]) * 0.5f);
 			Vector2 position = new(NPC.position.X - screenPos.X + (NPC.width / 2) - texture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - texture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + NPC.gfxOffY);
