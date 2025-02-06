@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
@@ -9,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Pigron : ModNPC, IDefiledEnemy {
+	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat {
+		void ICustomWikiStat.ModifyWikiStats(JObject data) {
+			data["Name"] = "Defiled Pigron";
+		}
+		string ICustomWikiStat.CustomStatPath => "Defiled_Pigron";
 		public int MaxMana => 20;
 		public int MaxManaDrain => 10;
 		public float Mana { get; set; }

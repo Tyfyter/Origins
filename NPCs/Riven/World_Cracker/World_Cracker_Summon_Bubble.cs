@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria;
 using PegasusLib;
 using Terraria.Localization;
+using Origins.Dev;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Summon_Bubble : Glowing_Mod_NPC, IRivenEnemy {
@@ -114,7 +115,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
-	public class Riven_Fighter_WC : Riven_Fighter {
+	public class Riven_Fighter_WC : Riven_Fighter, ICustomWikiStat {
+		string ICustomWikiStat.CustomStatPath => nameof(Riven_Fighter_WC);
 		public override string Texture => typeof(Riven_Fighter).GetDefaultTMLName();
 		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Riven_Fighter.DisplayName"));
 		public override void Load() { }
@@ -128,7 +130,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			this.CopyBanner<Riven_Fighter>();
 		}
 	}
-	public class Amebic_Slime_WC : Amebic_Slime {
+	public class Amebic_Slime_WC : Amebic_Slime, ICustomWikiStat {
+		string ICustomWikiStat.CustomStatPath => nameof(Amebic_Slime_WC);
 		public override string Texture => typeof(Amebic_Slime).GetDefaultTMLName();
 		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Amebic_Slime.DisplayName"));
 		public override void Load() { }
@@ -142,7 +145,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			this.CopyBanner<Amebic_Slime>();
 		}
 	}
-	public class Amoeba_Bugger_WC : Amoeba_Bugger {
+	public class Amoeba_Bugger_WC : Amoeba_Bugger, ICustomWikiStat {
+		string ICustomWikiStat.CustomStatPath => nameof(Amoeba_Bugger_WC);
 		public override string Texture => typeof(Amoeba_Bugger).GetDefaultTMLName();
 		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Amoeba_Bugger.DisplayName"));
 		public override void Load() { }
@@ -155,7 +159,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax /= 2;
 		}
 	}
-	public class World_Cracker_Exoskeleton_WC : World_Cracker_Exoskeleton {
+	public class World_Cracker_Exoskeleton_WC : World_Cracker_Exoskeleton, ICustomWikiStat {
+		string ICustomWikiStat.CustomStatPath => nameof(World_Cracker_Exoskeleton_WC);
 		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.World_Cracker_Exoskeleton.DisplayName"));
 		public override void Load() { }
 		public override void SetStaticDefaults() {

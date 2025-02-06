@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
@@ -79,7 +80,8 @@ namespace Origins.NPCs.Riven {
             OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.85f);
         }
     }
-	public class Spider_Amoeba_Wall : Spider_Amoeba {
+	public class Spider_Amoeba_Wall : Spider_Amoeba, ICustomWikiStat {
+		bool ICustomWikiStat.CanExportStats => false;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void Load() { }
 		public override void SetStaticDefaults() {

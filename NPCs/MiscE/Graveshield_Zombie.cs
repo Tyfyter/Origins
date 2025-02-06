@@ -50,7 +50,8 @@ namespace Origins.NPCs.MiscE {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Graveyard,
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

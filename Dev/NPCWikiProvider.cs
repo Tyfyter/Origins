@@ -107,7 +107,7 @@ namespace Origins.Dev {
 			}
 			foreach (KeyValuePair<int, AssimilationAmount> item in assimilations) {
 				if (item.Value != default) {
-					string assName = AssimilationLoader.Debuffs[item.Key].DisplayName.Value;
+					string assName = AssimilationLoader.Debuffs[item.Key].DisplayName.Value.Replace(" ", "");
 					if (item.Value.Function is not null) {
 						data.Add(assName, "variable");
 						continue;
