@@ -44,6 +44,9 @@ namespace Origins.Items.Accessories {
 			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
+			Main.tileSpelunker[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 100;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.Stone;
