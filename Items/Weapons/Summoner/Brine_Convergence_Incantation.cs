@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SpellTome)
 			.AddIngredient<Brineglow_Item>(5)
-			.AddIngredient<Felnum_Bar>(8)
+			.AddIngredient<Eitrite_Bar>(8)
 			.AddTile(TileID.Bookcases)
 			.Register();
 		}
