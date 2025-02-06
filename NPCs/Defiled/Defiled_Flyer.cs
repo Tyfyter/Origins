@@ -230,6 +230,7 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.spriteDirection == -1) {
 				spriteEffects |= SpriteEffects.FlipVertically;
 			}
+			if (NPC.IsABestiaryIconDummy) NPC.rotation = NPC.velocity.ToRotation();
 			Vector2 halfSize = new(GlowTexture.Width * 0.5f, GlowTexture.Height / Main.npcFrameCount[NPC.type] / 2);
 			Vector2 position = new(NPC.position.X - screenPos.X + (NPC.width / 2) - GlowTexture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - GlowTexture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + Main.NPCAddHeight(NPC) + NPC.gfxOffY);
 			Vector2 origin = new(halfSize.X * 1.6f, halfSize.Y);

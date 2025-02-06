@@ -173,6 +173,7 @@ namespace Origins.NPCs.Felnum {
 			Vector2 origin = new(22, 39);
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			float rotation = NPC.rotation;
+			if (NPC.IsABestiaryIconDummy) NPC.rotation = NPC.velocity.ToRotation();
 			if (NPC.spriteDirection != -1) {
 				spriteEffects = SpriteEffects.FlipHorizontally;
 				origin.X = texture.Width - origin.X;
