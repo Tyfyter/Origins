@@ -150,8 +150,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
-			Projectile.width = 0;
-			Projectile.height = 0;
+			Projectile.width = 14;
+			Projectile.height = 14;
 			Projectile.aiStyle = 0;
 			Projectile.extraUpdates = 1;
 			Projectile.hostile = false;
@@ -197,6 +197,21 @@ namespace Origins.Items.Weapons.Summoner {
 			if (++Projectile.frameCounter >= 6) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
+			const int HalfSpriteWidth = 28 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+			int HalfProjHeight = Projectile.height / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
