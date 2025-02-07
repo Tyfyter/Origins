@@ -5078,3 +5078,8 @@ Acrid_Beam_Thrusters: {
 	DisplayName: Acrid Beam Thrusters
 	Tooltip: Allows flight and slow fall
 }
+
+Hydrolantern: {
+	DisplayName: Hydrolantern
+	Tooltip: ""
+}

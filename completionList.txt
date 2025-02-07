@@ -587,7 +587,7 @@ UTILITIES:
 
 (X) Strange Backpack
 
-(#, ^2) Hydrolantern !!!
+(♦ (I definitely didn't do these as planned, but I think they turned out really well)) Hydrolantern !!!
 (^) Impenetrable Trashcan Lid
 (^) Indestructible Saddle
 (^) Salty Seed (Mitosis Node)
