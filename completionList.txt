@@ -201,7 +201,7 @@ ENEMY NPCS:
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
 (X) Angel
-(#2, ^2) Barnacle Mound* !!! (has banner sprites already)
+(☻) Barnacle Mound* !!!
 (X) Beckonbug
 (#, ^2) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
