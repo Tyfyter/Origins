@@ -5073,3 +5073,8 @@ Acrid_Laser_Rod: {
 	DisplayName: Acrid Laser Rod
 	Tooltip: ""
 }
+
+Acrid_Beam_Thrusters: {
+	DisplayName: Acrid Beam Thrusters
+	Tooltip: ""
+}

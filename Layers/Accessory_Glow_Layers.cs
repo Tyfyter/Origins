@@ -51,4 +51,5 @@ namespace Origins.Layers {
 	public class Waist_Glow_Layer() : Accessory_Glow_Layer(nameof(Player.waist), PlayerDrawLayers.WaistAcc, nameof(TextureAssets.AccWaist)) { }
 	public class Back_Glow_Layer() : Accessory_Glow_Layer(nameof(Player.back), PlayerDrawLayers.BackAcc, nameof(TextureAssets.AccBack)) { }
 	public class HandsOff_Glow_Layer() : Accessory_Glow_Layer(nameof(Player.handoff), PlayerDrawLayers.OffhandAcc, nameof(TextureAssets.AccHandsOffComposite)) { }
+	public class Wings_Glow_Layer() : Accessory_Glow_Layer(nameof(Player.wings), PlayerDrawLayers.Wings, nameof(TextureAssets.Wings)) { }
 }
