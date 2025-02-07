@@ -156,7 +156,7 @@ ENEMY NPCS:
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
-(#3, ^2) Cloud Elemental° !!! (unable to damage other enemies)
+(^) Cloud Elemental° !!!
 (^) Conehead Zombie°
 (X) Corrupt Reaper
 (^) Cranivore*
@@ -196,7 +196,7 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (X) Steam Shooter !!!
 
-(#, ^2) Airsnatcher !!!
+(☻, @4) Airsnatcher !!!
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*

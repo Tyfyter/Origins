@@ -1,19 +1,12 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins;
 using Origins.Dev;
-using Origins.Graphics;
-using Origins.Items.Other.Dyes;
-using Origins.Items.Weapons.Magic;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Tools {
 	public class Hydrolantern : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
@@ -33,9 +26,7 @@ namespace Origins.Items.Tools {
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
-				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.owner == player.whoAmI && projectile.type == type) projectile.Kill();
-				}
+				OriginExtensions.FadeOutOldProjectilesAtLimit([type], 1, 52);
 				return false;
 			}
 			OriginExtensions.FadeOutOldProjectilesAtLimit([type], Item.stack, 52);
@@ -45,6 +36,7 @@ namespace Origins.Items.Tools {
 	public class Hydrolantern_Use : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 5;
+			Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
 		}
 		public override void SetDefaults() {
 			Projectile.aiStyle = 0;
@@ -114,16 +106,24 @@ namespace Origins.Items.Tools {
 						lowest = MathHelper.PiOver2 * i;
 					}
 				}
-				rotationSpeed = Math.Min(GeometryUtils.AngleDif(Projectile.rotation, lowest, out int dir), 0.2f) * dir * 0.3f;
+				Vector2 mov = Vector2.Zero;
+				mov.X = Math.Min(GeometryUtils.AngleDif(Projectile.rotation, lowest, out int dir), 0.2f) * dir * 2;
+				Vector4 slopeCollision = Collision.SlopeCollision(Projectile.position, mov, Projectile.width, Projectile.height);
+				Projectile.position = slopeCollision.XY();
+				mov = slopeCollision.ZW();
+				mov = Collision.TileCollision(Projectile.position, mov, Projectile.width, Projectile.height);
+				Projectile.position += mov;
+				rotationSpeed = mov.X * 0.05f;
 			}
 			return false;
 		}
 	}
 	public class Hydrolantern_Force_Global : GlobalProjectile {
+		public static HashSet<int> ProjectileTypes = [];
+		public override void Unload() => ProjectileTypes = null;
 		public override void AI(Projectile projectile) {
-			int type = ModContent.ProjectileType<Hydrolantern_Use>();
 			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (projectile.whoAmI != other.whoAmI && other.type == type && ProjectileLoader.ShouldUpdatePosition(projectile)) {
+				if (projectile.whoAmI != other.whoAmI && ProjectileTypes.Contains(other.type) && ProjectileLoader.ShouldUpdatePosition(projectile)) {
 					Hydrolantern_Use.GetMovedBy(other, projectile, projectile.ignoreWater ? 1f : 0.5f);
 				}
 			}

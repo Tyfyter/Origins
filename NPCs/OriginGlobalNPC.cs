@@ -21,6 +21,7 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -444,6 +445,10 @@ namespace Origins.NPCs {
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
 			}
+			if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType == ModContent.WallType<Baryte_Wall>()) {
+				pool[0] = 0;
+				return;
+			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
 				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword);
@@ -463,7 +468,7 @@ namespace Origins.NPCs {
 					foreach (var entry in pool) {
 						pool[entry.Key] = 0;
 					}
-					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
+					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Defiled_Stone_Wall>()) {
 						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 9999);
 					}
 					return;

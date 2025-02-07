@@ -34,13 +34,15 @@ namespace Origins.World.BiomeData {
 		public const int NeededTiles = 250;
 		public const int ShaderTileCount = 75;
 		public static class SpawnRates {
-			public const float Carpalfish = 0.8f;
-			public const float Dragon = 0.6f;
-			public const float Creeper = 0.6f;
-			public const float Crab = 0.6f;
-			public const float A_GUN = 0.9f; // yes, this is a reference
-			public const float Crawdad = 0.9f;
+			public const float Carpalfish = 8000f;
+			public const float Dragon = 6000f;
+			public const float Creeper = 6000f;
+			public const float Crab = 6000f;
+			public const float A_GUN = 9000f; // yes, this is a reference
+			public const float Crawdad = 9000f;
+			public const float Airsnatcher = 8000f;
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate, bool needsMoss = false) {
+				if (OriginGlobalNPC.aerialSpawnPosition - (spawnInfo.Player.position.Y / 16f) < NPC.safeRangeY) return 0;
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
 				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;
 				if (needsMoss) {

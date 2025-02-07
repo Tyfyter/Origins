@@ -506,10 +506,7 @@ namespace Origins {
 			endlessExplosives = false;
 			if (!Player.immune) cinderSealCount = cinderSealItem?.useAnimation ?? 4;
 			cinderSealItem = null;
-			if (toxicShock) {
-				if (Player.breath > oldBreath) Player.breath = oldBreath;
-				toxicShock = false;
-			}
+			toxicShock = false;
 			gunGlove = false;
 			gunGloveItem = null;
 			guardedHeart = false;

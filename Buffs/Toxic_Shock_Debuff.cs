@@ -1,6 +1,10 @@
-﻿using Origins.NPCs;
+﻿using MonoMod.Cil;
+using Origins.NPCs;
+using PegasusLib.Reflection;
+using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod.Empowerments;
 
@@ -19,6 +23,24 @@ namespace Origins.Buffs {
 		public override void Update(NPC npc, ref int buffIndex) {
 			if (!npc.buffImmune[BuffID.Confused] && Main.rand.NextBool(400)) {// roughly 15% chance each second
 				npc.GetGlobalNPC<OriginGlobalNPC>().toxicShockStunTime = Toxic_Shock_Debuff.stun_duration;
+			}
+		}
+		internal static void IL_Player_CheckDrowning(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchAdd(),
+				i => i.MatchStfld<Player>(nameof(Player.breath))
+			);
+			c.Index--;
+			MonoModMethods.SkipPrevArgument(c);
+			c.Index--;
+			c.MoveAfterLabels();
+			if (c.Prev.Operand is ILLabel label) {
+				c.EmitLdarg0();
+				c.EmitDelegate((Player player) => player.OriginPlayer().toxicShock);
+				c.EmitBrtrue(label);
+			} else {
+				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ToxicShockILEditFail"));
 			}
 		}
 	}
