@@ -2,6 +2,7 @@
 using CalamityMod.NPCs.ExoMechs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
@@ -25,7 +26,11 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Carpalfish : Brine_Pool_NPC, IItemObtainabilityProvider {
+	public class Carpalfish : Brine_Pool_NPC, IItemObtainabilityProvider, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 80, 30);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 4;
+
 		public IEnumerable<int> ProvideItemObtainability() => [ModContent.ItemType<Venom_Fang>()];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

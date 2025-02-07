@@ -578,6 +578,12 @@ namespace Origins.Dev {
 	public interface IWikiNPC {
 		Rectangle DrawRect { get; }
 		int AnimationFrames { get; }
+		int FrameDuration => 1;
+		NPCExportType ImageExportType => NPCExportType.Bestiary;
+	}
+	public enum NPCExportType {
+		Bestiary,
+		SpriteSheet,
 	}
 	public interface INoSeperateWikiPage { }
 	public class StatOnlyItemWikiProvider : ItemWikiProvider {

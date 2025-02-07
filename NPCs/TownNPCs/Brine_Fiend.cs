@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Core;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
@@ -19,7 +20,11 @@ using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
-	public class Brine_Fiend : ModNPC {
+	public class Brine_Fiend : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 6, 36, 48);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 2;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
 

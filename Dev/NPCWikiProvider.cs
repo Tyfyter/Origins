@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.NPCs;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -130,9 +131,10 @@ namespace Origins.Dev {
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModNPC modNPC) {
 			NPC npc = modNPC.NPC;
-			if (npc.catchItem > 0) yield break;
 			string segmentText = "";
-			if (modNPC is WormBody) {
+			if (npc.catchItem > 0) {
+				segmentText = "_NPC";
+			} else if (modNPC is WormBody) {
 				segmentText = "_Body";
 			} else if (modNPC is WormTail) {
 				segmentText = "_Tail";
@@ -141,7 +143,13 @@ namespace Origins.Dev {
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;
-			yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames));
+			if (wikiNPC.ImageExportType == NPCExportType.Bestiary) {
+				yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration));
+			} else if (wikiNPC.ImageExportType == NPCExportType.SpriteSheet) {
+				Main.instance.LoadNPC(modNPC.Type);
+				var texture = TextureAssets.Npc[modNPC.Type];
+				yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(texture.Value, wikiNPC.AnimationFrames, wikiNPC.FrameDuration));
+			}
 		}
 	}
 }

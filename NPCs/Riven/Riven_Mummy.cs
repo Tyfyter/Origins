@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
@@ -9,7 +10,11 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy {
+	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 6, 40, 48);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 2;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.07f;
 		public override void Load() => this.AddBanner();

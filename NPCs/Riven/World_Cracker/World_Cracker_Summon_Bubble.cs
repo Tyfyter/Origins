@@ -14,7 +14,11 @@ using Terraria.Localization;
 using Origins.Dev;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Summon_Bubble : Glowing_Mod_NPC, IRivenEnemy {
+	public class World_Cracker_Summon_Bubble : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 50, 52);
+		public int AnimationFrames => 4;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public static int ID { get; private set; }
 		public static List<int> ValidSpawns { get; private set; } = [];
 		public override void SetStaticDefaults() {
