@@ -5066,15 +5066,15 @@ Peat_Moss_Debug_Item: {
 
 Crawdaddys_Revenge: {
 	DisplayName: Crawdaddy's Revenge
-	Tooltip: ""
+	Tooltip: Enemies repeatedly struck will get clawed
 }
 
 Acrid_Laser_Rod: {
 	DisplayName: Acrid Laser Rod
-	Tooltip: ""
+	Tooltip: The bobber will light up the area around it
 }
 
 Acrid_Beam_Thrusters: {
 	DisplayName: Acrid Beam Thrusters
-	Tooltip: ""
+	Tooltip: Allows flight and slow fall
 }

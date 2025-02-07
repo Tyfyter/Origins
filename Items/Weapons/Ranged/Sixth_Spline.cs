@@ -1,9 +1,7 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
-using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +21,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToRangedWeapon(ProjectileID.Bullet, ModContent.ItemType<Scrap>(), 12, 6);
-			Item.damage = 40;
+			Item.damage = 60;
 			Item.crit = -4;
 			Item.useAnimation = 12;
 			Item.useTime = 12;

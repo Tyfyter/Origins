@@ -597,7 +597,7 @@ UTILITIES:
 
 WINGS:
 ---
-(#, ^2) Acrid Beam Thrusters !!!
+(#2, ^2) Acrid Beam Thrusters !!!
 (X) Gills
 (X) Marrowick Mantle
 (X) Mutant Wings
@@ -630,11 +630,11 @@ TOOLS:
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
-(☻) Acrid Laser Rod !!!
+(^) Acrid Laser Rod
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(☻) Impactaxe
+(^) Impactaxe
 
 (X) Ahe
 (X) Nova Bomb
@@ -747,10 +747,10 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
-(☻) Crawdaddy's Revenge !!!
+(#3, ^2) Crawdaddy's Revenge !!!
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
-(#2, ^2) Fifth Spline
+(^) Fifth Spline
 (^) Firespit
 (#, ^2) Fumethrower !!!
 (^) Harpoon Burst Rifle*
@@ -1054,7 +1054,7 @@ TILES:
 (^) Lost Ore*
 (^) Marrowick*
 (#, ^2) Mildew Block° !!!
-(☻) Peat Moss Block* !!! (explosion when mined, bug with merging with vines)
+(^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
 (^) Riven Cactus*

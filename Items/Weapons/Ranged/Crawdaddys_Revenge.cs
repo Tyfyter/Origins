@@ -1,11 +1,7 @@
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Projectiles;
-using ReLogic.Graphics;
 using System;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
@@ -19,13 +15,13 @@ namespace Origins.Items.Weapons.Ranged {
 			});
 		}
 		public override void SetDefaults() {
-			Item.DefaultToRangedWeapon(ProjectileID.Bullet, AmmoID.Bullet, 11, 9.1f, true);
-			Item.damage = 33;
+			Item.DefaultToRangedWeapon(ProjectileID.Bullet, AmmoID.Bullet, 7, 9.1f, true);
+			Item.damage = 30;
 			Item.knockBack = 2;
 			Item.UseSound = SoundID.Item11;
 			Item.width = 86;
 			Item.height = 22;
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 2, silver: 50);
 		}
 		public override Vector2? HoldoutOffset() => new(-10, 1);
