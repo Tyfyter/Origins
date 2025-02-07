@@ -34,16 +34,18 @@ namespace Origins.Items.Accessories {
 				if (player.wingFrameCounter >= timePerFrame * 3) player.wingFrameCounter = 0;
 				player.wingFrame = 1 + player.wingFrameCounter / timePerFrame;
 
-				/*bool noLight = player.wingsLogic != player.wings;
+				bool noLight = player.wingsLogic != player.wings;
 				ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
-				for (int i = 0; i < 4; i++) {
-					if (Main.rand.NextBool(4)) {
-						Vector2 offset = (-0.74539816f + MathHelper.Pi / 8f * i + 0.03f * i).ToRotationVector2() * new Vector2(player.direction * -20, 20f);
-						Dust dust = Dust.NewDustDirect(player.Center, 0, 0, DustID.Vortex, 0f, 0f, 100, Color.White, 0.8f);
+				for (int i = -2; i < 4; i++) {
+					if (Main.rand.NextBool(2)) {
+						Vector2 offset = new((i * -12 - 1) * player.direction, 20f);
+						Dust dust = Dust.NewDustDirect(player.Center, 0, 0, DustID.Terra, 0f, 0f, 100, Color.White, 0.8f);
 						dust.noGravity = true;
 						dust.noLightEmittence = noLight;
 						dust.position = player.Center + offset;
-						dust.velocity = player.DirectionTo(dust.position) * 2f;
+						dust.velocity = player.DirectionTo(dust.position + new Vector2(player.direction * 6, 0)) * 2f;
+						dust.velocity.X *= 0.5f;
+						dust.velocity.Y *= 1.5f;
 						if (!Main.rand.NextBool(10)) {
 							dust.customData = this;
 						} else {
@@ -52,23 +54,6 @@ namespace Origins.Items.Accessories {
 						dust.shader = shaderData;
 					}
 				}
-				for (int i = 0; i < 4; i++) {
-					if (Main.rand.NextBool(8)) {
-						Vector2 offset = (-0.7053982f + MathHelper.Pi / 8f * i + 0.03f * i).ToRotationVector2() * new Vector2(player.direction * 20, 24f) + new Vector2(player.direction * -16f, 0f);
-						Dust dust = Dust.NewDustDirect(player.Center, 0, 0, DustID.Vortex, 0f, 0f, 100, Color.White, 0.5f);
-						dust.noGravity = true;
-						dust.noLightEmittence = noLight;
-						dust.position = player.Center + offset;
-						dust.velocity = Vector2.Normalize(dust.position - player.Center - new Vector2(player.direction * -16f, 0f)) * 2f;
-						dust.position += dust.velocity * 5f;
-						if (!Main.rand.NextBool(10)) {
-							dust.customData = this;
-						} else {
-							dust.fadeIn = 0.5f;
-						}
-						dust.shader = shaderData;
-					}
-				}*/
 			} else {
 				player.wingFrame = 0;
 			}

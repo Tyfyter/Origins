@@ -5076,7 +5076,7 @@ Acrid_Laser_Rod: {
 
 Acrid_Beam_Thrusters: {
 	DisplayName: Acrid Beam Thrusters
-	Tooltip: Allows flight and slow fall
+	Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 }
 
 Hydrolantern: {

@@ -597,7 +597,7 @@ UTILITIES:
 
 WINGS:
 ---
-(#2, ^2) Acrid Beam Thrusters !!!
+(☻) Acrid Beam Thrusters !!!
 (X) Gills
 (X) Marrowick Mantle
 (X) Mutant Wings
