@@ -1,5 +1,4 @@
 ﻿using Origins.NPCs;
-using Origins.NPCs.Defiled;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -21,7 +20,7 @@ namespace Origins.Buffs {
 			DoBubbles(npc);
 		}
 		public static void DoBubbles(Entity entity) {
-			Dust dust = Dust.NewDustDirect(new Vector2(entity.position.X - 2f, entity.position.Y - 2f), entity.width + 4, entity.height + 4, DustID.BreatheBubble, entity.velocity.X * 0.3f, entity.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+			Dust dust = Dust.NewDustDirect(new Vector2(entity.position.X - 2f, entity.position.Y - 2f), entity.width + 4, entity.height + 4, DustID.BreatheBubble, entity.velocity.X * 0.3f, entity.velocity.Y * 0.3f, 100, default, 1.75f);
 			dust.noGravity = true;
 			dust.velocity *= 0.75f;
 			dust.velocity.X *= 0.75f;

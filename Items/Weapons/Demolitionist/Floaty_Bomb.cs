@@ -1,10 +1,9 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Floaty_Bomb : ModItem, ICustomWikiStat {
+	public class Floaty_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsBomb",
@@ -20,7 +19,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed *= 1.4f;
 			Item.value *= 6;
 			Item.rare = ItemRarityID.Green;
-            Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 35)

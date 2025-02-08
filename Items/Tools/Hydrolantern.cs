@@ -1,4 +1,5 @@
 using Origins.Dev;
+using Origins.Items.Materials;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,14 @@ namespace Origins.Items.Tools {
 			Item.shootSpeed = 8;
 			Item.noUseGraphic = true;
 			Item.UseSound = SoundID.Item7;
+			Item.rare = ItemRarityID.Orange;
+		}
+		public override void AddRecipes() {
+			CreateRecipe(8)
+			.AddIngredient(ModContent.ItemType<Eitrite_Bar>())
+			.AddIngredient(ModContent.ItemType<Rubber>(), 8)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -65,7 +74,7 @@ namespace Origins.Items.Tools {
 				rotationSpeed += Projectile.velocity.X * 0.0002f;
 			}
 			float fade = Fade;
-			Lighting.AddLight(Projectile.Center, 1 * fade, 1 * fade, 1 * fade);
+			Lighting.AddLight(Projectile.Center, 1 * fade, 1 * fade, 0.2f * fade);
 		}
 		public override Color? GetAlpha(Color lightColor) => lightColor * Fade;
 		public static void GetMovedBy(Projectile projectile, Entity entity, float speedMult = 1f) {

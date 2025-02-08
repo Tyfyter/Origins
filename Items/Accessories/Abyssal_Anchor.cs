@@ -51,7 +51,7 @@ namespace Origins.Items.Accessories {
 			);
 			c.EmitLdarg0();
 			c.EmitDelegate((Vector2 velocity, Player player) => {
-				if (player.OriginPlayer().abyssalAnchor) velocity.Y *= 2f;
+				if (player.OriginPlayer().abyssalAnchor && player.velocity.Y > 0 && player.wet) velocity.Y *= 2.3f;
 				return velocity;
 			});
 		}

@@ -196,12 +196,12 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (X) Steam Shooter !!!
 
-(☻, @4) Airsnatcher !!!
+(#2, ^2) Airsnatcher !!! (custom bubble sprite present)
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
 (X) Angel
-(☻) Barnacle Mound* !!!
+(^) Barnacle Mound*
 (X) Beckonbug
 (#, ^2) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
@@ -233,7 +233,7 @@ ENEMY NPCS:
 (^) Sea Dragon°
 (^) Shattered Ghoul*
 (^) Shattered Mummy*
-(☻) Shotgunfish !!! (ultra-sensitivity to ripples and animations)
+(^) Shotgunfish
 (X) Tendon Terror
 (^) Torn Ghoul*
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
@@ -270,7 +270,7 @@ EVENTS:
 STATUS EFFECTS:
 ---
 (%2) Ashen Assimilation
-(☻) Cavitation !!! (needs bubbly effect and sounds)
+(^) Cavitation
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
 (^) Defiled Assimilation*
@@ -361,7 +361,7 @@ ARMOR:
 ACCESSORIES:
 ---
 (X) 5G Broadband Wi-Fi Router
-(☻) Abyssal Anchor* !!! (added fall speed through liquids)
+(@3, #2) Abyssal Anchor* !!!
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
@@ -437,7 +437,7 @@ ACCESSORIES:
 (^) Makeover Choker*
 (^) Messy Leech*
 (^) Messy Magma Leech*
-(☻) Mildew Heart !!!
+(^) Mildew Heart
 (X) Mindweights
 (^) Missile Armcannon*
 (#, ^2) Mithrafin !!!
@@ -450,7 +450,7 @@ ACCESSORIES:
 (^) Olid Organ*
 (#, ^2) Ornamental Keepsake !!!
 (X) Parasite Arm
-(#, ^2) Party Ring Balloon !!!
+(^) Party Ring Balloon
 (^) Plasma Bag*
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
@@ -587,7 +587,7 @@ UTILITIES:
 
 (X) Strange Backpack
 
-(♦ (I definitely didn't do these as planned, but I think they turned out really well)) Hydrolantern !!!
+(^) Hydrolantern
 (^) Impenetrable Trashcan Lid
 (^) Indestructible Saddle
 (^) Salty Seed (Mitosis Node)
@@ -597,7 +597,7 @@ UTILITIES:
 
 WINGS:
 ---
-(☻) Acrid Beam Thrusters !!!
+(^) Acrid Beam Thrusters
 (X) Gills
 (X) Marrowick Mantle
 (X) Mutant Wings

@@ -4150,20 +4150,14 @@ Abyssal_Anchor: {
 	DisplayName: Abyssal Anchor
 	Tooltip:
 		'''
-		+15% melee speed
-		+10% generic damage
-		+5% magic damage
-		+4% critical strike chance
-		+4 HP/s life regeneration
-		+20 mana
-		+8 defense
-		+5% damage reduction
+		Increase to damage, melee speed, mana,
+		critical strike chance, life regeneration,
+		defense, mining speed, damage reduction 
+		and minion knockback
 		+25% mana shielding
-		+25% mining speed
-		+1 minion knockback
 		Increased pick-up range for stars
-		-25% movement speed
-		-40% jump speed
+		-25% movement speed and -40% jump speed
+		Allows you to fall faster through liquids
 		'''
 }
 
@@ -5081,12 +5075,21 @@ Acrid_Beam_Thrusters: {
 
 Hydrolantern: {
 	DisplayName: Hydrolantern
-	Tooltip: ""
+	Tooltip:
+		'''
+		Non-consumable
+		Floats in the water and follows movement
+		'''
 }
 
 Mildew_Heart: {
 	DisplayName: Mildew Heart
-	Tooltip: ""
+	Tooltip:
+		'''
+		Up to 65% of your max life is gradually converted into mildew health
+		Mildew health regenerates faster than regular health
+		Your death is delayed for as long as your max mildew health decays
+		'''
 }
 
 Party_Ring_Balloon: {

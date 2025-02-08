@@ -196,7 +196,7 @@ namespace Origins.NPCs.Brine {
 				float x = ContentExtensions.DifficultyDamageMultiplier;
 				if (x > 4) x = 4;
 				float seconds = 15 - (x - 1) * (5 - (x - 2));
-				int time = (int)(seconds * 60 / 7);
+				int time = (int)(seconds * 60 / 3);
 				foreach (Player player in Main.ActivePlayers) {
 					if (player.Hitbox.Intersects(hitbox)) {
 						player.breath += Math.Min(time, (player.breathMax - player.breath) - 1);

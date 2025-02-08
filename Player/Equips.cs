@@ -441,14 +441,14 @@ namespace Origins {
 			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player, miniStaticShock ? 7 : 5);
 			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(Player, 2);
 			if (mildewHeart) {
-				float speed = 0.3f;
+				float speed = 0.25f;
 				if (Player.statLife <= 0) {
 					Player.lifeRegenCount = 0;
-					speed = 0.2f;
+					speed = 0.81f;
 					Player.KillMe(lastMildewDeathReason, 0, 0, lastMildewDeathPvP);
 				} else if (Player.statLife < mildewHealth) {
-					Player.lifeRegenCount += 30;
-					speed = 0.1f;
+					Player.lifeRegenCount += 24;
+					speed = 0.065f;
 				}
 				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
 			} else {

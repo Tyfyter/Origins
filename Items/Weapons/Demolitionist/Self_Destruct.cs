@@ -33,7 +33,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
 			Item.rare = ItemRarityID.Yellow;
 			Item.value = Item.sellPrice(gold: 3);
-			Item.ArmorPenetration += 6;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -59,7 +58,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Self_Destruct_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Body";
 		public override void SetDefaults() {
-			Projectile.timeLeft = 80;
+			Projectile.timeLeft = 110;
 			Projectile.tileCollide = false;
 			Projectile.width = 32;
 			Projectile.height = 48;
@@ -70,6 +69,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Center = player.MountedCenter;
 			Projectile.velocity = player.velocity;
 			player.heldProj = Projectile.whoAmI;
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 10f, 18f, 30, 1000f, 2f, nameof(Self_Destruct)
+			));
+			/*if (Main.rand.NextBool(5)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Electric, 0, 0, 255, [255, 0, 0]);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+			}*/
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return false;
