@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Rockstar_Collar : ModItem, ICustomWikiStat {
+	public class Rockstar_Choker : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat"
 		];
@@ -32,7 +32,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Rockstar_Collar>()
+			.AddIngredient<Shock_Collar>()
 			.AddIngredient<Makeover_Choker>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
