@@ -43,7 +43,7 @@ namespace Origins.NPCs.Dungeon {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Joint_Pop>(), 15));
+			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Joint_Pop>(), 10, 5));
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientNecroHelmet, 450));
 			npcLoot.Add(ItemDropRule.Common(ItemID.ClothierVoodooDoll, 300));
 			npcLoot.Add(ItemDropRule.Common(ItemID.BoneWand, 250)).OnFailedRoll(ItemDropRule.Common(ItemID.TallyCounter, 100)).OnFailedRoll(ItemDropRule.Common(ItemID.GoldenKey, 65)).OnFailedRoll(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Bone, 1, 1, 3));
