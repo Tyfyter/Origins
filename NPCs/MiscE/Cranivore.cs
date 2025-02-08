@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using PegasusLib;
 using System;
 using Terraria;
@@ -11,7 +12,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class Cranivore : ModNPC {
+    public class Cranivore : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 18, 34);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;

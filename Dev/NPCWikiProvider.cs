@@ -143,12 +143,18 @@ namespace Origins.Dev {
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;
+			string savePath = (modNPC as ICustomWikiStat)?.CustomSpritePath ?? WikiPageExporter.GetWikiName(modNPC);
 			if (wikiNPC.ImageExportType == NPCExportType.Bestiary) {
-				yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration));
+				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration));
 			} else if (wikiNPC.ImageExportType == NPCExportType.SpriteSheet) {
 				Main.instance.LoadNPC(modNPC.Type);
 				var texture = TextureAssets.Npc[modNPC.Type];
-				yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(texture.Value, wikiNPC.AnimationFrames, wikiNPC.FrameDuration));
+				(Rectangle frame, int frames)[] frames = new (Rectangle frame, int frames)[wikiNPC.AnimationFrames];
+				for (int i = 0; i < frames.Length; i++) {
+					Rectangle newFrame = wikiNPC.DrawRect with { Y = wikiNPC.DrawRect.Y + wikiNPC.DrawRect.Height * i };
+					frames[i] = (newFrame, wikiNPC.FrameDuration);
+				}
+				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(texture.Value, frames));
 			}
 		}
 	}

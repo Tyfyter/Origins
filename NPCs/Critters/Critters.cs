@@ -97,7 +97,11 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 	}
-	public class Cicada_3301 : ModNPC {
+	public class Cicada_3301 : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 20, 13);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 2;

@@ -1,4 +1,5 @@
-﻿using Origins.Items.Mounts;
+﻿using Origins.Dev;
+using Origins.Items.Mounts;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 60, 50);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;

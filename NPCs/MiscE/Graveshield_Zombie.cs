@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Other;
 using System;
 using Terraria;
@@ -9,7 +10,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class Graveshield_Zombie : ModNPC {
+    public class Graveshield_Zombie : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(2, 6, 36, 48);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.BoneThrowingSkeleton;
 			Main.npcFrameCount[NPC.type] = 3;

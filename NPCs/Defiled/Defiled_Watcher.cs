@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
@@ -20,7 +21,11 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 74, 68);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.03f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;

@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -17,7 +18,11 @@ using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
-	public class Defiled_Effigy : ModNPC {
+	public class Defiled_Effigy : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 40, 54);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 1; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
 

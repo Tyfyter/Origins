@@ -1,4 +1,5 @@
-﻿using Origins.Items.Accessories;
+﻿using Origins.Dev;
+using Origins.Items.Accessories;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -6,7 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-	public class Fae_Nymph : ModNPC {
+	public class Fae_Nymph : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 38, 54);
+		public int AnimationFrames => 36;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.Nymph] = Type;
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Nymph];

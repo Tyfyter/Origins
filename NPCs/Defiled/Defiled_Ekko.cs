@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -9,7 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Ekko : ModNPC, IDefiledEnemy {
+	public class Defiled_Ekko : ModNPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 28, 46);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
