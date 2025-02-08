@@ -448,6 +448,9 @@ namespace Origins.NPCs {
 			if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType == ModContent.WallType<Baryte_Wall>()) {
 				pool[0] = 0;
 				return;
+			} else if (Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>() && spawnInfo.Player.InModBiome<Brine_Pool>()) {
+				pool[0] = 0;
+				return;
 			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
