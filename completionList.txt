@@ -957,7 +957,7 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
 
-(@4, ^3) Acrid Handcannon* !!!
+(^) Acrid Handcannon*
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken

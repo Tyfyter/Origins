@@ -1,5 +1,5 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,8 +7,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => [

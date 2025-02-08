@@ -1,11 +1,11 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -23,12 +23,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 26;
 			Item.useAnimation = 33;
 			Item.useTime = 11;
-			Item.width = 100;
+			Item.width = 96;
 			Item.height = 24;
 			Item.shoot = ModContent.ProjectileType<Dreikan_Shot>();
 			Item.reuseDelay = 6;
-			Item.scale = 0.75f;
+			//Item.scale = 0.75f;
 			Item.value = Item.sellPrice(gold: 5);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 30)
+			.AddIngredient(ModContent.ItemType<Hallowed_Cleaver>())
+			.AddIngredient(ModContent.ItemType<Respyrite>(), 15)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-16, 2);
@@ -52,7 +60,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.light = 0;
 		}
 		public override void AI() {
-			Lighting.AddLight(Projectile.Center, 0.5f, 0.25f, 0.05f);
+			Lighting.AddLight(Projectile.Center, 0.5f, 0.35f, 0.05f);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Daybreak, 30);

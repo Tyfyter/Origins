@@ -26,7 +26,7 @@ namespace Origins.Items.Tools {
 			Item.shootSpeed = 15.7f;
 			Item.shoot = ModContent.ProjectileType<Acrid_Laser_Rod_Bobber>();
 			Item.value = Item.sellPrice(gold: 4);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

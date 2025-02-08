@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -13,10 +12,10 @@ namespace Origins.Items.Tools {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			Item.DamageType = DamageClass.Generic;
 			Item.noMelee = true;
-			Item.fishingPole = 26;
+			Item.fishingPole = 25;
 			Item.shootSpeed = 12f;
 			Item.shoot = ModContent.ProjectileType<Snatcher_Bobber>();
-			Item.value = Item.sellPrice(gold: 4, silver: 36);
+			Item.value = Item.sellPrice(gold: 3, silver: 12);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
