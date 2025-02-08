@@ -401,7 +401,10 @@ namespace Origins.NPCs.Defiled.Boss {
 					case state_summon_roar: {
 						NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
-						SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f).WithVolumeScale(0.25f), NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f).WithVolumeScale(0.25f), NPC.Center, (sound) => {
+							sound.Position = NPC.Center;
+							return true;
+						});
 						if (NPC.ai[1] < 40) {
 							leftArmTarget = 0;
 							rightArmTarget = 0;

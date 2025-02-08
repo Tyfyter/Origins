@@ -5,6 +5,7 @@ using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,6 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;
@@ -41,6 +43,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(Item.UseSound, player.Center, (sound) => {
+				sound.Position = player.Center;
+				return true;
+			});
+			return null;
+		}
 		public override bool WeaponPrefix() => true;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			position = player.MountedCenter;
@@ -61,23 +70,25 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Center = player.MountedCenter;
 			Projectile.velocity = player.velocity;
 			player.heldProj = Projectile.whoAmI;
-			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
-				Projectile.Center, 10f, 18f, 30, 1000f, 2f, nameof(Self_Destruct)
-			));
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return false;
 		}
 		public override void OnKill(int timeLeft) {
-			Projectile.NewProjectile(
-				Projectile.GetSource_Death(),
-				Projectile.Center,
-				default,
-				ModContent.ProjectileType<Self_Destruct_Explosion>(),
-				Projectile.damage,
-				Projectile.knockBack,
-				Projectile.owner
-			);
+			if (Projectile.owner == Main.myPlayer) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Self_Destruct_Explosion>(),
+					Projectile.damage,
+					Projectile.knockBack,
+					Projectile.owner
+				);
+			}
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 10f, 18f, 30, 1000f, 2f, nameof(Self_Destruct)
+			));
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];

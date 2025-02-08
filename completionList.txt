@@ -437,7 +437,7 @@ ACCESSORIES:
 (^) Makeover Choker*
 (^) Messy Leech*
 (^) Messy Magma Leech*
-(#, ^2) Mildew Heart !!!
+(☻) Mildew Heart !!!
 (X) Mindweights
 (^) Missile Armcannon*
 (#, ^2) Mithrafin !!!

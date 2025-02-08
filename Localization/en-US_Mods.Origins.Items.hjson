@@ -5088,3 +5088,12 @@ Mildew_Heart: {
 	DisplayName: Mildew Heart
 	Tooltip: ""
 }
+
+Party_Ring_Balloon: {
+	DisplayName: Party Ring Balloon
+	Tooltip:
+		'''
+		{$Mods.Origins.Items.Donor_Wristband.Tooltip}
+		{$ItemTooltip.BalloonHorseshoeHoney}
+		'''
+}
