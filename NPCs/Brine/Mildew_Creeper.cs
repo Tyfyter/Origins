@@ -57,7 +57,7 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
-			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Creeper);

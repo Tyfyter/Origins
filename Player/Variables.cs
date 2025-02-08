@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -248,6 +249,10 @@ namespace Origins {
 		public bool eitriteGunMagazine = false;
 		public bool fairyLotus = false;
 		public bool abyssalAnchor = false;
+		public bool mildewHeart = false;
+		public float mildewHealth = 0;
+		public PlayerDeathReason lastMildewDeathReason;
+		public bool lastMildewDeathPvP = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -646,6 +651,7 @@ namespace Origins {
 			eitriteGunMagazine = false;
 			fairyLotus = false;
 			abyssalAnchor = false;
+			mildewHeart = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {

@@ -17,7 +17,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-    public partial class OriginPlayer : ModPlayer {
+	public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
 			if (bugZapper && tornCurrentSeverity > 0) {
 				Player.statDefense *= 1.15f + tornCurrentSeverity;
@@ -411,8 +411,8 @@ namespace Origins {
 
 			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) { 
 				for (int i = 0; i < cinderSealCount; i++) {
-                    Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
-                }
+					Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
+				}
 				if (Player.immuneTime % cinderSealItem.useTime == 1) {
 					cinderSealCount--;
 					cinderSealItem.ModItem.Shoot(
@@ -440,7 +440,29 @@ namespace Origins {
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
 			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player, miniStaticShock ? 7 : 5);
 			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(Player, 2);
+			if (mildewHeart) {
+				float speed = 0.3f;
+				if (Player.statLife <= 0) {
+					Player.lifeRegenCount = 0;
+					speed = 0.2f;
+					Player.KillMe(lastMildewDeathReason, 0, 0, lastMildewDeathPvP);
+				} else if (Player.statLife < mildewHealth) {
+					Player.lifeRegenCount += 30;
+					speed = 0.1f;
+				}
+				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
+			} else {
+				mildewHealth = 0;
+			}
 			oldGravDir = Player.gravDir;
+		}
+		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
+			if (mildewHeart && mildewHealth > 0) {
+				lastMildewDeathReason = damageSource;
+				lastMildewDeathPvP = pvp;
+				return mildewHealth <= 0;
+			}
+			return true;
 		}
 		public override void UpdateDyes() {
 			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
@@ -571,11 +593,11 @@ namespace Origins {
 			}
 			if (primordialSoup) {
 				Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
-            }
+			}
 			if (bugZapper) {
-                Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
-            }
-        }
+				Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
+			}
+		}
 		public void SetMimicSetChoice(int level, int choice) {
 			mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
 		}
