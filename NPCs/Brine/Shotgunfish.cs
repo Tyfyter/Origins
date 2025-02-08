@@ -68,6 +68,9 @@ namespace Origins.NPCs.Brine {
 		public override bool CanTargetPlayer(Player player) {
 			return base.CanTargetPlayer(player) && player.WithinRange(NPC.Center, 16 * 12 + NPC.width + Math.Max(player.width, player.height));
 		}
+		public override float RippleTargetWeight(float magnitude, float distance) {
+			return base.RippleTargetWeight(magnitude, distance) * 2;
+		}
 		public override void AI() {
 			DoTargeting();
 			Vector2 direction;
