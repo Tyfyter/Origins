@@ -44,7 +44,7 @@ namespace Origins.NPCs.Dungeon {
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!NPC.downedPlantBoss) return 0;
 			if (!spawnInfo.HasRightDungeonWall(NPCExtensions.DungeonWallType.Brick)) return 0;
-			return SpawnCondition.DungeonNormal.Chance * 0.1f;
+			return SpawnCondition.DungeonNormal.Chance * 0.0166f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
