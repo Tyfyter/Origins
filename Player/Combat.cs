@@ -340,15 +340,6 @@ namespace Origins {
 			}
 			if (cavitationDebuff) {
 				Player.lifeRegen -= 33;
-				Dust dust = Dust.NewDustDirect(new Vector2(Player.position.X - 2f, Player.position.Y - 2f), Player.width + 4, Player.height + 4, DustID.BreatheBubble, Player.velocity.X * 0.3f, Player.velocity.Y * 0.3f, 220, Color.White, 1.75f);
-				dust.noGravity = true;
-				dust.velocity *= 0.75f;
-				dust.velocity.X *= 0.75f;
-				dust.velocity.Y -= 1f;
-				if (Main.rand.NextBool(4)) {
-					dust.noGravity = false;
-					dust.scale *= 0.5f;
-				}
 			}
 
 			if (staticShock || miniStaticShock || staticShockDamage) {

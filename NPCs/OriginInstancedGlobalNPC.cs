@@ -200,7 +200,7 @@ namespace Origins.NPCs {
 				}
 				npc.lifeRegen -= 66;
 				if (damage < 3) damage = 3;
-				Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.BreatheBubble, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+				/*Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.BreatheBubble, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
 				dust.noGravity = true;
 				dust.velocity *= 0.75f;
 				dust.velocity.X *= 0.75f;
@@ -208,7 +208,7 @@ namespace Origins.NPCs {
 				if (Main.rand.NextBool(4)) {
 					dust.noGravity = false;
 					dust.scale *= 0.5f;
-				}
+				}*/
 			}
 			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (npc.lifeRegen > 0) {
