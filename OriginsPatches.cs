@@ -667,6 +667,7 @@ namespace Origins {
 				return orig(self) || self.ammo == ItemID.Grenade;
 			};
 			IL_Player.CheckDrowning += Toxic_Shock_Debuff.IL_Player_CheckDrowning;
+			IL_Player.WaterCollision += Abyssal_Anchor.IL_Player_WaterCollision;
 		}
 
 		static bool shouldDoHeliumSound = false;

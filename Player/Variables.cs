@@ -247,6 +247,7 @@ namespace Origins {
 		public float meleeScaleMultiplier = 1;
 		public bool eitriteGunMagazine = false;
 		public bool fairyLotus = false;
+		public bool abyssalAnchor = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -644,6 +645,7 @@ namespace Origins {
 			meleeScaleMultiplier = 1;
 			eitriteGunMagazine = false;
 			fairyLotus = false;
+			abyssalAnchor = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {

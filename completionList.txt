@@ -233,7 +233,7 @@ ENEMY NPCS:
 (^) Sea Dragon°
 (^) Shattered Ghoul*
 (^) Shattered Mummy*
-(#2, ^2) Shotgunfish !!! (ultra-sensitivity to ripples and animations)
+(☻) Shotgunfish !!! (ultra-sensitivity to ripples and animations)
 (X) Tendon Terror
 (^) Torn Ghoul*
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
@@ -270,7 +270,7 @@ EVENTS:
 STATUS EFFECTS:
 ---
 (%2) Ashen Assimilation
-(#2, $2, ^2) Cavitation !!! (needs bubbly effect and sounds)
+(☻) Cavitation !!! (needs bubbly effect and sounds)
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
 (^) Defiled Assimilation*
@@ -361,7 +361,7 @@ ARMOR:
 ACCESSORIES:
 ---
 (X) 5G Broadband Wi-Fi Router
-(#2, ^2) Abyssal Anchor* !!! (added fall speed through liquids)
+(☻) Abyssal Anchor* !!! (added fall speed through liquids)
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
