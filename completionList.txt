@@ -465,7 +465,7 @@ ACCESSORIES:
 (X) Rebreather Gear !!!
 (^) Resin Shield*
 (^) Return To Sender*
-(#, ^2) Rockstar Choker !!!
+(^) Rockstar Choker
 (^) Ruby Reticle*
 (^) Seal of Cinders*
 (^) Scavenger Bag*
