@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Partybringer_P>(40, 40, 8f, 46, 28, true);
+			Item.DefaultToCanisterLauncher<Partybringer_P>(64, 40, 8f, 46, 28, true);
 			Item.value = Item.buyPrice(gold: 7);
 			Item.rare = ItemRarityID.Yellow;
 			Item.ArmorPenetration += 5;

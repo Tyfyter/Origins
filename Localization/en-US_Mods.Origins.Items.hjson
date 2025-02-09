@@ -5100,3 +5100,5 @@ Party_Ring_Balloon: {
 		{$ItemTooltip.BalloonHorseshoeHoney}
 		'''
 }
+
+Rockstar_Choker.DisplayName: Rockstar_ Choker
