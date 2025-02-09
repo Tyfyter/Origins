@@ -193,6 +193,7 @@ namespace Origins.Items.Accessories {
 			}
 			#endregion
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) => fallThrough = true;
 		public override void OnKill(int timeLeft) {
 			if (Main.myPlayer != Projectile.owner) {
 				Player owner = Main.player[Projectile.owner];

@@ -52,6 +52,7 @@ namespace Origins.Items.Tools {
 			Projectile.width = 18;
 			Projectile.height = 18;
 			Projectile.timeLeft = 18000;
+			Projectile.netImportant = true;
 		}
 		float rotationSpeed = 0;
 		float Fade => Math.Min(Projectile.timeLeft / 52f, 1);

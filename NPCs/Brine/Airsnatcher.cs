@@ -33,6 +33,7 @@ namespace Origins.NPCs.Brine {
 			NPC.width = 38;
 			NPC.height = 42;
 			NPC.friendly = false;
+			NPC.chaseable = false;
 			NPC.HitSound = SoundID.Item127;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0f;
@@ -64,10 +65,6 @@ namespace Origins.NPCs.Brine {
 				}
 			}
 			if (!hasRightWall) return 0;
-			for (int i = 1; i <= 1; i++) {
-				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX + i, spawnInfo.SpawnTileY);
-				tile.TileColor = PaintID.DeepOrangePaint;
-			}
 			return Brine_Pool.SpawnRates.Airsnatcher;
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
@@ -153,7 +150,7 @@ namespace Origins.NPCs.Brine {
 			int frame = NPC.frame.Y / 44;
 			if (NPC.ai[1] == 0 && frame != Main.npcFrameCount[Type] - 1) {
 				Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Airsnatcher_Bubble>()].Value;
-				Rectangle rect = texture.Frame(/*verticalFrames: 3, frameY: (int)NPC.frameCounter / 6*/);
+				Rectangle rect = texture.Frame(verticalFrames: 3, frameY: (int)NPC.frameCounter / 6);
 				spriteBatch.Draw(
 					texture,
 					NPC.position + new Vector2(19, 2 + frame * 6) - screenPos,
@@ -169,9 +166,8 @@ namespace Origins.NPCs.Brine {
 		}
 	}
 	public class Airsnatcher_Bubble : ModProjectile {
-		public override string Texture => "Terraria/Images/Bubble";
 		public override void SetStaticDefaults() {
-			//Main.projFrames[Type] = 3;
+			Main.projFrames[Type] = 3;
 			ProjectileID.Sets.CanDistortWater[Type] = false;
 			Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
 		}
@@ -183,11 +179,11 @@ namespace Origins.NPCs.Brine {
 		public override bool ShouldUpdatePosition() => Projectile.timeLeft > PopFrameTime;
 		public override void AI() {
 			if (Projectile.timeLeft <= PopFrameTime) {
-				//Projectile.frame = 2;
+				Projectile.frame = 2;
 				return;
 			}
 			if (++Projectile.frameCounter >= 6) {
-				//Projectile.frame = Projectile.frame ^ 1;
+				Projectile.frame = Projectile.frame ^ 1;
 			}
 			if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height / 2)) {
 				if (Projectile.velocity.Y > -2) Projectile.velocity.Y -= 0.1f;
@@ -199,7 +195,7 @@ namespace Origins.NPCs.Brine {
 				int time = (int)(seconds * 60 / 3);
 				foreach (Player player in Main.ActivePlayers) {
 					if (player.Hitbox.Intersects(hitbox)) {
-						player.breath += Math.Min(time, (player.breathMax - player.breath) - 1);
+						player.breath += Math.Max(Math.Min(time, (player.breathMax - player.breath) - 1), 0);
 						if (Projectile.active) {
 							Projectile.Kill();
 						}

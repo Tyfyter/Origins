@@ -445,32 +445,36 @@ namespace Origins.NPCs {
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
 			}
+			float baseChance = pool[0];
+			void CancelOtherSpawns() {
+				foreach (int type in pool.Keys) {
+					pool[type] = 0;
+				}
+			}
 			if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType == ModContent.WallType<Baryte_Wall>()) {
-				pool[0] = 0;
+				CancelOtherSpawns();
 				return;
 			} else if (Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>() && spawnInfo.Player.InModBiome<Brine_Pool>()) {
-				pool[0] = 0;
+				CancelOtherSpawns();
 				return;
 			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), Fiberglass_Undergrowth.SpawnRates.Bow);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), Fiberglass_Undergrowth.SpawnRates.Gun);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Cannon>(), Fiberglass_Undergrowth.SpawnRates.Gun);
-				pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), Fiberglass_Undergrowth.SpawnRates.Spider);
-				pool[0] = 0;
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword * baseChance);
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), Fiberglass_Undergrowth.SpawnRates.Bow * baseChance);
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), Fiberglass_Undergrowth.SpawnRates.Gun * baseChance);
+				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Cannon>(), Fiberglass_Undergrowth.SpawnRates.Gun * baseChance);
+				pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), Fiberglass_Undergrowth.SpawnRates.Spider * baseChance);
+				CancelOtherSpawns();
 				return;
 			}
 			if (originPlayer.ZoneFiberglass) {
-				pool[0] = 0;
+				CancelOtherSpawns();
 				return;
 			}
 			if (player.InModBiome<Defiled_Wastelands>()) {
 				if (Defiled_Amalgamation.spawnDA) {
-					foreach (var entry in pool) {
-						pool[entry.Key] = 0;
-					}
+					CancelOtherSpawns();
 					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Defiled_Stone_Wall>()) {
 						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 9999);
 					}

@@ -56,7 +56,7 @@ namespace Origins.LootConditions {
 	}
 	public class Dawn_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
-			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
+			return false && info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
 		public string GetConditionDescription() {

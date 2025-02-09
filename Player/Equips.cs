@@ -448,7 +448,7 @@ namespace Origins {
 					Player.KillMe(lastMildewDeathReason, 0, 0, lastMildewDeathPvP);
 				} else if (Player.statLife < mildewHealth) {
 					Player.lifeRegenCount += 24;
-					speed = 0.065f;
+					speed = 0.1f;
 				}
 				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
 			} else {
