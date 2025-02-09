@@ -17,6 +17,7 @@ using ThoriumMod.Items.HealerItems;
 
 namespace Origins.NPCs.MiscE {
 	public class Slime_Worm_Head : WormHead, ICustomWikiStat {
+		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Slime_Worm_Preview");
 		public override int BodyType => ModContent.NPCType<Slime_Worm_Body>();
 		public override int TailType => ModContent.NPCType<Slime_Worm_Tail>();
 		//public override void Load() => this.AddBanner();

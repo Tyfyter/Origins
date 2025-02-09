@@ -581,6 +581,7 @@ namespace Origins.Dev {
 		int AnimationFrames { get; }
 		int FrameDuration => 1;
 		NPCExportType ImageExportType => NPCExportType.Bestiary;
+		Range FrameRange => new Range(0, AnimationFrames);
 	}
 	public enum NPCExportType {
 		Bestiary,

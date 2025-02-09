@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -14,10 +15,11 @@ using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
 	public class Cellarkeep : ModNPC, IWikiNPC {
-		public Rectangle DrawRect => new(0, 0, 40, 56);
-		public int AnimationFrames => 1;
+		public Rectangle DrawRect => new(0, 4, 40, 56);
+		public int AnimationFrames => 48;
 		public int FrameDuration => 1;
-		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public Range FrameRange => new(8, 48);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 18;

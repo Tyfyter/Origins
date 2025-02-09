@@ -3,6 +3,7 @@ using CalamityMod.NPCs.ExoMechs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
@@ -24,7 +25,12 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Sea_Dragon : Brine_Pool_NPC {
+	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC {
+		public Rectangle DrawRect => new(-28, 0, 94, 26);
+		public int AnimationFrames => 64;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public Range FrameRange => new Range(28, 64);
 		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

@@ -48,7 +48,11 @@ namespace Origins.NPCs.MiscE {
 			}
 		}
 	}
-	public class Whimsical_Girl : ModNPC {
+	public class Whimsical_Girl : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 38, 54);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.LostGirl] = Type;
 			Main.npcFrameCount[Type] = 9;

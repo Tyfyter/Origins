@@ -1,4 +1,5 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Dev;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -6,7 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Enchanted_Trident : ModNPC, IDefiledEnemy {
+	public class Enchanted_Trident : ModNPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 2, 76, 76);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;

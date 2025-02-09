@@ -145,7 +145,7 @@ namespace Origins.Dev {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;
 			string savePath = (modNPC as ICustomWikiStat)?.CustomSpritePath ?? WikiPageExporter.GetWikiName(modNPC);
 			if (wikiNPC.ImageExportType == NPCExportType.Bestiary) {
-				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration));
+				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration)[wikiNPC.FrameRange]);
 			} else if (wikiNPC.ImageExportType == NPCExportType.SpriteSheet) {
 				Main.instance.LoadNPC(modNPC.Type);
 				var texture = TextureAssets.Npc[modNPC.Type];

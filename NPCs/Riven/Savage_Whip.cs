@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -10,7 +11,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Savage_Whip : ModNPC, IRivenEnemy {
+	public class Savage_Whip : ModNPC, IRivenEnemy, ICustomWikiStat {
+		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Savage_Whip_Preview");
 		public override void Load() {
 			this.AddBanner();
 			On_NPC.AddBuff += On_NPC_AddBuff;
