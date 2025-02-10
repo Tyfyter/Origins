@@ -1,5 +1,4 @@
 using Origins.Dev;
-using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -13,7 +12,7 @@ namespace Origins.Items.Armor.Cryosten {
         ];
         public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.sellPrice(1, silver: 50);
+			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -59,7 +58,7 @@ namespace Origins.Items.Armor.Cryosten {
 	public class Cryosten_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.sellPrice(1, silver: 50);
+			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -80,7 +79,7 @@ namespace Origins.Items.Armor.Cryosten {
 	public class Cryosten_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.sellPrice(1, silver: 50);
+			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {

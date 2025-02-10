@@ -163,7 +163,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			base.OnKill(timeLeft);
 			if (Projectile.owner != Main.myPlayer) return;
 			if (Main.rand.NextBool()) {
-				int i = Main.rand.Next(1, 4);
+				int i = Main.rand.Next(1, 2);
 				bool forceStar = i == 1;
 				for (; i-- > 0;) {
 					int item = Item.NewItem(

@@ -7,6 +7,7 @@ using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
@@ -399,6 +400,9 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					//"beckoning roar"
 					case state_summon_roar: {
+						Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+							NPC.Center, 10f, 16f, 60, 1200f, 1f, nameof(Defiled_Amalgamation)
+						));
 						NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
 						SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f).WithVolumeScale(0.25f), NPC.Center, (sound) => {

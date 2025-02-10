@@ -162,7 +162,7 @@ ENEMY NPCS:
 (^) Cranivore*
 (^) Crimbrain*
 (X) Crying Creeper
-(^) Defiled Cyclops*
+(@4, #2) Defiled Cyclops* !!!
 (^) Defiled Digger*
 (^) Defiled Krusher*
 (^) Defiled Mite*
@@ -194,9 +194,8 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)*
 (^) Spider Amoeba*
 (X) Spiteful Flesh
-(X) Steam Shooter !!!
 
-(#2, ^2) Airsnatcher !!! (custom bubble sprite present)
+(^) Airsnatcher
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
@@ -216,7 +215,7 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
-(X) Leaf Snapper !!!
+(#, ^2) Leaf Snapper !!!
 (^) King Crab
 (#3, ^2) Mildew Creeper !!!
 (^) Mitoworm*
@@ -361,7 +360,7 @@ ARMOR:
 ACCESSORIES:
 ---
 (X) 5G Broadband Wi-Fi Router
-(@3, #2) Abyssal Anchor* !!!
+(#2, ^2) Abyssal Anchor* !!!
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
@@ -415,7 +414,7 @@ ACCESSORIES:
 (^) Gun Magazine
 (^) Haggard Artery*
 (^) Handy Helper*
-(X) Harpy Horseshoe Balloon !!!
+(#, ^2) Harpy Horseshoe Balloon !!!
 (#2, ^2) Hazard Charm* !!! (added functionality)
 (^) Headphones*
 (#2, ^2) Helium Tank* !!! (added functionality with balloons)
@@ -462,7 +461,7 @@ ACCESSORIES:
 (^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
-(X) Rebreather Gear !!!
+(#, ^2) Rebreather Gear !!!
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Rockstar Choker
@@ -660,7 +659,7 @@ MELEE WEAPONS:
 (^) Marrowick Sword
 (^) Nineball*
 (^) Orbital Saw
-(X) Piston Rod !!!
+(#, ^2) Piston Rod !!!
 (^) Ripper Lance*
 (^) Riverang*
 (^) Snapthrow*
@@ -863,7 +862,7 @@ SUMMONER WEAPONS:
 (#, ^2) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
-(# (partial implementation, ), ^2) Relay Rod !!!
+(#2, ^2) Relay Rod !!!
 (%2) Ocean Amulet !!!
 (^) Ocotillo Finger
 (^) Ocotoral Bud*
@@ -886,7 +885,7 @@ SUMMONER WEAPONS:
 (#, ^2) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
-(X) Old Brine Rock !!!
+(#, ^2) Old Brine Rock !!!
 (X) Ornamental Riven Artifact
 (X) Riven Rain Rod
 (^) Scabcoral Lyre*
@@ -932,7 +931,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
-(X) Explosive Barrel !!!
+(#, ^2) Explosive Barrel !!!
 (^) Eyenade
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
@@ -964,12 +963,12 @@ EXPLOSIVE WEAPONS:
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
-(X) Grenade Lawnchair !!!
+(#, ^2) Grenade Lawnchair !!!
 (^) Happy Bomb*
 (X) Rattlesnake
-(X) Rocket Rile !!!
+(#, ^2) Rocket Rifle !!!
 (X) Shroomcannon
-(X) Sonar Dynamite !!!
+(#, ^2) Sonar Dynamite !!!
 (ᗢ) Sonorous Shredder
 (^) Thermite Launcher*
 (#, ^2) Torpedo Tube !!!
@@ -1154,7 +1153,7 @@ TILES:
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
 (X) Qube Generator°
-(X) Unsuspicious Bush !!!
+(#, ^2) Unsuspicious Bush !!!
 
 (^) Acetabularia*
 (X) Barnacle Infested Coral
