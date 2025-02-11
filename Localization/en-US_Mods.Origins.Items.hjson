@@ -262,6 +262,7 @@ Dryads_Inheritance: {
 		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Emit a damaging aura that inflicts poison
+		Summons spores over time that will damage enemies
 		'''
 }
 
@@ -907,7 +908,7 @@ Unsought_Organ: {
 	DisplayName: Unsought Organ
 	Tooltip:
 		'''
-		All damage received is reflected to 3 nearby enemies, inflicting 'Toxic Shock'
+		All damage received is reflected to 3 nearby enemies
 		5% increased damage and critical strike chance
 		All attacks inflict Toxic Shock
 		Enemies are less likely to target you

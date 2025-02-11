@@ -162,7 +162,7 @@ ENEMY NPCS:
 (^) Cranivore*
 (^) Crimbrain*
 (X) Crying Creeper
-(@4, #2) Defiled Cyclops* !!!
+(#2, ^2) Defiled Cyclops* !!!
 (^) Defiled Digger*
 (^) Defiled Krusher*
 (^) Defiled Mite*
@@ -376,8 +376,8 @@ ACCESSORIES:
 (^) Brine-Leafed Clover*
 (^) Bug Trapper*
 (X) Builder's Touch
-(X) Bundle of Evil
 (^) C.F.H.E.S.*
+(X) Cablegore
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
 (#, ^2) Charm of Naivety !!!
