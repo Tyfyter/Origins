@@ -50,6 +50,7 @@ namespace Origins.NPCs.Brine {
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Crawdad, true);
 		}
+		public override bool CanSpawnInPosition(int tileX, int tileY) => base.CanSpawnInPosition(tileX, tileY) && AnyMossNearSpawn(tileX, tileY);
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
 				this.GetBestiaryFlavorText()

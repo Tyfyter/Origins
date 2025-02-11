@@ -23,6 +23,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new();
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
@@ -45,7 +46,7 @@ namespace Origins.NPCs.Riven {
 			);
 			bestiaryEntry.Icon = new NPCExtensions.MultipleUnlockableNPCEntryIcon(Type, [0, 0, 0, 0], [0, 0, 0, 1]);
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0f;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BlisterBoi;
 		}

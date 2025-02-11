@@ -1,5 +1,7 @@
 ﻿using Origins.Buffs;
 using Origins.Reflection;
+using Origins.Tiles.Brine;
+using Origins.Walls;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -12,6 +14,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Brine {
@@ -27,6 +30,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			SpawnModBiomes = [
@@ -36,6 +40,7 @@ namespace Origins.NPCs.Brine {
 		public override void Unload() {
 			Ripples = null;
 		}
+		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type);
 		public virtual bool CanTargetNPC(NPC other) {
 			if (other.type == NPCID.TargetDummy) return false;
@@ -141,10 +146,59 @@ namespace Origins.NPCs.Brine {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			TargetPos = reader.ReadPackedVector2();
 		}
+		public static bool AnyMossNearSpawn(int tileX, int tileY) {
+			Point basePos = new(tileX, tileY);
+			Point pos = basePos;
+			static bool SearchForMoss(Point pos) {
+				int mossType = ModContent.TileType<Peat_Moss>();
+				for (int i = -3; i < 4; i++) {
+					for (int j = -3; j < 4; j++) {
+						if (Framing.GetTileSafely(pos.X + i, pos.Y + j).TileIsType(mossType)) return true;
+					}
+				}
+				return false;
+			}
+			for (int i = 0; i < 10; i++) {
+				pos.Y += 1;
+				if (Framing.GetTileSafely(pos).HasTile) {
+					if (SearchForMoss(pos)) return true;
+					break;
+				}
+			}
+			pos = basePos;
+			for (int i = 0; i < 10; i++) {
+				pos.X += 1;
+				if (Framing.GetTileSafely(pos).HasTile) {
+					if (SearchForMoss(pos)) return true;
+					break;
+				}
+			}
+			pos = basePos;
+			for (int i = 0; i < 10; i++) {
+				pos.X -= 1;
+				if (Framing.GetTileSafely(pos).HasTile) {
+					if (SearchForMoss(pos)) return true;
+					break;
+				}
+			}
+			pos = basePos;
+			for (int i = 0; i < 10; i++) {
+				pos.Y -= 1;
+				if (Framing.GetTileSafely(pos).HasTile) {
+					if (SearchForMoss(pos)) return true;
+					break;
+				}
+			}
+			return false;
+		}
+		public virtual bool CanSpawnInPosition(int tileX, int tileY) {
+			Tile tile = Framing.GetTileSafely(tileX, tileY);
+			return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
+		}
 		public override int SpawnNPC(int tileX, int tileY) {
-			int spawnY = tileY * 16;
-			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
-			return NPC.NewNPC(null, tileX * 16 + 8, spawnY, NPC.type);
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this, (spawnY) => CanSpawnInPosition(tileX, spawnY));
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 	}
 }

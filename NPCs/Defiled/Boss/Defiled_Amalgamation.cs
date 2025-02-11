@@ -13,6 +13,7 @@ using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
+using Origins.Walls;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
@@ -602,6 +603,13 @@ namespace Origins.NPCs.Defiled.Boss {
 				NPC.scale,
 				dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally
 			);
+		}
+		public class Spawn : SpawnPool {
+			public override string Name => $"{nameof(Defiled_Amalgamation)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				AddSpawn<Defiled_Amalgamation>(spawnInfo => spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Defiled_Stone_Wall>() ? 99999999 : 0);
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnDA && spawnInfo.Player.InModBiome<Defiled_Wastelands>();
 		}
 	}
 	public class Boss_Bar_DA : ModBossBar {

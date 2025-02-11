@@ -21,6 +21,7 @@ namespace Origins.NPCs.Riven {
 				PortraitPositionXOverride = 0,
 				PortraitPositionYOverride = 8
 			};
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.SandsharkCrimson);
@@ -45,7 +46,7 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 25));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 25));
         }
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+        public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) {
 				if (!Sandstorm.Happening || !spawnInfo.Player.ZoneSandstorm || !TileID.Sets.Conversion.Sand[spawnInfo.SpawnTileType] || !NPC.Spawning_SandstoneCheck(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY)) {
 					return 0f;

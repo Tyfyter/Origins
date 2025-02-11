@@ -18,6 +18,7 @@ namespace Origins.NPCs.Riven {
 				Velocity = 1
 			});
 			Main.npcFrameCount[NPC.type] = 16;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -37,7 +38,7 @@ namespace Origins.NPCs.Riven {
 			];
 			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Silica>()], true) * Riven_Hive.SpawnRates.Mummy / 3f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

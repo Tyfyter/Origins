@@ -16,6 +16,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
@@ -45,7 +46,7 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
 		}
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+        public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
             if (!spawnInfo.Water) return 0f;
             return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Flajelly;
         }

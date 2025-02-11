@@ -17,6 +17,7 @@ namespace Origins.NPCs.Defiled {
 				Position = new Vector2(4f, 8f),
 				PortraitPositionYOverride = 16f
 			};
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
@@ -42,7 +43,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.lifeRegen += 24 / (NPC.life / 20);
 			}
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Worm;
 		}

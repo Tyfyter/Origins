@@ -15,6 +15,7 @@ using Origins.Misc;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
+using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -95,7 +96,7 @@ namespace Origins.World.BiomeData {
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.BlueMoss;
-		public static class SpawnRates {
+		public class SpawnRates : SpawnPool {
 			public const float AmebSlime = 0.65f;
 			public const float Fighter = 1;
 			public const float Flajelly = 0.37f;
@@ -113,6 +114,14 @@ namespace Origins.World.BiomeData {
 			public const float Crawler = 0.8f;
 			public const float Mimic = 0.01f;
 			public const float Whip = 0.01f;
+			public override string Name => $"{nameof(Riven_Hive)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.BiomeHigh;
+				static float DesertCave(NPCSpawnInfo spawnInfo) => spawnInfo.DesertCave ? 1 : 0;
+				AddSpawn(NPCID.DesertDjinn, DesertCave);
+				AddSpawn(NPCID.DesertLamiaDark, DesertCave);
+				AddSpawn(NPCID.DesertBeast, DesertCave);
+			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
 				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
@@ -121,8 +130,10 @@ namespace Origins.World.BiomeData {
 				return 0f;
 			}
 			public static float FlyingEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
-				if (hardmode && !Main.hardMode) return 0f;
-				return spawnInfo.Player.InModBiome<Riven_Hive>() ? 0.25f : 0f;
+				return LandEnemyRate(spawnInfo, hardmode);
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>());
 			}
 		}
 		public static class Gen {

@@ -52,6 +52,7 @@ namespace Origins.NPCs.Brine {
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.A_GUN, true);
 		}
+		public override bool CanSpawnInPosition(int tileX, int tileY) => base.CanSpawnInPosition(tileX, tileY) && AnyMossNearSpawn(tileX, tileY);
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
 				this.GetBestiaryFlavorText()
@@ -120,7 +121,7 @@ namespace Origins.NPCs.Brine {
 						NPC.ai[0] = 0;
 						//Dust.NewDust(TargetPos, 0, 0, 6);
 						if (targetIsPrey && canSeeTarget) {
-							if (TargetPos.IsWithin(NPC.Center, 80)) {
+							if (TargetPos.IsWithin(NPC.Center, 16 * 6)) {
 								flipTargetRotation = true;
 							} else {
 								direction *= -1;

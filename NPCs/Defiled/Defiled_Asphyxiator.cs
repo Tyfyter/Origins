@@ -19,6 +19,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -46,7 +47,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if ((spawnInfo.SpawnTileX > WorldGen.oceanDistance && spawnInfo.SpawnTileX < Main.maxTilesX - WorldGen.oceanDistance) || !spawnInfo.Water || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
 		}

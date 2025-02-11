@@ -30,6 +30,7 @@ namespace Origins.NPCs.Defiled {
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
 				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Squid_Bile_P.assimilation_amount
 			});
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.width = 26;
@@ -51,7 +52,7 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Sqid;
 		}

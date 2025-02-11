@@ -24,6 +24,7 @@ namespace Origins.NPCs.Riven {
 				Position = new(0, 20),
 				PortraitPositionYOverride = 40
 			};
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
@@ -53,9 +54,9 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
-			int spawnY = tileY * 16;
-			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
-			return NPC.NewNPC(null, tileX * 16 + 8, spawnY, NPC.type);
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 		public override void AI() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -102,7 +103,7 @@ namespace Origins.NPCs.Riven {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.rotation = reader.ReadSByte() * MathHelper.PiOver2;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

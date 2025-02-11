@@ -31,6 +31,7 @@ namespace Origins.NPCs.Defiled {
 				Velocity = 1f
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
@@ -59,7 +60,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 180f;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Flyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}

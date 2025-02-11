@@ -17,6 +17,7 @@ namespace Origins.NPCs.Defiled {
 				Velocity = 1
 			});
 			Main.npcFrameCount[NPC.type] = 8;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DesertGhoulCorruption);
@@ -51,7 +52,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 180f;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.DesertCave) return 0;
 			if (!spawnInfo.Player.InModBiome<Defiled_Wastelands>()) return 0;
 			return Defiled_Wastelands.SpawnRates.Ghoul;

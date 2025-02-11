@@ -17,6 +17,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 7;
 			ItemID.Sets.KillsToBanner[Type] *= 3;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -36,7 +37,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, false) * Defiled_Wastelands.SpawnRates.AncientCyclops;
 		}

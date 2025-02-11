@@ -5,6 +5,7 @@ using Origins.NPCs;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,19 @@ namespace Origins.World.BiomeData {
 		}
 		public const int NeededTiles = 250;
 		public const int ShaderTileCount = 75;
-		public static class SpawnRates {
+		public class DisableOtherSpawns : SpawnPool {
+			public override string Name => $"{nameof(Brine_Pool)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.Environment;
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				if (SpawnRates.IsInBrinePool(spawnInfo) || !spawnInfo.Player.InModBiome<Brine_Pool>()) return false;
+				
+				return Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>()
+					|| Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).WallType == ModContent.WallType<Baryte_Wall>();
+			}
+		}
+		public class SpawnRates : SpawnPool {
 			public const float Carpalfish = 8000f;
 			public const float Dragon = 6000f;
 			public const float Creeper = 6000f;
@@ -41,57 +54,19 @@ namespace Origins.World.BiomeData {
 			public const float A_GUN = 9000f; // yes, this is a reference
 			public const float Crawdad = 9000f;
 			public const float Airsnatcher = 8000f;
+			public override string Name => $"{nameof(Brine_Pool)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.Environment;
+			}
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate, bool needsMoss = false) {
-				if (OriginGlobalNPC.aerialSpawnPosition - (spawnInfo.Player.position.Y / 16f) < NPC.safeRangeY) return 0;
-				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
-				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;
-				if (needsMoss) {
-					Point basePos = new(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
-					Point pos = basePos;
-					static bool SearchForMoss(Point pos) {
-						int mossType = ModContent.TileType<Peat_Moss>();
-						for (int i = -3; i < 4; i++) {
-							for (int j = -3; j < 4; j++) {
-								if (Framing.GetTileSafely(pos.X + i, pos.Y + j).TileIsType(mossType)) return true;
-							}
-						}
-						return false;
-					}
-					for (int i = 0; i < 10; i++) {
-						pos.Y += 1;
-						if (Framing.GetTileSafely(pos).HasTile) {
-							if (SearchForMoss(pos)) return rate;
-							break;
-						}
-					}
-					pos = basePos;
-					for (int i = 0; i < 10; i++) {
-						pos.X += 1;
-						if (Framing.GetTileSafely(pos).HasTile) {
-							if (SearchForMoss(pos)) return rate;
-							break;
-						}
-					}
-					pos = basePos;
-					for (int i = 0; i < 10; i++) {
-						pos.X -= 1;
-						if (Framing.GetTileSafely(pos).HasTile) {
-							if (SearchForMoss(pos)) return rate;
-							break;
-						}
-					}
-					pos = basePos;
-					for (int i = 0; i < 10; i++) {
-						pos.Y -= 1;
-						if (Framing.GetTileSafely(pos).HasTile) {
-							if (SearchForMoss(pos)) return rate;
-							break;
-						}
-					}
-					return 0;
-				}
 				return rate;
 			}
+
+			public static bool IsInBrinePool(NPCSpawnInfo spawnInfo) {
+				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}
 		public static class Gen {
 			static int minGenX, maxGenX, minGenY, maxGenY;

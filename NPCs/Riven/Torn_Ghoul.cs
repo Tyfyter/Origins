@@ -16,6 +16,7 @@ namespace Origins.NPCs.Riven {
 				Velocity = 1
 			});
 			Main.npcFrameCount[NPC.type] = 8;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DesertGhoulCorruption);
@@ -38,7 +39,7 @@ namespace Origins.NPCs.Riven {
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 6 * 60);
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.DesertCave) return 0;
 			if (!spawnInfo.Player.InModBiome<Riven_Hive>()) return 0;
 			return Riven_Hive.SpawnRates.Ghoul;

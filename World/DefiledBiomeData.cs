@@ -90,7 +90,7 @@ namespace Origins.World.BiomeData {
 		public const int ShaderTileCount = 75;
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
-		public static class SpawnRates {
+		public class SpawnRates : SpawnPool {
 			public const float ChunkSlime = 1;
 			public const float Cyclops = 1;
 			public const float Mite = 1;
@@ -106,16 +106,24 @@ namespace Origins.World.BiomeData {
 			public const float AncientCyclops = 0.03f;
 			public const float Asphyxiator = 0.5f;
 			public const float AncientFlyer = 0.04f;
+			public override string Name => $"{nameof(Defiled_Wastelands)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.BiomeHigh;
+				static float DesertCave(NPCSpawnInfo spawnInfo) => spawnInfo.DesertCave ? 1 : 0;
+				AddSpawn(NPCID.DesertDjinn, DesertCave);
+				AddSpawn(NPCID.DesertLamiaDark, DesertCave);
+				AddSpawn(NPCID.DesertBeast, DesertCave);
+			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>())) {
-					return 1f;
-				}
-				return 0f;
+				return 1f;
 			}
 			public static float FlyingEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
-				if (hardmode && !Main.hardMode) return 0f;
-				return spawnInfo.Player.InModBiome<Defiled_Wastelands>() ? 0.25f : 0f;
+				return LandEnemyRate(spawnInfo, hardmode);
+			}
+
+			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>());
 			}
 		}
 		public static class Gen {

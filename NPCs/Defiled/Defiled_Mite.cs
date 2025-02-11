@@ -20,6 +20,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;
@@ -40,6 +41,30 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 16;
 		public int MaxManaDrain => 8;
 		public float Mana { get; set; }
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.DesertCave) return 0;
+			if (spawnInfo.SpawnTileY > Main.worldSurface && !spawnInfo.DesertCave) {
+				int yPos = spawnInfo.SpawnTileY;
+				Tile tile;
+				for (int i = 0; i < spawnCheckDistance; i++) {
+					tile = Main.tile[spawnInfo.SpawnTileX, ++yPos];
+					if (tile.HasTile) {
+						yPos--;
+						break;
+					}
+				}
+				bool? halfSlab = null;
+				for (int i = spawnInfo.SpawnTileX - 1; i < spawnInfo.SpawnTileX + 2; i++) {
+					tile = Main.tile[i, yPos + 1];
+					if (!tile.HasTile || !Main.tileSolid[tile.TileType] || tile.Slope != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.IsHalfBlock)) {
+						return 0;
+					}
+					halfSlab = tile.IsHalfBlock;
+				}
+				return Defiled_Wastelands.SpawnRates.Mite;
+			}
+			return 0;
+		}
 		public void Regenerate(out int lifeRegen) {
 			int factor = 64;
 			lifeRegen = factor;

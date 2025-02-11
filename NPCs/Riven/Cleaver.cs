@@ -23,6 +23,7 @@ namespace Origins.NPCs.Riven {
 				Position = new Vector2(0f, 8f),
 				PortraitPositionYOverride = 28f
 			};
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -46,7 +47,7 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText()
 			);
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
 		}

@@ -1,9 +1,10 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.NPCs.Fiberglass;
+using Origins.Tiles.Other;
 using Origins.Walls;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,11 +20,20 @@ namespace Origins.World.BiomeData {
 		}
 		public const int NeededTiles = 1000;
 		public const int ShaderTileCount = 75;
-		public static class SpawnRates {
-			public const float Sword = 1;
-			public const float Bow = 1;
-			public const float Gun = 1;
-			public const float Spider = 0.025f;
+		public class DisableOtherSpawns : SpawnPool {
+			public override string Name => $"{nameof(Fiberglass_Undergrowth)}_{base.Name}";
+			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InModBiome<Fiberglass_Undergrowth>() && spawnInfo.SpawnTileType != ModContent.TileType<Fiberglass_Tile>();
+		}
+		public class SpawnRates : SpawnPool {
+			public override string Name => $"{nameof(Fiberglass_Undergrowth)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				AddSpawn<Enchanted_Fiberglass_Sword>(1);
+				AddSpawn<Enchanted_Fiberglass_Bow>(1);
+				AddSpawn<Enchanted_Fiberglass_Pistol>(1);
+				AddSpawn<Enchanted_Fiberglass_Cannon>(1);
+				AddSpawn<Fiberglass_Weaver>(0.025f);
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>();
 		}
 		public static class Gen {
 			public static void FiberglassStart(int i, int j) {

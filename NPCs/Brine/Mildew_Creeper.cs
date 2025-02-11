@@ -223,10 +223,11 @@ namespace Origins.NPCs.Brine {
 			-Vector2.UnitY
 		];
 		public override int SpawnNPC(int tileX, int tileY) {
-			int spawnY = tileY * 16;
-			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this, (spawnY) => CanSpawnInPosition(tileX, spawnY));
+			if (tileY == -1) return Main.maxNPCs;
+
 			const float offsetLen = 0;
-			Vector2 basePos = new(tileX * 16 + 8, spawnY);
+			Vector2 basePos = new(tileX * 16 + 8, tileY * 16);
 			float dist = 800;
 			int directionIndex = 2;
 			Vector2 bestPosition = basePos + directions[directionIndex] * (dist - offsetLen);

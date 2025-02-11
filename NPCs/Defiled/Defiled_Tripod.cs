@@ -32,6 +32,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitScale = 1f,
 				Velocity = 2f,
 			};
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;//NPCAIStyleID.Fighter;
@@ -63,7 +64,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 60f;// 2 mana for every 1 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerSafe || spawnInfo.DesertCave || spawnInfo.SpawnTileY <= Main.worldSurface) return 0;
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Tripod;
 		}

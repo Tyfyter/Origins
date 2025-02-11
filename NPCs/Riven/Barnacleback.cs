@@ -16,6 +16,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Drippler);
@@ -34,7 +35,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new float SpawnChance(NPCSpawnInfo spawnInfo) {
 			float rate = Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BarnBack;
 			if (rate == 0) return 0; // skip counting other barnaclebacks if it's already not going to spawn
 			int count = 1;

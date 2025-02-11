@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
+using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
@@ -12,6 +13,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.Brine;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Riven;
@@ -27,6 +29,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -189,8 +192,8 @@ namespace Origins.NPCs {
 						break;
 					}
 				}
-				float accelerationFactor = 1; 
-				float velocityFactor = 1; 
+				float accelerationFactor = 1;
+				float velocityFactor = 1;
 				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
 					accelerationFactor = adjustment.accelerationFactor;
 					velocityFactor = adjustment.velocityFactor;
@@ -439,79 +442,41 @@ namespace Origins.NPCs {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}*/
-		public static int aerialSpawnPosition = 0;
+		public static int GetAerialSpawnPosition(int tileX, int tileY, ModNPC npc, Predicate<int> isHeightValidCheck = null) {
+			int startPos = tileY;
+			isHeightValidCheck += (height) => {
+				Rectangle hitbox = npc.NPC.Hitbox;
+				hitbox.X = tileX * 16 - npc.NPC.width / 2;
+				hitbox.Y = height * 16 - npc.NPC.height;
+				return !hitbox.OverlapsAnyTiles();
+			};
+			RangeRandom random = new(Main.rand, tileY - 24, tileY);
+			for (int i = random.Start; i < random.End; i++) {
+				if (!isHeightValidCheck(i)) {
+					random.Multiply(i, i + 1, 0);
+				}
+			}
+			if (!random.AnyWeight) return -1;
+			int safeAreaHeight = (NPC.sHeight + NPC.safeRangeY * 2) / 16;
+			foreach (Player player in Main.ActivePlayers) {
+				Vector2 invalidRangeCorner = player.Center - new Vector2((NPC.sWidth / 2) - NPC.safeRangeX, (NPC.sHeight / 2) - NPC.safeRangeY);
+				invalidRangeCorner /= 16;
+				if (tileX >= invalidRangeCorner.X && tileX < invalidRangeCorner.X + NPC.sWidth + NPC.safeRangeX * 2) {
+					random.Multiply((int)invalidRangeCorner.Y, (int)invalidRangeCorner.Y + safeAreaHeight, 0);
+				}
+			}
+			if (!random.AnyWeight) return -1;
+			return random.Get();
+		}
+		public override void EditSpawnRange(Player player, ref int spawnRangeX, ref int spawnRangeY, ref int safeRangeX, ref int safeRangeY) {
+			if (player.InModBiome<Brine_Pool>() && Framing.GetTileSafely(player.Center.ToTileCoordinates()).WallType == ModContent.WallType<Baryte_Wall>()) {
+				spawnRangeY = safeRangeY + (spawnRangeX - safeRangeX);
+			}
+		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
-			}
-			float baseChance = pool[0];
-			void CancelOtherSpawns() {
-				foreach (int type in pool.Keys) {
-					pool[type] = 0;
-				}
-			}
-			if (Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType == ModContent.WallType<Baryte_Wall>()) {
-				CancelOtherSpawns();
-				return;
-			} else if (Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>() && spawnInfo.Player.InModBiome<Brine_Pool>()) {
-				CancelOtherSpawns();
-				return;
-			}
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword * baseChance);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), Fiberglass_Undergrowth.SpawnRates.Bow * baseChance);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), Fiberglass_Undergrowth.SpawnRates.Gun * baseChance);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Cannon>(), Fiberglass_Undergrowth.SpawnRates.Gun * baseChance);
-				pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), Fiberglass_Undergrowth.SpawnRates.Spider * baseChance);
-				CancelOtherSpawns();
-				return;
-			}
-			if (originPlayer.ZoneFiberglass) {
-				CancelOtherSpawns();
-				return;
-			}
-			if (player.InModBiome<Defiled_Wastelands>()) {
-				if (Defiled_Amalgamation.spawnDA) {
-					CancelOtherSpawns();
-					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Defiled_Stone_Wall>()) {
-						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 9999);
-					}
-					return;
-				}
-			}
-			if (spawnInfo.DesertCave) {
-				if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
-					pool[NPCID.DesertDjinn] = 1f;
-					pool[NPCID.DesertLamiaDark] = 1f;
-					pool[NPCID.DesertBeast] = 1f;
-				}
-			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile) {
-				if (Main.invasionType <= 0) pool[0] = 0;
-
-				if (spawnInfo.SpawnTileY > Main.worldSurface && !spawnInfo.DesertCave) {
-					int yPos = spawnInfo.SpawnTileY;
-					Tile tile;
-					for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
-						tile = Main.tile[spawnInfo.SpawnTileX, ++yPos];
-						if (tile.HasTile) {
-							yPos--;
-							break;
-						}
-					}
-					bool? halfSlab = null;
-					for (int i = spawnInfo.SpawnTileX - 1; i < spawnInfo.SpawnTileX + 2; i++) {
-						tile = Main.tile[i, yPos + 1];
-						if (!tile.HasTile || !Main.tileSolid[tile.TileType] || tile.Slope != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.IsHalfBlock)) {
-							goto SkipMiteSpawn;
-						}
-						halfSlab = tile.IsHalfBlock;
-					}
-					pool.Add(ModContent.NPCType<Defiled_Mite>(), Defiled_Wastelands.SpawnRates.Mite);
-					SkipMiteSpawn:;
-				}
 			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || player.InModBiome<Riven_Hive>()) {
 				if (Main.invasionType <= 0) pool[0] = 0;

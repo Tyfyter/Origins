@@ -17,6 +17,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {// could not add stats because 
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -38,7 +39,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Spighter;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -94,7 +95,6 @@ namespace Origins.NPCs.Riven {
 			SetSharedDefaults();
 			this.CopyBanner<Spider_Amoeba>();
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 4));

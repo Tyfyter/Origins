@@ -20,7 +20,7 @@
       <HintPath>..\ModAssemblies\CalamityMod_v2.0.4.5.dll</HintPath>
     </Reference>
     <Reference Include="PegasusLib">
-      <HintPath>..\ModAssemblies\PegasusLib_v1.0.4.7.dll</HintPath>
+      <HintPath>..\ModAssemblies\PegasusLib_v1.0.6.dll</HintPath>
     </Reference>
     <Reference Include="ThoriumMod">
       <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>

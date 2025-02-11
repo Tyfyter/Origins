@@ -28,6 +28,7 @@ namespace Origins.NPCs.Defiled {
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
 				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Defiled_Watcher_Spikes.assimilation_amount
 			});
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;
@@ -56,7 +57,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY < Main.worldSurface || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
 		}

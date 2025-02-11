@@ -632,7 +632,6 @@ namespace Origins {
 				if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && TileTransformsOnKill[tileTarget.TileType]) return true;
 				return false;
 			};
-			IL_NPC.SpawnNPC += IL_NPC_SpawnNPC;
 			On_TrackGenerator.IsLocationInvalid += (orig, x, y) => {
 				if (orig(x, y)) return true;
 				Tile tile = Main.tile[x, y];
@@ -690,27 +689,6 @@ namespace Origins {
 				orig(self, info, quiet);
 			} finally {
 				shouldDoHeliumSound = false;
-			}
-		}
-
-		private static void IL_NPC_SpawnNPC(ILContext il) {
-			ILCursor c = new(il);
-			int startYPosition = -1;
-			int yPosition = -1;
-			if (c.TryGotoNext(MoveType.Before,
-				il => il.MatchLdloc(out startYPosition),
-				il => il.MatchStloc(out yPosition),
-				il => il.MatchBr(out _),
-				il => il.MatchLdsflda<Main>(nameof(Main.tile)),
-				il => il.MatchLdloc(out _),
-				il => il.MatchLdloc(out yPosition),
-				il => il.MatchCall<Tilemap>("get_Item")
-			)) {
-				c.Index += 2;
-				c.EmitLdloc(startYPosition);
-				c.EmitStsfld(typeof(OriginGlobalNPC).GetField(nameof(OriginGlobalNPC.aerialSpawnPosition)));
-			} else {
-				LogError($"Could not find search for ground in NPC.SpawnNPC");
 			}
 		}
 
