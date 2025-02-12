@@ -150,6 +150,15 @@ namespace Origins {
 		}
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
 		public DebugConfig DebugMenuButton { get; set; }  = new();
+		internal static bool forceReloadLanguage = false;
+		public override void OnChanged() {
+			if (forceReloadLanguage) {
+				GameCulture culture = LanguageManager.Instance.ActiveCulture;
+				GameCulture french = GameCulture.FromCultureName(GameCulture.CultureName.French);
+				LanguageManager.Instance.SetLanguage(culture == french ? GameCulture.FromCultureName(GameCulture.CultureName.Italian) : french);
+				LanguageManager.Instance.SetLanguage(culture);
+			}
+		}
 	}
 	public class LaserTagConfig : ModConfig {
 		public static LaserTagConfig Instance => OriginClientConfig.Instance.laserTagConfig;
@@ -202,6 +211,9 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool DebugMode = false;
 
+		[DefaultValue(false)]
+		public bool ForceAprilFools = false;
+		#region exporting
 		public string StatJSONPath { get; set; }
 		public bool ExportAllItemStatsJSON {
 			get => false;
@@ -504,6 +516,7 @@ namespace Origins {
 		public string WikiSpecialTemplatePath { get; set; }
 		public string WikiSpritesPath { get; set; }
 		public string WikiPagePath { get; set; }
+		#endregion
 		public bool CheckTextureUsage {
 			get => default;
 			set {

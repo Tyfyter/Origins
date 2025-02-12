@@ -58,11 +58,13 @@ namespace Origins {
 		Mod fancyLighting;
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Func<bool> checkAprilFools;
-		public static Func<bool> CheckAprilFools { 
-			get => instance.checkAprilFools ??= ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? HolidayLibCheckAprilFools(HolidayLib) : DefaultCheckAprilFools;
+		public static Func<bool> CheckAprilFools {
+			get => OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools ?
+				() => true :
+				instance.checkAprilFools ??= ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? HolidayLibCheckAprilFools(HolidayLib) : DefaultCheckAprilFools;
 			set => instance.checkAprilFools = value;
 		}
-		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
+		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", () => CheckAprilFools());
 		ModKeybind goToKeybindKeybind;
 		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
 		Action<ModKeybind> goToKeybind;

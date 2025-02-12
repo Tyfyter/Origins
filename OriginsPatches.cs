@@ -648,6 +648,7 @@ namespace Origins {
 			IL_Player.ItemCheck_OwnerOnlyCode += Eitrite_Gun_Magazine.IL_Player_ItemCheck_OwnerOnlyCode;
 			IL_NPC.SpawnNPC_CheckToSpawnUndergroundFairy += Fairy_Lotus.IL_NPC_SpawnNPC_CheckToSpawnUndergroundFairy;
 			MonoModHooks.Add(typeof(ModConfig).Assembly.GetType("Terraria.ModLoader.Config.ConfigManager").GetMethod("Save", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static), (Action<ModConfig> orig, ModConfig pendingConfig) => {
+				if (pendingConfig is OriginClientConfig clientConfig) OriginClientConfig.forceReloadLanguage = (clientConfig.DebugMenuButton.ForceAprilFools != OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools);
 				orig(pendingConfig);
 				if (pendingConfig is OriginConfig realPendingConfig) realPendingConfig.SaveToFile();
 			});
