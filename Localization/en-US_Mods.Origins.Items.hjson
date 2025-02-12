@@ -36,7 +36,7 @@ Air_Tank: {
 	Tooltip:
 		'''
 		Extends underwater breathing
-		Immunity to ‘Suffocation'
+		Immunity to 'Suffocation'
 		'''
 }
 
@@ -421,7 +421,7 @@ Helium_Tank: {
 	Tooltip:
 		'''
 		Extends underwater breathing
-		Immunity to ‘Suffocation'
+		Immunity to 'Suffocation'
 		'Don't laugh'
 		'''
 }
@@ -2582,7 +2582,7 @@ Innermost_Manifest: {
 
 Laser_Tag_Gun: {
 	DisplayName: Laser Tag Gun
-	Tooltip: ‘Defective to some, glory to others'
+	Tooltip: Defective to some, glory to others
 }
 
 Low_Signal: {
