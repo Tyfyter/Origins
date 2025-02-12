@@ -96,10 +96,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Projectile.localNPCHitCooldown = 30;
 				Vector2 oldTarg = targetData.target;
 				targetData = (true, targetCenter);
-				if (++Projectile.localAI[0] >= 10 && oldTarg != targetCenter) {
-					Projectile.netUpdate = true;
-					Projectile.localAI[0] = 0;
-				}
+				if (targetData.manual && oldTarg != targetCenter) Projectile.netUpdate = true;
 			} else {
 				targetData = (false, default);
 				float targetDist = 640f;
