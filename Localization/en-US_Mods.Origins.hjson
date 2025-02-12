@@ -2096,7 +2096,7 @@ SetBonuses: {
 		'''
 	Cryosten:
 		'''
-		Attacks inflict frostburn
+		All attacks inflict frostburn
 		+10% explosive velocity
 		Immunity to Frozen and Chilled
 		'''
@@ -2142,7 +2142,7 @@ SetBonuses: {
 	Miner:
 		'''
 
-		20% reduced self-damage
+		-20% self-damage
 		'''
 	Pearlwood:
 		'''
@@ -2158,7 +2158,7 @@ SetBonuses: {
 	Rubber:
 		'''
 		Immunity to Static Shock and Electrified
-		Reduces damage taken by 5%
+		+5% damage reduction
 		'''
 }
 

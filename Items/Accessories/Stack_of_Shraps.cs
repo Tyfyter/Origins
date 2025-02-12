@@ -25,8 +25,6 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.madHand = true;
-			originPlayer.explosiveBlastRadius += 0.15f;
-			originPlayer.explosiveThrowSpeed += 0.2f;
 		}
 		public override void AddRecipes() {
 			AddShimmerRecipe<CorruptionAltBiome, Forbidden_Voice>();

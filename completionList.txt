@@ -304,11 +304,11 @@ NPC DIALOGUE:
 ARMOR:
 ---
 (^) Ancient Defiled Armor*
-(^) Ancient Felnum Armor
+(^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
 (^) Ashen Armor*
 (^) Cryosten Armor*
-(^) Defiled Armor* 
+(^) Defiled Armor*
 (^) Encrusted Armor*
 (^) Endowood Armor*
 (^) Felnum Armor*
@@ -316,10 +316,10 @@ ARMOR:
 (^) Lost Armor*
 (^) Marrowick Armor*
 (^) Mythic Armor*
-(^) Pink Cryosten Armor
+(^) Pink Cryosten Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
-(^) Rubber Armor
+(^) Rubber Armor*
 (ᗢ) Scavenger Armor*
 (^) Soulhide Armor*
 (^) Tendon Armor*
@@ -383,7 +383,7 @@ ACCESSORIES:
 (#, ^2) Charm of Naivety !!!
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(^) Control Locus°
+(^) Control Locus*
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -396,10 +396,10 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag*
 (^) Eccentric Stone*
 (^) Eitrite Gun Magazine*
-(^) Evil Bar Gun Magazines
+(^) Evil Bar Gun Magazines*
 (^) Exploder Emblem*
 (^) Explosive Artery*
-(^) Fairy Lotus
+(^) Fairy Lotus*
 (#, ^2) Fallacious Vase !!!
 (#, ^2) Feather Cape !!!
 (#, ^2) Feathery Crest !!!
@@ -411,7 +411,7 @@ ACCESSORIES:
 (#, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
 (#2, ^2) Gun Glove* !!! (randomized shooting offset)
-(^) Gun Magazine
+(^) Gun Magazine*
 (^) Haggard Artery*
 (^) Handy Helper*
 (#, ^2) Harpy Horseshoe Balloon !!!
@@ -425,8 +425,8 @@ ACCESSORIES:
 (^) Laser Tag Vest*
 (^) Last Descendent*
 (ᗢ) Lazy Cloak°
-(X) Liar's Tongue
-(^) Lightning Ring
+(X) Liar's Tongue !!!
+(^) Lightning Ring*
 (^) Locket Necklace*
 (^) Lousy Liver*
 (^) Lover's Leap*
@@ -440,7 +440,7 @@ ACCESSORIES:
 (X) Mindweights
 (^) Missile Armcannon*
 (#, ^2) Mithrafin !!!
-(^) Molten Gun Magazine
+(^) Molten Gun Magazine*
 (X) Netlace
 (X) Nightsky Cloak
 (^) Nitro Crate*
@@ -471,7 +471,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Cursed)*
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
-(^) Shock Collar
+(^) Shock Collar*
 (#, ^2) Shotgun Glove !!!
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
@@ -479,7 +479,7 @@ ACCESSORIES:
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
-(^) Sparking Flame Barrel
+(^) Sparking Flame Barrel*
 (#2, ^2) Speed Booster* !!!
 (^) Spirit Shard*
 (^) Stone Mask*
@@ -496,8 +496,6 @@ ACCESSORIES:
 (^) Unsought Organ*
 (^) Venom Fang*
 (#, ^2) Venom Shield !!!
-
-(X) Sigil of the Machine°
 
 (^) Entangled Energy*
 (^) Mana Drive°
@@ -516,7 +514,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Uncursed)*
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
-(ᗢ) Stack of Shraps°
+(#2, ^2, ᗢ) Stack of Shraps* !!!
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
@@ -659,10 +657,10 @@ MELEE WEAPONS:
 (^) Marrowick Sword
 (^) Nineball*
 (^) Orbital Saw
-(#, ^2) Piston Rod !!!
 (^) Ripper Lance*
 (^) Riverang*
 (^) Snapthrow*
+(#, ^2) Soldering Iron !!!
 (#, ^2) Soul Snatcher* !!!
 (#, ^2) Soulslasher !!!
 (^) Spiker Sword*
@@ -1264,7 +1262,7 @@ MATERIALS:
 (^) Busted Servo*
 (X) Geothermal Sludge !!!
 (^) Nova Fragment*
-(^) Power Core*
+(^) Power Core
 (^) Rotor*
 (X) Soul of Spite
 
