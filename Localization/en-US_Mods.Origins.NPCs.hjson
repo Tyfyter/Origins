@@ -179,7 +179,7 @@ Defiled_Effigy: {
 
 	Dialogue: {
 		FirstDialogue: Humble of Terrarian being spared. Hopeful my abilities prove useful.
-		Standard1: All coin proceeds to ‘Church of Defiled'. Negatory, coin is only much-needed material.
+		Standard1: All coin proceeds to 'Church of Defiled'. Negatory, coin is only much-needed material.
 		Standard2: Waste no time, [player:_]. Our vision needs followers.
 		Standard3: What is sought? Items, knowledge, or other?
 		Standard4: Survival is mandatory, desire is optional. Do you survive or desire?
