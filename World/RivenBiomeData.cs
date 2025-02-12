@@ -340,6 +340,17 @@ namespace Origins.World.BiomeData {
 								y--;
 							}
 						}
+						bool tooHigh = true;
+						int y2 = y;
+						while (y2 > 0) {
+							y2--;
+							Tile _tile = Framing.GetTileSafely(x, y2);
+							if (_tile.HasTile) {
+								tooHigh = TileLoader.GetTile(_tile.TileType) is not IRivenTile;
+								break;
+							}
+						}
+						if (tooHigh) continue;
 						Place3x2(x, y, rivenAltar);
 						placed = Framing.GetTileSafely(x, y).TileIsType(rivenAltar);
 					}
