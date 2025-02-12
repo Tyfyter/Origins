@@ -1,12 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using PegasusLib;
-using ReLogic.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Terraria;
-using Terraria.Chat;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
 

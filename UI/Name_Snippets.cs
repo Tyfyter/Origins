@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items;
-using Origins.Journal;
-using System.Security.Policy;
+﻿using Origins.Items;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -19,7 +14,6 @@ namespace Origins.UI {
 	public class NPC_Name_Handler : ITagHandler {
 		public class NPC_Name_Snippet : TextSnippet {
 			readonly int type;
-			int lastHovered = 0;
 			readonly bool isRealName = false;
 			public NPC_Name_Snippet(int type, Color color = default) : base() {
 				this.type = type;
@@ -37,13 +31,7 @@ namespace Origins.UI {
 				CheckForHover = true;
 				Color = color;
 			}
-			public override void Update() {
-				base.Update();
-				if (lastHovered > 0) lastHovered--;
-			}
 			public override void OnHover() {
-				base.OnHover();
-				lastHovered = 4;
 				Main.LocalPlayer.mouseInterface = true;
 				if (isRealName) {
 					UICommon.TooltipMouseText(Language.GetOrRegister("Mods.Origins.Generic.Definite_Article").Format(Lang.GetNPCNameValue(type)));
@@ -60,7 +48,6 @@ namespace Origins.UI {
 	public class Item_Name_Handler : ITagHandler {
 		public class Item_Name_Snippet : TextSnippet {
 			readonly Item item;
-			int lastHovered = 0;
 			public Item_Name_Snippet(int type, Color color = default) : base() {
 				if (type == -1) {
 					Text = "Invalid Item type";
@@ -71,13 +58,7 @@ namespace Origins.UI {
 				CheckForHover = true;
 				Color = color;
 			}
-			public override void Update() {
-				base.Update();
-				if (lastHovered > 0) lastHovered--;
-			}
 			public override void OnHover() {
-				base.OnHover();
-				lastHovered = 4;
 				Main.LocalPlayer.mouseInterface = true;
 				if (item is not null) {
 					Main.hoverItemName = $"{item.Name} [i:{item.type}]";
@@ -97,7 +78,6 @@ namespace Origins.UI {
 	public class Imperfect_Item_Name_Handler : ITagHandler {
 		public class Imperfect_Item_Name_Snippet : TextSnippet {
 			readonly Item item;
-			int lastHovered = 0;
 			public Imperfect_Item_Name_Snippet(int type, Color color = default) : base() {
 				if (type == -1) {
 					Text = "Invalid Item type";
@@ -109,13 +89,7 @@ namespace Origins.UI {
 				CheckForHover = true;
 				Color = color;
 			}
-			public override void Update() {
-				base.Update();
-				if (lastHovered > 0) lastHovered--;
-			}
 			public override void OnHover() {
-				base.OnHover();
-				lastHovered = 4;
 				Main.LocalPlayer.mouseInterface = true;
 				if (item is not null) {
 					Main.hoverItemName = $"{item.Name} [i:{item.type}]";
