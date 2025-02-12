@@ -26,6 +26,9 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			HitSound = SoundID.Item50;
 		}
+		public override void FloorVisuals(Player player) {
+			base.FloorVisuals(player);
+		}
 	}
 	public class Defiled_Ice_Item : ModItem {
 		public override void SetStaticDefaults() {
@@ -34,6 +37,13 @@ namespace Origins.Tiles.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Ice>());
+		}
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.IceTorch, 3)
+			.AddIngredient(ItemID.Torch, 3)
+			.AddIngredient(Type)
+			.SortAfterFirstRecipesOf(ItemID.IceTorch)
+			.Register();
 		}
 	}
 }

@@ -24,6 +24,9 @@ namespace Origins.Tiles.Riven {
 			DustType = DustID.Water_Snow;
 			HitSound = SoundID.Item50;
 		}
+		public override void FloorVisuals(Player player) {
+			base.FloorVisuals(player);
+		}
 	}
 	public class Primordial_Permafrost_Item : ModItem {
 		public override void SetStaticDefaults() {
@@ -32,6 +35,13 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Primordial_Permafrost>());
+		}
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.IceTorch, 3)
+			.AddIngredient(ItemID.Torch, 3)
+			.AddIngredient(Type)
+			.SortAfterFirstRecipesOf(ItemID.IceTorch)
+			.Register();
 		}
 	}
 }

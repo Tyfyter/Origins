@@ -29,16 +29,5 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Endowood>());
 		}
-        public override void AddRecipes() {
-            Recipe.Create(ModContent.ItemType<Endowood_Bow>())
-            .AddIngredient(Type, 10)
-            .AddTile(TileID.WorkBenches)
-            .Register();
-
-            Recipe.Create(ModContent.ItemType<Endowood_Sword>())
-            .AddIngredient(Type, 7)
-            .AddTile(TileID.WorkBenches)
-            .Register();
-        }
     }
 }

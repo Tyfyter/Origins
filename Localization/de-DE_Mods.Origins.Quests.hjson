@@ -102,7 +102,7 @@ Goblin_Tinkerer: {
 			- [qs{9}:Collect Gold Watch or Platinum Watch]
 			Unlocks: [i:Origins/Turbo_Reel]
 			''' */
-		// Inquire: Hey human! I was wondering if you could possibly fetch me five iron or lead bars, two chains, some adhesive and a watch? I have a project I’m working on that you might want to join in on!
+		// Inquire: Hey human! I was wondering if you could possibly fetch me five iron or lead bars, two chains, some adhesive and a watch? I have a project I'm working on that you might want to join in on!
 		// Start: Excellent! Now go reel in those goods and you won't be dissappointed by the result!
 		// ReadyToComplete: How was your adventure, Terrarian? Do you have the supplies?
 		// Complete: Sweet! With your hard work I have invented the turbo reel! You can use it to make things return to you faster!
@@ -143,7 +143,7 @@ Goblin_Tinkerer: {
 			- [qs{9}:Collect {8} Adamantite Bars ({7}/{8})]
 			Unlocks: [i:Origins/Rocket_Boosted_Minecart]
 			''' */
-		// Inquire: I just thought of another idea! This’ll surely impress [npcname:Mechanic]... can you get me a minecart, fifty rockets, eighty adhesives and fifteen Adamantite or Titanium Bars? Don't worry, my laboratory is explosive-proof!
+		// Inquire: I just thought of another idea! This'll surely impress [npcname:Mechanic]... can you get me a minecart, fifty rockets, eighty adhesives and fifteen Adamantite or Titanium Bars? Don't worry, my laboratory is explosive-proof!
 		// Start: Thank you in advance! The thought of finishing this project is surely exhilarating!
 		// ReadyToComplete: All good to go?
 		// Complete: Yes! Introducing the world's fastest ticket to space, the rocket-boosted minecart! With this thing you will be anywhere you need before you even need to think about it!
@@ -165,7 +165,7 @@ Arms_Dealer: {
 			- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
 			Unlocks: [i:Origins/Shardcannon]
 			''' */
-		// Inquire: Hey buddy, I’ve been workin’ on a little something that needs someone who knows how to handle a gun. Now, that makes two of us, but I'm sure my neighbors wouldn't like holes in their wall. Care to fit it out for me?
+		// Inquire: Hey buddy, I've been workin' on a little something that needs someone who knows how to handle a gun. Now, that makes two of us, but I'm sure my neighbors wouldn't like holes in their wall. Care to fit it out for me?
 		// Start: Thanks, buddy. Go shred up some zombies!
 		// ReadyToComplete: All done? Not too bad?
 		// Complete: Thanks for the info. I'll fix the imperfections, but otherwise sounds like it will sell big. If you liked it a lot, be sure to check out my wares.
@@ -210,7 +210,7 @@ Zoologist: {
 			- [qs{3}: Give critters to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			''' */
-		// Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring 'em back to me? Yah? Thank yah, hun! Oh and I’ll give you some discounts for being nice!
+		// Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring 'em back to me? Yah? Thank yah, hun! Oh and I'll give you some discounts for being nice!
 		// Start: YEE! Yes! Thank you, friend!
 		// ReadyToComplete: You save some critters, ya?
 		// Complete: Awww, you picked some good ones, friend! Thank you for da help!
@@ -229,7 +229,7 @@ Zoologist: {
 			- [qs{1}: Give the squirrel to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			''' */
-		// Inquire: This is gettin' out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals 'round here! Put an end to this and retrieve me one!
+		// Inquire: This is gettin' out of hand! I've been hearin' that gold squirrels sell big and are even bein' a part of people's meals 'round here! Put an end to this and retrieve me one!
 		// Start: Yes, just one!
 		// ReadyToComplete: Yah find a beauty now?
 		// Complete: Oh, bless ya heart! Because of you, I can have a little piece o' mind. Of course, saving one ain't gonna change much, but I'm just glad I can trust yah! Da hero we all need!
@@ -248,7 +248,7 @@ Zoologist: {
 			- [qs{3}: Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
 			Reward: [i:Origins/Eccentric_Stone]
 			''' */
-		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that’s a whole 'nother can 'o worms. Get it? Can 'o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they living creatures too!
+		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that's a whole 'nother can 'o worms. Get it? Can 'o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they living creatures too!
 		// Start: Thank ya again, hun!
 		// ReadyToComplete: Got some pretty glowin' worms for me?
 		// Complete: You really are a cool {0}! Well, I figure for all dat trouble, I'll give yah this cool looking rock I don't know how I got! Hope you like it!
@@ -259,7 +259,7 @@ Dryad: {
 	// Quest_Menu: As this world's righteous guardian, the responsibility of cleansing the evils is up to you. What will you do, Terrarian?
 
 	Cleansing_Station: {
-		// Name: I’ll Give You a Deal
+		// Name: I'll Give You a Deal
 		/* Journal:
 			'''
 			{$Mods.Origins.Quests.Dryad.Cleansing_Station.Name}
@@ -270,7 +270,7 @@ Dryad: {
 			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			''' */
-		// Inquire: Hey [player:_], look. I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the [evil:world]? If you follow through, I’ll reward you with access to something I've been hiding for a while now.
+		// Inquire: Hey [player:_], look. I know you've probably been busy lately, but can I take some time off you to cleanse some of the [evil:world]? If you follow through, I'll reward you with access to something I've been hiding for a while now.
 		// Start: Thanks. The [evil:world] has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
 		// ReadyToComplete: Hold on. Let me turn on my Dryad-instincts to see if you're lying...
 		// Complete: Oh good, you've made some progress, but it's not enough. The [evil:world] grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
@@ -311,7 +311,7 @@ Stylist: {
 			- [qs{3}: Give Magic Hair Spray to <npcname:Stylist>]
 			Unlocks: 4 new hairstyles
 			''' */
-		// Inquire: Ever since I was captured by those spiders I’ve run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
+		// Inquire: Ever since I was captured by those spiders I've run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
 		// Start: Looking sharp, Terrarian.
 		// ReadyToComplete: Do you have the special stuff for me?
 		// Complete: Mmm! Wonderful! Oh, I can do some more daring styles with this stuff again.
