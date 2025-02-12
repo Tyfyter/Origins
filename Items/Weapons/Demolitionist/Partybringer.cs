@@ -277,6 +277,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			set => Projectile.localAI[2] = value;
 		}
 		int forceDeployTimer = 60;
+		int assumeBrokenTimer = 600;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 13;
 		}
@@ -334,7 +335,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.frameCounter--;
 			}
 			if (Projectile.ai[0] < 10) {
-				if (Projectile.ai[0] > 0 && --forceDeployTimer > 0) Projectile.ai[0]--;
+				if (Projectile.ai[0] > 0 && --forceDeployTimer > 0) {
+					Projectile.ai[0]--;
+					assumeBrokenTimer = 600;
+				}
+				if (--assumeBrokenTimer <= 0) Projectile.Kill();
 			} else {
 				Projectile.ai[0]++;
 			}
