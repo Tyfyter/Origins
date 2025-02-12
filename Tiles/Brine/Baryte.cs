@@ -12,6 +12,7 @@ namespace Origins.Tiles.Brine {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
 			Origins.TileBlocksMinecartTracks[Type] = true;
