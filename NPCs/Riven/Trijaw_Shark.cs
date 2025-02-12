@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Trijaw_Shark : Glowing_Mod_NPC, ICustomCollisionNPC {
+	public class Trijaw_Shark : Glowing_Mod_NPC, ICustomCollisionNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, -6, 96, 40);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public bool IsSandshark => true;
 		public override void Load() => this.AddBanner();

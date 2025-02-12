@@ -17,6 +17,7 @@ namespace Origins.NPCs.Riven {
 	/// TODO: use <see cref="Worm"/>
 	/// </summary>
 	public class Rivenator_Head : Rivenator, ICustomWikiStat {
+		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Rivenator_Preview");
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
@@ -104,7 +105,8 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 
-	internal class Rivenator_Body : Rivenator {
+	internal class Rivenator_Body : Rivenator, ICustomWikiStat {
+		string ICustomWikiStat.CustomStatPath => ModContent.GetInstance<NPCWikiProvider>().PageName(this) + "_Body";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
@@ -114,7 +116,8 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 
-	internal class Rivenator_Tail : Rivenator {
+	internal class Rivenator_Tail : Rivenator, ICustomWikiStat {
+		string ICustomWikiStat.CustomStatPath => ModContent.GetInstance<NPCWikiProvider>().PageName(this) + "_Tail";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.World.BiomeData;
 using System;
@@ -12,11 +13,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mite : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Mite : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
 		internal const int spawnCheckDistance = 15;
 		public const int aggroRange = 128;
 		byte frame = 0;
 		byte anger = 0;
+		public Rectangle DrawRect => new(0, 6, 34, 28);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);

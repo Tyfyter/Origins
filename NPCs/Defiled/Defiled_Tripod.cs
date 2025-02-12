@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles;
@@ -18,7 +19,11 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy {
+	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 98, 100);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.07f;
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Shattered_Ghoul : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Shattered_Ghoul : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 6, 36, 52);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.10f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary

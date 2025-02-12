@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -9,9 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy {
+	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.03f;
+		public Rectangle DrawRect => new(0, 0, 28, 26);
+		public int AnimationFrames => 1;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 			Main.npcFrameCount[NPC.type] = 2;

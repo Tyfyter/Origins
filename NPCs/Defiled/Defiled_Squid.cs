@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Materials;
 using Origins.Projectiles.Enemies;
@@ -13,7 +14,11 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, -8, 30, 48);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public int MaxMana => 32;
 		public int MaxManaDrain => 8;
 		public float Mana {

@@ -155,11 +155,10 @@ namespace Origins.Dev {
 				if (i == 0) {
 					fileBufferStream.Write(buffer, 0, IDAT_pos);
 					fileBufferStream.Write([0x00, 0x00, 0x00, 0x08], 0, 4);
-					WriteAndAdvanceCRC(fileBufferStream, ref crc32, [
-						/*acTL      */0x61, 0x63, 0x54, 0x4C,
-								/*num_frames*/0x00, 0x00, 0x00, (byte)textures.Length,
-								/*num_plays */0x00, 0x00, 0x00, 0xFF
-					]);
+					WriteAndAdvanceCRC(fileBufferStream, ref crc32, "acTL"u8.ToArray());
+					WriteAndAdvanceCRC(fileBufferStream, ref crc32, ToBytes((uint)textures.Length), name: "num_frames");
+					WriteAndAdvanceCRC(fileBufferStream, ref crc32, BitConverter.GetBytes((uint)0), name: "num_plays");
+
 					FinalizeCRC((uint)crc32, fileBufferStream);
 				}
 

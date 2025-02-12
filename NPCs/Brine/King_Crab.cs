@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
@@ -12,7 +13,11 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine {
-	public class King_Crab : Brine_Pool_NPC {
+	public class King_Crab : Brine_Pool_NPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 62, 60);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		static readonly AutoLoadingAsset<Texture2D> armTexture = typeof(King_Crab).GetDefaultTMLName() + "_Arm";
 		static readonly AutoLoadingAsset<Texture2D> clawTexture = typeof(King_Crab).GetDefaultTMLName() + "_Claw";
 		public float AttackTime => NPC.ai[1] / 30;

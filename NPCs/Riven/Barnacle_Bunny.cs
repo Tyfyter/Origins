@@ -1,11 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy {
+	public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(-2, 6, 32, 32);
+		public int AnimationFrames => 28;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

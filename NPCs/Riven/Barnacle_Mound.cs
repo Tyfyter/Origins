@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs.Critters;
 using Origins.World.BiomeData;
@@ -15,10 +16,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacle_Mound : ModNPC, IRivenEnemy {
+	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC {
 		public override void Load() => this.AddBanner();
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var asset) ? asset : null))?.Value;
+		public Rectangle DrawRect => new(0, -41, 34, 22);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, 20),

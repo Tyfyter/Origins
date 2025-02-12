@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
 using Origins.Items.Armor.Vanity.BossMasks;
@@ -28,7 +29,7 @@ using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
 	[AutoloadBossHead]
-	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC {
+	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat {
 		static AutoLoadingAsset<Texture2D> UpperLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper";
 		static AutoLoadingAsset<Texture2D> LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
 		Arm[] legs;
@@ -40,6 +41,7 @@ namespace Origins.NPCs.Fiberglass {
 		const float totalLegLength = upperLegLength + lowerLegLength;
 		Vector2? spawnPosition = null;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Fiberglass_Weaver_Preview");
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;

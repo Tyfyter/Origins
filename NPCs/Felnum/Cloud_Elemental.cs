@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Vanity.Other;
@@ -17,8 +18,12 @@ using Terraria.ModLoader;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Felnum {
-	public class Cloud_Elemental : ModNPC {
+	public class Cloud_Elemental : ModNPC, IWikiNPC {
 		AutoLoadingAsset<Texture2D> armTexture = typeof(Cloud_Elemental).GetDefaultTMLName() + "_Fingergun";
+		public Rectangle DrawRect => new(0, 0, 70, 46);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		//public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.DD2DarkMageT1;

@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.NPCs;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -107,7 +108,7 @@ namespace Origins.Dev {
 			}
 			foreach (KeyValuePair<int, AssimilationAmount> item in assimilations) {
 				if (item.Value != default) {
-					string assName = AssimilationLoader.Debuffs[item.Key].DisplayName.Value;
+					string assName = AssimilationLoader.Debuffs[item.Key].DisplayName.Value.Replace(" ", "");
 					if (item.Value.Function is not null) {
 						data.Add(assName, "variable");
 						continue;
@@ -120,6 +121,9 @@ namespace Origins.Dev {
 			data.AppendJStat("Expert", expertData, []);
 			data.AppendJStat("Master", masterData, []);
 
+			JArray environments = WikiExtensions.GetEnvironment(ContentSamples.NpcsByNetId[modNPC.Type]);
+			data.AppendJStat("Environment", environments, []);
+
 			customStat?.ModifyWikiStats(data);
 			if (!data.ContainsKey("SpriteWidth")) data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
 			if (!data.ContainsKey("InternalName")) data.AppendStat("InternalName", modNPC?.Name, null);
@@ -127,9 +131,10 @@ namespace Origins.Dev {
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModNPC modNPC) {
 			NPC npc = modNPC.NPC;
-			if (npc.catchItem > 0) yield break;
 			string segmentText = "";
-			if (modNPC is WormBody) {
+			if (npc.catchItem > 0) {
+				segmentText = "_NPC";
+			} else if (modNPC is WormBody) {
 				segmentText = "_Body";
 			} else if (modNPC is WormTail) {
 				segmentText = "_Tail";
@@ -138,7 +143,19 @@ namespace Origins.Dev {
 		}
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
 			if (modNPC is not IWikiNPC wikiNPC) yield break;
-			yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames));
+			string savePath = (modNPC as ICustomWikiStat)?.CustomSpritePath ?? WikiPageExporter.GetWikiName(modNPC);
+			if (wikiNPC.ImageExportType == NPCExportType.Bestiary) {
+				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration)[wikiNPC.FrameRange]);
+			} else if (wikiNPC.ImageExportType == NPCExportType.SpriteSheet) {
+				Main.instance.LoadNPC(modNPC.Type);
+				var texture = TextureAssets.Npc[modNPC.Type];
+				(Rectangle frame, int frames)[] frames = new (Rectangle frame, int frames)[wikiNPC.AnimationFrames];
+				for (int i = 0; i < frames.Length; i++) {
+					Rectangle newFrame = wikiNPC.DrawRect with { Y = wikiNPC.DrawRect.Y + wikiNPC.DrawRect.Height * i };
+					frames[i] = (newFrame, wikiNPC.FrameDuration);
+				}
+				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(texture.Value, frames));
+			}
 		}
 	}
 }

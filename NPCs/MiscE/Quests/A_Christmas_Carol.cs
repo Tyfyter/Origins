@@ -1,4 +1,5 @@
-﻿using Origins.Questing;
+﻿using Origins.Dev;
+using Origins.Questing;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE.Quests {
-	public class Jacob_Marley : ModNPC {
+	public class Jacob_Marley : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 40, 56);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.Ghost;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Ghost];
@@ -73,7 +78,11 @@ namespace Origins.NPCs.MiscE.Quests {
 			);
 		}
 	}
-	public class Spirit_Of_Christmas_Past : ModNPC {
+	public class Spirit_Of_Christmas_Past : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 48, 34);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.FairyCritterBlue];
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
@@ -137,7 +146,11 @@ namespace Origins.NPCs.MiscE.Quests {
 			}
 		}
 	}
-	public class Spirit_Of_Christmas_Present_Tax_Collector : ModNPC {
+	public class Spirit_Of_Christmas_Present_Tax_Collector : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 42, 56);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 2;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.TaxCollector;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.TaxCollector];
@@ -175,7 +188,11 @@ namespace Origins.NPCs.MiscE.Quests {
 			return Main.dayTime;
 		}
 	}
-	public class Spirit_Of_Christmas_Present : ModNPC {
+	public class Spirit_Of_Christmas_Present : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 40, 56);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 2;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override string Texture => "Terraria/Images/TownNPCs/Shimmered/Santa_Default_Party";
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.SantaClaus];
@@ -333,7 +350,11 @@ namespace Origins.NPCs.MiscE.Quests {
 			if (++NPC.alpha >= 255) NPC.active = false;
 		}
 	}
-	public class Spirit_Of_Christmas_Future : ModNPC {
+	public class Spirit_Of_Christmas_Future : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 26, 50);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.Wraith;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Wraith];

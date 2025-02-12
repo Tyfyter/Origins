@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
@@ -8,8 +9,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amebic_Slime : ModNPC, IRivenEnemy {
+	public class Amebic_Slime : ModNPC, IRivenEnemy, IWikiNPC {
 		public AssimilationAmount? Assimilation => 0.04f;
+		public Rectangle DrawRect => new(0, 0, 32, 28);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;

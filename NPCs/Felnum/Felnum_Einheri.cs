@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
@@ -19,12 +20,16 @@ using Terraria.ModLoader;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Felnum {
-	public class Felnum_Einheri : ModNPC {
+	public class Felnum_Einheri : ModNPC, IWikiNPC {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Glow";
 		AutoLoadingAsset<Texture2D> glowOverTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Glow_Over";
 		AutoLoadingAsset<Texture2D> attackTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Attac";
 		AutoLoadingAsset<Texture2D> spearTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Spear";
 		AutoLoadingAsset<Texture2D> spearGlowTexture = typeof(Felnum_Einheri).GetDefaultTMLName() + "_Spear_Glow";
+		public Rectangle DrawRect => new(14, -10, 82, 96);
+		public int AnimationFrames => 48;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadViking;

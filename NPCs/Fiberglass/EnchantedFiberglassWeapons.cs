@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -14,9 +15,13 @@ using Terraria.Utilities;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Fiberglass {
-	public class Enchanted_Fiberglass_Bow : ModNPC {
+	public class Enchanted_Fiberglass_Bow : ModNPC, IWikiNPC {
 		Color[] oldColor = new Color[10];
 		int[] oldDir = new int[10];
+		public Rectangle DrawRect => new(0, 0, 18, 36);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
@@ -119,9 +124,13 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.Center = options.Get();
 		}
 	}
-	public class Enchanted_Fiberglass_Pistol : ModNPC {
+	public class Enchanted_Fiberglass_Pistol : ModNPC, IWikiNPC {
 		Color[] oldColor = new Color[10];
 		int[] oldDir = new int[10];
+		public Rectangle DrawRect => new(0, 0, 38, 22);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
@@ -200,11 +209,15 @@ namespace Origins.NPCs.Fiberglass {
 			oldColor[0] = drawColor;
 		}
 	}
-	public class Enchanted_Fiberglass_Sword : ModNPC {
+	public class Enchanted_Fiberglass_Sword : ModNPC, IWikiNPC {
 		Color[] oldColor = new Color[10];
 		int[] oldDir = new int[10];
 		int stuck = 0;
 		Vector2 stuckVel = Vector2.Zero;
+		public Rectangle DrawRect => new(0, 0, 44, 48);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 		}

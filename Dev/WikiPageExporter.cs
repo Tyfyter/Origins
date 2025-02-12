@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Origins.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -167,6 +169,7 @@ namespace Origins.Dev {
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
 		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name.Replace(' ', '_') : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
+		public static string GetWikiImagePath(string path) => string.Join('/', "§ModImage§", path);
 		public static string GetWikiItemRarity(Item item) => (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", "");
 		public void Unload() {
 			wikiTemplate = null;
@@ -576,6 +579,13 @@ namespace Origins.Dev {
 	public interface IWikiNPC {
 		Rectangle DrawRect { get; }
 		int AnimationFrames { get; }
+		int FrameDuration => 1;
+		NPCExportType ImageExportType => NPCExportType.Bestiary;
+		Range FrameRange => new Range(0, AnimationFrames);
+	}
+	public enum NPCExportType {
+		Bestiary,
+		SpriteSheet,
 	}
 	public interface INoSeperateWikiPage { }
 	public class StatOnlyItemWikiProvider : ItemWikiProvider {
@@ -752,6 +762,25 @@ namespace Origins.Dev {
 				if (npc.buffImmune[i] && (i < BuffID.Count || ModContent.GetModBuff(i).Mod is Origins)) immunities.Add(GetBuffText(i));
 			}
 			return immunities;
+		}
+		public static JArray GetEnvironment(this NPC npc) {
+			BestiaryEntry entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
+			JArray environments = [];
+			foreach (var info in entry.Info) {
+				if (info is ModBiomeBestiaryInfoElement biomeInfo) {
+					Mod mod = ModBestiaryInfoElementMethods._mod.GetValue(biomeInfo);
+					AddEnvironment(mod, biomeInfo);
+				} else if (info is FilterProviderInfoElement filter) {
+					AddEnvironment(null, filter);
+				}
+			}
+			void AddEnvironment(Mod mod, IFilterInfoProvider info) {
+				string name = Language.GetTextValue(info.GetDisplayNameKey());
+				if (LinkFormatters.TryGetValue(mod, out WikiLinkFormatter formatter)) {
+					environments.Add(formatter(name, null, false));
+				}
+			}
+			return environments;
 		}
 		public static (List<Recipe> recipes, List<Recipe> usedIn) GetRecipes(Item item) {
 			List<Recipe> recipes = [];

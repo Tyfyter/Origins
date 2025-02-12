@@ -21,11 +21,16 @@ using ThoriumMod.Empowerments;
 using Terraria.Audio;
 using Origins.Dusts;
 using Newtonsoft.Json.Linq;
+using Origins.Dev;
 
 namespace Origins.NPCs.Fiberglass {
-	public class Enchanted_Fiberglass_Cannon : ModNPC {
+	public class Enchanted_Fiberglass_Cannon : ModNPC, IWikiNPC {
 		readonly Color[] oldColor = new Color[10];
 		readonly int[] oldDir = new int[10];
+		public Rectangle DrawRect => new(0, 0, 52, 26);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 		}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
@@ -12,7 +13,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
+	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 6, 36, 40);
+		public int AnimationFrames => 32;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.09f;
 		public override void Load() => this.AddBanner();
