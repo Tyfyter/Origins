@@ -134,6 +134,20 @@ namespace Origins {
 						rot = -rot;
 					}
 				}
+				if (madHand) {
+					Fraction dmg = new(2, 3);
+					int count = (Main.rand.NextBool(2) ? 1 : 0);
+					dmg.D += count;
+					damage *= dmg;
+					double rot = Main.rand.NextBool(2) ? -0.1 : 0.1;
+					for (int i = count; i-- > 0;) {
+						Vector2 _velocity = velocity.RotatedBy(rot);
+						if (ItemLoader.Shoot(item, Player, source, position, _velocity, type, damage, knockback)) {
+							Projectile.NewProjectile(source, position, _velocity, type, damage, knockback, Player.whoAmI);
+						}
+						rot = -rot;
+					}
+				}
 			}
 			return true;
 		}

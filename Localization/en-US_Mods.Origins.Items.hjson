@@ -787,7 +787,7 @@ Shrap_Stack: {
 	DisplayName: Stack of Shraps
 	Tooltip:
 		'''
-		All explosives are duplicated twice
+		Explosives have a chance to be duplicated
 		'Double the gunpowder, double the fun.'
 		'''
 }
