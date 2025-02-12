@@ -55,12 +55,17 @@ namespace Origins.LootConditions {
 		}
 	}
 	public class Dawn_Key_Condition : IItemDropRuleCondition {
+#if false
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
 		}
 	}
 	public class Defiled_Key_Condition : IItemDropRuleCondition {
@@ -69,43 +74,64 @@ namespace Origins.LootConditions {
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			if (OriginsModIntegrations.CheckAprilFools()) return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKeyNoThe").Format(Language.GetOrRegister("Defiled_Wastelands"));
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Defiled_Wastelands"));
 		}
 	}
 	public class Dusk_Key_Condition : IItemDropRuleCondition {
+#if false
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Dusk>();
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Dusk"));
 		}
 	}
 	public class Hell_Key_Condition : IItemDropRuleCondition {
+#if false
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.ZoneUnderworldHeight;
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
 		}
 	}
 	public class Mushroom_Key_Condition : IItemDropRuleCondition {
+#if false
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.ZoneGlowshroom;
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
 		}
 	}
 	public class Ocean_Key_Condition : IItemDropRuleCondition {
+#if false
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.ZoneBeach;
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
 		}
 	}
 	public class Riven_Key_Condition : IItemDropRuleCondition {
@@ -114,7 +140,7 @@ namespace Origins.LootConditions {
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
 		public string GetConditionDescription() {
-			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Riven_Hive"));
 		}
 	}
 	public class DownedPlantera : IItemDropRuleCondition {
