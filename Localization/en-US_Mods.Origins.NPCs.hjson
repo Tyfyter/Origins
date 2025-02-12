@@ -180,7 +180,7 @@ Defiled_Effigy: {
 
 	Dialogue: {
 		FirstDialogue: Humble of Terrarian being spared. Hopeful my abilities prove useful.
-		Standard1: All coin proceeds to ‘Church of Defiled’. Negatory, coin is only much-needed material.
+		Standard1: All coin proceeds to ‘Church of Defiled'. Negatory, coin is only much-needed material.
 		Standard2: Waste no time, [player:_]. Our vision needs followers.
 		Standard3: What is sought? Items, knowledge, or other?
 		Standard4: Survival is mandatory, desire is optional. Do you survive or desire?
@@ -259,9 +259,9 @@ Dryad: {
 	AshenWorld: The Ashen is mechanizing the world and polluting it! You must stop the Factory.
 	CorruptWorld: The Corruption seeks to turn this world into a devoid wasteland! You must eliminate the infection.
 	CrimsonWorld: The Crimson is bleeding the world of its purity. You must heal the world of this gouge.
-	DefiledWorld1: My kind barely banished the Defiled into the Dusk. Now it’s back from a disturbance and stronger than before…
+	DefiledWorld1: My kind barely banished the Defiled into the Dusk. Now it's back from a disturbance and stronger than before…
 	DefiledWorld2: The Defiled lives by its means, but even that is too much for the world…
-	WindyDefiled: It’s never wind in the Defiled Wastelands, that’s breathing…
+	WindyDefiled: It's never wind in the Defiled Wastelands, that's breathing…
 	DefiledHeartDown: That's it for the Defiled. Finish it up.
 	BeforeDefeatS: Have you tried using purification powder on... wait a minute...
 	BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
