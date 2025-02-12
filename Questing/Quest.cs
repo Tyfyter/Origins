@@ -78,7 +78,7 @@ namespace Origins.Questing {
 			for (int j = 0; j < inventory.Length; j++) {
 				Item item = inventory[j];
 				for (int i = 0; i < items.Length; i++) {
-					var current = items[i];
+					(Predicate<Item> match, int count) current = items[i];
 					if (current.match(item)) {
 						if (current.count >= item.stack) {
 							current.count -= item.stack;
@@ -87,6 +87,7 @@ namespace Origins.Questing {
 							item.stack -= current.count;
 							current.count = 0;
 						}
+						items[i] = current;
 					}
 				}
 			}

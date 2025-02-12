@@ -307,8 +307,8 @@ Stylist: {
 								
 			'{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Inquire}'
 								
-			- [qs{2}: Obtain {1} Magic Hair Spray ({0}/{1})]
-			- [qs{3}: Give Magic Hair Spray to <npcname:Stylist>]
+			- [qs{2}: Obtain {1} <itemname:Origins/Magic_Hair_Spray> ({0}/{1})]
+			- [qs{3}: Give <itemname:Origins/Magic_Hair_Spray> to <npcname:Stylist>]
 			Unlocks: 4 new hairstyles
 			'''
 		Inquire: Ever since I was captured by those spiders I've run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
@@ -326,8 +326,8 @@ Stylist: {
 								
 			'{$Mods.Origins.Quests.Stylist.Comb.Inquire}'
 								
-			- [qs{0}: Obtain a Comb]
-			- [qs{1}: Give Comb to <npcname:Stylist>]
+			- [qs{0}: Obtain a <itemname:Origins/Comb>]
+			- [qs{1}: Give <itemname:Origins/Comb> to <npcname:Stylist>]
 			Unlocks: 2 new hairstyles
 			'''
 		Inquire: Hey [player:_]. I've been needing a comb so I can properly cut some hair since my other one broke. Yes, I pulled a lot of hair out last Blood Moon, but anyway, yeah could you do that for me?
@@ -345,14 +345,14 @@ Stylist: {
 								
 			'{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Inquire}'
 								
-			- [qs{0}: Obtain Crystal Cutters]
-			- [qs{1}: Give Crystal Cutters to <npcname:Stylist>]
+			- [qs{0}: Obtain <itemname:Origins/Crystal_Cutters>]
+			- [qs{1}: Give <itemname:Origins/Crystal_Cutters> to <npcname:Stylist>]
 			Unlocks: [i:Origins/Holiday_Hair_Dye]
 			'''
-		Inquire: Heyo [player:_]. I have another favor to ask of you. My customers have been complaining that it hurts whenever I use my old scissors and frankly, the blades are going bad. So, naturally I'd need new scissors... well, I've been talking it up with the wizard and he's told me there's crystal-bladed scissors out there... you see my point? GET THEM PLEASE.
+		Inquire: Heyo [player:_]. I have another favor to ask of you. My customers have been complaining that it hurts whenever I use my old scissors and frankly, the blades are going bad. So, naturally I'd need new scissors... well, I've been talking it up with [npcname:Wizard] and he's told me there's crystal-bladed scissors out there... you see my point? GET THEM PLEASE.
 		Start: YOU'RE AWESOME! ...sorry, I'm just excited.
 		ReadyToComplete: Oh my goodness, oh my goodness, oh my goodness.
-		Complete: YES! Mm! Mua! You are the absolute best! In return, the wizard and I made a new hair dye that I'll give you for cheap!
+		Complete: YES! Mm! Mua! You are the absolute best! In return, [npcname:Wizard] and I made a new hair dye that I'll give you for cheap!
 	}
 }
 
