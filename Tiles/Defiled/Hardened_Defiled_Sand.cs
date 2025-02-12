@@ -36,5 +36,12 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Hardened_Defiled_Sand>());
 		}
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.DesertTorch, 3)
+			.AddIngredient(ItemID.Torch, 3)
+			.AddIngredient(Type)
+			.SortAfterFirstRecipesOf(ItemID.DesertTorch)
+			.Register();
+		}
 	}
 }

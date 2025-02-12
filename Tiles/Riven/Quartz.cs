@@ -35,5 +35,12 @@ namespace Origins.Tiles.Riven {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Quartz>());
 		}
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.DesertTorch, 3)
+			.AddIngredient(ItemID.Torch, 3)
+			.AddIngredient(Type)
+			.SortAfterFirstRecipesOf(ItemID.DesertTorch)
+			.Register();
+		}
 	}
 }
