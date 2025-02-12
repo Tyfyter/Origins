@@ -785,7 +785,7 @@ Sonic_Radar: {
 
 Shrap_Stack: {
 	DisplayName: Stack of Shraps
-	Tooltip: 
+	Tooltip:
 		'''
 		All explosives are duplicated twice
 		'Double the gunpowder, double the fun.'

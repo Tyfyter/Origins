@@ -42,6 +42,7 @@ using Terraria.UI;
 using Origins.Items.Other.Testing;
 using Stubble.Core.Helpers;
 using Terraria.GameContent.Creative;
+using CalamityMod.Items;
 
 namespace Origins {
 	#region classes
@@ -3807,6 +3808,87 @@ namespace Origins {
 			if (matchQuality == 0) return;
 			tile.TileFrameX = (short)(bestMatch.X * 18);
 			tile.TileFrameY = (short)(bestMatch.Y * 18);
+		}
+		public static (MergeMatcher match, Point first, Point offset)[] ExtraTileBlending {
+			get {
+				Point right = new(1, 0);
+				Point down = new(0, 1);
+				const int NONE = -1;
+				const int ROCK = 1;
+				const int _MUD = 2;
+				return [
+					(new(ROCK, ROCK, NONE, ROCK), new Point(0, 0), down),
+					(new(NONE, ROCK, ROCK, ROCK), new Point(1, 0), right),
+					(new(ROCK, ROCK, ROCK, ROCK), new Point(1, 1), right),
+					(new(ROCK, NONE, ROCK, ROCK), new Point(1, 2), right),
+					(new(ROCK, ROCK, ROCK, NONE), new Point(4, 0), down),
+					(new(ROCK, ROCK, NONE, NONE), new Point(5, 0), down),
+					(new(NONE, ROCK, NONE, NONE), new Point(6, 0), right),
+					(new(ROCK, ROCK, ROCK, ROCK, UpLeft: NONE, UpRight: NONE), new Point(6, 1), right),
+					(new(ROCK, ROCK, ROCK, ROCK, DownLeft: NONE, DownRight: NONE), new Point(6, 2), right),
+					(new(ROCK, NONE, NONE, NONE), new Point(6, 3), right),
+					(new(NONE, NONE, NONE, ROCK), new Point(9, 0), down),
+					(new(ROCK, ROCK, ROCK, ROCK, UpLeft: NONE, DownLeft: NONE), new Point(10, 0), down),
+					(new(ROCK, ROCK, ROCK, ROCK, UpRight: NONE, DownRight: NONE), new Point(11, 0), down),
+					(new(NONE, NONE, ROCK, NONE), new Point(12, 0), down),
+					(new(NONE, _MUD, ROCK, ROCK), new Point(13, 0), right),
+					(new(_MUD, NONE, ROCK, ROCK), new Point(13, 1), right),
+					(new(ROCK, ROCK, NONE, _MUD), new Point(13, 2), right),
+					(new(ROCK, ROCK, _MUD, NONE), new Point(13, 3), right),
+					(new(NONE, ROCK, NONE, ROCK), new Point(0, 3), new Point(2, 0)),
+					(new(NONE, ROCK, ROCK, NONE), new Point(1, 3), new Point(2, 0)),
+					(new(ROCK, NONE, NONE, ROCK), new Point(0, 4), new Point(2, 0)),
+					(new(ROCK, NONE, ROCK, NONE), new Point(1, 4), new Point(2, 0)),
+					(new(NONE, NONE, NONE, NONE), new Point(9, 3), right),
+					(new(NONE, NONE, ROCK, ROCK), new Point(6, 4), right),
+					(new(ROCK, ROCK, ROCK, ROCK, DownRight: _MUD), new Point(0, 5), new Point(0, 2)),
+					(new(ROCK, ROCK, ROCK, ROCK, DownLeft: _MUD), new Point(1, 5), new Point(0, 2)),
+					(new(ROCK, ROCK, ROCK, ROCK, UpRight: _MUD), new Point(0, 6), new Point(0, 2)),
+					(new(ROCK, ROCK, ROCK, ROCK, UpLeft: _MUD), new Point(1, 5), new Point(0, 2)),
+					(new(_MUD, ROCK, _MUD, ROCK), new Point(2, 5), new Point(0, 2)),
+					(new(_MUD, ROCK, ROCK, _MUD), new Point(3, 5), new Point(0, 2)),
+					(new(ROCK, _MUD, _MUD, ROCK), new Point(2, 6), new Point(0, 2)),
+					(new(ROCK, _MUD, ROCK, _MUD), new Point(3, 6), new Point(0, 2)),
+					(new(ROCK, _MUD, NONE, ROCK), new Point(4, 5), down),
+					(new(ROCK, _MUD, ROCK, NONE), new Point(5, 5), down),
+					(new(_MUD, ROCK, NONE, ROCK), new Point(4, 8), down),
+					(new(_MUD, ROCK, ROCK, NONE), new Point(5, 8), down),
+					(new(NONE, _MUD, NONE, NONE), new Point(6, 5), down),
+					(new(_MUD, NONE, NONE, NONE), new Point(6, 8), down),
+					(new(ROCK, _MUD, NONE, NONE), new Point(7, 5), down),
+					(new(_MUD, ROCK, NONE, NONE), new Point(7, 8), down),
+					(new(ROCK, _MUD, ROCK, ROCK), new Point(8, 5), right),
+					(new(_MUD, ROCK, ROCK, ROCK), new Point(8, 6), right),
+					(new(ROCK, ROCK, ROCK, _MUD), new Point(8, 7), down),
+					(new(ROCK, ROCK, _MUD, ROCK), new Point(9, 7), down),
+					(new(_MUD, ROCK, _MUD, _MUD), new Point(11, 5), down),
+					(new(_MUD, _MUD, _MUD, ROCK), new Point(12, 5), down),
+					(new(ROCK, _MUD, _MUD, _MUD), new Point(11, 8), down),
+					(new(_MUD, _MUD, ROCK, _MUD), new Point(12, 8), down),
+					(new(ROCK, ROCK, _MUD, _MUD), new Point(10, 7), down),
+					(new(_MUD, _MUD, ROCK, ROCK), new Point(8, 10), right),
+					(new(NONE, ROCK, _MUD, ROCK), new Point(0, 11), right),
+					(new(NONE, ROCK, ROCK, _MUD), new Point(3, 11), right),
+					(new(ROCK, NONE, _MUD, ROCK), new Point(0, 12), right),
+					(new(ROCK, NONE, ROCK, _MUD), new Point(3, 12), right),
+					(new(_MUD, _MUD, _MUD, _MUD), new Point(6, 11), right),
+					(new(NONE, NONE, _MUD, _MUD), new Point(9, 11), right),
+					(new(_MUD, _MUD, NONE, NONE), new Point(6, 12), down),
+					(new(NONE, NONE, _MUD, NONE), new Point(0, 13), right),
+					(new(NONE, NONE, NONE, _MUD), new Point(3, 13), right),
+					(new(NONE, NONE, _MUD, ROCK), new Point(0, 14), right),
+					(new(NONE, NONE, ROCK, _MUD), new Point(3, 14), right),
+
+					(new(NONE, ROCK, NONE, _MUD), new Point(0, 3), new Point(2, 0)),
+					(new(NONE, ROCK, _MUD, NONE), new Point(1, 3), new Point(2, 0)),
+					(new(ROCK, NONE, NONE, _MUD), new Point(0, 4), new Point(2, 0)),
+					(new(ROCK, NONE, _MUD, NONE), new Point(1, 4), new Point(2, 0)),
+					(new(NONE, _MUD, NONE, ROCK), new Point(0, 3), new Point(2, 0)),
+					(new(NONE, _MUD, ROCK, NONE), new Point(1, 3), new Point(2, 0)),
+					(new(_MUD, NONE, NONE, ROCK), new Point(0, 4), new Point(2, 0)),
+					(new(_MUD, NONE, ROCK, NONE), new Point(1, 4), new Point(2, 0))
+				];
+			}
 		}
 		public static void DoFraming(int i, int j, bool resetFrame, (int tileType, int frameType)[] map, params (MergeMatcher match, Point first, Point offset)[] frames) {
 #if DEBUG && false

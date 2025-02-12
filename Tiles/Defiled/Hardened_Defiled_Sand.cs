@@ -14,6 +14,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.SandBiome[Type] = 1;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileMerge[TileType<Defiled_Sand>()][Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -25,6 +26,10 @@ namespace Origins.Tiles.Defiled {
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Defiled_Sand>(), 2)], TileExtenstions.ExtraTileBlending);
+			return false;
 		}
 	}
 	public class Hardened_Defiled_Sand_Item : ModItem {

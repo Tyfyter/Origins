@@ -14,6 +14,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.SandBiome[Type] = 1;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.HardenedSand];
+			Main.tileMerge[TileType<Silica>()][Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -27,6 +28,10 @@ namespace Origins.Tiles.Riven {
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
 			DustType = DustID.Ghost;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Silica>(), 2)], TileExtenstions.ExtraTileBlending);
+			return false;
 		}
 	}
 	public class Brittle_Quartz_Item : ModItem {

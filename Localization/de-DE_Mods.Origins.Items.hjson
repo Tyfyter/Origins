@@ -262,6 +262,7 @@ Dryads_Inheritance: {
 		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Emit a damaging aura that inflicts poison
+		Summons spores over time that will damage enemies
 		''' */
 }
 
@@ -784,7 +785,11 @@ Sonic_Radar: {
 
 Shrap_Stack: {
 	// DisplayName: Stack of Shraps
-	// Tooltip: Double the gunpowder, double the fun.
+	/* Tooltip:
+		'''
+		All explosives are duplicated twice
+		'Double the gunpowder, double the fun.'
+		''' */
 }
 
 Speed_Ravel: {
@@ -907,7 +912,7 @@ Unsought_Organ: {
 	// DisplayName: Unsought Organ
 	/* Tooltip:
 		'''
-		All damage received is reflected to 3 nearby enemies, inflicting 'Toxic Shock'
+		All damage received is reflected to 3 nearby enemies
 		5% increased damage and critical strike chance
 		All attacks inflict Toxic Shock
 		Enemies are less likely to target you
@@ -1326,7 +1331,7 @@ Riptide_Helmet: {
 	/* Tooltip:
 		'''
 		5% increased magic damage
-		Greatly extends underwater breathing
+		Slightly increased underwater breathing
 		''' */
 }
 
@@ -3706,7 +3711,7 @@ Control_Locus: {
 		Ranged projectiles are duplicated 5 times
 		Explosive projectiles are duplicated twice
 		All duplicated projectiles actually deal damage based on whether or not ammo was consumed
-		20% chance not to consume ammo
+		12% chance not to consume ammo
 		''' */
 }
 
@@ -4968,7 +4973,7 @@ Fairy_Lotus: {
 
 Rubber_Breastplate: {
 	// DisplayName: Rubber Breastplate
-	// Tooltip: Reduces damage taken from projectiles by 10%
+	// Tooltip: +10% damage reduction
 }
 
 Rubber_Greaves: {
