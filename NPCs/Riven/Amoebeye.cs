@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Gores.NPCs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
@@ -14,7 +15,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amoebeye : ModNPC, IRivenEnemy {
+	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 72, 68);
+		public int AnimationFrames => 32;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.04f;
 		public static int ID { get; private set; }
 		public override void Load() => this.AddBanner();
@@ -141,7 +146,11 @@ namespace Origins.NPCs.Riven {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 		}
 	}
-	public class Amoebeye_P : ModNPC, IRivenEnemy {
+	public class Amoebeye_P : ModNPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 58, 60);
+		public int AnimationFrames => 4;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;

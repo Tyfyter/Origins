@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Spider_Amoeba : Glowing_Mod_NPC, IRivenEnemy {
+    public class Spider_Amoeba : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 72, 34);
+		public int AnimationFrames => 32;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.04f;
 		public override void Load() => this.AddBanner();
@@ -79,7 +84,8 @@ namespace Origins.NPCs.Riven {
             OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.85f);
         }
     }
-	public class Spider_Amoeba_Wall : Spider_Amoeba {
+	public class Spider_Amoeba_Wall : Spider_Amoeba, ICustomWikiStat {
+		bool ICustomWikiStat.CanExportStats => false;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void Load() { }
 		public override void SetStaticDefaults() {

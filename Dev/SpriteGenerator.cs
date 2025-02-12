@@ -182,7 +182,7 @@ namespace Origins.Dev {
 			animation.Frame = frameNum;
 			return frames;
 		}
-		public static (Texture2D texture, int frames)[] GenerateAnimationSprite(NPC npc, Rectangle area, int ticks) {
+		public static (Texture2D texture, int frames)[] GenerateAnimationSprite(NPC npc, Rectangle area, int ticks, int framesPerFrame = 1) {
 			(Texture2D texture, int frames)[] frames = new (Texture2D texture, int frames)[ticks];
 			UnlockableNPCEntryIcon icon = new(npc.netID);
 			EntryIconDrawSettings iconDrawSettings = new() {
@@ -196,7 +196,7 @@ namespace Origins.Dev {
 						icon.Draw(default, spriteBatch, iconDrawSettings);
 					},
 					(area.Width, area.Height)
-				), 1);
+				), framesPerFrame);
 			}
 			return frames;
 		}

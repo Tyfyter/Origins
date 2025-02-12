@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -8,7 +9,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Chunky_Slime : ModNPC, IDefiledEnemy {
+	public class Chunky_Slime : ModNPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 32, 26);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -12,7 +14,12 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
-	public class Cellarkeep : ModNPC {
+	public class Cellarkeep : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 40, 56);
+		public int AnimationFrames => 48;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public Range FrameRange => new(8, 48);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 18;
@@ -125,7 +132,11 @@ namespace Origins.NPCs.Dungeon {
 			}
 		}
 	}
-	public class Cellarkeep_Barrel : ModNPC {
+	public class Cellarkeep_Barrel : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 26, 26);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.

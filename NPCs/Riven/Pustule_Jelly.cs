@@ -14,9 +14,14 @@ using Terraria.Audio;
 using Origins.Projectiles;
 using Origins.Gores.NPCs;
 using Origins.Buffs;
+using Origins.Dev;
 
 namespace Origins.NPCs.Riven {
-	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy {
+	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 32, 42);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.08f;
 		public override void Load() => this.AddBanner();

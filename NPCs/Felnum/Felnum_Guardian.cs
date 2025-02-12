@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Armor.Felnum;
@@ -21,10 +22,13 @@ using Terraria.ModLoader;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Felnum {
-	public class Felnum_Guardian : ModNPC {
+	public class Felnum_Guardian : ModNPC, IWikiNPC {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Felnum_Guardian).GetDefaultTMLName() + "_Glow";
 		public override void Load() => this.AddBanner();
 		public static HashSet<int> FriendlyNPCTypes { get; private set; } = [];
+		public Rectangle DrawRect => new(-14, 4, 72, 70);
+		public int AnimationFrames => 16;
+		public int FrameDuration => 1;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.FairyCritterBlue;
 			Main.npcFrameCount[NPC.type] = 4;

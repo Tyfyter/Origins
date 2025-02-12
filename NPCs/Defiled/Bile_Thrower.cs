@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Projectiles.Enemies;
 using PegasusLib;
 using Terraria;
@@ -10,7 +11,11 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
-	public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 4, 28, 42);
+		public int AnimationFrames => 12;
+		public int FrameDuration => 2;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public int MaxMana => 40;
 		public int MaxManaDrain => 5;
 		public float Mana {

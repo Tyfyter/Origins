@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
 using System;
@@ -18,7 +19,11 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
-	public class Etherealizer : ModNPC {
+	public class Etherealizer : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 6, 32, 56);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		//public override void Load() => this.AddBanner();
 		protected override bool CloneNewInstances => true;
 		static public int ID { get; private set; }

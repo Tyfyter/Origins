@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
@@ -9,7 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
-	public class King_Crab : Brine_Pool_NPC, IMeleeCollisionDataNPC {
+	public class King_Crab : Brine_Pool_NPC, IMeleeCollisionDataNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 62, 60);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 5;

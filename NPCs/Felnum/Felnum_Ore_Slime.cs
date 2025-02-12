@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Armor.Felnum;
 using Origins.Reflection;
 using Origins.Tiles.Other;
@@ -18,7 +19,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Felnum {
-	public class Felnum_Ore_Slime : ModNPC {
+	public class Felnum_Ore_Slime : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 32, 26);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.ShimmerSlime;

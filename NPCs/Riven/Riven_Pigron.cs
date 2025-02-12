@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
@@ -9,7 +11,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Pigron : Glowing_Mod_NPC, IRivenEnemy {
+	public class Riven_Pigron : Glowing_Mod_NPC, IRivenEnemy, ICustomWikiStat, IWikiNPC {
+		public Rectangle DrawRect => new(-8, 16, 80, 66);
+		public int AnimationFrames => 56;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		void ICustomWikiStat.ModifyWikiStats(JObject data) {
+			data["Name"] = "Riven Pigron";
+		}
+		string ICustomWikiStat.CustomStatPath => "Riven_Pigron";
+		string ICustomWikiStat.CustomSpritePath => "Riven_Pigron";
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.PigronCrimson];

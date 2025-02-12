@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
@@ -8,7 +9,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-	public class Crimbrain : ModNPC {
+	public class Crimbrain : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 36, 34, 28);
+		public int AnimationFrames => 32;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;

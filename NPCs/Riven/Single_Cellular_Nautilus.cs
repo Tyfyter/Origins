@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy {
+	public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 6, 38, 30);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.03f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

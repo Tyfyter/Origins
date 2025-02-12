@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Exoskeleton : Glowing_Mod_NPC, IRivenEnemy {
+	public class World_Cracker_Exoskeleton : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 50, 26);
+		public int AnimationFrames => 3;
+		public int FrameDuration => 6;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public AssimilationAmount? Assimilation => 0.03f;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
 		public override void SetStaticDefaults() {

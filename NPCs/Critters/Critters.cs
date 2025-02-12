@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Other.Fish;
 using Origins.World.BiomeData;
 using rail;
@@ -9,7 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Critters {
-	public class Amoeba_Buggy : Glowing_Mod_NPC {
+	public class Amoeba_Buggy : Glowing_Mod_NPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 18, 12);
+		public int AnimationFrames => 4;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 4;
@@ -37,7 +42,11 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 	}
-	public class Bug : ModNPC {
+	public class Bug : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 20, 12);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 2;
@@ -88,7 +97,11 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 	}
-	public class Cicada_3301 : ModNPC {
+	public class Cicada_3301 : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 20, 13);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
 			Main.npcCatchable[Type] = true;
 			Main.npcFrameCount[Type] = 2;

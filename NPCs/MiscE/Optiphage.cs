@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
@@ -11,7 +12,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class Optiphage : ModNPC {
+    public class Optiphage : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 16, 30);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;

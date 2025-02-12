@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
@@ -10,7 +11,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacleback : Glowing_Mod_NPC, IRivenEnemy {
+	public class Barnacleback : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 36, 50);
+		public int AnimationFrames => 24;
+		public int FrameDuration => 1;
+		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void Load() => this.AddBanner();
