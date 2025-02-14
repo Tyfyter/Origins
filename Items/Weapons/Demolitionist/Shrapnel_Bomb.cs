@@ -1,13 +1,11 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Shrapnel_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -20,15 +18,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 50;
-			Item.useTime = (int)(Item.useTime * 1.15);
-			Item.useAnimation = (int)(Item.useAnimation * 1.15);
+			Item.damage = 30;
 			Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
-			Item.shootSpeed *= 0.95f;
-			Item.knockBack = 13f;
+			Item.shootSpeed *= 1.15f;
 			Item.value = Item.sellPrice(silver: 1, copper: 80);
 			Item.rare = ItemRarityID.Blue;
-            Item.ArmorPenetration += 2;
+			Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
@@ -46,6 +41,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Bomb;

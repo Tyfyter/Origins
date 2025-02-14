@@ -1,12 +1,11 @@
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Defiled_Spirit : ModItem, ICustomWikiStat {
+	public class Defiled_Spirit : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
             "ThrownExplosive",
@@ -19,16 +18,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-			Item.damage = 16;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
+			Item.damage = 12;
 			Item.shoot = ModContent.ProjectileType<Defiled_Spirit_P>();
-			Item.shootSpeed = 17;
-			Item.knockBack -= 3;
+			Item.shootSpeed = 10;
+			Item.knockBack = 0;
 			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
-            Item.ArmorPenetration += 1;
+            Item.ArmorPenetration += 12;
         }
 	}
 	public class Defiled_Spirit_P : ModProjectile {
@@ -43,6 +40,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation();

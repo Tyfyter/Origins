@@ -90,7 +90,6 @@ namespace Origins.NPCs {
 					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
 					shop.Add<Link_Grenade>(PeatSoldCondition(85), ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>());
 					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
-					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
 					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
 					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));

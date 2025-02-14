@@ -17,14 +17,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 26;
-			Item.knockBack = 0;
-			Item.crit += 16;
-			Item.shootSpeed *= 2;
+			Item.damage = 32;
+			Item.crit += 6;
+			Item.shootSpeed *= 1.75f;
 			Item.shoot = ModContent.ProjectileType<Flashbang_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 15);
-            Item.ArmorPenetration += 2;
+            Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -42,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = -1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}

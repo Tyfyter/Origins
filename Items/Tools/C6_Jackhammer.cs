@@ -1,17 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class C6_Jackhammer : ModItem, ICustomWikiStat {
+	public class C6_Jackhammer : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"ToolWeapon"
 		];
@@ -20,15 +18,15 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ChlorophyteJackhammer);
-			Item.damage = 18;
+			Item.damage = 24;
 			Item.width = 28;
 			Item.height = 26;
-			Item.hammer = 55;
+			Item.hammer = 54;
 			//Item.useTime = Item.useAnimation = 60;
-			Item.knockBack = 9f;
+			Item.knockBack = 6f;
 			Item.shootSpeed = 4f;
 			Item.shoot = ModContent.ProjectileType<C6_Jackhammer_P>();
-			Item.value = Item.sellPrice(silver: 40);
+			Item.value = Item.sellPrice(silver: 48);
 			Item.rare = ItemRarityID.Blue;
 			Item.tileBoost = 0;
 		}
@@ -39,8 +37,8 @@ namespace Origins.Items.Tools {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-            .AddIngredient(ModContent.ItemType<NE8>(), 5)
-            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)
+            .AddIngredient(ModContent.ItemType<NE8>(), 6)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 12)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

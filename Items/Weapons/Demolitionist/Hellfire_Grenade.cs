@@ -19,17 +19,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 36;
+			Item.damage = 48;
 			Item.shoot = ModContent.ProjectileType<Hellfire_Grenade_P>();
+			Item.shootSpeed *= 1.25f;
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
 			Item.glowMask = glowmask;
-            Item.ArmorPenetration += 1;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 35)
-			.AddIngredient(ItemID.Grenade, 35)
 			.AddIngredient(ItemID.Fireblossom)
+			.AddIngredient(ItemID.Grenade, 35)
 			.AddIngredient(ItemID.Hellstone, 5)
 			.Register();
 		}
@@ -43,6 +43,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
             Projectile.type = ProjectileID.Grenade;
@@ -61,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center,
 				default,
 				ModContent.ProjectileType<Hellfire_Grenade_Fire>(),
-				Projectile.damage,
+				Projectile.damage / 3,
 				0,
 				Projectile.owner
 			);

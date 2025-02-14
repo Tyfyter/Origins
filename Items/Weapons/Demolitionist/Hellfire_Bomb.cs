@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.CloneDefaults(ItemID.Bomb);
 			Item.damage = 48;
 			Item.shoot = ModContent.ProjectileType<Hellfire_Bomb_P>();
+			Item.shootSpeed *= 1.25f;
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
 			Item.glowMask = glowmask;
@@ -43,6 +44,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Bomb;
@@ -61,7 +65,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center,
 				default,
 				ModContent.ProjectileType<Hellfire_Bomb_Fire>(),
-				Projectile.damage,
+				Projectile.damage / 2,
 				0,
 				Projectile.owner
 			);

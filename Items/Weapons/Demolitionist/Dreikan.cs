@@ -19,8 +19,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 66;
-			Item.crit = 26;
+			Item.damage = 48;
+			Item.crit = 20;
 			Item.useAnimation = 33;
 			Item.useTime = 11;
 			Item.width = 96;
@@ -58,6 +58,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			AIType = ProjectileID.ExplosiveBullet;
 			Projectile.light = 0;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.35f, 0.05f);

@@ -280,10 +280,6 @@ namespace Origins.NPCs {
 			if (shrapnelIndex > -1) {
 				Impeding_Shrapnel_Debuff.SpawnShrapnel(npc, npc.buffTime[shrapnelIndex]);
 			}
-			int outbreakIndex = npc.FindBuffIndex(Outbreak_Bomb_Owner_Buff.ID);
-			if (outbreakIndex > -1) {
-				Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, default, ModContent.ProjectileType<Outbreak_Bomb_Cloud>(), 60, 1, npc.buffTime[outbreakIndex] - 1);
-			}
 		}
 		public override void ModifyGlobalLoot(GlobalLoot globalLoot) {
 			foreach (var rule in globalLoot.Get()) {

@@ -27,7 +27,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = null;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
-			//Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -176,6 +175,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = true;
 			Projectile.tileCollide = true;
 			Projectile.extraUpdates = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] > 5) {
@@ -188,7 +190,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			dust.noGravity = true;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.3f;
+			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.65f;
 		}
 		public override void OnKill(int timeLeft) {
 			if (Main.myPlayer == Projectile.owner) {

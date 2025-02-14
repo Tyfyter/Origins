@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using System.Collections.Generic;
@@ -16,9 +15,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Hemoptysis_P>(14, 50, 8f, 46, 28, true);
-			Item.value = Item.sellPrice(silver: 24);
+			Item.value = Item.sellPrice(silver: 45);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.NPCDeath17;
+			Item.UseSound = SoundID.NPCDeath17.WithVolume(0.5f);
 			Item.ArmorPenetration += 1;
 		}
 		public override Vector2? HoldoutOffset() {

@@ -1,33 +1,29 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Origins.OriginExtensions;
-
-using Origins.Dev;
-using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToLauncher(2, 40, 78, 30, true);
+			Item.DefaultToLauncher(20, 50, 78, 30, true);
 			Item.shoot = ProjectileID.Bomb;
 			Item.useAmmo = ItemID.Bomb;
-			Item.knockBack = 1.6f;
 			Item.shootSpeed = 6f;
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;
+			Item.ArmorPenetration -= 10;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-16, 2);
@@ -40,15 +36,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (type == ModContent.ProjectileType<Impact_Bomb_P>()) {
 					type = ModContent.ProjectileType<Impact_Bomb_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					damage += damage / 2;
-					knockback *= 3;
+					damage *= 2;
+					knockback = 8;
 					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
 				if (type == ModContent.ProjectileType<Acid_Bomb_P>()) {
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
 					type = ModContent.ProjectileType<Brine_Droplet>();
-					damage -= 20;
+					//damage -= 20;
 					for (int i = Main.rand.Next(2); ++i < 5;) {
 						Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 3, knockback, player.whoAmI).scale = 0.85f;
 					}

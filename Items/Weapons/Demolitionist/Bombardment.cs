@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
@@ -18,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 8;
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 20);
+			Item.value = Item.sellPrice(silver: 45);
 			Item.UseSound = null;
 			Item.reuseDelay = 60;
 		}

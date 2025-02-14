@@ -11,12 +11,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Eruption_P>(27, 32, 16f, 50, 26, true);
+			Item.DefaultToCanisterLauncher<Eruption_P>(58, 32, 14.5f, 50, 26, true);
 			Item.knockBack = 6;
 			Item.reuseDelay = 6;
-			Item.value = Item.sellPrice(silver:50);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -47,6 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.friendly = false;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 		}
 		public override void AI() {
 			if (Projectile.owner == Main.myPlayer) {
@@ -88,8 +88,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center,
 				-Vector2.UnitY,
 				ModContent.ProjectileType<Eruption_Geyser>(),
-				Projectile.damage,
-				Projectile.knockBack,
+				(int)(Projectile.damage * 0.67),
+				Projectile.knockBack / 3,
 				Main.myPlayer
 			);
 		}

@@ -1,5 +1,3 @@
-using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
@@ -8,10 +6,8 @@ using Origins.Misc;
 using PegasusLib;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
-using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,9 +32,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DefaultToCanisterLauncher<Flare_Launcher_P>(24, 32, 14f, 44, 24);
 			Item.knockBack = 2;
 			Item.reuseDelay = 6;
-			Item.value = Item.sellPrice(silver:50);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

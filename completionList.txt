@@ -62,6 +62,7 @@ BOSSES AND MINI-BOSSES:
 
 (X) Corrupt Harvester
 (#, ^2/4) Lost Diver/Mildew Carrion !!!
+(X) Snowdrop
 
 (X) Crimson King
 (X) Duskord
@@ -484,6 +485,7 @@ ACCESSORIES:
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
+(X) Sunder Gut !!!
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
@@ -514,7 +516,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Uncursed)*
 (^) Mysterious Spray*
 (^) Scribe of the Meat God*
-(#2, ^2, ᗢ) Stack of Shraps* !!!
+(ᗢ) Stack of Shraps*
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
@@ -887,6 +889,8 @@ SUMMONER WEAPONS:
 (X) Ornamental Riven Artifact
 (X) Riven Rain Rod
 (^) Scabcoral Lyre*
+(X) Snowman Trophy
+(X) Trirod
 (X) TV Remote
 (X) Wyvern Horn
 (^) Ziptie*
@@ -943,16 +947,18 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
+(X) Impetus !!!
 (^) Internal Combustionfish*
-(^) Link Grenade*
+(#2, ^2) Link Grenade* !!! (additive damage)
 (^) Matrix*
 (^) Meteor*
-(@2, ^3) Outbreak Bomb* (needs cloud sprite or sprites, nothing vanilla is large enough not to need too much scaling)
 (^) Peatball*
 (^) Potato Mine*
+(X) Regurgitator of Souls !!!
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
-(^) Sticky Link Grenade*
+(#, ^2) Sticky Link Grenade* !!! (additive damage)
+(X) Sudden Night's Shadow !!!
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
@@ -988,6 +994,7 @@ EXPLOSIVE WEAPONS:
 (^) Self-Destruct*
 (X) Supernova
 (X) The Heatseeker
+(X) The Rocketman
 (X) Thundershot
 (X) Ticking Bomb
 (X) Ticking Dynamite

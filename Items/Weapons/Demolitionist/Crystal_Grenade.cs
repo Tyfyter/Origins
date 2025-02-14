@@ -19,14 +19,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 56;
+			Item.damage = 60;
 			Item.value *= 14;
 			Item.shoot = ModContent.ProjectileType<Crystal_Grenade_P>();
 			Item.shootSpeed *= 1.5f;
-			Item.knockBack = 5f;
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.LightRed;
-            Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -86,6 +84,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = -1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
@@ -105,7 +104,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int count = 11 - Main.rand.Next(3);
 			float rot = TwoPi / count;
 			for (int i = count; i > 0; i--) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 3, 6, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
 			}
 		}
 		public override void PostDraw(Color lightColor) {
@@ -160,7 +159,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CrystalStorm);
 			Projectile.DamageType = DamageClasses.ThrownExplosive;
-			Projectile.ArmorPenetration += 4;
+			Projectile.ArmorPenetration += 26;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 30 + Main.rand.Next(-5, 16);

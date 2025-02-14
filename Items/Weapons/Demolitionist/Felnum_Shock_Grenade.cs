@@ -17,15 +17,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 32;
+			Item.damage = 38;
 			Item.shoot = ModContent.ProjectileType<Felnum_Shock_Grenade_P>();
-			Item.shootSpeed *= 1.5f;
-			Item.knockBack = 5f;
+			Item.shootSpeed *= 1.25f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 70);
 			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 9999;
-            Item.ArmorPenetration += 3;
+            Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 6)
@@ -47,6 +45,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Grenade;

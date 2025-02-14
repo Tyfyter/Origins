@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Origins.Dev;
-using Terraria.Localization;
-
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Peatball : ModItem, ICustomWikiStat {
+	public class Peatball : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
             "ExpendableWeapon"
@@ -20,14 +17,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-			Item.damage = 12;
-			Item.useTime = (int)(Item.useTime * 0.75);
-			Item.useAnimation = (int)(Item.useAnimation * 0.75);
+			Item.damage = 16;
 			Item.shoot = ModContent.ProjectileType<Peatball_P>();
-			Item.shootSpeed = 7;
-			Item.knockBack *= 2;
+			Item.shootSpeed = 8;
+			Item.knockBack = 0;
 			Item.value = Item.sellPrice(copper: 75);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Green;
+			Item.ArmorPenetration += 8;
 		}
 		public override void AddRecipes() {
 			const int coalNumber = 4;
@@ -58,6 +54,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = 12;
 			Projectile.height = 12;
 			Projectile.scale = 0.85f;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;

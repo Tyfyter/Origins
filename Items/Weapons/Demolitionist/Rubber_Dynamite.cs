@@ -1,10 +1,7 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
-using Origins.Tiles.Brine;
-using PegasusLib;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,10 +18,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
-			Item.damage = 40;
+			Item.damage = 65;
 			Item.shoot = ModContent.ProjectileType<Rubber_Dynamite_P>();
 			Item.shootSpeed *= 1.75f;
-			Item.knockBack = 8f;
 			Item.value = Item.sellPrice(silver: 5);
 			Item.rare = ItemRarityID.Blue;
 		}

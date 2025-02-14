@@ -17,8 +17,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 60;
+			Item.damage = 68;
 			Item.value = 500;
+			Item.shootSpeed *= 1.5f;
 			Item.shoot = ModContent.ProjectileType<Acid_Grenade_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.LightRed;
@@ -40,6 +41,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Grenade;
@@ -55,7 +59,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 			//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
 			int t = ModContent.ProjectileType<Brine_Droplet>();
-			for (int i = Main.rand.Next(3); i < 5; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f;
+			for (int i = Main.rand.Next(3); i < 5; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 6), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f;
 		}
 	}
 }

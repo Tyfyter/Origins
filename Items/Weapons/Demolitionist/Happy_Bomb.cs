@@ -1,9 +1,8 @@
+using Origins.Dev;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.Audio;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Happy_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -17,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
 			Item.damage = 100;
+			Item.shootSpeed *= 1.5f;
 			Item.shoot = ModContent.ProjectileType<Happy_Bomb_P>();
 			Item.value = Item.sellPrice(silver: 75);
 			Item.rare = ItemRarityID.Pink;
@@ -32,6 +32,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
 			Projectile.friendly = true;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
 			if (Projectile.timeLeft < 60 && Main.rand.Next(0, Projectile.timeLeft) == 0) Projectile.Kill();

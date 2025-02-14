@@ -1,17 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Matrix : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -22,17 +19,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Matrix_P>(18, 50, 8f, 46, 18, true);
-			Item.value = Item.sellPrice(silver: 24);
+			Item.DefaultToCanisterLauncher<Matrix_P>(32, 50, 6f, 46, 18, true);
+			Item.value = Item.sellPrice(silver: 45);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
-			Item.ArmorPenetration += 1;
 		}
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(-8f, 0);
+			return new Vector2(-4f, -2f);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
+		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound((Origins.Sounds.EnergyRipple), player.MountedCenter);
+			return null;
 		}
 	}
 	public class Matrix_P : ModProjectile {
@@ -144,6 +144,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Dust.NewDustDirect(pos, 0, 0, DustID.Torch).velocity = (pos - Projectile.position).SafeNormalize(default) * Main.rand.NextFloat(0.5f, 2);
 				}
 			}
+			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 		}
 		public Vector2[] GetNodePositions() {
 			Vector2[] nodes = new Vector2[GetNodeCount()];

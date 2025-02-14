@@ -26,10 +26,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToLauncher(2, 30, 44, 18);
+			Item.DefaultToLauncher(16, 50, 44, 18);
 			Item.shoot = ProjectileID.Grenade;
 			Item.useAmmo = ItemID.Grenade;
-			Item.knockBack = 2f;
 			Item.shootSpeed = 5f;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
@@ -39,8 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
 				if (type == ModContent.ProjectileType<Felnum_Shock_Grenade_P>()) {
-					damage -= 15;
-					damage += (damage - 16) * 2;
+					//damage -= 15;
 					type = ModContent.ProjectileType<Awe_Grenade_P>();
 					velocity *= 1.25f;
 					knockback *= 3;
@@ -50,7 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (type == ModContent.ProjectileType<Impact_Grenade_P>()) {
 					type = ModContent.ProjectileType<Impact_Grenade_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					damage *= 10;
+					damage *= 2;
 					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
@@ -125,6 +123,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = duration;
 			Projectile.tileCollide = false;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Vector2 closest = Projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());

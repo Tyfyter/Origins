@@ -12,12 +12,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Cold_Snap_P>(15, 32, 16f, 50, 24);
+			Item.DefaultToCanisterLauncher<Cold_Snap_P>(15, 32, 12f, 50, 24);
 			Item.knockBack = 3;
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -48,6 +47,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 180;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X == 0f) {

@@ -20,11 +20,9 @@ namespace Origins.Items.Weapons.Ranged {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToRangedWeapon(ProjectileID.Bullet, ModContent.ItemType<Scrap>(), 12, 6);
+			Item.DefaultToRangedWeapon(ProjectileID.Bullet, ModContent.ItemType<Scrap>(), 10, 5);
 			Item.damage = 60;
 			Item.crit = -4;
-			Item.useAnimation = 12;
-			Item.useTime = 12;
 			Item.width = 86;
 			Item.height = 22;
 			Item.autoReuse = true;

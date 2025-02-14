@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.consumeAmmoOnFirstShotOnly = true;
-			Item.ArmorPenetration += 5;
+			Item.ArmorPenetration += 6;
 			Item.reuseDelay = 0;
 			Item.autoReuse = true;
 		}

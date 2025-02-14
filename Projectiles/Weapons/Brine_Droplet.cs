@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Terraria;
 using Terraria.Audio;
@@ -20,6 +19,7 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.timeLeft = 180;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
+			Projectile.ArmorPenetration += 26;
 		}
 		public override void AI() {
 			if (Projectile.ai[1] <= 0/*projectile.timeLeft<168*/) {

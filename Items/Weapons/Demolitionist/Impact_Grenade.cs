@@ -15,15 +15,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 30;
-			Item.useTime = (int)(Item.useTime * 0.75);
-			Item.useAnimation = (int)(Item.useAnimation * 0.75);
+			Item.damage = 43;
+			/*Item.useTime = (int)(Item.useTime * 0.75);
+			Item.useAnimation = (int)(Item.useAnimation * 0.75);*/
 			Item.shoot = ModContent.ProjectileType<Impact_Grenade_P>();
 			Item.shootSpeed *= 1.75f;
-			Item.knockBack = 10f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
-            Item.ArmorPenetration += 6;
+			Item.rare = ItemRarityID.Green;
+            //Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -37,6 +37,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Impact_Grenade";
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

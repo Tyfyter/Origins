@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
 using System.IO;
+using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	//very 7y, following the theme of the whole ashen countdown theme
-    public class Internal_Combustionfish : ModItem, ICustomWikiStat {
+	public class Internal_Combustionfish : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
             "ExpendableWeapon"
@@ -18,11 +17,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ResearchUnlockCount = 7;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToThrownWeapon(ModContent.ProjectileType<Internal_Combustionfish_P>(), 30, 6f);
+			Item.DefaultToThrownWeapon(ModContent.ProjectileType<Internal_Combustionfish_P>(), 14, 7f);
 			Item.DamageType = DamageClasses.ThrownExplosive;
-			Item.damage = 35;
-			Item.knockBack = 10f;
-			Item.value = Item.sellPrice(silver: 35);
+			Item.damage = 49;
+			Item.crit = 3;
+			Item.knockBack = 7f;
+			Item.value = Item.sellPrice(silver: 49);
 			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 7;
             Item.ArmorPenetration += 7;
@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		int prefix = 0;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.timeLeft = 60 * 20;
+			Projectile.timeLeft = 60 * 14;
 			Projectile.friendly = false;
 			Projectile.penetrate = 1;
 		}
