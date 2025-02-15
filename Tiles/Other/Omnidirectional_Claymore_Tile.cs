@@ -7,10 +7,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Tyfyter.Utils;
 using Terraria.Audio;
 using PegasusLib;
 
@@ -32,8 +30,11 @@ namespace Origins.Tiles.Other {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
+			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			ID = Type;
+			DustType = DustID.Lead;
+			RegisterItemDrop(ModContent.ItemType<Omnidirectional_Claymore>());
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);
@@ -53,7 +54,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override bool RightClick(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);
-			tile.TileFrameY = (short)((tile.TileFrameY + 18) % 90);
+			tile.TileFrameY = (short)((tile.TileFrameY + (18 * (Main.LocalPlayer.Center.X < i * 16 + 8 ? -1 : 1)) + 90) % 90);
 			NetMessage.SendTileSquare(-1, i, j);
 			return true;
 		}
@@ -127,19 +128,19 @@ namespace Origins.Tiles.Other {
 					float unitDiag = 0.70710677f;
 					switch (tile.TileFrameY / 18) {
 						case 0:
-						unit = Vector2.UnitX;
-						break;
-						case 1:
-						unit = new Vector2(unitDiag, -unitDiag);
-						break;
-						case 2:
 						unit = -Vector2.UnitY;
 						break;
-						case 3:
+						case 1:
 						unit = new Vector2(-unitDiag, -unitDiag);
 						break;
-						case 4:
+						case 2:
 						unit = -Vector2.UnitX;
+						break;
+						case 3:
+						unit = Vector2.UnitX;
+						break;
+						case 4:
+						unit = new Vector2(unitDiag, -unitDiag);
 						break;
 					}
 					Vector2 laserStartPoint = LaserStartPoint;

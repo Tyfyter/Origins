@@ -15,9 +15,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.LandMine);
+			Item.DefaultToPlaceableTile(ModContent.TileType<Omnidirectional_Claymore_Tile>());
 			Item.damage = 165;
-			Item.createTile = ModContent.TileType<Omnidirectional_Claymore_Tile>();
 			Item.value = Item.sellPrice(gold: 1, silver: 75);
 			Item.rare = ItemRarityID.Pink;
 			Item.noMelee = true;

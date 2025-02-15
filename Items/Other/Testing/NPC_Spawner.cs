@@ -2,7 +2,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
-
 namespace Origins.Items.Other.Testing {
 	/// <summary>
 	/// can be used to add NPCs to an NPC drop table
@@ -21,15 +20,16 @@ namespace Origins.Items.Other.Testing {
 			Item.maxStack = NPCLoader.NPCCount - 1;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			if (source is not EntitySource_Misc miscSource || miscSource.Context != "PlayerDropItemCheck") {
+			if (source is not EntitySource_Misc miscSource || miscSource.Context != "ThrowItem") {
 				NPC.NewNPC(source, (int)Item.position.X, (int)Item.position.Y, Item.stack);
 				Item.active = false;
+				Item.stack = 0;
 			}
 		}
 		public override bool CanPickup(Player player) => false;
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (Item.timeSinceItemSpawned > 15) {
-				if (Item.stack < NPCLoader.NPCCount) NPC.NewNPC(new EntitySource_Misc("PlayerDropItemCheck"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
+				if (Item.stack < NPCLoader.NPCCount) NPC.NewNPC(new EntitySource_Misc("ThrowItem"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
 				Item.active = false;
 			}
 		}
