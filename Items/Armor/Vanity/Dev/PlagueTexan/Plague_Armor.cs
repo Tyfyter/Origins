@@ -1,11 +1,7 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Pets;
-using Origins.LootConditions;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,8 +32,6 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	[AutoloadEquip(EquipType.Body)]
 	public class Plague_Texan_Jacket : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
-			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
 			ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
 			Item.ResearchUnlockCount = 1;
 		}
@@ -57,8 +51,6 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	public class Plague_Texan_Sight : ModItem {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Plague Texan's Gift");
-			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\nForesight is '20/20'");
 			Item.ResearchUnlockCount = 1;
 			ID = Item.type;
 		}

@@ -561,7 +561,7 @@ VANITY:
 (^) Sunflower Sandals
 
 (#, ^2) First Dream
-(^) Tyfyter's Set
+(^) Tyfyter's Set*
 
 (^) Acrid Dye
 (^) Amber Dye
