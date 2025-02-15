@@ -424,7 +424,11 @@ AltBiomes: {
 		GenPassName: Blue Lobsterating
 	}
 
-	Ashen_Alt_Biome.DisplayName: Ashen Factory
+	Ashen_Alt_Biome: {
+		DisplayName: Ashen Factory
+		Description: Ashen Alt Biome
+		GenPassName: Ashen Alt Biome
+	}
 }
 
 GuideAdvice: {

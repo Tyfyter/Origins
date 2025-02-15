@@ -275,7 +275,7 @@ namespace Origins.World.BiomeData {
 						WorldGen.PlaceTile(p.X + o, p.Y + 1, stoneID);
 						WorldGen.SlopeTile(p.X + o - 1, p.Y + 1, SlopeID.None);
 						WorldGen.SlopeTile(p.X + o, p.Y + 1, SlopeID.None);
-						if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to)) {
+						if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to, checkStay: true)) {
 							TileObject.Place(to);
 							//WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
 							fisureCount++;
@@ -879,8 +879,26 @@ namespace Origins.World.BiomeData {
 		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
 			Stack<Point> defiledHearts = new();
 			public override string ProgressMessage => Language.GetTextValue("Mods.Origins.AltBiomes.Defiled_Wastelands_Alt_Biome.GenPassName");
+			int startY;
+			public override void GetEvilSpawnLocation(int dungeonSide, int dungeonLocation, int SnowBoundMinX, int SnowBoundMaxX, int JungleBoundMinX, int JungleBoundMaxX, int currentDrunkIter, int maxDrunkBorders, out int evilBiomePosition, out int evilBiomePositionWestBound, out int evilBiomePositionEastBound) {
+				base.GetEvilSpawnLocation(dungeonSide, dungeonLocation, SnowBoundMinX, SnowBoundMaxX, JungleBoundMinX, JungleBoundMaxX, currentDrunkIter, maxDrunkBorders, out evilBiomePosition, out evilBiomePositionWestBound, out evilBiomePositionEastBound);
+				int startEvilBiomePosition = evilBiomePosition;
+				int offset = 0;
+				bool first = true;
+				do {
+					if (!first) {
+						offset = offset > 0 ? (-offset) : ((-offset) + 2);
+					} else {
+						first = false;
+					}
+					evilBiomePosition = startEvilBiomePosition + offset;
+					for (startY = (int)GenVars.worldSurfaceLow; !Framing.GetTileSafely(evilBiomePosition, startY).HasTile; startY++) ;
+				} while (startY > Main.maxTilesY);
+				evilBiomePositionWestBound += offset;
+				evilBiomePositionEastBound += offset;
+			}
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				int offset;
+				/*int offset;
 				for (offset = 0; offset < 300; offset = offset > 0 ? (-offset) : ((-offset) + 2)) {
 					if (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX) continue;
 					for (int j = (int)OriginSystem.WorldSurfaceLow; j < Main.maxTilesY; j++) {
@@ -914,27 +932,12 @@ namespace Origins.World.BiomeData {
 				evilBiomePositionEastBound += offset;
 				Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands after failure to find a position without jungle grass");
 
-				positioned:
+				positioned:*/
 				defiledWastelandsWestEdge ??= [];
 				defiledWastelandsEastEdge ??= [];
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
 				defiledWastelandsEastEdge.Add(evilBiomePositionEastBound);
 				WorldBiomeGeneration.ChangeRange.ResetRange();
-				int startY = int.MaxValue;
-				int startEvilBiomePosition = evilBiomePosition;
-				offset = 0;
-				bool first = true;
-				do {
-					if (!first) {
-						offset = offset > 0 ? (-offset) : ((-offset) + 2);
-					} else {
-						first = false;
-					}
-					evilBiomePosition = startEvilBiomePosition + offset;
-					for (startY = (int)GenVars.worldSurfaceLow; !Framing.GetTileSafely(evilBiomePosition, startY).HasTile; startY++) ;
-				} while (startY > Main.maxTilesY);
-				evilBiomePositionWestBound += offset;
-				evilBiomePositionEastBound += offset;
 				Point start = new(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);

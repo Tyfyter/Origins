@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -46,7 +47,7 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.Height = 4;
 			TileObjectData.newTile.Origin = new(0, 3);
 			TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16];
-			//TileObjectData.newTile.AnchorBottom = new AnchorData();
+			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(40, 40, 40), CreateMapEntryName());
 			//disableSmartCursor = true;
