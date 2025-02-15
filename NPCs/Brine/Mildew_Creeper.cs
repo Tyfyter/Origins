@@ -57,8 +57,8 @@ namespace Origins.NPCs.Brine {
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
 		}
-		// Mildew Creepers can and will attack anything
-		public override bool CanHitNPC(NPC target) => true;
+		// Mildew Creepers can and will attack anything except other Mildew Creepers
+		public override bool CanHitNPC(NPC target) => target.type != Type;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
