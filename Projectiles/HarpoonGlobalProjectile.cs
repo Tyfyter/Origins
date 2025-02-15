@@ -57,15 +57,17 @@ namespace Origins.Projectiles {
 				}
 			} else if (projectile.aiStyle == ProjAIStyleID.Harpoon) {
 				if (slamming) {
-					Vector2 oldDiff = (projectile.oldPosition - projectile.Size * 0.5f) - player.MountedCenter;
-					PolarVec2 polarDiff = (PolarVec2)(projectile.Center - player.MountedCenter);
-					polarDiff.R = oldDiff.Length();
-					Vector2 diff = (Vector2)polarDiff;
-					projectile.Center = player.MountedCenter + diff;
-					Vector2 oldVel = projectile.velocity;
-					projectile.velocity = (diff - oldDiff).SafeNormalize(default).RotatedBy(player.direction * 0.05f) * projectile.velocity.Length() * 0.9995f;
-					if (Math.Sign(oldVel.X) != Math.Sign(projectile.velocity.X)) {
-						SoundEngine.PlaySound(SoundID.Item1.WithPitch(-0.66f), projectile.Center);
+					if (projectile.numUpdates == -1) {
+						Vector2 oldDiff = (projectile.oldPosition - projectile.Size * 0.5f) - player.MountedCenter;
+						PolarVec2 polarDiff = (PolarVec2)(projectile.Center - player.MountedCenter);
+						polarDiff.R = oldDiff.Length();
+						Vector2 diff = (Vector2)polarDiff;
+						projectile.Center = player.MountedCenter + diff;
+						Vector2 oldVel = projectile.velocity;
+						projectile.velocity = (diff - oldDiff).SafeNormalize(default).RotatedBy(player.direction * 0.05f) * projectile.velocity.Length() * 0.9995f;
+						if (Math.Sign(oldVel.X) != Math.Sign(projectile.velocity.X)) {
+							SoundEngine.PlaySound(SoundID.Item1.WithPitch(-0.66f), projectile.Center);
+						}
 					}
 				} else if (originPlayer.boatRockerAltUse) {
 					Vector2 diff = projectile.Center - player.MountedCenter;
