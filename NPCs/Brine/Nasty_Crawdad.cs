@@ -152,7 +152,7 @@ namespace Origins.NPCs.Brine {
 				}
 				endPos += startPos;
 				Vector2 offset = Vector2.UnitY * 8;
-				if (!CollisionExtensions.CanHitRay(startPos, endPos) || !CollisionExtensions.CanHitRay(startPos + offset, endPos + offset) || !CollisionExtensions.CanHitRay(startPos - offset, endPos - offset)) {
+				if (!CollisionExt.CanHitRay(startPos, endPos) || !CollisionExt.CanHitRay(startPos + offset, endPos + offset) || !CollisionExt.CanHitRay(startPos - offset, endPos - offset)) {
 					hasBarrier = true;
 				}
 			}

@@ -216,9 +216,9 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
-(#, ^2) Leaf Snapper !!!
+(☻) Leaf Snapper !!!
 (^) King Crab
-(#3, ^2) Mildew Creeper !!!
+(#3?, ^2) Mildew Creeper !!!
 (^) Mitoworm*
 (^) Nasty Crawdad
 (^) Profaned Bident*

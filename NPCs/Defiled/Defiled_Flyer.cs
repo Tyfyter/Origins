@@ -120,7 +120,7 @@ namespace Origins.NPCs.Defiled {
 			}
 			diff.Normalize();
 			Vector2 position = NPC.position;
-			position += diff * CollisionExtensions.Raycast(position, diff, 16 * 50);
+			position += diff * CollisionExt.Raymarch(position, diff, 16 * 50);
 			Vector2 clockwiseTarget = default;
 			Vector2 counterclockwiseTarget = default;
 			if (Crawl(target, position.ToTileCoordinates(), bestMatch, false) is Point pos1) {
@@ -157,15 +157,15 @@ namespace Origins.NPCs.Defiled {
 			List<Point> path = [pos];
 			//Rectangle rect = new(0, 0, 16, 16);
 			test:
-			if (CollisionExtensions.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
-				if (CollisionExtensions.CanHitRay(NPC.Center, path[^1].ToWorldCoordinates())) return path[^1];
+			if (CollisionExt.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
+				if (CollisionExt.CanHitRay(NPC.Center, path[^1].ToWorldCoordinates())) return path[^1];
 				if (path.Count <= 1) return null;
 				Point? nextTarget = path[1];
 				for (int i = 1; i < path.Count; i++) {
 					/*rect.X = path[i].X * 16;
 					rect.Y = path[i].Y * 16;
 					OriginExtensions.DrawDebugOutline(rect);*/
-					if (CollisionExtensions.CanHitRay(NPC.Center, path[i].ToWorldCoordinates())) {
+					if (CollisionExt.CanHitRay(NPC.Center, path[i].ToWorldCoordinates())) {
 						nextTarget = path[i];
 					} else {
 						Point step = path[i] - nextTarget.Value;

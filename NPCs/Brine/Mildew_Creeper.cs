@@ -237,7 +237,7 @@ namespace Origins.NPCs.Brine {
 			int directionIndex = 2;
 			Vector2 bestPosition = basePos + directions[directionIndex] * (dist - offsetLen);
 			for (int i = 0; i < directions.Length; i++) {
-				float newDist = CollisionExtensions.Raycast(basePos, directions[i], dist);
+				float newDist = CollisionExt.Raymarch(basePos, directions[i], dist);
 				if (newDist < dist) {
 					dist = newDist;
 					bestPosition = basePos + directions[i] * (dist - offsetLen);

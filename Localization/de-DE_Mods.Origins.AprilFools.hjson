@@ -104,6 +104,8 @@ DefiledRelaySignals: {
 	// BeingDestroyed5: Go away in profane language.
 }
 
+// NPCs.Leaf_Snapper.DisplayName: Brine Turtle
+// Bestiary.Leaf_Snapper: Hello!
 /* SetBonuses.Rubber:
 	'''
 	Immunity to Static Shock, Electrified, and traffic laws

@@ -52,6 +52,7 @@ namespace Origins.World.BiomeData {
 			public const float Creeper = 6000f;
 			public const float Crab = 6000f;
 			public const float A_GUN = 9000f; // yes, this is a reference
+			public const float Turtle = 6000f;
 			public const float Swarm = 9000f;
 			public const float Crawdad = 9000f;
 			public const float Airsnatcher = 8000f;

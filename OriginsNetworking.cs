@@ -40,6 +40,7 @@ namespace Origins {
 					case inflict_assimilation:
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
 					case custom_knockback:
+					case entity_interaction:
 					altHandle = true;
 					break;
 
@@ -114,6 +115,7 @@ namespace Origins {
 					case inflict_assimilation:
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
 					case custom_knockback:
+					case entity_interaction:
 					altHandle = true;
 					break;
 
@@ -347,6 +349,20 @@ namespace Origins {
 						Main.npc[reader.ReadInt32()].DoCustomKnockback(new(reader.ReadSingle(), reader.ReadSingle()), Main.netMode == NetmodeID.MultiplayerClient);
 						break;
 					}
+					case entity_interaction: {
+						byte npcIndex = reader.ReadByte();
+						if (Main.npc[npcIndex].ModNPC is IInteractableNPC npc) {
+							npc.Interact();
+							if (npc.NeedsSync && Main.netMode == NetmodeID.Server) {
+								// Forward the changes to the other clients
+								ModPacket packet = GetPacket();
+								packet.Write(entity_interaction);
+								packet.Write(npcIndex);
+								packet.Send(-1, whoAmI);
+							}
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -376,6 +392,7 @@ namespace Origins {
 			internal const byte custom_combat_text = 20;
 			internal const byte sync_neural_network = 21;
 			internal const byte defiled_relay_message = 22;
+			internal const byte entity_interaction = 23;
 		}
 	}
 }

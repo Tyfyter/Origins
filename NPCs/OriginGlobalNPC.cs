@@ -503,6 +503,9 @@ namespace Origins.NPCs {
 				spawnRateMultiplier *= 0.65f;
 				maxSpawnsMultiplier *= 1.3f;
 			}
+			if (Framing.GetTileSafely(player.Bottom - Vector2.UnitY).WallType == ModContent.WallType<Baryte_Wall>()) {
+				spawnRateMultiplier *= 0.2f;
+			}
 			spawnRate = (int)(spawnRate * spawnRateMultiplier);
 			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);
 			if (originPlayer.rapidSpawnFrames > 0 || originPlayer.swarmStatue) {

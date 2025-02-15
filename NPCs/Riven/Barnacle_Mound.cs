@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs.Critters;
 using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.IO;
@@ -77,7 +78,7 @@ namespace Origins.NPCs.Riven {
 					-Vector2.UnitY
 				];
 				for (int i = 0; i < directions.Length; i++) {
-					float newDist = CollisionExtensions.Raycast(NPC.Center, directions[i], dist);
+					float newDist = CollisionExt.Raymarch(NPC.Center, directions[i], dist);
 					if (newDist < dist) {
 						dist = newDist;
 						bestPosition = NPC.Center + directions[i] * (dist - offsetLen);

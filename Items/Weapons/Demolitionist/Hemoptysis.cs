@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -69,7 +70,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				dir.Normalize();
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
-					Projectile.Center + dir * CollisionExtensions.Raycast(Projectile.Center, dir, 32),
+					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
 					dir,
 					ModContent.ProjectileType<Hemoptysis_P2>(),
 					Projectile.damage / 2,
@@ -82,7 +83,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				dir.Normalize();
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
-					Projectile.Center + dir * CollisionExtensions.Raycast(Projectile.Center, dir, 32),
+					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
 					dir,
 					ModContent.ProjectileType<Hemoptysis_P2>(),
 					Projectile.damage / 2,

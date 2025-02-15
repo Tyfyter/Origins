@@ -633,6 +633,10 @@ namespace Origins {
 	public interface IMeleeCollisionDataNPC {
 		void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
 	}
+	public interface IInteractableNPC {
+		bool NeedsSync => true;
+		void Interact();
+	}
 	public interface IWhipProjectile {
 		void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
 	}
@@ -1867,10 +1871,11 @@ namespace Origins {
 				self.frame.Y += heightEtBuffer;
 				self.frameCounter = 0;
 			}
-			if (self.frame.Y >= heightEtBuffer * frames.End.Value) {
-				self.frame.Y = heightEtBuffer * frames.Start.Value;
-			} else if (self.frame.Y < heightEtBuffer * frames.Start.Value) {
-				self.frame.Y = heightEtBuffer * (frames.End.Value - 1);
+			int frameCount = Main.npcFrameCount[self.type];
+			if (self.frame.Y >= heightEtBuffer * frames.End.GetOffset(frameCount)) {
+				self.frame.Y = heightEtBuffer * frames.Start.GetOffset(frameCount);
+			} else if (self.frame.Y < heightEtBuffer * frames.Start.GetOffset(frameCount)) {
+				self.frame.Y = heightEtBuffer * (frames.End.GetOffset(frameCount) - 1);
 			}
 		}
 		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
@@ -2863,18 +2868,20 @@ namespace Origins {
 			}
 			return false;
 		}
-		public static bool CanHitRay(Vector2 position, Vector2 target) {
-			Vector2 diff = target - position;
-			float length = diff.Length();
-			return Raycast(position, diff, length) == length;
-		}
-		public static float Raycast(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+		/// <summary>
+		/// Throws <see cref="ArgumentException"/> if <paramref name="direction"/> is zero
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="direction"></param>
+		/// <param name="maxLength"></param>
+		/// <returns>The distance traveled before a tile was reached, or <paramref name="maxLength"/> if the distance would exceed it</returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static float Raymarch(Vector2 position, Vector2 direction, Predicate<Tile> extraCheck, float maxLength = float.PositiveInfinity) {
 			if (direction == Vector2.Zero) throw new ArgumentException($"{nameof(direction)} may not be zero");
 			float length = 0;
 			Point tilePos = position.ToTileCoordinates();
 			Vector2 tileSubPos = (position - tilePos.ToWorldCoordinates(0, 0)) / 16;
 			float angle = direction.ToRotation();
-			//OriginExtensions.DrawDebugLine(Vector2.Zero, GeometryUtils.Vec2FromPolar(16, angle), position, 27);
 			double sin = Math.Sin(angle);
 			double cos = Math.Cos(angle);
 			double slope = cos == 0 ? Math.CopySign(double.PositiveInfinity, sin) : sin / cos;
@@ -2898,10 +2905,11 @@ namespace Origins {
 				Vector2 next = RaycastStep(tileSubPos, sin, cos);
 				if (next == tileSubPos) break;
 				Tile tile = Framing.GetTileSafely(tilePos);
-				bool doBreak = false;
+				bool doBreak = !WorldGen.InWorld(tilePos.X, tilePos.Y);
 				Vector2 diff = next - tileSubPos;
 				float dist = diff.Length();
 
+				if (!extraCheck(tile)) break;
 				if (tile.HasFullSolidTile()) {
 					float flope = (float)slope;
 					bool doSICalc = true;
@@ -3004,7 +3012,7 @@ namespace Origins {
 						}
 						break;
 						case (0, 1):
-						
+
 						if (IsSolidWithExceptions(0, +1, BlockType.SlopeDownRight, BlockType.HalfBlock) && IsSolidWithExceptions(-1, 0, BlockType.SlopeUpLeft)) {
 							doBreak = true;
 						}
@@ -3022,13 +3030,13 @@ namespace Origins {
 			if (length > maxLength) return maxLength;
 			return length;
 		}
-		static Vector2 RaycastStep(Vector2 pos, double sin, double cos) {
+		public static Vector2 RaycastStep(Vector2 pos, double sin, double cos) {
 			if (cos == 0) return new(pos.X, sin > 0 ? 1 : 0);
 			if (sin == 0) return new(cos > 0 ? 1 : 0, pos.Y);
 			double slope = sin / cos;
 			int xVlaue = cos > 0 ? 1 : 0;
 			double yIntercept = pos.Y - slope * (pos.X - xVlaue);
-			if (yIntercept >= 0f && yIntercept <= 1f) return new Vector2(xVlaue, (float)yIntercept);
+			if (yIntercept >= 0 && yIntercept <= 1) return new Vector2(xVlaue, (float)yIntercept);
 			int yVlaue = sin > 0 ? 1 : 0;
 			double xIntercept = (pos.Y - yVlaue) / -slope + pos.X;
 			return new Vector2((float)xIntercept, yVlaue);

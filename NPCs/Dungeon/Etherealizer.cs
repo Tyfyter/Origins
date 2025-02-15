@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -207,7 +208,7 @@ namespace Origins.NPCs.Dungeon {
 			void MoveTowardsTarget(Vector2 target, float inertia = 25) {
 				Projectile.velocity = (((target - Projectile.Center).SafeNormalize(default) * 8 + Projectile.velocity * (inertia - 1)) / inertia).WithMaxLength(8);
 			}
-			if (CollisionExtensions.CanHitRay(Projectile.Center, target.Center)) {
+			if (CollisionExt.CanHitRay(Projectile.Center, target.Center)) {
 				MoveTowardsTarget(target.Center);
 			} else if (Projectile.ai[1] != 0) {
 				Vector2 targetPos = new(Projectile.ai[1], Projectile.ai[2]);
@@ -234,7 +235,7 @@ namespace Origins.NPCs.Dungeon {
 			}
 			diff.Normalize();
 			Vector2 position = Projectile.position;
-			position += diff * CollisionExtensions.Raycast(position, diff, 16 * 50);
+			position += diff * CollisionExt.Raymarch(position, diff, 16 * 50);
 			Vector2 clockwiseTarget = default;
 			Vector2 counterclockwiseTarget = default;
 			if (Crawl(target, position.ToTileCoordinates(), bestMatch, false) is Point pos1) {
@@ -273,15 +274,15 @@ namespace Origins.NPCs.Dungeon {
 			List<Point> path = [pos];
 			//Rectangle rect = new(0, 0, 16, 16);
 			test:
-			if (CollisionExtensions.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
-				if (CollisionExtensions.CanHitRay(Projectile.Center, path[^1].ToWorldCoordinates())) return path[^1];
+			if (CollisionExt.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
+				if (CollisionExt.CanHitRay(Projectile.Center, path[^1].ToWorldCoordinates())) return path[^1];
 				if (path.Count <= 1) return null;
 				Point? nextTarget = path[1];
 				for (int i = 1; i < path.Count; i++) {
 					/*rect.X = path[i].X * 16;
 					rect.Y = path[i].Y * 16;
 					OriginExtensions.DrawDebugOutline(rect);*/
-					if (CollisionExtensions.CanHitRay(Projectile.Center, path[i].ToWorldCoordinates())) {
+					if (CollisionExt.CanHitRay(Projectile.Center, path[i].ToWorldCoordinates())) {
 						nextTarget = path[i];
 					} else {
 						Point step = path[i] - nextTarget.Value;

@@ -23,6 +23,9 @@ namespace Origins.NPCs.Brine {
 			Main.npcFrameCount[NPC.type] = 6;
 			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
 			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Frame = 1
+			};
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -118,11 +121,18 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
-			if (++NPC.frameCounter >= 6 * 2) NPC.frameCounter = 0;
 			NPC.timeLeft = 60;
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			if (!NPC.wet) {
+				NPC.lifeRegen -= 120;
+				if (damage < 0) damage = 0;
+				damage += 30;
+			}
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
+			if (++NPC.frameCounter >= 6 * 2) NPC.frameCounter = 0;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
@@ -151,6 +161,9 @@ namespace Origins.NPCs.Brine {
 			if (NPC.ai[1] == 0 && frame != Main.npcFrameCount[Type] - 1) {
 				Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Airsnatcher_Bubble>()].Value;
 				Rectangle rect = texture.Frame(verticalFrames: 3, frameY: (int)NPC.frameCounter / 6);
+				if (frame >= 2) {
+					rect.Inflate(-2, 0);
+				}
 				spriteBatch.Draw(
 					texture,
 					NPC.position + new Vector2(19, 2 + frame * 6) - screenPos,
@@ -162,6 +175,7 @@ namespace Origins.NPCs.Brine {
 					0,
 				0);
 			}
+			NPC.rotation = 0;
 			return true;
 		}
 	}
