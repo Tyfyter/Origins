@@ -279,11 +279,11 @@ namespace Origins {
 			}
 			if (magmaLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
-				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
+				target.AddBuff(BuffID.OnFire, Main.rand.Next(120, 361));
 			}
 			if (hit.DamageType.CountsAsClass<Explosive>()) {
 				if (dangerBarrel) {
-					target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
+					target.AddBuff(BuffID.OnFire, Main.rand.Next(120, 361));
 				}
 				if (scavengerSet) {
 					OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
@@ -337,7 +337,7 @@ namespace Origins {
 				}
 			}
 			if (cryostenSet) {
-				target.AddBuff(BuffID.Frostburn, Main.rand.Next(299, 601));
+				target.AddBuff(BuffID.Frostburn, Main.rand.Next(300, 601));
 			}
 		}
 		#endregion
