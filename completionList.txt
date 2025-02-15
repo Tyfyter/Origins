@@ -203,7 +203,7 @@ ENEMY NPCS:
 (X) Angel
 (^) Barnacle Mound*
 (X) Beckonbug
-(☻) Brine Latcher !!!
+(^) Brine Latcher
 (#, ^2) Brine Serpent !!!
 (^) Carpalfish°
 (^) Defiled Asphyxiator*
@@ -746,7 +746,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (^) Cobalt Harpoon Gun°
-(#3, ^2) Crawdaddy's Revenge !!!
+(^) Crawdaddy's Revenge
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
 (^) Fifth Spline

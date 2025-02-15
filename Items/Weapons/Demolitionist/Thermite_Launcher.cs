@@ -1,10 +1,7 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
-using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Ammo.Canisters;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -20,11 +17,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(35, 34, 16f, 44, 18);
+			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(38, 34, 16f, 44, 18);
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
-			Item.ArmorPenetration = 15;
 		}
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
@@ -74,6 +70,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 900;
 			Projectile.scale = 0.85f;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 6;
 		}
@@ -124,7 +121,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				projectile.Center,
 				default,
 				Thermite_Lingering_P.ID,
-				projectile.damage / 3,
+				projectile.damage / 10,
 				projectile.knockBack
 			);
 		}
@@ -146,6 +143,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
 			Projectile.tileCollide = false;
+			Projectile.ArmorPenetration += 25;
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 1, 0.75f, 0);
@@ -198,6 +196,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
 			Projectile.tileCollide = false;
+			Projectile.ArmorPenetration += 25;
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 1, 0.75f, 0);

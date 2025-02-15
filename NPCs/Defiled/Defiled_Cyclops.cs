@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Accessories;
-using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
@@ -16,14 +15,14 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Cyclops : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
-		public Rectangle DrawRect => new(0, 4, 52, 66);
+		public Rectangle DrawRect => new(0, 7, 46, 58);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.08f;
-		public const float speedMult = 1f;
+		public const float speedMult = 1.3f;
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 4;
+			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
@@ -32,8 +31,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 110;
 			NPC.defense = 8;
 			NPC.damage = 42;
-			NPC.width = 30;
-			NPC.height = 48;
+			NPC.width = 28;
+			NPC.height = 40;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
@@ -70,7 +69,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
 		}
-		public override bool? CanFallThroughPlatforms() => NPC.directionY == 1 && NPC.target >= 0 && NPC.targetRect.Bottom > NPC.position.Y + NPC.height;
+		public override bool? CanFallThroughPlatforms() => NPC.directionY == 1 && NPC.target >= 0 && NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public override void AI() {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
 			NPC.TargetClosest();
@@ -80,8 +79,8 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;
 		}
 		public override void FindFrame(int frameHeight) {
-			if (++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 66) % 264, 52, 64);
+			if (++NPC.frameCounter > 5) {
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 58) % 406, 46, 56);
 				NPC.frameCounter = 0;
 			}
 		}

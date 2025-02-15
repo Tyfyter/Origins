@@ -1,12 +1,9 @@
-using Origins.Projectiles;
+using AltLibrary.Common.Systems;
+using Origins.Dev;
 using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using AltLibrary.Common.Systems;
 namespace Origins.Items.Weapons.Ammo.Canisters {
 	[LegacyName("Resizable_Mine_One")]
 	public class Resizable_Mine_Wood : ModItem, ICanisterAmmo {
@@ -15,12 +12,12 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(14);
+			Item.DefaultToCanister(12);
 			Item.shootSpeed = -1.3f;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(silver: 2, copper: 33);
 			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration += 7;
+			Item.ArmorPenetration += 12;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -45,7 +42,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
 			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration += 6;
+			Item.ArmorPenetration += 4;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -69,7 +66,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.knockBack = 3.4f;
 			Item.value = Item.sellPrice(silver: 6, copper: 50);
 			Item.rare = ItemRarityID.Green;
-			Item.ArmorPenetration += 5;
+			Item.ArmorPenetration += 4;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -90,7 +87,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.knockBack = 3.6f;
 			Item.value = Item.sellPrice(silver: 7, copper: 80);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 4;
+			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
@@ -129,7 +126,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(48);
+			Item.DefaultToCanister(60);
 			Item.shootSpeed = 0.6f;
 			Item.knockBack = 4.4f;
 			Item.value = Item.sellPrice(silver: 13);
@@ -151,12 +148,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(60);
+			Item.DefaultToCanister(75);
 			Item.shootSpeed = 1f;
 			Item.knockBack = 4.9f;
 			Item.value = Item.sellPrice(silver: 26);
 			Item.rare = ItemRarityID.Cyan;
-			Item.ArmorPenetration += 1;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 16)

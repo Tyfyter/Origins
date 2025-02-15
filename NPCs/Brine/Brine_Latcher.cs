@@ -1,18 +1,10 @@
-﻿using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Cil;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
-using Origins.NPCs.Fiberglass;
-using Origins.Projectiles;
-using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -67,7 +59,7 @@ namespace Origins.NPCs.Brine {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 40;
 			NPC.defense = 14;
-			NPC.damage = 30;
+			NPC.damage = 10;
 			NPC.width = 22;
 			NPC.height = 24;
 			NPC.friendly = false;
@@ -101,6 +93,7 @@ namespace Origins.NPCs.Brine {
 			return base.CanTargetPlayer(player) && player.WithinRange(NPC.Center, 16 * 10 + NPC.width + Math.Max(player.width, player.height));
 		}
 		public override void AI() {
+			Lighting.AddLight(NPC.Center, 0f, 0.4f, 0f);
 			DoTargeting();
 			Vector2 direction = default;
 			if (NPC.wet) {

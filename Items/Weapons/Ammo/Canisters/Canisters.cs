@@ -1,6 +1,4 @@
-﻿using AltLibrary;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Graphics;
@@ -17,11 +15,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Ammo.Canisters {
 	#region global stuff
@@ -230,7 +226,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(33);
+			Item.DefaultToCanister(38);
 			Item.glowMask = glowmask;
 			Item.shootSpeed = 0.3f;
 			Item.knockBack = 3.6f;
@@ -270,7 +266,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 3;
+			Item.ArmorPenetration += 5;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)
@@ -437,11 +433,10 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanister(35);
+			Item.DefaultToCanister(22);
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.LightRed;
-			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)
@@ -649,7 +644,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 					projectile.Center,
 					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
 					projType,
-					(int)(projectile.damage * 0.35f),
+					(int)(projectile.damage * 0.15f),
 					0,
 					projectile.owner
 				);
@@ -699,7 +694,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.DefaultToCanister(15);
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 			Item.rare = ItemRarityID.Orange;
-			Item.ArmorPenetration += 3;
+			Item.ArmorPenetration += 15;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 10)
