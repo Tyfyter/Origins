@@ -203,7 +203,7 @@ ENEMY NPCS:
 (X) Angel
 (^) Barnacle Mound*
 (X) Beckonbug
-(#, ^2) Brine Latcher !!!
+(☻) Brine Latcher !!!
 (#, ^2) Brine Serpent !!!
 (^) Carpalfish°
 (^) Defiled Asphyxiator*

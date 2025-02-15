@@ -7,14 +7,10 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Brine {
@@ -41,7 +37,7 @@ namespace Origins.NPCs.Brine {
 			Ripples = null;
 		}
 		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
-		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type);
+		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type) || target.ModNPC is not Brine_Pool_NPC;
 		public virtual bool CanTargetNPC(NPC other) {
 			if (other.type == NPCID.TargetDummy) return false;
 			return other.wet && CanHitNPC(other);

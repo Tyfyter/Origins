@@ -36,6 +36,7 @@ namespace Origins.NPCs.Brine {
 				Velocity = 1f
 			};
 			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
+			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
 			PredatorNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 		}
 		public override void SetDefaults() {

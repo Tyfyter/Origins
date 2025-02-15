@@ -8,6 +8,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
+using Origins.NPCs.Brine;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -795,6 +796,13 @@ namespace Origins {
 					}
 				} finally {
 					coreGeneratorItem.useAmmo = ammoType;
+				}
+			}
+			if (info.DamageSource.SourceNPCIndex > -1 && Main.npc[info.DamageSource.SourceNPCIndex].type == ModContent.NPCType<Brine_Latcher>()) {
+				if (info.CooldownCounter == -1) {
+					Player.immuneTime /= 3;
+				} else {
+					Player.hurtCooldowns[info.CooldownCounter] /= 3;
 				}
 			}
 
