@@ -59,6 +59,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 60 * 20;
 			Projectile.friendly = false;
 			Projectile.penetrate = 1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			consumed = Internal_Combustionfish.consumed;
@@ -107,11 +109,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
-			if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
+			//if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
 			return null;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;
+			//Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.ai[2] = -1;
