@@ -1482,6 +1482,7 @@ Projectiles: {
 	// Acrid_Laser_Rod_Bobber.DisplayName: Acrid Laser Rod Bobber
 	// Hydrolantern_Use.DisplayName: Hydrolantern
 	// Airsnatcher_Bubble.DisplayName: Airsnatcher Bubble
+	// Unsatisfied_Soul.DisplayName: Unsatisfied Soul
 }
 
 Prefixes: {
@@ -2121,6 +2122,13 @@ SetBonuses: {
 		'''
 		Slain enemies provide a temporary boost to all stats
 		Mana usage is halved when in a Graveyard and artifact minions cost half as much
+		Enemies spawn more frequently
+		Increases your max number of minions by 3
+		''' */
+	/* NecromancerCrown:
+		'''
+		Text goes here
+		Mana usage is halved when in a Graveyard
 		Enemies spawn more frequently
 		Increases your max number of minions by 3
 		''' */

@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Armor.Necromancer;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
@@ -297,6 +298,21 @@ namespace Origins {
 				}
 				if (necroSet) {
 					necroSetAmount += target.lifeMax;
+				}
+				if (necroSet2) {
+					int type = ModContent.ProjectileType<Unsatisfied_Soul>();
+					int damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(target.lifeMax / 5) + 1;
+					int knockback = (int)Player.GetTotalKnockback(DamageClass.Summon).ApplyTo(4);
+					for (int i = Player.maxMinions / 2; i > 0; i--) {
+						Projectile.NewProjectile(
+							target.GetSource_Death(),
+							target.Center,
+							Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(8, 12),
+							type,
+							damage,
+							knockback
+						);
+					}
 				}
 			}
 			if (hasPotatOS && Main.rand.NextBool(10)) {

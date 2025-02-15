@@ -67,10 +67,11 @@ namespace Origins {
 		public int riptideDashTime = 0;
 		public int meatDashTime = 0;
 		public bool necroSet = false;
+		public bool necroSet2 = false;
+		public float necroSetAmount = 0f;
 		public bool novaSet = false;
 		public bool tendonSet = false;
 		public bool acridSet = false;
-		public float necroSetAmount = 0f;
 		public bool soulhideSet = false;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
@@ -456,12 +457,13 @@ namespace Origins {
 			riptideSet = false;
 			riptideLegs = false;
 			necroSet = false;
-			novaSet = false;
-			tendonSet = false;
-			acridSet = false;
+			necroSet2 = false;
 			if (necroSetAmount > 0) {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
+			novaSet = false;
+			tendonSet = false;
+			acridSet = false;
 			soulhideSet = false;
 			scavengerSet = false;
 			amberSet = false;

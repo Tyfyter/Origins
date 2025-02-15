@@ -5107,3 +5107,8 @@ Party_Ring_Balloon: {
 }
 
 // Rockstar_Choker.DisplayName: Rockstar Choker
+
+Necromancer_Crown: {
+	// DisplayName: Necromancer Crown
+	// Tooltip: ""
+}

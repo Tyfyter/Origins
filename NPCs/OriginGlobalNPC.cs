@@ -495,7 +495,7 @@ namespace Origins.NPCs {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			float spawnRateMultiplier = 1f;
 			float maxSpawnsMultiplier = 1f;
-			if (originPlayer.necroSet) {
+			if (originPlayer.necroSet || originPlayer.necroSet2) {
 				spawnRateMultiplier *= 0.5f;
 				maxSpawnsMultiplier *= 2f;
 			}
