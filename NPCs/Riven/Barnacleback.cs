@@ -20,7 +20,7 @@ namespace Origins.NPCs.Riven {
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 3;
+			Main.npcFrameCount[NPC.type] = 5;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
@@ -100,7 +100,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 50) % 150, 36, 50);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 50) % 250, 36, 50);
 				NPC.frameCounter = 0;
 			}
 		}
