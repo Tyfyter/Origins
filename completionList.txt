@@ -55,7 +55,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(^) Defiled Amalgamation*
+(#2, ^2) Defiled Amalgamation* !!!
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Shimmer Construct
 (^) World Cracker*
