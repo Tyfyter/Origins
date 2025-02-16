@@ -32,11 +32,12 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Projectile.width = 32;
 			Projectile.height = 144 / frames;
+			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			Projectile.Center = Main.player[Projectile.owner].MountedCenter;
+			if (Projectile.ai[0] == 0) Projectile.Center = Main.player[Projectile.owner].MountedCenter;
 			Projectile.timeLeft = 5;
-			if (++Projectile.frameCounter >= 4) {
+			if (++Projectile.frameCounter >= 6) {
 				Projectile.frameCounter = 0;
 				Projectile.frame = (Projectile.frame + 1) % frames;
 				if (Projectile.frame == 0) Projectile.Kill();

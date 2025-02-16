@@ -51,6 +51,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.frameCounter = 0;
 			}
 			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Asphalt);
+			const int HalfSpriteWidth = 50 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
+			}
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
@@ -60,7 +74,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			int t = ModContent.ProjectileType<Return_To_Sender_Thorns>();
-			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, Projectile.damage, 6, Projectile.owner, ai0: 1f).scale = 1f;
 			Projectile.Damage();
 			SoundEngine.PlaySound(SoundID.Item46.WithVolume(0.66f), Projectile.Center);
 			for (int i = 0; i < 18; i++) {
