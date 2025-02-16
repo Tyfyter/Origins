@@ -232,6 +232,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.spriteDirection = Projectile.direction;
 			#endregion
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = true;
+			return true;
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.Next(10) < 3 && (target.Center - Main.player[Projectile.owner].Center).Length() < 480) {
 				target.AddBuff(BuffID.Confused, 60);

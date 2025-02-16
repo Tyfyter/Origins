@@ -301,7 +301,7 @@ namespace Origins {
 				}
 				if (necroSet2) {
 					int type = ModContent.ProjectileType<Unsatisfied_Soul>();
-					int damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(target.lifeMax / 5) + 1;
+					int damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(target.lifeMax / 4) + 40;
 					int knockback = (int)Player.GetTotalKnockback(DamageClass.Summon).ApplyTo(4);
 					for (int i = Player.maxMinions / 2; i > 0; i--) {
 						Projectile.NewProjectile(

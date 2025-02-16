@@ -58,7 +58,7 @@ namespace Origins {
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
 						new Vector2(dashDirection * riptideDashSpeed, 0),
 						Riptide_Dash_P.ID,
-						25,
+						48,
 						riptideDashSpeed + 3,
 						Player.whoAmI
 					);

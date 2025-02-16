@@ -1,17 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Cil;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
-using Origins.NPCs.Fiberglass;
-using Origins.Projectiles;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -33,7 +26,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 140;
-			NPC.defense = 14;
+			NPC.defense = 50;
 			NPC.damage = 0;
 			NPC.width = 46;
 			NPC.height = 28;
@@ -41,7 +34,7 @@ namespace Origins.NPCs.Brine {
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath22;
 			NPC.knockBackResist = 0.95f;
-			NPC.value = 500;
+			NPC.value = 250;
 			NPC.noGravity = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
@@ -150,7 +143,7 @@ namespace Origins.NPCs.Brine {
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
 				float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int turnDir) * 0.75f;
 				NPC.velocity = NPC.velocity.RotatedBy(diff * turnDir) * (1 - diff * 0.1f);
-				NPC.velocity *= 0.96f;
+				NPC.velocity *= 0.94f;
 				NPC.velocity += direction * 0.2f;
 				if (!Collision.WetCollision(NPC.position + NPC.velocity, 20, 20)) {
 					NPC.velocity += direction;
