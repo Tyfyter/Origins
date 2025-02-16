@@ -78,10 +78,10 @@ namespace Origins.NPCs.Brine {
 			Vector2 direction;
 			if (NPC.wet) {
 				NPC.noGravity = true;
-				if (TargetPos != default && !(NPC.HasValidTarget || targetIsRipple)) TargetPos = default;
+				if (TargetPos != default && !(NPC.HasValidTarget || TargetIsRipple)) TargetPos = default;
 				if (TargetPos != default) {
 					direction = NPC.DirectionTo(TargetPos);
-					if (!targetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
+					if (!TargetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
 						direction *= -1;
 					}
 				} else {

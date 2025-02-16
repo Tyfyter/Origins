@@ -98,7 +98,7 @@ namespace Origins.NPCs.Brine {
 			Vector2 direction = default;
 			if (NPC.wet) {
 				NPC.noGravity = true;
-				bool targetIsPrey = TargetPos != default && !targetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
+				bool targetIsPrey = TargetPos != default && !TargetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
 				if (TargetPos != default) {
 					if (!targetIsPrey && !NPC.WithinRange(TargetPos, 16 * 12)) {
 						TargetPos = default;

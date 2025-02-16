@@ -78,9 +78,9 @@ namespace Origins.NPCs.Brine {
 			if (NPC.wet) {
 				bool flipTargetRotation = false;
 				NPC.noGravity = true;
-				bool targetIsPrey = TargetPos != default && !targetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
+				bool targetIsPrey = TargetPos != default && !TargetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
 				if (TargetPos != default) {
-					if ((!targetIsPrey && !NPC.WithinRange(TargetPos, 16 * 12)) || (targetIsRipple && NPC.ai[1] > 0)) {
+					if ((!targetIsPrey && !NPC.WithinRange(TargetPos, 16 * 12)) || (TargetIsRipple && NPC.ai[1] > 0)) {
 						TargetPos = default;
 					} else if (NPC.HasPlayerTarget) {
 						Player target = Main.player[NPC.target];
@@ -95,7 +95,7 @@ namespace Origins.NPCs.Brine {
 					if (NPC.ai[1] <= 0) {
 						direction *= -1;
 					}
-					if (NPC.ai[1] > 0 && canSeeTarget) {
+					if (NPC.ai[1] > 0 && CanSeeTarget) {
 						flipTargetRotation = true;
 						if (GeometryUtils.AngleDif(NPC.rotation, direction.ToRotation(), out _) < 1f && ++NPC.ai[0] >= 40) {
 							NPC.ai[0] = 0;
@@ -120,7 +120,7 @@ namespace Origins.NPCs.Brine {
 					} else {
 						NPC.ai[0] = 0;
 						//Dust.NewDust(TargetPos, 0, 0, 6);
-						if (targetIsPrey && canSeeTarget) {
+						if (targetIsPrey && CanSeeTarget) {
 							if (TargetPos.IsWithin(NPC.Center, 16 * 6)) {
 								flipTargetRotation = true;
 							} else {

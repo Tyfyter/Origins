@@ -67,7 +67,7 @@ namespace Origins.NPCs.Brine {
 			return base.CanTargetPlayer(player) && player.WithinRange(NPC.Center, 16 * 12 + NPC.width + Math.Max(player.width, player.height));
 		}
 		public override void AI() {
-			pathfindingTime = 0;
+			PathfindingTime = 0;
 			DoTargeting();
 			Vector2 direction;
 			if (NPC.wet) {

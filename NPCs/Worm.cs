@@ -75,6 +75,7 @@ namespace Origins.NPCs {
 		/// </summary>
 		public NPC FollowerNPC => SegmentType == WormSegmentType.Tail ? null : Main.npc[(int)NPC.ai[0]];
 
+		public virtual float SegmentSeparation => NPC.width;
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
 			return SegmentType == WormSegmentType.Head ? null : false;
 		}
@@ -635,7 +636,6 @@ namespace Origins.NPCs {
 	public abstract class WormBody : Worm {
 		public virtual bool SharesImmunityFrames => false;
 		public sealed override WormSegmentType SegmentType => WormSegmentType.Body;
-
 		protected internal override void BodyTailAI() {
 			CommonAI_BodyTail(this);
 		}
@@ -669,7 +669,7 @@ namespace Origins.NPCs {
 				// We also get the length of the direction vector.
 				float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
 				// We calculate a new, correct distance.
-				float dist = (length - worm.NPC.width) / length;
+				float dist = (length - worm.SegmentSeparation) / length;
 				float posX = dirX * dist;
 				float posY = dirY * dist;
  
@@ -731,7 +731,6 @@ namespace Origins.NPCs {
 	public abstract class WormTail : Worm {
 		public virtual bool SharesImmunityFrames => false;
 		public sealed override WormSegmentType SegmentType => WormSegmentType.Tail;
-
 		protected internal override void BodyTailAI() {
 			WormBody.CommonAI_BodyTail(this);
 		}

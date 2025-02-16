@@ -102,7 +102,7 @@ namespace Origins.NPCs.Brine {
 						walkRight = true;
 						walkLeft = false;
 					}
-					if (!targetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
+					if (!TargetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
 						(walkRight, walkLeft) = (walkLeft, walkRight);
 					}
 					if (TargetPos.Y < NPC.Center.Y - 100f && Math.Sign(xDirectionToTarget) != -Math.Sign(NPC.velocity.X) && Math.Abs(xDirectionToTarget) < 50 && NPC.velocity.Y == 0) {

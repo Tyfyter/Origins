@@ -24,6 +24,8 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
 			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new Vector2(0f, 12f),
+				PortraitPositionYOverride = 32,
 				Frame = 1
 			};
 		}
@@ -41,7 +43,6 @@ namespace Origins.NPCs.Brine {
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0f;
 			NPC.noGravity = true;
-			if (NPC.IsABestiaryIconDummy) NPC.rotation = MathHelper.Pi;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
