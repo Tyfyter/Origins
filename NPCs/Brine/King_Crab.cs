@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -34,7 +33,7 @@ namespace Origins.NPCs.Brine {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 500;
 			NPC.defense = 26;
-			NPC.damage = 96;
+			NPC.damage = 38;
 			NPC.width = 62;
 			NPC.height = 68;
 			NPC.friendly = false;

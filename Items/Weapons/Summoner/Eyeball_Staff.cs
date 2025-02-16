@@ -49,8 +49,6 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Mini_EOC_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Demon Eye");
-			// Description.SetDefault("The demon eye will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Eyeball_Staff.buffID = Type;

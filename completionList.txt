@@ -55,7 +55,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(^) Defiled Amalgamation*
+(#2, ^2) Defiled Amalgamation* !!!
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Shimmer Construct
 (^) World Cracker*
@@ -204,7 +204,7 @@ ENEMY NPCS:
 (^) Barnacle Mound*
 (X) Beckonbug
 (^) Brine Latcher
-(#, ^2) Brine Serpent !!!
+(#2, ^2) Brine Serpent !!!
 (^) Carpalfish°
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic*
@@ -216,7 +216,7 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
-(☻) Leaf Snapper !!!
+(#2, ^2) Leaf Snapper !!!
 (^) King Crab
 (#3?, ^2) Mildew Creeper !!!
 (^) Mitoworm*
@@ -337,7 +337,7 @@ ARMOR:
 (X) Chambersite Armor°
 (X) Edenwood Armor°
 (X) Mimic Armor
-(☻ (alt helm might actually need a buff)) Necromancer Armor*
+(^) Necromancer Armor*
 (X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
 (X) Warlord Armor

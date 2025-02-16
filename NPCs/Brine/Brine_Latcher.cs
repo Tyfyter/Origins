@@ -58,7 +58,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 40;
-			NPC.defense = 14;
+			NPC.defense = 8;
 			NPC.damage = 10;
 			NPC.width = 22;
 			NPC.height = 24;

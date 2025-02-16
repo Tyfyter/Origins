@@ -57,13 +57,13 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
-			NPC.lifeMax = 50;
-			NPC.defense = 7;
-			NPC.damage = 23;
+			NPC.lifeMax = 380;
+			NPC.defense = 27;
+			NPC.damage = 26;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath23;
 			//NPC.scale = 0.9f;
-			NPC.value = 70;
+			NPC.value = 450;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
@@ -97,42 +97,13 @@ namespace Origins.NPCs.Brine {
 		}
 
 		public override void Init() {
-			MinSegmentLength = MaxSegmentLength = 4;
-			MoveSpeed = 5.5f;
+			MinSegmentLength = MaxSegmentLength = 11;
+			MoveSpeed = 4f;
 			Acceleration = 0.1f;
 			DigSound = null;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			TryDeathEffect();
-		}
-		public void TryDeathEffect() {
-			if (NPC.life > 0 || NPC.aiAction == 1) return;
-			NPC.aiAction = 1;
-			NPC current = NPC;
-			Vector2 velocity = NPC.velocity * 1.25f;
-			float speed = velocity.Length();
-			HashSet<int> indecies = [];
-			int tailType = TailType;
-			while (current.ai[0] != 0) {
-				if (!indecies.Add(current.whoAmI)) break;
-				OriginExtensions.LerpEquals(
-					ref Gore.NewGoreDirect(
-						current.GetSource_Death(),
-						current.position,
-						velocity,
-						Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
-					).velocity,
-					current.velocity,
-					0.5f
-				);
-				if (current.type == tailType) break;
-				NPC next = Main.npc[(int)current.ai[0]];
-				velocity = next.DirectionTo(current.Center) * speed;
-				current = next;
-			}
-		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
+			target.AddBuff(BuffID.Poisoned, 240);
 		}
 		public override bool CanHitNPC(NPC target) => TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !SegmentTypes.Contains(target.type));
 		public virtual bool CanTargetNPC(NPC other) {
@@ -228,9 +199,6 @@ namespace Origins.NPCs.Brine {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Brine_Serpent_Head)?.TryDeathEffect();
-		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
 			Acceleration = 0.045f;
@@ -256,9 +224,6 @@ namespace Origins.NPCs.Brine {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
 		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Brine_Serpent_Head)?.TryDeathEffect();
-		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
 			Acceleration = 0.045f;
@@ -282,9 +247,6 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
-		}
-		public override void HitEffect(NPC.HitInfo hit) {
-			(HeadSegment.ModNPC as Brine_Serpent_Head)?.TryDeathEffect();
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;

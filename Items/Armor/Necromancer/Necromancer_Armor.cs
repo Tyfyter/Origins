@@ -184,6 +184,7 @@ namespace Origins.Items.Armor.Necromancer {
 			Projectile.width = 30;
 			Projectile.height = 30;
 			Projectile.penetrate = 1;
+			Projectile.ArmorPenetration += 15;
 		}
 		public override void AI() {
 			float targetWeight = 16 * 20;
