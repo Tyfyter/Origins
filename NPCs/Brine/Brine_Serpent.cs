@@ -2,6 +2,7 @@
 using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -90,7 +91,9 @@ namespace Origins.NPCs.Brine {
 			return Brine_Pool.SpawnRates.Snek;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
+			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 5, 8)
+			));
 		}
 
 		public override void Init() {
