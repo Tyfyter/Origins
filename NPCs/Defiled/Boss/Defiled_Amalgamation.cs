@@ -175,6 +175,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		const int state_triple_dash = 3;
 		const int state_sidestep_dash = 4;
 		const int state_summon_roar = 5;
+		const int state_ground_spikes = 6;
 		int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public override void AI() {
 			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
@@ -218,19 +219,22 @@ namespace Origins.NPCs.Defiled.Boss {
 								WeightedRandom<int> rand = new(
 									Main.rand,
 									[
-									new(state_single_dash, 1f),
-									new(state_projectiles, 0.9f),
+									new(0, 0f),
+									new(state_single_dash, 0.9f),
+									new(state_projectiles, 1f),
 									new(state_triple_dash, 0.35f),
-									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult))
+									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
+									new(state_summon_roar, 0f),
+									new(state_ground_spikes, 1f),
 									]
 								);
-								int lastUsedAttack = (-1) - AIState;
+								int lastUsedAttack = -AIState;
 
-								if (lastUsedAttack >= 0) {
+								if (lastUsedAttack > 0) {
 									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
-									if (Main.masterMode && lastUsedAttack == 2) {
-										rand.elements[0] = new(rand.elements[0].Item1, 0);
-										rand.elements[2] = new(rand.elements[2].Item1, 0);
+									if (Main.masterMode && lastUsedAttack == state_triple_dash) {
+										rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
+										rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
 									}
 								}
 
@@ -249,7 +253,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								int roarHP = NPC.lifeMax / (roarCount + 1);
 
 								if (roarCount - roars > NPC.life / roarHP) {
-									AIState = 5;
+									AIState = state_summon_roar;
 									roars++;
 								}
 
@@ -445,6 +449,55 @@ namespace Origins.NPCs.Defiled.Boss {
 						}
 					}
 					break;
+
+					//ground spikes
+					case state_ground_spikes: {
+						CheckTrappedCollision();
+						NPC.ai[1]++;
+						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
+						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
+						float speed = 2;
+						float acceleration = 0.4f;
+						targetHeight += NPC.ai[1] * 2;
+						if (NPC.ai[1] >= 60) {
+							if ((int)NPC.ai[1] == 60) {
+								NPC.velocity.Y += 8;
+								SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-1f, -0.8f), NPC.Center);
+							}
+							speed = 16 + 8 * ContentExtensions.DifficultyDamageMultiplier;
+							targetHeight = (NPC.Bottom.Y + NPC.velocity.Y) - NPC.targetRect.Center().Y;
+							if (NPC.collideY || NPC.ai[1] > 120) {
+								if (Main.netMode != NetmodeID.MultiplayerClient) {
+									float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
+									int count = Main.rand.Next(6, 8) + Main.rand.RandomRound(realDifficultyMult * 2);
+									for (int i = count; i-- > 0;) {
+										Projectile.NewProjectileDirect(
+											NPC.GetSource_FromAI(),
+											NPC.targetRect.Center() - new Vector2((i - count * 0.5f) * (56 - realDifficultyMult * 8 + 34 + 24), 640),
+											new Vector2(0, 8),
+											ModContent.ProjectileType<DA_Spike_Summon>(),
+											0,
+											0f,
+											Main.myPlayer,
+											ai2: NPC.targetRect.Center().Y
+										);
+									}
+								}
+								NPC.velocity = Vector2.Zero;
+								AIState = -AIState;
+							}
+						}
+
+						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
+						float diffX = NPC.Center.X - NPC.targetRect.Center().X;
+						diffX -= Math.Sign(diffX) * targetX;
+						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), acceleration);
+						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), acceleration);
+						leftArmTarget = -0f;
+						rightArmTarget = -0f;
+						armSpeed = 0.1f;
+					}
+					break;
 				}
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
@@ -482,11 +535,15 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override bool? CanFallThroughPlatforms() {
-			if (AIState == state_triple_dash) {
+			switch (AIState) {
+				case state_triple_dash:
 				int cycleLength = 100 - (DifficultyMult * 4);
 				int dashLength = 60 - (DifficultyMult * 2);
 				int activeLength = cycleLength * 2 + dashLength;
 				return NPC.ai[1] <= activeLength;
+
+				case state_ground_spikes:
+				return NPC.BottomLeft.Y < NPC.targetRect.Center.Y;
 			}
 			return true;
 		}
@@ -758,7 +815,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.npcProj = false;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
-			Projectile.DamageType = DamageClass.Default;
+			Projectile.DamageType = DamageClass.Magic;
 		}
 		public override void OnSpawn(IEntitySource source) {
 		}

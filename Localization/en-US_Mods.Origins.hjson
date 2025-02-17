@@ -1483,6 +1483,8 @@ Projectiles: {
 	Hydrolantern_Use.DisplayName: Hydrolantern
 	Airsnatcher_Bubble.DisplayName: Airsnatcher Bubble
 	Unsatisfied_Soul.DisplayName: Unsatisfied Soul
+	DA_Spike_Summon.DisplayName: DA Spike Summon
+	DA_Spike.DisplayName: Defiled Spike
 }
 
 Prefixes: {
