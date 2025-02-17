@@ -465,7 +465,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-1f, -0.8f), NPC.Center);
 							}
 							speed = 16 + 8 * ContentExtensions.DifficultyDamageMultiplier;
-							targetHeight = (NPC.Bottom.Y + NPC.velocity.Y) - NPC.targetRect.Center().Y;
+							targetHeight = (NPC.Bottom.Y + 24) - NPC.targetRect.Center().Y;
 							if (NPC.collideY || NPC.ai[1] > 120) {
 								if (Main.netMode != NetmodeID.MultiplayerClient) {
 									float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
@@ -747,6 +747,19 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
+			if (Projectile.timeLeft % 15 == 0) {
+				Projectile.localNPCImmunity.CopyTo(Projectile.NewProjectileDirect(
+					Projectile.GetSource_FromThis(),
+					Projectile.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Defiled_Spike_Explosion_Hostile>(),
+					Projectile.damage,
+					0,
+					Projectile.owner,
+					7,
+					ai2: 0.5f
+				).localNPCImmunity.AsSpan());
+			}
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.localNPCImmunity.CopyTo(Projectile.NewProjectileDirect(
@@ -777,6 +790,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override bool CanHitPlayer(Player target) => false;
 		public override bool CanHitPvp(Player target) => false;
 		public override void AI() {
+			if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
 			if (Projectile.ai[0] > 0) {
 				Projectile.ai[0]--;
 				Projectile.NewProjectileDirect(
@@ -817,14 +831,13 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.friendly = false;
 			Projectile.DamageType = DamageClass.Magic;
 		}
-		public override void OnSpawn(IEntitySource source) {
-		}
 		public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
 		public float movementFactor {
 			get => Projectile.ai[0];
 			set => Projectile.ai[0] = value;
 		}
 		public override void AI() {
+			Projectile.scale = ParentProjectile.scale;
 			Projectile.Center = ParentProjectile.Center - Projectile.velocity;
 			if (movementFactor == 0f) {
 				movementFactor = 1f;
@@ -834,7 +847,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (Projectile.timeLeft > 18) {
 				movementFactor += 1f;
 			}
-			Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.rotation += MathHelper.PiOver2;
 			ParentProjectile.timeLeft = 7;
@@ -864,7 +877,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
 			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
 			totalLength -= 58;
-			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
+			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58 * Projectile.scale;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
 			int c = 0;
 			Vector2 pos;
