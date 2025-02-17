@@ -48,6 +48,11 @@ namespace Origins.NPCs.Defiled {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.AncientFlyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
 				this.GetBestiaryFlavorText()

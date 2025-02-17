@@ -72,7 +72,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
-			Origins.RasterizeAdjustment.Add(Type, (8, 0f, 0f));
+			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Riven_Hive>());
 		}
 		public override void Unload() {
@@ -169,7 +169,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			ProcessShoot(NPC);
 
-			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
 		}
 		public static void ProcessShoot(NPC npc) {

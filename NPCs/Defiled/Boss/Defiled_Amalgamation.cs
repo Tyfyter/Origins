@@ -79,6 +79,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			};
 			ID = Type;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
+			Origins.RasterizeAdjustment[Type] = (16, 0f, 0f);
 		}
 		public override void SetDefaults() {
 			NPC.boss = true;
@@ -227,6 +228,10 @@ namespace Origins.NPCs.Defiled.Boss {
 
 								if (lastUsedAttack >= 0) {
 									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
+									if (Main.masterMode && lastUsedAttack == 2) {
+										rand.elements[0] = new(rand.elements[0].Item1, 0);
+										rand.elements[2] = new(rand.elements[2].Item1, 0);
+									}
 								}
 
 								if (!Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 16, 16)) {
@@ -263,13 +268,13 @@ namespace Origins.NPCs.Defiled.Boss {
 					case state_single_dash: {
 						NPC.ai[1]++;
 						NPC.velocity = NPC.oldVelocity;
-						if (NPC.ai[1] < 20) {
+						if (NPC.ai[1] < 25) {
 							float speed = 6;
 							OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 							NPC.oldVelocity = NPC.velocity;
-						} else if (NPC.ai[1] < 30) {
-							float speed = 11 + difficultyMult;
-							OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3F);
+						} else if (NPC.ai[1] < 35) {
+							float speed = 12 + difficultyMult * 1.8f;
+							OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
 							NPC.oldVelocity = NPC.velocity;
 						} else if ((NPC.collideX || NPC.collideY) && NPC.ai[1] <= 80) {
 							NPC.ai[1] += 2;
@@ -347,13 +352,13 @@ namespace Origins.NPCs.Defiled.Boss {
 								SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
 							}
 							NPC.velocity = NPC.oldVelocity;
-							if (NPC.ai[1] % cycleLength < 18 - (difficultyMult * 3)) {
-								float speed = 6 - (2 * difficultyMult);
+							if (NPC.ai[1] % cycleLength < 24 - (difficultyMult * 3)) {
+								float speed = 8;
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 								NPC.oldVelocity = NPC.velocity;
-							} else if (NPC.ai[1] % cycleLength < 26 - (difficultyMult * 2)) {
-								float speed = 14 + (2 * difficultyMult);
-								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3F);
+							} else if (NPC.ai[1] % cycleLength < 32 - (difficultyMult * 2)) {
+								float speed = 13 + (2 * difficultyMult);
+								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
 								NPC.oldVelocity = NPC.velocity;
 							} else if (NPC.ai[1] % cycleLength > dashLength || NPC.collideX || NPC.collideY) {
 								NPC.ai[2] = NPC.targetRect.Center().X;

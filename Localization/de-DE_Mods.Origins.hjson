@@ -2127,7 +2127,7 @@ SetBonuses: {
 		''' */
 	/* NecromancerCrown:
 		'''
-		Text goes here
+		Summons an unsatisfied soul from slain enemies
 		Mana usage is halved when in a Graveyard
 		Enemies spawn more frequently
 		Increases your max number of minions by 3
