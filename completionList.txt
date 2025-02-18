@@ -587,7 +587,7 @@ UTILITIES:
 (^) Hydrolantern
 (^) Impenetrable Trashcan Lid*
 (^) Indestructible Saddle*
-(^) Salty Seed (Mitosis Node)
+(^) Salty Seed (Mitosis Node)*
 (^5) Saltier Seed (Mitosis Node) !!!
 ---
 
@@ -597,7 +597,6 @@ WINGS:
 (^) Acrid Beam Thrusters
 (X) Gills
 (X) Marrowick Mantle
-(X) Mutant Wings
 (X) Phantom Thrusters
 
 (X) Ascendant Wings
@@ -609,29 +608,31 @@ WINGS:
 
 TOOLS:
 ---
-(^) Brick Breaker
-(^) C6 Jackhammer
-(^) Dismantler
-(^) Dissector
-(^) Endowood Hammer
-(^) Felnum Hamaxe
-(^) Felnum Pickaxe
-(^) Marrowick Hammer
-(^) Miter Saw
-(^) Parasitic Manipulator
-(^) Pile Driver
-(^) Rivenator
-(^) Snatcher
-(^) Stabsmash
-(^) Strainer
+(^) Brick Breaker*
+(^) C6 Jackhammer*
+(^) Dismantler*
+(^) Dissector*
+(^) Endowood Hammer*
+(^) Felnum Hamaxe*
+(^) Felnum Pickaxe*
+(^) Lightning Rod*
+(^) Marrowick Hammer*
+(^) Miter Saw*
+(^) Parasitic Manipulator*
+(^) Pile Driver*
+(^) Rivenator*
+(^) Snatcher*
+(^) Stabsmash*
+(^) Strainer*
 
-(^) Acrid Drill
-(^) Acrid Hamaxe
-(^) Acrid Laser Rod
-(^) Acrid Pickaxe
-(X) Bleeding Obsidian Dramaxe
+(^) Acrid Drill*
+(^) Acrid Hamaxe*
+(^) Acrid Laser Rod*
+(^) Acrid Pickaxe*
+(X) Bleeding Obsidian Hamaxe
+(X) Bleeding Obsidian Pickaxe
 
-(^) Impactaxe
+(^) Impactaxe*
 
 (X) Ahe
 (X) Nova Bomb
@@ -646,15 +647,15 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(^) Cyah Nara
-(^) Dark Spiral
+(^) Cyah Nara*
+(^) Dark Spiral*
 (^) Decimator*
-(^) Endowood Sword
-(^) Felnum Boar Spear
+(^) Endowood Sword*
+(^) Felnum Boar Spear*
 (^) Fiberglass Sword*
-(^) Hemorang
+(^) Hemorang*
 (^) Krakram*
-(^) Marrowick Sword
+(^) Marrowick Sword*
 (^) Nineball*
 (^) Orbital Saw
 (^) Ripper Lance*
@@ -1492,7 +1493,6 @@ AMMO:
 (X) Homing Rocket II
 (^) Resizable Mine VII*
 (X) Resizable Mine VIII
-(#2, ^2, 々) Starfuze°
 
 (^) Gray Solution*
 (X) Orange Solution

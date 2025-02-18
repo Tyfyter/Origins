@@ -495,6 +495,10 @@ namespace Origins.NPCs.Defiled.Boss {
 						diffX -= Math.Sign(diffX) * targetX;
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), acceleration);
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), acceleration);
+						/* April Fools' DAb
+						leftArmTarget = 0.15f;
+						rightArmTarget = -0.15f;
+						*/
 						leftArmTarget = 0.6f;
 						rightArmTarget = 0.7f;
 						armSpeed = 0.2f;

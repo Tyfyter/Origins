@@ -721,17 +721,4 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 		}
 	}
-	public class Starfuze : ModItem, ICustomWikiStat {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 199;
-		}
-		public override void SetDefaults() {
-			Item.DefaultToCanister(80);
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Cyan;
-			Item.glowMask = glowmask;
-		}
-	}
 }

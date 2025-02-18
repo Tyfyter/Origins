@@ -1,10 +1,7 @@
-using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Hemorang : ModItem, ICustomWikiStat {
 		public string[] Categories => [
