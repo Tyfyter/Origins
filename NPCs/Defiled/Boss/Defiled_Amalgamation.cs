@@ -352,11 +352,11 @@ namespace Origins.NPCs.Defiled.Boss {
 								SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
 							}
 							NPC.velocity = NPC.oldVelocity;
-							if (NPC.ai[1] % cycleLength < 24 - (difficultyMult * 3)) {
+							if (NPC.ai[1] % cycleLength < 30 - (difficultyMult * 3)) {
 								float speed = 8;
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 								NPC.oldVelocity = NPC.velocity;
-							} else if (NPC.ai[1] % cycleLength < 32 - (difficultyMult * 2)) {
+							} else if (NPC.ai[1] % cycleLength < 40 - (difficultyMult * 2)) {
 								float speed = 13 + (3 * difficultyMult);
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
 								NPC.oldVelocity = NPC.velocity;
@@ -366,6 +366,8 @@ namespace Origins.NPCs.Defiled.Boss {
 								goto default;
 							}
 						} else {
+							NPC.velocity.X *= 0.97f;
+							if (NPC.velocity.Y < 0) NPC.velocity.Y *= 0.97f;
 							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
 							NPC.collideX = NPC.collideY = false;
 							CheckTrappedCollision();
@@ -455,7 +457,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						CheckTrappedCollision();
 						NPC.ai[1]++;
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
-						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
+						float targetX = 0;// 320 + (float)Math.Sin(++time * 0.01f) * 32;
 						float speed = 2;
 						float acceleration = 0.4f;
 						targetHeight += NPC.ai[1] * 2;
@@ -617,7 +619,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (DifficultyMult >= 2) {
 				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
+					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (DifficultyMult - 1) * 15);
 				}
 			}
 		}
@@ -873,7 +875,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (DifficultyMult >= 2) {
 				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
+					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (DifficultyMult - 1) * 15);
 				}
 			}
 		}

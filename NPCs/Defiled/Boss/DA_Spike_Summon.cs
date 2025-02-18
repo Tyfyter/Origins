@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Gores.NPCs;
 using System;
 using System.Collections.Generic;
@@ -45,10 +46,11 @@ namespace Origins.NPCs.Defiled.Boss {
 						source,
 						Projectile.Center,
 						Vector2.Zero,
-						ModContent.ProjectileType<DA_Spike>(),
+						Main.expertMode ? ModContent.ProjectileType<DA_Spike_Bendy>() : ModContent.ProjectileType<DA_Spike>(),
 						(int)(15 + 15 * ContentExtensions.DifficultyDamageMultiplier),
 						0,
-						ai1: Main.rand.Next(0, 32) * ContentExtensions.DifficultyDamageMultiplier
+						ai1: Main.rand.Next(0, 32) * ContentExtensions.DifficultyDamageMultiplier,
+						ai2: Main.rand.NextFloat(0.01f, 0.02f) * Main.rand.NextBool().ToDirectionInt()
 					);
 					Projectile.Kill();
 					SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
@@ -131,6 +133,99 @@ namespace Origins.NPCs.Defiled.Boss {
 				);
 				pos.Y += precision;
 			}
+			return false;
+		}
+	}
+	public class DA_Spike_Bendy : DA_Spike {
+		public override string Texture => typeof(DA_Spike).GetDefaultTMLName();
+		public override void AI() {
+			base.AI();
+		}
+		/// <summary>
+		/// Call a programmer if this method lasts longer than four hours
+		/// </summary>
+		/// <returns></returns>
+		(Vector2 pos, Vector2 perpendicular)[] GetCurve() {
+			if (Projectile.localAI[2] != Projectile.ai[0]) {
+				const int precision = 16;
+				_curve = new (Vector2 pos, Vector2 perpendicular)[(int)Math.Ceiling(Projectile.ai[0] / precision)];
+				Vector2 pos = Projectile.Center + Vector2.UnitY * Projectile.ai[0];
+				Vector2 mov = -Vector2.UnitY * precision;
+				int index = 0;
+				for (int i = 0; i < Projectile.ai[0]; i += precision) {
+					_curve[index++] = (pos, mov.RotatedBy(MathHelper.PiOver2) / precision);
+					pos += mov;
+					mov = mov.RotatedBy(Projectile.ai[2]);
+				}
+			}
+			return _curve;
+		}
+		(Vector2 pos, Vector2 perpendicular)[] _curve = [];
+		public (Vector2 pos, Vector2 perpendicular)[] Curve {
+			get {
+				return _curve;
+			}
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			(Vector2 pos, Vector2 perpendicular)[] curve = GetCurve();
+			Vector2 lastPos0 = curve[0].pos - curve[0].perpendicular * 17;
+			Vector2 lastPos1 = curve[0].pos + curve[0].perpendicular * 17;
+			Vector2 nextPos0 = default, nextPos1 = default;
+			List<(Vector2 start, Vector2 end)> _lines = [(lastPos1, lastPos0)];
+			for (int i = 0; i < curve.Length; i++) {
+				Vector2 nextPos = curve[i].pos;
+				if (nextPos == default) break;
+				nextPos0 = nextPos - curve[i].perpendicular * 17;
+				nextPos1 = nextPos + curve[i].perpendicular * 17;
+
+				_lines.Add((lastPos0, nextPos0));
+				_lines.Add((nextPos1, lastPos1));
+				lastPos0 = nextPos0;
+				lastPos1 = nextPos1;
+			}
+			_lines.Add((nextPos0, nextPos1));
+			return CollisionExtensions.PolygonIntersectsRect(_lines.ToArray(), targetHitbox);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			const int precision = 16;
+			int segments = (int)Projectile.ai[0];
+			Rectangle frame = new(0, segments, 34, precision - (precision - (segments % precision)) % precision);
+			foreach ((Vector2 pos, Vector2 perpendicular) in GetCurve()) {
+				frame.Y -= precision;
+				if (frame.Height != precision) {
+					frame.Height = precision;
+					continue;
+				}
+				Main.EntitySpriteDraw(
+					TextureAssets.Projectile[Type].Value,
+					pos - Main.screenPosition,
+					frame,
+					new(Lighting.GetSubLight(pos)),
+					perpendicular.ToRotation(),
+					Vector2.UnitX * 17,
+					1,
+					SpriteEffects.None
+				);
+			}
+			/*(Vector2 pos, Vector2 perpendicular)[] curve = GetCurve();
+			Vector2 lastPos0 = curve[0].pos - curve[0].perpendicular * 17;
+			Vector2 lastPos1 = curve[0].pos + curve[0].perpendicular * 17;
+			Vector2 nextPos0 = default, nextPos1 = default;
+			List<(Vector2 start, Vector2 end)> _lines = [(lastPos1, lastPos0)];
+			for (int i = 0; i < curve.Length; i++) {
+				Vector2 nextPos = curve[i].pos;
+				nextPos0 = nextPos - curve[i].perpendicular * 17;
+				nextPos1 = nextPos + curve[i].perpendicular * 17;
+
+				_lines.Add((lastPos0, nextPos0));
+				_lines.Add((nextPos1, lastPos1));
+				lastPos0 = nextPos0;
+				lastPos1 = nextPos1;
+			}
+			_lines.Add((nextPos0, nextPos1));
+			for (int i = 0; i < _lines.Count; i++) {
+				OriginExtensions.DrawDebugLineSprite(_lines[i].start, _lines[i].end, Main.hslToRgb(i / (float)_lines.Count, 1, 0.5f), -Main.screenPosition);
+			}*/
 			return false;
 		}
 	}
