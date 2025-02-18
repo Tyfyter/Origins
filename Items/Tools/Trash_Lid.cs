@@ -1,17 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
-using Origins.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Trash_Lid : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -25,7 +21,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
 			Item.DefaultToMount(ModContent.MountType<Trash_Lid_Mount>());
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 20);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.useTime = Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.HoldUp;
         }

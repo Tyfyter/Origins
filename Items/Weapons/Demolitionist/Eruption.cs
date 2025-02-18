@@ -93,6 +93,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Main.myPlayer
 			);
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire, 600);
+		}
 	}
 	public class Eruption_Geyser : ModProjectile, ICanisterChildProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;

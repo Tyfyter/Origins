@@ -184,8 +184,8 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			target.AddBuff(BuffID.Venom, Main.rand.Next(119, 181));
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), Main.rand.Next(179, 241));
+			target.AddBuff(BuffID.Venom, Main.rand.Next(120, 180));
+			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), Main.rand.Next(180, 240));
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

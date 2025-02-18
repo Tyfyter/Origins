@@ -277,12 +277,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 							NPC.oldVelocity = NPC.velocity;
 						} else if (NPC.ai[1] < 35) {
-							float speed = 12 + difficultyMult * 1.8f;
+							float speed = 12 + difficultyMult * 2f;
 							OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
-							NPC.oldVelocity = NPC.velocity;
-						} else if ((NPC.collideX || NPC.collideY) && NPC.ai[1] <= 80) {
-							NPC.ai[1] += 2;
-							NPC.velocity *= 0.99f;
 							NPC.oldVelocity = NPC.velocity;
 						} else if (NPC.ai[1] > 80) {
 							AIState = -state_single_dash;
@@ -361,7 +357,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 								NPC.oldVelocity = NPC.velocity;
 							} else if (NPC.ai[1] % cycleLength < 32 - (difficultyMult * 2)) {
-								float speed = 13 + (2 * difficultyMult);
+								float speed = 13 + (3 * difficultyMult);
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
 								NPC.oldVelocity = NPC.velocity;
 							} else if (NPC.ai[1] % cycleLength > dashLength || NPC.collideX || NPC.collideY) {
@@ -370,6 +366,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								goto default;
 							}
 						} else {
+							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
 							NPC.collideX = NPC.collideY = false;
 							CheckTrappedCollision();
 							if (NPC.ai[1] - activeLength < TripleDashCD) {
@@ -452,6 +449,9 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					//ground spikes
 					case state_ground_spikes: {
+						Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+							NPC.Center, 10f, 16f, 60, 1200f, 1f, nameof(Defiled_Amalgamation)
+						));
 						CheckTrappedCollision();
 						NPC.ai[1]++;
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
@@ -463,6 +463,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							if ((int)NPC.ai[1] == 60) {
 								NPC.velocity.Y += 8;
 								SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-1f, -0.8f), NPC.Center);
+								SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
 							}
 							speed = 16 + 8 * ContentExtensions.DifficultyDamageMultiplier;
 							targetHeight = (NPC.Bottom.Y + 24) - NPC.targetRect.Center().Y;
@@ -471,6 +472,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
 									int count = Main.rand.Next(6, 8) + Main.rand.RandomRound(realDifficultyMult * 2);
 									for (int i = count; i-- > 0;) {
+										SoundEngine.PlaySound(SoundID.Item62.WithPitch(2f), NPC.Center);
 										Projectile.NewProjectileDirect(
 											NPC.GetSource_FromAI(),
 											NPC.targetRect.Center() - new Vector2((i - count * 0.5f) * (56 - realDifficultyMult * 8 + 34 + 24), 640),
@@ -493,9 +495,9 @@ namespace Origins.NPCs.Defiled.Boss {
 						diffX -= Math.Sign(diffX) * targetX;
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), acceleration);
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), acceleration);
-						leftArmTarget = -0f;
-						rightArmTarget = -0f;
-						armSpeed = 0.1f;
+						leftArmTarget = 0.6f;
+						rightArmTarget = 0.7f;
+						armSpeed = 0.2f;
 					}
 					break;
 				}

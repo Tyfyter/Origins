@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.DataStructures;
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.ID;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Gores.NPCs;
+using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Spike_Summon : ModProjectile {
@@ -53,6 +51,8 @@ namespace Origins.NPCs.Defiled.Boss {
 						ai1: Main.rand.Next(0, 32) * ContentExtensions.DifficultyDamageMultiplier
 					);
 					Projectile.Kill();
+					SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.defiledKillAF.WithVolume(0.25f).WithPitchRange(0.4f, 0.6f), Projectile.Center);
 				}
 			}
 		}
