@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Projectiles.Melee.Spears;
+using Microsoft.Xna.Framework;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -21,22 +22,26 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public override void SetStaticDefaults() {
 			//uncomment, then insert outer & inner colors
-			/*
-			new Rocket_Dummy_Canister(new(, , false), 128).Register(ItemID.RocketI);
-			new Rocket_Dummy_Canister(new(, , false), 128, 3).Register(ItemID.RocketII);
-			new Rocket_Dummy_Canister(new(, , false), 200).Register(ItemID.RocketIII);
-			new Rocket_Dummy_Canister(new(, , false), 200, 5).Register(ItemID.RocketIV);
-			new Rocket_Dummy_Canister(new(, , false), 250).Register(ItemID.MiniNukeI);
-			new Rocket_Dummy_Canister(new(, , false), 250, 7).Register(ItemID.MiniNukeII);
+			static CanisterData Canister(uint outer, uint inner, bool special = false) {
+				Color FromHex(uint value) {
+					return new((int)((0xff0000 & value) >> 16), (int)((0x00ff00 & value) >> 8), (int)((0x0000ff & value) >> 0));
+				}
+				return new(FromHex(outer), FromHex(inner), special);
+			}
+			new Rocket_Dummy_Canister(Canister(0xc3c3c3, 0xed1c24), 128).Register(ItemID.RocketI);
+			new Rocket_Dummy_Canister(Canister(0x4b4b4b, 0x63c45e), 128, 3).Register(ItemID.RocketII);
+			new Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x066bff), 200).Register(ItemID.RocketIII);
+			new Rocket_Dummy_Canister(Canister(0x4b4b4b, 0xecc800), 200, 5).Register(ItemID.RocketIV);
+			new Rocket_Dummy_Canister(Canister(0xea9427, 0x82af7b), 250).Register(ItemID.MiniNukeI);
+			new Rocket_Dummy_Canister(Canister(0xed1c24, 0xfec214), 250, 7).Register(ItemID.MiniNukeII);
 
-			new Cluster_Rocket_Dummy_Canister(new(, , true), ProjectileID.ClusterFragmentsI).Register(ItemID.ClusterRocketI);
-			new Cluster_Rocket_Dummy_Canister(new(, , true), ProjectileID.ClusterFragmentsII).Register(ItemID.ClusterRocketII);
+			new Cluster_Rocket_Dummy_Canister(Canister(0x82af7b, 0xc76812, true), ProjectileID.ClusterFragmentsI).Register(ItemID.ClusterRocketI);
+			new Cluster_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0xecc800, true), ProjectileID.ClusterFragmentsII).Register(ItemID.ClusterRocketII);
 
-			new Liquid_Rocket_Dummy_Canister(new(, , true), DelegateMethods.SpreadDry).Register(ItemID.DryRocket);
-			new Liquid_Rocket_Dummy_Canister(new(, , true), DelegateMethods.SpreadWater).Register(ItemID.WetRocket);
-			new Liquid_Rocket_Dummy_Canister(new(, , true), DelegateMethods.SpreadLava).Register(ItemID.LavaRocket);
-			new Liquid_Rocket_Dummy_Canister(new(, , true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
-			*/
+			new Liquid_Rocket_Dummy_Canister(Canister(0xeaeaea, 0xeaeaea, true), DelegateMethods.SpreadDry).Register(ItemID.DryRocket);
+			new Liquid_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x5698ff, true), DelegateMethods.SpreadWater).Register(ItemID.WetRocket);
+			new Liquid_Rocket_Dummy_Canister(Canister(0x655dc5, 0xf59300, true), DelegateMethods.SpreadLava).Register(ItemID.LavaRocket);
+			new Liquid_Rocket_Dummy_Canister(Canister(0x9b7c40, 0xfec214, true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
 		}
 	}
 	public class Rocket_Dummy_Canister(CanisterData canisterData, int explosionSize, int tileDestructionRadius = 0) : ICanisterAmmo {
@@ -86,7 +91,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	}
 	public class Liquid_Rocket_Dummy_Canister(CanisterData canisterData, Utils.TileActionAttempt tileAction, int explosionSize = 48) : Rocket_Dummy_Canister(canisterData, explosionSize) {
 		public override void AI(Projectile projectile, bool child) {
-			projectile.timeLeft = 1;
+			if (projectile.wet) projectile.timeLeft = 1;
 		}
 		public override void OnKill(Projectile projectile, bool child) {
 			base.OnKill(projectile, child);

@@ -328,55 +328,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 				SpriteEffects.None
 			);
 		}
+		public override bool PreKill(int timeLeft) => false;
 		public override bool PreDraw(ref Color lightColor) {
 			DrawGlow(Projectile, lightColor.A / 255f, true);
-			return false;
-			CanisterData canisterData = Projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
-			if (canisterData is null) return false;
-			Vector2 center = Projectile.Center;
-			Rectangle screen = new((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth, Main.screenHeight);
-			Vector2 closest = screen.Contains(center) ? center : CollisionExtensions.GetCenterProjectedPoint(screen, center);
-			Vector2 diff = closest - center;
-			float offScreenDist = diff.Length();
-			Color glowColor = canisterData.InnerColor * (lightColor.A / 255f);
-			float boomFactor = 1f;
-			if (Projectile.timeLeft < 10) {
-				boomFactor = Math.Min(Projectile.timeLeft / 10f, 1);
-				if (canisterData.Ammo is ModItem) {
-					boomFactor *= 1 + boomFactor;
-				}
-			}
-			if (offScreenDist > 16) {
-				if (!Collision.CanHitLine(center + (diff / offScreenDist) * 64, 0, 0, closest, 0, 0)) return false;
-				glowColor.A = 0;
-				float sqrt = MathF.Sqrt(offScreenDist / 32f);
-				float iSqrt = MathF.Pow(1 / sqrt, 0.5f) * boomFactor;
-				float colorFactor = MathF.Pow(iSqrt, 0.5f);
-				if (offScreenDist < 90f) colorFactor *= (offScreenDist - 16) / 90f;
-				Main.EntitySpriteDraw(
-					TextureAssets.Projectile[Type].Value,
-					closest - Main.screenPosition,
-					null,
-					glowColor * colorFactor,
-					(center - closest).ToRotation(),
-					new Vector2(45, 45),
-					new Vector2(5 * iSqrt, 1 * colorFactor),
-					SpriteEffects.None
-				);
-				return false;
-			}
-			glowColor.A = 0;
-			//boomFactor = MathF.Pow(boomFactor, 0.5f);
-			Main.EntitySpriteDraw(
-				TextureAssets.Projectile[Type].Value,
-				center - Main.screenPosition,
-				null,
-				glowColor * MathF.Pow(boomFactor, 0.5f),
-				Projectile.rotation,
-				new Vector2(45, 45),
-				Projectile.scale * MathF.Pow(boomFactor, 1.5f),
-				SpriteEffects.None
-			);
 			return false;
 		}
 	}
