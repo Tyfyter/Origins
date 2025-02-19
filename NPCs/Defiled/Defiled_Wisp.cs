@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
@@ -10,15 +9,13 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
-using ThoriumMod.Empowerments;
-using Origins.Dev;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Wisp : Glowing_Mod_NPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, -2, 24, 26);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;

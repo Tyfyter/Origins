@@ -42,7 +42,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
 		public string CustomSpritePath => "DefiledAmalg";
-		public AssimilationAmount? Assimilation => 0.04f;
+		public AssimilationAmount? Assimilation => 0.06f;
 		public static bool spawnDA = false;
 		float rightArmRot = 0.25f;
 		float leftArmRot = 0.25f;
@@ -87,7 +87,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 3100;
 			NPC.defense = 14;
-			NPC.damage = 48;
+			NPC.damage = 65;
 			NPC.width = 81;
 			NPC.height = 96;
 			NPC.friendly = false;
@@ -120,13 +120,13 @@ namespace Origins.NPCs.Defiled.Boss {
 				case 2:
 				NPC.lifeMax = (int)(4960 * balance * terriblyPlacedHookMult);
 				// NPC.defense = 13;
-				NPC.damage = (int)(64 * terriblyPlacedHookMult);
+				NPC.damage = (int)(76 * terriblyPlacedHookMult);
 				break;
 
 				case 3:
 				NPC.lifeMax = (int)(7936 * balance * terriblyPlacedHookMult);
 				// NPC.defense = 15;
-				NPC.damage = (int)(72 * terriblyPlacedHookMult);
+				NPC.damage = (int)(104 * terriblyPlacedHookMult);
 				break;
 			}
 		}
@@ -318,7 +318,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									NPC.Center,
 									Vector2.Normalize(NPC.targetRect.Center() - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
 									ModContent.ProjectileType<Low_Signal_Hostile>(),
-									(int)((22 - (realDifficultyMult * 3)) * realDifficultyMult), // for some reason NPC projectile damage is just arbitrarily doubled
+									(int)((24 - (realDifficultyMult * 3)) * realDifficultyMult), // for some reason NPC projectile damage is just arbitrarily doubled
 									0f,
 									Main.myPlayer
 								).tileCollide = Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 8, 8);
@@ -368,7 +368,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						} else {
 							NPC.velocity.X *= 0.97f;
 							if (NPC.velocity.Y < 0) NPC.velocity.Y *= 0.97f;
-							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
+							//SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
 							NPC.collideX = NPC.collideY = false;
 							CheckTrappedCollision();
 							if (NPC.ai[1] - activeLength < TripleDashCD) {
