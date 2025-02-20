@@ -192,7 +192,25 @@ namespace Origins.NPCs {
 				case NPCID.MaggotZombie:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grave_Danger>(), 20));
 				break;
-				default:
+				case NPCID.LunarTowerNebula or NPCID.LunarTowerSolar or NPCID.LunarTowerStardust or NPCID.LunarTowerVortex: {
+					DropOneByOne.Parameters normalParameters = default;
+					normalParameters.MinimumItemDropsCount = 4;
+					normalParameters.MaximumItemDropsCount = 6;
+					normalParameters.ChanceNumerator = 1;
+					normalParameters.ChanceDenominator = 1;
+					normalParameters.MinimumStackPerChunkBase = 1;
+					normalParameters.MaximumStackPerChunkBase = 3;
+					normalParameters.BonusMinDropsPerChunkPerPlayer = 0;
+					normalParameters.BonusMaxDropsPerChunkPerPlayer = 0;
+
+					DropOneByOne.Parameters expertParameters = normalParameters;
+					expertParameters.BonusMinDropsPerChunkPerPlayer = 0;
+					expertParameters.BonusMaxDropsPerChunkPerPlayer = 1;
+					expertParameters.MinimumStackPerChunkBase = (int)(expertParameters.MinimumStackPerChunkBase * 1.25f);
+					expertParameters.MaximumStackPerChunkBase = (int)(expertParameters.MaximumStackPerChunkBase * 1.25f);
+					int itemType = ModContent.ItemType<Nova_Fragment>();
+					npcLoot.Add(new DropBasedOnExpertMode(new DropOneByOne(itemType, normalParameters), new DropOneByOne(itemType, expertParameters)));
+				}
 				break;
 			}
 			bool alreadyAddedHandDrop = false;
