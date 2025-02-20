@@ -12,6 +12,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo.Canisters {
+	public class FixRocketShootType : GlobalItem {
+		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.ammo == AmmoID.Rocket;
+		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			if (weapon.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
+				type = weapon.shoot;
+			}
+		}
+	}
 	public class RocketsAsCanisters : GlobalItem {
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>();
 		public override bool? CanChooseAmmo(Item weapon, Item ammo, Player player) {
@@ -23,7 +31,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void SetStaticDefaults() {
 			//uncomment, then insert outer & inner colors
 			static CanisterData Canister(uint outer, uint inner, bool special = false) {
-				Color FromHex(uint value) {
+				static Color FromHex(uint value) {
 					return new((int)((0xff0000 & value) >> 16), (int)((0x00ff00 & value) >> 8), (int)((0x0000ff & value) >> 0));
 				}
 				return new(FromHex(outer), FromHex(inner), special);
@@ -38,7 +46,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			new Cluster_Rocket_Dummy_Canister(Canister(0x82af7b, 0xc76812, true), ProjectileID.ClusterFragmentsI).Register(ItemID.ClusterRocketI);
 			new Cluster_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0xecc800, true), ProjectileID.ClusterFragmentsII).Register(ItemID.ClusterRocketII);
 
-			new Liquid_Rocket_Dummy_Canister(Canister(0xeaeaea, 0xeaeaea, true), DelegateMethods.SpreadDry).Register(ItemID.DryRocket);
+			new Liquid_Rocket_Dummy_Canister(Canister(0xeaeaea, 0xeaeaea, true), DelegateMethods.SpreadDry, 3.5f).Register(ItemID.DryRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x5698ff, true), DelegateMethods.SpreadWater).Register(ItemID.WetRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x655dc5, 0xf59300, true), DelegateMethods.SpreadLava).Register(ItemID.LavaRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x9b7c40, 0xfec214, true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
@@ -89,14 +97,30 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 		}
 	}
-	public class Liquid_Rocket_Dummy_Canister(CanisterData canisterData, Utils.TileActionAttempt tileAction, int explosionSize = 48) : Rocket_Dummy_Canister(canisterData, explosionSize) {
+	public class Liquid_Rocket_Dummy_Canister(CanisterData canisterData, Utils.TileActionAttempt tileAction, float liquidSize = 3f, int explosionSize = 48) : Rocket_Dummy_Canister(canisterData, explosionSize) {
 		public override void AI(Projectile projectile, bool child) {
 			if (projectile.wet) projectile.timeLeft = 1;
 		}
 		public override void OnKill(Projectile projectile, bool child) {
 			base.OnKill(projectile, child);
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(projectile.Center.ToTileCoordinates(), 3f, tileAction);
+				Point pos = projectile.Center.ToTileCoordinates();
+				Tile tile = Main.tile[pos.X, pos.Y];
+				if (tile != null && tile.HasTile && tile.BlockType == BlockType.Solid) {
+					Vector2 offsetCenter = projectile.Center;
+					if (projectile.velocity == Vector2.Zero) {
+						while (tile != null && tile.HasTile && tile.BlockType == BlockType.Solid) {
+							Point offsetPos = offsetCenter.ToTileCoordinates();
+							tile = Main.tile[pos.X, pos.Y];
+							offsetCenter += GeometryUtils.Vec2FromPolar(4, projectile.rotation + MathHelper.PiOver2);
+							pos = offsetPos;
+						}
+					} else {
+						offsetCenter -= projectile.velocity;
+						pos = offsetCenter.ToTileCoordinates();
+					}
+				}
+				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pos, liquidSize, tileAction);
 			}
 		}
 	}
