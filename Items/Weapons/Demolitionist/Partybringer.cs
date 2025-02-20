@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return new Vector2(-8f, -8f);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			switch (Main.rand.Next(6)) {
+			switch (Main.rand.Next(player.ownedProjectileCounts[ModContent.ProjectileType<Partybringer_Turret>()] < Partybringer_Turret.MaxTurrets ? 6 : 5)) {
 				default:
 				type = Item.shoot;
 				break;
@@ -219,7 +219,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnKill(int timeLeft) {
 			base.OnKill(timeLeft);
 			if (Projectile.owner != Main.myPlayer) return;
-			if (Main.rand.NextBool()) {
+			if (Main.LocalPlayer.ownedProjectileCounts[ModContent.ProjectileType<Partybringer_Turret>()] < Partybringer_Turret.MaxTurrets && Main.rand.NextBool()) {
 				Projectile.NewProjectile(
 					Projectile.GetSource_Death(),
 					Projectile.Center,
@@ -272,6 +272,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Partybringer_Turret : ModProjectile {
 		static AutoLoadingAsset<Texture2D> podTexture = typeof(Partybringer_Turret).GetDefaultTMLName() + "_Pods";
+		public static int MaxTurrets => 15;
 		public int CanisterID {
 			get => (int)Projectile.localAI[2];
 			set => Projectile.localAI[2] = value;

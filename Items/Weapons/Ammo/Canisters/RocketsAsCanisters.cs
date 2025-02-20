@@ -29,7 +29,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			return null;
 		}
 		public override void SetStaticDefaults() {
-			//uncomment, then insert outer & inner colors
 			static CanisterData Canister(uint outer, uint inner, bool special = false) {
 				static Color FromHex(uint value) {
 					return new((int)((0xff0000 & value) >> 16), (int)((0x00ff00 & value) >> 8), (int)((0x0000ff & value) >> 0));
