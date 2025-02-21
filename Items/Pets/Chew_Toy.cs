@@ -19,11 +19,13 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
+using Origins.Items.Weapons.Melee;
 
 namespace Origins.Items.Pets {
 	public class Chee_Set : DevSet<Chew_Toy> {
-		public override IEnumerable<int> GetDrops() {
+		public override IEnumerable<ItemTypeDropRuleWrapper> GetDrops() {
 			yield return ModContent.ItemType<Chew_Toy>();
+			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<The_Bird>()));
 		}
 	}
 	public class Chew_Toy : ModItem, ICustomWikiStat, ICustomPetFrames {

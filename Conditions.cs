@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -27,7 +28,13 @@ namespace Origins {
 			public bool CanShowItemDropInUI() => true;
 			public string GetConditionDescription() => null;
 		}
+		public class HardmodeBossBagCondition : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) => !ItemID.Sets.PreHardmodeLikeBossBag.IndexInRange(info.item) || !ItemID.Sets.PreHardmodeLikeBossBag[info.item] || Main.tenthAnniversaryWorld;
+			public bool CanShowItemDropInUI() => true;
+			public string GetConditionDescription() => Language.GetOrRegister("Mods.Origins.Conditions.HardmodeBossBag").Value;
+		}
 		public static IItemDropRuleCondition PlayerInteraction { get; private set; } = new PlayerInteractionCondition();
+		public static IItemDropRuleCondition HardmodeBossBag { get; private set; } = new HardmodeBossBagCondition();
 		public void Load(Mod mod) { }
 		public void Unload() {
 			foreach (FieldInfo item in GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {

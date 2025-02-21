@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	public class Plague_Texan_Set : DevSet<Plague_Texan_Mask> {
-		public override IEnumerable<int> GetDrops() {
+		public override IEnumerable<ItemTypeDropRuleWrapper> GetDrops() {
 			yield return ModContent.ItemType<Plague_Texan_Mask>();
 			yield return ModContent.ItemType<Plague_Texan_Jacket>();
 			yield return ModContent.ItemType<Plague_Texan_Jeans>();

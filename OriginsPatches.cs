@@ -84,6 +84,9 @@ using Terraria.GameContent.Generation;
 using Origins.Items.Mounts;
 using BetterDialogue.UI;
 using Terraria.ModLoader.Config;
+using Microsoft.Xna.Framework.Audio;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -668,6 +671,25 @@ namespace Origins {
 			};
 			IL_Player.CheckDrowning += Toxic_Shock_Debuff.IL_Player_CheckDrowning;
 			IL_Player.WaterCollision += Abyssal_Anchor.IL_Player_WaterCollision;
+			/*
+			FastFieldInfo<SoundEffect, FAudio.FAudioBuffer> _handle = new("handle", BindingFlags.NonPublic);
+			FastFieldInfo<SoundEffect, ushort> _channels = new("channels", BindingFlags.NonPublic);
+			FastFieldInfo<SoundEffect, uint> _sampleRate = new("sampleRate", BindingFlags.NonPublic);
+			MonoModHooks.Add(typeof(SoundEffect).GetMethod(nameof(SoundEffect.CreateInstance)), (Func<SoundEffect, SoundEffectInstance> orig, SoundEffect self) => {
+				FAudio.FAudioBuffer handle = _handle.GetValue(self);
+				int sampleRate = (int)_sampleRate.GetValue(self);
+				byte[] bytes = new byte[handle.AudioBytes];
+				Marshal.Copy(handle.pAudioData, bytes, 0, bytes.Length);
+				ushort[] buffer = new ushort[bytes.Length / 2];
+				Buffer.BlockCopy(bytes, 0, buffer, 0, bytes.Length);
+				for (int i = 0; i < buffer.Length; i++) {
+					//buffer[i] = (ushort)(buffer[i] / 2);//(ushort)(buffer[i] * 1.1f);
+					//bytes[i] = (byte)(bytes[i] / 2);//Math.Min(buffer[i], (ushort)(ushort.MaxValue / 8));
+				}
+				Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
+				SoundEffect newEffect = new(bytes, sampleRate, (AudioChannels)_channels.GetValue(self));
+				return orig(newEffect);//orig(self);
+			});//*/
 		}
 
 		static bool shouldDoHeliumSound = false;

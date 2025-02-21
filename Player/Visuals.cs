@@ -78,7 +78,7 @@ namespace Origins {
 			}
 		}
 		public override void FrameEffects() {
-			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {
+			for (int i = 13; i < 18 + Player.extraAccessorySlots * 2; i++) {
 				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
 			}
 			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {

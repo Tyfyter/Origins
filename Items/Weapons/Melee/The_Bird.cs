@@ -35,14 +35,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item82.WithPitchRange(0.8f, 1f);
 			Item.scale = 1f;
 		}
-		public override void AddRecipes() {
-			/*
-			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Baseball_Bat>())
-			.AddIngredient(ModContent.ItemType<Razorwire>())
-			.Register();
-			//*/
-		}
 		public override bool? CanHitNPC(Player player, NPC target) => player.altFunctionUse == 2 ? null : false;
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
 		public override bool AltFunctionUse(Player player) => true;

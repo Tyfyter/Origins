@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -60,6 +61,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public virtual void AI(Projectile projectile, bool child) { }
 		public virtual void OnKill(Projectile projectile, bool child) {
 			ExplosiveGlobalProjectile.DoExplosion(projectile, explosionSize);
+			SoundEngine.PlaySound(SoundID.Item14, projectile.Center);
 			if (tileDestructionRadius > 0) {
 				Vector2 center = projectile.Center;
 				int i = (int)(center.X / 16);

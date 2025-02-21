@@ -42,6 +42,11 @@ Items: {
 	// Unmisfire.Tooltip: Corrects your shitty aim
 	// Spirit_Shard.DisplayName: SpiritS hard
 	// Terrarian_Voodoo_Doll.Tooltip: Should be thrown in lava or amebic gel
+
+	Meteor: {
+		// DisplayName: Meteor Toaster
+		// Tooltip: Ding!
+	}
 }
 
 // Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!

@@ -17,6 +17,7 @@ Conditions: {
 	DownedScrapper: After defeating the Scrapper
 	BiomeKey: Drops in the Hardmode {0}
 	BiomeKeyNoThe: Drops in Hardmode {0}
+	HardmodeBossBag: Drops from Hardmode Boss Bags
 }
 
 ModMenu: {
