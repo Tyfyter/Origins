@@ -1,15 +1,11 @@
-﻿using Origins.NPCs.Dungeon;
-using PegasusLib;
-using System;
+﻿using PegasusLib;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Guided_Missile : ModProjectile {
@@ -35,7 +31,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			void MoveTowardsTarget(Vector2 target, float inertia = 25) {
 				float damageMult = ContentExtensions.DifficultyDamageMultiplier;
 				inertia -= damageMult * 2;
-				float speed = 8 + damageMult * 0.5f;
+				float speed = 10 + damageMult * 0.5f;
 				Projectile.velocity = (((target - Projectile.Center).SafeNormalize(default) * speed + Projectile.velocity * (inertia - 1)) / inertia).WithMaxLength(speed);
 			}
 			if (CollisionExt.CanHitRay(Projectile.Center, target.Center)) {

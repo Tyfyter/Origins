@@ -531,7 +531,8 @@ namespace Origins.NPCs.Defiled.Boss {
 
 						switch ((int)NPC.ai[1]) {
 							case 20:
-							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1f), NPC.Center);
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
 								float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
 								Projectile.NewProjectileDirect(

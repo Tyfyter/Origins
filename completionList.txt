@@ -1577,6 +1577,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
+(X) Shimmer Construct
 (X) Tearror
 
 (X) Ashen Invasion
@@ -1619,6 +1620,7 @@ VOLUME II MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
+(X) Shimmer Construct
 (X) Tearror
 
 (X) Ashen Invasion
