@@ -1491,6 +1491,7 @@ Projectiles: {
 	// DA_Spike.DisplayName: D A Spike
 	// DA_Spike_Bendy.DisplayName: D A Spike Bendy
 	// DA_Guided_Missile.DisplayName: D A Guided Missile
+	// Torpedo_Tube_P.DisplayName: Torpedo Tube P
 }
 
 Prefixes: {

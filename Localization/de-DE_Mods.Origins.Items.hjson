@@ -5117,3 +5117,8 @@ Lost_Diver_Bag: {
 	// DisplayName: Treasure Bag (Lost Diver)
 	// Tooltip: ""
 }
+
+Torpedo_Tube: {
+	// DisplayName: Torpedo Tube
+	// Tooltip: ""
+}
