@@ -416,18 +416,21 @@ AltBiomes: {
 		// DisplayName: "{§Defiled_Wastelands}"
 		// Description: The physical manifestation of an egregore that desires constant growth and endless survival through its unique way of life.
 		// GenPassName: Defiledifying
+		// DryadTextDescriptor: defiled
 	}
 
 	Riven_Hive_Alt_Biome: {
 		// DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
 		// Description: A natural biome shaped by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
 		// GenPassName: Blue Lobsterating
+		// DryadTextDescriptor: riven
 	}
 
 	Ashen_Alt_Biome: {
 		// DisplayName: Ashen Factory
 		// Description: Ashen Alt Biome
 		// GenPassName: Ashen Alt Biome
+		// DryadTextDescriptor: ashen
 	}
 }
 
