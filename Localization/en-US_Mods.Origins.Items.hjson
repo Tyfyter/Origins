@@ -5112,3 +5112,8 @@ Necromancer_Crown: {
 	DisplayName: Necromancer Mask
 	Tooltip: +15% summon attack speed
 }
+
+Lost_Diver_Bag: {
+	DisplayName: Treasure Bag (Lost Diver)
+	Tooltip: ""
+}

@@ -170,13 +170,14 @@ namespace Origins.NPCs.Defiled.Boss {
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Defiled_Amalgamation_Relic_Item>()));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
 		}
-		const int state_single_dash = 1;
-		const int state_projectiles = 2;
-		const int state_triple_dash = 3;
-		const int state_sidestep_dash = 4;
-		const int state_summon_roar = 5;
-		const int state_ground_spikes = 6;
-		int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
+		public const int state_single_dash = 1;
+		public const int state_projectiles = 2;
+		public const int state_triple_dash = 3;
+		public const int state_sidestep_dash = 4;
+		public const int state_summon_roar = 5;
+		public const int state_ground_spikes = 6;
+		public const int state_magic_missile = 7;
+		public int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public override void AI() {
 			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
 			NPC.target = Main.maxPlayers;
@@ -226,6 +227,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
+									new(state_magic_missile, 1f),
 									]
 								);
 								int lastUsedAttack = -AIState;
@@ -506,6 +508,52 @@ namespace Origins.NPCs.Defiled.Boss {
 						armSpeed = 0.2f;
 					}
 					break;
+
+					case state_magic_missile: {
+						CheckTrappedCollision();
+						if ((int)NPC.ai[1] == 20) {
+							NPC.ai[1]++;
+						} else {
+							NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
+						}
+						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
+						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
+						float speed = 3;
+
+						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
+						float diffX = NPC.Center.X - NPC.targetRect.Center().X;
+						diffX -= Math.Sign(diffX) * targetX;
+						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
+						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), 0.4f);
+						leftArmTarget = -0.75f;
+						rightArmTarget = -0.75f;
+						armSpeed = 0.1f;
+
+						switch ((int)NPC.ai[1]) {
+							case 20:
+							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+							if (Main.netMode != NetmodeID.MultiplayerClient) {
+								float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
+								Projectile.NewProjectileDirect(
+									NPC.GetSource_FromAI(),
+									NPC.Center,
+									Vector2.Normalize(NPC.targetRect.Center() - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
+									ModContent.ProjectileType<DA_Guided_Missile>(),
+									(int)((24 - (realDifficultyMult * 3)) * realDifficultyMult),
+									0f,
+									ai0: NPC.whoAmI
+								);
+							}
+							break;
+							default:
+							if (NPC.ai[1] > 60 * 7.5f) {
+								AIState = -AIState;
+								NPC.ai[1] = 0;
+							}
+							break;
+						}
+					}
+					break;
 				}
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
@@ -624,10 +672,18 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			if (AIState == state_magic_missile) {
+				NPC.ai[1] += projectile.knockBack;
+			}
+
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_OnHurt(projectile), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			if (AIState == state_magic_missile) {
+				NPC.ai[1] += player.GetWeaponKnockback(item);
+			}
+
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_OnHurt(player), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
