@@ -1,30 +1,24 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo;
-using Origins.Projectiles;
-using Origins.Tiles.Cubekon;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using PegasusLib;
+using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Torpedo_Tube : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Torpedo_Tube_P>(38, 34, 7f, 44, 18);
-			Item.value = Item.sellPrice(gold: 15);
-			Item.rare = ButterscotchRarity.ID;
+			Item.DefaultToCanisterLauncher<Torpedo_Tube_P>(54, 44, 8f, 44, 18);
+			Item.value = Item.sellPrice(gold: 5);
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 		}
-		public override Vector2? HoldoutOffset() => Vector2.Zero;
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-8f, -8f);
+		}
 	}
 	public class Torpedo_Tube_P : ModProjectile, ICanisterProjectile {
 		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
@@ -72,12 +66,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 					OriginExtensions.AngularSmoothing(
 						ref velocity.Theta,
 						targetDiff.ToRotation(),
-						0.003f + velocity.R * 0.0015f * Origins.HomingEffectivenessMultiplier[Projectile.type]
+						0.02f + velocity.R * 0.006f * Origins.HomingEffectivenessMultiplier[Projectile.type]
 					);
 					Projectile.velocity = (Vector2)velocity;
 				}
 			} else {
-				Projectile.velocity.Y += 0.04f;
+				Projectile.velocity.Y += 0.1f;
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)

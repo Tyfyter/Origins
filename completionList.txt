@@ -157,7 +157,7 @@ ENEMY NPCS:
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
-(^) Cloud Elemental° !!!
+(^) Cloud Elemental°
 (^) Conehead Zombie°
 (X) Corrupt Reaper
 (^) Cranivore*
@@ -218,7 +218,7 @@ ENEMY NPCS:
 (X) Holy Warrior
 (#2, ^2) Leaf Snapper !!!
 (^) King Crab
-(#3?, ^2) Mildew Creeper !!!
+(#3, ^2) Mildew Creeper !!!
 (^) Mitoworm*
 (^) Nasty Crawdad
 (^) Profaned Bident*
@@ -328,7 +328,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(X) Extremophile Armor !!!
+(#, ^2) Extremophile Armor !!!
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -426,7 +426,7 @@ ACCESSORIES:
 (^) Laser Tag Vest*
 (^) Last Descendent*
 (ᗢ) Lazy Cloak°
-(X) Liar's Tongue !!!
+(#, ^2) Liar's Tongue !!!
 (^) Lightning Ring*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -485,7 +485,7 @@ ACCESSORIES:
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
-(X) Sunder Gut !!!
+(#, ^2) Sunder Gut !!!
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
@@ -940,6 +940,7 @@ EXPLOSIVE WEAPONS:
 (^) Floaty Bomb*
 (^) Glass Cannon*
 (^) Hand Grenade Launcher
+(#, ^2) Heartache Dynamite !!!
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
 (^) Hemoptysis
@@ -974,7 +975,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Sonar Dynamite !!!
 (ᗢ) Sonorous Shredder
 (^) Thermite Launcher*
-(#, ^2) Torpedo Tube !!!
+(^) Torpedo Tube
 
 (X) Autohandcannon
 (^) Bomboomstick
@@ -1147,7 +1148,8 @@ TILES:
 (X) Sanguinite Brick
 (X) Shadow Torch°
 (^) Traffic Cone*
-(#, ^5) Wilting Rose Planter Box !!!
+(#, ^5) Wilting Rose Planter Box
+(X) Wrycoral Planter Box
 
 (X) Batholith Grindstone°
 (^) Cleansing Station*
@@ -1214,8 +1216,8 @@ TILES:
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
-(X) Fiberglass Weaver Relic* !!!
-(X) Fiberglass Weaver Trophy* !!!
+(#, ^2) Fiberglass Weaver Relic* !!!
+(#, ^2) Fiberglass Weaver Trophy* !!!
 (#, ^2) Lost Diver Relic* !!!
 (#2, ^2) Lost Diver Trophy* !!!
 (々) Miscreant Relic*
@@ -1266,7 +1268,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(X) Geothermal Sludge !!!
+(#, ^2) Geothermal Sludge !!!
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*
@@ -1356,7 +1358,7 @@ CONSUMABLES:
 (^) Blue Bovine*
 (^) Bread*
 (^) Brine Cheese*
-(X) Ceaser Salad !!!
+(#, ^2) Ceaser Salad !!!
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*
@@ -1402,7 +1404,7 @@ CONSUMABLES:
 (^) White Water*
 
 (X) Ashen Key
-(X) Brine Key !!!
+(#, ^2) Brine Key !!!
 (^) Dawn Key°
 (^) Defiled Key*
 (^) Dusk Key°
@@ -1421,7 +1423,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(X) Terlet Paper !!!
+(X) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (#, ^2) Wet Wood (Mildew Blob) !!!
 
 (^) Amoeba Toy (Meberoid)*
