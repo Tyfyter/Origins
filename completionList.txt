@@ -654,10 +654,10 @@ MELEE WEAPONS:
 (^) Felnum Boar Spear*
 (^) Fiberglass Sword*
 (^) Hemorang*
-(^) Krakram*
+(#2, ^2) Krakram* !!! (rework)
 (^) Marrowick Sword*
 (^) Nineball*
-(^) Orbital Saw
+(^) Orbital Saw*
 (^) Ripper Lance*
 (^) Riverang*
 (^) Snapthrow*
@@ -668,12 +668,11 @@ MELEE WEAPONS:
 (^) Switchblade*
 (^) Thunderbolt
 (^) Triple Threat*
-(^) Tyrfing
 (^) Vorpal Sword (Cursed)*
 (^) Vorpal Sword (Uncursed)*
-(^) Waning Crescent
+(^) Waning Crescent*
 
-(^) Amenonuhoko
+(#2, ^2) Amenonuhoko !!! (rework)
 (^) Amoebash*
 (#, ^2) Boomboom !!!
 (#2, ^2) Crystal Cutters !!! (Orb fade effects)

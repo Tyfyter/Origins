@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using PegasusLib;
@@ -81,6 +82,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (++Projectile.frameCounter >= 4) {
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
 			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 120);
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {
