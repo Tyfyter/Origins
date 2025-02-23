@@ -8,6 +8,7 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Melee;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
 using Origins.NPCs.Defiled;
@@ -231,6 +232,20 @@ namespace Origins {
 				OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
 				originGlobalNPC.priorityMailTime = originGlobalNPC.prevPriorityMailTime;
 			}
+			if (faithBeads) {
+				target.AddBuff(Cavitation_Debuff.ID, 90);
+				target.AddBuff(BuffID.Wet, 180);
+				if (target.wet && Main.myPlayer == Player.whoAmI && faithBeadsItem is not null) {
+					Projectile.NewProjectile(
+						Player.GetSource_Accessory(faithBeadsItem),
+						target.Center,
+						default,
+						faithBeadsItem.shoot,
+						Player.GetWeaponDamage(faithBeadsItem),
+						Player.GetWeaponKnockback(faithBeadsItem)
+					);
+				}
+			}
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
@@ -248,6 +263,20 @@ namespace Origins {
 			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer && !proj.IsMinionOrSentryRelated) {
 				OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
 				originGlobalNPC.priorityMailTime = originGlobalNPC.prevPriorityMailTime;
+			}
+			if (faithBeads) {
+				target.AddBuff(Cavitation_Debuff.ID, 90);
+				target.AddBuff(BuffID.Wet, 180);
+				if (target.wet && Main.myPlayer == Player.whoAmI && faithBeadsItem is not null && proj.type != faithBeadsItem.shoot) {
+					Projectile.NewProjectile(
+						Player.GetSource_Accessory(faithBeadsItem),
+						target.Center,
+						default,
+						faithBeadsItem.shoot,
+						Player.GetWeaponDamage(faithBeadsItem),
+						Player.GetWeaponKnockback(faithBeadsItem)
+					);
+				}
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -289,6 +318,10 @@ namespace Origins {
 				if (scavengerSet) {
 					OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
 				}
+			}
+			if (faithBeads) {
+				target.AddBuff(Cavitation_Debuff.ID, 90);
+				target.AddBuff(BuffID.Wet, 180);
 			}
 			if (target.life <= 0) {
 				foreach (Quest quest in Quest_Registry.Quests) {

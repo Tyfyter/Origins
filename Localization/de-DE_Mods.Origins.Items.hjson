@@ -5122,3 +5122,8 @@ Torpedo_Tube: {
 	// DisplayName: Torpedo Tube
 	// Tooltip: ""
 }
+
+Faith_Beads: {
+	// DisplayName: Faith Beads
+	// Tooltip: ""
+}

@@ -254,6 +254,8 @@ namespace Origins {
 		public float mildewHealth = 0;
 		public PlayerDeathReason lastMildewDeathReason;
 		public bool lastMildewDeathPvP = false;
+		public bool faithBeads = false;
+		public Item faithBeadsItem = null;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -654,6 +656,7 @@ namespace Origins {
 			fairyLotus = false;
 			abyssalAnchor = false;
 			mildewHeart = false;
+			faithBeads = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {
