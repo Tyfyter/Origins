@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 		}
+		public override Vector2? HoldoutOffset() => Vector2.Zero;
 	}
 	public class Torpedo_Tube_P : ModProjectile, ICanisterProjectile {
 		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
@@ -75,6 +76,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					);
 					Projectile.velocity = (Vector2)velocity;
 				}
+			} else {
+				Projectile.velocity.Y += 0.04f;
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)
