@@ -265,9 +265,9 @@ namespace Origins.NPCs.MiscE.Quests {
 				NPC.ai[3] = 0;
 				NPC.aiAction = 1;
 			}
-			_ = NPC.position;
-			if (NPC.justHit) {
-				if (FindTeleportPosition(out int bestX, out int bestY, out int minValue, out int maxValue)) {
+			if (NPC.justHit || NPC.localAI[2] > 0) {
+				if (++NPC.localAI[2] > 60 && FindTeleportPosition(out int bestX, out int bestY, out int minValue, out int maxValue)) {
+					NPC.localAI[2] = 0;
 					ParticleOrchestraSettings particleSettings;
 					int taxCollectorID = ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>();
 					foreach (NPC other in Main.ActiveNPCs) {
@@ -309,7 +309,6 @@ namespace Origins.NPCs.MiscE.Quests {
 				Tax_Collector_Ghosts_Quest.GetTime(out int hour, out _);
 				if ((hour < 2 || Main.dayTime) && ++NPC.alpha > 255) NPC.active = false;
 			}
-			NPC.aiAction = 1;
 		}
 		public override bool CheckActive() {
 			return Main.dayTime;
