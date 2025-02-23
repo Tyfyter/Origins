@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.NPCs;
 using Origins.Projectiles;
@@ -25,7 +24,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.damage = 99;
-			Item.crit = 44;
+			Item.crit = 21;
 			Item.useAnimation = Item.useTime = 20;
 			Item.rare = ItemRarityID.Cyan;
 			Item.knockBack = 16;
@@ -134,6 +133,7 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
 				if (++Projectile.localAI[0] == player.itemAnimationMax) {
+					SoundEngine.PlaySound(SoundID.Item29.WithVolume(0.5f).WithPitchRange(1f, 1.2f), Projectile.Center);
 					ParticleOrchestrator.RequestParticleSpawn(false,
 						ParticleOrchestraType.SilverBulletSparkle,
 						new() {

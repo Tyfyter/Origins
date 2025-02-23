@@ -2765,6 +2765,7 @@ The_Bird: {
 	// DisplayName: The Bird
 	/* Tooltip:
 		'''
+		Perfectly time your swings to deal incredible damage
 		Developer item
 		'How's being 96000/r in the air going for yah? Thought so'
 		''' */
@@ -5120,10 +5121,21 @@ Lost_Diver_Bag: {
 
 Torpedo_Tube: {
 	// DisplayName: Torpedo Tube
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Inflicts Cavitation
+		Fires a torpedo that seeks enemies while submerged
+		''' */
 }
 
 Faith_Beads: {
 	// DisplayName: Faith Beads
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Immunity to Suffocation and reduces damage from loss of breath
+		Grants the ability to swim and easy movement through liquids
+		All of your attacks inflict Cavitation, Wet and have a chance to cause explosions underwater
+		+40% explosive blast radius
+		'Only through struggle do we find ourselves'
+		''' */
 }

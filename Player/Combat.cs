@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Necromancer;
@@ -8,10 +7,8 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
-using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
 using System;
@@ -21,8 +18,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using ThoriumMod.Empowerments;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -267,15 +262,17 @@ namespace Origins {
 			if (faithBeads) {
 				target.AddBuff(Cavitation_Debuff.ID, 90);
 				target.AddBuff(BuffID.Wet, 180);
-				if (target.wet && Main.myPlayer == Player.whoAmI && faithBeadsItem is not null && proj.type != faithBeadsItem.shoot) {
-					Projectile.NewProjectile(
-						Player.GetSource_Accessory(faithBeadsItem),
-						target.Center,
-						default,
-						faithBeadsItem.shoot,
-						Player.GetWeaponDamage(faithBeadsItem),
-						Player.GetWeaponKnockback(faithBeadsItem)
-					);
+				if (Main.rand.NextBool(faithBeadsItem.useAnimation, faithBeadsItem.reuseDelay)) {
+					if (target.wet && Main.myPlayer == Player.whoAmI && faithBeadsItem is not null && proj.type != faithBeadsItem.shoot) {
+						Projectile.NewProjectile(
+							Player.GetSource_Accessory(faithBeadsItem),
+							target.Center,
+							default,
+							faithBeadsItem.shoot,
+							Player.GetWeaponDamage(faithBeadsItem),
+							Player.GetWeaponKnockback(faithBeadsItem)
+						);
+					}
 				}
 			}
 		}

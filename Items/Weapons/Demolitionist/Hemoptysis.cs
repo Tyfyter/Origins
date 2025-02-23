@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
 using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
@@ -20,6 +21,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.NPCDeath17.WithVolume(0.5f);
 			Item.ArmorPenetration += 1;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrimtaneBar, 10)
+			.AddIngredient(ItemID.TissueSample, 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, -8f);

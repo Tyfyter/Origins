@@ -510,7 +510,7 @@ ACCESSORIES:
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
-(#, ^2) Faith Beads !!!
+(^) Faith Beads
 (^) Fiberglass Dagger*
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
@@ -692,16 +692,16 @@ MELEE WEAPONS:
 (X) Pile Bunker
 (X) Rocket Lance
 (#2, ^2) Telephone Pole*
-(^) Terrarang
-(^) True Light Disc
-(^) True Waning Crescent
+(^) Terrarang*
+(^) True Light Disc*
+(^) True Waning Crescent*
 (○, #2, ^2) Tyrfing
 
 (X) Celestial Point
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
-(^) The Bird°
+(^) The Bird*
 ---
 
 
@@ -711,7 +711,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
-(^) Chipper Knife
+(^) Chipper Knife*
 (^) Endowood Bow
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -753,6 +753,7 @@ RANGED WEAPONS:
 (^) Harpoon Burst Rifle*
 (^) HNO-3 "Viper"
 (^) Incision*
+(X) Lag Spike
 (X) Left Klik°
 (#, ^2) Laser Line Bow !!!
 (^) Mythril Harpoon Gun°
@@ -982,6 +983,7 @@ EXPLOSIVE WEAPONS:
 (X) Chlorophyte Handcannon
 (X) Firework Cannon
 (X) Flarefury
+(X) Holy Hand Grenade
 (^) Mine Flayer*
 (^) Nova Cascade*
 (^) Nova Swarm

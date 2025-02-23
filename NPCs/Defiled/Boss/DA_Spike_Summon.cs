@@ -83,6 +83,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.hostile = true;
 			Projectile.hide = true;
 			Projectile.timeLeft = 20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier);
+			Projectile.knockBack = 0;
 		}
 		public override void AI() {
 			float maxGrowth = 96 * ContentExtensions.DifficultyDamageMultiplier - Projectile.ai[1];

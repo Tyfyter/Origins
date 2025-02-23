@@ -1,8 +1,5 @@
-﻿using MonoMod.Cil;
-using Origins.Buffs;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Projectiles;
-using PegasusLib.Reflection;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -26,11 +23,13 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
-			Item.damage = 20;
+			Item.damage = 46;
 			Item.DamageType = DamageClasses.Explosive;
+			Item.useAnimation = 1;//used as the numerator for the chance
+			Item.reuseDelay = 12;//used as the denominator for the chance
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Faith_Beads_Explosion>();
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.LightRed;
 			Item.master = true;
 			Item.value = Item.sellPrice(gold: 8);
 		}
@@ -48,7 +47,7 @@ namespace Origins.Items.Accessories {
 		public override DamageClass DamageType => DamageClasses.Explosive;
 		public override int Size => 80;
 		public override bool DealsSelfDamage => false;
-		public override SoundStyle? Sound => SoundID.Item14;
+		public override SoundStyle? Sound => Origins.Sounds.Bonk.WithVolume(1f);
 		public override int FireDustAmount => 0;
 		public override void SetDefaults() {
 			base.SetDefaults();

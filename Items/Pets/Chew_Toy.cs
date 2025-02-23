@@ -1,17 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Armor.Vanity.Dev;
 using Origins.Items.Pets;
-using Origins.LootConditions;
+using Origins.Items.Weapons.Melee;
 using Origins.Tiles;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,7 +15,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Items.Pets.Chee_Toy_Message_Types;
-using Origins.Items.Weapons.Melee;
 
 namespace Origins.Items.Pets {
 	public class Chee_Set : DevSet<Chew_Toy> {

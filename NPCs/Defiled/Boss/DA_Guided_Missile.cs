@@ -1,7 +1,7 @@
-﻿using PegasusLib;
+﻿using Origins.Buffs;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.ID;
@@ -166,9 +166,11 @@ namespace Origins.NPCs.Defiled.Boss {
 			goto test;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 160);
 			Projectile.Kill();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 160);
 			Projectile.Kill();
 		}
 		public override void OnKill(int timeLeft) {

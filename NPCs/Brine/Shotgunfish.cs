@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Cil;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
-using Origins.NPCs.Fiberglass;
-using Origins.Projectiles;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;

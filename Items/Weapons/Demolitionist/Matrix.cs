@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles.Ashen;
 using PegasusLib;
 using System;
 using Terraria;
@@ -23,6 +25,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 45);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<NE8>(), 15)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-4f, -2f);

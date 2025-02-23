@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Accessories;
@@ -7,7 +6,6 @@ using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
@@ -32,7 +30,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
@@ -53,7 +50,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int TripleDashCD {
 			get {
-				int inactiveTime = 455 - DifficultyMult * 35;
+				int inactiveTime = 505 - DifficultyMult * 100;
 				if (DifficultyMult == 3) {
 					inactiveTime += 30;
 				}
@@ -85,9 +82,9 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.boss = true;
 			NPC.BossBar = ModContent.GetInstance<Boss_Bar_DA>();
 			NPC.aiStyle = NPCAIStyleID.None;
-			NPC.lifeMax = 3100;
+			NPC.lifeMax = 3250;
 			NPC.defense = 14;
-			NPC.damage = 65;
+			NPC.damage = 62;
 			NPC.width = 81;
 			NPC.height = 96;
 			NPC.friendly = false;
@@ -118,15 +115,15 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 			switch (DifficultyMult) {
 				case 2:
-				NPC.lifeMax = (int)(4960 * balance * terriblyPlacedHookMult);
+				NPC.lifeMax = (int)(5200 * balance * terriblyPlacedHookMult);
 				// NPC.defense = 13;
-				NPC.damage = (int)(76 * terriblyPlacedHookMult);
+				NPC.damage = (int)(73 * terriblyPlacedHookMult);
 				break;
 
 				case 3:
-				NPC.lifeMax = (int)(7936 * balance * terriblyPlacedHookMult);
+				NPC.lifeMax = (int)(8320 * balance * terriblyPlacedHookMult);
 				// NPC.defense = 15;
-				NPC.damage = (int)(104 * terriblyPlacedHookMult);
+				NPC.damage = (int)(99 * terriblyPlacedHookMult);
 				break;
 			}
 		}
@@ -274,12 +271,12 @@ namespace Origins.NPCs.Defiled.Boss {
 					case state_single_dash: {
 						NPC.ai[1]++;
 						NPC.velocity = NPC.oldVelocity;
-						if (NPC.ai[1] < 25) {
-							float speed = 6;
+						if (NPC.ai[1] < 30 - difficultyMult * 5) {
+							float speed = 5;
 							OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 							NPC.oldVelocity = NPC.velocity;
 						} else if (NPC.ai[1] < 35) {
-							float speed = 12 + difficultyMult * 2f;
+							float speed = 7 + (5 * difficultyMult);
 							OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
 							NPC.oldVelocity = NPC.velocity;
 						} else if (NPC.ai[1] > 80) {
@@ -354,13 +351,13 @@ namespace Origins.NPCs.Defiled.Boss {
 								SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
 							}
 							NPC.velocity = NPC.oldVelocity;
-							if (NPC.ai[1] % cycleLength < 30 - (difficultyMult * 3)) {
-								float speed = 8;
+							if (NPC.ai[1] % cycleLength < 10 - (difficultyMult * 3)) {
+								float speed = 4;
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 								NPC.oldVelocity = NPC.velocity;
-							} else if (NPC.ai[1] % cycleLength < 40 - (difficultyMult * 2)) {
-								float speed = 13 + (3 * difficultyMult);
-								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
+							} else if (NPC.ai[1] % cycleLength < 18 - (difficultyMult * 2)) {
+								float speed = 8 + (4 * difficultyMult);
+								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 8f);
 								NPC.oldVelocity = NPC.velocity;
 							} else if (NPC.ai[1] % cycleLength > dashLength || NPC.collideX || NPC.collideY) {
 								NPC.ai[2] = NPC.targetRect.Center().X;
@@ -412,7 +409,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					//"beckoning roar"
 					case state_summon_roar: {
 						Main.instance.CameraModifiers.Add(new CameraShakeModifier(
-							NPC.Center, 10f, 16f, 60, 1200f, 1f, nameof(Defiled_Amalgamation)
+							NPC.Center, 10f, 16f, 60, 5000f, 1f, nameof(Defiled_Amalgamation)
 						));
 						NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
@@ -668,7 +665,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (DifficultyMult >= 2) {
 				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (DifficultyMult - 1) * 15);
+					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (DifficultyMult - 1) * 46);
 				}
 			}
 		}

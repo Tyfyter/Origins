@@ -1,13 +1,10 @@
-using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Dev;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.Audio;
-using System;
-using Terraria.GameContent.Drawing;
 namespace Origins.Items.Weapons.Melee {
 	public class Waning_Crescent : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -24,7 +21,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Waning_Crescent_Thrown>();
 			Item.shootSpeed = 11.75f;
 			Item.knockBack = 5f;
-			Item.value = Item.sellPrice(silver: 50);
+			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 		}

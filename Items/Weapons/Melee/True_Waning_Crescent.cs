@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using System;
 using Terraria;
@@ -20,9 +19,9 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 18;
 			Item.useAnimation = 18;
 			Item.shoot = ModContent.ProjectileType<True_Waning_Crescent_Thrown>();
-			Item.shootSpeed = 11.75f;
+			Item.shootSpeed = 15f;
 			Item.knockBack = 5f;
-			Item.value = Item.sellPrice(silver: 50);
+			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item1;
 		}
