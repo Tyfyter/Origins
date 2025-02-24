@@ -341,6 +341,12 @@ namespace Origins {
 			set => Player.BuilderToggleState<Mojo_Injection_Toggle>() = (!value).ToInt();
 		}
 		public bool MojoInjectionActive => mojoInjection && MojoInjectionEnabled;
+		public bool crownJewel = false;
+		public bool CrownJewelEnabled {
+			get => Player.BuilderToggleState<Crown_Jewel_Toggle>() == 0;
+			set => Player.BuilderToggleState<Crown_Jewel_Toggle>() = (!value).ToInt();
+		}
+		public bool CrownJewelActive => crownJewel && CrownJewelEnabled;
 		public int defiledWill = 0;
 
 		public int talkingPet = 0;

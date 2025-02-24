@@ -459,6 +459,7 @@ namespace Origins {
 				}
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
+			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {
@@ -599,6 +600,7 @@ namespace Origins {
 			}
 			tag.Add("Assimilations", assimilations);
 			tag.Add("mojoInjection", mojoInjection);
+			tag.Add("crownJewel", crownJewel);
 			tag.Add("GUID", guid.ToByteArray());
 		}
 		public override void LoadData(TagCompound tag) {
@@ -631,6 +633,7 @@ namespace Origins {
 				}
 			}
 			mojoInjection = tag.SafeGet<bool>("mojoInjection");
+			crownJewel = tag.SafeGet<bool>("crownJewel");
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
 				guid = new Guid(guidBytes, false);
 			} else {

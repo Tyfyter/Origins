@@ -353,6 +353,13 @@ namespace Origins {
 					"player",
 					() => Main.LocalPlayer.OriginPlayer().mojoInjection
 				);
+				munchies.Call("AddSingleConsumable",
+					Origins.instance,
+					"1.4.2",
+					ModContent.GetInstance<Crown_Jewel>(),
+					"player",
+					() => Main.LocalPlayer.OriginPlayer().crownJewel
+				);
 			}
 		}
 		public static void AddRecipes() {

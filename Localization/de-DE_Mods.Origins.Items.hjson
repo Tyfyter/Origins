@@ -5165,3 +5165,11 @@ Lost_Diver_Helmet: {
 	// DisplayName: Lost Diver Helmet
 	// Tooltip: ""
 }
+
+Crown_Jewel: {
+	// DisplayName: Crown Jewel
+	// Tooltip: ""
+	// Toggle_On: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} on"
+	// Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} off"
+	// BossesSlain: "{0} bosses slain"
+}

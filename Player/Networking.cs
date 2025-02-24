@@ -76,6 +76,8 @@ namespace Origins {
 			OriginPlayer clone = (OriginPlayer)targetCopy;// shoot this one
 			clone.mojoInjection = mojoInjection;
 			clone.MojoInjectionEnabled = MojoInjectionEnabled;
+			clone.crownJewel = crownJewel;
+			clone.CrownJewelEnabled = CrownJewelEnabled;
 			clone.quantumInjectors = quantumInjectors;
 			clone.defiledWill = defiledWill;
 			clone.tornTarget = tornTarget;
@@ -93,8 +95,14 @@ namespace Origins {
 			PlayerVisualSyncDatas visualSyncDatas = 0;
 			if (clone.mojoInjection != mojoInjection) syncDatas |= MojoInjection;
 			if (clone.MojoInjectionEnabled != MojoInjectionEnabled) syncDatas |= MojoInjectionToggled;
+
+			if (clone.crownJewel != crownJewel) syncDatas |= CrownJewel;
+			if (clone.CrownJewelEnabled != CrownJewelEnabled) syncDatas |= CrownJewelToggled;
+
 			if (clone.quantumInjectors != quantumInjectors) syncDatas |= QuantumInjectors;
+
 			if (clone.defiledWill != defiledWill) syncDatas |= DefiledWills;
+
 			if (clone.tornTarget != tornTarget || clone.tornSeverityRate != tornSeverityRate) syncDatas |= Torn;
 
 			if (CheckAssimilationDesync(clone) && !Player.HasBuff(Purifying_Buff.ID)) syncDatas |= Assimilation;
@@ -125,7 +133,12 @@ namespace Origins {
 			packet.Write((ushort)syncDatas);
 			if (syncDatas.HasFlag(MojoInjection)) packet.Write(mojoInjection);
 			if (syncDatas.HasFlag(MojoInjectionToggled)) packet.Write(MojoInjectionEnabled);
+
+			if (syncDatas.HasFlag(CrownJewel)) packet.Write(crownJewel);
+			if (syncDatas.HasFlag(CrownJewelToggled)) packet.Write(CrownJewelEnabled);
+
 			if (syncDatas.HasFlag(QuantumInjectors)) packet.Write((byte)quantumInjectors);
+
 			if (syncDatas.HasFlag(DefiledWills)) packet.Write((byte)defiledWill);
 			if (syncDatas.HasFlag(Torn)) {
 				packet.Write(tornTarget);
@@ -147,8 +160,14 @@ namespace Origins {
 			PlayerSyncDatas syncDatas = (PlayerSyncDatas)reader.ReadUInt16();
 			if (syncDatas.HasFlag(MojoInjection)) mojoInjection = reader.ReadBoolean();
 			if (syncDatas.HasFlag(MojoInjectionToggled)) MojoInjectionEnabled = reader.ReadBoolean();
+
+			if (syncDatas.HasFlag(CrownJewel)) crownJewel = reader.ReadBoolean();
+			if (syncDatas.HasFlag(CrownJewelToggled)) CrownJewelEnabled = reader.ReadBoolean();
+
 			if (syncDatas.HasFlag(QuantumInjectors)) quantumInjectors = reader.ReadByte();
+
 			if (syncDatas.HasFlag(DefiledWills)) defiledWill = reader.ReadByte();
+
 			if (syncDatas.HasFlag(Torn)) {
 				tornTarget = reader.ReadSingle();
 				tornSeverityRate = reader.ReadSingle();
@@ -165,15 +184,17 @@ namespace Origins {
 	}
 	[Flags]
 	public enum PlayerSyncDatas : ushort {
-		Assimilation		 = 0b00000001,
-		Torn				 = 0b00000010,
-		MojoInjectionToggled = 0b00000100,
-		MojoInjection		 = 0b00100000,
-		DefiledWills		 = 0b01000000,
-		QuantumInjectors	 = 0b10000000,
+		Assimilation		 = 0b0000000000000001,
+		Torn				 = 0b0000000000000010,
+		MojoInjectionToggled = 0b0000000000000100,
+		CrownJewelToggled	 = 0b0000000000001000,
+		CrownJewel			 = 0b0000000000010000,
+		MojoInjection		 = 0b0000000000100000,
+		DefiledWills		 = 0b0000000001000000,
+		QuantumInjectors	 = 0b0000000010000000,
 	}
 	[Flags]
 	public enum PlayerVisualSyncDatas : ushort {
-		BlastSetActive   = 0b00000001,
+		BlastSetActive   = 0b0000000000000001,
 	}
 }
