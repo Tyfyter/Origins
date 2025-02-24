@@ -3,9 +3,9 @@ using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Projectiles;
+
 namespace Origins.Items.Weapons.Ranged {
     public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
         public new string[] Categories => [
@@ -47,6 +47,11 @@ namespace Origins.Items.Weapons.Ranged {
 				global.chainRandom = new(global.chainFrameSeed);
 			}
 			return global.chainRandom.Next(ChainFrames);
+		}
+	}
+	public class Boat_Rocker_Alt : Boat_Rocker {
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Boat_Rocker>()] = Type;
 		}
 	}
 }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Items.Weapons.Ranged;
 using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
@@ -19,6 +20,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, -8f);
+		}
+	}
+	public class Torpedo_Tube_Alt : Torpedo_Tube {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Torpedo_Tube>()] = Type;
 		}
 	}
 	public class Torpedo_Tube_P : ModProjectile, ICanisterProjectile {

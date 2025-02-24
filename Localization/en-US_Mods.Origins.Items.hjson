@@ -5185,3 +5185,18 @@ First_Dream: {
 	Mode_Diver: Diver
 	Tooltip: ""
 }
+
+Tender_Flesh_Heart: {
+	DisplayName: Tender Flesh Heart
+	Tooltip: ""
+}
+
+Torpedo_Tube_Alt: {
+	DisplayName: "{$Mods.Origins.Items.Torpedo_Tube.DisplayName}"
+	Tooltip: "{$Mods.Origins.Items.Torpedo_Tube.Tooltip}"
+}
+
+Boat_Rocker_Alt: {
+	DisplayName: "{$Mods.Origins.Items.Boat_Rocker.DisplayName}"
+	Tooltip: "{$Mods.Origins.Items.Boat_Rocker.Tooltip}"
+}
