@@ -49,6 +49,7 @@ namespace Origins.NPCs {
 		public bool miniStaticShock = false;
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
+		public bool electrified = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public bool amberDebuff = false;
@@ -105,6 +106,7 @@ namespace Origins.NPCs {
 			staticShock = false;
 			miniStaticShock = false;
 			staticShockDamage = false;
+			electrified = false;
 			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
@@ -217,6 +219,10 @@ namespace Origins.NPCs {
 				int damageMult = 1 + npc.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
 				npc.lifeRegen -= 8 * damageMult;
 				if (damage < 3 * damageMult) damage = 3 * damageMult;
+			}
+			if (electrified) {
+				int damageMult = 1 + npc.wet.ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+				if (damage < 40 * damageMult) damage = 40 * damageMult;
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				npc.lifeRegen -= 15;

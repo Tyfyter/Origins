@@ -1039,6 +1039,11 @@ Buffs: {
 		DisplayName: Mildew Blobbin'
 		Description: He do be blobbin' around
 	}
+
+	Electrified_Debuff: {
+		DisplayName: Electrified Debuff
+		Description: Mods.Origins.Buffs.Electrified_Debuff.Description
+	}
 }
 
 DamageClassName: {
