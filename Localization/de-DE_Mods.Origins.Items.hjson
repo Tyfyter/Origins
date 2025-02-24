@@ -5150,3 +5150,18 @@ Watered_Down_Keytar: {
 	// DisplayName: Watered Down Keytar
 	// Tooltip: ""
 }
+
+Lost_Diver_Chest: {
+	// DisplayName: Lost Diver Chest
+	// Tooltip: ""
+}
+
+Lost_Diver_Greaves: {
+	// DisplayName: Lost Diver Greaves
+	// Tooltip: ""
+}
+
+Lost_Diver_Helmet: {
+	// DisplayName: Lost Diver Helmet
+	// Tooltip: ""
+}
