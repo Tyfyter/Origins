@@ -33,6 +33,7 @@ namespace Origins {
 		public override float UseSpeedMultiplier(Item item) {
 			float speed = 1f;
 			if (item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) speed += gunSpeedBonus;
+			if (retaliatoryTendrilStrength > 0) speed += retaliatoryTendrilStrength;
 			return speed;
 		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
@@ -385,6 +386,13 @@ namespace Origins {
 			if (cryostenSet) {
 				target.AddBuff(BuffID.Frostburn, Main.rand.Next(300, 601));
 			}
+			if (retaliatoryTendrilCharge > 0) {
+				retaliatoryTendrilCharge -= hit.Damage;
+				if (retaliatoryTendrilCharge <= 0) {
+					retaliatoryTendrilCharge = 0;
+					retaliatoryTendrilStrength = 0;
+				}
+			}
 		}
 		#endregion
 		#region receiving
@@ -658,6 +666,15 @@ namespace Origins {
 			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
 				isSelfDamage = true;
 				selfDamageRally = info.Damage;
+			}
+			if (retaliatoryTendril && !isSelfDamage && info.Damage > retaliatoryTendrilItem.useAnimation) {
+				float strength = info.Damage * retaliatoryTendrilItem.knockBack;
+				if (strength > retaliatoryTendrilStrength) {
+					retaliatoryTendrilCharge = retaliatoryTendrilItem.useTime;
+					retaliatoryTendrilStrength = strength;
+				} else {
+					retaliatoryTendrilStrength += strength;
+				}
 			}
 			if (info.PvP && info.CooldownCounter == ImmunityCooldownID.WrongBugNet) {
 				Player.hurtCooldowns[ImmunityCooldownID.WrongBugNet] = Player.longInvince ? 10 : 6;

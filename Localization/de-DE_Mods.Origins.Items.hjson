@@ -5173,3 +5173,8 @@ Crown_Jewel: {
 	// Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} off"
 	// BossesSlain: "{0} bosses slain"
 }
+
+Retaliatory_Tendril: {
+	// DisplayName: Retaliatory Tendril
+	// Tooltip: ""
+}

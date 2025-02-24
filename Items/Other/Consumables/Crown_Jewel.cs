@@ -22,7 +22,7 @@ namespace Origins.Items.Other.Consumables {
 			Origins.AddGlowMask(this, "");
 		}
 		public override void SetDefaults() {
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.buyPrice(gold: 5);
 			Item.useTime = 30;
 			Item.useAnimation = 30;

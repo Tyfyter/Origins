@@ -256,6 +256,10 @@ namespace Origins {
 		public bool lastMildewDeathPvP = false;
 		public bool faithBeads = false;
 		public Item faithBeadsItem = null;
+		public bool retaliatoryTendril = false;
+		public Item retaliatoryTendrilItem = null;
+		public float retaliatoryTendrilStrength = 0;
+		public int retaliatoryTendrilCharge = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -663,6 +667,11 @@ namespace Origins {
 			abyssalAnchor = false;
 			mildewHeart = false;
 			faithBeads = false;
+			if (!retaliatoryTendril) {
+				retaliatoryTendrilStrength = 0;
+				retaliatoryTendrilCharge = 0;
+			}
+			retaliatoryTendril = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {
