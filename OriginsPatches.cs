@@ -671,6 +671,7 @@ namespace Origins {
 			};
 			IL_Player.CheckDrowning += Toxic_Shock_Debuff.IL_Player_CheckDrowning;
 			IL_Player.WaterCollision += Abyssal_Anchor.IL_Player_WaterCollision;
+			IL_Player.ApplyTouchDamage += Trap_Charm.IL_Player_ApplyTouchDamage;
 			/*
 			FastFieldInfo<SoundEffect, FAudio.FAudioBuffer> _handle = new("handle", BindingFlags.NonPublic);
 			FastFieldInfo<SoundEffect, ushort> _channels = new("channels", BindingFlags.NonPublic);
