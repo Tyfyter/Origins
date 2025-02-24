@@ -5057,6 +5057,7 @@ Monolith_Rod: {
 	Tooltip: ""
 	StrengthTooltip: "{0:P0} strength"
 	StrengthPrefixTooltip: "{0} strength"
+	CritTooltip: "{0:P0} critical chance"
 }
 
 Peat_Moss_Debug_Item: {

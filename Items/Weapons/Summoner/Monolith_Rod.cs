@@ -11,6 +11,7 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,6 +32,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.damage = 100;
 			Item.DamageType = DamageClass.Summon;
+			Item.crit = -4;
 			Item.mana = 12;
 			Item.width = 32;
 			Item.height = 32;
@@ -52,6 +54,8 @@ namespace Origins.Items.Weapons.Summoner {
 					if (int.TryParse(tooltips[i].Text.Split(' ')[0], out int strength)) {
 						tooltips[i] = new TooltipLine(Mod, "Strength", this.GetLocalization("StrengthTooltip").Format(strength * 0.01f));
 					}
+					int realCrit = Item.crit + 4;
+					if (realCrit > 0) tooltips.Insert(i + 1, new TooltipLine(Mod, "CritChance", this.GetLocalization("CritTooltip").Format(realCrit / 100f)));
 					break;
 					case "PrefixDamage":
 					tooltips[i] = new TooltipLine(Mod, "Strength", this.GetLocalization("StrengthPrefixTooltip").Format(tooltips[i].Text.Split(' ')[0])) {
@@ -257,6 +261,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.tileCollide = false;
 			Projectile.hide = true;
 		}
+		bool isCritical = false;
+		public override void OnSpawn(IEntitySource source) {
+			isCritical = Main.rand.NextFloat(100) < Projectile.CritChance;
+		}
 		public override void AI() {
 			int x = (int)(Projectile.position.X / 16);
 			int y = (int)(Projectile.position.Y / 16);
@@ -265,6 +273,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Lighting.AddLight(Projectile.Center, 0.45f, 0.45f, 0.45f);
 			Dust dust = Dust.NewDustDirect(Projectile.position, -0, 0, DustID.AncientLight, 0, 0, 125, new Color(80, 80, 80));
 			dust.noGravity = true;
+			if (isCritical) {
+				dust.fadeIn = 1.5f;
+				Projectile.extraUpdates = 1;
+			} else {
+				Projectile.extraUpdates = 0;
+			}
 
 			bool returning = Projectile.ai[2] != 0;
 			Entity targetEntity = Friendly_Monolith.GetTargetEntity((int)Projectile.ai[0]);
@@ -284,20 +298,28 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		void ApplyBuff(Entity entity) {
 			const int duration = 300;
+			int strength = Projectile.damage;
+			if (isCritical) strength *= 2;
 			if (entity is Player targetPlayer) {
-				targetPlayer.OriginPlayer().relayRodStrength = Projectile.damage;
+				targetPlayer.OriginPlayer().relayRodStrength = strength;
 				targetPlayer.AddBuff(ModContent.BuffType<Relay_Rod_Buff>(), duration);
 			} else if (entity is Projectile targetMinion && targetMinion.TryGetGlobalProjectile(out MinionGlobalProjectile minionGlobal)) {
-				minionGlobal.relayRodStrength = Projectile.damage;
+				minionGlobal.relayRodStrength = strength;
 				minionGlobal.relayRodTime = duration;
 				if (targetMinion.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
 					float oldHealth = artifactMinion.Life;
 					// heal 10% + damage bonuses
-					artifactMinion.Life += Projectile.damage * 0.01f * 0.1f * artifactMinion.MaxLife;
+					artifactMinion.Life += strength * 0.01f * 0.1f * artifactMinion.MaxLife;
 					if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
 					CombatText.NewText(entity.Hitbox, CombatText.HealLife, (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
 				}
 			}
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(isCritical);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			isCritical = reader.ReadBoolean();
 		}
 	}
 	public class Relay_Rod_Buff : ModBuff {
@@ -305,7 +327,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void Update(Player player, ref int buffIndex) {
 			float strength = player.OriginPlayer().relayRodStrength * 0.01f;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f * strength;
-			player.GetCritChance(DamageClass.Generic) += 15 * strength;
 			player.lifeRegenCount += Main.rand.RandomRound(20 * strength);
 		}
 	}
