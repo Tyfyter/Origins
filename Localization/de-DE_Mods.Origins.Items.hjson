@@ -5145,3 +5145,8 @@ Wet_Wood: {
 	// DisplayName: Wet Wood
 	// Tooltip: ""
 }
+
+Watered_Down_Keytar: {
+	// DisplayName: Watered Down Keytar
+	// Tooltip: ""
+}

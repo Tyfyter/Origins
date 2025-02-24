@@ -1499,6 +1499,8 @@ Projectiles: {
 	// Torpedo_Tube_P.DisplayName: Torpedo Tube P
 	// Faith_Beads_Explosion.DisplayName: Faith Beads Explosion
 	// Mildew_Blob.DisplayName: Mildew Blob
+	// Watered_Down_Keytar_Synth.DisplayName: Watered Down Keytar Synth
+	// Watered_Down_Keytar_Bass.DisplayName: Watered Down Keytar Bass
 }
 
 Prefixes: {
