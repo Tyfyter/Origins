@@ -88,7 +88,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
 		public new AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Pike of Deepneus");
 			if (!Main.dedServ) {
 				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			}

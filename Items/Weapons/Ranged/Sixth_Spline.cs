@@ -30,6 +30,14 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = SoundID.Item11;
 			Item.glowMask = glowmask;
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddRecipeGroup("AdamantiteBars", 10)
+			.AddIngredient(ModContent.ItemType<Respyrite>(), 18)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 12)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Sixth_Spline_Projectile proj = Projectiles.Get();

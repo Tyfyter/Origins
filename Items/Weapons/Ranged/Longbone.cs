@@ -1,17 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using System.Linq;
-using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
-using System.IO;
 namespace Origins.Items.Weapons.Ranged {
 	public class Longbone : ModItem, ICustomWikiStat {
 		internal static int t = ProjectileID.WoodenArrowFriendly;

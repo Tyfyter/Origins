@@ -1,6 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Pets;
 using Origins.Tiles;
@@ -9,7 +7,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,8 +17,9 @@ namespace Origins.Items.Pets {
 		
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
-			Item.value = Item.sellPrice(gold: 7, silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 5);
+			Item.rare = ItemRarityID.LightRed;
+			Item.master = true;
 		}
 
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
@@ -353,7 +351,7 @@ namespace Origins.Items.Pets {
 
 namespace Origins.Buffs {
 	public class Mildew_Blob_Buff : ModBuff {
-		public override string Texture => "Origins/Items/Pets/Mildew_Blob";
+		public override string Texture => "Origins/Buffs/Mildew_Blob_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

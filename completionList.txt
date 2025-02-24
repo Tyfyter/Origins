@@ -712,59 +712,59 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun
 (^) Chipper Knife*
-(^) Endowood Bow
+(^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
 (^) Fiberglass Pistol*
 (^) Fiberglass Shard*
 (^) Gelled Knife*
 (^) Harpoon Gun*
-(^) Longbone
+(^) Longbone*
 (^) Magma Grappler*
-(^) Marrowick Bow
+(^) Marrowick Bow*
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(^) Sleetfire
+(^) Sleetfire*
 (^) Sunflower Seed Shooter*
-(^) Tendon Tear
+(^) Tendon Tear*
 (^) The Kruncher*
-(^) Threemoepeater
+(^) Threemoepeater*
 (^) Unmisfire*
 (^) Unstrung Fiberglass Bow*
-(^) 2-in-1 Shotty
-(^) 3-in-1 Shotty
+(^) 2-in-1 Shotty*
+(^) 3-in-1 Shotty*
 
 (^) Acrid Impaler*
-(^) Adamantite Harpoon Gun°
+(^) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
 (#2, ^2) Boat Rocker !!! (alt)
-(^) Boiler
-(^) Cleaver Rifle
-(^) Cobalt Harpoon Gun°
+(^) Boiler*
+(^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
 (^) Dart Crossbow*
 (#, ^2) Dragon's Breath° !!!
-(^) Fifth Spline
-(^) Firespit
+(^) Fifth Spline*
+(^) Firespit*
 (#, ^2) Fumethrower !!!
+(^) Hallowed Cleaver*
 (^) Harpoon Burst Rifle*
-(^) HNO-3 "Viper"
+(^) HNO-3 "Viper"*
 (^) Incision*
 (X) Lag Spike
 (X) Left Klik°
 (#, ^2) Laser Line Bow !!!
-(^) Mythril Harpoon Gun°
+(^) Mythril Harpoon Gun*
 (X) Organ Donor
-(^) Orichalcum Harpoon Gun°
-(^) Palladium Harpoon Gun°
+(^) Orichalcum Harpoon Gun*
+(^) Palladium Harpoon Gun*
 (X) Ritualmaker
 (X) Riveiar
 (^) Spray 'N Pray°
 (^) Tiny Sniper
-(^) Titanium Harpoon Gun°
+(^) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 
 (#2, ^2) Astoxo
@@ -861,11 +861,11 @@ SUMMONER WEAPONS:
 (#, ^2) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
-(#2, ^2) Relay Rod !!!
 (%2) Ocean Amulet !!!
 (^) Ocotillo Finger
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
+(#2, ^2) Relay Rod !!!
 (^) Rotted Worm Staff
 (X) Shadow Cast
 (#, ^2) Sunflower in a Pot !!!
@@ -1425,7 +1425,7 @@ MOUNTS & PETS:
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
 (X) Terlet Paper (Kawaii Fiberglass Weaver) !!!
-(#, ^2) Wet Wood (Mildew Blob) !!!
+(^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*
 (X) Rusty Cross Necklace (Guardian Angel)

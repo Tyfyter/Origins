@@ -5054,7 +5054,7 @@ Brine_Convergence_Incantation: {
 
 Monolith_Rod: {
 	// DisplayName: Relay Rod
-	// Tooltip: ""
+	// Tooltip: Summons a Defiled Relay to boost you and your minions
 	// StrengthTooltip: "{0:P0} strength"
 	// StrengthPrefixTooltip: "{0} strength"
 	// CritTooltip: "{0:P0} critical chance"
@@ -5143,7 +5143,7 @@ Faith_Beads: {
 
 Wet_Wood: {
 	// DisplayName: Wet Wood
-	// Tooltip: ""
+	// Tooltip: Summons a Mildew Blob to blob around
 }
 
 Watered_Down_Keytar: {

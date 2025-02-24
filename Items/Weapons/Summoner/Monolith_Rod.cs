@@ -1,16 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Weapons.Summoner.Minions;
-using Origins.NPCs;
-using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles;
 using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -323,7 +317,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Relay_Rod_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_160";
+		public override string Texture => "Origins/Buffs/Relay_Rod_Buff";
 		public override void Update(Player player, ref int buffIndex) {
 			float strength = player.OriginPlayer().relayRodStrength * 0.01f;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f * strength;

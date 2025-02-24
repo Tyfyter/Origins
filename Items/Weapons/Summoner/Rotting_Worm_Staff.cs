@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
@@ -8,7 +8,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using Origins.Dev;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Rotting_Worm_Staff : ModItem, ICustomWikiStat {
@@ -44,8 +43,6 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Wormy_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mini Eater of Worlds");
-			// Description.SetDefault("The Eater of Worlds will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Rotting_Worm_Staff.buffID = Type;

@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using System.Linq;
@@ -6,8 +6,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -31,7 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.width = 100;
 			Item.height = 28;
 			Item.autoReuse = false;
-			Item.value = Item.sellPrice(silver: 50);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.HeavyCannon;
 			Item.glowMask = glowmask;

@@ -1031,13 +1031,13 @@ Buffs: {
 	}
 
 	Relay_Rod_Buff: {
-		// DisplayName: Relay Rod Buff
-		// Description: Mods.Origins.Buffs.Relay_Rod_Buff.Description
+		// DisplayName: New Message
+		// Description: A relay is boosting you!
 	}
 
 	Mildew_Blob_Buff: {
-		// DisplayName: Mildew Blob Buff
-		// Description: Mods.Origins.Buffs.Mildew_Blob_Buff.Description
+		// DisplayName: Mildew Blobbin'
+		// Description: He do be blobbin' around
 	}
 }
 
