@@ -441,7 +441,7 @@ namespace Origins {
 			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player, miniStaticShock ? 7 : 5);
 			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(Player, 2);
 			if (mildewHeart) {
-				float speed = 0.25f;
+				float speed = 0.25f * mildewHeartRegenMult;
 				if (Player.statLife <= 0) {
 					Player.lifeRegenCount = 0;
 					speed = 0.81f;

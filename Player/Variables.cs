@@ -251,6 +251,7 @@ namespace Origins {
 		public bool fairyLotus = false;
 		public bool abyssalAnchor = false;
 		public bool mildewHeart = false;
+		public float mildewHeartRegenMult = 1f;
 		public float mildewHealth = 0;
 		public PlayerDeathReason lastMildewDeathReason;
 		public bool lastMildewDeathPvP = false;
@@ -666,6 +667,7 @@ namespace Origins {
 			fairyLotus = false;
 			abyssalAnchor = false;
 			mildewHeart = false;
+			mildewHeartRegenMult = 1f;
 			faithBeads = false;
 			if (!retaliatoryTendril) {
 				retaliatoryTendrilStrength = 0;

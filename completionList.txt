@@ -216,9 +216,9 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
-(#2, ^2) Leaf Snapper !!!
+(☻) Leaf Snapper !!!
 (^) King Crab
-(#3, ^2) Mildew Creeper !!!
+(☻) Mildew Creeper !!!
 (^) Mitoworm*
 (^) Nasty Crawdad
 (^) Profaned Bident*
@@ -490,9 +490,9 @@ ACCESSORIES:
 (^) Superjump Cape*
 (^) Symbiote Skull*
 (^) Tainted Flesh*
-(#, ^2) Tender Flesh Heart !!!
+(☻) Tender Flesh Heart !!!
 (X) Timbre of Hell°
-(#2, ^2) Trap Charm* !!! (added functionality)
+(#2, ^2) Trap Charm* !!! (added functionality)?
 (^) Tripod Nip*
 (^) Turbo Reel*
 (^) Unsought Organ*
@@ -503,7 +503,7 @@ ACCESSORIES:
 (^) Mana Drive°
 (^) Protozoa Food*
 (#2, ^2) Refactoring Pieces* !!!
-(#, ^2) Retaliatory Tendril° !!!
+(☻) Retaliatory Tendril° !!!
 (^) Scrap Compactor°
 
 (^) Amebic Vial*
@@ -537,7 +537,7 @@ VANITY:
 (X) Duskord Mask
 (^) Fiberglass Weaver Head*
 (X) I.C.A.R.U.S. Mask
-(#, ^2) Lost Diver set !!!
+(☻) Lost Diver set !!!
 (X) Miscreant Mask
 (X) Quantux Mask
 (^) World Cracker Mask*
@@ -560,7 +560,7 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(#, ^2) First Dream
+(☻) First Dream
 (^) Tyfyter's Set*
 
 (^) Acrid Dye
@@ -675,7 +675,7 @@ MELEE WEAPONS:
 (#2, ^2) Amenonuhoko !!! (rework)
 (^) Amoebash*
 (#, ^2) Boomboom !!!
-(#2, ^2) Crystal Cutters !!! (Orb fade effects)
+(☻) Crystal Cutters !!! (Orb fade effects)
 (^) Depth Charge
 (X) Fair In Square
 (^) Knee Slapper*
@@ -691,7 +691,7 @@ MELEE WEAPONS:
 (^) Personal Laser Blade*
 (X) Pile Bunker
 (X) Rocket Lance
-(#2, ^2) Telephone Pole*
+(☻) Telephone Pole*
 (^) Terrarang*
 (^) True Light Disc*
 (^) True Waning Crescent*
@@ -740,7 +740,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(#2, ^2) Boat Rocker !!! (alt)
+(#2, ^2) Boat Rocker !!! (alt?)
 (^) Boiler*
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
@@ -776,7 +776,7 @@ RANGED WEAPONS:
 (X) Laser Tag Shotgun
 (X) Shroomshot
 (X) Skewr
-(#2, ^2) Tolruk
+(☻) Tolruk
 
 (X) Fulcrum
 (X) Journey's End
@@ -1509,7 +1509,7 @@ CROSS-MOD CONTENT:
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (#, ^2/4) Keytar !!!
-(#, ^4) Watered-down Keytar !!!
+(☻, ^4) Watered-down Keytar !!!
 ---
 
 UI:

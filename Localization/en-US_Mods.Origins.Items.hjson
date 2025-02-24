@@ -5178,3 +5178,10 @@ Retaliatory_Tendril: {
 	DisplayName: Retaliatory Tendril
 	Tooltip: ""
 }
+
+First_Dream: {
+	DisplayName: First Dream ({0})
+	Mode_Chrersis: Chrersis
+	Mode_Diver: Diver
+	Tooltip: ""
+}
