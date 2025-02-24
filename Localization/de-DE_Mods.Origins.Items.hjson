@@ -5057,6 +5057,7 @@ Monolith_Rod: {
 	// Tooltip: ""
 	// StrengthTooltip: "{0:P0} strength"
 	// StrengthPrefixTooltip: "{0} strength"
+	// CritTooltip: "{0:P0} critical chance"
 }
 
 Peat_Moss_Debug_Item: {
@@ -5138,4 +5139,9 @@ Faith_Beads: {
 		+40% explosive blast radius
 		'Only through struggle do we find ourselves'
 		''' */
+}
+
+Wet_Wood: {
+	// DisplayName: Wet Wood
+	// Tooltip: ""
 }

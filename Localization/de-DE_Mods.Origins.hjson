@@ -1034,6 +1034,11 @@ Buffs: {
 		// DisplayName: Relay Rod Buff
 		// Description: Mods.Origins.Buffs.Relay_Rod_Buff.Description
 	}
+
+	Mildew_Blob_Buff: {
+		// DisplayName: Mildew Blob Buff
+		// Description: Mods.Origins.Buffs.Mildew_Blob_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1493,6 +1498,7 @@ Projectiles: {
 	// DA_Guided_Missile.DisplayName: D A Guided Missile
 	// Torpedo_Tube_P.DisplayName: Torpedo Tube P
 	// Faith_Beads_Explosion.DisplayName: Faith Beads Explosion
+	// Mildew_Blob.DisplayName: Mildew Blob
 }
 
 Prefixes: {

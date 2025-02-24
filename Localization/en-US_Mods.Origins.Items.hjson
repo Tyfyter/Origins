@@ -5140,3 +5140,8 @@ Faith_Beads: {
 		'Only through struggle do we find ourselves'
 		'''
 }
+
+Wet_Wood: {
+	DisplayName: Wet Wood
+	Tooltip: ""
+}
