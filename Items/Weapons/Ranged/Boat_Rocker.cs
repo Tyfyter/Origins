@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
+using Origins.Tiles.Brine;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
@@ -52,6 +53,17 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Boat_Rocker_Alt : Boat_Rocker {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Boat_Rocker>()] = Type;
+		}
+		public override void UseStyle(Player player, Rectangle heldItemFrame) {
+			if (player.controlUseTile && player.releaseUseTile) {
+				player.OriginPlayer().boatRockerAltUse2 = true;
+			}
+		}
+		public override void AddRecipes() {
+			Recipe.Create(ModContent.ItemType<Boat_Rocker>())
+			.AddIngredient(Type)
+			.AddIngredient<Peat_Moss_Item>(4)
+			.Register();
 		}
 	}
 }

@@ -336,6 +336,7 @@ namespace Origins {
 		public int laserBladeCharge = 0;
 		public int tolrukCharge = 0;
 		public bool boatRockerAltUse = false;
+		public bool boatRockerAltUse2 = false;
 		public int mojoFlaskCount = 5;
 		public int mojoFlaskCountMax = 5;
 
@@ -693,6 +694,7 @@ namespace Origins {
 			broth = null;
 
 			boatRockerAltUse = false;
+			boatRockerAltUse2 = false;
 
 			manaShielding = 0f;
 

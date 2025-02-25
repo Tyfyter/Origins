@@ -18,6 +18,7 @@ namespace Origins.Projectiles {
 	public class HarpoonGlobalProjectile : GlobalProjectile {
 		bool isRetracting = false;
 		bool slamming = false;
+		int slamTime = -1;
 		bool justHit = false;
 		public bool bloodletter = false;
 		public int chainFrameSeed = -1;
@@ -61,6 +62,12 @@ namespace Origins.Projectiles {
 						Vector2 oldDiff = (projectile.oldPosition - projectile.Size * 0.5f) - player.MountedCenter;
 						PolarVec2 polarDiff = (PolarVec2)(projectile.Center - player.MountedCenter);
 						polarDiff.R = oldDiff.Length();
+						if (slamTime == 0) {
+							polarDiff.R = polarDiff.R * 1.02f - 16f;
+							if (polarDiff.R < 24) {
+								projectile.Kill();
+							}
+						}
 						Vector2 diff = (Vector2)polarDiff;
 						projectile.Center = player.MountedCenter + diff;
 						Vector2 oldVel = projectile.velocity;
@@ -69,7 +76,8 @@ namespace Origins.Projectiles {
 							SoundEngine.PlaySound(SoundID.Item1.WithPitch(-0.66f), projectile.Center);
 						}
 					}
-				} else if (originPlayer.boatRockerAltUse) {
+					if (slamTime > 0) slamTime--;
+				} else if (originPlayer.boatRockerAltUse || originPlayer.boatRockerAltUse2) {
 					Vector2 diff = projectile.Center - player.MountedCenter;
 					float dist = diff.Length();
 					diff = diff.RotatedBy(MathHelper.PiOver2 * player.direction).SafeNormalize(default);
@@ -80,6 +88,7 @@ namespace Origins.Projectiles {
 					projectile.penetrate = 10;
 					slamming = true;
 					projectile.netUpdate = true;
+					if (originPlayer.boatRockerAltUse2) slamTime = 20;
 				}
 			}
 			if (bloodletter) {
@@ -144,12 +153,14 @@ namespace Origins.Projectiles {
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			bitWriter.WriteBit(isRetracting);
 			bitWriter.WriteBit(slamming);
+			binaryWriter.Write((short)slamTime);
 			bitWriter.WriteBit(justHit);
 			bitWriter.WriteBit(bloodletter);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isRetracting = bitReader.ReadBit();
 			slamming = bitReader.ReadBit();
+			slamTime = binaryReader.ReadInt16();
 			justHit = bitReader.ReadBit();
 			bloodletter = bitReader.ReadBit();
 		}
