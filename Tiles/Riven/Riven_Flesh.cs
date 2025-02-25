@@ -33,6 +33,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;

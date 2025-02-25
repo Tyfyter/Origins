@@ -148,6 +148,7 @@ namespace Origins.World.BiomeData {
 				ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				ushort gooBlockType = (ushort)ModContent.TileType<Amoeba_Fluid>();
+				int oreID = ModContent.TileType<Encrusted_Ore>();
 				HashSet<ushort> cleaveReplacables = [fleshBlockType];
 				Tile tile;
 				int X0 = int.MaxValue;
@@ -265,7 +266,9 @@ namespace Origins.World.BiomeData {
 							fleshBlockType,
 							Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), genRand.NextFloat(4, 8)),
 							8,
-							twist: genRand.NextFloat(-2, 2) + MathHelper.Pi
+							twist: genRand.NextFloat(-2, 2) + MathHelper.Pi,
+							oreType: oreID,
+							oreRarity: 50
 						);
 						break;
 						case FeatureType.CUSP:
@@ -273,7 +276,9 @@ namespace Origins.World.BiomeData {
 							fleshBlockType,
 							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(2, 4)),
 							8,
-							twist: genRand.NextFloat(-0.2f, 0.2f)
+							twist: genRand.NextFloat(-0.2f, 0.2f),
+							oreType: oreID,
+							oreRarity: 50
 						);
 						break;
 						case FeatureType.CAVE:
@@ -284,7 +289,9 @@ namespace Origins.World.BiomeData {
 							12,
 							fleshBlockType,//fleshBlockType
 							6,
-							wallType: fleshWallType
+							wallType: fleshWallType,
+							oreType: oreID,
+							oreRarity: 25
 						);
 						pos = Defiled_Wastelands.Gen.DefiledVeinRunner(
 							x, y,
@@ -293,7 +300,9 @@ namespace Origins.World.BiomeData {
 							genRand.NextFloat(12, 24),
 							fleshBlockType,//fleshBlockType
 							6,
-							wallType: fleshWallType
+							wallType: fleshWallType,
+							oreType: oreID,
+							oreRarity: 25
 						).position;
 						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
 						break;

@@ -13,11 +13,14 @@ using Microsoft.VisualBasic;
 
 namespace Origins.World {
 	public class GenRunners {
-		public static Point SpikeRunner(int i, int j, int type, Vector2 speed, int size, float twist = 0, bool randomtwist = false) {
+		public static Point SpikeRunner(int i, int j, int type, Vector2 speed, int size, float twist = 0, bool randomtwist = false, int oreType = -1, int oreRarity = 100) {
 			float x = i;
 			float y = j;
 			while (size > 0) {
 				WorldGen.TileRunner((int)x, (int)y, size, 2, type, speedX: speed.X, speedY: speed.Y, addTile: true, overRide: true);
+				if (oreType != -1 && genRand.NextBool(oreRarity)) {
+					OreRunner((int)(x + genRand.NextFloat(-0.5f, 0.5f) * size), (int)(y + genRand.NextFloat(-0.5f, 0.5f) * size), genRand.Next(2, 6), genRand.Next(3, 7), (ushort)oreType);
+				}
 				x += speed.X;
 				y += speed.Y;
 				if (twist != 0) {

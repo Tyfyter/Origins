@@ -135,6 +135,7 @@ namespace Origins.World.BiomeData {
 
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
+				int oreID = ModContent.TileType<Lost_Ore>();
 				Vector2 startVec = new Vector2(i, j);
 				int fisureCount = 0;
 				DefiledCave(i, j);
@@ -174,7 +175,9 @@ namespace Origins.World.BiomeData {
 									genRand.NextFloat(distance * 0.8f, distance * 1.2f), //tunnel length
 									stoneID,
 									wallThickness,
-									wallType: stoneWallID));
+									wallType: stoneWallID,
+									oreType: oreID
+								));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								OriginSystem.EvilSpikeAvoidancePoints.Add(new((int)airCheckVec.X, (int)airCheckVec.Y));
@@ -196,7 +199,9 @@ namespace Origins.World.BiomeData {
 									genRand.NextFloat(distance * 0.8f, distance * 1.2f),
 									stoneID,
 									wallThickness,
-									wallType: stoneWallID));
+									wallType: stoneWallID,
+									oreType: oreID
+								));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								OriginSystem.EvilSpikeAvoidancePoints.Add(new((int)airCheckVec.X, (int)airCheckVec.Y));
@@ -214,7 +219,9 @@ namespace Origins.World.BiomeData {
 									genRand.NextFloat(distance * 0.8f, distance * 1.2f),
 									stoneID,
 									wallThickness,
-									wallType: stoneWallID));
+									wallType: stoneWallID,
+									oreType: oreID
+								));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								OriginSystem.EvilSpikeAvoidancePoints.Add(new((int)airCheckVec.X, (int)airCheckVec.Y));
@@ -236,7 +243,9 @@ namespace Origins.World.BiomeData {
 									genRand.NextFloat(distance * 0.8f, distance * 1.2f),
 									stoneID,
 									wallThickness,
-									wallType: stoneWallID));
+									wallType: stoneWallID,
+									oreType: oreID
+								));
 							airCheckVec = next.data.position;
 							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								OriginSystem.EvilSpikeAvoidancePoints.Add(new(airCheckVec.X, airCheckVec.Y));
@@ -433,7 +442,7 @@ namespace Origins.World.BiomeData {
 					}
 				}
 			}
-			public static (Vector2 position, Vector2 velocity) DefiledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1) {
+			public static (Vector2 position, Vector2 velocity) DefiledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1, int oreType = -1, int oreRarity = 500) {
 				Vector2 pos = new Vector2(i, j);
 				Tile tile;
 				if (randomtwist) twist = Math.Abs(twist);
@@ -488,6 +497,7 @@ namespace Origins.World.BiomeData {
 									if (!WorldGen.IsAContainer(tile)) {
 										tile.HasTile = true;
 										tile.ResetToType(wallBlockType);
+										if (oreType != -1 && genRand.NextBool(oreRarity)) OreRunner(l, k, genRand.Next(2, 6), genRand.Next(3, 7), (ushort)oreType);
 									}
 									//WorldGen.SquareTileFrame(l, k);
 									if (hasWall) {
