@@ -402,8 +402,8 @@ ACCESSORIES:
 (^) Explosive Artery*
 (^) Fairy Lotus*
 (#, ^2) Fallacious Vase !!!
-(#, ^2) Feather Cape !!!
-(#, ^2) Feathery Crest !!!
+(☻) Feather Cape !!!
+(☻) Feathery Crest !!!
 (#, ^2) Fissure Band !!!
 (^) Fleshy Figurine*
 (^) Focus Crystal*
@@ -415,7 +415,7 @@ ACCESSORIES:
 (^) Gun Magazine*
 (^) Haggard Artery*
 (^) Handy Helper*
-(#, ^2) Harpy Horseshoe Balloon !!!
+(☻) Harpy Horseshoe Balloon !!!
 (#2, ^2) Hazard Charm* !!! (added functionality)
 (^) Headphones*
 (#2, ^2) Helium Tank* !!! (added functionality with balloons)

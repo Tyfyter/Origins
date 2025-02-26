@@ -5200,3 +5200,18 @@ Boat_Rocker_Alt: {
 	DisplayName: "{$Mods.Origins.Items.Boat_Rocker.DisplayName}"
 	Tooltip: "{$Mods.Origins.Items.Boat_Rocker.Tooltip}"
 }
+
+Feathery_Crest: {
+	DisplayName: Feathery Crest
+	Tooltip: ""
+}
+
+Feather_Cape: {
+	DisplayName: Feather Cape
+	Tooltip: ""
+}
+
+Harpy_Horseshoe_Balloon: {
+	DisplayName: Harpy Horseshoe Balloon
+	Tooltip: ""
+}

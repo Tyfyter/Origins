@@ -8,10 +8,10 @@ using Origins.Projectiles;
 using Origins.Tiles.Brine;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
-        public new string[] Categories => [
-            "HarpoonGun"
-        ];
+	public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
+		public new string[] Categories => [
+			"HarpoonGun"
+		];
 		public override void SetStaticDefaults() {
 			ChainFrames = 3;
 		}
