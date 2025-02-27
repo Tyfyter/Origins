@@ -79,7 +79,7 @@ namespace Origins {
 					brineCenter = new(X, Y);
 					//}
 				}));
-				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration _) {
+				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
 					Mod.Logger.Info("Fiberglass Undergrowth");
 					progress.Message = "Undergrowing Fiberglass";
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
@@ -90,6 +90,11 @@ namespace Origins {
 						int Y;
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(350, 450);
+						int templeTop = GenVars.tTop - 100;
+						int templeBottom = GenVars.tBottom + 100;
+						if (Y > templeTop && Y < templeBottom) {
+							Y = Math.Abs(Y - templeTop) < Math.Abs(Y - templeBottom) ? templeTop : templeBottom;
+						}
 						if (GenVars.structures.CanPlace(new Rectangle(X - 32 - (32 + 16), Y - (32 + 16), 64 + 16, 64 + 16)) || ++tries > 1000) {
 							Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
 							Fiberglass_Undergrowth.Gen.FiberglassStart(X, Y);

@@ -492,7 +492,7 @@ ACCESSORIES:
 (^) Tainted Flesh*
 (☻) Tender Flesh Heart !!!
 (X) Timbre of Hell°
-(#2, ^2) Trap Charm* !!! (added functionality)?
+(☻) Trap Charm* !!!
 (^) Tripod Nip*
 (^) Turbo Reel*
 (^) Unsought Organ*

@@ -5215,3 +5215,8 @@ Harpy_Horseshoe_Balloon: {
 	DisplayName: Harpy Horseshoe Balloon
 	Tooltip: ""
 }
+
+Soldering_Iron: {
+	DisplayName: Soldering Iron
+	Tooltip: ""
+}
