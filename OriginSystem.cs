@@ -553,6 +553,7 @@ namespace Origins {
 			}
 			OriginExtensions.SwapClear(ref ExplosiveGlobalProjectile.nextExplodingProjectiles, ref ExplosiveGlobalProjectile.explodingProjectiles);
 			OriginExtensions.SwapClear(ref Mitosis_P.nextMitosises, ref Mitosis_P.mitosises);
+			OriginExtensions.SwapClear(ref The_Bird_Swing.nextReflectors, ref The_Bird_Swing.reflectors);
 			Brine_Pool_NPC.Ripples.Clear();
 		}
 		public override void PostUpdateProjectiles() {

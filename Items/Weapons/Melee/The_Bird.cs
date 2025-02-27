@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.NPCs;
 using Origins.Projectiles;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -110,6 +111,12 @@ namespace Origins.Items.Weapons.Melee {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			Main.projFrames[Type] = 5;
 		}
+		public static List<int> reflectors = [];
+		public static List<int> nextReflectors = [];
+		public override void Unload() {
+			reflectors = null;
+			nextReflectors = null;
+		}
 		public override void SetDefaults() {
 			Projectile.friendly = false;
 			Projectile.width = 48;
@@ -122,6 +129,10 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || !player.active) {
+				Projectile.Kill();
+				return;
+			}
 			Projectile.Center = player.MountedCenter;
 			if (player.channel) {
 				if (Projectile.owner == Main.myPlayer) {
@@ -161,10 +172,8 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				Projectile.direction = Math.Sign(Projectile.velocity.X);
 				player.OriginPlayer().heldProjOverArm = this;
-				if (Projectile.owner == Main.myPlayer) {
-					foreach (Projectile other in Main.ActiveProjectiles) {
-
-					}
+				if (Projectile.friendly) {
+					nextReflectors.Add(Projectile.whoAmI);
 				}
 			}
 			player.SetDummyItemTime(2);

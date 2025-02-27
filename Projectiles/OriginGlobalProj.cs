@@ -8,6 +8,7 @@ using Origins.Items.Armor.Felnum;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.Questing;
@@ -307,6 +308,22 @@ namespace Origins.Projectiles {
 				}
 				if (hasUsedMitosis && projectile.minion && --mitosisTimeLeft <= 0) {
 					hasUsedMitosis = false;
+				}
+			}
+			if (!projectile.ownerHitCheck && projectile.damage > 0) {
+				for (int i = 0; i < The_Bird_Swing.reflectors.Count; i++) {
+					Projectile reflector = Main.projectile[The_Bird_Swing.reflectors[i]];
+					Rectangle hitbox = reflector.Hitbox;
+					hitbox.Inflate(16, 16);
+					if (projectile.WithinRange(reflector.Center, 10 * 16) && projectile.Colliding(projectile.Hitbox, hitbox)) {
+						projectile.reflected = true;
+						if (projectile.hostile) projectile.damage *= 3;
+						projectile.hostile = false;
+						projectile.friendly = true;
+						float speed = Math.Max(12f / projectile.MaxUpdates, projectile.velocity.Length());
+						projectile.velocity = reflector.velocity * speed;
+						projectile.owner = reflector.owner;
+					}
 				}
 			}
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor) {

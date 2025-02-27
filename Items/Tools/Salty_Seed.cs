@@ -36,6 +36,10 @@ namespace Origins.Items.Tools {
 		public static bool[][] aiVariableResets = [];
 		public static List<int> mitosises = [];
 		public static List<int> nextMitosises = [];
+		public override void Unload() {
+			mitosises = null;
+			nextMitosises = null;
+		}
 		public const int minion_duplicate_duration = 300;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 10;
