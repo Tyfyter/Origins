@@ -30,10 +30,10 @@ namespace Origins.Buffs {
 				dust.scale *= 0.5f;
 			}
 			if (Main.rand.NextBool(4)) {
-				SoundEngine.PlaySound(SoundID.Item54.WithPitchRange(-1f, -0.6f), entity.Center);
+				SoundEngine.PlaySound(SoundID.Item54.WithPitchRange(-1f, -0.6f).WithVolumeScale(0.5f), entity.Center);
 			}
 			if (Main.rand.NextBool(8)) {
-				SoundEngine.PlaySound(SoundID.Drown.WithPitchRange(0f, 0.6f).WithVolumeScale(0.75f) with { MaxInstances = 0 }, entity.Center);
+				SoundEngine.PlaySound(SoundID.Drown.WithPitchRange(0f, 0.6f).WithVolumeScale(0.5f) with { MaxInstances = 0 }, entity.Center);
 			}
 		}
 	}

@@ -7,6 +7,7 @@ using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Torpedo_Tube : ModItem, ICustomWikiStat {
@@ -27,12 +28,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Torpedo_Tube>()] = Type;
 		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.shoot = ModContent.ProjectileType<Torpedo_Tube_Alt_P>();
+		}
 	}
 	public class Torpedo_Tube_P : ModProjectile, ICanisterProjectile {
 		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
 		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Canister_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public virtual float Gravity => 0.1f;
+		public virtual float HomingThreshold => 5.5f;
+		public virtual (float @base, float speedFactor) HomingFactor => (0.02f, 0.006f);
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			Origins.MagicTripwireRange[Type] = 40;
@@ -53,7 +61,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height)) {
-				float targetWeight = 5.5f;
+				float targetWeight = HomingThreshold;
 				Vector2 targetDiff = default;
 				bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
 					if (!target.wet) return false;
@@ -79,7 +87,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.velocity = (Vector2)velocity;
 				}
 			} else {
-				Projectile.velocity.Y += 0.1f;
+				Projectile.velocity.Y += Gravity;
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)
@@ -136,5 +144,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 				spriteEffects
 			);
 		}
+	}
+	public class Torpedo_Tube_Alt_P : Torpedo_Tube_P {
+		public override string Texture => typeof(Torpedo_Tube_P).GetDefaultTMLName();
+		public override float Gravity => 0.06f;
+		public override (float @base, float speedFactor) HomingFactor => (0.01f, 0.001f);
+		public override float HomingThreshold => 6f;
+		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.Torpedo_Tube_P.DisplayName");
 	}
 }
