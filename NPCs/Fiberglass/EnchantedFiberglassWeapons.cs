@@ -123,6 +123,11 @@ namespace Origins.NPCs.Fiberglass {
 			}
 			NPC.Center = options.Get();
 		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
+		}
 	}
 	public class Enchanted_Fiberglass_Pistol : ModNPC, IWikiNPC {
 		Color[] oldColor = new Color[10];
@@ -207,6 +212,11 @@ namespace Origins.NPCs.Fiberglass {
 			}
 			oldDir[0] = NPC.spriteDirection;
 			oldColor[0] = drawColor;
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 	}
 	public class Enchanted_Fiberglass_Sword : ModNPC, IWikiNPC {

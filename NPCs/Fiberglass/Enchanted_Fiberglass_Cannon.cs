@@ -117,6 +117,11 @@ namespace Origins.NPCs.Fiberglass {
 			oldColor[0] = drawColor;
 			return true;
 		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
+		}
 	}
 	public class Enchanted_Fiberglass_Cannon_P : ModProjectile {
 		public override void SetDefaults() {
