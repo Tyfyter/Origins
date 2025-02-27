@@ -1044,6 +1044,11 @@ Buffs: {
 		DisplayName: Electrified Debuff
 		Description: Mods.Origins.Buffs.Electrified_Debuff.Description
 	}
+
+	Old_Turtle_Buff: {
+		DisplayName: Old Turtle Buff
+		Description: Mods.Origins.Buffs.Old_Turtle_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1506,6 +1511,7 @@ Projectiles: {
 	Mildew_Blob.DisplayName: Mildew Blob
 	Watered_Down_Keytar_Synth.DisplayName: Watered Down Keytar Synth
 	Watered_Down_Keytar_Bass.DisplayName: Watered Down Keytar Bass
+	Old_Turtle.DisplayName: Old Turtle
 }
 
 Prefixes: {

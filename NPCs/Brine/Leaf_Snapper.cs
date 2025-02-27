@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;

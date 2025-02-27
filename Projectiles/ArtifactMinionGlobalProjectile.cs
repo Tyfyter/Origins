@@ -19,6 +19,7 @@ namespace Origins.Projectiles {
 		protected override bool CloneNewInstances => false;
 		bool isRespawned = false;
 		public StatModifier maxHealthModifier = StatModifier.Default;
+		public int defense = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is IArtifactMinion) Origins.ArtifactMinion[entity.type] = true;
 			return Origins.ArtifactMinion[entity.type];
@@ -159,11 +160,16 @@ namespace Origins.Projectiles {
 	public static class ArtifactMinionExtensions {
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, bool fromDoT = false, bool noCombatText = false) {
 			ModProjectile proj = minion as ModProjectile;
-			float healthModifiedDamage = damage * (minion.MaxLife / proj.Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().maxHealthModifier.ApplyTo(minion.MaxLife));
+			ArtifactMinionGlobalProjectile global = proj.Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>();
+			if (!fromDoT) {
+				damage -= global.defense;
+				if (damage < 0) damage = 0;
+			}
+			float healthModifiedDamage = damage * (minion.MaxLife / global.maxHealthModifier.ApplyTo(minion.MaxLife));
 			minion.Life -= healthModifiedDamage;
 			minion.OnHurt(damage, fromDoT);
 			if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
-			if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
+			if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, damage == 0 ? Color.Gray : CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
 		}
 		public static void DamageArtifactMinion(this Projectile minion, int damage, bool fromDoT = false, bool noCombatText = false) {
 			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, fromDoT, noCombatText);

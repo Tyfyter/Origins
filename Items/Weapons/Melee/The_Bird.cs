@@ -199,6 +199,7 @@ namespace Origins.Items.Weapons.Melee {
 				forcedCrit = true;
 			}
 		}
+		public override bool? CanCutTiles() => Projectile.friendly;
 		public override bool CanHitPvp(Player target) => Projectile.frameCounter > 0;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			float knockback = The_Bird.GetBirdKnockback(target, hit, Projectile.knockBack);

@@ -1,6 +1,7 @@
 using Origins.Buffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,6 +21,13 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
 			Projectile.ArmorPenetration += 26;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				Projectile.DamageType = itemUse.Item.DamageType;
+			} else if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile projParent) {
+				Projectile.DamageType = projParent.DamageType;
+			}
 		}
 		public override void AI() {
 			if (Projectile.ai[1] <= 0/*projectile.timeLeft<168*/) {

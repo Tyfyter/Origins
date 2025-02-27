@@ -5220,3 +5220,8 @@ Soldering_Iron: {
 	// DisplayName: Soldering Iron
 	// Tooltip: ""
 }
+
+Old_Brine_Rock: {
+	// DisplayName: Old Brine Rock
+	// Tooltip: ""
+}

@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
-		public bool CanDie => true || ++Projectile.ai[2] >= 60 * 5;
+		public bool CanDie => ++Projectile.ai[2] >= 60 * 5;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -126,6 +126,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
+			player.tankPet = Projectile.whoAmI;
+			player.tankPetReset = false;
 			bool walkLeft = Projectile.direction == -1;
 			bool walkRight = Projectile.direction == 1;
 			bool hasBarrier = false;

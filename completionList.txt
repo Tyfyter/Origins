@@ -884,7 +884,7 @@ SUMMONER WEAPONS:
 (#, ^2) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
-(#, ^2) Old Brine Rock !!!
+(☻) Old Brine Rock !!!
 (X) Ornamental Riven Artifact
 (X) Riven Rain Rod
 (^) Scabcoral Lyre*
