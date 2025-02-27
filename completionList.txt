@@ -661,7 +661,7 @@ MELEE WEAPONS:
 (^) Ripper Lance*
 (^) Riverang*
 (^) Snapthrow*
-(#, ^2) Soldering Iron !!!
+(☻) Soldering Iron !!!
 (#, ^2) Soul Snatcher* !!!
 (#, ^2) Soulslasher !!!
 (^) Spiker Sword*

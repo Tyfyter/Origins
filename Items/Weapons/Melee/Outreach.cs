@@ -9,6 +9,8 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib;
+using Terraria.GameContent.Drawing;
+using Terraria.Localization;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Outreach")]
@@ -25,8 +27,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.noUseGraphic = true;
 			Item.width = 46;
 			Item.height = 46;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
+			Item.useTime = 40;
+			Item.useAnimation = 40;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
 			Item.shoot = ModContent.ProjectileType<Soldering_Iron_P>();
@@ -49,6 +51,7 @@ namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Outreach_P")]
 	public class Soldering_Iron_P : ModProjectile {
 		static new AutoCastingAsset<Texture2D> GlowTexture;
+		public override LocalizedText DisplayName => Mod.GetLocalization($"Items.{nameof(Soldering_Iron)}.DisplayName");
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			Main.projFrames[Type] = 7;
@@ -74,6 +77,15 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.direction = player.direction;
 			player.heldProj = Projectile.whoAmI;
 			player.itemTime = player.itemAnimation;
+			const int inactiveTime = 00;
+			float frame = ((780 + inactiveTime) * (1 - player.itemAnimation / (float)player.itemAnimationMax));
+			if (player.channel && frame < 500 + inactiveTime && Projectile.owner == Main.myPlayer) {
+				Vector2 direction = (Main.MouseWorld - player.MountedCenter).SafeNormalize(default);
+				if (direction != Projectile.velocity) {
+					Projectile.netUpdate = true;
+					Projectile.velocity = direction;
+				}
+			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
 			float armRot = (Projectile.velocity * new Vector2(1, player.gravDir)).ToRotation() - MathHelper.PiOver2;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.ThreeQuarters, armRot + 0.35f * Projectile.direction);
@@ -82,12 +94,40 @@ namespace Origins.Items.Weapons.Melee {
 			//Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			Vector2 shoulderPos = player.RotatedRelativePoint(player.MountedCenter);//position + new Vector2(20, 23);
 			shoulderPos += new Vector2(player.direction * 6, player.gravDir * -2);
-			player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, ((Projectile.Center + Projectile.velocity * 8) - shoulderPos).ToRotation() - MathHelper.PiOver2);
-			Projectile.position += Projectile.velocity * 90 * Projectile.scale;
+			player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, ((Projectile.Center + Projectile.velocity * 8 * Projectile.scale) - shoulderPos).ToRotation() - MathHelper.PiOver2);
+			Projectile.position += Projectile.velocity * 112 * Projectile.scale;
 			if (player.ItemAnimationEndingOrEnded) {
 				Projectile.Kill();
 			}
-			Projectile.frame = (int)(Main.projFrames[Type] * (1 - player.itemAnimation / (float)player.itemAnimationMax));
+			if (frame < inactiveTime) Projectile.frame = 0;
+			else if (frame < 200 + inactiveTime) {
+				Projectile.frame = 1;
+				if (!player.channel) Projectile.ai[0] = 2;
+			} else if (frame < 375 + inactiveTime) {
+				Projectile.frame = 2;
+			} else if (frame < 450 + inactiveTime) {
+				Projectile.frame = 3;
+				if (!player.channel && Projectile.ai[0] == 0) {
+					Projectile.ai[0] = 1;
+					player.itemAnimation = player.itemAnimationMax - (int)(((450 + inactiveTime) / (float)(780 + inactiveTime)) * player.itemAnimationMax);
+					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
+						IndexOfPlayerWhoInvokedThis = (byte)Projectile.owner,
+						PositionInWorld = Projectile.Center - Projectile.velocity * 20 * Projectile.scale,
+						MovementVector = Projectile.velocity
+					});
+				}
+			} else if (frame < 500 + inactiveTime) {
+				Projectile.frame = 4;
+				if (!player.channel && Projectile.ai[0] == 0) {
+					Projectile.ai[0] = 1;
+					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
+						IndexOfPlayerWhoInvokedThis = (byte)Projectile.owner,
+						PositionInWorld = Projectile.Center - Projectile.velocity * 20 * Projectile.scale,
+						MovementVector = Projectile.velocity
+					});
+				}
+			} else if (frame < 640 + inactiveTime) Projectile.frame = 5;
+			else if (frame < 780 + inactiveTime) Projectile.frame = 6;
 			Projectile.friendly = Projectile.frame == 4;
 			float flaskOffsetAmount = 0;
 			switch (Projectile.frame) {
@@ -110,15 +150,21 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			Projectile.EmitEnchantmentVisualsAt(Projectile.position - Projectile.velocity * flaskOffsetAmount * Projectile.scale, Projectile.width, Projectile.height);
 		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			if (Projectile.ai[0] == 1) {
+				modifiers.CritDamage *= 1 + Projectile.CritChance / 50f;
+				modifiers.SetCrit();
+			}
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
 			SpriteEffects spriteEffects = Projectile.direction == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
 			float rotation = Projectile.rotation - (Projectile.direction == -1 ? MathHelper.PiOver2 : 0);
-			Vector2 origin = new Vector2(99, 11).Apply(spriteEffects, frame.Size());
+			Vector2 origin = (new Vector2(99, 11)).Apply(spriteEffects, frame.Size());
 			Main.EntitySpriteDraw(
 				texture,
-				(Projectile.Center) - Main.screenPosition,
+				Projectile.Center - Main.screenPosition,
 				frame,
 				lightColor,
 				rotation,
@@ -128,7 +174,7 @@ namespace Origins.Items.Weapons.Melee {
 			);
 			Main.EntitySpriteDraw(
 				GlowTexture,
-				(Projectile.Center) - Main.screenPosition,
+				Projectile.Center - Main.screenPosition,
 				frame,
 				Color.White,
 				rotation,
