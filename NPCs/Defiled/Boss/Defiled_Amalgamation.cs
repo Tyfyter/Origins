@@ -515,7 +515,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						}
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
 						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
-						float speed = 3;
+						float speed = 1;
 
 						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
 						float diffX = NPC.Center.X - NPC.targetRect.Center().X;

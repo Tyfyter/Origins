@@ -1,16 +1,14 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Projectiles;
-using PegasusLib;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Outreach")]
@@ -21,7 +19,7 @@ namespace Origins.Items.Weapons.Melee {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 26;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -107,6 +105,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.frame = 2;
 			} else if (frame < 450 + inactiveTime) {
 				Projectile.frame = 3;
+				SoundEngine.PlaySound(SoundID.NPCDeath48.WithVolume(0.2f), player.MountedCenter);
 				if (!player.channel && Projectile.ai[0] == 0) {
 					Projectile.ai[0] = 1;
 					player.itemAnimation = player.itemAnimationMax - (int)(((450 + inactiveTime) / (float)(780 + inactiveTime)) * player.itemAnimationMax);
@@ -117,6 +116,7 @@ namespace Origins.Items.Weapons.Melee {
 					});
 				}
 			} else if (frame < 500 + inactiveTime) {
+				SoundEngine.PlaySound(SoundID.NPCDeath43, player.MountedCenter);
 				Projectile.frame = 4;
 				if (!player.channel && Projectile.ai[0] == 0) {
 					Projectile.ai[0] = 1;
@@ -151,6 +151,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.EmitEnchantmentVisualsAt(Projectile.position - Projectile.velocity * flaskOffsetAmount * Projectile.scale, Projectile.width, Projectile.height);
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			SoundEngine.PlaySound(SoundID.Item45);
 			if (Projectile.ai[0] == 1) {
 				modifiers.CritDamage *= 1 + Projectile.CritChance / 50f;
 				modifiers.SetCrit();

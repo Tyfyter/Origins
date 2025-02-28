@@ -216,9 +216,9 @@ ENEMY NPCS:
 (X) Depth Crawler
 (X) Holy Governor
 (X) Holy Warrior
-(☻) Leaf Snapper !!!
+(^) Leaf Snapper
 (^) King Crab
-(☻) Mildew Creeper !!!
+(^) Mildew Creeper
 (^) Mitoworm*
 (^) Nasty Crawdad
 (^) Profaned Bident*
@@ -365,6 +365,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
+(X) Akaliegis !!
 (^) Asylum Whistle*
 (^) A.S.H. Attack Relay*
 (^) Automated Returns Handler*
@@ -402,9 +403,9 @@ ACCESSORIES:
 (^) Explosive Artery*
 (^) Fairy Lotus*
 (#, ^2) Fallacious Vase !!!
-(☻) Feather Cape !!!
-(☻) Feathery Crest !!!
-(#, ^2) Fissure Band !!!
+(^) Feather Cape
+(^) Feathery Crest
+(#, ^2) Fissure Band
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (#, ^2) Full Send !!!
@@ -415,7 +416,7 @@ ACCESSORIES:
 (^) Gun Magazine*
 (^) Haggard Artery*
 (^) Handy Helper*
-(☻) Harpy Horseshoe Balloon !!!
+(^) Harpy Horseshoe Balloon
 (#2, ^2) Hazard Charm* !!! (added functionality)
 (^) Headphones*
 (#2, ^2) Helium Tank* !!! (added functionality with balloons)
@@ -462,7 +463,7 @@ ACCESSORIES:
 (^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
-(☻) Rebreather Gear !!!
+(#, ^2) Rebreather Gear !!!
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Rockstar Choker
@@ -485,14 +486,15 @@ ACCESSORIES:
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
-(☻) Sunder Gut !!!
+(^) Sunder Gut
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
 (^) Tainted Flesh*
-(☻) Tender Flesh Heart !!!
+(^) Tender Flesh Heart
+(X) Tiki Buckler !!!
 (X) Timbre of Hell°
-(☻) Trap Charm* !!!
+(^) Trap Charm*
 (^) Tripod Nip*
 (^) Turbo Reel*
 (^) Unsought Organ*
@@ -537,7 +539,7 @@ VANITY:
 (X) Duskord Mask
 (^) Fiberglass Weaver Head*
 (X) I.C.A.R.U.S. Mask
-(☻) Lost Diver set !!!
+(^) Lost Diver set
 (X) Miscreant Mask
 (X) Quantux Mask
 (^) World Cracker Mask*
@@ -661,7 +663,7 @@ MELEE WEAPONS:
 (^) Ripper Lance*
 (^) Riverang*
 (^) Snapthrow*
-(☻) Soldering Iron !!!
+(^) Soldering Iron
 (#, ^2) Soul Snatcher* !!!
 (#, ^2) Soulslasher !!!
 (^) Spiker Sword*
@@ -672,16 +674,17 @@ MELEE WEAPONS:
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent*
 
-(☻) Amenonuhoko !!! (rework)
+(#2, ^2) Amenonuhoko !!! (rework)
 (^) Amoebash*
 (#, ^2) Boomboom !!!
-(☻) Crystal Cutters !!! (Orb fade effects)
+(^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
 (^) Knee Slapper*
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
+(X) The Foot !!!
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
@@ -691,7 +694,7 @@ MELEE WEAPONS:
 (^) Personal Laser Blade*
 (X) Pile Bunker
 (X) Rocket Lance
-(☻) Telephone Pole*
+(^) Telephone Pole*
 (^) Terrarang*
 (^) True Light Disc*
 (^) True Waning Crescent*
@@ -740,7 +743,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(☻) Boat Rocker !!! (alt?)
+(#2, ^2) Boat Rocker !!! (alt?)
 (^) Boiler*
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
@@ -755,7 +758,7 @@ RANGED WEAPONS:
 (^) Incision*
 (X) Lag Spike
 (X) Left Klik°
-(☻) Laser Line Bow !!!
+(#, ^2) Laser Line Bow !!!
 (^) Mythril Harpoon Gun*
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun*
@@ -776,7 +779,7 @@ RANGED WEAPONS:
 (X) Laser Tag Shotgun
 (X) Shroomshot
 (X) Skewr
-(☻) Tolruk
+(^) Tolruk
 
 (X) Fulcrum
 (X) Journey's End
@@ -855,7 +858,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
-(☻) Guardian Rod !!!
+(#, ^2) Guardian Rod !!!
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!
@@ -906,6 +909,7 @@ SUMMONER WEAPONS:
 (X) Ingress Incantation
 (X) Mojo Mask Staff
 (X) Peeping Tom's Incantation
+(X) Probe Controller
 (X) Ribatar
 (X) Seraphim Song
 (X, @2, #2) SMART Wrench
@@ -940,7 +944,7 @@ EXPLOSIVE WEAPONS:
 (^) Floaty Bomb*
 (^) Glass Cannon*
 (^) Hand Grenade Launcher
-(☻) Heartache Dynamite !!!
+(^) Heartache Dynamite
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
 (^) Hemoptysis

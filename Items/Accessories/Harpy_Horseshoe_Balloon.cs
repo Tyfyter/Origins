@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,8 +12,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Feathery_Crest>()
 			.AddIngredient(ItemID.BlueHorseshoeBalloon)
+			.AddIngredient<Feathery_Crest>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
@@ -24,10 +23,10 @@ namespace Origins.Items.Accessories {
 			jumpState.Enable();
 			player.hasLuck_LuckyHorseshoe = true;
 			player.noFallDmg = true;
-			if ((player.controlUp && !jumpState.Available) || jumpState.Active) {
-				player.gravity -= 0.2f;
+			if ((player.controlJump && !jumpState.Available) || jumpState.Active) {
+				player.gravity = 0.15f;
 			} else if (player.controlDown) {
-				player.gravity += 0.4f;
+				player.gravity = 1.4f;
 			}
 		}
 	}

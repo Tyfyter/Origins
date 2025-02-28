@@ -5189,7 +5189,13 @@ First_Dream: {
 
 Tender_Flesh_Heart: {
 	// DisplayName: Tender Flesh Heart
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Up to 65% of your max life is gradually converted into mildew health
+		Mildew health regenerates faster than regular health
+		Your death is delayed for as long as your max mildew health decays
+		Increased life regeneration, defense and mildew health conversion based on the torn severity you're affected by
+		''' */
 }
 
 Torpedo_Tube_Alt: {
@@ -5204,22 +5210,37 @@ Boat_Rocker_Alt: {
 
 Feathery_Crest: {
 	// DisplayName: Feathery Crest
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
 }
 
 Feather_Cape: {
 	// DisplayName: Feather Cape
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
 }
 
 Harpy_Horseshoe_Balloon: {
 	// DisplayName: Harpy Horseshoe Balloon
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Allows the holder to double jump
+		Increases jump height and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
 }
 
 Soldering_Iron: {
 	// DisplayName: Soldering Iron
-	// Tooltip: ""
+	// Tooltip: Release your input right as it strikes for a critical hit
 }
 
 Old_Brine_Rock: {

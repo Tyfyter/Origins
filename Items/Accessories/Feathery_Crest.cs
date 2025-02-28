@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
@@ -10,10 +9,10 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(silver: 85);
 		}
 		public override void UpdateEquip(Player player) {
-			if (player.controlUp) {
-				player.gravity -= 0.2f;
+			if (player.controlJump) {
+				player.gravity = 0.15f;
 			} else if (player.controlDown) {
-				player.gravity += 0.4f;
+				player.gravity = 1.4f;
 			}
 		}
 	}
