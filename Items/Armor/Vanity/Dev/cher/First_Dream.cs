@@ -14,6 +14,8 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		protected override bool CloneNewInstances => true;
 		[CloneByReference]
 		readonly List<First_Dream_Mode> modes = [];
+		[CloneByReference]
+		readonly List<(int index, Array set, object value)> setValues = [];
 		int mode = 0;
 		public override void Load() {
 			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
@@ -24,7 +26,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			int AddTextureWithSets(string name, EquipType equipType, params (Array set, object value)[] sets) {
 				int id = EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
 				for (int i = 0; i < sets.Length; i++) {
-					sets[i].set.SetValue(sets[i].value, id);
+					setValues.Add((id, sets[i].set, sets[i].value));
 				}
 				return id;
 			}
@@ -71,6 +73,12 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 					break;
 				}
 				NetMessage.SendData(MessageID.SyncEquipment, -1, -1, null, player.whoAmI, baseSlot + slot);
+			}
+		}
+		public override void SetStaticDefaults() {
+			for (int i = 0; i < setValues.Count; i++) {
+				(int index, Array set, object value) = setValues[i];
+				set.SetValue(value, index);
 			}
 		}
 		public override void SetDefaults() {
