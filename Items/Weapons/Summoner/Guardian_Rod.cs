@@ -343,11 +343,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Static_Shock_Debuff.Inflict(target, Main.rand.Next(240, 300));
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Origins.shaderOroboros.Capture();
-			base.PreDraw(ref lightColor);
 			Player owner = Main.player[Projectile.owner];
-			Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner), Projectile);
-			Origins.shaderOroboros.Release();
+			if (owner.cMinion != 0) {
+				Origins.shaderOroboros.Capture();
+				base.PreDraw(ref lightColor);
+				Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner), Projectile);
+				Origins.shaderOroboros.Release();
+			} else {
+				base.PreDraw(ref lightColor);
+			}
 			return false;
 		}
 	}
