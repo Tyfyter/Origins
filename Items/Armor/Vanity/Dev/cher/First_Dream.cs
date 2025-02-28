@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -20,8 +21,15 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			int AddTexture(string name, EquipType equipType) {
 				return EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
 			}
+			int AddTextureWithSets(string name, EquipType equipType, params (Array set, object value)[] sets) {
+				int id = EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
+				for (int i = 0; i < sets.Length; i++) {
+					sets[i].set.SetValue(sets[i].value, id);
+				}
+				return id;
+			}
 			modes.Add(new("Chrersis", new(
-				headSlot: AddTexture("Chrersis_Helmet_Head", EquipType.Head),
+				headSlot: AddTextureWithSets("Chrersis_Helmet_Head", EquipType.Head, (ArmorIDs.Head.Sets.DrawHead, false)),
 				bodySlot: AddTexture("Chrersis_Breastplate_Body", EquipType.Body),
 				legSlot: AddTexture("Chrersis_Greaves_Legs", EquipType.Legs)
 			)));
