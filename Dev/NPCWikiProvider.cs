@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.NPCs;
+using Origins.NPCs.Defiled;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -123,6 +124,8 @@ namespace Origins.Dev {
 
 			JArray environments = WikiExtensions.GetEnvironment(ContentSamples.NpcsByNetId[modNPC.Type]);
 			data.AppendJStat("Environment", environments, []);
+			string quote = WikiExtensions.GetBestiaryText(npc);
+			data.AppendStat("BestiaryQuotation", quote, "");
 
 			customStat?.ModifyWikiStats(data);
 			if (!data.ContainsKey("SpriteWidth")) data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
@@ -134,9 +137,9 @@ namespace Origins.Dev {
 			string segmentText = "";
 			if (npc.catchItem > 0) {
 				segmentText = "_NPC";
-			} else if (modNPC is WormBody) {
+			} else if (modNPC is WormBody or Defiled_Digger_Body) {
 				segmentText = "_Body";
-			} else if (modNPC is WormTail) {
+			} else if (modNPC is WormTail or Defiled_Digger_Tail) {
 				segmentText = "_Tail";
 			}
 			yield return (((modNPC as ICustomWikiStat)?.CustomStatPath ?? PageName(modNPC)) + segmentText, GetNPCStats(modNPC));
