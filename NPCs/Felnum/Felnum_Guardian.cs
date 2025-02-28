@@ -6,6 +6,7 @@ using Origins.Dusts;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Tiles.Other;
 using PegasusLib;
 using ReLogic.Utilities;
@@ -171,6 +172,7 @@ namespace Origins.NPCs.Felnum {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Felnum_Ore_Item>(), 1, 7, 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Guardian_Rod>(), 40));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Felnum_Helmet>(), 66));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Felnum_Breastplate>(), 66));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Felnum_Greaves>(), 66));
