@@ -462,7 +462,7 @@ ACCESSORIES:
 (^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
-(#, ^2) Rebreather Gear !!!
+(☻) Rebreather Gear !!!
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Rockstar Choker
@@ -485,7 +485,7 @@ ACCESSORIES:
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
-(#, ^2) Sunder Gut !!!
+(☻) Sunder Gut !!!
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
@@ -672,7 +672,7 @@ MELEE WEAPONS:
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent*
 
-(#2, ^2) Amenonuhoko !!! (rework)
+(☻) Amenonuhoko !!! (rework)
 (^) Amoebash*
 (#, ^2) Boomboom !!!
 (☻) Crystal Cutters !!! (Orb fade effects)
@@ -740,7 +740,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(#2, ^2) Boat Rocker !!! (alt?)
+(☻) Boat Rocker !!! (alt?)
 (^) Boiler*
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
@@ -755,7 +755,7 @@ RANGED WEAPONS:
 (^) Incision*
 (X) Lag Spike
 (X) Left Klik°
-(#, ^2) Laser Line Bow !!!
+(☻) Laser Line Bow !!!
 (^) Mythril Harpoon Gun*
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun*
@@ -855,7 +855,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
-(#, ^2) Guardian Rod !!!
+(☻) Guardian Rod !!!
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!

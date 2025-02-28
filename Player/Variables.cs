@@ -171,6 +171,7 @@ namespace Origins {
 		public bool magicTripwire = false;
 		public int lousyLiverCount = 0;
 		public List<(int id, int duration)> lousyLiverDebuffs = [];
+		public float lousyLiverRange = 256;
 		public bool summonTagForceCrit = false;
 		public bool rubyReticle = false;
 		public bool taintedFlesh = false;
@@ -592,6 +593,7 @@ namespace Origins {
 			shineSpark = false;
 			magicTripwire = false;
 			lousyLiverCount = 0;
+			lousyLiverRange = 256;
 			if (lousyLiverDebuffs.Count > 0) lousyLiverDebuffs.Clear();
 			summonTagForceCrit = false;
 			rubyReticle = false;

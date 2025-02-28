@@ -103,8 +103,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
-			Magnus_P_Drawer drawer = default;
-			drawer.Draw(Projectile);
+			Magnus_P_Drawer.Draw(Projectile);
 			return false;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
@@ -181,9 +180,7 @@ namespace Origins.Items.Weapons.Magic {
 		public const int FramesPerImportantTrail = 60;
 
 		private static VertexStrip _vertexStrip = new VertexStrip();
-
-		public float Length;
-		public void Draw(Projectile proj) {
+		public static void Draw(Projectile proj) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Framed"];
 			float uTime = (float)Main.timeForVisualEffects / 44;
 			int length = proj.oldPos.Length;

@@ -69,7 +69,7 @@ namespace Origins {
 				}
 			}
 			if (lousyLiverCount > 0) {
-				const float maxDist = 256 * 256;
+				float maxDist = lousyLiverRange * lousyLiverRange;
 				List<(NPC target, float dist)> targets = new(lousyLiverCount);
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC currentTarget = Main.npc[i];

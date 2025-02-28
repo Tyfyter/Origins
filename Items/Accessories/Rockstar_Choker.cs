@@ -11,7 +11,8 @@ namespace Origins.Items.Accessories {
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister("ItemTooltip.SharkToothNecklace"),
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Lightning_Ring)}.Tooltip"),
-				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Makeover_Choker)}.Tooltip")
+				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Mysterious_Spray)}.EffectTooltip"),
+				Language.GetOrRegister($"ItemTooltip.CrossNecklace")
 			);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 22);

@@ -1049,6 +1049,11 @@ Buffs: {
 		DisplayName: Old Turtle Buff
 		Description: Mods.Origins.Buffs.Old_Turtle_Buff.Description
 	}
+
+	Guardian_Rod_Buff: {
+		DisplayName: Guardian Rod Buff
+		Description: Mods.Origins.Buffs.Guardian_Rod_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1512,6 +1517,9 @@ Projectiles: {
 	Watered_Down_Keytar_Synth.DisplayName: Watered Down Keytar Synth
 	Watered_Down_Keytar_Bass.DisplayName: Watered Down Keytar Bass
 	Old_Turtle.DisplayName: Old Turtle
+	Amenonuhoko_Laser.DisplayName: Amenonuhoko Laser
+	Friendly_Guardian.DisplayName: Friendly Guardian
+	Friendly_Guardian_P.DisplayName: Friendly Guardian P
 }
 
 Prefixes: {

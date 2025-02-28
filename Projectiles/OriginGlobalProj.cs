@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
+using Origins.Projectiles.Weapons;
 using Origins.Questing;
 using Origins.Reflection;
 using PegasusLib;
@@ -63,6 +64,7 @@ namespace Origins.Projectiles {
 		public int unmissTarget = -1;
 		public Vector2 unmissTargetPos = default;
 		public int unmissAnimation = 0;
+		public bool laserBow = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public override void Load() {
 			itemSourceEffects = [];
@@ -346,6 +348,17 @@ namespace Origins.Projectiles {
 				projectile.velocity += extraGravity;
 				break;
 			}
+			if (laserBow && projectile.timeLeft % 10 == 0) {
+				Projectile.NewProjectile(
+					projectile.GetSource_FromAI(),
+					projectile.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Brine_Droplet>(),
+					projectile.damage / 3,
+					projectile.knockBack,
+					projectile.owner
+				);
+			}
 		}
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			if (viperEffect) {
@@ -460,6 +473,7 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(viperEffect);
 			bitWriter.WriteBit(isFromMitosis);
 			bitWriter.WriteBit(shouldUnmiss);
+			bitWriter.WriteBit(laserBow);
 
 			binaryWriter.Write(Prefix);
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
@@ -475,6 +489,7 @@ namespace Origins.Projectiles {
 			viperEffect = bitReader.ReadBit();
 			isFromMitosis = bitReader.ReadBit();
 			shouldUnmiss = bitReader.ReadBit();
+			laserBow = bitReader.ReadBit();
 
 			Prefix = binaryReader.ReadInt32();
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();

@@ -193,8 +193,8 @@ Coologne: {
 	// DisplayName: Coologne
 	/* Tooltip:
 		'''
-		Increases life regeneration at low health
-		Puts a shell around the owner when below 50% life that reduces damage by 25%
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		{$ItemTooltip.FrozenTurtleShell}
 		'20% cooler than competing brands!'
 		''' */
 }
@@ -509,8 +509,8 @@ Makeover_Choker: {
 	// DisplayName: Makeover Choker
 	/* Tooltip:
 		'''
-		Increases life regeneration at low health
-		Increases length of invincibility after taking damage
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		{$ItemTooltip.CrossNecklace}
 		'You look like a mess, let's get that taken care of'
 		''' */
 }
@@ -562,9 +562,10 @@ Mojo_Injection: {
 
 Mysterious_Spray: {
 	// DisplayName: Mysterious Spray
+	// EffectTooltip: Increases life regeneration at low health
 	/* Tooltip:
 		'''
-		Increases life regeneration at low health
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
 		'The perfect ailment to attack your senses'
 		''' */
 }
@@ -5223,5 +5224,18 @@ Soldering_Iron: {
 
 Old_Brine_Rock: {
 	// DisplayName: Old Brine Rock
+	// Tooltip: ""
+}
+
+// Rebreather_Gear.DisplayName: Rebreather Gear
+// Sunder_Gut.DisplayName: Sunder Gut
+
+Laser_Line_Bow: {
+	// DisplayName: Laser Line Bow
+	// Tooltip: ""
+}
+
+Guardian_Rod: {
+	// DisplayName: Guardian Rod
 	// Tooltip: ""
 }
