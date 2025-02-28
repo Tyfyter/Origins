@@ -782,6 +782,16 @@ namespace Origins.Dev {
 			}
 			return environments;
 		}
+		public static string GetBestiaryText(this NPC npc) {
+			BestiaryEntry entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
+			foreach (var info in entry.Info) {
+				if (info is FlavorTextBestiaryInfoElement quote) {
+					string key = FlavorTextBestiaryInfoElementMethods._key?.GetValue(quote);
+					return key != null && Language.Exists(key) ? Language.GetTextValue(key) : "";
+				}
+			}
+			return "";
+		}
 		public static (List<Recipe> recipes, List<Recipe> usedIn) GetRecipes(Item item) {
 			List<Recipe> recipes = [];
 			List<Recipe> usedIn = [];
