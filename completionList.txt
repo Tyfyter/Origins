@@ -940,7 +940,7 @@ EXPLOSIVE WEAPONS:
 (^) Floaty Bomb*
 (^) Glass Cannon*
 (^) Hand Grenade Launcher
-(#, ^2) Heartache Dynamite !!!
+(☻) Heartache Dynamite !!!
 (^) Hellfire Bomb*
 (^) Hellfire Grenade*
 (^) Hemoptysis
