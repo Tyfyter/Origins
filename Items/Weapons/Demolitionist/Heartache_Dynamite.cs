@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
-			Item.damage = 65;
+			Item.damage = 85;
 			Item.shoot = ModContent.ProjectileType<Heartache_Dynamite_P>();
 			Item.shootSpeed *= 1.75f;
 			Item.value = Item.sellPrice(silver: 5);

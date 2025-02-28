@@ -61,6 +61,7 @@ namespace Origins.NPCs {
 		public int birdedDamage = 0;
 		public bool airBird = false;
 		public bool deadBird = false;
+		public int sonarDynamiteTime = 0;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -111,6 +112,7 @@ namespace Origins.NPCs {
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
 			if (birdedTime <= 0) airBird = false;
+			if (sonarDynamiteTime > 0) sonarDynamiteTime--;
 			if (deadBird) {
 				npc.noTileCollide = false;
 				if (birdedTime <= 0) {
@@ -123,6 +125,11 @@ namespace Origins.NPCs {
 				drawColor.R = (byte)Math.Max(drawColor.R - 85, 0);
 				drawColor.G = (byte)Math.Min(drawColor.G + 50, 255);
 				drawColor.B = (byte)Math.Min(drawColor.B + 85, 255);
+			}
+			if (sonarDynamiteTime > 0) {
+				drawColor.R = (byte)Math.Max(drawColor.R - 150, 0);
+				drawColor.G = 255;
+				drawColor.B = 255;
 			}
 			if (Missing_File_UI.drawingMissingFileUI) {
 				drawColor = Missing_File_UI.currentNPCColor;

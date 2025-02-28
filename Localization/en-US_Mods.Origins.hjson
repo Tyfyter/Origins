@@ -1522,6 +1522,7 @@ Projectiles: {
 	Amenonuhoko_Laser.DisplayName: Amenonuhoko Laser
 	Friendly_Guardian.DisplayName: Friendly Guardian
 	Friendly_Guardian_P.DisplayName: Friendly Guardian P
+	Sonar_Dynamite_Ping.DisplayName: Sonar Dynamite Ping
 }
 
 Prefixes: {

@@ -133,7 +133,7 @@ namespace Origins {
 		}
 		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || Throwing.GetsPrefixesFor(damageClass);
 		public override void SetDefaultStats(Player player) {
-			//player.GetCritChance(this) += 4;
+			player.GetCritChance(this) -= 4;
 		}
 	}
 	[Autoload(false)]
@@ -159,7 +159,7 @@ namespace Origins {
 			return other.GetModifierInheritance(damageClass);
 		}
 		public override void SetDefaultStats(Player player) {
-			//player.GetCritChance(this) -= 4;
+			player.GetCritChance(this) -= 4;
 		}
 	}
 	public class Ranged_Magic : DamageClass {

@@ -5244,3 +5244,8 @@ Heartache_Dynamite: {
 	// DisplayName: Heartache Dynamite
 	// Tooltip: ""
 }
+
+Sonar_Dynamite: {
+	// DisplayName: Sonar Dynamite
+	// Tooltip: ""
+}
