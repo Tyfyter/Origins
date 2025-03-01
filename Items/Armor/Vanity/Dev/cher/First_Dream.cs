@@ -15,7 +15,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		[CloneByReference]
 		readonly List<First_Dream_Mode> modes = [];
 		[CloneByReference]
-		readonly List<(int index, Array set, object value)> setValues = [];
+		readonly List<(int id, Action<int> func)> setValues = [];
 		int mode = 0;
 		public override void Load() {
 			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
@@ -23,15 +23,15 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			int AddTexture(string name, EquipType equipType) {
 				return EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
 			}
-			int AddTextureWithSets(string name, EquipType equipType, params (Array set, object value)[] sets) {
+			int AddTextureWithSets(string name, EquipType equipType, params Action<int>[] sets) {
 				int id = EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
 				for (int i = 0; i < sets.Length; i++) {
-					setValues.Add((id, sets[i].set, sets[i].value));
+					setValues.Add((id, sets[i]));
 				}
 				return id;
 			}
 			modes.Add(new("Chrersis", new(
-				headSlot: AddTextureWithSets("Chrersis_Helmet_Head", EquipType.Head, (ArmorIDs.Head.Sets.DrawHead, false)),
+				headSlot: AddTextureWithSets("Chrersis_Helmet_Head", EquipType.Head, id => ArmorIDs.Head.Sets.DrawHead[id] = false),
 				bodySlot: AddTexture("Chrersis_Breastplate_Body", EquipType.Body),
 				legSlot: AddTexture("Chrersis_Greaves_Legs", EquipType.Legs)
 			)));
@@ -77,8 +77,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		}
 		public override void SetStaticDefaults() {
 			for (int i = 0; i < setValues.Count; i++) {
-				(int index, Array set, object value) = setValues[i];
-				set.SetValue(value, index);
+				setValues[i].func(setValues[i].id);
 			}
 		}
 		public override void SetDefaults() {
