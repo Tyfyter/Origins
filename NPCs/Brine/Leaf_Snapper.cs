@@ -37,6 +37,7 @@ namespace Origins.NPCs.Brine {
 			NPC.knockBackResist = 0.95f;
 			NPC.value = 250;
 			NPC.noGravity = true;
+			NPC.chaseable = OriginsModIntegrations.CheckAprilFools();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
