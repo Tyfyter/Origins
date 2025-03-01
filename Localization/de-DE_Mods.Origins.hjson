@@ -1048,13 +1048,13 @@ Buffs: {
 	}
 
 	Old_Turtle_Buff: {
-		// DisplayName: Old Turtle Buff
-		// Description: Mods.Origins.Buffs.Old_Turtle_Buff.Description
+		// DisplayName: Briney Buddy
+		// Description: The Leaf Snapper protek!
 	}
 
 	Guardian_Rod_Buff: {
-		// DisplayName: Guardian Rod Buff
-		// Description: Mods.Origins.Buffs.Guardian_Rod_Buff.Description
+		// DisplayName: Zappy Guardian
+		// Description: The Guardian zap your enemies!
 	}
 }
 

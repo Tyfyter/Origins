@@ -1,7 +1,5 @@
 using AltLibrary.Common.Systems;
-using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Tools;
@@ -30,16 +28,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
-			Item.damage = 120;
+			Item.damage = 175;
 			Item.shoot = ModContent.ProjectileType<Sonar_Dynamite_P>();
 			Item.value = Item.sellPrice(silver: 25);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
-			.AddIngredient(ItemID.Dynamite, 8)
 			.AddRecipeGroup(RecipeGroups.CopperBars, 3)
-			.AddIngredient<Alkaliphiliac_Tissue>()
+			.AddIngredient(ItemID.Dynamite, 8)
+			.AddIngredient<Alkaliphiliac_Tissue>(5)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -103,8 +101,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.Kill();
 					return;
 				}
-				SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-				SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Zombie82.WithPitch(-3).WithVolume(0.2f) with { MaxInstances = 0 }, Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(-4f) with { MaxInstances = 0 }, Projectile.Center);
 				if (Projectile.owner == Main.myPlayer) {
 					Projectile.NewProjectileDirect(
 						Projectile.GetSource_FromAI(),
@@ -150,11 +148,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position = parent.Center;
 			if (Projectile.ai[1] > 1) Projectile.Kill();
 			Projectile.ai[1] += 1 / 30f;
-			float range = 112.5f * Projectile.ai[1];
+			float range = 224.5f * Projectile.ai[1];
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.CanBeChasedBy(Projectile) && Projectile.Center.Clamp(npc.Hitbox).WithinRange(Projectile.Center, range)) {
-					parent.timeLeft = 30;
-					npc.GetGlobalNPC<OriginGlobalNPC>().sonarDynamiteTime = 30;
+					parent.timeLeft = 5;
+					npc.GetGlobalNPC<OriginGlobalNPC>().sonarDynamiteTime = 5;
 				}
 			}
 		}

@@ -463,7 +463,7 @@ ACCESSORIES:
 (^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
-(#, ^2) Rebreather Gear !!!
+(^) Rebreather Gear
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Rockstar Choker
@@ -505,7 +505,7 @@ ACCESSORIES:
 (^) Mana Drive°
 (^) Protozoa Food*
 (#2, ^2) Refactoring Pieces* !!!
-(☻) Retaliatory Tendril° !!!
+(#2, ^2) Retaliatory Tendril° !!! (Probably should have a cap)
 (^) Scrap Compactor°
 
 (^) Amebic Vial*
@@ -562,7 +562,7 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(☻) First Dream
+(^) First Dream
 (^) Tyfyter's Set*
 
 (^) Acrid Dye
@@ -621,7 +621,7 @@ TOOLS:
 (^) Marrowick Hammer*
 (^) Miter Saw*
 (^) Parasitic Manipulator*
-(^) Pile Driver*
+(^) Piledriver*
 (^) Rivenator*
 (^) Snatcher*
 (^) Stabsmash*
@@ -743,7 +743,7 @@ RANGED WEAPONS:
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
 (X) Bloodshot
-(#2, ^2) Boat Rocker !!! (alt?)
+(^) Boat Rocker
 (^) Boiler*
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
@@ -758,7 +758,7 @@ RANGED WEAPONS:
 (^) Incision*
 (X) Lag Spike
 (X) Left Klik°
-(#, ^2) Laser Line Bow !!!
+(^) Laser Line Bow
 (^) Mythril Harpoon Gun*
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun*
@@ -858,7 +858,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
-(#, ^2) Guardian Rod !!!
+(#2, ^2) Guardian Rod !!! (sound limit cap)
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!
@@ -887,7 +887,7 @@ SUMMONER WEAPONS:
 (#, ^2) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
-(☻) Old Brine Rock !!!
+(#2, ^2) Old Brine Rock !!!
 (X) Ornamental Riven Artifact
 (X) Riven Rain Rod
 (^) Scabcoral Lyre*
@@ -976,7 +976,7 @@ EXPLOSIVE WEAPONS:
 (X) Rattlesnake
 (#, ^2) Rocket Rifle !!!
 (X) Shroomcannon
-(#, ^2) Sonar Dynamite !!!
+(^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
 (^) Thermite Launcher*
 (^) Torpedo Tube
@@ -1319,7 +1319,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 ---
-(#, ^2) Crown Jewel !!!
+(^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection*
 (^) Quantum Injector°
@@ -1513,7 +1513,7 @@ CROSS-MOD CONTENT:
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (#, ^2/4) Keytar !!!
-(☻, ^4) Watered-down Keytar !!!
+(#2, $2, ^2) Watered-down Keytar !!!
 ---
 
 UI:

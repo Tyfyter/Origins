@@ -704,11 +704,7 @@ Rebreather: {
 
 Refactoring_Pieces: {
 	DisplayName: Refactoring Pieces
-	Tooltip:
-		'''
-		Increases mana shielding by 10%
-		Reduces damage taken by 5% if Lost Armor is not equipped
-		'''
+	Tooltip: Increases mana shielding and damage reduction by 10%
 }
 
 Resin_Shield: {
@@ -3579,8 +3575,7 @@ Binding_Book: {
 		Increases pickup range for mana stars
 		Increases maximum mana by 20
 		Restores mana when damaged
-		Increases mana shielding by 10%
-		Reduces damage taken by 5% if Lost Armor is not equipped
+		Increases mana shielding and damage reduction by 10%
 		'''
 }
 
@@ -5148,8 +5143,12 @@ Wet_Wood: {
 }
 
 Watered_Down_Keytar: {
-	DisplayName: Watered Down Keytar
-	Tooltip: ""
+	DisplayName: Watered-down Keytar
+	Tooltip:
+		'''
+		Left-click for a Toxic Shock-inflicting synth
+		Right-click for a cavitating bass
+		'''
 }
 
 Lost_Diver_Chest: {
@@ -5169,7 +5168,11 @@ Lost_Diver_Helmet: {
 
 Crown_Jewel: {
 	DisplayName: Crown Jewel
-	Tooltip: ""
+	Tooltip:
+		'''
+		Increases your damage, crit chance and self-damage resistance by 1% for every Hardmode boss you've defeated
+		'Many heroes have died for this, and yet you are the one to wield its power'
+		'''
 	Toggle_On: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} on"
 	Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} off"
 	BossesSlain: "{0} bosses slain"
@@ -5177,14 +5180,18 @@ Crown_Jewel: {
 
 Retaliatory_Tendril: {
 	DisplayName: Retaliatory Tendril
-	Tooltip: ""
+	Tooltip: Increases your attack speed as you take damage until you deal 500 damage
 }
 
 First_Dream: {
 	DisplayName: First Dream ({0})
 	Mode_Chrersis: Chrersis
 	Mode_Diver: Diver
-	Tooltip: ""
+	Tooltip:
+		'''
+		Right-click to change your appearance!
+		Makes you look like one of Origins' spriters!
+		'''
 }
 
 Tender_Flesh_Heart: {
@@ -5245,7 +5252,7 @@ Soldering_Iron: {
 
 Old_Brine_Rock: {
 	DisplayName: Old Brine Rock
-	Tooltip: ""
+	Tooltip: Summons an armed leaf snapper to fight for you
 }
 
 Rebreather_Gear.DisplayName: Rebreather Gear
@@ -5253,12 +5260,12 @@ Sunder_Gut.DisplayName: Sunder Gut
 
 Laser_Line_Bow: {
 	DisplayName: Laser Line Bow
-	Tooltip: ""
+	Tooltip: Fired arrows release brine rain in their wake
 }
 
 Guardian_Rod: {
 	DisplayName: Guardian Rod
-	Tooltip: ""
+	Tooltip: Summons a miniature Felnum Guardian to fight for you
 }
 
 Heartache_Dynamite: {
@@ -5268,5 +5275,5 @@ Heartache_Dynamite: {
 
 Sonar_Dynamite: {
 	DisplayName: Sonar Dynamite
-	Tooltip: ""
+	Tooltip: Explodes when enemies are pinged by it
 }

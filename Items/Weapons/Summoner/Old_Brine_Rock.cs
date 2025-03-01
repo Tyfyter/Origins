@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
-using Origins.Gores;
-using Origins.Items.Accessories;
-using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
@@ -37,7 +32,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = true;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Old_Turtle_Buff.ID;
 			Item.shoot = Old_Turtle.ID;
@@ -53,7 +48,7 @@ namespace Origins.Items.Weapons.Summoner {
 }
 namespace Origins.Buffs {
 	public class Old_Turtle_Buff : ModBuff {
-		public override string Texture => typeof(Old_Turtle).GetDefaultTMLName();
+		public override string Texture => "Origins/Buffs/Old_Turtle_Buff";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;

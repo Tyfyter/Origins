@@ -634,12 +634,11 @@ namespace Origins {
 					info.Dodgeable = true;
 					manaDamageToTake = (int)Math.Floor(manaDamage * costMult * manaShielding);
 				};
-			} else if (refactoringPieces) {
-				modifiers.SourceDamage *= 0.95f;
-			} /*else if (pricklyPeared) {
-			+25% mana shielding?
-			}*/
-			if (toxicShock) { //Add stun
+			}
+			if (refactoringPieces) {
+				modifiers.SourceDamage *= 0.9f;
+			}
+			if (toxicShock) { //TODO: Add stun
 				/*if (Main.rand.NextBool(400)) {// roughly 15% chance each second
 					Player.GetModPlayer<OriginPlayer>().stunTime;
 				}*/

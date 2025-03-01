@@ -1,14 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Projectiles;
-using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Empowerments;
@@ -130,7 +125,7 @@ namespace Origins.Items.Weapons.Crossmod {
 			DrawOriginOffsetX = 0;
 			DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
 			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
-			Lighting.AddLight(Projectile.Center, 0.25f, 0.25f, 0.75f);
+			Lighting.AddLight(Projectile.Center, 0.75f, 0.25f, 0.25f);
 		}
 		public static void OnHitNPC(NPC target) {
 			if (target.wet && Main.rand.NextBool(4)) target.AddBuff(Cavitation_Debuff.ID, Main.rand.Next(180, 301));

@@ -1,17 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Dusts;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs.Felnum;
-using Origins.Projectiles;
 using PegasusLib;
 using ReLogic.Utilities;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,7 +14,6 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Guardian_Rod : ModItem, ICustomWikiStat {
@@ -44,7 +38,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = true;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Guardian_Rod_Buff.ID;
 			Item.shoot = Friendly_Guardian.ID;
@@ -60,7 +54,7 @@ namespace Origins.Items.Weapons.Summoner {
 }
 namespace Origins.Buffs {
 	public class Guardian_Rod_Buff : ModBuff {
-		public override string Texture => typeof(Friendly_Guardian).GetDefaultTMLName() + "_Glow";
+		public override string Texture => "Origins/Buffs/Felnum_Guardian_Buff";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;

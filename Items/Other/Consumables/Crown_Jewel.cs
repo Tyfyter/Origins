@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Dev;
-using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -30,7 +26,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.height = 26;
 			Item.accessory = false;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.UseSound = SoundID.Item3;
+			Item.UseSound = SoundID.Item29.WithPitch(-3f).WithVolume(0.2f);
 			Item.consumable = true;
 		}
 		public override bool? UseItem(Player player) {

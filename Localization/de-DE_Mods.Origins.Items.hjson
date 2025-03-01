@@ -5164,7 +5164,7 @@ Lost_Diver_Greaves: {
 
 Lost_Diver_Helmet: {
 	// DisplayName: Lost Diver Helmet
-	// Tooltip: ""
+	// Tooltip: It's smelly in here...
 }
 
 Crown_Jewel: {
@@ -5177,14 +5177,18 @@ Crown_Jewel: {
 
 Retaliatory_Tendril: {
 	// DisplayName: Retaliatory Tendril
-	// Tooltip: ""
+	// Tooltip: Increases your attack speed as you take damage until you deal 500 damage
 }
 
 First_Dream: {
 	// DisplayName: First Dream ({0})
 	// Mode_Chrersis: Chrersis
 	// Mode_Diver: Diver
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Right-click to change your appearance!
+		Makes you look like one of Origins' spriters!
+		''' */
 }
 
 Tender_Flesh_Heart: {
@@ -5245,7 +5249,7 @@ Soldering_Iron: {
 
 Old_Brine_Rock: {
 	// DisplayName: Old Brine Rock
-	// Tooltip: ""
+	// Tooltip: Summons an armed leaf snapper to fight for you
 }
 
 // Rebreather_Gear.DisplayName: Rebreather Gear
@@ -5263,7 +5267,7 @@ Guardian_Rod: {
 
 Heartache_Dynamite: {
 	// DisplayName: Heartache Dynamite
-	// Tooltip: ""
+	// Tooltip: Enemies slain are more likely to drop healing hearts
 }
 
 Sonar_Dynamite: {

@@ -32,8 +32,8 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			}
 			modes.Add(new("Chrersis", new(
 				headSlot: AddTextureWithSets("Chrersis_Helmet_Head", EquipType.Head, id => ArmorIDs.Head.Sets.DrawHead[id] = false),
-				bodySlot: AddTexture("Chrersis_Breastplate_Body", EquipType.Body),
-				legSlot: AddTexture("Chrersis_Greaves_Legs", EquipType.Legs)
+				bodySlot: AddTextureWithSets("Chrersis_Breastplate_Body", EquipType.Body, id => ArmorIDs.Body.Sets.HidesTopSkin[id] = true),
+				legSlot: AddTextureWithSets("Chrersis_Greaves_Legs", EquipType.Legs, id => ArmorIDs.Legs.Sets.HidesBottomSkin[id] = true)
 			)));
 			modes.Add(new("Diver", new(
 				headSlot: AddTexture("Diver_Helmet_Head", EquipType.Head),

@@ -35,7 +35,7 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.addTile(Type);
 
 			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [..validTiles]);
-			HitSound = Origins.Sounds.DefiledHurt;
+			HitSound = Origins.Sounds.DefiledHurt.WithVolume(0.25f);
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 

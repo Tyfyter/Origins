@@ -1,13 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Empowerments;
