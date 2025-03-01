@@ -419,8 +419,9 @@ namespace Origins.Projectiles {
 			if (neuralNetworkEffect) {
 				neuralNetworkHit = true;
 				if (target.CanBeChasedBy(projectile)) {
-					int buffType = ModContent.BuffType<Neural_Network_Buff>();
-					Main.player[projectile.owner].AddBuff(buffType, 1);
+					Player player = Main.player[projectile.owner];
+					player.AddBuff(ModContent.BuffType<Neural_Network_Buff>(), 1);
+					player.OriginPlayer().neuralNetworkMisses = 0;
 				}
 			}
 		}
@@ -454,8 +455,9 @@ namespace Origins.Projectiles {
 			}
 			if (neuralNetworkEffect && !neuralNetworkHit) {
 				neuralNetworkEffect = false;
-				if (projectile.owner == Main.myPlayer) {
-					Main.player[projectile.owner].ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
+				Player player = Main.player[projectile.owner];
+				if (projectile.owner == Main.myPlayer && ++player.OriginPlayer().neuralNetworkMisses >= 4) {
+					player.ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
 				}
 			}
 		}

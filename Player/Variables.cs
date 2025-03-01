@@ -364,6 +364,7 @@ namespace Origins {
 		public Vector2 currentActiveHarpoonAveragePosition = default;
 		public float aprilFoolsRubberDynamiteTracker = 0;
 		public int crawdadNetworkCount = 0;
+		public int neuralNetworkMisses = 0;
 		#endregion
 
 		#region visuals
