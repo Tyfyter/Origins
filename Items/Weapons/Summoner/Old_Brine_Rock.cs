@@ -121,8 +121,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Friendly_Zombie_Buff.ID);
-			} else if (player.HasBuff(Friendly_Zombie_Buff.ID)) {
+				player.ClearBuff(Old_Turtle_Buff.ID);
+			} else if (player.HasBuff(Old_Turtle_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -147,24 +147,25 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (foundTarget) {
 				targetRect = Main.npc[target].Hitbox;
 				targetIsBelow = targetRect.Bottom > Projectile.position.Y + Projectile.height;
+			} else {
+				Vector2 idlePosition = player.Top;
+				idlePosition.X -= (48f + Projectile.minionPos * 48) * player.direction;
+				targetRect = new Rectangle((int)idlePosition.X, (int)idlePosition.Y, 0, 0);
+				targetIsBelow = targetRect.Bottom > Projectile.position.Y + Projectile.height;
 			}
 			if (Projectile.wet) {
 				if (Projectile.ai[2] == 0) {
 					Projectile.rotation = MathHelper.PiOver2 - MathHelper.PiOver2 * Math.Sign(Projectile.velocity.X);
 					Projectile.ai[2] = 1;
 				}
-				Vector2 direction;
-				if (foundTarget) {
+				Vector2 direction = Projectile.DirectionTo(targetRect.Center());
+				/*if (foundTarget) {
 					direction = Projectile.DirectionTo(targetRect.Center());
 				} else {
-					/*if (Projectile.collideX && Math.Abs(Projectile.velocity.X) > Math.Abs(Projectile.velocity.Y) * 0.25f) {
-						Projectile.velocity.X = -Projectile.direction;
-						Projectile.rotation += MathHelper.Pi;
-					}*/
 					Projectile.direction = Math.Sign(Projectile.velocity.X);
 					if (Projectile.direction == 0) Projectile.direction = 1;
 					direction = Vector2.UnitX * Projectile.direction;
-				}
+				}*/
 				const float dist = 16 * 4;
 				float tileAvoidance = 0;
 				for (int i = -3; i < 4; i++) {
@@ -210,10 +211,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.rotation = 0;
 					Projectile.ai[2] = 0;
 				}
-				bool walkLeft = Projectile.direction == -1;
-				bool walkRight = Projectile.direction == 1;
+				bool walkLeft = false;
+				bool walkRight = false;
 				bool hasBarrier = false;
-				bool hasHole = false;
 				if (player.DistanceSQ(Projectile.Center) > 1000 * 1000) {
 					Life--;
 				}
@@ -224,7 +224,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					if (!Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height)) {
 						Projectile.tileCollide = true;
 					}
-					if (foundTarget && distanceFromTarget < 800 * 800) {
+					if (distanceFromTarget < 800 * 800) {
 						float xDirectionToTarget = targetRect.Center.X - Projectile.Center.X;
 						if (xDirectionToTarget < -10f) {
 							walkLeft = true;
@@ -232,6 +232,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						} else if (xDirectionToTarget > 10f) {
 							walkRight = true;
 							walkLeft = false;
+						} else if (!foundTarget && Projectile.direction != player.direction) {
+							if (player.direction == 1) {
+								walkRight = true;
+							} else {
+								walkLeft = true;
+							}
 						}
 						if (targetRect.Y < Projectile.Center.Y - 100f && Math.Sign(xDirectionToTarget) != -Math.Sign(Projectile.velocity.X) && Math.Abs(xDirectionToTarget) < 50 && Projectile.velocity.Y == 0) {
 							Projectile.velocity.Y = -10f;
