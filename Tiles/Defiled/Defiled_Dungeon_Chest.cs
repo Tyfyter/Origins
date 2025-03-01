@@ -22,6 +22,7 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
+		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
 	}
 	public class Defiled_Dungeon_Chest_Item : ModItem {
 		public override void SetDefaults() {

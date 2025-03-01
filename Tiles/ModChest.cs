@@ -42,6 +42,8 @@ namespace Origins.Tiles {
 
 		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX >= 36;
 
+		public virtual bool CanUnlockChest(int i, int j) => true;
+
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
 			//frameXAdjustment = 36;
 			dustType = this.DustType;
@@ -116,7 +118,7 @@ namespace Origins.Tiles {
 				}
 			} else {
 				if (isLocked) {
-					if (player.ConsumeItem(keyItem) && Chest.Unlock(left, top)) {
+					if (CanUnlockChest(left, top) && player.ConsumeItem(keyItem) && Chest.Unlock(left, top)) {
 						if (Main.netMode == NetmodeID.MultiplayerClient) {
 							NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, (float)left, (float)top);
 						}

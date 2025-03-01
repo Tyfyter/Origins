@@ -453,6 +453,7 @@ GuideAdvice: {
 	Other: {
 		// Stone_Mask: Travel far along the surface of the world. You will be bound to find a stone mask to defend you from evil creatures.
 		// AcidFreakUnlock: I heard rumors of a lone lihzahrd woman in the brine pool. If I recall correctly, the brine pool is not an ideal place to call home...
+		// MojoInjection: Ever tried shimmering a Nature's Gift into a Mojo Injection? I've heard its the perfect ailment to cleanse you from the world's evils!
 	}
 }
 
@@ -1054,7 +1055,7 @@ Buffs: {
 
 	Guardian_Rod_Buff: {
 		// DisplayName: Zappy Guardian
-		// Description: The Guardian zap your enemies!
+		// Description: The Guardian will zap your enemies!
 	}
 }
 
