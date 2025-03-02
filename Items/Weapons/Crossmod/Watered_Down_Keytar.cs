@@ -13,11 +13,13 @@ using ThoriumMod.Projectiles.Bard;
 namespace Origins.Items.Weapons.Crossmod {
 	#region without thorium
 	public class Watered_Down_Keytar : ModItem {
+		public static int ID { get; internal set; }
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
 		public static SoundStyle BassSound => Origins.Sounds.RivenBass;
 		public static SoundStyle SynthSound => SoundID.Item132;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			ID = Type;
 		}
 		public static void SetSharedDefaults(Item item, out int cost) {
 			item.damage = 54;
@@ -142,6 +144,7 @@ namespace Origins.Items.Weapons.Crossmod {
 		public override void SetStaticDefaults() {
 			Empowerments.AddInfo<EmpowermentProlongation>(2);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+			Watered_Down_Keytar.ID = Type;
 		}
 		public override void SetBardDefaults() {
 			Watered_Down_Keytar.SetSharedDefaults(Item, out int cost);

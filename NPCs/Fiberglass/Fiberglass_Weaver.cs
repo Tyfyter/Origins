@@ -303,7 +303,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override void OnKill() {
-			ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver = true;
+			Boss_Tracker.Instance.downedFiberglassWeaver = true;
 			NetMessage.SendData(MessageID.WorldData);
 		}
 	}

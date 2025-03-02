@@ -1,9 +1,11 @@
 ﻿using Origins.World.BiomeData;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.LootConditions {
@@ -51,6 +53,36 @@ namespace Origins.LootConditions {
 		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
 			ItemDropAttemptResult result = default;
 			result.State = ItemDropAttemptResultState.Success;
+			return result;
+		}
+	}
+	public class DropInstancedPerClient(int itemId, int chanceDenominator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1, IItemDropRuleCondition condition = null) : CommonDrop(itemId, chanceDenominator, amountDroppedMinimum, amountDroppedMaximum) {
+		public IItemDropRuleCondition condition = condition;
+		public override bool CanDrop(DropAttemptInfo info) => condition is null || condition.CanDrop(info);
+		public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result;
+			if (info.rng.Next(chanceDenominator) < chanceNumerator) {
+				CommonCode.DropItemLocalPerClientAndSetNPCMoneyTo0(info.npc, itemId, info.rng.Next(amountDroppedMinimum, amountDroppedMaximum + 1));
+				NPC npc = info.npc;
+				int stack = info.rng.Next(amountDroppedMinimum, amountDroppedMaximum + 1);
+				if (Main.netMode == NetmodeID.Server && npc is not null) {
+					int num = Item.NewItem(npc.GetSource_Loot(), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, itemId, stack, noBroadcast: true, -1);
+					Main.timeItemSlotCannotBeReusedFor[num] = 54000;
+					for (int i = 0; i < Main.maxPlayers; i++) {
+						if (Main.player[i].active && npc.playerInteraction[i]) {
+							NetMessage.SendData(MessageID.InstancedItem, i, -1, null, num);
+						}
+					}
+					Main.item[num].active = false;
+				} else {
+					CommonCode.DropItem(info, itemId, stack);
+				}
+				result = default;
+				result.State = ItemDropAttemptResultState.Success;
+				return result;
+			}
+			result = default;
+			result.State = ItemDropAttemptResultState.FailedRandomRoll;
 			return result;
 		}
 	}

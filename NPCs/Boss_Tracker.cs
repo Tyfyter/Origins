@@ -13,7 +13,9 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.NPCs {
 	public class Boss_Tracker : ModSystem {
+		public static Boss_Tracker Instance => ModContent.GetInstance<Boss_Tracker>();
 		public bool downedFiberglassWeaver;
+		public bool downedLostDiver;
 		
 		public override void Load() {
 			DynamicMethod _saveData = new("saveData", typeof(void), [typeof(TagCompound), typeof(Boss_Tracker)], true);
@@ -22,6 +24,8 @@ namespace Origins.NPCs {
 			ILGenerator _loadDataGen = _loadData.GetILGenerator();
 			MethodInfo tagCompound_Set = typeof(TagCompound).GetMethod(nameof(TagCompound.Set));
 			MethodInfo tagCompound_TryGet = typeof(TagCompound).GetMethod(nameof(TagCompound.TryGet)).MakeGenericMethod(typeof(bool));
+			MethodInfo writeFlags = typeof(BinaryIO).GetMethod(nameof(BinaryIO.WriteFlags));
+			MethodInfo readFlags = typeof(BinaryIO).GetMethod(nameof(BinaryIO.ReadFlags), [..Enumerable.Repeat(typeof(bool), 8)]);
 			foreach (FieldInfo field in GetType().GetFields()) {
 				if (field.FieldType == typeof(bool)) {
 					_saveDataGen.Emit(OpCodes.Ldarg_0);
@@ -58,12 +62,14 @@ namespace Origins.NPCs {
 		public override void LoadWorldData(TagCompound tag) => loadData?.Invoke(tag, this);
 		public override void NetSend(BinaryWriter writer) {
 			writer.WriteFlags(
-				downedFiberglassWeaver
+				downedFiberglassWeaver,
+				downedLostDiver
 			);
 		}
 		public override void NetReceive(BinaryReader reader) {
 			reader.ReadFlags(
-				out downedFiberglassWeaver
+				out downedFiberglassWeaver,
+				out downedLostDiver
 			);
 		}
 	}

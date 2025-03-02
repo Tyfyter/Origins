@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Items.Weapons.Crossmod;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
@@ -14,9 +15,11 @@ using ThoriumMod.Projectiles.Bard;
 namespace Origins.Items.Weapons.Demolitionist {
 	#region without thorium
 	public class Sonorous_Shredder: ModItem {
+		public static int ID { get; internal set; }
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			ID = Type;
 		}
 		public static void SetSharedDefaults(Item item, out int cost) {
 			item.damage = 54;
@@ -113,6 +116,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Empowerments.AddInfo<InvincibilityFrames>(2);
 			Empowerments.AddInfo<FlightTime>(2);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+			Sonorous_Shredder.ID = Type;
 		}
 		public override void SetBardDefaults() {
 			Sonorous_Shredder.SetSharedDefaults(Item, out int cost);

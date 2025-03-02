@@ -1420,7 +1420,7 @@ CONSUMABLES:
 
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
-(#, ^2) Lost Diver Bag !!!
+(☻) Lost Diver Bag !!!
 (^) World Cracker Bag*
 ---
 

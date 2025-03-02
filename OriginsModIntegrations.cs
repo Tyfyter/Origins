@@ -207,7 +207,7 @@ namespace Origins {
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
 					2.1f,
-					() => ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver,
+					() => Boss_Tracker.Instance.downedFiberglassWeaver,
 					ModContent.NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
