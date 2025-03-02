@@ -508,7 +508,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					case state_magic_missile: {
 						CheckTrappedCollision();
-						if ((int)NPC.ai[1] == 20) {
+						if ((int)NPC.ai[1] == 19) {
 							NPC.ai[1]++;
 						} else {
 							NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
