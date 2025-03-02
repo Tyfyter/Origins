@@ -19,9 +19,10 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
-				Position = new Vector2(0f, -32f),
+				//CustomTexturePath = "Origins/NPCs/Brine/Boss/Rock_Bottom", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				Position = new Vector2(0f, 0f),
 				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = -32f
+				PortraitPositionYOverride = 0f
 			};
 		}
 		public override void Unload() {
@@ -76,7 +77,14 @@ namespace Origins.NPCs.Brine.Boss {
 			Vector2 headVect = legFrame.Size() * new Vector2(0.5f, 0.4f);
 			Vector2 bodyVect = legFrame.Size() * new Vector2(0.5f, 0.5f);
 			Vector2 legVect = legFrame.Size() * new Vector2(0.5f, 0.75f);
+			Color headColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.25) / 16, Color.White);
 			Color bodyColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.75) / 16, Color.White);
+			Color legColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.75) / 16, Color.White);
+			if (NPC.IsABestiaryIconDummy) {
+				headColor = Color.White;
+				bodyColor = Color.White;
+				legColor = Color.White;
+			}
 
 			#region composite data
 			Vector2 vector = new Vector2((int)(NPC.position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - bodyFrame.Height + 4f)) + new Vector2(bodyFrame.Width / 2, bodyFrame.Height / 2) - screenPos;
@@ -214,7 +222,7 @@ namespace Origins.NPCs.Brine.Boss {
 				legTexture,
 				new Vector2((int)(NPC.position.X - (legFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - legFrame.Height + 4f)) + legVect - screenPos,
 				legFrame,
-				Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.75) / 16, Color.White),
+				legColor,
 				0,
 				legVect,
 				1f,
@@ -240,7 +248,7 @@ namespace Origins.NPCs.Brine.Boss {
 				headTexture,
 				new Vector2((int)(NPC.position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - bodyFrame.Height + 4f)) + headVect - screenPos,
 				headFrame,
-				Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.25) / 16, Color.White),
+				headColor,
 				0,
 				headVect,
 				1f,

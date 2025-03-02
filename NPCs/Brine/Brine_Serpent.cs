@@ -117,10 +117,10 @@ namespace Origins.NPCs.Brine {
 			float[] oldRot;
 			int count;
 			if (NPC.IsABestiaryIconDummy) {
-				oldRot = new float[5];
-				oldPos = new Vector2[5];
+				oldRot = new float[11];
+				oldPos = new Vector2[11];
 				Vector2 pos = NPC.Center;
-				count = 5;
+				count = 11;
 				for (int i = 0; i < count; i++) {
 					pos.X += 36;
 					oldPos[i] = pos;
