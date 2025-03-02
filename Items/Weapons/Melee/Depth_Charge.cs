@@ -10,6 +10,9 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Buffs;
+using ReLogic.Content;
+using CalamityMod.NPCs.TownNPCs;
+using PegasusLib;
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -37,6 +40,14 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 		}
+		public override bool AltFunctionUse(Player player) => true;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (player.altFunctionUse == 2) {
+				velocity = velocity.RotatedBy(player.direction * -0.5f);
+				type = ModContent.ProjectileType<Depth_Charge_P_Alt>();
+				damage *= 2;
+			}
+		}
 	}
 	public class Depth_Charge_P : ModProjectile, IIsExplodingProjectile {
 		public static AutoCastingAsset<Texture2D> ChainTexture { get; private set; }
@@ -49,7 +60,7 @@ namespace Origins.Items.Weapons.Melee {
 		const int ai_state_dropping = 6;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Depth Charge");
-			if (Mod.RequestAssetIfExists<Texture2D>("Items/Weapons/Melee/Depth_Charge_Chain", out var chainTexture)) ChainTexture = chainTexture;
+			if (Mod.RequestAssetIfExists("Items/Weapons/Melee/Depth_Charge_Chain", out Asset<Texture2D> chainTexture)) ChainTexture = chainTexture;
 		}
 		public override void Unload() {
 			ChainTexture = null;
@@ -133,6 +144,120 @@ namespace Origins.Items.Weapons.Melee {
 
 		public bool IsExploding() => false;
 	}
+	public class Depth_Charge_P_Alt : ModProjectile, IIsExplodingProjectile {
+		public override string Texture => base.Texture[..^"_Alt".Length];
+		public static AutoCastingAsset<Texture2D> ChainTexture { get; private set; }
+		const int ai_state_spinning = 0;
+		const int ai_state_launching_forward = 1;
+		const int ai_state_retracting = 2;
+		const int ai_state_unused_state = 3;
+		const int ai_state_forced_retracting = 4;
+		const int ai_state_ricochet = 5;
+		const int ai_state_dropping = 6;
+		public override void SetStaticDefaults() {
+			// DisplayName.SetDefault("Depth Charge");
+			if (Mod.RequestAssetIfExists("Items/Weapons/Melee/Depth_Charge_Chain", out Asset<Texture2D> chainTexture)) ChainTexture = chainTexture;
+		}
+		public override void Unload() {
+			ChainTexture = null;
+		}
+		public override void SetDefaults() {
+			Projectile.netImportant = true;
+			Projectile.friendly = true;
+			Projectile.scale = 0.8f;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
+			Projectile.width = 36;
+			Projectile.height = 36;
+			Projectile.penetrate = 1;
+			Projectile.extraUpdates = 1;
+			Projectile.ignoreWater = true;
+			Projectile.tileCollide = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
+		}
+		public virtual Entity Owner => Main.player[Projectile.owner];
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource) Projectile.ai[0] = parentSource.Entity.direction;
+		}
+		public override void AI() {
+			Vector2 direction = Projectile.DirectionTo(Owner.Center);
+			Projectile.rotation += Projectile.ai[0] * 0.3f;
+			if (direction.HasNaNs()) return;
+			MathUtils.LinearSmoothing(ref Projectile.velocity, direction * 8, Projectile.ai[1] * 0.8f);
+			Projectile.velocity += direction.RotatedBy(Projectile.ai[0] * MathHelper.PiOver2) * -0.25f;
+			Projectile.ai[1] = 1 - (1 - Projectile.ai[1]) * 0.98f;
+			if (Projectile.ai[1] > 0.5f) {
+				Projectile.tileCollide = true;
+				if (Projectile.Hitbox.Intersects(Owner.Hitbox)) {
+					Projectile.penetrate = -1;
+					Projectile.Kill();
+				}
+			}
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Projectile.velocity = oldVelocity;
+			return Projectile.ai[1] > 0.5f;
+		}
+		public override bool PreDrawExtras() {
+			Vector2 chainDrawPosition = Projectile.Center;
+			Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
+			float rotation = vectorFromProjectileToPlayerArms.ToRotation();
+			List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
+			for (int i = 0; i < chainPositions.Count; i++) {
+				Main.EntitySpriteDraw(
+					ChainTexture,
+					chainPositions[i] - Main.screenPosition,
+					null,
+					Lighting.GetColor(chainPositions[i].ToTileCoordinates()),
+					rotation,
+					new Vector2(6, 3),
+					1,
+					0,
+				0);
+			}
+			return false;
+		}
+		public override void OnKill(int timeLeft) {
+			if (Projectile.penetrate >= 0) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Depth_Charge_Explosion>(),
+					Projectile.damage,
+					Projectile.knockBack,
+					Projectile.owner
+				);
+				Vector2 chainDrawPosition = Projectile.Center;
+				Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
+				List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
+				for (int i = 0; i < chainPositions.Count; i++) {
+					Gore.NewGore(
+						Projectile.GetSource_Death(),
+						chainPositions[i],
+						Projectile.velocity * 0.1f,
+						ModContent.GoreType<Depth_Charge_Chain>()
+					);
+				}
+			}
+		}
+
+		static List<Vector2> GetChainPositions(Vector2 chainDrawPosition, Vector2 vectorFromProjectileToPlayerArms) {
+			const int overlapPixels = 1;
+			const float chainLength = 12 - (overlapPixels * 2);
+			Vector2 unitVectorFromProjectileToPlayerArms = vectorFromProjectileToPlayerArms.SafeNormalize(Vector2.Zero) * chainLength;
+			float chainLengthRemainingToDraw = vectorFromProjectileToPlayerArms.Length() / chainLength + 1;
+			List<Vector2> chainPositions = new();
+			while (chainLengthRemainingToDraw > 0f) {
+				chainPositions.Add(chainDrawPosition);
+				chainDrawPosition += unitVectorFromProjectileToPlayerArms;
+				chainLengthRemainingToDraw--;
+			}
+			return chainPositions;
+		}
+
+		public bool IsExploding() => false;
+	}
 	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile, ISelfDamageEffectProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetDefaults() {
@@ -144,6 +269,17 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
 			Projectile.hide = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parentProjectile && parentProjectile.usesLocalNPCImmunity) {
+				for (int i = 0; i < parentProjectile.localNPCImmunity.Length; i++) {
+					if (parentProjectile.localNPCImmunity[i] != 0) {
+						Projectile.localNPCImmunity[i] = Projectile.localNPCHitCooldown;
+					}
+				}
+			}
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
