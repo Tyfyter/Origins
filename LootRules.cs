@@ -62,7 +62,6 @@ namespace Origins.LootConditions {
 		public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
 			ItemDropAttemptResult result;
 			if (info.rng.Next(chanceDenominator) < chanceNumerator) {
-				CommonCode.DropItemLocalPerClientAndSetNPCMoneyTo0(info.npc, itemId, info.rng.Next(amountDroppedMinimum, amountDroppedMaximum + 1));
 				NPC npc = info.npc;
 				int stack = info.rng.Next(amountDroppedMinimum, amountDroppedMaximum + 1);
 				if (Main.netMode == NetmodeID.Server && npc is not null) {
