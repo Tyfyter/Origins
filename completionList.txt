@@ -170,7 +170,7 @@ ENEMY NPCS:
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
-(X) Draconess !!!
+(X) Draconess
 (^) Enchanted Fiberglass Bow*
 (^) Enchanted Fiberglass Cannon*
 (^) Enchanted Fiberglass Pistol*
@@ -204,7 +204,7 @@ ENEMY NPCS:
 (^) Barnacle Mound*
 (X) Beckonbug
 (^) Brine Latcher
-(#2, ^2) Brine Serpent !!!
+(^) Brine Serpent
 (^) Carpalfish°
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic*
@@ -1032,7 +1032,7 @@ TILES:
 (X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(@, #2) Baryte* !!!
+(#2, ^2) Baryte* !!!
 (^) Batholith°
 (^) Bleeding Obsidian*
 (#, ^2) Bomb Trap !!!
@@ -1105,7 +1105,7 @@ TILES:
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
-(X) Brine Dungeon Chest !!!
+(#, ^2) Brine Dungeon Chest !!!
 (^) Brine Water Fountain
 (X) Bug Cage°
 (X) Cancer Block° !!!
@@ -1123,8 +1123,8 @@ TILES:
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
-(@4, ^3) Defiled Dungeon Chest*
-(X) Defiled Monolith !!!
+(#2/3, ^2) Defiled Dungeon Chest* !!! (needs glow)
+(#, ^2) Defiled Monolith !!!
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain
@@ -1197,7 +1197,7 @@ TILES:
 (X) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
-(X) The Jungle's Window !!!
+(#, ^2) The Jungle's Window !!!
 (X) There's Five of Them Now
 (X) What's Out There
 
@@ -1212,7 +1212,7 @@ TILES:
 ($2) Music Box (Defiled Wastelands Vol. 1/2) (both volumes)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea Vol. 1/2) (both volumes)
-(@, #, $2) Music Box (Fiberglass Undergrowth Vol. 1/2) !!!
+(#, ^2) Music Box (Fiberglass Undergrowth Vol. 1/2) !!!
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 ($2) Music Box (Riven Hive Vol. 1/2) (both volumes)
@@ -1309,7 +1309,7 @@ CRITTERS AND FISH:
 (^) Bobbit Worm
 (^) Bonehead Jellyfish*
 (^) Duskarp°
-(X) Fiberbass !!!
+(#, ^2) Fiberbass !!!
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
@@ -1428,7 +1428,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(X) Terlet Paper (Kawaii Fiberglass Weaver) !!!
+(#, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*
