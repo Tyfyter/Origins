@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Graphics.Renderers;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Weapons.Crossmod;
 using Origins.Items.Weapons.Demolitionist;
@@ -251,10 +252,11 @@ namespace Origins.NPCs.Brine.Boss {
 			Vector2 compositeOffset_BackArm = new(6 * NPC.direction, 2);
 			Vector2 backArmPosition = vector + compositeOffset_BackArm;
 			Vector2 backArmOrigin = bodyVect + compositeOffset_BackArm;
+
 			Vector2 compositeOffset_FrontArm = new(-5 * NPC.direction, 0);
 			Vector2 frontArmPosition = vector + compositeOffset_FrontArm;
 			Vector2 frontArmOrigin = bodyVect + compositeOffset_FrontArm;
-			Vector2 frontShoulderPosition = frontArmPosition + compositeOffset_FrontArm;
+			Vector2 frontShoulderPosition = frontArmPosition;
 			Point backShoulderFrameIndex = new(1, 1);
 			Point frontShoulderFrameIndex = new(0, 1);
 			Point backArmframeIndex = default;
