@@ -107,6 +107,8 @@ namespace Origins {
 		}
 		public override void PostUpdateRunSpeeds() {
 			oldGravDir = Player.gravDir;
+			if (forceFallthrough) Player.GoingDownWithGrapple = true;
+			forceFallthrough = false;
 		}
 	}
 }

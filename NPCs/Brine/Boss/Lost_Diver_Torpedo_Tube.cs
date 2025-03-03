@@ -144,7 +144,7 @@ namespace Origins.NPCs.Brine.Boss {
 			return false;
 		}
 		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item62, hostile: Projectile.reflected);
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item62, hostile: !Projectile.reflected);
 		}
 	}
 }

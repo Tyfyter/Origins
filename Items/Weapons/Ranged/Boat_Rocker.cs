@@ -16,14 +16,14 @@ namespace Origins.Items.Weapons.Ranged {
 			ChainFrames = 3;
 		}
 		public override void SetDefaults() {
-			Item.damage = 48;
+			Item.damage = 98;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.useAnimation = 3;
 			Item.useTime = 3;
-			Item.reuseDelay = 2;
+			Item.reuseDelay = 1;
 			Item.width = 48;
 			Item.height = 22;
 			Item.useAmmo = Harpoon.ID;

@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using PegasusLib;
 using System;
 using System.Linq;
 using Terraria;
@@ -38,20 +39,23 @@ namespace Origins.NPCs.Brine.Boss {
 			base.SetDefaults();
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
-			NPC.damage = 14;
+			NPC.damage = 58;
 			NPC.lifeMax = 25000;
 			NPC.defense = 26;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
 			NPC.height = 42;
 			NPC.knockBackResist = 0f;
-			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-0.8f);
+			NPC.HitSound = SoundID.NPCHit4.WithPitchRange(-0.8f, -0.4f);
 			NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.value = 0;//Item.buyPrice(gold: 5);
 		}
 		public AIModes AIMode {
 			get => (AIModes)NPC.aiAction;
-			set => NPC.aiAction = (int)value;
+			set {
+				NPC.ai[0] = 0;
+				NPC.aiAction = (int)value;
+			}
 		}
 		public int HeldProjectile {
 			get => (int)NPC.ai[3];
@@ -68,7 +72,15 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void AI() {
 			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 			DoTargeting();
-			Vector2 direction = NPC.DirectionTo(TargetPos);
+			Vector2 targetVelocity = Vector2.Zero;
+			if (NPC.HasPlayerTarget) {
+				targetVelocity = Main.player[NPC.target].velocity;
+			} else if (NPC.HasNPCTarget) {
+				targetVelocity = Main.npc[NPC.TranslatedTargetIndex].velocity;
+			}
+			Vector2 differenceFromTarget = TargetPos - NPC.Center;
+			float distanceFromTarget = differenceFromTarget.Length();
+			Vector2 direction = differenceFromTarget / distanceFromTarget;
 			if (swimTime > 0) {
 				NPC.frameCounter += 2.0;
 				while (NPC.frameCounter > 8.0) {
@@ -128,16 +140,57 @@ namespace Origins.NPCs.Brine.Boss {
 						if (mode == LastMode) weight *= 0.3f;
 						rand.Add(mode, weight);
 					}
-					AddMode(AIModes.Idle, 0);
-					AddMode(AIModes.Depth_Charge, 1);
+					float rangeFactor = Math.Max(0, distanceFromTarget / (15 * 16) - 1);
+					AddMode(AIModes.Idle, 0 + rangeFactor);
+					AddMode(AIModes.Boat_Rocker, 1 + (Main.expertMode ? rangeFactor * 0.5f : 0));
+					AddMode(AIModes.Depth_Charge, 1 - rangeFactor);
 					AddMode(AIModes.Torpedo_Tube, 1);
 					AddMode(AIModes.Mildew_Whip, NPC.life > NPC.lifeMax / 2 ? 0 : 1);
 					AIMode = rand.Get();
 					LastMode = AIMode;
-					NPC.ai[0] = 0;
 					NPC.netUpdate = true;
 					goto startMode;
 				}
+				break;
+				case AIModes.Boat_Rocker:
+				if (HeldProjectile < 0) {
+					Vector2 dir = direction * 12;
+					float lastAngle = dir.ToRotation();
+					int tries = 0;
+					improve:
+					if (GeometryUtils.AngleToTarget((differenceFromTarget + targetVelocity * 2) - dir * Math.Min(10, (distanceFromTarget / 4) / 12), 12, 0.3f) is float angle) {
+						dir = GeometryUtils.Vec2FromPolar(12, angle);
+						if (++tries < 2 && GeometryUtils.AngleDif(lastAngle, angle, out _) > 0.1f) {
+							lastAngle = angle;
+							goto improve;
+						}
+					}
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						HeldProjectile = Projectile.NewProjectileDirect(
+							NPC.GetSource_FromAI(),
+							NPC.Center,
+							dir,
+							ModContent.ProjectileType<Lost_Diver_Harpoon>(),
+							60,
+							4,
+							ai2: NPC.whoAmI
+						).identity;
+					}
+					itemRotation = dir.ToRotation();
+					if (dir.X < 0)
+						itemRotation += MathHelper.Pi;
+
+					itemRotation = MathHelper.WrapAngle(itemRotation);
+				} else {
+					Projectile heldProjectile = Main.projectile.FirstOrDefault(x => x.active && x.identity == HeldProjectile);
+					if (heldProjectile is null) {
+						HeldProjectile = -1;
+						AIMode = AIModes.Idle;
+						NPC.ai[0] = difficultyMult * 25;
+					}
+				}
+				heldItemType = ModContent.ItemType<Boat_Rocker>();
+				useItemRotFrame = true;
 				break;
 				case AIModes.Depth_Charge:
 				if (HeldProjectile < 0) {
@@ -181,7 +234,6 @@ namespace Origins.NPCs.Brine.Boss {
 					itemRotation = MathHelper.WrapAngle(itemRotation);
 				} else if (NPC.ai[0] > 30) {
 					AIMode = AIModes.Idle;
-					NPC.ai[0] = 0;
 					break;
 				}
 				heldItemType = ModContent.ItemType<Torpedo_Tube>();

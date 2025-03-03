@@ -423,6 +423,7 @@ namespace Origins {
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
+		public bool forceFallthrough = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
 		public override void ResetEffects() {
