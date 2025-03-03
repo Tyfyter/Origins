@@ -551,12 +551,17 @@ namespace Origins {
 			turboReel2 = false;
 			boomerangMagnet = false;
 
-			Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
-			oldPlasmaPhial = plasmaPhial;
-			plasmaPhial = false;
-			Player.ApplyBuffTimeAccessory(oldDonorWristband, donorWristband, donorWristbandMult, Main.debuff);
-			oldDonorWristband = donorWristband;
-			donorWristband = false;
+			try {
+				Main.debuff[BuffID.PotionSickness] = false;
+				Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
+				oldPlasmaPhial = plasmaPhial;
+				plasmaPhial = false;
+				Player.ApplyBuffTimeAccessory(oldDonorWristband, donorWristband, donorWristbandMult, Main.debuff);
+				oldDonorWristband = donorWristband;
+				donorWristband = false;
+			} finally {
+				Main.debuff[BuffID.PotionSickness] = true;
+			}
 
 			trapCharm = false;
 			dangerBarrel = false;
