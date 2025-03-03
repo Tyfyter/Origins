@@ -5,10 +5,14 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using System;
+using System.Linq;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine.Boss {
 	[AutoloadBossHead]
@@ -18,6 +22,7 @@ namespace Origins.NPCs.Brine.Boss {
 			base.SetStaticDefaults();
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.ShouldBeCountedAsBoss[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				//CustomTexturePath = "Origins/NPCs/Brine/Boss/Rock_Bottom", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(0f, 0f),
@@ -30,9 +35,8 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
-			NPC.boss = true;
 			NPC.noGravity = true;
-			NPC.noTileCollide = true;
+			NPC.noTileCollide = false;
 			NPC.damage = 14;
 			NPC.lifeMax = 25000;
 			NPC.defense = 26;
@@ -42,9 +46,159 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.knockBackResist = 0f;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-0.8f);
 			NPC.DeathSound = SoundID.NPCDeath6;
-			NPC.value = Item.buyPrice(gold: 5);
+			NPC.value = 0;//Item.buyPrice(gold: 5);
 		}
+		public AIModes AIMode {
+			get => (AIModes)NPC.aiAction;
+			set => NPC.aiAction = (int)value;
+		}
+		public int HeldProjectile {
+			get => (int)NPC.ai[3];
+			set => NPC.ai[3] = value;
+		}
+		public AIModes LastMode {
+			get => (AIModes)(int)NPC.localAI[3];
+			set => NPC.localAI[3] = (int)value;
+		}
+		public override bool CanTargetPlayer(Player player) => true;
+		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
+		public override float RippleTargetWeight(float magnitude, float distance) => 0;
+		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override void AI() {
+			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
+			DoTargeting();
+			Vector2 direction = NPC.DirectionTo(TargetPos);
+			if (swimTime > 0) {
+				NPC.frameCounter += 2.0;
+				while (NPC.frameCounter > 8.0) {
+					NPC.frameCounter -= 8.0;
+					legFrame.Y += legFrame.Height;
+				}
+				if (legFrame.Y < legFrame.Height * 7) {
+					legFrame.Y = legFrame.Height * 19;
+				} else if (legFrame.Y > legFrame.Height * 19) {
+					legFrame.Y = legFrame.Height * 7;
+				}
+			} else if (NPC.velocity.Y != 0f) {
+				bodyFrame.Y = bodyFrame.Height * 5;
+			} else {
+				if (NPC.wet) NPC.frameCounter = 0;
+				bodyFrame.Y = 0;
+			}
+			if (NPC.wet) {
+
+			} else {
+				swimTime = 0;
+				if (NPC.collideY && Math.Abs(NPC.velocity.X) > 2) {
+					NPC.velocity.X *= 0.98f;
+				}
+				if (Math.Abs(direction.X) >= 0.1f) {
+					if (Math.Abs(NPC.velocity.Y) < 0.01f && Math.Sign(direction.X) != -Math.Sign(NPC.velocity.X)) {
+						int xDirection = Math.Sign(direction.X);
+						NPC.frameCounter += 1;
+						while (NPC.frameCounter > 8.0) {
+							NPC.frameCounter -= 8.0;
+							legFrame.Y += legFrame.Height;
+						}
+						if (legFrame.Y < legFrame.Height * 7) {
+							legFrame.Y = legFrame.Height * 19;
+						} else if (legFrame.Y > legFrame.Height * 19) {
+							legFrame.Y = legFrame.Height * 7;
+						}
+						if (legFrame.Y / legFrame.Height is 9 or 17) NPC.velocity.X = xDirection * 0.01f;
+						else NPC.velocity.X = xDirection * 0.7f;
+					}
+				}
+				NPC.velocity.Y += 0.4f;
+				Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+				Collision.StepDown(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+			}
+			bool useItemRotFrame = false;
+			heldItemType = -1;
+			startMode:
+			switch (AIMode) {
+				default:
+				case AIModes.Idle:
+				NPC.ai[0] += 0.75f + (0.25f * difficultyMult);
+				if (NPC.ai[0] > 120 && NPC.HasValidTarget) {
+					HeldProjectile = -1;
+					WeightedRandom<AIModes> rand = new(Main.rand);
+					void AddMode(AIModes mode, double weight) {
+						if (mode == LastMode) weight *= 0.3f;
+						rand.Add(mode, weight);
+					}
+					AddMode(AIModes.Idle, 0);
+					AddMode(AIModes.Depth_Charge, 1);
+					AddMode(AIModes.Torpedo_Tube, 1);
+					AddMode(AIModes.Mildew_Whip, NPC.life > NPC.lifeMax / 2 ? 0 : 1);
+					AIMode = rand.Get();
+					LastMode = AIMode;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+					goto startMode;
+				}
+				break;
+				case AIModes.Depth_Charge:
+				if (HeldProjectile < 0) {
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						HeldProjectile = Projectile.NewProjectileDirect(
+							NPC.GetSource_FromAI(),
+							NPC.Center,
+							direction.RotatedBy(NPC.direction * -0.5f) * 8,
+							ModContent.ProjectileType<Lost_Diver_Depth_Charge>(),
+							60,
+							4,
+							ai2: NPC.whoAmI
+						).identity;
+					}
+				} else {
+					Projectile heldProjectile = Main.projectile.FirstOrDefault(x => x.active && x.identity == HeldProjectile);
+					if (heldProjectile is null) {
+						HeldProjectile = -1;
+						AIMode = AIModes.Idle;
+					}
+				}
+				useItemRotFrame = true;
+				break;
+				case AIModes.Torpedo_Tube:
+				if (NPC.ai[0] <= 0) {
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						Projectile.NewProjectileDirect(
+							NPC.GetSource_FromAI(),
+							NPC.Center,
+							direction * 8,
+							ModContent.ProjectileType<Lost_Diver_Torpedo_Tube>(),
+							60,
+							4,
+							ai2: NPC.whoAmI
+						);
+					}
+					itemRotation = direction.ToRotation();
+					if (direction.X < 0)
+						itemRotation += MathHelper.Pi;
+
+					itemRotation = MathHelper.WrapAngle(itemRotation);
+				} else if (NPC.ai[0] > 30) {
+					AIMode = AIModes.Idle;
+					NPC.ai[0] = 0;
+					break;
+				}
+				heldItemType = ModContent.ItemType<Torpedo_Tube>();
+				useItemRotFrame = true;
+				NPC.ai[0]++;
+				break;
+			}
+			if (useItemRotFrame) {
+				float rot = itemRotation * NPC.direction;
+				bodyFrame.Y = bodyFrame.Height * 3;
+				if (rot < -0.75f) {
+					bodyFrame.Y = bodyFrame.Height * 2;
+				}
+
+				if (rot > 0.6f) {
+					bodyFrame.Y = bodyFrame.Height * 4;
+				}
+			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			normalDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
@@ -65,6 +219,9 @@ namespace Origins.NPCs.Brine.Boss {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Faith_Beads>(), 4));
 			npcLoot.Add(new DropInstancedPerClient(ModContent.ItemType<Crown_Jewel>()));*/
 		}
+		public int heldItemType;
+		public int swimTime;
+		public float itemRotation;
 		public Rectangle bodyFrame = new(0, 0, 40, 56);
 		public Rectangle legFrame = new(0, 0, 40, 56);
 		AutoLoadingAsset<Texture2D> headTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Head";
@@ -249,44 +406,73 @@ namespace Origins.NPCs.Brine.Boss {
 				new Vector2((int)(NPC.position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - bodyFrame.Height + 4f)) + headVect - screenPos,
 				headFrame,
 				headColor,
-				0,
-				headVect,
+			0,
+			headVect,
 				1f,
-				effect,
+			effect,
 			0);
+
+			if (heldItemType >= 0) {
+				Main.instance.LoadItem(heldItemType);
+				Texture2D value = TextureAssets.Item[heldItemType].Value;
+				Rectangle itemDrawFrame = value.Bounds;
+				if (Main.itemAnimations[heldItemType] != null) {
+					itemDrawFrame = Main.itemAnimations[heldItemType].GetFrame(value);
+				}
+				Item heldItem = ContentSamples.ItemsByType[heldItemType];
+				Vector2 vector9 = new Vector2(0f, itemDrawFrame.Height / 2);
+				Vector2 vector10 = new(10, itemDrawFrame.Height * 0.5f);
+				ItemLoader.HoldoutOffset(1, heldItemType, ref vector10);
+				int num12 = (int)vector10.X;
+				vector9.Y = vector10.Y;
+				Vector2 origin7 = new Vector2(-num12, itemDrawFrame.Height / 2);
+				if (NPC.direction == -1) {
+					origin7 = new Vector2(itemDrawFrame.Width + num12, itemDrawFrame.Height / 2);
+				}
+				spriteBatch.Draw(
+					value,
+					new Vector2((int)(NPC.position.X + NPC.width * 0.5f - (NPC.direction * 2) + vector9.X), (int)(NPC.Center.Y - itemDrawFrame.Height * 0.5f + vector9.Y)) - screenPos,
+					itemDrawFrame,
+					heldItem.GetAlpha(bodyColor),
+					itemRotation,
+					origin7,
+					heldItem.scale,
+					effect,
+				0);
+			}
 
 			//index 28, front arm
 			if (shoulderDrawPosition == 0) {
 				spriteBatch.Draw(
-					bodyTexture,
-					frontShoulderPosition,
-					compFrontShoulderFrame,
-					bodyColor,
-					0,
-					bodyVect,
-					1f,
-					effect,
+				bodyTexture,
+				frontShoulderPosition,
+				compFrontShoulderFrame,
+				bodyColor,
+				0,
+				bodyVect,
+				1f,
+				effect,
 				0);
 			}
 			spriteBatch.Draw(
-				bodyTexture,
-				frontArmPosition,
-				compFrontArmFrame,
-				bodyColor,
-				0,
-				frontArmOrigin,
-				1f,
-				effect,
+			bodyTexture,
+			frontArmPosition,
+			compFrontArmFrame,
+			bodyColor,
+			0,
+			frontArmOrigin,
+			1f,
+			effect,
 			0);
 			if (shoulderDrawPosition == 1) {
 				spriteBatch.Draw(
-					bodyTexture,
-					frontShoulderPosition,
-					compFrontShoulderFrame,
-					bodyColor,
-					0,
-					bodyVect,
-					1f,
+				bodyTexture,
+				frontShoulderPosition,
+				compFrontShoulderFrame,
+				bodyColor,
+				0,
+				bodyVect,
+				1f,
 					effect,
 				0);
 			}
@@ -299,6 +485,13 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void OnKill() {
 			Boss_Tracker.Instance.downedLostDiver = true;
 			NetMessage.SendData(MessageID.WorldData);
+		}
+		public enum AIModes {
+			Idle,
+			Boat_Rocker,
+			Depth_Charge,
+			Torpedo_Tube,
+			Mildew_Whip,
 		}
 	}
 }

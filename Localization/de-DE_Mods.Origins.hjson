@@ -1525,6 +1525,9 @@ Projectiles: {
 	// Friendly_Guardian_P.DisplayName: Friendly Guardian P
 	// Sonar_Dynamite_Ping.DisplayName: Sonar Dynamite Ping
 	// Depth_Charge_P_Alt.DisplayName: Depth Charge P Alt
+	// Lost_Diver_Depth_Charge.DisplayName: Lost Diver Depth Charge
+	// Lost_Diver_Depth_Charge_Explosion.DisplayName: Lost Diver Depth Charge Explosion
+	// Lost_Diver_Torpedo_Tube.DisplayName: Lost Diver Torpedo Tube
 }
 
 Prefixes: {

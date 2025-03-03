@@ -774,8 +774,9 @@ namespace Origins.Projectiles {
 			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
 			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
-		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch) {
-			projectile.friendly = true;
+		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch, bool hostile = false) {
+			projectile.friendly = !hostile;
+			projectile.hostile = hostile;
 			projectile.penetrate = -1;
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;

@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					OriginExtensions.AngularSmoothing(
 						ref velocity.Theta,
 						targetDiff.ToRotation(),
-						0.02f + velocity.R * 0.006f * Origins.HomingEffectivenessMultiplier[Projectile.type]
+						HomingFactor.@base + velocity.R * HomingFactor.speedFactor * Origins.HomingEffectivenessMultiplier[Projectile.type]
 					);
 					Projectile.velocity = (Vector2)velocity;
 				}

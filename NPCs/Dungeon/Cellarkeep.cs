@@ -153,7 +153,7 @@ namespace Origins.NPCs.Dungeon {
 			NPC.chaseable = false;
 		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
-			if (modifiers.DamageType.CountsAsClass<Explosive>()) modifiers.SetInstantKill();
+			if (modifiers.DamageType?.CountsAsClass<Explosive>() ?? false) modifiers.SetInstantKill();
 			modifiers.SourceDamage.Base += 8;
 		}
 		public override void AI() {
@@ -270,6 +270,7 @@ namespace Origins.NPCs.Dungeon {
 			Projectile.friendly = true;
 			Projectile.hostile = true;
 			Projectile.trap = true;
+			Projectile.hide = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;

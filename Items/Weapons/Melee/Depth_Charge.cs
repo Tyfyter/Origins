@@ -13,12 +13,13 @@ using Origins.Buffs;
 using ReLogic.Content;
 using CalamityMod.NPCs.TownNPCs;
 using PegasusLib;
+using Origins.NPCs.Brine.Boss;
 namespace Origins.Items.Weapons.Melee {
-    public class Depth_Charge : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Flail"
-        ];
-        public override void SetStaticDefaults() {
+	public class Depth_Charge : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Flail"
+		];
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		}
@@ -59,7 +60,6 @@ namespace Origins.Items.Weapons.Melee {
 		const int ai_state_ricochet = 5;
 		const int ai_state_dropping = 6;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Depth Charge");
 			if (Mod.RequestAssetIfExists("Items/Weapons/Melee/Depth_Charge_Chain", out Asset<Texture2D> chainTexture)) ChainTexture = chainTexture;
 		}
 		public override void Unload() {
@@ -145,22 +145,7 @@ namespace Origins.Items.Weapons.Melee {
 		public bool IsExploding() => false;
 	}
 	public class Depth_Charge_P_Alt : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => base.Texture[..^"_Alt".Length];
-		public static AutoCastingAsset<Texture2D> ChainTexture { get; private set; }
-		const int ai_state_spinning = 0;
-		const int ai_state_launching_forward = 1;
-		const int ai_state_retracting = 2;
-		const int ai_state_unused_state = 3;
-		const int ai_state_forced_retracting = 4;
-		const int ai_state_ricochet = 5;
-		const int ai_state_dropping = 6;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Depth Charge");
-			if (Mod.RequestAssetIfExists("Items/Weapons/Melee/Depth_Charge_Chain", out Asset<Texture2D> chainTexture)) ChainTexture = chainTexture;
-		}
-		public override void Unload() {
-			ChainTexture = null;
-		}
+		public override string Texture => typeof(Depth_Charge_P).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Projectile.netImportant = true;
 			Projectile.friendly = true;
@@ -176,8 +161,12 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localNPCHitCooldown = 10;
 		}
 		public virtual Entity Owner => Main.player[Projectile.owner];
+		public virtual int ExplosionType => ModContent.ProjectileType<Depth_Charge_Explosion>();
 		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_Parent parentSource) Projectile.ai[0] = parentSource.Entity.direction;
+			if (source is EntitySource_Parent parentSource) {
+				Projectile.ai[0] = parentSource.Entity.direction;
+				Projectile.netUpdate = true;
+			}
 		}
 		public override void AI() {
 			Vector2 direction = Projectile.DirectionTo(Owner.Center);
@@ -193,6 +182,23 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.Kill();
 				}
 			}
+			if (Owner is Player player) {
+				player.SetDummyItemTime(2);
+				player.itemRotation = (-direction).ToRotation();
+				if (Projectile.Center.X < player.MountedCenter.X)
+					player.itemRotation += MathHelper.Pi;
+
+				player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
+			} else if (Owner is NPC ownerNPC && ownerNPC.ModNPC is Lost_Diver lostDiver) {
+				lostDiver.itemRotation = (-direction).ToRotation();
+				if (Projectile.Center.X < ownerNPC.Center.X)
+					lostDiver.itemRotation += MathHelper.Pi;
+
+				lostDiver.itemRotation = MathHelper.WrapAngle(lostDiver.itemRotation);
+			}
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			Projectile.penetrate--;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = oldVelocity;
@@ -200,12 +206,12 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool PreDrawExtras() {
 			Vector2 chainDrawPosition = Projectile.Center;
-			Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
+			Vector2 vectorFromProjectileToPlayerArms = GetVectorFromProjectileToPlayerArms().MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
 			float rotation = vectorFromProjectileToPlayerArms.ToRotation();
 			List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
 			for (int i = 0; i < chainPositions.Count; i++) {
 				Main.EntitySpriteDraw(
-					ChainTexture,
+					Depth_Charge_P.ChainTexture,
 					chainPositions[i] - Main.screenPosition,
 					null,
 					Lighting.GetColor(chainPositions[i].ToTileCoordinates()),
@@ -217,19 +223,33 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return false;
 		}
+		Vector2 GetVectorFromProjectileToPlayerArms() {
+			if (Owner is Player) {
+				return Main.GetPlayerArmPosition(Projectile);
+			} else if (Owner is NPC ownerNPC && ownerNPC.ModNPC is Lost_Diver lostDiver) {
+				Vector2 vector = Main.OffsetsPlayerOnhand[lostDiver.bodyFrame.Y / 56] * 2f;
+
+				vector -= new Vector2(lostDiver.bodyFrame.Width - ownerNPC.width, lostDiver.bodyFrame.Height - 42) / 2f;
+				return ownerNPC.Center - new Vector2(20f, 42f) / 2f + vector + Vector2.UnitY * ownerNPC.gfxOffY;
+			} else {
+				return Owner.Center;
+			}
+		}
 		public override void OnKill(int timeLeft) {
 			if (Projectile.penetrate >= 0) {
-				Projectile.NewProjectile(
-					Projectile.GetSource_Death(),
-					Projectile.Center,
-					default,
-					ModContent.ProjectileType<Depth_Charge_Explosion>(),
-					Projectile.damage,
-					Projectile.knockBack,
-					Projectile.owner
-				);
+				if (Projectile.owner == Main.myPlayer) {
+					Projectile.NewProjectile(
+						Projectile.GetSource_Death(),
+						Projectile.Center,
+						default,
+						ExplosionType,
+						Projectile.damage,
+						Projectile.knockBack,
+						Projectile.owner
+					);
+				}
 				Vector2 chainDrawPosition = Projectile.Center;
-				Vector2 vectorFromProjectileToPlayerArms = Main.GetPlayerArmPosition(Projectile).MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
+				Vector2 vectorFromProjectileToPlayerArms = GetVectorFromProjectileToPlayerArms().MoveTowards(chainDrawPosition, 4f) - chainDrawPosition;
 				List<Vector2> chainPositions = GetChainPositions(chainDrawPosition, vectorFromProjectileToPlayerArms);
 				for (int i = 0; i < chainPositions.Count; i++) {
 					Gore.NewGore(
