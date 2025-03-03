@@ -1123,7 +1123,7 @@ TILES:
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
-(☻) Defiled Dungeon Chest* !!!
+(^) Defiled Dungeon Chest*
 (#, ^2) Defiled Monolith !!!
 (X) Defiled Pylon°
 (^) Defiled Torch*

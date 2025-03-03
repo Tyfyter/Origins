@@ -417,14 +417,14 @@ Generic: {
 AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		DisplayName: "{§Defiled_Wastelands}"
-		Description: The physical manifestation of an egregore that desires constant growth and endless survival through its unique way of life.
+		Description: The surrogate evil Defiled is guaranteed to be present in your world.
 		GenPassName: Defiledifying
 		DryadTextDescriptor: defiled
 	}
 
 	Riven_Hive_Alt_Biome: {
 		DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
-		Description: A natural biome shaped by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
+		Description: Life-harboring, beautiful riven is guaranteed to be present in your world.
 		GenPassName: Blue Lobsterating
 		DryadTextDescriptor: riven
 	}
