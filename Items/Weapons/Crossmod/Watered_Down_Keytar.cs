@@ -15,8 +15,8 @@ namespace Origins.Items.Weapons.Crossmod {
 	public class Watered_Down_Keytar : ModItem {
 		public static int ID { get; internal set; }
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
-		public static SoundStyle BassSound => Origins.Sounds.RivenBass;
-		public static SoundStyle SynthSound => SoundID.Item132;
+		public static SoundStyle BassSound = new("Origins/Sounds/Custom/KeytarBass", SoundType.Sound);
+		public static SoundStyle SynthSound = new("Origins/Sounds/Custom/KeytarSynth", SoundType.Sound);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ID = Type;
