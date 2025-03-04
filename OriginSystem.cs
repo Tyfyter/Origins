@@ -512,30 +512,32 @@ namespace Origins {
 		}
 		public override void OnLocalizationsLoaded() {
 			Dictionary<string, LocalizedText> texts = LocalizationMethods._localizedTexts.GetValue(LanguageManager.Instance);
-			texts["Riven"] = texts["Mods.Origins.Generic.Riven"];
+			/*texts["Riven"] = texts["Mods.Origins.Generic.Riven"];
 			texts["Riven_Hive"] = texts["Mods.Origins.Generic.Riven_Hive"];
 			texts["Dusk"] = texts["Mods.Origins.Generic.Dusk"];
 			texts["Defiled"] = texts["Mods.Origins.Generic.Defiled"];
 			texts["Defiled_Wastelands"] = texts["Mods.Origins.Generic.Defiled_Wastelands"];
 			texts["the_Defiled_Wastelands"] = texts["Mods.Origins.Generic.the_Defiled_Wastelands"];
-			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				foreach (var text in texts.ToList()) {
-					if (text.Key.StartsWith("Mods.Origins.AprilFools")) {
-						string key = text.Key.Replace("AprilFools.", "");
-						if (texts.TryGetValue(key, out LocalizedText targetText)) {
-							LocalizationMethods._value.SetValue(targetText, text.Value.Value);
-							LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
-							LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
-						} else {
-							Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
-							texts[key] = text.Value;
-						}
+			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];*/
+			bool isAprilFools = OriginsModIntegrations.CheckAprilFools();
+			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
+				if (isAprilFools && text.Key.StartsWith("Mods.Origins.AprilFools")) {
+					string key = text.Key.Replace("AprilFools.", "");
+					if (texts.TryGetValue(key, out LocalizedText targetText)) {
+						LocalizationMethods._value.SetValue(targetText, text.Value.Value);
+						LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
+						LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
+					} else {
+						Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
+						texts[key] = text.Value;
 					}
+				} else if (text.Key.StartsWith("Mods.Origins.Generic")) {
+					string key = text.Key.Replace("Mods.Origins.Generic.", "");
+					texts[key] = text.Value;
 				}
 			}
 			Regex substitutionRegex = new Regex("{§(.*?)}", RegexOptions.Compiled);
-			foreach (var text in texts.ToList()) {
+			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
 				Match subMatch = substitutionRegex.Match(text.Value.Value);
 				while (subMatch.Success) {
 					LocalizationMethods._value.SetValue(text.Value, text.Value.Value.Replace(subMatch.Groups[0].Value, Language.GetTextValue(subMatch.Groups[1].Value)));

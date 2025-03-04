@@ -1513,7 +1513,7 @@ CROSS-MOD CONTENT:
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (#, ^2/4) Keytar !!!
-(#2, $2, ^2) Watered-down Keytar !!!
+(☻) Watered-down Keytar !!!
 ---
 
 UI:

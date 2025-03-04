@@ -174,6 +174,15 @@ namespace Origins.LootConditions {
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Riven_Hive"));
 		}
 	}
+	public class Brine_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Brine_Pool>();
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Brine_Pool"));
+		}
+	}
 	public class DownedPlantera : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return NPC.downedPlantBoss;

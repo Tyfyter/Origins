@@ -405,6 +405,7 @@ Generic: {
 	Defiled_Wastelands: Defiled Wastelands
 	the_Defiled_Wastelands: the {$Mods.Origins.Generic.Defiled_Wastelands}
 	The_Defiled_Wastelands: The {$Mods.Origins.Generic.Defiled_Wastelands}
+	Brine_Pool: Brine Pool
 	Arms_Dealer: the Arms Dealer
 	Defiled_Antibody: Defiled Antibody
 	Defiled_Antibodies: Defiled Antibodies

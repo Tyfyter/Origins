@@ -536,5 +536,6 @@ namespace Origins.Items.Materials {
 	public class Riven_Key : Dawn_Key {
 		public override bool HasGlowmask => true;
 	}
+	public class Brine_Key : Dawn_Key { }
 	#endregion
 }

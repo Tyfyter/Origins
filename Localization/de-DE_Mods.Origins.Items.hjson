@@ -5277,3 +5277,8 @@ Sonar_Dynamite: {
 	// DisplayName: Sonar Dynamite
 	// Tooltip: Explodes when enemies are pinged by it
 }
+
+Brine_Key: {
+	// DisplayName: Brine Key
+	// Tooltip: ""
+}
