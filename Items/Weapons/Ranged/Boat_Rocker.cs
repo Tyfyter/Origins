@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
-			Item.useAnimation = 3;
-			Item.useTime = 3;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
 			Item.reuseDelay = 1;
 			Item.width = 48;
 			Item.height = 22;
@@ -62,7 +62,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Boat_Rocker>())
 			.AddIngredient(Type)
-			.AddIngredient<Peat_Moss_Item>(4)
+			.AddIngredient<Mildew_Item>(4)
 			.Register();
 		}
 	}

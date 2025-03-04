@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Ranged;
+using Origins.Tiles.Brine;
 using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
@@ -31,6 +32,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.shoot = ModContent.ProjectileType<Torpedo_Tube_Alt_P>();
+		}
+		public override void AddRecipes() {
+			Recipe.Create(ModContent.ItemType<Torpedo_Tube>())
+			.AddIngredient(Type)
+			.AddIngredient<Mildew_Item>(4)
+			.Register();
 		}
 	}
 	public class Torpedo_Tube_P : ModProjectile, ICanisterProjectile {

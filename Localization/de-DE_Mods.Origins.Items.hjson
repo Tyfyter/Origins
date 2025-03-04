@@ -5282,3 +5282,8 @@ Brine_Key: {
 	// DisplayName: Brine Key
 	// Tooltip: ""
 }
+
+Mildew_Item: {
+	// DisplayName: Mildew Item
+	// Tooltip: ""
+}

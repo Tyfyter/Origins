@@ -6,12 +6,14 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Tyfyter.Utils;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Origins.Projectiles {
 	//separate global for organization
@@ -21,6 +23,8 @@ namespace Origins.Projectiles {
 		int slamTime = -1;
 		bool justHit = false;
 		public bool bloodletter = false;
+		bool boatRockerCanEmbed = false;
+		Entity boatRockerEmbed = null;
 		public int chainFrameSeed = -1;
 		public FastRandom chainRandom;
 		public override bool InstancePerEntity => true;
@@ -31,6 +35,13 @@ namespace Origins.Projectiles {
 		public override void SetDefaults(Projectile projectile) {
 			isRetracting = false;
 			slamming = false;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				if (itemUse.Item.ModItem is Boat_Rocker and not Boat_Rocker_Alt) {
+					boatRockerCanEmbed = true;
+				}
+			}
 		}
 		public override bool PreAI(Projectile projectile) {
 			if (slamming && justHit && projectile.penetrate > 2) {
@@ -122,6 +133,23 @@ namespace Origins.Projectiles {
 					projectile.velocity = (Vector2)velocity;
 				}
 			}
+			if (boatRockerEmbed is not null) {
+				if (!boatRockerEmbed.active || boatRockerEmbed is Player { dead: true } || projectile.WithinRange(player.MountedCenter, 16 * 10)) {
+					boatRockerEmbed = null;
+				} else {
+					float knockbackResist = boatRockerEmbed is NPC npc ? npc.knockBackResist : 1;
+					MathUtils.LinearSmoothing(ref boatRockerEmbed.velocity, projectile.velocity * 0.4f, 1.8f * knockbackResist);
+					projectile.Center = boatRockerEmbed.Center - projectile.velocity - projectile.velocity.SafeNormalize(default) * 8;
+				}
+			}
+		}
+		public override bool CanHitPlayer(Projectile projectile, Player target) {
+			if (boatRockerEmbed is not null) return false;
+			return base.CanHitPlayer(projectile, target);
+		}
+		public override bool? CanHitNPC(Projectile projectile, NPC target) {
+			if (boatRockerEmbed is not null) return false;
+			return base.CanHitNPC(projectile, target);
 		}
 		public override void PostAI(Projectile projectile) {
 			if (projectile.aiStyle == ProjAIStyleID.Harpoon && Main.player.IndexInRange(projectile.owner)) {
@@ -134,10 +162,12 @@ namespace Origins.Projectiles {
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			justHit = true;
+			if (boatRockerCanEmbed && target.knockBackResist != 0) boatRockerEmbed = target;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}
 		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
 			justHit = true;
+			if (boatRockerCanEmbed) boatRockerEmbed = target;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}
 		public override bool? Colliding(Projectile projectile, Rectangle projHitbox, Rectangle targetHitbox) {
@@ -156,6 +186,12 @@ namespace Origins.Projectiles {
 			binaryWriter.Write((short)slamTime);
 			bitWriter.WriteBit(justHit);
 			bitWriter.WriteBit(bloodletter);
+			if (boatRockerEmbed is not null) {
+				bitWriter.WriteBit(true);
+				binaryWriter.Write(boatRockerEmbed.whoAmI + ((boatRockerEmbed is NPC) ? 300 : 0));
+			} else {
+				bitWriter.WriteBit(false);
+			}
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isRetracting = bitReader.ReadBit();
@@ -163,6 +199,16 @@ namespace Origins.Projectiles {
 			slamTime = binaryReader.ReadInt16();
 			justHit = bitReader.ReadBit();
 			bloodletter = bitReader.ReadBit();
+			if (bitReader.ReadBit()) {
+				int target = binaryReader.ReadInt32();
+				if (target >= 300) {
+					boatRockerEmbed = Main.npc[target - 300];
+				} else {
+					boatRockerEmbed = Main.player[target];
+				}
+			} else {
+				boatRockerEmbed = null;
+			}
 		}
 		public override bool PreDrawExtras(Projectile projectile) {
 			Player player = Main.player[projectile.owner];

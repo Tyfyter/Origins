@@ -11,6 +11,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
+using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -60,7 +61,7 @@ namespace Origins.NPCs.Brine {
 		// Mildew Creepers can and will attack anything except other Mildew Creepers
 		public override bool CanHitNPC(NPC target) => target.type != Type;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
 		}
