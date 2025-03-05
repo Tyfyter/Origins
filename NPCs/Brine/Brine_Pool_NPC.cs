@@ -103,7 +103,15 @@ namespace Origins.NPCs.Brine {
 		public static void DoTargeting(IBrinePoolNPC self) {
 			NPC NPC = ((ModNPC)self).NPC;
 			const int pathfinding_frequency = 5;
-			TargetClosest(self, (self.TargetIsRipple || (NPC.HasNPCTarget ? !self.CanTargetNPC(Main.npc[NPC.TranslatedTargetIndex]) : !self.CanTargetPlayer(Main.player[NPC.target]))) && NPC.Center.IsWithin(self.TargetPos, Math.Max(NPC.width * 2, NPC.height * 2)));
+			bool resetTarget;
+			if (NPC.HasValidTarget) {
+				if (self.TargetIsRipple) resetTarget = NPC.Center.IsWithin(self.TargetPos, Math.Max(NPC.width * 2, NPC.height * 2));
+				else if (NPC.HasNPCTarget) resetTarget = !self.CanTargetNPC(Main.npc[NPC.TranslatedTargetIndex]);
+				else resetTarget = !self.CanTargetPlayer(Main.player[NPC.target]);
+			} else {
+				resetTarget = true;
+			}
+			TargetClosest(self, resetTarget);
 			if (NPC.HasValidTarget) {
 				NPCAimedTarget targetData = NPC.GetTargetData();
 				Vector2 target = targetData.Center;
