@@ -27,6 +27,7 @@ namespace Origins.NPCs.Brine {
 		public bool TargetIsRipple { get; set; }
 		public bool CanSeeTarget { get; set; }
 		public Vector2 TargetPos { get; set; }
+		public bool AggressivePathfinding => false;
 		public HashSet<int> TargetNPCTypes => TargetNPCTypes;
 		public static HashSet<int> TargetTypes { get; private set; } = [];
 		public static HashSet<int> SegmentTypes { get; private set; } = [];
