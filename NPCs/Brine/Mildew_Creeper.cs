@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Misc;
 using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Felnum;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -34,14 +35,17 @@ namespace Origins.NPCs.Brine {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public static HashSet<int> FriendlyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = Vector2.UnitY * -16,
 				PortraitPositionYOverride = -32
 			};
+			FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
+			base.SetDefaults();
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 500;
 			NPC.defense = 24;
@@ -55,12 +59,9 @@ namespace Origins.NPCs.Brine {
 			NPC.value = 5000;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			SpawnModBiomes = [
-				ModContent.GetInstance<Brine_Pool>().Type
-			];
 		}
 		// Mildew Creepers can and will attack anything except other Mildew Creepers
-		public override bool CanHitNPC(NPC target) => target.ModNPC is not Mildew_Creeper or Lost_Diver;
+		public override bool CanHitNPC(NPC target) => !FriendlyNPCTypes.Contains(target.type);
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));

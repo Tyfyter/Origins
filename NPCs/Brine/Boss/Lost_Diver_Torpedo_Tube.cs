@@ -90,6 +90,10 @@ namespace Origins.NPCs.Brine.Boss {
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
 			}
 		}
+		public override bool? CanHitNPC(NPC target) {
+			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
+			return null;
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Projectile.penetrate--;
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 120);
@@ -144,7 +148,7 @@ namespace Origins.NPCs.Brine.Boss {
 			return false;
 		}
 		public override void OnKill(int timeLeft) {
-			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item62, hostile: !Projectile.reflected);
+			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item62, hostile: !Projectile.reflected, alsoFriendly: true);
 		}
 	}
 }

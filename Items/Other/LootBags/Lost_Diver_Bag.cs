@@ -14,7 +14,7 @@ namespace Origins.Items.Other.LootBags {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			itemLoot.Add(Lost_Diver.normalDropRule);
+			itemLoot.Add(Mildew_Carrion.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Retaliatory_Tendril>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 12), false));
 		}

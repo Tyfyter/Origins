@@ -21,6 +21,10 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override Entity Owner => Main.npc[(int)Projectile.ai[2]];
 		public override int ExplosionType => ModContent.ProjectileType<Lost_Diver_Depth_Charge_Explosion>();
+		public override bool? CanHitNPC(NPC target) {
+			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
+			return null;
+		}
 	}
 	public class Lost_Diver_Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
@@ -50,6 +54,10 @@ namespace Origins.NPCs.Brine.Boss {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 				Projectile.ai[0] = 1;
 			}
+		}
+		public override bool? CanHitNPC(NPC target) {
+			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
+			return null;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);

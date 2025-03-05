@@ -227,10 +227,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (Owner is Player) {
 				return Main.GetPlayerArmPosition(Projectile);
 			} else if (Owner is NPC ownerNPC && ownerNPC.ModNPC is Lost_Diver lostDiver) {
-				Vector2 vector = Main.OffsetsPlayerOnhand[lostDiver.bodyFrame.Y / 56] * 2f;
-
-				vector -= new Vector2(lostDiver.bodyFrame.Width - ownerNPC.width, lostDiver.bodyFrame.Height - 42) / 2f;
-				return ownerNPC.Center - new Vector2(20f, 42f) / 2f + vector + Vector2.UnitY * ownerNPC.gfxOffY;
+				return lostDiver.GetHandPosition();
 			} else {
 				return Owner.Center;
 			}

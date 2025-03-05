@@ -15,11 +15,11 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Brine.Boss {
 	[AutoloadBossHead]
 	public class Lost_Diver : Brine_Pool_NPC {
-		internal static IItemDropRule normalDropRule;
 		public override bool AggressivePathfinding => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -32,9 +32,7 @@ namespace Origins.NPCs.Brine.Boss {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 0f
 			};
-		}
-		public override void Unload() {
-			normalDropRule = null;
+			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -48,7 +46,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.height = 42;
 			NPC.knockBackResist = 0f;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchRange(-0.8f, -0.4f);
-			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.value = 0;//Item.buyPrice(gold: 5);
 		}
 		public AIModes AIMode {
@@ -67,7 +65,8 @@ namespace Origins.NPCs.Brine.Boss {
 			set => NPC.localAI[3] = (int)value;
 		}
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
-		public override bool CanTargetNPC(NPC other) => NPC.WithinRange(other.Center, 16 * 400) && other.ModNPC is not Mildew_Creeper or Lost_Diver;
+		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
+		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
 		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
@@ -80,7 +79,6 @@ namespace Origins.NPCs.Brine.Boss {
 			} else if (NPC.HasNPCTarget) {
 				targetVelocity = Main.npc[NPC.TranslatedTargetIndex].velocity;
 			}
-			Dust.NewDustPerfect(TargetPos, CanSeeTarget ? 6 : 29, Vector2.Zero);
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
@@ -171,7 +169,7 @@ namespace Origins.NPCs.Brine.Boss {
 			switch (AIMode) {
 				default:
 				case AIModes.Idle:
-				NPC.ai[0] += 0.75f + (0.25f * difficultyMult);
+				NPC.ai[0] += 0.65f + (0.35f * difficultyMult);
 				if (NPC.ai[0] > 120 && NPC.HasValidTarget) {
 					HeldProjectile = -1;
 					WeightedRandom<AIModes> rand = new(Main.rand);
@@ -184,7 +182,7 @@ namespace Origins.NPCs.Brine.Boss {
 					AddMode(AIModes.Boat_Rocker, 1 + (Main.expertMode ? rangeFactor * 0.5f : 0));
 					AddMode(AIModes.Depth_Charge, 1 - rangeFactor);
 					AddMode(AIModes.Torpedo_Tube, 1);
-					AddMode(AIModes.Mildew_Whip, NPC.life > NPC.lifeMax / 2 ? 0 : 1);
+					AddMode(AIModes.Mildew_Whip, NPC.life > NPC.lifeMax / 2 ? 0 : (1 - rangeFactor));
 					AIMode = rand.Get();
 					LastMode = AIMode;
 					NPC.netUpdate = true;
@@ -279,6 +277,36 @@ namespace Origins.NPCs.Brine.Boss {
 				useItemRotFrame = true;
 				NPC.ai[0]++;
 				break;
+				case AIModes.Mildew_Whip:
+				if (HeldProjectile < 0) {
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						HeldProjectile = Projectile.NewProjectileDirect(
+							NPC.GetSource_FromAI(),
+							NPC.Center,
+							direction * 4,
+							ModContent.ProjectileType<Lost_Diver_Mildew_Whip>(),
+							60,
+							2,
+							ai2: NPC.whoAmI
+						).identity;
+					}
+				} else {
+					Projectile heldProjectile = Main.projectile.FirstOrDefault(x => x.active && x.identity == HeldProjectile);
+					if (heldProjectile is null) {
+						HeldProjectile = -1;
+						AIMode = AIModes.Idle;
+					}
+				}
+				if (NPC.ai[0] < Lost_Diver_Mildew_Whip.UseTime * 0.333f) {
+					bodyFrame.Y = bodyFrame.Height;
+				} else if (NPC.ai[0] < Lost_Diver_Mildew_Whip.UseTime * 0.666f) {
+					bodyFrame.Y = bodyFrame.Height * 2;
+				} else {
+					bodyFrame.Y = bodyFrame.Height * 3;
+				}
+				NPC.ai[0]++;
+				//useItemRotFrame = true;
+				break;
 			}
 			if (useItemRotFrame) {
 				float rot = itemRotation * NPC.direction;
@@ -286,30 +314,16 @@ namespace Origins.NPCs.Brine.Boss {
 				if (rot < -0.75f) {
 					bodyFrame.Y = bodyFrame.Height * 2;
 				}
-
 				if (rot > 0.6f) {
 					bodyFrame.Y = bodyFrame.Height * 4;
 				}
 			}
 		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			normalDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
-				ModContent.ItemType<Boat_Rocker>(),
-				ModContent.ItemType<Depth_Charge>(),
-				ModContent.ItemType<Torpedo_Tube>(),
-				ModContent.ItemType<Mildew_Whip>(),
-				Watered_Down_Keytar.ID
-			).WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Lost_Diver_Helmet>(), 10)
-			.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Lost_Diver_Chest>()))
-			.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Lost_Diver_Greaves>()))
-			);
-			//These need to be in the mildew carrion's loot, it's realistically simplest to make the two separate NPCs
-			/*npcLoot.Add(new DropBasedOnExpertMode(
-				normalDropRule,
-				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Lost_Diver_Bag>(), 1, 1, 1, null)
-			));
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Faith_Beads>(), 4));
-			npcLoot.Add(new DropInstancedPerClient(ModContent.ItemType<Crown_Jewel>()));*/
+		public Vector2 GetHandPosition() {
+			Vector2 vector = Main.OffsetsPlayerOnhand[bodyFrame.Y / 56] * 2f;
+
+			vector -= new Vector2(bodyFrame.Width - NPC.width, bodyFrame.Height - 42) / 2f;
+			return NPC.Center - new Vector2(20f, 42f) / 2f + vector + Vector2.UnitY * NPC.gfxOffY;
 		}
 		public int heldItemType;
 		public int swimTime;
@@ -585,8 +599,7 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedLostDiver = true;
-			NetMessage.SendData(MessageID.WorldData);
+			NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<Lost_Diver_Transformation>(), ai1: NPC.direction).Center = NPC.Center;
 		}
 		public enum AIModes {
 			Idle,

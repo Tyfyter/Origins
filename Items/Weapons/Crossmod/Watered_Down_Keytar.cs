@@ -96,6 +96,11 @@ namespace Origins.Items.Weapons.Crossmod {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OnHitNPC(target);
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = 24;
+			height = 24;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+		}
 	}
 	public class Watered_Down_Keytar_Bass : ModProjectile {
 		public const int frame_time = 5;
@@ -134,6 +139,11 @@ namespace Origins.Items.Weapons.Crossmod {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OnHitNPC(target);
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = 24;
+			height = 24;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
 		}
 	}
 	#endregion without thorium
@@ -201,6 +211,11 @@ namespace Origins.Items.Weapons.Crossmod {
 		public override void BardOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Watered_Down_Keytar_Synth.OnHitNPC(target);
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = 24;
+			height = 24;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+		}
 	}
 	[ExtendsFromMod("ThoriumMod")]
 	public class Watered_Down_Keytar_Bass_Thorium : BardProjectile {
@@ -235,6 +250,11 @@ namespace Origins.Items.Weapons.Crossmod {
 		}
 		public override void BardOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Watered_Down_Keytar_Bass.OnHitNPC(target);
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = 24;
+			height = 24;
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
 		}
 	}
 	#endregion with thorium

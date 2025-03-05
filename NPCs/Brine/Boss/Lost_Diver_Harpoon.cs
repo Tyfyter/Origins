@@ -87,7 +87,10 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 		}
 		public override bool CanHitPlayer(Player target) => Projectile.ai[1] == -1;
-		public override bool? CanHitNPC(NPC target) => Projectile.ai[1] == -1 ? null : false;
+		public override bool? CanHitNPC(NPC target) {
+			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
+			return Projectile.ai[1] == -1 ? null : false;
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (Main.expertMode && Projectile.ai[0] == 0) Projectile.ai[1] = target.whoAmI;
 			Projectile.ai[0] = 1f;

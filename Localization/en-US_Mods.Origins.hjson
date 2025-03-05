@@ -1530,6 +1530,7 @@ Projectiles: {
 	Lost_Diver_Depth_Charge_Explosion.DisplayName: Lost Diver Depth Charge Explosion
 	Lost_Diver_Torpedo_Tube.DisplayName: Lost Diver Torpedo Tube
 	Lost_Diver_Harpoon.DisplayName: Lost Diver Harpoon
+	Lost_Diver_Mildew_Whip.DisplayName: Lost Diver Mildew Whip
 }
 
 Prefixes: {
