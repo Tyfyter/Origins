@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -116,6 +117,31 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Festering_Crate_Tile : Fishing_Crate_Tile<Festering_Crate> {
 		public override Color MapColor => new Color(100, 100, 100);
+	}
+	#endregion
+	#region basic crate
+	public class Basic_Crate : Fishing_Crate_Item<Basic_Crate_Tile> {
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
+			IItemDropRule[] brine = [
+				//Riven_Hive.LesionDropRule,
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Brineglow_Item>(), 1, 5, 16),
+					ItemDropRule.NotScalingWithLuck(ItemType<Peat_Moss_Item>(), 1, 5, 16)
+				),
+				BiomeChest_GoldCoin,
+				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
+					new OneFromRulesRule(5, Ores.Concat(HardmodeOres).ToArray()),
+					new OneFromRulesRule(3, 2, Bars.Concat(HardmodeBars).ToArray())),
+				new OneFromRulesRule(3, Potions)
+			];
+			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(brine));
+			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
+			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
+		}
+	}
+	public class Basic_Crate_Tile : Fishing_Crate_Tile<Basic_Crate> {
+		public override string Texture => "Origins/Items/Other/Fish/Basic_Crate";
+		public override Color MapColor => new Color(0, 62, 64);
 	}
 	#endregion
 	public abstract class Fishing_Crate_Item<TTile> : ModItem, ICustomWikiStat where TTile : ModTile {

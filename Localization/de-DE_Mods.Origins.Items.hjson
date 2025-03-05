@@ -5287,3 +5287,8 @@ Mildew_Item: {
 	// DisplayName: Mildew Item
 	// Tooltip: ""
 }
+
+Basic_Crate: {
+	// DisplayName: Basic Crate
+	// Tooltip: ""
+}

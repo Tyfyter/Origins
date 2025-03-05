@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(#, ^2/4) Lost Diver/Mildew Carrion !!!
+(☻, ^2/4) Lost Diver/ (#, ^2/4)Mildew Carrion !!!
 (X) Snowdrop
 
 (X) Crimson King
@@ -1388,7 +1388,7 @@ CONSUMABLES:
 (X) The Button°
 
 (X) Ashen Loot Box°
-(#2, ^2) Basic Crate* !!!
+(☻) Basic Crate* !!!
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box°
 (#2, ^2, 々) Crimson Loot Box°
@@ -1409,7 +1409,7 @@ CONSUMABLES:
 (^) White Water*
 
 (X) Ashen Key
-(#, ^2) Brine Key !!!
+(☻) Brine Key !!!
 (^) Dawn Key°
 (^) Defiled Key*
 (^) Dusk Key°

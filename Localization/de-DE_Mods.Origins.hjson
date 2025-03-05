@@ -1750,6 +1750,7 @@ Tiles: {
 	// Defiled_Relay.MapEntry: Defiled Relay
 	// Hydrothermal_Vent.MapEntry: Hydrothermal Vent
 	// Ocotillo.DisplayName: Ocotillo
+	// Basic_Crate_Tile.MapEntry: Basic Crate
 }
 
 MapObject: {
