@@ -1,9 +1,18 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.LootConditions;
+using PegasusLib;
+using PegasusLib.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Renderers;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -16,9 +25,14 @@ namespace Origins.Items.Other.Consumables {
 		public override void Unload() => bosses = null;
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this, "");
+			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
+				Mod.Assets.Request<Effect>("Effects/Crown_Jewel_Caustics"),
+				"Crown_Jewel_Caustics"
+			))
+			.UseImage(TextureAssets.Extra[193]);
 		}
 		public override void SetDefaults() {
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Lime;
 			Item.value = Item.buyPrice(gold: 5);
 			Item.useTime = 30;
 			Item.useAnimation = 30;
@@ -28,6 +42,37 @@ namespace Origins.Items.Other.Consumables {
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.UseSound = SoundID.Item29.WithPitch(-3f).WithVolume(0.2f);
 			Item.consumable = true;
+		}
+		public override void GrabRange(Player player, ref int grabRange) {
+			if (Item.newAndShiny) grabRange = 16 * 2;
+		}
+		public override void Update(ref float gravity, ref float maxFallSpeed) {
+			if (Item.newAndShiny) {
+				Item.velocity.X *= 0.97f;
+				if (Item.velocity.Y < 0) Item.velocity.Y *= 0.97f;
+				gravity = 0.04f;
+				maxFallSpeed = 2.5f;
+			}
+		}
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+			SpriteBatchState state = spriteBatch.GetState();
+			try {
+				spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
+				Texture2D texture = TextureAssets.Extra[193].Value;
+				DrawData data = new() {
+					texture = texture,
+					position = Item.Center - Main.screenPosition,
+					color = Color.Lime,
+					rotation = 0f,
+					scale = new Vector2(scale),
+					shader = Item.dye,
+					origin = texture.Size() * 0.5f
+				};
+				GameShaders.Armor.ApplySecondary(Item.dye, null, data);
+				data.Draw(spriteBatch);
+			} finally {
+				spriteBatch.Restart(state);
+			}
 		}
 		public override bool? UseItem(Player player) {
 			ref bool crownJewel = ref player.GetModPlayer<OriginPlayer>().crownJewel;
@@ -93,5 +138,12 @@ namespace Origins.Items.Other.Consumables {
 			drawParams.Frame.Height = 18;
 			return true;
 		}
+	}
+	public class Crown_Jewel_Drop() : DropInstancedPerClient(ModContent.ItemType<Crown_Jewel>(), 1, 1, 1, null) {
+		//*
+		public override bool CanDropForPlayer(Player player) => !player.OriginPlayer().crownJewel;
+		/*/
+		public override bool CanDropForPlayer(Player player) => true;
+		//*/
 	}
 }

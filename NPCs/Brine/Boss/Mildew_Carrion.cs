@@ -155,7 +155,7 @@ namespace Origins.NPCs.Brine.Boss {
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Lost_Diver_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Faith_Beads>(), 4));
-			npcLoot.Add(new DropInstancedPerClient(ModContent.ItemType<Crown_Jewel>()));
+			npcLoot.Add(new Crown_Jewel_Drop());
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

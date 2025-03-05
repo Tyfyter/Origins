@@ -67,14 +67,14 @@ namespace Origins.LootConditions {
 				if (Main.netMode == NetmodeID.Server && npc is not null) {
 					int num = Item.NewItem(npc.GetSource_Loot(), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, itemId, stack, noBroadcast: true, -1);
 					Main.timeItemSlotCannotBeReusedFor[num] = 54000;
-					for (int i = 0; i < Main.maxPlayers; i++) {
-						if (Main.player[i].active && npc.playerInteraction[i]) {
-							NetMessage.SendData(MessageID.InstancedItem, i, -1, null, num);
+					foreach (Player player in Main.ActivePlayers) {
+						if (npc.playerInteraction[player.whoAmI] && CanDropForPlayer(player)) {
+							NetMessage.SendData(MessageID.InstancedItem, player.whoAmI, -1, null, num);
 						}
 					}
 					Main.item[num].active = false;
 				} else {
-					CommonCode.DropItem(info, itemId, stack);
+					if (CanDropForPlayer(Main.LocalPlayer)) CommonCode.DropItem(info, itemId, stack);
 				}
 				result = default;
 				result.State = ItemDropAttemptResultState.Success;
@@ -84,6 +84,7 @@ namespace Origins.LootConditions {
 			result.State = ItemDropAttemptResultState.FailedRandomRoll;
 			return result;
 		}
+		public virtual bool CanDropForPlayer(Player player) => true;
 	}
 	public class Dawn_Key_Condition : IItemDropRuleCondition {
 #if false
