@@ -113,6 +113,11 @@ namespace Origins.NPCs.Brine.Boss {
 				if (NPC.wet) NPC.frameCounter = 0;
 				bodyFrame.Y = 0;
 			}
+			void TrySwim() {
+				int oldTime = swimTime;
+				swimTime = Math.Min(swimCharge, 30);
+				swimCharge -= swimTime - oldTime;
+			}
 			if (NPC.wet) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
@@ -122,8 +127,8 @@ namespace Origins.NPCs.Brine.Boss {
 					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
 					if (differenceFromTarget.Y > 64) {
 						NPC.velocity.Y += 0.6f;
-					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0)) {
-						NPC.velocity.Y += 0.3f;
+					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0) || swimCharge <= 0) {
+						NPC.velocity.Y += 0.2f;
 						if (swimTime <= 0) swimTime = 30;
 					} else {
 						if (differenceFromTarget.Y < (CanSeeTarget ? -64 : -4)) {
@@ -134,9 +139,9 @@ namespace Origins.NPCs.Brine.Boss {
 								slow_distance /= 2;
 								fast_distance /= 2;
 							}
-							if (swimTime <= 10) swimTime = 30;
+							if (swimTime <= 10) TrySwim();
 						} else {
-							if (swimTime <= 0) swimTime = 30;
+							if (swimTime <= 0) TrySwim();
 						}
 					}
 					if (differenceFromTarget.X > fast_distance) {
@@ -148,11 +153,15 @@ namespace Origins.NPCs.Brine.Boss {
 					} else if (differenceFromTarget.X < -slow_distance) {
 						NPC.velocity.X -= slow_speed;
 					}
+					if (NPC.collideY) {
+						swimCharge = 60 * 10;
+					}
 				}
 			} else {
 				swimTime = 0;
-				if (NPC.collideY && Math.Abs(NPC.velocity.X) > 2) {
-					NPC.velocity.X *= 0.98f;
+				if (NPC.collideY) {
+					if (Math.Abs(NPC.velocity.X) > 2) NPC.velocity.X *= 0.98f;
+					swimCharge = 60 * 10;
 				}
 				if (Math.Abs(direction.X) >= 0.1f) {
 					if (Math.Abs(NPC.velocity.Y) < 0.01f && Math.Sign(direction.X) != -Math.Sign(NPC.velocity.X)) {
@@ -349,6 +358,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public int heldItemType;
 		public int swimTime;
+		public int swimCharge;
 		public float itemRotation;
 		public Rectangle bodyFrame = new(0, 0, 40, 56);
 		public Rectangle legFrame = new(0, 0, 40, 56);
