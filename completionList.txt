@@ -1198,7 +1198,7 @@ TILES:
 (X) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
-(#, ^2) The Jungle's Window !!!
+(☻) The Jungle's Window !!!
 (X) There's Five of Them Now
 (X) What's Out There
 

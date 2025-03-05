@@ -5292,3 +5292,8 @@ Basic_Crate: {
 	DisplayName: Basic Crate
 	Tooltip: ""
 }
+
+The_Jungles_Window_Item: {
+	DisplayName: The Jungle's Window
+	Tooltip: "'Albert Kiln'"
+}
