@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void SetDefaults() {
 			Item.damage = 98;
 			Item.DamageType = DamageClass.Ranged;
-			Item.knockBack = 4;
+			Item.knockBack = 4.5f;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.useAnimation = 30;

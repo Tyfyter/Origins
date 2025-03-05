@@ -8,6 +8,7 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine.Boss {
@@ -25,6 +26,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 12;
+			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 			global = new();
 		}
 		public override void AI() {
@@ -78,6 +80,7 @@ namespace Origins.NPCs.Brine.Boss {
 				MathUtils.LinearSmoothing(ref player.velocity, Projectile.velocity * 0.2f * multiplier, 0.6f * multiplier);
 				player.OriginPlayer().forceFallthrough = true;
 				Projectile.Center = player.MountedCenter - Projectile.velocity - Projectile.velocity.SafeNormalize(default) * 8;
+				Projectile.hostile = false;
 				if (distance < 16 * (10 - multiplier)) {
 					Projectile.ai[1] = -1;
 				}

@@ -10,6 +10,7 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
 using Origins.Misc;
+using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Defiled;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
@@ -59,7 +60,7 @@ namespace Origins.NPCs.Brine {
 			];
 		}
 		// Mildew Creepers can and will attack anything except other Mildew Creepers
-		public override bool CanHitNPC(NPC target) => target.type != Type;
+		public override bool CanHitNPC(NPC target) => target.ModNPC is not Mildew_Creeper or Lost_Diver;
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
 			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));

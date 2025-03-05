@@ -24,6 +24,7 @@ namespace Origins.Projectiles {
 		bool justHit = false;
 		public bool bloodletter = false;
 		bool boatRockerCanEmbed = false;
+		int boatRockerEmbedTime = 0;
 		Entity boatRockerEmbed = null;
 		public int chainFrameSeed = -1;
 		public FastRandom chainRandom;
@@ -69,6 +70,7 @@ namespace Origins.Projectiles {
 				}
 			} else if (projectile.aiStyle == ProjAIStyleID.Harpoon) {
 				if (slamming) {
+					boatRockerCanEmbed = false;
 					if (projectile.numUpdates == -1) {
 						Vector2 oldDiff = (projectile.oldPosition - projectile.Size * 0.5f) - player.MountedCenter;
 						PolarVec2 polarDiff = (PolarVec2)(projectile.Center - player.MountedCenter);
@@ -134,11 +136,11 @@ namespace Origins.Projectiles {
 				}
 			}
 			if (boatRockerEmbed is not null) {
-				if (!boatRockerEmbed.active || boatRockerEmbed is Player { dead: true } || projectile.WithinRange(player.MountedCenter, 16 * 10)) {
+				if (!boatRockerEmbed.active || boatRockerEmbed is Player { dead: true } || ++boatRockerEmbedTime > 90 || projectile.WithinRange(player.MountedCenter, 16 * 10)) {
 					boatRockerEmbed = null;
 				} else {
 					float knockbackResist = boatRockerEmbed is NPC npc ? npc.knockBackResist : 1;
-					MathUtils.LinearSmoothing(ref boatRockerEmbed.velocity, projectile.velocity * 0.4f, 1.8f * knockbackResist);
+					MathUtils.LinearSmoothing(ref boatRockerEmbed.velocity, projectile.velocity * 0.4f, (projectile.knockBack / 2.5f) * knockbackResist);
 					projectile.Center = boatRockerEmbed.Center - projectile.velocity - projectile.velocity.SafeNormalize(default) * 8;
 				}
 			}

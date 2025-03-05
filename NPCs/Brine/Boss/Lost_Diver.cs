@@ -20,6 +20,7 @@ namespace Origins.NPCs.Brine.Boss {
 	[AutoloadBossHead]
 	public class Lost_Diver : Brine_Pool_NPC {
 		internal static IItemDropRule normalDropRule;
+		public override bool AggressivePathfinding => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
@@ -65,7 +66,8 @@ namespace Origins.NPCs.Brine.Boss {
 			get => (AIModes)(int)NPC.localAI[3];
 			set => NPC.localAI[3] = (int)value;
 		}
-		public override bool CanTargetPlayer(Player player) => true;
+		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
+		public override bool CanTargetNPC(NPC other) => NPC.WithinRange(other.Center, 16 * 400) && other.ModNPC is not Mildew_Creeper or Lost_Diver;
 		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
@@ -78,6 +80,7 @@ namespace Origins.NPCs.Brine.Boss {
 			} else if (NPC.HasNPCTarget) {
 				targetVelocity = Main.npc[NPC.TranslatedTargetIndex].velocity;
 			}
+			Dust.NewDustPerfect(TargetPos, CanSeeTarget ? 6 : 29, Vector2.Zero);
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
@@ -92,6 +95,14 @@ namespace Origins.NPCs.Brine.Boss {
 				} else if (legFrame.Y > legFrame.Height * 19) {
 					legFrame.Y = legFrame.Height * 7;
 				}
+				if (swimTime > 20) {
+					bodyFrame.Y = 0;
+				} else if (swimTime > 10) {
+					bodyFrame.Y = bodyFrame.Height * 5;
+				} else {
+					bodyFrame.Y = 0;
+				}
+				swimTime--;
 			} else if (NPC.velocity.Y != 0f) {
 				bodyFrame.Y = bodyFrame.Height * 5;
 			} else {
@@ -99,7 +110,35 @@ namespace Origins.NPCs.Brine.Boss {
 				bodyFrame.Y = 0;
 			}
 			if (NPC.wet) {
-
+				NPC.velocity *= 0.96f;
+				if (TargetPos != default) {
+					if (differenceFromTarget.Y > 64) {
+						NPC.velocity.Y += 0.6f;
+					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0)) {
+						NPC.velocity.Y += 0.3f;
+						if (swimTime <= 0) swimTime = 30;
+					} else {
+						if (differenceFromTarget.Y < (CanSeeTarget ? -64 : -4)) {
+							NPC.velocity.Y = -6;
+							if (swimTime <= 10) swimTime = 30;
+						} else {
+							if (swimTime <= 0) swimTime = 30;
+						}
+					}
+					const float fast_speed = 0.6f;
+					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
+					const float fast_distance = 16 * 20;
+					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
+					if (differenceFromTarget.X > fast_distance) {
+						NPC.velocity.X += fast_speed;
+					} else if (differenceFromTarget.X > slow_distance) {
+						NPC.velocity.X += slow_speed;
+					} else if (differenceFromTarget.X < -fast_distance) {
+						NPC.velocity.X -= fast_speed;
+					} else if (differenceFromTarget.X < -slow_distance) {
+						NPC.velocity.X -= slow_speed;
+					}
+				}
 			} else {
 				swimTime = 0;
 				if (NPC.collideY && Math.Abs(NPC.velocity.X) > 2) {
@@ -294,6 +333,15 @@ namespace Origins.NPCs.Brine.Boss {
 				headColor = Color.White;
 				bodyColor = Color.White;
 				legColor = Color.White;
+			} else {
+				NPCLoader.DrawEffects(NPC, ref headColor);
+				headColor = NPC.GetNPCColorTintedByBuffs(headColor);
+
+				NPCLoader.DrawEffects(NPC, ref bodyColor);
+				bodyColor = NPC.GetNPCColorTintedByBuffs(bodyColor);
+
+				NPCLoader.DrawEffects(NPC, ref legColor);
+				legColor = NPC.GetNPCColorTintedByBuffs(legColor);
 			}
 
 			#region composite data

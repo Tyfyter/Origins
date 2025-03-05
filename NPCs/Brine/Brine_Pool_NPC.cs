@@ -19,6 +19,7 @@ namespace Origins.NPCs.Brine {
 		public bool TargetIsRipple { get; set; } = false;
 		public bool CanSeeTarget { get; set; } = false;
 		public Vector2 TargetPos { get; set; }
+		public virtual bool AggressivePathfinding => false;
 		public static List<(Vector2 position, float magnitude)> Ripples { get; private set; } = [];
 		[CloneByReference]
 		public HashSet<int> TargetNPCTypes { get; private set; } = [];
@@ -102,7 +103,7 @@ namespace Origins.NPCs.Brine {
 		public static void DoTargeting(IBrinePoolNPC self) {
 			NPC NPC = ((ModNPC)self).NPC;
 			const int pathfinding_frequency = 5;
-			TargetClosest(self, NPC.Center.IsWithin(self.TargetPos, Math.Max(NPC.width * 2, NPC.height * 2)));
+			TargetClosest(self, (self.TargetIsRipple || (NPC.HasNPCTarget ? !self.CanTargetNPC(Main.npc[NPC.TranslatedTargetIndex]) : !self.CanTargetPlayer(Main.player[NPC.target]))) && NPC.Center.IsWithin(self.TargetPos, Math.Max(NPC.width * 2, NPC.height * 2)));
 			if (NPC.HasValidTarget) {
 				NPCAimedTarget targetData = NPC.GetTargetData();
 				Vector2 target = targetData.Center;
@@ -138,7 +139,24 @@ namespace Origins.NPCs.Brine {
 							}
 						}
 					} else {
-						self.TargetPos = default;
+						if (self.AggressivePathfinding) path = CollisionExtensions.GridBasedPathfinding(
+							CollisionExtensions.GeneratePathfindingGrid(topLeft, bottomRight, 0, 0),
+							searchSize.ToTileCoordinates(),
+							(target - searchStart).ToTileCoordinates(),
+							validEnds
+						);
+						if (path.Length > 0) {
+							for (int i = 0; i < path.Length && i < 10; i++) {
+								Vector2 pos = path[i].ToWorldCoordinates() + searchStart;
+								if (CollisionExt.CanHitRay(NPC.Center, pos + new Vector2(8))) {
+									self.TargetPos = pos;
+								} else {
+									break;
+								}
+							}
+						} else {
+							self.TargetPos = default;
+						}
 					}
 				}
 			}
@@ -209,6 +227,7 @@ namespace Origins.NPCs.Brine {
 		public bool TargetIsRipple { get; set; }
 		public bool CanSeeTarget { get; set; }
 		public Vector2 TargetPos { get; set; }
+		public bool AggressivePathfinding { get; }
 		[CloneByReference]
 		public HashSet<int> TargetNPCTypes { get; }
 		public bool CheckTargetLOS(Vector2 target);
