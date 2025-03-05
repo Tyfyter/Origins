@@ -74,14 +74,20 @@ namespace Origins.NPCs.Brine.Boss {
 			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 			DoTargeting();
 			Vector2 targetVelocity = Vector2.Zero;
+			bool enraged = false;
 			if (NPC.HasPlayerTarget) {
-				targetVelocity = Main.player[NPC.target].velocity;
+				Player player = Main.player[NPC.target];
+				enraged = NPC.wet && !player.wet;
+				targetVelocity = player.velocity;
 			} else if (NPC.HasNPCTarget) {
-				targetVelocity = Main.npc[NPC.TranslatedTargetIndex].velocity;
+				NPC npcTarget = Main.npc[NPC.TranslatedTargetIndex];
+				enraged = NPC.wet && !npcTarget.wet;
+				targetVelocity = npcTarget.velocity;
 			}
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
+			
 			if (swimTime > 0) {
 				NPC.frameCounter += 2.0;
 				while (NPC.frameCounter > 8.0) {
@@ -110,6 +116,10 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.wet) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
+					const float fast_speed = 0.6f;
+					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
+					float fast_distance = 16 * 20;
+					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
 					if (differenceFromTarget.Y > 64) {
 						NPC.velocity.Y += 0.6f;
 					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0)) {
@@ -117,16 +127,18 @@ namespace Origins.NPCs.Brine.Boss {
 						if (swimTime <= 0) swimTime = 30;
 					} else {
 						if (differenceFromTarget.Y < (CanSeeTarget ? -64 : -4)) {
-							NPC.velocity.Y = -6;
+							if (Collision.WetCollision(NPC.position - Vector2.UnitY * 6, NPC.width, NPC.height)) {
+								NPC.velocity.Y = -6;
+							} else {
+								NPC.velocity.Y *= 0.5f;
+								slow_distance /= 2;
+								fast_distance /= 2;
+							}
 							if (swimTime <= 10) swimTime = 30;
 						} else {
 							if (swimTime <= 0) swimTime = 30;
 						}
 					}
-					const float fast_speed = 0.6f;
-					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
-					const float fast_distance = 16 * 20;
-					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
 					if (differenceFromTarget.X > fast_distance) {
 						NPC.velocity.X += fast_speed;
 					} else if (differenceFromTarget.X > slow_distance) {
@@ -145,7 +157,7 @@ namespace Origins.NPCs.Brine.Boss {
 				if (Math.Abs(direction.X) >= 0.1f) {
 					if (Math.Abs(NPC.velocity.Y) < 0.01f && Math.Sign(direction.X) != -Math.Sign(NPC.velocity.X)) {
 						int xDirection = Math.Sign(direction.X);
-						NPC.frameCounter += 1;
+						NPC.frameCounter += 0.9f + NPC.localAI[1];
 						while (NPC.frameCounter > 8.0) {
 							NPC.frameCounter -= 8.0;
 							legFrame.Y += legFrame.Height;
@@ -155,8 +167,9 @@ namespace Origins.NPCs.Brine.Boss {
 						} else if (legFrame.Y > legFrame.Height * 19) {
 							legFrame.Y = legFrame.Height * 7;
 						}
-						if (legFrame.Y / legFrame.Height is 9 or 17) NPC.velocity.X = xDirection * 0.01f;
-						else NPC.velocity.X = xDirection * 0.7f;
+						if (legFrame.Y / legFrame.Height is 9 or 17) NPC.velocity.X = xDirection * (0.01f + NPC.localAI[1] * 0.2f);
+						else NPC.velocity.X = xDirection * 0.7f * (1 + NPC.localAI[1] * 0.5f);
+						if (NPC.localAI[1] < 1) NPC.localAI[1] += 0.01f / 60;
 					}
 				}
 				NPC.velocity.Y += 0.4f;
@@ -166,15 +179,17 @@ namespace Origins.NPCs.Brine.Boss {
 			bool useItemRotFrame = false;
 			heldItemType = -1;
 			startMode:
+			float attackSpeed = 0.65f + (0.35f * difficultyMult);
 			switch (AIMode) {
 				default:
 				case AIModes.Idle:
-				NPC.ai[0] += 0.65f + (0.35f * difficultyMult);
+				NPC.ai[0] += attackSpeed;
 				if (NPC.ai[0] > 120 && NPC.HasValidTarget) {
 					HeldProjectile = -1;
 					WeightedRandom<AIModes> rand = new(Main.rand);
 					void AddMode(AIModes mode, double weight) {
-						if (mode == LastMode) weight *= 0.3f;
+						if (enraged && mode == AIModes.Boat_Rocker) weight *= 2f;
+						else if (mode == LastMode) weight *= 0.3f;
 						rand.Add(mode, weight);
 					}
 					float rangeFactor = Math.Max(0, distanceFromTarget / (15 * 16) - 1);
@@ -191,16 +206,19 @@ namespace Origins.NPCs.Brine.Boss {
 				break;
 				case AIModes.Boat_Rocker:
 				if (HeldProjectile < 0) {
-					Vector2 dir = direction * 12;
+					float speed = enraged ? 24 : 12;
+					Vector2 dir = direction * speed;
 					float lastAngle = dir.ToRotation();
 					int tries = 0;
 					improve:
-					if (GeometryUtils.AngleToTarget((differenceFromTarget + targetVelocity * 2) - dir * Math.Min(10, (distanceFromTarget / 4) / 12), 12, 0.3f) is float angle) {
-						dir = GeometryUtils.Vec2FromPolar(12, angle);
+					if (GeometryUtils.AngleToTarget((differenceFromTarget + targetVelocity * 2) - dir * Math.Min(10, (distanceFromTarget / 4) / speed), speed, 0.3f) is float angle) {
+						dir = GeometryUtils.Vec2FromPolar(speed, angle);
 						if (++tries < 2 && GeometryUtils.AngleDif(lastAngle, angle, out _) > 0.1f) {
 							lastAngle = angle;
 							goto improve;
 						}
+					} else {
+						dir = new Vector2(Math.Sign(direction.X), 0).RotatedBy(Math.Sign(direction.X) * -0.75f) * speed;
 					}
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
 						HeldProjectile = Projectile.NewProjectileDirect(
@@ -224,6 +242,7 @@ namespace Origins.NPCs.Brine.Boss {
 						HeldProjectile = -1;
 						AIMode = AIModes.Idle;
 						NPC.ai[0] = difficultyMult * 25;
+						if (enraged) NPC.ai[0] = 115 - attackSpeed * 20;
 					}
 				}
 				heldItemType = ModContent.ItemType<Boat_Rocker>();
@@ -232,10 +251,11 @@ namespace Origins.NPCs.Brine.Boss {
 				case AIModes.Depth_Charge:
 				if (HeldProjectile < 0) {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						float speed = enraged ? 10 : 8;
 						HeldProjectile = Projectile.NewProjectileDirect(
 							NPC.GetSource_FromAI(),
 							NPC.Center,
-							direction.RotatedBy(NPC.direction * -0.5f) * 8,
+							direction.RotatedBy(NPC.direction * -0.5f) * speed,
 							ModContent.ProjectileType<Lost_Diver_Depth_Charge>(),
 							60,
 							4,
@@ -254,10 +274,11 @@ namespace Origins.NPCs.Brine.Boss {
 				case AIModes.Torpedo_Tube:
 				if (NPC.ai[0] <= 0) {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						float speed = enraged ? 12 : 8;
 						Projectile.NewProjectileDirect(
 							NPC.GetSource_FromAI(),
 							NPC.Center,
-							direction * 8,
+							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Torpedo_Tube>(),
 							60,
 							4,
@@ -280,10 +301,11 @@ namespace Origins.NPCs.Brine.Boss {
 				case AIModes.Mildew_Whip:
 				if (HeldProjectile < 0) {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						float speed = enraged ? 6 : 4;
 						HeldProjectile = Projectile.NewProjectileDirect(
 							NPC.GetSource_FromAI(),
 							NPC.Center,
-							direction * 4,
+							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Mildew_Whip>(),
 							60,
 							2,

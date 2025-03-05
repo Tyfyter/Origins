@@ -39,7 +39,7 @@ namespace Origins.NPCs.Brine.Boss {
 				global.chainFrameSeed = Main.rand.Next(0, ushort.MaxValue);
 			}
 
-			Vector2 diff = owner.Center - Projectile.Center;
+			Vector2 diff = (owner.Center - Vector2.UnitY * 2) - Projectile.Center;
 			if (Projectile.alpha == 0) {
 				if (diff.X > 0) owner.direction = -1;
 				else owner.direction = 1;
@@ -77,13 +77,15 @@ namespace Origins.NPCs.Brine.Boss {
 					return;
 				}
 				float multiplier = ContentExtensions.DifficultyDamageMultiplier - 1;
+				if (owner.wet && !player.wet) multiplier *= 2;
+				else Projectile.hostile = false;
 				MathUtils.LinearSmoothing(ref player.velocity, Projectile.velocity * 0.2f * multiplier, 0.6f * multiplier);
 				player.OriginPlayer().forceFallthrough = true;
 				Projectile.Center = player.MountedCenter - Projectile.velocity - Projectile.velocity.SafeNormalize(default) * 8;
-				Projectile.hostile = false;
 				if (distance < 16 * (10 - multiplier)) {
 					Projectile.ai[1] = -1;
 				}
+				if (Projectile.timeLeft >= 120) Projectile.timeLeft = 120;
 			}
 		}
 		public override bool CanHitPlayer(Player target) => Projectile.ai[1] == -1;

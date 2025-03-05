@@ -75,14 +75,14 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noTileCollide = true;
 			NPC.damage = 58;
 			NPC.lifeMax = 25000;
-			NPC.defense = 26;
+			NPC.defense = 18;
 			NPC.aiStyle = 0;
 			NPC.width = 76;
 			NPC.height = 58;
 			NPC.knockBackResist = 0f;
 			NPC.HitSound = SoundID.Item127;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.value = 0;//Item.buyPrice(gold: 5);
+			NPC.value = Item.buyPrice(gold: 5);
 		}
 		public AIModes AIMode {
 			get => (AIModes)NPC.aiAction;
