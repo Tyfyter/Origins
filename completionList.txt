@@ -58,10 +58,11 @@ BOSSES AND MINI-BOSSES:
 (#2, ^2) Defiled Amalgamation* !!!
 ($, ^2/3) Fiberglass Weaver* !!!
 (X) Shimmer Construct
+(X) Trenchmaker
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(☻, ^2/4) Lost Diver/ (#, ^2/4)Mildew Carrion !!!
+(#2, ^2/4) Lost Diver/ (#, ^2/4)Mildew Carrion !!! (walking wobble for the Lost Diver)
 (X) Snowdrop
 
 (X) Crimson King
@@ -365,7 +366,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(X) Akaliegis !!
+(#, ^2) Akaliegis !!
 (^) Asylum Whistle*
 (^) A.S.H. Attack Relay*
 (^) Automated Returns Handler*
@@ -492,7 +493,7 @@ ACCESSORIES:
 (^) Symbiote Skull*
 (^) Tainted Flesh*
 (^) Tender Flesh Heart
-(X) Tiki Buckler !!!
+(#, ^2) Tiki Buckler !!!
 (X) Timbre of Hell°
 (^) Trap Charm*
 (^) Tripod Nip*
@@ -590,7 +591,7 @@ UTILITIES:
 (^) Impenetrable Trashcan Lid*
 (^) Indestructible Saddle*
 (^) Salty Seed (Mitosis Node)*
-(^5) Saltier Seed (Mitosis Node) !!!
+(^5) Saltier Seed (Mitosis Node)
 ---
 
 
@@ -674,7 +675,7 @@ MELEE WEAPONS:
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent*
 
-(#2, ^2) Amenonuhoko !!! (rework)
+(^) Amenonuhoko
 (^) Amoebash*
 (#, ^2) Boomboom !!!
 (^) Crystal Cutters
@@ -887,7 +888,7 @@ SUMMONER WEAPONS:
 (#, ^2) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
-(#2, ^2) Old Brine Rock !!!
+(^) Old Brine Rock
 (X) Ornamental Riven Artifact
 (X) Riven Rain Rod
 (^) Scabcoral Lyre*
@@ -1388,7 +1389,7 @@ CONSUMABLES:
 (X) The Button°
 
 (X) Ashen Loot Box°
-(☻) Basic Crate* !!!
+(#2, ^2) Basic Crate* !!! (other drops)
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box°
 (#2, ^2, 々) Crimson Loot Box°
@@ -1409,7 +1410,7 @@ CONSUMABLES:
 (^) White Water*
 
 (X) Ashen Key
-(☻) Brine Key !!!
+(^) Brine Key
 (^) Dawn Key°
 (^) Defiled Key*
 (^) Dusk Key°
@@ -1420,7 +1421,7 @@ CONSUMABLES:
 
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
-(☻) Lost Diver Bag !!!
+(^) Lost Diver Bag
 (^) World Cracker Bag*
 ---
 
@@ -1513,7 +1514,7 @@ CROSS-MOD CONTENT:
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (#, ^2/4) Keytar !!!
-(☻) Watered-down Keytar !!!
+(^) Watered-down Keytar
 ---
 
 UI:

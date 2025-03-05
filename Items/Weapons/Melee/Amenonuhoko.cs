@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.noUseGraphic = true;
 			Item.width = 66;
 			Item.height = 68;
-			Item.useTime = 48;
-			Item.useAnimation = 48;
+			Item.useTime = 22;
+			Item.useAnimation = 22;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Amenonuhoko_P>();
@@ -73,7 +73,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.Center = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			if (!projOwner.frozen) {
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
-					movementFactor -= 0.9f;
+					movementFactor -= 0.8f;
 					if (Projectile.ai[2] == 0) {
 						Projectile.ai[2] = 1;
 						Projectile.NewProjectile(
@@ -87,7 +87,7 @@ namespace Origins.Items.Weapons.Melee {
 						);
 					}
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 1f;
+					movementFactor += 2.2f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;

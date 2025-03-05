@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Marrowick {
@@ -21,6 +22,7 @@ namespace Origins.Items.Armor.Marrowick {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.statDefense += 1;
+			player.setBonus = Language.GetTextValue("ArmorSetBonus.Wood");
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
