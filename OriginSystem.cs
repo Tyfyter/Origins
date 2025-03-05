@@ -61,6 +61,7 @@ namespace Origins {
 				queuedUIStates[i].AddToList();
 			}
 			queuedUIStates = null;
+			DamageClasses.Patch();
 		}
 		public override void Unload() {
 			queuedUIStates = null;

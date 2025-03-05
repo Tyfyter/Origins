@@ -1086,6 +1086,7 @@ DamageClasses: {
 	// ExplosivePlus.DisplayName: explosive{0}
 	// ExplosivePlusModded.DisplayName: explosive {0}
 	// Melee_Magic.DisplayName: melee/magic damage
+	// No_Summon_Inherit.DisplayName: No Summon Inherit
 }
 
 Projectiles: {

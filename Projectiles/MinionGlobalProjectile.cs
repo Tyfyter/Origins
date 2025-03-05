@@ -4,6 +4,7 @@ using MonoMod.Cil;
 using Origins.Items;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.World;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata;
@@ -14,6 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using ThoriumMod.Projectiles.Minions;
 using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
@@ -79,6 +81,22 @@ namespace Origins.Projectiles {
 				}
 			}
 			if (prefix is MinionPrefix minionPrefix) minionPrefix.OnSpawn(projectile, source);
+		}
+		public override bool PreAI(Projectile projectile) {
+			if (relayRodStrength != 0) {
+				float strength = relayRodStrength * 0.01f;
+				if (projectile.minion || projectile.sentry || projectile.ContinuouslyUpdateDamageStats) projectile.damage += (int)(projectile.damage * strength * 0.1f);
+				const int rate = 40;
+				if (projectile.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife && timer % rate == 0) {
+					float oldHealth = artifactMinion.Life;
+					// heal 10/sec + damage bonuses
+					artifactMinion.Life += strength * 10f * (rate / 60f);
+					if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
+					int diff = (int)artifactMinion.Life - (int)oldHealth;
+					if (diff != 0) CombatText.NewText(projectile.Hitbox, CombatText.HealLife, diff, false, dot: true);
+				}
+			}
+			return true;
 		}
 		public override void PostAI(Projectile projectile) {
 			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is MinionPrefix artifactPrefix) {

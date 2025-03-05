@@ -320,6 +320,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override string Texture => "Origins/Buffs/Relay_Rod_Buff";
 		public override void Update(Player player, ref int buffIndex) {
 			float strength = player.OriginPlayer().relayRodStrength * 0.01f;
+			player.GetDamage<No_Summon_Inherit>() += 0.1f * strength;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f * strength;
 			player.lifeRegenCount += Main.rand.RandomRound(20 * strength);
 		}

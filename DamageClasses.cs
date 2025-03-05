@@ -19,16 +19,18 @@ namespace Origins {
 		private static DamageClass rangedMagic;
 		private static DamageClass incantation;
 		private static DamageClass meleeMagic;
+		private static DamageClass noSummonInherit;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
 		public static DamageClass ThrownExplosive => thrownExplosive ??= ModContent.GetInstance<Thrown_Explosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
 		public static DamageClass RangedMagic => rangedMagic ??= ModContent.GetInstance<Ranged_Magic>();
 		public static DamageClass Incantation => incantation ??= ModContent.GetInstance<Incantation>();
 		public static DamageClass MeleeMagic => meleeMagic ??= ModContent.GetInstance<Melee_Magic>();
+		public static DamageClass NoSummonInherit => noSummonInherit ??= ModContent.GetInstance<No_Summon_Inherit>();
 		public static DamageClassList All => new();
 		public static HashSet<DamageClass> HideInConfig { get; private set; } = [];
 		public void Load(Mod mod) {
-			IList<DamageClass> damageClasses = All;
+			DamageClassList damageClasses = All;
 			int len = damageClasses.Count;
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
 			mod.AddContent(explosive = new Explosive());
@@ -47,12 +49,24 @@ namespace Origins {
 				}
 			}
 		}
-
+		public static void Patch() {
+			HashSet<MethodInfo> patched = [];
+			foreach (DamageClass damageClass in All) {
+				if (damageClass == DamageClass.Summon) continue;
+				MethodInfo method = damageClass.GetType().GetMethod(nameof(DamageClass.GetModifierInheritance));
+				if (!patched.Add(method)) continue;
+				MonoModHooks.Add(method, (Func<DamageClass, DamageClass, StatInheritanceData> orig, DamageClass self, DamageClass other) => {
+					if (self != DamageClass.Summon && other == NoSummonInherit) return orig(self, DamageClass.Generic);
+					return orig(self, other);
+				});
+			}
+		}
 		public void Unload() {
-			explosive = null;
-			ExplosiveVersion = null;
-			rangedMagic = null;
-			HideInConfig = null;
+			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)) {
+				if (field.FieldType.IsClass) {
+					field.SetValue(null, null);
+				}
+			}
 		}
 	}
 	public readonly struct DamageClassList : IList<DamageClass> {
@@ -72,6 +86,7 @@ namespace Origins {
 			}
 		}
 		public int IndexOf(DamageClass item) {
+			if (Equals(item, this[item.Type])) return item.Type;
 			for (int i = 0; i < Count; i++) {
 				if (Equals(item, this[i])) return i;
 			}
@@ -203,5 +218,7 @@ namespace Origins {
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == Generic || damageClass == Melee || damageClass == Magic;
 		}
+	}
+	public class No_Summon_Inherit : DamageClass {
 	}
 }
