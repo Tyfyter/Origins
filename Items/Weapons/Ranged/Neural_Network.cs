@@ -79,6 +79,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Sync(player, time);
 		}
 		static void Sync(Player player, int time) {
+			if (Main.netMode == NetmodeID.SinglePlayer) return;
 			if (player.whoAmI == Main.myPlayer) {
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.custom_combat_text);
