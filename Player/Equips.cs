@@ -571,7 +571,7 @@ namespace Origins {
 		public override void UpdateLifeRegen() {
 			if (oldCryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
 			if (bombCharminItLifeRegenCount > 0) {
-				Player.lifeRegenCount += 24;
+				Player.lifeRegenCount += bombCharminItStrength;
 				const float offsetMult = 1;
 				const float fadeIn = 0;
 				Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Asphalt, Scale: 0.75f);

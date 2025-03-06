@@ -5303,3 +5303,8 @@ Defiled_Monolith_Item: {
 	DisplayName: Defiled Monolith
 	Tooltip: ""
 }
+
+Charm_Of_Naivety: {
+	DisplayName: Charm Of Naivety
+	Tooltip: ""
+}

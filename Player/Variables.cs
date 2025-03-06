@@ -231,6 +231,7 @@ namespace Origins {
 		public bool bugZapper = false;
 		public int bugZapperFlyTime = 0;
 		public bool bombCharminIt = false;
+		public int bombCharminItStrength = 24;
 		public bool cursedVoice = false;
 		public Item cursedVoiceItem = null;
 		public int cursedVoiceCooldown = 0;
@@ -665,6 +666,7 @@ namespace Origins {
 			bugZapper = false;
 			if (bugZapperFlyTime > 0) bugZapperFlyTime--;
 			bombCharminIt = false;
+			bombCharminItStrength = 24;
 			cursedVoice = false;
 			cursedVoiceItem = null;
 			if (cursedVoiceCooldown > 0) cursedVoiceCooldown--;

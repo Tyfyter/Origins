@@ -383,7 +383,7 @@ ACCESSORIES:
 (X) Cablegore
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
-(#, ^2) Charm of Naivety !!!
+(☻) Charm of Naivety !!!
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
 (^) Control Locus*

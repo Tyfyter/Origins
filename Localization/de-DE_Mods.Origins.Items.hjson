@@ -3717,6 +3717,7 @@ Terrarian_Voodoo_Doll: {
 	// Tooltip: ""
 	// TooltipPlayer: It looks kind of like {0}...
 	// TooltipYouDoNotRecognizeTheBodiesInTheWater: It doesn't look familiar...
+	// WhyDontYouExist: It doesn't look familiar, but somehow you get the feeling that you don't either...
 }
 
 Avulsion: {
@@ -5300,5 +5301,10 @@ The_Jungles_Window_Item: {
 
 Defiled_Monolith_Item: {
 	// DisplayName: Defiled Monolith
+	// Tooltip: ""
+}
+
+Charm_Of_Naivety: {
+	// DisplayName: Charm Of Naivety
 	// Tooltip: ""
 }
