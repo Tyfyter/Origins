@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
 using System;
@@ -11,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
@@ -51,6 +53,10 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Joint_Pop>(), 10, 5));
+			npcLoot.Add(new DropBasedOnExpertMode(
+				ItemDropRule.Common(ModContent.ItemType<Explosive_Barrel>(), 3, 15, 30),
+				ItemDropRule.Common(ModContent.ItemType<Explosive_Barrel>(), 2, 20, 40)
+			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientNecroHelmet, 450));
 			npcLoot.Add(ItemDropRule.Common(ItemID.ClothierVoodooDoll, 300));
 			npcLoot.Add(ItemDropRule.Common(ItemID.BoneWand, 250)).OnFailedRoll(ItemDropRule.Common(ItemID.TallyCounter, 100)).OnFailedRoll(ItemDropRule.Common(ItemID.GoldenKey, 65)).OnFailedRoll(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Bone, 1, 1, 3));

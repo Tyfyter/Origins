@@ -1534,6 +1534,7 @@ Projectiles: {
 	// Lost_Diver_Torpedo_Tube.DisplayName: Lost Diver Torpedo Tube
 	// Lost_Diver_Harpoon.DisplayName: Lost Diver Harpoon
 	// Lost_Diver_Mildew_Whip.DisplayName: Lost Diver Mildew Whip
+	// Explosive_Barrel_P.DisplayName: Explosive Barrel P
 }
 
 Prefixes: {

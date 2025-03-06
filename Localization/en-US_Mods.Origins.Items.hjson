@@ -5313,3 +5313,8 @@ Unsuspicious_Bush_Item: {
 	DisplayName: Unsuspicious Bush
 	Tooltip: "'Does absolutely nothing'"
 }
+
+Explosive_Barrel: {
+	DisplayName: Explosive Barrel
+	Tooltip: ""
+}

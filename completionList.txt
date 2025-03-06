@@ -937,7 +937,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
-(#, ^2) Explosive Barrel !!!
+(☻) Explosive Barrel !!!
 (^) Eyenade
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
