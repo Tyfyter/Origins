@@ -5328,3 +5328,8 @@ Acrid_Spout: {
 		{$CommonItemTooltip.Whips}
 		''' */
 }
+
+Liars_Tongue: {
+	// DisplayName: Liar's Tongue
+	// Tooltip: ""
+}
