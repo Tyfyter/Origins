@@ -3496,7 +3496,7 @@ Orbital_Saw: {
 
 Neural_Network: {
 	DisplayName: Neural Network
-	Tooltip: ""
+	Tooltip: Repeatedly striking enemies increases its fire rate
 }
 
 Eruption: {
@@ -5285,8 +5285,8 @@ Brine_Key: {
 }
 
 Mildew_Item: {
-	DisplayName: Mildew Item
-	Tooltip: ""
+	DisplayName: Mildew Block
+	Tooltip: "'Gross. Just gross'"
 }
 
 Basic_Crate: {
@@ -5301,10 +5301,10 @@ The_Jungles_Window_Item: {
 
 Defiled_Monolith_Item: {
 	DisplayName: Defiled Monolith
-	Tooltip: ""
+	Tooltip: "'Harness a fraction of the Defiled's ability to break the 4th wall'"
 }
 
 Charm_Of_Naivety: {
-	DisplayName: Charm Of Naivety
+	DisplayName: Charm of Naivety
 	Tooltip: ""
 }

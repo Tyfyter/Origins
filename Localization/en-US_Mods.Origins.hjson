@@ -2208,7 +2208,7 @@ SetBonuses: {
 		All explosives inflict Impeding Shrapnel
 		Additional scrap drops from Ashen enemies
 		'''
-	Souldhide: Nearby enemies are weakened and afflicted with Shadowflame
+	Souldhide: Nearby enemies are weakened and afflicted with Shadefire
 	Tendon: Mobility is based on remaining health
 	Miner:
 		'''

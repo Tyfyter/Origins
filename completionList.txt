@@ -383,7 +383,7 @@ ACCESSORIES:
 (X) Cablegore
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
-(☻) Charm of Naivety !!!
+(^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
 (^) Control Locus*
@@ -506,7 +506,7 @@ ACCESSORIES:
 (^) Mana Drive°
 (^) Protozoa Food*
 (#2, ^2) Refactoring Pieces* !!!
-(#2, ^2) Retaliatory Tendril° !!! (Probably should have a cap)
+(#2, ^2) Retaliatory Tendril° !!! (Probably could benefit from self-damage)
 (^) Scrap Compactor°
 
 (^) Amebic Vial*
@@ -726,7 +726,7 @@ RANGED WEAPONS:
 (^) Longbone*
 (^) Magma Grappler*
 (^) Marrowick Bow*
-(^) Neural Network*
+(#3, ^2) Neural Network* !!!
 (^) Riven Splitter*
 (^) Shardcannon*
 (^) Sleetfire*
@@ -1033,7 +1033,7 @@ TILES:
 (X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(☻) Baryte* !!!
+(^) Baryte*
 (^) Batholith°
 (^) Bleeding Obsidian*
 (#, ^2) Bomb Trap !!!
@@ -1063,7 +1063,7 @@ TILES:
 (#, ^2) Limestone !!!
 (^) Lost Ore*
 (^) Marrowick*
-(#, ^2) Mildew Block° !!!
+(^) Mildew Block°
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (@4) Quartz Block*
@@ -1125,7 +1125,7 @@ TILES:
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
-(☻) Defiled Monolith !!!
+(#2, ^2) Defiled Monolith !!! (equippable as vanity and tooltip)
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain
@@ -1198,7 +1198,7 @@ TILES:
 (X) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
-(☻) The Jungle's Window !!!
+(^) The Jungle's Window
 (X) There's Five of Them Now
 (X) What's Out There
 

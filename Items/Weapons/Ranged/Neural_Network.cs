@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 	}
 	public class Neural_Network_Buff : ModBuff {
-		public override string Texture => typeof(Neural_Network).GetDefaultTMLName();
+		public override string Texture => "Origins/Buffs/Neural_Network_Buff";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
