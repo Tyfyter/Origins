@@ -230,7 +230,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 								Projectile.knockBack
 							);
 						}
-						SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds).WithVolumeScale(0.5f), Projectile.Center);
+						SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds).WithVolumeScale(0.5f) with { MaxInstances = 7 }, Projectile.Center);
 						if (SoundEngine.TryGetActiveSound(soundSlot, out sound)) sound.Stop();
 					}
 				} else {

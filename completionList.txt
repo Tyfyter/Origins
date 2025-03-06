@@ -859,7 +859,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
-(#2, ^2) Guardian Rod !!! (sound limit cap)
+(☻) Guardian Rod !!! (sound limit cap)
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!
