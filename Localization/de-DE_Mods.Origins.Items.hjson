@@ -5297,3 +5297,8 @@ The_Jungles_Window_Item: {
 	// DisplayName: The Jungle's Window
 	// Tooltip: "'Albert Kiln'"
 }
+
+Defiled_Monolith_Item: {
+	// DisplayName: Defiled Monolith
+	// Tooltip: ""
+}

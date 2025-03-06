@@ -1125,7 +1125,7 @@ TILES:
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
-(#, ^2) Defiled Monolith !!!
+(☻) Defiled Monolith !!!
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain

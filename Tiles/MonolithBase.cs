@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles {
-	public abstract class WaterFountainItem<TFountainTile> : ModItem, ICustomWikiStat where TFountainTile : ModTile {
+	public abstract class MonolithItem<TFountainTile> : ModItem, ICustomWikiStat where TFountainTile : ModTile {
 		public string[] Categories => [
 			"WaterFountain"
 		];
@@ -25,29 +25,31 @@ namespace Origins.Tiles {
 			Item.value = Item.buyPrice(gold: 4);
 		}
 	}
-	public abstract class WaterFountainBase<TWaterStyle> : ModTile where TWaterStyle : ModWaterStyle {
-		public virtual int Height => 4;
-		public virtual int Frames => 6;
+	public abstract class MonolithBase : ModTile {
+		public virtual int Height => 3;
+		public abstract int Frames { get; }
+		public abstract Color MapColor { get; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileLighted[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 
-			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.WaterFountain, 0));
+			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.VoidMonolith, 0));
 			TileObjectData.newTile.Height = Height;
 			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, Height).ToArray();
 			TileObjectData.newTile.Origin = new(1, Height - 1);
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.WaterFountain"));
+			AddMapEntry(MapColor, Mod.GetLocalization($"Items.{Name}_Item.DisplayName"));
 			DustType = DustID.Stone;
 		}
 		public bool IsEnabled(int i, int j) => Main.tile[i, j].TileFrameY >= 18 * Height;
 		public bool IsEnabled(Tile tile) => tile.TileFrameY >= 18 * Height;
 		public override void NearbyEffects(int i, int j, bool closer) {
-			if (closer && IsEnabled(i, j)) Main.SceneMetrics.ActiveFountainColor = ModContent.GetInstance<TWaterStyle>().Slot;
+			if (closer && IsEnabled(i, j)) ApplyEffect();
 		}
+		public abstract void ApplyEffect();
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;

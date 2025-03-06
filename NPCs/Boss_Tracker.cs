@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonoMod.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -95,12 +97,21 @@ namespace Origins.NPCs {
 				netSend = _netSend.CreateDelegate<Action<BinaryWriter, Boss_Tracker>>();
 				netReceive = _netReceive.CreateDelegate<Action<BinaryReader, Boss_Tracker>>();
 			}
+			foreach (FieldInfo field in GetType().GetFields()) {
+				if (field.FieldType == typeof(bool)) {
+					DynamicMethod get = new("get_" + field.Name, typeof(bool), []);
+					get.GetILGenerator().Emit(OpCodes.Ldsfld, field);
+					get.GetILGenerator().Emit(OpCodes.Ret);
+					Conditions.Add(field.Name, new(Language.GetOrRegister("Mods.Origins.Conditions." + field.Name.Replace("downed", "Downed")), get.CreateDelegate<Func<bool>>()));
+				}
+			}
 		}
 		public override void Unload() {
 			foreach (FieldInfo field in GetType().GetFields()) {
 				if (field.IsStatic && field.FieldType.IsClass) field.SetValue(null, null);
 			}
 		}
+		public static Dictionary<string, Condition> Conditions { get; private set; } = [];
 		static Action<TagCompound, Boss_Tracker> saveData;
 		static Action<TagCompound, Boss_Tracker> loadData;
 		static Action<BinaryWriter, Boss_Tracker> netSend;

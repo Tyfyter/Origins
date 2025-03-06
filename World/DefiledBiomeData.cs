@@ -55,7 +55,10 @@ namespace Origins.World.BiomeData {
 				OriginSystem.defiledTiles - (Defiled_Wastelands.NeededTiles - Defiled_Wastelands.ShaderTileCount),
 				Defiled_Wastelands.ShaderTileCount
 			) / Defiled_Wastelands.ShaderTileCount) * 0.9f;
-			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
+
+			float before = originPlayer.ZoneDefiledProgressSmoothed;
+			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
+			originPlayer.DefiledMonolith = false;
 
 			return OriginSystem.defiledTiles > Defiled_Wastelands.NeededTiles;
 		}

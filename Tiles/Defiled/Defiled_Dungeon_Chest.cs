@@ -15,6 +15,9 @@ namespace Origins.Tiles.Defiled {
 			color = Vector3.Max(color, new Vector3(0.394f));
 		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
 			LocalizedText name = CreateMapEntryName();

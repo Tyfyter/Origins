@@ -291,6 +291,11 @@ namespace Origins {
 		public float ZoneVoidProgressSmoothed = 0;
 
 		public float ZoneDefiledProgress = 0;
+		int DefiledMonolithTime = 0;
+		public bool DefiledMonolith {
+			get => DefiledMonolithTime > 0;
+			set => DefiledMonolithTime = value ? 5 : Math.Max(DefiledMonolithTime - 1, 0);
+		}
 		public float ZoneDefiledProgressSmoothed = 0;
 
 		public float ZoneRivenProgress = 0;
