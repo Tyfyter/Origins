@@ -13,7 +13,7 @@ namespace Origins.Tiles.Defiled {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = Vector3.Max(color, new Vector3(0.394f));
+			if (IsEnabled(tile)) color = Vector3.Max(color, new Vector3(0.394f));
 		}
 		public override int Frames => 1;
 		public override Color MapColor => new(157, 157, 157);
@@ -33,8 +33,7 @@ namespace Origins.Tiles.Defiled {
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.01f;
 		}
-		public override void Load() => this.SetupGlowKeys();
+		public override void OnLoad() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Defiled_Monolith_Item : MonolithItem<Defiled_Monolith> { }
 }

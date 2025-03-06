@@ -11,16 +11,22 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles {
-	public abstract class MonolithItem<TFountainTile> : ModItem, ICustomWikiStat where TFountainTile : ModTile {
+	[Autoload(false)]
+	public class MonolithItem(MonolithBase tile) : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"WaterFountain"
+			"Monolith"
 		];
+		[CloneByReference]
+		public MonolithBase Tile { get; } = tile;
+		protected override bool CloneNewInstances => true;
+		public override string Texture => Tile.Texture + "_Item";
+		public override string Name => Tile.Name + "_Item";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-			ModContent.GetInstance<TFountainTile>().RegisterItemDrop(Type);
+			Tile.RegisterItemDrop(Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<TFountainTile>());
+			Item.DefaultToPlaceableTile(Tile.Type);
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(gold: 4);
 		}
@@ -29,6 +35,11 @@ namespace Origins.Tiles {
 		public virtual int Height => 3;
 		public abstract int Frames { get; }
 		public abstract Color MapColor { get; }
+		public sealed override void Load() {
+			Mod.AddContent(new MonolithItem(this));
+			OnLoad();
+		}
+		public virtual void OnLoad() { }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
