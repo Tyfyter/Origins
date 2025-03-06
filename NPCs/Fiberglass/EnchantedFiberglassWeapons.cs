@@ -22,6 +22,7 @@ namespace Origins.NPCs.Fiberglass {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
@@ -136,6 +137,7 @@ namespace Origins.NPCs.Fiberglass {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
@@ -228,6 +230,7 @@ namespace Origins.NPCs.Fiberglass {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 		}

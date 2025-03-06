@@ -674,6 +674,7 @@ namespace Origins {
 				} else {
 					retaliatoryTendrilStrength += strength;
 				}
+				if (retaliatoryTendrilStrength > retaliatoryTendrilItem.reuseDelay * 0.01f) retaliatoryTendrilStrength = retaliatoryTendrilItem.reuseDelay * 0.01f;
 			}
 			if (info.PvP && info.CooldownCounter == ImmunityCooldownID.WrongBugNet) {
 				Player.hurtCooldowns[ImmunityCooldownID.WrongBugNet] = Player.longInvince ? 10 : 6;

@@ -12,6 +12,7 @@ namespace Origins.Items.Accessories {
 			Item.useAnimation = 50; // trigger threshold
 			Item.useTime = 1000; // "charge"
 			Item.knockBack = 0.005f; // damage to strength multiplier
+			Item.reuseDelay = 100;
 			Item.rare = ItemRarityID.Pink;
 			Item.expert = true;
 			Item.value = Item.sellPrice(gold: 3);

@@ -49,6 +49,7 @@ namespace Origins.Projectiles {
 						}
 						player.OriginPlayer()?.broth?.PreUpdateMinion(proj);
 					}
+					if (global.relayRodStrength != 0) global.tempBonusUpdates += global.relayRodStrength * 0.01f * 0.1f;
 					if (global.TotalBonusUpdates != 0) {
 						global.bonusUpdateCounter += global.TotalBonusUpdates * (updates + 1);
 						if (global.TotalBonusUpdates > 0) {
