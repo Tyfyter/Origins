@@ -56,6 +56,7 @@ namespace Origins.Projectiles.Misc {
 					}
 				}
 				Target = current;
+				if (Target == default) Projectile.timeLeft -= 9;
 			} else {
 				Projectile.velocity = Projectile.DirectionTo(Target.ToVector2() * 16 + new Vector2(8)) * 8;
 			}

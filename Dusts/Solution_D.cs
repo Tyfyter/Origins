@@ -16,7 +16,7 @@ namespace Origins.Dusts {
 			return false;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) {
-			return new Color(100, 100, 100, 0);
+			return (dust.color * 0.4f) with { A = 0 };
 		}
 	}
 }

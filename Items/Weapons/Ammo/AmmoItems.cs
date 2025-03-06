@@ -99,7 +99,7 @@ namespace Origins.Items.Weapons.Ammo {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.PurpleSolution] = ItemID.RedSolution;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RedSolution] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Teal_Solution>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Teal_Solution>()] = ItemID.PurpleSolution;//ModContent.ItemType<NE8>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Teal_Solution>()] = ItemID.PurpleSolution;//ModContent.ItemType<Orange_Solution>();
 			//ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Orange_Solution>()] = ItemID.PurpleSolution;
 			Item.ResearchUnlockCount = 99;
 		}
@@ -116,7 +116,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.aiStyle = 0;
 		}
 		public override void AI() {
-			OriginGlobalProj.ClentaminatorAI<Defiled_Wastelands_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.GhostWhite);
+			OriginGlobalProj.ClentaminatorAI<Defiled_Wastelands_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(156, 156, 160));
 		}
 	}
 	public class Teal_Solution : ModItem {
@@ -136,7 +136,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.aiStyle = 0;
 		}
 		public override void AI() {
-			OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.Teal);
+			OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(0, 180, 255));
 		}
 	}
 }
