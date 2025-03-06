@@ -31,6 +31,7 @@ namespace Origins.NPCs {
 		internal bool ziptieDebuff = false;
 		internal bool mildewWhipDebuff = false;
 		internal bool ocotilloFingerDebuff = false;
+		internal bool acridSpoutDebuff = false;
 		internal bool brineIncantationDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
@@ -72,13 +73,14 @@ namespace Origins.NPCs {
 			} else {
 				rasterizedTime = 0;
 			}
-			amebolizeDebuff = false;
-			beeAfraidDebuff = false;
-			hibernalIncantationDebuff = false;
 			jointPopDebuff = false;
 			ziptieDebuff = false;
 			mildewWhipDebuff = false;
 			ocotilloFingerDebuff = false;
+			acridSpoutDebuff = false;
+			amebolizeDebuff = false;
+			beeAfraidDebuff = false;
+			hibernalIncantationDebuff = false;
 			brineIncantationDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);

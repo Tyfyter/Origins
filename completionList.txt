@@ -877,7 +877,7 @@ SUMMONER WEAPONS:
 (^) Thread Rod*
 (^) Woodsprite Staff
 
-(#, ^2) Acrid Spout !!!
+(☻) Acrid Spout !!!
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl

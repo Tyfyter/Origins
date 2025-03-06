@@ -359,6 +359,9 @@ namespace Origins.NPCs {
 				if (brineIncantationDebuff) {
 					damageBoost += 6f;
 				}
+				if (acridSpoutDebuff) {
+					damageBoost += 6f;
+				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
 				}

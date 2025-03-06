@@ -1060,6 +1060,11 @@ Buffs: {
 		DisplayName: Zappy Guardian
 		Description: The Guardian will zap your enemies!
 	}
+
+	Acrid_Spout_Buff: {
+		DisplayName: Acrid Spout Buff
+		Description: Mods.Origins.Buffs.Acrid_Spout_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1498,9 +1503,9 @@ Projectiles: {
 	Felnum_Guardian_P.DisplayName: Felnum Guardian
 	Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
 	Cloud_Elemental_P.DisplayName: Cloud Elemental
-	Shotgunfish_P.DisplayName: Shotgunfish P
+	Shotgunfish_P.DisplayName: Shotgunfish
 	Ashen_Mortar.DisplayName: Ashen Mortar
-	Ashen_Mortar_P.DisplayName: Ashen Mortar P
+	Ashen_Mortar_P.DisplayName: Ashen Mortar
 	Fiberglass_Sword_P.DisplayName: Fiberglass Sword
 	Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
 	Ocotillo_Finger_P.DisplayName: Ocotillo Finger
@@ -1526,15 +1531,17 @@ Projectiles: {
 	Old_Turtle.DisplayName: Old Turtle
 	Amenonuhoko_Laser.DisplayName: Amenonuhoko Laser
 	Friendly_Guardian.DisplayName: Friendly Guardian
-	Friendly_Guardian_P.DisplayName: Friendly Guardian P
+	Friendly_Guardian_P.DisplayName: Friendly Guardian
 	Sonar_Dynamite_Ping.DisplayName: Sonar Dynamite Ping
-	Depth_Charge_P_Alt.DisplayName: Depth Charge P Alt
+	Depth_Charge_P_Alt.DisplayName: Depth Charge
 	Lost_Diver_Depth_Charge.DisplayName: Lost Diver Depth Charge
 	Lost_Diver_Depth_Charge_Explosion.DisplayName: Lost Diver Depth Charge Explosion
 	Lost_Diver_Torpedo_Tube.DisplayName: Lost Diver Torpedo Tube
 	Lost_Diver_Harpoon.DisplayName: Lost Diver Harpoon
 	Lost_Diver_Mildew_Whip.DisplayName: Lost Diver Mildew Whip
-	Explosive_Barrel_P.DisplayName: Explosive Barrel P
+	Explosive_Barrel_P.DisplayName: Explosive Barrel
+	Acrid_Spout_P.DisplayName: Acrid Spout
+	Acrid_Spout_Droplet.DisplayName: Acrid Spout Droplet
 }
 
 Prefixes: {

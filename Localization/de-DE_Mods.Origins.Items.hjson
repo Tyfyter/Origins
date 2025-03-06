@@ -5318,3 +5318,13 @@ Explosive_Barrel: {
 	// DisplayName: Explosive Barrel
 	// Tooltip: ""
 }
+
+Acrid_Spout: {
+	// DisplayName: Acrid Spout
+	/* Tooltip:
+		'''
+		Spews droplets of brine
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
