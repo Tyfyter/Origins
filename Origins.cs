@@ -883,6 +883,7 @@ namespace Origins {
 			public static int Fiberglass => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Fiberglass : Vol2.Fiberglass;
 
 			public static int BrinePool => OriginClientConfig.Instance.OldSoundtrack ? Vol1.BrinePool : Vol2.BrinePool;
+			public static int AncientBrinePool;
 
 			public static int Dusk;
 
@@ -961,6 +962,7 @@ namespace Origins {
 				}
 				Vol1.Fiberglass = GetMusicSlotOld("The_Room_Before");
 				Vol1.BrinePool = GetMusicSlotOld("Below_The_Brine");
+				AncientBrinePool = GetMusicSlotOld("Only_the_Brave");
 				Vol1.Defiled = GetMusicSlotOld("Stolen_Memories");
 				Vol1.UndergroundDefiled = GetMusicSlotOld("Heart_Of_The_Beast");
 				Vol1.DefiledBoss = GetMusicSlotOld("ADJUDICATE");

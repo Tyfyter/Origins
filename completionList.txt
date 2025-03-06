@@ -1202,7 +1202,7 @@ TILES:
 (X) There's Five of Them Now
 (X) What's Out There
 
-(#, $2) Ancient Music Box (Brine Pool) !!!
+(☻) Ancient Music Box (Brine Pool) !!!
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)

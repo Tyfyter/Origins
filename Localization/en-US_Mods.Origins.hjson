@@ -1754,6 +1754,7 @@ Tiles: {
 	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
 	Ocotillo.DisplayName: Ocotillo
 	Basic_Crate_Tile.MapEntry: Basic Crate
+	Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
 }
 
 MapObject: {
@@ -2304,6 +2305,7 @@ Music: {
 	Frayed_And_Stretched.Name: Frayed And Stretched
 	Alkahest.Name: Alkahest
 	Skulking.Name: Skulking
+	Only_the_Brave.Name: Only the Brave
 }
 
 DefiledRelaySignals: {
