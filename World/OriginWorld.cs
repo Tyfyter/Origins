@@ -8,10 +8,12 @@ using Origins.Tiles.Riven;
 using Origins.World;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -57,6 +59,25 @@ namespace Origins {
 		Point brineCenter;
 		public bool forceThunderstorm = false;
 		public int forceThunderstormDelay = 0;
+
+		bool forceAF = false;
+		public bool ForceAF {
+			get => forceAF;
+			set {
+				if (value != forceAF) {
+					forceAF = value;
+					OriginsModIntegrations.HolidayForceChanged();
+					GameCulture culture = LanguageManager.Instance.ActiveCulture;
+					try {
+						GameCulture french = GameCulture.FromCultureName(GameCulture.CultureName.French);
+						LanguageManager.Instance.SetLanguage(culture == french ? GameCulture.FromCultureName(GameCulture.CultureName.Italian) : french);
+					} finally {
+						LanguageManager.Instance.SetLanguage(culture);
+					}
+					NetMessage.SendData(MessageID.WorldData);
+				}
+			}
+		}
 
 		public bool unlockedBrineNPC = false;
 		public static int MimicSetLevel {
@@ -140,6 +161,13 @@ namespace Origins {
 			if (questsTag.Count > 0) {
 				tag.Add("Quests", questsTag);
 			}
+		}
+		public override void NetSend(BinaryWriter writer) {
+			writer.WriteFlags(forceAF, forceThunderstorm);
+		}
+		public override void NetReceive(BinaryReader reader) {
+			reader.ReadFlags(out bool forceAF, out bool forceThunderstorm);
+			ForceAF = forceAF;
 		}
 		public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
@@ -477,50 +505,6 @@ namespace Origins {
 				packet.Write(tRiven);
 			}
 			totalDefiled2 = 0;
-		}
-		public static bool ConvertWall(ref ushort tileType, byte evilType, bool convert = true) {
-			getEvilWallConversionTypes(evilType, out ushort[] stoneTypes, out ushort[] hardenedSandTypes, out ushort[] sandstoneTypes);
-			switch (tileType) {
-				case WallID.Stone:
-				if (convert) tileType = WorldGen.genRand.Next(stoneTypes);
-				return true;
-				case WallID.Sandstone:
-				if (convert) tileType = WorldGen.genRand.Next(sandstoneTypes);
-				return true;
-				case WallID.HardenedSand:
-				if (convert) tileType = WorldGen.genRand.Next(hardenedSandTypes);
-				return true;
-			}
-			return false;
-		}
-
-		public static bool ConvertTileWeak(ref ushort tileType, byte evilType, bool convert = true) {
-			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out _, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
-			switch (tileType) {
-				case TileID.Grass:
-				if (convert) tileType = grassType;
-				return true;
-				case TileID.Stone:
-				if (convert) tileType = stoneType;
-				return true;
-				case TileID.Sand:
-				if (convert) tileType = sandType;
-				return true;
-				case TileID.Sandstone:
-				if (convert) tileType = sandstoneType;
-				return true;
-				case TileID.HardenedSand:
-				if (convert) tileType = hardenedSandType;
-				return true;
-				case TileID.IceBlock:
-				if (convert) tileType = iceType;
-				return true;
-			}
-			if (Main.tileMoss[tileType]) {
-				if (convert) tileType = stoneType;
-				return true;
-			}
-			return false;
 		}
 		public static bool ConvertTile(ref ushort tileType, byte evilType, bool aggressive = false) {
 			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out _, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);

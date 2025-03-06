@@ -5308,3 +5308,8 @@ Charm_Of_Naivety: {
 	DisplayName: Charm of Naivety
 	Tooltip: ""
 }
+
+Unsuspicious_Bush_Item: {
+	DisplayName: Unsuspicious Bush
+	Tooltip: "'Does absolutely nothing'"
+}

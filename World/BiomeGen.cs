@@ -334,29 +334,5 @@ namespace Origins {
 				break;
 			}
 		}
-		public static void getEvilWallConversionTypes(byte evilType, out ushort[] stoneWallTypes, out ushort[] hardenedSandWallTypes, out ushort[] sandstoneWallTypes) {
-			switch (evilType) {
-				case evil_wastelands:
-				stoneWallTypes = [(ushort)WallType<Defiled_Stone_Wall>()];
-				hardenedSandWallTypes = [(ushort)WallType<Hardened_Defiled_Sand_Wall>()];
-				sandstoneWallTypes = [(ushort)WallType<Defiled_Sandstone_Wall>()];
-				break;
-				case evil_riven:
-				stoneWallTypes = [WallID.CrimstoneUnsafe];
-				hardenedSandWallTypes = [WallID.CrimsonHardenedSand];
-				sandstoneWallTypes = [WallID.CrimsonSandstone];
-				break;
-				case evil_crimson:
-				stoneWallTypes = [WallID.CrimstoneUnsafe];
-				hardenedSandWallTypes = [WallID.CrimsonHardenedSand];
-				sandstoneWallTypes = [WallID.CrimsonSandstone];
-				break;
-				default:
-				stoneWallTypes = [WallID.EbonstoneUnsafe];
-				hardenedSandWallTypes = [WallID.CorruptHardenedSand];
-				sandstoneWallTypes = [WallID.CorruptSandstone];
-				break;
-			}
-		}
 	}
 }

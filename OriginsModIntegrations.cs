@@ -64,6 +64,8 @@ namespace Origins {
 				instance.checkAprilFools ??= ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? HolidayLibCheckAprilFools(HolidayLib) : DefaultCheckAprilFools;
 			set => instance.checkAprilFools = value;
 		}
+		Func<object[], object> holidayForceChanged;
+		public static void HolidayForceChanged() => instance.holidayForceChanged([]);
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", () => CheckAprilFools());
 		ModKeybind goToKeybindKeybind;
 		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
@@ -81,8 +83,11 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
 				checkAprilFools = (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
+				HolidayLib.Call("ADDHOLIDAY", "April fools", () => OriginSystem.Instance.ForceAF.ToInt());
+				holidayForceChanged = (Func<object[], object>)HolidayLib.Call("GETFUNC", "HOLIDAYFORCECHANGED");
 			} else {
 				checkAprilFools = DefaultCheckAprilFools;
+				holidayForceChanged = _ => -1;
 			}
 			if (ModLoader.TryGetMod("ItemSourceHelper", out Mod itemSourceHelper)) {
 				itemSourceHelper.Call("AddIconicWeapon", DamageClasses.Explosive.Type, (int)ItemID.Bomb);
@@ -115,7 +120,7 @@ namespace Origins {
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
-		static bool DefaultCheckAprilFools() => DateTime.Today.Month == 4 && DateTime.Today.Day == 1;
+		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || OriginSystem.Instance.ForceAF;
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 				static Func<bool> IfEvil<T>() where T : AltBiome {
