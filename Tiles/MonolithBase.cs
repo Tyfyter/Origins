@@ -29,6 +29,14 @@ namespace Origins.Tiles {
 			Item.DefaultToPlaceableTile(Tile.Type);
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(gold: 4);
+			Item.accessory = true;
+			Item.vanity = true;
+		}
+		public override void UpdateAccessory(Player player, bool hideVisual) {
+			if (!hideVisual) UpdateVanity(player);
+		}
+		public override void UpdateVanity(Player player) {
+			if (player.whoAmI == Main.myPlayer) Tile.ApplyEffect();
 		}
 	}
 	public abstract class MonolithBase : ModTile {
