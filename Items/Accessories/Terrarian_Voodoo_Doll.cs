@@ -49,12 +49,17 @@ namespace Origins.Items.Accessories {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			if (RefreshPlayer() is not null) {
 				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.TooltipPlayer", player.name)));
+			} else if (OriginPlayer.LocalOriginPlayer?.guid == Guid.Empty) {
+				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.WhyDontYouExist")));
 			} else {
 				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.TooltipYouDoNotRecognizeTheBodiesInTheWater")));
 			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.GetModPlayer<OriginPlayer>().pickupRangeBoost += 75;
+			if (!Main.dedServ && owner == Guid.Empty) {
+				owner = player.OriginPlayer().guid;
+			}
+			player.OriginPlayer().pickupRangeBoost += 75;
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (RefreshPlayer() is OriginPlayer originPlayer) {
