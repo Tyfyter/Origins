@@ -3841,6 +3841,7 @@ namespace Origins {
 			get {
 				Point right = new(1, 0);
 				Point down = new(0, 1);
+				Point single = new(0, 0);
 				const int NONE = -1;
 				const int ROCK = 1;
 				const int _MUD = 2;
@@ -3914,7 +3915,28 @@ namespace Origins {
 					(new(NONE, _MUD, NONE, ROCK), new Point(0, 3), new Point(2, 0)),
 					(new(NONE, _MUD, ROCK, NONE), new Point(1, 3), new Point(2, 0)),
 					(new(_MUD, NONE, NONE, ROCK), new Point(0, 4), new Point(2, 0)),
-					(new(_MUD, NONE, ROCK, NONE), new Point(1, 4), new Point(2, 0))
+					(new(_MUD, NONE, ROCK, NONE), new Point(1, 4), new Point(2, 0)),
+
+					(new(_MUD, NONE, _MUD, _MUD), new Point(14, 8), single),
+					(new(ROCK, NONE, _MUD, _MUD), new Point(15, 8), single),
+					(new(_MUD, NONE, _MUD, ROCK), new Point(13, 9), single),
+					(new(NONE, ROCK, _MUD, _MUD), new Point(14, 9), single),
+					(new(NONE, _MUD, _MUD, _MUD), new Point(15, 9), single),
+					(new(NONE, _MUD, _MUD, ROCK), new Point(13, 10), single),
+					(new(_MUD, _MUD, _MUD, NONE), new Point(14, 10), single),
+					(new(_MUD, ROCK, _MUD, NONE), new Point(15, 10), single),
+					(new(NONE, _MUD, _MUD, NONE), new Point(13, 11), single),
+					(new(ROCK, _MUD, _MUD, NONE), new Point(14, 11), single),
+					(new(_MUD, NONE, _MUD, NONE), new Point(15, 11), single),
+					(new(_MUD, NONE, ROCK, _MUD), new Point(13, 12), single),
+					(new(NONE, _MUD, ROCK, _MUD), new Point(14, 12), single),
+					(new(_MUD, _MUD, ROCK, NONE), new Point(15, 12), single),
+					(new(_MUD, NONE, NONE, _MUD), new Point(13, 13), single),
+					(new(_MUD, ROCK, NONE, _MUD), new Point(14, 13), single),
+					(new(_MUD, _MUD, NONE, _MUD), new Point(15, 13), single),
+					(new(_MUD, _MUD, NONE, ROCK), new Point(13, 14), single),
+					(new(NONE, _MUD, NONE, _MUD), new Point(14, 14), single),
+					(new(ROCK, _MUD, NONE, _MUD), new Point(15, 14), single),
 				];
 			}
 		}

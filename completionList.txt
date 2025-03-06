@@ -1033,11 +1033,11 @@ TILES:
 (X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
-(#2, ^2) Baryte* !!!
+(☻) Baryte* !!!
 (^) Batholith°
 (^) Bleeding Obsidian*
 (#, ^2) Bomb Trap !!!
-(^) Brittle Quartz*
+(@4) Brittle Quartz*
 (^) Chambersite
 (X) Compacted Scrap°
 (X) Cubekon Altar°
@@ -1045,7 +1045,7 @@ TILES:
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (X) Defiled Regolith
-(^) Defiled Sand*
+(@4) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
 (^) Dusklight°
@@ -1057,7 +1057,7 @@ TILES:
 (^) Felnum Ore*
 (^) Fiberglass Block*
 (^) Gray Ice Block*
-(^) Hardened Defiled Sand*
+(@4) Hardened Defiled Sand*
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (#, ^2) Limestone !!!
@@ -1066,7 +1066,7 @@ TILES:
 (#, ^2) Mildew Block° !!!
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(^) Quartz Block*
+(@4) Quartz Block*
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
