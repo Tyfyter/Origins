@@ -26,6 +26,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
+			if (buffIndex >= 0) damage.Base -= 0.13f * player.buffTime[buffIndex];
+		}
 	}
 	public class Neural_Network_Buff : ModBuff {
 		public override string Texture => "Origins/Buffs/Neural_Network_Buff";
@@ -39,8 +43,7 @@ namespace Origins.Items.Weapons.Ranged {
 				player.DelBuff(buffIndex--);
 			} else {
 				player.GetAttackSpeed(DamageClass.Ranged) += 0.05f * player.buffTime[buffIndex];
-				player.GetDamage(DamageClass.Ranged).Base -= 0.13f * player.buffTime[buffIndex];
-				player.GetArmorPenetration(DamageClass.Ranged) += 0.1f * player.buffTime[buffIndex];
+				player.GetArmorPenetration(DamageClass.Ranged) += 0.20f * player.buffTime[buffIndex];
 			}
 		}
 		public override bool ReApply(Player player, int time, int buffIndex) {
