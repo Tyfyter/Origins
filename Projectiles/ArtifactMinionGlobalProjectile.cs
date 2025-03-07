@@ -42,10 +42,15 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void PostAI(Projectile projectile) {
-			if (projectile.ModProjectile is IArtifactMinion artifact && artifact.Life <= 0) {
-				artifact.Life = 0;
-				if (artifact.CanDie) {
-					projectile.Kill();
+			if (projectile.ModProjectile is IArtifactMinion artifact) {
+				if (artifact.Life <= 0) {
+					artifact.Life = 0;
+					if (artifact.CanDie) {
+						projectile.Kill();
+					}
+				}
+				if (projectile.owner == Main.myPlayer && projectile.numUpdates == -1) {
+					ArtifactMinionSystem.nextArtifactMinions.Add(projectile.whoAmI);
 				}
 			}
 		}
@@ -82,9 +87,6 @@ namespace Origins.Projectiles {
 			return null;
 		}
 		public override void PostDraw(Projectile projectile, Color lightColor) {
-			if (projectile.owner == Main.myPlayer && projectile.ModProjectile is IArtifactMinion) {
-				ArtifactMinionSystem.artifactMinions.Add(projectile.whoAmI);
-			}
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
@@ -97,12 +99,23 @@ namespace Origins.Projectiles {
 			}
 		}
 	}
+	public enum ArtifactMinionHealthbarStyles {
+		Auto,
+		UnderMinion,
+		UnderBuff,
+		Both
+	}
 	public class ArtifactMinionSystem : ModSystem {
 		public static List<int> artifactMinions = [];
-		public override void Unload() => artifactMinions = null;
+		public static List<int> nextArtifactMinions = [];
+		public override void Unload() {
+			artifactMinions = null;
+			nextArtifactMinions = null;
+		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
+			OriginExtensions.SwapClear(ref nextArtifactMinions, ref artifactMinions);
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Entity Health Bars"));
-			if (inventoryIndex != -1) {//error prevention & null check
+			if (inventoryIndex != -1 && OriginClientConfig.Instance.ArtifactMinionHealthbarStyle != ArtifactMinionHealthbarStyles.UnderBuff) {//error prevention & null check
 				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 					"Origins: Artifact Minion Health Bars",
 					delegate {
@@ -131,11 +144,40 @@ namespace Origins.Projectiles {
 								}
 							}
 						}
-						artifactMinions.Clear();
 						return true;
 					},
 					InterfaceScaleType.Game) { Active = artifactMinions.Count > 0 }
 				);
+			}
+		}
+		public static void DrawBuffHealthbars(int projectileType, ref BuffDrawParams drawParams, float startY) {
+			Vector2 posOffset = Main.screenPosition;
+			posOffset.X += drawParams.SourceRectangle.Width / 2;
+			bool checkOnScreen = OriginClientConfig.Instance.ArtifactMinionHealthbarStyle == ArtifactMinionHealthbarStyles.Auto;
+			for (int i = 0; i < artifactMinions.Count; i++) {
+				Projectile projectile = Main.projectile[artifactMinions[i]];
+				if (projectile.type != projectileType) continue;
+				if (checkOnScreen) {
+					Vector2 pos = projectile.position.ToScreenPosition();
+					if (pos.X <= Main.screenWidth && pos.Y <= Main.screenHeight && pos.X >= -projectile.width && pos.Y >= -projectile.height) {
+						continue;
+					}
+				}
+				if (projectile.ModProjectile is IArtifactMinion artifact) {
+					if (drawParams.TextPosition.Y != startY) drawParams.TextPosition.Y += 2;
+					if (artifact.Life > 0) {
+						Main.instance.DrawHealthBar(
+							drawParams.TextPosition.X + posOffset.X, drawParams.TextPosition.Y + posOffset.Y,
+							(int)artifact.Life,
+							artifact.MaxLife,
+							drawParams.DrawColor.A / 255f,
+							0.85f
+						);
+					} else {
+						artifact.DrawDeadHealthBar(drawParams.TextPosition + posOffset, drawParams.DrawColor.A / 255f);
+					}
+					drawParams.TextPosition.Y += 10;
+				}
 			}
 		}
 	}
@@ -151,7 +193,7 @@ namespace Origins.Projectiles {
 				null,
 				Color.Gray * light,
 				0f,
-				new Vector2(18f * 0.85f, 0),
+				new Vector2(18f, 0),
 				0.85f,
 				SpriteEffects.None,
 			0);

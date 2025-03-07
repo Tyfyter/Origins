@@ -10,10 +10,12 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Projectiles;
+using Origins.Items.Weapons.Summoner.Minions;
+using System.Collections.Generic;
+using Origins.Buffs;
 namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
-		internal static int buffID = 0;
         public string[] Categories => [
             "Artifact",
 			"Minion"
@@ -35,7 +37,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
-			Item.buffType = buffID;
+			Item.buffType = Friendly_Bomb_Buff.ID;
 			Item.shoot = projectileID;
 			Item.noMelee = true;
 		}
@@ -49,21 +51,13 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Friendly_Bomb_Buff : ModBuff {
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Bomb_Artifact.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Bomb_Artifact.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+	public class Friendly_Bomb_Buff : MinionBuff {
+		public static int ID { get; private set; }
+		public override IEnumerable<int> ProjectileTypes() => [
+			Bomb_Artifact.projectileID
+		];
+		public override bool IsArtifact => true;
+		public override bool DrawHealthBars => false;
 	}
 }
 
@@ -137,9 +131,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Bomb_Artifact.buffID);
+				player.ClearBuff(Friendly_Bomb_Buff.ID);
 			}
-			if (player.HasBuff(Bomb_Artifact.buffID)) {
+			if (player.HasBuff(Friendly_Bomb_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion

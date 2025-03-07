@@ -2,11 +2,13 @@
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs.Felnum;
 using PegasusLib;
 using ReLogic.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -53,23 +55,12 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Guardian_Rod_Buff : ModBuff {
+	public class Guardian_Rod_Buff : MinionBuff {
 		public override string Texture => "Origins/Buffs/Felnum_Guardian_Buff";
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Friendly_Guardian.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Friendly_Guardian.ID
+		];
 	}
 }
 

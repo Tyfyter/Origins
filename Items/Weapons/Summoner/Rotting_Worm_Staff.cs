@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -12,7 +13,6 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Summoner {
 	public class Rotting_Worm_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
-		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 		}
@@ -28,34 +28,23 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
-			Item.buffType = buffID;
+			Item.buffType = Wormy_Buff.ID;
 			Item.shoot = projectileID;
 			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
-			player.AddBuff(buffID, 2);
+			player.AddBuff(Wormy_Buff.ID, 2);
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;
 		}
 	}
 }
 namespace Origins.Buffs {
-	public class Wormy_Buff : ModBuff {
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Rotting_Worm_Staff.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Rotting_Worm_Staff.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+	public class Wormy_Buff : MinionBuff {
+		public static int ID { get; private set; }
+		public override IEnumerable<int> ProjectileTypes() => [
+			Rotting_Worm_Staff.projectileID
+		];
 	}
 }
 
@@ -96,9 +85,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Rotting_Worm_Staff.buffID);
+				player.ClearBuff(Wormy_Buff.ID);
 			}
-			if (player.HasBuff(Rotting_Worm_Staff.buffID)) {
+			if (player.HasBuff(Wormy_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -292,7 +281,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (Main.myPlayer == player.whoAmI) Projectile.Kill();
 				return;
 			}
-			if (player.HasBuff(Rotting_Worm_Staff.buffID)) {
+			if (player.HasBuff(Wormy_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			float dX = last.Center.X - Projectile.Center.X;

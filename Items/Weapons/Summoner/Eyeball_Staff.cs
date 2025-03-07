@@ -9,10 +9,10 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
 	public class Eyeball_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
-		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 			Item.ResearchUnlockCount = 1;
@@ -29,39 +29,23 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
-			Item.buffType = buffID;
+			Item.buffType = Mini_EOC_Buff.ID;
 			Item.shoot = projectileID;
 			Item.noMelee = true;
 		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Mini_EOC_Buff>();
-			player.AddBuff(Item.buffType, 2);
-			position = Main.MouseWorld;
-		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
-			player.AddBuff(buffID, 2);
+			player.AddBuff(Mini_EOC_Buff.ID, 2);
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;
 		}
 	}
 }
 namespace Origins.Buffs {
-	public class Mini_EOC_Buff : ModBuff {
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Eyeball_Staff.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Eyeball_Staff.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+	public class Mini_EOC_Buff : MinionBuff {
+		public override IEnumerable<int> ProjectileTypes() => [
+			Eyeball_Staff.projectileID
+		];
+		public static int ID { get; private set; }
 	}
 }
 
@@ -112,9 +96,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Eyeball_Staff.buffID);
+				player.ClearBuff(Mini_EOC_Buff.ID);
 			}
-			if (player.HasBuff(Eyeball_Staff.buffID)) {
+			if (player.HasBuff(Mini_EOC_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

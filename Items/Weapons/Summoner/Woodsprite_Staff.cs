@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
 	public class Woodsprite_Staff : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -42,20 +43,10 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Woodsprite_Buff : ModBuff {
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Woodsprite_Staff.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+	public class Woodsprite_Buff : MinionBuff {
+		public override IEnumerable<int> ProjectileTypes() => [
+			Woodsprite_Staff.projectileID
+		];
 	}
 }
 

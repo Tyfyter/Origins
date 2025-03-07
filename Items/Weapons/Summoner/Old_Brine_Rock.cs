@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -47,23 +49,12 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Old_Turtle_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Old_Turtle_Buff";
+	public class Old_Turtle_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Old_Turtle.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Old_Turtle.ID
+		];
+		public override bool IsArtifact => true;
 	}
 }
 

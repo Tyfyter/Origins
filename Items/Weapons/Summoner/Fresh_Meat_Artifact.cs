@@ -15,6 +15,7 @@ using Terraria.Graphics.Shaders;
 using Origins.Projectiles;
 using Terraria.Audio;
 using Origins.Gores;
+using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Fresh_Meat_Artifact : ModItem, ICustomWikiStat {
@@ -54,22 +55,12 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Fresh_Meat_Buff : ModBuff {
+	public class Fresh_Meat_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Fresh_Meat_Artifact_P.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Fresh_Meat_Artifact_P.ID
+		];
+		public override bool IsArtifact => true;
 	}
 }
 

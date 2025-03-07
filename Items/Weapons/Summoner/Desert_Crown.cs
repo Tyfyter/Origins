@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner.Minions;
+using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
 	public class Desert_Crown : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -42,22 +43,11 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Desert_Crown_Buff : ModBuff {
+	public class Desert_Crown_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Sand_Elemental.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Sand_Elemental.ID
+		];
 	}
 }
 

@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 using Origins.Dev;
+using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
 	public class Teardown : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
@@ -253,21 +254,10 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Teardown_Buff : ModBuff {
+	public class Teardown_Buff : MinionBuff {
+		public override IEnumerable<int> ProjectileTypes() => [
+			Teardown.projectileID
+		];
 		public override string Texture => "Origins/Buffs/Exoskeleton_Buff";
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Teardown.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Teardown.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
 	}
 }

@@ -372,9 +372,10 @@ namespace Origins.NPCs.Brine.Boss {
 			Vector2 headVect = legFrame.Size() * new Vector2(0.5f, 0.4f);
 			Vector2 bodyVect = legFrame.Size() * new Vector2(0.5f, 0.5f);
 			Vector2 legVect = legFrame.Size() * new Vector2(0.5f, 0.75f);
-			Color headColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.25) / 16, Color.White);
-			Color bodyColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.75) / 16, Color.White);
-			Color legColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(NPC.position.Y + NPC.height * 0.75) / 16, Color.White);
+			Vector2 position = NPC.position + Main.OffsetsPlayerHeadgear[legFrame.Y / legFrame.Height];
+			Color headColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(position.Y + NPC.height * 0.25) / 16, Color.White);
+			Color bodyColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(position.Y + NPC.height * 0.75) / 16, Color.White);
+			Color legColor = Lighting.GetColorClamped((int)NPC.Center.X / 16, (int)(position.Y + NPC.height * 0.75) / 16, Color.White);
 			if (NPC.IsABestiaryIconDummy) {
 				headColor = Color.White;
 				bodyColor = Color.White;
@@ -391,7 +392,7 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 
 			#region composite data
-			Vector2 vector = new Vector2((int)(NPC.position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - bodyFrame.Height + 4f)) + new Vector2(bodyFrame.Width / 2, bodyFrame.Height / 2) - screenPos;
+			Vector2 vector = new Vector2((int)(position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(position.Y + NPC.height - bodyFrame.Height + 4f)) + new Vector2(bodyFrame.Width / 2, bodyFrame.Height / 2) - screenPos;
 			Vector2 vector2 = Main.OffsetsPlayerHeadgear[bodyFrame.Y / bodyFrame.Height];
 			vector2.Y -= 2f;
 			vector -= vector2;
@@ -487,7 +488,7 @@ namespace Origins.NPCs.Brine.Boss {
 			#endregion
 
 			//index 10, back acc
-			Vector2 vec = NPC.position + new Vector2(NPC.width / 2, NPC.height - bodyFrame.Height / 2) + new Vector2(0f, 4f) - screenPos;
+			Vector2 vec = position + new Vector2(NPC.width / 2, NPC.height - bodyFrame.Height / 2) + new Vector2(0f, 4f) - screenPos;
 			vec = vec.Floor();
 			spriteBatch.Draw(
 				backTexture,
@@ -525,7 +526,7 @@ namespace Origins.NPCs.Brine.Boss {
 			//index 13, legs
 			spriteBatch.Draw(
 				legTexture,
-				new Vector2((int)(NPC.position.X - (legFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - legFrame.Height + 4f)) + legVect - screenPos,
+				new Vector2((int)(position.X - (legFrame.Width / 2) + (NPC.width / 2)), (int)(position.Y + NPC.height - legFrame.Height + 4f)) + legVect - screenPos,
 				legFrame,
 				legColor,
 				0,
@@ -551,13 +552,13 @@ namespace Origins.NPCs.Brine.Boss {
 			headFrame.Height -= 4;
 			spriteBatch.Draw(
 				headTexture,
-				new Vector2((int)(NPC.position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - bodyFrame.Height + 4f)) + headVect - screenPos,
+				new Vector2((int)(position.X - (bodyFrame.Width / 2) + (NPC.width / 2)), (int)(position.Y + NPC.height - bodyFrame.Height + 4f)) + headVect - screenPos,
 				headFrame,
 				headColor,
-			0,
-			headVect,
+				0,
+				headVect,
 				1f,
-			effect,
+				effect,
 			0);
 
 			if (heldItemType >= 0) {
@@ -579,7 +580,7 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 				spriteBatch.Draw(
 					value,
-					new Vector2((int)(NPC.position.X + NPC.width * 0.5f - (NPC.direction * 2) + vector9.X), (int)(NPC.Center.Y - itemDrawFrame.Height * 0.5f + vector9.Y)) - screenPos,
+					new Vector2((int)(position.X + NPC.width * 0.5f - (NPC.direction * 2) + vector9.X), (int)(NPC.Center.Y - itemDrawFrame.Height * 0.5f + vector9.Y)) - screenPos,
 					itemDrawFrame,
 					heldItem.GetAlpha(bodyColor),
 					itemRotation,

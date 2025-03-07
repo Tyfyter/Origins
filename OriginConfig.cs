@@ -6,6 +6,7 @@ using Origins.Items.Other.Fish;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Origins.LootConditions;
+using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.UI;
 using Origins.UI.Event;
@@ -129,6 +130,9 @@ namespace Origins {
 
 		[DefaultValue(false)]
 		public bool TwentyFourHourTime = false;
+
+		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
+		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
 
 		[DefaultValue(false)]
 		public bool OldSoundtrack = false;

@@ -1865,6 +1865,11 @@ Configs: {
 			// Label: Volume 1 to Volume 2 Music toggle
 			// Tooltip: Toggles between the different soundtracks of Terraria Origins. 'On' is Vol. 1, 'Off' is Vol. 2.
 		}
+
+		ArtifactMinionHealthbarStyle: {
+			// Label: Artifact Minion Healthbar Style
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -2140,6 +2145,14 @@ Configs: {
 			// Label: Display Name
 			// Tooltip: ""
 		}
+	}
+
+	ArtifactMinionHealthbarStyles: {
+		// Tooltip: ""
+		// Auto.Label: Auto
+		// UnderMinion.Label: Under Minion
+		// UnderBuff.Label: Under Buff
+		// Both.Label: Both
 	}
 }
 
