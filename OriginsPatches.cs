@@ -1419,7 +1419,7 @@ namespace Origins {
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
 			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
 				rollingLotteryTicket = true;
-				if (self.RollLuck(2 + range * currentChanceNumerator / lottery_ticket_min_denominator) == 0) {
+				if (self.RollLuck((int)MathF.Ceiling(MathF.Pow(range, 0.75f) + range * 0.05f)) < currentChanceNumerator) {
 					if (Main.netMode == NetmodeID.Server && !originPlayer.lotteryTicketItem.IsAir) {
 						ModPacket packet = instance.GetPacket();
 						packet.Write(NetMessageType.win_lottery);
