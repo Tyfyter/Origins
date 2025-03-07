@@ -184,9 +184,12 @@ ENEMY NPCS:
 (@4, ^3) Flagellant*
 (^) Flying Exoskeleton*
 (^) Graveshield Zombie*
+(X) Hammerhand
 (^) Optiphage*
+(X) Packhunter
 (X) Pinwheel
 (^) Pustule Jellyfish*
+(X) Repairboy
 (^) Riven Penguin*
 (^) Riven Protoform*
 (X) Scanner Scout
@@ -196,6 +199,7 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)*
 (^) Spider Amoeba*
 (X) Spiteful Flesh
+(X) The Claw
 
 (^) Airsnatcher
 (^) Amoebeye*
@@ -418,9 +422,9 @@ ACCESSORIES:
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Harpy Horseshoe Balloon
-(☻) Hazard Charm* !!! (added functionality)
+(^) Hazard Charm*
 (^) Headphones*
-(#2, ^2) Helium Tank* !!! (added functionality with balloons?)
+(#2, ^2) Helium Tank* !!! (added functionality with balloons)
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
 (X) Laden Crown
@@ -428,7 +432,7 @@ ACCESSORIES:
 (^) Laser Tag Vest*
 (^) Last Descendent*
 (ᗢ) Lazy Cloak°
-(☻) Liar's Tongue !!!
+(^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -502,12 +506,12 @@ ACCESSORIES:
 (^) Venom Fang*
 (#, ^2) Venom Shield !!!
 
+(@4, #2) Bomb Rack
 (^) Entangled Energy*
 (^) Mana Drive°
 (^) Protozoa Food*
 (#2, ^2) Refactoring Pieces* !!!
 (#2, ^2) Retaliatory Tendril° !!! (Probably could benefit from self-damage)
-(^) Scrap Compactor°
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -726,7 +730,7 @@ RANGED WEAPONS:
 (^) Longbone*
 (^) Magma Grappler*
 (^) Marrowick Bow*
-(#3, ^2) Neural Network* !!!
+(^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
 (^) Sleetfire*
@@ -859,7 +863,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash*
 (^) Fresh Meat Artifact
-(☻) Guardian Rod !!! (sound limit cap)
+(^) Guardian Rod
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (#, ^2) Inject Incantation !!!
@@ -877,7 +881,7 @@ SUMMONER WEAPONS:
 (^) Thread Rod*
 (^) Woodsprite Staff
 
-(☻) Acrid Spout !!!
+(^) Acrid Spout
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
@@ -937,7 +941,7 @@ EXPLOSIVE WEAPONS:
 (^) Cold Snap*
 (^) Defiled Spirit*
 (^) Eruption*
-(☻) Explosive Barrel !!!
+(^) Explosive Barrel
 (^) Eyenade
 (^) Felnum Shock Grenade*
 (^) Flare Launcher
@@ -1070,7 +1074,7 @@ TILES:
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
-(^) Sanguinite Ore*
+(@4, ^3) Sanguinite Ore*
 (^) Silica*
 (^) Silicon Ore*
 (X) Sootgrass°
@@ -1125,7 +1129,7 @@ TILES:
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
-(☻) Defiled Monolith !!! (equippable as vanity and tooltip)
+(^) Defiled Monolith
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain
@@ -1165,7 +1169,7 @@ TILES:
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
 (X) Qube Generator°
-(☻) Unsuspicious Bush !!!
+(^) Unsuspicious Bush
 
 (^) Acetabularia*
 (X) Barnacle Infested Coral
@@ -1202,7 +1206,7 @@ TILES:
 (X) There's Five of Them Now
 (X) What's Out There
 
-(☻) Ancient Music Box (Brine Pool) !!!
+(^) Ancient Music Box (Brine Pool)
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
@@ -1222,9 +1226,9 @@ TILES:
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
-(☻) Fiberglass Weaver Relic* !!!
-(☻) Fiberglass Weaver Trophy* !!!
-(#, ^2) Lost Diver Relic* !!!
+(^) Fiberglass Weaver Relic*
+(^) Fiberglass Weaver Trophy*
+(#2, ^2) Lost Diver Relic* !!!
 (#2, ^2) Lost Diver Trophy* !!!
 (々) Miscreant Relic*
 (々) Miscreant Trophy*
@@ -1364,7 +1368,7 @@ CONSUMABLES:
 (^) Blue Bovine*
 (^) Bread*
 (^) Brine Cheese*
-(☻) Ceaser Salad !!!
+(^) Caeser Salad
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*
@@ -1429,7 +1433,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!! (I have to ask why this is the idea you came up with for the item)
+(#, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*

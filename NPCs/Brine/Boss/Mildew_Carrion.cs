@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Accessories;
+﻿using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
@@ -8,8 +7,6 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
-using Origins.LootConditions;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -28,7 +25,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void SetDefaults() {
 			NPC.dontTakeDamage = true;
-			NPC.lifeMax = 25000;
+			NPC.lifeMax = 14500;
 			NPC.noGravity = true;
 			NPC.width = 76;
 			NPC.height = 58;

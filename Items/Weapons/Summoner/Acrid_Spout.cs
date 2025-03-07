@@ -1,13 +1,7 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.NPCs;
-using Origins.Projectiles;
-using Origins.Projectiles.Weapons;
-using PegasusLib;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -21,10 +15,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Acrid_Spout : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToWhip(ModContent.ProjectileType<Acrid_Spout_P>(), 33, 5, 4, 50);
+			Item.DefaultToWhip(ModContent.ProjectileType<Acrid_Spout_P>(), 34, 5, 4, 28);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
-			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 4, silver: 60);
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
@@ -46,7 +40,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Projectile.DefaultToWhip();
 			Projectile.WhipSettings.Segments = 20;
-			Projectile.WhipSettings.RangeMultiplier = 1;
+			Projectile.WhipSettings.RangeMultiplier = 2;
 		}
 
 		private float Timer {
@@ -55,7 +49,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 
 		public override void AI() {
-			Projectile.WhipSettings.RangeMultiplier = 1f * Projectile.scale;
+			Projectile.WhipSettings.RangeMultiplier = 2f * Projectile.scale;
 			Player owner = Main.player[Projectile.owner];
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 

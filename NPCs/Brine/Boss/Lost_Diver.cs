@@ -1,21 +1,14 @@
-﻿using CalamityMod.Graphics.Renderers;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Armor.Vanity.BossMasks;
-using Origins.Items.Weapons.Crossmod;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
 using PegasusLib;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Brine.Boss {
 	[AutoloadBossHead]
@@ -39,8 +32,8 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
 			NPC.damage = 58;
-			NPC.lifeMax = 25000;
-			NPC.defense = 26;
+			NPC.lifeMax = 400; // Wanted to experiment giving it player-like stats. Perhaps it could benefit from a damage reduction to make it feel more tankier without outright increasing defense??
+			NPC.defense = 99;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
 			NPC.height = 42;
@@ -526,7 +519,7 @@ namespace Origins.NPCs.Brine.Boss {
 			//index 13, legs
 			spriteBatch.Draw(
 				legTexture,
-				new Vector2((int)(position.X - (legFrame.Width / 2) + (NPC.width / 2)), (int)(position.Y + NPC.height - legFrame.Height + 4f)) + legVect - screenPos,
+				new Vector2((int)(NPC.position.X - (legFrame.Width / 2) + (NPC.width / 2)), (int)(NPC.position.Y + NPC.height - legFrame.Height + 4f)) + legVect - screenPos,
 				legFrame,
 				legColor,
 				0,

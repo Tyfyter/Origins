@@ -585,7 +585,7 @@ namespace Origins {
 				Projectile sourceProjectile = Main.projectile[info.DamageSource.SourceProjectileLocalIndex];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
 					if (resinShield) {
-						resinShieldCooldown = (int)explosiveFuseTime.Scale(5).ApplyTo(300);
+						resinShieldCooldown = (int)explosiveFuseTime.Scale(5).ApplyTo(198);
 						if (Player.shield == Resin_Shield.ShieldID) {
 							for (int i = Main.rand.Next(4, 8); i-- > 0;) {
 								Dust.NewDust(Player.MountedCenter + new Vector2(12 * Player.direction - 6, -12), 8, 32, DustID.GemAmber, Player.direction * 2, Alpha: 100);
