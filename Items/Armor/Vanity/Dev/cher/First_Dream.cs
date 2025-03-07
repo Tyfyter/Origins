@@ -20,10 +20,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		public override void Load() {
 			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
 			On_Player.UpdateVisibleAccessory += On_Player_UpdateVisibleAccessory;
-			int AddTexture(string name, EquipType equipType) {
-				return EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
-			}
-			int AddTextureWithSets(string name, EquipType equipType, params Action<int>[] sets) {
+			int AddTexture(string name, EquipType equipType, params Action<int>[] sets) {
 				int id = EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
 				for (int i = 0; i < sets.Length; i++) {
 					setValues.Add((id, sets[i]));
@@ -31,9 +28,9 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 				return id;
 			}
 			modes.Add(new("Chrersis", new(
-				headSlot: AddTextureWithSets("Chrersis_Helmet_Head", EquipType.Head, id => ArmorIDs.Head.Sets.DrawHead[id] = false),
-				bodySlot: AddTextureWithSets("Chrersis_Breastplate_Body", EquipType.Body, id => ArmorIDs.Body.Sets.HidesTopSkin[id] = true),
-				legSlot: AddTextureWithSets("Chrersis_Greaves_Legs", EquipType.Legs, id => ArmorIDs.Legs.Sets.HidesBottomSkin[id] = true)
+				headSlot: AddTexture("Chrersis_Helmet_Head", EquipType.Head, id => ArmorIDs.Head.Sets.DrawHead[id] = false),
+				bodySlot: AddTexture("Chrersis_Breastplate_Body", EquipType.Body, id => ArmorIDs.Body.Sets.HidesTopSkin[id] = true),
+				legSlot: AddTexture("Chrersis_Greaves_Legs", EquipType.Legs, id => ArmorIDs.Legs.Sets.HidesBottomSkin[id] = true)
 			)));
 			modes.Add(new("Diver", new(
 				headSlot: AddTexture("Diver_Helmet_Head", EquipType.Head),
@@ -79,6 +76,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			for (int i = 0; i < setValues.Count; i++) {
 				setValues[i].func(setValues[i].id);
 			}
+			setValues.Clear();
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
