@@ -1763,6 +1763,7 @@ Tiles: {
 	Ocotillo.DisplayName: Ocotillo
 	Basic_Crate_Tile.MapEntry: Basic Crate
 	Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
+	Music_Box_BP: Music Box (Brine Pool)
 }
 
 MapObject: {

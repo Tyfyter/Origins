@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -43,6 +44,7 @@ namespace Origins.Tiles.MusicBoxes {
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 			AddMapEntry(MapColor, Language.GetOrRegister("Mods.Origins.Tiles." + Name, PrettyPrintName));
 			
 			// The following code links the music box's item and tile with a music track:
@@ -54,6 +56,7 @@ namespace Origins.Tiles.MusicBoxes {
 			RegisterItemDrop(Item.Type);
 			base.DustType = this.DustType;
 		}
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
@@ -187,6 +190,57 @@ namespace Origins.Tiles.MusicBoxes {
 					}
 				}
 			}
+		}
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
+	public class Music_Box_BP : Music_Box, IGlowingModTile {
+		public override Color MapColor => new Color(42, 112, 59);
+		public override int MusicSlot => Origins.Music.Vol2.BrinePool;
+		public override int DustType => DustID.GreenMoss;
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public static float GlowLightValue(Tile tile) => tile.TileFrameX >= 36 ? 1 : 0;
+		public Color GlowColor => Color.White;
+		public static bool ShouldGlow(Tile tile) => tile.TileFrameX >= 36;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			TileID.Sets.HasSlopeFrames[Type] = true;
+			Main.tileLighted[Type] = true;
+			AnimationFrameHeight = 36;
+			if (!Main.dedServ) {
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0f, 0.45f, 0.2f) * GlowLightValue(tile));
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY + Main.tileFrame[Type] * AnimationFrameHeight, 18, 18);
+			drawData.glowTexture = GlowTexture;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			Tile tile = Main.tile[i, j];
+
+			// If the torch is on
+			if (ShouldGlow(tile)) {
+				float glowLightValue = GlowLightValue(tile);
+				r = 0f;
+				g = 0.2f * glowLightValue;
+				b = 0.05f * glowLightValue;
+			}
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 8) {
+				frameCounter = 0;
+				frame = ++frame % 3;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
 		}
 		public override void Load() {
 			base.Load();
