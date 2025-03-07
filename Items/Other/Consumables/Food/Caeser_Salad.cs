@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
-    public class Sour_Apple : ModItem {
+    public class Caeser_Salad : ModItem {
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 			ItemID.Sets.FoodParticleColors[Type] = [
@@ -21,7 +21,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.DefaultToFood(
 				32, 24,
 				BuffID.WellFed2,
-				60 * 60 * 7
+				(int)(60 * 60 * 7.5f)
 			);
 		}
 	}

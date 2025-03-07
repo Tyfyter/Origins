@@ -5333,3 +5333,8 @@ Liars_Tongue: {
 	// DisplayName: Liar's Tongue
 	// Tooltip: ""
 }
+
+Caeser_Salad: {
+	// DisplayName: Caeser Salad
+	// Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
