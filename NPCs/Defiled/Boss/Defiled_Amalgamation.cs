@@ -156,7 +156,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Trophy_Item>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
@@ -164,7 +164,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Defiled_Amalgamation_Relic_Item>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Defiled_Amalgamation_Relic>()));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
 		}
 		public const int state_single_dash = 1;

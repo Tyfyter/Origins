@@ -1222,8 +1222,8 @@ TILES:
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
-(#, ^2) Fiberglass Weaver Relic* !!!
-(#, ^2) Fiberglass Weaver Trophy* !!!
+(☻) Fiberglass Weaver Relic* !!!
+(☻) Fiberglass Weaver Trophy* !!!
 (#, ^2) Lost Diver Relic* !!!
 (#2, ^2) Lost Diver Trophy* !!!
 (々) Miscreant Relic*
@@ -1364,7 +1364,7 @@ CONSUMABLES:
 (^) Blue Bovine*
 (^) Bread*
 (^) Brine Cheese*
-(#, ^2) Ceaser Salad !!!
+(☻) Ceaser Salad !!!
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*

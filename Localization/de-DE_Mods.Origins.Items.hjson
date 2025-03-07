@@ -5338,3 +5338,13 @@ Caeser_Salad: {
 	// DisplayName: Caeser Salad
 	// Tooltip: "{$CommonItemTooltip.MediumStats}"
 }
+
+Fiberglass_Weaver_Relic_Item: {
+	// DisplayName: Fiberglass Weaver Relic
+	// Tooltip: ""
+}
+
+Fiberglass_Weaver_Trophy_Item: {
+	// DisplayName: Fiberglass Weaver Trophy
+	// Tooltip: ""
+}

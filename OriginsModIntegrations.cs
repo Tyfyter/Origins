@@ -138,8 +138,8 @@ namespace Origins {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Defiled_Amalgamation.BossChecklistIntegration.SpawnCondition"),
 						["spawnItems"] = ModContent.ItemType<Nerve_Impulse_Manipulator>(),
 						["collectibles"] = new List<int> {
-							ModContent.ItemType<Defiled_Amalgamation_Relic_Item>(),
-							ModContent.ItemType<Defiled_Amalgamation_Trophy_Item>(),
+							RelicTileBase.ItemType<Defiled_Amalgamation_Relic>(),
+							TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(),
 							ModContent.ItemType<Defiled_Amalgamation_Mask>(),
 							ModContent.ItemType<Blockus_Tube>(),
 						}
@@ -160,8 +160,8 @@ namespace Origins {
 						["spawnItems"] = ModContent.ItemType<Sus_Ice_Cream>(),
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.World_Cracker_Head.BossChecklistIntegration.SpawnCondition"),
 						["collectibles"] = new List<int> {
-							ModContent.ItemType<World_Cracker_Relic_Item>(),
-							ModContent.ItemType<World_Cracker_Trophy_Item>(),
+							RelicTileBase.ItemType<World_Cracker_Relic>(),
+							TrophyTileBase.ItemType<World_Cracker_Trophy>(),
 							ModContent.ItemType<World_Cracker_Mask>(),
 							ModContent.ItemType<Fleshy_Globe>(),
 						},
@@ -218,6 +218,8 @@ namespace Origins {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
 						["spawnItems"] = ModContent.ItemType<Shaped_Glass>(),
 						["collectibles"] = new List<int> {
+							RelicTileBase.ItemType<Fiberglass_Weaver_Relic>(),
+							TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(),
 							ModContent.ItemType<Fiberglass_Weaver_Head>()
 						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {

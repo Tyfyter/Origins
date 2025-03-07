@@ -403,7 +403,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 1, 134));
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Vorpal_Sword_Cursed>()));
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Trophy_Item>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<World_Cracker_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
@@ -412,7 +412,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fleshy_Globe>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Amebic_Vial>(), 4));
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<World_Cracker_Relic_Item>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<World_Cracker_Relic>()));
 
 			armorBreakDropRule = new LeadingSuccessRule();
 

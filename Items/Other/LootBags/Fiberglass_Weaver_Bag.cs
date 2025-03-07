@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
 using Origins.NPCs.Fiberglass;
+using Origins.Tiles.BossDrops;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -18,6 +19,7 @@ namespace Origins.Items.Other.LootBags {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			itemLoot.Add(ItemDropRule.FewFromOptionsNotScalingWithLuck(2, 1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>()));
 			itemLoot.Add(Fiberglass_Weaver.weaponDropRule);
+			itemLoot.Add(ItemDropRule.Common(TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(), 10));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Entangled_Energy>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
 		}
