@@ -449,15 +449,15 @@ ACCESSORIES:
 (^) Mildew Heart
 (X) Mindweights
 (^) Missile Armcannon*
-(#, ^2) Mithrafin !!!
+(☻) Mithrafin !!!
 (^) Molten Gun Magazine*
 (X) Netlace
 (X) Nightsky Cloak
 (^) Nitro Crate*
 (^) No U Card*
-(#, ^2) Noxious Mithrafin !!!
+(☻) Noxious Mithrafin !!!
 (^) Olid Organ*
-(#, ^2) Ornamental Keepsake !!!
+(☻) Ornamental Keepsake !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -514,7 +514,7 @@ ACCESSORIES:
 (^) Mana Drive°
 (^) Protozoa Food*
 (#2, ^2) Refactoring Pieces* !!!
-(#2, ^2) Retaliatory Tendril° !!! (Probably could benefit from self-damage)
+(☻) Retaliatory Tendril° !!! (Probably could benefit from self-damage)
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*

@@ -27,6 +27,8 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.mithrafin = true;
 			originPlayer.venomFang = true;
+			originPlayer.symbioteSkull = true;
+			player.GetArmorPenetration(DamageClass.Generic) += 5;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
