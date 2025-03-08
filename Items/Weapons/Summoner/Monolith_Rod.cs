@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Summoner {
 					if (int.TryParse(tooltips[i].Text.Split(' ')[0], out int strength)) {
 						tooltips[i] = new TooltipLine(Mod, "Strength", this.GetLocalization("StrengthTooltip").Format(strength * 0.01f));
 					}
-					int realCrit = Item.crit + 4;
+					int realCrit = Main.LocalPlayer.GetWeaponCrit(Item);
 					if (realCrit > 0) tooltips.Insert(i + 1, new TooltipLine(Mod, "CritChance", this.GetLocalization("CritTooltip").Format(realCrit / 100f)));
 					break;
 					case "PrefixDamage":

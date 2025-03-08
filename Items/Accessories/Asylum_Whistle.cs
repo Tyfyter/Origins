@@ -6,13 +6,12 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Asylum_Whistle : ModItem, IJournalEntryItem, ICustomWikiStat {
+	public class Asylum_Whistle : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat",
 			"SummonBoostAcc",
 			"LoreItem"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Handling_Device>()] = ModContent.ItemType<Asylum_Whistle>();

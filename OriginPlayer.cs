@@ -552,12 +552,6 @@ namespace Origins {
 				}
 			}
 		}
-		public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
-			if (!journalUnlocked) {
-				return true;
-			}
-			return !unlockedJournalEntries.Contains(journalItem.EntryName);
-		}
 
 		public override void SaveData(TagCompound tag) {
 			if (eyndumCore is not null) {

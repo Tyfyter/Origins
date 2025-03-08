@@ -36,11 +36,10 @@ namespace Origins.Tiles.Other {
 			b = 0.1f + (0.3f * v);
 		}
 	}
-	public class Felnum_Ore_Item : ModItem, ICustomWikiStat, IJournalEntryItem {
+	public class Felnum_Ore_Item : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Ore"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

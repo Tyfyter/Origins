@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Origins.Dev.WikiPageExporter;
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword_Cursed : ModItem, IJournalEntryItem, ICustomWikiStat, ICustomLinkFormat {
+	public class Vorpal_Sword_Cursed : ModItem, IJournalEntrySource, ICustomWikiStat, ICustomLinkFormat {
 		static short glowmask;
         public string[] Categories => [
 			"Torn",
@@ -33,7 +33,6 @@ namespace Origins.Items.Weapons.Melee {
 			Name: ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " "),
 			Image: LinkInfo.FromStats)
 			.Formatter();
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

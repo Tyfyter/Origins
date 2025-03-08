@@ -9,12 +9,11 @@ using Terraria.Localization;
 using Origins.World.BiomeData;
 
 namespace Origins.Items.Accessories {
-	public class Stack_of_Shraps : ModItem, ICustomWikiStat, IJournalEntryItem {
+	public class Stack_of_Shraps : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat",
 			"ExplosiveBoostAcc"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Stack_of_Shraps_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 26);

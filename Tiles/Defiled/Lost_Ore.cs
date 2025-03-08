@@ -34,11 +34,10 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	[LegacyName("Defiled_Ore_Item")]
-	public class Lost_Ore_Item : ModItem, ICustomWikiStat, IJournalEntryItem {
+	public class Lost_Ore_Item : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Ore"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
         public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Lost_Ore>());

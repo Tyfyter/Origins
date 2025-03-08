@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Other;
 using Origins.Items.Weapons;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
@@ -17,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -199,6 +201,10 @@ namespace Origins.Items {
 					Protomind.PlayRandomMessage(Protomind.QuoteType.Potato_Launcher, originPlayer.protOSQuoteCooldown, player.Top);
 				}
 			}
+			if (player.whoAmI == Main.myPlayer && item.ModItem is IJournalEntrySource journalEntryItem && !originPlayer.unlockedJournalEntries.Contains(journalEntryItem.EntryName)) {
+				originPlayer.unlockedJournalEntries.Add(journalEntryItem.EntryName);
+				SoundEngine.PlaySound(Origins.Sounds.defiledKillAF); // temp sound
+			}
 			return true;
 		}
 		public override void GrabRange(Item item, Player player, ref int grabRange) {
@@ -282,11 +288,6 @@ namespace Origins.Items {
 			AddVanillaTooltips(item.type, tooltips);
 			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
 				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
-			}
-			if (item.ModItem is IJournalEntryItem journalItem) {
-				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().DisplayJournalTooltip(journalItem)) {
-					tooltips.Add(new TooltipLine(Mod, "JournalIndicator", Language.GetTextValue(journalItem.IndicatorKey)));
-				}
 			}
 		}
 		public override bool CanReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {

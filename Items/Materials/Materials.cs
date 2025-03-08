@@ -57,11 +57,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Alkahest : MaterialItem, IJournalEntryItem {
+	public class Alkahest : MaterialItem, IJournalEntrySource {
         public string[] Categories => [
             "LoreItem"
         ];
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
@@ -123,11 +122,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Black_Bile : MaterialItem, IJournalEntryItem {
+	public class Black_Bile : MaterialItem, IJournalEntrySource {
         public string[] Categories => [
             "LoreItem"
         ];
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
@@ -262,14 +260,13 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Felnum_Bar : MaterialItem, IJournalEntryItem, ICustomWikiStat {
+	public class Felnum_Bar : MaterialItem, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
             "LoreItem",
 			"Bar"
         ];
         public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override bool Hardmode => false;
 		public override void Load() {
