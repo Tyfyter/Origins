@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Journal;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
@@ -412,6 +413,7 @@ namespace Origins {
 		public bool collidingX = false;
 		public bool collidingY = false;
 		public HashSet<string> unlockedJournalEntries = new();
+		public HashSet<string> unreadJournalEntries = new();
 		public HashSet<string> startedQuests = new();
 		public int dashDirection = 0;
 		public int dashDirectionY = 0;
@@ -877,6 +879,12 @@ namespace Origins {
 		public void SetTalkingPet(int index) {
 			talkingPet = index;
 			talkingPetTime = 2;
+		}
+		public void UnlockJournalEntry(IJournalEntrySource journalEntrySource) {
+			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(journalEntrySource.EntryName)) {
+				unreadJournalEntries.Add(journalEntrySource.EntryName);
+				SoundEngine.PlaySound(Origins.Sounds.defiledKillAF); // temp sound
+			}
 		}
 	}
 }

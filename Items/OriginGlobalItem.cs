@@ -201,10 +201,6 @@ namespace Origins.Items {
 					Protomind.PlayRandomMessage(Protomind.QuoteType.Potato_Launcher, originPlayer.protOSQuoteCooldown, player.Top);
 				}
 			}
-			if (player.whoAmI == Main.myPlayer && item.ModItem is IJournalEntrySource journalEntryItem && !originPlayer.unlockedJournalEntries.Contains(journalEntryItem.EntryName)) {
-				originPlayer.unlockedJournalEntries.Add(journalEntryItem.EntryName);
-				SoundEngine.PlaySound(Origins.Sounds.defiledKillAF); // temp sound
-			}
 			return true;
 		}
 		public override void GrabRange(Item item, Player player, ref int grabRange) {
@@ -298,11 +294,12 @@ namespace Origins.Items {
 		}
 		public override void UpdateInventory(Item item, Player player) {
 			if (player.whoAmI == Main.myPlayer) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.UpdateInventoryEvent is not null) {
 						quest.UpdateInventoryEvent(item);
 					}
 				}
+				if (item.ModItem is IJournalEntrySource journalEntrySource) player.OriginPlayer().UnlockJournalEntry(journalEntrySource);
 			}
 		}
 		static OneFromRulesRule originsDevSetRule;

@@ -7,6 +7,7 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Journal;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
 using Origins.Projectiles;
@@ -327,6 +328,8 @@ namespace Origins {
 						quest.KillEnemyEvent(target);
 					}
 				}
+
+				if (target.ModNPC is IJournalEntrySource journalEntrySource) UnlockJournalEntry(journalEntrySource);
 				if (necroSet) {
 					necroSetAmount += target.lifeMax;
 				}

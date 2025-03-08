@@ -70,7 +70,7 @@ namespace Origins.UI {
 			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);
 			data.Draw(spriteBatch);
 			spriteBatch.Restart(oldstate);
-			if (Quest_Registry.Quests.Any(q => q.HasNotification)) {
+			if (((OriginPlayer.LocalOriginPlayer?.unreadJournalEntries?.Count ?? 0) > 0) || Quest_Registry.Quests.Any(q => q.HasNotification)) {
 				//TODO: use Terraria/UI/UI_quickicon1
 				float scaleValue = MathHelper.Lerp(0.5f, 1.15f, Main.mouseTextColor / 255f);
 				ChatManager.DrawColorCodedStringWithShadow(

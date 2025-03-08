@@ -198,19 +198,25 @@ namespace Origins.UI {
 					JournalEntry entry = Journal_Registry.Entries[key];
 					currentEffect = entry.TextShader;
 					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}.Text")), entry.BaseColor);
+					OriginPlayer.LocalOriginPlayer.unreadJournalEntries.Remove(key);
 				}
 				break;
 
 				case Journal_UI_Mode.Index_Page: {
 					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+					StringBuilder unreadBuilder = new();
 					StringBuilder builder = new();
 					foreach (string entry in Journal_Registry.Entries.Keys) {
 						if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
 							continue;
 						}
-						builder.Append($"[j:{entry}]\n");
+						if (originPlayer.unreadJournalEntries.Contains(entry)) {
+							unreadBuilder.Append($"[j/ju:{entry}]\n");
+						} else {
+							builder.Append($"[j/j:{entry}]\n");
+						}
 					}
-					SetText(builder.ToString(), Color.Black);
+					SetText(unreadBuilder.ToString() + builder.ToString(), Color.Black);
 					break;
 				}
 
