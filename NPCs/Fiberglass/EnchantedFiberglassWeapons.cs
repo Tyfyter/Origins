@@ -51,21 +51,21 @@ namespace Origins.NPCs.Fiberglass {
 			Vector2 speed = new Vector2(-12, 0).RotatedBy(Main.rand.NextFloat(NPC.rotation - 0.05f, NPC.rotation + 0.05f));
 			Vector2 pos = NPC.Center + speed;
 			if (Collision.CanHit(pos, 1, 1, Main.player[NPC.target].Center, 1, 1) && Main.netMode != NetmodeID.MultiplayerClient) {
-				NPC.localAI[0] += 1f;
-				if (NPC.localAI[0] >= 75f) {
+				NPC.ai[0] += 1f;
+				if (NPC.ai[0] >= 120f) {
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), pos.X, pos.Y, speed.X, speed.Y, ProjectileID.WoodenArrowHostile, 16, 0f);
-					NPC.localAI[0] = 0f;
+					NPC.ai[0] = 0f;
 					teleport();
 				}
-			} else NPC.localAI[0] = 0f;
+			} else NPC.ai[0] = 0f;
 			if (NPC.spriteDirection == 1) NPC.rotation += MathHelper.Pi;
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
-			NPC.localAI[0] = -15f;
+			NPC.ai[0] = -15f;
 			teleport();
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			NPC.localAI[0] = 0f;
+			NPC.ai[0] = 0f;
 			teleport();
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
