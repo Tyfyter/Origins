@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
-			return new Vector2(8, 0);
+			return new Vector2(-3, -2);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = velocity.RotatedByRandom(0.075f);
