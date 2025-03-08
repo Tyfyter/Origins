@@ -17,15 +17,15 @@ namespace Origins.Items.Weapons.Magic {
 		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
+			Item.staff[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 52;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
-			Item.noUseGraphic = true;
-			Item.useStyle = ItemUseStyleID.Swing;
+			Item.noUseGraphic = false;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.width = 28;
 			Item.height = 30;
 			Item.useTime = 24;

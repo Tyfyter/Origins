@@ -828,7 +828,7 @@ MAGIC WEAPONS:
 (^) Shimmer Rod
 (X) Shinedown
 (X) Siphon Staff
-(#2, ^2) Splashid !!!
+(☻) Splashid !!!
 (^) Startillery
 (X) Symbiotic Staff
 

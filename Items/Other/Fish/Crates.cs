@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using System;
@@ -136,6 +138,14 @@ namespace Origins.Items.Other.Fish {
 			];
 			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(brine));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
+			itemLoot.Add(new OneFromRulesRule(2,
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Focus_Potion>(), 1, 1, 3),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Antisolve_Potion>(), 1, 1, 3)
+			));
+			itemLoot.Add(ItemDropRule.OneFromOptions(4,
+				ModContent.ItemType<Sour_Apple>(),
+				ModContent.ItemType<Caeser_Salad>()
+			));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
 		}
 	}
