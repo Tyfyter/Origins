@@ -32,12 +32,11 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
 			NPC.damage = 58;
-			NPC.lifeMax = 400;
+			NPC.lifeMax = 8000;
 			NPC.defense = 32;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
 			NPC.height = 42;
-			NPC.takenDamageMultiplier = 0.05f /*(difficultyMult * 0.05f)*/;
 			NPC.knockBackResist = 0f;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchRange(-0.8f, -0.4f);
 			NPC.DeathSound = SoundID.NPCDeath1;
@@ -626,7 +625,9 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 		}
 		public override void OnKill() {
-			NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<Lost_Diver_Transformation>(), ai1: NPC.direction).Center = NPC.Center;
+			NPC transformation = NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<Lost_Diver_Transformation>(), ai1: NPC.direction);
+			transformation.Center = NPC.Center;
+			transformation.velocity = NPC.velocity;
 		}
 		public enum AIModes {
 			Idle,

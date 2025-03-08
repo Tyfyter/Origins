@@ -1396,7 +1396,7 @@ CONSUMABLES:
 (X) The Button°
 
 (X) Ashen Loot Box°
-(#2, ^2) Basic Crate* !!! (other drops)
+(☻) Basic Crate* !!! (other drops)
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box°
 (#2, ^2, 々) Crimson Loot Box°

@@ -24,6 +24,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
 			NPC.lifeMax = 6000;
 			NPC.noGravity = true;
@@ -32,7 +33,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override bool PreAI() {
 			NPC.spriteDirection = (int)-NPC.ai[1];
-			NPC.velocity = Vector2.Zero;
+			NPC.velocity *= 0.92f;
 			if (NPC.ai[0] < 2) {
 				NPC.ai[0] += 1f / 15;
 			} else {
