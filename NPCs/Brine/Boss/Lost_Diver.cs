@@ -32,11 +32,12 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
 			NPC.damage = 58;
-			NPC.lifeMax = 400; // Wanted to experiment giving it player-like stats. Perhaps it could benefit from a damage reduction to make it feel more tankier without outright increasing defense??
-			NPC.defense = 99;
+			NPC.lifeMax = 400;
+			NPC.defense = 32;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
 			NPC.height = 42;
+			NPC.takenDamageMultiplier = 0.05f /*(difficultyMult * 0.05f)*/;
 			NPC.knockBackResist = 0f;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchRange(-0.8f, -0.4f);
 			NPC.DeathSound = SoundID.NPCDeath1;

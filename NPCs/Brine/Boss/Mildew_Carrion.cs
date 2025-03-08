@@ -25,7 +25,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void SetDefaults() {
 			NPC.dontTakeDamage = true;
-			NPC.lifeMax = 14500;
+			NPC.lifeMax = 6000;
 			NPC.noGravity = true;
 			NPC.width = 76;
 			NPC.height = 58;
@@ -71,7 +71,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.damage = 58;
-			NPC.lifeMax = 25000;
+			NPC.lifeMax = 6000;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
 			NPC.width = 76;

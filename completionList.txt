@@ -95,6 +95,8 @@ TOWN NPC Quests:
 
 (^) Arms Dealer - Live Fire*
 (X) Arms Dealer - Three Times the Charm*
+(X) Brine Fiend - Basic Brewery !!!
+(X) Brine Fiend - Get Freaky !!!
 (^) Cyborg - Sensor Upgrade*
 (^) Dryad - I’ll Give You a Deal*
 (^) Dryad - Clearing the Way*
@@ -242,6 +244,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (^) Torn Ghoul*
 (#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
+(X) VV-13
 
 (X) Clockwork
 (@2/3, #) Electromancer
@@ -689,7 +692,7 @@ MELEE WEAPONS:
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
-(X) The Foot !!!
+(#, ^2) The Foot !!!
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
@@ -740,6 +743,7 @@ RANGED WEAPONS:
 (^) Threemoepeater*
 (^) Unmisfire*
 (^) Unstrung Fiberglass Bow*
+(X) Welding Torch
 (^) 2-in-1 Shotty*
 (^) 3-in-1 Shotty*
 
@@ -873,7 +877,7 @@ SUMMONER WEAPONS:
 (^) Ocotillo Finger
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
-(#2, ^2) Relay Rod !!!
+(^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
 (#, ^2) Sunflower in a Pot !!!
@@ -967,7 +971,6 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!! (additive damage)
-(X) Sudden Night's Shadow !!!
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
@@ -1591,6 +1594,7 @@ VOLUME I MUSIC:
 (X) Seer
 (X) Shimmer Construct
 (X) Tearror
+(X) Trenchmaker
 
 (X) Ashen Invasion
 (X) Corruption Invasion
@@ -1634,6 +1638,7 @@ VOLUME II MUSIC:
 (X) Seer
 (X) Shimmer Construct
 (X) Tearror
+(X) Trenchmaker
 
 (X) Ashen Invasion
 (X) Corruption Invasion
