@@ -264,6 +264,9 @@ namespace Origins {
 		public Item retaliatoryTendrilItem = null;
 		public float retaliatoryTendrilStrength = 0;
 		public int retaliatoryTendrilCharge = 0;
+		public bool mithrafin = false;
+		public bool oldMithrafin = false;
+		public const float mithrafinSelfMult = 0.8f;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -571,6 +574,9 @@ namespace Origins {
 			} finally {
 				Main.debuff[BuffID.PotionSickness] = true;
 			}
+			Player.ApplyBuffTimeAccessory(oldMithrafin, mithrafin, mithrafinSelfMult, Mithrafin.buffTypes);
+			oldMithrafin = mithrafin;
+			mithrafin = false;
 
 			trapCharm = false;
 			dangerBarrel = false;

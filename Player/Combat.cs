@@ -300,6 +300,9 @@ namespace Origins {
 					target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
 				}
 			}
+			if (mithrafin) {
+				target.AddBuff(Mithrafin_Poison_Extend_Debuff.ID, 2);
+			}
 			if (lightningRing) {
 				target.AddBuff(ModContent.BuffType<Mini_Static_Shock_Debuff>(), 180);
 			}

@@ -5348,3 +5348,8 @@ Fiberglass_Weaver_Trophy_Item: {
 	DisplayName: Fiberglass Weaver Trophy
 	Tooltip: ""
 }
+
+Mithrafin: {
+	DisplayName: Mithrafin
+	Tooltip: ""
+}

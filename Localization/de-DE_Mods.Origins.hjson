@@ -1065,6 +1065,11 @@ Buffs: {
 		// DisplayName: Acrid Spout Buff
 		// Description: Mods.Origins.Buffs.Acrid_Spout_Buff.Description
 	}
+
+	Mithrafin_Poison_Extend_Debuff: {
+		// DisplayName: Mithrafin Poison Extend Debuff
+		// Description: Mods.Origins.Buffs.Mithrafin_Poison_Extend_Debuff.Description
+	}
 }
 
 DamageClassName: {

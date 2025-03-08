@@ -1353,6 +1353,9 @@ namespace Origins {
 				if (originPlayer.donorWristband && Main.debuff[type]) {
 					mult *= OriginPlayer.donorWristbandMult;
 				}
+				if (originPlayer.mithrafin && Mithrafin.buffTypes[type]) {
+					mult *= OriginPlayer.mithrafinSelfMult;
+				}
 				value = (int)(value * mult);
 			}
 			return value;
