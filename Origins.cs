@@ -604,6 +604,11 @@ namespace Origins {
 				MaxInstances = 0,
 				PitchVariance = 0.4f
 			};
+			Sounds.Journal = new SoundStyle("Origins/Sounds/Custom/WritingFire", SoundType.Sound) {
+				MaxInstances = 1,
+				SoundLimitBehavior = SoundLimitBehavior.IgnoreNew,
+				PitchVariance = 0.4f
+			};
 			//OriginExtensions.initClone();
 			Music.LoadMusic();
 
@@ -1015,6 +1020,7 @@ namespace Origins {
 			public static SoundStyle LittleZap = SoundID.Roar;
 
 			public static SoundStyle Bonk = SoundID.Roar;
+			public static SoundStyle Journal = SoundID.Roar;
 			public static void Unload() {
 				LightningSounds = null;
 			}

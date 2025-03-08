@@ -889,7 +889,7 @@ namespace Origins {
 		public void UnlockJournalEntry(IJournalEntrySource journalEntrySource) {
 			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(journalEntrySource.EntryName)) {
 				unreadJournalEntries.Add(journalEntrySource.EntryName);
-				SoundEngine.PlaySound(Origins.Sounds.defiledKillAF); // temp sound
+				SoundEngine.PlaySound(Origins.Sounds.Journal);
 			}
 		}
 	}
