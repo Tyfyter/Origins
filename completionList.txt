@@ -137,7 +137,7 @@ OTHER:
 (X) Accessory Jump Speed Modifiers° !!!
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
-(^) Journal*
+(#2, ^2) Journal*
 (^) Quest System General*
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
 ---
@@ -960,14 +960,14 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(X) Impetus !!!
+(#, ^2) Impetus !!!
 (^) Internal Combustionfish*
 (#2, ^2) Link Grenade* !!! (additive damage)
 (^) Matrix*
 (^) Meteor*
 (^) Peatball*
 (^) Potato Mine*
-(X) Regurgitator of Souls !!!
+(#, ^2) Regurgitator of Souls !!!
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!! (additive damage)
