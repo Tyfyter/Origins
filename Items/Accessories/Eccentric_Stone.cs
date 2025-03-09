@@ -1,11 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Eccentric_Stone : ModItem, IJournalEntrySource, ICustomWikiStat, IItemObtainabilityProvider {
@@ -19,6 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
+			player.maxMinions += 1;
 			Lighting.AddLight(player.MountedCenter - new Vector2(0, 6), 0.2f, 0.05f, 0.175f);
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];
@@ -29,6 +29,7 @@ namespace Origins.Items.Accessories {
 					break;
 				}
 			}
+
 		}
 		public IEnumerable<int> ProvideItemObtainability() {
 			yield return ModContent.ItemType<Spirit_Shard>();

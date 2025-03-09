@@ -17,6 +17,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {
+			player.maxMinions += 1;
 			player.GetModPlayer<OriginPlayer>().spiritShard = true;
 		}
 	}
