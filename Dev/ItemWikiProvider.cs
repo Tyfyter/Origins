@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Journal;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -327,6 +328,7 @@ namespace Origins.Dev {
 			data["Image"] = customStat?.CustomSpritePath ?? WikiPageExporter.GetWikiItemImagePath(modItem);
 			data["Name"] = item.Name;
 			JArray types = new("Item");
+			if (modItem is IJournalEntrySource) types.Add("Lore");
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
 			if (item.accessory) types.Add("Accessory");
