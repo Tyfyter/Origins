@@ -166,7 +166,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) {
-			damage = 60;
+			damage = 30;
 			knockback = 4f;
 		}
 

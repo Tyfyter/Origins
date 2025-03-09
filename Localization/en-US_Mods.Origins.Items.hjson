@@ -5365,3 +5365,8 @@ Boomboom: {
 	DisplayName: Boomboom
 	Tooltip: "'She loves her toys, especially the deadly ones!'"
 }
+
+Fumethrower: {
+	DisplayName: Fumethrower
+	Tooltip: ""
+}
