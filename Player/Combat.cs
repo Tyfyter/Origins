@@ -174,7 +174,8 @@ namespace Origins {
 							SoundEngine.PlaySound(gunGloveItem.UseSound, position);
 						}
 					}
-					gunGloveCooldown = CombinedHooks.TotalUseTime(gunGloveItem.useTime, Player, gunGloveItem);
+					int useTime = CombinedHooks.TotalUseTime(gunGloveItem.useTime, Player, gunGloveItem);
+					gunGloveCooldown = useTime + Main.rand.Next(-useTime / 2, useTime / 2);
 				}
 			}
 		}

@@ -420,14 +420,14 @@ ACCESSORIES:
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
-(#2, ^2) Gun Glove* !!! (randomized shooting offset)
+(☻) Gun Glove* !!! (randomized shooting offset)
 (^) Gun Magazine*
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Harpy Horseshoe Balloon
 (^) Hazard Charm*
 (^) Headphones*
-(#2, ^2) Helium Tank* !!! (added functionality with balloons)
+(☻) Helium Tank* !!! (added functionality with balloons)
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
 (X) Laden Crown
@@ -664,7 +664,7 @@ MELEE WEAPONS:
 (^) Felnum Boar Spear*
 (^) Fiberglass Sword*
 (^) Hemorang*
-(#2, ^2) Krakram* !!! (rework)
+(☻) Krakram* !!! (rework)
 (^) Marrowick Sword*
 (^) Nineball*
 (^) Orbital Saw*
@@ -684,7 +684,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(#, ^2) Boomboom !!!
+(☻) Boomboom !!!
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
