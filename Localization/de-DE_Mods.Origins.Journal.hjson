@@ -10,10 +10,22 @@ Indicator: {
 	// Other: Detailed description available.
 }
 
-// Places
+Amoebeye: {
+	// Places
+	
+	
+	// Characters
+	
+	/* Text:
+		'''
+		[header:Amoebeye (8/12)]
+		[i:Origins/Amoebeye]
 
-
-// Characters
+		*****
+		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. This place and the Amoeba itself are purely natural beings surviving in this world.
+		''' */
+	// Name: Amoebeye Entry
+}
 
 Ancient_Defiled_Cyclops: {
 	// Name: Ancient Defiled Cyclops
@@ -24,6 +36,18 @@ Ancient_Defiled_Cyclops: {
 
 		*****
 		It started with emptiness. The memories collected can be felt, but there only remains empty void. Lacking information to inform us. So disturbed we all were as forgetters of past lives; to know our experiences now made us nothing.
+		''' */
+}
+
+Brain_of_Cthulhu: {
+	// Name: Brain of Cthulhu
+	/* Text:
+		'''
+		[header:Brain of Cthulhu (13/13)]
+		[i:Brain_of_Cthulhu]
+
+		*****
+		As long as the Crimson bleeds, there will always be evil. Making it bleed more makes it worse for all.
 		''' */
 }
 
@@ -102,6 +126,30 @@ Mildew_Carrion: {
 		''' */
 }
 
+Riven_Protoform: {
+	// Name: Riven Protoform
+	/* Text:
+		'''
+		[header:Riven Protoform (7/12)]
+		[i:Origins/Riven_Protoform]
+
+		*****
+		The hive has since had many species born from its spug-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
+		''' */
+}
+
+Savage_Whip: {
+	// Name: Savage Whip
+	/* Text:
+		'''
+		[header:Savage Whip (9/12)]
+		[i:Origins/Savage_Whip]
+
+		*****
+		Even with that, the Riven is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". How could that be with a species entirely incapable of feeding from evil-doing like the Corruption or Crimson?
+		''' */
+}
+
 Sea_Dragon: {
 	// Name: Sea Dragon
 	/* Text:
@@ -114,27 +162,51 @@ Sea_Dragon: {
 		''' */
 }
 
+/* Shark.Text:
+	'''
+	[header:Shark (2/5)]
+	[i:Shark]
+
+	*****
+	The merfolk's battle against Cthulhu was quick but violent. Neptune leading the initial cavalry was a tactical failure to his demise. Despite the unduly circumstace he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune consumed by Cthulhu, which had made Cthulhu even more powerful.
+	''' */
 // Items
 
+/* Alkahest.Text:
+	'''
+	[header:Alkahest (1/12)]
+	[i:Origins/Alkahest]
+
+	*****
+	The universal solvent, alkahest. How the parasite is uniquely capable of generating it is unclear, but it could very easily be just part of its biologic processes.
+	''' */
+
+Asylum_Whistle: {
+	// Name: Asylum Whistle
+	/* Text:
+		'''
+		[header:Asylum Whistle (1/1)]
+		[i:Origins/Asylum_Whistle]
+
+		*****
+		They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get the children inside. Following that would always be lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground. I was curious as to why they were so angry at the ground all the time, but I could never get to know why because the whistle would always sound.
+		''' */
+}
+
 Baryte: {
-	Baryte: {
-		// Name: Baryte
-		/* Text:
-			'''
-			[header:Baryte (3/9)]
-			[i:Origins/Baryte]
+	/* Text:
+		'''
+		[header:Baryte (3/9)]
+		[i:Origins/Baryte_Item]
 
-			*****
-			???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
+		*****
+		???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
 
-			???: Really?
+		???: Really?
 
-			???: Yeah, and it was supposedly for "Terraria's strongest warrior". He must've thought he was the stuff coming all the way down here for it.
-			''' */
-	}
-
-	// Text: Mods.Origins.Journal.Baryte.Text
-	// Name: Baryte
+		???: Yeah, and it was supposedly for "Terraria's strongest warrior". He must've thought he was the stuff coming all the way down here for it.
+		''' */
+	// Name: Baryte Entry
 }
 
 Black_Bile: {
@@ -146,6 +218,18 @@ Black_Bile: {
 
 		*****
 		We cope through the excess. Unintended was harm of the world, but eventually we accepted this. In the end, all that matters is our continuous existence, we concluded.
+		''' */
+}
+
+Blade_Tongue: {
+	// Name: Blade Tongue
+	/* Text:
+		'''
+		[header:Blade Tongue (1/13)]
+		[i:Blade_Tongue]
+
+		*****
+		Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria.
 		''' */
 }
 
@@ -166,6 +250,18 @@ Boat_Rocker: {
 		Penny: They're magic in case you're wondering~
 
 		???: Oh heck yeah!
+		''' */
+}
+
+Bone_Rattle: {
+	// Name: Bone Rattle
+	/* Text:
+		'''
+		[header:Bone Rattle (8/13)]
+		[i:Bone_Rattle]
+
+		*****
+		Their king was well-received, garnering liking by his people, especially winning over the children's children. He drank from the blood with no care to celebrate his trophy. So, did the wild animals that surrounded the sacred lake.
 		''' */
 }
 
@@ -194,6 +290,30 @@ Boat_Rocker: {
 	She found refuge in a cave nearby a brine pool. As a child, the soft glow of the brineglow below drew in her curiosity. Strangely, it was found that she had a predisposition for the harsh brine.
 	''' */
 
+Crimson_Heart: {
+	// Name: Crimson Heart
+	/* Text:
+		'''
+		[header:Crimson Heart (4/13)]
+		[i:Crimson_Heart_Item]
+
+		*****
+		Like the rest, this one’s heart was locked away, protected by his most devout after removing it from his body. To outsiders, a mortal sin punishable by death. To them, a festive tradition to honor their new king.
+		''' */
+}
+
+Crimson_Rod: {
+	// Name: Crimson Rod
+	/* Text:
+		'''
+		[header:Crimson Rod (6/13)]
+		[i:Crimson_Rod]
+
+		*****
+		Even in present time, its blood rains and continues to satiate the blood-thirsty, devolved denizens of this horrible place.
+		''' */
+}
+
 Crown_Jewel: {
 	// Name: Crown Jewel
 	/* Text:
@@ -203,6 +323,18 @@ Crown_Jewel: {
 
 		*****
 		There she is. The crown jewel. Gleaming in this dark abyss, reminding me of her. The love of my life. ...perhaps, I really am not worthy. I am no hero, I am only a crowd-pleaser.
+		''' */
+}
+
+Deep_Ocean_Pearl: {
+	// Name: Deep Ocean Pearl
+	/* Text:
+		'''
+		[header:Deep Ocean Pearl (4/5)]
+		[i:Origins/Deep_Ocean_Pearl]
+
+		*****
+		The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from his havoc. There was a reform attempted by Neptune's closest but without their idol to give them guidance, the dream began to fade as people fled. I was just a merling at that time, which helped me fail to understand how awful life in Aqi was.
 		''' */
 }
 
@@ -251,6 +383,42 @@ Dim_Starlight: {
 	She was not of their kin, the one who could take us. To come put down rabid dog, we took her with us down to hell, to share this torture. We also learned from wounding her soul, but she did not welcome herself until there was no choice.
 	''' */
 
+Diving_Helmet: {
+	// Name: Diving Helmet
+	/* Text:
+		'''
+		[header:Diving Helmet (5/5)]
+		[i:Diving_Helmet]
+
+		*****
+		I instead found joy infatuated by a naive, benevolent diver who entertained himself by diving and taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
+		''' */
+}
+
+Life_Fruit: {
+	// Name: Life Fruit
+	/* Text:
+		'''
+		[header:Life Fruit (1/1)]
+		[i:Life_Fruit]
+
+		*****
+		Terraria's Dryads were its true keepers, bringing about life and acting on behalf the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
+		''' */
+}
+
+Eccentric_Stone: {
+	// Name: Eccentric Stone
+	/* Text:
+		'''
+		[header:Eccentric Stone]
+		[i:Origins/Eccentric_Stone]
+
+		*****
+		This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate, but yet weren't able to free me from. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so carelessly is unforgivable.
+		''' */
+}
+
 Faith_Beads: {
 	// Name: Faith Beads
 	/* Text:
@@ -298,7 +466,14 @@ Felnum: {
 
 Forbidden_Voice: {
 	// Name: Forbidden Voice
-	// Text: Tumblr Fire Text.gif
+	/* Text:
+		'''
+		[header:Forbidden Voice]
+		[i:Origins/Forbidden_Voice] [i:Origins/Forbidden_Voice_Uncursed]
+
+		*****
+		Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see my face melting away. "Promises" for fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
+		''' */
 }
 
 Hearty_Broth: {
@@ -313,6 +488,14 @@ Hearty_Broth: {
 		''' */
 }
 
+/* Ichor.Text:
+	'''
+	[header:Ichor (12/13)]
+	[i:Ichor]
+
+	*****
+	The Crimson, despite the dryads' best efforts, could not be stopped. They began to understand that it was necessary for this world unless a hero could step up to the rite of keeping the balance themselves.
+	''' */
 /* Infusion.Text:
 	'''
 	[header:Infusion (4/17)]
@@ -382,6 +565,18 @@ Missing_File: {
 		''' */
 }
 
+Neptunes_Shell: {
+	// Name: Neptune's Shell
+	/* Text:
+		'''
+		[header:Neptune's Shell (1/5)]
+		[i:Neptunes_Shell]
+
+		*****
+		Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire, he choose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. But, not Cthulhu. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been. But, it was still a slaughter.
+		''' */
+}
+
 Old_Brine_Rock: {
 	// Name: Old Brine Rock
 	/* Text:
@@ -394,6 +589,78 @@ Old_Brine_Rock: {
 		''' */
 }
 
+Panic_Necklace: {
+	// Name: Panic Necklace
+	/* Text:
+		'''
+		[header:Panic Necklace (7/13)]
+		[i:Panic_Necklace]
+
+		*****
+		For the first few hours there was panic, but after the First King had struck down the beast with a single blow it began to calm. The panic still found itself in their fragile hearts later.
+		''' */
+}
+
+Primordial_Permafrost: {
+	// Name: Primordial Permafrost
+	/* Text:
+		'''
+		[header:Primordial Permafrost (4/12)]
+		[i:Origins/Primordial_Permafrost_Item]
+
+		*****
+		Without that heat, the amoeba can't do anything. This is why it often falls victim to sources of cold. The snow is its greatest weakness, if only the Dryad Clan knew that.
+		''' */
+}
+
+Riven_Carapace: {
+	// Name: Riven Carapace
+	/* Text:
+		'''
+		[header:Riven Carapace (6/12)]
+		[i:Origins/Riven_Carapace]
+
+		*****
+		Unfortunate creatures are then forced to evolve to the Riven's conditions. A parasite that plays god even though it's entirely incapable of any intelligent thought being the single-celled organism it is.
+		''' */
+}
+
+Salty_Seed: {
+	// Name: Salty Seed
+	/* Text:
+		'''
+		[header:Salty Seed (3/12)]
+		[i:Origins/Salty_Seed]
+
+		*****
+		It needs two things to keep it alive: salt and heat. Salt expedites the production of valuable alkahest. It uses heat to power its metabolism, which it gets by digesting things in the form of waste heat.
+		''' */
+}
+
+Seam_Beam: {
+	// Name: Seam Beam
+	/* Text:
+		'''
+		[header:Seam Beam (11/12)]
+		[i:Origins/Seam_Beam]
+
+		*****
+		So, in other words magic did this and now the Riven is empowered by the world as a rightful evil? I thought the Defiled being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to entirely dissolve it as an evil.
+		''' */
+}
+
+Shell_Pile: {
+	// Name: Shell Pile
+	/* Text:
+		'''
+		[header:Shell Pile (3/5)]
+		[i:Shell_Pile_Item]
+
+		*****
+		Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh.
+		''' */
+}
+
 /* Splashid.Text:
 	'''
 	[header:Splashid (6/6)]
@@ -403,17 +670,110 @@ Old_Brine_Rock: {
 	I've explored some of her crafts and they are truly intriguing. They very much remind me of my dark arts, how I am a master of my own crafts. Magic does indeed come in many forms.
 	''' */
 
-Stack_of_Shraps: {
-	// Name: Stack of Shraps
-	// Text: Pennies, quarters, dollars.
+Spug_Flesh: {
+	// Name: Spug Flesh
+	/* Text:
+		'''
+		[header:Spug Flesh (12/12)]
+		[i:Origins/Spug_Flesh_Item]
+
+		*****
+		It's not a matter of that, the Riven is now a part of the world. The world simply thinks it would be best to dissolve parts of the imbalance in an attempt to clean out the impurities.
+		''' */
 }
 
-/* Stone_Mask.Text:
-	'''
-	I have it. The power of the nature-will is strong in my soul. The Dryads use this mask to foresee the future, but I do remember there being some kind of consequence. I hope I learn that in time. For now, I must use this helm to stop that evil sorcerer from destroying the rest of Terraria…
+Stack_of_Shraps: {
+	// Name: Stack of Shraps
+	/* Text:
+		'''
+		[header:Stack of Shraps (1/1)]
+		[i:Origins/Stack_of_Shraps]
 
-	Ah, that's it. That's what we must do. Gerald, go warn the postmaster. We must act quickly and warn any of the others of what is to come.
+		*****
+		Hints like these for your inquisitive mind to guess of atrocities committed against wasteful spendthrifts. Prodigies possessive of such powerful crafts giving away their gifts only for them to be in the headwinds of pointless wars against once-allies.
+		''' */
+}
+
+Stone_Mask: {
+	// Name: Stone Mask
+	/* Text:
+		'''
+		[header:Stone Mask]
+		[i:Origins/Stone_Mask]
+
+		*****
+		Ah, I know of this mask, from history of torn-away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
+		''' */
+}
+
+Symbiote_Skull: {
+	// Name: Symbiote Skull
+	/* Text:
+		'''
+		[header:Symbiote Skull (5/12)]
+		[i:Origins/Symbiote_Skull]
+
+		*****
+		Strangely, the life we've found in the hive maintains its autonomy from the parasite, albeit with a little of its influence by controlling their gut microbiomes like a true parasite.
+		''' */
+}
+
+/* Teardown.Text:
+	'''
+	[header:Teardown (10/12)]
+	[i:Origins/Teardown]
+
+	*****
+	It's pretty simple. The amoeba's origins are stained with blood; the blood of Cthulhu himself actually. Cthulhu's blood had spilled into the world, a random crevice the parasite had remained dormant in for eons. The parasite was affected, turning into a parasitic version of itself. It is not evil by nature, it is evil by design.
 	''' */
+
+Tendon_Tear: {
+	// Name: Tendon Tear
+	/* Text:
+		'''
+		[header:Tendon Tear (10/13)]
+		[i:Origins/Tendon_Tear]
+
+		*****
+		The breakout group had successfully controlled the populous at the same time they lost control of themselves. Their creation growing too powerful, rising from its chamber. The fallen kingdom began to rot as its citizens began to rip and tear.
+		''' */
+}
+
+The_Rotted_Fork: {
+	// Name: The Rotted Fork
+	/* Text:
+		'''
+		[header:The Rotted Fork (3/13)]
+		[i:The_Rotteed_Fork]
+
+		*****
+		It became a tradition written in blood. The king must drink from the blood of the giant beast their first had slain. Sacred ichor, instead the deemer of righteous king. The fork would be there for the pouring, and the fork of his first.
+		''' */
+}
+
+The_Undertaker: {
+	// Name: The Undertaker
+	/* Text:
+		'''
+		[header:The Undertaker (5/13)]
+		[i:The_Undertaker]
+
+		*****
+		The kingdom's people weren't always this consumed by witchcraft. It had been the blood that was spilled onto the lands of Terraria by a giant, otherworldly beast.
+		''' */
+}
+
+Tissue_Sample: {
+	// Name: Tissue Sample
+	/* Text:
+		'''
+		[header:Tissue Sample (9/13)]
+		[i:Tissue_Sample]
+
+		*****
+		But, it was too late before the last sane of the populous began to realize his evil plots... even from hundreds of years after his death. These cultists wanted to restore their old king by first restoring the organ that made him.
+		''' */
+}
 
 Torpedo_Tube: {
 	// Name: Torpedo Tube
@@ -452,16 +812,42 @@ Undead_Chunk: {
 		''' */
 }
 
-/* Vorpal_Sword.Text:
-	'''
-	This sword can only be used by a pure mind for He cannot corrupt. The sword is very powerful and can slice through anything for if He were to get his mitts on them, we would all be doomed.
+Vicious_Mushroom: {
+	// Name: Vicious Mushroom
+	/* Text:
+		'''
+		[header:Vicious Mushroom (2/13)]
+		[i:Blade_Tongue]
 
-	I bestow to you, the might of a weapon that inquires the true responsibility of an individual. You mustn't use this blade for any other reason than to slash down the Forbidden One. We are in times of need, Boy… do not let us down… I can do it sir.
+		*****
+		Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order. But, first must understand the Crimson's long history in this world.
+		''' */
+}
 
-	Hmmph! Ah, it's a bust! I can't get it. It's stuck with the ground! Being this sharp, I would've figured it could slide right out! This would be too dangerous for the parasite to consume!
+Vorpal_Sword: {
+	// Name: Vorpal Sword
+	/* Text:
+		'''
+		[header:Vorpal Sword (2/12)]
+		[i:Origins/Vorpal_Sword_Cursed] [i:Origins/Vorpal_Sword]
 
-	The leak had been neglected, and so came the Riven.
-	''' */
+		*****
+		The parasite cuts away at matter through alkahest. It absorbs the materials it can use and stores the excess elsewhere for later. It works by cutting compounds down to their most basic elements.
+		''' */
+}
+
+Weakpoint_Analyzer: {
+	// Name: Weakpoint Anaylzer
+	/* Text:
+		'''
+		[header:Weakpoint Analyzer (11/13)]
+		[i:Origins/Weakpoint_Analyzer]
+
+		*****
+		Rip and tear their closest, all for sustenance. The new king had risen, all to influence them with his hymn. The recited hymn of endless bloodlust.
+		''' */
+}
+
 /* Ziptie.Text:
 	'''
 	[header:Ziptie (6/17)]
@@ -470,31 +856,8 @@ Undead_Chunk: {
 	*****
 	Damnation was no salvation, surely felt to be punishment greater than endless drifting through void. We learned because that was all there was. Crooked thoughts of collective thoughts from the egregore. We were being made alive...
 	''' */
+
 // The Archives (until I'm done with them)
-
-/* Alkahest.Text:
-	'''
-	[header:Alkahest]
-	[i:Origins/Alkahest]
-
-	*****
-
-	Overview: 
-		- Alkahest is an extremely-concentrated alkaline solution that is notable for being capable of breaking down any composite material. Alkahest is the primary chemical used by the Primordial Amoeba to break down the Terrarian world into energy. Alkahest is a very rare resource despite being widely available within the Riven Hive due to the fact that the Primordial Amoeba is the only being capable of synthesizing the chemical, making it highly sought after by merchants.
-						
-	Characteristics: 
-		- Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
-						
-	Origins: 
-		- As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
-						
-	Chemistry:
-		- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation, and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
-						
-	History: 
-		- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the Riven Hive, it was like any other single-cellular organism. When Cthulhu's invasion on Terraria's inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
-	''' */
-// Asylum_Whistle.Text: They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get us children inside, and following that would always be a strike of lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground in fury. I was just curious as to why they were so angry at the ground all the time, but I would never get to know that because that whistle would always sound.
 
 Captured_Mojo: {
 	// Name: Mojo
@@ -520,58 +883,6 @@ Captured_Mojo: {
 		''' */
 }
 
-// Name: Defiled Amalgamation
-/* Text:
-	'''
-	"That creature... it seems so... distraught?"
-
-	"I mean, if you had the collective consciousness of every being warped to the Defiled, wouldn't you be so hostile?"
-
-	"I wouldn't say *every* being. The Defiled is still quite small compared to the other three evils out there."
-
-	"The Amalgamation is the oldest known being in the Defiled's possession, it has went through so many chunks that I hardly doubt it even has one memory of itself."
-
-
-	Overview:
-		- The Defiled Amalgamation is the oldest known entity in the Defiled's hold as evident with its uniquely large size. The creature is known to prevent intruders from reaching the caverns of the Defiled Wastelands.
-
-	Characteristics:
-		- The Amalgamation adopts the same desaturated, misfigured appearance like any other Defiled creature, however, its size is surely a unique characteristic that not many other anti-bodies can share. It also bears a prominent avian physiology, moreso than Defiled Phantoms. Behaviorally, the Amalgamation is very volatile and sporadic. It also can be quite territorial and regularly guards the entrances to the Defiled Caverns on the surface.
-							
-	Origins:
-		- The Defiled Amalgamation's original form is not known, but it could likely be assumed that it was once a bird based on its physiology. Aside from that, it went through a the same process like any other creature being assimilated to the Defiled will that being "refactoring defiledization”.
-
-	Speculation:
-		- It is known that the Defiled Amalgamation contains the memories of many different beings assimilated to the Defiled. It could likely be assumed that the Amalgamation is seen as a higher entity than the other creatures that wander the wastes, but a heirarchy has not been confirmed to be present.
-	''' */
-/* Eccentric_Stone.Text:
-	'''
-	My Gloria! Where is she?!
-
-	You're too late… she is dead.
-
-	H- Why are you doing this?!
-
-	There world has done nothing for me. Why not?
-
-	That doesn't mean the blood of innocents is anywhere necessary!
-
-	Someone could've said something, but they all passed me by…
-
-	You're remembering wrong!
-
-	How dare you gaslight me! These are my own memories. How could I forget my own memories?! Die insolent pig!
-
-	NO!
-
-	No… father…
-
-	Daughter, I'm here! I'm right here!
-
-	Father… where are you?
-
-	I'm right here!
-	''' */
 /* Lost_Page.Text:
 	'''
 	I think they're still discovering- OKAY, so I totally just got sent to some kind of pocket dimension, so I'm going to try and write as much as I can on this piece of paper. I can see a lot of their data now that I'm in this weird realm, which I could only presume is some kind of prison. Their civilization is trying to become a singularity and combine all of their consciousnesses into one. It's really crazy, and I didn't think they were that far, but I am really discovering a lot of secrets right now. When I get out of here I'm going to really have to experiment…
@@ -584,7 +895,7 @@ Captured_Mojo: {
 
 	What's left are only the constructs of the inhabitants that once lived there. Some are said to still roam along the ashen ground of the underworld to this day.
 	''' */
-/* Tinkerers_Handing_Guide.Text:
+/* Tinkerers_Handy_Guide.Text:
 	'''
 	So, they call themselves the Cuboids, but they're a part of the Cubekon race, just to clarify… after looking into their data, they seem to be from another world and are somehow trapped here for some reason. My question is, with this wealth of technological advance, why haven't they gotten out of here yet? Not even I know that. What I do know is what's inside of them.
 
@@ -603,8 +914,3 @@ Captured_Mojo: {
 	Contributions:
 		- aiding the Terrarian
 	''' */
-
-Defiled_Tripod: {
-	// Text: Mods.Origins.Journal.Defiled_Tripod.Text
-	// Name: Defiled Tripod
-}

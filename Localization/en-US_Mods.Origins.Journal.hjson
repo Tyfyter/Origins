@@ -10,19 +10,22 @@ Indicator: {
 	Other: Detailed description available.
 }
 
-// Places
+Amoebeye: {
+	// Places
+	
+	
+	// Characters
+	
+	Text:
+		'''
+		[header:Amoebeye (8/12)]
+		[i:Origins/Amoebeye]
 
-
-// Characters
-
-Amoebeye.Text:
-	'''
-	[header:Amoebeye (8/12)]
-	[i:Origins/Amoebeye]
-
-	*****
-	And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. This place and the Amoeba itself are purely natural beings surviving in this world.
-	'''
+		*****
+		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. This place and the Amoeba itself are purely natural beings surviving in this world.
+		'''
+	Name: Amoebeye Entry
+}
 
 Ancient_Defiled_Cyclops: {
 	Name: Ancient Defiled Cyclops
@@ -167,8 +170,6 @@ Shark.Text:
 	*****
 	The merfolk's battle against Cthulhu was quick but violent. Neptune leading the initial cavalry was a tactical failure to his demise. Despite the unduly circumstace he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune consumed by Cthulhu, which had made Cthulhu even more powerful.
 	'''
-
-
 // Items
 
 Alkahest.Text:
@@ -192,18 +193,21 @@ Asylum_Whistle: {
 		'''
 }
 
-Baryte.Text:
-	'''
-	[header:Baryte (3/9)]
-	[i:Origins/Baryte_Item]
+Baryte: {
+	Text:
+		'''
+		[header:Baryte (3/9)]
+		[i:Origins/Baryte_Item]
 
-	*****
-	???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
+		*****
+		???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
 
-	???: Really?
+		???: Really?
 
-	???: Yeah, and it was supposedly for "Terraria's strongest warrior". He must've thought he was the stuff coming all the way down here for it.
-	'''
+		???: Yeah, and it was supposedly for "Terraria's strongest warrior". He must've thought he was the stuff coming all the way down here for it.
+		'''
+	Name: Baryte Entry
+}
 
 Black_Bile: {
 	Name: Black Bile
@@ -269,7 +273,6 @@ Boomboom.Text:
 	*****
 	I remember when I was still with my people before they banished me. That girl and her boomerang, she wasn't banished, she was lost. I don't think she ever knew she was that close to home this whole time.
 	'''
-
 Breach.Text:
 	'''
 	[header:Breach (16/17)]
@@ -278,7 +281,6 @@ Breach.Text:
 	*****
 	We festered in long silence enough and with your existence vexatious voices have thinned. We even found new problems through you, but we are not afraid because we forsee eventual submission.
 	'''
-
 Brineglow.Text:
 	'''
 	[header:Brineglow (3/6)]
@@ -494,7 +496,6 @@ Ichor.Text:
 	*****
 	The Crimson, despite the dryads' best efforts, could not be stopped. They began to understand that it was necessary for this world unless a hero could step up to the rite of keeping the balance themselves.
 	'''
-
 Infusion.Text:
 	'''
 	[header:Infusion (4/17)]
@@ -856,7 +857,6 @@ Ziptie.Text:
 	Damnation was no salvation, surely felt to be punishment greater than endless drifting through void. We learned because that was all there was. Crooked thoughts of collective thoughts from the egregore. We were being made alive...
 	'''
 
-
 // The Archives (until I'm done with them)
 
 Captured_Mojo: {
@@ -914,4 +914,3 @@ Zoologist.Text:
 	Contributions:
 		- aiding the Terrarian
 	'''
-}
