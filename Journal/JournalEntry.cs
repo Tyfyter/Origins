@@ -7,20 +7,22 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Journal {
-	public abstract class JournalEntry : ModType {
+	public abstract class JournalEntry : ModType, ILocalizedModType {
 		public abstract string TextKey { get; }
 		public string NameKey { get; private set; }
 		public string NameValue => Language.GetTextValue(NameKey);
 		public virtual string[] Aliases => [];
 		public virtual ArmorShaderData TextShader => null;
 		public virtual Color BaseColor => Color.Black;
+		public string LocalizationCategory => "Journal";
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
-			NameKey = $"Mods.{Mod.Name}.Journal.{TextKey}.Name";
+			NameKey = $"Mods.{Mod.Name}.{LocalizationCategory}.{TextKey}.Name";
 			if (!Language.Exists(NameKey)) {
-				NameKey = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
+				string itemName = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
+				if (Language.Exists(itemName)) NameKey = itemName;
 			}
-			Language.GetOrRegister(NameKey);
+			Language.GetOrRegister(NameKey, PrettyPrintName);
 			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
 			Journal_Registry.Entries ??= [];
 			Journal_Registry.Entries.Add(Mod.Name + "/" + Name, this);

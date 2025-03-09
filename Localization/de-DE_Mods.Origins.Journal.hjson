@@ -134,6 +134,7 @@ Baryte: {
 	}
 
 	// Text: Mods.Origins.Journal.Baryte.Text
+	// Name: Baryte
 }
 
 Black_Bile: {
@@ -602,4 +603,8 @@ Captured_Mojo: {
 	Contributions:
 		- aiding the Terrarian
 	''' */
-// Defiled_Tripod.Text: Mods.Origins.Journal.Defiled_Tripod.Text
+
+Defiled_Tripod: {
+	// Text: Mods.Origins.Journal.Defiled_Tripod.Text
+	// Name: Defiled Tripod
+}

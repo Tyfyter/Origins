@@ -3326,8 +3326,6 @@ Baryte_Wall_Item: {
 	Tooltip: ""
 }
 
-Baryte.DisplayName: Mods.Origins.Items.Baryte.DisplayName
-
 Defiled_Dungeon_Chest_Placeholder_Item: {
 	DisplayName: Defiled Dungeon Chest Placeholder Item
 	Tooltip: ""
@@ -5376,6 +5374,3 @@ Fumethrower: {
 	DisplayName: Fumethrower
 	Tooltip: ""
 }
-
-Ancient_Defiled_Cyclops.DisplayName: Mods.Origins.Items.Ancient_Defiled_Cyclops.DisplayName
-Defiled_Tripod.DisplayName: Mods.Origins.Items.Defiled_Tripod.DisplayName
