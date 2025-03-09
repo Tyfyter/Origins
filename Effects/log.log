@@ -32,4 +32,83 @@ Compiling font... Done!
 Compiling font content file: CoordinateMaskFilter.xnb... Done!
 
 Loading description file: Crown_Jewel_Caustics.fx... Done!
-Compiling font... 
+Compiling font... Done!
+Compiling font content file: Crown_Jewel_Caustics.xnb... Done!
+
+Loading description file: HolidayHairDye.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Done!
+Compiling font content file: HolidayHairDye.xnb... Done!
+
+Loading description file: Journal.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Journal.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Journal.fx
+Done!
+Compiling font content file: Journal.xnb... Done!
+
+Loading description file: MaskedPurpleJellyFilter.fx... Done!
+Compiling font... Done!
+Compiling font content file: MaskedPurpleJellyFilter.xnb... Done!
+
+Loading description file: MaskedRasterizeFilter.fx... Done!
+Compiling font... Done!
+Compiling font content file: MaskedRasterizeFilter.xnb... Done!
+
+Loading description file: MaskedTornFilter.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+Done!
+Compiling font content file: MaskedTornFilter.xnb... Done!
+
+Loading description file: PerlinFade.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx
+Done!
+Compiling font content file: PerlinFade.xnb... Done!
+
+Loading description file: Rasterize.fx... Done!
+Compiling font... Done!
+Compiling font content file: Rasterize.xnb... Done!
+
+Loading description file: RivenBloodCoating.fx... Done!
+Compiling font... Done!
+Compiling font content file: RivenBloodCoating.xnb... Done!
+
+Loading description file: Shimmer.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Shimmer.fx
+Done!
+Compiling font content file: Shimmer.xnb... Done!
+
+Loading description file: Solvent.fx... Done!
+Compiling font... Done!
+Compiling font content file: Solvent.xnb... Done!
+
+Loading description file: Strip.fx... Done!
+Compiling font... Done!
+Compiling font content file: Strip.xnb... Done!
+
+Loading description file: TileOutline.fx... Done!
+Compiling font... Done!
+Compiling font content file: TileOutline.xnb... Done!

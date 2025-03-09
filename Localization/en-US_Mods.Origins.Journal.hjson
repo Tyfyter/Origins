@@ -925,15 +925,7 @@ Ziptie.Text:
 	*****
 	Damnation was no salvation, surely felt to be punishment greater than endless drifting through void. We learned because that was all there was. Crooked thoughts of collective thoughts from the egregore. We were being made alive...
 	'''
-
-// The Archives (until I'm done with them)
-
-Ashen4: {
-	Text:
-		'''
-		And finally with Master Tinkerers, we have the highest-ranking caste of the Mechanicus Sovereignty. Master Tinkerers are proven to be the brightest and most capable, and also the most elder. Master Tinkerer's jobs are very special to them or include high-level administrative work. Master Tinkerers rarely have time outside of their work whenever not joined by Senior Tinkerers. Two notable Master Tinkerers in history was the geniocratic monarch himself, Emfrit Neferly, and who you know as the Cubekon Tinkerer. The Cubekon Tinkerer was promoted to Master Tinkerer after amassing enough information about the otherwise enigmatic Cubekonians and directly transforming her research into substantial advancements in Mechanicus technology.
-		'''
-}
+Ashen4.Text: And finally with Master Tinkerers, we have the highest-ranking caste of the Mechanicus Sovereignty. Master Tinkerers are proven to be the brightest and most capable, and also the most elder. Master Tinkerer's jobs are very special to them or include high-level administrative work. Master Tinkerers rarely have time outside of their work whenever not joined by Senior Tinkerers. Two notable Master Tinkerers in history was the geniocratic monarch himself, Emfrit Neferly, and who you know as the Cubekon Tinkerer. The Cubekon Tinkerer was promoted to Master Tinkerer after amassing enough information about the otherwise enigmatic Cubekonians and directly transforming her research into substantial advancements in Mechanicus technology.
 
 Captured_Mojo: {
 	Name: Mojo
@@ -990,3 +982,8 @@ Zoologist.Text:
 	Contributions:
 		- aiding the Terrarian
 	'''
+
+NE_8: {
+	Name: N E_8 Entry
+	Text: Mods.Origins.Journal.NE_8.Text
+}

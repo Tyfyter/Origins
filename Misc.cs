@@ -2737,6 +2737,33 @@ namespace Origins {
 			X = vector.X;
 			Y = vector.Y;
 		}
+
+		public static void UseOldRenderTargets(this SpriteBatch spriteBatch, RenderTargetBinding[] oldRenderTargets) {
+			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;
+			RenderTargetUsage[] renderTargetUsage = [];
+			try {
+				if (anyOldTargets) {
+					renderTargetUsage = new RenderTargetUsage[oldRenderTargets.Length];
+					for (int i = 0; i < oldRenderTargets.Length; i++) {
+						RenderTarget2D renderTarget = (RenderTarget2D)oldRenderTargets[i].RenderTarget;
+						renderTargetUsage[i] = renderTarget.RenderTargetUsage;
+						PegasusLib.Graphics.GraphicsMethods.SetRenderTargetUsage(renderTarget, RenderTargetUsage.PreserveContents);
+					}
+				} else {
+					renderTargetUsage = [spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage];
+					spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+				}
+				spriteBatch.GraphicsDevice.SetRenderTargets(oldRenderTargets);
+			} finally {
+				if (anyOldTargets) {
+					for (int i = 0; i < oldRenderTargets.Length; i++) {
+						PegasusLib.Graphics.GraphicsMethods.SetRenderTargetUsage((RenderTarget2D)oldRenderTargets[i].RenderTarget, renderTargetUsage[i]);
+					}
+				} else {
+					spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage[0];
+				}
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

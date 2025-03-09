@@ -44,6 +44,7 @@ using PegasusLib;
 using Origins.Items.Other.Consumables;
 using CalamityMod.Items.Placeables.FurnitureAuric;
 using Origins.Items;
+using Origins.Items.Other;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -111,6 +112,7 @@ namespace Origins {
 		public static ArmorShaderData solventShader;
 		public static MiscShaderData rasterizeShader;
 		public static ArmorShaderData amebicProtectionShader;
+		public static ArmorShaderData journalDrawingShader;
 		public static HairShaderData amebicProtectionHairShader;
 		public static ArmorShaderData coordinateMaskFilter;
 		public static ArmorShaderData tileOutlineShader;
@@ -437,6 +439,9 @@ namespace Origins {
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
 				.UseSamplerState(SamplerState.PointClamp);
 
+				journalDrawingShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "Drawing");
+				GameShaders.Armor.BindShader(MC.ItemType<Journal_Item>(), journalDrawingShader);
+
 				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
 				//Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
@@ -515,6 +520,12 @@ namespace Origins {
 			]);
 			ChatManager.Register<Evil_Handler>([
 				"evil"
+			]);
+			ChatManager.Register<Journal_Portrait_Handler>([
+				"jportrait"
+			]);
+			ChatManager.Register<Image_Handler>([
+				"jimage"
 			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,

@@ -268,11 +268,7 @@ Dryads_Inheritance: {
 
 Eccentric_Stone: {
 	// DisplayName: Eccentric Stone
-	/* Tooltip:
-		'''
-		10% increased summon damage
-		+2 minion slots
-		''' */
+	// Tooltip: +1 minion slot
 }
 
 Endless_Explosives: {
