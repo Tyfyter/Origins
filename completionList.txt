@@ -243,7 +243,7 @@ ENEMY NPCS:
 (^) Shotgunfish
 (X) Tendon Terror
 (^) Torn Ghoul*
-(#2, ^2) Trijaw Shark* !!! (need symbiotic fish AI)
+(☻) Trijaw Shark* !!!
 (X) VV-13
 
 (X) Clockwork
