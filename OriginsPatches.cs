@@ -690,6 +690,14 @@ namespace Origins {
 				SoundEffect newEffect = new(bytes, sampleRate, (AudioChannels)_channels.GetValue(self));
 				return orig(newEffect);//orig(self);
 			});//*/
+			On_Player.UpdateJumpHeight += On_Player_UpdateJumpHeight;
+		}
+
+		private void On_Player_UpdateJumpHeight(On_Player.orig_UpdateJumpHeight orig, Player self) {
+			orig(self);
+			if (self.jumpBoost && self.OriginPlayer().heliumTank) {
+				Player.jumpHeight = (int)(Player.jumpHeight * 1.2f);
+			}
 		}
 
 		static bool shouldDoHeliumSound = false;
@@ -706,7 +714,7 @@ namespace Origins {
 			try {
 				if (!self.stoned && !self.frostArmor && !self.boneArmor) {
 					OriginPlayer originPlayer = self.OriginPlayer();
-					shouldDoHeliumSound = originPlayer.heliumTank;
+					shouldDoHeliumSound = originPlayer.heliumTankSqueak;
 					heliumSoundPitch = originPlayer.heliumTankStrength;
 				}
 				orig(self, info, quiet);

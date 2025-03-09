@@ -16,6 +16,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.buffImmune[BuffID.Suffocation] = true;
 			player.AddMaxBreath(257);
+			player.OriginPlayer().heliumTank = true;
 			if (!hideVisual) UpdateSqueakiness(player, false);
 		}
 		public override void UpdateVanity(Player player) {
@@ -23,7 +24,7 @@ namespace Origins.Items.Accessories {
 		}
 		public void UpdateSqueakiness(Player player, bool vanitySlot) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			originPlayer.heliumTank = true;
+			originPlayer.heliumTankSqueak = true;
 			int count = player.armor.Length / 2;
 			int offset = vanitySlot ? count : 0;
 			for (int i = 0; i < count; i++) {

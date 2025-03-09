@@ -133,6 +133,7 @@ namespace Origins {
 		public int spiderRavelTime;
 		public int vanityRavel;
 		public bool heliumTank = false;
+		public bool heliumTankSqueak = false;
 		public float heliumTankStrength = 1f;
 		public bool messyLeech = false;
 		public bool magmaLeech = false;
@@ -555,6 +556,7 @@ namespace Origins {
 			spiritShard = false;
 			ravel = false;
 			heliumTank = false;
+			heliumTankSqueak = false;
 			messyLeech = false;
 			magmaLeech = false;
 			noU = false;
