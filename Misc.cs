@@ -3987,6 +3987,58 @@ namespace Origins {
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
 		}
 	}
+	public static class ProjectileExtensions {
+		public static void DoBoomerangAI(this Projectile projectile, Entity owner, float returnSpeed = 9f, float returnAcceleration = 0.4f, bool doSound = true) {
+			if (doSound && projectile.soundDelay == 0) {
+				projectile.soundDelay = 8;
+				SoundEngine.PlaySound(SoundID.Item7, projectile.position);
+			}
+			if (projectile.ai[0] == 0f) {
+				projectile.ai[1] += 1f;
+
+				if (projectile.ai[1] >= 30f) {
+					projectile.ai[0] = 1f;
+					projectile.ai[1] = 0f;
+					projectile.netUpdate = true;
+				}
+			} else {
+				projectile.tileCollide = false;
+
+				Vector2 offset = owner.Center - projectile.Center;
+				float distance = offset.Length();
+				if (distance > 3000f) {
+					projectile.Kill();
+					return;
+				}
+
+				offset *= returnSpeed / distance;
+				if (projectile.velocity.X < offset.X) {
+					projectile.velocity.X += returnAcceleration;
+					if (projectile.velocity.X < 0f && offset.X > 0f)
+						projectile.velocity.X += returnAcceleration;
+				} else if (projectile.velocity.X > offset.X) {
+					projectile.velocity.X -= returnAcceleration;
+					if (projectile.velocity.X > 0f && offset.X < 0f)
+						projectile.velocity.X -= returnAcceleration;
+				}
+
+				if (projectile.velocity.Y < offset.Y) {
+					projectile.velocity.Y += returnAcceleration;
+					if (projectile.velocity.Y < 0f && offset.Y > 0f)
+						projectile.velocity.Y += returnAcceleration;
+				} else if (projectile.velocity.Y > offset.Y) {
+					projectile.velocity.Y -= returnAcceleration;
+					if (projectile.velocity.Y > 0f && offset.Y < 0f)
+						projectile.velocity.Y -= returnAcceleration;
+				}
+
+				if (Main.myPlayer == projectile.owner) {
+					if (projectile.Hitbox.Intersects(owner.Hitbox))
+						projectile.Kill();
+				}
+			}
+		}
+	}
 	public static class ContentExtensions {
 		public static void AddBanner(this ModNPC self) {
 			self.Mod.AddContent(new Banner(self));

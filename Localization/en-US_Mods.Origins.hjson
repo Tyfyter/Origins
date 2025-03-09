@@ -1547,6 +1547,7 @@ Projectiles: {
 	Explosive_Barrel_P.DisplayName: Explosive Barrel
 	Acrid_Spout_P.DisplayName: Acrid Spout
 	Acrid_Spout_Droplet.DisplayName: Acrid Spout Droplet
+	Boomboom_P.DisplayName: Boomboom P
 }
 
 Prefixes: {

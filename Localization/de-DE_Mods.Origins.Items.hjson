@@ -5356,3 +5356,8 @@ Mithrafin: {
 
 // Noxious_Mithrafin.DisplayName: Noxious Mithrafin
 // Ornamental_Keepsake.DisplayName: Ornamental Keepsake
+
+Boomboom: {
+	// DisplayName: Boomboom
+	// Tooltip: ""
+}

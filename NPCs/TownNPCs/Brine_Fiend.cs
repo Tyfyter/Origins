@@ -1,14 +1,20 @@
 ﻿using AltLibrary.Core;
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
@@ -17,6 +23,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
@@ -31,7 +38,7 @@ namespace Origins.NPCs.TownNPCs {
 			NPCID.Sets.ExtraFramesCount[Type] = 8; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
 			NPCID.Sets.AttackFrameCount[Type] = 4;
 			NPCID.Sets.DangerDetectRange[Type] = 700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
-			NPCID.Sets.AttackType[Type] = 0;
+			NPCID.Sets.AttackType[Type] = 1;
 			NPCID.Sets.AttackTime[Type] = 90; // The amount of time it takes for the NPC's attack animation to be over once it starts.
 			NPCID.Sets.AttackAverageChance[Type] = 30;
 			NPCID.Sets.HatOffsetY[Type] = 4; // For when a party is active, the party hat spawns at a Y offset.
@@ -158,7 +165,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) {
-			damage = 30;
+			damage = 60;
 			knockback = 4f;
 		}
 
@@ -168,18 +175,63 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay) {
-			projType = ModContent.ProjectileType<Brine_Droplet>();
+			projType = ModContent.ProjectileType<Boomboom_P>();
 			attackDelay = 1;
 		}
 
 		public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset) {
 			multiplier = 8f;
-			randomOffset = 2f;
-			gravityCorrection = 30;
+			randomOffset = 0f;
+			gravityCorrection = 0;
 		}
 
 		public override ITownNPCProfile TownNPCProfile() {
 			return new Brine_Fiend_Profile();
+		}
+	}
+	public class Brine_Fiend_Boomboom : Boomboom_P {
+		public override string Texture => typeof(Boomboom_P).GetDefaultTMLName();
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.aiStyle = -1;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			base.OnSpawn(source);
+			if (source is EntitySource_Parent parentSource && parentSource is NPC npc) Projectile.ai[2] = npc.whoAmI;
+		}
+		public override void AI() {
+			if (!Main.npc.IndexInRange((int)Projectile.ai[2])) {
+				Projectile.Kill();
+				return;
+			}
+			NPC owner = Main.npc[(int)Projectile.ai[2]];
+			if (!owner.active) {
+				Projectile.Kill();
+				return;
+			}
+			Projectile.DoBoomerangAI(owner);
+
+			base.AI();
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			base.OnHitNPC(target, hit, damageDone);
+			if (Projectile.ai[0] == 0f) {
+				Projectile.velocity = -Projectile.velocity;
+				Projectile.netUpdate = true;
+			}
+
+			Projectile.ai[0] = 1f;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			if (Projectile.ai[0] == 0f) {
+				Projectile.velocity = -Projectile.oldVelocity;
+				Projectile.netUpdate = true;
+			}
+
+			Projectile.ai[0] = 1f;
+			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+			return false;
 		}
 	}
 	public class Brine_Fiend_Profile : ITownNPCProfile {
