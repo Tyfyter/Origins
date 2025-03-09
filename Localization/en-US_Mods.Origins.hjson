@@ -1548,6 +1548,7 @@ Projectiles: {
 	Acrid_Spout_P.DisplayName: Acrid Spout
 	Acrid_Spout_Droplet.DisplayName: Acrid Spout Droplet
 	Boomboom_P.DisplayName: Boomboom P
+	Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
 }
 
 Prefixes: {

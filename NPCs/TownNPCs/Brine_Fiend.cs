@@ -11,6 +11,7 @@ using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -175,7 +176,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay) {
-			projType = ModContent.ProjectileType<Boomboom_P>();
+			projType = ModContent.ProjectileType<Brine_Fiend_Boomboom>();
 			attackDelay = 1;
 		}
 
@@ -193,18 +194,19 @@ namespace Origins.NPCs.TownNPCs {
 		public override string Texture => typeof(Boomboom_P).GetDefaultTMLName();
 		public override void SetDefaults() {
 			base.SetDefaults();
+			Projectile.penetrate = -1;
 			Projectile.aiStyle = -1;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			base.OnSpawn(source);
-			if (source is EntitySource_Parent parentSource && parentSource is NPC npc) Projectile.ai[2] = npc.whoAmI;
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC npc) Projectile.localAI[2] = npc.whoAmI;
 		}
 		public override void AI() {
-			if (!Main.npc.IndexInRange((int)Projectile.ai[2])) {
+			if (!Main.npc.IndexInRange((int)Projectile.localAI[2])) {
 				Projectile.Kill();
 				return;
 			}
-			NPC owner = Main.npc[(int)Projectile.ai[2]];
+			NPC owner = Main.npc[(int)Projectile.localAI[2]];
 			if (!owner.active) {
 				Projectile.Kill();
 				return;
@@ -212,6 +214,12 @@ namespace Origins.NPCs.TownNPCs {
 			Projectile.DoBoomerangAI(owner);
 
 			base.AI();
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((int)Projectile.localAI[2]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[2] = reader.ReadInt32(); 
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			base.OnHitNPC(target, hit, damageDone);
