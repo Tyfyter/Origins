@@ -22,6 +22,7 @@ using Terraria.Audio;
 using Origins.Dusts;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Tiles.Other;
 
 namespace Origins.NPCs.Fiberglass {
 	public class Enchanted_Fiberglass_Cannon : ModNPC, IWikiNPC {
@@ -93,6 +94,8 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new AnyPlayerInteraction(), ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Item>(), 10, 3, 8));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Vine, 7));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
