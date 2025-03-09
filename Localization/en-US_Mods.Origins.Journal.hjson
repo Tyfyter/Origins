@@ -194,6 +194,7 @@ Asylum_Whistle: {
 }
 
 Baryte: {
+	Name: Baryte
 	Text:
 		'''
 		[header:Baryte (3/9)]
@@ -206,7 +207,18 @@ Baryte: {
 
 		???: Yeah, and it was supposedly for "Terraria's strongest warrior". He must've thought he was the stuff coming all the way down here for it.
 		'''
-	Name: Baryte Entry
+}
+
+Biocomponent_10: {
+	Name: Biocomponent 10
+	Text:
+		'''
+		[header:Biocomponent 10 (1/11)]
+		[i:Origins/Biocomponent_10]
+
+		*****
+		One of the surprisingly smaller castes of the Mechanicus Sovereignty, the Laborers, often worked alongside the worker machines in menial tasks, but not quite to the level of an Apprentice. Laborer quality of life was the worst due to how valuable one's intelligence was in their society, but compared to most other ancient civilizations there's was up there. There are no notable figures in the Laborer caste.
+		'''
 }
 
 Black_Bile: {
@@ -289,6 +301,18 @@ Brineglow.Text:
 	*****
 	She found refuge in a cave nearby a brine pool. As a child, the soft glow of the brineglow below drew in her curiosity. Strangely, it was found that she had a predisposition for the harsh brine.
 	'''
+
+C6_Jackhammer: {
+	Name: C6 Jackhammer
+	Text:
+		'''
+		[header:C6 Jackhammer (5/11)]
+		[i:Origins/C6_Jackhammer]
+
+		*****
+		Next is Scope Tinkerer caste, able to begin learning beyond their area of expertise, but not quite capable of making product to drive forward society. They take on manager roles in the general workforce, able to educate the lower castes while pursuing their own studies with higher-ups on a more personal level. Being exalted to any castes above Scope is an arduous journey as knowledge becomes increasingly harder to acquire.
+		'''
+}
 
 Crimson_Heart: {
 	Name: Crimson Heart
@@ -464,6 +488,18 @@ Felnum: {
 		'''
 }
 
+Fifth_Spline: {
+	Name: Fifth Spline
+	Text:
+		'''
+		[header:Fifth Spline (6/11)]
+		[i:Origins/Fifth_Spline]
+
+		*****
+		Above Scope Tinkerers are Senior Tinkerers. They make up the second smallest caste by population and live more luxurious lives. Senior Tinkerers act as teachers for Scope Tinkerers while primarily pursuing ways to actively improve Mechanicus society through technology or policy. The one-on-one nature of working with Scope Tinkerers below them grants them a lot of time to balance their lives.
+		'''
+}
+
 Forbidden_Voice: {
 	Name: Forbidden Voice
 	Text:
@@ -504,6 +540,18 @@ Infusion.Text:
 	*****
 	We wanted only to be left alone, or to be understood. Perhaps it was too hard them understanding something they never gave enough time to begin. They still pried wicked magic into our bodies and failed. Only succeeding when they brought the most elder to handle us.
 	'''
+
+Internal_Combustionfish: {
+	Name: Internal Combustionfish
+	Text:
+		'''
+		[header:Internal Combustionfish (4/11)]
+		[i:Origins/Internal_Combustionfish]
+
+		*****
+		Going into the Tinkerer caste, we start to see higher-level organization take place. Tinkerers are essentially just Craftsmen who are able to teach their jobs on a surface level. Tinkerers are of high emotional and intellectual intelligence as they must be tactful and able to express themselves. Some jobs performed by Tinkerers include maintenance technicians and systems work as they begin to understand pre-existing schematics.
+		'''
+}
 
 Lost_Picture_Frame: {
 	Name: Faith Beads
@@ -565,6 +613,18 @@ Missing_File: {
 		'''
 }
 
+NE8: {
+	Name: NE-8
+	Text:
+		'''
+		[header:NE-8 (3/11)]
+		[i:Origins/NE8]
+
+		*****
+		Craftsmen and women are either young adults pursuing a college-level education or satisfied with their particular line of work. Craftsmen work in specific jobs that Laborers can't really do without pre-requisite knowledge and understanding. Typical jobs like woodwork and trade electricians would be covered by this caste, which is to include notable figures like who you know as the Mechanic.
+		'''
+}
+
 Neptunes_Shell: {
 	Name: Neptune's Shell
 	Text:
@@ -576,6 +636,15 @@ Neptunes_Shell: {
 		Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire, he choose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. But, not Cthulhu. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been. But, it was still a slaughter.
 		'''
 }
+
+Nineball.Text:
+	'''
+	[header:Nineball (2/11)]
+	[i:Origins/Nineball]
+
+	*****
+	The next one up were the aforementioned Apprentinces, those either too young for higher education or at an average level of intellect. This was the most populous caste of the Mechanicus Sovereignty and didn't have anyone of notable history. The Apprentice caste is treated as a beginner-level caste where the primary objective is to expand upon information. Apprentices don't get their specialties until they become Craftsmen.
+	'''
 
 Old_Brine_Rock: {
 	Name: Old Brine Rock
@@ -858,6 +927,13 @@ Ziptie.Text:
 	'''
 
 // The Archives (until I'm done with them)
+
+Ashen4: {
+	Text:
+		'''
+		And finally with Master Tinkerers, we have the highest-ranking caste of the Mechanicus Sovereignty. Master Tinkerers are proven to be the brightest and most capable, and also the most elder. Master Tinkerer's jobs are very special to them or include high-level administrative work. Master Tinkerers rarely have time outside of their work whenever not joined by Senior Tinkerers. Two notable Master Tinkerers in history was the geniocratic monarch himself, Emfrit Neferly, and who you know as the Cubekon Tinkerer. The Cubekon Tinkerer was promoted to Master Tinkerer after amassing enough information about the otherwise enigmatic Cubekonians and directly transforming her research into substantial advancements in Mechanicus technology.
+		'''
+}
 
 Captured_Mojo: {
 	Name: Mojo

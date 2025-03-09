@@ -1,17 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-namespace Origins.Items.Weapons.Melee
-{
-    public class Nineball : ModItem, ICustomWikiStat {
+namespace Origins.Items.Weapons.Melee {
+	public class Nineball : ModItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
             "Yoyo"
         ];
-        public override void SetDefaults() {
+		public string EntryName => "Origins/" + typeof(Nineball_Entry).Name;
+		public class Nineball_Entry : JournalEntry {
+			public override string TextKey => "Nineball";
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Code1);
 			Item.damage = 18;
 			Item.crit = 5;

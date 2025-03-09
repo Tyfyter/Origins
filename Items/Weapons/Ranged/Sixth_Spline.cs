@@ -2,19 +2,24 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Sixth_Spline : ModItem, ICustomWikiStat {
+	public class Sixth_Spline : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
 		public static WeightedRandom<Sixth_Spline_Projectile> Projectiles { get; private set; }  = new();
         public string[] Categories => [
             "Gun"
         ];
-        public static int ID { get; set; }
+		public string EntryName => "Origins/" + typeof(Fifth_Spline_Entry).Name;
+		public class Fifth_Spline_Entry : JournalEntry {
+			public override string TextKey => "Fifth_Spline";
+		}
+		public static int ID { get; set; }
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			ID = Type;

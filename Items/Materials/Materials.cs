@@ -102,7 +102,11 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Biocomponent10 : MaterialItem {
+	public class Biocomponent10 : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Biocomponent_10_Entry).Name;
+		public class Biocomponent_10_Entry : JournalEntry {
+			public override string TextKey => "Biocomponent_10";
+		}
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
@@ -338,7 +342,11 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class NE8 : MaterialItem {
+	public class NE8 : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(NE_8_Entry).Name;
+		public class NE_8_Entry : JournalEntry {
+			public override string TextKey => "NE_8";
+		}
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
