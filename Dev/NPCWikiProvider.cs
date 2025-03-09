@@ -44,7 +44,7 @@ namespace Origins.Dev {
 			data["Name"] = npc.TypeName;
 			JArray types = new("NPC");
 			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
-			if (modItem is IJournalEntrySource) types.Add("Lore");
+			if (modNPC is IJournalEntrySource) types.Add("Lore");
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
 			
