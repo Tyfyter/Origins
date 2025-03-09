@@ -5,6 +5,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -71,6 +72,8 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Item>(), 10, 3, 8));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Vine, 7));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
@@ -191,6 +194,8 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new AnyPlayerInteraction(), ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Item>(), 10, 3, 8));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Vine, 7));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
@@ -370,6 +375,8 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Item>(), 10, 3, 8));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Vine, 7));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
