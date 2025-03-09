@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);
-			Item.damage = 15;
+			Item.damage = 25;
 			Item.useAnimation = 20;
 			Item.useTime = 5;
 			Item.width = 36;
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 6;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 4;
 			Projectile.friendly = true;
 			Projectile.alpha = 255;
 			Projectile.extraUpdates = 1;
