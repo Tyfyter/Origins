@@ -137,7 +137,7 @@ OTHER:
 (X) Accessory Jump Speed Modifiers° !!!
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
-(#2?, ^2) Journal*
+(^) Journal*
 (^) Quest System General*
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
 ---
