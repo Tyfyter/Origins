@@ -37,8 +37,9 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (fail && !effectOnly) {
+			if (fail && (!effectOnly || Main.rand.NextBool(3))) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
+				WorldGen.SquareTileFrame(i, j);
 			}
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
 			if (originWorld is not null) {
