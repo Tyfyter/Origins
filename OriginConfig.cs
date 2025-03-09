@@ -140,8 +140,8 @@ namespace Origins {
 		public LaserTagConfig laserTagConfig = new();
 
 		[Header("Journal")]
-		[DefaultValue(true)]
-		public bool OpenJournalOnUnlock = true;
+		[DefaultValue(false)]
+		public bool ShowLockedEntries = false;
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;

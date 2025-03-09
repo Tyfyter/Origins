@@ -206,17 +206,19 @@ namespace Origins.UI {
 					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 					StringBuilder unreadBuilder = new();
 					StringBuilder builder = new();
+					StringBuilder lockedBuilder = new();
 					foreach (string entry in Journal_Registry.Entries.Keys) {
 						if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
+							if (OriginClientConfig.Instance.ShowLockedEntries) lockedBuilder.AppendLine($"[j/jl:{entry}]");
 							continue;
 						}
 						if (originPlayer.unreadJournalEntries.Contains(entry)) {
-							unreadBuilder.Append($"[j/ju:{entry}]\n");
+							unreadBuilder.AppendLine($"[j/ju:{entry}]");
 						} else {
-							builder.Append($"[j/j:{entry}]\n");
+							builder.AppendLine($"[j/j:{entry}]");
 						}
 					}
-					SetText(unreadBuilder.ToString() + builder.ToString(), Color.Black);
+					SetText(unreadBuilder.ToString() + builder.ToString() + lockedBuilder.ToString(), Color.Black);
 					break;
 				}
 

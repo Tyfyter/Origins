@@ -5,19 +5,25 @@ using Origins.Journal;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.UI.Chat;
 
 namespace Origins.UI {
 	public class Journal_Link_Handler : ITagHandler {
 		public class Journal_Link_Snippet : TextSnippet {
-			string key;
+			public readonly string key;
+			public readonly Flags flags;
 			int lastHovered = 0;
-			Flags flags;
 			public Journal_Link_Snippet(string key, Color color = default, Flags flags = Flags.NONE) : base() {
 				this.key = key;
 				Text = Journal_Registry.Entries[key].NameValue;
-				CheckForHover = true;
-				this.Color = color;
+				if (flags.HasFlag(Flags.L)) {
+					this.Color = Color.Lerp(color, Color.SlateGray, 0.5f);
+					CheckForHover = false;
+				} else {
+					this.Color = color;
+					CheckForHover = true;
+				}
 				this.flags = flags;
 			}
 			public override void Update() {
@@ -25,11 +31,13 @@ namespace Origins.UI {
 				if (lastHovered > 0) lastHovered--;
 			}
 			public override void OnHover() {
+				if (flags.HasFlag(Flags.L)) return;
 				base.OnHover();
 				lastHovered = 4;
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			public override void OnClick() {
+				if (flags.HasFlag(Flags.L)) return;
 				Origins.OpenJournalEntry(key);
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
@@ -51,6 +59,22 @@ namespace Origins.UI {
 							pos.Y = position.Y + 2 * scale;
 							spriteBatch.Draw(TextureAssets.QuicksIcon.Value, pos, Main.MouseTextColorReal);
 						}
+					}
+					if (flags.HasFlag(Flags.L)) {
+						Vector2 pos = position + FontAssets.MouseText.Value.MeasureString(Text) * new Vector2(1, 0.35f) * scale;
+						pos.X += 4;
+						//pos.Y = position.Y + 2 * scale;
+						Main.instance.LoadItem(ItemID.ChestLock);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.ChestLock].Value,
+							pos,
+							null,
+							Main.MouseTextColorReal,
+							0,
+							new(0, TextureAssets.Item[ItemID.ChestLock].Value.Height * 0.5f),
+							scale * 0.75f,
+							SpriteEffects.None,
+						0);
 					}
 					//size = ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, color, 0, Vector2.Zero, new Vector2(scale));
 					//ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, new Color(0f, 0f, 0f, color.A / 255f), 0, Vector2.Zero, new Vector2(scale));
@@ -87,6 +111,10 @@ namespace Origins.UI {
 			/// in journal
 			/// </summary>
 			J = 1 << 1,
+			/// <summary>
+			/// locked
+			/// </summary>
+			L = 1 << 2,
 		}
 	}
 }

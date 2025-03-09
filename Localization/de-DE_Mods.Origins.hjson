@@ -1879,6 +1879,11 @@ Configs: {
 			// Label: Artifact Minion Healthbar Style
 			// Tooltip: ""
 		}
+
+		ShowLockedEntries: {
+			// Label: Show Locked Entries
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
