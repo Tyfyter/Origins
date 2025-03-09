@@ -1,7 +1,5 @@
 ﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.NPCs;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;

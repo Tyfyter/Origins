@@ -1,9 +1,4 @@
-﻿using Origins.Buffs;
-using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.NPCs;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -20,7 +15,7 @@ namespace Origins.Items.Accessories {
 			);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override void UpdateEquip(Player player) {
@@ -32,8 +27,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Noxious_Mithrafin>()
 			.AddIngredient<Keepsake_Remains>()
+			.AddIngredient<Noxious_Mithrafin>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

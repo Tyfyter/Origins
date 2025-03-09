@@ -243,7 +243,7 @@ ENEMY NPCS:
 (^) Shotgunfish
 (X) Tendon Terror
 (^) Torn Ghoul*
-(☻) Trijaw Shark* !!!
+(^) Trijaw Shark*
 (X) VV-13
 
 (X) Clockwork
@@ -277,7 +277,6 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(%2) Ashen Assimilation
 (^) Cavitation
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
@@ -383,7 +382,7 @@ ACCESSORIES:
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
-(^) Brine-Leafed Clover*
+(#3, ^2) Brine-Leafed Clover* !!! (worldgen issue)
 (^) Bug Trapper*
 (X) Builder's Touch
 (^) C.F.H.E.S.*
@@ -427,7 +426,7 @@ ACCESSORIES:
 (^) Harpy Horseshoe Balloon
 (^) Hazard Charm*
 (^) Headphones*
-(#2, ^2) Helium Tank* !!! (added functionality with balloons)
+(^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
 (X) Laden Crown
@@ -449,15 +448,15 @@ ACCESSORIES:
 (^) Mildew Heart
 (X) Mindweights
 (^) Missile Armcannon*
-(☻) Mithrafin !!!
+(^) Mithrafin
 (^) Molten Gun Magazine*
 (X) Netlace
 (X) Nightsky Cloak
 (^) Nitro Crate*
 (^) No U Card*
-(☻) Noxious Mithrafin !!!
+(^) Noxious Mithrafin
 (^) Olid Organ*
-(☻) Ornamental Keepsake !!!
+(^) Ornamental Keepsake
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -490,7 +489,7 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (^) Sparking Flame Barrel*
-(#2, ^2) Speed Booster* !!!
+(#2, ^2) Speed Booster*
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
@@ -512,9 +511,10 @@ ACCESSORIES:
 (@4, #2) Bomb Rack
 (^) Entangled Energy*
 (^) Mana Drive°
+(X) Probe Pack
 (^) Protozoa Food*
 (#2, ^2) Refactoring Pieces* !!!
-(☻) Retaliatory Tendril° !!! (Probably could benefit from self-damage)
+(^) Retaliatory Tendril°
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -684,7 +684,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko
 (^) Amoebash*
-(#, ^2) Boomboom !!!
+(^) Boomboom
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
@@ -828,7 +828,7 @@ MAGIC WEAPONS:
 (^) Shimmer Rod
 (X) Shinedown
 (X) Siphon Staff
-(☻) Splashid !!!
+(^) Splashid
 (^) Startillery
 (X) Symbiotic Staff
 
@@ -982,7 +982,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Grenade Lawnchair !!!
 (^) Happy Bomb*
 (X) Rattlesnake
-(#, ^2) Rocket Rifle !!!
+(#, ^2) Rocket Rifle
 (X) Shroomcannon
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
@@ -1194,7 +1194,7 @@ TILES:
 (^) Riven Foliage
 (^) Riven Pot
 (X) Scrapleaf Tree
-(^) Soulspore*
+(#3, ^2) Soulspore* !!! (worldgen issue)
 (ᗢ) Surveysprout*
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
@@ -1213,7 +1213,7 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(#, $2) Music Box (Brine Pool Vol. 1/2) !!! (both volumes)
+(#, $2) Music Box (Brine Pool Vol. 1/2) (Vol. 2)
 ($2) Music Box (Defiled Caverns Vol. 1/2) (both volumes)
 (X) Music Box (Defiled Egregocide Route Vol. 1)
 (X) Music Box (Defiled Mimic Route Vol. 1)
@@ -1396,7 +1396,7 @@ CONSUMABLES:
 (X) The Button°
 
 (X) Ashen Loot Box°
-(☻) Basic Crate* !!! (other drops)
+(^) Basic Crate*
 (^) Bilious Crate*
 (#2, ^2, 々) Corruption Loot Box°
 (#2, ^2, 々) Crimson Loot Box°
@@ -1516,6 +1516,8 @@ AMMO:
 
 CROSS-MOD CONTENT:
 ---
+(X) Contagion Assimilation
+
 (X) Bomber's Soul
 (X) Defiled Wave
 (X) Exploder's Soul

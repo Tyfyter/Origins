@@ -18,10 +18,10 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 14;
 			Item.useAnimation = 14;
 			Item.shoot = ModContent.ProjectileType<Boomboom_P>();
-			Item.shootSpeed = 9.75f;
+			Item.shootSpeed = 13f;
 			Item.knockBack = 5f;
-			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 2, silver: 30);
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 		}
 		public override bool CanUseItem(Player player) {

@@ -1,9 +1,4 @@
-﻿using Origins.Buffs;
-using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.NPCs;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -19,8 +14,8 @@ namespace Origins.Items.Accessories {
 			);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
-			Item.rare = ItemRarityID.LightRed;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 3);
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();

@@ -5351,7 +5351,11 @@ Fiberglass_Weaver_Trophy_Item: {
 
 Mithrafin: {
 	// DisplayName: Mithrafin
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Extends any Poison, Acid Venom or Toxic Shock inflicted onto enemies
+		Reduces the duration of these effects when applied to you
+		''' */
 }
 
 // Noxious_Mithrafin.DisplayName: Noxious Mithrafin
@@ -5359,5 +5363,5 @@ Mithrafin: {
 
 Boomboom: {
 	// DisplayName: Boomboom
-	// Tooltip: ""
+	// Tooltip: "'She loves her toys, especially the deadly ones!'"
 }
