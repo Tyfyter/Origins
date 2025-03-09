@@ -31,6 +31,7 @@ namespace Origins.NPCs.MiscE {
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if ((spawnInfo.Player.ZoneGraveyard || !Main.dayTime) && spawnInfo.Player.ZoneForest) {
 				return 0.085f;
 			}

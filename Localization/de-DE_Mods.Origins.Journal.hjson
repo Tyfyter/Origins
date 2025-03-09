@@ -419,7 +419,7 @@ Torpedo_Tube: {
 	/* Text:
 		'''
 		[header:Torpedo Tube (2/9)]
-		[i:Origins/Torpedo_Tube]
+		[i:Origins/Torpedo_Tube] [i:Origins/Torpedo_Tube_Alt]
 
 		*****
 		???: Huh. This guy was no push-over too. Some of his equipment looks like he was ready to pick a fight with something much larger than him.

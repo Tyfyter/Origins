@@ -61,6 +61,7 @@ namespace Origins.NPCs.Felnum {
 			return time > 0;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.4f;
 			return 0;
 		}
