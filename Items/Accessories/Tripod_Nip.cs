@@ -2,7 +2,6 @@
 using Origins.Journal;
 using Origins.NPCs.Defiled;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {

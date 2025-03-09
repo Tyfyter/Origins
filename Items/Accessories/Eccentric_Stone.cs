@@ -9,8 +9,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Eccentric_Stone : ModItem, IJournalEntrySource, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
-			"Misc",
-			"LoreItem"
+			"Combat",
+			"LoreItem",
+			"SummonBoostAcc"
 		];
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		public override void SetDefaults() {
@@ -29,7 +30,6 @@ namespace Origins.Items.Accessories {
 					break;
 				}
 			}
-
 		}
 		public IEnumerable<int> ProvideItemObtainability() {
 			yield return ModContent.ItemType<Spirit_Shard>();

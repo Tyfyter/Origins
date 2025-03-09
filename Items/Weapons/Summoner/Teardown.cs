@@ -1,24 +1,27 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Summoner;
+using Origins.Journal;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-
-using Origins.Dev;
-using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
-	public class Teardown : ModItem, ICustomWikiStat {
+	public class Teardown : ModItem, ICustomWikiStat, IJournalEntrySource {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		static short glowmask;
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Teardown_Entry).Name;
+		public class Teardown_Entry : JournalEntry {
+			public override string TextKey => "Teardown";
+		}
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 		}

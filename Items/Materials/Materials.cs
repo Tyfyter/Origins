@@ -391,7 +391,11 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Orange;
 		public override bool Hardmode => true;
 	}
-	public class Riven_Carapace : MaterialItem {
+	public class Riven_Carapace : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Riven_Carapace_Entry).Name;
+		public class Riven_Carapace_Entry : JournalEntry {
+			public override string TextKey => "Riven_Carapace";
+		}
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);

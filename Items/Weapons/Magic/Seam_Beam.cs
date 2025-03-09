@@ -1,27 +1,29 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Tools;
+using Origins.Journal;
 using Origins.NPCs;
-using Origins.Projectiles;
 using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Seam_Beam : ModItem, ICustomWikiStat {
+	public class Seam_Beam : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
 			"MagicGun"
 		];
 		static short glowmask;
+		public string EntryName => "Origins/" + typeof(Seam_Beam_Entry).Name;
+		public class Seam_Beam_Entry : JournalEntry {
+			public override string TextKey => "Seam_Beam";
+		}
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}

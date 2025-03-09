@@ -7,7 +7,6 @@ namespace Origins.Items.Accessories {
 	public class Spirit_Shard : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat",
-			"LoreItem",
 			"SummonBoostAcc"
 		];
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
@@ -19,6 +18,8 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.maxMinions += 1;
 			player.GetModPlayer<OriginPlayer>().spiritShard = true;
+			player.GetDamage(DamageClass.Summon) += 0.1f;
+			player.maxMinions += 2;
 		}
 	}
 }

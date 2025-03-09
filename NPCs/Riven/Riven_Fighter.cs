@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System.IO;
 using Terraria;
@@ -13,7 +13,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Riven_Protoform_Entry).Name;
+		public class Riven_Protoform_Entry : JournalEntry {
+			public override string TextKey => "Riven_Protoform";
+		}
 		public Rectangle DrawRect => new(0, 6, 36, 40);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;

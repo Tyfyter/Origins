@@ -268,7 +268,11 @@ Dryads_Inheritance: {
 
 Eccentric_Stone: {
 	DisplayName: Eccentric Stone
-	Tooltip: ""
+	Tooltip:
+		'''
+		10% increased summon damage
+		+2 minion slots
+		'''
 }
 
 Endless_Explosives: {
@@ -805,7 +809,12 @@ Spider_Ravel: {
 
 Spirit_Shard: {
 	DisplayName: Spirit Shard
-	Tooltip: Artifact minions turn into ghosts of their former selves upon death
+	Tooltip:
+		'''
+		Artifact minions turn into ghosts of their former selves upon death
+		10% increased summon damage
+		+2 minion slots
+		'''
 }
 
 Stealth_Ravel: {

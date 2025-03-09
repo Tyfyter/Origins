@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Journal;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Primordial_Permafrost : OriginTile, IRivenTile {
+	public class Primordial_Permafrost : OriginTile, IRivenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.Ices[Type] = true;
@@ -28,7 +28,11 @@ namespace Origins.Tiles.Riven {
 			base.FloorVisuals(player);
 		}
 	}
-	public class Primordial_Permafrost_Item : ModItem {
+	public class Primordial_Permafrost_Item : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Primordial_Permafrost_Entry).Name;
+		public class Primordial_Permafrost_Entry : JournalEntry {
+			public override string TextKey => "Primordial_Permafrost";
+		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);

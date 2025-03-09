@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Tiles.Cubekon;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -142,7 +141,11 @@ namespace Origins.Tiles.Riven {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Flesh_Item : ModItem {
+	public class Riven_Flesh_Item : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Spug_Flesh_Entry).Name;
+		public class Spug_Flesh_Entry : JournalEntry {
+			public override string TextKey => "Spug_Flesh";
+		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
