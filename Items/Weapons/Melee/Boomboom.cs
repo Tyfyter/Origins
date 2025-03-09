@@ -1,14 +1,19 @@
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Boomboom : ModItem, ICustomWikiStat {
+	public class Boomboom : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Boomerang"
 		];
+		public string EntryName => "Origins/" + typeof(Boomboom_Entry).Name;
+		public class Boomboom_Entry : JournalEntry {
+			public override string TextKey => "Boomboom";
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;

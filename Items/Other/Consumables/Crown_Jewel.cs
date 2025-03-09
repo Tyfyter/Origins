@@ -1,26 +1,26 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Journal;
 using Origins.LootConditions;
-using PegasusLib;
 using PegasusLib.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Renderers;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
-	public class Crown_Jewel : ModItem, ICustomWikiStat {
+	public class Crown_Jewel : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"PermaBoost"
 		];
+		public string EntryName => "Origins/" + typeof(Crown_Jewel_Entry).Name;
+		public class Crown_Jewel_Entry : JournalEntry {
+			public override string TextKey => "Crown_Jewel";
+		}
 		static List<int> bosses = [];
 		public override void Unload() => bosses = null;
 		public override void SetStaticDefaults() {

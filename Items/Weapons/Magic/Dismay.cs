@@ -1,19 +1,23 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
             "UsesBookcase",
 			"SpellBook"
         ];
-        public override void SetDefaults() {
+		public string EntryName => "Origins/" + typeof(Dismay_Entry).Name;
+		public class Dismay_Entry : JournalEntry {
+			public override string TextKey => "Dismay";
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedFlames);
 			Item.damage = 50;
 			Item.DamageType = DamageClass.Magic;

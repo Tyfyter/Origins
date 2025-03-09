@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ranged;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -12,13 +12,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy, IWikiNPC {
+	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public Rectangle DrawRect => new(-3, 6, 90, 118);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public class Ancient_Defiled_Cyclops_Entry : JournalEntry {
+			public override string TextKey => "Ancient_Defiled_Cyclops";
+		}
+		public string EntryName => "Origins/" + typeof(Ancient_Defiled_Cyclops_Entry).Name;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 7;
 			ItemID.Sets.KillsToBanner[Type] *= 3;

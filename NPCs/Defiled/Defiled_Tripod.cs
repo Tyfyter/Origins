@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.Tiles;
 using Origins.World.BiomeData;
 using System;
@@ -18,7 +19,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
 		public Rectangle DrawRect => new(0, 4, 98, 100);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
@@ -37,6 +38,10 @@ namespace Origins.NPCs.Defiled {
 				Velocity = 2f,
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
+		}
+		public string EntryName => "Origins/" + typeof(Defiled_Tripod_Entry).Name;
+		public class Defiled_Tripod_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Tripod";
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;//NPCAIStyleID.Fighter;

@@ -1,17 +1,22 @@
 using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.Journal;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Defiled_Spirit : ModItem, ICustomWikiStat {
+	public class Defiled_Spirit : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
         public string[] Categories => [
             "ThrownExplosive",
             "ExpendableWeapon"
         ];
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Defiled_Spirit_Entry).Name;
+		public class Defiled_Spirit_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Spirit";
+		}
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}

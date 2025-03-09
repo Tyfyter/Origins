@@ -1,22 +1,22 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Journal;
+using Origins.Projectiles;
+using PegasusLib;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
-using Origins.Projectiles;
-using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
-	public class Breach : ModItem, ICustomWikiStat {
+	public class Breach : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"OtherMagic"
 		];
+		public string EntryName => "Origins/" + typeof(Breach_Entry).Name;
+		public class Breach_Entry : JournalEntry {
+			public override string TextKey => "Breach";
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = Type;
 			OriginExtensions.InsertIntoShimmerCycle(ModContent.ItemType<Missing_File>(), Type);

@@ -1,13 +1,18 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Lousy_Liver : ModItem, ICustomWikiStat {
+	public class Lousy_Liver : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat",
 			"RasterSource"
 		];
+		public string EntryName => "Origins/" + typeof(Lousy_Liver_Entry).Name;
+		public class Lousy_Liver_Entry : JournalEntry {
+			public override string TextKey => "Lousy_Liver";
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
 			Item.rare = ItemRarityID.LightRed;

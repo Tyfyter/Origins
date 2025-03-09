@@ -7,6 +7,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.Journal;
 using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -15,7 +16,11 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine.Boss {
-	public class Lost_Diver_Transformation : ModNPC {
+	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
+		public class Mildew_Carrion_Entry : JournalEntry {
+			public override string TextKey => "Mildew_Carrion";
+		}
+		public string EntryName => "Origins/" + typeof(Mildew_Carrion_Entry).Name;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 10;
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;

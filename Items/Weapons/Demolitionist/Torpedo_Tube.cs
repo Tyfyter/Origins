@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Ranged;
+using Origins.Journal;
 using Origins.Tiles.Brine;
 using PegasusLib;
 using Terraria;
@@ -11,7 +11,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Torpedo_Tube : ModItem, ICustomWikiStat {
+	public class Torpedo_Tube : ModItem, ICustomWikiStat, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Torpedo_Tube_Entry).Name;
+		public class Torpedo_Tube_Entry : JournalEntry {
+			public override string TextKey => "Torpedo_Tube";
+		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Torpedo_Tube_P>(54, 44, 8f, 44, 18);
 			Item.value = Item.sellPrice(gold: 5);

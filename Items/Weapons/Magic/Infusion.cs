@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.NPCs;
 using PegasusLib;
 using System.Collections.Generic;
@@ -10,12 +11,16 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Infusion : ModItem, ICustomWikiStat {
+	public class Infusion : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
         public string[] Categories => [
             "MagicGun"
         ];
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Infusion_Entry).Name;
+		public class Infusion_Entry : JournalEntry {
+			public override string TextKey => "Infusion";
+		}
+		public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

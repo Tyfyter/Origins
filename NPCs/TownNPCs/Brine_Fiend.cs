@@ -1,15 +1,12 @@
 ﻿using AltLibrary.Core;
-using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Melee;
-using Origins.Projectiles.Weapons;
+using Origins.Journal;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
-using PegasusLib;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,11 +21,14 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
-	public class Brine_Fiend : ModNPC, IWikiNPC {
+	public class Brine_Fiend : ModNPC, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Brine_Fiend_Entry).Name;
+		public class Brine_Fiend_Entry : JournalEntry {
+			public override string TextKey => "Brine_Fiend";
+		}
 		public Rectangle DrawRect => new(0, 6, 36, 48);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 2;

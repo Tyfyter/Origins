@@ -1,15 +1,20 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Dim_Starlight : ModItem, ICustomWikiStat {
+	public class Dim_Starlight : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Vitality",
 			"MagicBoostAcc"
 		];
 		static short glowmask;
+		public string EntryName => "Origins/" + typeof(Dim_Starlight_Entry).Name;
+		public class Dim_Starlight_Entry : JournalEntry {
+			public override string TextKey => "Dim_Starlight";
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofStarpower] = ModContent.ItemType<Dim_Starlight>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Dim_Starlight>()] = ItemID.BandofStarpower;

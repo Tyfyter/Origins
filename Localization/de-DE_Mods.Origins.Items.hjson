@@ -2716,7 +2716,11 @@ Knee_Slapper: {
 
 Krakram: {
 	// DisplayName: Krakram
-	// Tooltip: "'Very pointy'"
+	/* Tooltip:
+		'''
+		Double backs on enemies
+		'Very pointy'
+		''' */
 }
 
 Nematoclaw: {
@@ -3321,6 +3325,8 @@ Baryte_Wall_Item: {
 	// DisplayName: Baryte Wall
 	// Tooltip: ""
 }
+
+// Baryte.DisplayName: Mods.Origins.Items.Baryte.DisplayName
 
 Defiled_Dungeon_Chest_Placeholder_Item: {
 	// DisplayName: Defiled Dungeon Chest Placeholder Item
@@ -5370,3 +5376,6 @@ Fumethrower: {
 	// DisplayName: Fumethrower
 	// Tooltip: ""
 }
+
+// Ancient_Defiled_Cyclops.DisplayName: Mods.Origins.Items.Ancient_Defiled_Cyclops.DisplayName
+// Defiled_Tripod.DisplayName: Mods.Origins.Items.Defiled_Tripod.DisplayName

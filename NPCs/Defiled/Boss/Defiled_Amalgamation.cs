@@ -7,6 +7,7 @@ using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
+using Origins.Journal;
 using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
@@ -33,7 +34,7 @@ using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat {
+	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> RightArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
@@ -59,6 +60,10 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
+		public string EntryName => "Origins/" + typeof(Defiled_Amalgamation_Entry).Name;
+		public class Defiled_Amalgamation_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Amalgamation";
+		}
 		internal static IItemDropRule normalDropRule;
 		public override void Unload() {
 			normalDropRule = null;

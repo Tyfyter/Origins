@@ -1,30 +1,33 @@
-﻿using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.UI;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Linq;
-using Terraria.Audio;
-using Origins.Projectiles.Weapons;
-using Terraria.DataStructures;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
-using Terraria.Graphics.Shaders;
-using Terraria.GameContent.Bestiary;
-using PegasusLib;
+using Origins.Journal;
+using Origins.Projectiles.Weapons;
+using Origins.UI;
 using PegasusLib.Graphics;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]
-	public class Missing_File : ModItem, ICustomWikiStat {
+	public class Missing_File : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"OtherMagic"
 		];
 		public static int ID { get; private set; }
 		public static Dictionary<int, int> NPCTypeAliases { get; private set; } = [];
+		public string EntryName => "Origins/" + typeof(Missing_File_Entry).Name;
+		public class Missing_File_Entry : JournalEntry {
+			public override string TextKey => "Missing_File";
+		}
 		public override void SetStaticDefaults() {
 			ID = Type;
 			NPCTypeAliases[NPCID.LihzahrdCrawler] = NPCID.Lihzahrd;

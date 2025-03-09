@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Melee;
+using Origins.Journal;
 using Origins.Misc;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -19,7 +19,11 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC {
+	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Sea_Dragon_Entry).Name;
+		public class Sea_Dragon_Entry : JournalEntry {
+			public override string TextKey => "Sea_Dragon";
+		}
 		public Rectangle DrawRect => new(-28, 0, 94, 26);
 		public int AnimationFrames => 64;
 		public int FrameDuration => 1;

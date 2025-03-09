@@ -179,12 +179,16 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 	}
-	public class Defiled_Bar : MaterialItem, ICustomWikiStat {
+	public class Defiled_Bar : MaterialItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
             "LoreItem",
 			"Bar"
         ];
-        public override int Value => Item.sellPrice(silver: 30);
+		public string EntryName => "Origins/" + typeof(Defiled_Bar_Entry).Name;
+		public class Defiled_Bar_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Bar";
+		}
+		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override bool Hardmode => false;
 		public override void Load() {
@@ -485,7 +489,11 @@ namespace Origins.Items.Materials {
             .Register();
         }
 	}
-	public class Undead_Chunk : MaterialItem {
+	public class Undead_Chunk : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Undead_Chunk_Entry).Name;
+		public class Undead_Chunk_Entry : JournalEntry {
+			public override string TextKey => "Undead_Chunk";
+		}
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);

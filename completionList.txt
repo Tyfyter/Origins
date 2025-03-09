@@ -419,7 +419,7 @@ ACCESSORIES:
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
-(☻) Gun Glove* !!! (randomized shooting offset)
+(^) Gun Glove*
 (^) Gun Magazine*
 (^) Haggard Artery*
 (^) Handy Helper*
@@ -664,7 +664,7 @@ MELEE WEAPONS:
 (^) Felnum Boar Spear*
 (^) Fiberglass Sword*
 (^) Hemorang*
-(☻) Krakram* !!! (rework)
+(^) Krakram*
 (^) Marrowick Sword*
 (^) Nineball*
 (^) Orbital Saw*
@@ -760,7 +760,7 @@ RANGED WEAPONS:
 (#, ^2) Dragon's Breath° !!!
 (^) Fifth Spline*
 (^) Firespit*
-(#, ^2) Fumethrower !!!
+(^) Fumethrower
 (^) Hallowed Cleaver*
 (^) Harpoon Burst Rifle*
 (^) HNO-3 "Viper"*

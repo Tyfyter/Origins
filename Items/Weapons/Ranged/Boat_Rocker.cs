@@ -1,17 +1,21 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
+using Origins.Projectiles;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Projectiles;
-using Origins.Tiles.Brine;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
+	public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat, IJournalEntrySource {
 		public new string[] Categories => [
 			"HarpoonGun"
 		];
+		public string EntryName => "Origins/" + typeof(Boat_Rocker_Entry).Name;
+		public class Boat_Rocker_Entry : JournalEntry {
+			public override string TextKey => "Boat_Rocker";
+		}
 		public override void SetStaticDefaults() {
 			ChainFrames = 3;
 		}

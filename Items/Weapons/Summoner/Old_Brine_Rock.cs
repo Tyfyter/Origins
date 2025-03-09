@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Journal;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using PegasusLib;
@@ -16,7 +17,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Old_Brine_Rock : ModItem {
+	public class Old_Brine_Rock : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Old_Brine_Rock_Entry).Name;
+		public class Old_Brine_Rock_Entry : JournalEntry {
+			public override string TextKey => "Old_Brine_Rock";
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

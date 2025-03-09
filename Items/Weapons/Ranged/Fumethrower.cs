@@ -1,13 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.ModLoader;
-
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Brine;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fumethrower : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -18,7 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);
-			Item.damage = 9;
+			Item.damage = 15;
 			Item.useAnimation = 20;
 			Item.useTime = 5;
 			Item.width = 36;
@@ -27,17 +23,17 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shoot = ModContent.ProjectileType<Fumethrower_P>();
 			Item.shootSpeed = 12f;
 			Item.reuseDelay = 6;
-			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Blue;
-			Item.ArmorPenetration = 5;
+			Item.value = Item.sellPrice(gold: 3);
+			Item.rare = ItemRarityID.LightRed;
+			Item.ArmorPenetration = 25;
 			Item.UseSound = SoundID.Item34;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient<Alkaliphiliac_Tissue>(10)
-            .AddIngredient<Brineglow_Item>(8)
-            .AddIngredient<Baryte_Item>(20)
-			.AddTile(TileID.Anvils)
+			.AddIngredient<Baryte_Item>(20)
+			.AddIngredient<Brineglow_Item>(8)
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() {

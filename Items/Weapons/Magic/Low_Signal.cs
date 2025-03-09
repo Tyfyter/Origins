@@ -1,16 +1,21 @@
 using Origins.Dev;
+using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Low_Signal : ModItem, ICustomWikiStat {
+	public class Low_Signal : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
         public string[] Categories => [
             "Wand"
         ];
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Low_Signal_Entry).Name;
+		public class Low_Signal_Entry : JournalEntry {
+			public override string TextKey => "Low_Signal";
+		}
+		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

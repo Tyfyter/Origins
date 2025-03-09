@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
 using Terraria;
@@ -8,12 +8,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Splashid : ModItem, IElementalItem {
+	public class Splashid : ModItem, IElementalItem, IJournalEntrySource {
 		static short glowmask;
 		public string[] Categories => [
 			"Wand",
 			"ToxicSource"
 		];
+		public string EntryName => "Origins/" + typeof(Splashid_Entry).Name;
+		public class Splashid_Entry : JournalEntry {
+			public override string TextKey => "Splashid";
+		}
 		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

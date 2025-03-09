@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,11 +16,15 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brineglow : OriginTile, IGlowingModTile {
+    public class Brineglow : OriginTile, IGlowingModTile, IJournalEntrySource {
         public string[] Categories => [
             "Plant"
         ];
-        public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
+		public string EntryName => "Origins/" + typeof(Brineglow_Entry).Name;
+		public class Brineglow_Entry : JournalEntry {
+			public override string TextKey => "Brineglow";
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, 0);

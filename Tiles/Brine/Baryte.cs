@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using static Origins.TileExtenstions;
+using Origins.Journal;
 
 namespace Origins.Tiles.Brine {
 	[LegacyName("Sulphur_Stone", "Dolomite")]
@@ -41,7 +42,11 @@ namespace Origins.Tiles.Brine {
 		}
 	}
 	[LegacyName("Sulphur_Stone_Item", "Dolomite_Item")]
-	public class Baryte_Item : ModItem {
+	public class Baryte_Item : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Baryte_Entry).Name;
+		public class Baryte_Entry : JournalEntry {
+			public override string TextKey => "Baryte";
+		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Origins.Projectiles;
 using System;
 using Terraria;
@@ -7,10 +8,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Faith_Beads : ModItem, ICustomWikiStat {
+	public class Faith_Beads : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Misc"
 		];
+		public string EntryName => "Origins/" + typeof(Faith_Beads_Entry).Name;
+		public class Faith_Beads_Entry : JournalEntry {
+			public override string TextKey => "Faith_Beads";
+		}
 		public override void Load() {
 			MonoModHooks.Add(
 				typeof(Player).GetProperty(nameof(Player.breathCDMax)).GetGetMethod(),

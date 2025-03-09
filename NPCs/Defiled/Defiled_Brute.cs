@@ -12,9 +12,10 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Journal;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Brute : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Brute : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
 		public Rectangle DrawRect => new(0, 4, 74, 62);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
@@ -23,6 +24,10 @@ namespace Origins.NPCs.Defiled {
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
+		public string EntryName => "Origins/" + typeof(Defiled_Krusher_Entry).Name;
+		public class Defiled_Krusher_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Krusher";
+		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

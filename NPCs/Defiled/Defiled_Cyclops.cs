@@ -3,6 +3,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -14,13 +15,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Cyclops : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Cyclops : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
 		public Rectangle DrawRect => new(0, 7, 46, 58);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.08f;
 		public const float speedMult = 1.3f;
+		public string EntryName => "Origins/" + typeof(Defiled_Cyclops_Entry).Name;
+		public class Defiled_Cyclops_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Cyclops";
+		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

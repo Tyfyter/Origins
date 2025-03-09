@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Cil;
 using Origins.Dev;
+using Origins.Journal;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -11,10 +11,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Mildew_Heart : ModItem, ICustomWikiStat {
+	public class Mildew_Heart : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat"
 		];
+		public string EntryName => "Origins/" + typeof(Mildew_Heart_Entry).Name;
+		public class Mildew_Heart_Entry : JournalEntry {
+			public override string TextKey => "Mildew_Heart";
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 4);
