@@ -2,6 +2,7 @@
 using PegasusLib.Graphics;
 using System.Text.RegularExpressions;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI.Chat;
@@ -12,12 +13,10 @@ namespace Origins.UI {
 		public class Journal_Portrait_Snippet : TextSnippet {
 			RenderTarget2D renderTarget;
 			readonly int id;
-			readonly float sharpness;
-			readonly bool sketched;
+			readonly Options options;
 			public Journal_Portrait_Snippet(string text, Options options) : base(text) {
 				Color = options.Color;
-				sharpness = options.Sharpness;
-				sketched = options.Sketch;
+				this.options = options;
 				if (!NPCID.Search.TryGetId(text, out id)) {
 					id = -1;
 					return;
@@ -26,11 +25,18 @@ namespace Origins.UI {
 			}
 			void SetupRenderTarget() {
 				renderTarget = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
-				UIBestiaryEntryIcon element = new UIBestiaryEntryIcon(Main.BestiaryDB.FindEntryByNPCID(id), isPortrait: true);
-				element.Width.Set(230f, 0);
-				element.Height.Set(112f, 0);
-				element.Recalculate();
-				element.Update(new GameTime());
+				BestiaryEntry entry = Main.BestiaryDB.FindEntryByNPCID(id);
+				Rectangle dimensions = new(0, 0, (int)options.Width, (int)options.Height);
+				BestiaryUICollectionInfo _collectionInfo = new() {
+					OwnerEntry = entry,
+					UnlockState = BestiaryEntryUnlockState.CanShowStats_2
+				};
+				EntryIconDrawSettings settings = new() {
+					iconbox = dimensions,
+					IsPortrait = true,
+					IsHovered = false
+				};
+				//entry.Icon.Update(_collectionInfo, dimensions, settings);
 				bool wasSpritebatchRunning = Main.spriteBatch.IsRunning();
 				SpriteBatchState state = Main.spriteBatch.GetState();
 				if (wasSpritebatchRunning) {
@@ -40,15 +46,15 @@ namespace Origins.UI {
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 				Main.spriteBatch.Begin();
-				if (sketched) {
+				if (options.Sketch) {
 					shaderOroboros.Capture();
-					element.Draw(Main.spriteBatch);
-					Origins.journalDrawingShader.UseSaturation(sharpness);
+					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
+					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
 					Origins.journalDrawingShader.UseColor(Color);
 					shaderOroboros.Stack(Origins.journalDrawingShader);
 					shaderOroboros.Release();
 				} else {
-					element.Draw(Main.spriteBatch);
+					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
 				}
 				Main.spriteBatch.End();
 				if (wasSpritebatchRunning) {
@@ -64,20 +70,25 @@ namespace Origins.UI {
 					size = default;
 					return false;
 				}
-				size = new(230f, 112f);
+				size = new(options.Width, options.Height);
 				if (renderTarget is null) return true;
-				spriteBatch?.Draw(renderTarget, position, new(0, 0, 230, 112), Color.White);
+				spriteBatch?.Draw(renderTarget, position, new(0, 0, (int)options.Width, (int)options.Height), Color.White);
 				return true;
 			}
 			~Journal_Portrait_Snippet() {
 				Main.QueueMainThreadAction(() => renderTarget?.Dispose());
 			}
 		}
-		public record struct Options(bool Sketch = false, float Sharpness = 1, Color Color = default);
+		public record struct Options(bool Sketch = false, float Sharpness = 1, Color Color = default, float Width = 230f, float Height = 112f);
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			Regex regex = new("(?:(s[\\d\\.]+)|(d))+");
-			Options settings = new(Color:baseColor);
+			Regex regex = new("(?:(s[\\d\\.]+)|(d)|(w[\\d\\.]+)|(h[\\d\\.]+))+");
+			Options settings = new(Color: baseColor);
+			bool first = true;
 			foreach (Group group in regex.Match(options).Groups.Values) {
+				if (first) {
+					first = false;
+					continue;
+				}
 				if (group.Value.Length <= 0) continue;
 				switch (group.Value[0]) {
 					///sharpness
@@ -87,6 +98,14 @@ namespace Origins.UI {
 					///sketch instead of full color
 					case 'd':
 					settings.Sketch = true;
+					break;
+					///width
+					case 'w':
+					settings.Width = float.Parse(group.Value[1..]);
+					break;
+					///height
+					case 'h':
+					settings.Height = float.Parse(group.Value[1..]);
 					break;
 				}
 			}
