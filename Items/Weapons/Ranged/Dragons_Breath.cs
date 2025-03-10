@@ -34,6 +34,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6, 0);
 		}
+		public override bool CanConsumeAmmo(Item ammo, Player player) => Main.rand.NextBool(3, 5);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			position += velocity.SafeNormalize(default) * 36;
 		}
@@ -118,7 +119,7 @@ namespace Origins.Items.Weapons.Ranged {
 			int verticalFrames = 7;
 			float progress = Utils.Remap(Projectile.localAI[0], 0f, fromMax, 0f, 1f);
 			float fade = Utils.Remap(Projectile.localAI[0] + Projectile.localAI[2], num, fromMax, 1f, 0f);
-			float num10 = Math.Min(Projectile.localAI[0], 20f);
+			float num10 = Math.Min(Projectile.localAI[0] + Projectile.localAI[2], 20f);
 			float num11 = Utils.Remap(Projectile.localAI[0] + Projectile.localAI[2], 0f, fromMax, 0f, 1f);
 			float scale = Utils.Remap(progress, 0.2f, 0.5f, 0.25f, 1f);
 			Rectangle rectangle = value.Frame(1, verticalFrames, 0, (int)Utils.Remap(num11, 0.5f, 1f, 3f, 5f));

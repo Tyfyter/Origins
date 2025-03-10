@@ -758,7 +758,7 @@ RANGED WEAPONS:
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
 (^) Dart Crossbow*
-(#, ^2) Dragon's Breath° !!!
+(☻) Dragon's Breath° !!!
 (^) Fifth Spline*
 (^) Firespit*
 (^) Fumethrower
@@ -1195,7 +1195,7 @@ TILES:
 (^) Riven Foliage
 (^) Riven Pot
 (X) Scrapleaf Tree
-(#3, ^2) Soulspore* !!! (worldgen issue)
+(☻) Soulspore* !!! (can't find any evidence that there's an actual issue beyond a lack of grass, now generates on defile stone too)
 (ᗢ) Surveysprout*
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!

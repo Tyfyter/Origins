@@ -2509,11 +2509,7 @@ Thermite_Launcher: {
 
 Dragons_Breath: {
 	// DisplayName: Dragon's Breath
-	/* Tooltip:
-		'''
-		Uses fireblossoms as ammo
-		Desperately needs rework
-		''' */
+	// Tooltip: Uses fireblossoms as ammo
 }
 
 Felnum_Golf_Ball: {
