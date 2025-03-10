@@ -25,7 +25,7 @@ namespace Origins.World {
 			(CHANGE_QUEUE, ChestID.LockedShadow, 0b0000),
 			(ENQUEUE, ModContent.ItemType<Boiler>(), 0.5f),
 			(ENQUEUE, ModContent.ItemType<Firespit>(), 0.5f),
-			//(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 0.5f),
+			(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 0.5f),
 			(ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 0.5f),
 
 			(CHANGE_QUEUE, ChestID.Ice, 0b0000),
