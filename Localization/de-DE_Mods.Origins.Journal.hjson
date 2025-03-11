@@ -20,7 +20,7 @@ Amoebeye: {
 	/* Text:
 		'''
 		[header:Amoebeye (8/12)]
-		[jportrait/s1.2dh200w200:Origins/Baryte_Item:Origins/Amoebeye]
+		[jportrait/s1.2dw600:Origins/Amoebeye]
 
 		*****
 		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. This place and the Amoeba itself are purely natural beings surviving in this world.
@@ -32,7 +32,8 @@ Ancient_Defiled_Cyclops: {
 	/* Text:
 		'''
 		[header:Ancient Defiled Cyclops (1/17)]
-		[i:Origins/Ancient_Defiled_Cyclops]
+		[jportrait/s1.2dw500h150:Origins/Ancient_Defiled_Cyclops]
+
 
 		*****
 		It started with emptiness. The memories collected can be felt, but there only remains empty void. Lacking information to inform us. So disturbed we all were as forgetters of past lives; to know our experiences now made us nothing.
@@ -44,7 +45,7 @@ Brain_of_Cthulhu: {
 	/* Text:
 		'''
 		[header:Brain of Cthulhu (13/13)]
-		[i:Brain_of_Cthulhu]
+		[jportrait/s1.2dw600:Brain_of_Cthulhu]
 
 		*****
 		As long as the Crimson bleeds, there will always be evil. Making it bleed more makes it worse for all.
@@ -56,7 +57,7 @@ Brine_Fiend: {
 	/* Text:
 		'''
 		[header:Brine Fiend (1/6)]
-		[i:Origins/Brine_Fiend]
+		[jportrait/s1.2dw600:Origins/Brine_Fiend]
 
 		*****
 		I know she doesn't talk much, but she has with me of course. She's too young to know what's good for her. Young lihzarhds of the Temple are usually like this, but they grow out of it eventually.
@@ -83,7 +84,7 @@ Defiled_Amalgamation: {
 	/* Text:
 		'''
 		[header:Defiled Amalgamation (13/17)]
-		[i:Origins/Defiled_Amalgamation]
+		[jportrait/s1.2dw600h140:Origins/Defiled_Amalgamation]
 
 		*****
 		Sometimes we sent them out to pointless tasks to remain occupied for minutes of silence. We even watched as some return to vicious cycle of simple life as they turned back to carnality. But, no matter for productivity.
@@ -95,7 +96,7 @@ Defiled_Cyclops: {
 	/* Text:
 		'''
 		[header:Defiled Cyclops (12/17)]
-		[i:Origins/Defiled_Cyclops]
+		[jportrait/s1.2dw300h56:Origins/Defiled_Cyclops]
 
 		*****
 		Lack of adversarial relationships didn't help, rather it disturbed the mediocrity. More to join us, more voices to annoy us. Less we could send to go fight pointless battles to remove vestige. Our true worst.
@@ -107,7 +108,7 @@ Defiled_Krusher: {
 	/* Text:
 		'''
 		[header:Defiled Krusher (3/17)]
-		[i:Origins/Defiled_Krusher]
+		[jportrait/s1.2dw450h78:Origins/Defiled_Brute]
 
 		*****
 		The great maintainers of this world found us in vulnerability, but instead of being nurturing mothers they wanted to be known for, they instead tried to kill us. With no intelligent thought to rely on, we defended precious existence.
@@ -119,7 +120,7 @@ Mildew_Carrion: {
 	/* Text:
 		'''
 		[header:Lost Diver (9/9)]
-		[i:Origins/Lost_Diver]
+		[jportrait/s1.2dw600:Origins/Lost_Diver]
 
 		*****
 		The hero with no name, he was not to blame. Wicked animals making the man their toy, when he was only just a boy. Lost his family at such young age, and his merfolk girlfriend filled him with much rage. Handled himself well and broke away, found new things to conquer day-by-day. Before long his lust for adventure came, and so did he below the brine never the same.
@@ -131,7 +132,7 @@ Riven_Protoform: {
 	/* Text:
 		'''
 		[header:Riven Protoform (7/12)]
-		[i:Origins/Riven_Protoform]
+		[jportrait/s1.2dw300h48:Origins/Riven_Fighter]
 
 		*****
 		The hive has since had many species born from its spug-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
@@ -143,7 +144,7 @@ Savage_Whip: {
 	/* Text:
 		'''
 		[header:Savage Whip (9/12)]
-		[i:Origins/Savage_Whip]
+		[jportrait/s1.2d:Origins/Savage_Whip]
 
 		*****
 		Even with that, the Riven is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". How could that be with a species entirely incapable of feeding from evil-doing like the Corruption or Crimson?
@@ -155,7 +156,7 @@ Sea_Dragon: {
 	/* Text:
 		'''
 		[header:Sea Dragon (4/6)]
-		[i:Origins/Sea_Dragon]
+		[jportrait/s1.2dw600:Origins/Sea_Dragon]
 
 		*****
 		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would quickly shape her to be who she is today. She started brewing concoctions to make her more resistant, however.
@@ -165,7 +166,7 @@ Sea_Dragon: {
 /* Shark.Text:
 	'''
 	[header:Shark (2/5)]
-	[i:Shark]
+	[jportrait/s1.2dw600:Shark]
 
 	*****
 	The merfolk's battle against Cthulhu was quick but violent. Neptune leading the initial cavalry was a tactical failure to his demise. Despite the unduly circumstace he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune consumed by Cthulhu, which had made Cthulhu even more powerful.
@@ -175,7 +176,9 @@ Sea_Dragon: {
 /* Alkahest.Text:
 	'''
 	[header:Alkahest (1/12)]
-	[i:Origins/Alkahest]
+	[jimage/sc3d:Origins/Items/Materials/Alkahest]
+
+
 
 	*****
 	The universal solvent, alkahest. How the parasite is uniquely capable of generating it is unclear, but it could very easily be just part of its biologic processes.
@@ -186,7 +189,9 @@ Asylum_Whistle: {
 	/* Text:
 		'''
 		[header:Asylum Whistle (1/1)]
-		[i:Origins/Asylum_Whistle]
+		[jimage/sc3d:Origins/Items/Accessories/Asylum_Whistle]
+
+
 
 		*****
 		They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get the children inside. Following that would always be lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground. I was curious as to why they were so angry at the ground all the time, but I could never get to know why because the whistle would always sound.
@@ -198,7 +203,8 @@ Baryte: {
 	/* Text:
 		'''
 		[header:Baryte (3/9)]
-		[jimage/s3:Origins/Tiles/Brine/Baryte_Item]
+		[jimage/sc3d:Origins/Tiles/Brine/Baryte_Item]
+
 
 		*****
 		???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
@@ -214,7 +220,8 @@ Biocomponent_10: {
 	/* Text:
 		'''
 		[header:Biocomponent 10 (1/11)]
-		[i:Origins/Biocomponent_10]
+		[jimage/sc3d:Origins/Items/Materials/Biocomponent10]
+
 
 		*****
 		One of the surprisingly smaller castes of the Mechanicus Sovereignty, the Laborers, often worked alongside the worker machines in menial tasks, but not quite to the level of an Apprentice. Laborer quality of life was the worst due to how valuable one's intelligence was in their society, but compared to most other ancient civilizations there's was up there. There are no notable figures in the Laborer caste.
@@ -226,7 +233,8 @@ Black_Bile: {
 	/* Text:
 		'''
 		[header:Black Bile (11/17)]
-		[i:Origins/Black_Bile]
+		[jimage/sc3d:Origins/Items/Materials/Black_Bile]
+
 
 		*****
 		We cope through the excess. Unintended was harm of the world, but eventually we accepted this. In the end, all that matters is our continuous existence, we concluded.
@@ -238,7 +246,7 @@ Blade_Tongue: {
 	/* Text:
 		'''
 		[header:Blade Tongue (1/13)]
-		[i:Blade_Tongue]
+		[jimage/sc3d:Blade_Tongue]
 
 		*****
 		Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria.
@@ -250,7 +258,7 @@ Boat_Rocker: {
 	/* Text:
 		'''
 		[header:Boat Rocker (4/9)]
-		[i:Origins/Boat_Rocker] [i:Origins/Boat_Rocker_Alt]
+		[jimage/sc2d:Origins/Items/Weapons/Ranged/Boat_Rocker] [jimage/sc2dw800:Origins/Items/Weapons/Ranged/Boat_Rocker_Alt]
 
 		*****
 		???: One shot, slam it down. Two shots, wave it all around. Three shots, blunt side for the pound. Four shots, kick the ground. Five, the aim is sound. What brings yah, Penny?
@@ -270,7 +278,7 @@ Bone_Rattle: {
 	/* Text:
 		'''
 		[header:Bone Rattle (8/13)]
-		[i:Bone_Rattle]
+		[jimage/sc3d:Bone_Rattle]
 
 		*****
 		Their king was well-received, garnering liking by his people, especially winning over the children's children. He drank from the blood with no care to celebrate his trophy. So, did the wild animals that surrounded the sacred lake.
@@ -280,7 +288,8 @@ Bone_Rattle: {
 /* Boomboom.Text:
 	'''
 	[header:Boombooom (2/6)]
-	[i:Origins/Boomboom]
+	[jimage/sc2d:Origins/Items/Weapons/Melee/Boomboom]
+
 
 	*****
 	I remember when I was still with my people before they banished me. That girl and her boomerang, she wasn't banished, she was lost. I don't think she ever knew she was that close to home this whole time.
@@ -288,7 +297,9 @@ Bone_Rattle: {
 /* Breach.Text:
 	'''
 	[header:Breach (16/17)]
-	[i:Origins/Breach]
+	[jimage/sc3d:Origins/Items/Weapons/Magic/Breach]
+
+
 
 	*****
 	We festered in long silence enough and with your existence vexatious voices have thinned. We even found new problems through you, but we are not afraid because we forsee eventual submission.
@@ -296,7 +307,7 @@ Bone_Rattle: {
 /* Brineglow.Text:
 	'''
 	[header:Brineglow (3/6)]
-	[i:Origins/Brineglow]
+	[jimage/sc3d:Origins/Tiles/Brine/Brineglow]
 
 	*****
 	She found refuge in a cave nearby a brine pool. As a child, the soft glow of the brineglow below drew in her curiosity. Strangely, it was found that she had a predisposition for the harsh brine.

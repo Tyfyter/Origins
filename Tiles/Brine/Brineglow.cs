@@ -16,14 +16,10 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brineglow : OriginTile, IGlowingModTile, IJournalEntrySource {
+    public class Brineglow : OriginTile, IGlowingModTile {
         public string[] Categories => [
             "Plant"
         ];
-		public string EntryName => "Origins/" + typeof(Brineglow_Entry).Name;
-		public class Brineglow_Entry : JournalEntry {
-			public override string TextKey => "Brineglow";
-		}
 		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -364,9 +360,13 @@ namespace Origins.Tiles.Brine {
 			Item.value = Item.sellPrice(copper: 30);
         }
     }
-    public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider {
+    public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider, IJournalEntrySource {
 		public IEnumerable<int> ProvideItemObtainability() => [Type];
 		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
+		public string EntryName => "Origins/" + typeof(Brineglow_Entry).Name;
+		public class Brineglow_Entry : JournalEntry {
+			public override string TextKey => "Brineglow";
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}

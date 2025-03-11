@@ -32,7 +32,8 @@ Ancient_Defiled_Cyclops: {
 	Text:
 		'''
 		[header:Ancient Defiled Cyclops (1/17)]
-		[i:Origins/Ancient_Defiled_Cyclops]
+		[jportrait/s1.2dw500h150:Origins/Ancient_Defiled_Cyclops]
+
 
 		*****
 		It started with emptiness. The memories collected can be felt, but there only remains empty void. Lacking information to inform us. So disturbed we all were as forgetters of past lives; to know our experiences now made us nothing.
@@ -44,7 +45,7 @@ Brain_of_Cthulhu: {
 	Text:
 		'''
 		[header:Brain of Cthulhu (13/13)]
-		[i:Brain_of_Cthulhu]
+		[jportrait/s1.2dw600:Brain_of_Cthulhu]
 
 		*****
 		As long as the Crimson bleeds, there will always be evil. Making it bleed more makes it worse for all.
@@ -56,7 +57,7 @@ Brine_Fiend: {
 	Text:
 		'''
 		[header:Brine Fiend (1/6)]
-		[i:Origins/Brine_Fiend]
+		[jportrait/s1.2dw600:Origins/Brine_Fiend]
 
 		*****
 		I know she doesn't talk much, but she has with me of course. She's too young to know what's good for her. Young lihzarhds of the Temple are usually like this, but they grow out of it eventually.
@@ -83,7 +84,7 @@ Defiled_Amalgamation: {
 	Text:
 		'''
 		[header:Defiled Amalgamation (13/17)]
-		[i:Origins/Defiled_Amalgamation]
+		[jportrait/s1.2dw600h140:Origins/Defiled_Amalgamation]
 
 		*****
 		Sometimes we sent them out to pointless tasks to remain occupied for minutes of silence. We even watched as some return to vicious cycle of simple life as they turned back to carnality. But, no matter for productivity.
@@ -95,7 +96,7 @@ Defiled_Cyclops: {
 	Text:
 		'''
 		[header:Defiled Cyclops (12/17)]
-		[i:Origins/Defiled_Cyclops]
+		[jportrait/s1.2dw300h56:Origins/Defiled_Cyclops]
 
 		*****
 		Lack of adversarial relationships didn't help, rather it disturbed the mediocrity. More to join us, more voices to annoy us. Less we could send to go fight pointless battles to remove vestige. Our true worst.
@@ -107,7 +108,7 @@ Defiled_Krusher: {
 	Text:
 		'''
 		[header:Defiled Krusher (3/17)]
-		[i:Origins/Defiled_Krusher]
+		[jportrait/s1.2dw450h78:Origins/Defiled_Brute]
 
 		*****
 		The great maintainers of this world found us in vulnerability, but instead of being nurturing mothers they wanted to be known for, they instead tried to kill us. With no intelligent thought to rely on, we defended precious existence.
@@ -119,7 +120,7 @@ Mildew_Carrion: {
 	Text:
 		'''
 		[header:Lost Diver (9/9)]
-		[i:Origins/Lost_Diver]
+		[jportrait/s1.2dw600:Origins/Lost_Diver]
 
 		*****
 		The hero with no name, he was not to blame. Wicked animals making the man their toy, when he was only just a boy. Lost his family at such young age, and his merfolk girlfriend filled him with much rage. Handled himself well and broke away, found new things to conquer day-by-day. Before long his lust for adventure came, and so did he below the brine never the same.
@@ -131,7 +132,7 @@ Riven_Protoform: {
 	Text:
 		'''
 		[header:Riven Protoform (7/12)]
-		[i:Origins/Riven_Protoform]
+		[jportrait/s1.2dw300h48:Origins/Riven_Fighter]
 
 		*****
 		The hive has since had many species born from its spug-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
@@ -143,7 +144,7 @@ Savage_Whip: {
 	Text:
 		'''
 		[header:Savage Whip (9/12)]
-		[i:Origins/Savage_Whip]
+		[jportrait/s1.2d:Origins/Savage_Whip]
 
 		*****
 		Even with that, the Riven is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". How could that be with a species entirely incapable of feeding from evil-doing like the Corruption or Crimson?
@@ -155,7 +156,7 @@ Sea_Dragon: {
 	Text:
 		'''
 		[header:Sea Dragon (4/6)]
-		[i:Origins/Sea_Dragon]
+		[jportrait/s1.2dw600:Origins/Sea_Dragon]
 
 		*****
 		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would quickly shape her to be who she is today. She started brewing concoctions to make her more resistant, however.
@@ -165,7 +166,7 @@ Sea_Dragon: {
 Shark.Text:
 	'''
 	[header:Shark (2/5)]
-	[i:Shark]
+	[jportrait/s1.2dw600:Shark]
 
 	*****
 	The merfolk's battle against Cthulhu was quick but violent. Neptune leading the initial cavalry was a tactical failure to his demise. Despite the unduly circumstace he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune consumed by Cthulhu, which had made Cthulhu even more powerful.
@@ -175,7 +176,7 @@ Shark.Text:
 Alkahest.Text:
 	'''
 	[header:Alkahest (1/12)]
-	[jimage/s3d:Origins/Items/Materials/Alkahest]
+	[jimage/sc3d:Origins/Items/Materials/Alkahest]
 
 
 
@@ -188,7 +189,7 @@ Asylum_Whistle: {
 	Text:
 		'''
 		[header:Asylum Whistle (1/1)]
-		[jimage/s3d:Origins/Items/Accessories/Asylum_Whistle]
+		[jimage/sc3d:Origins/Items/Accessories/Asylum_Whistle]
 
 
 
@@ -202,7 +203,7 @@ Baryte: {
 	Text:
 		'''
 		[header:Baryte (3/9)]
-		[jimage/s3d:Origins/Tiles/Brine/Baryte_Item]
+		[jimage/sc3d:Origins/Tiles/Brine/Baryte_Item]
 
 
 		*****
@@ -219,7 +220,7 @@ Biocomponent_10: {
 	Text:
 		'''
 		[header:Biocomponent 10 (1/11)]
-		[jimage/s3d:Origins/Items/Materials/Biocomponent10]
+		[jimage/sc3d:Origins/Items/Materials/Biocomponent10]
 
 
 		*****
@@ -232,7 +233,7 @@ Black_Bile: {
 	Text:
 		'''
 		[header:Black Bile (11/17)]
-		[jimage/s3d:Origins/Items/Materials/Black_Bile]
+		[jimage/sc3d:Origins/Items/Materials/Black_Bile]
 
 
 		*****
@@ -245,7 +246,7 @@ Blade_Tongue: {
 	Text:
 		'''
 		[header:Blade Tongue (1/13)]
-		[i:Blade_Tongue]
+		[jimage/sc3d:Blade_Tongue]
 
 		*****
 		Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria.
@@ -257,7 +258,7 @@ Boat_Rocker: {
 	Text:
 		'''
 		[header:Boat Rocker (4/9)]
-		[i:Origins/Boat_Rocker] [i:Origins/Boat_Rocker_Alt]
+		[jimage/sc2d:Origins/Items/Weapons/Ranged/Boat_Rocker] [jimage/sc2dw800:Origins/Items/Weapons/Ranged/Boat_Rocker_Alt]
 
 		*****
 		???: One shot, slam it down. Two shots, wave it all around. Three shots, blunt side for the pound. Four shots, kick the ground. Five, the aim is sound. What brings yah, Penny?
@@ -277,7 +278,7 @@ Bone_Rattle: {
 	Text:
 		'''
 		[header:Bone Rattle (8/13)]
-		[i:Bone_Rattle]
+		[jimage/sc3d:Bone_Rattle]
 
 		*****
 		Their king was well-received, garnering liking by his people, especially winning over the children's children. He drank from the blood with no care to celebrate his trophy. So, did the wild animals that surrounded the sacred lake.
@@ -287,7 +288,8 @@ Bone_Rattle: {
 Boomboom.Text:
 	'''
 	[header:Boombooom (2/6)]
-	[i:Origins/Boomboom]
+	[jimage/sc2d:Origins/Items/Weapons/Melee/Boomboom]
+
 
 	*****
 	I remember when I was still with my people before they banished me. That girl and her boomerang, she wasn't banished, she was lost. I don't think she ever knew she was that close to home this whole time.
@@ -295,7 +297,9 @@ Boomboom.Text:
 Breach.Text:
 	'''
 	[header:Breach (16/17)]
-	[i:Origins/Breach]
+	[jimage/sc3d:Origins/Items/Weapons/Magic/Breach]
+
+
 
 	*****
 	We festered in long silence enough and with your existence vexatious voices have thinned. We even found new problems through you, but we are not afraid because we forsee eventual submission.
@@ -303,7 +307,8 @@ Breach.Text:
 Brineglow.Text:
 	'''
 	[header:Brineglow (3/6)]
-	[i:Origins/Brineglow]
+	[jimage/sc3d:Origins/Tiles/Brine/Brineglow_Item]
+
 
 	*****
 	She found refuge in a cave nearby a brine pool. As a child, the soft glow of the brineglow below drew in her curiosity. Strangely, it was found that she had a predisposition for the harsh brine.
@@ -314,10 +319,10 @@ C6_Jackhammer: {
 	Text:
 		'''
 		[header:C6 Jackhammer (5/11)]
-		[i:Origins/C6_Jackhammer]
+		[jimage/sc3d:Origins/Items/Tools/C6_Jackhammer]
 
 		*****
-		Next is Scope Tinkerer caste, able to begin learning beyond their area of expertise, but not quite capable of making product to drive forward society. They take on manager roles in the general workforce, able to educate the lower castes while pursuing their own studies with higher-ups on a more personal level. Being exalted to any castes above Scope is an arduous journey as knowledge becomes increasingly harder to acquire.
+		Next is the Scope Tinkerer caste, able to begin learning beyond their area of expertise, but not quite capable of making product to drive forward society. They take on manager roles in the general workforce, able to educate the lower castes while pursuing their own studies with higher-ups on a more personal level. Being exalted to any castes above Scope is an arduous journey as knowledge becomes increasingly harder to acquire.
 		'''
 }
 
@@ -326,7 +331,7 @@ Crimson_Heart: {
 	Text:
 		'''
 		[header:Crimson Heart (4/13)]
-		[i:Crimson_Heart_Item]
+		[jimage/sc3d:Crimson_Heart_Item]
 
 		*****
 		Like the rest, this one’s heart was locked away, protected by his most devout after removing it from his body. To outsiders, a mortal sin punishable by death. To them, a festive tradition to honor their new king.
@@ -338,7 +343,7 @@ Crimson_Rod: {
 	Text:
 		'''
 		[header:Crimson Rod (6/13)]
-		[i:Crimson_Rod]
+		[jimage/sc3d:Crimson_Rod]
 
 		*****
 		Even in present time, its blood rains and continues to satiate the blood-thirsty, devolved denizens of this horrible place.
@@ -350,7 +355,8 @@ Crown_Jewel: {
 	Text:
 		'''
 		[header:Crown Jewel (7/9)]
-		[i:Origins/Crown_Jewel]
+		[jimage/sc3d:Origins/Items/Other/Consumables/Crown_Jewel]
+
 
 		*****
 		There she is. The crown jewel. Gleaming in this dark abyss, reminding me of her. The love of my life. ...perhaps, I really am not worthy. I am no hero, I am only a crowd-pleaser.
@@ -362,7 +368,7 @@ Deep_Ocean_Pearl: {
 	Text:
 		'''
 		[header:Deep Ocean Pearl (4/5)]
-		[i:Origins/Deep_Ocean_Pearl]
+		[jimage/sc3d:Origins/Items/Weapons/Summoner/Deep_Ocean_Pearl]
 
 		*****
 		The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from his havoc. There was a reform attempted by Neptune's closest but without their idol to give them guidance, the dream began to fade as people fled. I was just a merling at that time, which helped me fail to understand how awful life in Aqi was.
@@ -374,7 +380,8 @@ Defiled_Bar: {
 	Text:
 		'''
 		[header:Defiled Bar (8/17)]
-		[i:Origins/Defiled_Bar]
+		[jimage/sc3d:Origins/Items/Materials/Defiled_Bar]
+
 
 		*****
 		We live informed, wishing we had never known. An amalgam of purloined thoughts and memories. Pieces make us, many memories that belong to sole names... names who are with us, less without.
@@ -386,7 +393,8 @@ Defiled_Spirit: {
 	Text:
 		'''
 		[header:Defiled Spirit (2/17)]
-		[i:Origins/Defiled_Spirit] [i:Origins/Defiled_Wisp]
+		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Defiled_Spirit] [jportrait/s1.2dw150h25:Origins/Defiled_Wisp]
+
 
 		*****
 		We did not stop to think. We reverted to carnal thought. Only through this new existence we began to be shaped by habits that still flowed through our bodies. Existence was optimal, because we didn't have to think at all.
@@ -398,7 +406,9 @@ Dim_Starlight: {
 	Text:
 		'''
 		[header:Dim Starlight (7/17)]
-		[i:Origins/Dim_Starlight]
+		[jimage/sc3d:Origins/Items/Accessories/Dim_Starlight]
+
+
 
 		*****
 		We saw more than what the tiny sand pit could foster, life resting silently in cosmos. We looked up to stars, seeing nightmares far bigger than us. We are still afraid, for things you cannot see.
@@ -408,7 +418,8 @@ Dim_Starlight: {
 Dismay.Text:
 	'''
 	[header:Dismay (5/17)]
-	[i:Origins/Dismay]
+	[jimage/sc2d:Origins/Items/Weapons/Magic/Dismay]
+
 
 	*****
 	She was not of their kin, the one who could take us. To come put down rabid dog, we took her with us down to hell, to share this torture. We also learned from wounding her soul, but she did not welcome herself until there was no choice.
@@ -419,7 +430,7 @@ Diving_Helmet: {
 	Text:
 		'''
 		[header:Diving Helmet (5/5)]
-		[i:Diving_Helmet]
+		[jimage/sc3d:Diving_Helmet]
 
 		*****
 		I instead found joy infatuated by a naive, benevolent diver who entertained himself by diving and taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
@@ -431,7 +442,7 @@ Life_Fruit: {
 	Text:
 		'''
 		[header:Life Fruit (1/1)]
-		[i:Life_Fruit]
+		[jimage/sc3d:Life_Fruit]
 
 		*****
 		Terraria's Dryads were its true keepers, bringing about life and acting on behalf the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
@@ -443,7 +454,8 @@ Eccentric_Stone: {
 	Text:
 		'''
 		[header:Eccentric Stone]
-		[i:Origins/Eccentric_Stone]
+		[jimage/sc2d:Origins/Items/Accessories/Eccentric_Stone]
+
 
 		*****
 		This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate, but yet weren't able to free me from. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so carelessly is unforgivable.
@@ -455,7 +467,8 @@ Faith_Beads: {
 	Text:
 		'''
 		[header:Faith Beads (5/9)]
-		[i:Origins/Faith_Beads]
+		[jimage/sc2d:Origins/Items/Accessories/Faith_Beads]
+
 
 		*****
 		Penny: Now take off your suit.
@@ -473,7 +486,9 @@ Felnum: {
 	Text:
 		'''
 		[header:Felnum]
-		[i:Origins/Felnum_Ore_Item] [i:Origins/Felnum_Bar]
+		[jimage/sc3d:Origins/Tiles/Other/Felnum_Ore_Item] [jimage/sc3dw800:Origins/Items/Materials/Felnum_Bar]
+
+		*****
 
 		Overview: 
 			- Felnum is mostly known for its "electrical greed" in that it builds up a crystalline material known as "felnum crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
@@ -500,7 +515,7 @@ Fifth_Spline: {
 	Text:
 		'''
 		[header:Fifth Spline (6/11)]
-		[i:Origins/Fifth_Spline]
+		[jimage/sc3d:Origins/Items/Weapons/Ranged/Sixth_Spline]
 
 		*****
 		Above Scope Tinkerers are Senior Tinkerers. They make up the second smallest caste by population and live more luxurious lives. Senior Tinkerers act as teachers for Scope Tinkerers while primarily pursuing ways to actively improve Mechanicus society through technology or policy. The one-on-one nature of working with Scope Tinkerers below them grants them a lot of time to balance their lives.
@@ -512,10 +527,10 @@ Forbidden_Voice: {
 	Text:
 		'''
 		[header:Forbidden Voice]
-		[i:Origins/Forbidden_Voice] [i:Origins/Forbidden_Voice_Uncursed]
+		[jimage/sc3d:Origins/Items/Accessories/Forbidden_Voice] [jimage/sc3dw300:Origins/Items/Accessories/Forbidden_Voice_Uncursed]
 
 		*****
-		Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see my face melting away. "Promises" for fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
+		Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see it melting away. "Promises" of fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
 		'''
 }
 
@@ -524,7 +539,9 @@ Hearty_Broth: {
 	Text:
 		'''
 		[header:Hearty Broth (5/6)]
-		[i:Origins/Hearty_Broth]
+		[jimage/sc3d:Origins/Items/Other/Consumables/Broths/Hearty_Broth]
+
+
 
 		*****
 		Cooking and brewing quickly became her hobbies. She drew a fascination in it after collecting rare ingredients from all over the jungle. The broths she fed to animals made her find her real talents in brewery.
@@ -534,7 +551,7 @@ Hearty_Broth: {
 Ichor.Text:
 	'''
 	[header:Ichor (12/13)]
-	[i:Ichor]
+	[jimage/sc3d:Ichor]
 
 	*****
 	The Crimson, despite the dryads' best efforts, could not be stopped. They began to understand that it was necessary for this world unless a hero could step up to the rite of keeping the balance themselves.
@@ -542,7 +559,8 @@ Ichor.Text:
 Infusion.Text:
 	'''
 	[header:Infusion (4/17)]
-	[i:Origins/Infusion]
+	[jimage/sc2d:Origins/Items/Weapons/Magic/Infusion]
+
 
 	*****
 	We wanted only to be left alone, or to be understood. Perhaps it was too hard them understanding something they never gave enough time to begin. They still pried wicked magic into our bodies and failed. Only succeeding when they brought the most elder to handle us.
@@ -553,7 +571,7 @@ Internal_Combustionfish: {
 	Text:
 		'''
 		[header:Internal Combustionfish (4/11)]
-		[i:Origins/Internal_Combustionfish]
+		[jimage/sc2d:Origins/Items/Weapons/Demolitionist/Internal_Combustionfish]
 
 		*****
 		Going into the Tinkerer caste, we start to see higher-level organization take place. Tinkerers are essentially just Craftsmen who are able to teach their jobs on a surface level. Tinkerers are of high emotional and intellectual intelligence as they must be tactful and able to express themselves. Some jobs performed by Tinkerers include maintenance technicians and systems work as they begin to understand pre-existing schematics.
@@ -561,11 +579,11 @@ Internal_Combustionfish: {
 }
 
 Lost_Picture_Frame: {
-	Name: Faith Beads
+	Name: Lost Picture Frame
 	Text:
 		'''
 		[header:Lost Picture Frame (6/9)]
-		[i:Origins/Lost_Picture_Frame]
+		[jimage/sc3d:Origins/Items/Other/Consumables/Lost_Picture_Frame]
 
 		*****
 		A picture of the sunset we used to adore all the time together. It was unfortunate, letting her go that day. Whenever I needed that fire in my heart, I thought of her.
@@ -577,7 +595,8 @@ Lousy_Liver: {
 	Text:
 		'''
 		[header:Lousy Liver (15/17)]
-		[i:Origins/Lousy_Liver]
+		[jimage/sc3d:Origins/Items/Accessories/Lousy_Liver]
+
 
 		*****
 		Our hunger became unbearable. We became indolent, lazy... efficient. Our bodies improved to make life easier. Old enemies had been cleansed from the workings of time.
@@ -588,8 +607,10 @@ Low_Signal: {
 	Name: Low Signal
 	Text:
 		'''
-		[header:Low Signal (9/17]
-		[i:Origins/Low_Signal]
+		[header:Low Signal (9/17)]
+		[jimage/sc1.5d:Origins/Items/Weapons/Magic/Low_Signal]
+
+		
 
 		*****
 		The towers constructed to ensure synchrony. Many minds fighting for one will, survival everlasting as we understand common enemies and learn from borrowed experiences.
