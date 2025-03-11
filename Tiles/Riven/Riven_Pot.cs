@@ -27,6 +27,7 @@ namespace Origins.Tiles.Riven {
 			}
 			Main.tileSpelunker[Type] = true;
 			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			//Main.tileNoAttach[Type] = true;
 			Main.tileLighted[Type] = true;
