@@ -10,21 +10,21 @@ Indicator: {
 	Other: Detailed description available.
 }
 
+// Places
+
+
+// Characters
+
 Amoebeye: {
-	// Places
-	
-	
-	// Characters
-	
+	Name: Amoebeye
 	Text:
 		'''
 		[header:Amoebeye (8/12)]
-		[i:Origins/Amoebeye]
+		[jportrait/s1.2dw600:Origins/Amoebeye]
 
 		*****
 		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. This place and the Amoeba itself are purely natural beings surviving in this world.
 		'''
-	Name: Amoebeye Entry
 }
 
 Ancient_Defiled_Cyclops: {
@@ -175,7 +175,9 @@ Shark.Text:
 Alkahest.Text:
 	'''
 	[header:Alkahest (1/12)]
-	[i:Origins/Alkahest]
+	[jimage/s3d:Origins/Items/Materials/Alkahest]
+
+
 
 	*****
 	The universal solvent, alkahest. How the parasite is uniquely capable of generating it is unclear, but it could very easily be just part of its biologic processes.
@@ -186,7 +188,9 @@ Asylum_Whistle: {
 	Text:
 		'''
 		[header:Asylum Whistle (1/1)]
-		[i:Origins/Asylum_Whistle]
+		[jimage/s3d:Origins/Items/Accessories/Asylum_Whistle]
+
+
 
 		*****
 		They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get the children inside. Following that would always be lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground. I was curious as to why they were so angry at the ground all the time, but I could never get to know why because the whistle would always sound.
@@ -198,7 +202,8 @@ Baryte: {
 	Text:
 		'''
 		[header:Baryte (3/9)]
-		[i:Origins/Baryte_Item]
+		[jimage/s3d:Origins/Tiles/Brine/Baryte_Item]
+
 
 		*****
 		???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
@@ -214,7 +219,8 @@ Biocomponent_10: {
 	Text:
 		'''
 		[header:Biocomponent 10 (1/11)]
-		[i:Origins/Biocomponent_10]
+		[jimage/s3d:Origins/Items/Materials/Biocomponent10]
+
 
 		*****
 		One of the surprisingly smaller castes of the Mechanicus Sovereignty, the Laborers, often worked alongside the worker machines in menial tasks, but not quite to the level of an Apprentice. Laborer quality of life was the worst due to how valuable one's intelligence was in their society, but compared to most other ancient civilizations there's was up there. There are no notable figures in the Laborer caste.
@@ -226,7 +232,8 @@ Black_Bile: {
 	Text:
 		'''
 		[header:Black Bile (11/17)]
-		[i:Origins/Black_Bile]
+		[jimage/s3d:Origins/Items/Materials/Black_Bile]
+
 
 		*****
 		We cope through the excess. Unintended was harm of the world, but eventually we accepted this. In the end, all that matters is our continuous existence, we concluded.
@@ -613,7 +620,7 @@ Missing_File: {
 		'''
 }
 
-NE8: {
+NE_8: {
 	Name: NE-8
 	Text:
 		'''
@@ -982,8 +989,3 @@ Zoologist.Text:
 	Contributions:
 		- aiding the Terrarian
 	'''
-
-NE_8: {
-	Name: N E_8 Entry
-	Text: Mods.Origins.Journal.NE_8.Text
-}

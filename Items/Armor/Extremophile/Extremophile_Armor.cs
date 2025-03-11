@@ -1,6 +1,4 @@
-using CalamityMod.NPCs.TownNPCs;
 using Origins.Dev;
-using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -23,6 +21,7 @@ namespace Origins.Items.Armor.Extremophile {
 			player.OriginPlayer().projectileSpeedBoost += 0.15f;
 		}
 		public override void UpdateArmorSet(Player player) {
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Extremophile");
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.extremophileSet = true;
 			player.statDefense += originPlayer.extremophileSetTime / 30;

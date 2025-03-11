@@ -5378,15 +5378,24 @@ Fumethrower: {
 
 Extremophile_Breastplate: {
 	// DisplayName: Extremophile Breastplate
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		+15% generic damage
+		+10% generic attack speed
+		''' */
 }
 
 Extremophile_Greaves: {
 	// DisplayName: Extremophile Greaves
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		+25% movement speed
+		10% increased speed when submerged
+		Grants the ability to swim
+		''' */
 }
 
 Extremophile_Helmet: {
 	// DisplayName: Extremophile Helmet
-	// Tooltip: ""
+	// Tooltip: +15% generic velocity
 }

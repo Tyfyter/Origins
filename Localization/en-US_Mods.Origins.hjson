@@ -2267,6 +2267,13 @@ SetBonuses: {
 		Immunity to Static Shock and Electrified
 		+5% damage reduction
 		'''
+	Extremophile:
+		'''
+		Receiving a debuff gradually builds up defense until hit again
+		Damaging debuffs deal 33% less damage to you
+		Being hit repeatedly increases the likelihood of dodging the next attack
+		This likelihood is reset after a successful dodge
+		'''
 }
 
 ItemSourceFilter: {

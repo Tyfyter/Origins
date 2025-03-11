@@ -148,7 +148,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(^) Barnacleback*
+(ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (X) Blotopus
@@ -186,6 +186,7 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (@4, ^3) Flagellant*
 (^) Flying Exoskeleton*
+(X) Goo Wall
 (^) Graveshield Zombie*
 (X) Hammerhand
 (^) Optiphage*
@@ -322,6 +323,7 @@ ARMOR:
 (^) Endowood Armor*
 (^) Felnum Armor*
 (^) Fiberglass Armor*
+(X) Laborer Set
 (^) Lost Armor*
 (^) Marrowick Armor*
 (^) Mythic Armor*
@@ -336,7 +338,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(☻) Extremophile Armor !!!
+(#2, ^2) Extremophile Armor !!! (needs debuff-defense cap)
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -383,7 +385,7 @@ ACCESSORIES:
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
-(☻) Brine-Leafed Clover* !!! (worldgen issue)
+(^) Brine-Leafed Clover*
 (^) Bug Trapper*
 (X) Builder's Touch
 (^) C.F.H.E.S.*
@@ -758,7 +760,7 @@ RANGED WEAPONS:
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
 (^) Dart Crossbow*
-(☻) Dragon's Breath° !!!
+(^) Dragon's Breath°
 (^) Fifth Spline*
 (^) Firespit*
 (^) Fumethrower
@@ -1159,6 +1161,7 @@ TILES:
 (^) Riven Dungeon Chest*
 (^) Riven Torch*
 (^) Riven Water Fountain
+(X) Rusty Locker
 (X) Sanguinite Brick
 (X) Shadow Torch°
 (^) Traffic Cone*
@@ -1167,12 +1170,12 @@ TILES:
 
 (X) Batholith Grindstone°
 (^) Cleansing Station*
-(X) Defiled Waste Organ°
 (X) Elderforge°
 (^) Fabricator*
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
 (X) Qube Generator°
+(X) The Demaker
 (^) Unsuspicious Bush
 
 (^) Acetabularia*
@@ -1185,18 +1188,22 @@ TILES:
 (X) Eden Tree°
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
+(X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
 (#, ^2) Hydrothermal Vent !!!
 (X) Marrowick Coral
+(X) Marrowick Flange
 (X) Moonshine°
 (#2, ^2) Ocotillo !!!
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
 (X) Scrapleaf Tree
-(☻) Soulspore* !!! (can't find any evidence that there's an actual issue beyond a lack of grass, now generates on defile stone too)
+(X) Shelf Coral
+(^) Soulspore*
 (ᗢ) Surveysprout*
+(X) Tangel Bramble
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
 (^) Wilting Rose*
