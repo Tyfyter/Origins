@@ -1590,14 +1590,6 @@ namespace Origins {
 				tile.TileFrameY = 0;
 				return true;
 			}
-			ushort brineClover = (ushort)MC.TileType<Brine_Leaf_Clover_Tile>();
-			if (TileObject.CanPlace(x, y, brineClover, 0, 0, out TileObject objectData, false, checkStay: true)) {
-				objectData.style = 0;
-				objectData.alternate = 0;
-				objectData.random = 0;
-				TileObject.Place(objectData);
-				return true;
-			}
 			return false;
 		}
 

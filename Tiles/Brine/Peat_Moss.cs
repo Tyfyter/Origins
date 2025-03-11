@@ -46,6 +46,7 @@ namespace Origins.Tiles.Brine {
 					TileObject.Place(objectData);
 				}
 			}
+			Brine_Leaf_Clover_Tile.TryGrowOnTile(i, j);
 		}
 	}
 	public class Peat_Moss_Item : MaterialItem {

@@ -336,7 +336,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(#, ^2) Extremophile Armor !!!
+(☻) Extremophile Armor !!!
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -383,7 +383,7 @@ ACCESSORIES:
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
-(#3, ^2) Brine-Leafed Clover* !!! (worldgen issue)
+(☻) Brine-Leafed Clover* !!! (worldgen issue)
 (^) Bug Trapper*
 (X) Builder's Touch
 (^) C.F.H.E.S.*

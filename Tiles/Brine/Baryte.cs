@@ -39,6 +39,7 @@ namespace Origins.Tiles.Brine {
 					TileObject.Place(objectData);
 				}
 			}
+			Brine_Leaf_Clover_Tile.TryGrowOnTile(i, j);
 		}
 	}
 	[LegacyName("Sulphur_Stone_Item", "Dolomite_Item")]
