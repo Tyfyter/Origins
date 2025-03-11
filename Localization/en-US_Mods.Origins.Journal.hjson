@@ -610,7 +610,7 @@ Low_Signal: {
 		[header:Low Signal (9/17)]
 		[jimage/sc1.5d:Origins/Items/Weapons/Magic/Low_Signal]
 
-		
+
 
 		*****
 		The towers constructed to ensure synchrony. Many minds fighting for one will, survival everlasting as we understand common enemies and learn from borrowed experiences.
@@ -622,7 +622,9 @@ Mildew_Heart: {
 	Text:
 		'''
 		[header:Mildew Heart (8/9)]
-		[i:Origins/Mildew_Heart]
+		[jimage/sc3d:Origins/Items/Accessories/Mildew_Heart]
+
+
 
 		*****
 		Heroes have a heart, they-- die with them. Can I say I did all this with heart? Was I honest to myself?
@@ -634,7 +636,8 @@ Missing_File: {
 	Text:
 		'''
 		[header:Missing File (14/17)]
-		[i:Origins/Missing_File]
+		[jimage/sc3d:Origins/Items/Weapons/Magic/Missing_File]
+
 
 		*****
 		Always that problem with our way of life. We only grew, even to sizes that rivaled our nightmares. It started to become unhealthy. We couldn't help ourselves, instinct truly is great pleasurer.
@@ -646,7 +649,8 @@ NE_8: {
 	Text:
 		'''
 		[header:NE-8 (3/11)]
-		[i:Origins/NE8]
+		[jimage/sc3d:Origins/Items/Materials/NE8]
+
 
 		*****
 		Craftsmen and women are either young adults pursuing a college-level education or satisfied with their particular line of work. Craftsmen work in specific jobs that Laborers can't really do without pre-requisite knowledge and understanding. Typical jobs like woodwork and trade electricians would be covered by this caste, which is to include notable figures like who you know as the Mechanic.
@@ -658,7 +662,7 @@ Neptunes_Shell: {
 	Text:
 		'''
 		[header:Neptune's Shell (1/5)]
-		[i:Neptunes_Shell]
+		[jimage/sc3d:Neptunes_Shell]
 
 		*****
 		Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire, he choose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. But, not Cthulhu. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been. But, it was still a slaughter.
@@ -668,7 +672,8 @@ Neptunes_Shell: {
 Nineball.Text:
 	'''
 	[header:Nineball (2/11)]
-	[i:Origins/Nineball]
+	[jimage/sc3d:Origins/Items/Weapons/Melee/Nineball]
+
 
 	*****
 	The next one up were the aforementioned Apprentinces, those either too young for higher education or at an average level of intellect. This was the most populous caste of the Mechanicus Sovereignty and didn't have anyone of notable history. The Apprentice caste is treated as a beginner-level caste where the primary objective is to expand upon information. Apprentices don't get their specialties until they become Craftsmen.
@@ -679,7 +684,9 @@ Old_Brine_Rock: {
 	Text:
 		'''
 		[header:Old Brine Rock (1/9)]
-		[i:Origins/Old_Brine_Rock]
+		[jimage/sc3d:Origins/Items/Weapons/Summoner/Old_Brine_Rock]
+
+
 
 		*****
 		Wretched brine pool, I curse you. I curse you so no more heroes go looking for the troublesome gem. I curse you such that any daring divers of your waters are poisoned forever. I curse you for all light to be drowned out. Keep this bloodstained wasteland away from those who manipulate with the curses I've brought onto you.
@@ -691,7 +698,7 @@ Panic_Necklace: {
 	Text:
 		'''
 		[header:Panic Necklace (7/13)]
-		[i:Panic_Necklace]
+		[jimage/sc3d:Panic_Necklace]
 
 		*****
 		For the first few hours there was panic, but after the First King had struck down the beast with a single blow it began to calm. The panic still found itself in their fragile hearts later.
@@ -703,7 +710,7 @@ Primordial_Permafrost: {
 	Text:
 		'''
 		[header:Primordial Permafrost (4/12)]
-		[i:Origins/Primordial_Permafrost_Item]
+		[jimage/sc3d:Origins/Tiles/Riven/Primordial_Permafrost_Item]
 
 		*****
 		Without that heat, the amoeba can't do anything. This is why it often falls victim to sources of cold. The snow is its greatest weakness, if only the Dryad Clan knew that.
@@ -715,7 +722,8 @@ Riven_Carapace: {
 	Text:
 		'''
 		[header:Riven Carapace (6/12)]
-		[i:Origins/Riven_Carapace]
+		[jimage/sc3d:Origins/Items/Materials/Riven_Carapace]
+
 
 		*****
 		Unfortunate creatures are then forced to evolve to the Riven's conditions. A parasite that plays god even though it's entirely incapable of any intelligent thought being the single-celled organism it is.
@@ -727,7 +735,7 @@ Salty_Seed: {
 	Text:
 		'''
 		[header:Salty Seed (3/12)]
-		[i:Origins/Salty_Seed]
+		[jimage/sc3d:Origins/Items/Tools/Salty_Seed]
 
 		*****
 		It needs two things to keep it alive: salt and heat. Salt expedites the production of valuable alkahest. It uses heat to power its metabolism, which it gets by digesting things in the form of waste heat.
@@ -739,7 +747,8 @@ Seam_Beam: {
 	Text:
 		'''
 		[header:Seam Beam (11/12)]
-		[i:Origins/Seam_Beam]
+		[jimage/sc3d:Origins/Items/Weapons/Magic/Seam_Beam]
+
 
 		*****
 		So, in other words magic did this and now the Riven is empowered by the world as a rightful evil? I thought the Defiled being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to entirely dissolve it as an evil.
@@ -751,7 +760,7 @@ Shell_Pile: {
 	Text:
 		'''
 		[header:Shell Pile (3/5)]
-		[i:Shell_Pile_Item]
+		[jimage/sc3d:Shell_Pile_Item]
 
 		*****
 		Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh.
@@ -761,7 +770,9 @@ Shell_Pile: {
 Splashid.Text:
 	'''
 	[header:Splashid (6/6)]
-	[i:Origins/Splashid]
+	[jimage/sc2d:Origins/Items/Weapons/Magic/Splashid]
+
+
 
 	*****
 	I've explored some of her crafts and they are truly intriguing. They very much remind me of my dark arts, how I am a master of my own crafts. Magic does indeed come in many forms.
@@ -772,7 +783,7 @@ Spug_Flesh: {
 	Text:
 		'''
 		[header:Spug Flesh (12/12)]
-		[i:Origins/Spug_Flesh_Item]
+		[jimage/sc3d:Origins/Tiles/Riven/Riven_Flesh_Item]
 
 		*****
 		It's not a matter of that, the Riven is now a part of the world. The world simply thinks it would be best to dissolve parts of the imbalance in an attempt to clean out the impurities.
@@ -784,7 +795,8 @@ Stack_of_Shraps: {
 	Text:
 		'''
 		[header:Stack of Shraps (1/1)]
-		[i:Origins/Stack_of_Shraps]
+		[jimage/sc3d:Origins/Items/Accessories/Stack_of_Shraps]
+
 
 		*****
 		Hints like these for your inquisitive mind to guess of atrocities committed against wasteful spendthrifts. Prodigies possessive of such powerful crafts giving away their gifts only for them to be in the headwinds of pointless wars against once-allies.
@@ -796,7 +808,8 @@ Stone_Mask: {
 	Text:
 		'''
 		[header:Stone Mask]
-		[i:Origins/Stone_Mask]
+		[jimage/sc3d:Origins/Items/Accessories/Stone_Mask]
+
 
 		*****
 		Ah, I know of this mask, from history of torn-away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
@@ -808,7 +821,8 @@ Symbiote_Skull: {
 	Text:
 		'''
 		[header:Symbiote Skull (5/12)]
-		[i:Origins/Symbiote_Skull]
+		[jimage/sc3d:Origins/Items/Accessories/Symbiote_Skull]
+
 
 		*****
 		Strangely, the life we've found in the hive maintains its autonomy from the parasite, albeit with a little of its influence by controlling their gut microbiomes like a true parasite.
@@ -818,7 +832,10 @@ Symbiote_Skull: {
 Teardown.Text:
 	'''
 	[header:Teardown (10/12)]
-	[i:Origins/Teardown]
+	[jimage/sc2d:Origins/Items/Weapons/Summoner/Teardown]
+
+
+
 
 	*****
 	It's pretty simple. The amoeba's origins are stained with blood; the blood of Cthulhu himself actually. Cthulhu's blood had spilled into the world, a random crevice the parasite had remained dormant in for eons. The parasite was affected, turning into a parasitic version of itself. It is not evil by nature, it is evil by design.
@@ -829,7 +846,7 @@ Tendon_Tear: {
 	Text:
 		'''
 		[header:Tendon Tear (10/13)]
-		[i:Origins/Tendon_Tear]
+		[jimage/sc3d:Origins/Items/Weapons/Ranged/Tendon_Tear]
 
 		*****
 		The breakout group had successfully controlled the populous at the same time they lost control of themselves. Their creation growing too powerful, rising from its chamber. The fallen kingdom began to rot as its citizens began to rip and tear.
@@ -841,7 +858,7 @@ The_Rotted_Fork: {
 	Text:
 		'''
 		[header:The Rotted Fork (3/13)]
-		[i:The_Rotteed_Fork]
+		[jimage/sc3d:The_Rotteed_Fork]
 
 		*****
 		It became a tradition written in blood. The king must drink from the blood of the giant beast their first had slain. Sacred ichor, instead the deemer of righteous king. The fork would be there for the pouring, and the fork of his first.
@@ -853,7 +870,7 @@ The_Undertaker: {
 	Text:
 		'''
 		[header:The Undertaker (5/13)]
-		[i:The_Undertaker]
+		[jimage/sc3d:The_Undertaker]
 
 		*****
 		The kingdom's people weren't always this consumed by witchcraft. It had been the blood that was spilled onto the lands of Terraria by a giant, otherworldly beast.
@@ -865,7 +882,7 @@ Tissue_Sample: {
 	Text:
 		'''
 		[header:Tissue Sample (9/13)]
-		[i:Tissue_Sample]
+		[jimage/sc3d:Tissue_Sample]
 
 		*****
 		But, it was too late before the last sane of the populous began to realize his evil plots... even from hundreds of years after his death. These cultists wanted to restore their old king by first restoring the organ that made him.
@@ -877,7 +894,7 @@ Torpedo_Tube: {
 	Text:
 		'''
 		[header:Torpedo Tube (2/9)]
-		[i:Origins/Torpedo_Tube] [i:Origins/Torpedo_Tube_Alt]
+		[jimage/sc2d:Origins/Items/Weapons/Demolitionist/Torpedo_Tube] [jimage/sc2dw300:Origins/Items/Weapons/Demolitionist/Torpedo_Tube_Alt]
 
 		*****
 		???: Huh. This guy was no push-over too. Some of his equipment looks like he was ready to pick a fight with something much larger than him.
@@ -891,8 +908,10 @@ Tripod_Nip: {
 	Text:
 		'''
 		[header:Tripod Nip (17/17)]
-		[i:Origins/Tripod_Nip]
+		[jimage/sc3d:Origins/Items/Accessories/Tripod_Nip]
 
+
+		*****
 		Meow. Meow. Mrrow.
 		'''
 }
@@ -902,7 +921,7 @@ Undead_Chunk: {
 	Text:
 		'''
 		[header:Undead Chunk (10/17)]
-		[i:Origins/Undead_Chunk]
+		[jimage/sc3d:Origins/Items/Materials/Undead_Chunk]
 
 		*****
 		Satisfaction exchanged for sure survival, an endless loop of suffering. Even for us, it still necessary for survival. That is how we get along, friend. Still, there is suffering after death.
@@ -914,7 +933,7 @@ Vicious_Mushroom: {
 	Text:
 		'''
 		[header:Vicious Mushroom (2/13)]
-		[i:Blade_Tongue]
+		[jimage/sc3d:Vicious_Mushroom]
 
 		*****
 		Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order. But, first must understand the Crimson's long history in this world.
@@ -926,7 +945,9 @@ Vorpal_Sword: {
 	Text:
 		'''
 		[header:Vorpal Sword (2/12)]
-		[i:Origins/Vorpal_Sword_Cursed] [i:Origins/Vorpal_Sword]
+		[jimage/sc2d:Origins/Items/Weapons/Melee/Vorpal_Sword_Cursed] [jimage/sc2dw300:Origins/Items/Weapons/Melee/Vorpal_Sword]
+
+
 
 		*****
 		The parasite cuts away at matter through alkahest. It absorbs the materials it can use and stores the excess elsewhere for later. It works by cutting compounds down to their most basic elements.
@@ -938,7 +959,8 @@ Weakpoint_Analyzer: {
 	Text:
 		'''
 		[header:Weakpoint Analyzer (11/13)]
-		[i:Origins/Weakpoint_Analyzer]
+		[jimage/sc3d:Origins/Items/Accessories/Weakpoint_Analyzer]
+
 
 		*****
 		Rip and tear their closest, all for sustenance. The new king had risen, all to influence them with his hymn. The recited hymn of endless bloodlust.
@@ -948,7 +970,9 @@ Weakpoint_Analyzer: {
 Ziptie.Text:
 	'''
 	[header:Ziptie (6/17)]
-	[i:Origins/Ziptie]
+	[jimage/sc2d:Origins/Items/Weapons/Summoner/Ziptie]
+
+
 
 	*****
 	Damnation was no salvation, surely felt to be punishment greater than endless drifting through void. We learned because that was all there was. Crooked thoughts of collective thoughts from the egregore. We were being made alive...
