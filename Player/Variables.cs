@@ -89,6 +89,9 @@ namespace Origins {
 		public bool rainSet = false;
 		public bool rubberBody = false;
 		public int nearTrafficCone = 0;
+		public bool extremophileSet = false;
+		public int extremophileSetHits = 0;
+		public int extremophileSetTime = 0;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -383,6 +386,7 @@ namespace Origins {
 		#endregion visuals
 
 		public float statSharePercent = 0f;
+		public StatModifier projectileSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
 		public Item journalDye = null;
@@ -508,6 +512,13 @@ namespace Origins {
 			rainSet = false;
 			rubberBody = false;
 			if (nearTrafficCone > 0) nearTrafficCone--;
+			if (extremophileSet) {
+				if (extremophileSetTime > 0 && extremophileSetTime < 60 * 15) extremophileSetTime++;
+				extremophileSet = false;
+			} else {
+				extremophileSetHits = 0;
+				extremophileSetTime = 0;
+			}
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
@@ -739,6 +750,7 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
+			projectileSpeedBoost = StatModifier.Default;
 
 			if (itemComboAnimationTime > 0)
 				itemComboAnimationTime--;

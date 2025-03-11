@@ -691,6 +691,17 @@ namespace Origins {
 				return orig(newEffect);//orig(self);
 			});//*/
 			On_Player.UpdateJumpHeight += On_Player_UpdateJumpHeight;
+			On_Player.AddBuff += On_Player_AddBuff;
+		}
+
+		private static void On_Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {
+			orig(self, type, timeToAdd, quiet, foodHack);
+			if (Main.debuff[type]) {
+				OriginPlayer originPlayer = self.OriginPlayer();
+				if (originPlayer.extremophileSet) {
+					originPlayer.extremophileSetTime++;
+				}
+			}
 		}
 
 		private void On_Player_UpdateJumpHeight(On_Player.orig_UpdateJumpHeight orig, Player self) {
@@ -1580,7 +1591,7 @@ namespace Origins {
 				return true;
 			}
 			ushort brineClover = (ushort)MC.TileType<Brine_Leaf_Clover_Tile>();
-			if (TileObject.CanPlace(x, y, brineClover, 0, 0, out TileObject objectData, false)) {
+			if (TileObject.CanPlace(x, y, brineClover, 0, 0, out TileObject objectData, false, checkStay: true)) {
 				objectData.style = 0;
 				objectData.alternate = 0;
 				objectData.random = 0;

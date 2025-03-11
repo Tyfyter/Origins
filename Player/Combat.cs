@@ -88,6 +88,12 @@ namespace Origins {
 			if (advancedImaging) {
 				velocity *= 1.38f;
 			}
+			if (projectileSpeedBoost != StatModifier.Default) {
+				float speed = velocity.Length();
+				if (speed != 0) {
+					velocity *= projectileSpeedBoost.ApplyTo(speed) / speed;
+				}
+			}
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				StatModifier velocityModifier = explosiveProjectileSpeed;
 				if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
@@ -602,6 +608,11 @@ namespace Origins {
 					}
 				}
 			}
+			if (extremophileSet && Main.rand.Next(99) < extremophileSetHits * 10) {
+				extremophileSetHits = 0;
+				Player.SetImmuneTimeForAllTypes(60);
+				return true;
+			}
 			if (blizzardwalkerActiveTime >= Blizzardwalkers_Jacket.max_active_time) {
 				blizzardwalkerActiveTime = 0;
 				Player.SetImmuneTimeForAllTypes(60);
@@ -664,6 +675,8 @@ namespace Origins {
 		}
 		public override void PostHurt(Player.HurtInfo info) {
 			lifeRegenTimeSinceHit = 0;
+			if (extremophileSet) extremophileSetHits++;
+			extremophileSetTime = 0;
 			if (manaDamageToTake > 0) {
 				Player.CheckMana(manaDamageToTake, true);
 				Player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 50);
