@@ -1550,6 +1550,9 @@ Projectiles: {
 	// Boomboom_P.DisplayName: Boomboom P
 	// Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
 	// Fumethrower_P.DisplayName: Fumethrower P
+	// Bomb_Trap_Bomb.DisplayName: Bomb Trap Bomb
+	// Bomb_Trap_Grenade.DisplayName: Bomb Trap Grenade
+	// Bomb_Trap_Dynamite.DisplayName: Bomb Trap Dynamite
 }
 
 Prefixes: {

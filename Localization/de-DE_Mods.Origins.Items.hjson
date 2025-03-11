@@ -5399,3 +5399,8 @@ Extremophile_Helmet: {
 	// DisplayName: Extremophile Helmet
 	// Tooltip: +15% generic velocity
 }
+
+Bomb_Trap_Item: {
+	// DisplayName: Bomb Trap Item
+	// Tooltip: ""
+}
