@@ -39,6 +39,9 @@ namespace Origins {
 				Player.velocity *= 1.006f;
 				Player.ignoreWater = true;
 			}
+			if (Player.ownedProjectileCounts[ModContent.ProjectileType<Latchkey_P>()] > 0) {
+				Player.tongued = true;
+			}
 			if (riptideSet && !Player.mount.Active) {
 				Player.dashType = 0;
 				Player.dashTime = 0;
@@ -67,6 +70,32 @@ namespace Origins {
 					Player.velocity.X = riptideDashSpeed * Math.Sign(riptideDashTime);
 					riptideDashTime -= Math.Sign(riptideDashTime);
 					dashDelay = 25;
+				}
+			}
+			if (refactoringPieces && refactoringPiecesDashCooldown <= 0) {
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const float keyDashSpeed = 4;
+				if (dashDirection != 0) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					Player.timeSinceLastDashStarted = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
+					}
+					Projectile.NewProjectile(
+						Player.GetSource_Misc("refactor"),
+						Player.Center + new Vector2(Player.width * dashDirection, 0),
+						new Vector2(dashDirection * keyDashSpeed, 0),
+						ModContent.ProjectileType<Latchkey_P>(),
+						0,
+						0,
+						Player.whoAmI
+					);
+					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
+					dashDelay = 10 + 6;
+					refactoringPiecesDashCooldown = 120;
 				}
 			}
 			if (meatScribeItem is not null && meatDashCooldown <= 0) {

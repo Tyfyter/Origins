@@ -1556,6 +1556,7 @@ Projectiles: {
 	// Soulslasher_Slash.DisplayName: Soulslasher Slash
 	// Soulslasher_Swing.DisplayName: Soulslasher Swing
 	// Soulslasher_P.DisplayName: Soulslasher P
+	// Latchkey_P.DisplayName: Latchkey P
 }
 
 Prefixes: {

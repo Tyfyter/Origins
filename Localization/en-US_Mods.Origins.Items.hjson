@@ -5424,3 +5424,8 @@ Soulslasher: {
 	DisplayName: Soulslasher
 	Tooltip: ""
 }
+
+Latchkey: {
+	DisplayName: Latchkey
+	Tooltip: ""
+}
