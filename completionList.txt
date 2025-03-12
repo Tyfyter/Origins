@@ -676,7 +676,7 @@ MELEE WEAPONS:
 (^) Snapthrow*
 (^) Soldering Iron
 (#, ^2) Soul Snatcher* !!!
-(#, ^2) Soulslasher !!!
+(☻) Soulslasher !!!
 (^) Spiker Sword*
 (^) Switchblade*
 (^) Thunderbolt
@@ -1116,7 +1116,7 @@ TILES:
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
-(#, ^2) Brine Dungeon Chest !!!
+(☻) Brine Dungeon Chest !!!
 (^) Brine Water Fountain
 (X) Bug Cage°
 (X) Cancer Block° !!!

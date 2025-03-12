@@ -5401,11 +5401,26 @@ Extremophile_Helmet: {
 }
 
 Bomb_Trap_Item: {
-	// DisplayName: Bomb Trap Item
+	// DisplayName: Bomb Trap
 	// Tooltip: ""
 }
 
 Limestone_Item: {
-	// DisplayName: Limestone Item
+	// DisplayName: Limestone
+	// Tooltip: ""
+}
+
+Brine_Dungeon_Chest_Item: {
+	// DisplayName: Brine Chest
+	// Tooltip: ""
+}
+
+Locked_Brine_Dungeon_Chest_Item: {
+	// DisplayName: Locked Brine Dungeon Chest Item
+	// Tooltip: ""
+}
+
+Soulslasher: {
+	// DisplayName: Soulslasher
 	// Tooltip: ""
 }
