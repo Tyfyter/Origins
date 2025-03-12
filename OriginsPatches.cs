@@ -698,7 +698,7 @@ namespace Origins {
 			orig(self, type, timeToAdd, quiet, foodHack);
 			if (Main.debuff[type]) {
 				OriginPlayer originPlayer = self.OriginPlayer();
-				if (originPlayer.extremophileSet) {
+				if (originPlayer.extremophileSet && originPlayer.extremophileSetTime <= 0) {
 					originPlayer.extremophileSetTime++;
 				}
 			}
