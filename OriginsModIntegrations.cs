@@ -41,6 +41,7 @@ using ThoriumMod.Items;
 using ThoriumMod.Items.Darksteel;
 using Origins.Items.Accessories;
 using Origins.Buffs;
+using Origins.NPCs.Brine.Boss;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -207,7 +208,7 @@ namespace Origins {
 						}
 					}
 				);
-				Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
+				Asset<Texture2D> fwTexture = ModContent.Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
@@ -226,7 +227,40 @@ namespace Origins {
 							SpriteBatchState state = spriteBatch.GetState();
 							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
 							try {
-								spriteBatch.Draw(texture.Value, area.Center(), null, color, 0, texture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+								spriteBatch.Draw(fwTexture.Value, area.Center(), null, color, 0, fwTexture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+							} finally {
+								spriteBatch.Restart(state);
+							}
+						}
+					}
+				);
+				Asset<Texture2D> ldTexture = ModContent.Request<Texture2D>("Origins/NPCs/Brine/Boss/Rock_Bottom");
+				bossChecklist.Call("LogBoss",
+					mod,
+					nameof(Lost_Diver).Replace("_", ""),
+					7.3f,
+					() => Boss_Tracker.Instance.downedLostDiver,
+					new List<int> {
+						ModContent.NPCType<Lost_Diver>(),
+						ModContent.NPCType<Lost_Diver_Transformation>(),
+						ModContent.NPCType<Mildew_Carrion>()
+					},
+					new Dictionary<string, object> {
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Lost_Diver.BossChecklistIntegration.SpawnCondition"),
+						["spawnItems"] = ModContent.ItemType<Lost_Picture_Frame>(),
+						["collectibles"] = new List<int> {
+							RelicTileBase.ItemType<Lost_Diver_Relic>(),
+							TrophyTileBase.ItemType<Lost_Diver_Trophy>(),
+							ModContent.ItemType<Lost_Diver_Helmet>(),
+							ModContent.ItemType<Lost_Diver_Chest>(),
+							ModContent.ItemType<Lost_Diver_Greaves>()
+						},
+						["overrideHeadTextures"] = ModContent.GetInstance<Lost_Diver>().BossHeadTexture,
+						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+							SpriteBatchState state = spriteBatch.GetState();
+							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+							try {
+								spriteBatch.Draw(ldTexture.Value, area.Center(), ldTexture.Value.Frame(1, 15, 0, 4), color, 0, ldTexture.Value.Frame(1, 15, 0, 4).Size() * 0.5f, 2, SpriteEffects.None, 0);
 							} finally {
 								spriteBatch.Restart(state);
 							}

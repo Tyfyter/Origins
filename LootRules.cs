@@ -1,4 +1,6 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Walls;
+using Origins.World.BiomeData;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Terraria;
@@ -178,6 +180,15 @@ namespace Origins.LootConditions {
 	public class Brine_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Brine_Pool>();
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Brine_Pool"));
+		}
+	}
+	public class Lost_Picture_Frame_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && Brine_Pool.SpawnRates.IsInBrinePool(info.npc.position) && info.player.InModBiome<Brine_Pool>() && info.npc.AnyInteractions();
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
 		public string GetConditionDescription() {

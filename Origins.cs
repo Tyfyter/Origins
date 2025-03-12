@@ -381,6 +381,10 @@ namespace Origins {
 				perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
 				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
+				Filters.Scene["Origins:AreaFlicker"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Flickering"), "Flickering"), EffectPriority.High);
+				if (Filters.Scene["Origins:AreaFlicker"]?.IsActive() ?? false) {
+					Filters.Scene["Origins:AreaFlicker"].Deactivate();
+				}
 				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "VoidShade"), EffectPriority.High);
 				if (Filters.Scene["Origins:ZoneDefiled"]?.IsActive() ?? false) {
 					Filters.Scene["Origins:ZoneDefiled"].Deactivate();

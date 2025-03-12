@@ -1,4 +1,4 @@
-author = Moonlight Glint, Jadams, chrersis, and gojisturba
+author = Moonlight Glint, Jadams, chrersis, gojisturba, and Reivax
 version = 0.4.5.4
 displayName = Terraria Origins
 

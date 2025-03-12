@@ -1232,8 +1232,8 @@ TILES:
 (ᗢ) Enemy Banners*
 (^) Fiberglass Weaver Relic*
 (^) Fiberglass Weaver Trophy*
-(#2, ^2) Lost Diver Relic* !!!
-(#2, ^2) Lost Diver Trophy* !!!
+(^) Lost Diver Relic*
+(^) Lost Diver Trophy*
 (々) Miscreant Relic*
 (々) Miscreant Trophy*
 (々) Quantux Relic*
@@ -1390,7 +1390,7 @@ CONSUMABLES:
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
-(#, ^2) Lost Picture Frame !!!
+(^) Lost Picture Frame
 (X) Quantum Cell°
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*

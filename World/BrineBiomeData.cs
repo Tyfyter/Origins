@@ -1,7 +1,4 @@
-﻿using CalamityMod;
-using Microsoft.Xna.Framework;
-using Origins.Backgrounds;
-using Origins.NPCs;
+﻿using Origins.Backgrounds;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
@@ -10,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
@@ -67,6 +63,10 @@ namespace Origins.World.BiomeData {
 
 			public static bool IsInBrinePool(NPCSpawnInfo spawnInfo) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
+			}
+			public static bool IsInBrinePool(Vector2 pos) {
+				Tile tile = Framing.GetTileSafely(pos);
 				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);

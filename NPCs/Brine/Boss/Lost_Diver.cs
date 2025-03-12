@@ -1,16 +1,66 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
+using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.NPCs.Brine.Boss {
+	public class Lost_Diver_Spawn : Brine_Pool_NPC {
+		public override string Texture => "Origins/NPCs/Brine/Boss/Lost_Diver";
+		public static bool spawnLD = false;
+		public override void SetStaticDefaults() {
+			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+		}
+		public override void SetDefaults() {
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
+			NPC.dontTakeDamage = true;
+			NPC.lifeMax = 6000;
+			NPC.defense = 24;
+			NPC.noGravity = true;
+			NPC.width = 20;
+			NPC.height = 42;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			spawnLD = false;
+		}
+		public override bool PreAI() {
+			int flickerAmt = Main.rand.Next(4, 7);
+			int flickerTime = Main.rand.Next(25, 60);
+			int flickerRange = 17;
+			int spawnLD = Main.rand.Next(2, flickerAmt);
+			for (int i = -flickerRange; i < flickerRange; i++) {
+				for (int j = -flickerRange; j < flickerRange; j++) {
+
+				}
+			}
+			return false;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			return false;
+		}
+		public class Spawn : SpawnPool {
+			public override string Name => $"{nameof(Lost_Diver)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.EventHigh;
+				AddSpawn<Lost_Diver_Spawn>(spawnInfo => Brine_Pool.SpawnRates.IsInBrinePool(spawnInfo) && spawnInfo.Player.InModBiome<Brine_Pool>() ? 99999999 : 0);
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnLD && spawnInfo.Player.InModBiome<Brine_Pool>();
+		}
+	}
 	[AutoloadBossHead]
 	public class Lost_Diver : Brine_Pool_NPC {
 		public override bool AggressivePathfinding => true;
@@ -41,6 +91,9 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.HitSound = SoundID.NPCHit4.WithPitchRange(-0.8f, -0.4f);
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.value = 0;//Item.buyPrice(gold: 5);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Brine_Pool>().Type
+			];
 		}
 		public AIModes AIMode {
 			get => (AIModes)NPC.aiAction;
@@ -635,6 +688,30 @@ namespace Origins.NPCs.Brine.Boss {
 			Depth_Charge,
 			Torpedo_Tube,
 			Mildew_Whip,
+		}
+	}
+
+	public class Lost_Diver_Spawn_Flicker : ModSceneEffect {
+		public Vector2 targetPos = new();
+		private NPC dummy;
+		public override void SpecialVisuals(Player player, bool isActive) {
+			float percent = Clamp((targetPos - player.Center).Length() / 1000f, -10, 0.8f);
+			ScreenShaderData shader = Filters.Scene["Origins:AreaFlicker"].GetShader()
+				.UseColor(1.3f, 1.3f, 1.3f)
+				.UseOpacity(percent);
+			shader.Shader.Parameters["uScale"].SetValue(50000f);
+			shader.Shader.Parameters["uSaturation"].SetValue(1);
+			player.ManageSpecialBiomeVisuals("Origins:AreaFlicker", isActive, targetPos);
+			Dust.NewDustPerfect(targetPos, DustID.Adamantite);
+		}
+		public override bool IsSceneEffectActive(Player player) {
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc?.ModNPC is Lost_Diver_Spawn) {
+					targetPos = npc.Center;
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

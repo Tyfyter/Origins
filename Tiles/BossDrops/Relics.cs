@@ -2,4 +2,5 @@
     public class Defiled_Amalgamation_Relic : RelicTileBase {}
     public class World_Cracker_Relic : RelicTileBase {}
     public class Fiberglass_Weaver_Relic : RelicTileBase {}
+	public class Lost_Diver_Relic : RelicTileBase {}
 }

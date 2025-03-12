@@ -334,7 +334,17 @@ Slime_Worm: {
 // Brine_Serpent_Body2.DisplayName: Brine Serpent
 // Brine_Serpent_Head.DisplayName: Brine Serpent
 // Brine_Serpent_Tail.DisplayName: Brine Serpent
-// Lost_Diver.DisplayName: Lost Diver
+
+Lost_Diver: {
+	// DisplayName: Lost Diver
+
+	BossChecklistIntegration: {
+		// SpawnCondition: Use [i:Origins/Lost_Picture_Frame] in the Brine Pools
+		// EntryName: Lost Diver
+	}
+}
+
 // Lost_Diver_Transformation.DisplayName: Lost Diver Transformation
 // Mildew_Carrion.DisplayName: Mildew Carrion
 // Trijaw_Shark_Feesh.DisplayName: Trijaw Shark Feesh
+// Lost_Diver_Spawn.DisplayName: Lost Diver Spawn

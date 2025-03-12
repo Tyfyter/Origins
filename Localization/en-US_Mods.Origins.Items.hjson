@@ -5379,3 +5379,18 @@ Fumethrower: {
 	DisplayName: Fumethrower
 	Tooltip: ""
 }
+
+Lost_Picture_Frame: {
+	DisplayName: Lost Picture Frame
+	Tooltip: Summons the Lost Diver
+}
+
+Lost_Diver_Relic_Item: {
+	DisplayName: Lost Diver Relic
+	Tooltip: ""
+}
+
+Lost_Diver_Trophy_Item: {
+	DisplayName: Lost Diver Trophy
+	Tooltip: ""
+}

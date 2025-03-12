@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
+using Origins.Tiles.BossDrops;
 using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -154,12 +155,15 @@ namespace Origins.NPCs.Brine.Boss {
 			.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Lost_Diver_Chest>()))
 			.WithOnSuccess(ItemDropRule.Common(ModContent.ItemType<Lost_Diver_Greaves>()))
 			);
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Lost_Diver_Trophy>(), 10));
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Lost_Diver_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Faith_Beads>(), 4));
 			npcLoot.Add(new Crown_Jewel_Drop());
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Lost_Diver_Relic>()));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
