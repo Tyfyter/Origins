@@ -21,11 +21,10 @@ namespace Origins.Tiles.Brine {
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Brine Leaf Clover");
-			AddMapEntry(new Color(28, 128, 56), name);
+			AddMapEntry(new Color(28, 128, 56), CreateMapEntryName());
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorAlternateTiles = [];
@@ -53,5 +52,15 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public override bool IsTileSpelunkable(int i, int j) => true;
+		public static void TryGrowOnTile(int i, int j) {
+			if (!Framing.GetTileSafely(i, j - 1).HasTile && WorldGen.genRand.NextBool(1000)) {
+				if (TileObject.CanPlace(i, j - 1, TileType<Brine_Leaf_Clover_Tile>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
+					objectData.style = 0;
+					objectData.alternate = 0;
+					objectData.random = 0;
+					TileObject.Place(objectData);
+				}
+			}
+		}
 	}
 }

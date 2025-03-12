@@ -2810,6 +2810,8 @@ namespace Origins {
 	public static class CollisionExtensions {
 		static Triangle[] tileTriangles;
 		static Rectangle[] tileRectangles;
+		public static ReadOnlySpan<Triangle> TileTriangles => tileTriangles.AsSpan();
+		public static ReadOnlySpan<Rectangle> TileRectangles => tileRectangles.AsSpan();
 		public static void Load() {
 			Vector2 topLeft = Vector2.Zero * 16;
 			Vector2 topRight = Vector2.UnitX * 16;

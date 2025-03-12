@@ -15,6 +15,7 @@ using Origins.Water;
 
 namespace Origins.Backgrounds 
 {
+#nullable enable
 	public class CaptureBiomeSettings : ModSystem
 	{
 		public override void Load() 
@@ -227,4 +228,5 @@ namespace Origins.Backgrounds
 			});
 		}
 	}
+#nullable disable
 }

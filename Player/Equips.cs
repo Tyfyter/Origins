@@ -569,6 +569,9 @@ namespace Origins {
 			}
 		}
 		public override void UpdateLifeRegen() {
+			if (extremophileSet && Player.lifeRegen < 0) {
+				Player.lifeRegen -= Main.rand.RandomRound(Player.lifeRegen * 0.333f);
+			}
 			if (oldCryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
 			if (bombCharminItLifeRegenCount > 0) {
 				Player.lifeRegenCount += bombCharminItStrength;

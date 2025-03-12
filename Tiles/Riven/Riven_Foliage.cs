@@ -19,6 +19,7 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			Main.tileNoFail[Type] = true;
 			Main.tileLighted[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;

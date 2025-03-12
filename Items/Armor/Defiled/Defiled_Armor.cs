@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
@@ -7,7 +6,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Defiled {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Defiled_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
             "ArmorSet",

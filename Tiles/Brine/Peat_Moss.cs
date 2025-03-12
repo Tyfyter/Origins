@@ -38,14 +38,15 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
-				if (TileObject.CanPlace(i, j + 1, TileType<Brineglow>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile && Framing.GetTileSafely(i, j + 1).LiquidAmount >= 255) {
+				if (TileObject.CanPlace(i, j + 1, WorldGen.genRand.NextBool(3) ? TileType<Brineglow>() : TileType<Underwater_Vine>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;
 					TileObject.Place(objectData);
 				}
 			}
+			Brine_Leaf_Clover_Tile.TryGrowOnTile(i, j);
 		}
 	}
 	public class Peat_Moss_Item : MaterialItem {

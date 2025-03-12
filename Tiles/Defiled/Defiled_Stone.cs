@@ -37,6 +37,13 @@ namespace Origins.Tiles.Defiled {
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
+		public override void RandomUpdate(int i, int j) {
+			Tile above = Framing.GetTileSafely(i, j - 1);
+			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid && Main.rand.NextBool(250)) {
+				above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+				WorldGen.TileFrame(i, j - 1);
+			}
+		}
 	}
 	public class Defiled_Stone_Item : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {

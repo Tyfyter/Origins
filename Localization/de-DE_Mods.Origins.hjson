@@ -1550,6 +1550,13 @@ Projectiles: {
 	// Boomboom_P.DisplayName: Boomboom P
 	// Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
 	// Fumethrower_P.DisplayName: Fumethrower P
+	// Bomb_Trap_Bomb.DisplayName: Bomb Trap Bomb
+	// Bomb_Trap_Grenade.DisplayName: Bomb Trap Grenade
+	// Bomb_Trap_Dynamite.DisplayName: Bomb Trap Dynamite
+	// Soulslasher_Slash.DisplayName: Soulslasher Slash
+	// Soulslasher_Swing.DisplayName: Soulslasher Swing
+	// Soulslasher_P.DisplayName: Soulslasher P
+	// Latchkey_P.DisplayName: Latchkey P
 }
 
 Prefixes: {
@@ -1772,6 +1779,8 @@ Tiles: {
 	// Basic_Crate_Tile.MapEntry: Basic Crate
 	// Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
 	// Music_Box_BP: Music Box (Brine Pool)
+	// Brine_Dungeon_Chest.MapEntry: Brine Dungeon Chest
+	// Brine_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Brine_Dungeon_Chest_Locked.MapEntry
 }
 
 MapObject: {
@@ -2266,6 +2275,13 @@ SetBonuses: {
 		'''
 		Immunity to Static Shock and Electrified
 		+5% damage reduction
+		''' */
+	/* Extremophile:
+		'''
+		Receiving a debuff gradually builds up defense until hit again
+		Damaging debuffs deal 33% less damage to you
+		Being hit repeatedly increases the likelihood of dodging the next attack
+		This likelihood is reset after a successful dodge
 		''' */
 }
 

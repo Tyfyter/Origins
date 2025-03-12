@@ -89,6 +89,9 @@ namespace Origins {
 		public bool rainSet = false;
 		public bool rubberBody = false;
 		public int nearTrafficCone = 0;
+		public bool extremophileSet = false;
+		public int extremophileSetHits = 0;
+		public int extremophileSetTime = 0;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -108,7 +111,8 @@ namespace Origins {
 		public bool asylumWhistle = false;
 		public int asylumWhistleTarget = -1;
 		public int mitosisCooldown = 0;
-		public bool refactoringPieces;
+		public bool refactoringPieces = false;
+		public int refactoringPiecesDashCooldown = 0;
 		public float mysteriousSprayMult = 1;
 		public bool protozoaFood = false;
 		public int protozoaFoodCooldown = 0;
@@ -383,6 +387,7 @@ namespace Origins {
 		#endregion visuals
 
 		public float statSharePercent = 0f;
+		public StatModifier projectileSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
 		public Item journalDye = null;
@@ -478,6 +483,21 @@ namespace Origins {
 			minerSet = false;
 			lostSet = false;
 			refactoringPieces = false;
+			if (refactoringPiecesDashCooldown > 0) {
+				if (--refactoringPiecesDashCooldown <= 0) {
+					for (int i = 0; i < 8; i++) {
+						Dust.NewDust(
+							Player.position,
+							Player.width,
+							Player.height,
+							DustID.TintableDustLighted,
+							Scale: 1.5f,
+							newColor: Main.hslToRgb(Main.rand.NextFloat(6), 1, 0.5f)
+						);
+					}
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
+				}
+			}
 			rivenSet = false;
 			rivenSetBoost = false;
 			bleedingObsidianSet = false;
@@ -508,6 +528,13 @@ namespace Origins {
 			rainSet = false;
 			rubberBody = false;
 			if (nearTrafficCone > 0) nearTrafficCone--;
+			if (extremophileSet) {
+				if (extremophileSetTime > 0 && extremophileSetTime < 60 * 15) extremophileSetTime++;
+				extremophileSet = false;
+			} else {
+				extremophileSetHits = 0;
+				extremophileSetTime = 0;
+			}
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
@@ -739,6 +766,7 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
+			projectileSpeedBoost = StatModifier.Default;
 
 			if (itemComboAnimationTime > 0)
 				itemComboAnimationTime--;

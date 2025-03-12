@@ -736,6 +736,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public class Spawn : SpawnPool {
 			public override string Name => $"{nameof(Defiled_Amalgamation)}_{base.Name}";
 			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.EventHigh;
 				AddSpawn<Defiled_Amalgamation>(spawnInfo => spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Defiled_Stone_Wall>() ? 99999999 : 0);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnDA && spawnInfo.Player.InModBiome<Defiled_Wastelands>();

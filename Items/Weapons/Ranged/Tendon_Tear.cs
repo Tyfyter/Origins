@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -9,11 +10,15 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Tendon_Tear : ModItem, ICustomWikiStat {
+	public class Tendon_Tear : ModItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
             "Gun"
         ];
-        public override void SetDefaults() {
+		public string EntryName => "Origins/" + typeof(Tendon_Tear_Entry).Name;
+		public class Tendon_Tear_Entry : JournalEntry {
+			public override string TextKey => "Tendon_Tear";
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 18;
 			Item.crit = -2;

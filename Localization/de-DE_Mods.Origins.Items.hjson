@@ -2509,11 +2509,7 @@ Thermite_Launcher: {
 
 Dragons_Breath: {
 	// DisplayName: Dragon's Breath
-	/* Tooltip:
-		'''
-		Uses fireblossoms as ammo
-		Desperately needs rework
-		''' */
+	// Tooltip: Uses fireblossoms as ammo
 }
 
 Felnum_Golf_Ball: {
@@ -3362,7 +3358,7 @@ Alkahest_Torch: {
 }
 
 // Surveysprout.DisplayName: Surveysprout
-// NE8.DisplayName: NE8
+// NE8.DisplayName: NE-8
 // Nova_Fragment.DisplayName: Nova Fragment
 
 Polyeel: {
@@ -5380,11 +5376,6 @@ Fumethrower: {
 	// Tooltip: ""
 }
 
-Lost_Picture_Frame: {
-	// DisplayName: Lost Picture Frame
-	// Tooltip: Summons the Lost Diver
-}
-
 Lost_Diver_Relic_Item: {
 	// DisplayName: Lost Diver Relic
 	// Tooltip: ""
@@ -5392,5 +5383,59 @@ Lost_Diver_Relic_Item: {
 
 Lost_Diver_Trophy_Item: {
 	// DisplayName: Lost Diver Trophy
+	// Tooltip: ""
+}
+
+Extremophile_Breastplate: {
+	// DisplayName: Extremophile Breastplate
+	/* Tooltip:
+		'''
+		+15% generic damage
+		+10% generic attack speed
+		''' */
+}
+
+Extremophile_Greaves: {
+	// DisplayName: Extremophile Greaves
+	/* Tooltip:
+		'''
+		+25% movement speed
+		10% increased speed when submerged
+		Grants the ability to swim
+		''' */
+}
+
+Extremophile_Helmet: {
+	// DisplayName: Extremophile Helmet
+	// Tooltip: +15% generic velocity
+}
+
+Bomb_Trap_Item: {
+	// DisplayName: Bomb Trap
+	// Tooltip: ""
+}
+
+Limestone_Item: {
+	// DisplayName: Limestone
+	// Tooltip: ""
+}
+
+Brine_Dungeon_Chest_Item: {
+	// DisplayName: Brine Chest
+	// Tooltip: ""
+}
+
+Locked_Brine_Dungeon_Chest_Item: {
+	// DisplayName: Locked Brine Dungeon Chest Item
+	// Tooltip: ""
+}
+
+Soulslasher: {
+	// DisplayName: Soulslasher
+	// Tooltip: ""
+}
+
+Latchkey: {
+	// DisplayName: Latchkey
 	// Tooltip: ""
 }

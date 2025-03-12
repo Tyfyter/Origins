@@ -20,6 +20,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			Main.tileNoFail[Type] = true;
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;

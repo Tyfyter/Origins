@@ -14,6 +14,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			AddMapEntry(new Color(175, 175, 175));
 			HitSound = Origins.Sounds.DefiledIdle;
 
