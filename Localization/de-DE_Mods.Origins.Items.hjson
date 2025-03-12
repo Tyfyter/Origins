@@ -5404,3 +5404,8 @@ Bomb_Trap_Item: {
 	// DisplayName: Bomb Trap Item
 	// Tooltip: ""
 }
+
+Limestone_Item: {
+	// DisplayName: Limestone Item
+	// Tooltip: ""
+}

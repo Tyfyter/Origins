@@ -1046,7 +1046,7 @@ TILES:
 (^) Baryte*
 (^) Batholith°
 (^) Bleeding Obsidian*
-(#, ^2) Bomb Trap !!!
+(☻) Bomb Trap !!!
 (@4) Brittle Quartz*
 (^) Chambersite
 (X) Compacted Scrap°
@@ -1070,7 +1070,7 @@ TILES:
 (@4) Hardened Defiled Sand*
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
-(#, ^2) Limestone !!!
+(@4, ^3) Limestone !!! (merges with tile other than itself and dirt)
 (^) Lost Ore*
 (^) Marrowick*
 (^) Mildew Block°

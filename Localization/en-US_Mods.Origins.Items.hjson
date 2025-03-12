@@ -5401,6 +5401,11 @@ Extremophile_Helmet: {
 }
 
 Bomb_Trap_Item: {
-	DisplayName: Bomb Trap Item
+	DisplayName: Bomb Trap
+	Tooltip: ""
+}
+
+Limestone_Item: {
+	DisplayName: Limestone
 	Tooltip: ""
 }
