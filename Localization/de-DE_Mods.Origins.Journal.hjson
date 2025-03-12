@@ -961,6 +961,7 @@ Weakpoint_Analyzer: {
 		[header:Weakpoint Analyzer (11/13)]
 		[jimage/sc3d:Origins/Items/Accessories/Weakpoint_Analyzer]
 
+
 		*****
 		Rip and tear their closest, all for sustenance. The new king had risen, all to influence them with his hymn. The recited hymn of endless bloodlust.
 		''' */
@@ -969,7 +970,9 @@ Weakpoint_Analyzer: {
 /* Ziptie.Text:
 	'''
 	[header:Ziptie (6/17)]
-	[i:Origins/Ziptie]
+	[jimage/sc2d:Origins/Items/Weapons/Summoner/Ziptie]
+
+
 
 	*****
 	Damnation was no salvation, surely felt to be punishment greater than endless drifting through void. We learned because that was all there was. Crooked thoughts of collective thoughts from the egregore. We were being made alive...

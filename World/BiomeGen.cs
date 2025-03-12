@@ -257,6 +257,19 @@ namespace Origins {
 					);
 				}
 			}));
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Remove Broken Traps"));
+			tasks.Insert(genIndex, new PassLegacy("Boom", (GenerationProgress progress, GameConfiguration _) => {
+				ushort type = (ushort)TileType<Bomb_Trap>();
+				for (int i = 0; i < Main.maxTilesX; i++) {
+					for (int j = (int)GenVars.worldSurfaceHigh; j < Main.maxTilesY; j++) {
+						Tile tile = Framing.GetTileSafely(i, j);
+						if (tile.TileType == TileID.Traps && tile.TileFrameY == 0 && genRand.NextBool(10) && HasTriggerWithinRange(i, j, 10)) {
+							tile.TileType = type;
+						}
+					}
+				}
+			}));
+
 			if (remixWorldGen) {
 				genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
 				tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
@@ -279,6 +292,47 @@ namespace Origins {
 					Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
 				}));
 			}
+
+		}
+		public static bool HasTriggerWithinRange(int i, int j, int range) {
+			List<Point> currentPoints = [];
+			List<Point> nextPoints = [];
+			HashSet<Point> prevPoints = [];
+			nextPoints.Add(new(i, j));
+			while (nextPoints.Count > 0) {
+				Utils.Swap(ref currentPoints, ref nextPoints);
+				while (currentPoints.Count > 0) {
+					Point item = currentPoints[0];
+					currentPoints.RemoveAt(0);
+					if (!InWorld(item.X, item.Y, 5)) {
+						continue;
+					}
+					Tile tile = Main.tile[item.X, item.Y];
+					if (tile.RedWire) {
+						prevPoints.Add(item);
+						if (IsItATrigger(tile) && Math.Abs(item.X - i) <= range) {
+							return true;
+						}
+						Point item2 = new(item.X - 1, item.Y);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+						item2 = new(item.X + 1, item.Y);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+						item2 = new(item.X, item.Y - 1);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+						item2 = new(item.X, item.Y + 1);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+					}
+				}
+			}
+			return false;
 		}
 		public static void RemoveTree(int i, int j) {
 			Tile tile = Main.tile[i, j];
