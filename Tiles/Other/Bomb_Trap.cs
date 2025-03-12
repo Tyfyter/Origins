@@ -106,6 +106,21 @@ namespace Origins.Tiles.Other {
 			Projectile.timeLeft = 60;
 			AIType = ProjectileID.Grenade;
 		}
+		public override void AI() {
+			if (Projectile.timeLeft <= 3) return;
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.Hitbox.Intersects(Projectile.Hitbox)) {
+					Projectile.timeLeft = 3;
+					return;
+				}
+			}
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.Hitbox.Intersects(Projectile.Hitbox)) {
+					Projectile.timeLeft = 3;
+					return;
+				}
+			}
+		}
 		public override void PrepareBombToBlow() {
 			Projectile.friendly = true;
 			Projectile.hostile = true;
@@ -115,7 +130,7 @@ namespace Origins.Tiles.Other {
 	public class Bomb_Trap_Bomb : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bomb;
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Bomb);
+			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.trap = true;
 			Projectile.timeLeft = 90;
 			AIType = ProjectileID.Grenade;
