@@ -162,6 +162,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Bomb_Trap>());
+			Item.value = Item.sellPrice(silver: 35);
 		}
 	}
 }

@@ -676,7 +676,7 @@ MELEE WEAPONS:
 (^) Snapthrow*
 (^) Soldering Iron
 (#, ^2) Soul Snatcher* !!!
-(☻) Soulslasher !!!
+(^) Soulslasher
 (^) Spiker Sword*
 (^) Switchblade*
 (^) Thunderbolt

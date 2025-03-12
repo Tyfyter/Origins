@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item60;
 			Item.ArmorPenetration = 0;
 		}
 		public override void AddRecipes() {

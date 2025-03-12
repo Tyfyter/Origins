@@ -495,7 +495,7 @@ namespace Origins {
 							newColor: Main.hslToRgb(Main.rand.NextFloat(6), 1, 0.5f)
 						);
 					}
-					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
 				}
 			}
 			rivenSet = false;

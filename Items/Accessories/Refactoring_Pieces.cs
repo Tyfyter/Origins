@@ -1,11 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using PegasusLib.Graphics;
-using System.Collections.Generic;
-using System;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
