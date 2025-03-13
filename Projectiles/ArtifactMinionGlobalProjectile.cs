@@ -41,6 +41,11 @@ namespace Origins.Projectiles {
 				artifact.Life = artifact.MaxLife;
 			}
 		}
+		public static void ModifyHurt(Projectile projectile, ref int damage, bool fromDoT) {
+			if (projectile.TryGetOwner(out Player player)) {
+				player.OriginPlayer()?.broth?.ModifyHurt(projectile, ref damage, fromDoT);
+			}
+		}
 		public static void OnHurt(Projectile projectile, int damage, bool fromDoT) {
 			if (projectile.TryGetOwner(out Player player)) {
 				player.OriginPlayer()?.broth?.OnHurt(projectile, damage, fromDoT);
@@ -189,6 +194,7 @@ namespace Origins.Projectiles {
 	public interface IArtifactMinion {
 		int MaxLife { get; set; }
 		float Life { get; set; }
+		void ModifyHurt(ref int damage, bool fromDoT) { }
 		void OnHurt(int damage, bool fromDoT) { }
 		bool CanDie => true;
 		void DrawDeadHealthBar(Vector2 position, float light) {
@@ -206,7 +212,9 @@ namespace Origins.Projectiles {
 	}
 	public static class ArtifactMinionExtensions {
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, bool fromDoT = false, bool noCombatText = false) {
+			minion.ModifyHurt(ref damage, fromDoT);
 			ModProjectile proj = minion as ModProjectile;
+			ArtifactMinionGlobalProjectile.ModifyHurt(proj.Projectile, ref damage, fromDoT);
 			ArtifactMinionGlobalProjectile global = proj.Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>();
 			if (!fromDoT) {
 				damage -= global.defense;
