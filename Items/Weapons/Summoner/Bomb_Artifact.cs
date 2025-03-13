@@ -293,7 +293,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.frame = 7 + (int)(Projectile.ai[0] / 6f);
 				if (++Projectile.ai[0] > 30) {
 					//Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, projectile.damage, 0, projectile.owner, 1, 1);
-					Projectile.DamageArtifactMinion(9999, noCombatText: true);
+					Projectile.DamageArtifactMinion(50, noCombatText: true);
 				}
 			} else if (OnGround) {
 				Projectile.localAI[1]--;

@@ -41,6 +41,11 @@ namespace Origins.Projectiles {
 				artifact.Life = artifact.MaxLife;
 			}
 		}
+		public static void OnHurt(Projectile projectile, int damage, bool fromDoT) {
+			if (projectile.TryGetOwner(out Player player)) {
+				player.OriginPlayer()?.broth?.OnHurt(projectile, damage, fromDoT);
+			}
+		}
 		public override void PostAI(Projectile projectile) {
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
 				if (artifact.Life <= 0) {
@@ -210,6 +215,7 @@ namespace Origins.Projectiles {
 			float healthModifiedDamage = damage * (minion.MaxLife / global.maxHealthModifier.ApplyTo(minion.MaxLife));
 			minion.Life -= healthModifiedDamage;
 			minion.OnHurt(damage, fromDoT);
+			ArtifactMinionGlobalProjectile.OnHurt(proj.Projectile, damage, fromDoT);
 			if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
 			if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, damage == 0 ? Color.Gray : CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
 		}

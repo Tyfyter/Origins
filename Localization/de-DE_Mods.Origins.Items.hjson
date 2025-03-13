@@ -5450,3 +5450,13 @@ Latchkey: {
 	// DisplayName: Latchkey
 	// Tooltip: Use to glitch through defiled blocks
 }
+
+Sharp_Broth: {
+	// DisplayName: Sharp Broth
+	// Tooltip: ""
+}
+
+Minty_Broth: {
+	// DisplayName: Minty Broth
+	// Tooltip: ""
+}

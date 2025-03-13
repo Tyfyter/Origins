@@ -19,6 +19,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -252,6 +253,9 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
+			if (proj.IsMinionOrSentryRelated) {
+				broth?.OnMinionHit(proj, target, hit, damageDone);
+			}
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
 				if (flaskBile) {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);

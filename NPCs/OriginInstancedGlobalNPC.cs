@@ -231,7 +231,8 @@ namespace Origins.NPCs {
 			}
 			if (electrified) {
 				int damageMult = 1 + npc.wet.ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
-				if (damage < 40 * damageMult) damage = 40 * damageMult;
+				npc.lifeRegen -= 40 * damageMult;
+				if (damage < 40 * damageMult) damage = 20 * damageMult;
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				npc.lifeRegen -= 15;

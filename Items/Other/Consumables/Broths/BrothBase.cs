@@ -38,7 +38,11 @@ namespace Origins.Items.Other.Consumables.Broths {
 		}
 		public virtual void UpdateBuff(Player player, ref int buffIndex) { }
 		public virtual void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) { }
+		public virtual void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) { }
 		public virtual void PreUpdateMinion(Projectile minion) { }
+		public virtual void UpdateMinion(Projectile minion, int time) { }
+		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT) { }
+		public virtual void PostDrawMinion(Projectile minion, Color lightColor) { }
 		internal static bool On_Player_QuickBuff_ShouldBotherUsingThisBuff(On_Player.orig_QuickBuff_ShouldBotherUsingThisBuff orig, Player self, int attemptedType) {
 			bool result = orig(self, attemptedType);
 			bool isBroth = Origins.BrothBuffs[attemptedType];

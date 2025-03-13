@@ -1070,6 +1070,16 @@ Buffs: {
 		// DisplayName: Mithrafin Poison Extend Debuff
 		// Description: Mods.Origins.Buffs.Mithrafin_Poison_Extend_Debuff.Description
 	}
+
+	Sharp_Broth_Buff: {
+		// DisplayName: Sharp Broth Buff
+		// Description: Mods.Origins.Buffs.Sharp_Broth_Buff.Description
+	}
+
+	Minty_Broth_Buff: {
+		// DisplayName: Minty Broth Buff
+		// Description: Mods.Origins.Buffs.Minty_Broth_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1557,6 +1567,7 @@ Projectiles: {
 	// Soulslasher_Swing.DisplayName: Soulslasher Swing
 	// Soulslasher_P.DisplayName: Soulslasher P
 	// Latchkey_P.DisplayName: Latchkey P
+	// Minty_Retaliation_Visual.DisplayName: Minty Retaliation Visual
 }
 
 Prefixes: {

@@ -30,10 +30,10 @@ namespace Origins.Projectiles {
 		public float TotalBonusUpdates => bonusUpdates + tempBonusUpdates;
 		public int relayRodTime = 0;
 		public int relayRodStrength = 0;
+		bool fromArtifact = false;
 		public override void Load() {
 			IL_Projectile.Update += IL_Projectile_Update;
 		}
-
 		private static void IL_Projectile_Update(ILContext il) {
 			ILCursor c = new(il);
 			c.GotoNext(MoveType.Before,
@@ -43,7 +43,7 @@ namespace Origins.Projectiles {
 			c.EmitDelegate((int updates, Projectile proj) => {
 				OriginsGlobalBiome.isConvertingProjectilePlayerOwned = !proj.hostile && !proj.npcProj && proj.owner != Main.maxPlayers;
 				if (proj.TryGetGlobalProjectile(out MinionGlobalProjectile global)) {
-					if (proj.friendly && proj.TryGetOwner(out Player player)) {
+					if (proj.TryGetOwner(out Player player)) {
 						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {
 							artifact.maxHealthModifier = StatModifier.Default;
 						}
@@ -79,6 +79,7 @@ namespace Origins.Projectiles {
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
 					prefix = parentProjectile.TryGetGlobalProjectile(out OriginGlobalProj parent) ? parent.prefix : null;
+					fromArtifact = IsArtifact(parentProjectile);
 				}
 			}
 			if (prefix is MinionPrefix minionPrefix) minionPrefix.OnSpawn(projectile, source);
@@ -100,8 +101,11 @@ namespace Origins.Projectiles {
 			return true;
 		}
 		public override void PostAI(Projectile projectile) {
-			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is MinionPrefix artifactPrefix) {
-				artifactPrefix.UpdateProjectile(projectile, timer);
+			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is MinionPrefix minionPrefixPrefix) {
+				minionPrefixPrefix.UpdateProjectile(projectile, timer);
+			}
+			if (projectile.TryGetOwner(out Player player)) {
+				player.OriginPlayer()?.broth?.UpdateMinion(projectile, timer);
 			}
 			if (projectile.numUpdates == -1) {
 				timer++;
@@ -109,11 +113,23 @@ namespace Origins.Projectiles {
 				if (relayRodTime <= 0) relayRodStrength = 0;
 			}
 		}
+		public override void PostDraw(Projectile projectile, Color lightColor) {
+			if (projectile.TryGetOwner(out Player player)) {
+				player.OriginPlayer()?.broth?.PostDrawMinion(projectile, lightColor);
+			}
+		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			binaryWriter.Write((float)bonusUpdates);
+			bitWriter.WriteBit(fromArtifact);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			bonusUpdates = binaryReader.ReadSingle();
+			fromArtifact = bitReader.ReadBit();
+		}
+		public static bool IsArtifact(Projectile projectile) {
+			if (Origins.ArtifactMinion[projectile.type]) return true;
+			if (!projectile.TryGetGlobalProjectile(out MinionGlobalProjectile minionGlobal)) return false;
+			return minionGlobal.fromArtifact;
 		}
 	}
 }

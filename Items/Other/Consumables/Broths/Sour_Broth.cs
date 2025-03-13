@@ -23,7 +23,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			];
 		}
 		public override void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
-			if (Main.rand.NextBool(Origins.ArtifactMinion[proj.type] ? 25 : 10, 100)) modifiers.SetCrit();
+			if (Main.rand.NextBool(MinionGlobalProjectile.IsArtifact(proj) ? 25 : 10, 100)) modifiers.SetCrit();
 		}
 	}
 }
