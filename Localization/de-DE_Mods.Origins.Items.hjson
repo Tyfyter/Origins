@@ -5460,3 +5460,8 @@ Minty_Broth: {
 	// DisplayName: Minty Broth
 	// Tooltip: ""
 }
+
+Full_Send: {
+	// DisplayName: Full Send
+	// Tooltip: ""
+}

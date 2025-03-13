@@ -272,6 +272,10 @@ namespace Origins {
 		public bool mithrafin = false;
 		public bool oldMithrafin = false;
 		public const float mithrafinSelfMult = 0.8f;
+		public bool fullSend = false;
+		public Item fullSendItem = null;
+		public Vector2 fullSendStartPos;
+		public Vector2 fullSendPos;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -606,6 +610,7 @@ namespace Origins {
 			Player.ApplyBuffTimeAccessory(oldMithrafin, mithrafin, mithrafinSelfMult, Mithrafin.buffTypes);
 			oldMithrafin = mithrafin;
 			mithrafin = false;
+			fullSend = false;
 
 			trapCharm = false;
 			dangerBarrel = false;

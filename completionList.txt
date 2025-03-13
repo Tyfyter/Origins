@@ -338,7 +338,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(#2, ^2) Extremophile Armor !!! (needs debuff-defense cap)
+(☻) Extremophile Armor !!!
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -399,7 +399,7 @@ ACCESSORIES:
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
-(#, ^2) Crooked Mirror !!!
+(^2, ♠ (Celestial Starlight + Fissure Band)) Crooked Mirror !!!
 (^) Danger Barrel*
 (^) Destructive Claws*
 (^) Dim Starlight*
@@ -418,7 +418,7 @@ ACCESSORIES:
 (#, ^2) Fissure Band
 (^) Fleshy Figurine*
 (^) Focus Crystal*
-(#, ^2) Full Send !!!
+(☻) Full Send !!!
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
@@ -502,7 +502,7 @@ ACCESSORIES:
 (^) Symbiote Skull*
 (^) Tainted Flesh*
 (^) Tender Flesh Heart
-(#, ^2) Tiki Buckler !!!
+(^2, ♠ (Akaliegis + Pygmy Necklace)) Tiki Buckler !!!
 (X) Timbre of Hell°
 (^) Trap Charm*
 (^) Tripod Nip*

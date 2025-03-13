@@ -1284,7 +1284,7 @@ namespace Origins {
 		public const int Desert = 56 + 12;
 		public const int LockedDesert = 56 + 13;
 		public const int Reef = 56 + 14;
-		public const int Baloon = 56 + 15;
+		public const int Balloon = 56 + 15;
 		public const int AshWood = 56 + 16;
 		public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
 	}
@@ -1425,6 +1425,15 @@ namespace Origins {
 			value -= amount;
 			if (amount == 0) return (int)value;
 			if (random.NextFloat() < amount) {
+				value++;
+			}
+			return (int)value;
+		}
+		public static int RandomRound(this UnifiedRandom random, double value) {
+			double amount = value % 1;
+			value -= amount;
+			if (amount == 0) return (int)value;
+			if (random.NextDouble() < amount) {
 				value++;
 			}
 			return (int)value;

@@ -12,6 +12,7 @@ using Origins.NPCs;
 using Origins.NPCs.Brine;
 using Origins.Projectiles;
 using Origins.Questing;
+using PegasusLib.ID;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -20,6 +21,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using ThoriumMod.Empowerments;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -629,6 +631,9 @@ namespace Origins {
 		bool allManaDamage = false;
 		int manaDamageToTake = 0;
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
+			if (fullSend && modifiers.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
+				modifiers.FinalDamage *= 0.14f;
+			}
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
 				modifiers.SourceDamage *= 2;
 			}
@@ -788,6 +793,49 @@ namespace Origins {
 						10,
 						Player.whoAmI
 					);
+				}
+			}
+			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
+				const float maxDist = 240 * 240;
+				double totalDamage = info.SourceDamage * 0.86;
+				Vector2 center = Player.MountedCenter;
+				List<(int id, float weight)> targets = new();
+				NPC npc;
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					npc = Main.npc[i];
+					if (npc.type == NPCID.TargetDummy || npc.CanBeChasedBy(info.DamageSource)) {
+						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(center);
+						Vector2 diff = currentPos - center;
+						float dist = diff.LengthSquared();
+						if (dist > maxDist) continue;
+						float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+						if (totalDamage / 3 > npc.life) {
+							currentWeight = 0;
+						}
+						if (npc.type == NPCID.TargetDummy) currentWeight -= 2;
+						if (targets.Count >= 1) {
+							for (int j = 0; j < 3 && j < targets.Count; j++) {
+								if (targets[j].weight < currentWeight) {
+									targets.Insert(j, (i, currentWeight));
+									break;
+								}
+							}
+						} else {
+							targets.Add((i, currentWeight));
+						}
+					}
+				}
+				NPC.HitInfo hit = new() {
+					Damage = Main.rand.RandomRound(totalDamage / 3),
+					DamageType = DamageClass.Summon,
+					Knockback = 4
+				};
+				for (int i = 0; i < 3; i++) {
+					if (i >= targets.Count) break;
+					npc = Main.npc[targets[i].id];
+					hit.HitDirection = Math.Sign(npc.Center.X - center.X);
+					npc.StrikeNPC(hit);
+					if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendStrikeNPC(npc, hit);
 				}
 			}
 			if (cinderSealItem is not null) {
