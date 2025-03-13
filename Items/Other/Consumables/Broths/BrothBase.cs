@@ -60,6 +60,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 	public class BrothBuff(BrothBase item) : ModBuff {
 		public override string Name => item.Name + "_Buff";
 		public override void SetStaticDefaults() {
+			Main.persistentBuff[Type] = true;
 			Origins.BrothBuffs[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) {
