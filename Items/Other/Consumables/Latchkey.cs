@@ -1,13 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
 using Origins.Tiles;
+using PegasusLib;
 using PegasusLib.Graphics;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,6 +39,11 @@ namespace Origins.Items.Other.Consumables {
 			Item.shootSpeed = 4;
 			Item.shoot = ModContent.ProjectileType<Latchkey_P>();
 			Item.value = Item.sellPrice(copper: 20);
+		}
+		public override bool? UseItem(Player player) {
+			// aren't these supposed to have this as a drawback?
+			//player.GetAssimilation<Defiled_Assimilation>().Percent += 0.03f;
+			return base.UseItem(player);
 		}
 	}
 	public class Latchkey_P : ModProjectile {
@@ -207,5 +216,25 @@ namespace Origins.Items.Other.Consumables {
 			});
 			Main.OnResolutionChanged -= Resize;
 		}
+		/*FastFieldInfo<LightingEngine, LightMap> _workingLightMap = new("_workingLightMap", BindingFlags.NonPublic);
+		FastFieldInfo<LightingEngine, Rectangle> _workingProcessedArea = new("_workingProcessedArea", BindingFlags.NonPublic);
+		FastStaticFieldInfo<Lighting, ILightingEngine> _activeEngine = new("_activeEngine", BindingFlags.NonPublic);
+		public override void ModifyLightingBrightness(ref float scale) {
+			if (_activeEngine.Value is LightingEngine lightingEngine) {
+				Rectangle workingProcessedArea = _workingProcessedArea.GetValue(lightingEngine);
+				LightMap lightMap = _workingLightMap.GetValue(lightingEngine);
+				Point startPos = new(Player.tileTargetX - workingProcessedArea.X, Player.tileTargetY - workingProcessedArea.Y);
+				for (int i = -10; i < 11; i++) {
+					int x = i + startPos.X;
+					if (x < 0 || x >= lightMap.Width) continue;
+					for (int j = -10; j < 11; j++) {
+						int y = j + startPos.Y;
+						if (y < 0 || y >= lightMap.Height) continue;
+						lightMap.SetMaskAt(x, y, LightMaskMode.Solid);
+						lightMap[x, y] = Vector3.Zero;
+					}
+				}
+			}
+		}*/
 	}
 }
