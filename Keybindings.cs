@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +15,10 @@ namespace Origins {
 		public static ModKeybind ForbiddenVoice { get; private set; }
 		[Keybind("Inspect Item", "Mouse3")]
 		public static ModKeybind InspectItem { get; private set; }
+#if DEBUG
+		[Keybind("Debug Screen Shader", Keys.OemQuotes)]
+		public static ModKeybind DebugScreenShader { get; private set; }
+#endif
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);
 			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Static)) {
@@ -42,6 +47,7 @@ namespace Origins {
 		}
 		[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
 		protected sealed class KeybindAttribute(string name, string defaultBinding = "None") : Attribute {
+			public KeybindAttribute(string name, Keys key) : this(name, key.ToString()) { }
 			public string Name { get; } = name;
 			public string DefaultBinding { get; } = defaultBinding;
 		}

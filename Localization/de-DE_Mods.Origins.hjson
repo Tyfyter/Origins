@@ -1800,6 +1800,7 @@ Keybinds: {
 	// "Trigger Set Bonus.DisplayName": Trigger set bonus ability
 	// "Inspect Item.DisplayName": Inspect item
 	// "Forbidden Voice.DisplayName": Use Forbidden Voice
+	// "Debug Screen Shader.DisplayName": Debug  Screen  Shader
 }
 
 Configs: {
