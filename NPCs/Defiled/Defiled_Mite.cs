@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Armor.Defiled;
+using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -82,6 +83,7 @@ namespace Origins.NPCs.Defiled {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));

@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
@@ -70,6 +71,8 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
 		}
 		public override void AI() {

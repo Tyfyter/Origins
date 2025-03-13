@@ -8,6 +8,7 @@ using Origins.Items.Materials;
 using Terraria.GameContent.Bestiary;
 using Origins.Items.Armor.Defiled;
 using Origins.World.BiomeData;
+using Origins.Items.Other.Consumables;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
@@ -54,6 +55,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));

@@ -1,6 +1,7 @@
 ﻿using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
 using Origins.World.BiomeData;
@@ -57,6 +58,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 14));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 14));

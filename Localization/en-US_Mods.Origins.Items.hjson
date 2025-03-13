@@ -180,7 +180,7 @@ Cirrhosis_Abhorrence: {
 	Tooltip:
 		'''
 		All attacks inflict Bleeding and set enemies ablaze
-		Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+		Four of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
 		'''
 }
 
@@ -471,7 +471,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: Four of the nearest enemies will be afflicted with Rasterized
+	Tooltip: Three of the nearest enemies will be afflicted with Rasterized
 }
 
 Lovers_Leap: {
@@ -704,7 +704,11 @@ Rebreather: {
 
 Refactoring_Pieces: {
 	DisplayName: Refactoring Pieces
-	Tooltip: Increases mana shielding and damage reduction by 10%
+	Tooltip:
+		'''
+		Increases mana shielding and damage reduction by 10%
+		Grants a dash that allows you to glitch through defiled blocks
+		'''
 }
 
 Resin_Shield: {
@@ -3581,6 +3585,7 @@ Binding_Book: {
 		Increases maximum mana by 20
 		Restores mana when damaged
 		Increases mana shielding and damage reduction by 10%
+		Grants a dash that allows you to glitch through defiled blocks
 		'''
 }
 
@@ -4166,6 +4171,7 @@ Abyssal_Anchor: {
 		Increased pick-up range for stars
 		-25% movement speed and -40% jump speed
 		Allows you to fall faster through liquids
+		Grants a dash that allows you to glitch through defiled blocks
 		'''
 }
 
@@ -5373,7 +5379,7 @@ Boomboom: {
 
 Fumethrower: {
 	DisplayName: Fumethrower
-	Tooltip: ""
+	Tooltip: Spits colorful flames
 }
 
 Lost_Picture_Frame: {
@@ -5442,5 +5448,5 @@ Soulslasher: {
 
 Latchkey: {
 	DisplayName: Latchkey
-	Tooltip: ""
+	Tooltip: Use to glitch through defiled blocks
 }

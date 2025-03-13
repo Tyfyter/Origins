@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Tiles;
 using Origins.World.BiomeData;
 using System;
@@ -80,6 +81,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tripod_Nip>(), 48));
 		}

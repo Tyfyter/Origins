@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.glowMask = glowmask;
 		}
@@ -28,7 +28,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.magmaLeech = true;
-			originPlayer.lousyLiverCount = 5;
+			originPlayer.lousyLiverCount = 4;
 			originPlayer.lousyLiverDebuffs.Add((Lousy_Liver_Debuff.ID, 9));
 			originPlayer.lousyLiverDebuffs.Add((BuffID.OnFire, 15));
 			originPlayer.lousyLiverDebuffs.Add((BuffID.Bleeding, 15));

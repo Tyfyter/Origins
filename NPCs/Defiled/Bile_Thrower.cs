@@ -1,11 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Armor.Defiled;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Other.Consumables;
 using Origins.Projectiles.Enemies;
 using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -38,6 +43,10 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			this.CopyBanner<Defiled_Banner_NPC>();
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 10));
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData(false);

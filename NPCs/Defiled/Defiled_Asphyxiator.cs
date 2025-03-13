@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -44,6 +47,11 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 10));
+		}
 		public int MaxMana => 100;
 		public int MaxManaDrain => 100;
 		public float Mana { get; set; }
@@ -65,9 +73,6 @@ namespace Origins.NPCs.Defiled {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public int Frame {
 			get => NPC.frame.Y / 58;

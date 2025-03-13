@@ -1,16 +1,9 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Origins.Dusts;
-using Origins.Items.Accessories;
+﻿using Origins.Items.Accessories;
 using Origins.Tiles;
-using Origins.Tiles.Riven;
-using Origins.World.BiomeData;
-using PegasusLib;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Other.Consumables {
 	public class Latchkey : ModItem {
@@ -21,13 +14,13 @@ namespace Origins.Items.Other.Consumables {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.useStyle = ItemUseStyleID.HiddenAnimation;
 			Item.rare = ItemRarityID.Green;
 			Item.width = 18;
 			Item.height = 20;
 			Item.maxStack = Item.CommonMaxStack;
 			Item.consumable = true;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = Origins.Sounds.PowerUp.WithVolume(0.75f);
 			Item.useAnimation = 15;
 			Item.useTime = 15;
 			Item.noUseGraphic = true;
@@ -35,13 +28,6 @@ namespace Origins.Items.Other.Consumables {
 			Item.shootSpeed = 4;
 			Item.shoot = ModContent.ProjectileType<Latchkey_P>();
 			Item.value = Item.sellPrice(copper: 20);
-		}
-		public override void AddRecipes() {
-			/*Recipe.Create(Type, 10)
-			.AddIngredient(ItemID.BottledWater, 10)
-			.AddIngredient(ModContent.ItemType<Riven_Grass_Seeds>())
-            .AddIngredient(ModContent.ItemType<Silica_Item>())
-            .Register();*/
 		}
 	}
 	public class Latchkey_P : ModProjectile {

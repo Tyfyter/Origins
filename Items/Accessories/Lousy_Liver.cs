@@ -15,12 +15,12 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.lousyLiverCount = 4;
+			originPlayer.lousyLiverCount = 3;
 			originPlayer.lousyLiverDebuffs.Add((Lousy_Liver_Debuff.ID, 10));
 		}
 	}

@@ -1,5 +1,4 @@
 ﻿using Origins.Buffs;
-using Origins.NPCs.Defiled.Boss;
 using System;
 using System.Collections.Generic;
 using System.IO;

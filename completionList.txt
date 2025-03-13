@@ -516,7 +516,7 @@ ACCESSORIES:
 (^) Mana Drive°
 (X) Probe Pack
 (^) Protozoa Food*
-(#2, ^2) Refactoring Pieces* !!!
+(#2, ^2) Refactoring Pieces* !!! (just needs visual effects)
 (^) Retaliatory Tendril°
 
 (^) Amebic Vial*
@@ -1206,7 +1206,7 @@ TILES:
 (X) Tangel Bramble
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
-(^) Wilting Rose*
+(#3, ^2) Wilting Rose* !!! (drops acorns when it shouldn't)
 (@4, ^3) Wrycoral*
 
 (^) A Perfect World
@@ -1349,7 +1349,7 @@ CONSUMABLES:
 (^) Flask of Black Bile*
 (^) Focus Potion°
 (#, ^2) Greater Summoning Potion !!!
-(#, ^2) Latchkey !!!
+(#2, ^2) Latchkey !!! (visual effects)
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
@@ -1596,7 +1596,7 @@ VOLUME I MUSIC:
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
-(^) Lost Diver/Mildew Carrion
+($) Lost Diver/Mildew Carrion !!! (beginning track)
 (X) Mechamalgamation
 (X) Miscreant
 (X) Quantux
@@ -1640,7 +1640,7 @@ VOLUME II MUSIC:
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
-($2) Lost Diver/Mildew Carrion
+($) Lost Diver/Mildew Carrion !!! (still missing beginning and end tracks)
 (X) Mechamalgamation
 (X) Miscreant
 (X) Quantux
