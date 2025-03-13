@@ -692,8 +692,8 @@ namespace Origins {
 			});//*/
 			On_Player.UpdateJumpHeight += On_Player_UpdateJumpHeight;
 			On_Player.AddBuff += On_Player_AddBuff;
+			IL_Player.UpdateLifeRegen += Akaliegis.IL_Player_UpdateLifeRegen;
 		}
-
 		private static void On_Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {
 			orig(self, type, timeToAdd, quiet, foodHack);
 			if (Main.debuff[type]) {

@@ -186,6 +186,10 @@ namespace Origins.Projectiles {
 					} else {
 						artifact.DrawDeadHealthBar(drawParams.TextPosition + posOffset, drawParams.DrawColor.A / 255f);
 					}
+					if (!Main.mouseText && new Rectangle((int)drawParams.TextPosition.X, (int)drawParams.TextPosition.Y, 36, 12).Contains(Main.MouseScreen)) {
+						Main.instance.MouseText($"{(int)artifact.Life}/{artifact.MaxLife}");
+						Main.mouseText = true;
+					}
 					drawParams.TextPosition.Y += 10;
 				}
 			}

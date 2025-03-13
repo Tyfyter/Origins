@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.ignoreWater = false;
 			Projectile.netImportant = true;
-			MaxLife = 60 * 45;
+			MaxLife = 15 * 45;
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;
@@ -221,7 +221,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 
 			#endregion
-			Life--;
+			Life -= 0.25f;
 		}
 		public override void OnKill(int timeLeft) {
 			const float diameter = 16;

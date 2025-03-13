@@ -276,6 +276,7 @@ namespace Origins {
 		public Item fullSendItem = null;
 		public Vector2 fullSendStartPos;
 		public Vector2 fullSendPos;
+		public bool akaliegis = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -611,6 +612,7 @@ namespace Origins {
 			oldMithrafin = mithrafin;
 			mithrafin = false;
 			fullSend = false;
+			akaliegis = false;
 
 			trapCharm = false;
 			dangerBarrel = false;
