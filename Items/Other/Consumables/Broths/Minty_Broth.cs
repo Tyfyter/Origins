@@ -20,11 +20,15 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.DrinkParticleColors[Type] = [
-				new(233, 173, 117),
-				new(207, 110, 21),
-				new(151, 82, 18)
+				new(32, 228, 149),
+				new(45, 172, 121),
+				new(34, 113, 81)
+			];
+			ItemID.Sets.FoodParticleColors[Type] = [
+				new(8, 44, 30)
 			];
 		}
+		public override int Duration => 4;
 		public override void PostDrawMinion(Projectile minion, Color lightColor) {
 			Texture2D texture = TextureAssets.Extra[174].Value;
 			int oldShader = Main.CurrentDrawnEntityShader;

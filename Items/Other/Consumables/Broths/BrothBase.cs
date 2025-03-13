@@ -23,7 +23,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			Item.DefaultToFood(
 				30, 28,
 				Buff.Type,
-				60 * 60 * 6,
+				60 * 60 * Duration,
 				true
 			);
 			Item.useStyle = ItemUseStyleID.EatFood;
@@ -36,6 +36,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			}
 			return true;
 		}
+		public virtual int Duration => 6;
 		public virtual void UpdateBuff(Player player, ref int buffIndex) { }
 		public virtual void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) { }
 		public virtual void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) { }

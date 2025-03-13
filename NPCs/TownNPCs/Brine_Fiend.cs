@@ -100,6 +100,8 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Hearty_Broth>()
 			.Add<Sour_Broth>()
 			.Add<Foul_Broth>()
+			.Add<Sharp_Broth>()
+			.Add<Minty_Broth>()
 			.Register();
 		}
 		public override string GetChat() {
