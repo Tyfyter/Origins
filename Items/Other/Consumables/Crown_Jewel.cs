@@ -23,6 +23,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		static List<int> bosses = [];
 		public override void Unload() => bosses = null;
+		public static int ShaderID { get; private set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this, "");
 			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
@@ -30,6 +31,7 @@ namespace Origins.Items.Other.Consumables {
 				"Crown_Jewel_Caustics"
 			))
 			.UseImage(TextureAssets.Extra[193]);
+			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Lime;

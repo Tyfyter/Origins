@@ -1568,6 +1568,9 @@ Projectiles: {
 	Soulslasher_P.DisplayName: Soulslasher P
 	Latchkey_P.DisplayName: Latchkey P
 	Minty_Retaliation_Visual.DisplayName: Minty Retaliation Visual
+	The_Foot_Smash.DisplayName: The Foot Smash
+	The_Foot_Flail.DisplayName: The Foot Flail
+	The_Foot_Aura.DisplayName: The Foot Aura
 }
 
 Prefixes: {
