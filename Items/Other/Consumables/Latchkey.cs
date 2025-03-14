@@ -164,7 +164,7 @@ namespace Origins.Items.Other.Consumables {
 				Utils.Swap(ref renderTarget, ref oldRenderTarget);
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Matrix.Identity);
 				if (oldHadLatchkeys) Main.spriteBatch.Draw(oldRenderTarget, Main.screenLastPosition - Main.screenPosition, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 				for (int i = 0; i < latchkeys.Count; i++) {
 					Player player = Main.player[latchkeys[i].owner];
