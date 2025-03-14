@@ -12,6 +12,7 @@ using Origins.NPCs;
 using Origins.NPCs.Brine.Boss;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
+using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
@@ -249,6 +250,9 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 60);
+		}
+		public override void AI() {
+			Lighting.AddLight(Projectile.Center, 0, 0.4f, 0);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			SpriteBatchState state = Main.spriteBatch.GetState();

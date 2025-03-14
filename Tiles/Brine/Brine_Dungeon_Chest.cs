@@ -6,17 +6,23 @@ using Terraria.Localization;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Melee;
 
 namespace Origins.Tiles.Brine {
 	public class Brine_Dungeon_Chest : ModChest {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			AddMapEntry(new Color(200, 200, 200), CreateMapEntryName(), MapChestName);
-			AddMapEntry(new Color(140, 140, 140), Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry")), MapChestName);
+			AddMapEntry(new Color(15, 86, 88), CreateMapEntryName(), MapChestName);
+			AddMapEntry(new Color(15, 86, 88), Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry")), MapChestName);
 			//disableSmartCursor = true;
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Brine_Key>();
 			DustType = DustID.GreenMoss;
+			ModLoader.GetMod(nameof(AltLibrary)).Call("adddungeonchest",
+				Type,
+				ModContent.ItemType<The_Foot>(),
+				1
+			);
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
