@@ -15,6 +15,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Projectiles;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Foot : ModItem, ICustomWikiStat {
@@ -119,6 +120,9 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class The_Foot_Flail : ModProjectile {
 		public AutoLoadingAsset<Texture2D> ChainTexture = typeof(The_Foot).GetDefaultTMLName() + "_Chain";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.netImportant = true;
 			Projectile.friendly = true;
@@ -197,16 +201,16 @@ namespace Origins.Items.Weapons.Melee {
 					Lighting.GetColor(chainPositions[i].ToTileCoordinates()),
 					rotation,
 					new Vector2(6, 3),
-					1,
+					Projectile.scale,
 					0,
 				0);
 			}
 			return false;
 		}
 
-		static List<Vector2> GetChainPositions(Vector2 chainDrawPosition, Vector2 vectorFromProjectileToPlayerArms) {
+		List<Vector2> GetChainPositions(Vector2 chainDrawPosition, Vector2 vectorFromProjectileToPlayerArms) {
 			const int overlapPixels = 1;
-			const float chainLength = 12 - (overlapPixels * 2);
+			float chainLength = (12 - (overlapPixels * 2)) * Projectile.scale;
 			Vector2 unitVectorFromProjectileToPlayerArms = vectorFromProjectileToPlayerArms.SafeNormalize(Vector2.Zero) * chainLength;
 			float chainLengthRemainingToDraw = vectorFromProjectileToPlayerArms.Length() / chainLength + 1;
 			List<Vector2> chainPositions = new();
