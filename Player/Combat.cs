@@ -176,15 +176,19 @@ namespace Origins {
 						Vector2 position = Player.itemLocation;
 						Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
 
-						CombinedHooks.ModifyShootStats(Player, gunGloveItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockback);
-						EntitySource_ItemUse_WithAmmo source = (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(gunGloveItem, usedAmmoItemId);
-						if (CombinedHooks.Shoot(Player, gunGloveItem, source, position, velocity, projToShoot, damage, knockback)) {
-							Projectile.NewProjectile(source, position, velocity, projToShoot, damage, knockback, Player.whoAmI);
-							SoundEngine.PlaySound(gunGloveItem.UseSound, position);
+						if (gunGloveItem.UseSound is not null) SoundEngine.PlaySound(gunGloveItem.UseSound, position);
+
+						if (Main.myPlayer == Player.whoAmI) {
+							CombinedHooks.ModifyShootStats(Player, gunGloveItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockback);
+							EntitySource_ItemUse_WithAmmo source = (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(gunGloveItem, usedAmmoItemId);
+							if (CombinedHooks.Shoot(Player, gunGloveItem, source, position, velocity, projToShoot, damage, knockback)) {
+								Projectile.NewProjectile(source, position, velocity, projToShoot, damage, knockback, Player.whoAmI);
+								SoundEngine.PlaySound(gunGloveItem.UseSound, position);
+							}
 						}
 					}
 					int useTime = CombinedHooks.TotalUseTime(gunGloveItem.useTime, Player, gunGloveItem);
-					gunGloveCooldown = useTime + Main.rand.Next(-useTime / 2, useTime / 2);
+					gunGloveCooldown = useTime + Main.rand.Next(-useTime / 5, useTime / 5);
 				}
 			}
 		}

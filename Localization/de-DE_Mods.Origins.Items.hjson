@@ -5503,3 +5503,8 @@ Terlet_Paper: {
 	// DisplayName: Terlet Paper
 	// Tooltip: Summons a kawaii spooder
 }
+
+Shotgun_Glove: {
+	// DisplayName: Shotgun Glove
+	// Tooltip: ""
+}

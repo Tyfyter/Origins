@@ -485,7 +485,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
 (^) Shock Collar*
-(#, ^2) Shotgun Glove !!!
+(☻) Shotgun Glove !!!
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
 (^) Sniper's Mark*
