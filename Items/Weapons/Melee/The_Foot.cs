@@ -1,33 +1,20 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
-using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Journal;
-using Origins.NPCs;
-using Origins.NPCs.Brine.Boss;
-using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
-using Origins.Tiles.Brine;
-using Origins.World.BiomeData;
+using System;
 using PegasusLib;
 using PegasusLib.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.BardItems;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Foot : ModItem, ICustomWikiStat {

@@ -94,7 +94,7 @@ TOWN NPC Quests:
 (^) TOWN NPC QUEST MECHANICS°
 
 (^) Arms Dealer - Live Fire*
-(X) Arms Dealer - Three Times the Charm*
+(^) Arms Dealer - Three Times the Charm*
 (X) Brine Fiend - Basic Brewery !!!
 (X) Brine Fiend - Get Freaky !!!
 (^) Cyborg - Sensor Upgrade*
@@ -316,7 +316,7 @@ ARMOR:
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
-(^) Ashen Armor*
+(⛥) Ashen Armor*
 (^) Cryosten Armor*
 (^) Defiled Armor*
 (^) Encrusted Armor*
@@ -338,7 +338,7 @@ ARMOR:
 (^) Acrid Armor*
 (^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
-(☻) Extremophile Armor !!!
+(^) Extremophile Armor
 (X) Faefinder's Armor
 (X) Mildew Armor !!!
 (X) Ruby Ranger Armor°
@@ -375,7 +375,7 @@ ACCESSORIES:
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(☻) Akaliegis !!
+(^) Akaliegis
 (^) Asylum Whistle*
 (^) A.S.H. Attack Relay*
 (^) Automated Returns Handler*
@@ -418,7 +418,7 @@ ACCESSORIES:
 (#, ^2) Fissure Band
 (^) Fleshy Figurine*
 (^) Focus Crystal*
-(☻) Full Send !!!
+(^) Full Send
 (^) Futurephones*
 (#, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
@@ -474,6 +474,7 @@ ACCESSORIES:
 (^) Razorwire*
 (^) Rebreather*
 (^) Rebreather Gear
+(X) Reformward
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Rockstar Choker
@@ -516,7 +517,7 @@ ACCESSORIES:
 (^) Mana Drive°
 (X) Probe Pack
 (^) Protozoa Food*
-(#2, ^2) Refactoring Pieces* !!! (just needs visual effects)
+(^) Refactoring Pieces*
 (^) Retaliatory Tendril°
 
 (^) Amebic Vial*
@@ -695,7 +696,7 @@ MELEE WEAPONS:
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
-(#, ^2) The Foot !!!
+(^) The Foot
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
@@ -814,6 +815,7 @@ MAGIC WEAPONS:
 (^) Low Signal*
 (^) Magnus
 (^) Manasynk*
+(X) Nerve Flan
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -834,6 +836,7 @@ MAGIC WEAPONS:
 (^) Splashid
 (^) Startillery
 (X) Symbiotic Staff
+(X) True Nerve Flan
 
 (^) Amber of Embers
 (^) Breach
@@ -1046,7 +1049,7 @@ TILES:
 (^) Baryte*
 (^) Batholith°
 (^) Bleeding Obsidian*
-(☻) Bomb Trap !!!
+(^) Bomb Trap
 (@4) Brittle Quartz*
 (^) Chambersite
 (X) Compacted Scrap°
@@ -1089,9 +1092,11 @@ TILES:
 (@4, ^3) Twilith*
 
 (^) Amebic Gel Wall
+(X) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
+(X) Calcified Spug Flesh Wall
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -1116,7 +1121,7 @@ TILES:
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
-(☻) Brine Dungeon Chest !!!
+(^) Brine Dungeon Chest
 (^) Brine Water Fountain
 (X) Bug Cage°
 (X) Cancer Block° !!!
@@ -1206,7 +1211,7 @@ TILES:
 (X) Tangel Bramble
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
-(#3, ^2) Wilting Rose* !!! (drops acorns when it shouldn't)
+(#2, ^2) Wilting Rose* !!! (has seed sprites now)
 (@4, ^3) Wrycoral*
 
 (^) A Perfect World
@@ -1349,7 +1354,7 @@ CONSUMABLES:
 (^) Flask of Black Bile*
 (^) Focus Potion°
 (#, ^2) Greater Summoning Potion !!!
-(#2, ^2) Latchkey !!! (visual effects)
+(ᗢ) Latchkey
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
@@ -1365,11 +1370,11 @@ CONSUMABLES:
 (#, ^2) Light Broth° !!!
 (X) Metallic Broth
 (X) Minishark Broth
-(☻) Minty Broth° !!!
+(^) Minty Broth°
 (#, ^2) Plain Broth° !!!
 (X) Salty Broth
 (#, ^2) Savory Broth° !!!
-(☻) Sharp Broth !!!
+(^) Sharp Broth
 (^) Sour Broth*
 (#, ^2) Spicy Broth° !!!
 (#, ^2) Sweet Broth° !!!
@@ -1385,6 +1390,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
+(X) Nerve Flan
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
@@ -1444,7 +1450,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
+(@4, #3) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*

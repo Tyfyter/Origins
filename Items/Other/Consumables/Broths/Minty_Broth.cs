@@ -1,15 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.LootConditions;
-using Origins.Projectiles;
-using PegasusLib;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
+using PegasusLib;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;

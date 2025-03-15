@@ -1072,13 +1072,26 @@ Buffs: {
 	}
 
 	Sharp_Broth_Buff: {
-		// DisplayName: Sharp Broth Buff
-		// Description: Mods.Origins.Buffs.Sharp_Broth_Buff.Description
+		// DisplayName: Sharp Broth
+		/* Description:
+			'''
+			Artifact minions inflict Electrified
+			All minions inflict Static Shock
+			''' */
 	}
 
 	Minty_Broth_Buff: {
-		// DisplayName: Minty Broth Buff
-		// Description: Mods.Origins.Buffs.Minty_Broth_Buff.Description
+		// DisplayName: Minty Broth
+		/* Description:
+			'''
+			Artifact minions have the Thorns effect
+			All minions inflict Frostburn for a small area around them
+			''' */
+	}
+
+	Terlet_Paper_Buff: {
+		// DisplayName: Terlet Paper Buff
+		// Description: Kawaii spooder tiem
 	}
 }
 
@@ -1571,6 +1584,7 @@ Projectiles: {
 	// The_Foot_Smash.DisplayName: The Foot Smash
 	// The_Foot_Flail.DisplayName: The Foot Flail
 	// The_Foot_Aura.DisplayName: The Foot Aura
+	// Terlet_Paper_P.DisplayName: Terlet Paper P
 }
 
 Prefixes: {

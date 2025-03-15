@@ -5437,7 +5437,7 @@ Brine_Dungeon_Chest_Item: {
 }
 
 Locked_Brine_Dungeon_Chest_Item: {
-	// DisplayName: Locked Brine Dungeon Chest Item
+	// DisplayName: Brine Dungeon Chest (locked)
 	// Tooltip: ""
 }
 
@@ -5453,25 +5453,53 @@ Latchkey: {
 
 Sharp_Broth: {
 	// DisplayName: Sharp Broth
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Artifact minions inflict Electrified
+		All minions inflict Static Shock
+		''' */
 }
 
 Minty_Broth: {
 	// DisplayName: Minty Broth
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		All artifact minions have the Thorns effect
+		All minions inflict Frostburn for a small area around them
+		''' */
 }
 
 Full_Send: {
 	// DisplayName: Full Send
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Allows the holder to perform a glitchy double jump
+		Increases jump height but doesn't negate fall damage
+		86% of fall damage is instead directed towards three nearby enemies
+		''' */
 }
 
 Akaliegis: {
 	// DisplayName: Akaliegis
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		15% damage reduction while an artifact minion is active
+		Artifact minions heal while at max life
+		''' */
 }
 
 The_Foot: {
 	// DisplayName: The Foot
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Inflicts Toxic Shock
+		Releases a akaline aura when striking the ground
+		Hold and right-click to use it like a flail
+		Right-click and release to use it as an anchor
+		''' */
+}
+
+Terlet_Paper: {
+	// DisplayName: Terlet Paper
+	// Tooltip: Summons a kawaii spooder
 }

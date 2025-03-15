@@ -1,11 +1,8 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using PegasusLib;
-using System;
-using System.Collections.Generic;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
+using PegasusLib;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]

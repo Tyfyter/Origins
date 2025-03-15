@@ -41,8 +41,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(copper: 20);
 		}
 		public override bool? UseItem(Player player) {
-			// aren't these supposed to have this as a drawback?
-			//player.GetAssimilation<Defiled_Assimilation>().Percent += 0.03f;
+			//player.AddBuff(Mana_Buffer_Debuff.ID, 90);
 			return base.UseItem(player);
 		}
 	}
