@@ -44,6 +44,10 @@ namespace Origins {
 					altHandle = true;
 					break;
 
+					case place_tile_entity:
+					TESystem.Get(reader.ReadUInt16()).tileEntityLocations.Add(new(reader.ReadInt16(), reader.ReadInt16()));
+					break;
+
 					case win_lottery: {
 						Item lotteryTicketItem = Main.LocalPlayer.GetModPlayer<OriginPlayer>().lotteryTicketItem;
 						if (--lotteryTicketItem.stack <= 0) lotteryTicketItem.TurnToAir();

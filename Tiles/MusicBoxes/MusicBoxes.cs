@@ -52,7 +52,7 @@ namespace Origins.Tiles.MusicBoxes {
 			//   When an item with the given item type is equipped, it will play the music that has musicSlot as its ID.
 			//   When a tile with the given type and Y-frame is nearby, if its X-frame is >= 36, it will play the music that has musicSlot as its ID.
 			// When getting the music slot, you should not add the file extensions!
-			MusicLoader.AddMusicBox(Mod, MusicSlot, Item.Type, Type);
+			MusicLoader.AddMusicBox(Mod, Main.dedServ ? 0 : MusicSlot, Item.Type, Type);
 			RegisterItemDrop(Item.Type);
 			base.DustType = this.DustType;
 		}
