@@ -5513,3 +5513,8 @@ Wilting_Rose_Seeds: {
 	DisplayName: Wilting Rose Seeds
 	Tooltip: ""
 }
+
+Grenade_Lawnchair: {
+	DisplayName: Grenade Lawnchair
+	Tooltip: ""
+}

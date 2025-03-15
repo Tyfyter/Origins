@@ -61,6 +61,8 @@ namespace Origins.NPCs.Brine {
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 2)
 			).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Crawdaddys_Revenge>(), 40)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Grenade_Lawnchair>(), 120)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && CanHitNPC(other);
