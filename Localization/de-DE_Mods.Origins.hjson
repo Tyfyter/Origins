@@ -1584,9 +1584,9 @@ Projectiles: {
 	// The_Foot_Smash.DisplayName: The Foot Smash
 	// The_Foot_Flail.DisplayName: The Foot Flail
 	// The_Foot_Aura.DisplayName: The Foot Aura
-	// Terlet_Paper_P.DisplayName: Terlet Paper P
-	// Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls P
-	// Venom_Shield_P.DisplayName: Venom Shield P
+	// Terlet_Paper_P.DisplayName: Cute Spooder
+	// Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls
+	// Venom_Shield_P.DisplayName: Venom Shield
 }
 
 Prefixes: {

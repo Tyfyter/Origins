@@ -894,7 +894,7 @@ Torpedo_Tube: {
 	/* Text:
 		'''
 		[header:Torpedo Tube (2/9)]
-		[jimage/sc2d:Origins/Items/Weapons/Demolitionist/Torpedo_Tube] [jimage/sc2dw300:Origins/Items/Weapons/Demolitionist/Torpedo_Tube_Alt]
+		[jimage/sc2ds3:Origins/Items/Weapons/Demolitionist/Torpedo_Tube] [jimage/sc2ds3w300:Origins/Items/Weapons/Demolitionist/Torpedo_Tube_Alt]
 
 		*****
 		???: Huh. This guy was no push-over too. Some of his equipment looks like he was ready to pick a fight with something much larger than him.

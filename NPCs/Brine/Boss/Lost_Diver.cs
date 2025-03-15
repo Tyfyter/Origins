@@ -1,9 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.Riven.World_Cracker;
 using Origins.World.BiomeData;
 using PegasusLib;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -63,9 +67,11 @@ namespace Origins.NPCs.Brine.Boss {
 	}
 	[AutoloadBossHead]
 	public class Lost_Diver : Brine_Pool_NPC {
+		public static int HeadID { get; private set; } = -1;
 		public override bool AggressivePathfinding => true;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			HeadID = NPC.GetBossHeadTextureIndex();
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.ShouldBeCountedAsBoss[Type] = true;
@@ -89,8 +95,10 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.height = 42;
 			NPC.knockBackResist = 0f;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchRange(-0.8f, -0.4f);
-			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.DeathSound = NPC.HitSound;
 			NPC.value = 0;//Item.buyPrice(gold: 5);
+			NPC.BossBar = ModContent.GetInstance<Boss_Bar_LD>();
+			NPC.npcSlots = 200;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Brine_Pool>().Type
 			];
@@ -690,7 +698,17 @@ namespace Origins.NPCs.Brine.Boss {
 			Mildew_Whip,
 		}
 	}
-
+	public class Boss_Bar_LD : ModBossBar {
+		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
+			if (Lost_Diver.HeadID == -1) return null;
+			return TextureAssets.NpcHeadBoss[Lost_Diver.HeadID];
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			Boss_Bar_LD_Transformation.lastLostDiverMaxHealth = drawParams.LifeMax;
+			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
+			return false;
+		}
+	}
 	public class Lost_Diver_Spawn_Flicker : ModSceneEffect {
 		public Vector2 targetPos = new();
 		private NPC dummy;

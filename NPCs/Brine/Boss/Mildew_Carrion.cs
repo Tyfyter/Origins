@@ -1,4 +1,5 @@
-﻿using Origins.Items.Accessories;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
@@ -9,9 +10,13 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.Tiles.BossDrops;
+using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -37,6 +42,8 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.width = 76;
 			NPC.height = 58;
+			NPC.BossBar = ModContent.GetInstance<Boss_Bar_LD_Transformation>();
+			NPC.npcSlots = 200;
 		}
 		public override bool PreAI() {
 			NPC.spriteDirection = (int)-NPC.ai[1];
@@ -50,6 +57,87 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.ai[0] >= Main.npcFrameCount[Type]) {
 				NPC.Transform(ModContent.NPCType<Mildew_Carrion>());
 			}
+			return false;
+		}
+	}
+	public class Boss_Bar_LD_Transformation : ModBossBar {
+		internal static float lastLostDiverMaxHealth = -1;
+		AutoLoadingAsset<Texture2D> barTextureLD = typeof(Boss_Bar_LD).GetDefaultTMLName();
+		AutoLoadingAsset<Texture2D> barTextureMC = typeof(Boss_Bar_MC).GetDefaultTMLName();
+		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
+			if (Lost_Diver.HeadID == -1) return null;
+			return TextureAssets.NpcHeadBoss[Lost_Diver.HeadID];
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			float progress = npc.ai[0] / Main.npcFrameCount[npc.type];
+			float inverseProgress = MathF.Pow(1 - progress, 0.5f);
+			(_, Vector2 barCenter, Texture2D iconTexture, Rectangle iconFrame, Color iconColor, float life, float lifeMax, float shield, float shieldMax, float iconScale, bool showText, Vector2 textOffset) = drawParams;
+			life = npc.lifeMax * MathF.Pow(progress, 0.5f);
+			lifeMax = MathHelper.Lerp(lastLostDiverMaxHealth, npc.lifeMax, progress);
+			Point barSize = new Point(456, 22); //Size of the bar
+			Point topLeftOffset = new Point(32, 24); //Where the top left of the bar starts
+			int frameCount = 6;
+
+			Rectangle bgFrame = barTextureLD.Frame(verticalFrames: frameCount, frameY: 3);
+			Color bgColor = Color.White * 0.2f;
+
+			int scale = (int)(barSize.X * life / lifeMax);
+			scale -= scale % 2;
+			Rectangle barFrame = barTextureLD.Frame(verticalFrames: frameCount, frameY: 2);
+			barFrame.X += topLeftOffset.X;
+			barFrame.Y += topLeftOffset.Y;
+			barFrame.Width = 2;
+			barFrame.Height = barSize.Y;
+
+			Rectangle tipFrame = barTextureLD.Frame(verticalFrames: frameCount, frameY: 1);
+			tipFrame.X += topLeftOffset.X;
+			tipFrame.Y += topLeftOffset.Y;
+			tipFrame.Width = 2;
+			tipFrame.Height = barSize.Y;
+
+			Rectangle barPosition = Utils.CenteredRectangle(barCenter, barSize.ToVector2());
+			Vector2 barTopLeft = barPosition.TopLeft();
+			Vector2 topLeft = barTopLeft - topLeftOffset.ToVector2();
+
+			// Background
+			spriteBatch.Draw(barTextureLD, topLeft, bgFrame, bgColor * inverseProgress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+			// Bar itself
+			Vector2 stretchScale = new Vector2(scale / barFrame.Width, 1f);
+			Color barColor = Color.White * inverseProgress;
+			spriteBatch.Draw(barTextureLD, barTopLeft, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
+
+			// Tip
+			spriteBatch.Draw(barTextureLD, barTopLeft + new Vector2(scale - 2, 0f), tipFrame, barColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+			// Frame
+			Rectangle frameFrame = barTextureLD.Frame(verticalFrames: frameCount, frameY: 0);
+			spriteBatch.Draw(barTextureLD, topLeft, frameFrame, barColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+			barColor = Color.White * progress;
+			// Background
+			spriteBatch.Draw(barTextureMC, topLeft, bgFrame, bgColor * progress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+			// Bar itself
+			spriteBatch.Draw(barTextureMC, barTopLeft, barFrame, barColor * progress, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
+
+			// Tip
+			spriteBatch.Draw(barTextureMC, barTopLeft + new Vector2(scale - 2, 0f), tipFrame, barColor * progress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+			// Frame
+			spriteBatch.Draw(barTextureMC, topLeft, frameFrame, Color.White * progress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+			// Icon
+			Vector2 iconOffset = new Vector2(4f, 20f);
+			Vector2 iconSize = new Vector2(26f, 28f);
+			// The vanilla method with the shieldCurrent parameter, which is used only by the lunar pillars, uses iconSize = iconFrame.Size() instead, which have a size of 26x30,
+			// causing a slight vertical offset that is barely noticeable. Considering that the non-shieldCurrent method is the more general one, let's keep it like this
+			// (changing that using the lunar pillar code will cause many other icons to be offset instead) --direwolf420
+			Vector2 iconPos = iconOffset + iconSize / 2f;
+			// iconFrame Centered around iconPos
+			spriteBatch.Draw(iconTexture, topLeft + iconPos, iconFrame, iconColor, 0f, iconFrame.Size() / 2f, iconScale, SpriteEffects.None, 0f);
+
+			BigProgressBarHelper.DrawHealthText(spriteBatch, barPosition, textOffset, life, lifeMax);
 			return false;
 		}
 	}
@@ -88,6 +176,8 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.HitSound = SoundID.Item127;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.value = Item.buyPrice(gold: 5);
+			NPC.npcSlots = 200;
+			NPC.BossBar = ModContent.GetInstance<Boss_Bar_MC>();
 		}
 		public AIModes AIMode {
 			get => (AIModes)NPC.aiAction;
@@ -175,6 +265,18 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public enum AIModes {
 			Idle,
+		}
+	}
+	public class Boss_Bar_MC : ModBossBar {
+		int bossHeadIndex = -1;
+		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
+			if (bossHeadIndex == -1) return null;
+			return TextureAssets.NpcHeadBoss[bossHeadIndex];
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			bossHeadIndex = npc.GetBossHeadTextureIndex();
+			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
+			return false;
 		}
 	}
 }
