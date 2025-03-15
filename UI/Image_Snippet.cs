@@ -30,7 +30,7 @@ namespace Origins.UI {
 				if (image is null) return false;
 				size = image.Size() * Scale;
 				if (options.Sketch) shaderOroboros.Capture();
-				spriteBatch?.Draw(image.Value, position, null, options.Color ?? Color.White, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+				spriteBatch?.Draw(image.Value, position, null, options.Sketch ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
 				if (options.Sketch) {
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
 					Origins.journalDrawingShader.UseColor(color);

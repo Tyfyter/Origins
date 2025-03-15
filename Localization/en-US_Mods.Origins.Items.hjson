@@ -5528,3 +5528,8 @@ Regurgitator_Of_Souls: {
 	DisplayName: Regurgitator Of Souls
 	Tooltip: ""
 }
+
+Venom_Shield: {
+	DisplayName: Venom Shield
+	Tooltip: ""
+}

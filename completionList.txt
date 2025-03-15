@@ -510,7 +510,7 @@ ACCESSORIES:
 (^) Turbo Reel*
 (^) Unsought Organ*
 (^) Venom Fang*
-(#, ^2) Venom Shield !!!
+(☻) Venom Shield !!!
 
 (@4, #2) Bomb Rack
 (^) Entangled Energy*

@@ -197,6 +197,12 @@ namespace Origins {
 			if (modifiers.DamageType.CountsAsClass(DamageClasses.Explosive)) {
 				modifiers.DefenseEffectiveness *= explosive_defense_factor;
 			}
+			if (Origins.processingDash) {
+				for (int i = 0; i < dashHitDebuffs.Count; i++) {
+					(int type, Range duration) = dashHitDebuffs[i];
+					target.AddBuff(type, Main.rand.Next(duration.Start.Value, duration.End.Value + 1));
+				}
+			}
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;
@@ -759,7 +765,7 @@ namespace Origins {
 			}
 			if (retributionShield) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.Damage;
+				double totalDamage = info.Damage * (1 - retributionShieldItem.knockBack);
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
