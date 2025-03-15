@@ -1,12 +1,9 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Grenade_Lawnchair : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => [
@@ -36,7 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.useAmmo = ItemID.Grenade;
 			Item.value = Item.sellPrice(gold: 5);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.Pink;
 			Item.useLimitPerAnimation = 3;
 		}
 		public override float UseTimeMultiplier(Player player) => 1f / Item.useTime;

@@ -14,7 +14,7 @@ Conditions: {
 	ShimmerTransmutation: Shimmer Transmutation
 	DownedDefiledAmalgamation: After defeating the Defiled Amalgamation
 	DownedWorldCracker: After defeating the World Cracker
-	DownedScrapper: After defeating the Scrapper
+	DownedTrenchmaker: After defeating the Trenchmaker
 	BiomeKey: Drops in the Hardmode {0}
 	BiomeKeyNoThe: Drops in Hardmode {0}
 	HardmodeBossBag: Drops from Hardmode Boss Bags
@@ -22,6 +22,7 @@ Conditions: {
 	NotHoliday: Not on {0}
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
+	DownedScrapper: Mods.Origins.Conditions.DownedScrapper
 }
 
 ModMenu: {
@@ -108,6 +109,15 @@ FishQuest: {
 			Now, I haven't heard much about them, but I do know that they can really nip at anything that looms over the purple lava, so watch your hands!
 			'''
 		Location: Caught in {$Dusk}
+	}
+
+	Fiberbass: {
+		Description:
+			'''
+			Watch out for those Fiberbass in the Undergrowth! They have very sharp bodies so you have to grab them from the fins.
+			Despite being related to the common bass, Fiberbass sell for a lot because they're made of fiberglass and make good decorations!
+			'''
+		Location: Caught in Fiberglass Undergrowth
 	}
 }
 

@@ -5506,7 +5506,7 @@ Terlet_Paper: {
 
 Shotgun_Glove: {
 	DisplayName: Shotgun Glove
-	Tooltip: ""
+	Tooltip: Shoots as you swing
 }
 
 Wilting_Rose_Seeds: {
@@ -5516,7 +5516,7 @@ Wilting_Rose_Seeds: {
 
 Grenade_Lawnchair: {
 	DisplayName: Grenade Lawnchair
-	Tooltip: ""
+	Tooltip: Releases grenades in your inventory as you swing
 }
 
 Fiberbass: {
@@ -5525,11 +5525,19 @@ Fiberbass: {
 }
 
 Regurgitator_Of_Souls: {
-	DisplayName: Regurgitator Of Souls
-	Tooltip: ""
+	DisplayName: Regurgitator of Souls
+	Tooltip: Inflicts Shadefire
 }
 
 Venom_Shield: {
 	DisplayName: Venom Shield
-	Tooltip: ""
+	Tooltip:
+		'''
+		Attacks inflict Toxic Shock
+		Effects are stronger while Acrid Armor is equipped
+		Grants immunity to knockback and fire blocks
+		All damage received is reflected to 3 nearby enemies
+		Allows the player to dash into the enemy
+		Double tap a direction
+		'''
 }

@@ -485,7 +485,7 @@ ACCESSORIES:
 (^) Scrap Barrier (Uncursed)*
 (^) Shield of Retribution*
 (^) Shock Collar*
-(☻) Shotgun Glove !!!
+(^) Shotgun Glove
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
 (^) Sniper's Mark*
@@ -510,7 +510,7 @@ ACCESSORIES:
 (^) Turbo Reel*
 (^) Unsought Organ*
 (^) Venom Fang*
-(☻) Venom Shield !!!
+(^) Venom Shield
 
 (@4, #2) Bomb Rack
 (^) Entangled Energy*
@@ -973,7 +973,7 @@ EXPLOSIVE WEAPONS:
 (^) Meteor*
 (^) Peatball*
 (^) Potato Mine*
-(☻) Regurgitator of Souls !!!
+(^) Regurgitator of Souls
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!! (additive damage)
@@ -985,7 +985,7 @@ EXPLOSIVE WEAPONS:
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
-(☻) Grenade Lawnchair !!!
+(#2, ^2) Grenade Lawnchair !!!
 (^) Happy Bomb*
 (X) Rattlesnake
 (#, ^2) Rocket Rifle
@@ -1211,7 +1211,7 @@ TILES:
 (X) Tangel Bramble
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
-(☻) Wilting Rose* !!! (has seed sprites now)
+(^) Wilting Rose*
 (@4, ^3) Wrycoral*
 
 (^) A Perfect World
@@ -1330,7 +1330,7 @@ CRITTERS AND FISH:
 (^) Bobbit Worm
 (^) Bonehead Jellyfish*
 (^) Duskarp°
-(☻) Fiberbass !!!
+(^) Fiberbass
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*
@@ -1354,7 +1354,7 @@ CONSUMABLES:
 (^) Flask of Black Bile*
 (^) Focus Potion°
 (#, ^2) Greater Summoning Potion !!!
-(ᗢ) Latchkey
+(#2, ^2, ᗢ) Latchkey !!! (needs mana buffer application)
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
@@ -1403,7 +1403,7 @@ CONSUMABLES:
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
-(^) Lost Picture Frame
+(#3, ^2) Lost Picture Frame !!!
 (X) Quantum Cell°
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*
@@ -1621,7 +1621,7 @@ VOLUME I MUSIC:
 (X) Test of Ancients
 ---
 
-VOLUME II MUSIC:
+VOLUME II MUSIC: (discontinued??)
 ---
 
 (X) Ashen Factory
@@ -1646,7 +1646,7 @@ VOLUME II MUSIC:
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
-($) Lost Diver/Mildew Carrion !!! (still missing beginning and end tracks)
+($) Lost Diver/Mildew Carrion
 (X) Mechamalgamation
 (X) Miscreant
 (X) Quantux

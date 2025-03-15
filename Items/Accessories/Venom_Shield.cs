@@ -11,8 +11,9 @@ namespace Origins.Items.Accessories {
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.EoCShield);
+			Item.damage = 57;
 			Item.defense = 3;
-			Item.knockBack = 0.5f; // damage reduction percent
+			Item.knockBack = 0f; // damage reduction percent
 			Item.shoot = ModContent.ProjectileType<Venom_Shield_P>();
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;

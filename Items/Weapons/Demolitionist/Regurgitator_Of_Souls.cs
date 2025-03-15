@@ -1,11 +1,8 @@
-﻿using CalamityMod.Graphics.Renderers;
-using CalamityMod.NPCs.TownNPCs;
+﻿using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Projectiles;
-using PegasusLib;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -26,10 +23,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Regurgitator_Of_Souls_P>(20, 30, 10, 60, 24);
+			Item.DefaultToCanisterLauncher<Regurgitator_Of_Souls_P>(20, 42, 14, 60, 24);
 			Item.knockBack = 5.75f;
-			Item.value = Item.sellPrice(gold: 5);
-			Item.rare = ItemRarityID.Lime;
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Zombie24.WithPitchRange(0.6f, 1f);
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
@@ -67,8 +64,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.timeLeft = 420;
 			Projectile.penetrate = 1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Corruption);
 			if (Projectile.ai[0] == 0 && Projectile.TryGetOwner(out Player player) && (player.itemAnimation * 6) / player.itemAnimationMax > 2) {
 				Projectile.Center = (player.HandPosition ?? player.MountedCenter) + (Projectile.velocity.SafeNormalize(default) * 26) - Projectile.velocity;
 			} else {
