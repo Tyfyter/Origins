@@ -1330,7 +1330,7 @@ CRITTERS AND FISH:
 (^) Bobbit Worm
 (^) Bonehead Jellyfish*
 (^) Duskarp°
-(#, ^2) Fiberbass !!!
+(☻) Fiberbass !!!
 (^) Polyeel*
 (^) Prikish*
 (^) Tearracuda*

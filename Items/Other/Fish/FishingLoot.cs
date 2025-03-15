@@ -20,6 +20,12 @@ namespace Origins.Items.Other.Fish {
 		static FishingLootInfo _pool;
 		public static FishingLootInfo lastProcessedLoot;
 		public static FishingLootInfo Pool => _pool ??= new OrderedFishingLoot(
+		#region fiberglass undergrowth
+			new LeadingConditionFishLoot(
+				new ItemFishingLoot(ItemType<Fiberbass>(), (_, attempt) => attempt.uncommon && attempt.questFish == ItemType<Fiberbass>()),
+			(player, _) => player.InModBiome<Fiberglass_Undergrowth>()),
+		#endregion fiberglass undergrowth
+
 		#region jungle
 			new LeadingConditionFishLoot(
 				new ItemFishingLoot(ItemType<Messy_Leech>(), (player, attempt) => (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) && Main.rand.NextBool(10)),

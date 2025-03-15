@@ -81,6 +81,22 @@ namespace Origins.Items.Other.Fish {
 			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bobbit_Worm.Location");
 		}
 	}
+	public class Fiberbass : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 2;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToQuestFish();
+		}
+		public override bool IsAnglerQuestAvailable() {
+			return Main.hardMode;
+		}
+		public override bool IsQuestFish() => true;
+		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Fiberbass.Description");
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Fiberbass.Location");
+		}
+	}
 	public class Tire : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ExtractinatorMode[Type] = 1;
