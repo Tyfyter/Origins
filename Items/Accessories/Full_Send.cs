@@ -4,6 +4,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using PegasusLib;
 using Terraria.ModLoader;
+using Origins.Gores;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Full_Send : ModItem {
@@ -63,7 +64,7 @@ namespace Origins.Items.Accessories {
 				feet = 0;
 
 			for (int num23 = 0; num23 < 10; num23++) {
-				Dust dust = Dust.NewDustDirect(new Vector2(player.position.X - 34f, player.position.Y + feet - 16f), 102, 32, DustID.Cloud, (0f - player.velocity.X) * 0.5f, player.velocity.Y * 0.5f, 100, default, 1.5f);
+				Dust dust = Dust.NewDustDirect(new Vector2(player.position.X - 34f, player.position.Y + feet - 16f), 102, 32, DustID.Cloud, (0f - player.velocity.X) * 0.5f, player.velocity.Y * 0.5f, 100, new(148, 48, 101), 1.5f);
 				dust.velocity.X = dust.velocity.X * 0.5f - player.velocity.X * 0.1f;
 				dust.velocity.Y = dust.velocity.Y * 0.5f - player.velocity.Y * 0.3f;
 			}
@@ -73,7 +74,7 @@ namespace Origins.Items.Accessories {
 				Gore gore = Gore.NewGoreDirect(null,
 					startPos + cloudOffset * i,
 					new Vector2(0f - player.velocity.X, 0f - player.velocity.Y),
-					Main.rand.Next(11, 14)
+					Main.rand.Next(Mulberry_Cloud_1.gores).Type
 				);
 				gore.velocity.X = gore.velocity.X * 0.1f - player.velocity.X * 0.1f;
 				gore.velocity.Y = gore.velocity.Y * 0.1f - player.velocity.Y * 0.05f;
@@ -95,8 +96,9 @@ namespace Origins.Items.Accessories {
 			int feet = player.height;
 			if (player.gravDir == -1f)
 				feet = -6;
+			OriginPlayer originPlayer = player.OriginPlayer();
 
-			Dust dust = Dust.NewDustDirect(new Vector2(player.position.X - 4f, player.position.Y + feet), player.width + 8, 4, DustID.Cloud, player.velocity.X * -0.5f, player.velocity.Y * 0.5f, 100, default, 1.5f);
+			Dust dust = Dust.NewDustDirect(new Vector2(originPlayer.fullSendPos.X - 4f, originPlayer.fullSendPos.Y + feet), player.width + 8, 4, DustID.Cloud, player.velocity.X * -0.5f, player.velocity.Y * 0.5f, 100, new(148, 48, 101), 1.5f);
 			dust.velocity.X = dust.velocity.X * 0.5f - player.velocity.X * 0.1f;
 			dust.velocity.Y = dust.velocity.Y * 0.5f - player.velocity.Y * 0.3f;
 		}
