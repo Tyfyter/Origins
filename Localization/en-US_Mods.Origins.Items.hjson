@@ -5508,3 +5508,8 @@ Shotgun_Glove: {
 	DisplayName: Shotgun Glove
 	Tooltip: ""
 }
+
+Wilting_Rose_Seeds: {
+	DisplayName: Wilting Rose Seeds
+	Tooltip: ""
+}

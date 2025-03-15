@@ -1211,7 +1211,7 @@ TILES:
 (X) Tangel Bramble
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
-(#2, ^2) Wilting Rose* !!! (has seed sprites now)
+(☻) Wilting Rose* !!! (has seed sprites now)
 (@4, ^3) Wrycoral*
 
 (^) A Perfect World
