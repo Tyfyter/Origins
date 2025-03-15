@@ -1585,6 +1585,8 @@ Projectiles: {
 	// The_Foot_Flail.DisplayName: The Foot Flail
 	// The_Foot_Aura.DisplayName: The Foot Aura
 	// Terlet_Paper_P.DisplayName: Terlet Paper P
+	// Regurgitator_of_Souls_P.DisplayName: Regurgitator_of Souls P
+	// Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls P
 }
 
 Prefixes: {

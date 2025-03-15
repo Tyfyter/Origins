@@ -40,12 +40,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useLimitPerAnimation = 3;
 		}
 		public override float UseTimeMultiplier(Player player) => 1f / Item.useTime;
-		public override void AddRecipes() {
-			/*Recipe.Create(Type)
-			.AddIngredient(ItemID.ChlorophyteBar, 18)
-			.AddTile(TileID.MythrilAnvil)
-			.Register();*/
-		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player drawPlayer = drawInfo.drawPlayer;
 			float itemRotation = drawPlayer.itemRotation;

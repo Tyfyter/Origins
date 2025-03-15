@@ -973,7 +973,7 @@ EXPLOSIVE WEAPONS:
 (^) Meteor*
 (^) Peatball*
 (^) Potato Mine*
-(#, ^2) Regurgitator of Souls !!!
+(☻) Regurgitator of Souls !!!
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!! (additive damage)

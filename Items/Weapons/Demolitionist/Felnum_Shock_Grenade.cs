@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
@@ -85,6 +86,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 2;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile projParent) {
+				Projectile.DamageType = projParent.DamageType;
+			}
 		}
 		public override void AI() {
 			if (Projectile.penetrate == 1) {

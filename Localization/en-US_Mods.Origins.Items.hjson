@@ -5518,3 +5518,13 @@ Grenade_Lawnchair: {
 	DisplayName: Grenade Lawnchair
 	Tooltip: ""
 }
+
+Fiberbass: {
+	DisplayName: Fiberbass
+	Tooltip: ""
+}
+
+Regurgitator_Of_Souls: {
+	DisplayName: Regurgitator Of Souls
+	Tooltip: ""
+}

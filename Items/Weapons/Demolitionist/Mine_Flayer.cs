@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			type = Item.shoot;
 		}
 	}
-	public class Mine_Flayer_P : ModProjectile, IIsExplodingProjectile, ICanisterProjectile {
+	public class Mine_Flayer_P : ModProjectile, ICanisterProjectile {
 		public override string Texture => "Terraria/Images/Item_1";
 		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Outer";
 		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Inner";
@@ -102,18 +102,5 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
 		}
-		public override bool PreKill(int timeLeft) {
-			Projectile.penetrate = -1;
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 96;
-			Projectile.height = 96;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
-			Projectile.Damage();
-			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
-			return true;
-		}
-		public bool IsExploding() => Projectile.penetrate == -1;
 	}
 }

@@ -481,7 +481,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
-			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.oldPosition + projectile.Size / 2 + projectile.velocity, default, Bile_Canister_Explosion.ID, (int)(projectile.damage * 0.75f), 0, projectile.owner);
+			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.oldPosition + ContentSamples.ProjectilesByType[projectile.type].Size / 2 + projectile.velocity, default, Bile_Canister_Explosion.ID, (int)(projectile.damage * 0.75f), 0, projectile.owner);
 		}
 	}
 	public class Bile_Canister_Explosion : ModProjectile, IIsExplodingProjectile, ICanisterChildProjectile {
