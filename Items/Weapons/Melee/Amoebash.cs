@@ -60,6 +60,9 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 slamDir = direction.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
 			Collision.HitTiles(position, slamDir, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, position + Projectile.Size * 0.5f);
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 5f, 3f, 12, 500f, -1f, nameof(Amoebash)
+			));
 
 			IEntitySource source = Projectile.GetSource_FromAI();
 			int projType = ModContent.ProjectileType<Amoebash_Shrapnel>();
