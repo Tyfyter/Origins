@@ -5475,3 +5475,8 @@ The_Foot: {
 	// DisplayName: The Foot
 	// Tooltip: ""
 }
+
+Terlet_Paper: {
+	// DisplayName: Terlet Paper
+	// Tooltip: Summons a kawaii spooder
+}

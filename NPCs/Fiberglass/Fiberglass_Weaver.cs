@@ -5,6 +5,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Pets;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -127,7 +128,8 @@ namespace Origins.NPCs.Fiberglass {
 						} else if (legStart.DistanceSQ(legTargets[i]) > (totalLegLength * totalLegLength)) {
 							legTargets[i] = GetStandPosition(
 								((legs[i].start + new Vector2(0, 15.75f + (i / 2) * 0.0625f)) * new Vector2(0.85f, 2.04f)).RotatedBy(NPC.rotation) * 4 + NPC.Center,
-								legStart
+								legStart,
+								totalLegLength
 							);
 						}
 					}
@@ -215,7 +217,7 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 		}
-		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart) {//candidate
+		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart, float legth) {//candidate
 			HashSet<Point> checkedPoints = new HashSet<Point>();
 			Queue<Point> candidates = new Queue<Point>();
 			candidates.Enqueue(target.ToWorldCoordinates().ToPoint());
@@ -224,7 +226,7 @@ namespace Origins.NPCs.Fiberglass {
 			while (candidates.Count > 0) {
 				current = candidates.Dequeue();
 				checkedPoints.Add(current);
-				if (legStart.DistanceSQ(current.ToWorldCoordinates()) > (totalLegLength * totalLegLength)) {
+				if (legStart.DistanceSQ(current.ToWorldCoordinates()) > (legth * legth)) {
 					continue;
 				}
 				tile = Main.tile[current];
@@ -272,6 +274,7 @@ namespace Origins.NPCs.Fiberglass {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fiberglass_Dagger>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Fiberglass_Weaver_Relic>()));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terlet_Paper>(), 4));
 			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -285,7 +288,7 @@ namespace Origins.NPCs.Fiberglass {
 				AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
 				AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i ? 1f : 0.3f);
 
-				Vector2 screenStart = legs[i].start - Main.screenPosition;
+				Vector2 screenStart = legs[i].start - screenPos;
 				Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
 				Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
 				legs[i].start = baseStart;

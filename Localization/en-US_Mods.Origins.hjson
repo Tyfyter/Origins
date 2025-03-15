@@ -1080,6 +1080,11 @@ Buffs: {
 		DisplayName: Minty Broth Buff
 		Description: Mods.Origins.Buffs.Minty_Broth_Buff.Description
 	}
+
+	Terlet_Paper_Buff: {
+		DisplayName: Fiberglass Spooder
+		Description: Kawaii spooder tiem
+	}
 }
 
 DamageClassName: {
@@ -1571,6 +1576,7 @@ Projectiles: {
 	The_Foot_Smash.DisplayName: The Foot Smash
 	The_Foot_Flail.DisplayName: The Foot Flail
 	The_Foot_Aura.DisplayName: The Foot Aura
+	Terlet_Paper_P.DisplayName: Terlet Paper P
 }
 
 Prefixes: {
