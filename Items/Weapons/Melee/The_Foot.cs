@@ -126,7 +126,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Projectile.netImportant = true;
 			Projectile.friendly = true;
-			Projectile.scale = 1f;
+			Projectile.scale = 0.9f;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.width = 40;
 			Projectile.height = 40;

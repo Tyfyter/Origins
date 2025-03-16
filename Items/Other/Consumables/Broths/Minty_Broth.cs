@@ -43,7 +43,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (!NPCID.Sets.CountsAsCritter[npc.type] && !npc.friendly && center.WithinRange(center.Clamp(npc.Hitbox), Size)) {
 					hit.HitDirection = Math.Sign(npc.Center.X - center.X);
-					npc.StrikeNPC(hit);
+					Main.LocalPlayer.addDPS(npc.StrikeNPC(hit));
 					if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendStrikeNPC(npc, hit);
 				}
 			}

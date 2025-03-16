@@ -1103,6 +1103,11 @@ Buffs: {
 		DisplayName: Fiberglass Spooder
 		Description: Kawaii spooder tiem
 	}
+
+	Sunny_Sunflower_Buff: {
+		DisplayName: Sunny Sunflower Buff
+		Description: Mods.Origins.Buffs.Sunny_Sunflower_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1597,6 +1602,9 @@ Projectiles: {
 	Terlet_Paper_P.DisplayName: Cute Spooder
 	Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls
 	Venom_Shield_P.DisplayName: Venom Shield
+	Sunny_Sunflower.DisplayName: Sunny Sunflower
+	Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed P
+	Sunny_Sunflower_P.DisplayName: Sunny Sunflower P
 }
 
 Prefixes: {

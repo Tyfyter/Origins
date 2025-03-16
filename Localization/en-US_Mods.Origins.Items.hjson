@@ -5541,3 +5541,8 @@ Venom_Shield: {
 		Double tap a direction
 		'''
 }
+
+Sunflower_In_A_Pot: {
+	DisplayName: Sunflower In A Pot
+	Tooltip: ""
+}

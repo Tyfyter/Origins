@@ -6,3 +6,5 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "Exists to be written to by a dynamic method and promptly ignored", Scope = "member", Target = "~F:Origins.NPCs.Boss_Tracker.dummy")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Origins.Buffs")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:Origins.Items.Weapons.Summoner.Minions")]
