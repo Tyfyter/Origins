@@ -162,7 +162,6 @@ namespace Origins.NPCs {
 				case NPCID.SkeletonArcher:
 				case NPCID.SkeletonAstonaut:
 				case NPCID.SkeletonCommando:
-				case NPCID.SkeletonMerchant:
 				case NPCID.SkeletonTopHat:
 				case NPCID.ArmoredSkeleton:
 				case NPCID.BigHeadacheSkeleton:
@@ -183,6 +182,10 @@ namespace Origins.NPCs {
 				case NPCID.SmallPantlessSkeleton:
 				case NPCID.SmallSkeleton:
 				case NPCID.TacticalSkeleton:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+				break;
+				case NPCID.SkeletonMerchant:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>(), 5));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
 				break;
 				case NPCID.TheGroom:

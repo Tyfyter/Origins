@@ -5531,7 +5531,15 @@ Regurgitator_Of_Souls: {
 
 Venom_Shield: {
 	// DisplayName: Venom Shield
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Attacks inflict Toxic Shock
+		Effects are stronger while Acrid Armor is equipped
+		Grants immunity to knockback and fire blocks
+		All damage received is reflected to 3 nearby enemies
+		Allows the player to dash into the enemy
+		Double tap a direction
+		''' */
 }
 
 Sunflower_In_A_Pot: {
