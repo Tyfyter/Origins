@@ -71,6 +71,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.HitSound = SoundID.NPCHit4;
 			NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.value = Item.buyPrice(gold: 5);
+			NPC.npcSlots = 200;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
