@@ -1,5 +1,8 @@
-﻿using Origins.Backgrounds;
+﻿using AltLibrary.Common.Systems;
+using Origins.Backgrounds;
+using Origins.Tiles;
 using Origins.Tiles.Brine;
+using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
 using PegasusLib;
@@ -9,7 +12,9 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
+using static PegasusLib.TileUtils;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
@@ -307,6 +312,28 @@ namespace Origins.World.BiomeData {
 						75,
 						validTiles
 					);
+				}
+				ushort rivenAltar = (ushort)ModContent.TileType<Hydrothermal_Vent>();
+				for (int k = genRand.Next(40, 60); k > 0;) {
+					int posX = genRand.Next(minGenX, maxGenX);
+					int posY = genRand.Next(minGenY, maxGenY);
+					if (TileObject.CanPlace(posX, posY, rivenAltar, 0, 0, out TileObject objectData, false, checkStay: true)) {
+						TileObjectData tileData = TileObjectData.GetTileData(rivenAltar, objectData.style);
+
+						int left = posX - tileData.Origin.X;
+						int top = posY - tileData.Origin.Y;
+						for (int y = 0; y < tileData.Height; y++) {
+							for (int x = 0; x < tileData.Width; x++) {
+								Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+								if (tileSafely.HasTile && !(Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
+									goto fail;
+								}
+							}
+						}
+						TileObject.Place(objectData);
+						k--;
+						fail:;
+					}
 				}
 				int vineTries = 0;
 				int brineglowTile = ModContent.TileType<Brineglow>();
