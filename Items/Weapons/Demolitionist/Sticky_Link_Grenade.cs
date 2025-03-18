@@ -93,7 +93,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return null;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			Link_Grenade_P.AccumulateDamageFromKin(Projectile, ref modifiers);
+			Link_Grenade_P.AccumulateDamageFromKin(Projectile, target, ref modifiers);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;

@@ -63,12 +63,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
 			return null;
 		}
-		public static void AccumulateDamageFromKin(Projectile projectile, ref NPC.HitModifiers modifiers) {
+		public static void AccumulateDamageFromKin(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			Vector2 center = projectile.Center;
 			int n = 1;
 			float defFactor = 1;
+			Rectangle targetHitbox = target.Hitbox;
 			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (other.type == projectile.type && other.whoAmI != projectile.whoAmI && other.Center.IsWithin(center, 16 * 12)) {
+				if (other.type == projectile.type && other.whoAmI != projectile.whoAmI && other.Center.IsWithin(center, 16 * 12) && other.Colliding(other.Hitbox, targetHitbox)) {
 					float factor = 1 / MathF.Pow(++n, 0.5f);
 					modifiers.SourceDamage.Base += other.damage * factor;
 					defFactor += factor * factor;
@@ -77,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			modifiers.DefenseEffectiveness *= defFactor;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			AccumulateDamageFromKin(Projectile, ref modifiers);
+			AccumulateDamageFromKin(Projectile, target, ref modifiers);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;
