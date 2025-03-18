@@ -120,7 +120,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 
 			#region General behavior
-			Vector2 idlePosition = player.Bottom;
+			Vector2 idlePosition = player.Bottom - new Vector2(player.direction * (Projectile.minionPos + 1) * 32, Projectile.height * 0.5f);
 
 			// die if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -146,7 +146,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.direction = Math.Sign(vectorToIdlePosition.X);
 				if (++Projectile.frameCounter >= 20) Projectile.frameCounter = 0;
 				Projectile.frame = 9;
-				if (distanceToIdlePosition > 64) return;
+				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
 				Projectile.ai[2] = 0;
 				Projectile.netUpdate = true;
 			}
@@ -177,7 +177,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						between *= isCurrentTarget ? 0 : 1 + i / 8f;
 						bool closer = distanceFromTarget > between;
 						bool lineOfSight = CollisionExt.CanHitRay(pos + offset, npc.Center);
-						for (int j = 0; j < 100 && !lineOfSight; j++) {
+						int j = 0;
+						for (; j < 100 && !lineOfSight; j++) {
 							lineOfSight = CollisionExt.CanHitRay(pos + offset, Main.rand.NextVector2FromRectangle(npc.Hitbox));
 						}
 						if (closer && lineOfSight) {
@@ -197,7 +198,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-
 			#endregion
 
 			#region Movement
