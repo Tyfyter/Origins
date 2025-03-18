@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
@@ -7,6 +8,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Origins.LootConditions;
 using Origins.Projectiles;
+using Origins.Questing;
 using Origins.Reflection;
 using Origins.UI;
 using Origins.UI.Event;
@@ -133,6 +135,9 @@ namespace Origins {
 
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
+
+		[DefaultValue(~QuestNotificationPositions.None), ConfigFlags<QuestNotificationPositions>]
+		public QuestNotificationPositions QuestNotificationPosition = ~QuestNotificationPositions.None;
 
 		[DefaultValue(false)]
 		public bool OldSoundtrack = false;

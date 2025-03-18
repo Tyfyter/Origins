@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CalamityMod.Cooldowns;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -29,9 +35,9 @@ namespace Origins.Questing {
 			if (!Main.dedServ) Language.GetOrRegister(quest.NameKey);
 		}
 		static void Setup() {
-			if (QuestIDs is null) QuestIDs = new Dictionary<string, int>();
-			if (Quests is null) Quests = new List<Quest>();
-			if (NetQuests is null) NetQuests = new List<Quest>();
+			QuestIDs ??= [];
+			Quests ??= [];
+			NetQuests ??= [];
 		}
 		public void Load(Mod mod) {
 			Setup();

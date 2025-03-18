@@ -21,6 +21,7 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
+using Terraria.ModLoader.Config;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -871,6 +872,7 @@ Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis m
 	public enum Journal_Default_UI_Mode  {
 		Index_Page = Journal_UI_Mode.Index_Page,
 		Quest_List = Journal_UI_Mode.Quest_List,
+		Memos = Journal_UI_Mode.Custom,
 		Search_Page = Journal_UI_Mode.Search_Page
 	}
 }

@@ -394,7 +394,8 @@ namespace Origins {
 					Filters.Scene["Origins:ZoneDefiled"].Deactivate();
 				}
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "DefiledShade")
-					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 1),
+					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 1)
+					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 0),
 				EffectPriority.High);
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);

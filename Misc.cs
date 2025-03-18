@@ -2464,7 +2464,7 @@ namespace Origins {
 		public static void RegisterForUnload(this IUnloadable unloadable) {
 			Origins.unloadables.Add(unloadable);
 		}
-		public static string GetDefaultTMLName(this Type type) => PegasusLib.PegasusExt.GetDefaultTMLName(type);
+		public static string GetDefaultTMLName(this Type type) => PegasusExt.GetDefaultTMLName(type);
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
 			T[] possibleFlags = Enum.GetValues<T>();
 			for (int i = 0; i < possibleFlags.Length; i++) {
@@ -2672,6 +2672,25 @@ namespace Origins {
 
 				default:
 				return Language.GetOrRegister("Mods.Origins.Items.CombineTooltips").WithFormatArgs(parts[0], CombineTooltips(parts[1..]));
+			}
+		}
+		public static LocalizedText CombineWithAnd(params LocalizedText[] parts) {
+			if (parts.Length == 2) return Language.GetOrRegister("Mods.Origins.Conditions.And").WithFormatArgs(parts[0], parts[1]);
+			return CombineWithAndInternal(parts);
+		}
+		static LocalizedText CombineWithAndInternal(params LocalizedText[] parts) {
+			switch (parts.Length) {
+				case 0:
+				return LocalizedText.Empty;
+
+				case 1:
+				return parts[0];
+
+				case 2:
+				return Language.GetOrRegister("Mods.Origins.Conditions.CommaAnd").WithFormatArgs(parts[0], CombineWithAndInternal(parts[1..]));
+
+				default:
+				return Language.GetOrRegister("Mods.Origins.Conditions.Comma").WithFormatArgs(parts[0], CombineWithAndInternal(parts[1..]));
 			}
 		}
 		public static LocalizedText GetRandomText(string key) {

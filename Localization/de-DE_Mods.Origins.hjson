@@ -6,6 +6,7 @@ Conditions: {
 	// Or: "{0} or {1}"
 	// Not: Not {0}
 	// Comma: "{0}, {1}"
+	// CommaAnd: "{0}, and {1}"
 	// QuestCompleted: After completing "{0}"
 	// PeatSoldCondition: After selling {0} peat moss to the Demolitionist
 	// Brine: Mods.Origins.Conditions.Brine
@@ -1942,6 +1943,11 @@ Configs: {
 			// Label: Show locked entries
 			// Tooltip: Undiscovered entries are grey-out and visible on the Index.
 		}
+
+		QuestNotificationPosition: {
+			// Label: Quest Notification Position
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -2141,6 +2147,7 @@ Configs: {
 		// Index_Page.Label: Index
 		// Quest_List.Label: Quests
 		// Search_Page.Label: Search
+		// Memos.Label: Memos
 	}
 
 	LaserTagConfig: {
@@ -2225,6 +2232,14 @@ Configs: {
 		// UnderMinion.Label: Under Minion
 		// UnderBuff.Label: Under Buff
 		// Both.Label: Both
+	}
+
+	QuestNotificationPositions: {
+		// Tooltip: ""
+		// None.Label: None
+		// World.Label: World
+		// Map.Label: Map
+		// Housing.Label: Housing
 	}
 }
 
