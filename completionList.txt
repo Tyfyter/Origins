@@ -415,12 +415,12 @@ ACCESSORIES:
 (#, ^2) Fallacious Vase !!!
 (^) Feather Cape
 (^) Feathery Crest
-(#, ^2) Fissure Band
+(#, ^2) Fissure Band (is lesser defiled mana just supposed to be mana but with assimilation?)
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(#, ^2) Golden Lotus !!!
+(⛥) Golden Lotus !!!
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
 (^) Gun Magazine*
@@ -676,7 +676,7 @@ MELEE WEAPONS:
 (^) Riverang*
 (^) Snapthrow*
 (^) Soldering Iron
-(#, ^2) Soul Snatcher* !!!
+(⛥) Soul Snatcher* !!!
 (^) Soulslasher
 (^) Spiker Sword*
 (^) Switchblade*
@@ -1210,7 +1210,7 @@ TILES:
 (ᗢ) Surveysprout*
 (X) Tangel Bramble
 (^) Underwater Vine
-(#, ^2) Venus Coral !!!
+(⛥) Venus Coral !!!
 (^) Wilting Rose*
 (@4, ^3) Wrycoral*
 
@@ -1358,7 +1358,7 @@ CONSUMABLES:
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
-(#, ^2) Skimswim Potion !!!
+(⛥) Skimswim Potion !!!
 (X) Super Mojo Flask
 (X) Mega Mojo Flask
 (^) Voidsight Potion°

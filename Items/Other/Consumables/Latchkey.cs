@@ -34,6 +34,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.UseSound = Origins.Sounds.PowerUp.WithVolume(0.75f);
 			Item.useAnimation = 15;
 			Item.useTime = 15;
+			Item.mana = 8;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.shootSpeed = 4;
@@ -41,7 +42,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(copper: 20);
 		}
 		public override bool? UseItem(Player player) {
-			//player.AddBuff(Mana_Buffer_Debuff.ID, 90);
+			player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 90);
 			return base.UseItem(player);
 		}
 	}
