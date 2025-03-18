@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Tiles.Ashen;
 using PegasusLib;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -61,6 +62,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool? CanHitNPC(NPC target) {
 			if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
 			return null;
+		}
+		public static void AccumulateDamageFromKin(Projectile projectile, ref NPC.HitModifiers modifiers) {
+			Vector2 center = projectile.Center;
+			int n = 1;
+			float defFactor = 1;
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.type == projectile.type && other.whoAmI != projectile.whoAmI && other.Center.IsWithin(center, 16 * 12)) {
+					float factor = 1 / MathF.Pow(++n, 0.5f);
+					modifiers.SourceDamage.Base += other.damage * factor;
+					defFactor += factor * factor;
+				}
+			}
+			modifiers.DefenseEffectiveness *= defFactor;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			AccumulateDamageFromKin(Projectile, ref modifiers);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;

@@ -968,7 +968,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (#, ^2) Impetus !!!
 (^) Internal Combustionfish*
-(#2, ^2) Link Grenade* !!! (additive damage)
+(☻) Link Grenade* !!! (additive damage follows non-linear formula to avoid easy inifinite buildup, multiplier of 1/(n^0.5))
 (^) Matrix*
 (^) Meteor*
 (^) Peatball*
@@ -976,7 +976,7 @@ EXPLOSIVE WEAPONS:
 (^) Regurgitator of Souls
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
-(#, ^2) Sticky Link Grenade* !!! (additive damage)
+(☻) Sticky Link Grenade* !!!
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*

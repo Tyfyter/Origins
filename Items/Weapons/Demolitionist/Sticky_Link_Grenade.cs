@@ -1,6 +1,7 @@
 using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -90,6 +91,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool? CanHitNPC(NPC target) {
 			if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
 			return null;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			Link_Grenade_P.AccumulateDamageFromKin(Projectile, ref modifiers);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;
