@@ -89,7 +89,7 @@ namespace Origins.Questing {
 					int targetIndex = c.Index - 1;
 					if (!check.Next.Next.MatchLdloc(out int loc)) continue;
 
-					while (!check.Prev.MatchCallvirt<Asset<Texture2D>>("get_" + nameof(Asset<>.Value))) check.Index++;
+					while (!check.Prev.MatchCallvirt<Asset<Texture2D>>("get_" + nameof(Asset<Texture2D>.Value))) check.Index++;
 
 					c.EmitLdloc(loc);
 					for (; check.Index < targetIndex; check.Index++) {

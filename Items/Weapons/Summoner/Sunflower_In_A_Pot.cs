@@ -2,9 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
-using Origins.Journal;
 using Origins.Projectiles;
-using Origins.Projectiles.Weapons;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -12,7 +10,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -43,10 +40,10 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ItemID.Sunflower)
 			.AddIngredient(ItemID.ClayPot)
 			.AddIngredient(ItemID.DirtBlock, 5)
 			.AddIngredient(ItemID.FallenStar, 3)
+			.AddIngredient(ItemID.Sunflower)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
@@ -260,7 +257,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Crit = false
 						};
 						Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
-						this.DamageArtifactMinion(npc.damage);
+						this.DamageArtifactMinion(npc.damage / 2);
 						Projectile.localAI[2] = 20;
 						break;
 					}
@@ -359,7 +356,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public void OnHurt(int damage, bool fromDoT) {
 			if (fromDoT) return;
-			if (Life > 0) SoundEngine.PlaySound(SoundID.NPCHit1, Projectile.Center);
+			if (Life > 0) SoundEngine.PlaySound(SoundID.FemaleHit.WithPitch(2f).WithVolume(0.25f), Projectile.Center);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D baseTexture = TextureAssets.Projectile[Type].Value;
@@ -440,6 +437,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Lighting.AddLight(Projectile.Center, 0.8f, 0.8f, 0);
+			Dust dust = Dust.NewDustDirect(
+						Projectile.position,
+						Projectile.width,
+						Projectile.height,
+						DustID.YellowTorch,
+						SpeedY: -2
+					);
+			dust.velocity *= 0.5f;
+			dust.noGravity = true;
 		}
 		public override Color? GetAlpha(Color lightColor) => new(255, 255, 255, 100);
 	}

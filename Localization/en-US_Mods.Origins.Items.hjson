@@ -5543,6 +5543,10 @@ Venom_Shield: {
 }
 
 Sunflower_In_A_Pot: {
-	DisplayName: Sunflower In A Pot
-	Tooltip: ""
+	DisplayName: Sunflower in a Pot
+	Tooltip:
+		'''
+		Summons a sunny sunflower to fight for you
+		Heals you and slightly increases your speed during the day
+		'''
 }

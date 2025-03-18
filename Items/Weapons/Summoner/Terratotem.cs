@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using System;

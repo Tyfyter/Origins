@@ -1,10 +1,9 @@
-﻿using Terraria;
+﻿using Origins.Gores;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using PegasusLib;
 using Terraria.ModLoader;
-using Origins.Gores;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Full_Send : ModItem {
@@ -20,6 +19,27 @@ namespace Origins.Items.Accessories {
 			.AddIngredient<Return_To_Sender>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.AddOnCraftCallback((_, item, consumedItems, destinationStack) => item.Prefix(PrefixID.Arcane))
+			.Register();
+
+			CreateRecipe()
+			.AddIngredient(ItemID.YellowHorseshoeBalloon)
+			.AddIngredient<Return_To_Sender>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddOnCraftCallback((_, item, consumedItems, destinationStack) => item.Prefix(PrefixID.Brisk))
+			.Register();
+
+			CreateRecipe()
+			.AddIngredient(ItemID.WhiteHorseshoeBalloon)
+			.AddIngredient<Return_To_Sender>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddOnCraftCallback((_, item, consumedItems, destinationStack) => item.Prefix(PrefixID.Warding))
+			.Register();
+
+			CreateRecipe()
+			.AddIngredient(ItemID.BalloonHorseshoeFart)
+			.AddIngredient<Return_To_Sender>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddOnCraftCallback((_, item, consumedItems, destinationStack) => item.Prefix(PrefixID.Wild))
 			.Register();
 		}
 		public override void UpdateEquip(Player player) {

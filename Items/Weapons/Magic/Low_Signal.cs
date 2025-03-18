@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 40;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 9;
 			Item.noMelee = true;
