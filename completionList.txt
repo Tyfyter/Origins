@@ -886,7 +886,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(#, ^2) Sunflower in a Pot !!!
+(☻) Sunflower in a Pot !!!
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff
@@ -985,7 +985,7 @@ EXPLOSIVE WEAPONS:
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
-(#2, ^2) Grenade Lawnchair !!!
+(☻) Grenade Lawnchair !!!
 (^) Happy Bomb*
 (X) Rattlesnake
 (#, ^2) Rocket Rifle

@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Grenade_Lawnchair : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Grenade_Lawnchair : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Launcher"
         ];
@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.knockBack = 5.75f;
-			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useAnimation = 40;
 			Item.useTime = 40;
 			Item.width = 50;
@@ -29,34 +29,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = SoundID.Item36;
 			Item.shootSpeed = 5.35f;
 			Item.noMelee = false;
-			Item.damage = 0;
+			Item.damage = 1;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.useAmmo = ItemID.Grenade;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Pink;
 			Item.useLimitPerAnimation = 3;
 		}
-		public override float UseTimeMultiplier(Player player) => 1f / Item.useTime;
-		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
-			Player drawPlayer = drawInfo.drawPlayer;
-			float itemRotation = drawPlayer.itemRotation;
-
-			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
-
-			drawInfo.DrawDataCache.Add(new DrawData(
-				UseTexture,
-				pos,
-				null,
-				Item.GetAlpha(lightColor),
-				itemRotation,
-				drawOrigin,
-				drawPlayer.GetAdjustedItemScale(Item),
-				drawInfo.itemEffect,
-				0));
-		}
+		public override float UseTimeMultiplier(Player player) => 4f / Item.useTime;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			for (int i = Main.rand.Next(6, 9); i-- > 0;) {
-				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(1.4f) * Main.rand.NextFloat(0.9f, 1), type, damage, knockback, player.whoAmI);
+			int count = Main.rand.Next(6, 9);
+			Vector2 speed = new(velocity.Length() * player.direction, 0);
+			for (int i = count; i-- > 0;) {
+				Projectile.NewProjectile(source, position, speed.RotatedBy(-2 * (i / (float)count) * player.direction) * Main.rand.NextFloat(0.9f, 1), type, damage, knockback, player.whoAmI);
 			}
 			return false;
 		}
