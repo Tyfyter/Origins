@@ -705,16 +705,6 @@ namespace Origins {
 	public interface IUnloadable {
 		void Unload();
 	}
-	public interface IFlicker {
-		bool isFlickering { get; set; }
-		int flickerRange { get; set; }
-		int timesToFlicker { get; set; }
-		int flickersDone { get; set; }
-		bool lightsOff { get; set; }
-		int time { get; set; }
-		bool added { get; set; }
-		void Update();
-	}
 	public static class Elements {
 		public const ushort Fire = 1;
 		public const ushort Earth = 2;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.Items.Other.Consumables;
+using System;
 
 namespace Origins.Misc {
 	public class FrameCachedValue<T> {
@@ -10,12 +11,16 @@ namespace Origins.Misc {
 			lastGameFrameCount = Origins.gameFrameCount;
 			value = GetValueFunc();
 		}
-		public T GetValue() {
-			if (lastGameFrameCount != Origins.gameFrameCount) {
-				lastGameFrameCount = Origins.gameFrameCount;
-				value = GetValueFunc();
+		public T GetValue() => Value;
+		public T Value {
+			get {
+				if (lastGameFrameCount != Origins.gameFrameCount) {
+					lastGameFrameCount = Origins.gameFrameCount;
+					value = GetValueFunc();
+				}
+				return value;
 			}
-			return value;
 		}
+		public static implicit operator FrameCachedValue<T>(Func<T> getValueFunc) => new(getValueFunc);
 	}
 }
