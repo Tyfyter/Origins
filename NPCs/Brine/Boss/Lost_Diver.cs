@@ -34,10 +34,10 @@ namespace Origins.NPCs.Brine.Boss {
 				flickersDone++;
 				currentFlickerTime = 0;
 			}
-			if (lightsOff) {
+			if (flickersDone >= timesToFlicker) Finished = true;
+			else if (lightsOff) {
 				BlackoutSystem.Blackout((int)(npc.Center.X / 16), (int)(npc.Center.Y / 16), flickerRange, flickerRange, flickerRange);
 			}
-			if (flickersDone >= timesToFlicker) Finished = true;
 		}
 	}
 	public class Lost_Diver_Spawn : Lost_Diver {
