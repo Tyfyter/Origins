@@ -503,7 +503,7 @@ ACCESSORIES:
 (^) Symbiote Skull*
 (^) Tainted Flesh*
 (^) Tender Flesh Heart
-(^2, ♠ (Akaliegis + Pygmy Necklace)) Tiki Buckler !!!
+(☻) Tiki Buckler !!!
 (X) Timbre of Hell°
 (^) Trap Charm*
 (^) Tripod Nip*
@@ -1367,7 +1367,7 @@ CONSUMABLES:
 (X) Bitter Broth
 (^) Foul Broth*
 (^) Hearty Broth*
-(#, ^2) Light Broth° !!!
+(X) Light Broth° !!!
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°

@@ -19,6 +19,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().akaliegis = true;
+			DoEnduranceBuff(player);
+		}
+		public static void DoEnduranceBuff(Player player) {
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if (projectile.owner != player.whoAmI || projectile.ModProjectile is not IArtifactMinion) continue;
 				player.endurance += (1 - player.endurance) * 0.15f;
