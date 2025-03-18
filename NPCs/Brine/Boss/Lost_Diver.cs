@@ -1,28 +1,73 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
-using Origins.NPCs.Defiled.Boss;
-using Origins.NPCs.Riven.World_Cracker;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
+using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.NPCs.Brine.Boss {
-	public class Lost_Diver_Spawn : Brine_Pool_NPC {
+	public class NPCFlicker(NPC npc) : IFlicker {
+		public bool isFlickering { get; set; }
+		public int flickerRange { get; set; }
+		public int timesToFlicker { get; set; }
+		public int flickersDone { get; set; }
+		public bool lightsOff { get; set; }
+		public int time { get; set; }
+		public bool added { get; set; }
+
+
+		FastFieldInfo<LightingEngine, LightMap> _workingLightMap = new("_workingLightMap", BindingFlags.NonPublic);
+		FastFieldInfo<LightingEngine, Rectangle> _workingProcessedArea = new("_workingProcessedArea", BindingFlags.NonPublic);
+		FastStaticFieldInfo<Lighting, ILightingEngine> _activeEngine = new("_activeEngine", BindingFlags.NonPublic);
+		public void Update() {
+			if (!npc.active) isFlickering = false;
+			if (_activeEngine.Value is LightingEngine lightingEngine) {
+				if (npc.localAI[2] <= 0) npc.localAI[2] = Main.rand.Next((int)npc.localAI[0], (int)npc.localAI[1]);
+				if (++time >= npc.localAI[2]) {
+					time = 0;
+					lightsOff = !lightsOff;
+					npc.localAI[2] = Main.rand.Next((int)npc.localAI[0], (int)npc.localAI[1]);
+				}
+				Rectangle workingProcessedArea = _workingProcessedArea.GetValue(lightingEngine);
+				LightMap lightMap = _workingLightMap.GetValue(lightingEngine);
+				Point startPos = new((int)(npc.Center.X / 16) - workingProcessedArea.X, (int)(npc.Center.Y / 16) - workingProcessedArea.Y);
+
+				for (int i = -flickerRange; i < flickerRange + 1; i++) {
+					int x = i + startPos.X;
+					if (x < 0 || x >= lightMap.Width) continue;
+					for (int j = -flickerRange; j < flickerRange + 1; j++) {
+						int y = j + startPos.Y;
+						if (y < 0 || y >= lightMap.Height) continue;
+						if ((startPos - new Point(x, y)).ToVector2().Length() <= flickerRange) {
+							if (lightsOff) {
+								lightMap.SetMaskAt(x, y, LightMaskMode.Solid);
+								lightMap[x, y] = Vector3.Zero;
+								if (!added) {
+									added = !added;
+									flickersDone++;
+								}
+							} else added = false;
+						}
+					}
+				}
+			}
+		}
+	}
+	public class Lost_Diver_Spawn : Lost_Diver {
 		public override string Texture => "Origins/NPCs/Brine/Boss/Lost_Diver";
-		public static bool spawnLD = false;
+		private bool spawnedLD = false;
+		private NPCFlicker flick;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -38,31 +83,37 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.width = 20;
 			NPC.height = 42;
 		}
-		public override void OnSpawn(IEntitySource source) {
-			spawnLD = false;
-		}
-		public override bool PreAI() {
-			int flickerAmt = Main.rand.Next(4, 7);
-			int flickerTime = Main.rand.Next(25, 60);
-			int flickerRange = 17;
-			int spawnLD = Main.rand.Next(2, flickerAmt);
-			for (int i = -flickerRange; i < flickerRange; i++) {
-				for (int j = -flickerRange; j < flickerRange; j++) {
+		public override void AI() {
+			if (flick is null) {
+				Flicker flicker = ModContent.GetInstance<Flicker>();
+				flick = new NPCFlicker(NPC);
+				flicker.iFlicker.Add(flick);
+				flick.isFlickering = true;
+				flick.timesToFlicker = Main.rand.Next(15, 17);
+				flick.flickerRange = 30;
+				NPC.localAI[0] = 1;
+				NPC.localAI[1] = 6;
+				NPC.ai[1] = Main.rand.Next(2, flick.timesToFlicker);
+			}
 
-				}
+			NPC.ai[0] = flick.flickersDone;
+			if (flick.flickersDone >= flick.timesToFlicker) {
+				NPC.active = false;
+				NPC.NewNPCDirect(new EntitySource_BossSpawn(Main.LocalPlayer), NPC.Bottom, ModContent.NPCType<Lost_Diver>());
 			}
-			return false;
+			if (NPC.ai[0] >= NPC.ai[1] && flick.lightsOff && !spawnedLD) {
+				spawnedLD = true;
+			}
+			DoTargeting();
+			if (TargetPos.X > NPC.Center.X) NPC.direction = 1;
+			else NPC.direction = -1;
 		}
+		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
+		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && !Mildew_Creeper.FriendlyNPCTypes.Contains(other.type);
+		public override bool CanHitNPC(NPC target) => false;
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.ai[0] >= NPC.ai[1] && spawnedLD) return base.PreDraw(spriteBatch, screenPos, drawColor);
 			return false;
-		}
-		public class Spawn : SpawnPool {
-			public override string Name => $"{nameof(Lost_Diver)}_{base.Name}";
-			public override void SetStaticDefaults() {
-				Priority = SpawnPoolPriority.EventHigh;
-				AddSpawn<Lost_Diver_Spawn>(spawnInfo => Brine_Pool.SpawnRates.IsInBrinePool(spawnInfo) && spawnInfo.Player.InModBiome<Brine_Pool>() ? 99999999 : 0);
-			}
-			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnLD && spawnInfo.Player.InModBiome<Brine_Pool>();
 		}
 	}
 	[AutoloadBossHead]
@@ -172,6 +223,7 @@ namespace Origins.NPCs.Brine.Boss {
 				swimTime = Math.Min(swimCharge, 30);
 				swimCharge -= swimTime - oldTime;
 			}
+
 			if (NPC.wet) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
@@ -709,27 +761,21 @@ namespace Origins.NPCs.Brine.Boss {
 			return false;
 		}
 	}
-	public class Lost_Diver_Spawn_Flicker : ModSceneEffect {
-		public Vector2 targetPos = new();
-		private NPC dummy;
-		public override void SpecialVisuals(Player player, bool isActive) {
-			float percent = Clamp((targetPos - player.Center).Length() / 1000f, -10, 0.8f);
-			ScreenShaderData shader = Filters.Scene["Origins:AreaFlicker"].GetShader()
-				.UseColor(1.3f, 1.3f, 1.3f)
-				.UseOpacity(percent);
-			shader.Shader.Parameters["uScale"].SetValue(50000f);
-			shader.Shader.Parameters["uSaturation"].SetValue(1);
-			player.ManageSpecialBiomeVisuals("Origins:AreaFlicker", isActive, targetPos);
-			Dust.NewDustPerfect(targetPos, DustID.Adamantite);
+	public class Flicker : ModSystem {
+		public List<IFlicker> iFlicker = [];
+
+		public override void OnWorldUnload() {
+			iFlicker = [];
 		}
-		public override bool IsSceneEffectActive(Player player) {
-			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc?.ModNPC is Lost_Diver_Spawn) {
-					targetPos = npc.Center;
-					return true;
+		public override void ModifyLightingBrightness(ref float scale) {
+			for (int index = iFlicker.Count - 1; index >= 0; index--) {
+				IFlicker flick = iFlicker[index];
+				if (!flick.isFlickering || flick.flickersDone >= flick.timesToFlicker) {
+					iFlicker.RemoveAt(index);
+					continue;
 				}
+				flick.Update();
 			}
-			return false;
 		}
 	}
 }
