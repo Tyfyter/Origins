@@ -21,6 +21,8 @@ using Terraria.Localization;
 using Origins.Reflection;
 using Terraria;
 using ReLogic.Content;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Origins {
 	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Class | AttributeTargets.Enum)]
@@ -168,6 +170,56 @@ namespace Origins {
 			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) x = Unsafe.BitCast<TEnum, ulong>(value);
 			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
 			return x > 0 && (x & (x - 1)) == 0;
+		}
+	}
+	public class FlagsEnumConverter<TEnum> : JsonConverter where TEnum : struct, Enum {
+		static TEnum OR(TEnum a, TEnum b) {
+			Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+			if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<byte, TEnum>((byte)(Unsafe.BitCast<TEnum, byte>(a) | Unsafe.BitCast<TEnum, byte>(b)));
+			else if (underlyingType == typeof(short) || underlyingType == typeof(ushort)) return Unsafe.BitCast<ushort, TEnum>((ushort)(Unsafe.BitCast<TEnum, ushort>(a) | Unsafe.BitCast<TEnum, ushort>(b)));
+			else if (underlyingType == typeof(int) || underlyingType == typeof(uint)) return Unsafe.BitCast<uint, TEnum>((Unsafe.BitCast<TEnum, uint>(a) | Unsafe.BitCast<TEnum, uint>(b)));
+			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<ulong, TEnum>((Unsafe.BitCast<TEnum, ulong>(a) | Unsafe.BitCast<TEnum, ulong>(b)));
+			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
+		}
+
+		public override bool CanConvert(Type objectType) {
+			ArgumentNullException.ThrowIfNull(objectType, nameof(objectType));
+			return objectType == typeof(TEnum);
+		}
+		static TEnum LegacyRead(long value) {
+			Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+			if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<byte, TEnum>((byte)value);
+			else if (underlyingType == typeof(short) || underlyingType == typeof(ushort)) return Unsafe.BitCast<ushort, TEnum>((ushort)value);
+			else if (underlyingType == typeof(int) || underlyingType == typeof(uint)) return Unsafe.BitCast<uint, TEnum>((uint)value);
+			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<ulong, TEnum>((ulong)value);
+			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
+		}
+		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+			if (reader.TokenType == JsonToken.Integer) return LegacyRead((long)reader.Value);
+			if (reader.TokenType != JsonToken.StartArray) throw new FormatException();
+			TEnum value = default;
+			while (reader.Read()) {
+				switch (reader.TokenType) {
+					case JsonToken.Comment: break;
+					case JsonToken.String:
+					if (Enum.TryParse(reader.Value.ToString(), out TEnum next)) value = OR(value, next);
+					break;
+					case JsonToken.EndArray:
+					return value;
+					default:
+					throw new FormatException();
+				}
+			}
+			throw new FormatException();
+		}
+
+		public override void WriteJson(JsonWriter writer, object _value, JsonSerializer serializer) {
+			if (_value is not TEnum value) return;
+			writer.WriteStartArray();
+			foreach (TEnum flag in value.GetFlags()) {
+				writer.WriteValue(flag.ToString());
+			}
+			writer.WriteEndArray();
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace Origins.Reflection {
 		public static LocalizedText GetConfigLabel(MemberInfo memberInfo) => Language.GetOrRegister(_GetConfigKey_LabelKeyAttribute(memberInfo, "Label"));
 		public static LocalizedText GetConfigTooltip(MemberInfo memberInfo, bool register = false) {
 			string key = _GetConfigKey_TooltipKeyAttribute(memberInfo, "Tooltip");
-			if (register && !Language.Exists(key)) return LocalizedText.Empty;
+			if (!register && !Language.Exists(key)) return LocalizedText.Empty;
 			return Language.GetOrRegister(key);
 		}
 	}

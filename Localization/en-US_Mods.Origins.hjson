@@ -2239,7 +2239,7 @@ Configs: {
 		None.Label: None
 		World.Label: World
 		Map.Label: Map
-		Housing.Label: Housing
+		Housing.Label: Housing Menu
 	}
 }
 

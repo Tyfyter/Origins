@@ -136,7 +136,7 @@ namespace Origins {
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
 
-		[DefaultValue(~QuestNotificationPositions.None), ConfigFlags<QuestNotificationPositions>]
+		[DefaultValue(~QuestNotificationPositions.None), ConfigFlags<QuestNotificationPositions>, JsonConverter(typeof(FlagsEnumConverter<QuestNotificationPositions>))]
 		public QuestNotificationPositions QuestNotificationPosition = ~QuestNotificationPositions.None;
 
 		[DefaultValue(false)]
