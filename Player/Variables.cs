@@ -280,6 +280,9 @@ namespace Origins {
 		public List<(int type, Range duration)> dashHitDebuffs = [];
 		public bool dashVase = false;
 		public int vaseDashDirection = 0;
+		public bool goldenLotus = false;
+		public Item goldenLotusItem = null;
+		public int goldenLotusProj = -1;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;

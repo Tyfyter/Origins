@@ -5557,3 +5557,8 @@ Fallacious_Vase: {
 	DisplayName: Fallacious Vase
 	Tooltip: ""
 }
+
+Golden_Lotus: {
+	DisplayName: Golden Lotus
+	Tooltip: "Press <key> "
+}

@@ -13,6 +13,8 @@ namespace Origins {
 		public static ModKeybind TriggerSetBonus { get; private set; }
 		[Keybind("Forbidden Voice", "F")]
 		public static ModKeybind ForbiddenVoice { get; private set; }
+		[Keybind(Keys.H)]
+		public static ModKeybind GoldenLotus { get; private set; }
 		[Keybind("Inspect Item", "Mouse3")]
 		public static ModKeybind InspectItem { get; private set; }
 #if DEBUG
@@ -23,12 +25,12 @@ namespace Origins {
 			Type type = typeof(ModKeybind);
 			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Static)) {
 				if (field.FieldType == type && field.GetCustomAttribute<KeybindAttribute>() is KeybindAttribute data) {
-					field.SetValue(null, KeybindLoader.RegisterKeybind(mod, data.Name, data.DefaultBinding));
+					field.SetValue(null, KeybindLoader.RegisterKeybind(mod, data.Name ?? field.Name, data.DefaultBinding));
 				}
 			}
 			foreach (PropertyInfo property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Static)) {
 				if (property.PropertyType == type && property.GetCustomAttribute<KeybindAttribute>() is KeybindAttribute data) {
-					property.SetValue(null, KeybindLoader.RegisterKeybind(mod, data.Name, data.DefaultBinding));
+					property.SetValue(null, KeybindLoader.RegisterKeybind(mod, data.Name ?? property.Name, data.DefaultBinding));
 				}
 			}
 		}
@@ -46,7 +48,9 @@ namespace Origins {
 			}
 		}
 		[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-		protected sealed class KeybindAttribute(string name, string defaultBinding = "None") : Attribute {
+		protected sealed class KeybindAttribute(string name, string defaultBinding) : Attribute {
+			public KeybindAttribute(string defaultBinding = "None") : this(null, defaultBinding) {}
+			public KeybindAttribute(Keys defaultKey) : this(null, defaultKey) {}
 			public KeybindAttribute(string name, Keys key) : this(name, key.ToString()) { }
 			public string Name { get; } = name;
 			public string DefaultBinding { get; } = defaultBinding;

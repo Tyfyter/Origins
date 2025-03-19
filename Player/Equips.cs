@@ -316,6 +316,35 @@ namespace Origins {
 					}
 				}
 			}
+			if (goldenLotus && Main.myPlayer == Player.whoAmI) {
+				if (Keybindings.GoldenLotus.JustPressed) {
+					int projType = goldenLotusItem.shoot;
+					if (Player.ownedProjectileCounts[projType] <= 0) {
+						goldenLotusProj = Projectile.NewProjectile(
+							Player.GetSource_Accessory(goldenLotusItem),
+							Player.Center,
+							Vector2.Zero,
+							projType,
+							0,
+							0,
+							Player.whoAmI
+						);
+					} else {
+						Projectile goldenLotusFairy = Main.projectile[goldenLotusProj];
+						goldenLotusFairy.ai[0] = -1;
+						for (int i = 0; i < Main.chest.Length; i++) {
+							Chest chest = Main.chest[i];
+							if (chest is null) continue;
+							if (Player.tileTargetX >= chest.x && Player.tileTargetX <= chest.x + 1 && Player.tileTargetY >= chest.y && Player.tileTargetY <= chest.y + 1) {
+								goldenLotusFairy.ai[0] = 1;
+								goldenLotusFairy.ai[1] = i;
+								break;
+							}
+						}
+						goldenLotusFairy.netUpdate = true;
+					}
+				}
+			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
 				//Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				Item item = protozoaFoodItem;

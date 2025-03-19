@@ -16,6 +16,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 using static Origins.Origins.NetMessageType;
 
@@ -100,6 +101,19 @@ namespace Origins {
 					}
 					break;
 
+					case chest_sync: {
+						ushort chestIndex = reader.ReadUInt16();
+						if (Main.chest[chestIndex] == null) {
+							Main.chest[chestIndex] = new Chest();
+						}
+						Chest chest = Main.chest[chestIndex];
+						for (int i = 0; i < 40; i++) {
+							chest.item[i] ??= new();
+							ItemIO.Receive(chest.item[i], reader, readStack: true);
+						}
+					}
+					break;
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -171,6 +185,17 @@ namespace Origins {
 						ModPacket packet = GetPacket();
 						packet.Write(reader.ReadString());
 						packet.Send(-1, whoAmI);
+					}
+					break;
+
+					case request_chest_sync: {
+						ushort chestIndex = reader.ReadUInt16();
+						Chest chest = Main.chest[chestIndex];
+						ModPacket packet = GetPacket();
+						for (int i = 0; i < 40; i++) {
+							ItemIO.Send(chest.item[i], packet, writeStack: true);
+						}
+						packet.Send(whoAmI);
 					}
 					break;
 
@@ -397,6 +422,8 @@ namespace Origins {
 			internal const byte sync_neural_network = 21;
 			internal const byte defiled_relay_message = 22;
 			internal const byte entity_interaction = 23;
+			internal const byte request_chest_sync = chest_sync;
+			internal const byte chest_sync = 24;
 		}
 	}
 }
