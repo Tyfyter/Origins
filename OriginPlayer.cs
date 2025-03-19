@@ -42,11 +42,14 @@ namespace Origins {
 			if (Player.ownedProjectileCounts[ModContent.ProjectileType<Latchkey_P>()] > 0) {
 				Player.tongued = true;
 			}
+			bool otherDash = Player.dashType != 0;
 			if (riptideSet && !Player.mount.Active) {
+				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const int riptideDashDuration = 12;
-				const float riptideDashSpeed = 9f;
+				float riptideDashSpeed = 9f;
+				if (dashVase) riptideDashSpeed *= 1.2f;
 				if (dashDirection != 0 && (Player.velocity.X * dashDirection < riptideDashSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
@@ -67,42 +70,19 @@ namespace Origins {
 					);
 				}
 				if (riptideDashTime != 0) {
+					Player.dashDelay = -1;
 					Player.velocity.X = riptideDashSpeed * Math.Sign(riptideDashTime);
 					riptideDashTime -= Math.Sign(riptideDashTime);
 					dashDelay = 25;
+					if (riptideDashTime == 0) Player.dashDelay = 25;
 				}
-			}
-			if (refactoringPieces && refactoringPiecesDashCooldown <= 0) {
-				Player.dashType = 0;
-				Player.dashTime = 0;
-				const float keyDashSpeed = 4;
-				if (dashDirection != 0) {
-					Player.dashDelay = -1;
-					Player.dash = 2;
-					Player.timeSinceLastDashStarted = 0;
-					int gravDir = Math.Sign(Player.gravity);
-					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
-						Player.velocity.Y = Player.gravity;
-					}
-					Projectile.NewProjectile(
-						Player.GetSource_Misc("refactor"),
-						Player.Center + new Vector2(Player.width * dashDirection, 0),
-						new Vector2(dashDirection * keyDashSpeed, 0),
-						ModContent.ProjectileType<Latchkey_P>(),
-						0,
-						0,
-						Player.whoAmI
-					);
-					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
-					dashDelay = 10 + 6;
-					refactoringPiecesDashCooldown = 120;
-				}
-			}
-			if (meatScribeItem is not null && meatDashCooldown <= 0) {
+			} else if (meatScribeItem is not null && meatDashCooldown <= 0) {
+				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const float meatDashTotalSpeed = 12f;
-				const float meatDashSpeed = meatDashTotalSpeed / Scribe_of_the_Meat_God_P.max_updates;
+				float meatDashSpeed = meatDashTotalSpeed / Scribe_of_the_Meat_God_P.max_updates;
+				if (dashVase) meatDashSpeed *= 1.2f;
 				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashTotalSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
@@ -124,12 +104,40 @@ namespace Origins {
 					dashDelay = Scribe_of_the_Meat_God_P.dash_duration + 6;
 					meatDashCooldown = 120 + Scribe_of_the_Meat_God_P.dash_duration;
 				}
-			}
-			if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+			} else if (refactoringPieces && refactoringPiecesDashCooldown <= 0) {
+				otherDash = true;
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				float keyDashSpeed = 4;
+				if (dashVase) keyDashSpeed *= 1.2f;
+				if (dashDirection != 0) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					Player.timeSinceLastDashStarted = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
+					}
+					Projectile.NewProjectile(
+						Player.GetSource_Misc("refactor"),
+						Player.Center + new Vector2(Player.width * dashDirection, 0),
+						new Vector2(dashDirection * keyDashSpeed, 0),
+						ModContent.ProjectileType<Latchkey_P>(),
+						0,
+						0,
+						Player.whoAmI
+					);
+					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
+					dashDelay = 10 + 6;
+					refactoringPiecesDashCooldown = 120;
+				}
+			} else if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const int shineSparkDuration = 90;
-				const float shineSparkSpeed = 16f;
+				float shineSparkSpeed = 16f;
+				if (dashVase) shineSparkSpeed *= 1.2f;
 				if (shineSparkDashTime > 0) {
 					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
 					if (collidingX || collidingY) {
@@ -152,7 +160,8 @@ namespace Origins {
 				}
 			} else if (loversLeap) {
 				const int loversLeapDuration = 6;
-				const float loversLeapSpeed = 12f;
+				float loversLeapSpeed = 12f;
+				if (dashVase) loversLeapSpeed *= 1.2f;
 				if (collidingX || collidingY) {
 					Player.dashType = 0;
 					Player.dashTime = 0;
@@ -284,6 +293,26 @@ namespace Origins {
 					} else if(loversLeapDashTime == 1) {
 						loversLeapDashTime = 0;
 					}
+				} else {
+					otherDash = true;
+				}
+			}
+			if (dashVase && !otherDash) {
+				Player.dashTime = 0;
+				const int vaseDashDuration = 12;
+				float vaseDashSpeed = 8f;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < vaseDashSpeed)) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					Player.dashDelay = vaseDashDuration;
+					Player.timeSinceLastDashStarted = 0;
+					vaseDashDirection = dashDirection;
+					if (Player.velocity.Y * Player.gravDir > Player.gravity * Player.gravDir * 8) {
+						Player.velocity.Y = Player.gravity * 8;
+					}
+				}
+				if (Player.dashDelay > 0 && vaseDashDirection != 0 && Player.velocity.X * vaseDashDirection < vaseDashSpeed) {
+					Player.velocity.X = vaseDashSpeed * vaseDashDirection;
 				}
 			}
 			if (rebreather && Player.breath < Player.breathMax) {

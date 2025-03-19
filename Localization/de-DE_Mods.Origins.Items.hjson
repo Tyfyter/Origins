@@ -5552,3 +5552,8 @@ Sunflower_In_A_Pot: {
 }
 
 // Tiki_Buckler.DisplayName: Tiki Buckler
+
+Fallacious_Vase: {
+	// DisplayName: Fallacious Vase
+	// Tooltip: ""
+}

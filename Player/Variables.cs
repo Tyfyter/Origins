@@ -278,6 +278,8 @@ namespace Origins {
 		public Vector2 fullSendPos;
 		public bool akaliegis = false;
 		public List<(int type, Range duration)> dashHitDebuffs = [];
+		public bool dashVase = false;
+		public int vaseDashDirection = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -615,6 +617,7 @@ namespace Origins {
 			fullSend = false;
 			akaliegis = false;
 			dashHitDebuffs.Clear();
+			dashVase = false;
 
 			trapCharm = false;
 			dangerBarrel = false;

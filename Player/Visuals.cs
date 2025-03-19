@@ -109,6 +109,11 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 			if (forceFallthrough) Player.GoingDownWithGrapple = true;
 			forceFallthrough = false;
+			if (dashVase && Player.dashDelay < 0) {
+				const float factor = 1.5f;
+				Player.accRunSpeed *= factor;
+				Player.maxRunSpeed *= factor;
+			}
 		}
 	}
 }
