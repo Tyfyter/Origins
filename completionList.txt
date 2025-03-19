@@ -399,7 +399,6 @@ ACCESSORIES:
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
-(^2, ♠ (Celestial Starlight + Fissure Band)) Crooked Mirror !!!
 (^) Danger Barrel*
 (^) Destructive Claws*
 (^) Dim Starlight*
@@ -412,10 +411,9 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus*
-(#, ^2) Fallacious Vase !!!
+(@2, #2) Fallacious Vase !!! (needs orb sprites)
 (^) Feather Cape
 (^) Feathery Crest
-(#, ^2) Fissure Band (is lesser defiled mana just supposed to be mana but with assimilation?)
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Full Send
@@ -503,7 +501,7 @@ ACCESSORIES:
 (^) Symbiote Skull*
 (^) Tainted Flesh*
 (^) Tender Flesh Heart
-(☻) Tiki Buckler !!!
+(^) Tiki Buckler
 (X) Timbre of Hell°
 (^) Trap Charm*
 (^) Tripod Nip*
@@ -676,7 +674,7 @@ MELEE WEAPONS:
 (^) Riverang*
 (^) Snapthrow*
 (^) Soldering Iron
-(⛥) Soul Snatcher* !!!
+(%2) Soul Snatcher* !!!
 (^) Soulslasher
 (^) Spiker Sword*
 (^) Switchblade*
@@ -968,7 +966,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Grenade*
 (#, ^2) Impetus !!!
 (^) Internal Combustionfish*
-(☻) Link Grenade* !!! (additive damage follows non-linear formula to avoid easy inifinite buildup, multiplier of 1/(n^0.5))
+(^) Link Grenade*
 (^) Matrix*
 (^) Meteor*
 (^) Peatball*
@@ -976,7 +974,7 @@ EXPLOSIVE WEAPONS:
 (^) Regurgitator of Souls
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
-(☻) Sticky Link Grenade* !!!
+(^) Sticky Link Grenade*
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
@@ -1210,7 +1208,7 @@ TILES:
 (ᗢ) Surveysprout*
 (X) Tangel Bramble
 (^) Underwater Vine
-(⛥) Venus Coral !!!
+(#, ^2) Venus Coral !!!
 (^) Wilting Rose*
 (@4, ^3) Wrycoral*
 
@@ -1226,17 +1224,17 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(#, $2) Music Box (Brine Pool Vol. 1/2) (Vol. 2)
-($2) Music Box (Defiled Caverns Vol. 1/2) (both volumes)
-(X) Music Box (Defiled Egregocide Route Vol. 1)
-(X) Music Box (Defiled Mimic Route Vol. 1)
-($2) Music Box (Defiled Wastelands Vol. 1/2) (both volumes)
+(#, $2) Music Box (Brine Pool)
+($2) Music Box (Defiled Caverns) !!!
+(X) Music Box (Defiled Egregocide Route)
+(X) Music Box (Defiled Mimic Route)
+($2) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
-(@, #, $2) Music Box (Eutrophic Sea Vol. 1/2) (both volumes)
-(#, @4) Music Box (Fiberglass Undergrowth Vol. 1/2) !!!
+(@, #, $2) Music Box (Eutrophic Sea)
+(#, ^2) Music Box (Fiberglass Undergrowth) !!!
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
-($2) Music Box (Riven Hive Vol. 1/2) (both volumes)
+($2) Music Box (Riven Hive)
 (@, #, $2) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
@@ -1354,7 +1352,7 @@ CONSUMABLES:
 (^) Flask of Black Bile*
 (^) Focus Potion°
 (#, ^2) Greater Summoning Potion !!!
-(#2, ^2, ᗢ) Latchkey !!! (needs mana buffer application)
+(ᗢ) Latchkey
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
@@ -1367,7 +1365,7 @@ CONSUMABLES:
 (X) Bitter Broth
 (^) Foul Broth*
 (^) Hearty Broth*
-(X) Light Broth° !!!
+(#, ^2) Light Broth° !!!
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°
@@ -1533,10 +1531,16 @@ CROSS-MOD CONTENT:
 (X) Contagion Assimilation
 
 (X) Bomber's Soul
+(#, ^2) Defiled Storage Unit !!!
+(#, ^2) Defiled Storage Upgrade !!!
 (X) Defiled Wave
+(#, ^2) Encrusted Storage Unit !!!
+(#, ^2) Encrusted Storage Upgrade !!!
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (#, ^2/4) Keytar !!!
+(#, ^2) Sanguinite Storage Unit !!!
+(#, ^2) Sanguinite Storage Upgrade !!!
 (^) Watered-down Keytar
 ---
 

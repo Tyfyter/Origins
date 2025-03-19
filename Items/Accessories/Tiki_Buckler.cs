@@ -13,13 +13,13 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.defense = 3;
-			Item.rare = ItemRarityID.LightRed;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Lime;
+			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Akaliegis>()
 			.AddIngredient(ItemID.PygmyNecklace)
+			.AddIngredient<Akaliegis>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

@@ -1,13 +1,9 @@
 ﻿using MonoMod.Cil;
-using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.Projectiles;
-using PegasusLib.Reflection;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Akaliegis : ModItem {

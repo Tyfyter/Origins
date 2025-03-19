@@ -37,13 +37,13 @@ namespace Origins.Buffs {
 	public class Defiled_Assimilation : AssimilationDebuff {
 		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override void Update(Player player, float percent) {
-			if (percent >= 0.125 /*&& Main.rand.NextFloat(0, 200) < percent - 0.125*/) {
+			if (percent >= 0.25) {
 				player.AddBuff(BuffID.Weak, 300);
 			}
-			if (percent >= 0.35 /*&& Main.rand.NextFloat(0, 200) < percent - 0.35*/) {
+			if (percent >= 0.5) {
 				player.AddBuff(BuffID.BrokenArmor, 180);
 			}
-			if (percent >= 0.5) {
+			if (percent >= 0.75) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
 			player.OriginPlayer().GetAssimilation(AssimilationType).Percent += percent * 0.0000444f;

@@ -3221,7 +3221,7 @@ Carburite_Item: {
 
 Cleansing_Station_Item: {
 	// DisplayName: Cleansing Station
-	// Tooltip: Use to cleanse all assimilation
+	// Tooltip: Use to cleanse all assimilation while not in an evil biome
 }
 
 Felnum_Ore_Item: {
