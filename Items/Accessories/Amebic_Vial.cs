@@ -90,7 +90,10 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ItemID.Spear);
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 2;
+			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 40;
 			Projectile.width = 16;
 			Projectile.height = 16;

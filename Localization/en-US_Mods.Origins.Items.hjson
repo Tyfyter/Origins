@@ -5592,3 +5592,8 @@ AshenSupremeRenewal: {
 	DisplayName: Ashen Renewal Supreme
 	Tooltip: Ashs the entire world
 }
+
+Power_Lotus: {
+	DisplayName: Power Lotus
+	Tooltip: ""
+}

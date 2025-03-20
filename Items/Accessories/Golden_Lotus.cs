@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.fairyLotus = true;
 			player.treasureMagnet = true;
@@ -54,6 +54,7 @@ namespace Origins.Items.Accessories {
 		protected static List<int> fairiesOpeningChests = [];
 		protected static List<int> nextFairiesOpeningChests = [];
 		public override void Load() {
+			if (GetType() != typeof(Golden_Lotus_Fairy)) return;
 			IL_Chest.UpdateChestFrames += IL_Chest_UpdateChestFrames;
 			On_Chest.UsingChest += On_Chest_UsingChest;
 			On_Player.OpenChest += On_Player_OpenChest;
@@ -108,18 +109,6 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (Projectile.owner == Main.myPlayer && (!originPlayer.goldenLotus || originPlayer.goldenLotusItem.shoot != Type || originPlayer.goldenLotusProj != Projectile.whoAmI)) {
 				Projectile.ai[0] = -1;
-			}
-			void DisplayRange() {
-				if (Projectile.owner != Main.myPlayer) return;
-				for (float angle = 0; angle < MathHelper.TwoPi; angle += 1 / Projectile.localAI[0]) {
-					Dust dust = Dust.NewDustPerfect(
-						Projectile.position + GeometryUtils.Vec2FromPolar(Projectile.localAI[0] * range_per_frame, angle + Projectile.frameCounter),
-						DustID.GoldFlame,
-						Vector2.Zero
-					);
-					dust.noGravity = true;
-					//dust.noLight = true;
-				}
 			}
 			switch ((int)Projectile.ai[0]) {
 				case 0:
@@ -182,7 +171,7 @@ namespace Origins.Items.Accessories {
 				}
 				if (Projectile.localAI[0] > 0) Projectile.localAI[0]--;
 				Projectile.velocity *= 0.8f;
-				Lighting.AddLight(Projectile.position, 1f, 0.882f, 0.686f);
+				AddFairyLight();
 				break;
 
 				case 2:
@@ -210,7 +199,7 @@ namespace Origins.Items.Accessories {
 				}
 				if (Projectile.localAI[0] > 0) Projectile.localAI[0]--;
 				Projectile.velocity *= 0.8f;
-				Lighting.AddLight(Projectile.position, 1f, 0.882f, 0.686f);
+				AddFairyLight();
 				break;
 
 				default:
@@ -224,6 +213,22 @@ namespace Origins.Items.Accessories {
 			DrawOriginOffsetY = -12;
 			Projectile.frameCounter++;
 		}
+		public virtual void DisplayRange() {
+			if (Projectile.owner != Main.myPlayer) return;
+			for (float angle = 0; angle < MathHelper.TwoPi; angle += 1 / Projectile.localAI[0]) {
+				Dust dust = Dust.NewDustPerfect(
+					Projectile.position + GeometryUtils.Vec2FromPolar(Projectile.localAI[0] * range_per_frame, angle + Projectile.frameCounter),
+					DustID.GoldFlame,
+					Vector2.Zero
+				);
+				dust.noGravity = true;
+				//dust.noLight = true;
+			}
+		}
+		public virtual void AddFairyLight() {
+			Lighting.AddLight(Projectile.position, 1f, 0.882f, 0.686f);
+		}
+		public virtual Color GetItemColor(Item item, Vector2 position, Vector2 velocity) => new Color(255, 225, 175, 200) * 0.8f;
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			overWiresUI.Add(index);
 		}
@@ -234,12 +239,12 @@ namespace Origins.Items.Accessories {
 			if (hideFarie || vanishTimer > 0) {
 				if (Projectile.owner == Main.myPlayer) {
 					foreach (KeyValuePair<int, ChestItems> chest in chestItems) {
-						chest.Value?.Draw(Projectile.position, chest.Key == ChestIndex ? 1 : vanishTimer / (expand_frames - 10));
+						chest.Value?.Draw(Projectile.position, this, chest.Key == ChestIndex ? 1 : vanishTimer / (expand_frames - 10));
 					}
 				}
 				if (hideFarie) return false;
 			} else if (chestItems.TryGetValue(ChestIndex, out ChestItems itemCluster)) {
-				itemCluster.Draw(Projectile.position, 1);
+				itemCluster.Draw(Projectile.position, this, 1);
 			}
 			lightColor = Color.White * 0.8f;
 			return true;
@@ -259,11 +264,11 @@ namespace Origins.Items.Accessories {
 					if (items.Count >= 10) break;
 				}
 			}
-			public void Draw(Vector2 center, float alpha) {
+			public void Draw(Vector2 center, Golden_Lotus_Fairy colorProvider, float alpha) {
 				for (int i = 0; i < items.Count; i++) {
 					(Item item, Vector2 offset, Vector2 velocity) = items[i];
 					Vector2 position = basePosition + offset;
-					Color color = new Color(255, 225, 175, 200) * alpha * 0.8f;
+					Color color = colorProvider.GetItemColor(item, offset, velocity) * alpha;
 					float distSQ = center.DistanceSQ(position);
 					if (distSQ > max_range * max_range) {
 						distSQ = MathF.Sqrt(distSQ);

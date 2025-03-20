@@ -13,13 +13,13 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Combat"
 		];
-        public override void SetStaticDefaults() {
-            glowmask = Origins.AddGlowMask(this);
-        }
-        static short glowmask;
-        bool bothGloves = false;
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+		}
+		static short glowmask;
+		bool bothGloves = false;
 		bool noGloves = false;
-		
+
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PowerGlove);
 			if (!bothGloves) Item.handOffSlot = -1;
@@ -28,8 +28,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 8);
-            Item.glowMask = glowmask;
-        }
+			Item.glowMask = glowmask;
+		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			player.kbGlove = true;
 			player.autoReuseGlove = true;
@@ -155,8 +155,8 @@ namespace Origins.Items.Accessories {
 			}
 
 			CreateRecipe()
-            .AddIngredient(ItemID.PowerGlove, 2)
-            .AddIngredient(ModContent.ItemType<Amebic_Vial>())
+			.AddIngredient(ItemID.PowerGlove, 2)
+			.AddIngredient(ModContent.ItemType<Amebic_Vial>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFools"), () => OriginsModIntegrations.CheckAprilFools())
 			.AddOnCraftCallback((_, result, consumed, _) => {
@@ -256,7 +256,10 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ItemID.Spear);
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 2;
+			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 40;
 			Projectile.width = 16;
 			Projectile.height = 16;

@@ -1613,6 +1613,8 @@ Projectiles: {
 	RivenNukeSupremeProj.DisplayName: Riven Nuke Supreme Proj
 	AshenNukeProj.DisplayName: Ashen Nuke Proj
 	AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme Proj
+	Power_Lotus_Deflect_Fairy.DisplayName: Power Lotus Deflect Fairy
+	Power_Lotus_Seeker_Fairy.DisplayName: Power Lotus Seeker Fairy
 }
 
 Prefixes: {

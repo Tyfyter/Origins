@@ -418,7 +418,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(⛥) Golden Lotus !!!
+(☻) Golden Lotus !!!
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
 (^) Gun Magazine*
@@ -464,7 +464,7 @@ ACCESSORIES:
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
-(#, ^2) Power Lotus !!!
+(☻) Power Lotus !!!
 (^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
