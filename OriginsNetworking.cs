@@ -101,7 +101,7 @@ namespace Origins {
 					}
 					break;
 
-					case chest_sync: {
+					case chest_sync or chest_sync_projectile: {
 						ushort chestIndex = reader.ReadUInt16();
 						if (Main.chest[chestIndex] == null) {
 							Main.chest[chestIndex] = new Chest();
@@ -110,6 +110,12 @@ namespace Origins {
 						for (int i = 0; i < 40; i++) {
 							chest.item[i] ??= new();
 							ItemIO.Receive(chest.item[i], reader, readStack: true);
+						}
+						switch (type) {
+							case chest_sync_projectile:
+							Projectile lotus = Main.projectile[reader.ReadUInt16()];
+							if (lotus.ModProjectile is IChestSyncRecipient recipient) recipient.ReceiveChestSync(chestIndex);
+							break;
 						}
 					}
 					break;
@@ -188,12 +194,19 @@ namespace Origins {
 					}
 					break;
 
-					case request_chest_sync: {
+					case request_chest_sync or request_chest_sync_projectile: {
 						ushort chestIndex = reader.ReadUInt16();
 						Chest chest = Main.chest[chestIndex];
 						ModPacket packet = GetPacket();
+						packet.Write(type);
+						packet.Write(chestIndex);
 						for (int i = 0; i < 40; i++) {
 							ItemIO.Send(chest.item[i], packet, writeStack: true);
+						}
+						switch (type) {
+							case request_chest_sync_projectile:
+							packet.Write(reader.ReadUInt16());
+							break;
 						}
 						packet.Send(whoAmI);
 					}
@@ -424,6 +437,28 @@ namespace Origins {
 			internal const byte entity_interaction = 23;
 			internal const byte request_chest_sync = chest_sync;
 			internal const byte chest_sync = 24;
+			internal const byte request_chest_sync_projectile = chest_sync_projectile;
+			internal const byte chest_sync_projectile = 25;
+		}
+	}
+	public interface IChestSyncRecipient {
+		public void ReceiveChestSync(int i);
+	}
+	public static class NetworkingExtensions {
+		public static void RequestChestSync(this IChestSyncRecipient recipient, int chestIndex) {
+			byte messageType;
+			ushort recipientIndex;
+			if (recipient is ModProjectile proj) {
+				messageType = request_chest_sync_projectile;
+				recipientIndex = (ushort)proj.Projectile.whoAmI;
+			} else {
+				throw new NotImplementedException();
+			}
+			ModPacket packet = Origins.instance.GetPacket();
+			packet.Write(messageType);
+			packet.Write((ushort)chestIndex);
+			packet.Write(recipientIndex);
+			packet.Send();
 		}
 	}
 }

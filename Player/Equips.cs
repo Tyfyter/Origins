@@ -336,7 +336,7 @@ namespace Origins {
 							Chest chest = Main.chest[i];
 							if (chest is null) continue;
 							if (Player.tileTargetX >= chest.x && Player.tileTargetX <= chest.x + 1 && Player.tileTargetY >= chest.y && Player.tileTargetY <= chest.y + 1) {
-								goldenLotusFairy.ai[0] = 1;
+								goldenLotusFairy.ai[0] = -2;
 								goldenLotusFairy.ai[1] = i;
 								break;
 							}
