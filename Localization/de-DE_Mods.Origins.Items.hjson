@@ -5562,3 +5562,33 @@ Golden_Lotus: {
 	// DisplayName: Golden Lotus
 	// Tooltip: "Press <key> "
 }
+
+DefiledRenewal: {
+	// DisplayName: Defiled Renewal
+	// Tooltip: Defiles a large radius
+}
+
+DefiledSupremeRenewal: {
+	// DisplayName: Defiled Renewal Supreme
+	// Tooltip: Defiles the entire world
+}
+
+RivenRenewal: {
+	// DisplayName: Riven Renewal
+	// Tooltip: Rivens a large radius
+}
+
+RivenSupremeRenewal: {
+	// DisplayName: Riven Renewal Supreme
+	// Tooltip: Rivens the entire world
+}
+
+AshenRenewal: {
+	// DisplayName: Ashen Renewal
+	// Tooltip: Ashs a large radius
+}
+
+AshenSupremeRenewal: {
+	// DisplayName: Ashen Renewal Supreme
+	// Tooltip: Ashs the entire world
+}

@@ -1607,6 +1607,12 @@ Projectiles: {
 	Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed P
 	Sunny_Sunflower_P.DisplayName: Sunny Sunflower P
 	Golden_Lotus_Fairy.DisplayName: Golden Lotus Fairy
+	DefiledNukeProj.DisplayName: Defiled Nuke Proj
+	DefiledNukeSupremeProj.DisplayName: Defiled Nuke Supreme Proj
+	RivenNukeProj.DisplayName: Riven Nuke Proj
+	RivenNukeSupremeProj.DisplayName: Riven Nuke Supreme Proj
+	AshenNukeProj.DisplayName: Ashen Nuke Proj
+	AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme Proj
 }
 
 Prefixes: {

@@ -1544,7 +1544,7 @@ CROSS-MOD CONTENT:
 (^) Watered-down Keytar
 (X) Fountain biome change with fargo's
 (X) Fargo's sell boss/rare npc summons
-(X) Fargo's renewals
+(^3) Fargo's renewals
 (X) Fargo's caught npcs
 (X) Fargo's sell appropriate woods
 (X) Unlimited ammo items with Fargo's
