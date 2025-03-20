@@ -1542,6 +1542,12 @@ CROSS-MOD CONTENT:
 (#, ^2) Sanguinite Storage Unit !!!
 (#, ^2) Sanguinite Storage Upgrade !!!
 (^) Watered-down Keytar
+(X) Fountain biome change with fargo's
+(X) Fargo's sell boss/rare npc summons
+(X) Fargo's renewals
+(X) Fargo's caught npcs
+(X) Fargo's sell appropriate woods
+(X) Unlimited ammo items with Fargo's
 ---
 
 UI:
