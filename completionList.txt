@@ -1531,16 +1531,16 @@ CROSS-MOD CONTENT:
 (X) Contagion Assimilation
 
 (X) Bomber's Soul
-(#, ^2) Defiled Storage Unit !!!
-(#, ^2) Defiled Storage Upgrade !!!
+(☻) Defiled Storage Unit !!!
+(☻) Defiled Storage Upgrade !!!
 (X) Defiled Wave
-(#, ^2) Encrusted Storage Unit !!!
-(#, ^2) Encrusted Storage Upgrade !!!
+(☻) Encrusted Storage Unit !!!
+(☻) Encrusted Storage Upgrade !!!
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
 (#, ^2/4) Keytar !!!
-(#, ^2) Sanguinite Storage Unit !!!
-(#, ^2) Sanguinite Storage Upgrade !!!
+(☻) Sanguinite Storage Unit !!!
+(☻) Sanguinite Storage Upgrade !!!
 (^) Watered-down Keytar
 (X) Fountain biome change with fargo's
 (X) Fargo's sell boss/rare npc summons
