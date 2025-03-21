@@ -1839,6 +1839,9 @@ Tiles: {
 	// Music_Box_BP: Music Box (Brine Pool)
 	// Brine_Dungeon_Chest.MapEntry: Brine Dungeon Chest
 	// Brine_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Brine_Dungeon_Chest_Locked.MapEntry
+	// Defiled_Storage_Unit.MapEntry: Defiled Storage Unit
+	// Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
+	// Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
 }
 
 MapObject: {

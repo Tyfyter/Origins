@@ -25,6 +25,9 @@
     <Reference Include="ThoriumMod">
       <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
     </Reference>
+    <Reference Include="MagicStorage">
+      <HintPath>..\ModAssemblies\MagicStorage_v0.6.0.3.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />

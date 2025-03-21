@@ -5597,3 +5597,33 @@ Power_Lotus: {
 	// DisplayName: Power Lotus
 	// Tooltip: ""
 }
+
+Defiled_Storage_Upgrade: {
+	// DisplayName: Defiled Storage Upgrade
+	// Tooltip: ""
+}
+
+Defiled_Storage_Unit_Item: {
+	// DisplayName: Defiled Storage Unit Item
+	// Tooltip: ""
+}
+
+Encrusted_Storage_Upgrade: {
+	// DisplayName: Encrusted Storage Upgrade
+	// Tooltip: ""
+}
+
+Encrusted_Storage_Unit_Item: {
+	// DisplayName: Encrusted Storage Unit Item
+	// Tooltip: ""
+}
+
+Sanguinite_Storage_Upgrade: {
+	// DisplayName: Sanguinite Storage Upgrade
+	// Tooltip: ""
+}
+
+Sanguinite_Storage_Unit_Item: {
+	// DisplayName: Sanguinite Storage Unit Item
+	// Tooltip: ""
+}
