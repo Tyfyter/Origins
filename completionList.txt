@@ -1365,7 +1365,7 @@ CONSUMABLES:
 (X) Bitter Broth
 (^) Foul Broth*
 (^) Hearty Broth*
-(#, ^2) Light Broth° !!!
+(☻) Light Broth° !!!
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°

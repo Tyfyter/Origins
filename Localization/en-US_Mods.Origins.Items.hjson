@@ -5627,3 +5627,8 @@ Sanguinite_Storage_Unit_Item: {
 	DisplayName: Sanguinite Storage Unit Item
 	Tooltip: ""
 }
+
+Light_Broth: {
+	DisplayName: Light Broth
+	Tooltip: ""
+}

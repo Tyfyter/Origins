@@ -1109,6 +1109,11 @@ Buffs: {
 		DisplayName: Sunny Sunflower
 		Description: She dances to the beat of world.
 	}
+
+	Light_Broth_Buff: {
+		DisplayName: Light Broth Buff
+		Description: Mods.Origins.Buffs.Light_Broth_Buff.Description
+	}
 }
 
 DamageClassName: {
