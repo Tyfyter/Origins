@@ -1623,6 +1623,7 @@ Projectiles: {
 	Keytar_Bass.DisplayName: Keytar Bass
 	Keytar_Lead.DisplayName: Keytar Lead
 	Keytar_Synth.DisplayName: Keytar Synth
+	Astoxo_Lightning.DisplayName: Astoxo Lightning
 }
 
 Prefixes: {

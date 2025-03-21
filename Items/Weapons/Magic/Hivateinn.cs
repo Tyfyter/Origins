@@ -9,10 +9,10 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Wand"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"Wand"
+		];
+		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 			Origins.DamageBonusScale[Type] = 1.5f;
@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Felnum_Lightning : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_466";
-		
+
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.DamageType = DamageClass.Magic;

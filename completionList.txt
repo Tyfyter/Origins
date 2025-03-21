@@ -781,7 +781,7 @@ RANGED WEAPONS:
 (^) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 
-(#2, ^2) Astoxo
+(☻) Astoxo
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°

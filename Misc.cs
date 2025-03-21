@@ -2114,18 +2114,27 @@ namespace Origins {
 			return area.Contains((int)point.X, (int)point.Y);
 		}
 		#region drawing
-		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
-			if (texture is null) {
-				texture = TextureAssets.Extra[33].Value;
-			}
+		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, Vector2 offset = default, params (float scale, Color color)[] colors) {
+			texture ??= TextureAssets.Extra[33].Value;
 			Vector2 size;
 			int colorLength = colors.Length;
 			DelegateMethods.f_1 = 1;
+			Rectangle screenBounds = new(
+				0,
+				0,
+				Main.screenWidth,
+				Main.screenHeight
+			);
+			int extraSize = (int)(Math.Max(texture.Width, texture.Height) * scale);
+			screenBounds.Inflate(extraSize, extraSize);
 			for (int colorIndex = 0; colorIndex < colorLength; colorIndex++) {
 				size = new Vector2(scale) * colors[colorIndex].scale;
 				DelegateMethods.c_1 = colors[colorIndex].color;
 				for (int i = positions.Length; --i > 0;) {
-					Utils.DrawLaser(spriteBatch, texture, positions[i], positions[i - 1], size, DelegateMethods.LightningLaserDraw);
+					Vector2 a = positions[i] + offset;
+					Vector2 b = positions[i - 1] + offset;
+					if (!Collision.CheckAABBvLineCollision(screenBounds.TopLeft(), screenBounds.Size(), a, b)) continue;
+					Utils.DrawLaser(spriteBatch, texture, a, b, size, DelegateMethods.LightningLaserDraw);
 				}
 			}
 		}
@@ -2151,6 +2160,7 @@ namespace Origins {
 				positions.ToArray(),
 				null,
 				1.333f,
+				default,
 				colors
 			);
 		}

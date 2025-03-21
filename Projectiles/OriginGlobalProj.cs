@@ -65,6 +65,7 @@ namespace Origins.Projectiles {
 		public Vector2 unmissTargetPos = default;
 		public int unmissAnimation = 0;
 		public bool laserBow = false;
+		public bool astoxoEffect = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public override void Load() {
 			itemSourceEffects = [];
@@ -460,6 +461,7 @@ namespace Origins.Projectiles {
 					player.ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
 				}
 			}
+			if (astoxoEffect) Astoxo.DoEffect(projectile);
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
 			if (weakpointAnalyzerTarget is Vector2 targetPos) {
