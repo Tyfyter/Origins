@@ -411,14 +411,14 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus*
-(@2, #2) Fallacious Vase !!! (needs orb sprites)
+(#2, ^2) Fallacious Vase !!! (needs orb appearance)
 (^) Feather Cape
 (^) Feathery Crest
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(☻) Golden Lotus !!!
+(#3, ^2) Golden Lotus !!!
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
 (^) Gun Magazine*
@@ -464,7 +464,7 @@ ACCESSORIES:
 (^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
-(☻) Power Lotus !!!
+(^) Power Lotus
 (^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
@@ -1049,6 +1049,7 @@ TILES:
 (^) Bleeding Obsidian*
 (^) Bomb Trap
 (@4) Brittle Quartz*
+(X) Brown Ice
 (^) Chambersite
 (X) Compacted Scrap°
 (X) Cubekon Altar°
@@ -1085,9 +1086,11 @@ TILES:
 (^) Silica*
 (^) Silicon Ore*
 (X) Sootgrass°
+(X) Sootstone
 (X) Space Goo
 (^) Spug Flesh*
 (@4, ^3) Twilith*
+(X) Witherwood
 
 (^) Amebic Gel Wall
 (X) Barnacle Wall
@@ -1202,7 +1205,6 @@ TILES:
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
-(X) Scrapleaf Tree
 (X) Shelf Coral
 (^) Soulspore*
 (ᗢ) Surveysprout*
@@ -1210,6 +1212,7 @@ TILES:
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
 (^) Wilting Rose*
+(X) Witherleaf Tree
 (@4, ^3) Wrycoral*
 
 (^) A Perfect World
@@ -1365,7 +1368,7 @@ CONSUMABLES:
 (X) Bitter Broth
 (^) Foul Broth*
 (^) Hearty Broth*
-(☻) Light Broth° !!!
+(^) Light Broth°
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°
@@ -1528,26 +1531,35 @@ AMMO:
 
 CROSS-MOD CONTENT:
 ---
+(X, ?) Fargo's caught npcs
+(X, ?) Fargo's Fountain biome change
+(X) Fargo's sell boss/rare npc summons
+(X) Fargo's sell evil woods
+
 (X) Contagion Assimilation
 
+(X) Ashen Chest
+(#2, ^2) Ashen Renewal
+(#2, ^2) Ashen Renewal Supreme
 (X) Bomber's Soul
-(☻) Defiled Storage Unit !!!
-(☻) Defiled Storage Upgrade !!!
+(#, ^2) Defiled Chest
+(#2, ^2) Defiled Renewal
+(#2, ^2) Defiled Renewal Supreme
+(^) Defiled Storage Unit
+(^) Defiled Storage Upgrade
 (X) Defiled Wave
-(☻) Encrusted Storage Unit !!!
-(☻) Encrusted Storage Upgrade !!!
+(^) Encrusted Storage Unit
+(^) Encrusted Storage Upgrade
 (X) Exploder's Soul
+(X) Fargo's Unlimited ammo items
 (X) Laden Pressure Incantation
-(☻) Keytar !!!
-(☻) Sanguinite Storage Unit !!!
-(☻) Sanguinite Storage Upgrade !!!
+(#, ^2/4) Keytar !!!
+(#, ^2) Riven Chest
+(#2, ^2) Riven Renewal
+(#2, ^2) Riven Renewal Supreme
+(^) Sanguinite Storage Unit
+(^) Sanguinite Storage Upgrade
 (^) Watered-down Keytar
-(X) Fountain biome change with fargo's
-(X) Fargo's sell boss/rare npc summons
-(^3) Fargo's renewals
-(X) Fargo's caught npcs
-(X) Fargo's sell appropriate woods
-(X) Unlimited ammo items with Fargo's
 ---
 
 UI:

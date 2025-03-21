@@ -5560,7 +5560,12 @@ Fallacious_Vase: {
 
 Golden_Lotus: {
 	// DisplayName: Golden Lotus
-	// Tooltip: "Press <key> "
+	/* Tooltip:
+		'''
+		Increases pickup range for items
+		Press <key> to enable/disable loot search
+		Press <key> over discovered loot to have a golden fairy bring it to you
+		''' */
 }
 
 DefiledRenewal: {
@@ -5595,7 +5600,17 @@ AshenSupremeRenewal: {
 
 Power_Lotus: {
 	// DisplayName: Power Lotus
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Power fairies will protect you from projectiles and enemies
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Increases the size of melee weapons
+		Increases pickup range for items
+		Press <key> to enable/disable loot search
+		Press <key> over discovered loot to have a power fairy bring it to you
+		''' */
 }
 
 Defiled_Storage_Upgrade: {
@@ -5630,7 +5645,7 @@ Sanguinite_Storage_Unit_Item: {
 
 Light_Broth: {
 	// DisplayName: Light Broth
-	// Tooltip: ""
+	// Tooltip: Artifact minions receive 25% less damage
 }
 
 Keytar: {

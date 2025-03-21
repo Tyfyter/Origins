@@ -1,20 +1,13 @@
-﻿using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Mono.Cecil;
+﻿using Mono.Cecil;
 using MonoMod.Cil;
 using MonoMod.Utils;
 using Origins.Dev;
-using Origins.Projectiles;
 using PegasusLib;
-using PegasusLib.Reflection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
-using ThoriumMod;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Golden_Lotus : ModItem, ICustomWikiStat {
@@ -25,7 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(20, 34);
 			Item.shoot = ModContent.ProjectileType<Golden_Lotus_Fairy>();
 			Item.rare = ItemRarityID.LightRed;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 4);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -36,8 +29,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Fairy_Lotus>())
 			.AddIngredient(ItemID.TreasureMagnet)
+			.AddIngredient(ModContent.ItemType<Fairy_Lotus>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
@@ -222,7 +215,7 @@ namespace Origins.Items.Accessories {
 					Vector2.Zero
 				);
 				dust.noGravity = true;
-				//dust.noLight = true;
+				dust.noLight = true;
 			}
 		}
 		public virtual void AddFairyLight() {

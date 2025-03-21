@@ -1,5 +1,4 @@
-﻿using CalamityMod.Projectiles.Magic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using PegasusLib;
 using System;
@@ -30,7 +29,8 @@ namespace Origins.Items.Accessories {
 			Item.knockBack = 8;
 			Item.rare = ItemRarityID.LightPurple;
 			Item.hasVanityEffects = true;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 12);
+			Item.maxStack = 1;
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.OriginPlayer();
