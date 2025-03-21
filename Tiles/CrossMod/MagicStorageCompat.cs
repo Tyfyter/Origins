@@ -17,8 +17,11 @@ using Origins.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.CrossMod {
+	[ExtendsFromMod(nameof(MagicStorage))]
 	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
+	[ExtendsFromMod(nameof(MagicStorage))]
 	public class Encrusted_Storage_Unit() : OriginsStorageUnit<Encrusted_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
+	[ExtendsFromMod(nameof(MagicStorage))]
 	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public class OriginsStorageUpgrading : GlobalTile {
@@ -104,6 +107,7 @@ namespace Origins.Tiles.CrossMod {
 			}
 		}
 	}
+	[ExtendsFromMod(nameof(MagicStorage))]
 	public class OriginsStorageUnit<TMaterial, TNextUpgradeItem>(int tier) : OriginsStorageUnit(tier) where TMaterial : ModItem where TNextUpgradeItem : ModItem {
 		public override int MaterialItem => ModContent.ItemType<TMaterial>();
 		public override int NextUpgradeItem => ModContent.ItemType<TNextUpgradeItem>();
