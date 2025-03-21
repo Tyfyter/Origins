@@ -57,100 +57,18 @@ namespace Origins.Items.Weapons.Crossmod {
 			Item.shoot = ModContent.ProjectileType<Watered_Down_Keytar_Synth>();
 		}
 	}
-	public class Watered_Down_Keytar_Synth : ModProjectile {
-		public const int frame_time = 5;
-		public const int frame_count = 1;
-		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Synth_P";
-		public override void SetStaticDefaults() {
-			Main.projFrames[Type] = frame_count;
-		}
-		public override void SetDefaults() {
-			Projectile.DamageType = DamageClass.Generic;
-			Projectile.width = 48;
-			Projectile.height = 48;
-			Projectile.friendly = true;
-		}
-		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
-			Projectile.spriteDirection = Projectile.direction;
-			if (++Projectile.frameCounter >= frame_time) {
-				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
-			}
-			const int HalfSpriteWidth = 32 / 2;
-			const int HalfSpriteHeight = 32 / 2;
-
-			int HalfProjWidth = Projectile.width / 2;
-			int HalfProjHeight = Projectile.height / 2;
-
-			// Vanilla configuration for "hitbox in middle of sprite"
-			DrawOriginOffsetX = 0;
-			DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
-			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
-			Lighting.AddLight(Projectile.Center, 0.25f, 0.25f, 0.75f);
-		}
-		public static void OnHitNPC(NPC target) {
-			target.AddBuff(BuffID.Venom, Main.rand.Next(180, 301));
-			if (Main.rand.NextBool(4)) target.AddBuff(Toxic_Shock_Debuff.ID, Main.rand.Next(180, 301));
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OnHitNPC(target);
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 24;
-			height = 24;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
-		}
+	public class Watered_Down_Keytar_Synth : Keytar_Synth {
+		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Synth";
 	}
-	public class Watered_Down_Keytar_Bass : ModProjectile {
-		public const int frame_time = 5;
-		public const int frame_count = 1;
-		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Bass_P";
-		public override void SetStaticDefaults() {
-			Main.projFrames[Type] = frame_count;
-		}
-		public override void SetDefaults() {
-			Projectile.DamageType = DamageClass.Generic;
-			Projectile.width = 48;
-			Projectile.height = 48;
-			Projectile.friendly = true;
-		}
-		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
-			Projectile.spriteDirection = Projectile.direction;
-			if (++Projectile.frameCounter >= frame_time) {
-				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
-			}
-			const int HalfSpriteWidth = 32 / 2;
-			const int HalfSpriteHeight = 32 / 2;
-
-			int HalfProjWidth = Projectile.width / 2;
-			int HalfProjHeight = Projectile.height / 2;
-
-			// Vanilla configuration for "hitbox in middle of sprite"
-			DrawOriginOffsetX = 0;
-			DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
-			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
-			Lighting.AddLight(Projectile.Center, 0.75f, 0.25f, 0.25f);
-		}
-		public static void OnHitNPC(NPC target) {
-			if (target.wet && Main.rand.NextBool(4)) target.AddBuff(Cavitation_Debuff.ID, Main.rand.Next(180, 301));
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OnHitNPC(target);
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 24;
-			height = 24;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
-		}
+	public class Watered_Down_Keytar_Bass : Keytar_Bass {
+		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Bass";
 	}
 	#endregion without thorium
 	#region with thorium
 	[ExtendsFromMod("ThoriumMod")]
 	public class Watered_Down_Keytar_Thorium : BardItem, ICustomWikiStat {
 		public override string Name => base.Name[..^"_Thorium".Length];
+		public override BardInstrumentType InstrumentType => BardInstrumentType.Electronic;
 		public override void SetStaticDefaults() {
 			Empowerments.AddInfo<EmpowermentProlongation>(2);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
@@ -178,84 +96,12 @@ namespace Origins.Items.Weapons.Crossmod {
 		public string CustomStatPath => WikiPageExporter.GetWikiName(this) + "_Thorium";
 	}
 	[ExtendsFromMod("ThoriumMod")]
-	public class Watered_Down_Keytar_Synth_Thorium : BardProjectile {
-		public override string Name => base.Name[..^"_Thorium".Length];
-		public override BardInstrumentType InstrumentType => BardInstrumentType.String;
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Synth_P";
-		public override void SetStaticDefaults() {
-			Main.projFrames[Type] = Watered_Down_Keytar_Synth.frame_count;
-		}
-		public override void SetBardDefaults() {
-			Projectile.width = 48;
-			Projectile.height = 48;
-			Projectile.friendly = true;
-		}
-		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
-			Projectile.spriteDirection = Projectile.direction;
-			if (++Projectile.frameCounter >= Watered_Down_Keytar_Synth.frame_time) {
-				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
-			}
-			const int HalfSpriteWidth = 32 / 2;
-			const int HalfSpriteHeight = 32 / 2;
-
-			int HalfProjWidth = Projectile.width / 2;
-			int HalfProjHeight = Projectile.height / 2;
-
-			// Vanilla configuration for "hitbox in middle of sprite"
-			DrawOriginOffsetX = 0;
-			DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
-			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
-			Lighting.AddLight(Projectile.Center, 0.25f, 0.25f, 0.75f);
-		}
-		public override void BardOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Watered_Down_Keytar_Synth.OnHitNPC(target);
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 24;
-			height = 24;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
-		}
+	public class Watered_Down_Keytar_Synth_Thorium : Keytar_Synth_Thorium {
+		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Synth";
 	}
 	[ExtendsFromMod("ThoriumMod")]
-	public class Watered_Down_Keytar_Bass_Thorium : BardProjectile {
-		public override string Name => base.Name[..^"_Thorium".Length];
-		public override BardInstrumentType InstrumentType => BardInstrumentType.String;
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Bass_P";
-		public override void SetStaticDefaults() {
-			Main.projFrames[Type] = Watered_Down_Keytar_Bass.frame_count;
-		}
-		public override void SetBardDefaults() {
-			Projectile.width = 48;
-			Projectile.height = 48;
-			Projectile.friendly = true;
-		}
-		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (Projectile.direction - 1);
-			Projectile.spriteDirection = Projectile.direction;
-			if (++Projectile.frameCounter >= Watered_Down_Keytar_Bass.frame_time) {
-				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
-			}
-			const int HalfSpriteWidth = 32 / 2;
-			const int HalfSpriteHeight = 32 / 2;
-
-			int HalfProjWidth = Projectile.width / 2;
-			int HalfProjHeight = Projectile.height / 2;
-
-			// Vanilla configuration for "hitbox in middle of sprite"
-			DrawOriginOffsetX = 0;
-			DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
-			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
-			Lighting.AddLight(Projectile.Center, 0.75f, 0.25f, 0.25f);
-		}
-		public override void BardOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Watered_Down_Keytar_Bass.OnHitNPC(target);
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			width = 24;
-			height = 24;
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
-		}
+	public class Watered_Down_Keytar_Bass_Thorium : Keytar_Bass_Thorium {
+		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Bass";
 	}
 	#endregion with thorium
 }

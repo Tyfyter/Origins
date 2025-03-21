@@ -5632,3 +5632,11 @@ Light_Broth: {
 	DisplayName: Light Broth
 	Tooltip: ""
 }
+
+Keytar: {
+	DisplayName: Keytar
+	Tooltip: ""
+	Mode0: Synth Mode
+	Mode1: Bass Mode
+	Mode2: Lead Mode
+}

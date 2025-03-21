@@ -1538,7 +1538,7 @@ CROSS-MOD CONTENT:
 (☻) Encrusted Storage Upgrade !!!
 (X) Exploder's Soul
 (X) Laden Pressure Incantation
-(#, ^2/4) Keytar !!!
+(☻) Keytar !!!
 (☻) Sanguinite Storage Unit !!!
 (☻) Sanguinite Storage Upgrade !!!
 (^) Watered-down Keytar

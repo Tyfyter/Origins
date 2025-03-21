@@ -1620,6 +1620,9 @@ Projectiles: {
 	AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme Proj
 	Power_Lotus_Deflect_Fairy.DisplayName: Power Lotus Deflect Fairy
 	Power_Lotus_Seeker_Fairy.DisplayName: Power Lotus Seeker Fairy
+	Keytar_Bass.DisplayName: Keytar Bass
+	Keytar_Lead.DisplayName: Keytar Lead
+	Keytar_Synth.DisplayName: Keytar Synth
 }
 
 Prefixes: {

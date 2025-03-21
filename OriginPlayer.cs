@@ -759,6 +759,7 @@ namespace Origins {
 		}
 		public override void PostItemCheck() {
 			ItemChecking = false;
+			releaseAltUse = !Player.controlUseTile;
 		}
 		public void InflictAssimilation<TAssimilation>(float assimilationAmount) where TAssimilation : AssimilationDebuff => InflictAssimilation((ushort)ModContent.GetInstance<TAssimilation>().AssimilationType, assimilationAmount);
 		public void InflictAssimilation(ushort assimilationType, float assimilationAmount) {

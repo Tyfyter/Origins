@@ -391,6 +391,7 @@ namespace Origins {
 		public float aprilFoolsRubberDynamiteTracker = 0;
 		public int crawdadNetworkCount = 0;
 		public int neuralNetworkMisses = 0;
+		public int keytarMode = 0;
 		#endregion
 
 		#region visuals
@@ -403,6 +404,7 @@ namespace Origins {
 		public bool journalUnlocked = false;
 		public Item journalDye = null;
 
+		public bool releaseAltUse = false;
 		public bool itemLayerWrench = false;
 		public int itemComboAnimationTime = 0;
 		public bool plagueSight = false;
@@ -621,6 +623,7 @@ namespace Origins {
 			akaliegis = false;
 			dashHitDebuffs.Clear();
 			dashVase = false;
+			goldenLotus = false;
 
 			trapCharm = false;
 			dangerBarrel = false;
