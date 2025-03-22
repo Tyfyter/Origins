@@ -302,7 +302,8 @@ namespace Origins {
 				ChestID.Granite,
 				ChestID.Marble,
 				ChestID.DeadMan,
-				ChestID.Sandstone
+				ChestID.Sandstone,
+				ChestID.LockedHallow
 			);
 			Chest chest;
 			int lootType;
