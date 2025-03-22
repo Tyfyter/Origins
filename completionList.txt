@@ -166,10 +166,10 @@ ENEMY NPCS:
 (^) Cranivore*
 (^) Crimbrain*
 (X) Crying Creeper
-(X) Defiled Broadcaster
-(#2, ^2) Defiled Cyclops* !!!
+(#, ^2) Defiled Broadcaster
+(#2, ^2, ᗢ) Defiled Cyclops* (bone latcher arm)
 (^) Defiled Digger*
-(^) Defiled Krusher*
+(#2, ^2, ᗢ) Defiled Krusher* !!! (new animation, boulder throw)
 (^) Defiled Mite*
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
@@ -813,7 +813,7 @@ MAGIC WEAPONS:
 (#3, ^2) Low Signal* !!! (glowmask not displaying)
 (^) Magnus
 (^) Manasynk*
-(X) Nerve Flan
+(#, ^2) Nerve Flan
 (^) Splitsplash*
 (^) Tones of Agony
 
