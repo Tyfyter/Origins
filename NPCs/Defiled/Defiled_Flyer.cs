@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
@@ -20,7 +21,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Flyer : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Flyer : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ITangelaHaver {
 		public AssimilationAmount? Assimilation => 0.05f;
 		public Rectangle DrawRect => new(-30, 28, 104, 38);
 		public int AnimationFrames => 1;
@@ -236,6 +237,8 @@ namespace Origins.NPCs.Defiled {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			Mana = reader.ReadSingle();
 		}
+		public int? TangelaSeed { get; set; }
+		public AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Flyer).GetDefaultTMLName() + "_Tangela";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection == -1) {
@@ -265,10 +268,19 @@ namespace Origins.NPCs.Defiled {
 				NPC.scale,
 				spriteEffects,
 			0);
+
+			TangelaVisual.DrawTangela(
+				this,
+				tangelaTexture,
+				position,
+				NPC.frame,
+				NPC.rotation,
+				origin,
+				new(NPC.scale),
+				spriteEffects
+			);
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			
-		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }
 	}
 }

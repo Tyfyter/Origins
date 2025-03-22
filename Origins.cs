@@ -48,6 +48,8 @@ using Origins.Items.Other.Consumables;
 using CalamityMod.Items.Placeables.FurnitureAuric;
 using Origins.Items;
 using Origins.Items.Other;
+using CalamityMod.Projectiles.Magic;
+using Origins.Items.Weapons.Melee;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -446,6 +448,8 @@ namespace Origins {
 
 				journalDrawingShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "Drawing");
 				GameShaders.Armor.BindShader(MC.ItemType<Journal_Item>(), journalDrawingShader);
+
+				TangelaVisual.LoadShader();
 
 				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
