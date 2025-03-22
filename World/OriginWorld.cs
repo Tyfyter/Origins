@@ -400,6 +400,10 @@ namespace Origins {
 					}
 					break;
 				}
+				if (cache is null) {
+					Origins.instance.Logger.Info($"failed to use chest cache ");
+					return;
+				}
 				cache = new ChestLootCache(cache.Where((c) => c.Value.Count > 0));
 				Origins.instance.Logger.Info($"using chest cache #{actions[actionIndex].param} {ChestID.Search.GetName(actions[actionIndex].param)} with mode {(int)actions[actionIndex].weight}: {string.Join(", ", cache.Select(v => $"{v.Value.Count} {new Item(v.Key).Name} (s)"))}");
 			}
@@ -468,9 +472,14 @@ namespace Origins {
 					random = cache.GetWeightedRandom();
 				}
 			}
-			if (actionIndex < actions.Length && actions[actionIndex].action == CHANGE_QUEUE) {
+			if (actionIndex < actions.Length && actions[actionIndex].action is CHANGE_QUEUE) {
 				cache = lootCaches[actions[actionIndex].param];
 				filterCache();
+				actionIndex++;
+				goto cont;
+			}
+			if (actionIndex < actions.Length && actions[actionIndex].action is SET_COUNT_RANGE) {
+				countRange = (actions[actionIndex].param, (int)actions[actionIndex].weight);
 				actionIndex++;
 				goto cont;
 			}
