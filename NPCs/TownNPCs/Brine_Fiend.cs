@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Core;
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Consumables.Broths;
@@ -21,6 +22,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
@@ -69,7 +71,13 @@ namespace Origins.NPCs.TownNPCs {
 			InvalidateNPCHousing.NPCTypeIgnoresAllEvil.Add(Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.WitchDoctor);
+			NPC.width = 18;
+			NPC.height = 40;
+			NPC.aiStyle = 7;
+			NPC.damage = 10;
+			NPC.defense = 15;
+			NPC.lifeMax = 250;
+			NPC.knockBackResist = 0.5f;
 			NPC.townNPC = true;
 			NPC.friendly = true;
 			NPC.HitSound = SoundID.NPCHit26;
