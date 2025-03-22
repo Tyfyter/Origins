@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Crossmod {
 			ID = Type;
 		}
 		public static void SetSharedDefaults(Item item, out int cost) {
-			item.damage = 54;
+			item.damage = 52;
 			item.DamageType = DamageClass.Generic;
 			item.knockBack = 1f;
 			item.useAnimation = 16;
@@ -108,7 +108,7 @@ namespace Origins.Items.Weapons.Crossmod {
 			if (player.altFunctionUse == 2) mult *= 0;
 		}
 		public override void ModifyWeaponCrit(Player player, ref float crit) {
-			if (player.OriginPlayer().keytarMode == 2) crit *= 2;
+			if (player.OriginPlayer().keytarMode == 2) crit *= 3;
 		}
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

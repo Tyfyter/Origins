@@ -7,7 +7,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Low_Signal : ModItem, ICustomWikiStat, IJournalEntrySource {
-		static short glowmask;
         public string[] Categories => [
             "Wand"
         ];
@@ -20,9 +19,11 @@ namespace Origins.Items.Weapons.Magic {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
+		static short glowmask;
 		public override void SetDefaults() {
 			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
+			Item.crit = 5;
 			Item.mana = 9;
 			Item.noMelee = true;
 			Item.noUseGraphic = false;

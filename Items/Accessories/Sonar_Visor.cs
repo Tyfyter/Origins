@@ -19,6 +19,9 @@ namespace Origins.Items.Accessories {
 			originPlayer.advancedImaging = true;
 			originPlayer.sonarVisor = true;
 			player.buffImmune[BuffID.Confused] = true;
+
+			player.GetCritChance(DamageClass.Generic) += 10;
+			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.2f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

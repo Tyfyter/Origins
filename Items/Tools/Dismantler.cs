@@ -5,7 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Dismantler : ModItem {
-		
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+		}
+		static short glowmask;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 14;
@@ -19,6 +22,7 @@ namespace Origins.Items.Tools {
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

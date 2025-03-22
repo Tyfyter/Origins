@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 			"ManaShielding"
 		];
 		public override void SetStaticDefaults() {
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(11, 6));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
 			Item.ResearchUnlockCount = 1;
 			glowmask = Origins.AddGlowMask(this);
 		}

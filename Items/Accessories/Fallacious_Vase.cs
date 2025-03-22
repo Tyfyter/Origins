@@ -1,5 +1,4 @@
 ﻿using Origins.Dev;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,8 +15,8 @@ namespace Origins.Items.Accessories {
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WarriorEmblem);
-			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().dashVase = true;

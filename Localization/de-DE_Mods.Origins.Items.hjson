@@ -27,6 +27,8 @@ Advanced_Imaging: {
 	/* Tooltip:
 		'''
 		Increased projectile speed
+		10% increased critical strike chance
+		20% increased explosive blast radius
 		Immunity to Confusion
 		''' */
 }
@@ -770,6 +772,8 @@ Sonar_Visor: {
 	/* Tooltip:
 		'''
 		Increased projectile speed
+		10% increased critical strike chance
+		20% increased explosive blast radius
 		Immunity to Confusion
 		Highlights the outermost layer of tiles
 		''' */
@@ -5555,7 +5559,11 @@ Sunflower_In_A_Pot: {
 
 Fallacious_Vase: {
 	// DisplayName: Fallacious Vase
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Grants a quick dash
+		Increases dash speed by 20%
+		''' */
 }
 
 Golden_Lotus: {
@@ -5650,7 +5658,7 @@ Light_Broth: {
 
 Keytar: {
 	// DisplayName: Keytar
-	// Tooltip: ""
+	// Tooltip: Right click to alternate between different instruments!
 	// Mode0: Synth Mode
 	// Mode1: Bass Mode
 	// Mode2: Lead Mode
