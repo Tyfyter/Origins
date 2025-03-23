@@ -184,7 +184,7 @@ ENEMY NPCS:
 (^) Felnum Einheri*
 (^) Felnum Guardian*
 (^) Felnum Slime*
-(@4, ^3) Flagellant*
+(#2, ^2) Flagellant* (new behavior and anim fix)
 (^) Flying Exoskeleton*
 (X) Goo Wall
 (^) Graveshield Zombie*
@@ -1185,6 +1185,8 @@ TILES:
 (^) Unsuspicious Bush
 
 (^) Acetabularia*
+(X) Ashen Scrap Foliage
+(X) Ashen Soot Foliage
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
