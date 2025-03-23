@@ -67,5 +67,9 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
 		}
+		public override void OnKill() {
+			Boss_Tracker.Instance.downedDefiledMimic = true;
+			NetMessage.SendData(MessageID.WorldData);
+		}
 	}
 }

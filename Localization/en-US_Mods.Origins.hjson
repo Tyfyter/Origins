@@ -24,6 +24,9 @@ Conditions: {
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
 	DownedScrapper: Mods.Origins.Conditions.DownedScrapper
+	DownedDefiledMimic: After defeating a Defiled Mimic, In hardmode
+	DownedRivenMimic: After defeating a Riven Mimic, In hardmode
+	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
 }
 
 ModMenu: {

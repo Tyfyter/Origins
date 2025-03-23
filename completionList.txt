@@ -1531,20 +1531,20 @@ AMMO:
 
 CROSS-MOD CONTENT:
 ---
-(X, ?) Fargo's caught npcs
-(X, ?) Fargo's Fountain biome change
-(X) Fargo's sell boss/rare npc summons
-(X) Fargo's sell evil woods
+(#3) Fargo's caught npcs
+(X) Fargo's Fountain biome change
+(^, ᗢ) Fargo's sell boss/rare npc summons
+(^, ᗢ) Fargo's sell evil woods
 
 (X) Contagion Assimilation
 
-(X) Ashen Chest
-(#2, ^2) Ashen Renewal
-(#2, ^2) Ashen Renewal Supreme
+(々) Ashen Chest
+(々) Ashen Renewal
+(々) Ashen Renewal Supreme
 (X) Bomber's Soul
-(#, ^2) Defiled Chest
-(#2, ^2) Defiled Renewal
-(#2, ^2) Defiled Renewal Supreme
+(^) Defiled Chest
+(^) Defiled Renewal
+(^) Defiled Renewal Supreme
 (^) Defiled Storage Unit
 (^) Defiled Storage Upgrade
 (X) Defiled Wave
@@ -1554,9 +1554,9 @@ CROSS-MOD CONTENT:
 (X) Fargo's Unlimited ammo items
 (X) Laden Pressure Incantation
 (^) Keytar
-(#, ^2) Riven Chest
-(#2, ^2) Riven Renewal
-(#2, ^2) Riven Renewal Supreme
+(^) Riven Chest
+(^) Riven Renewal
+(^) Riven Renewal Supreme
 (^) Sanguinite Storage Unit
 (^) Sanguinite Storage Upgrade
 (^) Watered-down Keytar

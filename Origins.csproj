@@ -19,6 +19,9 @@
     <Reference Include="CalamityMod">
       <HintPath>..\ModAssemblies\CalamityMod_v2.0.4.5.dll</HintPath>
     </Reference>
+    <Reference Include="Fargowiltas">
+      <HintPath>..\ModAssemblies\Fargowiltas_v3.3.5.5.dll</HintPath>
+    </Reference>
     <Reference Include="PegasusLib">
       <HintPath>..\ModAssemblies\PegasusLib_v1.0.6.1.dll</HintPath>
     </Reference>

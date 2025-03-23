@@ -8,9 +8,9 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Other.Consumables.Renewals {
+namespace Origins.CrossMod.Fargos.Items {
 	public abstract class TORenewals<Material, Solution>(bool supreme = false) : ModItem where Material : ModItem where Solution : ModProjectile {
-		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("Fargoswiltas");
+		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
@@ -19,7 +19,7 @@ namespace Origins.Items.Other.Consumables.Renewals {
 		public override void SetDefaults() {
 			Item.width = 20;
 			Item.height = 26;
-			Item.maxStack = 99;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.consumable = true;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.rare = ItemRarityID.Orange;
@@ -68,12 +68,12 @@ namespace Origins.Items.Other.Consumables.Renewals {
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			base.Projectile.Kill();
+			Projectile.Kill();
 			return true;
 		}
 
 		public override void OnKill(int timeLeft) {
-			SoundEngine.PlaySound(in SoundID.Shatter, base.Projectile.Center);
+			SoundEngine.PlaySound(in SoundID.Shatter, Projectile.Center);
 			int num = 150;
 			float[] array = [0f, 0f, 5f, 5f, 5f, -5f, -5f, -5f];
 			float[] array2 = [5f, -5f, 0f, 5f, -5f, 0f, 5f, -5f];

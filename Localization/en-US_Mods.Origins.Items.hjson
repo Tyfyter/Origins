@@ -5668,3 +5668,18 @@ Nerve_Flan: {
 	DisplayName: Nerve Flan
 	Tooltip: ""
 }
+
+Defiled_Chest: {
+	DisplayName: Defiled Chest
+	Tooltip: Summons Defiled Mimic
+}
+
+Riven_Chest: {
+	DisplayName: Riven Chest
+	Tooltip: Summons Riven Mimic
+}
+
+Ashen_Chest: {
+	DisplayName: Ashen Chest
+	Tooltip: Summons Ashen Mimic
+}

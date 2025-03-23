@@ -69,6 +69,10 @@ namespace Origins.NPCs.Riven {
             } else {
                 Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
             }
-        }
-    }
+		}
+		public override void OnKill() {
+			Boss_Tracker.Instance.downedRivenMimic = true;
+			NetMessage.SendData(MessageID.WorldData);
+		}
+	}
 }

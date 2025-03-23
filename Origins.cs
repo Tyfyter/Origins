@@ -50,6 +50,7 @@ using Origins.Items;
 using Origins.Items.Other;
 using CalamityMod.Projectiles.Magic;
 using Origins.Items.Weapons.Melee;
+using Origins.NPCs.TownNPCs;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -635,6 +636,13 @@ namespace Origins {
 			Main.OnPostDraw += IncrementFrameCount;
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
+
+			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) { // WHY THIS NO WORK!!!
+				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Language.GetTextValue("Mods.Origins.NPCs.Brine_Fiend.Dialog.Standard3"), Name);
+				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Language.GetTextValue("Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content"), Name);
+				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), "", Name); // for future
+			}
+
 #if DEBUG
 			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);

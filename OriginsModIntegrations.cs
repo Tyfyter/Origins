@@ -42,6 +42,7 @@ using ThoriumMod.Items.Darksteel;
 using Origins.Items.Accessories;
 using Origins.Buffs;
 using Origins.NPCs.Brine.Boss;
+using Origins.NPCs.TownNPCs;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -58,6 +59,8 @@ namespace Origins {
 		public static Mod Thorium { get => instance.thorium; set => instance.thorium = value; }
 		Mod fancyLighting;
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
+		Mod fargosMutant;
+		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
 		Func<bool> checkAprilFools;
 		public static Func<bool> CheckAprilFools {
 			get => OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools ?
@@ -268,6 +271,13 @@ namespace Origins {
 					}
 				);
 			}
+			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
+				FargosMutant.Call("AddSummon", 3, ModContent.ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
+				FargosMutant.Call("AddSummon", 3, ModContent.ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
+				FargosMutant.Call("AddSummon", 2.1, ModContent.ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
+				FargosMutant.Call("AddSummon", 7.3, ModContent.ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
+			}
+
 			void AddModdedNPCAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount, HashSet<int> set = null) where TDebuff : AssimilationDebuff {
 				if (NPCID.Search.TryGetId(name, out int id)) {
 					set?.Add(id);
@@ -569,6 +579,9 @@ namespace Origins {
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
+		}
+		[JITWhenModsEnabled("Fargowiltas")]
+		static void SetupFargos() {
 		}
 	}
 	public interface ICustomWikiDestination {
