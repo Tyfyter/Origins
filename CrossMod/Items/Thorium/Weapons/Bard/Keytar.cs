@@ -11,9 +11,8 @@ using ThoriumMod;
 using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
 using ThoriumMod.Projectiles.Bard;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace Origins.Items.Weapons.Crossmod {
+namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 	#region without thorium
 	public class Keytar : ModItem {
 		public static int ID { get; internal set; }
@@ -63,7 +62,7 @@ namespace Origins.Items.Weapons.Crossmod {
 		}
 		public static void CycleMode(Player player) {
 			if (!player.ItemAnimationJustStarted) {
-				if (player.controlUseItem || (player.controlUseTile && player.OriginPlayer().releaseAltUse)) {
+				if (player.controlUseItem || player.controlUseTile && player.OriginPlayer().releaseAltUse) {
 					player.itemAnimation = 0;
 					player.itemTime = 0;
 				}
@@ -128,9 +127,7 @@ namespace Origins.Items.Weapons.Crossmod {
 		public static void ProjectileAI(ModProjectile proj, float r, float g, float b, int frame_time = 5) {
 			proj.Projectile.rotation = proj.Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (proj.Projectile.direction - 1);
 			proj.Projectile.spriteDirection = proj.Projectile.direction;
-			if (++proj.Projectile.frameCounter >= frame_time) {
-				if (++proj.Projectile.frame >= Main.projFrames[proj.Type]) proj.Projectile.frame = 0;
-			}
+			if (++proj.Projectile.frameCounter >= frame_time) 				if (++proj.Projectile.frame >= Main.projFrames[proj.Type]) proj.Projectile.frame = 0;
 			const int HalfSpriteWidth = 32 / 2;
 			const int HalfSpriteHeight = 32 / 2;
 

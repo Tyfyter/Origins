@@ -1,5 +1,4 @@
 ﻿using Origins.Dev;
-using Origins.Items.Weapons.Crossmod;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using System;
@@ -12,7 +11,7 @@ using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
 using ThoriumMod.Projectiles.Bard;
 
-namespace Origins.Items.Weapons.Demolitionist {
+namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 	#region without thorium
 	public class Sonorous_Shredder: ModItem {
 		public static int ID { get; internal set; }

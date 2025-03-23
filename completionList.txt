@@ -1549,6 +1549,7 @@ CROSS-MOD CONTENT:
 (^) Defiled Renewal Supreme
 (^) Defiled Storage Unit
 (^) Defiled Storage Upgrade
+(X) Defiled "Fake" Altar
 (X) Defiled Wave
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
@@ -1559,6 +1560,7 @@ CROSS-MOD CONTENT:
 (^) Riven Chest
 (^) Riven Renewal
 (^) Riven Renewal Supreme
+(X) Riven "Fake" Altar
 (^) Sanguinite Storage Unit
 (^) Sanguinite Storage Upgrade
 (^) Watered-down Keytar

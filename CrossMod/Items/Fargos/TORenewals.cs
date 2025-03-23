@@ -8,7 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.CrossMod.Fargos.Items {
+namespace Origins.CrossMod.Items.Fargos {
 	public abstract class TORenewals<Material, Solution>(bool supreme = false) : ModItem where Material : ModItem where Solution : ModProjectile {
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 
@@ -99,9 +99,7 @@ namespace Origins.CrossMod.Fargos.Items {
 				for (int m = -num; m <= num; m++) {
 					int i3 = (int)(l + Projectile.Center.X / 16f);
 					int j3 = (int)(m + Projectile.Center.Y / 16f);
-					if (Math.Sqrt(l * l + m * m) <= num + 0.5) {
-						ALConvert.Convert<Biome>(i3, j3, 1);
-					}
+					if (Math.Sqrt(l * l + m * m) <= num + 0.5) 						ALConvert.Convert<Biome>(i3, j3, 1);
 				}
 			}
 		}

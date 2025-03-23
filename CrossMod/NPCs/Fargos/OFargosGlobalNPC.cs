@@ -1,8 +1,7 @@
 ﻿using Fargowiltas.Items.Summons.Deviantt;
 using Fargowiltas.NPCs;
-using Origins.CrossMod.Fargos.Items;
+using Origins.CrossMod.Items.Fargos;
 using Origins.NPCs;
-using Origins.Tiles.Dawn;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using System;
@@ -12,7 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Origins.CrossMod.Fargos {
+namespace Origins.CrossMod.NPCs.Fargos {
 	[JITWhenModsEnabled("Fargowiltas")]
 	public class OFargosGlobalNPC : GlobalNPC {
 		public override void ModifyShop(NPCShop shop) {

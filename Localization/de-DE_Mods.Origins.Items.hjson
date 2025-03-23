@@ -5675,7 +5675,6 @@ Sanguinite_Storage_Unit_Item: {
 		''' */
 }
 
-
 Light_Broth: {
 	// DisplayName: Light Broth
 	// Tooltip: Artifact minions receive 25% less damage

@@ -1,7 +1,7 @@
 ﻿using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 
-namespace Origins.CrossMod.Fargos.Items {
+namespace Origins.CrossMod.Items.Fargos {
 	public class DefiledRenewal : TORenewals<Gray_Solution, DefiledNukeProj> {
 		public DefiledRenewal() : base() {
 		}

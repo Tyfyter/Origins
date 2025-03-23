@@ -1,5 +1,4 @@
 ﻿using Origins.NPCs.Defiled;
-using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Terraria;
 using Terraria.Audio;
@@ -7,7 +6,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.CrossMod.Fargos.Items {
+namespace Origins.CrossMod.Items.Fargos {
 	public abstract class TOSummons<Summon> : ModItem where Summon : ModNPC {
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 		public override void SetStaticDefaults() {

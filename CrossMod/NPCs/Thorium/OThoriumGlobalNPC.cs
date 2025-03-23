@@ -1,17 +1,11 @@
 ﻿using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
-using PegasusLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod.NPCs;
 
-namespace Origins.CrossMod {
+namespace Origins.CrossMod.NPCs.Thorium {
 	[ExtendsFromMod(nameof(ThoriumMod))]
 	public class OThoriumGlobalNPC : GlobalNPC {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.ModNPC?.Mod is ThoriumMod.ThoriumMod;

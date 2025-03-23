@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod.Items.Thorium.Weapons.Bard;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
-using Origins.Items.Weapons.Crossmod;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;

@@ -1,9 +1,4 @@
 ﻿using MagicStorage.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.DataStructures;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,12 +6,10 @@ using Terraria.Localization;
 using MagicStorage;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
-using CalamityMod.Items.Potions.Alcohol;
 using Origins.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Origins.Tiles.CrossMod {
+namespace Origins.CrossMod.Tiles.Magicstorage {
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
