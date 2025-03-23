@@ -5623,33 +5623,58 @@ Power_Lotus: {
 
 Defiled_Storage_Upgrade: {
 	// DisplayName: Defiled Storage Upgrade
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		''' */
 }
 
 Defiled_Storage_Unit_Item: {
-	// DisplayName: Defiled Storage Unit Item
-	// Tooltip: ""
+	// DisplayName: Defiled Storage Unit
+	/* Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		''' */
 }
 
 Encrusted_Storage_Upgrade: {
 	// DisplayName: Encrusted Storage Upgrade
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		''' */
 }
 
 Encrusted_Storage_Unit_Item: {
-	// DisplayName: Encrusted Storage Unit Item
-	// Tooltip: ""
+	// DisplayName: Encrusted Storage Unit
+	/* Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		''' */
 }
 
 Sanguinite_Storage_Upgrade: {
 	// DisplayName: Sanguinite Storage Upgrade
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		''' */
 }
 
 Sanguinite_Storage_Unit_Item: {
-	// DisplayName: Sanguinite Storage Unit Item
-	// Tooltip: ""
+	// DisplayName: Sanguinite Storage Unit
+	/* Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		''' */
 }
+
 
 Light_Broth: {
 	// DisplayName: Light Broth
