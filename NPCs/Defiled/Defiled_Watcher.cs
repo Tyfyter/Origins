@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
@@ -23,7 +25,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ITangelaHaver {
 		public Rectangle DrawRect => new(0, 0, 74, 68);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
@@ -158,6 +160,24 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
+		}
+		public int? TangelaSeed { get; set; }
+		public AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Watcher).GetDefaultTMLName() + "_Tangela";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			base.PostDraw(spriteBatch, screenPos, drawColor);
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (NPC.spriteDirection == 1) spriteEffects = SpriteEffects.FlipHorizontally;
+			Vector2 halfSize = new(tangelaTexture.Value.Width / 2, tangelaTexture.Value.Height / Main.npcFrameCount[NPC.type] / 2);
+			TangelaVisual.DrawTangela(
+				this,
+				tangelaTexture,
+				new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - tangelaTexture.Value.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - tangelaTexture.Value.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + Main.NPCAddHeight(NPC) + NPC.gfxOffY),
+				NPC.frame,
+				NPC.rotation,
+				halfSize,
+				new(NPC.scale),
+				spriteEffects
+			);
 		}
 	}
 	public class Defiled_Watcher_Spikes : ModProjectile {

@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Graphics {
@@ -45,14 +46,17 @@ namespace Origins.Graphics {
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Krakram>());
 			Filters.Scene.OnPostDraw += Scene_OnPostDraw;
 		}
-		static readonly List<DrawData> drawDatas = [];
+		static readonly List<(DrawData data, int seed)> drawDatas = [];
 		private static void Scene_OnPostDraw() {
 			if (drawDatas.Count <= 0) return;
 			try {
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
 				for (int i = 0; i < drawDatas.Count; i++) {
-					DrawData data = drawDatas[i];
-					GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer).Apply(null, data);
+					(DrawData data, int seed) = drawDatas[i];
+					FastRandom random = new(seed);
+					shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()));
+					shader.Apply(null, data);
 					data.Draw(Main.spriteBatch);
 				}
 			} finally {
@@ -62,7 +66,7 @@ namespace Origins.Graphics {
 		}
 		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects) {
 			if (!tangelaHaver.TangelaSeed.HasValue) tangelaHaver.TangelaSeed = Main.rand.Next();
-			drawDatas.Add(new(
+			drawDatas.Add((new(
 				texture,
 				position,
 				sourceRectangle,
@@ -70,9 +74,8 @@ namespace Origins.Graphics {
 				rotation,
 				origin,
 				scale,
-				effects,
-				tangelaHaver.TangelaSeed.Value
-			));
+				effects
+			), tangelaHaver.TangelaSeed.Value));
 		}
 	}
 }

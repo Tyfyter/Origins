@@ -30,7 +30,7 @@ float4 Tangela(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 
 	perlin = (perlin - 0.5) * 2;
 	perlin = (pow(abs(perlin), 0.8) * sign(perlin)) / 2 + 0.5;
 	
-	return lerp(float4(perlin * puble, 1), noise, pow(perlin * 1.5, 2)) * color.a;
+	return lerp(float4(perlin * 3 * puble, 1), noise, pow(perlin * 2.75, 3)) * color.a;
 }
 
 technique Technique1{

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
 using Origins.Tiles;
@@ -148,10 +149,11 @@ namespace Origins.Items.Other.Consumables {
 			return highestValue;
 		}
 	}
-	public class Latchkey_Visuals : ModSystem {
+	public class Latchkey_Visuals : ModSystem, ITangelaHaver {
 		internal RenderTarget2D renderTarget;
 		internal RenderTarget2D oldRenderTarget;
 		bool oldHadLatchkeys = false;
+		public int? TangelaSeed { get; set; }
 		public override void PostDrawTiles() {
 			int type = ModContent.ProjectileType<Latchkey_P>();
 			List<Projectile> latchkeys = [];
@@ -180,6 +182,7 @@ namespace Origins.Items.Other.Consumables {
 
 				Main.spriteBatch.End();
 				Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
+				//TangelaVisual.DrawTangela(this, renderTarget, Vector2.Zero, null, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 				Main.spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 				DrawData data = new(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);

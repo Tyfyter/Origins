@@ -1624,6 +1624,7 @@ Projectiles: {
 	Keytar_Lead.DisplayName: Keytar Lead
 	Keytar_Synth.DisplayName: Keytar Synth
 	Astoxo_Lightning.DisplayName: Astoxo Lightning
+	Nerve_Flan_P.DisplayName: Nerve Flan P
 }
 
 Prefixes: {

@@ -5663,3 +5663,8 @@ Keytar: {
 	Mode1: Bass Mode
 	Mode2: Lead Mode
 }
+
+Nerve_Flan: {
+	DisplayName: Nerve Flan
+	Tooltip: ""
+}
