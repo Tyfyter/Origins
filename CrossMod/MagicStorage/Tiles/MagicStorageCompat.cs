@@ -12,11 +12,11 @@ using MagicStorageItems = MagicStorage.Items;
 
 namespace Origins.CrossMod.MagicStorage.Tiles {
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorageItems.UpgradeHellstone>(1) { }
+	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Encrusted_Storage_Unit() : OriginsStorageUnit<Encrusted_Bar, MagicStorageItems.UpgradeHellstone>(1) { }
+	public class Encrusted_Storage_Unit() : OriginsStorageUnit<Encrusted_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorageItems.UpgradeHellstone>(1) { }
+	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public class OriginsStorageUpgrading : GlobalTile {
 		public override void RightClick(int i, int j, int type) {
@@ -88,9 +88,10 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		}
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class OriginsStorageUnit<TMaterial, TNextUpgradeItem>(int tier) : OriginsStorageUnit(tier) where TMaterial : ModItem where TNextUpgradeItem : ModItem {
+	public class OriginsStorageUnit<TMaterial, TNextUpgradeItem, TNextUnitItem>(int tier) : OriginsStorageUnit(tier) where TMaterial : ModItem where TNextUpgradeItem : ModItem where TNextUnitItem : ModItem {
 		public override int MaterialItem => ModContent.ItemType<TMaterial>();
 		public override int NextUpgradeItem => ModContent.ItemType<TNextUpgradeItem>();
+		public override int NextUnitItem => ModContent.ItemType<TNextUnitItem>();
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public abstract class OriginsStorageUnit(int tier) : StorageUnit {
@@ -99,6 +100,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public OriginsStorageUpgrade UpgradeItem { get; private set; }
 		public virtual int NextUpgradeStyle => Tier + 1;
 		public abstract int NextUpgradeItem { get; }
+		public abstract int NextUnitItem { get; }
 		public override void Load() {
 			UpgradeItem = new(this);
 			Mod.AddContent(UpgradeItem);
@@ -190,10 +192,14 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 			Item.placeStyle = Unit.Tier;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<MagicStorageItems.StorageUnit>();
-			recipe.AddIngredient(Unit.UpgradeItem.Type);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient<MagicStorageItems.StorageUnit>()
+			.AddIngredient(Unit.UpgradeItem.Type)
+			.Register();
+			Recipe.Create(Unit.NextUnitItem)
+			.AddIngredient(Type)
+			.AddIngredient(Unit.NextUpgradeItem)
+			.Register();
 		}
 	}
 }
