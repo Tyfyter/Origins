@@ -8,8 +8,8 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.CrossMod.Items.Fargos {
-	public abstract class TORenewals<Material, Solution>(bool supreme = false) : ModItem where Material : ModItem where Solution : ModProjectile {
+namespace Origins.CrossMod.Fargos.Items {
+	public abstract class TORenewals<TMaterial, TSolution>(bool supreme = false) : ModItem where TMaterial : ModItem where TSolution : ModProjectile {
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 
 		public override void SetStaticDefaults() {
@@ -34,7 +34,7 @@ namespace Origins.CrossMod.Items.Fargos {
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), position, velocity, ModContent.ProjectileType<Solution>(), 0, 0f, Main.myPlayer, 0f, 0f, 0f);
+			Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), position, velocity, ModContent.ProjectileType<TSolution>(), 0, 0f, Main.myPlayer, 0f, 0f, 0f);
 			return false;
 		}
 
@@ -50,11 +50,11 @@ namespace Origins.CrossMod.Items.Fargos {
 				recipe.AddIngredient(ItemID.Bottle);
 				recipe.AddTile(TileID.Bottles);
 			}
-			recipe.AddIngredient<Material>(amt);
+			recipe.AddIngredient<TMaterial>(amt);
 			recipe.Register();
 		}
 	}
-	public abstract class TORenewal_P<Proj, Biome>(bool supreme = false) : ModProjectile where Proj: ModProjectile where Biome : AltBiome {
+	public abstract class TORenewal_P<TProj, TBiome>(bool supreme = false) : ModProjectile where TProj : ModProjectile where TBiome : AltBiome {
 
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("Fargoswiltas");
 
@@ -79,7 +79,7 @@ namespace Origins.CrossMod.Items.Fargos {
 			float[] array2 = [5f, -5f, 0f, 5f, -5f, 0f, 5f, -5f];
 			if (Main.netMode == 0) {
 				for (int i = 0; i < 8; i++) {
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, array[i], array2[i], ModContent.ProjectileType<Proj>(), 0, 0f, Main.myPlayer);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, array[i], array2[i], ModContent.ProjectileType<TProj>(), 0, 0f, Main.myPlayer);
 				}
 			}
 
@@ -88,7 +88,7 @@ namespace Origins.CrossMod.Items.Fargos {
 					for (int k = -Main.maxTilesY; k < Main.maxTilesY; k++) {
 						int i2 = (int)(j + Projectile.Center.X / 16f);
 						int j2 = (int)(k + Projectile.Center.Y / 16f);
-						ALConvert.Convert<Biome>(i2, j2, 1);
+						ALConvert.Convert<TBiome>(i2, j2, 1);
 					}
 				}
 
@@ -99,7 +99,7 @@ namespace Origins.CrossMod.Items.Fargos {
 				for (int m = -num; m <= num; m++) {
 					int i3 = (int)(l + Projectile.Center.X / 16f);
 					int j3 = (int)(m + Projectile.Center.Y / 16f);
-					if (Math.Sqrt(l * l + m * m) <= num + 0.5) 						ALConvert.Convert<Biome>(i3, j3, 1);
+					if (Math.Sqrt(l * l + m * m) <= num + 0.5) ALConvert.Convert<TBiome>(i3, j3, 1);
 				}
 			}
 		}

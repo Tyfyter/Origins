@@ -150,7 +150,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Joint_Pop_Explosion : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.SummonMeleeSpeed];
 			Projectile.width = 96;

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod.NPCs;
 
-namespace Origins.CrossMod.NPCs.Thorium {
+namespace Origins.CrossMod.Thorium.NPCs {
 	[ExtendsFromMod(nameof(ThoriumMod))]
 	public class OThoriumGlobalNPC : GlobalNPC {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.ModNPC?.Mod is ThoriumMod.ThoriumMod;

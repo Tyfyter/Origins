@@ -12,7 +12,7 @@ using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
 using ThoriumMod.Projectiles.Bard;
 
-namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
+namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 	#region without thorium
 	public class Keytar : ModItem {
 		public static int ID { get; internal set; }
@@ -127,7 +127,7 @@ namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 		public static void ProjectileAI(ModProjectile proj, float r, float g, float b, int frame_time = 5) {
 			proj.Projectile.rotation = proj.Projectile.velocity.ToRotation() + MathHelper.PiOver2 * (proj.Projectile.direction - 1);
 			proj.Projectile.spriteDirection = proj.Projectile.direction;
-			if (++proj.Projectile.frameCounter >= frame_time) 				if (++proj.Projectile.frame >= Main.projFrames[proj.Type]) proj.Projectile.frame = 0;
+			if (++proj.Projectile.frameCounter >= frame_time && ++proj.Projectile.frame >= Main.projFrames[proj.Type]) proj.Projectile.frame = 0;
 			const int HalfSpriteWidth = 32 / 2;
 			const int HalfSpriteHeight = 32 / 2;
 

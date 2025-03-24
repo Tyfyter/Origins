@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.CrossMod.Items.Thorium.Weapons.Bard;
+using Origins.CrossMod.Thorium.Items.Weapons.Bard;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.Consumables;

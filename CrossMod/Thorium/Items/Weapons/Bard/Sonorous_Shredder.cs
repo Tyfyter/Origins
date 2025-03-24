@@ -11,7 +11,7 @@ using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
 using ThoriumMod.Projectiles.Bard;
 
-namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
+namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 	#region without thorium
 	public class Sonorous_Shredder: ModItem {
 		public static int ID { get; internal set; }
@@ -49,7 +49,7 @@ namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 		public const int frame_time = 5;
 		public const int frame_count = 7;
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = frame_count;
 		}
@@ -85,7 +85,7 @@ namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 	}
 	public class Sonorous_Shredder_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("ThoriumMod");
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.width = 96;
@@ -138,7 +138,7 @@ namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 		public override string Name => base.Name[..^"_Thorium".Length];
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override BardInstrumentType InstrumentType => BardInstrumentType.String;
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = Sonorous_Shredder_Projectile.frame_count;
 		}
@@ -183,7 +183,7 @@ namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
 		public override string Name => base.Name[..^"_Thorium".Length];
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override BardInstrumentType InstrumentType => BardInstrumentType.Percussion;
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetBardDefaults() {
 			Projectile.width = 96;
 			Projectile.height = 96;

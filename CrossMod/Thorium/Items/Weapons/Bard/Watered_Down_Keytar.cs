@@ -8,7 +8,7 @@ using ThoriumMod;
 using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
 
-namespace Origins.CrossMod.Items.Thorium.Weapons.Bard {
+namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 	#region without thorium
 	public class Watered_Down_Keytar : ModItem {
 		public static int ID { get; internal set; }
@@ -53,10 +53,10 @@ else {
 		}
 	}
 	public class Watered_Down_Keytar_Synth : Keytar_Synth {
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Synth";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Keytar_Synth";
 	}
 	public class Watered_Down_Keytar_Bass : Keytar_Bass {
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Bass";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Keytar_Bass";
 	}
 	#endregion without thorium
 	#region with thorium
@@ -89,11 +89,11 @@ else {
 	}
 	[ExtendsFromMod("ThoriumMod")]
 	public class Watered_Down_Keytar_Synth_Thorium : Keytar_Synth_Thorium {
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Synth";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Keytar_Synth";
 	}
 	[ExtendsFromMod("ThoriumMod")]
 	public class Watered_Down_Keytar_Bass_Thorium : Keytar_Bass_Thorium {
-		public override string Texture => "Origins/Items/Weapons/Crossmod/Keytar_Bass";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Keytar_Bass";
 	}
 	#endregion with thorium
 }

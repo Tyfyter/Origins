@@ -6,8 +6,8 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.CrossMod.Items.Fargos {
-	public abstract class TOSummons<Summon> : ModItem where Summon : ModNPC {
+namespace Origins.CrossMod.Fargos.Items {
+	public abstract class TOSummons<TSummon> : ModItem where TSummon : ModNPC {
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
@@ -20,16 +20,15 @@ namespace Origins.CrossMod.Items.Fargos {
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
 				Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250));
-				NPC.NewNPCDirect(NPC.GetBossSpawnSource(player.whoAmI), pos, ModContent.NPCType<Summon>());
+				NPC.NewNPCDirect(NPC.GetBossSpawnSource(player.whoAmI), pos, ModContent.NPCType<TSummon>());
 				SoundEngine.PlaySound(SoundID.Roar);
 			}
 			return true;
 		}
 	}
-	public class Defiled_Chest : TOSummons<Defiled_Mimic> {
-	}
-	public class Riven_Chest : TOSummons<Riven_Mimic> {
-	}/*
-	public class Ashen_Chest : TOSummons<Ashen_Mimic> {
-	}*/
+	public class Defiled_Chest : TOSummons<Defiled_Mimic> { }
+	public class Riven_Chest : TOSummons<Riven_Mimic> { }
+	/*
+	public class Ashen_Chest : TOSummons<Ashen_Mimic> { }
+	*/
 }

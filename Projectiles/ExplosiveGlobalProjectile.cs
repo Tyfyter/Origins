@@ -895,7 +895,7 @@ namespace Origins.Projectiles {
 		}
 	}
 	public abstract class ExplosionProjectile : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public abstract DamageClass DamageType { get; }
 		public abstract int Size { get; }
 		public virtual bool Hostile => false;

@@ -8,14 +8,15 @@ using Terraria.Audio;
 using Terraria.ID;
 using Origins.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
+using MagicStorageItems = MagicStorage.Items;
 
-namespace Origins.CrossMod.Tiles.Magicstorage {
+namespace Origins.CrossMod.MagicStorage.Tiles {
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
+	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorageItems.UpgradeHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Encrusted_Storage_Unit() : OriginsStorageUnit<Encrusted_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
+	public class Encrusted_Storage_Unit() : OriginsStorageUnit<Encrusted_Bar, MagicStorageItems.UpgradeHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorage.Items.UpgradeHellstone>(1) { }
+	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorageItems.UpgradeHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public class OriginsStorageUpgrading : GlobalTile {
 		public override void RightClick(int i, int j, int type) {
@@ -34,22 +35,12 @@ namespace Origins.CrossMod.Tiles.Magicstorage {
 		}
 		internal static int GetCapacityForPrevStyle(int style) {
 			style--;
-			if (style == 8) {
-				return 4;
-			}
-			if (style > 1) {
-				style--;
-			}
+			if (style == 8) return 4;
+			if (style > 1) style--;
 			int num2 = style + 1;
-			if (num2 > 4) {
-				num2++;
-			}
-			if (num2 > 6) {
-				num2++;
-			}
-			if (num2 > 8) {
-				num2 += 7;
-			}
+			if (num2 > 4) num2++;
+			if (num2 > 6) num2++;
+			if (num2 > 8) num2 += 7;
 			return 40 * num2;
 		}
 		public static void TryUpgradeStorage(int i, int j, int type) {
@@ -70,29 +61,25 @@ namespace Origins.CrossMod.Tiles.Magicstorage {
 				NetMessage.SendTileSquare(Main.myPlayer, i, j, 2, 2);
 				TEStorageHeart heart = storageUnitTE.GetHeart();
 				if (heart != null) {
-					if (Main.netMode == NetmodeID.SinglePlayer) {
+					switch (Main.netMode) {
+						case NetmodeID.SinglePlayer:
 						heart.ResetCompactStage();
-					} else if (Main.netMode == NetmodeID.MultiplayerClient) {
+						break;
+
+						default:
 						NetHelper.SendResetCompactStage(heart.Position);
+						break;
 					}
 				}
 				item.stack--;
-				if (item.stack <= 0) {
-					item.SetDefaults();
-				}
-				if (player.selectedItem == 58) {
-					Main.mouseItem = item.Clone();
-				}
+				if (item.stack <= 0) item.SetDefaults();
+				if (player.selectedItem == 58) Main.mouseItem = item.Clone();
 				if (player.selectedItem == 58) {
 					Main.mouseItem.stack--;
-					if (Main.mouseItem.stack <= 0) {
-						Main.mouseItem.TurnToAir();
-					}
+					if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
 				} else {
 					item.stack--;
-					if (item.stack <= 0) {
-						item.TurnToAir();
-					}
+					if (item.stack <= 0) item.TurnToAir();
 				}
 				player.ConsumeItem(item.type);
 				SoundEngine.PlaySound(in SoundID.MaxMana, storageUnitTE.Position.ToWorldCoordinates());
@@ -118,15 +105,9 @@ namespace Origins.CrossMod.Tiles.Magicstorage {
 			Mod.AddContent(new OriginsStorageUnitItem(this));
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (Main.tile[i, j].TileFrameX % 36 == 18) {
-				i--;
-			}
-			if (Main.tile[i, j].TileFrameY % 36 == 6) {
-				j--;
-			}
-			if (TileEntity.ByPosition.ContainsKey(new Point16(i, j)) && Main.tile[i, j].TileFrameX / 36 % 3 != 0) {
-				fail = true;
-			}
+			if (Main.tile[i, j].TileFrameX % 36 == 18) i--;
+			if (Main.tile[i, j].TileFrameY % 36 == 6) j--;
+			if (TileEntity.ByPosition.ContainsKey(new Point16(i, j)) && Main.tile[i, j].TileFrameX / 36 % 3 != 0) fail = true;
 		}
 		public override bool CanExplode(int i, int j) {
 			bool fail = false;
@@ -140,22 +121,20 @@ namespace Origins.CrossMod.Tiles.Magicstorage {
 			if (Main.tile[i, j].TileFrameY % 36 == 18) j--;
 			Player player = Main.LocalPlayer;
 			Item item = player.HeldItem;
-			if (!TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity te) || te is not TEStorageUnit storageUnitTE) {
-				storageUnitTE = null;
-			}
+			if (!TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity te) || te is not TEStorageUnit storageUnitTE) storageUnitTE = null;
 			if (item?.type == NextUpgradeItem) {
 				OriginsStorageUpgrading.SetTypeAndStyle(i, j, (ushort)ModContent.TileType<StorageUnit>(), Tier);
 				return base.RightClick(i, j);
 			}
 			Main.LocalPlayer.tileInteractionHappened = true;
-			string obj = (storageUnitTE.Inactive ? Language.GetTextValue("Mods.MagicStorage.Inactive") : Language.GetTextValue("Mods.MagicStorage.Active"));
+			string obj = storageUnitTE.Inactive ? Language.GetTextValue("Mods.MagicStorage.Inactive") : Language.GetTextValue("Mods.MagicStorage.Active");
 			string fullnessString = Language.GetTextValue("Mods.MagicStorage.Capacity", storageUnitTE.NumItems, storageUnitTE.Capacity);
 			Main.NewText(obj + ", " + fullnessString);
 			return false;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
-			Vector2 vector = (Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange));
+			Vector2 vector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
 			Vector2 position = vector + 16f * new Vector2(i, j) - Main.screenPosition;
 			Rectangle value = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
 			Color color = Lighting.GetColor(i, j, Color.White);
@@ -212,7 +191,7 @@ namespace Origins.CrossMod.Tiles.Magicstorage {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<MagicStorage.Items.StorageUnit>();
+			recipe.AddIngredient<MagicStorageItems.StorageUnit>();
 			recipe.AddIngredient(Unit.UpgradeItem.Type);
 			recipe.Register();
 		}

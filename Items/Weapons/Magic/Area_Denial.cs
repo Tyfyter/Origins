@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Area_Denial_Explosion : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.width = 96;
