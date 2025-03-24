@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 2));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData(false);

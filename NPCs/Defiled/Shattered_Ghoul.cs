@@ -72,7 +72,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
 		}
 		public override void AI() {

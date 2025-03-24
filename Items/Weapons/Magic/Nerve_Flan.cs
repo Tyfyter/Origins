@@ -57,34 +57,6 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.extraUpdates = 25;
 		}
 
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
-			float targetWeight = 160 + Math.Max(target.width, target.height);
-			targetWeight *= targetWeight;
-			Vector2 targetPos = default;
-			if (Main.player[Projectile.owner].DoHoming((target) => {
-				if (target is not NPC npc || Projectile.localNPCImmunity[npc.whoAmI] != 0) return false;
-				Vector2 currentPos = target.Center;
-				float distMult = (target.wet || npc.ModNPC is IDefiledEnemy) ? 0.5f : 1f;
-				float dist = MathF.Pow((Projectile.Center.X - currentPos.X) * distMult, 2) + MathF.Pow((Projectile.Center.Y - currentPos.Y) * distMult, 2);
-				if (dist < targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
-					targetWeight = dist;
-					targetPos = currentPos;
-					return true;
-				}
-				return false;
-			}, false)) {
-				Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(default) * Projectile.velocity.Length();
-				this.target = Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
-				Projectile.damage = (int)(Projectile.damage * 0.9f);
-			} else {
-				int index = Math.Min((int)++Projectile.ai[1], Projectile.oldPos.Length);
-				Projectile.oldPos[^index] = Projectile.Center + Projectile.velocity;
-				Projectile.oldRot[^index] = Projectile.velocity.ToRotation();
-				StopMovement();
-			}
-		}
-
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			hitbox.Inflate(2, 2);
 		}
