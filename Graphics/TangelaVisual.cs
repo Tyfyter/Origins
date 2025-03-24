@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Projectiles.Magic;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -13,7 +15,6 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Graphics {
 	public interface ITangelaHaver {
@@ -46,23 +47,31 @@ namespace Origins.Graphics {
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Krakram>());
 			Filters.Scene.OnPostDraw += Scene_OnPostDraw;
 		}
-		static readonly List<(DrawData data, int seed)> drawDatas = [];
+		static DateTime changeModeTime = DateTime.MinValue;
+		public static bool DrawOver { get; private set; } = false;
+		internal static readonly List<(DrawData data, int seed)> drawDatas = [];
 		private static void Scene_OnPostDraw() {
 			if (drawDatas.Count <= 0) return;
-			try {
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
-				for (int i = 0; i < drawDatas.Count; i++) {
-					(DrawData data, int seed) = drawDatas[i];
-					FastRandom random = new(seed);
-					shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()));
-					shader.Apply(null, data);
-					data.Draw(Main.spriteBatch);
+			if (DrawOver) {
+				try {
+					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
+					for (int i = 0; i < drawDatas.Count; i++) {
+						(DrawData data, int seed) = drawDatas[i];
+						FastRandom random = new(seed);
+						shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()));
+						shader.Apply(null, data);
+						data.Draw(Main.spriteBatch);
+					}
+				} finally {
+					Main.spriteBatch.End();
 				}
-			} finally {
-				Main.spriteBatch.End();
 			}
 			drawDatas.Clear();
+			if (DateTime.Now > changeModeTime) {
+				DrawOver = Main.rand.NextBool(3, 5);
+				changeModeTime = DateTime.Now + TimeSpan.FromSeconds(Main.rand.Next(4, 11)) / (1 + DrawOver.ToInt());
+			}
 		}
 		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects) {
 			if (!tangelaHaver.TangelaSeed.HasValue) tangelaHaver.TangelaSeed = Main.rand.Next();
@@ -76,6 +85,64 @@ namespace Origins.Graphics {
 				scale,
 				effects
 			), tangelaHaver.TangelaSeed.Value));
+			if (DrawOver) return;
+			SpriteBatchState state = Main.spriteBatch.GetState();
+			try {
+				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
+				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
+				(DrawData data, int seed) = drawDatas[^1];
+				FastRandom random = new(seed);
+				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()));
+				shader.Apply(null, data);
+				data.Draw(Main.spriteBatch);
+			} finally {
+				Main.spriteBatch.Restart(state);
+			}
+		}
+	}
+	public class Tangela_Resaturate_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), IUnloadable {
+		public override void Draw(SpriteBatch spriteBatch) {
+			if (TangelaVisual.DrawOver) {
+				return;
+			}
+			if (renderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
+			try {
+				Origins.shaderOroboros.Capture();
+				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
+					TangelaVisual.drawDatas[i].data.Draw(spriteBatch);
+				}
+			} finally {
+				Origins.shaderOroboros.DrawContents(renderTarget);
+				Origins.shaderOroboros.Reset(default);
+			}
+			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseImage(renderTarget, 1);
+		}
+		public override void Update(GameTime gameTime) { }
+		public override void Activate(Vector2 position, params object[] args) { }
+		public override void Deactivate(params object[] args) { }
+		public override bool IsVisible() {
+			return Main.LocalPlayer?.OriginPlayer()?.ZoneDefiledProgressSmoothed > 0 && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader;
+		}
+
+		public void Unload() {
+			if (renderTarget is not null) {
+				Main.QueueMainThreadAction(renderTarget.Dispose);
+				Main.OnResolutionChanged -= Resize;
+			}
+		}
+		internal RenderTarget2D renderTarget;
+		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
+			renderTarget.Dispose();
+			SetupRenderTargets();
+		}
+		void SetupRenderTargets() {
+			if (renderTarget is not null && !renderTarget.IsDisposed) return;
+			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
 	}
 }

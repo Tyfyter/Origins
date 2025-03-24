@@ -193,13 +193,13 @@ namespace Origins.Items.Other.Consumables {
 
 				Main.spriteBatch.End();
 				Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
-				//TangelaVisual.DrawTangela(this, renderTarget, Vector2.Zero, null, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
-				Main.spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+				//Main.spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 				DrawData data = new(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
 				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null); // temp shader choice
 				shader.Apply(Main.LocalPlayer, data);
 				data.Draw(Main.spriteBatch);
+				TangelaVisual.DrawTangela(this, renderTarget, Vector2.Zero, null, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
 				Main.spriteBatch.End();
 
 				oldHadLatchkeys = true;
