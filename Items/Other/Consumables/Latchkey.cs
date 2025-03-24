@@ -67,13 +67,17 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AI() {
 			Player owner = Main.player[Projectile.owner];
-
+			
 			if (Projectile.ai[0] > 0) {
+				Projectile.timeLeft = 2;
 				if (--Projectile.ai[0] <= 0) Projectile.Kill();
 			} else {
 				Vector2 pos = Projectile.position;
 				Rectangle hitbox = Projectile.Hitbox;
-				for (int i = 0; i < 11 * 4; i++) {
+				const int length = 16 * 4;
+				int i = 0;
+				bool didBreak = false;
+				for (; i < length; i++) {
 					pos += Projectile.velocity;
 					hitbox.X = (int)pos.X;
 					hitbox.Y = (int)pos.Y;
@@ -91,7 +95,14 @@ namespace Origins.Items.Other.Consumables {
 						owner.velocity = Vector2.Zero;
 						return;
 					}
-					if (shouldBreak) break;
+					if (shouldBreak) {
+						didBreak = true;
+						break;
+					}
+				}
+				if (!didBreak) {
+					Projectile.Kill();
+					owner.velocity = Vector2.Zero;
 				}
 			}
 

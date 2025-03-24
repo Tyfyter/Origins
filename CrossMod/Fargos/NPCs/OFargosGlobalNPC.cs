@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod.Fargos.NPCs {
-	[JITWhenModsEnabled("Fargowiltas")]
+	[ExtendsFromMod(nameof(Fargowiltas))]
 	public class OFargosGlobalNPC : GlobalNPC {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.ModNPC?.Mod is Fargowiltas.Fargowiltas;
 		public override void ModifyShop(NPCShop shop) {
