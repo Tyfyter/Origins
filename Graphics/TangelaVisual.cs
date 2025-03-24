@@ -15,6 +15,7 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Graphics {
 	public interface ITangelaHaver {
@@ -27,6 +28,7 @@ namespace Origins.Graphics {
 			public override void Apply(Entity entity, DrawData? drawData = null) {
 				if (_uImage2 != null) {
 					Main.graphics.GraphicsDevice.Textures[2] = _uImage2.Value;
+					Main.graphics.GraphicsDevice.SamplerStates[2] = SamplerState.LinearWrap;
 					Shader.Parameters["uImageSize2"]?.SetValue(_uImage2.Size());
 				}
 				base.Apply(entity, drawData);
@@ -49,7 +51,7 @@ namespace Origins.Graphics {
 		}
 		static DateTime changeModeTime = DateTime.MinValue;
 		public static bool DrawOver { get; private set; } = false;
-		internal static readonly List<(DrawData data, int seed)> drawDatas = [];
+		internal static readonly List<TangelaDrawData> drawDatas = [];
 		private static void Scene_OnPostDraw() {
 			if (drawDatas.Count <= 0) return;
 			if (DrawOver) {
@@ -57,9 +59,9 @@ namespace Origins.Graphics {
 					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
 					for (int i = 0; i < drawDatas.Count; i++) {
-						(DrawData data, int seed) = drawDatas[i];
+						(DrawData data, int seed, Vector2 extraOffset) = drawDatas[i];
 						FastRandom random = new(seed);
-						shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()));
+						shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) + extraOffset / 256);
 						shader.Apply(null, data);
 						data.Draw(Main.spriteBatch);
 					}
@@ -73,9 +75,9 @@ namespace Origins.Graphics {
 				changeModeTime = DateTime.Now + TimeSpan.FromSeconds(Main.rand.Next(4, 11)) / (1 + DrawOver.ToInt());
 			}
 		}
-		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects) {
+		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, Vector2 extraOffset = default) {
 			if (!tangelaHaver.TangelaSeed.HasValue) tangelaHaver.TangelaSeed = Main.rand.Next();
-			drawDatas.Add((new(
+			drawDatas.Add(new(new(
 				texture,
 				position,
 				sourceRectangle,
@@ -84,15 +86,15 @@ namespace Origins.Graphics {
 				origin,
 				scale,
 				effects
-			), tangelaHaver.TangelaSeed.Value));
+			), tangelaHaver.TangelaSeed.Value, extraOffset));
 			if (DrawOver) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			try {
 				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
 				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
-				(DrawData data, int seed) = drawDatas[^1];
+				(DrawData data, int seed, _) = drawDatas[^1];
 				FastRandom random = new(seed);
-				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()));
+				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) + extraOffset / 256);
 				shader.Apply(null, data);
 				data.Draw(Main.spriteBatch);
 			} finally {
@@ -100,6 +102,7 @@ namespace Origins.Graphics {
 			}
 		}
 	}
+	public record struct TangelaDrawData(DrawData Data, int Seed, Vector2 ExtraOffset = default);
 	public class Tangela_Resaturate_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), IUnloadable {
 		public override void Draw(SpriteBatch spriteBatch) {
 			if (TangelaVisual.DrawOver) {
@@ -113,7 +116,7 @@ namespace Origins.Graphics {
 			try {
 				Origins.shaderOroboros.Capture();
 				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
-					TangelaVisual.drawDatas[i].data.Draw(spriteBatch);
+					TangelaVisual.drawDatas[i].Data.Draw(spriteBatch);
 				}
 			} finally {
 				Origins.shaderOroboros.DrawContents(renderTarget);

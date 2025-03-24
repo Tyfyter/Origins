@@ -25,7 +25,8 @@ using Origins.Graphics;
 namespace Origins.Items.Weapons.Magic {
 	public class Nerve_Flan : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
-			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 40, Nerve_Flan_P.tick_motion, true);
+			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 30, Nerve_Flan_P.tick_motion, true);
+			Item.useTime /= 3;
 			Item.damage = 34;
 			Item.mana = 14;
 			Item.knockBack = 3;
@@ -171,7 +172,8 @@ namespace Origins.Items.Weapons.Magic {
 				0,
 				center,
 				Vector2.One / Main.GameViewMatrix.Zoom,
-				SpriteEffects.None
+				SpriteEffects.None,
+				Main.screenPosition * 0.5f
 			);
 			return false;
 		}
