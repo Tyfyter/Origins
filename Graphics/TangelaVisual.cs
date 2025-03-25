@@ -15,14 +15,29 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Graphics {
 	public interface ITangelaHaver {
 		public int? TangelaSeed { get; set; }
 	}
+	class TangelaArmorShaderData() : ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/Tangela"), "Tangela"), ITangelaHaver {
+		private Asset<Texture2D> _uImage2 = ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin");
+		public int? TangelaSeed { get; set; }
+		public override void Apply(Entity entity, DrawData? drawData = null) {
+			if (drawData is DrawData data) {
+				TangelaVisual.drawDatas.Add(new(data, entity.whoAmI));
+			}
+			if (_uImage2 != null) {
+				Main.graphics.GraphicsDevice.Textures[2] = _uImage2.Value;
+				Main.graphics.GraphicsDevice.SamplerStates[2] = SamplerState.LinearWrap;
+				Shader.Parameters["uImageSize2"]?.SetValue(_uImage2.Size());
+			}
+			base.Apply(entity, drawData);
+		}
+	}
 	public static class TangelaVisual {
 		public static int ShaderID { get; private set; }
+		public static int FakeShaderID { get; private set; }
 		class ArmorShaderDataWithAnotherImage(Asset<Effect> shader, string passName) : ArmorShaderData(shader, passName) {
 			private Asset<Texture2D> _uImage2;
 			public override void Apply(Entity entity, DrawData? drawData = null) {
@@ -44,9 +59,16 @@ namespace Origins.Graphics {
 				ModContent.Request<Effect>("Origins/Effects/Tangela"),
 				"Tangela"
 			))
-			.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
-			.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
+				.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
+				.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise")
+			);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Krakram>());
+
+			GameShaders.Armor.BindShader(ModContent.ItemType<Nerve_Flan>(), new TangelaArmorShaderData()
+				.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"))
+			);
+			FakeShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Nerve_Flan>());
+
 			Filters.Scene.OnPostDraw += Scene_OnPostDraw;
 		}
 		static DateTime changeModeTime = DateTime.MinValue;
