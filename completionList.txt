@@ -81,7 +81,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#2, ^2) Brine Fiend !!!
+(#2?, ^2) Brine Fiend !!!
 (ᗢ) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -156,7 +156,7 @@ ENEMY NPCS:
 (#, ^2) Boulder Mimic !!!
 (^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
-(#, ^2) Catacomb Clearer !!!
+(#, ^2) Catacomb Clearer !!!? (limestone cave generation not yet designed)
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
