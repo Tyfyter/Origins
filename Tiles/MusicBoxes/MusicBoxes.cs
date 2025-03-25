@@ -421,4 +421,9 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
+	public class Music_Box_FU : Music_Box {
+		public override Color MapColor => new Color(146, 253, 250);
+		public override int MusicSlot => Origins.Music.Vol2.Fiberglass;
+		public override int DustType => DustID.Glass;
+	}
 }

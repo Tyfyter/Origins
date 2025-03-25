@@ -1861,6 +1861,7 @@ Tiles: {
 	// Defiled_Storage_Unit.MapEntry: Defiled Storage Unit
 	// Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
 	// Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
+	// Music_Box_FU: Music Box (Fiberglass Undergrowth)
 }
 
 MapObject: {

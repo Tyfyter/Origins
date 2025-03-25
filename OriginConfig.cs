@@ -685,7 +685,7 @@ namespace Origins {
 						if (!missingIngredients.TryGetValue(result, out HashSet<int> missing)) {
 							missingIngredients.Add(result, ingredients.ToHashSet());
 						} else {
-							foreach (var item in ingredients) {
+							foreach (int item in ingredients) {
 								missing.Add(item);
 							}
 						}

@@ -1236,7 +1236,7 @@ TILES:
 ($2) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
-(#, ^2) Music Box (Fiberglass Undergrowth) !!!
+(☻ (but it should probably look different when turned on)) Music Box (Fiberglass Undergrowth) !!!
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 ($2) Music Box (Riven Hive)
