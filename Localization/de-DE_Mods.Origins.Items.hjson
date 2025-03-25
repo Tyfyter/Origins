@@ -5707,3 +5707,8 @@ Ashen_Chest: {
 	// DisplayName: Ashen Chest
 	// Tooltip: Summons Ashen Mimic
 }
+
+Greater_Summoning_Potion: {
+	// DisplayName: Greater Summoning Potion
+	// Tooltip: ""
+}

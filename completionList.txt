@@ -1356,7 +1356,7 @@ CONSUMABLES:
 (^) Flask of Alkahest*
 (^) Flask of Black Bile*
 (^) Focus Potion°
-(#, ^2) Greater Summoning Potion !!!
+(☻) Greater Summoning Potion !!!
 (ᗢ) Latchkey
 (^) Mojo Flask*
 (^) Protean Potion*
