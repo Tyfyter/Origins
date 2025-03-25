@@ -55,7 +55,7 @@ namespace Origins.Items.Accessories {
 			Vector2 diff;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				projectile = Main.projectile[i];
-				if (projectile.active && (projectile.hostile || (Main.player[projectile.owner].hostile && Main.player[projectile.owner].team != player.team))) {
+				if (projectile.active && (projectile.hostile || (Main.player[projectile.owner].hostile && Main.player[projectile.owner].team != player.team)) && Amebic_Vial.canBeDeflected[projectile.type]) {
 					currentPos = projectile.Hitbox.ClosestPointInRect(player.MountedCenter);
 					diff = player.Hitbox.ClosestPointInRect(projectile.Center) - currentPos;
 					float dist = diff.LengthSquared();
@@ -196,7 +196,7 @@ namespace Origins.Items.Accessories {
 
 			Projectile.spriteDirection = Projectile.direction;
 			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (other.hostile && Projectile.Colliding(Projectile.Hitbox, other.Hitbox)) {
+				if (other.hostile && Amebic_Vial.canBeDeflected[other.type] && Projectile.Colliding(Projectile.Hitbox, other.Hitbox)) {
 					other.velocity = Vector2.Lerp(other.velocity, direction * 3.5f, 0.6f);
 				}
 			}

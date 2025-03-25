@@ -882,6 +882,7 @@ namespace Origins {
 			tileBlocksMinecartTracks = TileID.Sets.Factory.CreateBoolSet(false);
 			wallBlocksMinecartTracks = WallID.Sets.Factory.CreateBoolSet(false);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
+			Amebic_Vial.canBeDeflected = ProjectileID.Sets.Factory.CreateBoolSet(true);
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 		}

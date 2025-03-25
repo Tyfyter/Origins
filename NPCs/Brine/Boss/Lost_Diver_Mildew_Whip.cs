@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Felnum;
@@ -24,6 +25,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override string Texture => typeof(Mildew_Whip_P).GetDefaultTMLName();
 		public NPC Owner => Main.npc[(int)Projectile.ai[2]];
 		public override void SetStaticDefaults() {
+			Amebic_Vial.canBeDeflected[Type] = false;
 		}
 		public override void SetDefaults() {
 			Projectile.DefaultToWhip();
@@ -106,14 +108,14 @@ namespace Origins.NPCs.Brine.Boss {
 
 			Vector2 pos = list[0];
 
-			for (int i = 0; i < list.Count - 1; i++) {
+			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
 				Rectangle frame = new Rectangle(0, 0, 48, 28);
 				Vector2 origin = new Vector2(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
-				if (i == list.Count - 2) {
+				if (i == list.Count - 1) {
 					frame.Y = 112;
 				} else if (i > 10) {
 					frame.Y = 84;
@@ -124,7 +126,12 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 
 				Vector2 element = list[i];
-				Vector2 diff = list[i + 1] - element;
+				Vector2 diff;
+				if (i == list.Count - 1) {
+					diff = element - list[i - 1];
+				} else {
+					diff = list[i + 1] - element;
+				}
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
 				Color color = Lighting.GetColor(element.ToTileCoordinates());

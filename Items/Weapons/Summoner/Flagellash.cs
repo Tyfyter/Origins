@@ -127,9 +127,14 @@ namespace Origins.Items.Weapons.Summoner {
 			Vector2 origin = new Vector2(texture.Width / 2, 3);
 			int progress = -2;
 			Vector2 pos = list[0];
-			for (int i = 0; i < list.Count - 1; i++) {
+			for (int i = 0; i < list.Count; i++) {
 				Vector2 element = list[i];
-				Vector2 diff = list[i + 1] - element;
+				Vector2 diff;
+				if (i == list.Count - 1) {
+					diff = element - list[i - 1];
+				} else {
+					diff = list[i + 1] - element;
+				}
 				if (diff.HasNaNs()) {
 					continue;
 				}
@@ -138,7 +143,7 @@ namespace Origins.Items.Weapons.Summoner {
 				if (progress + dist >= texture.Width - 2) {
 					progress = 0;
 				}
-				if (i == list.Count - 2) {
+				if (i == list.Count - 1) {
 					progress = texture.Width - (int)dist;
 				}
 				Rectangle frame = new Rectangle(0, progress + 2, 6, (int)dist);

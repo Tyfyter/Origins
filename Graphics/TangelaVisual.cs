@@ -53,6 +53,10 @@ namespace Origins.Graphics {
 		public static bool DrawOver { get; private set; } = false;
 		internal static readonly List<TangelaDrawData> drawDatas = [];
 		private static void Scene_OnPostDraw() {
+			if (DateTime.Now > changeModeTime) {
+				DrawOver = Main.rand.NextBool(3, 5);
+				changeModeTime = DateTime.Now + TimeSpan.FromSeconds(Main.rand.Next(4, 11)) / (1 + DrawOver.ToInt());
+			}
 			if (drawDatas.Count <= 0) return;
 			if (DrawOver) {
 				try {
@@ -70,10 +74,6 @@ namespace Origins.Graphics {
 				}
 			}
 			drawDatas.Clear();
-			if (DateTime.Now > changeModeTime) {
-				DrawOver = Main.rand.NextBool(3, 5);
-				changeModeTime = DateTime.Now + TimeSpan.FromSeconds(Main.rand.Next(4, 11)) / (1 + DrawOver.ToInt());
-			}
 		}
 		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, Vector2 extraOffset = default) {
 			if (!tangelaHaver.TangelaSeed.HasValue) tangelaHaver.TangelaSeed = Main.rand.Next();

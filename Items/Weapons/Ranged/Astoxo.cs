@@ -15,6 +15,8 @@ using PegasusLib;
 using System;
 using Terraria.Audio;
 using System.Collections.Generic;
+using Origins.Items.Accessories;
+using Origins.Items.Weapons.Melee;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Astoxo : ModItem, ICustomWikiStat {
@@ -48,12 +50,12 @@ namespace Origins.Items.Weapons.Ranged {
 			return new Vector2(-8f, 0);
 		}
 		public static void DoEffect(Projectile projectile) {
-			const float max_dist = 46;
-			float floorDist = CollisionExt.Raymarch(projectile.Bottom, Vector2.UnitY, max_dist);
-			if (floorDist == max_dist) floorDist = 0;
+			const float max_dist = 64;
+			float floorDist = CollisionExt.Raymarch(projectile.Top, Vector2.UnitY, tile => !tile.HasSolidTile(), max_dist);
+			if (floorDist == max_dist) floorDist = projectile.height;
 			Projectile.NewProjectile(
 				projectile.GetSource_Death(),
-				projectile.Bottom + Vector2.UnitY * floorDist,
+				projectile.Top + Vector2.UnitY * floorDist,
 				projectile.velocity,
 				ModContent.ProjectileType<Astoxo_Lightning>(),
 				projectile.damage,
@@ -80,7 +82,23 @@ namespace Origins.Items.Weapons.Ranged {
 			if (Projectile.localAI[0] == 0) {
 				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(2), Projectile.Center);
 				SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds).WithVolume(2), Projectile.Center);
+				Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+					Projectile.Center, 5f, 3f, 12, 750f, -1f, nameof(Astoxo)
+				));
+				Collision.HitTiles(Projectile.position, Vector2.UnitY * 4, Projectile.width, 4);
 				Projectile.localAI[0] = Projectile.position.Y;
+				Projectile.localAI[1] = 0;
+				Rectangle checkBox = Projectile.Hitbox;
+				checkBox.Y += 1;
+				checkBox.Height = 1;
+				checkBox.Inflate(-8, 0);
+				foreach (Point tilePos in Collision.GetTilesIn(checkBox.TopLeft(), checkBox.BottomRight())) {
+					Tile tile = Framing.GetTileSafely(tilePos);
+					if (!tile.HasSolidTile() || tile.BlockType is BlockType.HalfBlock or BlockType.SlopeUpLeft or BlockType.SlopeUpRight) {
+						Projectile.localAI[1] = 1;
+						break;
+					}
+				}
 			}
 			if (positions is null) {
 				positions = [];
@@ -112,7 +130,10 @@ namespace Origins.Items.Weapons.Ranged {
 				oldPos[i] = Vector2.Lerp(start, end, i / (float)maxLength);
 				oldRot[i] = MathHelper.PiOver2;
 			}
-			_vertexStrip.PrepareStrip(oldPos, oldRot, _ => new Color(80, 204, 219, 0), _ => 32 * 5, -Main.screenPosition);
+			_vertexStrip.PrepareStrip(oldPos, oldRot, progress => {
+				if (progress == 0 && Projectile.localAI[1] == 1) return Color.Transparent;
+				return new Color(80, 204, 219, 0);
+			}, _ => 32 * 5, -Main.screenPosition);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			if (positions is null) return false;
