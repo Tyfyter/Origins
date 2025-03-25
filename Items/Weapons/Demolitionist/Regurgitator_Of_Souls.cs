@@ -2,12 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Regurgitator_Of_Souls : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -28,6 +30,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Zombie24.WithPitchRange(0.6f, 1f);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.RottenChunk, 10)
+			.AddIngredient(ItemID.DemoniteBar, 6)
+			.AddIngredient(ItemID.ShadowScale, 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player drawPlayer = drawInfo.drawPlayer;
@@ -68,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Corruption);
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Corruption);
 			if (Projectile.ai[0] == 0 && Projectile.TryGetOwner(out Player player) && (player.itemAnimation * 6) / player.itemAnimationMax > 2) {
 				Projectile.Center = (player.HandPosition ?? player.MountedCenter) + (Projectile.velocity.SafeNormalize(default) * 26) - Projectile.velocity;
 			} else {

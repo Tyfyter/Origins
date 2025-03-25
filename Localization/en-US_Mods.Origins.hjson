@@ -1638,6 +1638,9 @@ Projectiles: {
 	Defiled_Krusher_P1.DisplayName: Defiled Krusher
 	Defiled_Krusher_P2.DisplayName: Defiled Krusher
 	Defiled_Krusher_P3.DisplayName: Defiled Krusher
+	Impetus_P.DisplayName: Impetus P
+	Impetus_Splut_P.DisplayName: Impetus Splut P
+	Impetus_Shrapnel.DisplayName: Impetus Shrapnel
 }
 
 Prefixes: {

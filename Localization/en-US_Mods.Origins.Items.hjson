@@ -5727,3 +5727,8 @@ Fake_Ashen_Altar_Item: {
 	DisplayName: Ashen Altar
 	Tooltip: A placeable Ashen Altar. Cannot be mined to get hardmode ores
 }
+
+Impetus: {
+	DisplayName: Impetus
+	Tooltip: ""
+}

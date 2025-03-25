@@ -964,7 +964,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(#, ^2) Impetus !!!
+(☻) Impetus !!!
 (^) Internal Combustionfish*
 (^) Link Grenade*
 (^) Matrix*
