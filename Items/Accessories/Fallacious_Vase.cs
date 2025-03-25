@@ -19,7 +19,9 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.OriginPlayer().dashVase = true;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.dashVase = true;
+			originPlayer.dashVaseVisual = !hideVisual;
 		}
 
 		private static void On_WorldGen_SpawnThingsFromPot(On_WorldGen.orig_SpawnThingsFromPot orig, int i, int j, int x2, int y2, int style) {

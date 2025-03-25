@@ -167,7 +167,7 @@ ENEMY NPCS:
 (^) Crimbrain*
 (X) Crying Creeper
 (#, ^2) Defiled Broadcaster
-(#2, ^2, ᗢ) Defiled Cyclops* (bone latcher arm)
+(☻) Defiled Cyclops* (bone latcher arm)
 (^) Defiled Digger*
 (#2, ^2, ᗢ) Defiled Krusher* !!! (new animation, boulder throw)
 (^) Defiled Mite*
@@ -411,7 +411,7 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus*
-(#2/3, ^2) Fallacious Vase !!! (needs orb appearance, left dash bounce)
+(☻) Fallacious Vase !!! (needs orb appearance, left dash bounce)
 (^) Feather Cape
 (^) Feathery Crest
 (^) Fleshy Figurine*

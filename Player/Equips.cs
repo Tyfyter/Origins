@@ -494,13 +494,13 @@ namespace Origins {
 			return true;
 		}
 		public override void UpdateDyes() {
-			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
+			if (dashVaseVisual) {
 				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-					if (Player.armor[i].ModItem is Ravel) {
-						Player.cMount = Player.dye[i].dye;
+					if (Player.armor[i].ModItem is Fallacious_Vase) {
+						dashVaseDye = Player.dye[i].dye;
 					}
-					if (Player.armor[i + 10].ModItem is Ravel) {
-						Player.cMount = Player.dye[i].dye;
+					if (Player.armor[i + 10].ModItem is Fallacious_Vase) {
+						dashVaseDye = Player.dye[i].dye;
 						break;
 					}
 				}

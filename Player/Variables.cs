@@ -280,6 +280,9 @@ namespace Origins {
 		public List<(int type, Range duration)> dashHitDebuffs = [];
 		public bool dashVase = false;
 		public int vaseDashDirection = 0;
+		public bool dashVaseVisual = false;
+		public int dashVaseDye = 0;
+		public float dashVaseFrameCount = 0;
 		public bool goldenLotus = false;
 		public Item goldenLotusItem = null;
 		public int goldenLotusProj = -1;
@@ -623,6 +626,7 @@ namespace Origins {
 			akaliegis = false;
 			dashHitDebuffs.Clear();
 			dashVase = false;
+			dashVaseDye = 0;
 			goldenLotus = false;
 
 			trapCharm = false;

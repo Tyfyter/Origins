@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Layers;
 using PegasusLib;
 using System;
 using Terraria;
@@ -27,8 +28,12 @@ namespace Origins {
 				}
 			}
 			if (hideAllLayers) {
-				foreach (var layer in PlayerDrawLayerLoader.Layers) {
+				foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.Layers) {
 					layer.Hide();
+				}
+			} else if (dashVaseVisual) {
+				foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.Layers) {
+					if (layer is not Fallacious_Vase_Dash_Layer) layer.Hide();
 				}
 			}
 		}

@@ -311,9 +311,14 @@ namespace Origins {
 						Player.velocity.Y = Player.gravity * 8;
 					}
 				}
-				if (Player.dashDelay > 0 && vaseDashDirection != 0 && Player.velocity.X * vaseDashDirection < vaseDashSpeed) {
-					Player.velocity.X = vaseDashSpeed * vaseDashDirection;
+				if (Player.dashDelay > 0 && vaseDashDirection != 0) {
+					if (Player.velocity.X * vaseDashDirection < vaseDashSpeed) Player.velocity.X = vaseDashSpeed * vaseDashDirection;
+				} else {
+					dashVaseVisual = false;
 				}
+			} else {
+				vaseDashDirection = 0;
+				dashVaseVisual = false;
 			}
 			if (rebreather && Player.breath < Player.breathMax) {
 				if (Player.breathCD == 0 || rebreatherCounting) {
