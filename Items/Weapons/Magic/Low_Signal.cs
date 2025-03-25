@@ -16,10 +16,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
+			Origins.AddGlowMask(this);
 		}
-		static short glowmask;
 		public override void SetDefaults() {
 			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
@@ -40,7 +38,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
 			Item.autoReuse = true;
-			Item.glowMask = glowmask;
 		}
 	}
 	public class Low_Signal_P : ModProjectile {
