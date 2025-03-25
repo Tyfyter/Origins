@@ -68,6 +68,8 @@ namespace Origins.NPCs.TownNPCs {
 			//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
 			InvalidateNPCHousing.NPCTypeIgnoresAllEvil.Add(Type);
+			BetterDialogue.BetterDialogue.SupportedNPCs.Add(Type);
+			BetterDialogue.BetterDialogue.RegisterShoppableNPC(Type);
 		}
 		public override void SetDefaults() {
 			NPC.width = 18;

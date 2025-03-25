@@ -400,3 +400,47 @@ Tax_Collector: {
 		Complete: Thank you, now I suppose it's time to hold up my end of the bargain.
 	}
 }
+
+Brine_Fiend: {
+	Quest_Menu: "[c/ff0000:Hey, Chee, this one needs text]"
+
+	Alkaliegis: {
+		Name: Basic Brewery
+		Journal:
+			'''
+			{$Mods.Origins.Quests.Brine_Fiend.Alkaliegis.Name}
+			Client: [npcname:Origins/Brine_Fiend]
+								
+			'{$Mods.Origins.Quests.Brine_Fiend.Alkaliegis.Inquire}'
+								
+			- [qs{1}:Collect <itemname:TeleportationPotion>]
+			- [qs{0}:Collect <itemname:Origins/Greater_Summoning_Potion>]
+			- [qs{2}:Collect <itemname:TitanPotion>]
+			Unlocks: [i:Origins/Akaliegis]
+			'''
+		Inquire: "[player:_], can you help me? I'm in the mood for something 'experimental', but I don't know how to get my hands on the ingredients I need, so something artificial will do. It's simple. I need a [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion] and [itemname:TitanPotion]. Can you get those for me so I can make some new brews with chemicals I haven't tried yet?"
+		Start: Sick. Now go away, I'm busy.
+		ReadyToComplete: "[c/ff0000:This one too]"
+		Complete: Well, that wasn't long. Sorry for shoo-ing you, I wasn't in the mood at that time. As the old man likes the say, \"I embody appreciation.\" Anyhoo, I have some weird shield-thingy I found in the Brine Pool the other day. I'd give it to you for free, but let's be honest, you're the only person keeping Terraria's economy running these days
+	}
+
+	Ancient_Brine_Music_Box: {
+		Name: Get Freaky
+		Journal:
+			'''
+			{$Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.Name}
+			Client: [npcname:Origins/Brine_Fiend]
+								
+			'{$Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.Inquire}'
+								
+			- [qs{0}:Collect <itemname:Origins/Fervor_Potion>]
+			- [qs{1}:Collect <itemname:LovePotion>]
+			- [qs{2}:Collect <itemname:MagicPowerPotion>]
+			Unlocks: [i:Origins/Ancient_Music_Box_BP_Item]
+			'''
+		Inquire: Oh, [player:_]. Man/woman of the hour, I need you to go play fetch for me again. This time around I need a [itemname:Origins/Fervor_Potion], [itemname:LovePotion] and [itemname:MagicPowerPotion]. Get those and I think I can conjure up something fun for [npcname:PartyGirl]'s birthday coming up. It'll be a surprise!
+		Start: Great! She likes surprises, right?
+		ReadyToComplete: "[c/ff0000:Y éste]"
+		Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it/
+	}
+}
