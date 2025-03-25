@@ -1,5 +1,4 @@
 ﻿using AltLibrary.Core;
-using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Consumables.Broths;
@@ -17,12 +16,12 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
@@ -111,6 +110,9 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Sharp_Broth>()
 			.Add<Minty_Broth>()
 			.Register();
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Boomboom>()));
 		}
 		public override string GetChat() {
 			WeightedRandom<string> chat = new();
