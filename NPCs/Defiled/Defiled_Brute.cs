@@ -14,6 +14,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Journal;
 using Origins.Items.Other.Consumables;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using PegasusLib;
+using System.IO;
+using Origins.Buffs;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Brute : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
@@ -22,7 +27,7 @@ namespace Origins.NPCs.Defiled {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.08f;
-		public static float SpeedMult => 0.85f;
+		public float SpeedMult => NPC.aiAction == 0 ? 0.85f : (NPC.frame.Y / NPC.frame.Height == 10 ? 2f : 0.15f);
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
 		public string EntryName => "Origins/" + typeof(Defiled_Krusher_Entry).Name;
@@ -89,71 +94,66 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			NPC.TargetClosest();
-			/*if(npc.localAI[3]<=0&&npc.targetRect.Intersects(new Rectangle((int)npc.position.X-(npc.direction == 1 ? 70 : 52), (int)npc.position.Y, 178, npc.height))) {
-				if(!attacking) {
-					npc.frame = new Rectangle(0, 680, 182, 170);
-					npc.frameCounter = 0;
-					npc.velocity.X*=0.25f;
-				}
-				attacking = true;
-			}
-			if(npc.localAI[3]>0)npc.localAI[3]--;*/
 			if (NPC.HasPlayerTarget) {
 				NPC.spriteDirection = NPC.direction;
-			}
-			/*if(attacking) {
-				if(++npc.frameCounter>7) {
-					//add frame height to frame y position and modulo by frame height multiplied by walking frame count
-					if(npc.frame.Y>=1018) {
-						if(npc.frameCounter>19) {
-							npc.frame = new Rectangle(0, 0, 182, 170);
-							npc.frameCounter = 0;
-							attacking = false;
-							npc.localAI[3] = 60;
+				if (Main.netMode != NetmodeID.MultiplayerClient) {
+					if (NPC.aiAction == 0) {
+						Vector2 diff = NPC.GetTargetData().Center - NPC.Center;
+						float dist = diff.Length();
+						if (dist > 192 && ++NPC.localAI[0] > 60) {
+							NPC.localAI[0] = 0;
+							NPC.aiAction = 1 + Main.rand.Next(3);
+							NPC.localAI[1] = 1;
+							NPC.netUpdate = true;
 						}
-					} else {
-						npc.frame = new Rectangle(0, (npc.frame.Y+170)%1190, 182, 170);
-						npc.frameCounter = 0;
+					} else if (NPC.localAI[1] > 0 && ++NPC.localAI[1] >= 5 * 7) {
+						NPC.localAI[1] = 0;
+						int projType;
+						switch (NPC.aiAction) {
+							default:
+							projType = ModContent.ProjectileType<Defiled_Krusher_P1>();
+							break;
+							case 2:
+							projType = ModContent.ProjectileType<Defiled_Krusher_P2>();
+							break;
+							case 3:
+							projType = ModContent.ProjectileType<Defiled_Krusher_P3>();
+							break;
+						}
+						Vector2 pos = NPC.Center + new Vector2(4 * NPC.direction, -52);
+						Vector2 velocity;
+						const float speed = 12;
+						if (GeometryUtils.AngleToTarget(NPC.GetTargetData().Center - pos, speed, 0.1f) is float angle) {
+							velocity = angle.ToRotationVector2() * speed;
+						} else {
+							float val = 0.70710678119f;
+							velocity = new Vector2(val * NPC.direction, -val) * speed;
+						}
+						Projectile.NewProjectile(
+							NPC.GetSource_FromAI(),
+							pos,
+							velocity,
+							projType,
+							30,
+							8
+						);
 					}
 				}
-				if (npc.collideY) {
-					npc.velocity.X*=0.5f;
-				}
-			//}else{*/
+			}
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= SpeedMult;
-			//}
 		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.aiAction == 0) {
 				NPC.DoFrames(7, ..5);
-			}
-		}
-		public override void PostAI() {
-			//if(!attacking) {
-			//if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=SpeedMult;
-			//npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
-			//}
-		}
-		/*public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
-			bool flip = npc.direction == 1;
-			//Rectangle armHitbox = new Rectangle((int)npc.position.X+(flip?0:108), (int)npc.position.Y, 70, npc.height);
-			bool h = victimHitbox.Intersects(npcRect);
-			if(attacking) {
-				if(npc.frame.Y>=1018) {
-					npcRect = new Rectangle(npcRect.Center.X+(npc.direction*63), npcRect.Y, 52, npc.height);
-					if(npc.frameCounter<9&&victimHitbox.Intersects(npcRect)) {
-						damageMultiplier = 3;
-						knockbackMult = 2f;
-						return;
-					}
+			} else {
+				if (NPC.frame.Y / NPC.frame.Height < 5) NPC.frame.Y = NPC.frame.Height * 5;
+				NPC.DoFrames(7, 5..(Main.npcFrameCount[Type] + 1));
+				if (NPC.frame.Y / NPC.frame.Height == Main.npcFrameCount[Type]) {
+					NPC.aiAction = 0;
+					NPC.frame.Y = 0;
 				}
 			}
-			/*if(victimHitbox.Intersects(armHitbox)) {
-				npcRect = armHitbox;
-				return;
-			}
-			npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
-		}*/
+		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
 			modifiers.Knockback.Flat -= 1.2f;
 		}
@@ -172,5 +172,80 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
 		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((byte)NPC.aiAction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.aiAction = reader.ReadByte();
+		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Texture2D texture = null;
+			switch (NPC.aiAction) {
+				case 1:
+				texture = TextureAssets.Projectile[ModContent.ProjectileType<Defiled_Asphyxiator_P1>()].Value;
+				break;
+				case 2:
+				texture = TextureAssets.Projectile[ModContent.ProjectileType<Defiled_Asphyxiator_P2>()].Value;
+				break;
+				case 3:
+				texture = TextureAssets.Projectile[ModContent.ProjectileType<Defiled_Asphyxiator_P3>()].Value;
+				break;
+			}
+			if (texture is null) return;
+			Vector2? pos = null;
+			float rot = 0;
+			switch (NPC.frame.Y / NPC.frame.Height) {
+				case 6:
+				pos = new(17, 24);
+				break;
+				case 7:
+				pos = new(21, 17);
+				break;
+				case 8:
+				pos = new(-10, -32);
+				break;
+				case 9:
+				pos = new(-4, -52);
+				break;
+			}
+			if (pos is Vector2 offset) {
+				offset.X *= NPC.spriteDirection;
+				spriteBatch.Draw(
+					texture,
+					NPC.Center + offset - screenPos,
+					null,
+					drawColor,
+					rot,
+					texture.Size() * 0.5f,
+					1,
+					SpriteEffects.None,
+				0);
+			}
+		}
 	}
+	public class Defiled_Krusher_P1 : ModProjectile {
+		public override string Texture => "Origins/NPCs/Defiled/Defiled_Asphyxiator_P" + GetType().Name[^1];
+		public override void SetStaticDefaults() {
+			AssimilationLoader.AddProjectileAssimilation<Defiled_Assimilation>(Type, 0.04f);
+		}
+		public override void SetDefaults() {
+			Projectile.width = Projectile.height = 36;
+			Projectile.timeLeft = 180;
+			Projectile.hostile = true;
+		}
+		public override void AI() {
+			Projectile.rotation += Projectile.velocity.X * 0.04f;
+			Projectile.velocity.Y += 0.1f;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			Projectile.Kill();
+		}
+		public override void OnKill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+			for (int i = 0; i < 5; i++)
+				Origins.instance.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height)), Projectile.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
+		}
+	}
+	public class Defiled_Krusher_P2 : Defiled_Krusher_P1 { }
+	public class Defiled_Krusher_P3 : Defiled_Krusher_P1 { }
 }

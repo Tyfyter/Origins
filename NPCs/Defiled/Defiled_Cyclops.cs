@@ -152,11 +152,9 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(Mana);
 			writer.Write(NPC.localAI[3]);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
-			Mana = reader.ReadSingle();
 			NPC.localAI[3] = reader.ReadSingle();
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -281,6 +279,7 @@ namespace Origins.NPCs.Defiled {
 		public NPC Owner => Main.npc[(int)Projectile.ai[2]];
 		public override void SetStaticDefaults() {
 			Amebic_Vial.canBeDeflected[Type] = false;
+			AssimilationLoader.AddProjectileAssimilation<Defiled_Assimilation>(Type, 0.04f);
 		}
 		public override void SetDefaults() {
 			Projectile.DefaultToWhip();

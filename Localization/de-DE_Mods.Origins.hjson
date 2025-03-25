@@ -1635,6 +1635,9 @@ Projectiles: {
 	// Astoxo_Lightning.DisplayName: Astoxo Lightning
 	// Nerve_Flan_P.DisplayName: Nerve Flan P
 	// Defiled_Cyclops_Bone_Latcher.DisplayName: Defiled Cyclops Bone Latcher
+	// Defiled_Krusher_P1.DisplayName: Defiled Krusher
+	// Defiled_Krusher_P2.DisplayName: Defiled Krusher
+	// Defiled_Krusher_P3.DisplayName: Defiled Krusher
 }
 
 Prefixes: {

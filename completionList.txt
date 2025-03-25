@@ -169,7 +169,7 @@ ENEMY NPCS:
 (#, ^2) Defiled Broadcaster
 (☻) Defiled Cyclops* (bone latcher arm)
 (^) Defiled Digger*
-(#2, ^2, ᗢ) Defiled Krusher* !!! (new animation, boulder throw)
+(☻) Defiled Krusher* !!! (new animation, boulder throw)
 (^) Defiled Mite*
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
