@@ -58,6 +58,7 @@ namespace Origins.World.BiomeData {
 			public const float Snek = 9000f;
 			public const float Crawdad = 9000f;
 			public const float Airsnatcher = 8000f;
+			public const float Dead_Guy = 1000f;
 			public override string Name => $"{nameof(Brine_Pool)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.Environment;
