@@ -65,7 +65,7 @@ namespace Origins.Graphics {
 					for (int i = 0; i < drawDatas.Count; i++) {
 						(DrawData data, int seed, Vector2 extraOffset) = drawDatas[i];
 						FastRandom random = new(seed);
-						shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) + extraOffset / 256);
+						shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
 						shader.Apply(null, data);
 						data.Draw(Main.spriteBatch);
 					}
@@ -94,7 +94,7 @@ namespace Origins.Graphics {
 				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
 				(DrawData data, int seed, _) = drawDatas[^1];
 				FastRandom random = new(seed);
-				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) + extraOffset / 256);
+				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
 				shader.Apply(null, data);
 				data.Draw(Main.spriteBatch);
 			} finally {

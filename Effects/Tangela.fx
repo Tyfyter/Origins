@@ -24,9 +24,9 @@ float2 uLegacyArmorSheetSize;
 float4 Tangela(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float3 puble = float3(0.24, 0.00, 0.44);
 	float4 color = tex2D(uImage0, coords);
-	float2 frameCoords = coords * uImageSize0 - uSourceRect.xy;
-	float perlin = tex2D(uImage2, frameCoords / uImageSize2 + uOffset).r;
-	float4 noise = tex2D(uImage1, frameCoords / uImageSize1 + uOffset);
+	float2 frameCoords = coords * uImageSize0 + uOffset - uSourceRect.xy;
+	float perlin = tex2D(uImage2, frameCoords / uImageSize2).r;
+	float4 noise = tex2D(uImage1, frameCoords / uImageSize1);
 	perlin = (perlin - 0.5) * 2;
 	perlin = (pow(abs(perlin), 0.8) * sign(perlin)) / 2 + 0.5;
 	

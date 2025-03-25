@@ -145,7 +145,7 @@ namespace Origins.Items.Weapons.Magic {
 				center,
 				Vector2.One / Main.GameViewMatrix.Zoom,
 				SpriteEffects.None,
-				Main.screenPosition * 0.5f
+				Main.screenPosition
 			);
 			return false;
 		}
