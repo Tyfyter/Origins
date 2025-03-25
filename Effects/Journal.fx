@@ -26,9 +26,17 @@ float4 Drawing(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 
 	tex2D(uImage0, coords + pixel * float2(-1, 1)) + tex2D(uImage0, coords + pixel * float2(0, 1)) + tex2D(uImage0, coords + pixel * float2(1, 1));
 	return float4(uColor, 1) * pow((abs(value.r) + abs(value.g) + abs(value.b) + value.a * 3) / 6, uSaturation) * (textureHere.a + 1) * 0.5;
 }
+float4 LightnessToTransparency(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 color = tex2D(uImage0, coords);
+	float median = (min(color.r, min(color.g, color.b)) + max(color.r, max(color.g, color.b))) / 2;
+	return float4(0, 0, 0, 1 - median) * color.a;
+}
 
 technique Default {
 	pass Drawing {
 		PixelShader = compile ps_3_0 Drawing();
+	}
+	pass LightnessToTransparency {
+		PixelShader = compile ps_3_0 LightnessToTransparency();
 	}
 }

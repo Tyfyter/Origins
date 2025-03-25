@@ -22,7 +22,7 @@ namespace Origins.NPCs.Defiled {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.08f;
-		public const float speedMult = 0.75f;
+		public static float SpeedMult => 0.85f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
 		public string EntryName => "Origins/" + typeof(Defiled_Krusher_Entry).Name;
@@ -30,7 +30,7 @@ namespace Origins.NPCs.Defiled {
 			public override string TextKey => "Defiled_Krusher";
 		}
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 4;
+			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
@@ -82,7 +82,7 @@ namespace Origins.NPCs.Defiled {
 		public override bool PreAI() {
 			if (Main.rand.NextBool(1000)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(0.5f, 0.75f), NPC.Center);
 			//if(!attacking) {
-			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;
+			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= SpeedMult;
 			//npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
 			//}
 			return true;
@@ -120,13 +120,12 @@ namespace Origins.NPCs.Defiled {
 					npc.velocity.X*=0.5f;
 				}
 			//}else{*/
-			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
+			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= SpeedMult;
 			//}
 		}
 		public override void FindFrame(int frameHeight) {
-			if (++NPC.frameCounter > 9) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 62) % 248, 74, 60);
-				NPC.frameCounter = 0;
+			if (NPC.aiAction == 0) {
+				NPC.DoFrames(7, ..5);
 			}
 		}
 		public override void PostAI() {
@@ -155,6 +154,9 @@ namespace Origins.NPCs.Defiled {
 			}
 			npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
 		}*/
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
+			modifiers.Knockback.Flat -= 1.2f;
+		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));

@@ -29,18 +29,27 @@ namespace Origins.UI {
 				size = default;
 				if (image is null) return false;
 				size = image.Size() * Scale;
-				if (options.Sketch) shaderOroboros.Capture();
-				spriteBatch?.Draw(image.Value, position, null, options.Sketch ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
-				if (options.Sketch) {
+				if (options.Shader != JournalImageShader.None) shaderOroboros.Capture();
+				spriteBatch?.Draw(image.Value, position, null, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+				switch (options.Shader) {
+					case JournalImageShader.Sketch:
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
 					Origins.journalDrawingShader.UseColor(color);
 					shaderOroboros.Stack(Origins.journalDrawingShader);
 					shaderOroboros.Release();
+					break;
+
+					case JournalImageShader.Transparent:
+					shaderOroboros.Stack(Origins.journalTransparentShader);
+					shaderOroboros.Release();
+					break;
 				}
 				return true;
 			}
 		}
-		public record struct Options(bool Sketch = false, float Sharpness = 1, Color? Color = null, float Scale = 1f);
+		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color? Color = null, float Scale = 1f) {
+			public readonly bool Sketch => Shader == JournalImageShader.Sketch;
+		}
 		record struct SnippetOption(string Name, [StringSyntax(StringSyntaxAttribute.Regex)] string Data, Action<string> Action) {
 			public readonly string Pattern => Name + Data;
 			public static SnippetOption CreateColorOption(string name, Action<Color> setter) {
@@ -82,10 +91,16 @@ namespace Origins.UI {
 			ParseOptions(options,
 				new SnippetOption("sc", "[\\d\\.]+", match => settings.Scale = float.Parse(match)),
 				new SnippetOption("s", "[\\d\\.]+", match => settings.Sharpness = float.Parse(match)),
-				new SnippetOption("d", "", match => settings.Sketch = true),
+				new SnippetOption("d", "", match => settings.Shader = JournalImageShader.Sketch),
+				new SnippetOption("t", "", match => settings.Shader = JournalImageShader.Transparent),
 				SnippetOption.CreateColorOption("c", value => settings.Color = value)
 			);
 			return new Image_Snippet(text, settings);
 		}
+	}
+	public enum JournalImageShader {
+		None,
+		Sketch,
+		Transparent
 	}
 }

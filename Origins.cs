@@ -51,6 +51,7 @@ using Origins.Items.Other;
 using CalamityMod.Projectiles.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.TownNPCs;
+using Origins.Items.Other.Testing;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -119,6 +120,7 @@ namespace Origins {
 		public static MiscShaderData rasterizeShader;
 		public static ArmorShaderData amebicProtectionShader;
 		public static ArmorShaderData journalDrawingShader;
+		public static ArmorShaderData journalTransparentShader;
 		public static HairShaderData amebicProtectionHairShader;
 		public static ArmorShaderData coordinateMaskFilter;
 		public static ArmorShaderData tileOutlineShader;
@@ -449,6 +451,9 @@ namespace Origins {
 
 				journalDrawingShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "Drawing");
 				GameShaders.Armor.BindShader(MC.ItemType<Journal_Item>(), journalDrawingShader);
+
+				journalTransparentShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "LightnessToTransparency");
+				GameShaders.Armor.BindShader(MC.ItemType<Framing_Tester>(), journalTransparentShader);
 
 				TangelaVisual.LoadShader();
 

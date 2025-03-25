@@ -51,7 +51,7 @@ namespace Origins.Graphics {
 		}
 		static DateTime changeModeTime = DateTime.MinValue;
 		public static bool DrawOver { get; private set; } = false;
-		internal static readonly List<TangelaDrawData> drawDatas = [];
+		public static readonly List<TangelaDrawData> drawDatas = [];
 		private static void Scene_OnPostDraw() {
 			if (DateTime.Now > changeModeTime) {
 				DrawOver = Main.rand.NextBool(3, 5);

@@ -9,6 +9,11 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI.Chat;
+using CalamityMod.Projectiles.Magic;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
+using Terraria.Utilities;
+using Origins.Graphics;
 
 namespace Origins.UI {
 	public class Journal_Portrait_Handler : ITagHandler {
@@ -49,15 +54,42 @@ namespace Origins.UI {
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 				Main.spriteBatch.Begin();
-				if (options.Sketch) {
+				switch (options.Shader) {
+					case JournalImageShader.Sketch:
 					shaderOroboros.Capture();
 					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
 					Origins.journalDrawingShader.UseColor(Color);
 					shaderOroboros.Stack(Origins.journalDrawingShader);
 					shaderOroboros.Release();
-				} else {
+					break;
+
+					case JournalImageShader.Transparent:
+					shaderOroboros.Capture();
 					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
+					shaderOroboros.Stack(Origins.journalTransparentShader);
+					shaderOroboros.Release();
+					break;
+
+					default:
+					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
+					break;
+				}
+				if (TangelaVisual.drawDatas.Count > 0) {
+					try {
+						Main.spriteBatch.Restart(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+						ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(TangelaVisual.ShaderID, Main.LocalPlayer);
+						for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
+							(DrawData data, int seed, Vector2 extraOffset) = TangelaVisual.drawDatas[i];
+							FastRandom random = new(seed);
+							shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
+							shader.Apply(null, data);
+							data.Draw(Main.spriteBatch);
+						}
+					} finally {
+						Main.spriteBatch.Restart();
+					}
+					TangelaVisual.drawDatas.Clear();
 				}
 				Main.spriteBatch.End();
 				if (wasSpritebatchRunning) {
@@ -82,7 +114,9 @@ namespace Origins.UI {
 				Main.QueueMainThreadAction(() => renderTarget?.Dispose());
 			}
 		}
-		public record struct Options(bool Sketch = false, float Sharpness = 1, Color Color = default, float Width = 230f, float Height = 112f);
+		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color Color = default, float Width = 230f, float Height = 112f) {
+			public readonly bool Sketch => Shader == JournalImageShader.Sketch;
+		}
 		record struct SnippetOption(string Name, [StringSyntax(StringSyntaxAttribute.Regex)] string Data, Action<string> Action) {
 			public readonly string Pattern => Name + Data;
 			public static SnippetOption CreateColorOption(string name, Action<Color> setter) {
@@ -125,7 +159,8 @@ namespace Origins.UI {
 				new SnippetOption("w", "[\\d\\.]+", match => settings.Width = float.Parse(match)),
 				new SnippetOption("h", "[\\d\\.]+", match => settings.Height = float.Parse(match)),
 				new SnippetOption("s", "[\\d\\.]+", match => settings.Sharpness = float.Parse(match)),
-				new SnippetOption("d", "", match => settings.Sketch = true),
+				new SnippetOption("d", "", match => settings.Shader = JournalImageShader.Sketch),
+				new SnippetOption("t", "", match => settings.Shader = JournalImageShader.Transparent),
 				SnippetOption.CreateColorOption("c", value => settings.Color = value)
 			);
 			return new Journal_Portrait_Snippet(text, settings);
