@@ -545,14 +545,28 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
 		}
 	}
-	public class Defiled_Key : Dawn_Key { }
+	public class Defiled_Key : Dawn_Key {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
+		}
+	}
 	public class Dusk_Key : Dawn_Key { }
 	public class Hell_Key : Dawn_Key { }
 	public class Mushroom_Key : Dawn_Key { }
 	public class Ocean_Key : Dawn_Key { }
 	public class Riven_Key : Dawn_Key {
 		public override bool HasGlowmask => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
+		}
 	}
-	public class Brine_Key : Dawn_Key { }
+	public class Brine_Key : Dawn_Key {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Brine_Dungeon_Chest_Item>();
+		}
+	}
 	#endregion
 }

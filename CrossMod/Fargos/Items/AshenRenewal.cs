@@ -2,7 +2,7 @@
 using Origins.Items.Weapons.Ammo;
 using Origins.World;
 
-namespace Origins.CrossMod.Items.Fargos {
+namespace Origins.CrossMod.Fargos.Items {
 	public class AshenRenewal : TORenewals<Orange_Solution, AshenNukeProj> {
 		public AshenRenewal() : base() { }
 	}

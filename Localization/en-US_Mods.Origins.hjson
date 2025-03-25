@@ -38,6 +38,7 @@ RecipeGroups: {
 	GemStaves: Any Gem Staff
 	EvilBoomerangs: Any Evil Boomerang
 	EvilGunMagazines: Any Evil Gun Magazine
+	AnnyBanner: Any {0} Banner
 }
 
 Status_Messages: {
@@ -1862,6 +1863,9 @@ Tiles: {
 	Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
 	Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
 	Music_Box_FU: Music Box (Fiberglass Undergrowth)
+	Fake_Ashen_Altar.MapEntry: Ashen Altar
+	Fake_Defiled_Altar.MapEntry: Defiled Altar
+	Fake_Riven_Altar.MapEntry: Riven Altar
 }
 
 MapObject: {

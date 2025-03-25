@@ -6,21 +6,14 @@ using Terraria.ModLoader;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
-//using ThoriumMod.Items;
 using System.Reflection;
-//using ThoriumMod.Projectiles.Bard;
-using Microsoft.Xna.Framework;
 using Origins.Tiles;
 using Origins.NPCs.MiscE;
 using MonoMod.Cil;
-using Microsoft.Xna.Framework.Input;
 using Terraria.Localization;
 using Origins.Dev;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using ThoriumMod;
-using System.Reflection.Emit;
-using Terraria.DataStructures;
 using Mono.Cecil.Cil;
 using Mono.Cecil;
 using Origins.Items;
@@ -28,7 +21,6 @@ using Origins.Items.Other.Consumables;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Riven.World_Cracker;
 using AltLibrary.Common.Systems;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using AltLibrary.Common.AltBiomes;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Tiles.BossDrops;
@@ -42,7 +34,17 @@ using ThoriumMod.Items.Darksteel;
 using Origins.Items.Accessories;
 using Origins.Buffs;
 using Origins.NPCs.Brine.Boss;
-using Origins.NPCs.TownNPCs;
+using Origins.Tiles.Riven;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Endowood;
+using Origins.Tiles.Marrowick;
+using Origins.Tiles.Brine;
+using Origins.CrossMod.MagicStorage.Tiles;
+using Origins.Items.Materials;
+using Origins.NPCs.Defiled;
+using Origins.NPCs.Brine;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Magic;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -415,6 +417,11 @@ namespace Origins {
 		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
+			if (instance.fargosMutant is not null) AddFargosRecipes();
+		}
+		public static void AddRecipeGroups() {
+			if (ModLoader.TryGetMod("MagicStorage", out _)) AddMagicStorageGroups();
+			if (instance.fargosMutant is not null) AddFargosGroups();
 		}
 		public void Unload() {
 			instance = null;
@@ -579,9 +586,84 @@ namespace Origins {
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
+
+			Recipe.Create(ModContent.ItemType<Brine_Dungeon_Chest_Item>(), 10)
+				.AddIngredient<Brine_Key>()
+				.AddIngredient(ItemID.Chest, 10)
+				.AddTile(TileID.Anvils)
+				.Register();
+
+			Recipe.Create(ModContent.ItemType<Defiled_Dungeon_Chest_Item>(), 10)
+				.AddIngredient<Defiled_Key>()
+				.AddIngredient(ItemID.Chest, 10)
+				.AddTile(TileID.Anvils)
+				.Register();
+
+			Recipe.Create(ModContent.ItemType<Riven_Dungeon_Chest_Item>(), 10)
+				.AddIngredient<Riven_Key>()
+				.AddIngredient(ItemID.Chest, 10)
+				.AddTile(TileID.Anvils)
+				.Register();
 		}
-		[JITWhenModsEnabled("Fargowiltas")]
-		static void SetupFargos() {
+		static void AddFargosRecipes() {
+			Recipe.Create(ModContent.ItemType<Brine_Key>())
+				.AddRecipeGroup("Origins:AnyBrineBanner", 10)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier);
+			Recipe.Create(ModContent.ItemType<Defiled_Key>())
+				.AddIngredient(Item.NPCtoBanner(ModContent.NPCType<Defiled_Banner_NPC>()), 10)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier);
+			Recipe.Create(ModContent.ItemType<Riven_Key>())
+				.AddRecipeGroup("Origins:AnyRivenBanner", 10)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier);
+
+			Recipe.Create(ModContent.ItemType<The_Foot>())
+				.AddIngredient(ModContent.ItemType<Brine_Key>())
+				.AddCondition(Condition.DownedPlantera)
+				.AddTile(TileID.MythrilAnvil);
+			Recipe.Create(ModContent.ItemType<Missing_File>())
+				.AddIngredient(ModContent.ItemType<Defiled_Key>())
+				.AddCondition(Condition.DownedPlantera)
+				.AddTile(TileID.MythrilAnvil);
+			Recipe.Create(ModContent.ItemType<Plasma_Cutter>())
+				.AddIngredient(ModContent.ItemType<Riven_Key>())
+				.AddCondition(Condition.DownedPlantera)
+				.AddTile(TileID.MythrilAnvil);
+		}
+		[JITWhenModsEnabled("MagicStorage")]
+		static void AddMagicStorageGroups() {
+			static void AddItemsToGroup(RecipeGroup group, params int[] items) {
+				for (int i = 0; i < items.Length; i++) {
+					group.ValidItems.Add(items[i]);
+				}
+			}
+			static RecipeGroup GetGroup(string key) => RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs[key]];
+
+			AddItemsToGroup(GetGroup("MagicStorage:AnySnowBiomeBlock"), [ModContent.ItemType<Defiled_Ice_Item>(), ModContent.ItemType<Primordial_Permafrost_Item>()]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyDemonAltar"), [ModContent.ItemType<Fake_Defiled_Altar_Item>(), ModContent.ItemType<Fake_Riven_Altar_Item>()/*, ModContent.ItemType<Fake_Ashen_Altar_Item>()*/]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyChest"), [ModContent.ItemType<Endowood_Chest_Item>(), ModContent.ItemType<Marrowick_Chest_Item>(), ModContent.ItemType<Brine_Dungeon_Chest_Item>(), ModContent.ItemType<Defiled_Dungeon_Chest_Item>(), ModContent.ItemType<Riven_Dungeon_Chest_Item>()]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyWorkBench"), [ModContent.GetInstance<Endowood_Work_Bench>().item.Type, ModContent.GetInstance<Marrowick_Work_Bench>().item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnySink"), [ModContent.GetInstance<Endowood_Sink>().item.Type, ModContent.GetInstance<Marrowick_Sink>().item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyTable"), [ModContent.GetInstance<Endowood_Table>().item.Type, ModContent.GetInstance<Marrowick_Table>().item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), [ModContent.GetInstance<Endowood_Bookcase>().item.Type, ModContent.GetInstance<Marrowick_Bookcase>().item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), [ModContent.ItemType<Defiled_Campfire_Item>(), ModContent.ItemType<Riven_Campfire_Item>()]);
+		}
+		static void AddFargosGroups() {
+			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
+			List<int> brine = [];
+			List<int> riven = [];
+			for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++) {
+				NPC npc = ContentSamples.NpcsByNetId[i];
+				if (npc?.ModNPC is not null) {
+					if (npc.ModNPC.SpawnModBiomes.Contains(ModContent.GetInstance<Brine_Pool>().Type)) brine.Add(GetBanner(i));
+					if (npc.ModNPC.SpawnModBiomes.Contains(ModContent.GetInstance<Riven_Hive_Alt_Biome>().Type) || npc.ModNPC.SpawnModBiomes.Contains(ModContent.GetInstance<Riven_Hive>().Type)) riven.Add(GetBanner(i));
+				}
+			}
+
+			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValueWith("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool")), [.. brine]));
+			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValueWith("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive")), [.. riven]));
 		}
 	}
 	public interface ICustomWikiDestination {

@@ -355,6 +355,8 @@ namespace Origins {
 				ModContent.ItemType<Prickly_Pear>(),
 				ModContent.ItemType<Sour_Apple>()
 			);
+
+			OriginsModIntegrations.AddRecipeGroups();
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;

@@ -33,10 +33,9 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			cost = 20;
 		}
 		public override bool? UseItem(Player player) {
-			if (player.altFunctionUse == 2) 				Item.UseSound = BassSound;
-else {
-				Item.UseSound = SynthSound;
-			}
+			if (player.altFunctionUse == 2) Item.UseSound = BassSound;
+			else Item.UseSound = SynthSound;
+			
 			SoundEngine.PlaySound(Item.UseSound.Value.WithPitchOffset(
 				Math.Min(((Main.MouseWorld - player.Center) / new Vector2(Main.screenWidth * 0.4f, Main.screenHeight * 0.4f)).Length(), 1) * 2 - 1
 			));
@@ -45,7 +44,9 @@ else {
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
 		public override bool AltFunctionUse(Player player) => true;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (player.altFunctionUse == 2) 				type = ModContent.ProjectileType<Watered_Down_Keytar_Bass>();
+			if (player.altFunctionUse == 2) {
+				type = ModContent.ProjectileType<Watered_Down_Keytar_Bass>();
+			}
 		}
 		public override void SetDefaults() {
 			SetSharedDefaults(Item, out Item.mana);
@@ -75,15 +76,18 @@ else {
 			InspirationCost = cost / 10;
 		}
 		public override void BardUseAnimation(Player player) {
-			if (player.altFunctionUse == 2) 				Item.UseSound = Watered_Down_Keytar.BassSound;
-else {
+			if (player.altFunctionUse == 2) {
+				Item.UseSound = Watered_Down_Keytar.BassSound;
+			} else {
 				Item.UseSound = Watered_Down_Keytar.SynthSound;
 			}
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
 		public override bool AltFunctionUse(Player player) => true;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (player.altFunctionUse == 2) 				type = ModContent.ProjectileType<Watered_Down_Keytar_Bass_Thorium>();
+			if (player.altFunctionUse == 2) {
+				type = ModContent.ProjectileType<Watered_Down_Keytar_Bass_Thorium>();
+			}
 		}
 		public string CustomStatPath => WikiPageExporter.GetWikiName(this) + "_Thorium";
 	}

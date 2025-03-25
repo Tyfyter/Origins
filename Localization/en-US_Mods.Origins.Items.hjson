@@ -1601,7 +1601,7 @@ Riven_Carapace.DisplayName: "{§Riven} Carapace"
 
 Riven_Key: {
 	DisplayName: "{§Riven} Key"
-	Tooltip: Unlocks a Riven Chest in the Dungeon
+	Tooltip: Unlocks a {§Riven} Chest in the Dungeon
 }
 
 Rotor.DisplayName: Rotor
@@ -5296,7 +5296,7 @@ Sonar_Dynamite: {
 
 Brine_Key: {
 	DisplayName: Brine Key
-	Tooltip: ""
+	Tooltip: Unlocks a Brine Chest in the Dungeon
 }
 
 Mildew_Item: {
@@ -5587,13 +5587,13 @@ DefiledSupremeRenewal: {
 }
 
 RivenRenewal: {
-	DisplayName: Riven Renewal
-	Tooltip: Rivens a large radius
+	DisplayName: "{§Riven} Renewal"
+	Tooltip: "{§Riven}s a large radius"
 }
 
 RivenSupremeRenewal: {
-	DisplayName: Riven Renewal Supreme
-	Tooltip: Rivens the entire world
+	DisplayName: "{§Riven} Renewal Supreme"
+	Tooltip: "{§Riven}s the entire world"
 }
 
 AshenRenewal: {
@@ -5699,8 +5699,8 @@ Defiled_Chest: {
 }
 
 Riven_Chest: {
-	DisplayName: Riven Chest
-	Tooltip: Summons Riven Mimic
+	DisplayName: "{§Riven} Chest"
+	Tooltip: Summons {§Riven} Mimic
 }
 
 Ashen_Chest: {
@@ -5711,4 +5711,19 @@ Ashen_Chest: {
 Greater_Summoning_Potion: {
 	DisplayName: Greater Summoning Potion
 	Tooltip: ""
+}
+
+Fake_Defiled_Altar_Item: {
+	DisplayName: Defiled Altar
+	Tooltip: A placeable Defiled Altar. Cannot be mined to get hardmode ores
+}
+
+Fake_Riven_Altar_Item: {
+	DisplayName: "{§Riven} Altar"
+	Tooltip: A placeable {§Riven} Altar. Cannot be mined to get hardmode ores
+}
+
+Fake_Ashen_Altar_Item: {
+	DisplayName: Ashen Altar
+	Tooltip: A placeable Ashen Altar. Cannot be mined to get hardmode ores
 }

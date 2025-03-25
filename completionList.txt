@@ -1543,13 +1543,14 @@ CROSS-MOD CONTENT:
 (々) Ashen Chest
 (々) Ashen Renewal
 (々) Ashen Renewal Supreme
+(々) Ashen "Fake" Altar
 (X) Bomber's Soul
 (^) Defiled Chest
 (^) Defiled Renewal
 (^) Defiled Renewal Supreme
 (^) Defiled Storage Unit
 (^) Defiled Storage Upgrade
-(X) Defiled "Fake" Altar
+(^) Defiled "Fake" Altar
 (X) Defiled Wave
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
@@ -1560,7 +1561,7 @@ CROSS-MOD CONTENT:
 (^) Riven Chest
 (^) Riven Renewal
 (^) Riven Renewal Supreme
-(X) Riven "Fake" Altar
+(^) Riven "Fake" Altar
 (^) Sanguinite Storage Unit
 (^) Sanguinite Storage Upgrade
 (^) Watered-down Keytar
