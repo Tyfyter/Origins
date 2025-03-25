@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Greater_Summoning_Potion : ModItem {
-		public const float bonus_multiplicative = 0.15f;
-		public const float bonus_additive = 5f;
 		public string[] Categories => [
 			"Potion"
 		];
