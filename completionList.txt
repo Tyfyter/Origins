@@ -1380,7 +1380,7 @@ CONSUMABLES:
 (^) Sharp Broth
 (^) Sour Broth*
 (#, ^2) Spicy Broth° !!!
-(#, ^2) Sweet Broth° !!!
+(☻) Sweet Broth° !!!
 (#, ^2) Umami Broth !!!
 
 (^) Bileberry*

@@ -20,7 +20,7 @@ namespace Origins.NPCs.Riven {
 		public AssimilationAmount? Assimilation => 0.11f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 4;
+			Main.npcFrameCount[NPC.type] = 5;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
@@ -28,9 +28,8 @@ namespace Origins.NPCs.Riven {
 			NPC.lifeMax = 135;
 			NPC.defense = 14;
 			NPC.damage = 35;
-			NPC.width = 33;
-			NPC.height = 50;
-			NPC.frame.Height = 58;
+			NPC.width = 50;
+			NPC.height = 74;
 			NPC.value = 500;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type,
@@ -45,11 +44,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.spriteDirection = NPC.direction;
-			NPC.frameCounter += 1.0;
-			if (NPC.frameCounter >= 24.0) {
-				NPC.frameCounter = 0.0;
-			}
-			NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
+			NPC.DoFrames(6, ..4);
 		}
         public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
             if (!spawnInfo.Water) return 0f;
@@ -63,7 +58,7 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			OriginPlayer.InflictTorn(target, 1800, targetSeverity: 1f - 0.47f);// is this really supposed to last 30 seconds?
+			OriginPlayer.InflictTorn(target, 180, targetSeverity: 0.4f);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
