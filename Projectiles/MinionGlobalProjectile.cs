@@ -68,6 +68,14 @@ namespace Origins.Projectiles {
 				}
 				return updates;
 			});
+			c.GotoNext(MoveType.After,
+				il => il.MatchCallOrCallvirt<Player>(nameof(Player.GetTotalDamage))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate((StatModifier damage, Projectile proj) => {
+				if (Origins.ArtifactMinion[proj.type]) damage = damage.CombineWith(Main.player[proj.owner].OriginPlayer().artifactDamage);
+				return damage;
+			});
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			return entity.IsMinionOrSentryRelated;

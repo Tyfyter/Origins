@@ -115,7 +115,7 @@ namespace Origins.Items.Armor.Necromancer {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().artifactDamage += 0.25f;
+			player.OriginPlayer().artifactDamage += 0.25f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
