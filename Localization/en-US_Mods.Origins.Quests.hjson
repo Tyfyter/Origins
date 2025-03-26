@@ -421,7 +421,7 @@ Brine_Fiend: {
 		Inquire: "[player:_], can you help me? I'm in the mood for something 'experimental', but I don't know how to get my hands on the ingredients I need, so something artificial will do. It's simple. I need a [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion] and [itemname:TitanPotion]. Can you get those for me so I can make some new brews with chemicals I haven't tried yet?"
 		Start: Sick. Now go away, I'm busy.
 		ReadyToComplete: "[c/ff0000:This one too]"
-		Complete: Well, that wasn't long. Sorry for shoo-ing you, I wasn't in the mood at that time. As the old man likes the say, \"I embody appreciation.\" Anyhoo, I have some weird shield-thingy I found in the Brine Pool the other day. I'd give it to you for free, but let's be honest, you're the only person keeping Terraria's economy running these days
+		Complete: Well, that wasn't long. Sorry for shoo-ing you, I wasn't in the mood at that time. As the old man likes the say, \"I embody appreciation.\" Anyhoo, I have some weird shield-thingy I found in the Brine Pool the other day. I'd give it to you for free, but let's be honest, you're the only person keeping Terraria's economy running these days.
 	}
 
 	Ancient_Brine_Music_Box: {
@@ -441,6 +441,6 @@ Brine_Fiend: {
 		Inquire: Oh, [player:_]. Man/woman of the hour, I need you to go play fetch for me again. This time around I need a [itemname:Origins/Fervor_Potion], [itemname:LovePotion] and [itemname:MagicPowerPotion]. Get those and I think I can conjure up something fun for [npcname:PartyGirl]'s birthday coming up. It'll be a surprise!
 		Start: Great! She likes surprises, right?
 		ReadyToComplete: "[c/ff0000:Y éste]"
-		Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it/
+		Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it.
 	}
 }

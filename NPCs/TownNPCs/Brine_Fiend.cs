@@ -1,10 +1,13 @@
 ﻿using AltLibrary.Core;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
+using Origins.Questing;
 using Origins.Tiles.Brine;
+using Origins.Tiles.MusicBoxes;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -111,6 +114,8 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Foul_Broth>()
 			.Add<Sharp_Broth>()
 			.Add<Minty_Broth>()
+			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
+			.Add(Music_Box.ItemType<Ancient_Music_Box_BP>(), Quest.QuestCondition<Old_Brine_Music_Box_Quest>())
 			.Register();
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

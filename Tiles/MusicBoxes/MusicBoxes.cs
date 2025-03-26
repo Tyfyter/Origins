@@ -25,6 +25,7 @@ namespace Origins.Tiles.MusicBoxes {
 		public abstract int MusicSlot { get; }
 		public virtual new int DustType => 0;
 		public Music_Box_Item Item { get; private set; }
+		public static int ItemType<TMusicBox>() where TMusicBox : Music_Box => GetInstance<TMusicBox>().Item.Type;
 		static List<Music_Box> musicBoxes = [];
 		public static ReadOnlySpan<Music_Box> MusicBoxes => CollectionsMarshal.AsSpan(musicBoxes);
 

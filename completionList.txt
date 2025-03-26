@@ -81,7 +81,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#2?, ^2) Brine Fiend !!!
+(☻) Brine Fiend !!!
 (ᗢ) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -95,8 +95,8 @@ TOWN NPC Quests:
 
 (^) Arms Dealer - Live Fire*
 (^) Arms Dealer - Three Times the Charm*
-(X) Brine Fiend - Basic Brewery !!!
-(X) Brine Fiend - Get Freaky !!!
+(☻) Brine Fiend - Basic Brewery !!!
+(☻) Brine Fiend - Get Freaky !!!
 (^) Cyborg - Sensor Upgrade*
 (^) Dryad - I’ll Give You a Deal*
 (^) Dryad - Clearing the Way*
@@ -491,7 +491,7 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (^) Sparking Flame Barrel*
-(#2, ^2) Speed Booster*
+(☻) Speed Booster*
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
