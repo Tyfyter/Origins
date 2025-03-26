@@ -24,8 +24,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
-using static Terraria.ID.ContentSamples.CreativeHelper;
 
 namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
@@ -282,6 +280,7 @@ namespace Origins.Items {
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 			AddVanillaTooltips(item.type, tooltips);
+			if (item.shoot > ProjectileID.None && Origins.ArtifactMinion[item.shoot]) tooltips.Insert(1, new(Mod, "ArtifactTag", Language.GetOrRegister("Mods.Origins.Items.GenericTooltip.ArtifactTag").Value));
 			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
 				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
 			}

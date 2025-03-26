@@ -1649,6 +1649,7 @@ Projectiles: {
 }
 
 Prefixes: {
+	PrefixMinionSpeed: "{0} minion speed"
 	Assuring_Prefix.DisplayName: Assuring
 	Betraying_Prefix.DisplayName: Betraying
 	Catastrophic_Prefix.DisplayName: Catastrophic

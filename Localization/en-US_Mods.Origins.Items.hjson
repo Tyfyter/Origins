@@ -2,6 +2,7 @@ GenericTooltip: {
 	MinuteCooldown: "{0} minute cooldown"
 	SecondCooldown: "{0} second cooldown"
 	TornSeverity: +{0}% applied torn severity
+	ArtifactTag: "[c/ffb300:-Artifact Minion-]"
 }
 
 Krunch_Mix: {

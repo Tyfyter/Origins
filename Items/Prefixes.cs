@@ -15,7 +15,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.Items {
 	public interface IOnSpawnProjectilePrefix {
@@ -410,6 +409,12 @@ namespace Origins.Items {
 				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates += 0.12f;
 			}
 		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
+			..base.GetTooltipLines(item),
+			new(Mod, "PrefixMinionSpeed", Language.GetOrRegister("Mods.Origins.Prefixes.PrefixMinionSpeed").Format($"+{0.12:P0}")) {
+				IsModifier = true
+			}
+		];
 		public override void ModifyValue(ref float valueMult) {
 			base.ModifyValue(ref valueMult);
 			valueMult *= 1.289f;
@@ -430,6 +435,12 @@ namespace Origins.Items {
 			base.ModifyValue(ref valueMult);
 			valueMult *= 1.277f;
 		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
+			..base.GetTooltipLines(item),
+			new(Mod, "PrefixMinionSpeed", Language.GetOrRegister("Mods.Origins.Prefixes.PrefixMinionSpeed").Format($"+{0.15:P0}")) {
+				IsModifier = true
+			}
+		];
 	}
 	public abstract class ArtifactMinionPrefix : MinionPrefix {
 		public virtual StatModifier MaxLifeModifier => StatModifier.Default;
