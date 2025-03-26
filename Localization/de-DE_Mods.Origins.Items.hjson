@@ -5743,3 +5743,8 @@ Rocket_Rifle: {
 	// DisplayName: Rocket Rifle
 	// Tooltip: ""
 }
+
+Ocotillo_Flower: {
+	// DisplayName: Ocotillo Flower
+	// Tooltip: ""
+}

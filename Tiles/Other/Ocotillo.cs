@@ -42,8 +42,8 @@ namespace Origins.Tiles.Other {
 			ID = Type;
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
+			if (Framing.GetTileSafely(i, j).TileFrameX >= 18 * 3 * 4) yield return new Item(ModContent.ItemType<Ocotillo_Flower>(), 1, -1);
 			yield return new Item(ModContent.ItemType<Ocotillo_Finger>(), 1, -1);
-			yield break;
 		}
 	}
 	public class Ocotillo_Item : TestingItem {
@@ -59,6 +59,20 @@ namespace Origins.Tiles.Other {
 				}
 			}
 			Ocotillo.data.AnchorValidTiles = tiles.ToArray();
+		}
+	}
+	public class Ocotillo_Flower : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 3;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(ModContent.TileType<Ocotillo>());
+		}
+		public override void AddRecipes() {
+			Recipe.Create(ItemID.RedDye, 2)
+			.AddIngredient(Type)
+			.AddTile(TileID.DyeVat)
+			.Register();
 		}
 	}
 }
