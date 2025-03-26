@@ -1,15 +1,12 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Regurgitator_Of_Souls : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -25,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Regurgitator_Of_Souls_P>(20, 42, 14, 60, 24);
+			Item.DefaultToCanisterLauncher<Regurgitator_Of_Souls_P>(26, 42, 14, 60, 24);
 			Item.knockBack = 5.75f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;

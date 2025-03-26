@@ -1,38 +1,30 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Graphics;
+using Origins.Items.Tools;
+using PegasusLib;
+using ReLogic.Content;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Buffs;
-using Origins.Items.Tools;
-using Origins.NPCs;
-using ReLogic.Content;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
-using PegasusLib;
-using Origins.NPCs.Defiled;
-using static Terraria.GameContent.TextureAssets;
-using Origins.Graphics;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Nerve_Flan : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 30, Nerve_Flan_P.tick_motion, true);
 			Item.useTime /= 3;
-			Item.damage = 34;
+			Item.damage = 18;
 			Item.mana = 14;
 			Item.knockBack = 3;
 			Item.UseSound = SoundID.Item1;
 			Item.value = Item.sellPrice(silver: 60);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 1;
 		}
 	}
 	public class Nerve_Flan_P : ModProjectile, ITangelaHaver {

@@ -1082,8 +1082,8 @@ Buffs: {
 	}
 
 	Mithrafin_Poison_Extend_Debuff: {
-		DisplayName: Mithrafin Poison Extend Debuff
-		Description: Mods.Origins.Buffs.Mithrafin_Poison_Extend_Debuff.Description
+		DisplayName: Mithrafinished
+		Description: Your afflictions have been extended!
 	}
 
 	Sharp_Broth_Buff: {
@@ -1116,17 +1116,21 @@ Buffs: {
 
 	Light_Broth_Buff: {
 		DisplayName: Light Broth Buff
-		Description: Mods.Origins.Buffs.Light_Broth_Buff.Description
+		Description: Artifact minions receive 25% less damage
 	}
 
 	Greater_Summoning_Buff: {
-		DisplayName: Greater Summoning Buff
-		Description: Mods.Origins.Buffs.Greater_Summoning_Buff.Description
+		DisplayName: Greater Summoning
+		Description: Increased max number of minions
 	}
 
 	Sweet_Broth_Buff: {
-		DisplayName: Sweet Broth Buff
-		Description: Mods.Origins.Buffs.Sweet_Broth_Buff.Description
+		DisplayName: Sweet Broth
+		Description:
+			'''
+			15% increased minion attack speed
+			10% increased artifact minion damage
+			'''
 	}
 }
 

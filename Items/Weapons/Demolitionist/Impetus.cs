@@ -1,16 +1,10 @@
-﻿using CalamityMod.Graphics.Renderers;
-using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Gores.NPCs;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.NPCs;
 using Origins.World.BiomeData;
-using ReLogic.Content;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -27,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 8;
 			Item.knockBack = 5.75f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Zombie24.WithPitchRange(0.6f, 1f);
 		}
 		public override void AddRecipes() {
