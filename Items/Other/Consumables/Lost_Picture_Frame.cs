@@ -12,11 +12,6 @@ namespace Origins.Items.Other.Consumables {
         public string[] Categories => [
             "BossSummon"
         ];
-		public List<Vector2> SpawnMap = [];
-		private int rangeX = 10;
-		private int rangeY = 4;
-		private int spawnDst = 17;
-		private readonly int spawnType = ModContent.NPCType<Lost_Diver_Spawn>();
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
@@ -25,42 +20,40 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.WormFood);
 			Item.rare = ItemRarityID.Blue;
 		}
-		public override bool CanUseItem(Player player) {
-			if (NPC.AnyNPCs(ModContent.NPCType<Lost_Diver_Spawn>()) || NPC.AnyNPCs(ModContent.NPCType<Lost_Diver>()) || NPC.AnyNPCs(ModContent.NPCType<Lost_Diver_Transformation>()) || NPC.AnyNPCs(ModContent.NPCType<Mildew_Carrion>())) return false;
+		public override bool? UseItem(Player player) {
+			const int range_reduction_x = 10;
+			const int range_reduction_y = 4;
+			const int min_spawn_dist = 17;
+			int spawn = ModContent.NPCType<Lost_Diver_Spawn>();
+			if (NPC.AnyNPCs(spawn) || NPC.AnyNPCs(ModContent.NPCType<Lost_Diver>()) || NPC.AnyNPCs(ModContent.NPCType<Lost_Diver_Transformation>()) || NPC.AnyNPCs(ModContent.NPCType<Mildew_Carrion>())) goto fail;
 
-			if (player.InModBiome<Brine_Pool>() && !Brine_Pool.SpawnRates.IsInBrinePool(player.Center)) return false;
+			if (player.InModBiome<Brine_Pool>() && !Brine_Pool.SpawnRates.IsInBrinePool(player.Center)) goto fail;
 
-			SpawnMap = [];
-			for (int i = -NPC.safeRangeX + rangeX; i <= NPC.safeRangeX - rangeX; i++) {
+			List<Vector2> SpawnMap = [];
+			ModNPC npc = ModContent.GetModNPC(spawn);
+			Rectangle hitbox = npc.NPC.Hitbox;
+			bool IsPositionValidCheck(Vector2 pos) {
+				hitbox.X = (int)pos.X * 16 - npc.NPC.width / 2;
+				hitbox.Y = (int)pos.Y * 16 - npc.NPC.height;
+				return !hitbox.OverlapsAnyTiles();
+			}
+			for (int i = -NPC.safeRangeX + range_reduction_x; i <= NPC.safeRangeX - range_reduction_x; i++) {
 				int x = i + (int)(player.Center.X / 16);
-				for (int j = -NPC.safeRangeY + rangeY; j <= NPC.safeRangeY - rangeY; j++) {
+				for (int j = -NPC.safeRangeY + range_reduction_y; j <= NPC.safeRangeY - range_reduction_y; j++) {
 					int y = j + (int)(player.Center.Y / 16);
 					Vector2 pos = new(x, y);
-					bool inRange = pos.Distance(player.Center / 16) <= spawnDst;
-					bool inBP = !Brine_Pool.SpawnRates.IsInBrinePool(pos * 16);
-					bool inHeight = !isHeightValidCheck(pos);
-					if (!inRange || !inBP || !inHeight) {
+					if (!pos.WithinRange(player.Center / 16, min_spawn_dist) && Brine_Pool.SpawnRates.IsInBrinePool(pos * 16) && IsPositionValidCheck(pos)) {
 						SpawnMap.Add(pos * 16);
 					}
 				}
 			}
-
-			return SpawnMap.Count != 0;
-		}
-		public override bool? UseItem(Player player) {
-			if (player.whoAmI == Main.myPlayer) {
-				int pos = Main.rand.Next(0, SpawnMap.Count);
-				SoundEngine.PlaySound(SoundID.Roar);
-				NPC.NewNPCDirect(new EntitySource_BossSpawn(player), SpawnMap[pos], spawnType);
-			}
+			if (SpawnMap.Count <= 0) goto fail;
+			SoundEngine.PlaySound(SoundID.Roar);
+			if (Main.netMode != NetmodeID.MultiplayerClient) NPC.NewNPCDirect(new EntitySource_BossSpawn(player), Main.rand.Next(SpawnMap), spawn);
 			return true;
-		}
-		private bool isHeightValidCheck(Vector2 pos) {
-			ModNPC npc = ModContent.GetModNPC(spawnType);
-			Rectangle hitbox = npc.NPC.Hitbox;
-			hitbox.X = (int)pos.X * 16 - npc.NPC.width / 2;
-			hitbox.Y = (int)pos.Y * 16 - npc.NPC.height;
-			return !hitbox.OverlapsAnyTiles();
+			fail:
+			player.itemAnimation = 0;
+			return false;
 		}
 	}
 }

@@ -106,7 +106,7 @@ namespace Origins.NPCs.Defiled {
 							NPC.localAI[1] = 1;
 							NPC.netUpdate = true;
 						}
-					} else if (NPC.localAI[1] > 0 && ++NPC.localAI[1] >= 5 * 7) {
+					} else if (NPC.localAI[1] > 0 && ++NPC.localAI[1] >= 4 * 7) {
 						NPC.localAI[1] = 0;
 						int projType;
 						switch (NPC.aiAction) {
@@ -144,10 +144,10 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.aiAction == 0) {
-				NPC.DoFrames(7, ..5);
+				NPC.DoFrames(7, ..6);
 			} else {
-				if (NPC.frame.Y / NPC.frame.Height < 5) NPC.frame.Y = NPC.frame.Height * 5;
-				NPC.DoFrames(7, 5..(Main.npcFrameCount[Type] + 1));
+				if (NPC.frame.Y / NPC.frame.Height < 6) NPC.frame.Y = NPC.frame.Height * 6;
+				NPC.DoFrames(7, 6..(Main.npcFrameCount[Type] + 1));
 				if (NPC.frame.Y / NPC.frame.Height == Main.npcFrameCount[Type]) {
 					NPC.aiAction = 0;
 					NPC.frame.Y = 0;
@@ -179,6 +179,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.aiAction = reader.ReadByte();
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			base.PostDraw(spriteBatch, screenPos, drawColor);
 			Texture2D texture = null;
 			switch (NPC.aiAction) {
 				case 1:

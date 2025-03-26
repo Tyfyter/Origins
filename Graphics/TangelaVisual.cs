@@ -76,7 +76,7 @@ namespace Origins.Graphics {
 		public static readonly List<TangelaDrawData> drawDatas = [];
 		private static void Scene_OnPostDraw() {
 			if (DateTime.Now > changeModeTime) {
-				DrawOver = Main.rand.NextBool(3, 5);
+				DrawOver = Main.rand.NextBool(3);
 				changeModeTime = DateTime.Now + TimeSpan.FromSeconds(Main.rand.Next(4, 11)) / (1 + DrawOver.ToInt());
 			}
 			if (drawDatas.Count <= 0) return;
