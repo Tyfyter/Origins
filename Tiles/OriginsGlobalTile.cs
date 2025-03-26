@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
@@ -11,6 +12,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Origins.Tiles {
 	public class OriginsGlobalTile : GlobalTile {
@@ -109,6 +111,24 @@ namespace Origins.Tiles {
 				baseY += direction;
 			}
 			return stalactiteTextures.TryGetValue(Main.tile[i, baseY].TileType, out texture);
+		}
+		public override void RandomUpdate(int i, int j, int type) {
+			if (i > WorldGen.beachDistance && i < Main.maxTilesX - WorldGen.beachDistance && Ocotillo.data.AnchorValidTiles.Contains(type) && WorldGen.genRand.NextBool(200)) {
+				ushort ocotillo = (ushort)ModContent.TileType<Ocotillo>();
+				if (TileObject.CanPlace(i, j - 1, ocotillo, 0, 1, out TileObject objectData, onlyCheck: false)) {
+					TileObjectData tileData = TileObjectData.GetTileData(ocotillo, objectData.style);
+					int left = i - tileData.Origin.X;
+					int top = (j - 1) - tileData.Origin.Y;
+					for (int y = 0; y < tileData.Height; y++) {
+						for (int x = 0; x < tileData.Width; x++) {
+							Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+							if (tileSafely.HasTile) goto fail;
+						}
+					}
+					if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
+					fail:;
+				}
+			}
 		}
 		public override void DrawEffects(int i, int j, int type, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			if (type == TileID.Stalactite) {

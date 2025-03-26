@@ -43,7 +43,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			if (Framing.GetTileSafely(i, j).TileFrameX >= 18 * 3 * 4) yield return new Item(ModContent.ItemType<Ocotillo_Flower>(), 1, -1);
-			yield return new Item(ModContent.ItemType<Ocotillo_Finger>(), 1, -1);
+			if (Main.rand.NextBool(5)) yield return new Item(ModContent.ItemType<Ocotillo_Finger>(), 1, -1);
 		}
 	}
 	public class Ocotillo_Item : TestingItem {
