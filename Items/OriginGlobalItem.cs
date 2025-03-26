@@ -361,7 +361,7 @@ namespace Origins.Items {
 						rule.Add(
 							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>()),
 							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>()),
-							//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>()),
 							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>())
 						);
 						foundMain = true;
