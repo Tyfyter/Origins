@@ -86,7 +86,8 @@ namespace Origins.Questing {
 
 				StageTagOption(hasSummonPotion),
 				StageTagOption(hasTeleportPotion),
-				StageTagOption(hasTitanPotion)
+				StageTagOption(hasTitanPotion),
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {
@@ -181,7 +182,8 @@ namespace Origins.Questing {
 
 				StageTagOption(hasFervorPotion),
 				StageTagOption(hasLovePotion),
-				StageTagOption(hasMagicPotion)
+				StageTagOption(hasMagicPotion),
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {
