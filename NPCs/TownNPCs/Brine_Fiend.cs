@@ -156,23 +156,8 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override List<string> SetNPCNameList() => this.GetGivenName().ToList();
-		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
-		public override bool CanTownNPCSpawn(int numTownNPCs) { // Requirements for the town NPC to spawn.
-			if (OriginSystem.Instance.unlockedBrineNPC) return true;
-			for (int k = 0; k < 255; k++) {
-				Player player = Main.player[k];
-				if (!player.active) {
-					continue;
-				}
-
-				if (player.HasItemInAnyInventory(ModContent.ItemType<Eitrite_Ore_Item>())) {
-					OriginSystem.Instance.unlockedBrineNPC = true;
-					return true;
-				}
-			}
-
-			return false;
-		}
+		public override bool CanGoToStatue(bool toKingStatue) => !toKingStatue;
+		public override bool CanTownNPCSpawn(int numTownNPCs) => Boss_Tracker.Instance.downedLostDiver;
 
 		public override void SetChatButtons(ref string button, ref string button2) { // What the chat buttons are when you open up the chat UI
 			button = Language.GetTextValue("LegacyInterface.28");
