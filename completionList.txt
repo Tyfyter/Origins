@@ -986,7 +986,7 @@ EXPLOSIVE WEAPONS:
 (^) Grenade Lawnchair
 (^) Happy Bomb*
 (X) Rattlesnake
-(#, ^2) Rocket Rifle
+(☻) Rocket Rifle
 (X) Shroomcannon
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder

@@ -5738,3 +5738,8 @@ Sweet_Broth: {
 	DisplayName: Sweet Broth
 	Tooltip: ""
 }
+
+Rocket_Rifle: {
+	DisplayName: Rocket Rifle
+	Tooltip: ""
+}
