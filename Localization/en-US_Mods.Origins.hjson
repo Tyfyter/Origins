@@ -1123,6 +1123,11 @@ Buffs: {
 		DisplayName: Greater Summoning Buff
 		Description: Mods.Origins.Buffs.Greater_Summoning_Buff.Description
 	}
+
+	Sweet_Broth_Buff: {
+		DisplayName: Sweet Broth Buff
+		Description: Mods.Origins.Buffs.Sweet_Broth_Buff.Description
+	}
 }
 
 DamageClassName: {
