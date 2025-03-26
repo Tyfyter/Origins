@@ -81,7 +81,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(☻) Brine Fiend !!!
+(^) Brine Fiend
 (ᗢ) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -167,9 +167,9 @@ ENEMY NPCS:
 (^) Crimbrain*
 (X) Crying Creeper
 (#, ^2) Defiled Broadcaster
-(☻) Defiled Cyclops* (bone latcher arm)
+(^) Defiled Cyclops*
 (^) Defiled Digger*
-(☻) Defiled Krusher* !!! (new animation, boulder throw)
+(^) Defiled Krusher*
 (^) Defiled Mite*
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
@@ -184,7 +184,7 @@ ENEMY NPCS:
 (^) Felnum Einheri*
 (^) Felnum Guardian*
 (^) Felnum Slime*
-(#2, ^2) Flagellant* (new behavior and anim fix)
+(ᗢ) Flagellant* (new behavior)
 (^) Flying Exoskeleton*
 (X) Goo Wall
 (^) Graveshield Zombie*
@@ -236,7 +236,7 @@ ENEMY NPCS:
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
-(☻) Rock Bottom !!!
+(#2, ^2) Rock Bottom !!!
 (X) Rotting Husk
 (^) Savage Whip*
 (^) Sea Dragon°
@@ -411,7 +411,7 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus*
-(☻) Fallacious Vase !!! (needs orb appearance, left dash bounce)
+(#2, ^2) Fallacious Vase !!! (glowing yellow dusts while dashing)
 (^) Feather Cape
 (^) Feathery Crest
 (^) Fleshy Figurine*
@@ -491,7 +491,7 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (^) Sparking Flame Barrel*
-(☻) Speed Booster*
+(#3, ^2) Speed Booster* !!!
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
@@ -781,7 +781,7 @@ RANGED WEAPONS:
 (^) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 
-(☻) Astoxo
+(^) Astoxo
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
@@ -810,10 +810,10 @@ MAGIC WEAPONS:
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion*
-(☻) Low Signal* !!! (glowmask now displaying)
+(^) Low Signal*
 (^) Magnus
 (^) Manasynk*
-(#, ^2) Nerve Flan
+(#2, ^2) Nerve Flan
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -964,7 +964,7 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(☻) Impetus !!!
+(^) Impetus
 (^) Internal Combustionfish*
 (^) Link Grenade*
 (^) Matrix*
@@ -986,7 +986,7 @@ EXPLOSIVE WEAPONS:
 (^) Grenade Lawnchair
 (^) Happy Bomb*
 (X) Rattlesnake
-(☻) Rocket Rifle
+(#2, ^2) Rocket Rifle (larger blast radius)
 (X) Shroomcannon
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
@@ -1236,7 +1236,7 @@ TILES:
 ($2) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
-(☻ (but it should probably look different when turned on)) Music Box (Fiberglass Undergrowth) !!!
+(^) Music Box (Fiberglass Undergrowth)
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 ($2) Music Box (Riven Hive)
@@ -1356,8 +1356,8 @@ CONSUMABLES:
 (^) Flask of Alkahest*
 (^) Flask of Black Bile*
 (^) Focus Potion°
-(☻) Greater Summoning Potion !!!
-(ᗢ) Latchkey
+(^) Greater Summoning Potion
+(^) Latchkey
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
@@ -1380,8 +1380,19 @@ CONSUMABLES:
 (^) Sharp Broth
 (^) Sour Broth*
 (#, ^2) Spicy Broth° !!!
-(☻) Sweet Broth° !!!
+(^) Sweet Broth°
 (#, ^2) Umami Broth !!!
+
+(X) Adrenaline
+(X) Bottomless Multi-Med
+(X) Brightsee
+(X) Fire Band
+(X) Medicinal Acid
+(X) Morphine
+(X) Multi-Med
+(X) Rasterwrap
+(X) Sanguis Pack
+(X) Unmarked Antidote
 
 (^) Bileberry*
 (^) Blue Bovine*
@@ -1406,7 +1417,7 @@ CONSUMABLES:
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
-(☻) Lost Picture Frame !!!
+(^) Lost Picture Frame
 (X) Quantum Cell°
 (^) Shaped Glass*
 (^) Suspicious Looking Ice Cream*
@@ -1453,7 +1464,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(@4, #3) Terlet Paper (Kawaii Fiberglass Weaver) !!!
+(#3, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*

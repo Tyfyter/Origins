@@ -16,11 +16,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Rocket_Rifle_P>(20, 20, 14, 60, 24, true);
+			Item.DefaultToCanisterLauncher<Rocket_Rifle_P>(50, 53, 8, 60, 24, true);
 			Item.value = Item.sellPrice(gold: 7);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item11;
-			Item.ArmorPenetration += 5;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, -6);

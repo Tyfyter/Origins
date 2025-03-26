@@ -5691,7 +5691,7 @@ Keytar: {
 
 Nerve_Flan: {
 	// DisplayName: Nerve Flan
-	// Tooltip: ""
+	// Tooltip: Putting the soul in fan-dancing
 }
 
 Defiled_Chest: {
@@ -5711,7 +5711,7 @@ Ashen_Chest: {
 
 Greater_Summoning_Potion: {
 	// DisplayName: Greater Summoning Potion
-	// Tooltip: ""
+	// Tooltip: Increases your max number of minions by 2
 }
 
 Fake_Defiled_Altar_Item: {
@@ -5731,15 +5731,23 @@ Fake_Ashen_Altar_Item: {
 
 Impetus: {
 	// DisplayName: Impetus
-	// Tooltip: ""
+	// Tooltip: Projectiles split apart until there's no more splitting apart to be done
 }
 
 Sweet_Broth: {
 	// DisplayName: Sweet Broth
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		15% increased minion attack speed
+		10% increased artifact minion damage
+		''' */
 }
 
 Rocket_Rifle: {
 	// DisplayName: Rocket Rifle
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses canisters and rockets as ammo
+		Using canisters as ammo has limited fuel
+		''' */
 }
