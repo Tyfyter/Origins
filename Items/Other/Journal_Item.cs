@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other {
@@ -19,6 +18,7 @@ namespace Origins.Items.Other {
 			return false;
 		}
 		public override void AddRecipes() {
+			return;
 			CreateRecipe()
 			.AddIngredient(ItemID.Book)
 			.AddIngredient(ItemID.Feather)

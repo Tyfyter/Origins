@@ -96,6 +96,7 @@ namespace Origins.Questing {
 						c.Emit(check.Next.OpCode, check.Next.Operand);
 					}
 					static void DrawIcon(int headType, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth) {
+						if (headType == 0) return;
 						if (!OriginClientConfig.Instance.QuestNotificationPosition.HasFlag(QuestNotificationPositions.Housing)) return;
 						foreach (NPC npc in Main.ActiveNPCs) {
 							if ((npc.ModNPC?.TownNPCStayingHomeless ?? false) || TownNPCProfiles.GetHeadIndexSafe(npc) != headType) continue;

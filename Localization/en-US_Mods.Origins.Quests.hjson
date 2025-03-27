@@ -1,22 +1,19 @@
 Guide: {
 	Quest_Menu: Need some advice?
 
-	Journal: {
-		Name: Journal Get!
+	Quest_Quest: {
+		Name: Get Questing!
 		Journal:
 			'''
-			{$Mods.Origins.Quests.Guide.Journal.Name}
+			{$Mods.Origins.Quests.Guide.Quest_Quest.Name}
 			Client: [npcname:Guide]
 								
-			'{$Mods.Origins.Quests.Guide.Journal.Inquire}'
+			'{$Mods.Origins.Quests.Guide.Quest_Quest.Inquire}'
 								
-			- [qs/completed:Get a feather]
-			- [qs/completed:Get a book]
-			- [qs/completed:Get ink]
-			Unlocks: [i:Origins/Journal_Item]
+			- [qs{0}:Complete a quest]
 			'''
-		Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in."
-		Start: You could use a book from the dungeon, a harpy feather, and squid ink to keep track of your quests.
+		Inquire: "[c/ff0000:dialog needed]"
+		Start: "[c/ff0000:dialog needed]"
 	}
 }
 

@@ -27,11 +27,11 @@ namespace Origins.Items.Materials {
 			resultStack = 1;
 			if (Main.rand.NextBool(80)) {
 				resultType = ModContent.ItemType<Chambersite_Item>();
-				if (Main.rand.NextBool(20)) resultStack += Main.rand.Next(0, 2);
-				if (Main.rand.NextBool(30)) resultStack += Main.rand.Next(0, 3);
-				if (Main.rand.NextBool(40)) resultStack += Main.rand.Next(0, 4);
-				if (Main.rand.NextBool(50)) resultStack += Main.rand.Next(0, 5);
-				if (Main.rand.NextBool(60)) resultStack += Main.rand.Next(0, 6);
+				if (Main.rand.NextBool(10)) resultStack += Main.rand.Next(0, 2);
+				if (Main.rand.NextBool(15)) resultStack += Main.rand.Next(0, 3);
+				if (Main.rand.NextBool(20)) resultStack += Main.rand.Next(0, 4);
+				if (Main.rand.NextBool(25)) resultStack += Main.rand.Next(0, 5);
+				if (Main.rand.NextBool(30)) resultStack += Main.rand.Next(0, 6);
 			} else if (Main.rand.NextBool(3)) {
 				if (Main.rand.NextBool(500)) {
 					resultType = ItemID.PlatinumCoin;
