@@ -874,7 +874,7 @@ SUMMONER WEAPONS:
 (^) Guardian Rod
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
-(#, ^2) Inject Incantation !!!
+(☻) Inject Incantation !!!
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (%2) Ocean Amulet !!!
@@ -1275,7 +1275,7 @@ MATERIALS:
 (^) Felnum Bar*
 (^) Magic Hair Spray*
 (^) NE-8*
-(#, ^2) Ocotillo Flower !!!
+(☻) Ocotillo Flower !!!
 (^) Riven Carapace*
 (^) Riven Seeds*
 (^) Rubber*

@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Fargowiltas.Items.Explosives;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Materials;
 using PegasusLib;
@@ -11,6 +14,8 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
+using ThoriumMod.NPCs;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Summoner {
@@ -21,9 +26,14 @@ namespace Origins.Items.Weapons.Summoner {
 			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CrystalVileShard);
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.width = 26;
+			Item.height = 28;
+			Item.value = Item.sellPrice(0, 8);
+			Item.autoReuse = true;
 			Item.damage = 19;
 			Item.DamageType = DamageClasses.Incantation;
+			Item.noMelee = true;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Maelstrom_Incantation_P>();
 			Item.noUseGraphic = true;

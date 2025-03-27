@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.damage = 15;
 			Item.DamageType = DamageClasses.Incantation;
+			Item.noMelee = true;
 			Item.width = 22;
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;

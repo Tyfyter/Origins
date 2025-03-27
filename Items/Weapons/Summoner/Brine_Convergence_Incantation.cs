@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 35;
 			Item.DamageType = DamageClasses.Incantation;
+			Item.noMelee = true;
 			Item.knockBack = 3;
 			Item.shoot = ModContent.ProjectileType<Brine_Convergence_Incantation_Spawn_P>();
 			Item.noUseGraphic = true;

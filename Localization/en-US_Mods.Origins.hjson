@@ -1651,6 +1651,7 @@ Projectiles: {
 	Impetus_Splut_P.DisplayName: Impetus Splut P
 	Impetus_Shrapnel.DisplayName: Impetus Shrapnel
 	Rocket_Rifle_P.DisplayName: Rocket Rifle P
+	Inject_Incantation_P.DisplayName: Inject Incantation P
 }
 
 Prefixes: {

@@ -5761,3 +5761,8 @@ Geothermal_Sludge: {
 	DisplayName: Geothermal Sludge
 	Tooltip: ""
 }
+
+Inject_Incantation: {
+	DisplayName: Inject Incantation
+	Tooltip: ""
+}
