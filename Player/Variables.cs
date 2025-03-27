@@ -437,6 +437,7 @@ namespace Origins {
 		public int oldYSign = 0;
 		public bool collidingX = false;
 		public bool collidingY = false;
+		public bool onSlope = false;
 		public HashSet<string> unlockedJournalEntries = new();
 		public HashSet<string> unreadJournalEntries = new();
 		public HashSet<string> startedQuests = new();

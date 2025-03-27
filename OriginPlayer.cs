@@ -52,9 +52,16 @@ namespace Origins {
 				if (dashVase) shineSparkSpeed *= 1.2f;
 				if (shineSparkDashTime > 0) {
 					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
+					if (shineSparkDashDirection.X != 0 && onSlope) {
+						shineSparkDashTime = 1;
+						shineSparkCharge = 60;
+					}
 					if (collidingX || collidingY) {
 						shineSparkDashTime = 1;
 						Collision.HitTiles(Player.position, Player.velocity, Player.width, Player.height);
+						if (!collidingX && shineSparkDashDirection.X != 0) {
+							shineSparkCharge = 60;
+						}
 					}
 					shineSparkDashTime--;
 					dashDelay = 30;
@@ -375,6 +382,7 @@ namespace Origins {
 					windSpeed = (short)Math.Clamp(windSpeed + Player.velocity.X, -128, 128);
 				}
 			}*/
+			onSlope = false;
 		}
 		public override void PreUpdate() {
 			if (OriginConfig.Instance.Assimilation) {
