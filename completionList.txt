@@ -986,7 +986,7 @@ EXPLOSIVE WEAPONS:
 (^) Grenade Lawnchair
 (^) Happy Bomb*
 (X) Rattlesnake
-(#2, ^2) Rocket Rifle (larger blast radius)
+(☻) Rocket Rifle (should probably not have larger blast radius, as-is it's almost a sidegrade to the Rocket Launcher despite being way earlier than it due to its versatility and having similar or better stats for everything but speed and knockback)
 (X) Shroomcannon
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
