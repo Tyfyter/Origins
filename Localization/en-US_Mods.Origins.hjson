@@ -1883,6 +1883,7 @@ Tiles: {
 	Fake_Ashen_Altar.MapEntry: Ashen Altar
 	Fake_Defiled_Altar.MapEntry: Defiled Altar
 	Fake_Riven_Altar.MapEntry: Riven Altar
+	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 }
 
 MapObject: {

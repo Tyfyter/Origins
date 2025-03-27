@@ -5756,3 +5756,8 @@ Ocotillo_Flower: {
 	// DisplayName: Ocotillo Flower
 	// Tooltip: ""
 }
+
+Geothermal_Sludge: {
+	// DisplayName: Geothermal Sludge
+	// Tooltip: ""
+}

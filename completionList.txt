@@ -1199,7 +1199,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#2, ^2) Hydrothermal Vent !!!
+(☻) Hydrothermal Vent !!!
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
@@ -1297,7 +1297,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(#, ^2) Geothermal Sludge !!!
+(☻) Geothermal Sludge !!!
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*
