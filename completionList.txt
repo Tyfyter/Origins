@@ -1545,7 +1545,7 @@ AMMO:
 CROSS-MOD CONTENT:
 ---
 (#3) Fargo's caught npcs
-(#3) Fargo's Fountain biome change
+(^) Fargo's Fountain biome change
 (^, ᗢ) Fargo's sell boss/rare npc summons
 (^, ᗢ) Fargo's sell evil woods
 

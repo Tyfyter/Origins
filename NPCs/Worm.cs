@@ -624,7 +624,7 @@ namespace Origins.NPCs {
 			SegmentCount = reader.ReadInt32();
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 6;
+			//NPC.aiStyle = 6;
 			NPC.netAlways = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;

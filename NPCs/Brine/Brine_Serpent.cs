@@ -70,6 +70,7 @@ namespace Origins.NPCs.Brine {
 			];
 		}
 		public override void PostAI() {
+			DigSound = null;
 			base.PostAI();
 			Brine_Pool_NPC.HitOtherNPCs(NPC);
 		}

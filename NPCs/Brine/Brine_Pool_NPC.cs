@@ -1,4 +1,6 @@
-﻿using Origins.Buffs;
+﻿using MonoMod.Cil;
+using Origins.Buffs;
+using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
 using Origins.Walls;
@@ -28,6 +30,25 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
+		}
+		public static void DisableRipples(ILContext il) {
+			ILCursor c = new(il);
+			try {
+				int loc = -1;
+				ILLabel label = default;
+				c.GotoNext(MoveType.After,
+					i => i.MatchLdsfld<Main>(nameof(Main.npc)),
+					i => i.MatchLdloc(out loc),
+					i => i.MatchLdelemRef(),
+					i => i.MatchBrfalse(out label)
+				);
+
+				c.EmitLdloc(loc);
+				c.EmitDelegate((int i) => Main.npc[i].ModNPC is Brine_Pool_NPC or IBrinePoolNPC);
+				c.EmitBrtrue(label);
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(DisableRipples), e)) throw;
+			}
 		}
 		public override void SetDefaults() {
 			SpawnModBiomes = [
@@ -222,7 +243,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public virtual bool CanSpawnInPosition(int tileX, int tileY) {
 			Tile tile = Framing.GetTileSafely(tileX, tileY);
-			return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
+			return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive);
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
 			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this, (spawnY) => CanSpawnInPosition(tileX, spawnY));

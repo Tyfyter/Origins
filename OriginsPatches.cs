@@ -87,6 +87,8 @@ using Terraria.ModLoader.Config;
 using Microsoft.Xna.Framework.Audio;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using Origins.NPCs.Brine;
+using Terraria.GameContent.Shaders;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -701,6 +703,7 @@ namespace Origins {
 					processingDash = false;
 				}
 			};
+			IL_WaterShaderData.DrawWaves += Brine_Pool_NPC.DisableRipples;
 		}
 		public static bool processingDash = false;
 		private static void On_Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {

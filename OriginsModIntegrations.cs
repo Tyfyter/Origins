@@ -680,44 +680,4 @@ namespace Origins {
 	public interface IBardDamageClassOverride {
 		DamageClass DamageType { get; }
 	}
-	[ExtendsFromMod("Fargowiltas")]
-	public class OriginsFargoPlayer : ModPlayer {
-		public static HashSet<ModBiome> forcedModBiomes = [];
-		public override void Load() {
-			On_Player.UpdateBiomes += On_Player_UpdateBiomes;
-			MonoModHooks.Modify(typeof(BiomeLoader).GetMethod(nameof(BiomeLoader.UpdateBiomes)), IL_BiomeLoader_UpdateBiomes);
-		}
-
-		private void IL_BiomeLoader_UpdateBiomes(ILContext il) {
-			ILCursor c = new(il);
-			c.GotoNext(MoveType.Before, i => i.MatchCallOrCallvirt<ModBiome>(nameof(ModBiome.IsBiomeActive)));
-			c.Index--;
-			c.EmitDup();
-			c.Index += 2;
-			c.EmitDelegate((ModBiome biome, bool active) => active || forcedModBiomes.Contains(biome));
-		}
-		private void On_Player_UpdateBiomes(On_Player.orig_UpdateBiomes orig, Player self) {
-			forcedModBiomes.Clear();
-			int fountain = Main.SceneMetrics.ActiveFountainColor;
-			int brine = ModContent.GetInstance<Brine_Water_Style>().Slot;
-			int defiled = ModContent.GetInstance<Defiled_Water_Style>().Slot;
-			int riven = ModContent.GetInstance<Riven_Water_Style>().Slot;
-			Brine_Pool.forcedBiomeActive = false;
-			Defiled_Wastelands.forcedBiomeActive = false;
-			Riven_Hive.forcedBiomeActive = false;
-			if (FargoServerConfig.Instance.Fountains) {
-				if (fountain == brine) {
-					forcedModBiomes.Add(ModContent.GetInstance<Brine_Pool>());
-					Brine_Pool.forcedBiomeActive = true;
-				} else if (fountain == defiled) {
-					forcedModBiomes.Add(ModContent.GetInstance<Defiled_Wastelands>());
-					Defiled_Wastelands.forcedBiomeActive = true;
-				} else if (fountain == riven) {
-					forcedModBiomes.Add(ModContent.GetInstance<Riven_Hive>());
-					Riven_Hive.forcedBiomeActive = true;
-				}
-			}
-			orig(self);
-		}
-	}
 }
