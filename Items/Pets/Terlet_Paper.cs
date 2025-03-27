@@ -118,21 +118,21 @@ namespace Origins.Items.Pets {
 				speed = 6f;
 				inertia = 48f;
 			}
-			if (distanceToIdlePosition > 12f) {
+			if (distanceToIdlePosition > 24f) {
 				// The immediate range around the player (when it passively floats about)
 
 				// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
 				vectorToIdlePosition.Normalize();
 				vectorToIdlePosition *= speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
-			} else if (Projectile.velocity == Vector2.Zero) {
+			} else {
 				Projectile.velocity *= 0.95f;
+				if (Projectile.velocity.LengthSquared() <= 0.1f * 0.1f) Projectile.velocity = Vector2.Zero;
 			}
 			#endregion
 
 			#region Animation and visuals
-			// So it will lean slightly towards the direction it's moving
-			AngularSmoothing(ref Projectile.rotation, Projectile.AngleTo(Projectile.Center + Projectile.velocity) + MathHelper.PiOver2, 0.1f);
+			if (Projectile.velocity != Vector2.Zero) AngularSmoothing(ref Projectile.rotation, Projectile.velocity.ToRotation() + MathHelper.PiOver2, 0.1f);
 
 			// This is a simple "loop through all frames from top to bottom" animation
 
@@ -150,16 +150,16 @@ namespace Origins.Items.Pets {
 						legs[i].start = new Vector2(i % 2 == 0 ? -17 : 17, -30);
 						break;
 						case 1:
-						legs[i].start = new Vector2(i % 2 == 0 ? -24 : 24, -13);
+						legs[i].start = new Vector2(i % 2 == 0 ? -24 : 24, -14);
 						break;
 						case 2:
 						legs[i].start = new Vector2(i % 2 == 0 ? -24 : 24, 7);
 						break;
 						case 3:
-						legs[i].start = new Vector2(i % 2 == 0 ? -24 : 24, 30);
+						legs[i].start = new Vector2(i % 2 == 0 ? -20 : 20, 24);
 						break;
 					}
-					legTargets[i] = ((legs[i].start + new Vector2(0, 5)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.3f + Projectile.Center;
+					legTargets[i] = ((legs[i].start + new Vector2(0, ((i % 2 == 0) ^ (i % 4 < 2) ? -10 : 10))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.3f + Projectile.Center;
 				}
 			}
 			//for (int i = 0; i < 8; i++) DrawDebugLine(legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center, legTargets[i]);
@@ -169,7 +169,7 @@ namespace Origins.Items.Pets {
 						Vector2 legStart = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
 						if (legStart.DistanceSQ(legTargets[i]) > (totalLegLength * totalLegLength)) {
 							legTargets[i] = Fiberglass_Weaver.GetStandPosition(
-								((legs[i].start + new Vector2(0, 5)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.3f + Projectile.Center,
+								((legs[i].start + new Vector2(0, 0)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.3f + Projectile.Center,
 								legStart,
 								totalLegLength
 							);
@@ -193,7 +193,7 @@ namespace Origins.Items.Pets {
 						Vector2 legStart = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
 						if (legStart.DistanceSQ(legTargets[i]) > (totalLegLength * totalLegLength)) {
 							legTargets[i] = Fiberglass_Weaver.GetStandPosition(
-								((legs[i].start + new Vector2(0, 5)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.3f + Projectile.Center,
+								((legs[i].start + new Vector2(0, 0)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.3f + Projectile.Center,
 								legStart,
 								totalLegLength
 							);

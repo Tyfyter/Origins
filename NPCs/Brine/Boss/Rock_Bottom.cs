@@ -1,27 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.CrossMod.Thorium.Items.Weapons.Bard;
-using Origins.Items.Accessories;
-using Origins.Items.Armor.Vanity.BossMasks;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Other.LootBags;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
-using Origins.Journal;
-using Origins.Tiles.BossDrops;
-using Origins.Tiles.Brine;
-using Origins.World.BiomeData;
-using ReLogic.Content;
-using System;
+﻿using Origins.World.BiomeData;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Rock_Bottom : Brine_Pool_NPC, IInteractableNPC {
@@ -51,17 +31,21 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.dontTakeDamage = true;
 			NPC.lifeMax = 6000;
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 76;
 			NPC.height = 58;
+			NPC.knockBackResist = 0;
+			NPC.SuperArmor = true;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) => NPC.AnyNPCs(Type) ? 0 : Brine_Pool.SpawnRates.Dead_Guy;
 		public override bool PreAI() {
-			NPC.velocity *= 0.6f;
+			NPC.velocity.X = 0f;
+			NPC.velocity.Y = 0f;
+			if (NPC.justHit) NPC.ai[1] = 1;
 			if (NPC.ai[1] == 0) return false;
+			NPC.dontTakeDamage = true;
 			switch ((int)NPC.ai[0]) {
 				default:
 				NPC.ai[0] += 1f / 15;

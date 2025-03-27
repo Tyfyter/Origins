@@ -236,7 +236,7 @@ ENEMY NPCS:
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
-(#2, ^2) Rock Bottom !!!
+(☻) Rock Bottom !!!
 (X) Rotting Husk
 (^) Savage Whip*
 (^) Sea Dragon°
@@ -1464,7 +1464,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#3, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
+(#3?, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*
