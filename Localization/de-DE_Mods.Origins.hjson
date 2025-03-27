@@ -1132,6 +1132,11 @@ Buffs: {
 			10% increased artifact minion damage
 			''' */
 	}
+
+	Inject_Incantation_Buff: {
+		// DisplayName: Inject Incantation Buff
+		// Description: Mods.Origins.Buffs.Inject_Incantation_Buff.Description
+	}
 }
 
 DamageClassName: {

@@ -2,10 +2,13 @@
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Prefixes.BardPrefixes;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Rocket_Rifle : ModItem, ICustomWikiStat {
@@ -51,6 +54,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) {
+				global.modifierBlastRadius = global.modifierBlastRadius.CombineWith(new(1, 1.25f));
+			}
+		}
 		public override void AI() {
 			if (++Projectile.localAI[0] < 7) return;
 			Color dustColor = default;
@@ -59,7 +67,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (global.CanisterData?.Ammo is not Rocket_Dummy_Canister) Projectile.ai[0]++;
 				if (global.CanisterData?.HasSpecialEffect ?? false) {
 					dustType = Tintable_Torch_Dust.ID;
-					dustColor = global.CanisterData.InnerColor;
+					dustColor = global.CanisterData.InnerColor with { A = 100 };
 				}
 			}
 			if (Projectile.ai[0] < FreeFuel) {

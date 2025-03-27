@@ -159,7 +159,7 @@ namespace Origins.Projectiles {
 			if (source is EntitySource_Death) fromDeath = true;
 			else if (source is EntitySource_ItemUse itemUse) {
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is IBlastRadiusPrefix brPrefix) {
-					modifierBlastRadius = brPrefix.BlastRadius();
+					modifierBlastRadius = modifierBlastRadius.CombineWith(brPrefix.BlastRadius());
 				}
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is ISelfDamagePrefix sdPrefix) {
 					selfDamageModifier = selfDamageModifier.CombineWith(sdPrefix.SelfDamage());
