@@ -1,8 +1,5 @@
-﻿using AltLibrary.Common.Systems;
-using Origins.Backgrounds;
-using Origins.Tiles;
+﻿using Origins.Backgrounds;
 using Origins.Tiles.Brine;
-using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
 using PegasusLib;
@@ -14,7 +11,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
-using static PegasusLib.TileUtils;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
@@ -27,6 +23,7 @@ namespace Origins.World.BiomeData {
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Defiled_Underground_Background>();
+		internal static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			return OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 		}
@@ -69,11 +66,11 @@ namespace Origins.World.BiomeData {
 
 			public static bool IsInBrinePool(NPCSpawnInfo spawnInfo) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY);
-				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
+				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
 			}
 			public static bool IsInBrinePool(Vector2 pos) {
 				Tile tile = Framing.GetTileSafely(pos);
-				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && tile.WallType == ModContent.WallType<Baryte_Wall>();
+				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}

@@ -1,7 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
-using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -15,7 +14,6 @@ using Origins.Misc;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
-using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -34,7 +32,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
 
@@ -54,6 +51,7 @@ namespace Origins.World.BiomeData {
 		public override string MapBackground => BackgroundPath;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public static FrameCachedValue<float> NormalGlowValue { get; private set; } = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
+		internal static bool forcedBiomeActive;
 		public static Vector3 ColoredGlow(float intensity) => new Vector3(0.394f, 0.879f, 0.912f) * intensity * NormalGlowValue.GetValue();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -124,7 +122,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>()) || forcedBiomeActive) {
 					return 1f;
 				}
 				return 0f;
@@ -133,7 +131,7 @@ namespace Origins.World.BiomeData {
 				return LandEnemyRate(spawnInfo, hardmode);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>());
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>()) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {

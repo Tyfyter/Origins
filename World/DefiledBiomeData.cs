@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Origins.Tiles.Defiled;
 using Origins.Walls;
 using Terraria;
@@ -25,16 +24,13 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.Personalities;
-using Terraria.ObjectData;
 using Origins.Tiles;
 using AltLibrary.Common.Systems;
-using System.Linq;
 using Origins.Tiles.Other;
 using AltLibrary;
 using Terraria.Localization;
 using AltLibrary.Core;
 using PegasusLib;
-using System.Collections;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -49,18 +45,19 @@ namespace Origins.World.BiomeData {
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Defiled_Underground_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();
+		internal static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneDefiledProgress = (Math.Min(
-				OriginSystem.defiledTiles - (Defiled_Wastelands.NeededTiles - Defiled_Wastelands.ShaderTileCount),
-				Defiled_Wastelands.ShaderTileCount
-			) / Defiled_Wastelands.ShaderTileCount) * 0.9f;
+				OriginSystem.defiledTiles - (NeededTiles - ShaderTileCount),
+				ShaderTileCount
+			) / ShaderTileCount) * 0.9f;
 
 			float before = originPlayer.ZoneDefiledProgressSmoothed;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 			originPlayer.DefiledMonolith = false;
 
-			return OriginSystem.defiledTiles > Defiled_Wastelands.NeededTiles;
+			return OriginSystem.defiledTiles > NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -126,7 +123,7 @@ namespace Origins.World.BiomeData {
 			}
 
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>());
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>()) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {
