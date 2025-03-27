@@ -411,7 +411,7 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus*
-(#2, ^2) Fallacious Vase !!! (glowing yellow dusts while dashing)
+(☻) Fallacious Vase !!! (glowing yellow dusts while dashing)
 (^) Feather Cape
 (^) Feathery Crest
 (^) Fleshy Figurine*

@@ -43,7 +43,34 @@ namespace Origins {
 				Player.tongued = true;
 			}
 			bool otherDash = Player.dashType != 0;
-			if (riptideSet && !Player.mount.Active) {
+			if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+				otherDash = true;
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int shineSparkDuration = 90;
+				float shineSparkSpeed = 16f;
+				if (dashVase) shineSparkSpeed *= 1.2f;
+				if (shineSparkDashTime > 0) {
+					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
+					if (collidingX || collidingY) {
+						shineSparkDashTime = 1;
+						Collision.HitTiles(Player.position, Player.velocity, Player.width, Player.height);
+					}
+					shineSparkDashTime--;
+					dashDelay = 30;
+					loversLeapDashTime = 0;
+					Player.velocity.Y -= Player.gravity * Player.gravDir * 0.1f;
+				} else {
+					if (dashDirection != 0 || dashDirectionY != 0) {
+						shineSparkDashTime = shineSparkDuration;
+						shineSparkDashSpeed = shineSparkSpeed;
+						Player.timeSinceLastDashStarted = 0;
+						shineSparkDashDirection = new((Player.controlRight ? 1 : 0) - (Player.controlLeft ? 1 : 0), (Player.controlDown ? 1 : 0) - (Player.controlUp ? 1 : 0));
+						shineSparkDashDirection.Normalize();
+						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
+					}
+				}
+			} else if(riptideSet && !Player.mount.Active) {
 				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
@@ -130,33 +157,6 @@ namespace Origins {
 					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
 					dashDelay = 10 + 6;
 					refactoringPiecesDashCooldown = 120;
-				}
-			} else if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
-				otherDash = true;
-				Player.dashType = 0;
-				Player.dashTime = 0;
-				const int shineSparkDuration = 90;
-				float shineSparkSpeed = 16f;
-				if (dashVase) shineSparkSpeed *= 1.2f;
-				if (shineSparkDashTime > 0) {
-					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
-					if (collidingX || collidingY) {
-						shineSparkDashTime = 1;
-						Collision.HitTiles(Player.position, Player.velocity, Player.width, Player.height);
-					}
-					shineSparkDashTime--;
-					dashDelay = 30;
-					loversLeapDashTime = 0;
-					Player.velocity.Y -= Player.gravity * Player.gravDir * 0.1f;
-				} else {
-					if (dashDirection != 0 || dashDirectionY != 0) {
-						shineSparkDashTime = shineSparkDuration;
-						shineSparkDashSpeed = shineSparkSpeed;
-						Player.timeSinceLastDashStarted = 0;
-						shineSparkDashDirection = new((Player.controlRight ? 1 : 0) - (Player.controlLeft ? 1 : 0), (Player.controlDown ? 1 : 0) - (Player.controlUp ? 1 : 0));
-						shineSparkDashDirection.Normalize();
-						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
-					}
 				}
 			} else if (loversLeap) {
 				const int loversLeapDuration = 6;
@@ -313,6 +313,14 @@ namespace Origins {
 				}
 				if (Player.dashDelay > 0 && vaseDashDirection != 0) {
 					if (Player.velocity.X * vaseDashDirection < vaseDashSpeed) Player.velocity.X = vaseDashSpeed * vaseDashDirection;
+					Dust.NewDust(
+						Player.position,
+						Player.width,
+						Player.height,
+						DustID.YellowTorch,
+						0,
+						Player.velocity.Y
+					);
 				} else {
 					dashVaseVisual = false;
 				}
