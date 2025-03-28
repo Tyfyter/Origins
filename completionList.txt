@@ -1376,12 +1376,12 @@ CONSUMABLES:
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°
-(#, ^2) Plain Broth° !!!
+(⛥) Plain Broth° !!!
 (X) Salty Broth
-(#, ^2) Savory Broth° !!!
+(⛥) Savory Broth° !!!
 (^) Sharp Broth
 (^) Sour Broth*
-(#, ^2) Spicy Broth° !!!
+(⛥) Spicy Broth° !!!
 (^) Sweet Broth°
 (^) Umami Broth
 
