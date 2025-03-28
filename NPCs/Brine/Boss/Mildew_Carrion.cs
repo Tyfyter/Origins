@@ -9,9 +9,13 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
+using Origins.Misc;
 using Origins.Tiles.BossDrops;
+using PegasusLib;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -20,6 +24,8 @@ using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Origins.Misc.Physics;
+using static Origins.NPCs.Brine.Mildew_Creeper;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -148,7 +154,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 4;
-			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				//CustomTexturePath = "Origins/NPCs/Brine/Boss/Rock_Bottom", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
@@ -200,7 +206,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
-		public override void AI() {
+		public override bool PreAI() {
 			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 			DoTargeting();
 			Vector2 targetVelocity = Vector2.Zero;
@@ -225,7 +231,7 @@ namespace Origins.NPCs.Brine.Boss {
 						rand.Add(mode, weight);
 					}
 					float rangeFactor = Math.Max(0, distanceFromTarget / (15 * 16) - 1);
-					AddMode(AIModes.Idle, 0 + rangeFactor);
+					AddMode(AIModes.Idle, 1);
 					AIMode = rand.Get();
 					LastMode = AIMode;
 					NPC.netUpdate = true;
@@ -233,6 +239,28 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 				break;
 			}
+			if (Main.netMode != NetmodeID.MultiplayerClient && ++NPC.ai[3] > 90) {
+				for (int i = 2; i > 0; i--) {
+					Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0.1f, 0.5f) * Main.rand.NextBool().ToDirectionInt()) * 16;
+					NPC.NewNPC(
+						NPC.GetSource_FromAI(),
+						(int)NPC.Center.X,
+						(int)NPC.Center.Y,
+						ModContent.NPCType<Mildew_Carrion_Tentacle>(),
+						0,
+						tentacleDir.X,
+						tentacleDir.Y,
+						0,
+						NPC.whoAmI
+					);
+					NPC.ai[3] = 0;
+				}
+			}
+			NPC.velocity *= 0.97f;
+			return false;
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(6);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			normalDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
@@ -264,7 +292,13 @@ namespace Origins.NPCs.Brine.Boss {
 			NetMessage.SendData(MessageID.WorldData);
 		}
 		public enum AIModes {
-			Idle,
+			Idle
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((byte)NPC.aiAction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.aiAction = reader.ReadByte();
 		}
 	}
 	public class Boss_Bar_MC : ModBossBar {
@@ -277,6 +311,108 @@ namespace Origins.NPCs.Brine.Boss {
 			bossHeadIndex = npc.GetBossHeadTextureIndex();
 			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
 			return false;
+		}
+	}
+	public class Mildew_Carrion_Tentacle : ModNPC {
+		public override void SetStaticDefaults() {
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+		}
+		public override void SetDefaults() {
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.damage = 58;
+			NPC.lifeMax = 200;
+			NPC.defense = 18;
+			NPC.aiStyle = 0;
+			NPC.width = 16;
+			NPC.height = 16;
+			NPC.knockBackResist = 0f;
+			NPC.HitSound = SoundID.Item127;
+			NPC.DeathSound = SoundID.NPCDeath1;
+		}
+		public NPC Owner {
+			get {
+				int index = (int)NPC.ai[3];
+				if (Main.npc.IndexInRange(index) && Main.npc[index].ModNPC is Mildew_Carrion) return Main.npc[index];
+				NPC.life = 0;
+				return NPC;
+			}
+		}
+		public override void OnSpawn(IEntitySource source) {
+			NPC.velocity = new(NPC.ai[0], NPC.ai[1]);
+			NPC.ai[0] = 0;
+			NPC.ai[1] = 0;
+			NPC.netUpdate = true;
+		}
+		public override bool PreAI() {
+			NPC owner = Owner;
+			Vector2 targetPos = (owner.ModNPC as Mildew_Carrion)?.TargetPos ?? owner.Center;
+			switch ((int)NPC.ai[0]) {
+				case 0: {
+					if (--NPC.ai[2] <= 0 && NPC.Hitbox.OverlapsAnyTiles(false)) {
+						NPC.velocity = Vector2.Zero;
+						NPC.ai[0] = 1;
+					}
+					break;
+				}
+				case 1: {
+					NPC.velocity = Vector2.Zero;
+					Vector2 targetDirection = owner.DirectionTo(targetPos);
+					Vector2 direction = owner.DirectionTo(NPC.Center);
+					if (Vector2.Dot(targetDirection, direction) < -0.1f) {
+						NPC.life = 0;
+					}
+					if (NPC.life > 0) owner.velocity += direction * 0.1f;
+					break;
+				}
+			}
+			return false;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Vector2 diff = Owner.Center - NPC.Center;
+			float dist = diff.Length();
+			if (NPC.localAI[0] == 0) NPC.localAI[0] = Main.rand.Next(1, ushort.MaxValue);
+			FastRandom rand = new((int)NPC.localAI[0]);
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			float rotation = diff.ToRotation() + MathHelper.PiOver2;
+			Main.EntitySpriteDraw(
+				texture,
+				NPC.Center - screenPos,
+				frame,
+				drawColor,
+				rotation,
+				frame.Size() * 0.5f,
+				1,
+				SpriteEffects.None
+			);
+			diff /= dist / (frame.Height - 8);
+			Vector2 pos = NPC.Center;
+			while (dist > frame.Height) {
+				frame.Y = rand.Next(4) * frame.Height;
+				pos += diff;
+				Main.EntitySpriteDraw(
+					texture,
+					pos - screenPos,
+					frame,
+					GetColor(pos),
+					rotation,
+					frame.Size() * 0.5f,
+					1,
+					SpriteEffects.None
+				);
+				dist -= frame.Height - 8;
+			}
+			return false;
+			Color GetColor(Vector2 position) {
+				if (NPC.IsABestiaryIconDummy) return Color.White;
+				Color npcColor = Lighting.GetColor(position.ToTileCoordinates());
+				NPCLoader.DrawEffects(NPC, ref npcColor);
+				return NPC.GetNPCColorTintedByBuffs(npcColor);
+			}
 		}
 	}
 }

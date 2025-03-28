@@ -6,6 +6,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -44,7 +45,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override string Texture => "Origins/NPCs/Brine/Boss/Lost_Diver";
 		private SpawnNPCFlicker flicker;
 		public override void SetStaticDefaults() {
-			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
@@ -85,7 +86,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			HeadID = NPC.GetBossHeadTextureIndex();
-			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.CantTakeLunchMoney[Type] = !OriginsModIntegrations.CheckAprilFools();
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.ShouldBeCountedAsBoss[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
@@ -703,6 +704,12 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC transformation = NPC.NewNPCDirect(NPC.GetSource_Death(), NPC.Center, ModContent.NPCType<Lost_Diver_Transformation>(), ai1: NPC.direction);
 			transformation.Center = NPC.Center;
 			transformation.velocity = NPC.velocity;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((byte)NPC.aiAction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.aiAction = reader.ReadByte();
 		}
 		public enum AIModes {
 			Idle,

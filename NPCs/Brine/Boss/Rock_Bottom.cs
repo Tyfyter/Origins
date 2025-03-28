@@ -7,7 +7,7 @@ namespace Origins.NPCs.Brine.Boss {
 	public class Rock_Bottom : Brine_Pool_NPC {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 15;
-			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
