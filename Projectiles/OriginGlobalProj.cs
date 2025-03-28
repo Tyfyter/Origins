@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
+using Origins.NPCs.MiscE;
 using Origins.Projectiles.Weapons;
 using Origins.Questing;
 using Origins.Reflection;
@@ -462,6 +463,15 @@ namespace Origins.Projectiles {
 				}
 			}
 			if (astoxoEffect) Astoxo.DoEffect(projectile);
+			if (projectile.type == ProjectileID.Boulder && Main.noTrapsWorld && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(3)) {
+				Vector2 pos = projectile.Bottom;
+				NPC.NewNPC(
+					projectile.GetSource_Death(),
+					(int)pos.X,
+					(int)pos.Y,
+					ModContent.NPCType<Boulder_Mimic>()
+				);
+			}
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
 			if (weakpointAnalyzerTarget is Vector2 targetPos) {
