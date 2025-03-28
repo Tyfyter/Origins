@@ -54,6 +54,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 25, 1, 1, new Conditions.DontStarveIsNotUp()));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				new FlavorTextBestiaryInfoElement("CommonBestiaryFlavor.Pigron")
 			);
