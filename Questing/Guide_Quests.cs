@@ -17,6 +17,7 @@ namespace Origins.Questing {
 				if (!Started) return false;
 				if (completed) return true;
 				for (int i = 0; i < Quest_Registry.Quests.Count; i++) {
+					if (Quest_Registry.Quests[i] == this) continue;
 					if (Quest_Registry.Quests[i].Completed) {
 						HasNotification = false;
 						return completed = true;
