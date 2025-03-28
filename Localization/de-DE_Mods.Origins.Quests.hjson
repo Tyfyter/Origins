@@ -12,8 +12,8 @@ Guide: {
 								
 			- [qs{0}:Complete a quest]
 			''' */
-		// Inquire: "[c/ff0000:dialog needed]"
-		// Start: "[c/ff0000:dialog needed]"
+		// Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in. I happen to have a Journal on hand for you! Accept my quest if you want it."
+		// Start: You did it! Here, have this.
 	}
 }
 

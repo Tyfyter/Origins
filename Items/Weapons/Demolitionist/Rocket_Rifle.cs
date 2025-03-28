@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Dusts;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using Terraria;
@@ -8,7 +10,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Prefixes.BardPrefixes;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Rocket_Rifle : ModItem, ICustomWikiStat {
@@ -23,6 +24,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 7);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item11;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulBottleNight, 15)
+			.AddIngredient(ModContent.ItemType<Respyrite>(), 25)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 50)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, -6);
@@ -56,7 +65,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) {
-				global.modifierBlastRadius = global.modifierBlastRadius.CombineWith(new(1, 1.25f));
+				global.modifierBlastRadius = global.modifierBlastRadius.CombineWith(new(1, 1.5f));
 			}
 		}
 		public override void AI() {

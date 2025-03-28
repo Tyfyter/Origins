@@ -103,6 +103,8 @@ TOWN NPC Quests:
 (^) Goblin Tinkerer - Reel In the Goods*
 (^) Goblin Tinkerer - Lend a Hand?*
 (X) Goblin Tinkerer - Full Speed Ahead
+(^) Guide - Get Questing!
+(X) Guide - Troubling Trouble !!!
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
 (^) Party Girl - Livin' Up the Party
@@ -153,7 +155,7 @@ ENEMY NPCS:
 (^) Bile Thrower*
 (X) Blotopus
 (^) Bottomfeeder*
-(☻) Boulder Mimic !!!
+(#2, ^2) Boulder Mimic !!! (can't turn around, make it faster)
 (^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
 (#, ^2) Catacomb Clearer !!!? (limestone cave generation not yet designed)
@@ -236,7 +238,7 @@ ENEMY NPCS:
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
-(☻) Rock Bottom !!!
+(#2, ^2) Rock Bottom !!! (trigger on death)
 (X) Rotting Husk
 (^) Savage Whip*
 (^) Sea Dragon°
@@ -371,7 +373,7 @@ ARMOR:
 ACCESSORIES:
 ---
 (X) 5G Broadband Wi-Fi Router
-(☻) Abyssal Anchor* !!!
+(^) Abyssal Anchor*
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
@@ -411,7 +413,7 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (^) Explosive Artery*
 (^) Fairy Lotus*
-(☻) Fallacious Vase !!! (glowing yellow dusts while dashing)
+(^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
 (^) Fleshy Figurine*
@@ -491,7 +493,7 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (^) Sparking Flame Barrel*
-(☻) Speed Booster* !!!
+(^) Speed Booster*
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
@@ -874,7 +876,7 @@ SUMMONER WEAPONS:
 (^) Guardian Rod
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
-(☻) Inject Incantation !!!
+(^) Inject Incantation
 (^) Joint Pop*
 (^) Maelstrom Incantation
 (%2) Ocean Amulet !!!
@@ -986,7 +988,7 @@ EXPLOSIVE WEAPONS:
 (^) Grenade Lawnchair
 (^) Happy Bomb*
 (X) Rattlesnake
-(☻) Rocket Rifle (should probably not have larger blast radius, as-is it's almost a sidegrade to the Rocket Launcher despite being way earlier than it due to its versatility and having similar or better stats for everything but speed and knockback)
+(^) Rocket Rifle
 (X) Shroomcannon
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
@@ -1275,7 +1277,7 @@ MATERIALS:
 (^) Felnum Bar*
 (^) Magic Hair Spray*
 (^) NE-8*
-(☻) Ocotillo Flower !!!
+(^) Ocotillo Flower
 (^) Riven Carapace*
 (^) Riven Seeds*
 (^) Rubber*
@@ -1297,7 +1299,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(☻) Geothermal Sludge !!!
+(#2, ^2) Geothermal Sludge !!! (make chambersites a little more common and remove platinum coin from pool entirely)
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*
@@ -1381,7 +1383,7 @@ CONSUMABLES:
 (^) Sour Broth*
 (#, ^2) Spicy Broth° !!!
 (^) Sweet Broth°
-(#, ^2) Umami Broth !!!
+(^) Umami Broth
 
 (X) Adrenaline
 (X) Bottomless Multi-Med
@@ -1437,6 +1439,7 @@ CONSUMABLES:
 (#2, ^2, 々) Riven Loot Box°
 (X) Twilight Crate*
 
+(X) Eye of Aether !!!
 (^) Gooey Water*
 (^) Holiday Hair Dye*
 (^) Lottery Ticket*

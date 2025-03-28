@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.Tiles.Other;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Origins.Tiles.Other;
 
 namespace Origins.Items.Materials {
 	public class Geothermal_Sludge : ModItem {
@@ -34,14 +29,14 @@ namespace Origins.Items.Materials {
 				if (Main.rand.NextBool(30)) resultStack += Main.rand.Next(0, 6);
 			} else if (Main.rand.NextBool(3)) {
 				if (Main.rand.NextBool(500)) {
-					resultType = ItemID.PlatinumCoin;
+					resultType = ItemID.SilverCoin;
 					for (int i = 0; i < 3; i++) {
 						if (Main.rand.NextBool(5)) resultStack ++;
 					}
 				} else if (Main.rand.NextBool(40)) {
 					resultType = ItemID.GoldCoin;
 					for (int i = 0; i < 4; i++) {
-						if (Main.rand.NextBool(5)) resultStack += Main.rand.Next(5, 26);
+						if (Main.rand.NextBool(5)) resultStack += 1;
 					}
 					if (Main.rand.NextBool(5)) resultStack += Main.rand.Next(5, 25);
 				} else {

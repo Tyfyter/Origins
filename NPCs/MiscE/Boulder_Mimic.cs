@@ -12,15 +12,16 @@ namespace Origins.NPCs.MiscE {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
-			NPC.lifeMax = 100;
-			NPC.defense = 20;
+			NPC.lifeMax = 120;
+			NPC.defense = 22;
 			NPC.damage = 40;
 			NPC.width = 32;
 			NPC.height = 32;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.Dig;
-			NPC.DeathSound = SoundID.Dig;
+			NPC.HitSound = SoundID.NPCHit41;
+			NPC.DeathSound = SoundID.NPCDeath43;
 			DrawOffsetY = 20;
+			NPC.knockBackResist = 0.5f;
 		}
 		public override void AI() {
 			if (NPC.frame.Y / NPC.frame.Height >= 6) {

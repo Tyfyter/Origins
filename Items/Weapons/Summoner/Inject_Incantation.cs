@@ -1,32 +1,24 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Materials;
+using Origins.NPCs;
+using Origins.Projectiles.Weapons;
 using ReLogic.Content;
 using System;
+using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
-using Origins.Dev;
-using System.IO;
-using Origins.Items.Materials;
-using PegasusLib;
-using Terraria.Graphics.Shaders;
-using Terraria.Audio;
-using System.Collections.Generic;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Projectiles.Weapons;
-using Origins.Items.Tools;
-using Terraria.GameContent;
-using Origins.NPCs;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Inject_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
-			Item.damage = 15;
+			Item.damage = 10;
 			Item.DamageType = DamageClasses.Incantation;
 			Item.noMelee = true;
 			Item.width = 22;
@@ -47,8 +39,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Book, 5)
-			.AddIngredient(ItemID.Shiverthorn, 7)
-			.AddIngredient(ItemID.IceBlock, 15)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -156,7 +147,7 @@ namespace Origins.Items.Weapons.Summoner {
 					Projectile.position - Vector2.One * 2,
 					Projectile.width + 4,
 					Projectile.height + 4,
-					DustID.WhiteTorch,
+					DustID.SnowBlock,
 					Projectile.velocity.X * 0.4f,
 					Projectile.velocity.Y * 0.4f,
 					100,
@@ -165,6 +156,7 @@ namespace Origins.Items.Weapons.Summoner {
 				dust.noGravity = true;
 				dust.velocity *= 1.8f;
 				dust.velocity.Y -= 0.5f;
+				//dust.noLight = true;
 			}
 			#endregion
 		}

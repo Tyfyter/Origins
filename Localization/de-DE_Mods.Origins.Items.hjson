@@ -5764,7 +5764,11 @@ Geothermal_Sludge: {
 
 Inject_Incantation: {
 	// DisplayName: Inject Incantation
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
 }
 
 Huff_Puffer_Bait: {

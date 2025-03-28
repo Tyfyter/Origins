@@ -181,7 +181,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 				rot[i] = proj.oldRot[reverseIndex];
 				pos[i] = proj.oldPos[reverseIndex] + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(-6, 6), rot[i] + MathHelper.PiOver2);
-				Lighting.AddLight(pos[i], 0.1f, 0.75f, 1f);
+				Lighting.AddLight(pos[i], 0.25f, 0f, 0.28f);
 			}
 			if (length == 0) return;
 			//Dust.NewDustPerfect(pos[length - 1] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
