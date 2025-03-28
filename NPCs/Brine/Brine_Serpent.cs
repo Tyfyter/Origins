@@ -200,6 +200,8 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath23;
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -225,6 +227,8 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath23;
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;
@@ -249,6 +253,8 @@ namespace Origins.NPCs.Brine {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.width = NPC.height = 24;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath23;
 		}
 		public override void Init() {
 			MoveSpeed = 5.5f;

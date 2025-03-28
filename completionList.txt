@@ -898,7 +898,7 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(⛥) Huff Puffer Bait !!!
+(☻) Huff Puffer Bait !!! ('d ideally have sprites for the clouds that don't need to be scaled up 2x)
 (#, ^2) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone

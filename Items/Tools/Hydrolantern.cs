@@ -1,5 +1,6 @@
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.NPCs.Brine;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -66,8 +67,6 @@ namespace Origins.Items.Tools {
 				rotationSpeed -= Projectile.rotation * 0.001f;
 				rotationSpeed *= 0.99f;
 				rotationSpeed += Projectile.velocity.X * 0.0002f;
-				foreach (Player player in Main.ActivePlayers) GetMovedBy(Projectile, player);
-				foreach (NPC npc in Main.ActiveNPCs) GetMovedBy(Projectile, npc);
 			} else {
 				Projectile.velocity.Y += 0.12f;
 				Projectile.rotation += rotationSpeed;
@@ -79,8 +78,9 @@ namespace Origins.Items.Tools {
 		}
 		public override Color? GetAlpha(Color lightColor) => lightColor * Fade;
 		public static void GetMovedBy(Projectile projectile, Entity entity, float speedMult = 1f) {
-			if (!ProjectileID.Sets.CanDistortWater[projectile.type] || ProjectileID.Sets.NoLiquidDistortion[projectile.type]) return;
-			if (!entity.wet && !Collision.WetCollision(projectile.position, projectile.width, projectile.height)) return;
+			if (entity is Projectile otherProj && (!ProjectileID.Sets.CanDistortWater[otherProj.type] || ProjectileID.Sets.NoLiquidDistortion[otherProj.type])) return;
+			if (!projectile.wet && !Collision.WetCollision(projectile.position, projectile.width, projectile.height)) return;
+			if (!entity.wet && !Collision.WetCollision(entity.position, entity.width, entity.height)) return;
 			float distSQ = projectile.Center.Clamp(entity.Hitbox).DistanceSQ(projectile.Center);
 			const float max_range = 16 * 6;
 			if (distSQ < max_range * max_range) {
@@ -134,8 +134,23 @@ namespace Origins.Items.Tools {
 		public override void AI(Projectile projectile) {
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (projectile.whoAmI != other.whoAmI && ProjectileTypes.Contains(other.type) && ProjectileLoader.ShouldUpdatePosition(projectile)) {
-					Hydrolantern_Use.GetMovedBy(other, projectile, projectile.ignoreWater ? 1f : 0.5f);
+					GetMovedBy(other, projectile, projectile.ignoreWater ? 1f : 0.5f);
 				}
+			}
+			foreach (Player player in Main.ActivePlayers) GetMovedBy(projectile, player);
+			foreach (NPC npc in Main.ActiveNPCs) GetMovedBy(projectile, npc);
+		}
+		public static void GetMovedBy(Projectile projectile, Entity entity, float speedMult = 1f) {
+			if (entity is Projectile otherProj && (!ProjectileID.Sets.CanDistortWater[otherProj.type] || ProjectileID.Sets.NoLiquidDistortion[otherProj.type])) return;
+			if (!projectile.wet && !Collision.WetCollision(projectile.position, projectile.width, projectile.height)) return;
+			if (!entity.wet && !Collision.WetCollision(entity.position, entity.width, entity.height)) return;
+			float distSQ = projectile.Center.Clamp(entity.Hitbox).DistanceSQ(projectile.Center);
+			const float max_range = 16 * 6;
+			if (distSQ < max_range * max_range) {
+				float sizeFactor = (entity.width * entity.height) / 840f;
+				if (entity is NPC npc && npc.ModNPC is Brine_Pool_NPC) sizeFactor /= 5;
+				if (sizeFactor > 1) sizeFactor = MathF.Pow(sizeFactor, 0.25f);
+				projectile.velocity += entity.velocity.WithMaxLength(8) * (1 - distSQ / (max_range * max_range)) * 0.03f * speedMult * sizeFactor;
 			}
 		}
 	}

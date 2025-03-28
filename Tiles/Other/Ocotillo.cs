@@ -66,7 +66,7 @@ namespace Origins.Tiles.Other {
 			Item.ResearchUnlockCount = 3;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Ocotillo>());
+			Item.CloneDefaults(ItemID.RedHusk);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.RedDye, 2)

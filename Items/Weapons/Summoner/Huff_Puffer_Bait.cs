@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Tools;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -18,14 +20,23 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 70;
-			Item.knockBack = 1;
-			Item.shoot = ModContent.ProjectileType<Huff_Puffer>();
+			Item.DefaultToThrownWeapon(ModContent.ProjectileType<Huff_Puffer>(), 20, 8);
+			Item.noUseGraphic = true;
+			Item.DamageType = DamageClass.Summon;
+			Item.damage = 30;
+			Item.knockBack = 0.2f;
 			Item.bait = 193;
 			Item.consumable = false;
 		}
 		public override bool? CanConsumeBait(Player player) => false;
 		public override bool AltFunctionUse(Player player) => true;
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.altFunctionUse != 2) {
+				Projectile.NewProjectile(source, position, velocity, type, Item.damage, Item.knockBack, player.whoAmI);
+				player.UpdateMaxTurrets();
+			}
+			return false;
+		}
 	}
 	public class Huff_Puffer_Bait_Player : ModPlayer {
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
@@ -46,14 +57,16 @@ namespace Origins.Items.Weapons.Summoner {
 				Item item = player.GetFishingConditions().Bait;
 				if (item.ModItem is not Huff_Puffer_Bait) return;
 				projectile.ai[1] = ItemID.None;
+				projectile.ai[0] = 2;
 				Projectile.NewProjectile(
 					player.GetSource_ItemUse(item),
 					projectile.Center,
 					Vector2.Zero,
 					item.shoot,
-					player.GetWeaponDamage(item),
-					player.GetWeaponKnockback(item)
+					(int)(player.GetWeaponDamage(item) * 1.2f),
+					player.GetWeaponKnockback(item) * 1.5f
 				);
+				player.UpdateMaxTurrets();
 			}
 		}
 	}
@@ -65,19 +78,19 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			public override void SetDefaults() {
 				Projectile.DamageType = DamageClass.Summon;
-				Projectile.width = 18;
-				Projectile.height = 18;
+				Projectile.width = 16;
+				Projectile.height = 16;
 				Projectile.tileCollide = true;
-				Projectile.friendly = false;
+				Projectile.friendly = true;
 				Projectile.sentry = true;
 				Projectile.penetrate = -1;
 				Projectile.timeLeft = Projectile.SentryLifeTime;
 				Projectile.aiStyle = 0;
-				Projectile.timeLeft = 18000;
 				Projectile.netImportant = true;
 			}
 			float rotationSpeed = 0;
 			float Fade => Math.Min(Projectile.timeLeft / 52f, 1);
+			bool Dead => Projectile.ai[0] >= 120;
 			public override void AI() {
 				Projectile.velocity *= Projectile.wet ? 0.96f : 0.99f;
 				if (Projectile.wet) {
@@ -85,31 +98,49 @@ namespace Origins.Items.Weapons.Summoner {
 					Projectile.velocity.Y += waveFactor * 0.01f;
 					Projectile.rotation += rotationSpeed;
 					Projectile.rotation = MathF.Atan2(MathF.Sin(Projectile.rotation), MathF.Cos(Projectile.rotation));
-					rotationSpeed -= Projectile.rotation * 0.001f;
+					rotationSpeed -= Projectile.rotation * -0.001f * Dead.ToDirectionInt();
 					rotationSpeed *= 0.99f;
 					rotationSpeed += Projectile.velocity.X * 0.0002f;
-					foreach (Player player in Main.ActivePlayers) GetMovedBy(Projectile, player);
-					foreach (NPC npc in Main.ActiveNPCs) GetMovedBy(Projectile, npc);
+					if (!Dead) {
+						if (Projectile.ai[0] > 0) Projectile.ai[0]--;
+						if (++Projectile.frameCounter > 6) {
+							Projectile.frameCounter = 0;
+							if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = Main.projFrames[Type] - 2;
+							Projectile.localAI[0]++;
+							if (Projectile.localAI[0] < ProjectileID.ToxicCloud) Projectile.localAI[0] = ProjectileID.ToxicCloud;
+							if (Projectile.localAI[0] > ProjectileID.ToxicCloud3) Projectile.localAI[0] = ProjectileID.ToxicCloud;
+						}
+					}
+					if (Math.Abs(Projectile.velocity.X) > 2) Projectile.spriteDirection = Projectile.velocity.X > 0 ? 1 : -1;
 				} else {
 					Projectile.velocity.Y += 0.12f;
 					Projectile.rotation += rotationSpeed;
 					rotationSpeed *= 0.99f;
-					rotationSpeed += Projectile.velocity.X * 0.0002f;
+					rotationSpeed += Projectile.velocity.X * 0.0003f;
+					if (!Dead) {
+						Projectile.ai[0]++;
+					} else {
+						if (Projectile.timeLeft > 60) Projectile.timeLeft = 60;
+					}
 				}
-				float fade = Fade;
-				Lighting.AddLight(Projectile.Center, 1 * fade, 1 * fade, 0.2f * fade);
+
+				const int HalfSpriteWidth = 30 / 2;
+				const int HalfSpriteHeight = 30 / 2;
+
+				int HalfProjWidth = Projectile.width / 2;
+				int HalfProjHeight = Projectile.height / 2;
+				DrawOriginOffsetX = 0;
+				DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
+				DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
+			}
+			public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+				if (Projectile.frame >= Main.projFrames[Type] - 2) {
+					hitbox.Inflate(32, 32);
+				} else {
+					hitbox.Inflate(-8, -8);
+				}
 			}
 			public override Color? GetAlpha(Color lightColor) => lightColor * Fade;
-			public static void GetMovedBy(Projectile projectile, Entity entity, float speedMult = 1f) {
-				if (!ProjectileID.Sets.CanDistortWater[projectile.type] || ProjectileID.Sets.NoLiquidDistortion[projectile.type]) return;
-				if (!entity.wet && !Collision.WetCollision(projectile.position, projectile.width, projectile.height)) return;
-				float distSQ = projectile.Center.Clamp(entity.Hitbox).DistanceSQ(projectile.Center);
-				const float max_range = 16 * 6;
-				if (distSQ < max_range * max_range) {
-					float sizeFactor = (entity.width * entity.height) / 840f;
-					projectile.velocity += entity.velocity.WithMaxLength(8) * (1 - distSQ / (max_range * max_range)) * 0.03f * speedMult * sizeFactor;
-				}
-			}
 			public override bool OnTileCollide(Vector2 oldVelocity) {
 				const float bounce = 0.4f;
 				const float friction = 0.9f;
@@ -131,15 +162,15 @@ namespace Origins.Items.Weapons.Summoner {
 				} else {
 					float lowestDiff = MathHelper.TwoPi;
 					float lowest = 0;
-					for (int i = 0; i < 4; i++) {
-						float current = GeometryUtils.AngleDif(Projectile.rotation, MathHelper.PiOver2 * i, out _);
+					for (int i = 0; i < 2; i++) {
+						float current = GeometryUtils.AngleDif(Projectile.rotation, MathHelper.Pi * i, out _);
 						if (current < lowestDiff) {
 							lowestDiff = current;
-							lowest = MathHelper.PiOver2 * i;
+							lowest = MathHelper.Pi * i;
 						}
 					}
 					Vector2 mov = Vector2.Zero;
-					mov.X = Math.Min(GeometryUtils.AngleDif(Projectile.rotation, lowest, out int dir), 0.2f) * dir * 2;
+					mov.X = Math.Min(GeometryUtils.AngleDif(Projectile.rotation, lowest, out int dir), 1f) * dir * 2;
 					Vector4 slopeCollision = Collision.SlopeCollision(Projectile.position, mov, Projectile.width, Projectile.height);
 					Projectile.position = slopeCollision.XY();
 					mov = slopeCollision.ZW();
@@ -148,6 +179,22 @@ namespace Origins.Items.Weapons.Summoner {
 					rotationSpeed = mov.X * 0.05f;
 				}
 				return false;
+			}
+			public override void PostDraw(Color lightColor) {
+				int cloudType = (int)Projectile.localAI[0];
+				if (Projectile.localAI[0] == 0 || Projectile.frame < Main.projFrames[Type] - 2) return;
+				Main.instance.LoadProjectile(cloudType);
+				Texture2D texture = TextureAssets.Projectile[cloudType].Value;
+				Main.EntitySpriteDraw(
+					texture,
+					Projectile.Center - Main.screenPosition,
+					null,
+					lightColor * 0.5f,
+					0,
+					texture.Size() * 0.5f,
+					2,
+					SpriteEffects.None
+				);
 			}
 		}
 	}

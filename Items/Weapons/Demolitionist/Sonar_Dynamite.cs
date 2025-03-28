@@ -45,11 +45,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Sonar_Dynamite_P : ModProjectile {
 		public override string Texture => typeof(Sonar_Dynamite).GetDefaultTMLName();
 		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.Items.{nameof(Sonar_Dynamite)}.DisplayName");
-		AutoLoadingAsset<Texture2D> sonarTexture = typeof(Sonar_Dynamite).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
 			Origins.MagicTripwireDetonationStyle[Type] = 1;
 			ProjectileID.Sets.Explosive[Type] = true;
+			Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Dynamite);
@@ -77,8 +77,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 				rotationSpeed *= 0.99f;
 				rotationSpeed += Projectile.velocity.X * 0.0002f;
-				foreach (Player player in Main.ActivePlayers) Hydrolantern_Use.GetMovedBy(Projectile, player);
-				foreach (NPC npc in Main.ActiveNPCs) Hydrolantern_Use.GetMovedBy(Projectile, npc);
 			} else {
 				if (Projectile.ai[0] > 5f) {
 					if (Projectile.velocity.Y == 0f && Projectile.velocity.X != 0f) {
