@@ -221,6 +221,11 @@ namespace Origins {
 		public bool bindingBookVisual = false;
 		public int bindingBookDye = 0;
 		public Physics.Chain[] bindingBookChains = new Physics.Chain[3];
+		public bool abyssalAnchorVisual = false;
+		public int abyssalAnchorDye = 0;
+		public Physics.Chain abyssalAnchorChain = null;
+		public Vector2 abyssalAnchorPosition;
+		public Vector2 abyssalAnchorVelocity;
 		public bool priorityMail = false;
 		public bool emergencyBeeCanister = false;
 		public bool blizzardwalkerJacket = false;
@@ -712,6 +717,7 @@ namespace Origins {
 			dryadNecklace = false;
 			weakpointAnalyzer = false;
 			bindingBookVisual = false;
+			abyssalAnchorVisual = false;
 			priorityMail = false;
 			emergencyBeeCanister = false;
 			if (!blizzardwalkerJacket) blizzardwalkerActiveTime = 0;

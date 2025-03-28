@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Drawing;
 using Terraria;
 
 namespace Origins.Misc {
@@ -112,7 +113,17 @@ namespace Origins.Misc {
 								currentLink.velocity = newVel;
 							}
 							Vector2 lastChainTryMovement = direction * distDiff * 0.5f;
-							Vector2 lastChainMovement = Collision.AnyCollision(links[i - 1].position - new Vector2(2), lastChainTryMovement, 4, 4);
+							Link lastLink = links[i - 1];
+							Vector2 lastChainMovement;// = lastLink.size == 0 ? lastChainTryMovement : Collision.AnyCollision(lastLink.position - new Vector2(lastLink.size * 0.5f), lastChainTryMovement, lastLink.size, lastLink.size);
+							if (lastLink.size == 0) {
+								lastChainMovement = lastChainTryMovement;
+							} else {
+								Vector2 halfSize = new Vector2(lastLink.size * 0.5f);
+								Vector4 slopeCollision = Collision.SlopeCollision(links[i - 1].position - halfSize, lastChainTryMovement, lastLink.size, lastLink.size);
+								links[i - 1].position = slopeCollision.XY() + halfSize;
+								lastChainMovement = slopeCollision.ZW();
+								lastChainMovement = Collision.TileCollision(links[i - 1].position - halfSize, lastChainMovement, lastLink.size, lastLink.size);
+							}
 							links[i - 1].position += lastChainMovement;
 							links[i - 1].velocity += lastChainMovement;
 							currentLink.position += lastChainTryMovement - lastChainMovement;
@@ -147,6 +158,7 @@ namespace Origins.Misc {
 				public float length = length;
 				public float drag = drag;
 				public float spring = spring;
+				public int size = 4;
 			}
 		}
 	}

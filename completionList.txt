@@ -371,7 +371,7 @@ ARMOR:
 ACCESSORIES:
 ---
 (X) 5G Broadband Wi-Fi Router
-(#2, ^2) Abyssal Anchor* !!!
+(☻) Abyssal Anchor* !!!
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
