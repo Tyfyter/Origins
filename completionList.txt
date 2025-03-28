@@ -1299,7 +1299,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(#2, ^2) Geothermal Sludge !!! (make chambersites a little more common and remove platinum coin from pool entirely)
+(☻) Geothermal Sludge !!! (made chambersites more common and removed platinum coin from pool entirely)
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*

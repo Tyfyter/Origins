@@ -20,7 +20,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack) {
 			resultStack = 1;
-			if (Main.rand.NextBool(80)) {
+			if (Main.rand.NextBool(40)) {
 				resultType = ModContent.ItemType<Chambersite_Item>();
 				if (Main.rand.NextBool(10)) resultStack += Main.rand.Next(0, 2);
 				if (Main.rand.NextBool(15)) resultStack += Main.rand.Next(0, 3);
@@ -28,12 +28,7 @@ namespace Origins.Items.Materials {
 				if (Main.rand.NextBool(25)) resultStack += Main.rand.Next(0, 5);
 				if (Main.rand.NextBool(30)) resultStack += Main.rand.Next(0, 6);
 			} else if (Main.rand.NextBool(3)) {
-				if (Main.rand.NextBool(500)) {
-					resultType = ItemID.SilverCoin;
-					for (int i = 0; i < 3; i++) {
-						if (Main.rand.NextBool(5)) resultStack ++;
-					}
-				} else if (Main.rand.NextBool(40)) {
+				if (Main.rand.NextBool(40)) {
 					resultType = ItemID.GoldCoin;
 					for (int i = 0; i < 4; i++) {
 						if (Main.rand.NextBool(5)) resultStack += 1;
