@@ -1139,8 +1139,12 @@ Buffs: {
 	}
 
 	Umami_Broth_Buff: {
-		// DisplayName: Umami Broth Buff
-		// Description: Mods.Origins.Buffs.Umami_Broth_Buff.Description
+		// DisplayName: Umami Broth
+		/* Description:
+			'''
+			All minions inflict Acid Venom
+			Artifact minions also inflict Toxic Shock
+			''' */
 	}
 }
 

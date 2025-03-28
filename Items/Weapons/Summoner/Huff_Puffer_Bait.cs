@@ -91,6 +91,7 @@ namespace Origins.Items.Weapons.Summoner {
 			float rotationSpeed = 0;
 			float Fade => Math.Min(Projectile.timeLeft / 52f, 1);
 			bool Dead => Projectile.ai[0] >= 120;
+			public override bool? CanCutTiles() => false;
 			public override void AI() {
 				Projectile.velocity *= Projectile.wet ? 0.96f : 0.99f;
 				if (Projectile.wet) {

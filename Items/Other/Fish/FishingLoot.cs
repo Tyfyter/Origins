@@ -89,7 +89,10 @@ namespace Origins.Items.Other.Fish {
 				)),
 		#endregion dusk
 		#region brine
-				((player, _) => player.InModBiome<Brine_Pool>() ? 1 : 0, new OrderedFishingLoot(
+				((player, _) => player.InModBiome<Brine_Pool>() ? 1 : 0, new OrderedFishingLoot(new LeadingConditionFishLoot(
+						new OrderedFishingLoot(
+						new ItemFishingLoot(ItemType<Huff_Puffer_Bait>(), (_, _) => true)
+					), (_, attempt) => attempt.rare),
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
 						new ItemFishingLoot(ItemType<Bobbit_Worm>(), (_, attempt) => attempt.questFish == ItemType<Bobbit_Worm>()),

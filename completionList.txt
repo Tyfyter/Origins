@@ -155,7 +155,7 @@ ENEMY NPCS:
 (^) Bile Thrower*
 (X) Blotopus
 (^) Bottomfeeder*
-(#2, ^2) Boulder Mimic !!! (can't turn around, make it faster)
+(☻) Boulder Mimic !!! (can turn around, made it faster)
 (^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
 (#, ^2) Catacomb Clearer !!!? (limestone cave generation not yet designed)
@@ -238,7 +238,7 @@ ENEMY NPCS:
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
-(#2, ^2) Rock Bottom !!! (trigger on death)
+(☻) Rock Bottom !!! (trigger on death)
 (X) Rotting Husk
 (^) Savage Whip*
 (^) Sea Dragon°

@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,6 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
 	// made seed-specific because not getting killed by boulders is how you're supposed to deal with them
 	public class Boulder_Mimic : Glowing_Mod_NPC {
+		public float SpeedMult => 1.15f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 9;
 			// seed-specific NPCs don't get bestiary entries
@@ -23,11 +26,18 @@ namespace Origins.NPCs.MiscE {
 			DrawOffsetY = 20;
 			NPC.knockBackResist = 0.5f;
 		}
+		public override bool PreAI() {
+			NPC.velocity /= SpeedMult;
+			return true;
+		}
 		public override void AI() {
 			if (NPC.frame.Y / NPC.frame.Height >= 6) {
 				DrawOffsetY = 14;
 				NPC.aiStyle = NPCAIStyleID.Granite_Elemental;
+				float diff = NPC.GetTargetData().Center.X - NPC.Center.X;
+				if (diff != 0) NPC.spriteDirection = diff > 0 ? 1 : -1;
 			}
+			NPC.velocity *= SpeedMult;
 		}
 		public override void FindFrame(int frameHeight) {
 			bool expanded = NPC.frame.Y / NPC.frame.Height >= 6;

@@ -5778,5 +5778,9 @@ Huff_Puffer_Bait: {
 
 Umami_Broth: {
 	// DisplayName: Umami Broth
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		All minions inflict Acid Venom
+		Artifact minions also inflict Toxic Shock
+		''' */
 }
