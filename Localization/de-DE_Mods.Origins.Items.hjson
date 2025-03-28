@@ -5784,3 +5784,8 @@ Umami_Broth: {
 		Artifact minions also inflict Toxic Shock
 		''' */
 }
+
+Mildew_Incantation: {
+	// DisplayName: Mildew Incantation
+	// Tooltip: ""
+}

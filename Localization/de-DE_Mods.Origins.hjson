@@ -1146,6 +1146,11 @@ Buffs: {
 			Artifact minions also inflict Toxic Shock
 			''' */
 	}
+
+	Mildew_Incantation_Buff: {
+		// DisplayName: Mildew Incantation Buff
+		// Description: Mods.Origins.Buffs.Mildew_Incantation_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1670,6 +1675,8 @@ Projectiles: {
 	// Mildew_Carrion_Spore.DisplayName: Mildew Carrion Spore
 	// Mildew_Carrion_Spore2.DisplayName: Mildew Carrion Spore2
 	// Mildew_Carrion_Spore3.DisplayName: Mildew Carrion Spore3
+	// Mildew_Incantation_P.DisplayName: Mildew Incantation P
+	// Mildew_Incantation_Creeper.DisplayName: Mildew Incantation Creeper
 }
 
 Prefixes: {

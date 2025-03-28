@@ -77,6 +77,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			base.SetDefaults();
 		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) { }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 	}
 }

@@ -899,7 +899,7 @@ SUMMONER WEAPONS:
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
 (☻) Huff Puffer Bait !!! ('d ideally have sprites for the clouds that don't need to be scaled up 2x)
-(#, ^2) Mildew Incantation !!!
+(☻) Mildew Incantation !!! (Should probably have its own creeper sprites instead of scaling the normal ones down)
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock

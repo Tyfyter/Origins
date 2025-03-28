@@ -23,7 +23,7 @@ namespace Origins.Tiles.Brine {
 			RegisterItemDrop(ItemType<Mildew_Item>());
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
-			DustType = DustID.GrassBlades;
+			DustType = DustID.Bone;
 		}
 	}
 	public class Mildew_Item : ModItem {

@@ -368,6 +368,9 @@ namespace Origins.NPCs {
 				if (injectIncantationDebuff) {
 					damageBoost += 6f;
 				}
+				if (mildewIncantationDebuff) {
+					damageBoost += 6f;
+				}
 				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost * ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type]);
 			} else if (npc.HasBuff(Futurephones_Buff.ID)) {
 				modifiers.SourceDamage *= 1.05f;
