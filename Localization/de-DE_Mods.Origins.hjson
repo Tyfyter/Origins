@@ -1667,6 +1667,9 @@ Projectiles: {
 	// Rocket_Rifle_P.DisplayName: Rocket Rifle P
 	// Inject_Incantation_P.DisplayName: Inject Incantation P
 	// Huff_Puffer.DisplayName: Huff Puffer
+	// Mildew_Carrion_Spore.DisplayName: Mildew Carrion Spore
+	// Mildew_Carrion_Spore2.DisplayName: Mildew Carrion Spore2
+	// Mildew_Carrion_Spore3.DisplayName: Mildew Carrion Spore3
 }
 
 Prefixes: {

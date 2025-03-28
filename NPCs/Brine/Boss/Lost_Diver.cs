@@ -47,6 +47,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
@@ -89,6 +90,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = !OriginsModIntegrations.CheckAprilFools();
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.ShouldBeCountedAsBoss[Type] = true;
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				//CustomTexturePath = "Origins/NPCs/Brine/Boss/Rock_Bottom", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(0f, 0f),

@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using Origins.Buffs;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
+using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.Consumables;
@@ -24,8 +27,6 @@ using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static Origins.Misc.Physics;
-using static Origins.NPCs.Brine.Mildew_Creeper;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -203,7 +204,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
 		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
-		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
+		public override bool CheckTargetLOS(Vector2 target) => true;
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override bool PreAI() {
@@ -218,30 +219,86 @@ namespace Origins.NPCs.Brine.Boss {
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
+			int tendrilType = ModContent.NPCType<Mildew_Carrion_Tendril>();
 			startMode:
 			switch (AIMode) {
 				default:
 				case AIModes.Idle:
 				NPC.ai[0] += 0.65f + (0.35f * difficultyMult);
-				if (NPC.ai[0] > 120 && NPC.HasValidTarget) {
+				if (NPC.ai[0] > 180 && NPC.HasValidTarget) {
 					HeldProjectile = -1;
 					WeightedRandom<AIModes> rand = new(Main.rand);
 					void AddMode(AIModes mode, double weight) {
 						if (mode == LastMode) weight *= 0.3f;
 						rand.Add(mode, weight);
 					}
-					float rangeFactor = Math.Max(0, distanceFromTarget / (15 * 16) - 1);
-					AddMode(AIModes.Idle, 1);
+					AddMode(AIModes.Idle, 0);
+					AddMode(AIModes.Spores, 1);
+					int tendrilCountMax = 8 + (int)(ContentExtensions.DifficultyDamageMultiplier * 2);
+					int tendrilCount = 0;
+					foreach (NPC other in Main.ActiveNPCs) {
+						if (other.type == tendrilType && ++tendrilCount >= tendrilCountMax) break;
+					}
+					if (tendrilCount < tendrilCountMax) AddMode(AIModes.SpawnTendril, 1 - (tendrilCount / (float)tendrilCountMax));
 					AIMode = rand.Get();
 					LastMode = AIMode;
 					NPC.netUpdate = true;
 					goto startMode;
 				}
 				break;
+				case AIModes.Spores: {
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						for (int i = Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier + 0.5f); i > 0; i--) {
+							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (10 + ContentExtensions.DifficultyDamageMultiplier * 2) * Main.rand.NextFloat(0.8f, 1f);
+							Projectile.NewProjectile(
+								NPC.GetSource_FromAI(),
+								NPC.Center,
+								sporeDirection,
+								Main.rand.Next(Mildew_Carrion_Spore.types),
+								(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
+								2
+							);
+						}
+					}
+					AIMode = AIModes.Idle;
+					break;
+				}
+				case AIModes.SpawnTendril: {
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						for (int i = Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier + 0.5f); i > 0; i--) {
+							Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0f, MathHelper.TwoPi)) * 4;
+							NPC.NewNPC(
+								NPC.GetSource_FromAI(),
+								(int)NPC.Center.X,
+								(int)NPC.Center.Y,
+								tendrilType,
+								0,
+								tentacleDir.X,
+								tentacleDir.Y,
+								0,
+								NPC.whoAmI
+							);
+						}
+					}
+					AIMode = AIModes.Idle;
+					break;
+				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && ++NPC.ai[3] > 90) {
-				for (int i = 2; i > 0; i--) {
-					Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0.1f, 0.5f) * Main.rand.NextBool().ToDirectionInt()) * 16;
+			if (Main.netMode != NetmodeID.MultiplayerClient && ++NPC.localAI[2] > 90) {
+				int side = Main.rand.NextBool().ToDirectionInt();
+				for (int i = Main.rand.RandomRound(1.5f + ContentExtensions.DifficultyDamageMultiplier); i > 0; i--) {
+					Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0.2f, 0.5f) * side) * (14 + ContentExtensions.DifficultyDamageMultiplier);
+					Vector2 pos = NPC.Center;
+					Rectangle hitbox = new(0, 0, 16, 16);
+					hitbox.X = (int)pos.X - 8;
+					hitbox.Y = (int)pos.Y - 8;
+					int intangibleSteps = 1;
+					while (hitbox.OverlapsAnyTiles(false) && intangibleSteps < 120) {
+						intangibleSteps++;
+						pos += tentacleDir;
+						hitbox.X = (int)pos.X - 8;
+						hitbox.Y = (int)pos.Y - 8;
+					}
 					NPC.NewNPC(
 						NPC.GetSource_FromAI(),
 						(int)NPC.Center.X,
@@ -250,11 +307,12 @@ namespace Origins.NPCs.Brine.Boss {
 						0,
 						tentacleDir.X,
 						tentacleDir.Y,
-						0,
+						intangibleSteps,
 						NPC.whoAmI
 					);
-					NPC.ai[3] = 0;
+					side = -side;
 				}
+				NPC.localAI[2] = 0;
 			}
 			NPC.velocity *= 0.97f;
 			return false;
@@ -292,7 +350,9 @@ namespace Origins.NPCs.Brine.Boss {
 			NetMessage.SendData(MessageID.WorldData);
 		}
 		public enum AIModes {
-			Idle
+			Idle,
+			Spores,
+			SpawnTendril
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);
@@ -315,14 +375,16 @@ namespace Origins.NPCs.Brine.Boss {
 	}
 	public class Mildew_Carrion_Tentacle : ModNPC {
 		public override void SetStaticDefaults() {
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 58;
+			NPC.damage = 0;
 			NPC.lifeMax = 200;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
@@ -358,17 +420,51 @@ namespace Origins.NPCs.Brine.Boss {
 					break;
 				}
 				case 1: {
+					NPC.chaseable = false;
 					NPC.velocity = Vector2.Zero;
 					Vector2 targetDirection = owner.DirectionTo(targetPos);
 					Vector2 direction = owner.DirectionTo(NPC.Center);
-					if (Vector2.Dot(targetDirection, direction) < -0.1f) {
-						NPC.life = 0;
+					if (Vector2.Dot(targetDirection, direction) < ContentExtensions.DifficultyDamageMultiplier * 0.25f - 0.35f) {
+						NPC.localAI[1] += 1f / 31;
 					}
-					if (NPC.life > 0) owner.velocity += direction * 0.1f;
+					owner.velocity += direction * 0.1f;
 					break;
 				}
 			}
+			if (NPC.localAI[1] > 0) {
+				NPC.dontTakeDamage = true;
+				NPC.localAI[1] += 1f / 31;
+			}
+			if (NPC.localAI[1] >= 1 || !owner.active) NPC.life = 0;
 			return false;
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0 && NPC.localAI[1] < 0.5f) {
+				Vector2 diff = Owner.Center - NPC.Center;
+				float dist = diff.Length();
+				if (NPC.localAI[0] == 0) NPC.localAI[0] = Main.rand.Next(1, ushort.MaxValue);
+				FastRandom rand = new((int)NPC.localAI[0]);
+				Texture2D texture = TextureAssets.Npc[Type].Value;
+				Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
+				Gore.NewGoreDirect(
+					NPC.GetSource_Death(),
+					NPC.Center,
+					Vector2.Zero,
+					ModContent.GoreType<Mildew_Carrion_Tentacle_Gore>()
+				).frame = 4;
+				diff /= dist / (frame.Height - 8);
+				Vector2 pos = NPC.Center;
+				while (dist > frame.Height) {
+					pos += diff;
+					Gore.NewGoreDirect(
+						NPC.GetSource_Death(),
+						pos,
+						Vector2.Zero,
+						ModContent.GoreType<Mildew_Carrion_Tentacle_Gore>()
+					).frame = (byte)rand.Next(4);
+					dist -= frame.Height - 8;
+				}
+			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 diff = Owner.Center - NPC.Center;
@@ -379,11 +475,13 @@ namespace Origins.NPCs.Brine.Boss {
 			Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			float rotation = diff.ToRotation() + MathHelper.PiOver2;
+			float sqrtDecay = MathF.Pow(1 - NPC.localAI[1], 0.5f);
+			Color decayColor = new(1 - NPC.localAI[1], 1 - NPC.localAI[1], 1 - NPC.localAI[1], sqrtDecay); 
 			Main.EntitySpriteDraw(
 				texture,
 				NPC.Center - screenPos,
 				frame,
-				drawColor,
+				drawColor.MultiplyRGBA(decayColor),
 				rotation,
 				frame.Size() * 0.5f,
 				1,
@@ -398,13 +496,147 @@ namespace Origins.NPCs.Brine.Boss {
 					texture,
 					pos - screenPos,
 					frame,
-					GetColor(pos),
+					GetColor(pos).MultiplyRGBA(decayColor),
 					rotation,
 					frame.Size() * 0.5f,
 					1,
 					SpriteEffects.None
 				);
 				dist -= frame.Height - 8;
+			}
+			return false;
+			Color GetColor(Vector2 position) {
+				if (NPC.IsABestiaryIconDummy) return Color.White;
+				Color npcColor = Lighting.GetColor(position.ToTileCoordinates());
+				NPCLoader.DrawEffects(NPC, ref npcColor);
+				return NPC.GetNPCColorTintedByBuffs(npcColor);
+			}
+		}
+	}
+	public class Mildew_Carrion_Tendril : ModNPC {
+		public override void SetStaticDefaults() {
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+		}
+		public override void SetDefaults() {
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.damage = 32;
+			NPC.lifeMax = 150;
+			NPC.defense = 18;
+			NPC.aiStyle = 0;
+			NPC.width = 16;
+			NPC.height = 16;
+			NPC.knockBackResist = 1f;
+			NPC.HitSound = SoundID.Item127;
+			NPC.DeathSound = SoundID.NPCDeath1;
+		}
+		public NPC Owner {
+			get {
+				int index = (int)NPC.ai[3];
+				if (Main.npc.IndexInRange(index) && Main.npc[index].ModNPC is Mildew_Carrion) return Main.npc[index];
+				NPC.life = 0;
+				return NPC;
+			}
+		}
+		public override void OnSpawn(IEntitySource source) {
+			NPC.velocity = new(NPC.ai[0], NPC.ai[1]);
+			NPC.netUpdate = true;
+		}
+		public override bool PreAI() {
+			NPC owner = Owner;
+			Vector2 ownerDiff = owner.Center - NPC.Center;
+			float ownerDist = ownerDiff.Length();
+			float distFactor = ownerDist - 16 * 8;
+			float distDir = Math.Sign(distFactor);
+			distFactor *= distDir;
+			distFactor = Math.Max(1, 1 / MathF.Pow(distFactor, 0.7f));
+			NPC.velocity += ownerDiff * distFactor * distDir * 0.01f;
+
+			if (distDir < 0) {
+				ownerDiff /= ownerDist;
+				foreach (NPC other in Main.ActiveNPCs) {
+					if (other.type == Type && other.whoAmI != NPC.whoAmI) {
+						Vector2 otherDiff = NPC.Center - other.Center;
+						float otherDist = otherDiff.Length();
+						if (otherDist < 1) continue;
+						Vector2 nextVel = NPC.velocity + (otherDiff / MathF.Pow(otherDist, 1.1f)) * 1f;
+						if (nextVel.LengthSquared() < 16 * 16) {
+							NPC.velocity = nextVel;
+						}
+					}
+				}
+			}
+			float speedSquared = NPC.velocity.LengthSquared();
+			if (speedSquared > 16 * 16) NPC.velocity = NPC.velocity.WithMaxLength(16);
+			else if (speedSquared > 8 * 8) NPC.velocity *= 0.93f;
+			if (!owner.active) NPC.life = 0;
+			return false;
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				/*Vector2 diff = Owner.Center - NPC.Center;
+				float dist = diff.Length();
+				if (NPC.localAI[0] == 0) NPC.localAI[0] = Main.rand.Next(1, ushort.MaxValue);
+				FastRandom rand = new((int)NPC.localAI[0]);
+				Texture2D texture = TextureAssets.Npc[Type].Value;
+				Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
+				Gore.NewGoreDirect(
+					NPC.GetSource_Death(),
+					NPC.Center,
+					Vector2.Zero,
+					ModContent.GoreType<Mildew_Carrion_Tentacle_Gore>()
+				).frame = 4;
+				diff /= dist / (frame.Height - 8);
+				Vector2 pos = NPC.Center;
+				while (dist > frame.Height) {
+					pos += diff;
+					Gore.NewGoreDirect(
+						NPC.GetSource_Death(),
+						pos,
+						Vector2.Zero,
+						ModContent.GoreType<Mildew_Carrion_Tentacle_Gore>()
+					).frame = (byte)rand.Next(4);
+					dist -= frame.Height - 8;
+				}*/
+			}
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Vector2 diff = Owner.Center - NPC.Center;
+			float dist = diff.Length();
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: 3, frameY: 2);
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			float rotation = diff.ToRotation() + MathHelper.PiOver2;
+			Main.EntitySpriteDraw(
+				texture,
+				NPC.Center - screenPos,
+				frame,
+				drawColor,
+				rotation,
+				frame.Size() * 0.5f,
+				1,
+				SpriteEffects.None
+			);
+			diff /= dist / (frame.Height - 2);
+			Vector2 pos = NPC.Center;
+			frame.Y = frame.Height;
+			while (dist > frame.Height) {
+				pos += diff;
+				Main.EntitySpriteDraw(
+					texture,
+					pos - screenPos,
+					frame,
+					GetColor(pos),
+					rotation,
+					frame.Size() * 0.5f,
+					1,
+					SpriteEffects.None
+				);
+				dist -= frame.Height - 2;
 			}
 			return false;
 			Color GetColor(Vector2 position) {
