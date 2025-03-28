@@ -13,6 +13,7 @@ namespace Origins.Items.Tools {
 	public class Hydrolantern : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Glowstick] = Type;
+			ItemID.Sets.Glowsticks[Type] = true;
 			Item.ResearchUnlockCount = 8;
 		}
 		public override void SetDefaults() {
@@ -132,9 +133,10 @@ namespace Origins.Items.Tools {
 		public static HashSet<int> ProjectileTypes = [];
 		public override void Unload() => ProjectileTypes = null;
 		public override void AI(Projectile projectile) {
+			if (!ProjectileTypes.Contains(projectile.type)) return;
 			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (projectile.whoAmI != other.whoAmI && ProjectileTypes.Contains(other.type) && ProjectileLoader.ShouldUpdatePosition(projectile)) {
-					GetMovedBy(other, projectile, projectile.ignoreWater ? 1f : 0.5f);
+				if (projectile.whoAmI != other.whoAmI && ProjectileLoader.ShouldUpdatePosition(other)) {
+					GetMovedBy(projectile, other, other.ignoreWater ? 1f : 0.5f);
 				}
 			}
 			foreach (Player player in Main.ActivePlayers) GetMovedBy(projectile, player);
