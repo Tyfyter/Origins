@@ -5766,3 +5766,8 @@ Inject_Incantation: {
 	// DisplayName: Inject Incantation
 	// Tooltip: ""
 }
+
+Huff_Puffer_Bait: {
+	// DisplayName: Huff Puffer Bait
+	// Tooltip: ""
+}

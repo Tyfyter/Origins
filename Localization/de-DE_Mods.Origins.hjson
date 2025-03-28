@@ -1657,6 +1657,7 @@ Projectiles: {
 	// Impetus_Shrapnel.DisplayName: Impetus Shrapnel
 	// Rocket_Rifle_P.DisplayName: Rocket Rifle P
 	// Inject_Incantation_P.DisplayName: Inject Incantation P
+	// Huff_Puffer.DisplayName: Huff Puffer
 }
 
 Prefixes: {
