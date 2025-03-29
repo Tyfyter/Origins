@@ -1467,7 +1467,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#3?, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
+(☻) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*
