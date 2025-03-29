@@ -45,7 +45,7 @@ namespace Origins.NPCs.Felnum {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 120;
-			NPC.defense = 32;
+			NPC.defense = 14;
 			NPC.damage = 15;
 			NPC.width = 44;
 			NPC.height = 40;

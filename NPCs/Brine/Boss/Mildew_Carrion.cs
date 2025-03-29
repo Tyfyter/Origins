@@ -44,7 +44,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
-			NPC.lifeMax = 6000;
+			NPC.lifeMax = 4000;
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 76;

@@ -155,7 +155,7 @@ ENEMY NPCS:
 (^) Bile Thrower*
 (X) Blotopus
 (^) Bottomfeeder*
-(☻) Boulder Mimic !!! (can turn around, made it faster)
+(^) Boulder Mimic
 (^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
 (#, ^2) Catacomb Clearer !!!? (limestone cave generation not yet designed)
@@ -238,7 +238,7 @@ ENEMY NPCS:
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
-(☻) Rock Bottom !!! (trigger on death)
+(#2, ^2) Rock Bottom !!! (spawn on tiles)
 (X) Rotting Husk
 (^) Savage Whip*
 (^) Sea Dragon°
@@ -594,7 +594,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook*
-(^) Chunky Hook*
+(#2, ^2) Tangela Tether !!!
 
 (X) Strange Backpack
 
@@ -898,8 +898,8 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(☻) Huff Puffer Bait !!! ('d ideally have sprites for the clouds that don't need to be scaled up 2x)
-(☻) Mildew Incantation !!! (Should probably have its own creeper sprites instead of scaling the normal ones down)
+(@2, #2) Huff Puffer Bait !!! ('d ideally have sprites for the clouds that don't need to be scaled up 2x) !!!
+(☻) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
@@ -1201,7 +1201,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(☻) Hydrothermal Vent !!!
+(#2, ^2) Hydrothermal Vent !!! (goopy glows and smonk)
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
@@ -1299,7 +1299,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(☻) Geothermal Sludge !!! (made chambersites more common and removed platinum coin from pool entirely)
+(^) Geothermal Sludge
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*
@@ -1371,13 +1371,13 @@ CONSUMABLES:
 (X) Astringent Broth
 (X) Bitter Broth
 (^) Foul Broth*
+(X) Greasy Broth !!!
 (^) Hearty Broth*
 (^) Light Broth°
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°
 (⛥) Plain Broth° !!!
-(X) Salty Broth
 (⛥) Savory Broth° !!!
 (^) Sharp Broth
 (^) Sour Broth*
@@ -1467,7 +1467,7 @@ MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(☻) Terlet Paper (Kawaii Fiberglass Weaver) !!!
+(#2, ^2) Terlet Paper (Kawaii Fiberglass Weaver) !!!
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*

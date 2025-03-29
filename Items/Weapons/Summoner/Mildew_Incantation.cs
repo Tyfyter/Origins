@@ -1,38 +1,28 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Misc;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
-using Origins.NPCs.Brine.Boss;
 using Origins.Projectiles;
-using Origins.Projectiles.Weapons;
-using Origins.Tiles.Brine;
-using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Misc.Physics;
-using static Origins.NPCs.Brine.Mildew_Creeper;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Mildew_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
-			Item.damage = 25;
+			Item.damage = 50;
 			Item.DamageType = DamageClasses.Incantation;
 			Item.noMelee = true;
 			Item.width = 22;
@@ -44,8 +34,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 10f;
 			Item.mana = 14;
 			Item.knockBack = 1f;
-			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item8;
 			Item.channel = true;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;

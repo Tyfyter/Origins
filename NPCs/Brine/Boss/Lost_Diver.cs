@@ -104,7 +104,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
 			NPC.damage = 58;
-			NPC.lifeMax = 8000;
+			NPC.lifeMax = 6000;
 			NPC.defense = 32;
 			NPC.aiStyle = 0;
 			NPC.width = 20;

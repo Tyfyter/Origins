@@ -20,7 +20,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack) {
 			resultStack = 1;
-			if (Main.rand.NextBool(40)) {
+			if (Main.rand.NextBool(10)) {
 				resultType = ModContent.ItemType<Chambersite_Item>();
 				if (Main.rand.NextBool(10)) resultStack += Main.rand.Next(0, 2);
 				if (Main.rand.NextBool(15)) resultStack += Main.rand.Next(0, 3);

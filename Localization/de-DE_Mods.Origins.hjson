@@ -626,7 +626,7 @@ Buffs: {
 
 	Platformer_Mech_Buff: {
 		// DisplayName: Platformer Mech
-		// Description: It stomps along the ground.
+		// Description: It stomps along the ground
 	}
 
 	Purification_Buff: {
@@ -672,7 +672,7 @@ Buffs: {
 
 	Toxic_Shock_Debuff: {
 		// DisplayName: Toxic Shock
-		// Description: The agony is getting to you.
+		// Description: The agony is getting to you
 	}
 
 	Voidsight_Buff: {
@@ -728,11 +728,6 @@ Buffs: {
 	Ravel_Mount_Buff: {
 		// DisplayName: Ravel
 		// Description: 10% chance to dodge
-	}
-
-	Speed_Ravel_Mount_Buff: {
-		// DisplayName: Speed Ravel
-		// Description: 10% chance to dodge. Move very fast
 	}
 
 	Spider_Ravel_Mount_Buff: {
@@ -802,7 +797,7 @@ Buffs: {
 
 	Neural_Network_Buff: {
 		// DisplayName: Neural Pathing
-		// Description: Don't miss.
+		// Description: Don't miss
 	}
 
 	Toxic_Shock_Strengthen_Debuff: {
@@ -1008,7 +1003,7 @@ Buffs: {
 
 	Cavitation_Debuff: {
 		// DisplayName: Cavitation
-		// Description: You got the wind knocked out of you.
+		// Description: You've got the wind knocked out of you
 	}
 
 	Mildew_Whip_Buff: {
@@ -1111,7 +1106,7 @@ Buffs: {
 
 	Sunny_Sunflower_Buff: {
 		// DisplayName: Sunny Sunflower
-		// Description: She dances to the beat of world.
+		// Description: She dances to the beat of world, and eats your frames
 	}
 
 	Light_Broth_Buff: {

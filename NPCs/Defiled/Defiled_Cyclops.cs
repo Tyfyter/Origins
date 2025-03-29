@@ -31,7 +31,7 @@ namespace Origins.NPCs.Defiled {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.08f;
-		public const float speedMult = 1.3f;
+		public const float speedMult = 1.5f;
 		public string EntryName => "Origins/" + typeof(Defiled_Cyclops_Entry).Name;
 		public class Defiled_Cyclops_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Cyclops";
