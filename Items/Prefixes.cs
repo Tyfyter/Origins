@@ -490,7 +490,7 @@ namespace Origins.Items {
 			Lighting.AddLight(projectile.Center, 1f, 0.3f, 0.1f);
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(240, 361));
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(240, 361));
 		}
 		public override void OnKill(Projectile projectile) {
 			SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), projectile.Center);
