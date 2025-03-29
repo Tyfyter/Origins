@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Penguin : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -19,6 +21,9 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CrimsonPenguin);
+			NPC.damage = 21;
+			NPC.lifeMax = 75;
+			NPC.value = 500f;
 			AnimationType = NPCID.CrimsonPenguin;
 			AIType = NPCID.CrimsonPenguin;
         }

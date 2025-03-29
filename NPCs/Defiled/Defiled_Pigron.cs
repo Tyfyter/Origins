@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Accessories;
@@ -9,6 +10,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat, IWikiNPC {
@@ -33,7 +35,16 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.PigronCorruption);
+			NPC.width = 44;
+			NPC.height = 36;
+			NPC.aiStyle = 2;
+			NPC.damage = 70;
+			NPC.defense = 16;
+			NPC.lifeMax = 210;
+			NPC.HitSound = SoundID.NPCHit27;
+			NPC.DeathSound = SoundID.NPCDeath30;
+			NPC.knockBackResist = 0.5f;
+			NPC.value = 2000f;
 			AnimationType = NPCID.PigronCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Ice_Biome>().Type

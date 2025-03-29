@@ -14,6 +14,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
+using CalamityMod.NPCs.TownNPCs;
+using Newtonsoft.Json.Linq;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Defiled {
 	public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
@@ -38,6 +41,9 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CorruptPenguin);
+			NPC.damage = 20;
+			NPC.lifeMax = 70;
+			NPC.value = 500f;
 			AnimationType = NPCID.CorruptPenguin;
 			AIType = NPCID.CorruptPenguin;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;

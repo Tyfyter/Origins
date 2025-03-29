@@ -24,6 +24,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.damage = 14;
 			NPC.width = 28;
 			NPC.height = 44;
+			NPC.value = 90;
 			NPC.friendly = false;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;

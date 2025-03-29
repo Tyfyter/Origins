@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Other.Consumables.Food;
@@ -12,6 +14,9 @@ using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
+using ThoriumMod.Empowerments;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.NPCs.Riven {
 	public class Trijaw_Shark : Glowing_Mod_NPC, ICustomCollisionNPC, IWikiNPC {
@@ -32,7 +37,13 @@ namespace Origins.NPCs.Riven {
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.SandsharkCrimson);
+			NPC.noGravity = true;
+			NPC.aiStyle = NPCAIStyleID.Sand_Shark;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.knockBackResist = 0.8f;
+			NPC.behindTiles = true;
+
 			NPC.lifeMax = 450;
 			NPC.defense = 23;
 			NPC.damage = 56;
@@ -120,7 +131,11 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.SandsharkCrimson);
+			NPC.noGravity = true;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.knockBackResist = 0.8f;
+			NPC.behindTiles = true;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 50;
 			NPC.defense = 11;

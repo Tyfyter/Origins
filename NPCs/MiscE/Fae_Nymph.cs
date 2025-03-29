@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -25,6 +26,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
+			NPC.value = Item.buyPrice(gold: 2);
 			AIType = NPCID.Nymph;
 			AnimationType = NPCID.Nymph;
 			Banner = Item.NPCtoBanner(NPCID.Nymph);
@@ -67,6 +69,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
+			NPC.value = Item.buyPrice(gold: 2);
 			AIType = NPCID.LostGirl;
 			AnimationType = NPCID.LostGirl;
 			Banner = Item.NPCtoBanner(NPCID.LostGirl);

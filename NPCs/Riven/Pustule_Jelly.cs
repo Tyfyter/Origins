@@ -15,6 +15,7 @@ using Origins.Projectiles;
 using Origins.Gores.NPCs;
 using Origins.Buffs;
 using Origins.Dev;
+using Newtonsoft.Json.Linq;
 
 namespace Origins.NPCs.Riven {
 	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -39,6 +40,7 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 32;
 			NPC.height = 42;
 			NPC.frame.Height = 40;
+			NPC.value = 800f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type,
