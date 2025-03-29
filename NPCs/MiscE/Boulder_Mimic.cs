@@ -14,6 +14,7 @@ namespace Origins.NPCs.MiscE {
 			// seed-specific NPCs don't get bestiary entries
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
+		public override void Load() => this.AddBanner();
 		public override void SetDefaults() {
 			NPC.lifeMax = 120;
 			NPC.defense = 22;
