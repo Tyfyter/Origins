@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 (X) Zombie Paladin
 
 (#2, ^2) Defiled Amalgamation* !!!
-($, ^2/3) Fiberglass Weaver* !!!
+($, ^2/3) Fiberglass Weaver*
 (X) Shimmer Construct
 (X) Trenchmaker
 (^) World Cracker*
@@ -158,7 +158,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
-(#, ^2) Catacomb Clearer !!!? (limestone cave generation not yet designed)
+(#, ^2) Catacomb Clearer !!!
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
@@ -676,7 +676,7 @@ MELEE WEAPONS:
 (^) Riverang*
 (^) Snapthrow*
 (^) Soldering Iron
-(%2) Soul Snatcher* !!!
+(#2, ^2) Soul Snatcher* !!!
 (^) Soulslasher
 (^) Spiker Sword*
 (^) Switchblade*
@@ -879,7 +879,7 @@ SUMMONER WEAPONS:
 (^) Inject Incantation
 (^) Joint Pop*
 (^) Maelstrom Incantation
-(%2) Ocean Amulet !!!
+(X) Ocean Amulet
 (^) Ocotillo Finger
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
@@ -898,7 +898,7 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(@2, #2) Huff Puffer Bait !!! ('d ideally have sprites for the clouds that don't need to be scaled up 2x) !!!
+(#2, ^2) Huff Puffer Bait !!!
 (☻) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone
@@ -1074,7 +1074,7 @@ TILES:
 (@4) Hardened Defiled Sand*
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
-(@4, ^3) Limestone !!! (merges with tile other than itself and dirt)
+(^) Limestone
 (^) Lost Ore*
 (^) Marrowick*
 (^) Mildew Block°
@@ -1202,10 +1202,11 @@ TILES:
 (^) Gel Blister*
 (X) Heat Vent
 (#2, ^2) Hydrothermal Vent !!! (goopy glows and smonk)
+(#, ^2) Limestone Foliage !!!
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
-(#2, ^2) Ocotillo !!!
+(^) Ocotillo
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
@@ -1352,7 +1353,7 @@ CONSUMABLES:
 (%2) The Defiled Will°
 
 (^) Absorption Potion*
-(^) Ambition Potion*
+(#2, ^2) Ambition Potion !!!
 (^) Antisolve Potion*
 (^) Fervor Potion*
 (^) Flask of Alkahest*
@@ -1363,7 +1364,7 @@ CONSUMABLES:
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
-(⛥) Skimswim Potion !!!
+(#2, ^2) Skimswim Potion !!!
 (X) Super Mojo Flask
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
@@ -1371,17 +1372,17 @@ CONSUMABLES:
 (X) Astringent Broth
 (X) Bitter Broth
 (^) Foul Broth*
-(X) Greasy Broth !!!
+(#, ^2) Greasy Broth !!!
 (^) Hearty Broth*
 (^) Light Broth°
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°
-(⛥) Plain Broth° !!!
-(⛥) Savory Broth° !!!
+(#2, ^2) Plain Broth° !!!
+(#2, ^2) Savory Broth° !!!
 (^) Sharp Broth
 (^) Sour Broth*
-(⛥) Spicy Broth° !!!
+(#2, ^2) Spicy Broth° !!!
 (^) Sweet Broth°
 (^) Umami Broth
 
@@ -1439,7 +1440,7 @@ CONSUMABLES:
 (#2, ^2, 々) Riven Loot Box°
 (X) Twilight Crate*
 
-(X) Eye of Aether !!!
+(#, ^2) Eye of Aether !!!
 (^) Gooey Water*
 (^) Holiday Hair Dye*
 (^) Lottery Ticket*
