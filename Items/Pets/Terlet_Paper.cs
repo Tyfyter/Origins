@@ -165,7 +165,7 @@ namespace Origins.Items.Pets {
 					legTargets[i] = ((legs[i].start + new Vector2(0, ((i % 4 < 2) ? -10 : 10))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 2.3f + Projectile.Center;
 				}
 			}
-			//for (int i = 0; i < 8; i++) DrawDebugLine(legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center + (Vector2)legs[i].bone0, legTargets[i]);
+			for (int i = 0; i < 8; i++) DrawDebugLine(legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center + (Vector2)legs[i].bone0, legTargets[i]);
 			switch ((int)Projectile.ai[0]) {
 				case 0: {
 					for (int i = 0; i < 8; i++) {
@@ -229,6 +229,14 @@ namespace Origins.Items.Pets {
 
 				Vector2 screenStart = legs[i].start - Main.screenPosition;
 				Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, lightColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+
+				Vector2 pos = new Vector2((((Vector2)legs[i].bone0).X / 2) - Main.screenPosition.X, (((Vector2)legs[i].bone0).Y / 2) - Main.screenPosition.Y);
+				Vector2 diff = (Vector2)legs[i].bone0 + new Vector2(4);
+				Vector2 scale = new Vector2(diff.Length(), 2);
+				Texture2D text = (Texture2D)ModContent.Request<Texture2D>("Origins/Projectiles/Pixel");
+
+				Main.EntitySpriteDraw(text, pos, null, lightColor * 0.8f, diff.ToRotation(), new Vector2(0f, 0.5f), scale, SpriteEffects.None, 0);
+
 				Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, lightColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
 				legs[i].start = baseStart;
 			}
