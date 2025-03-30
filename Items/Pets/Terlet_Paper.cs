@@ -137,8 +137,8 @@ namespace Origins.Items.Pets {
 			// This is a simple "loop through all frames from top to bottom" animation
 
 			// Some visuals here
-			float tmp1 = 70.1f / 2.5f;
-			float tmp2 = 76 / 4.5f;
+			float tmp1 = 70.1f / 3;
+			float tmp2 = 76 / 3;
 			float tmp3 = tmp1 + tmp2;
 			if (legs is null) {
 				legs = new Arm[8];
@@ -162,7 +162,7 @@ namespace Origins.Items.Pets {
 						legs[i].start = new Vector2(i % 2 == 0 ? -25 : 25, 24);
 						break;
 					}
-					legTargets[i] = ((legs[i].start + new Vector2(0, ((i % 4 < 2) ? -10 : 10))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.8f + Projectile.Center;
+					legTargets[i] = ((legs[i].start + new Vector2(0, ((i % 2 == 0) ^ (i % 4 < 2) ? -5 : 5))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.7f + Projectile.Center;
 				}
 			}
 			//for (int i = 0; i < 8; i++) DrawDebugLine(legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center, legTargets[i]);
@@ -172,9 +172,9 @@ namespace Origins.Items.Pets {
 						Vector2 legStart = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
 						if (legStart.DistanceSQ(legTargets[i]) > (tmp3 * tmp3)) {
 							legTargets[i] = Fiberglass_Weaver.GetStandPosition(
-								((legs[i].start + new Vector2(0, 0)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.8f + Projectile.Center,
+								((legs[i].start + new Vector2(0, ((i % 2 == 0) ^ (i % 4 < 2) ? -5 : 5))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.7f + Projectile.Center,
 								legStart,
-								totalLegLength
+								tmp3
 							);
 						}
 					}
@@ -190,15 +190,15 @@ namespace Origins.Items.Pets {
 					float leg0Factor2 = (float)Math.Cos(Projectile.ai[1] / 3);
 					float leg1Factor = (float)Math.Sin(Projectile.ai[1] / 3 + Math.PI);
 					float leg1Factor2 = (float)Math.Cos(Projectile.ai[1] / 3 + 0.1);
-					legTargets[0] = Projectile.Center + (Vector2)new PolarVec2(84 + (8 * leg0Factor), Projectile.rotation - MathHelper.PiOver2 + 0.09f + leg0Factor2 * 0.10f);
-					legTargets[1] = Projectile.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), Projectile.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
+					//legTargets[0] = Projectile.Center + (Vector2)new PolarVec2(84 + (8 * leg0Factor), Projectile.rotation - MathHelper.PiOver2 + 0.09f + leg0Factor2 * 0.10f);
+					//legTargets[1] = Projectile.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), Projectile.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
 					for (int i = 2; i < 8; i++) {
 						Vector2 legStart = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
 						if (legStart.DistanceSQ(legTargets[i]) > (tmp3 * tmp3)) {
 							legTargets[i] = Fiberglass_Weaver.GetStandPosition(
-								((legs[i].start + new Vector2(0, 0)) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.8f + Projectile.Center,
+								((legs[i].start + new Vector2(0, ((i % 2 == 0) ^ (i % 4 < 2) ? -5 : 5))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.7f + Projectile.Center,
 								legStart,
-								totalLegLength
+								tmp3
 							);
 						}
 					}
