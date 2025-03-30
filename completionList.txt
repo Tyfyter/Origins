@@ -284,7 +284,7 @@ STATUS EFFECTS:
 (^) Cavitation
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
-(^) Defiled Assimilation*
+(#2, ^2) Defiled Assimilation* !!! (dissipation when outside of the biome)
 (X) Hallowed Assimilation
 (^) Impeding Shrapnel*
 (^) Mana Buffer*
@@ -342,7 +342,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (^) Extremophile Armor
 (X) Faefinder's Armor
-(X) Mildew Armor !!!
+(#, ^2) Mildew Armor !!!
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
@@ -367,7 +367,7 @@ ARMOR:
 (^) Chlorophyte Crown*
 (^) Chlorophyte Visage*
 (^) Hallowed Visage*
-(X) Lucky Hat !!!
+(#, ^2) Lucky Hat !!!
 ---
 
 
