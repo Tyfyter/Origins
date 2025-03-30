@@ -274,11 +274,6 @@ Eccentric_Stone: {
 	Tooltip: +1 minion slot
 }
 
-Endless_Explosives: {
-	DisplayName: Dysfunctional Endless Explosives Bag
-	Tooltip: 15% chance not to consume thrown explosives or explosive ammo
-}
-
 Entangled_Energy: {
 	DisplayName: Entangled Energy
 	Tooltip:
@@ -3565,7 +3560,11 @@ Chambersite_Item: {
 
 Dysfunctional_Endless_Explosives_Bag: {
 	DisplayName: Dysfunctional Endless Explosives Bag
-	Tooltip: 15% chance not to consume thrown explosives or explosive ammo
+	Tooltip:
+		'''
+		15% chance not to consume thrown explosives or explosive ammo
+		'Where's a bomb when you need it?!'
+		'''
 }
 
 Shield_of_Retribution: {

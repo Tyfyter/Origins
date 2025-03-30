@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Projectiles;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
-using PegasusLib;
-using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem, ICustomWikiStat {
 		static short glowmask;
