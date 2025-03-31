@@ -20,13 +20,10 @@ namespace Origins.Items.Other.Consumables.Food {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.ChocolateChipCookie);
+			Item.DefaultToFood(16, 16, BuffID.WellFed, 60 * 60 * 10);
 			Item.holdStyle = ItemHoldStyleID.HoldUp;
-			Item.buffType = BuffID.WellFed;
-			Item.buffTime = 60 * 60 * 10;
 			Item.value = Item.sellPrice(silver: 1);
 			Item.ammo = ModContent.ItemType<Potato>();
-			Item.shoot = ModContent.ProjectileType<Potato_P>();
 			Item.notAmmo = true;
 		}
 		public override bool AltFunctionUse(Player player) {
