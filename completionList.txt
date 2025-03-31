@@ -367,7 +367,7 @@ ARMOR:
 (^) Chlorophyte Crown*
 (^) Chlorophyte Visage*
 (^) Hallowed Visage*
-(#, ^2) Lucky Hat !!!
+(☻) Lucky Hat !!!
 ---
 
 

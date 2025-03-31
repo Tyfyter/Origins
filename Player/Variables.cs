@@ -92,6 +92,9 @@ namespace Origins {
 		public bool extremophileSet = false;
 		public int extremophileSetHits = 0;
 		public int extremophileSetTime = 0;
+		public bool luckyHatSet = false;
+		public int luckyHatSetTime = 0;
+		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -556,6 +559,20 @@ namespace Origins {
 			} else {
 				extremophileSetHits = 0;
 				extremophileSetTime = 0;
+			}
+			if (luckyHatSet) {
+				if (Player.ItemAnimationActive) {
+					luckyHatSetTime = LuckyHatSetActive ? -1 : 0;
+				} else if (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) {
+					if (luckyHatSetTime < 90) {
+						luckyHatSetTime++;
+					}
+				} else {
+					luckyHatSetTime = 0;
+				}
+				luckyHatSet = false;
+			} else {
+				luckyHatSetTime = 0;
 			}
 
 			setActiveAbility = 0;

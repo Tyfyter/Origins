@@ -5788,3 +5788,8 @@ Mildew_Incantation: {
 	DisplayName: Mildew Incantation
 	Tooltip: ""
 }
+
+Lucky_Hat: {
+	DisplayName: Lucky Hat
+	Tooltip: ""
+}

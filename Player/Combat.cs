@@ -52,6 +52,10 @@ namespace Origins {
 				damage *= 1 + Focus_Potion.bonus_multiplicative;
 				damage.Flat += Focus_Potion.bonus_additive;
 			}
+			if ((item.CountsAsClass(DamageClass.Ranged) || item.CountsAsClass(DamageClasses.Explosive)) && LuckyHatSetActive) {
+				float mult = (90f / item.useAnimation) * 1.3f;
+				if (mult > 1) damage *= mult;
+			}
 		}
 		public override void ModifyWeaponCrit(Item item, ref float crit) {
 			if (rubyReticle) {

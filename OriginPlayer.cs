@@ -26,6 +26,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using static Fargowiltas.FargoSets;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -766,8 +767,12 @@ namespace Origins {
 				}
 			}
 			itemUseOldDirection = Player.direction;
+			bool goingToUseItem = Player.controlUseItem && Player.releaseUseItem && Player.itemAnimation == 0 && Player.HeldItem.useStyle != ItemUseStyleID.None;
+			if (goingToUseItem && (Player.HeldItem.IsAir || !CombinedHooks.CanUseItem(Player, Player.HeldItem))) {
+				goingToUseItem = true;
+			}
 			if (focusPotion) {
-				if (Player.ItemAnimationJustStarted) {
+				if (goingToUseItem) {
 					focusPotionThisUse = Player.CheckMana(Focus_Potion.GetManaCost(Player.HeldItem), true);
 					Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				} else if (Player.ItemAnimationEndingOrEnded) {
@@ -775,6 +780,16 @@ namespace Origins {
 				}
 			} else {
 				focusPotionThisUse = false;
+			}
+			if (goingToUseItem) {
+				if (Player.HeldItem.ChangePlayerDirectionOnShoot) {
+					Vector2 unitX = Vector2.UnitX.RotatedBy(Player.fullRotation);
+					Vector2 shootDirection = Main.MouseWorld - Player.RotatedRelativePoint(Player.MountedCenter);
+					if (shootDirection != Vector2.Zero) shootDirection.Normalize();
+					if (Player.direction != (Vector2.Dot(unitX, shootDirection) > 0 ? 1 : -1) && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive))) {
+						if (luckyHatSet && luckyHatSetTime > 0) luckyHatSetTime += 30;
+					}
+				}
 			}
 			return true;
 		}

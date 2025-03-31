@@ -1175,6 +1175,7 @@ DamageClasses: {
 	ExplosivePlusModded.DisplayName: explosive {0}
 	Melee_Magic.DisplayName: melee/magic damage
 	No_Summon_Inherit.DisplayName: No Summon Inherit
+	Ranged_Explosive_Inherit.DisplayName: Ranged Explosive Inherit
 }
 
 Projectiles: {
@@ -1905,6 +1906,7 @@ Tiles: {
 	Fake_Defiled_Altar.MapEntry: Defiled Altar
 	Fake_Riven_Altar.MapEntry: Riven Altar
 	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
+	Lucky_Hat_Tile.MapEntry: Lucky Hat
 }
 
 MapObject: {
