@@ -37,7 +37,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item8;
-			Item.channel = true;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
