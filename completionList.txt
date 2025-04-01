@@ -238,7 +238,7 @@ ENEMY NPCS:
 (^) Riven Pigron*
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
-(#2, ^2) Rock Bottom !!! (spawn on tiles)
+(☻) Rock Bottom !!! (spawn on tiles)
 (X) Rotting Husk
 (^) Savage Whip*
 (^) Sea Dragon°

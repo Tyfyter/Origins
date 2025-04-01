@@ -46,5 +46,8 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.ai[1] = 1;
 			return false;
 		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
+		}
 	}
 }
