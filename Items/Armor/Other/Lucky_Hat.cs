@@ -26,7 +26,9 @@ namespace Origins.Items.Armor.Other {
 			orig(ref self, player);
 			if (self.CurrentEyeFrame == PlayerEyeHelper.EyeFrame.EyeOpen && player.OriginPlayer().LuckyHatSetActive) self.CurrentEyeFrame = PlayerEyeHelper.EyeFrame.EyeHalfClosed;
 		}
-
+		public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.width = 22;
 			Item.height = 26;

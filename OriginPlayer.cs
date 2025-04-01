@@ -35,6 +35,7 @@ namespace Origins {
 		public const float explosive_defense_factor = 2f;
 		public static OriginPlayer LocalOriginPlayer { get; internal set; }
 		public override void PreUpdateMovement() {
+			realControlUseItem = Player.controlUseItem;
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
 				Player.velocity *= 1.006f;

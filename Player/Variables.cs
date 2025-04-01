@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Journal;
 using Origins.Misc;
@@ -403,6 +404,8 @@ namespace Origins {
 		public int crawdadNetworkCount = 0;
 		public int neuralNetworkMisses = 0;
 		public int keytarMode = 0;
+		public float soulSnatcherTime = 0;
+		public bool soulSnatcherActive = false;
 		#endregion
 
 		#region visuals
@@ -466,6 +469,10 @@ namespace Origins {
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
 		public bool forceFallthrough = false;
+		/// <summary>
+		/// not set to true by alt uses
+		/// </summary>
+		public bool realControlUseItem = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
 		public override void ResetEffects() {
@@ -856,6 +863,7 @@ namespace Origins {
 			} else if (!Player.HasBuff<Defiled_Asphyxiator_Debuff_3>()) {
 				rasterizedTime = 0;
 			}
+			Soul_Snatcher.UpdateCharge(Player, ref soulSnatcherTime, ref soulSnatcherActive);
 			plagueSight = false;
 			plagueSightLight = false;
 			mountOnly = false;

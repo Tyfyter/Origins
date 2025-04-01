@@ -42,6 +42,7 @@ namespace Origins {
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
 					case custom_knockback:
 					case entity_interaction:
+					case soul_snatcher_activate:
 					altHandle = true;
 					break;
 
@@ -140,6 +141,7 @@ namespace Origins {
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
 					case custom_knockback:
 					case entity_interaction:
+					case soul_snatcher_activate:
 					altHandle = true;
 					break;
 
@@ -405,6 +407,20 @@ namespace Origins {
 						}
 						break;
 					}
+					case soul_snatcher_activate: {
+						byte player = reader.ReadByte();
+						OriginPlayer originPlayer = Main.player[player].OriginPlayer();
+						originPlayer.soulSnatcherActive = reader.ReadBoolean();
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = instance.GetPacket();
+							packet.Write(soul_snatcher_activate);
+							packet.Write(player);
+							packet.Write(originPlayer.soulSnatcherActive);
+							packet.Send(ignoreClient: player);
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -439,6 +455,7 @@ namespace Origins {
 			internal const byte chest_sync = 24;
 			internal const byte request_chest_sync_projectile = chest_sync_projectile;
 			internal const byte chest_sync_projectile = 25;
+			internal const byte soul_snatcher_activate = 26;
 		}
 	}
 	public interface IChestSyncRecipient {

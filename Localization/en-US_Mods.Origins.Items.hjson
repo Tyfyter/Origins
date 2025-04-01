@@ -5798,3 +5798,8 @@ Eye_Of_Aether: {
 	DisplayName: Eye Of Aether
 	Tooltip: ""
 }
+
+Soul_Snatcher: {
+	DisplayName: Soul Snatcher
+	Tooltip: ""
+}
