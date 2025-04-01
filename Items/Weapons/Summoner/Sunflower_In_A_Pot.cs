@@ -168,14 +168,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Vector2 pos = Projectile.position;
 					Vector2 offset = headCenterOffset;
 					int dir = Math.Sign(npc.Center.X - (pos.X + offset.X));
+					//try reducing it from 8, might be the cause of the performance problems
+					Vector2 stepDown = new Vector2(16, 32);
 					for (int i = 0; i < 8; i++) {
 						if (i != 0 && !CanWalkOnto(pos, dir)) break;
 						float between = Vector2.Distance(npc.Center, Projectile.Center);
 						between *= isCurrentTarget ? 0 : 1 + i / 8f;
 						bool closer = distanceFromTarget > between;
 						bool lineOfSight = CollisionExt.CanHitRay(pos + offset, npc.Center);
-						int j = 0;
-						for (; j < 100 && !lineOfSight; j++) {
+						
+						//try reducing it from 100, might be the cause of the performance problems
+						for (int j = 0; j < 100 && !lineOfSight; j++) {
 							lineOfSight = CollisionExt.CanHitRay(pos + offset, Main.rand.NextVector2FromRectangle(npc.Hitbox));
 						}
 						if (closer && lineOfSight) {
@@ -187,7 +190,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							bestTargetIsVisible = i == 0;
 							break;
 						}
-						if (Framing.GetTileSafely((pos + new Vector2(16, 32)).ToTileCoordinates()).IsHalfBlock) {
+						if (Framing.GetTileSafely(pos + stepDown).IsHalfBlock) {
 							pos.Y -= 16;
 						}
 						pos.X += 16 * dir;
@@ -318,10 +321,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X != oldVelocity.X) {
-				int dir = Math.Sign(oldVelocity.X);
-				Vector2 collisionPos = (Projectile.Bottom + new Vector2(18 * dir, 0));
-				if (Framing.GetTileSafely(collisionPos.ToTileCoordinates()).HasFullSolidTile() && !Framing.GetTileSafely((collisionPos - new Vector2(0, 12)).ToTileCoordinates()).HasFullSolidTile()) {
-					Projectile.velocity.Y = -5;
+				Vector2 pos = Projectile.position;
+				Collision.StepUp(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
+				Collision.StepDown(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
+
+				if (Projectile.position == pos) {
+					int dir = Math.Sign(oldVelocity.X);
+					Vector2 collisionPos = (Projectile.Bottom + new Vector2(18 * dir, 0));
+					if (Framing.GetTileSafely(collisionPos.ToTileCoordinates()).HasFullSolidTile() && !Framing.GetTileSafely((collisionPos - new Vector2(0, 12)).ToTileCoordinates()).HasFullSolidTile()) {
+						Projectile.velocity.Y = -5;
+					}
 				}
 			}
 			return false;
@@ -366,6 +375,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.localAI[2] > 0 && Projectile.localAI[2] % 10 > 5) {
 				lightColor *= 0.3f;
 			}
+			Vector2 gfxOffset = new(0, Projectile.gfxOffY);
 			if (Projectile.ai[2] == 1) {
 				Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
 				Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;
@@ -383,7 +393,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 					Main.EntitySpriteDraw(
 						wingTexture,
-						Projectile.Top + new Vector2(((baseFrame.Width - 8) / 2) * i, 2 + Math.Abs(i) * 6) - Main.screenPosition,
+						Projectile.Top + new Vector2(((baseFrame.Width - 8) / 2) * i, 2 + Math.Abs(i) * 6) + gfxOffset - Main.screenPosition,
 						wingFrame,
 						lightColor,
 						0,
@@ -395,7 +405,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Main.EntitySpriteDraw(
 				baseTexture,
-				Projectile.Bottom + offset - Main.screenPosition,
+				Projectile.Bottom + offset + gfxOffset - Main.screenPosition,
 				baseFrame,
 				lightColor,
 				0,
