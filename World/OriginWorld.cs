@@ -95,6 +95,7 @@ namespace Origins {
 		public List<Point> AbandonedBombs => _abandonedBombs ??= [];
 		private Dictionary<Point, Guid> _voidLocks;
 		public Dictionary<Point, Guid> VoidLocks => _voidLocks ??= [];
+		public Vector2? shimmerPosition;
 		public override void OnWorldUnload() {
 			forceThunderstorm = false;
 		}
@@ -122,13 +123,26 @@ namespace Origins {
 			defiledAltResurgenceTiles = [];
 			questsTag = tag.SafeGet<TagCompound>("Quests");
 			if (Main.dedServ) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.SaveToWorld) {
 						quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 					}
 				}
 			}
 			hasLoggedPUP = false;
+			if (tag.TryGet(nameof(shimmerPosition), out Vector2 _shimmerPosition)) shimmerPosition = _shimmerPosition;
+			else {
+				for (int i = 0; i < Main.maxTilesX; i++) {
+					for (int j = 0; j < Main.maxTilesY; j++) {
+						Tile tile = Framing.GetTileSafely(i, j);
+						if (tile.LiquidAmount > 0 && tile.LiquidType == LiquidID.Shimmer) {
+							shimmerPosition = new(i, j);
+							goto foundShimmer;
+						}
+					}
+				}
+				foundShimmer:;
+			}
 		}
 		internal TagCompound questsTag;
 		public override void SaveWorldData(TagCompound tag) {
@@ -146,7 +160,7 @@ namespace Origins {
 				["uuid"] = kvp.Value.ToString()
 			}).ToList());
 			TagCompound questsTag = [];
-			foreach (var quest in Quest_Registry.Quests) {
+			foreach (Quest quest in Quest_Registry.Quests) {
 				if (quest.SaveToWorld) {
 					TagCompound questTag = [];
 					quest.SaveData(questTag);
@@ -161,13 +175,16 @@ namespace Origins {
 			if (questsTag.Count > 0) {
 				tag.Add("Quests", questsTag);
 			}
+			if (shimmerPosition.HasValue) tag.Add(nameof(shimmerPosition), shimmerPosition.Value);
 		}
 		public override void NetSend(BinaryWriter writer) {
 			writer.WriteFlags(forceAF, forceThunderstorm);
+			if (shimmerPosition.HasValue) writer.WriteVector2(shimmerPosition.Value);
 		}
 		public override void NetReceive(BinaryReader reader) {
-			reader.ReadFlags(out bool forceAF, out bool forceThunderstorm);
+			reader.ReadFlags(out bool forceAF, out forceThunderstorm);
 			ForceAF = forceAF;
+			if (reader.ReadBoolean()) shimmerPosition = reader.ReadVector2();
 		}
 		public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
@@ -288,6 +305,7 @@ namespace Origins {
 			queuedKillTiles.Enqueue((i, j));
 		}
 		public override void PostWorldGen() {
+			shimmerPosition = new((float)GenVars.shimmerPosition.X, (float)GenVars.shimmerPosition.Y);
 			ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56 + 17,
 				ChestID.Normal,
 				ChestID.Gold,

@@ -5793,3 +5793,8 @@ Lucky_Hat: {
 	DisplayName: Lucky Hat
 	Tooltip: ""
 }
+
+Eye_Of_Aether: {
+	DisplayName: Eye Of Aether
+	Tooltip: ""
+}
