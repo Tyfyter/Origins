@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using PegasusLib;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
@@ -25,12 +26,14 @@ namespace Origins.Items.Other.Consumables {
 			const int float_up = 30;
 			const int float_in_place = float_up + 60;
 			const int shoot = float_in_place + 60;
+			const float spin_speed = 0.5f;
 			Projectile.ai[0]++;
 			if (Projectile.ai[0] < float_up) {
 				Projectile.velocity *= 0.93f;
 				Projectile.velocity.Y -= 0.4f;
 			} else if (Projectile.ai[0] < float_in_place) {
 				Projectile.velocity *= 0.93f;
+				Projectile.rotation += spin_speed;
 			} else if (Projectile.ai[1] == 0) {
 				if (ModContent.GetInstance<OriginSystem>().shimmerPosition is Vector2 shimmerPosition) {
 					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
@@ -42,8 +45,13 @@ namespace Origins.Items.Other.Consumables {
 					// could use some dusts or gores here
 					Projectile.Kill();
 				}
-			} else if (Projectile.ai[0] > shoot) {
-				Projectile.hide = true;
+			} else if (Projectile.ai[0] < shoot) {
+				Projectile.velocity = Vector2.Zero;
+				float targetAngle = (new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center).ToRotation() - MathHelper.PiOver4 * 0.5f;
+				float angle = GeometryUtils.AngleDif(Projectile.rotation, targetAngle, out int dir);
+				if (dir != 1 || angle > spin_speed) Projectile.rotation += spin_speed;
+				else Projectile.rotation = targetAngle;
+			} else if (Projectile.timeLeft > 15) {
 				Vector2 diff = new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center;
 				Vector2 pos = Projectile.Center;
 				float dist = diff.Length();
@@ -62,7 +70,11 @@ namespace Origins.Items.Other.Consumables {
 					pos += dir;
 					dist -= speed;
 				}
-				Projectile.Kill();
+				Projectile.timeLeft = 15;
+			}
+			if (Projectile.timeLeft < 15) {
+				SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+				Projectile.Opacity = Projectile.timeLeft / 15f;
 			}
 		}
 	}
