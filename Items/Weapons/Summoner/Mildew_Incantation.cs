@@ -40,13 +40,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.channel = true;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient(ItemID.Book, 5)
-			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public bool BackHand => true;
