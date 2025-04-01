@@ -569,7 +569,7 @@ namespace Origins {
 			}
 			if (luckyHatSet) {
 				if (Player.ItemAnimationActive) {
-					luckyHatSetTime = LuckyHatSetActive ? -1 : 0;
+					luckyHatSetTime = LuckyHatSetActive && Player.itemAnimation > 1 ? -1 : 0;
 				} else if (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) {
 					if (luckyHatSetTime < 90) {
 						luckyHatSetTime++;

@@ -53,7 +53,7 @@ namespace Origins {
 				damage.Flat += Focus_Potion.bonus_additive;
 			}
 			if ((item.CountsAsClass(DamageClass.Ranged) || item.CountsAsClass(DamageClasses.Explosive)) && LuckyHatSetActive) {
-				float mult = (90f / item.useAnimation) * 1.3f;
+				float mult = (90f / Math.Max(item.useAnimation, 8)) * 1.3f;
 				if (mult > 1) damage *= mult;
 			}
 		}
