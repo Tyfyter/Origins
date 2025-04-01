@@ -96,6 +96,8 @@ namespace Origins {
 		public bool luckyHatSet = false;
 		public int luckyHatSetTime = 0;
 		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
+		public bool mildewHead = false;
+		public bool mildewSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -581,6 +583,8 @@ namespace Origins {
 			} else {
 				luckyHatSetTime = 0;
 			}
+			mildewHead = false;
+			mildewSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {

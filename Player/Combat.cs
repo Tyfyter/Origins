@@ -272,6 +272,12 @@ namespace Origins {
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.IsMinionOrSentryRelated) {
 				broth?.OnMinionHit(proj, target, hit, damageDone);
+				if (mildewSet) {
+					target.AddBuff(Toxic_Shock_Debuff.ID, 90);
+					if (mildewSet && venomFang) {
+						target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
+					}
+				}
 			}
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
 				if (flaskBile) {
