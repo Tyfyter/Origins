@@ -692,7 +692,7 @@ MELEE WEAPONS:
 (^) Boomboom
 (^) Crystal Cutters
 (^) Depth Charge
-(#2, ^2) Knee Slapper* !!! (use glowmasks)
+(☻) Knee Slapper* !!! (use glowmasks)
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
@@ -898,7 +898,7 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(#2, ^2) Huff Puffer Bait !!!
+(#2?, ^2) Huff Puffer Bait !!!
 (☻) Mildew Incantation !!!
 (^) Mildew Whip
 (X) Obsidian Bone

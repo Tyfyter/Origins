@@ -99,6 +99,9 @@ namespace Origins.Graphics {
 		}
 		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, Vector2 extraOffset = default) {
 			if (!tangelaHaver.TangelaSeed.HasValue) tangelaHaver.TangelaSeed = Main.rand.Next();
+			DrawTangela(texture, position, sourceRectangle, rotation, origin, scale, effects, tangelaHaver.TangelaSeed.Value, extraOffset);
+		}
+		public static void DrawTangela(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, int tangelaSeed, Vector2 extraOffset = default) {
 			drawDatas.Add(new(new(
 				texture,
 				position,
@@ -108,7 +111,7 @@ namespace Origins.Graphics {
 				origin,
 				scale,
 				effects
-			), tangelaHaver.TangelaSeed.Value, extraOffset));
+			), tangelaSeed, extraOffset));
 			if (DrawOver) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			try {
