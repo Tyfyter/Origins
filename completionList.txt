@@ -1353,7 +1353,7 @@ CONSUMABLES:
 (%2) The Defiled Will°
 
 (^) Absorption Potion*
-(#2, ^2) Ambition Potion !!!
+(☻) Ambition Potion !!!
 (^) Antisolve Potion*
 (^) Fervor Potion*
 (^) Flask of Alkahest*
