@@ -56,7 +56,7 @@ namespace Origins.NPCs.Defiled {
 				ModContent.ItemType<Incision>(),
 				ModContent.ItemType<Ziptie>(),
 				ModContent.ItemType<Ravel>(),
-				ModContent.ItemType<Chunky_Hook>()
+				ModContent.ItemType<Tangela_Tether>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));

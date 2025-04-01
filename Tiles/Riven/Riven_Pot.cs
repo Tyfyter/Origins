@@ -66,9 +66,9 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = 0.05f * GlowValue;
+			r = 0.015f * GlowValue;
 			g = 0.0375f * GlowValue;
-			b = 0.015f * GlowValue;
+			b = 0.05f * GlowValue;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);

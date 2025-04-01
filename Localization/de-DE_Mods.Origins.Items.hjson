@@ -4393,11 +4393,6 @@ Lost_Brick_Item: {
 	// Tooltip: ""
 }
 
-Chunky_Hook: {
-	// DisplayName: Chunky Hook
-	// Tooltip: ""
-}
-
 Bee_Afraid_Incantation: {
 	// DisplayName: Bee Afraid Incantation
 	/* Tooltip:
@@ -5801,5 +5796,10 @@ Eye_Of_Aether: {
 
 Soul_Snatcher: {
 	// DisplayName: Soul Snatcher
+	// Tooltip: ""
+}
+
+Tangela_Tether: {
+	// DisplayName: Tangela Tether
 	// Tooltip: ""
 }

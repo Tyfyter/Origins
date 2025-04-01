@@ -595,7 +595,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook*
-(#2, ^2) Tangela Tether !!!
+(☻) Tangela Tether !!!
 
 (X) Strange Backpack
 
@@ -1201,7 +1201,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#2, ^2) Hydrothermal Vent !!! (goopy glows and smonk)
+(☻) Hydrothermal Vent !!! (goopy glows and smonk)
 (#, ^2) Limestone Foliage !!!
 (X) Marrowick Coral
 (X) Marrowick Flange

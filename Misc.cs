@@ -2776,6 +2776,10 @@ namespace Origins {
 			X = vector.X;
 			Y = vector.Y;
 		}
+		public static void Deconstruct(this Point vector, out int X, out int Y) {
+			X = vector.X;
+			Y = vector.Y;
+		}
 
 		public static void UseOldRenderTargets(this SpriteBatch spriteBatch, RenderTargetBinding[] oldRenderTargets) {
 			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;

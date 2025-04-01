@@ -13,7 +13,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Soul_Snatcher : ModItem, ICustomWikiStat {
