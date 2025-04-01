@@ -123,7 +123,7 @@ namespace Origins.Tiles {
 					for (int y = 0; y < tileData.Height; y++) {
 						for (int x = 0; x < tileData.Width; x++) {
 							Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
-							if (tileSafely.HasTile) goto fail;
+							if (tileSafely.HasTile || tileSafely.LiquidAmount > 0) goto fail;
 						}
 					}
 					if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
