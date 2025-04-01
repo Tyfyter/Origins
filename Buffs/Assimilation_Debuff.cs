@@ -17,7 +17,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Corrupt_Assimilation : AssimilationDebuff {
-		public override bool IsValidBiome(Player player) => player.ZoneCorrupt;
 		public override void Update(Player player, float percent) {
 			player.GetDamage(DamageClass.Generic) -= percent / 2;
 			player.GetAttackSpeed(DamageClass.Generic) -= percent / 2;
@@ -26,7 +25,6 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Crimson_Assimilation : AssimilationDebuff {
-		public override bool IsValidBiome(Player player) => player.ZoneCrimson;
 		public override void Update(Player player, float percent) {
 			if (Main.rand.NextFloat(0.5f, 2f) < percent) {
 				if (Main.rand.NextBool(2)) {
@@ -39,7 +37,6 @@ namespace Origins.Buffs {
 	}
 	public class Defiled_Assimilation : AssimilationDebuff {
 		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilDefiled";
-		public override bool IsValidBiome(Player player) => player.InModBiome<Defiled_Wastelands>();
 		public override void Update(Player player, float percent) {
 			if (percent >= 0.125 /*&& Main.rand.NextFloat(0, 200) < percent - 0.125*/) {
 				player.AddBuff(BuffID.Weak, 300);
@@ -50,21 +47,11 @@ namespace Origins.Buffs {
 			if (percent >= 0.5) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
-
-			var assimilation = player.OriginPlayer().GetAssimilation(AssimilationType);
-
-			if (assimilation.Type.IsValidBiome(player)) {
-				assimilation.Percent += percent * 0.0000444f;
-			} else {
-				//Decrease assimilation percent by 1% per tick
-				assimilation.Percent -= 0.0000444f;
-			}
-
+			player.OriginPlayer().GetAssimilation(AssimilationType).Percent += percent * player.InModBiome<Defiled_Wastelands>().ToDirectionInt() * 0.0000444f;
 		}
 	}
 	public class Riven_Assimilation : AssimilationDebuff {
 		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilRiven";
-		public override bool IsValidBiome(Player player) => player.InModBiome<Riven_Hive>();
 		public override void OnChanged(Player player, float oldValue, float newValue) {
 			if (oldValue < newValue) player.OriginPlayer().timeSinceRivenAssimilated = 0;
 		}
@@ -125,7 +112,6 @@ namespace Origins.Buffs {
 		public virtual LocalizedText DeathMessage => this.GetLocalization(nameof(DeathMessage), PrettyPrintName);
 		public virtual string BestiaryStatTexture => Texture + "_BestiaryStat";
 		public int AssimilationType { get; internal set; } = -1;
-		public virtual bool IsValidBiome(Player player) => true;
 		public override void Load() {
 			AssimilationLoader.Register(this);
 			Mod.AddContent(new AssimilationStat(this));
@@ -141,11 +127,6 @@ namespace Origins.Buffs {
 		public sealed override void Update(Player player, ref int buffIndex) {
 			AssimilationInfo info = player.OriginPlayer().GetAssimilation(AssimilationType);
 			float percent = info.EffectivePercent;
-
-			if (percent <= 0f) {
-				player.buffImmune[Type] = true;
-			}
-
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = DeathMessage.Key
