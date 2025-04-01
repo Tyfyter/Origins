@@ -172,7 +172,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.friendly = true;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
-			Projectile.scale = 0.75f;
+			Projectile.scale = 0.85f;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 30;
 		}
@@ -225,9 +225,9 @@ namespace Origins.Items.Weapons.Summoner {
 				anchor.Y += 8;
 				const float spring = 0.5f;
 				for (int i = 0; i < 15; i++) {
-					links.Add(new(anchor, default, 12f, gravity, drag: 0.93f, spring: spring));
+					links.Add(new(anchor, default, 13.6f, gravity, drag: 0.93f, spring: spring));
 				}
-				links.Add(new(anchor, default, 15f, [new ProjectileTargetGravity(this)], drag: 0.93f, spring: spring));
+				links.Add(new(anchor, default, 17f, [new ProjectileTargetGravity(this)], drag: 0.93f, spring: spring));
 				chain = new Physics.Chain() {
 					anchor = new WorldAnchorPoint(anchor),
 					links = links.ToArray()

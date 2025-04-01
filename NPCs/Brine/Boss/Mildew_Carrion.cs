@@ -210,16 +210,11 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool PreAI() {
 			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 			DoTargeting();
-			Vector2 targetVelocity = Vector2.Zero;
-			if (NPC.HasPlayerTarget) {
-				targetVelocity = Main.player[NPC.target].velocity;
-			} else if (NPC.HasNPCTarget) {
-				targetVelocity = Main.npc[NPC.TranslatedTargetIndex].velocity;
-			}
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
 			int tendrilType = ModContent.NPCType<Mildew_Carrion_Tendril>();
+			NPC.rotation = direction.ToRotation() + MathHelper.PiOver2;
 			startMode:
 			switch (AIMode) {
 				default:
@@ -234,7 +229,7 @@ namespace Origins.NPCs.Brine.Boss {
 					}
 					AddMode(AIModes.Idle, 0);
 					AddMode(AIModes.Spores, 1);
-					int tendrilCountMax = 8 + (int)(ContentExtensions.DifficultyDamageMultiplier * 2);
+					int tendrilCountMax = 8 + (int)(difficultyMult * 2);
 					int tendrilCount = 0;
 					foreach (NPC other in Main.ActiveNPCs) {
 						if (other.type == tendrilType && ++tendrilCount >= tendrilCountMax) break;
@@ -248,14 +243,14 @@ namespace Origins.NPCs.Brine.Boss {
 				break;
 				case AIModes.Spores: {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
-						for (int i = Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier + 0.5f); i > 0; i--) {
-							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (10 + ContentExtensions.DifficultyDamageMultiplier * 2) * Main.rand.NextFloat(0.8f, 1f);
+						for (int i = Main.rand.RandomRound(difficultyMult + 0.5f); i > 0; i--) {
+							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.8f, 1f);
 							Projectile.NewProjectile(
 								NPC.GetSource_FromAI(),
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
-								(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
+								(int)(25 * difficultyMult),
 								2
 							);
 						}
@@ -265,7 +260,7 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 				case AIModes.SpawnTendril: {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
-						for (int i = Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier + 0.5f); i > 0; i--) {
+						for (int i = Main.rand.RandomRound(difficultyMult + 0.5f); i > 0; i--) {
 							Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0f, MathHelper.TwoPi)) * 4;
 							NPC.NewNPC(
 								NPC.GetSource_FromAI(),
@@ -284,14 +279,18 @@ namespace Origins.NPCs.Brine.Boss {
 					break;
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && ++NPC.localAI[2] > 90) {
+			if (Main.netMode != NetmodeID.MultiplayerClient && ++NPC.localAI[2] > 150) {
 				int side = Main.rand.NextBool().ToDirectionInt();
-				for (int i = Main.rand.RandomRound(1.5f + ContentExtensions.DifficultyDamageMultiplier); i > 0; i--) {
-					Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0.2f, 0.5f) * side) * (14 + ContentExtensions.DifficultyDamageMultiplier);
+				int tentacleType = ModContent.NPCType<Mildew_Carrion_Tentacle>();
+				int presentTentacleCount = (int)Math.Ceiling(NPC.localAI[1] / Mildew_Carrion_Tentacle.DestructionCooldown);
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.type == tentacleType) presentTentacleCount++;
+				}
+				for (int i = Main.rand.RandomRound(1.5f + difficultyMult); i > 0; i--) {
+					if (presentTentacleCount++ >= 3 + difficultyMult) break;
+					Vector2 tentacleDir = direction.RotatedBy(Main.rand.NextFloat(0.2f, 0.5f) * side) * (14 + difficultyMult);
 					Vector2 pos = NPC.Center;
-					Rectangle hitbox = new(0, 0, 16, 16);
-					hitbox.X = (int)pos.X - 8;
-					hitbox.Y = (int)pos.Y - 8;
+					Rectangle hitbox = new((int)pos.X - 8, (int)pos.Y - 8, 16, 16);
 					int intangibleSteps = 1;
 					while (hitbox.OverlapsAnyTiles(false) && intangibleSteps < 120) {
 						intangibleSteps++;
@@ -303,7 +302,7 @@ namespace Origins.NPCs.Brine.Boss {
 						NPC.GetSource_FromAI(),
 						(int)NPC.Center.X,
 						(int)NPC.Center.Y,
-						ModContent.NPCType<Mildew_Carrion_Tentacle>(),
+						tentacleType,
 						0,
 						tentacleDir.X,
 						tentacleDir.Y,
@@ -314,6 +313,7 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 				NPC.localAI[2] = 0;
 			}
+			if (NPC.localAI[1] > 0) NPC.localAI[1]--;
 			NPC.velocity *= 0.97f;
 			return false;
 		}
@@ -374,6 +374,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	public class Mildew_Carrion_Tentacle : ModNPC {
+		public static int DestructionCooldown => 300;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
@@ -413,7 +414,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Vector2 targetPos = (owner.ModNPC as Mildew_Carrion)?.TargetPos ?? owner.Center;
 			switch ((int)NPC.ai[0]) {
 				case 0: {
-					if (--NPC.ai[2] <= 0 && NPC.Hitbox.OverlapsAnyTiles(false)) {
+					if (--NPC.ai[2] <= 0 && (NPC.Hitbox.OverlapsAnyTiles(false) || NPC.ai[2] < -180)) {
 						NPC.velocity = Vector2.Zero;
 						NPC.ai[0] = 1;
 					}
@@ -437,6 +438,9 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 			if (NPC.localAI[1] >= 1 || !owner.active) NPC.life = 0;
 			return false;
+		}
+		public override void OnKill() {
+			if (NPC.localAI[1] < 1) Owner.localAI[1] += DestructionCooldown;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 && NPC.localAI[1] < 0.5f) {
