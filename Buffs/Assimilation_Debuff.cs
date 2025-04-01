@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.NPCs;
+using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Graphics;
 using System;
@@ -46,7 +47,7 @@ namespace Origins.Buffs {
 			if (percent >= 0.5) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
-			player.OriginPlayer().GetAssimilation(AssimilationType).Percent += percent * 0.0000444f;
+			player.OriginPlayer().GetAssimilation(AssimilationType).Percent += percent * player.InModBiome<Defiled_Wastelands>().ToDirectionInt() * 0.0000444f;
 		}
 	}
 	public class Riven_Assimilation : AssimilationDebuff {
