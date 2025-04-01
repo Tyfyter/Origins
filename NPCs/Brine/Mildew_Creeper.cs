@@ -9,6 +9,7 @@ using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
 using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Defiled;
