@@ -1677,6 +1677,8 @@ Projectiles: {
 	Soul_Snatcher_P.DisplayName: Soul Snatcher
 	Soul_Snatcher_Spin.DisplayName: Soul Snatcher Spin
 	Tangela_Tether_P.DisplayName: Tangela Tether P
+	Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
+	Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
 }
 
 Prefixes: {
