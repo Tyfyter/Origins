@@ -1202,7 +1202,7 @@ TILES:
 (^) Gel Blister*
 (X) Heat Vent
 (☻) Hydrothermal Vent !!! (goopy glows and smonk)
-(#, ^2) Limestone Foliage !!!
+(☻) Limestone Rubble !!!
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
