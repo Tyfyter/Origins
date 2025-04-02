@@ -360,6 +360,7 @@ namespace Origins {
 		public bool swarmStatue = false;
 		public bool focusPotion = false;
 		public BrothBase broth = null;
+		public int staticBrothEffectCooldown = 0;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
 		public bool miniStaticShock = false;
@@ -802,6 +803,8 @@ namespace Origins {
 			staticShockDamage = false;
 			if (!Player.HasBuff<Relay_Rod_Buff>()) relayRodStrength = 0;
 			broth = null;
+			if (staticBrothEffectCooldown > 0)
+				staticBrothEffectCooldown--;
 
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;

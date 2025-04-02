@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Broths {
 	public class Greasy_Broth : BrothBase {
-		public static int cd = 30;
-		public static int cdMax = 90;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.DrinkParticleColors[Type] = [
@@ -17,19 +15,16 @@ namespace Origins.Items.Other.Consumables.Broths {
 				new Color(38, 73, 66)
 			];
 		}
-		public override void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
+		public override void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Oiled, 360);
 			if (MinionGlobalProjectile.IsArtifact(proj)) {
 				//target.AddBuff(BuffID.OnFire, 360);
-				if (cd >= cdMax) {
-					Projectile.NewProjectile(Terraria.Entity.InheritSource(proj), proj.Center, new Vector2(), Greasy_Gas.ID, 0, 0);
-					cd = 0;
+				ref int staticBrothEffectCooldown = ref Main.player[proj.owner].OriginPlayer().staticBrothEffectCooldown;
+				if (staticBrothEffectCooldown <= 0) {
+					Projectile.NewProjectile(Terraria.Entity.InheritSource(proj), proj.Center, Vector2.Zero, Greasy_Gas.ID, 0, 0);
+					staticBrothEffectCooldown = 90;
 				}
 			}
-		}
-		public override void UpdateBuff(Player player, ref int buffIndex) {
-			cdMax = 90;
-			cd++;
 		}
 	}
 	public class Greasy_Gas : ModProjectile {
@@ -67,11 +62,9 @@ namespace Origins.Items.Other.Consumables.Broths {
 			#region Animation and visuals
 			// This is a simple "loop through all frames from top to bottom" animation
 			int frameSpeed = 5;
-			Projectile.frameCounter++;
-			if (Projectile.frameCounter >= frameSpeed) {
+			if (++Projectile.frameCounter >= frameSpeed) {
 				Projectile.frameCounter = 0;
-				Projectile.frame++;
-				if (Projectile.frame >= Main.projFrames[Projectile.type]) {
+				if (++Projectile.frame >= Main.projFrames[Projectile.type]) {
 					Projectile.frame = 0;
 				}
 			}
@@ -86,12 +79,12 @@ namespace Origins.Items.Other.Consumables.Broths {
 				texture,
 				Projectile.Bottom - new Vector2(0, 4) - Main.screenPosition,
 				frame,
-				Projectile.GetAlpha(lightColor.MultiplyRGB(new Color(89, 52, 96))),
+				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(89, 52, 96, 200))),
 				Projectile.rotation,
 				new Vector2(frame.Width / 2, frame.Height - 4),
 				Projectile.scale,
 				SpriteEffects.None,
-				0);
+			0);
 			return false;
 		}
 	}
