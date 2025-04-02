@@ -77,13 +77,25 @@ namespace Origins.Items.Armor.Other {
 				TileID.Containers,
 				TileID.TNTBarrel
 			];
-			TileObjectData.newTile.Direction = TileObjectDirection.None;
+			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
+			TileObjectData.addAlternate(1);
+
+			TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.HookCheckIfCanPlace = new PlacementHook(PlacementPreviewHook_CheckIfCanPlace, -1, 0, true);
 			TileObjectData.newAlternate.AnchorBottom = new AnchorData(AnchorType.AlternateTile, 2, 0);
 			TileObjectData.newAlternate.DrawYOffset = 6;
 			TileObjectData.addAlternate(0);
+			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
+			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
+			TileObjectData.newAlternate.HookCheckIfCanPlace = new PlacementHook(PlacementPreviewHook_CheckIfCanPlace, -1, 0, true);
+			TileObjectData.newAlternate.AnchorBottom = new AnchorData(AnchorType.AlternateTile, 2, 0);
+			TileObjectData.newAlternate.DrawYOffset = 6;
+			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
+
+			RegisterItemDrop(ModContent.ItemType<Lucky_Hat>(), -1);
 		}
 		public static int PlacementPreviewHook_CheckIfCanPlace(int i, int j, int type, int style, int direction, int alternate) {
 			Tile anchorTile = Framing.GetTileSafely(i, j + 1);
