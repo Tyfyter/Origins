@@ -109,6 +109,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 		public override void AddShops() {
 			new NPCShop(Type)
+			.Add<Plain_Broth>()
 			.Add<Hearty_Broth>()
 			.Add<Sour_Broth>()
 			.Add<Foul_Broth>()
@@ -116,6 +117,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Minty_Broth>()
 			.Add<Umami_Broth>()
 			.Add<Light_Broth>()
+			.Add<Sweet_Broth>()
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
 			.Add(Music_Box.ItemType<Ancient_Music_Box_BP>(), Quest.QuestCondition<Old_Brine_Music_Box_Quest>())
 			.Register();

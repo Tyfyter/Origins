@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Items;
+using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.World;
 using System;
@@ -133,6 +134,11 @@ namespace Origins.Projectiles {
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			bonusUpdates = binaryReader.ReadSingle();
 			fromArtifact = bitReader.ReadBit();
+		}
+		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
+			if (projectile.TryGetOwner(out Player player) && player.OriginPlayer()?.broth is Plain_Broth) {
+				hitbox.Inflate(hitbox.Width / 8, hitbox.Height / 8);
+			}
 		}
 		public static bool IsArtifact(Projectile projectile) {
 			if (Origins.ArtifactMinion[projectile.type]) return true;

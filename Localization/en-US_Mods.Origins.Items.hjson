@@ -5818,3 +5818,8 @@ Mildew_Helmet: {
 	DisplayName: Mildew Helmet
 	Tooltip: ""
 }
+
+Plain_Broth: {
+	DisplayName: Plain Broth
+	Tooltip: Increases minion size by 25%
+}

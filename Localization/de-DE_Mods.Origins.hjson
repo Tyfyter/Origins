@@ -1146,6 +1146,11 @@ Buffs: {
 		// DisplayName: Mildew Incantation Buff
 		// Description: Mods.Origins.Buffs.Mildew_Incantation_Buff.Description
 	}
+
+	Plain_Broth_Buff: {
+		// DisplayName: Plain Broth Buff
+		// Description: Mods.Origins.Buffs.Plain_Broth_Buff.Description
+	}
 }
 
 DamageClassName: {
