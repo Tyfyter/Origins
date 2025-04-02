@@ -17,7 +17,7 @@ namespace Origins.Tiles.Limestone {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Origin = new Point16(0, 2);
-			if (!Name.EndsWith("_Fake")) TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.addTile(Type);
 
 			DustType = DustID.Sand;
@@ -27,8 +27,7 @@ namespace Origins.Tiles.Limestone {
 		public override string Texture => base.Texture[..^"_Fake".Length];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Limestone_Item>(), Type, 0, 1, 2);
-			RegisterItemDrop(ModContent.ItemType<Limestone_Item>());
+			FlexibleTileWand.RubblePlacementMedium.SetupRubblemakerClone<Limestone_Item>(this, 0, 1, 2);
 		}
 	}
 }

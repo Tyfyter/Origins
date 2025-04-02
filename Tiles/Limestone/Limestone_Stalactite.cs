@@ -27,7 +27,7 @@ namespace Origins.Tiles.Limestone {
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
-			if (!Name.EndsWith("_Fake")) TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.Origin = new();
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleMultiplier = 1;
@@ -56,7 +56,7 @@ namespace Origins.Tiles.Limestone {
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
-			if (!Name.EndsWith("_Fake")) TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleMultiplier = 1;
 			TileObjectData.addTile(Type);
@@ -68,16 +68,14 @@ namespace Origins.Tiles.Limestone {
 		public override string Texture => base.Texture[..^"_Fake".Length];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Limestone_Item>(), Type, 0, 1, 2);
-			RegisterItemDrop(ModContent.ItemType<Limestone_Item>());
+			FlexibleTileWand.RubblePlacementMedium.SetupRubblemakerClone<Limestone_Item>(this, 0, 1, 2);
 		}
 	}
 	public class Limestone_Stalagmite_Fake : Limestone_Stalagmite {
 		public override string Texture => base.Texture[..^"_Fake".Length];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Limestone_Item>(), Type, 0, 1, 2);
-			RegisterItemDrop(ModContent.ItemType<Limestone_Item>());
+			FlexibleTileWand.RubblePlacementMedium.SetupRubblemakerClone<Limestone_Item>(this, 0, 1, 2);
 		}
 	}
 }

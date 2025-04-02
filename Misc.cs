@@ -44,6 +44,7 @@ using Stubble.Core.Helpers;
 using Terraria.GameContent.Creative;
 using CalamityMod.Items;
 using Terraria.Graphics.Light;
+using Origins.Tiles.Limestone;
 
 namespace Origins {
 	#region classes
@@ -2235,6 +2236,16 @@ namespace Origins {
 		/// </summary>
 		public static bool TileIsType(this Tile self, int type) {
 			return self.HasTile && self.TileType == type;
+		}
+		public static void SetupRubblemakerClone<TItem>(this FlexibleTileWand wand, ModTile tile, params int[] variants) where TItem : ModItem {
+			TileObjectData tileObjectData = TileObjectData.GetTileData(tile.Type, 0, 0);
+			tileObjectData.RandomStyleRange = 0;
+			for (int i = 0; i < tileObjectData.AlternatesCount; i++) {
+				TileObjectData.GetTileData(tile.Type, 0, 0).RandomStyleRange = 0;
+			}
+			tileObjectData.RandomStyleRange = 0;
+			wand.AddVariations(ModContent.ItemType<TItem>(), tile.Type, variants);
+			tile.RegisterItemDrop(ModContent.ItemType<TItem>());
 		}
 		#endregion
 		public static T SafeGet<T>(this TagCompound self, string key, T fallback = default) {
