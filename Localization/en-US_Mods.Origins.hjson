@@ -13,7 +13,7 @@ Conditions: {
 	RivenWater: Amebic Gel
 	ShimmerDecrafting: Shimmer decrafting only
 	ShimmerTransmutation: Shimmer Transmutation
-	DownedDefiledAmalgamation: After defeating the Defiled Amalgamation
+	DownedDefiledAmalgamation: After defeating the {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName}
 	DownedWorldCracker: After defeating the World Cracker
 	DownedTrenchmaker: After defeating the Trenchmaker
 	BiomeKey: Drops in the Hardmode {0}
@@ -24,21 +24,21 @@ Conditions: {
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
 	DownedScrapper: Mods.Origins.Conditions.DownedScrapper
-	DownedDefiledMimic: After defeating a Defiled Mimic, In hardmode
-	DownedRivenMimic: After defeating a Riven Mimic, In hardmode
+	DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
+	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
 	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
 }
 
 ModMenu: {
-	Defiled_Wastelands: Defiled Wastelands
-	Riven_Hive: Riven Hive
+	Defiled_Wastelands: "{§Defiled_Wastelands}"
+	Riven_Hive: "{§Riven_Hive}"
 }
 
 RecipeGroups: {
 	GemStaves: Any Gem Staff
 	EvilBoomerangs: Any Evil Boomerang
 	EvilGunMagazines: Any Evil Gun Magazine
-	AnnyBanner: Any {0} Banner
+	AnyBanner: Any {0} Banner
 }
 
 Status_Messages: {
@@ -93,7 +93,7 @@ FishQuest: {
 		Description:
 			'''
 			It's more poky than your average puffer and more deadly! It's not toxic so don't worry, but it can get through your head!
-			It's the Defiled we're talking about here! I want you to go and find that fish bubbling around in the Wastelands and bring it back to me!
+			It's the {§Defiled} we're talking about here! I want you to go and find that fish bubbling around in the {§Defiled_Wastelands} and bring it back to me!
 			'''
 		Location: Caught in {§Defiled_Wastelands}
 	}
@@ -110,10 +110,10 @@ FishQuest: {
 	Duskarp: {
 		Description:
 			'''
-			Down in the gloomy depths of the underworld is a very dark place known as the "Dusk". I've heard there's a type of fish native to the Dusk known as the "Duskarp".
+			Down in the gloomy depths of the underworld is a very dark place known as the "{§Dusk}". I've heard there's a type of fish native to the {§Dusk} known as the "{§Dusk}arp".
 			Now, I haven't heard much about them, but I do know that they can really nip at anything that looms over the purple lava, so watch your hands!
 			'''
-		Location: Caught in {$Dusk}
+		Location: Caught in {§Dusk}
 	}
 
 	Fiberbass: {
@@ -411,7 +411,7 @@ DeathMessage: {
 	Torn_3: "{0} got digested."
 	Torn_4: "{0} got dissolved."
 	Tripod_0: "{0} forgot the tripod nip."
-	Tripod_1: "{0} got rekt by a Defiled Tripod."
+	Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
 }
 
 Generic: {
@@ -435,16 +435,16 @@ Generic: {
 AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		DisplayName: "{§Defiled_Wastelands}"
-		Description: The surrogate evil Defiled is guaranteed to be present in your world.
-		GenPassName: Defiledifying
-		DryadTextDescriptor: defiled
+		Description: The surrogate evil {§Defiled} is guaranteed to be present in your world.
+		GenPassName: "{§Defiled}ifying"
+		DryadTextDescriptor: "{§Defiled}"
 	}
 
 	Riven_Hive_Alt_Biome: {
-		DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
-		Description: Life-harboring, beautiful riven is guaranteed to be present in your world.
+		DisplayName: "{§Riven_Hive}"
+		Description: Life-harboring, beautiful {§Riven} is guaranteed to be present in your world.
 		GenPassName: Blue Lobsterating
-		DryadTextDescriptor: riven
+		DryadTextDescriptor: "{§Riven}"
 	}
 
 	Ashen_Alt_Biome: {
@@ -457,15 +457,15 @@ AltBiomes: {
 
 GuideAdvice: {
 	World_Evils: {
-		DA_Summon_Item: You can combine defiled powder and strange string to create a nerve impulse manipulator. Make sure you are in the wastelands before using it.
-		PA_Summon_Item: You can create suspicious looking ice cream using sentient powder and bud barnacles. Make sure you are in the riven hive before using it.
-		DAltar: Defiled altars can usually be found in the defiled wastelands. You will need to be near them to craft some items.
-		RAltar: Riven altars can usually be found in the riven hive. You will need to be near them to craft some items.
-		DFissure: Defiled relays can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!
-		RLesion: Gel blisters can usually be found in the riven hive. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
-		Defiled_Heart: The Defiled quickly reclaims purified tiles until all Defiled Hearts are smashed. Find them in Caverns at the center of the system.
-		HardmodeAltarD: Make sure to smash any defiled altar you can find. Something good is bound to happen if you do!
-		HardmodeAltarR: Make sure to smash any riven altar you can find. Something good is bound to happen if you do!
+		DA_Summon_Item: You can combine {§Defiled} powder and strange string to create a nerve impulse manipulator. Make sure you are in {§the_Defiled_Wastelands} before using it.
+		PA_Summon_Item: You can create suspicious looking ice cream using sentient powder and bud barnacles. Make sure you are in the {§Riven_Hive} before using it.
+		DAltar: "{§Defiled} altars can usually be found in the {§Defiled_Wastelands}. You will need to be near them to craft some items."
+		RAltar: "{§Riven} altars can usually be found in the {§Riven_Hive}. You will need to be near them to craft some items."
+		DFissure: "{§Defiled} relays can usually be found in the chasms around {§Defiled} areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!"
+		RLesion: Gel blisters can usually be found in the {§Riven_Hive}. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
+		Defiled_Heart: The {§Defiled} quickly reclaims purified tiles until all {§Defiled} Hearts are smashed. Find them in Caverns at the center of the system.
+		HardmodeAltarD: Make sure to smash any {§Defiled} altar you can find. Something good is bound to happen if you do!
+		HardmodeAltarR: Make sure to smash any {§Riven} altar you can find. Something good is bound to happen if you do!
 	}
 
 	Other: {
@@ -534,9 +534,9 @@ Buffs: {
 	}
 
 	Defiled_Assimilation: {
-		DisplayName: Defiled Assimilation
+		DisplayName: "{§Defiled} Assimilation"
 		Description: You're being assimilated by {§The_Defiled_Wastelands}
-		DeathMessage: "{0} was warped to the Defiled Will."
+		DeathMessage: "{0} was warped to the {§Defiled} Will."
 	}
 
 	Defiled_Blight_Buff: {
@@ -640,9 +640,9 @@ Buffs: {
 	}
 
 	Riven_Assimilation: {
-		DisplayName: Riven Assimilation
+		DisplayName: "{§Riven} Assimilation"
 		Description: You're being assimilated by the {§Riven_Hive}
-		DeathMessage: "{0} became one with the Riven Hive's ecosystem."
+		DeathMessage: "{0} became one with the {§Riven_Hive}'s ecosystem."
 	}
 
 	Safe_Buff: {
@@ -915,7 +915,7 @@ Buffs: {
 	}
 
 	Desert_Crown_Buff: {
-		DisplayName: Mud Crown
+		DisplayName: Desert Crown
 		Description: The sand elemental will fight for you
 	}
 
@@ -1153,6 +1153,16 @@ Buffs: {
 	}
 }
 
+	Greasy_Broth_Buff: {
+		DisplayName: Greasy Broth
+		Description:
+			'''
+			All minions inflict Oiled
+			Artifact minions creates a greasy gas that causes burning on hit
+			'''
+	}
+}
+
 DamageClassName: {
 	ExplosivePlusTerraria/DefaultDamageClass: explosive damage
 	ExplosivePlusTerraria/GenericDamageClass: explosive damage
@@ -1200,7 +1210,7 @@ Projectiles: {
 	Unsought_Organ_P.DisplayName: Unsought Organ
 	Riptide_Dash_P.DisplayName: Riptide Dash
 	Ash_Urn_P.DisplayName: Ashes
-	Defiled_Powder_P.DisplayName: Defiled Powder
+	Defiled_Powder_P.DisplayName: "{§Defiled} Powder"
 	Sentient_Powder_P.DisplayName: Sentient Powder
 	Gooey_Water_P.DisplayName: Gooey Water
 	White_Water_P.DisplayName: White Water
@@ -1263,7 +1273,7 @@ Projectiles: {
 	Crystal_Bomb_P.DisplayName: Crystal Bomb
 	Crystal_Grenade_P.DisplayName: Crystal Grenade
 	Crystal_Grenade_Shard.DisplayName: Crystal Shard
-	Defiled_Spirit_P.DisplayName: Defiled Spirit
+	Defiled_Spirit_P.DisplayName: "{§Defiled} Spirit"
 	Dreikan_Shot.DisplayName: Dreikanfire
 	Explosive_Golf_Ball_P.DisplayName: Explosive Golf Ball
 	Felnum_Shock_Grenade_P.DisplayName: Felnum Shock Grenade
@@ -1369,13 +1379,13 @@ Projectiles: {
 	Woodsprite_Lifesteal.DisplayName: Woodsprite Lifesteal
 	Teardown_P.DisplayName: Flying Exoskeleton
 	Fiberglass_Thread.DisplayName: Fiberglass Thread
-	Defiled_Enemy_Summon.DisplayName: Defiled Enemy Summon
+	Defiled_Enemy_Summon.DisplayName: "{§Defiled} Enemy Summon"
 	Defiled_Wastelands_Signal.DisplayName: Nerve Impulse
 	Felnum_Shock_Arc.DisplayName: Felnum Shock Arc
 	Felnum_Shock_Leader.DisplayName: Felnum Shock
 	Brine_Droplet.DisplayName: Brine Droplet
 	Cryostrike_P.DisplayName: Cryostrike
-	Defiled_Spike_Explosion.DisplayName: Defiled Spike Explosion
+	Defiled_Spike_Explosion.DisplayName: "{§Defiled} Spike Explosion"
 	Defiled_Spike_Explosion_Spike.DisplayName: "{§Defiled} Spike Eruption"
 	Gooey_Exaultion_P.DisplayName: Gooey Exaultion
 	Lava_Shot.DisplayName: Magma Shot
@@ -1514,10 +1524,10 @@ Projectiles: {
 	Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
 	Scabcoral_Lyre_P.DisplayName: Scabcoral
 	Omnidirectional_Claymore_Projectile.DisplayName: Omnidirectional Claymore
-	Defiled_Asphyxiator_P1.DisplayName: Defiled Asphyxiator P1
-	Defiled_Asphyxiator_P2.DisplayName: Defiled Asphyxiator P2
-	Defiled_Asphyxiator_P3.DisplayName: Defiled Asphyxiator P3
-	Defiled_Watcher_Spikes.DisplayName: Defiled Watcher Spikes
+	Defiled_Asphyxiator_P1.DisplayName: "{§Defiled} Asphyxiator"
+	Defiled_Asphyxiator_P2.DisplayName: "{§Defiled} Asphyxiator"
+	Defiled_Asphyxiator_P3.DisplayName: "{§Defiled} Asphyxiator"
+	Defiled_Watcher_Spikes.DisplayName: "{§Defiled} Watcher Spikes"
 	Generic_Weapon_P.DisplayName: Generic Weapon
 	Hemoptysis_P.DisplayName: Hemoptysis
 	Hemoptysis_Blood_P.DisplayName: Hemoptysis
@@ -1537,10 +1547,10 @@ Projectiles: {
 	Spray_N_Pray_P.DisplayName: Spray 'N Pray
 	Broken_Terratotem_Orb.DisplayName: Broken Terratotem Orb
 	Terratotem_Orb.DisplayName: Terratotem Orb
-	Silica_Ball_Falling.DisplayName: Silica Ball Falling
-	Silica_Ball_Gun.DisplayName: Silica Ball Gun
-	Defiled_Sand_Ball_Falling.DisplayName: Defiled Sand Ball Falling
-	Defiled_Sand_Ball_Gun.DisplayName: Defiled Sand Ball Gun
+	Silica_Ball_Falling.DisplayName: Silica Ball
+	Silica_Ball_Gun.DisplayName: Silica Ball
+	Defiled_Sand_Ball_Falling.DisplayName: "{§Defiled} Sand Ball"
+	Defiled_Sand_Ball_Gun.DisplayName: "{§Defiled} Sand Ball"
 	Terratotem_Laser.DisplayName: Terratotem Laser
 	World_Cracker_Beam.DisplayName: World Cracker Beam
 	Friendly_Zombie.DisplayName: Friendly Zombie
@@ -1650,12 +1660,12 @@ Projectiles: {
 	Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed P
 	Sunny_Sunflower_P.DisplayName: Sunny Sunflower P
 	Golden_Lotus_Fairy.DisplayName: Golden Lotus Fairy
-	DefiledNukeProj.DisplayName: Defiled Nuke Proj
-	DefiledNukeSupremeProj.DisplayName: Defiled Nuke Supreme Proj
-	RivenNukeProj.DisplayName: Riven Nuke Proj
-	RivenNukeSupremeProj.DisplayName: Riven Nuke Supreme Proj
-	AshenNukeProj.DisplayName: Ashen Nuke Proj
-	AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme Proj
+	DefiledNukeProj.DisplayName: "{§Defiled} Nuke"
+	DefiledNukeSupremeProj.DisplayName: "{§Defiled} Nuke Supreme"
+	RivenNukeProj.DisplayName: "{§Riven} Nuke"
+	RivenNukeSupremeProj.DisplayName: "{§Riven} Nuke Supreme"
+	AshenNukeProj.DisplayName: Ashen Nuke
+	AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme
 	Power_Lotus_Deflect_Fairy.DisplayName: Power Lotus Deflect Fairy
 	Power_Lotus_Seeker_Fairy.DisplayName: Power Lotus Seeker Fairy
 	Keytar_Bass.DisplayName: Keytar Bass
@@ -1663,19 +1673,19 @@ Projectiles: {
 	Keytar_Synth.DisplayName: Keytar Synth
 	Astoxo_Lightning.DisplayName: Astoxo Lightning
 	Nerve_Flan_P.DisplayName: Nerve Flan P
-	Defiled_Cyclops_Bone_Latcher.DisplayName: Defiled Cyclops Bone Latcher
-	Defiled_Krusher_P1.DisplayName: Defiled Krusher
-	Defiled_Krusher_P2.DisplayName: Defiled Krusher
-	Defiled_Krusher_P3.DisplayName: Defiled Krusher
+	Defiled_Cyclops_Bone_Latcher.DisplayName: "{§Defiled} Cyclops Bone Latcher"
+	Defiled_Krusher_P1.DisplayName: "{§Defiled} Krusher"
+	Defiled_Krusher_P2.DisplayName: "{§Defiled} Krusher"
+	Defiled_Krusher_P3.DisplayName: "{§Defiled} Krusher"
 	Impetus_P.DisplayName: Impetus P
 	Impetus_Splut_P.DisplayName: Impetus Splut P
 	Impetus_Shrapnel.DisplayName: Impetus Shrapnel
 	Rocket_Rifle_P.DisplayName: Rocket Rifle P
 	Inject_Incantation_P.DisplayName: Inject Incantation P
 	Huff_Puffer.DisplayName: Huff Puffer
-	Mildew_Carrion_Spore.DisplayName: Mildew Carrion Spore
-	Mildew_Carrion_Spore2.DisplayName: Mildew Carrion Spore2
-	Mildew_Carrion_Spore3.DisplayName: Mildew Carrion Spore3
+	Mildew_Carrion_Spore.DisplayName: "{§Mildew_Carrion} Spore"
+	Mildew_Carrion_Spore2.DisplayName: "{§Mildew_Carrion} Spore"
+	Mildew_Carrion_Spore3.DisplayName: "{§Mildew_Carrion} Spore"
 	Mildew_Incantation_P.DisplayName: Mildew Incantation P
 	Mildew_Incantation_Creeper.DisplayName: Mildew Incantation Creeper
 	Eye_Of_Aether_P.DisplayName: Eye Of Aether P
@@ -1684,6 +1694,7 @@ Projectiles: {
 	Tangela_Tether_P.DisplayName: Tangela Tether P
 	Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
 	Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
+	Greasy_Gas.DisplayName: Greasy Gas
 }
 
 Prefixes: {
@@ -1737,13 +1748,13 @@ Biomes: {
 	}
 
 	Defiled_Wastelands: {
-		DisplayName: Defiled Wastelands
-		TownNPCDialogueName: the Defiled Wastelands
+		DisplayName: "{§Defiled_Wastelands}"
+		TownNPCDialogueName: "{§the_Defiled_Wastelands}"
 	}
 
 	Dusk: {
-		DisplayName: Dusk
-		TownNPCDialogueName: the Dusk
+		DisplayName: "{§Dusk}"
+		TownNPCDialogueName: the {§Dusk}
 	}
 
 	Fiberglass_Undergrowth: {
@@ -1752,8 +1763,8 @@ Biomes: {
 	}
 
 	Riven_Hive: {
-		DisplayName: Riven Hive
-		TownNPCDialogueName: the Riven Hive
+		DisplayName: "{§Riven_Hive}"
+		TownNPCDialogueName: the {§Riven_Hive}
 	}
 
 	World_Cracker_Master_Biome: {
@@ -1762,13 +1773,13 @@ Biomes: {
 	}
 
 	Underground_Defiled_Wastelands_Biome: {
-		DisplayName: Underground Defiled Wastelands
-		TownNPCDialogueName: the Underground Defiled Wastelands
+		DisplayName: Underground {§Defiled_Wastelands}
+		TownNPCDialogueName: the Underground {§Defiled_Wastelands}
 	}
 
 	Underground_Riven_Hive_Biome: {
-		DisplayName: Underground Riven Hive
-		TownNPCDialogueName: the Underground Riven Hive
+		DisplayName: Underground {§Riven_Hive}
+		TownNPCDialogueName: the Underground {§Riven_Hive}
 	}
 
 	Bestiary_Biomes: {
@@ -1784,18 +1795,18 @@ Biomes: {
 	}
 
 	AshenBiomeData: {
-		DisplayName: Ashen Biome Data
-		TownNPCDialogueName: the Ashen Biome Data
+		DisplayName: Ashen Biome
+		TownNPCDialogueName: the Ashen Biome
 	}
 
 	Defiled_Wastelands_Desert: {
-		DisplayName: Defiled Desert
-		TownNPCDialogueName: the Defiled Desert
+		DisplayName: "{§Defiled} Desert"
+		TownNPCDialogueName: the {§Defiled} Desert
 	}
 
 	Riven_Hive_Desert: {
-		DisplayName: Riven Desert
-		TownNPCDialogueName: the Riven Desert
+		DisplayName: "{§Riven} Desert"
+		TownNPCDialogueName: the {§Riven} Desert
 	}
 
 	Riven_Hive_Ocean: {
@@ -1804,13 +1815,13 @@ Biomes: {
 	}
 
 	Defiled_Wastelands_Underground_Desert: {
-		DisplayName: Underground Defiled Desert
-		TownNPCDialogueName: the Underground Defiled Desert
+		DisplayName: Underground {§Defiled} Desert
+		TownNPCDialogueName: the Underground {§Defiled} Desert
 	}
 
 	Riven_Hive_Underground_Desert: {
-		DisplayName: Underground Riven Desert
-		TownNPCDialogueName: the Underground Riven Desert
+		DisplayName: Underground {§Riven} Desert
+		TownNPCDialogueName: the Underground {§Riven} Desert
 	}
 
 	Riven_Hive_Ice_Biome: {
@@ -1824,8 +1835,8 @@ Biomes: {
 	}
 
 	Defiled_Wastelands_Ocean: {
-		DisplayName: Defiled Wastelands Ocean
-		TownNPCDialogueName: the Defiled Ocean
+		DisplayName: "{§Defiled_Wastelands} Ocean"
+		TownNPCDialogueName: the {§Defiled} Ocean
 	}
 }
 
@@ -1841,8 +1852,8 @@ Tiles: {
 	}
 
 	Riven_Dungeon_Chest: {
-		ContainerName: Riven Chest
-		MapEntry: Riven Chest
+		ContainerName: "{§Riven} Chest"
+		MapEntry: "{§Riven} Chest"
 	}
 
 	Brine_Leaf_Clover_Tile.MapEntry: Brine Leaf Clover
@@ -1861,15 +1872,15 @@ Tiles: {
 	Fiberglass_Tile.MapEntry: Mods.Origins.MapObject.Fiberglass_Tile
 	Acetabularia.MapEntry: Acetabularia
 	Encrusted_Ore.MapEntry: Encrusted Ore
-	Riven_Altar.MapEntry: Riven Altar
-	Riven_Dungeon_Chest_Locked.MapEntry: Locked Riven Chest
-	Riven_Lesion.MapEntry: Riven Lesion
-	Riven_Tree_Sapling.MapEntry: Riven Sapling
+	Riven_Altar.MapEntry: "{§Riven} Altar"
+	Riven_Dungeon_Chest_Locked.MapEntry: Locked {§Riven} Chest
+	Riven_Lesion.MapEntry: "{§Riven} Lesion"
+	Riven_Tree_Sapling.MapEntry: "{§Riven} Sapling"
 	Wrycoral.MapEntry: Wrycoral
 	Traffic_Cone.DisplayName: Traffic Cone
-	Music_Box_DC: Music Box (Defiled Caverns)
-	Music_Box_DW: Music Box (Defiled Wastelands)
-	Music_Box_RH: Music Box (Riven Hive)
+	Music_Box_DC: Music Box ({§Defiled} Caverns)
+	Music_Box_DW: Music Box ({§Defiled_Wastelands})
+	Music_Box_RH: Music Box ({§Riven_Hive})
 	Brineglow_Vine.MapEntry: Brineglow Vine
 	Brineglow.MapEntry: Brineglow
 	Bilious_Crate_Tile.MapEntry: Bilious Crate
@@ -1894,14 +1905,14 @@ Tiles: {
 	Omnidirectional_Claymore_Tile.MapEntry: Omnidirectional Claymore
 	Laser_Tag_Console.MapEntry: Laser Tag Console
 	Potato_Tile.MapEntry: Potato
-	Ancient_Music_Box_DW: Ancient Music Box (Defiled Wastelands)
-	Ancient_Music_Box_RH: Ancient Music Box (Riven Hive)
+	Ancient_Music_Box_DW: Ancient Music Box ({§Defiled_Wastelands})
+	Ancient_Music_Box_RH: Ancient Music Box ({§Riven_Hive})
 	Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
 	Lost_Ore.MapEntry: Lost Ore
 	Carburite.MapEntry: Carburite
 	Silicon_Ore.MapEntry: Silicon Ore
 	Underwater_Vine.MapEntry: Underwater Vine
-	Defiled_Relay.MapEntry: Defiled Relay
+	Defiled_Relay.MapEntry: "{§Defiled} Relay"
 	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
 	Ocotillo.DisplayName: Ocotillo
 	Basic_Crate_Tile.MapEntry: Basic Crate
@@ -1909,13 +1920,13 @@ Tiles: {
 	Music_Box_BP: Music Box (Brine Pool)
 	Brine_Dungeon_Chest.MapEntry: Brine Dungeon Chest
 	Brine_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Brine_Dungeon_Chest_Locked.MapEntry
-	Defiled_Storage_Unit.MapEntry: Defiled Storage Unit
+	Defiled_Storage_Unit.MapEntry: "{§Defiled} Storage Unit"
 	Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
 	Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
 	Music_Box_FU: Music Box (Fiberglass Undergrowth)
 	Fake_Ashen_Altar.MapEntry: Ashen Altar
-	Fake_Defiled_Altar.MapEntry: Defiled Altar
-	Fake_Riven_Altar.MapEntry: Riven Altar
+	Fake_Defiled_Altar.MapEntry: "{§Defiled} Altar"
+	Fake_Riven_Altar.MapEntry: "{§Riven} Altar"
 	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	Lucky_Hat_Tile.MapEntry: Lucky Hat
 }

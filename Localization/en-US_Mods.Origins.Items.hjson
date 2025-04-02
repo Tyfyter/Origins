@@ -705,7 +705,7 @@ Refactoring_Pieces: {
 	Tooltip:
 		'''
 		Increases mana shielding and damage reduction by 10%
-		Grants a dash that allows you to glitch through defiled blocks
+		Grants a dash that allows you to glitch through {§Defiled} blocks
 		'''
 }
 
@@ -896,7 +896,7 @@ Tripod_Nip: {
 	Tooltip:
 		'''
 		Reduces enemy aggression and spawn rates
-		Defiled Tripods become friendly
+		{§Mods.Origins.NPCs.Defiled_Tripods.DisplayName} become friendly
 		'''
 }
 
@@ -1342,32 +1342,32 @@ Riptide_Helmet: {
 }
 
 Riven_Coat: {
-	DisplayName: Riven Coat
+	DisplayName: "{§Riven} Coat"
 	Tooltip: 6% increased weapon speed
 }
 
 Riven_Mask: {
-	DisplayName: Riven Mask
+	DisplayName: "{§Riven} Mask"
 	Tooltip: 6% increased weapon speed
 }
 
 Riven_Pants: {
-	DisplayName: Riven Pants
+	DisplayName: "{§Riven} Pants"
 	Tooltip: 6% increased weapon speed
 }
 
 Riven2_Mask: {
-	DisplayName: Ancient Riven Mask
+	DisplayName: Ancient {§Riven} Mask
 	Tooltip: 6% increased weapon speed
 }
 
 Riven2_Coat: {
-	DisplayName: Ancient Riven Coat
+	DisplayName: Ancient {§Riven} Coat
 	Tooltip: 6% increased weapon speed
 }
 
 Riven2_Pants: {
-	DisplayName: Ancient Riven Pants
+	DisplayName: Ancient {§Riven} Pants
 	Tooltip: 6% increased weapon speed
 }
 
@@ -1508,7 +1508,7 @@ Defiled_Bar.DisplayName: "{§Defiled} Bar"
 
 Defiled_Key: {
 	DisplayName: "{§Defiled} Key"
-	Tooltip: Unlocks a Defiled Chest in the Dungeon
+	Tooltip: Unlocks a {§Defiled} Chest in the Dungeon
 }
 
 Dawn_Key: {
@@ -1517,8 +1517,8 @@ Dawn_Key: {
 }
 
 Dusk_Key: {
-	DisplayName: Dusk Key
-	Tooltip: Unlocks a Dusk Chest in the Dungeon
+	DisplayName: "{§Dusk} Key"
+	Tooltip: Unlocks a {§Dusk} Chest in the Dungeon
 }
 
 Dreadful_Powder: {
@@ -1896,7 +1896,7 @@ The_Button: {
 }
 
 The_Defiled_Will: {
-	DisplayName: The Defiled Will
+	DisplayName: The {§Defiled} Will
 	Tooltip: Will you continue the legacy?
 }
 
@@ -1960,7 +1960,7 @@ Crusty_Crate: {
 }
 
 Duskarp: {
-	DisplayName: Duskarp
+	DisplayName: "{§Dusk}arp"
 	Tooltip: ""
 }
 
@@ -1985,7 +1985,7 @@ Journal_Item: {
 }
 
 Defiled_Amalgamation_Bag: {
-	DisplayName: Treasure Bag (Defiled Amalgamation)
+	DisplayName: Treasure Bag ({§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName})
 	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
@@ -2356,7 +2356,7 @@ Crystal_Grenade: {
 }
 
 Defiled_Spirit: {
-	DisplayName: Defiled Spirit
+	DisplayName: "{§Defiled} Spirit"
 	Tooltip: ""
 }
 
@@ -2947,7 +2947,7 @@ Magma_Grappler: {
 }
 
 Riven_Splitter: {
-	DisplayName: Riven Splitter
+	DisplayName: "{§Riven} Splitter"
 	Tooltip:
 		'''
 		Uses harpoons as ammo
@@ -3180,7 +3180,7 @@ Hardened_Defiled_Sand_Item: {
 }
 
 Locked_Defiled_Dungeon_Chest_Item: {
-	DisplayName: Defiled Chest (locked)
+	DisplayName: "{§Defiled} Chest (locked)"
 	Tooltip: ""
 }
 
@@ -3195,7 +3195,7 @@ Bleeding_Obsidian_Item: {
 }
 
 Dusk_Light_Item: {
-	DisplayName: Dusklight
+	DisplayName: "{§Dusk}light"
 	Tooltip: ""
 }
 
@@ -3206,7 +3206,7 @@ Dusk_Stone_Item: {
 
 A_Perfect_World_Item: {
 	DisplayName: A Perfect World
-	Tooltip: "'The Defiled'"
+	Tooltip: "'The {§Defiled}'"
 }
 
 Batholith_Item: {
@@ -3332,22 +3332,22 @@ Baryte_Wall_Item: {
 }
 
 Defiled_Dungeon_Chest_Placeholder_Item: {
-	DisplayName: Defiled Dungeon Chest Placeholder Item
+	DisplayName: "{§Defiled} Dungeon Chest Placeholder Item"
 	Tooltip: ""
 }
 
 Riven_Dungeon_Chest_Placeholder_Item: {
-	DisplayName: Riven Dungeon Chest Placeholder Item
+	DisplayName: "{§Riven} Dungeon Chest Placeholder Item"
 	Tooltip: ""
 }
 
 Defiled_Torch: {
-	DisplayName: Defiled Torch
+	DisplayName: "{§Defiled} Torch"
 	Tooltip: ""
 }
 
 Riven_Torch: {
-	DisplayName: Riven Torch
+	DisplayName: "{§Riven} Torch"
 	Tooltip: ""
 }
 
@@ -3435,12 +3435,12 @@ Ambition_Potion: {
 }
 
 Defiled_Amalgamation_Relic_Item: {
-	DisplayName: Defiled Amalgamation Relic
+	DisplayName: "{§Defiled} Amalgamation Relic"
 	Tooltip: ""
 }
 
 Defiled_Amalgamation_Trophy_Item: {
-	DisplayName: Defiled Amalgamation Trophy
+	DisplayName: "{§Defiled} Amalgamation Trophy"
 	Tooltip: ""
 }
 
@@ -3474,22 +3474,22 @@ Riven_Cactus_Item: {
 }
 
 Riven_Campfire_Item: {
-	DisplayName: Riven Campfire
+	DisplayName: "{§Riven} Campfire"
 	Tooltip: ""
 }
 
 Defiled_Campfire_Item: {
-	DisplayName: Defiled Campfire
+	DisplayName: "{§Defiled} Campfire"
 	Tooltip: ""
 }
 
 Riven_Fountain_Item: {
-	DisplayName: Riven Water Fountain
+	DisplayName: "{§Riven} Water Fountain"
 	Tooltip: ""
 }
 
 Defiled_Fountain_Item: {
-	DisplayName: Defiled Water Fountain
+	DisplayName: "{§Defiled} Water Fountain"
 	Tooltip: ""
 }
 
@@ -3589,7 +3589,7 @@ Binding_Book: {
 		Increases maximum mana by 20
 		Restores mana when damaged
 		Increases mana shielding and damage reduction by 10%
-		Grants a dash that allows you to glitch through defiled blocks
+		Grants a dash that allows you to glitch through {§Defiled} blocks
 		'''
 }
 
@@ -3629,12 +3629,12 @@ Batholith_Wall_Placed_Unsafe_Item: {
 }
 
 Riven_Grass_Wall_Safe_Item: {
-	DisplayName: Riven Grass Wall
+	DisplayName: "{§Riven} Grass Wall"
 	Tooltip: ""
 }
 
 Riven_Grass_Wall_Placed_Unsafe_Item: {
-	DisplayName: Infested Riven Grass Wall
+	DisplayName: Infested {§Riven} Grass Wall
 	Tooltip: ""
 }
 
@@ -4144,12 +4144,12 @@ Blast_Helmet: {
 }
 
 Defiled_Grass_Wall_Safe_Item: {
-	DisplayName: Defiled Grass Wall
+	DisplayName: "{§Defiled} Grass Wall"
 	Tooltip: ""
 }
 
 Defiled_Grass_Wall_Placed_Unsafe_Item: {
-	DisplayName: Infested Defiled Grass Wall Placed
+	DisplayName: Infested {§Defiled} Grass Wall
 	Tooltip: ""
 }
 
@@ -4175,7 +4175,7 @@ Abyssal_Anchor: {
 		Increased pick-up range for stars
 		-25% movement speed and -40% jump speed
 		Allows you to fall faster through liquids
-		Grants a dash that allows you to glitch through defiled blocks
+		Grants a dash that allows you to glitch through {§Defiled} blocks
 		'''
 }
 
@@ -4513,7 +4513,7 @@ Wilting_Rose_Planter_Box_Item: {
 }
 
 Riven_Altar_Item: {
-	DisplayName: Riven Altar (Debugging Item)
+	DisplayName: "{§Riven} Altar (Debugging Item)"
 	Tooltip: ""
 }
 
@@ -4853,7 +4853,7 @@ Mildew_Whip: {
 }
 
 Defiled_Relay_Item: {
-	DisplayName: Defiled Relay Item
+	DisplayName: "{§Defiled} Relay Item"
 	Tooltip: ""
 }
 
@@ -4898,7 +4898,7 @@ Eitrite_Gun_Magazine: {
 }
 
 Crimtane_Gun_Magazine.DisplayName: Crimtane Gun Magazine
-Defiled_Gun_Magazine.DisplayName: Defiled Gun Magazine
+Defiled_Gun_Magazine.DisplayName: "{§Defiled} Gun Magazine"
 Demonite_Gun_Magazine.DisplayName: Demonite Gun Magazine
 Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
 Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
@@ -5061,7 +5061,7 @@ Brine_Convergence_Incantation: {
 
 Monolith_Rod: {
 	DisplayName: Relay Rod
-	Tooltip: Summons a Defiled Relay to boost you and your minions
+	Tooltip: Summons a {§Defiled} Relay to boost you and your minions
 	StrengthTooltip: "{0:P0} strength"
 	StrengthPrefixTooltip: "{0} strength"
 	CritTooltip: "{0:P0} critical chance"
@@ -5310,8 +5310,8 @@ The_Jungles_Window_Item: {
 }
 
 Defiled_Monolith_Item: {
-	DisplayName: Defiled Monolith
-	Tooltip: "'Harness a fraction of the Defiled's ability to break the 4th wall'"
+	DisplayName: "{§Defiled} Monolith"
+	Tooltip: "'Harness a fraction of the {§Defiled}'s ability to break the 4th wall'"
 }
 
 Charm_Of_Naivety: {
@@ -5447,7 +5447,7 @@ Soulslasher: {
 
 Latchkey: {
 	DisplayName: Latchkey
-	Tooltip: Use to glitch through defiled blocks
+	Tooltip: Use to glitch through {§Defiled} blocks
 }
 
 Sharp_Broth: {
@@ -5572,23 +5572,23 @@ Golden_Lotus: {
 }
 
 DefiledRenewal: {
-	DisplayName: Defiled Renewal
-	Tooltip: Defiles a large radius
+	DisplayName: "{§Defiled} Renewal"
+	Tooltip: "{§Defiled_Wastelands} a large radius"
 }
 
 DefiledSupremeRenewal: {
-	DisplayName: Defiled Renewal Supreme
-	Tooltip: Defiles the entire world
+	DisplayName: "{§Defiled} Renewal Supreme"
+	Tooltip: "{§Defiled_Wastelands} the entire world"
 }
 
 RivenRenewal: {
 	DisplayName: "{§Riven} Renewal"
-	Tooltip: "{§Riven}s a large radius"
+	Tooltip: "{§Riven_Hive}s a large radius"
 }
 
 RivenSupremeRenewal: {
 	DisplayName: "{§Riven} Renewal Supreme"
-	Tooltip: "{§Riven}s the entire world"
+	Tooltip: "{§Riven_Hive}s the entire world"
 }
 
 AshenRenewal: {
@@ -5617,7 +5617,7 @@ Power_Lotus: {
 }
 
 Defiled_Storage_Upgrade: {
-	DisplayName: Defiled Storage Upgrade
+	DisplayName: "{§Defiled} Storage Upgrade"
 	Tooltip:
 		'''
 		Upgrades Storage Unit to 80 capacity
@@ -5626,7 +5626,7 @@ Defiled_Storage_Upgrade: {
 }
 
 Defiled_Storage_Unit_Item: {
-	DisplayName: Defiled Storage Unit
+	DisplayName: "{§Defiled} Storage Unit"
 	Tooltip:
 		'''
 		A component for storing items in a Magic Storage storage system
@@ -5689,8 +5689,8 @@ Nerve_Flan: {
 }
 
 Defiled_Chest: {
-	DisplayName: Defiled Chest
-	Tooltip: Summons Defiled Mimic
+	DisplayName: "{§Defiled} Chest"
+	Tooltip: Summons {§Defiled} Mimic
 }
 
 Riven_Chest: {
@@ -5709,8 +5709,8 @@ Greater_Summoning_Potion: {
 }
 
 Fake_Defiled_Altar_Item: {
-	DisplayName: Defiled Altar
-	Tooltip: A placeable Defiled Altar. Cannot be mined to get hardmode ores
+	DisplayName: "{§Defiled} Altar"
+	Tooltip: A placeable {§Defiled} Altar. Cannot be mined to get hardmode ores
 }
 
 Fake_Riven_Altar_Item: {
@@ -5822,4 +5822,13 @@ Mildew_Helmet: {
 Plain_Broth: {
 	DisplayName: Plain Broth
 	Tooltip: Increases minion size by 25%
+}
+
+Greasy_Broth: {
+	DisplayName: Greasy Broth
+	Tooltip:
+		'''
+		Causees minions to inflict Oiled for 1 sec
+		Artifact minions creates a greasy gas that causes burning on hit
+		'''
 }

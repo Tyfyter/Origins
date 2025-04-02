@@ -1372,7 +1372,7 @@ CONSUMABLES:
 (X) Astringent Broth
 (X) Bitter Broth
 (^) Foul Broth*
-(#, ^2) Greasy Broth !!!
+(☻) Greasy Broth !!!
 (^) Hearty Broth*
 (^) Light Broth°
 (X) Metallic Broth

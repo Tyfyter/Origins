@@ -14,6 +14,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.Misc;
+using Origins.NPCs.Defiled;
 using Origins.Tiles.BossDrops;
 using PegasusLib;
 using ReLogic.Content;
@@ -66,6 +67,15 @@ namespace Origins.NPCs.Brine.Boss {
 				NPC.Transform(ModContent.NPCType<Mildew_Carrion>());
 			}
 			return false;
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Lost_Diver_Transformation).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Lost_Diver_Transformation).GetDefaultTMLName() + "_AF";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+			}
 		}
 	}
 	public class Boss_Bar_LD_Transformation : ModBossBar {
@@ -361,6 +371,15 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Mildew_Carrion).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Mildew_Carrion).GetDefaultTMLName() + "_AF";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+			}
+		}
 	}
 	public class Boss_Bar_MC : ModBossBar {
 		int bossHeadIndex = -1;
@@ -568,6 +587,15 @@ namespace Origins.NPCs.Brine.Boss {
 				Color npcColor = Lighting.GetColor(position.ToTileCoordinates());
 				NPCLoader.DrawEffects(NPC, ref npcColor);
 				return NPC.GetNPCColorTintedByBuffs(npcColor);
+			}
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Mildew_Carrion_Tentacle).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Mildew_Carrion_Tentacle).GetDefaultTMLName() + "_AF";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
 			}
 		}
 	}

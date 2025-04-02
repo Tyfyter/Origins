@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿/*using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.Defiled;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -12,23 +10,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-	public class Crimbrain : ModNPC, IWikiNPC {
+	public class Canninhound : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 36, 34, 28);
-		public int AnimationFrames => 32;
+		public int AnimationFrames => 120;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override void Load() => this.AddBanner();
+		//public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 4;
+			Main.npcFrameCount[NPC.type] = 13;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
 			AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(Type, 0.04f);
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(0, -16),
-				PortraitPositionYOverride = -32
-			};
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 86;
+			NPC.aiStyle = NPCAIStyleID.Unicorn;
 			NPC.lifeMax = 36;
 			NPC.defense = 10;
 			NPC.damage = 25;
@@ -46,7 +40,7 @@ namespace Origins.NPCs.MiscE {
 			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			target.AddBuff(BuffID.Confused, 20);
+			if (Main.rand.NextBool()) target.AddBuff(BuffID.Bleeding, 20);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -56,7 +50,6 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 17));
 		}
 		public override void AI() {
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
@@ -66,18 +59,10 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 112, 34, 26);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 48) % 750, 82, 46);
 				NPC.frameCounter = 0;
-			}
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Crimbrain).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Crimbrain).GetDefaultTMLName() + "_AF";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
 			}
 		}
 	}
 }
+*/

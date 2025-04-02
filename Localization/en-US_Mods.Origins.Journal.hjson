@@ -28,10 +28,10 @@ Amoebeye: {
 }
 
 Ancient_Defiled_Cyclops: {
-	Name: Ancient Defiled Cyclops
+	Name: Ancient {§Defiled} Cyclops
 	Text:
 		'''
-		[header:Ancient Defiled Cyclops (1/17)]
+		[header:Ancient {§Defiled} Cyclops (1/17)]
 		[jportrait/s1.2dw500h150:Origins/Ancient_Defiled_Cyclops]
 
 
@@ -80,10 +80,10 @@ Cubekon_Tinkerer: {
 }
 
 Defiled_Amalgamation: {
-	Name: Defiled Amalgamation
+	Name: "{§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName}"
 	Text:
 		'''
-		[header:Defiled Amalgamation (13/17)]
+		[header:{§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} (13/17)]
 		[jportrait/s1.2dw600h140:Origins/Defiled_Amalgamation]
 
 		*****
@@ -92,10 +92,10 @@ Defiled_Amalgamation: {
 }
 
 Defiled_Cyclops: {
-	Name: Defiled Cyclops
+	Name: "{§Defiled} Cyclops"
 	Text:
 		'''
-		[header:Defiled Cyclops (12/17)]
+		[header:{§Defiled} Cyclops (12/17)]
 		[jportrait/s1.2dw300h56:Origins/Defiled_Cyclops]
 
 		*****
@@ -104,10 +104,10 @@ Defiled_Cyclops: {
 }
 
 Defiled_Krusher: {
-	Name: Defiled Krusher
+	Name: "{§Defiled} Krusher"
 	Text:
 		'''
-		[header:Defiled Krusher (3/17)]
+		[header:{§Defiled} Krusher (3/17)]
 		[jportrait/tw450h78:Origins/Defiled_Brute]
 
 		*****
@@ -128,10 +128,10 @@ Mildew_Carrion: {
 }
 
 Riven_Protoform: {
-	Name: Riven Protoform
+	Name: "{§Mods.Origins.NPCs.Riven_Fighter.DisplayName}"
 	Text:
 		'''
-		[header:Riven Protoform (7/12)]
+		[header:{§Mods.Origins.NPCs.Riven_Fighter.DisplayName} (7/12)]
 		[jportrait/s1.2dw300h48:Origins/Riven_Fighter]
 
 		*****
@@ -147,7 +147,7 @@ Savage_Whip: {
 		[jportrait/s1.2d:Origins/Savage_Whip]
 
 		*****
-		Even with that, the Riven is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". How could that be with a species entirely incapable of feeding from evil-doing like the Corruption or Crimson?
+		Even with that, the {§Riven} is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". How could that be with a species entirely incapable of feeding from evil-doing like the Corruption or Crimson?
 		'''
 }
 
@@ -376,10 +376,10 @@ Deep_Ocean_Pearl: {
 }
 
 Defiled_Bar: {
-	Name: Defiled Bar
+	Name: "{§Mods.Origins.Items.Defiled_Bar.DisplayName}"
 	Text:
 		'''
-		[header:Defiled Bar (8/17)]
+		[header:{§Mods.Origins.Items.Defiled_Bar.DisplayName} (8/17)]
 		[jimage/sc3d:Origins/Items/Materials/Defiled_Bar]
 
 
@@ -389,10 +389,10 @@ Defiled_Bar: {
 }
 
 Defiled_Spirit: {
-	Name: Defiled Spirit
+	Name: "{§Defiled} Spirit"
 	Text:
 		'''
-		[header:Defiled Spirit (2/17)]
+		[header:{§Defiled} Spirit (2/17)]
 		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Defiled_Spirit] [jportrait/s1.2dw150h25:Origins/Defiled_Wisp]
 
 
@@ -718,15 +718,15 @@ Primordial_Permafrost: {
 }
 
 Riven_Carapace: {
-	Name: Riven Carapace
+	Name: "{§Riven} Carapace"
 	Text:
 		'''
-		[header:Riven Carapace (6/12)]
+		[header:{§Riven} Carapace (6/12)]
 		[jimage/sc3d:Origins/Items/Materials/Riven_Carapace]
 
 
 		*****
-		Unfortunate creatures are then forced to evolve to the Riven's conditions. A parasite that plays god even though it's entirely incapable of any intelligent thought being the single-celled organism it is.
+		Unfortunate creatures are then forced to evolve to the {§Riven}'s conditions. A parasite that plays god even though it's entirely incapable of any intelligent thought being the single-celled organism it is.
 		'''
 }
 
@@ -751,7 +751,7 @@ Seam_Beam: {
 
 
 		*****
-		So, in other words magic did this and now the Riven is empowered by the world as a rightful evil? I thought the Defiled being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to entirely dissolve it as an evil.
+		So, in other words magic did this and now the {§Riven} is empowered by the world as a rightful evil? I thought the {§Defiled} being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to entirely dissolve it as an evil.
 		'''
 }
 
@@ -786,7 +786,7 @@ Spug_Flesh: {
 		[jimage/sc3d:Origins/Tiles/Riven/Riven_Flesh_Item]
 
 		*****
-		It's not a matter of that, the Riven is now a part of the world. The world simply thinks it would be best to dissolve parts of the imbalance in an attempt to clean out the impurities.
+		It's not a matter of that, the {§Riven} is now a part of the world. The world simply thinks it would be best to dissolve parts of the imbalance in an attempt to clean out the impurities.
 		'''
 }
 
@@ -999,7 +999,7 @@ Captured_Mojo: {
 			- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation, and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
 							
 		History: 
-			- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the Riven Hive, it was like any other single-cellular organism. When Cthulhu's invasion on Terraria's inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
+			- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the {§Riven_Hive}, it was like any other single-cellular organism. When Cthulhu's invasion on Terraria's inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
 		'''
 }
 

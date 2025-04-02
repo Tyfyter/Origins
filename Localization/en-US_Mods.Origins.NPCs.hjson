@@ -2,7 +2,6 @@ Amoeba_Buggy.DisplayName: Amoeba Buggy
 Bug.DisplayName: Bug
 Cicada_3301.DisplayName: Cicada 3301
 Ancient_Defiled_Cyclops.DisplayName: Ancient {§Defiled} Cyclops
-Ancient_Defiled_Phantom.DisplayName: Ancient {§Defiled} Phantom
 Chunky_Slime.DisplayName: Chunky Slime
 
 Defiled_Amalgamation: {
@@ -147,7 +146,7 @@ Brine_Fiend: {
 }
 
 Defiled_Effigy: {
-	DisplayName: Defiled Effigy
+	DisplayName: "{§Defiled} Effigy"
 
 	TownNPCMood: {
 		Content: We aspire to waste time presently.
@@ -180,7 +179,7 @@ Defiled_Effigy: {
 
 	Dialogue: {
 		FirstDialogue: Humble of Terrarian being spared. Hopeful my abilities prove useful.
-		Standard1: All coin proceeds to 'Church of Defiled'. Negatory, coin is only much-needed material.
+		Standard1: All coin proceeds to 'Church of {§Defiled}'. Negatory, coin is only much-needed material.
 		Standard2: Waste no time, [player:_]. Our vision needs followers.
 		Standard3: What is sought? Items, knowledge, or other?
 		Standard4: Survival is mandatory, desire is optional. Do you survive or desire?
@@ -206,7 +205,7 @@ Defiled_Effigy: {
 		Spread100: Spread is {%}. A perfect world… we wonder if more material is acquirable…
 	}
 
-	Census.SpawnCondition: After sparing the Defiled
+	Census.SpawnCondition: After sparing the {§Defiled}
 }
 
 Cubekon_Tinkerer: {
@@ -237,7 +236,7 @@ Cubekon_Tinkerer: {
 }
 
 PartyGirl.TownNPCMood_PartyGirl.LoveBiome_Space: I finally got to go to space!!!
-Defiled_Squid.DisplayName: Defiled Squid
+Defiled_Squid.DisplayName: "{§Defiled} Squid"
 Savage_Whip.DisplayName: Savage Whip
 Savage_Whip_Segment.DisplayName: Savage Whip Segment
 Traffic_Cone_NPC.DisplayName: Traffic Cone
@@ -247,24 +246,24 @@ Riven_Pigron.DisplayName: Pigron
 Defiled_Pigron.DisplayName: Pigron
 Amoebeye.DisplayName: Amoebeye
 Amoebeye_P.DisplayName: Amoebeye's Bubble
-Defiled_Asphyxiator.DisplayName: Defiled Asphyxiator
+Defiled_Asphyxiator.DisplayName: "{§Defiled} Asphyxiator"
 Etherealizer.DisplayName: Etherealizer
 Etherealizer_P.DisplayName: Etherealizer Spirit
-Defiled_Watcher.DisplayName: Defiled Watcher
+Defiled_Watcher.DisplayName: "{§Defiled} Watcher"
 Graveshield_Zombie.DisplayName: Graveshield Zombie
 Enchanted_Fiberglass_Cannon.DisplayName: Enchanted Fiberglass Cannon
-Ancient_Defiled_Flyer.DisplayName: Ancient Defiled Phantom
+Ancient_Defiled_Flyer.DisplayName: Ancient {§Defiled} Phantom
 
 Dryad: {
 	AshenWorld: The Ashen is mechanizing the world and polluting it! You must stop the Factory.
 	CorruptWorld: The Corruption seeks to turn this world into a devoid wasteland! You must eliminate the infection.
 	CrimsonWorld: The Crimson is bleeding the world of its purity. You must heal the world of this gouge.
-	DefiledWorld1: My kind barely banished the Defiled into the Dusk. Now it's back from a disturbance and stronger than before…
-	DefiledWorld2: The Defiled lives by its means, but even that is too much for the world…
-	WindyDefiled: It's never wind in the Defiled Wastelands, that's breathing…
-	DefiledHeartDown: That's it for the Defiled. Finish it up.
+	DefiledWorld1: My kind barely banished the {§Defiled} into the {§Dusk}. Now it's back from a disturbance and stronger than before…
+	DefiledWorld2: The {§Defiled} lives by its means, but even that is too much for the world…
+	WindyDefiled: It's never wind in the {§Defiled} Wastelands, that's breathing…
+	DefiledHeartDown: That's it for the {§Defiled}. Finish it up.
 	BeforeDefeatS: Have you tried using purification powder on... wait a minute...
-	BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
+	BeforeDefeatDA: Have you tried using purification powder on {§Defiled} Stone?
 	BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
 
 	PurifySuccess: {
@@ -339,18 +338,19 @@ Lost_Diver: {
 	DisplayName: Lost Diver
 
 	BossChecklistIntegration: {
-		SpawnCondition: Use [i:Origins/Lost_Picture_Frame] in the Brine Pools
+		SpawnCondition: Use [i:Origins/Lost_Picture_Frame] in the Brine Pools, or defeat a {$Mods.Origins.NPCs.Rock_Bottom.DisplayName}
 		EntryName: Lost Diver
 	}
 }
 
 Lost_Diver_Transformation.DisplayName: Lost Diver Transformation
-Mildew_Carrion.DisplayName: Mildew Carrion
+Mildew_Carrion.DisplayName: "{§Mildew_Carrion}"
 Trijaw_Shark_Feesh.DisplayName: Trijaw Shark Feesh
 Lost_Diver_Spawn.DisplayName: Lost Diver Spawn
 Rock_Bottom.DisplayName: Rock Bottom
 Boulder_Mimic.DisplayName: Boulder Mimic
-Mildew_Carrion_Tentacle.DisplayName: Mildew Carrion Tentacle
-Mildew_Carrion_Mildew_Creeper.DisplayName: Mildew Carrion Mildew Creeper
-Mildew_Carrion_Tendril.DisplayName: Mildew Carrion Tendril
 Catacomb_Clearer.DisplayName: Catacomb Clearer
+Mildew_Carrion_Tentacle.DisplayName: "{§Mildew_Carrion} Tentacle"
+Mildew_Carrion_Mildew_Creeper.DisplayName: "{§Mildew_Carrion} Mildew Creeper"
+Mildew_Carrion_Tendril.DisplayName: "{§Mildew_Carrion} Tendril"
+Canninhound.DisplayName: Canninhound

@@ -5,12 +5,9 @@ Generic: {
 	Defiled_Wastelands: Blŏkusland™
 	the_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
 	The_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
-	Defiled_Amalgamation: District Attorney
 	Defiled_Antibody: Blŏkusland™ Employee
 	Defiled_Antibodies: Blŏkusland™ Employees
-	Defiled_Tripod: Blŏkusland™ Certified Weaponized Catgirl
 	Mildew_Carrion: Mildew Chadlion
-	Riven_Fighter: Riven Knownolimitsoform
 }
 
 Status_Messages: {
@@ -48,6 +45,15 @@ Items: {
 		DisplayName: Meteor Toaster
 		Tooltip: Ding!
 	}
+
+	Unsuspicious_Bush_Item: {
+		DisplayName: Unsussy Bush
+		Tooltip:
+			'''
+			{$Mods.Origins.Items.Unsuspicious_Bush_Item.Tooltip}
+			'Sussy baka!'
+			'''
+	}
 }
 
 Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!
@@ -72,7 +78,7 @@ Biomes: {
 		TownNPCDialogueName: the {§Defiled_Wastelands} Signature Patent-Pending Cold-Park
 	}
 
-	Riven_Hive_Ocean_Biome: {
+	Riven_Hive_Ocean: {
 		DisplayName: "{§Riven_Hive} but wetter"
 		TownNPCDialogueName: the place where Riven Jesus, our savior: {§Riven_Hive} can be found
 	}
@@ -110,7 +116,13 @@ DefiledRelaySignals: {
 	BeingDestroyed5: Go away in profane language.
 }
 
-NPCs.Leaf_Snapper.DisplayName: Brine Turtle
+NPCs: {
+	Leaf_Snapper.DisplayName: Brine Turtle
+	Defiled_Amalgamation.DisplayName: District Attorney
+	Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
+	Riven_Fighter.DisplayName: Riven Knownolimitsoform
+}
+
 Bestiary.Leaf_Snapper: Hello!
 SetBonuses.Rubber:
 	'''

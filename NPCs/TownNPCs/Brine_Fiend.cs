@@ -118,6 +118,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Umami_Broth>()
 			.Add<Light_Broth>()
 			.Add<Sweet_Broth>()
+			.Add<Greasy_Broth>()
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
 			.Add(Music_Box.ItemType<Ancient_Music_Box_BP>(), Quest.QuestCondition<Old_Brine_Music_Box_Quest>())
 			.Register();
