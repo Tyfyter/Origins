@@ -41,7 +41,7 @@ namespace Origins.NPCs.Riven {
 			NPC.defense = 10;
 			NPC.damage = 33;
 			NPC.width = 20;
-			NPC.height = 38;
+			NPC.height = OriginsModIntegrations.CheckAprilFools() ? 766 : 38;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
