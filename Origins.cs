@@ -542,6 +542,9 @@ namespace Origins {
 			ChatManager.Register<Image_Handler>([
 				"jimage"
 			]);
+			ChatManager.Register<Item_Hint_Handler>([
+				"itemhint"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

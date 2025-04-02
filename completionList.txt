@@ -104,7 +104,7 @@ TOWN NPC Quests:
 (^) Goblin Tinkerer - Lend a Hand?*
 (X) Goblin Tinkerer - Full Speed Ahead
 (^) Guide - Get Questing!
-(X) Guide - Troubling Trouble !!!
+(☻) Guide - Troubling Trouble !!!
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
 (^) Party Girl - Livin' Up the Party

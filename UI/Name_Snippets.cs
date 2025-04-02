@@ -75,6 +75,36 @@ namespace Origins.UI {
 			return new Item_Name_Snippet(-1, baseColor);
 		}
 	}
+	public class Item_Hint_Handler : ITagHandler {
+		public class Item_Hint_Snippet : TextSnippet {
+			readonly Item item;
+			public Item_Hint_Snippet(string text, int type, Color color = default) : base() {
+				Text = text;
+				Color = color;
+				if (type == -1) {
+					Text = "Invalid Item type";
+					return;
+				}
+				item = ContentSamples.ItemsByType[type];
+				CheckForHover = true;
+			}
+			public override void OnHover() {
+				Main.LocalPlayer.mouseInterface = true;
+				if (item is not null) {
+					Main.hoverItemName = $"{item.Name} [i:{item.type}]";
+					Main.HoverItem = item.Clone();
+					Main.HoverItem.SetNameOverride(Main.hoverItemName);
+					Main.instance.MouseText(Main.hoverItemName, item.rare, 0);
+				}
+			}
+		}
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			if ((int.TryParse(options, out int itemType) && itemType < ItemLoader.ItemCount) || ItemID.Search.TryGetId(options, out itemType)) {
+				return new Item_Hint_Snippet(text, itemType, baseColor);
+			}
+			return new Item_Hint_Snippet(text, -1, baseColor);
+		}
+	}
 	public class Imperfect_Item_Name_Handler : ITagHandler {
 		public class Imperfect_Item_Name_Snippet : TextSnippet {
 			readonly Item item;

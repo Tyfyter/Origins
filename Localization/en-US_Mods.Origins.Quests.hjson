@@ -7,13 +7,32 @@ Guide: {
 			'''
 			{$Mods.Origins.Quests.Guide.Quest_Quest.Name}
 			Client: [npcname:Guide]
-								
+
 			'{$Mods.Origins.Quests.Guide.Quest_Quest.Inquire}'
-								
+
 			- [qs{0}:Complete a quest]
 			'''
 		Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in. I happen to have a Journal on hand for you! Accept my quest if you want it."
 		Start: You did it! Here, have this.
+	}
+
+	Assimilation_Quest: {
+		Name: Troubling Trouble
+		Journal:
+			'''
+			{$Mods.Origins.Quests.Guide.Assimilation_Quest.Name}
+			Client: [npcname:Guide]
+
+			'{$Mods.Origins.Quests.Guide.Assimilation_Quest.Inquire}'
+
+			[npcname:Guide] said to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to a place he called "the Aether"
+
+			- [qs/completed:Be assimilated by the <evil:_>]
+			- [qs/completed:Ask the guide for help curing yourself]
+			Reward: [i:SpelunkerPotion] x5, [i:Origins/Eye_Of_Aether] x5
+			'''
+		Inquire: That isn't good, it looks like the [evil:_] has started spreading to you! If you can find a Dryad she'll be able to cure you, but if you can't, I have some things that should help you make a cure for yourself.
+		Start: Here, you'll need to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to the Aether, these should help you find both.
 	}
 }
 
@@ -26,9 +45,9 @@ Merchant: {
 			'''
 			{$Mods.Origins.Quests.Merchant.Blue_Bovine.Name}
 			Client: [npcname:Merchant]
-								
+
 			'{$Mods.Origins.Quests.Merchant.Blue_Bovine.Inquire}'
-								
+
 			- [qs{3}:Slay {2} Harpies ({1}/{2})]
 			Unlocks: [i:Origins/Blue_Bovine]
 			'''
@@ -44,9 +63,9 @@ Merchant: {
 			'''
 			{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Name}
 			Client: [npcname:Merchant]
-								
+
 			'{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Inquire}'
-								
+
 			- [qs{2}:Slay {1} rare enemies ({0}/{1})]
 			Unlocks: [i:Origins/Lottery_Ticket]
 			'''
@@ -66,9 +85,9 @@ Party_Girl: {
 			'''
 			{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Name}
 			Client: [npcname:PartyGirl]
-								
+
 			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Inquire}'
-								
+
 			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
 			Unlocks: [i:Origins/Partybringer]
 			'''
@@ -90,9 +109,9 @@ Goblin_Tinkerer: {
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Name}
 			Client: [npcname:GoblinTinkerer]
-								
+
 			'{$Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Inquire}'
-								
+
 			- [qs{2}:Collect {1} Iron Bar ({0}/{1})]
 			- [qs{5}:Collect {4} Chains ({3}/{4})]
 			- [qs{8}:Collect {7} Adhesive Wrap ({6}/{7})]
@@ -111,9 +130,9 @@ Goblin_Tinkerer: {
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Name}
 			Client: [npcname:GoblinTinkerer]
-								
+
 			'{$Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Inquire}'
-								
+
 			- [qs{2}:Collect {1} Leather ({0}/{1})]
 			- [qs{3}:Collect Flintlock Pistol]
 			- [qs{4}:Collect Zombie Arm]
@@ -131,9 +150,9 @@ Goblin_Tinkerer: {
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Name}
 			Client: [npcname:GoblinTinkerer]
-								
+
 			'{$Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Inquire}'
-								
+
 			- [qs{0}:Collect Minecart]
 			- [qs{3}:Collect {2} Rocket I ({1}/{2})]
 			- [qs{6}:Collect {5} Adhesive Wrap ({4}/{5})]
@@ -156,9 +175,9 @@ Arms_Dealer: {
 			'''
 			{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Name}
 			Client: [npcname:ArmsDealer]
-								
+
 			'{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire}'
-								
+
 			- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
 			Unlocks: [i:Origins/Shardcannon]
 			'''
@@ -176,9 +195,9 @@ Arms_Dealer: {
 			'''
 			{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Name}
 			Client: [npcname:ArmsDealer]
-								
+
 			'{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Inquire}'
-								
+
 			- [qs{2}:Slay {1} Enemies with the <imperfect:Origins/Harpoon_Burst_Rifle> ({0}/{1})]
 			Unlocks: [i:Origins/Harpoon_Burst_Rifle]
 			'''
@@ -200,9 +219,9 @@ Zoologist: {
 			'''
 			{$Mods.Origins.Quests.Zoologist.Discount_1_Quest.Name}
 			Client: [npcname:BestiaryGirl]
-								
+
 			'{$Mods.Origins.Quests.Zoologist.Discount_1_Quest.Inquire}'
-								
+
 			- [qs{2}: Obtain any {1} critters ({0}/{1})]
 			- [qs{3}: Give critters to <npcname:BestiaryGirl>]
 			Reward: 3% discount
@@ -219,9 +238,9 @@ Zoologist: {
 			'''
 			{$Mods.Origins.Quests.Zoologist.Discount_2_Quest.Name}
 			Client: [npcname:BestiaryGirl]
-								
+
 			'{$Mods.Origins.Quests.Zoologist.Discount_2_Quest.Inquire}'
-								
+
 			- [qs{0}: Catch a <itemname:SquirrelGold>]
 			- [qs{1}: Give the squirrel to <npcname:BestiaryGirl>]
 			Reward: 3% discount
@@ -238,9 +257,9 @@ Zoologist: {
 			'''
 			{$Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Name}
 			Client: [npcname:BestiaryGirl]
-								
+
 			'{$Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Inquire}'
-								
+
 			- [qs{2}: Obtain {1} <itemname:EnchantedNightcrawler>s ({0}/{1})]
 			- [qs{3}: Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
 			Reward: [i:Origins/Eccentric_Stone]
@@ -261,9 +280,9 @@ Dryad: {
 			'''
 			{$Mods.Origins.Quests.Dryad.Cleansing_Station.Name}
 			Client: [npcname:Dryad]
-								
+
 			'{$Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire}'
-								
+
 			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			'''
@@ -279,9 +298,9 @@ Dryad: {
 			'''
 			{$Mods.Origins.Quests.Dryad.Bloombomb.Name}
 			Client: [npcname:Dryad]
-								
+
 			'{$Mods.Origins.Quests.Dryad.Bloombomb.Inquire}'
-								
+
 			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Bloombomb]
 			'''
@@ -301,9 +320,9 @@ Stylist: {
 			'''
 			{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Name}
 			Client: [npcname:Stylist]
-								
+
 			'{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Inquire}'
-								
+
 			- [qs{2}: Obtain {1} <itemname:Origins/Magic_Hair_Spray> ({0}/{1})]
 			- [qs{3}: Give <itemname:Origins/Magic_Hair_Spray> to <npcname:Stylist>]
 			Unlocks: 4 new hairstyles
@@ -320,9 +339,9 @@ Stylist: {
 			'''
 			{$Mods.Origins.Quests.Stylist.Comb.Name}
 			Client: [npcname:Stylist]
-								
+
 			'{$Mods.Origins.Quests.Stylist.Comb.Inquire}'
-								
+
 			- [qs{0}: Obtain a <itemname:Origins/Comb>]
 			- [qs{1}: Give <itemname:Origins/Comb> to <npcname:Stylist>]
 			Unlocks: 2 new hairstyles
@@ -339,9 +358,9 @@ Stylist: {
 			'''
 			{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Name}
 			Client: [npcname:Stylist]
-								
+
 			'{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Inquire}'
-								
+
 			- [qs{0}: Obtain <itemname:Origins/Crystal_Cutters>]
 			- [qs{1}: Give <itemname:Origins/Crystal_Cutters> to <npcname:Stylist>]
 			Unlocks: [i:Origins/Holiday_Hair_Dye]
@@ -362,9 +381,9 @@ Cyborg: {
 			'''
 			{$Mods.Origins.Quests.Cyborg.Advanced_Imaging.Name}
 			Client: [npcname:Cyborg]
-								
+
 			'{$Mods.Origins.Quests.Cyborg.Advanced_Imaging.Inquire}'
-								
+
 			- [qs{1}: Investigate the electronic presence]
 			- [qs{2}: Return to <npcname:Cyborg>]
 			Unlocks: [i:Origins/Advanced_Imaging]
@@ -407,9 +426,9 @@ Brine_Fiend: {
 			'''
 			{$Mods.Origins.Quests.Brine_Fiend.Alkaliegis.Name}
 			Client: [npcname:Origins/Brine_Fiend]
-								
+
 			'{$Mods.Origins.Quests.Brine_Fiend.Alkaliegis.Inquire}'
-								
+
 			- [qs{1}:Collect <itemname:TeleportationPotion>]
 			- [qs{0}:Collect <itemname:Origins/Greater_Summoning_Potion>]
 			- [qs{2}:Collect <itemname:TitanPotion>]
@@ -428,9 +447,9 @@ Brine_Fiend: {
 			'''
 			{$Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.Name}
 			Client: [npcname:Origins/Brine_Fiend]
-								
+
 			'{$Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.Inquire}'
-								
+
 			- [qs{0}:Collect <itemname:Origins/Fervor_Potion>]
 			- [qs{1}:Collect <itemname:LovePotion>]
 			- [qs{2}:Collect <itemname:MagicPowerPotion>]
