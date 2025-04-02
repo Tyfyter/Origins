@@ -50,7 +50,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		}
 
 		private static void On_ItemSlot_SwapVanityEquip(On_ItemSlot.orig_SwapVanityEquip orig, Item[] inv, int context, int slot, Player player) {
-			if (inv[slot]?.ModItem is not First_Dream firstDream) {
+			if (inv[slot]?.ModItem is not First_Dream firstDream || ItemSlot.ShiftInUse) {
 				orig(inv, context, slot, player);
 				return;
 			}
@@ -87,9 +87,16 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		void SetNameOverride() {
 			Item.SetNameOverride(Lang.GetItemName(Item.type).Format(this.GetLocalization($"Mode_{modes[mode].Name}")));
 		}
+		public override bool CanRightClick() => !ItemSlot.ShiftInUse;
+		public override void RightClick(Player player) {
+			Item.stack++;
+			mode++;
+			if (mode >= modes.Count) mode = 0;
+		}
 		public override void UpdateInventory(Player player) => SetNameOverride();
 		public override void UpdateVanity(Player player) => SetNameOverride();
 		public override void UpdateAccessory(Player player, bool hideVisual) => SetNameOverride();
+		public override void Update(ref float gravity, ref float maxFallSpeed) => SetNameOverride();
 		public override void SaveData(TagCompound tag) {
 			tag["mode"] = mode;
 		}
