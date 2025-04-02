@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata;
@@ -118,6 +119,7 @@ namespace Origins.Projectiles {
 	public class ArtifactMinionSystem : ModSystem {
 		public static List<int> artifactMinions = [];
 		public static List<int> nextArtifactMinions = [];
+		public static int hoveredMinion = -1;
 		public override void Unload() {
 			artifactMinions = null;
 			nextArtifactMinions = null;
@@ -125,45 +127,75 @@ namespace Origins.Projectiles {
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			OriginExtensions.SwapClear(ref nextArtifactMinions, ref artifactMinions);
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Entity Health Bars"));
-			if (inventoryIndex != -1 && OriginClientConfig.Instance.ArtifactMinionHealthbarStyle != ArtifactMinionHealthbarStyles.UnderBuff) {//error prevention & null check
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					"Origins: Artifact Minion Health Bars",
-					delegate {
-						for (int i = 0; i < artifactMinions.Count; i++) {
-							Projectile projectile = Main.projectile[artifactMinions[i]];
-							if (projectile.ModProjectile is IArtifactMinion artifact) {
-								Vector2 position = default;
-								if (Main.HealthBarDrawSettings != 0 && artifact.Life < artifact.MaxLife) {
-									if (Main.HealthBarDrawSettings == 1) {
-										position = projectile.Bottom + new Vector2(0, projectile.gfxOffY + 10);
-									} else {
-										position = projectile.Top + new Vector2(0, projectile.gfxOffY - 24);
-									}
-									float light = Lighting.Brightness((int)position.X / 16, (int)(projectile.Center.Y + projectile.gfxOffY) / 16) * 0.5f + 0.5f;
-									if (artifact.Life > 0) {
-										Main.instance.DrawHealthBar(
-											position.X, position.Y,
-											(int)artifact.Life,
-											artifact.MaxLife,
-											light,
-											0.85f
-										);
-									} else {
-										artifact.DrawDeadHealthBar(position, light);
+			if (inventoryIndex != -1) {//error prevention & null check
+				if (OriginClientConfig.Instance.ArtifactMinionHealthbarStyle != ArtifactMinionHealthbarStyles.UnderBuff) {
+					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+						"Origins: Artifact Minion Health Bars",
+						delegate {
+							for (int i = 0; i < artifactMinions.Count; i++) {
+								Projectile projectile = Main.projectile[artifactMinions[i]];
+								if (projectile.ModProjectile is IArtifactMinion artifact) {
+									Vector2 position = default;
+									if (Main.HealthBarDrawSettings != 0 && artifact.Life < artifact.MaxLife) {
+										if (Main.HealthBarDrawSettings == 1) {
+											position = projectile.Bottom + new Vector2(0, projectile.gfxOffY + 10);
+										} else {
+											position = projectile.Top + new Vector2(0, projectile.gfxOffY - 24);
+										}
+										float light = Lighting.Brightness((int)position.X / 16, (int)(projectile.Center.Y + projectile.gfxOffY) / 16) * 0.5f + 0.5f;
+										if (artifact.Life > 0) {
+											Main.instance.DrawHealthBar(
+												position.X, position.Y,
+												(int)artifact.Life,
+												artifact.MaxLife,
+												light,
+												0.85f
+											);
+										} else {
+											artifact.DrawDeadHealthBar(position, light);
+										}
 									}
 								}
 							}
-						}
-						return true;
-					},
-					InterfaceScaleType.Game) { Active = artifactMinions.Count > 0 }
-				);
+							return true;
+						},
+						InterfaceScaleType.Game) { Active = artifactMinions.Count > 0 }
+					);
+					inventoryIndex += 1;
+				}
+				if (OriginClientConfig.Instance.ArtifactMinionHealthbarStyle != ArtifactMinionHealthbarStyles.UnderMinion) {
+					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+						"Origins: Hovered Artifact Minion Indicator",
+						delegate {
+							if (hoveredMinion != -1) {
+								Projectile projectile = Main.projectile[hoveredMinion];
+								Texture2D value = TextureAssets.LockOnCursor.Value;
+								Rectangle frame1 = new(0, 0, value.Width, 12);
+								Rectangle frame2 = new(0, 16, value.Width, 12);
+								Vector2 origin = frame1.Size() * new Vector2(0.5f, 1f);
+								Color color1 = new(108, 255, 43, 220);
+								float waveFactor = MathF.Sin(Main.GlobalTimeWrappedHourly * MathHelper.Pi);
+								color1 *= 0.88f + waveFactor * 0.12f;
+								Color color2 = color1.MultiplyRGBA(new Color(0.75f, 0.75f, 0.75f, 1f));
+								Vector2 scale = new Vector2(0.58f, 1f) * (0.6f - waveFactor * 0.05f);
+								Vector2 pos = projectile.Top - Vector2.UnitY * (0.6f + waveFactor * 0.4f) * 4 - Main.screenPosition;
+								Main.spriteBatch.Draw(value, pos, frame1, color1, 0, origin, scale, SpriteEffects.None, 0f);
+								Main.spriteBatch.Draw(value, pos, frame2, color2, 0, origin, scale, SpriteEffects.None, 0f);
+							}
+							hoveredMinion = -1;
+							return true;
+						},
+						InterfaceScaleType.Game) { Active = artifactMinions.Count > 0 || hoveredMinion != -1 }
+					);
+					inventoryIndex += 1;
+				}
 			}
 		}
 		public static void DrawBuffHealthbars(int projectileType, ref BuffDrawParams drawParams, float startY) {
 			Vector2 posOffset = Main.screenPosition;
 			posOffset.X += drawParams.SourceRectangle.Width / 2;
 			bool checkOnScreen = OriginClientConfig.Instance.ArtifactMinionHealthbarStyle == ArtifactMinionHealthbarStyles.Auto;
+			bool tryKillHovered = Main.mouseRight && Main.mouseRightRelease;
 			for (int i = 0; i < artifactMinions.Count; i++) {
 				Projectile projectile = Main.projectile[artifactMinions[i]];
 				if (projectile.type != projectileType) continue;
@@ -187,8 +219,14 @@ namespace Origins.Projectiles {
 						artifact.DrawDeadHealthBar(drawParams.TextPosition + posOffset, drawParams.DrawColor.A / 255f);
 					}
 					if (!Main.mouseText && new Rectangle((int)drawParams.TextPosition.X, (int)drawParams.TextPosition.Y, 36, 12).Contains(Main.MouseScreen)) {
+						Main.LocalPlayer.mouseInterface = true;
 						Main.instance.MouseText($"{(int)artifact.Life}/{artifact.MaxLife}");
 						Main.mouseText = true;
+						hoveredMinion = artifactMinions[i];
+						if (tryKillHovered) {
+							projectile.Kill();
+							tryKillHovered = false;
+						}
 					}
 					drawParams.TextPosition.Y += 10;
 				}
