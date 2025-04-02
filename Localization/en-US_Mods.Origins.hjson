@@ -1149,9 +1149,8 @@ Buffs: {
 
 	Plain_Broth_Buff: {
 		DisplayName: Plain Broth Buff
-		Description: Mods.Origins.Buffs.Plain_Broth_Buff.Description
+		Description: Increases minion size by 25%
 	}
-}
 
 	Greasy_Broth_Buff: {
 		DisplayName: Greasy Broth
