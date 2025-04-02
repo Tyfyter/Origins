@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Origins.Buffs;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
@@ -284,7 +285,7 @@ namespace Origins.NPCs.Brine.Boss {
 				int tentacleType = ModContent.NPCType<Mildew_Carrion_Tentacle>();
 				int presentTentacleCount = (int)Math.Ceiling(NPC.localAI[1] / Mildew_Carrion_Tentacle.DestructionCooldown);
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.type == tentacleType) presentTentacleCount++;
+					if (npc.type == tentacleType && npc.localAI[1] == 0) presentTentacleCount++;
 				}
 				for (int i = Main.rand.RandomRound(1.5f + difficultyMult); i > 0; i--) {
 					if (presentTentacleCount++ >= 3 + difficultyMult) break;
@@ -409,6 +410,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.ai[1] = 0;
 			NPC.netUpdate = true;
 		}
+		Physics.Chain chain;
 		public override bool PreAI() {
 			NPC owner = Owner;
 			Vector2 targetPos = (owner.ModNPC as Mildew_Carrion)?.TargetPos ?? owner.Center;
@@ -426,15 +428,48 @@ namespace Origins.NPCs.Brine.Boss {
 					Vector2 targetDirection = owner.DirectionTo(targetPos);
 					Vector2 direction = owner.DirectionTo(NPC.Center);
 					if (Vector2.Dot(targetDirection, direction) < ContentExtensions.DifficultyDamageMultiplier * 0.25f - 0.35f) {
-						NPC.localAI[1] += 1f / 31;
+						NPC.localAI[1] += 1f / 181;
 					}
 					owner.velocity += direction * 0.1f;
 					break;
 				}
 			}
 			if (NPC.localAI[1] > 0) {
+				if (!Main.dedServ && chain is null) {
+					Physics.Gravity[] gravity = [
+						new Physics.ConstantGravity(Vector2.UnitY * 0.04f),
+					];
+					List<Physics.Chain.Link> links = [];
+					Vector2 anchor = NPC.Center;
+					anchor.Y += 8;
+					const float spring = 0.1f;
+					Vector2 diff = Owner.Center - NPC.Center;
+					float dist = diff.Length();
+					Texture2D texture = TextureAssets.Npc[Type].Value;
+					Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
+					Gore.NewGoreDirect(
+						NPC.GetSource_Death(),
+						NPC.Center,
+						Vector2.Zero,
+						ModContent.GoreType<Mildew_Carrion_Tentacle_Gore>()
+					).frame = 4;
+					diff /= dist / (frame.Height - 8);
+					Vector2 pos = NPC.Center;
+					links.Add(new(pos, default, frame.Height - 8, gravity, drag: 0.93f, spring: spring));
+					while (dist > frame.Height) {
+						pos += diff;
+						links.Add(new(pos, default, frame.Height - 8, gravity, drag: 0.93f, spring: spring));
+						dist -= frame.Height - 8;
+					}
+					chain = new Physics.Chain() {
+						anchor = new Physics.WorldAnchorPoint(anchor),
+						links = links.ToArray()
+					};
+				}
 				NPC.dontTakeDamage = true;
-				NPC.localAI[1] += 1f / 31;
+				NPC.localAI[1] += 1f / 181;
+			} else {
+				NPC.rotation = (Owner.Center - NPC.Center).ToRotation() + MathHelper.PiOver2;
 			}
 			if (NPC.localAI[1] >= 1 || !owner.active) NPC.life = 0;
 			return false;
@@ -478,7 +513,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
-			float rotation = diff.ToRotation() + MathHelper.PiOver2;
+			float rotation = NPC.rotation;
 			float sqrtDecay = MathF.Pow(1 - NPC.localAI[1], 0.5f);
 			Color decayColor = new(1 - NPC.localAI[1], 1 - NPC.localAI[1], 1 - NPC.localAI[1], sqrtDecay); 
 			Main.EntitySpriteDraw(
@@ -491,22 +526,41 @@ namespace Origins.NPCs.Brine.Boss {
 				1,
 				SpriteEffects.None
 			);
-			diff /= dist / (frame.Height - 8);
-			Vector2 pos = NPC.Center;
-			while (dist > frame.Height) {
-				frame.Y = rand.Next(4) * frame.Height;
-				pos += diff;
-				Main.EntitySpriteDraw(
-					texture,
-					pos - screenPos,
-					frame,
-					GetColor(pos).MultiplyRGBA(decayColor),
-					rotation,
-					frame.Size() * 0.5f,
-					1,
-					SpriteEffects.None
-				);
-				dist -= frame.Height - 8;
+			if (chain is not null) {
+				for (int i = 0; i < 3; i++) chain.UpdateWithCollision();
+				for (int i = 0; i < chain.links.Length - 1; i++) {
+					frame.Y = rand.Next(4) * frame.Height;
+					Vector2 pos = chain.links[i].position;
+					Vector2 dir = chain.links[i + 1].position - pos;
+					Main.EntitySpriteDraw(
+						texture,
+						pos + dir * 0.5f - screenPos,
+						frame,
+						GetColor(pos).MultiplyRGBA(decayColor),
+						dir.ToRotation() + MathHelper.PiOver2,
+						frame.Size() * 0.5f,
+						1,
+						SpriteEffects.None
+					);
+				}
+			} else {
+				diff /= dist / (frame.Height - 8);
+				Vector2 pos = NPC.Center;
+				while (dist > frame.Height) {
+					frame.Y = rand.Next(4) * frame.Height;
+					pos += diff;
+					Main.EntitySpriteDraw(
+						texture,
+						pos - screenPos,
+						frame,
+						GetColor(pos).MultiplyRGBA(decayColor),
+						rotation,
+						frame.Size() * 0.5f,
+						1,
+						SpriteEffects.None
+					);
+					dist -= frame.Height - 8;
+				}
 			}
 			return false;
 			Color GetColor(Vector2 position) {
