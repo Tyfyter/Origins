@@ -4149,7 +4149,7 @@ Defiled_Grass_Wall_Safe_Item: {
 }
 
 Defiled_Grass_Wall_Placed_Unsafe_Item: {
-	// DisplayName: Infested {§Defiled} Grass Wall Placed
+	// DisplayName: Infested {§Defiled} Grass Wall
 	// Tooltip: ""
 }
 

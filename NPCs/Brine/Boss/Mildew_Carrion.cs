@@ -503,6 +503,7 @@ namespace Origins.NPCs.Brine.Boss {
 				if (NPC.localAI[0] == 0) NPC.localAI[0] = Main.rand.Next(1, ushort.MaxValue);
 				FastRandom rand = new((int)NPC.localAI[0]);
 				Texture2D texture = TextureAssets.Npc[Type].Value;
+				if (texture.Height == 0) return;
 				Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
 				Gore.NewGoreDirect(
 					NPC.GetSource_Death(),
@@ -530,6 +531,7 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.localAI[0] == 0) NPC.localAI[0] = Main.rand.Next(1, ushort.MaxValue);
 			FastRandom rand = new((int)NPC.localAI[0]);
 			Texture2D texture = TextureAssets.Npc[Type].Value;
+			if (texture.Height == 0) return false;
 			Rectangle frame = texture.Frame(verticalFrames: 5, frameY: 4);
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			float rotation = NPC.rotation;
