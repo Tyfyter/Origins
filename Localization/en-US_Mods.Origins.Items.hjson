@@ -3429,8 +3429,9 @@ Ambition_Potion: {
 	DisplayName: Ambition Potion
 	Tooltip:
 		'''
-		2.5% increased damage, crit chance, weapon speed
-		12.5% stat share 
+		12.5% stat share
+		+10% generic weapon velocity
+		+10% melee weapon size
 		'''
 }
 
@@ -5781,22 +5782,27 @@ Umami_Broth: {
 
 Mildew_Incantation: {
 	DisplayName: Mildew Incantation
-	Tooltip: ""
+	Tooltip: Cast mildew spores that summon miniature creepers on tiles
 }
 
 Lucky_Hat: {
 	DisplayName: Lucky Hat
-	Tooltip: ""
+	Tooltip: +8% ranged and explosive critical strike chance
 }
 
 Eye_Of_Aether: {
-	DisplayName: Eye Of Aether
-	Tooltip: ""
+	DisplayName: Spyglass
+	Tooltip: Locates the Aether
 }
 
 Soul_Snatcher: {
 	DisplayName: Soul Snatcher
-	Tooltip: ""
+	Tooltip:
+		'''
+		Hold <right> to spin it around
+		Becomes empowered after striking enemies, inflicting Shadefire
+		Pressing <left> while empowered and holding <right> launches it
+		'''
 }
 
 Tangela_Tether: {
@@ -5805,18 +5811,26 @@ Tangela_Tether: {
 }
 
 Mildew_Breastplate: {
-	DisplayName: Mildew Breastplate
-	Tooltip: ""
+	DisplayName: Mildew Wrap
+	Tooltip:
+		'''
+		+10% generic velocity
+		+10% summon damage and +10% additional artifact damage
+		'''
 }
 
 Mildew_Greaves: {
-	DisplayName: Mildew Greaves
-	Tooltip: ""
+	DisplayName: Mildew Pants
+	Tooltip: Increases your max number of minions by 2
 }
 
 Mildew_Helmet: {
-	DisplayName: Mildew Helmet
-	Tooltip: ""
+	DisplayName: Mildew Wreath
+	Tooltip:
+		'''
+		Incantations slightly home to targets
+		+10% summon damage and +10% additional artifact damage
+		'''
 }
 
 Plain_Broth: {
@@ -5828,7 +5842,7 @@ Greasy_Broth: {
 	DisplayName: Greasy Broth
 	Tooltip:
 		'''
-		Causees minions to inflict Oiled for 1 sec
-		Artifact minions creates a greasy gas that causes burning on hit
+		All minions inflict Oiled
+		Artifact minions release greasy gas that burns enemies
 		'''
 }

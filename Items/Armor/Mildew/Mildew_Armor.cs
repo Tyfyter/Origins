@@ -2,7 +2,6 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Brine;
-using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

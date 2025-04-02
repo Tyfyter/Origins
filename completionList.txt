@@ -104,7 +104,7 @@ TOWN NPC Quests:
 (^) Goblin Tinkerer - Lend a Hand?*
 (X) Goblin Tinkerer - Full Speed Ahead
 (^) Guide - Get Questing!
-(☻) Guide - Troubling Trouble !!!
+(^) Guide - Troubling Trouble
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
 (^) Party Girl - Livin' Up the Party
@@ -158,7 +158,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie°
 (#, ^2) Canninhound !!!
-(#, ^2) Catacomb Clearer !!!
+(^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
@@ -342,7 +342,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (^) Extremophile Armor
 (X) Faefinder's Armor
-(#, ^2) Mildew Armor !!!
+(#2, ^2) Mildew Armor !!!
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
@@ -367,7 +367,7 @@ ARMOR:
 (^) Chlorophyte Crown*
 (^) Chlorophyte Visage*
 (^) Hallowed Visage*
-(☻) Lucky Hat !!!
+(#2/3, ^2) Lucky Hat !!!
 ---
 
 
@@ -589,13 +589,14 @@ VANITY:
 (ᗢ) Rasterized Dye
 (X) Riven Dye
 (^) Shimmer Dye
+(X) Tangela Dye !!!
 ---
 
 
 UTILITIES:
 ---
 (^) Amoeba Hook*
-(☻) Tangela Tether !!!
+(^) Tangela Tether
 
 (X) Strange Backpack
 
@@ -692,7 +693,7 @@ MELEE WEAPONS:
 (^) Boomboom
 (^) Crystal Cutters
 (^) Depth Charge
-(☻) Knee Slapper* !!! (use glowmasks)
+(^) Knee Slapper*
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
@@ -886,7 +887,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(^) Sunflower in a Pot
+(^) Sunflower in a Pot (is it fixed???)
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff
@@ -899,7 +900,7 @@ SUMMONER WEAPONS:
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
 (#2?, ^2) Huff Puffer Bait !!!
-(☻) Mildew Incantation !!!
+(^) Mildew Incantation
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
@@ -1201,8 +1202,8 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(☻) Hydrothermal Vent !!! (goopy glows and smonk)
-(☻) Limestone Rubble !!!
+(#2, ^2) Hydrothermal Vent !!! (goopy glows and smonk)
+(^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
@@ -1213,7 +1214,7 @@ TILES:
 (X) Shelf Coral
 (^) Soulspore*
 (ᗢ) Surveysprout*
-(X) Tangel Bramble
+(X) Tangela Bramble !!!
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
 (^) Wilting Rose*
@@ -1286,6 +1287,7 @@ MATERIALS:
 (^) Sentient Powder*
 (^) Silicon Bar*
 (^) Strange String*
+(X) Tangela Bud !!!
 (^) Tire*
 (^) Tree Sap*
 (^) Undead Chunk*
@@ -1353,7 +1355,7 @@ CONSUMABLES:
 (%2) The Defiled Will°
 
 (^) Absorption Potion*
-(☻) Ambition Potion !!!
+(^) Ambition Potion
 (^) Antisolve Potion*
 (^) Fervor Potion*
 (^) Flask of Alkahest*
@@ -1365,14 +1367,14 @@ CONSUMABLES:
 (^) Protean Potion*
 (^) Purification Potion*
 (#2, ^2) Skimswim Potion !!!
-(X) Super Mojo Flask
+(X) Super Mojo Flask !!!
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
 
 (X) Astringent Broth
 (X) Bitter Broth
 (^) Foul Broth*
-(☻) Greasy Broth !!!
+(#2, ^2) Greasy Broth !!! (grease gas FX)
 (^) Hearty Broth*
 (^) Light Broth°
 (X) Metallic Broth
@@ -1440,11 +1442,11 @@ CONSUMABLES:
 (#2, ^2, 々) Riven Loot Box°
 (X) Twilight Crate*
 
-(☻) Eye of Aether !!!
 (^) Gooey Water*
 (^) Holiday Hair Dye*
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
+(#2, ^2) Spyglass !!! (fancy anim)
 (^) Void Lock*
 (^) White Water*
 

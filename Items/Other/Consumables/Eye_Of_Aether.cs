@@ -1,10 +1,10 @@
-﻿using PegasusLib;
+﻿using Origins.Tiles.Other;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.NPCs;
 
 namespace Origins.Items.Other.Consumables {
 	public class Eye_Of_Aether : ModItem {
@@ -14,6 +14,14 @@ namespace Origins.Items.Other.Consumables {
 			Item.height = 16;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.DamageType = DamageClass.Default;
+			Item.rare = ItemRarityID.Blue;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Lens, 2)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 5)
+			.Register();
 		}
 	}
 	public class Eye_Of_Aether_P : ModProjectile {

@@ -1157,7 +1157,7 @@ Buffs: {
 		Description:
 			'''
 			All minions inflict Oiled
-			Artifact minions creates a greasy gas that causes burning on hit
+			Artifact minions release greasy gas that burns enemies
 			'''
 	}
 }
@@ -2445,6 +2445,17 @@ SetBonuses: {
 		Damaging debuffs deal 33% less damage to you
 		Being hit repeatedly increases the likelihood of dodging the next attack
 		This likelihood is reset after a successful dodge
+		'''
+	Lucky_Hat:
+		'''
+		Amplifies damage when timing your shots in 1.5-second intervals
+		Increased damage when firing opposite to where you're moving
+		'''
+	Mildew:
+		'''
+		Grants immunity to Toxic Shock
+		All minions don mildew growths that inflict Acid Venom
+		All projectiles release mildew vines in their wake that also inflict Acid Venom
 		'''
 }
 
