@@ -20,6 +20,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
 		}
 
