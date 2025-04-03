@@ -56,6 +56,7 @@ namespace Origins.NPCs {
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public bool amberDebuff = false;
+		public bool onSoMuchFire = false;
 		public Vector2 preAIVelocity = default;
 		public int priorityMailTime = 0;
 		public int prevPriorityMailTime = 0;
@@ -115,6 +116,7 @@ namespace Origins.NPCs {
 			staticShockDamage = false;
 			electrified = false;
 			amberDebuff = false;
+			onSoMuchFire = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
 			if (birdedTime <= 0) airBird = false;
@@ -190,6 +192,13 @@ namespace Origins.NPCs {
 					npc.lifeRegen = 0;
 				}
 				npc.lifeRegen -= 4;
+			}
+			if (onSoMuchFire) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 20;
+				damage += 3;
 			}
 			if (shadeFire) {
 				if (npc.lifeRegen > 0) {

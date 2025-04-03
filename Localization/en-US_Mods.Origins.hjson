@@ -1160,6 +1160,11 @@ Buffs: {
 			Artifact minions release greasy gas that burns enemies
 			'''
 	}
+
+	On_Even_More_Fire: {
+		DisplayName: On Even More Fire
+		Description: Mods.Origins.Buffs.On_Even_More_Fire.Description
+	}
 }
 
 DamageClassName: {
