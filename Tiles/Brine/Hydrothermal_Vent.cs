@@ -112,6 +112,7 @@ namespace Origins.Tiles.Brine {
 
 				case (4, 0):
 				case (4, 1):
+				case (4, 2):
 				case (5, 1):
 				case (5, 2):
 				color = Vector3.Max(color, new Vector3(0.912f, 0.879f, 0.394f));
@@ -152,7 +153,7 @@ namespace Origins.Tiles.Brine {
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
 			drawData.glowTexture = GlowTexture;
 
-			if (Main.rand.NextFloat(1000) >= Main.gfxQuality * 500f) return;
+			if (Main.rand.NextFloat(1000) >= Main.gfxQuality * 1000f) return;
 			Tile tile = Main.tile[i, j];
 			int style = TileObjectData.GetTileStyle(tile);
 			if (style < 0) return;
@@ -179,11 +180,14 @@ namespace Origins.Tiles.Brine {
 				smokePos += new Vector2(-8, -6) * flipMult;
 				break;
 				case (2, 1):
-				smokePos += new Vector2(-6, -8) * flipMult;
+				smokePos += new Vector2(-6, -10) * flipMult;
 				break;
 
 				case (4, 0):
 				smokePos += new Vector2(0, 4) * flipMult;
+				break;
+				case (4, 2):
+				smokePos += new Vector2(0, -8) * flipMult;
 				break;
 				case (5, 1):
 				smokePos += new Vector2(0, 6) * flipMult;
