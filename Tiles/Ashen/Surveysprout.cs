@@ -158,6 +158,7 @@ namespace Origins.Tiles.Ashen {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout_Item>()] = ItemID.Deathweed;
+			Item.ResearchUnlockCount = 25;
 		}
 	}
 }

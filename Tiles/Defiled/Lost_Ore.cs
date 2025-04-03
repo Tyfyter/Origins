@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
+using Origins.Tiles.Riven;
 using PegasusLib;
 using Terraria;
 using Terraria.ID;
@@ -38,6 +39,9 @@ namespace Origins.Tiles.Defiled {
 		public string[] Categories => [
 			"Ore"
 		];
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 100;
+        }
         public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Lost_Ore>());
 			Item.rare = ItemRarityID.Blue;
