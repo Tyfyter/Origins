@@ -168,20 +168,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Vector2 pos = Projectile.position;
 					Vector2 offset = headCenterOffset;
 					int dir = Math.Sign(npc.Center.X - (pos.X + offset.X));
-					//try reducing it from 8, might be the cause of the performance problems
 					Vector2 stepDown = new Vector2(16, 32);
-					for (int i = 0; i < 8; i++) {
+					for (int i = 0; i < 5; i++) {
 						if (i != 0 && !CanWalkOnto(pos, dir)) break;
 						float between = Vector2.Distance(npc.Center, Projectile.Center);
 						between *= isCurrentTarget ? 0 : 1 + i / 8f;
 						bool closer = distanceFromTarget > between;
+						if (!closer) break;
 						bool lineOfSight = CollisionExt.CanHitRay(pos + offset, npc.Center);
 						
-						//try reducing it from 100, might be the cause of the performance problems
-						for (int j = 0; j < 100 && !lineOfSight; j++) {
+						for (int j = 0; j < 40 && !lineOfSight; j++) {
 							lineOfSight = CollisionExt.CanHitRay(pos + offset, Main.rand.NextVector2FromRectangle(npc.Hitbox));
 						}
-						if (closer && lineOfSight) {
+						if (lineOfSight) {
 							distanceFromTarget = between;
 							targetCenter = npc.Center;
 							target = npc.whoAmI;
