@@ -129,9 +129,30 @@ namespace Origins.Projectiles {
 				if (relayRodTime <= 0) relayRodStrength = 0;
 			}
 		}
+		static AutoLoadingAsset<Texture2D> mildewGrowthTexture = "Origins/Items/Armor/Mildew/Mildew_Spore";
+		float? mildewGrowthAngle = null;
+		float mildewGrowthFrame = 0;
 		public override void PostDraw(Projectile projectile, Color lightColor) {
 			if (projectile.TryGetOwner(out Player player)) {
-				player.OriginPlayer()?.broth?.PostDrawMinion(projectile, lightColor);
+				OriginPlayer originPlayer = player.OriginPlayer();
+				originPlayer.broth?.PostDrawMinion(projectile, lightColor);
+				if (originPlayer.mildewSet && (projectile.minion || projectile.sentry)) {
+					mildewGrowthAngle ??= Main.rand.NextFloat(MathHelper.TwoPi);
+					Rectangle frame = mildewGrowthTexture.Frame(verticalFrames: 3, frameY: (int)(mildewGrowthFrame % 3));
+					float scale = projectile.scale;
+					if (ContentSamples.ProjectilesByType.TryGetValue(projectile.type, out Projectile baseProj) && baseProj.scale != 0) scale /= baseProj.scale;
+					Main.EntitySpriteDraw(
+						mildewGrowthTexture,
+						projectile.Center + (mildewGrowthAngle.Value + projectile.rotation).ToRotationVector2() * 4 * scale - Main.screenPosition,
+						frame,
+						lightColor,
+						mildewGrowthAngle.Value + projectile.rotation,
+						frame.Size() * new Vector2(0.5f, 1),
+						scale,
+						SpriteEffects.None
+					);
+					mildewGrowthFrame += 1f / 6;
+				}
 			}
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
