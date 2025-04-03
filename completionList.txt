@@ -1381,7 +1381,7 @@ CONSUMABLES:
 (X) Minishark Broth
 (^) Minty Broth°
 (#2, ^2) Plain Broth° !!!
-(#2, ^2) Savory Broth° !!!
+(☻) Savory Broth° !!!
 (^) Sharp Broth
 (^) Sour Broth*
 (#2, ^2) Spicy Broth° !!!

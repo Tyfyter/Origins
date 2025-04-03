@@ -5846,3 +5846,12 @@ Greasy_Broth: {
 		Artifact minions release greasy gas that burns enemies
 		''' */
 }
+
+Savory_Broth: {
+	// DisplayName: Savory Broth
+	/* Tooltip:
+		'''
+		Increases debuff duration from minions by 20%
+		Artifact minions tenderize targets
+		''' */
+}

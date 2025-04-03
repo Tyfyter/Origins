@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Broths {
@@ -11,6 +12,8 @@ namespace Origins.Items.Other.Consumables.Broths {
 		];
 		protected override bool CloneNewInstances => true;
 		public BrothBuff Buff { get; private set; }
+		public virtual LocalizedText BuffDisplayName => DisplayName;
+		public virtual LocalizedText BuffDescription => Tooltip;
 		public override void Load() {
 			Mod.AddContent(Buff = new(this));
 		}
@@ -60,6 +63,8 @@ namespace Origins.Items.Other.Consumables.Broths {
 	[Autoload(false)]
 	public class BrothBuff(BrothBase item) : ModBuff {
 		public override string Name => item.Name + "_Buff";
+		public override LocalizedText DisplayName => item.BuffDisplayName;
+		public override LocalizedText Description => item.BuffDescription;
 		public override void SetStaticDefaults() {
 			Main.persistentBuff[Type] = true;
 			Origins.BrothBuffs[Type] = true;

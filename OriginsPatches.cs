@@ -224,8 +224,21 @@ namespace Origins {
 				return orig(self);
 			};
 			On_NPC.AddBuff += (orig, self, type, time, quiet) => {
+				Player inflictingPlayer = Main.CurrentPlayer;
+				float durationModifier = 1f;
+				if (Main.ProjectileUpdateLoopIndex != -1) {
+					Projectile projectile = Main.projectile[Main.ProjectileUpdateLoopIndex];
+					if (projectile.TryGetOwner(out Player owner)) {
+						inflictingPlayer = owner;
+						OriginPlayer originPlayer = owner.OriginPlayer();
+						if (projectile.IsMinionOrSentryRelated && originPlayer.broth is Savory_Broth) {
+							durationModifier *= 1.2f;
+						}
+					}
+				}
+				time = (int)(time * durationModifier);
 				orig(self, type, time, quiet);
-				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsATagBuff[type] && Main.LocalPlayer.GetModPlayer<OriginPlayer>().summonTagForceCrit) {
+				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsATagBuff[type] && inflictingPlayer.OriginPlayer().summonTagForceCrit) {
 					orig(self, Headphones_Buff.ID, 300, quiet);
 				}
 			};

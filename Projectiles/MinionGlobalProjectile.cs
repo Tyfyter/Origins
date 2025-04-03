@@ -140,6 +140,11 @@ namespace Origins.Projectiles {
 				hitbox.Inflate(hitbox.Width / 8, hitbox.Height / 8);
 			}
 		}
+		/// <summary>
+		/// Checks if a projectile is an artifact minion or came from one
+		/// </summary>
+		/// <param name="projectile"></param>
+		/// <returns></returns>
 		public static bool IsArtifact(Projectile projectile) {
 			if (Origins.ArtifactMinion[projectile.type]) return true;
 			if (!projectile.TryGetGlobalProjectile(out MinionGlobalProjectile minionGlobal)) return false;
