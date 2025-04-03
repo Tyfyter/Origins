@@ -32,6 +32,7 @@ namespace Origins.Projectiles {
 		public int relayRodTime = 0;
 		public int relayRodStrength = 0;
 		bool fromArtifact = false;
+		BrothBase activeBroth;
 		public override void Load() {
 			IL_Projectile.Update += IL_Projectile_Update;
 		}
@@ -48,7 +49,13 @@ namespace Origins.Projectiles {
 						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {
 							artifact.maxHealthModifier = StatModifier.Default;
 						}
-						player.OriginPlayer()?.broth?.PreUpdateMinion(proj);
+						BrothBase currentBroth = player.OriginPlayer()?.broth;
+						if (global.activeBroth != currentBroth) {
+							global.activeBroth?.SwitchActive(proj, -1);
+							global.activeBroth = currentBroth;
+							global.activeBroth?.SwitchActive(proj, 1);
+						}
+						currentBroth?.PreUpdateMinion(proj);
 					}
 					if (global.relayRodStrength != 0) global.tempBonusUpdates += global.relayRodStrength * 0.01f * 0.1f;
 					if (global.TotalBonusUpdates != 0) {

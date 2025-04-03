@@ -17,5 +17,8 @@ namespace Origins.Items.Other.Consumables.Broths {
 				new(152, 155, 47)
 			];
 		}
+		public override void SwitchActive(Projectile minion, int active) {
+			minion.scale *= MathF.Pow(1.25f, active);
+		}
 	}
 }

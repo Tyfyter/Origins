@@ -48,6 +48,12 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public virtual void ModifyHurt(Projectile minion, ref int damage, bool fromDoT) { }
 		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT) { }
 		public virtual void PostDrawMinion(Projectile minion, Color lightColor) { }
+		/// <summary>
+		/// Runs when the broth a minion is affected by changes, including when a new minion is spawned
+		/// </summary>
+		/// <param name="minion">The minion</param>
+		/// <param name="active">1 if the broth is becoming active, -1 if the broth is becoming inactive</param>
+		public virtual void SwitchActive(Projectile minion, int active) { }
 		internal static bool On_Player_QuickBuff_ShouldBotherUsingThisBuff(On_Player.orig_QuickBuff_ShouldBotherUsingThisBuff orig, Player self, int attemptedType) {
 			bool result = orig(self, attemptedType);
 			bool isBroth = Origins.BrothBuffs[attemptedType];
