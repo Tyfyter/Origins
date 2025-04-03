@@ -94,7 +94,7 @@ namespace Origins.Items.Other.Consumables {
 						}
 					}
 				}
-			} else if (Projectile.timeLeft > 15) {
+			} else if (Projectile.timeLeft > 30) {
 				Vector2 diff = new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center;
 				Vector2 pos = Projectile.Center;
 				float dist = diff.Length();
@@ -113,12 +113,30 @@ namespace Origins.Items.Other.Consumables {
 					pos += dir;
 					dist -= speed;
 				}
-				Projectile.timeLeft = 15;
+				Projectile.timeLeft = 30;
 			}
-			if (Projectile.timeLeft < 15) {
-				SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-				Projectile.Opacity = Projectile.timeLeft / 15f;
+			if (Projectile.timeLeft < 30) {
+				bool aprilFools = OriginsModIntegrations.CheckAprilFools();
+				Projectile.Opacity = Projectile.timeLeft / (aprilFools ? 15f : 30f);
+				if (Projectile.timeLeft > 15) {
+					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+				} else {
+					if (aprilFools && Projectile.localAI[0] == 0) {
+						Projectile.timeLeft = 15;
+						Projectile.hostile = true;
+						Projectile.damage = 3;
+					}
+					Projectile.tileCollide = true;
+					Projectile.velocity *= 0.97f;
+					Projectile.velocity.Y += 0.4f;
+				}
+			} else {
+				Lighting.AddLight(Projectile.Center, 0.369f, 0.012f, 0.988f);
 			}
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Projectile.localAI[0] = 1;
+			return false;
 		}
 	}
 }
