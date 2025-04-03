@@ -899,7 +899,7 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(#2?, ^2) Huff Puffer Bait !!!
+(☻) Huff Puffer Bait !!!
 (^) Mildew Incantation
 (^) Mildew Whip
 (X) Obsidian Bone
