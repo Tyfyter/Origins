@@ -1836,7 +1836,8 @@ Mojo_Flask: {
 	// DisplayName: Mojo Flask
 	/* Tooltip:
 		'''
-		Reduces all assimilation by 20% each
+		Reduces all assimilation by {FlaskCureAmount}% each
+		{FlaskUseCount} uses
 		All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
 		''' */
 }
@@ -5855,3 +5856,5 @@ Savory_Broth: {
 		Artifact minions tenderize targets
 		''' */
 }
+
+// Super_Mojo_Flask.DisplayName: Super Mojo Flask

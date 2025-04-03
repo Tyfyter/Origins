@@ -806,6 +806,10 @@ namespace Origins {
 			if (staticBrothEffectCooldown > 0)
 				staticBrothEffectCooldown--;
 
+			for (int i = 0; i < Player.inventory.Length; i++) {
+				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask) mojoFlaskCountMax = mojoFlask.FlaskUseCount;
+			}
+			
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
 

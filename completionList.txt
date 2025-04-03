@@ -1367,7 +1367,7 @@ CONSUMABLES:
 (^) Protean Potion*
 (^) Purification Potion*
 (#2, ^2) Skimswim Potion !!!
-(X) Super Mojo Flask !!!
+(^3, @) Super Mojo Flask !!!
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
 

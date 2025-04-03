@@ -96,6 +96,8 @@ namespace Origins.Items.Armor.Other {
 			TileObjectData.addTile(Type);
 
 			RegisterItemDrop(ModContent.ItemType<Lucky_Hat>(), -1);
+
+			HitSound = SoundID.Item32;
 		}
 		public static int PlacementPreviewHook_CheckIfCanPlace(int i, int j, int type, int style, int direction, int alternate) {
 			Tile anchorTile = Framing.GetTileSafely(i, j + 1);
