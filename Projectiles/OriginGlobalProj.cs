@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items;
@@ -10,6 +11,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles.Weapons;
@@ -18,15 +20,18 @@ using Origins.Reflection;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Origins.Projectiles {
 	public class OriginGlobalProj : GlobalProjectile, IDrawProjectileEffect {
@@ -68,6 +73,7 @@ namespace Origins.Projectiles {
 		public bool laserBow = false;
 		public bool astoxoEffect = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
+		public Vector2[] oldPositions = [];
 		public override void Load() {
 			itemSourceEffects = [];
 		}
@@ -276,6 +282,31 @@ namespace Origins.Projectiles {
 				}
 			} else if (unmissAnimation > 0) {
 				unmissAnimation--;
+			}
+			{
+				bool mildewArmor = false;
+				if (projectile.friendly && projectile.TryGetOwner(out Player owner)) {
+					mildewArmor = owner.OriginPlayer().mildewSet;
+				}
+				int neededTrailLength = 0;
+				if (mildewArmor) neededTrailLength = Math.Max(neededTrailLength, 30);
+				if (neededTrailLength != 0) {
+					if (oldPositions.Length != neededTrailLength) Array.Resize(ref oldPositions, neededTrailLength);
+					Rectangle mildewHitbox = new(0, 0, 8, 8);
+					for (int i = oldPositions.Length - 1; i > 0; i--) {
+						oldPositions[i] = oldPositions[i - 1];
+						if (mildewArmor) {
+							mildewHitbox.X = (int)oldPositions[i].X - 4;
+							mildewHitbox.Y = (int)oldPositions[i].Y - 4;
+							foreach (NPC npc in Main.ActiveNPCs) {
+								if (npc.chaseable && !npc.immortal && !npc.friendly && mildewHitbox.Intersects(npc.Hitbox)) {
+									npc.AddBuff(Toxic_Shock_Debuff.ID, 60);
+								}
+							}
+						}
+					}
+					oldPositions[0] = projectile.Center;
+				}
 			}
 		}
 		public override void AI(Projectile projectile) {
@@ -558,6 +589,70 @@ namespace Origins.Projectiles {
 				projectile.ai[0]++;
 			}
 			projectile.rotation += 0.3f * projectile.direction;
+		}
+		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
+			if (projectile.friendly && projectile.TryGetOwner(out Player owner) && owner.OriginPlayer().mildewSet) {
+				Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Mildew_Whip_P>()].Value;
+				int frameSeed = projectile.type + projectile.whoAmI;
+				for (int i = 0; i < oldPositions.Length - 1; i++) {
+					if (i < 30) {
+						if (oldPositions[i + 1] == Vector2.Zero) break;
+						frameSeed = DrawMildewVine(texture, oldPositions[i], oldPositions[i + 1], frameSeed,
+							new Rectangle(18, 32, 14, 16),
+							new Rectangle(18, 62, 10, 12),
+							new Rectangle(18, 90, 12, 14)
+						);
+					}
+				}
+			}
+			return true;
+		}
+		static int DrawMildewVine(Texture2D texture, Vector2 a, Vector2 b, int frameSeed, params Rectangle[] frames) {
+			if (frames.Length == 0) throw new ArgumentException("Must have frames", nameof(frames));
+			float rotation = (b - a).ToRotation() + MathHelper.PiOver2;
+			Rectangle frame;
+			float length = (b - a).Length();
+			/*if (length > 12) {
+				frame = frames[new FastRandom(++frameSeed).Next(frames.Length)];
+				Main.EntitySpriteDraw(
+					texture,
+					a - Main.screenPosition,
+					frame,
+					Lighting.GetColor(a.ToTileCoordinates()),
+					rotation,
+					frame.Size() * 0.5f,
+					1,
+					(SpriteEffects)new FastRandom(++frameSeed).Next(4)
+				);
+				frame = frames[new FastRandom(++frameSeed).Next(frames.Length)];
+				Main.EntitySpriteDraw(
+					texture,
+					b - Main.screenPosition,
+					frame,
+					Lighting.GetColor(a.ToTileCoordinates()),
+					rotation,
+					frame.Size() * 0.5f,
+					1,
+					(SpriteEffects)new FastRandom(++frameSeed).Next(4)
+				);
+			}*/
+			Vector2 dir = (b - a) / length;
+			while (length > 0) {
+				frame = frames[new FastRandom(++frameSeed).Next(frames.Length)];
+				Main.EntitySpriteDraw(
+					texture,
+					a - Main.screenPosition,
+					frame,
+					Lighting.GetColor(a.ToTileCoordinates()),
+					rotation,
+					frame.Size() * 0.5f * Vector2.UnitX,
+					1,
+					(SpriteEffects)new FastRandom(++frameSeed).Next(4)
+				);
+				a += dir * (frame.Height - 2);
+				length -= frame.Height - 2;
+			}
+			return frameSeed;
 		}
 		public override void PostDraw(Projectile projectile, Color lightColor) {
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2 && ProjectileID.Sets.IsAWhip[projectile.type]) {

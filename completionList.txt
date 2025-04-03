@@ -342,7 +342,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (^) Extremophile Armor
 (X) Faefinder's Armor
-(#2, ^2) Mildew Armor !!!
+(☻) Mildew Armor !!!
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
