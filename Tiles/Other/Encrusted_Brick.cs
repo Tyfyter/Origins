@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,6 +24,13 @@ namespace Origins.Tiles.Other {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Encrusted_Brick>());
+		}
+		public override void AddRecipes() {
+			CreateRecipe(5)
+			.AddIngredient<Riven_Flesh_Item>(5)
+			.AddIngredient<Encrusted_Ore_Item>()
+			.AddTile(TileID.Furnaces)
+			.Register();
 		}
 	}
 }

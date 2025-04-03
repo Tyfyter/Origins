@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -24,6 +26,13 @@ namespace Origins.Tiles.Other {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Lost_Brick>());
+		}
+		public override void AddRecipes() {
+			CreateRecipe(5)
+			.AddIngredient<Defiled_Stone_Item>(5)
+			.AddIngredient<Lost_Ore_Item>()
+			.AddTile(TileID.Furnaces)
+			.Register();
 		}
 	}
 }
