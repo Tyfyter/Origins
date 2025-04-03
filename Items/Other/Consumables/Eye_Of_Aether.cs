@@ -2,12 +2,16 @@
 using PegasusLib;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Eye_Of_Aether : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 15;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToThrownWeapon(ModContent.ProjectileType<Eye_Of_Aether_P>(), 20, 4);
 			Item.width = 16;
@@ -15,6 +19,10 @@ namespace Origins.Items.Other.Consumables {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.DamageType = DamageClass.Default;
 			Item.rare = ItemRarityID.Blue;
+			Item.noUseGraphic = true;
+		}
+		public override void UseItemFrame(Player player) {
+			if (player.itemAnimation / (float)player.itemAnimationMax < 0.85f) player.bodyFrame.Y = player.bodyFrame.Height * 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -22,6 +30,22 @@ namespace Origins.Items.Other.Consumables {
 			.AddIngredient(ItemID.FallenStar)
 			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 5)
 			.Register();
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			velocity = new Vector2(player.direction, 0);
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			position += velocity * 12;
+			velocity = new Vector2(0, -16);
+			Projectile.NewProjectile(
+				source,
+				position,
+				velocity,
+				type,
+				damage,
+				knockback
+			);
+			return false;
 		}
 	}
 	public class Eye_Of_Aether_P : ModProjectile {
@@ -31,17 +55,18 @@ namespace Origins.Items.Other.Consumables {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			const int float_up = 30;
+			const int fall = 40;
+			const int float_up = fall + 30;
 			const int float_in_place = float_up + 60;
-			const int shoot = float_in_place + 60;
-			const float spin_speed = 0.5f;
+			const int shoot = float_in_place + 30;
+			float spin_speed = (Projectile.ai[0] - float_up) * 0.01f;
 			Projectile.ai[0]++;
-			if (Projectile.ai[0] < float_up) {
+			if (Projectile.ai[0] < fall) {
+				Projectile.velocity *= 0.97f;
+				Projectile.velocity.Y += 0.4f;
+			} else if (Projectile.ai[0] < float_up) {
 				Projectile.velocity *= 0.93f;
-				Projectile.velocity.Y -= 0.4f;
-			} else if (Projectile.ai[0] < float_in_place) {
-				Projectile.velocity *= 0.93f;
-				Projectile.rotation += spin_speed;
+				Projectile.velocity.Y -= 0.2f;
 			} else if (Projectile.ai[1] == 0) {
 				if (ModContent.GetInstance<OriginSystem>().shimmerPosition is Vector2 shimmerPosition) {
 					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
@@ -54,11 +79,21 @@ namespace Origins.Items.Other.Consumables {
 					Projectile.Kill();
 				}
 			} else if (Projectile.ai[0] < shoot) {
-				Projectile.velocity = Vector2.Zero;
-				float targetAngle = (new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center).ToRotation() - MathHelper.PiOver4 * 0.5f;
-				float angle = GeometryUtils.AngleDif(Projectile.rotation, targetAngle, out int dir);
-				if (dir != 1 || angle > spin_speed) Projectile.rotation += spin_speed;
-				else Projectile.rotation = targetAngle;
+				if (Projectile.ai[0] < float_in_place) Projectile.velocity *= 0.93f;
+				float targetAngle = (new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center).ToRotation() + MathHelper.PiOver4 * 0.65f;
+				if (GeometryUtils.AngularSmoothing(ref Projectile.rotation, targetAngle, spin_speed)) {
+					Projectile.rotation = targetAngle;
+					if (Projectile.ai[0] % 13f < 1) {
+						for (int i = 0; i < 3; i++) {
+							Vector2 direction = (Main.rand.NextFloat(-1f, 1f) + targetAngle - MathHelper.PiOver4 * 0.65f).ToRotationVector2();
+							ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
+								PositionInWorld = Projectile.Center + direction * 64,
+								MovementVector = direction * -4,
+								UniqueInfoPiece = (byte)(0.727f * 255f)
+							});
+						}
+					}
+				}
 			} else if (Projectile.timeLeft > 15) {
 				Vector2 diff = new Vector2(Projectile.ai[1], Projectile.ai[2]) - Projectile.Center;
 				Vector2 pos = Projectile.Center;
