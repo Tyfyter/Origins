@@ -5,9 +5,10 @@ a Demolitionist class balanced with other classes and an art style that fits as 
 
 Wiki: https://tyfyter.github.io/OriginsWiki/
 
-This mod is a collaboration between Tyfyter2002, Jadams and chrersis since April of 2017.
+This mod is a collaboration since April of 2017.
 
-Programmer: Tyfyter2002
-Artist: chrersis
-Music and sound designer: chrersis
-Wiki developer: Jadams
+Programmer: Tyfyter2002 and Reivax
+Artist: chrersis, forg
+Music: chrersis and gojisturba
+Sound designer: chrersis
+Wiki developer: chrersis, Jadams, Reivax

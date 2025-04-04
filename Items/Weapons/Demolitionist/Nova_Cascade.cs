@@ -61,6 +61,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 64;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
+			Projectile.hide = true;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
 			Projectile.usesLocalNPCImmunity = true;
