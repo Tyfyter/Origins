@@ -56,7 +56,9 @@ namespace Origins.Items.Other.Consumables.Broths {
 					npc.AddBuff(BuffID.OnFire, 360);
 				}
 			}
-			if (Projectile.ai[0] > 0) Projectile.timeLeft = 60;
+
+			Projectile.scale += 0.01f;
+			Projectile.Opacity -= 0.01f;
 			#endregion
 
 			#region Animation and visuals

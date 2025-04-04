@@ -438,7 +438,7 @@ NPCs/MiscB/Severus
 
 NPCs/MiscE/Boulder_Mimic
 NPCs/MiscE/Boulder_Mimic_Glow
-NPCs/MiscE/Canninhound
+NPCs/MiscE/Cannihound
 NPCs/MiscE/Cloud_Elemental
 NPCs/MiscE/Cloud_Elemental_Fingergun
 NPCs/MiscE/NPC_48
