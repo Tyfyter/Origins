@@ -271,18 +271,20 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.localAI[2] = -1;
 				this.DamageArtifactMinion(200);
 			}
-			foreach (Player healee in Main.ActivePlayers) {
-				if (healee.team == player.team && Projectile.Center.Clamp(healee.Hitbox).WithinRange(Projectile.Center, 16 * 15)) {
-					healee.lifeRegenCount += 2;
-					Dust dust = Dust.NewDustDirect(
-						healee.position,
-						healee.width,
-						healee.height,
-						DustID.YellowTorch,
-						SpeedY: -2
-					);
-					dust.velocity *= 0.5f;
-					dust.noGravity = true;
+			if (Main.dayTime) {
+				foreach (Player healee in Main.ActivePlayers) {
+					if (healee.team == player.team && Projectile.Center.Clamp(healee.Hitbox).WithinRange(Projectile.Center, 16 * 15)) {
+						healee.lifeRegenCount += 2;
+						Dust dust = Dust.NewDustDirect(
+							healee.position,
+							healee.width,
+							healee.height,
+							DustID.YellowTorch,
+							SpeedY: -2
+						);
+						dust.velocity *= 0.5f;
+						dust.noGravity = true;
+					}
 				}
 			}
 			if (Projectile.velocity.Y != 0) {

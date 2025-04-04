@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Brine;
@@ -216,6 +217,16 @@ namespace Origins {
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
 			fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
+
+			if (!Main.SceneMetrics.HasSunflower && Main.dayTime) {
+				int team = Main.LocalPlayer.team;
+				foreach (Projectile projectile in Main.ActiveProjectiles) {
+					if (projectile.type == Sunny_Sunflower.ID && projectile.ai[2] != 1 && team == Main.player[projectile.owner].team && projectile.Center.Clamp(Main.LocalPlayer.Hitbox).WithinRange(projectile.Center, 16 * 15)) {
+						Main.SceneMetrics.HasSunflower = true;
+						break;
+					}
+				}
+			}
 		}
 		public bool TryAddVoidLock(Point position, Guid owner, bool fromNet = false, int netOwner = -1) {
 			if (VoidLocks.TryAdd(position, owner)) {
