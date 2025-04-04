@@ -18,6 +18,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.height = 16;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.DamageType = DamageClass.Default;
+			Item.UseSound = SoundID.Item1;
 			Item.rare = ItemRarityID.Blue;
 			Item.noUseGraphic = true;
 		}
@@ -71,6 +72,7 @@ namespace Origins.Items.Other.Consumables {
 				if (ModContent.GetInstance<OriginSystem>().shimmerPosition is Vector2 shimmerPosition) {
 					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
 					SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-2), Projectile.Center);
 					Projectile.ai[1] = shimmerPosition.X * 16;
 					Projectile.ai[2] = shimmerPosition.Y * 16;
 				} else {

@@ -1836,8 +1836,8 @@ Mojo_Flask: {
 	// DisplayName: Mojo Flask
 	/* Tooltip:
 		'''
-		Reduces all assimilation by {FlaskCureAmount}% each
 		{FlaskUseCount} uses
+		Reduces all assimilation by {FlaskCureAmount}% each
 		All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
 		''' */
 }
