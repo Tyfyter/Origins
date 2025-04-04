@@ -2,6 +2,7 @@
 using Origins.Questing;
 using Origins.Tiles;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -33,13 +34,13 @@ namespace Origins {
 					packet = Mod.GetPacket();
 					packet.Write(Origins.NetMessageType.sync_void_locks);
 					packet.Write((ushort)OriginSystem.Instance.VoidLocks.Count);
-					foreach (var @lock in OriginSystem.Instance.VoidLocks) {
+					foreach (KeyValuePair<Point, Guid> @lock in OriginSystem.Instance.VoidLocks) {
 						packet.Write(@lock.Key.X);
 						packet.Write(@lock.Key.Y);
 						packet.Write(@lock.Value.ToByteArray());
 					}
 					packet.Send(Player.whoAmI);
-					foreach (var quest in Quest_Registry.NetQuests) {
+					foreach (Quest quest in Quest_Registry.NetQuests) {
 						quest.Sync(Player.whoAmI);
 					}
 				}

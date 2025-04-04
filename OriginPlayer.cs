@@ -727,10 +727,10 @@ namespace Origins {
 			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? [];
 			Origins.instance.Logger.Debug("player quests: " + questsTag.ToString());
 			Origins.instance.Logger.Debug("world quests: " + worldQuestsTag.ToString());
-			foreach (var quest in Quest_Registry.Quests) {
+			foreach (Quest quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
 					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
-				} else {
+				} else if (Main.netMode != NetmodeID.MultiplayerClient) {
 					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 				}
 			}
