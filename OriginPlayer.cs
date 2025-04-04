@@ -759,6 +759,9 @@ namespace Origins {
 				itemUseOldDirection = Player.direction;
 				return false;
 			}
+			if (luckyHatSet && !Player.ItemAnimationActive && Player.HeldItem.ChangePlayerDirectionOnShoot && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) && luckyHatSetTime < 90) {
+				Player.direction = itemUseOldDirection;
+			}
 			ItemChecking = true;
 			if (Player.HeldItem.ModItem is C6_Jackhammer or Miter_Saw && Player.controlUseTile) {
 				if (Player.ItemAnimationEndingOrEnded) {
