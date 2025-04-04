@@ -97,6 +97,7 @@ namespace Origins.NPCs.Brine.Boss {
 	}
 	public class Mildew_Carrion_Mildew_Creeper : Mildew_Creeper {
 		public override string Texture => typeof(Mildew_Creeper).GetDefaultTMLName();
+		public override int ChainLength => 10;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;

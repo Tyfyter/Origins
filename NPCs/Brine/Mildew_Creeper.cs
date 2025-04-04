@@ -89,6 +89,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CheckTargetLOS(Vector2 target) => true;
 		Physics.Chain chain;
+		public virtual int ChainLength => 15;
 		public override void AI() {
 			DoTargeting();
 			if (chain is null) {
@@ -100,7 +101,7 @@ namespace Origins.NPCs.Brine {
 				Vector2 anchor = NPC.Center;
 				anchor.Y += 8;
 				const float spring = 0.5f;
-				for (int i = 0; i < 15; i++) {
+				for (int i = 0; i < ChainLength; i++) {
 					links.Add(new(anchor, default, 16f, gravity, drag: 0.93f, spring: spring));
 				}
 				links.Add(new(anchor, default, 20f, [new NPCTargetGravity(this)], drag: 0.93f, spring: spring));
