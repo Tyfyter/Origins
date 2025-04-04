@@ -1,18 +1,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Summoner.Minions;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.NPCs;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Huff_Puffer_Bait : ModItem, ICustomWikiStat {
@@ -23,8 +20,9 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DefaultToThrownWeapon(ModContent.ProjectileType<Huff_Puffer>(), 20, 8);
 			Item.noUseGraphic = true;
 			Item.DamageType = DamageClass.Summon;
-			Item.damage = 30;
+			Item.damage = 47;
 			Item.knockBack = 0.2f;
+			Item.rare = ItemRarityID.LightRed;
 			Item.bait = 193;
 			Item.consumable = false;
 		}

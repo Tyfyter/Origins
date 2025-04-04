@@ -20,8 +20,8 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 18;
-			Item.knockBack = 6f;
+			Item.damage = 9;
+			Item.knockBack = 1f;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 14;
 			Item.shootSpeed = 9f;
@@ -207,7 +207,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Vector2 diff = targetCenter - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
-					if (++Projectile.ai[1] >= 45) {
+					if (++Projectile.ai[1] >= 10) {
+						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1.5f).WithVolume(0.25f), Projectile.Center);
 						if (Main.myPlayer == player.whoAmI) Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							Projectile.position + headCenterOffset,
@@ -432,6 +433,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.timeLeft = 300;
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 1;
+			Projectile.ArmorPenetration += 5;
 		}
 		public override void AI() {
 			const int HalfSpriteWidth = 32 / 2;

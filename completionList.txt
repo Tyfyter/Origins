@@ -342,7 +342,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (^) Extremophile Armor
 (X) Faefinder's Armor
-(☻) Mildew Armor !!!
+(^) Mildew Armor
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
@@ -676,6 +676,7 @@ MELEE WEAPONS:
 (^) Orbital Saw*
 (^) Ripper Lance*
 (^) Riverang*
+(X) Silicon Sword
 (^) Snapthrow*
 (^) Soldering Iron
 (#2, ^2) Soul Snatcher* !!!
@@ -887,7 +888,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(^) Sunflower in a Pot (is it fixed???)
+(^) Sunflower in a Pot
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff
@@ -899,7 +900,7 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(☻) Huff Puffer Bait !!!
+(^) Huff Puffer Bait
 (^) Mildew Incantation
 (^) Mildew Whip
 (X) Obsidian Bone
@@ -1111,9 +1112,11 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Edenwood Wall
+(X) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Harmony Brick Wall
+(X) Lost Brick Wall
 (^) Marrowick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
@@ -1202,7 +1205,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#2, ^2) Hydrothermal Vent !!! (goopy glows and smonk)
+(#2, ^2) Hydrothermal Vent !!! (goopy glows, smonk, chlorophyte hammer req, and indestructible tile base)
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
@@ -1236,6 +1239,7 @@ TILES:
 (#, $2) Music Box (Brine Pool)
 ($2) Music Box (Defiled Caverns) !!!
 (X) Music Box (Defiled Egregocide Route)
+(X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
 ($2) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
@@ -1374,17 +1378,17 @@ CONSUMABLES:
 (X) Astringent Broth
 (X) Bitter Broth
 (^) Foul Broth*
-(☻) Greasy Broth !!!
+(#2, ^2) Greasy Broth !!!
 (^) Hearty Broth*
 (^) Light Broth°
 (X) Metallic Broth
 (X) Minishark Broth
 (^) Minty Broth°
-(☻) Plain Broth° !!!
-(☻) Savory Broth° !!!
+(^) Plain Broth°
+(^) Savory Broth°
 (^) Sharp Broth
 (^) Sour Broth*
-(#2, ^2) Spicy Broth° !!!
+(^) Spicy Broth°
 (^) Sweet Broth°
 (^) Umami Broth
 
@@ -1446,7 +1450,7 @@ CONSUMABLES:
 (^) Holiday Hair Dye*
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
-(☻) Spyglass !!! (fancy anim)
+(^) Spyglass
 (^) Void Lock*
 (^) White Water*
 
@@ -1596,6 +1600,8 @@ UI:
 (X) Dawn Map/Bestiary Backdrop
 (^) Defiled Caverns Icon
 (^) Defiled Desert Icon
+(X) Defiled Egregore
+(X) Defiled Egregore Map/Bestiary Backdrop
 (^) Defiled Map/Bestiary Backdrop
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
@@ -1632,6 +1638,7 @@ VOLUME I MUSIC:
 (^) Defiled Caverns
 (^) Defiled Wastelands
 (X) Defiled Wastelands - Egregocide Route
+(X) Defiled Wastelands - Egregore
 (X) Defiled Wastelands - Mimic Route
 (^) Eutrophic Sea
 (^) Fiberglass Caves
@@ -1647,50 +1654,6 @@ VOLUME I MUSIC:
 (X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
 ($) Lost Diver/Mildew Carrion !!! (beginning track)
-(X) Mechamalgamation
-(X) Miscreant
-(X) Quantux
-(^) World Cracker
-(X) Seer
-(X) Shimmer Construct
-(X) Tearror
-(X) Trenchmaker
-
-(X) Ashen Invasion
-(X) Corruption Invasion
-(X) Crimson Invasion
-(X) Defiled Invasion
-(X) Laser Tag Event
-(X) Riven Invasion
-(X) Test of Ancients
----
-
-VOLUME II MUSIC: (discontinued??)
----
-
-(X) Ashen Factory
-(^) Brine Pool
-(X) Cosmos
-(X) Cubekon Temple
-(X) Dawn
-(^) Defiled Caverns
-(^) Defiled Wastelands
-(X) Defiled Wastelands - Egregocide Route
-(X) Defiled Wastelands - Mimic Route
-(^) Eutrophic Sea
-(^) Fiberglass Caves
-(X) Fractured Isles
-(^) Riven Hive
-(X) The Dusk
-(^) Underground Riven Hive
-
-(X) Crimson King
-(^) Defiled Amalgamation
-(X) Duskord
-(X) Fiberglass Weaver
-(X) I.C.A.R.U.S.
-(X) Leviathan of the Riven
-($) Lost Diver/Mildew Carrion
 (X) Mechamalgamation
 (X) Miscreant
 (X) Quantux
