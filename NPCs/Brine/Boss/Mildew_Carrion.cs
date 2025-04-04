@@ -354,6 +354,18 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-15, -10).RotatedBy(NPC.rotation),
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Mildew_Carrion)}_Gore1"
+				);
+				Origins.instance.SpawnGoreByName(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-1, -3).RotatedBy(NPC.rotation),
+					Vector2.Zero,
+					$"Gores/NPC/{nameof(Mildew_Carrion)}_Gore2"
+				);
 			}
 		}
 		public override void OnKill() {
