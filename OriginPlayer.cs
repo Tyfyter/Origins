@@ -656,7 +656,7 @@ namespace Origins {
 				tag.Add("UnlockedQuests", startedQuests.ToList());
 			}
 			TagCompound questsTag = [];
-			foreach (var quest in Quest_Registry.Quests) {
+			foreach (Quest quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
 					TagCompound questTag = [];
 					quest.SaveData(questTag);
