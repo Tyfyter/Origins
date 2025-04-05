@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,11 +19,10 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public override void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Oiled, 360);
 			if (MinionGlobalProjectile.IsArtifact(proj)) {
-				//target.AddBuff(BuffID.OnFire, 360);
 				ref int staticBrothEffectCooldown = ref Main.player[proj.owner].OriginPlayer().staticBrothEffectCooldown;
 				if (staticBrothEffectCooldown <= 0) {
 					Projectile.NewProjectile(Terraria.Entity.InheritSource(proj), proj.Center, Vector2.Zero, Greasy_Gas.ID, 0, 0);
-					staticBrothEffectCooldown = 90;
+					staticBrothEffectCooldown = 15;
 				}
 			}
 		}
@@ -45,20 +45,24 @@ namespace Origins.Items.Other.Consumables.Broths {
 			Projectile.ignoreWater = false;
 			Projectile.netImportant = true;
 			Projectile.timeLeft = 60;
+			Projectile.scale -= 0.5f;
 		}
 		public override bool? CanCutTiles() {
 			return false;
 		}
 		public override void AI() {
 			#region General behavior
+			Projectile.scale += 0.02f;
+			Projectile.Opacity -= 0.01f;
+			Rectangle hitbox = Projectile.getRect().Scaled(Projectile.scale * 2).Recentered(Projectile.Center);
+			//hitbox.DrawDebugOutline();
+			Projectile.ai[0] = hitbox.Center().X;
+			Projectile.ai[1] = hitbox.BottomLeft().Y;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (Projectile.getRect().Intersects(npc.getRect()) && npc.chaseable && !npc.immortal && !npc.friendly) {
+				if (hitbox.Intersects(npc.getRect()) && npc.chaseable && !npc.immortal && !npc.friendly) {
 					npc.AddBuff(BuffID.OnFire, 360);
 				}
 			}
-
-			Projectile.scale += 0.01f;
-			Projectile.Opacity -= 0.01f;
 			#endregion
 
 			#region Animation and visuals
@@ -79,7 +83,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
 			Main.EntitySpriteDraw(
 				texture,
-				Projectile.Bottom - new Vector2(0, 4) - Main.screenPosition,
+				new Vector2(Projectile.ai[0], Projectile.ai[1] - 4) - Main.screenPosition,
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(89, 52, 96, 200))),
 				Projectile.rotation,
