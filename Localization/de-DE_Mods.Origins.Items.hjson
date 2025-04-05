@@ -896,7 +896,7 @@ Tripod_Nip: {
 	/* Tooltip:
 		'''
 		Reduces enemy aggression and spawn rates
-		{§Mods.Origins.NPCs.Defiled_Tripods.DisplayName} become friendly
+		{§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}s become friendly
 		''' */
 }
 
