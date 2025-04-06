@@ -159,7 +159,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie°
 (#, ^2) Cannihound !!!
-(#2, ^2) Catacomb Clearer !!! (banner)
+(^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
