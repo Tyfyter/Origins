@@ -1,13 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;

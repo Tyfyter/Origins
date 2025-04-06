@@ -579,6 +579,7 @@ namespace Origins.NPCs.Brine.Boss {
 			} else {
 				diff /= dist / (frame.Height - 8);
 				Vector2 pos = NPC.Center;
+				if (frame.Height < 8) return false;
 				while (dist > frame.Height) {
 					frame.Y = rand.Next(4) * frame.Height;
 					pos += diff;

@@ -45,7 +45,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			Projectile.ignoreWater = false;
 			Projectile.netImportant = true;
 			Projectile.timeLeft = 60;
-			Projectile.scale -= 0.5f;
+			Projectile.scale = 0.25f;
 		}
 		public override bool? CanCutTiles() {
 			return false;

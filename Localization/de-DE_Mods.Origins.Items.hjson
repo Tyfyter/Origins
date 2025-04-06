@@ -5801,7 +5801,7 @@ Soul_Snatcher: {
 	/* Tooltip:
 		'''
 		Hold <right> to spin it around
-		Becomes empowered after striking enemies, inflicting Shadefire
+		Becomes empowered after striking 3 enemies, inflicting Shadefire
 		Pressing <left> while empowered and holding <right> launches it
 		''' */
 }
