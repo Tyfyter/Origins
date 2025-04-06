@@ -23,7 +23,7 @@ using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.MiscE {
 	public class Catacomb_Clearer : ModNPC {
-		//public override void Load() => this.AddBanner();
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 20;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
