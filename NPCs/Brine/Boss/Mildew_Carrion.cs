@@ -1,4 +1,5 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Origins.Buffs;
@@ -26,6 +27,8 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.BigProgressBar;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -655,7 +658,8 @@ namespace Origins.NPCs.Brine.Boss {
 			float distDir = Math.Sign(distFactor);
 			distFactor *= distDir;
 			distFactor = Math.Max(1, 1 / MathF.Pow(distFactor, 0.7f));
-			NPC.velocity += ownerDiff * distFactor * distDir * 0.01f;
+			distFactor *= 0.1f;
+			NPC.velocity += ownerDiff * (distFactor + 0.1f) * distDir * 0.01f;
 
 			if (distDir < 0) {
 				ownerDiff /= ownerDist;
@@ -705,12 +709,43 @@ namespace Origins.NPCs.Brine.Boss {
 				}*/
 			}
 		}
+		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 diff = Owner.Center - NPC.Center;
 			float dist = diff.Length();
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Beam"];
+			FastRandom rand = new(NPC.whoAmI);
+			float uTime = (float)Main.timeForVisualEffects * (rand.Next(10) * 0.1f + 0.1f);
+			int length = (int)(dist / 10);
+			if (length == 0) return false;
+			float[] rot = new float[length];
+			Vector2[] pos = new Vector2[length];
+			Color[] colors = new Color[length];
+			Vector2 step = diff / length;
+			for (int i = 0; i < length; i++) {
+				pos[i] = NPC.Center + step * i + new Vector2(step.Y, -step.X) * MathF.Sin((i * rand.Next(1, 10) * 0.05f) + NPC.whoAmI + uTime) * (rand.Next(10) * 0.03f + 0.2f);
+				colors[i] = Lighting.GetColor(pos[i].ToTileCoordinates());
+			}
+			for (int i = 1; i < length; i++) {
+				rot[i] = (pos[i] - pos[i - 1]).ToRotation();
+			}
+			Asset<Texture2D> texture = TextureAssets.Npc[Type];
+			miscShaderData.UseImage0(texture);
+			miscShaderData.UseShaderSpecificData(texture.UVFrame());
+			float endLength = 1f / length;
+			miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
+				10f / 30f,
+				endLength
+			));
+			miscShaderData.Apply();
+			_vertexStrip.PrepareStrip(pos, rot, progress => float.IsNaN(progress) ? Color.Red : colors[(int)(progress * (colors.Length - 1))], _ => 3, -Main.screenPosition, length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			return false;
+			/*
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: 3, frameY: 2);
-			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			//drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			float rotation = diff.ToRotation() + MathHelper.PiOver2;
 			Main.EntitySpriteDraw(
 				texture,
@@ -746,6 +781,7 @@ namespace Origins.NPCs.Brine.Boss {
 				NPCLoader.DrawEffects(NPC, ref npcColor);
 				return NPC.GetNPCColorTintedByBuffs(npcColor);
 			}
+			*/
 		}
 	}
 }
