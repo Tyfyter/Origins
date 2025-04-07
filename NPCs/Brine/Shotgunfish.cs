@@ -197,24 +197,24 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
-				/*Origins.instance.SpawnGoreByName(
+				Gore.NewGore(
 					NPC.GetSource_Death(),
-					NPC.Center,
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_3"
+					NPC.Center + new Vector2(2 * NPC.direction, -2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shotgunfish1_Gore")
 				);
-				Origins.instance.SpawnGoreByName(
+				Gore.NewGore(
 					NPC.GetSource_Death(),
-					NPC.Center + GeometryUtils.Vec2FromPolar(-16, NPC.rotation),
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_2"
+					NPC.Center + new Vector2(-17 * NPC.direction, -3).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shotgunfish2_Gore")
 				);
-				Origins.instance.SpawnGoreByName(
+				Gore.NewGore(
 					NPC.GetSource_Death(),
-					NPC.Center + GeometryUtils.Vec2FromPolar(-32, NPC.rotation),
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_1"
-				);*/
+					NPC.Center + new Vector2(-38 * NPC.direction, -2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shotgunfish3_Gore")
+				);
 			}
 		}
 		public AutoLoadingAsset<Texture2D> afTexture = $"{typeof(Shotgunfish).GetDefaultTMLName()}_AF";

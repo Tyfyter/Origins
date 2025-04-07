@@ -280,24 +280,30 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
-				/*Origins.instance.SpawnGoreByName(
+				Gore.NewGore(
 					NPC.GetSource_Death(),
-					NPC.Center,
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_3"
+					NPC.Center + new Vector2(-14 * NPC.direction, 3).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Nasty_Crawdad2_Gore")
 				);
-				Origins.instance.SpawnGoreByName(
+				Gore.NewGore(
 					NPC.GetSource_Death(),
-					NPC.Center + GeometryUtils.Vec2FromPolar(-16, NPC.rotation),
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_2"
+					NPC.Center + new Vector2(-8 * NPC.direction, 5).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Nasty_Crawdad2_Gore")
 				);
-				Origins.instance.SpawnGoreByName(
+				Gore.NewGore(
 					NPC.GetSource_Death(),
-					NPC.Center + GeometryUtils.Vec2FromPolar(-32, NPC.rotation),
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_1"
-				);*/
+					NPC.Center + new Vector2(29 * NPC.direction, 3).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Nasty_Crawdad1_Gore")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(6 * NPC.direction, 0).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Nasty_Crawdad3_Gore")
+				);
 			}
 		}
 	}

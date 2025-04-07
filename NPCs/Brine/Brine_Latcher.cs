@@ -176,24 +176,29 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
-				/*Origins.instance.SpawnGoreByName(
-					NPC.GetSource_Death(),
-					NPC.Center,
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_3"
-				);
-				Origins.instance.SpawnGoreByName(
-					NPC.GetSource_Death(),
-					NPC.Center + GeometryUtils.Vec2FromPolar(-16, NPC.rotation),
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_2"
-				);
-				Origins.instance.SpawnGoreByName(
-					NPC.GetSource_Death(),
-					NPC.Center + GeometryUtils.Vec2FromPolar(-32, NPC.rotation),
-					Vector2.Zero,
-					$"Gores/NPC/{nameof(Shotgunfish)}_Gore_1"
-				);*/
+				const float factor = 1f;
+				const float r_factor = 1f / factor;
+				for (int i = 0; i < 12; i++) {
+					Dust dust = Dust.NewDustDirect(
+						NPC.position,
+						NPC.width,
+						NPC.height,
+						DustID.GreenBlood,
+						NPC.velocity.X * r_factor,
+						NPC.velocity.Y * r_factor
+					);
+					dust.velocity *= factor;
+					dust = Dust.NewDustDirect(
+						NPC.position,
+						NPC.width,
+						NPC.height,
+						DustID.SparkForLightDisc,
+						NPC.velocity.X * r_factor,
+						NPC.velocity.Y * r_factor,
+						newColor: new(0f, 0.4f, 0f, 0.4f)
+					);
+					dust.velocity *= factor;
+				}
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

@@ -6,6 +6,7 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -273,11 +274,40 @@ namespace Origins.NPCs.Brine {
 			return true;
 		}
 		public override void FindFrame(int frameHeight) {
-			
+
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
-			
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-4 * NPC.direction, -19).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/King_Crab2_Gore")
+				);
+				Gore.NewGoreDirect(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-10 * NPC.direction, 13).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/King_Crab1_Gore")
+				).Frame = new SpriteFrame(2, 1, 0, 0);
+				Gore.NewGoreDirect(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(10 * NPC.direction, 13).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/King_Crab1_Gore")
+				).Frame = new SpriteFrame(2, 1, 1, 0);
+				Gore.NewGoreDirect(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-6 * NPC.direction, 13).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/King_Crab1_Gore")
+				).Frame = new SpriteFrame(2, 1, 0, 0);
+				Gore.NewGoreDirect(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(6 * NPC.direction, 13).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/King_Crab1_Gore")
+				).Frame = new SpriteFrame(2, 1, 1, 0);
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
