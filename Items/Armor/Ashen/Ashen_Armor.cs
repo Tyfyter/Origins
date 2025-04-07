@@ -1,5 +1,7 @@
 using Origins.Dev;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -8,14 +10,18 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Ashen
 {
     [AutoloadEquip(EquipType.Head)]
-	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, IJournalEntrySource {
         public string[] Categories => [
             "ArmorSet",
             "ExplosiveBoostGear",
 			"GenericBoostGear",
 			"SelfDamageProtek"
 		];
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Ashen_Helmet_Entry).Name;
+		public class Ashen_Helmet_Entry : JournalEntry {
+			public override string TextKey => "Ashen_Helmet";
+		}
+		public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
@@ -48,8 +54,11 @@ namespace Origins.Items.Armor.Ashen
 		public int LegsItemID => ModContent.ItemType<Ashen_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Ashen_Breastplate : ModItem, INoSeperateWikiPage {
-		
+	public class Ashen_Breastplate : ModItem, INoSeperateWikiPage, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Ashen_Breastplate_Entry).Name;
+		public class Ashen_Breastplate_Entry : JournalEntry {
+			public override string TextKey => "Ashen_Breastplate";
+		}
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(silver: 80);
@@ -67,8 +76,11 @@ namespace Origins.Items.Armor.Ashen
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Ashen_Greaves : ModItem, INoSeperateWikiPage {
-		
+	public class Ashen_Greaves : ModItem, INoSeperateWikiPage, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Ashen_Greaves_Entry).Name;
+		public class Ashen_Greaves_Entry : JournalEntry {
+			public override string TextKey => "Ashen_Greaves";
+		}
 		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 60);
