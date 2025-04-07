@@ -63,7 +63,7 @@ namespace Origins.NPCs {
 		/// <summary>
 		/// The NPC instance of the head segment for this worm.
 		/// </summary>
-		public NPC HeadSegment => Main.npc[NPC.realLife];
+		public NPC HeadSegment => Main.npc.IndexInRange(NPC.realLife) ? Main.npc[NPC.realLife] : null;
 
 		/// <summary>
 		/// The NPC instance of the segment that this segment is following (ai[1]).  For head segments, this property always returns <see langword="null"/>.
