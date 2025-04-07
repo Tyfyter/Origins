@@ -24,11 +24,12 @@ namespace Origins.Items.Other.Consumables {
 		public static Func<Texture2D, Rectangle> GetFrameGetter(int type, int frameCount) => (Texture2D texture) => {
 			int frame = 5;
 			if (!Main.gameMenu) {
-				frame = Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
-				if (Main.LocalPlayer.ItemAnimationActive && Main.LocalPlayer.HeldItem.type == type) {
+				frame = Main.CurrentPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
+				if (Main.CurrentPlayer.ItemAnimationActive && Main.CurrentPlayer.HeldItem.type == type) {
 					frame++;
 				}
 			}
+			if (frame > frameCount) frame = frameCount;
 			return texture.Frame(frameCount, 1, Math.Min(frame, frameCount - 1), 0);
 		};
 		public override void SetDefaults() {
