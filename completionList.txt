@@ -1207,7 +1207,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#2, ^2) Hydrothermal Vent !!! (smonk?)
+(☻) Hydrothermal Vent !!! (smonk?)
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
