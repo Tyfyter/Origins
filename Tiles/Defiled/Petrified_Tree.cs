@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PegasusLib;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -45,10 +46,11 @@ namespace Origins.Tiles.Defiled {
 		public override Asset<Texture2D> GetTexture() {
 			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree");
 		}
+		public static AutoLoadingAsset<Texture2D> branchesTopsTexture = "Origins/Tiles/Defiled/Petrified_Tree_Tops_Tangela";
 		public override Asset<Texture2D> GetTopTextures() {
 			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Tops");
 		}
-
+		public static AutoLoadingAsset<Texture2D> branchesTangelaTexture = "Origins/Tiles/Defiled/Petrified_Tree_Branches_Tangela";
 		public override Asset<Texture2D> GetBranchTextures() {
 			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Branches");
 		}

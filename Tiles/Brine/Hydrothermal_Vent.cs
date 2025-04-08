@@ -14,15 +14,16 @@ using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Tiles.Brine {
-	public class Hydrothermal_Vent : ModTile {
+	public class Hydrothermal_Vent : ModTile, IComplexMineDamageTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileLighted[Type] = false;
+			Main.tileHammer[Type] = true;
 			Main.tileBlockLight[Type] = false;
+			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			//TileID.Sets.HasOutlines[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -34,6 +35,13 @@ namespace Origins.Tiles.Brine {
 
 			AddMapEntry(new Color(18, 73, 56), CreateMapEntryName());
 			DustType = DustID.GreenMoss;
+		}
+
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			Player player = Main.LocalPlayer;
+			if (player.HeldItem.hammer < 90) {
+				damage = 0;
+			}
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!NPC.downedGolemBoss) return;

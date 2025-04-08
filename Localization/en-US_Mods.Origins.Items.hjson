@@ -5863,3 +5863,13 @@ Spicy_Broth: {
 	DisplayName: Spicy Broth
 	Tooltip: Minions engulf enemies in flames
 }
+
+Tangela_Dye: {
+	DisplayName: Tangela Dye
+	Tooltip: ""
+}
+
+Tangela_Bramble_Item: {
+	DisplayName: Tangela Bramble Item
+	Tooltip: ""
+}

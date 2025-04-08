@@ -1,5 +1,6 @@
 ﻿using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using PegasusLib.Graphics;
@@ -37,7 +38,7 @@ namespace Origins.Graphics {
 	}
 	public static class TangelaVisual {
 		public static int ShaderID { get; private set; }
-		public static int FakeShaderID { get; private set; }
+		public static int FakeShaderID => Tangela_Dye.ShaderID;
 		class ArmorShaderDataWithAnotherImage(Asset<Effect> shader, string passName) : ArmorShaderData(shader, passName) {
 			private Asset<Texture2D> _uImage2;
 			public override void Apply(Entity entity, DrawData? drawData = null) {
@@ -63,11 +64,6 @@ namespace Origins.Graphics {
 				.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise")
 			);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Krakram>());
-
-			GameShaders.Armor.BindShader(ModContent.ItemType<Nerve_Flan>(), new TangelaArmorShaderData()
-				.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"))
-			);
-			FakeShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Nerve_Flan>());
 
 			Filters.Scene.OnPostDraw += Scene_OnPostDraw;
 		}

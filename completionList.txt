@@ -591,7 +591,7 @@ VANITY:
 (ᗢ) Rasterized Dye
 (X) Riven Dye
 (^) Shimmer Dye
-(#2, ^2) Tangela Dye !!!
+(☻) Tangela Dye !!!
 ---
 
 
@@ -1207,13 +1207,13 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#2, ^2) Hydrothermal Vent !!! (goopy glows, smonk, chlorophyte hammer req, and indestructible tile base)
+(#2, ^2) Hydrothermal Vent !!! (smonk?)
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
 (^) Ocotillo
-(#2, ^2) Petrified Tree* !!! (tangela visuals)
+(☻) Petrified Tree* !!! (tangela visuals)
 (^) Riven Foliage
 (^) Riven Pot
 (X) Shelf Coral
