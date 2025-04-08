@@ -485,6 +485,16 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
+	public class Tangela_Bud : MaterialItem {
+		public override int ResearchUnlockCount => 25;
+		public override int Value => Item.sellPrice(copper: 18);
+		public override bool Hardmode => false;
+		public override void AddRecipes() {
+			Recipe.Create(Type, 3)
+			.AddIngredient(ModContent.ItemType<Tangela_Bramble_Item>())
+			.Register();
+		}
+	}
 	public class Tree_Sap : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;

@@ -1293,7 +1293,7 @@ MATERIALS:
 (^) Sentient Powder*
 (^) Silicon Bar*
 (^) Strange String*
-(#, ^2) Tangela Bud !!!
+(☻) Tangela Bud !!!
 (^) Tire*
 (^) Tree Sap*
 (^) Undead Chunk*

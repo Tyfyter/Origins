@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -22,6 +23,13 @@ namespace Origins.Items.Other.Dyes {
 			ItemID.Sets.NonColorfulDyeItems.Add(Type);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 			Item.ResearchUnlockCount = 3;
+		}
+		public override bool AddToDyeTrader(Player player) => false;
+		public override void AddRecipes() {
+			CreateRecipe(2)
+			.AddIngredient<Tangela_Bud>()
+			.AddTile(TileID.DyeVat)
+			.Register();
 		}
 	}
 }

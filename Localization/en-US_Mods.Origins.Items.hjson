@@ -5870,6 +5870,8 @@ Tangela_Dye: {
 }
 
 Tangela_Bramble_Item: {
-	DisplayName: Tangela Bramble Item
+	DisplayName: Tangela Bramble
 	Tooltip: ""
 }
+
+Tangela_Bud.DisplayName: Tangela Bud
