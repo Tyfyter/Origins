@@ -250,7 +250,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (empowered) {
-				target.AddBuff(Shadefire_Debuff.ID, 120);
+				target.AddBuff(Shadefire_Debuff.ID, 180);
 			} else {
 				Main.player[Projectile.owner].OriginPlayer().soulSnatcherTime += 60;
 			}
@@ -321,10 +321,8 @@ namespace Origins.Items.Weapons.Melee {
 			if (Projectile.ai[0] != 0) {
 				if (Projectile.soundDelay >= 0) {
 					Projectile.soundDelay = -1;
-					SoundEngine.PlaySound(
-						SoundID.Item1,
-						Projectile.Center
-					);
+					SoundEngine.PlaySound(SoundID.Item9.WithPitchRange(-1f, -0.2f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(-1f, -0.2f), Projectile.Center);
 				}
 				Vector2? handDir = null;
 				Projectile.hide = false;
@@ -410,10 +408,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.rotation += player.direction * baseSpeed * (28f / player.itemAnimationMax);
 			if (Projectile.soundDelay <= 0) {
 				Projectile.soundDelay = Main.rand.RandomRound(MathHelper.TwoPi / (baseSpeed * (28f / player.itemAnimationMax)));
-				SoundEngine.PlaySound(
-					SoundID.Item1,
-					Projectile.Center
-				);
+				SoundEngine.PlaySound(SoundID.Item71.WithPitch(1.3f), Projectile.Center);
 			}
 			Projectile.direction = player.direction;
 			Projectile.spriteDirection = player.direction;

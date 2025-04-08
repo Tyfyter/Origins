@@ -591,7 +591,7 @@ VANITY:
 (ᗢ) Rasterized Dye
 (X) Riven Dye
 (^) Shimmer Dye
-(☻) Tangela Dye !!!
+(^) Tangela Dye
 ---
 
 
@@ -681,7 +681,7 @@ MELEE WEAPONS:
 (X) Silicon Sword
 (^) Snapthrow*
 (^) Soldering Iron
-(☻) Soul Snatcher* !!!
+(^) Soul Snatcher*
 (^) Soulslasher
 (^) Spiker Sword*
 (^) Switchblade*
@@ -1207,19 +1207,19 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(☻) Hydrothermal Vent !!! (smonk?)
+(#3, ^2) Hydrothermal Vent !!! (figure out why I can't see the glows)
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
 (X) Moonshine°
 (^) Ocotillo
-(☻) Petrified Tree* !!! (tangela visuals)
+(^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
 (X) Shelf Coral
 (^) Soulspore*
 (ᗢ) Surveysprout*
-(☻) Tangela Bramble !!!
+(^) Tangela Bramble
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
 (^) Wilting Rose*
@@ -1293,7 +1293,7 @@ MATERIALS:
 (^) Sentient Powder*
 (^) Silicon Bar*
 (^) Strange String*
-(☻) Tangela Bud !!!
+(^) Tangela Bud
 (^) Tire*
 (^) Tree Sap*
 (^) Undead Chunk*
@@ -1369,11 +1369,11 @@ CONSUMABLES:
 (^) Focus Potion°
 (^) Greater Summoning Potion
 (^) Latchkey
-(@4, ^3) Mojo Flask*
+(^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
 (#2, ^2) Skimswim Potion !!!
-(☻) Super Mojo Flask !!!
+(^) Super Mojo Flask
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
 
@@ -1415,7 +1415,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(X) Nerve Flan
+(#2, ^2) Nerve Flan !!!
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*

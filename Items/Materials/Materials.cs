@@ -477,6 +477,7 @@ namespace Origins.Items.Materials {
 	public class Strange_String : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
+		public override bool HasTooltip => true;
 		public override void AddRecipes() {
             Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
@@ -487,7 +488,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Tangela_Bud : MaterialItem {
 		public override int ResearchUnlockCount => 25;
+		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(copper: 18);
+		public override bool HasTooltip => true;
 		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe.Create(Type, 3)

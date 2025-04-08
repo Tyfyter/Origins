@@ -5801,7 +5801,7 @@ Soul_Snatcher: {
 	Tooltip:
 		'''
 		Hold <right> to spin it around
-		Becomes empowered after striking 3 enemies, inflicting Shadefire
+		Becomes empowered after striking enemies, inflicting Shadefire
 		Pressing <left> while empowered and holding <right> launches it
 		'''
 }
@@ -5866,7 +5866,7 @@ Spicy_Broth: {
 
 Tangela_Dye: {
 	DisplayName: Tangela Dye
-	Tooltip: ""
+	Tooltip: Makes things intangible to your computer
 }
 
 Tangela_Bramble_Item: {
@@ -5874,4 +5874,11 @@ Tangela_Bramble_Item: {
 	Tooltip: ""
 }
 
-Tangela_Bud.DisplayName: Tangela Bud
+Tangela_Bud: {
+	DisplayName: Tangela Bud
+	Tooltip:
+		'''
+		Used to make Tangela Dye
+		'Ooooh, preeeetty'
+		'''
+}
