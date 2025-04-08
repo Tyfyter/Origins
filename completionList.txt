@@ -1369,11 +1369,11 @@ CONSUMABLES:
 (^) Focus Potion°
 (^) Greater Summoning Potion
 (^) Latchkey
-(^) Mojo Flask*
+(@4, ^3) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
 (#2, ^2) Skimswim Potion !!!
-(#2, ^2) Super Mojo Flask !!! (fix animation from size difference)
+(☻) Super Mojo Flask !!!
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
 
