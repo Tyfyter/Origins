@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Armor.Other;
@@ -32,6 +33,10 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 
 			RegisterItemDrop(ModContent.ItemType<Tangela_Bramble_Item>(), -1);
+		}
+		public override bool IsTileDangerous(int i, int j, Player player) => true;
+		public static void StandInside(Player player) {
+			player.AddBuff(Rasterized_Debuff.ID, 16);
 		}
 		public static AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Tangela_Bramble).GetDefaultTMLName() + "_Tangela";
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {

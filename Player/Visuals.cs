@@ -4,6 +4,7 @@ using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Layers;
+using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
 using Terraria;
@@ -118,6 +119,13 @@ namespace Origins {
 				const float factor = 1.5f;
 				Player.accRunSpeed *= factor;
 				Player.maxRunSpeed *= factor;
+			}
+			int brambleType = ModContent.TileType<Tangela_Bramble>();
+			foreach (Point point in Collision.GetTilesIn(Player.position, Player.BottomRight)) {
+				if (Framing.GetTileSafely(point).TileIsType(brambleType)) {
+					Tangela_Bramble.StandInside(Player);
+					break;
+				}
 			}
 		}
 	}
