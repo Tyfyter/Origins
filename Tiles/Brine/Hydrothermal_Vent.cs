@@ -212,7 +212,8 @@ namespace Origins.Tiles.Brine {
 					12,
 					DustID.Smoke,
 					0,
-					-4
+					-4,
+					newColor: Color.DimGray
 				).velocity *= 0.25f;
 			}
 		}

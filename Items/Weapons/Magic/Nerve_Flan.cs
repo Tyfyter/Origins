@@ -7,6 +7,7 @@ using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
@@ -14,17 +15,69 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Nerve_Flan : ModItem, ICustomWikiStat {
+	public class Nerve_Flan : ModItem, ICustomDrawItem {
+		AutoLoadingAsset<Texture2D> useTexture = typeof(Nerve_Flan).GetDefaultTMLName() + "_Use";
+		AutoLoadingAsset<Texture2D> useTangelaTexture = typeof(Nerve_Flan).GetDefaultTMLName() + "_Use_Tangela";
+		public override void SetStaticDefaults() {
+			useTexture.LoadAsset();
+			useTangelaTexture.LoadAsset();
+		}
 		public override void SetDefaults() {
-			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 30, Nerve_Flan_P.tick_motion, true);
-			Item.useTime /= 3;
+			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 32, Nerve_Flan_P.tick_motion, true);
+			Item.useTime /= 4;
 			Item.damage = 18;
 			Item.mana = 14;
 			Item.knockBack = 3;
 			Item.UseSound = SoundID.Item1;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
-			Item.maxStack = 1;
+		}
+		public override void UseItemFrame(Player player) {
+			float offset;
+			float timePerSwing = player.itemAnimationMax * 0.5f;
+			if (player.itemAnimation > timePerSwing) {
+				offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
+			} else {
+				offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
+			}
+			offset = Math.Clamp(offset * 2, -1, 1);
+			player.SetCompositeArmFront(
+				true,
+				Player.CompositeArmStretchAmount.Full,
+				player.itemRotation - (MathHelper.PiOver2 + offset) * player.direction
+			);
+		}
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			int itemFrame = drawInfo.drawPlayer.itemAnimationMax - drawInfo.drawPlayer.itemAnimation;
+			Rectangle frame = useTexture.Value.Frame(verticalFrames: 6, frameY: Math.Clamp(itemFrame, 0, 5));
+			DrawData data = new(
+				useTexture,
+				drawInfo.drawPlayer.GetFrontHandPosition(drawInfo.drawPlayer.compositeFrontArm.stretch, drawInfo.drawPlayer.compositeFrontArm.rotation) - Main.screenPosition,
+				frame,
+				lightColor,
+				drawInfo.drawPlayer.compositeFrontArm.rotation + MathHelper.Pi - MathHelper.PiOver4 * drawInfo.drawPlayer.direction,
+				new Vector2(11, 22).Apply(drawInfo.itemEffect, frame.Size()),
+				1f,
+				drawInfo.itemEffect
+			);
+			drawInfo.DrawDataCache.Add(data);
+			data.texture = useTangelaTexture;
+			data.shader = TangelaVisual.FakeShaderID;
+			drawInfo.DrawDataCache.Add(data);
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.ItemUsesThisAnimation is 1 or 3) return false;
+			if (player.ItemUsesThisAnimation == 4) {
+				Projectile.NewProjectile(
+					source,
+					position,
+					velocity.RotatedByRandom(0.2f),
+					type,
+					damage,
+					knockback
+				);
+			}
+			return true;
 		}
 	}
 	public class Nerve_Flan_P : ModProjectile, ITangelaHaver {
@@ -64,7 +117,7 @@ namespace Origins.Items.Weapons.Magic {
 			return null;
 		}
 		protected Vector2? target = null;
-		protected int startupDelay = 0;
+		protected int startupDelay = 2;
 		protected float randomArcing = 0.3f;
 		public override void AI() {
 			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);

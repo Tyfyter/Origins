@@ -98,7 +98,7 @@ namespace Origins.Graphics {
 			DrawTangela(texture, position, sourceRectangle, rotation, origin, scale, effects, tangelaHaver.TangelaSeed.Value, extraOffset);
 		}
 		public static void DrawTangela(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, int tangelaSeed, Vector2 extraOffset = default) {
-			drawDatas.Add(new(new(
+			DrawTangela(new(
 				texture,
 				position,
 				sourceRectangle,
@@ -107,14 +107,16 @@ namespace Origins.Graphics {
 				origin,
 				scale,
 				effects
-			), tangelaSeed, extraOffset));
+			), tangelaSeed, extraOffset);
+		}
+		public static void DrawTangela(DrawData data, int tangelaSeed, Vector2 extraOffset = default) {
+			drawDatas.Add(new(data, tangelaSeed, extraOffset));
 			if (DrawOver) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			try {
 				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
 				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
-				(DrawData data, int seed, _) = drawDatas[^1];
-				FastRandom random = new(seed);
+				FastRandom random = new(tangelaSeed);
 				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
 				shader.Apply(null, data);
 				data.Draw(Main.spriteBatch);

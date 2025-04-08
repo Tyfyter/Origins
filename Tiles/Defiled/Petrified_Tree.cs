@@ -46,7 +46,7 @@ namespace Origins.Tiles.Defiled {
 		public override Asset<Texture2D> GetTexture() {
 			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree");
 		}
-		public static AutoLoadingAsset<Texture2D> branchesTopsTexture = "Origins/Tiles/Defiled/Petrified_Tree_Tops_Tangela";
+		public static AutoLoadingAsset<Texture2D> topsTangelaTexture = "Origins/Tiles/Defiled/Petrified_Tree_Tops_Tangela";
 		public override Asset<Texture2D> GetTopTextures() {
 			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Tops");
 		}

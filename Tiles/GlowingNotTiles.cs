@@ -136,7 +136,7 @@ namespace Origins.Tiles {
 							position.X += windFactor * 2f;
 							position.Y += Math.Abs(windFactor) * 2f;
 							TangelaVisual.DrawTangela(
-								Petrified_Tree.branchesTopsTexture,
+								Petrified_Tree.topsTangelaTexture,
 								position,
 								frame,
 								rotation,
