@@ -114,7 +114,6 @@ namespace Origins {
 			On_NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
 			//On.Terraria.WorldGen.GERunner += OriginSystem.GERunnerHook;
 			//On.Terraria.WorldGen.Convert += OriginSystem.ConvertHook;
-			Petrified_Tree.Load();
 			OriginSystem worldInstance = MC.GetInstance<OriginSystem>();
 			if (worldInstance is not null) {
 				worldInstance.defiledResurgenceTiles = [];

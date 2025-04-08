@@ -2791,6 +2791,10 @@ namespace Origins {
 			X = vector.X;
 			Y = vector.Y;
 		}
+		public static void Deconstruct(this Vector4 vector, out Vector2 XY, out Vector2 ZW) {
+			XY = vector.XY();
+			ZW = vector.ZW();
+		}
 
 		public static void UseOldRenderTargets(this SpriteBatch spriteBatch, RenderTargetBinding[] oldRenderTargets) {
 			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;

@@ -693,7 +693,6 @@ namespace Origins {
 			TorsoLegLayers = null;
 			Music.musicDisplay = null;
 			instance = null;
-			Petrified_Tree.Unload();
 			OriginExtensions.unInitExt();
 			OriginTile.IDs = null;
 			OriginTile.DefiledTiles = null;
