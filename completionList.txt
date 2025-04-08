@@ -1219,7 +1219,7 @@ TILES:
 (X) Shelf Coral
 (^) Soulspore*
 (ᗢ) Surveysprout*
-(#, ^2) Tangela Bramble !!!
+(☻) Tangela Bramble !!!
 (^) Underwater Vine
 (#, ^2) Venus Coral !!!
 (^) Wilting Rose*
