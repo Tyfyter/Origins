@@ -369,7 +369,7 @@ ARMOR:
 (^) Chlorophyte Crown*
 (^) Chlorophyte Visage*
 (^) Hallowed Visage*
-(#2, ^2) Lucky Hat !!! (sound indicator)
+(^) Lucky Hat
 ---
 
 
@@ -819,7 +819,7 @@ MAGIC WEAPONS:
 (^) Low Signal*
 (^) Magnus
 (^) Manasynk*
-(#2, ^2) Nerve Flan
+(^) Nerve Flan
 (^) Splitsplash*
 (^) Tones of Agony
 

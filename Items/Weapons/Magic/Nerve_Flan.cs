@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Tools;
+using Origins.Tiles.Defiled;
 using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -28,9 +31,17 @@ namespace Origins.Items.Weapons.Magic {
 			Item.damage = 18;
 			Item.mana = 14;
 			Item.knockBack = 3;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = null;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Strange_String>(), 100)
+			.AddIngredient(ModContent.ItemType<Tangela_Bramble_Item>())
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 8)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void UseItemFrame(Player player) {
 			float offset;
@@ -136,6 +147,8 @@ namespace Origins.Items.Weapons.Magic {
 					if (speed != 0) Projectile.velocity = (target.Value - Projectile.Center).SafeNormalize(Projectile.velocity / speed).RotatedByRandom(randomArcing) * speed;
 				}
 				if (startupDelay > 0) {
+					SoundEngine.PlaySound(Origins.Sounds.defiledKillAF.WithPitchRange(-1f, -0.2f).WithVolume(0.1f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(-1f, -0.2f), Projectile.Center);
 					startupDelay--;
 				} else {
 					if (++Projectile.ai[1] > ProjectileID.Sets.TrailCacheLength[Type]) {

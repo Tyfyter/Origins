@@ -68,7 +68,7 @@ namespace Origins {
 				}
 			}
 			if (ModLoader.TryGetMod("OriginsMusic", out Mod musicMod)) {
-				foreach (ReadOnlySpan<char> line in Encoding.UTF8.GetString(musicMod.GetFileBytes("data/points.txt")).EnumerateLines()) {
+				foreach (ReadOnlySpan<char> line in Encoding.UTF8.GetString(musicMod.GetFileBytes("data/points.txt")).Split('\n')) {
 					if (ParseLine(line.ToString(), out string[] reqs)) {
 						requirements = reqs;
 						return true;
