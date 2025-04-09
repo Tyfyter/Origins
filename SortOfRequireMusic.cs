@@ -28,7 +28,9 @@ namespace Origins {
 			if (buildData["name"] == "Origins") {
 				string extraRequirements = ", OriginsMusic";
 				if (!TryGetMusicModRequirements(out string[] musicRequirements)) return false;
-				for (int i = 0; i < musicRequirements.Length; i++) extraRequirements += ", " + musicRequirements[i];
+				for (int i = 0; i < musicRequirements.Length; i++) {
+					if (!orig_modreferences.Contains(musicRequirements[i])) extraRequirements += ", " + musicRequirements[i];
+				}
 				buildData["modreferences"] = orig_modreferences + extraRequirements;
 			}
 

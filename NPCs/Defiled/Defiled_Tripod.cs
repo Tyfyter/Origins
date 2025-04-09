@@ -48,7 +48,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 90;
 			NPC.scale = 0.85f;
 			NPC.friendly = false;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
+			NPC.HitSound = OriginsModIntegrations.CheckAprilFools() ? SoundID.Meowmere : Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 2300;
 			NPC.knockBackResist = 0.5f;
