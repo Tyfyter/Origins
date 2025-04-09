@@ -77,8 +77,9 @@ namespace Origins.NPCs.Brine.Boss {
 					return;
 				}
 				float multiplier = ContentExtensions.DifficultyDamageMultiplier - 1;
-				if (owner.wet && !player.wet) multiplier *= 2;
-				else Projectile.hostile = false;
+				if (owner.wet && !player.wet) {
+					multiplier += 2;
+				} else Projectile.hostile = false;
 				MathUtils.LinearSmoothing(ref player.velocity, Projectile.velocity * 0.2f * multiplier, 0.6f * multiplier);
 				player.OriginPlayer().forceFallthrough = true;
 				Projectile.Center = player.MountedCenter - Projectile.velocity - Projectile.velocity.SafeNormalize(default) * 8;
@@ -94,7 +95,7 @@ namespace Origins.NPCs.Brine.Boss {
 			return Projectile.ai[1] == -1 ? null : false;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if (Main.expertMode && Projectile.ai[0] == 0) Projectile.ai[1] = target.whoAmI;
+			if ((Main.expertMode || (Owner.wet && !target.wet)) && Projectile.ai[0] == 0) Projectile.ai[1] = target.whoAmI;
 			Projectile.ai[0] = 1f;
 			Projectile.netUpdate = true;
 		}

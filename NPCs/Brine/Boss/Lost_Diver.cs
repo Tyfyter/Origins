@@ -144,16 +144,17 @@ namespace Origins.NPCs.Brine.Boss {
 			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 			DoTargeting();
 			Vector2 targetVelocity = Vector2.Zero;
-			bool enraged = false;
+			bool targetWet = false;
 			if (NPC.HasPlayerTarget) {
 				Player player = Main.player[NPC.target];
-				enraged = NPC.wet && !player.wet;
+				targetWet = player.wet;
 				targetVelocity = player.velocity;
 			} else if (NPC.HasNPCTarget) {
 				NPC npcTarget = Main.npc[NPC.TranslatedTargetIndex];
-				enraged = NPC.wet && !npcTarget.wet;
+				targetWet = npcTarget.wet;
 				targetVelocity = npcTarget.velocity;
 			}
+			bool enraged = NPC.wet && !targetWet;
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
@@ -188,7 +189,7 @@ namespace Origins.NPCs.Brine.Boss {
 				swimTime = Math.Min(swimCharge, 30);
 				swimCharge -= swimTime - oldTime;
 			}
-
+			if (enraged) swimCharge = 60 * 10;
 			if (NPC.wet) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
@@ -273,7 +274,7 @@ namespace Origins.NPCs.Brine.Boss {
 						rand.Add(mode, weight);
 					}
 					float rangeFactor = Math.Max(0, distanceFromTarget / (15 * 16) - 1);
-					AddMode(AIModes.Idle, 0 + rangeFactor);
+					AddMode(AIModes.Idle, enraged ? 0 : 0 + rangeFactor);
 					AddMode(AIModes.Boat_Rocker, 1 + (Main.expertMode ? rangeFactor * 0.5f : 0));
 					AddMode(AIModes.Depth_Charge, 1 - rangeFactor);
 					AddMode(AIModes.Torpedo_Tube, 1);
@@ -354,7 +355,7 @@ namespace Origins.NPCs.Brine.Boss {
 				case AIModes.Torpedo_Tube:
 				if (NPC.ai[0] <= 0) {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
-						float speed = enraged ? 12 : 8;
+						float speed = targetWet ? 8 : 12;
 						Projectile.NewProjectileDirect(
 							NPC.GetSource_FromAI(),
 							NPC.Center,
