@@ -787,12 +787,18 @@ namespace Origins {
 				focusPotionThisUse = false;
 			}
 			if (goingToUseItem) {
-				if (Player.HeldItem.ChangePlayerDirectionOnShoot) {
+				if (Player.HeldItem.ChangePlayerDirectionOnShoot && !LuckyHatSetActive) {
 					Vector2 unitX = Vector2.UnitX.RotatedBy(Player.fullRotation);
 					Vector2 shootDirection = Main.MouseWorld - Player.RotatedRelativePoint(Player.MountedCenter);
 					if (shootDirection != Vector2.Zero) shootDirection.Normalize();
 					if (Player.direction != (Vector2.Dot(unitX, shootDirection) > 0 ? 1 : -1) && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive))) {
-						if (luckyHatSet && luckyHatSetTime > 0) luckyHatSetTime += 30;
+						if (luckyHatSet && luckyHatSetTime > 0) {
+							luckyHatSetTime += 30;
+							if (LuckyHatSetActive) {
+								SoundEngine.PlaySound(SoundID.Camera.WithPitchRange(0.6f, 1f), Player.Center);
+								SoundEngine.PlaySound(SoundID.Coins.WithPitchRange(0.6f, 1f), Player.Center);
+							}
+						}
 					}
 				}
 			}

@@ -576,6 +576,10 @@ namespace Origins {
 				} else if (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) {
 					if (luckyHatSetTime < 90) {
 						luckyHatSetTime++;
+						if (LuckyHatSetActive) {
+							SoundEngine.PlaySound(SoundID.Camera.WithPitchRange(0.6f, 1f), Player.Center);
+							SoundEngine.PlaySound(SoundID.Coins.WithPitchRange(0.6f, 1f), Player.Center);
+						}
 					}
 				} else {
 					luckyHatSetTime = 0;
