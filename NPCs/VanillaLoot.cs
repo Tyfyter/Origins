@@ -244,7 +244,7 @@ namespace Origins.NPCs {
 				break;
 			}
 			CommonDrop harpoonRule = null;
-			foreach (var rule in npcLoot.Get(includeGlobalDrops: false)) {
+			foreach (IItemDropRule rule in npcLoot.Get(includeGlobalDrops: false)) {
 				List<DropRateInfo> drops = [];
 				DropRateInfoChainFeed ratesInfo = new();
 				rule.ReportDroprates(drops, ratesInfo);

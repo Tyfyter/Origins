@@ -15,6 +15,8 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
+using Origins.Music;
+using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -90,7 +92,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax = 3800;
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
-			Music = Origins.Music.RivenBoss;
 			NPC.value = Item.sellPrice(gold: 1);
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
@@ -621,6 +622,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			drawParams.BarTexture = Asset<Texture2D>.DefaultValue;
 			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
 			return false;
+		}
+	}
+	public class WC_Music_Scene_Effect : BossMusicSceneEffect {
+		public override int Music => Origins.Music.RivenBoss;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			npcIDs[ModContent.NPCType<World_Cracker_Head>()] = true;
+			npcIDs[ModContent.NPCType<World_Cracker_Body>()] = true;
+			npcIDs[ModContent.NPCType<World_Cracker_Tail>()] = true;
 		}
 	}
 	public class World_Cracker_Master_Biome : ModBiome {

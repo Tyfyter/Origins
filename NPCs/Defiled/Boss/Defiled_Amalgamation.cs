@@ -9,6 +9,7 @@ using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
 using Origins.Journal;
 using Origins.LootConditions;
+using Origins.Music;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
@@ -97,7 +98,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
 			NPC.noGravity = true;
 			NPC.npcSlots = 200;
-			Music = Origins.Music.DefiledBoss;
 			NPC.knockBackResist = 0; // actually a multiplier
 			NPC.value = Item.sellPrice(gold: 1);
 			SpawnModBiomes = [
@@ -513,7 +513,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					case state_magic_missile: {
 						CheckTrappedCollision();
-						if ((int)NPC.ai[1] == 19) {
+						if (NPC.ai[1] is >= 19 and <= 21) {
 							NPC.ai[1]++;
 						} else {
 							NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
@@ -793,6 +793,9 @@ namespace Origins.NPCs.Defiled.Boss {
 				0f);
 			}
 		}
+	}
+	public class DA_Music_Scene_Effect : BossMusicSceneEffect<Defiled_Amalgamation> {
+		public override int Music => Origins.Music.DefiledBoss;
 	}
 	public class Low_Signal_Hostile : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
