@@ -45,6 +45,7 @@ using Terraria.GameContent.Creative;
 using CalamityMod.Items;
 using Terraria.Graphics.Light;
 using Origins.Tiles.Limestone;
+using Terraria.Enums;
 
 namespace Origins {
 	#region classes
@@ -3839,6 +3840,99 @@ namespace Origins {
 
 				npc.ai[0] = 1f;
 			}
+		}
+		public static void DoFlyingAI(this NPC npc, float speed = 4f, float acceleration = 0.02f, float bounciness = 0.4f) {
+			if (!npc.HasValidTarget) npc.TargetClosest();
+
+			NPCAimedTarget targetData = npc.GetTargetData();
+			bool leave = false;
+			if (targetData.Type == NPCTargetType.Player)
+				leave = Main.player[npc.target].dead;
+
+			Vector2 npcCenter = (npc.Center / 8f).Floor() * 8;
+			Vector2 targetCenter = (targetData.Center / 8f).Floor() * 8;
+			Vector2 diff = targetCenter - npcCenter;
+			float distanceToTarget = diff.Length();
+
+			if (distanceToTarget == 0f) {
+				diff = npc.velocity;
+			} else {
+				diff *= speed / distanceToTarget;
+			}
+
+			if (distanceToTarget > 100f) {
+				npc.ai[0] += 1f;
+				if (npc.ai[0] > 0f)
+					npc.velocity.Y += 0.023f;
+				else
+					npc.velocity.Y -= 0.023f;
+
+				if (npc.ai[0] < -100f || npc.ai[0] > 100f)
+					npc.velocity.X += 0.023f;
+				else
+					npc.velocity.X -= 0.023f;
+
+				if (npc.ai[0] > 200f)
+					npc.ai[0] = -200f;
+			}
+
+			if (distanceToTarget < 150f) {
+				npc.velocity += diff * 0.007f;
+			}
+
+			if (leave) {
+				diff = new(npc.direction * speed / 0.5f, speed * -0.5f);
+			}
+			if (npc.velocity.X < diff.X) {
+				npc.velocity.X += acceleration;
+			} else if (npc.velocity.X > diff.X) {
+				npc.velocity.X -= acceleration;
+			}
+
+			if (npc.velocity.Y < diff.Y) {
+				npc.velocity.Y += acceleration;
+			} else if (npc.velocity.Y > diff.Y) {
+				npc.velocity.Y -= acceleration;
+			}
+
+			npc.rotation = diff.ToRotation() - MathHelper.PiOver2;
+
+			if (npc.collideX) {
+				npc.netUpdate = true;
+				npc.velocity.X = npc.oldVelocity.X * -bounciness;
+				if (npc.direction == -1 && npc.velocity.X > 0f && npc.velocity.X < 2f)
+					npc.velocity.X = 2f;
+
+				if (npc.direction == 1 && npc.velocity.X < 0f && npc.velocity.X > -2f)
+					npc.velocity.X = -2f;
+			}
+
+			if (npc.collideY) {
+				npc.netUpdate = true;
+				npc.velocity.Y = npc.oldVelocity.Y * -bounciness;
+				if (npc.velocity.Y > 0f && npc.velocity.Y < 1.5f)
+					npc.velocity.Y = 2f;
+
+				if (npc.velocity.Y < 0f && npc.velocity.Y > -1.5f)
+					npc.velocity.Y = -2f;
+			}
+
+			if (npc.wet) {
+				if (npc.velocity.Y > 0f)
+					npc.velocity.Y *= 0.95f;
+
+				npc.velocity.Y -= 0.3f;
+				if (npc.velocity.Y < -2f)
+					npc.velocity.Y = -2f;
+			}
+
+			if (leave) {
+				npc.velocity.Y -= acceleration * 2f;
+				npc.EncourageDespawn(10);
+			}
+
+			if (((npc.velocity.X > 0f && npc.oldVelocity.X < 0f) || (npc.velocity.X < 0f && npc.oldVelocity.X > 0f) || (npc.velocity.Y > 0f && npc.oldVelocity.Y < 0f) || (npc.velocity.Y < 0f && npc.oldVelocity.Y > 0f)) && !npc.justHit)
+				npc.netUpdate = true;
 		}
 		public static void DrawGlowingNPCPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
