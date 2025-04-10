@@ -1,13 +1,5 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.World.BiomeData;
-using System;
-using System.Drawing;
+﻿using Origins.World.BiomeData;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,6 +10,7 @@ namespace Origins.NPCs.Riven {
 		public AssimilationAmount? Assimilation => 0.07f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -31,8 +24,11 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath16;
 			NPC.noGravity = true;
 		}
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Aqueoua * 0.5f;
+		}
 		public override void AI() {
-			NPC.DoFlyingAI();
+			NPC.DoFlyingAI(5f, 0.025f, 0.5f);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(5);
@@ -49,6 +45,15 @@ namespace Origins.NPCs.Riven {
 			} else {
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
 			}
+		}
+	}
+	public class Shelly_Aqueoua : Aqueoua {
+		public override void SetDefaults() {
+			base.SetDefaults();
+			NPC.defense = 16;
+		}
+		public override void AI() {
+			NPC.DoFlyingAI(4f, 0.02f, 0.4f);
 		}
 	}
 }

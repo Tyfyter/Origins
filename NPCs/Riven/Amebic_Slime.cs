@@ -35,7 +35,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Riven_Hive>().Type,
 			];
 		}
-		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.AmebSlime;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

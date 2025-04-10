@@ -49,6 +49,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override int BodyType => ModContent.NPCType<World_Cracker_Body>();
 		public override int TailType => ModContent.NPCType<World_Cracker_Tail>();
 		public override bool SharesDebuffs => true;
+		public override float RotationOffset => MathHelper.Pi;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int DifficultyScaledSegmentCount => 13 + 2 * DifficultyMult;
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
@@ -58,9 +59,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		internal static IItemDropRule normalDropRule;
 		internal static IItemDropRule armorBreakDropRule;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
+		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public override void SetStaticDefaults() {
-			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifier = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/World_Cracker_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(40f, 24f),
 				PortraitPositionXOverride = 0f,

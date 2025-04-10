@@ -102,6 +102,7 @@ namespace Origins.World.BiomeData {
 			public const float Amoebeye = 0.25f;
 			public const float BlisterBoi = 0.75f;
 			public const float Seashell = 0.6f;
+			public const float Aqueoua = 0.5f;
 			public const float Spighter = 1;
 			public const float Mummy = 1;
 			public const float Ghoul = 2;
@@ -119,6 +120,12 @@ namespace Origins.World.BiomeData {
 				AddSpawn(NPCID.DesertDjinn, DesertCave);
 				AddSpawn(NPCID.DesertLamiaDark, DesertCave);
 				AddSpawn(NPCID.DesertBeast, DesertCave);
+				static Func<NPCSpawnInfo, float> MimicRate(float rate) => (spawnInfo) => {
+					if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) return rate;
+					return 0;
+				};
+				AddSpawn(ModContent.NPCType<Riven_Mimic>(), MimicRate(Mimic));
+				AddSpawn(ModContent.NPCType<Savage_Whip>(), MimicRate(Whip));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;

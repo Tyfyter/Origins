@@ -106,6 +106,8 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
+			NPC.lifeMax = 200;
+			NPC.value = 0;
 			// stat changes here
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) { }

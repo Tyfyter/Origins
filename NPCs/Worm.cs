@@ -193,6 +193,7 @@ namespace Origins.NPCs {
 		/// Whether the NPC shares its debuffs across segments
 		/// </summary>
 		public virtual bool SharesDebuffs => false;
+		public virtual float RotationOffset => MathHelper.PiOver2;
 
 		/// <summary>
 		/// Override this method to use custom body-spawning code.<br/>
@@ -576,7 +577,7 @@ namespace Origins.NPCs {
 		protected void HeadAI_Movement_SetRotation(bool collision) {
 			// Set the correct rotation for this NPC.
 			// Assumes the sprite for the NPC points upward.  You might have to modify this line to properly account for your NPC's orientation
-			NPC.rotation = NPC.velocity.ToRotation() + MathHelper.Pi;
+			NPC.rotation = NPC.velocity.ToRotation() + RotationOffset;
 		   
 			// Some netupdate stuff (multiplayer compatibility).
 			if (collision) {

@@ -113,6 +113,12 @@ namespace Origins.World.BiomeData {
 				AddSpawn(NPCID.DesertDjinn, DesertCave);
 				AddSpawn(NPCID.DesertLamiaDark, DesertCave);
 				AddSpawn(NPCID.DesertBeast, DesertCave);
+				static Func<NPCSpawnInfo, float> MimicRate(float rate) => (spawnInfo) => {
+					if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) return rate;
+					return 0;
+				};
+				AddSpawn(ModContent.NPCType<Defiled_Mimic>(), MimicRate(Mimic));
+				AddSpawn(ModContent.NPCType<Enchanted_Trident>(), MimicRate(Bident));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;

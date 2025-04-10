@@ -137,6 +137,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax /= 4;
 			this.CopyBanner<Riven_Fighter>();
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 	}
 	public class Amebic_Slime_WC : Amebic_Slime, ICustomWikiStat {
 		string ICustomWikiStat.CustomStatPath => nameof(Amebic_Slime_WC);
@@ -152,6 +153,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax /= 4;
 			this.CopyBanner<Amebic_Slime>();
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 	}
 	public class Amoeba_Bugger_WC : Amoeba_Bugger, ICustomWikiStat {
 		string ICustomWikiStat.CustomStatPath => nameof(Amoeba_Bugger_WC);
