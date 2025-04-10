@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Humanizer;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.Tiles.Brine;
@@ -114,20 +115,27 @@ namespace Origins.Tiles {
 			return stalactiteTextures.TryGetValue(Main.tile[i, baseY].TileType, out texture);
 		}
 		public override void RandomUpdate(int i, int j, int type) {
-			if (i > WorldGen.beachDistance && i < Main.maxTilesX - WorldGen.beachDistance && Ocotillo.data.AnchorValidTiles.Contains(type) && WorldGen.genRand.NextBool(200)) {
-				ushort ocotillo = (ushort)ModContent.TileType<Ocotillo>();
-				if (TileObject.CanPlace(i, j - 1, ocotillo, 0, 1, out TileObject objectData, onlyCheck: false)) {
-					TileObjectData tileData = TileObjectData.GetTileData(ocotillo, objectData.style);
-					int left = i - tileData.Origin.X;
-					int top = (j - 1) - tileData.Origin.Y;
-					for (int y = 0; y < tileData.Height; y++) {
-						for (int x = 0; x < tileData.Width; x++) {
-							Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
-							if (tileSafely.HasTile || tileSafely.LiquidAmount > 0) goto fail;
+			if (i > WorldGen.beachDistance && i < Main.maxTilesX - WorldGen.beachDistance && Ocotillo.data.AnchorValidTiles.Contains(type)) {
+				bool hasLimestone = false;
+				int limestone = ModContent.TileType<Limestone.Limestone>();
+				for (int y = 0; y < 10 && !hasLimestone; y++) {
+					if (Framing.GetTileSafely(i, j + y).TileIsType(limestone)) hasLimestone = true;
+				}
+				if (WorldGen.genRand.NextBool(hasLimestone ? 80 : 200)) {
+					ushort ocotillo = (ushort)ModContent.TileType<Ocotillo>();
+					if (TileObject.CanPlace(i, j - 1, ocotillo, 0, 1, out TileObject objectData, onlyCheck: false)) {
+						TileObjectData tileData = TileObjectData.GetTileData(ocotillo, objectData.style);
+						int left = i - tileData.Origin.X;
+						int top = (j - 1) - tileData.Origin.Y;
+						for (int y = 0; y < tileData.Height; y++) {
+							for (int x = 0; x < tileData.Width; x++) {
+								Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+								if (tileSafely.HasTile || tileSafely.LiquidAmount > 0) goto fail;
+							}
 						}
+						if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
+						fail:;
 					}
-					if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
-					fail:;
 				}
 			}
 		}

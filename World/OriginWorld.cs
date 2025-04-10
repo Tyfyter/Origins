@@ -5,6 +5,7 @@ using Origins.Tiles;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Limestone;
 using Origins.Tiles.Riven;
 using Origins.World;
 using System;
@@ -31,6 +32,7 @@ namespace Origins {
 		public static int rivenTiles;
 		public static int brineTiles;
 		public static int fiberglassTiles;
+		public static int limestoneTiles;
 		public int peatSold;
 		public const float biomeShaderSmoothing = 0.025f;
 		internal bool hasDefiled = false;
@@ -193,6 +195,7 @@ namespace Origins {
 			rivenTiles = 0;
 			brineTiles = 0;
 			fiberglassTiles = 0;
+			limestoneTiles = 0;
 		}
 
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
@@ -217,6 +220,11 @@ namespace Origins {
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
 			fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
+
+			limestoneTiles = tileCounts[ModContent.TileType<Limestone>()]
+				+ tileCounts[ModContent.TileType<Limestone_Stalactite>()]
+				+ tileCounts[ModContent.TileType<Limestone_Stalagmite>()]
+				+ tileCounts[ModContent.TileType<Limestone_Pile_Medium>()];
 
 			if (!Main.SceneMetrics.HasSunflower && Main.dayTime) {
 				int team = Main.LocalPlayer.team;

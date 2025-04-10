@@ -1843,6 +1843,11 @@ Biomes: {
 		DisplayName: "{§Defiled_Wastelands} Ocean"
 		TownNPCDialogueName: the {§Defiled} Ocean
 	}
+
+	Limestone_Cave: {
+		DisplayName: Limestone Cave
+		TownNPCDialogueName: the Limestone Cave
+	}
 }
 
 CaptureBiomeChoice: {
