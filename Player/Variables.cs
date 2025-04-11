@@ -466,7 +466,7 @@ namespace Origins {
 		public int itemUseOldDirection = 0;
 		public List<Vector2> oldVelocities = new();
 		public Guid guid = Guid.Empty;
-		public int voodooDollIndex = -1;
+		public Item voodooDoll = null;
 		public float manaShielding = 0f;
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
@@ -956,14 +956,13 @@ namespace Origins {
 				dashDelay--;
 			}
 			#endregion
-			if (voodooDollIndex >= 0) {
-				Item voodooDoll = Main.item[voodooDollIndex];
+			if (voodooDoll is not null) {
 				Player.wet |= forceWetCollision = voodooDoll.wet;
 				Player.lavaWet |= forceLavaCollision = voodooDoll.lavaWet;
 				Player.honeyWet |= forceHoneyCollision = voodooDoll.honeyWet;
 				Player.shimmerWet |= forceShimmerCollision = voodooDoll.shimmerWet;
-				voodooDollIndex = -1;
 			}
+			voodooDoll = null;
 			forceDrown = false;
 			heldProjOverArm = null;
 			shieldGlow = -1;
