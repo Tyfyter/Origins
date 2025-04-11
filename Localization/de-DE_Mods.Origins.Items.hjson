@@ -5887,3 +5887,8 @@ Skimswim_Potion: {
 	// DisplayName: Skimswim Potion
 	// Tooltip: ""
 }
+
+Venus_Coral_Debug_Item: {
+	// DisplayName: Venus Coral Debug Item
+	// Tooltip: ""
+}
