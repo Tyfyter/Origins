@@ -447,10 +447,9 @@ namespace Origins.NPCs {
 				priorityMailTime = 300;
 			}
 		}
-		/*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
-			knockback*=MeleeCollisionNPCData.knockbackMult;
-			MeleeCollisionNPCData.knockbackMult = 1f;
-		}*/
+		public override void OnHitNPC(NPC npc, NPC target, NPC.HitInfo hit) {
+			if (target.ModNPC is IOnHitByNPC onHitByNPC) onHitByNPC.OnHitByNPC(npc, hit);
+		}
 		public static int GetAerialSpawnPosition(int tileX, int tileY, ModNPC npc, Predicate<int> isHeightValidCheck = null) {
 			int startPos = tileY;
 			isHeightValidCheck += (height) => {

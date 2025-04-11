@@ -428,34 +428,19 @@ namespace Origins.NPCs {
 			// acceleration is exactly what it sounds like. The speed at which this NPC accelerates.
 			float acceleration = Acceleration;
 
-			float targetXPos, targetYPos;
+			Vector2 targetPosition = ForcedTargetPosition ?? (NPC.HasValidTarget ? NPC.GetTargetData().Center : NPC.Center + NPC.velocity * 16);
 
-			Player playerTarget = Main.player[NPC.target];
-
-			Vector2 forcedTarget = ForcedTargetPosition ?? playerTarget.Center;
-			// Using a ValueTuple like this allows for easy assignment of multiple values
-			(targetXPos, targetYPos) = (forcedTarget.X, forcedTarget.Y);
-
-			// Copy the value, since it will be clobbered later
-			Vector2 npcCenter = NPC.Center;
-
-			float targetRoundedPosX = (float)((int)(targetXPos / 16f) * 16);
-			float targetRoundedPosY = (float)((int)(targetYPos / 16f) * 16);
-			npcCenter.X = (float)((int)(npcCenter.X / 16f) * 16);
-			npcCenter.Y = (float)((int)(npcCenter.Y / 16f) * 16);
-			float dirX = targetRoundedPosX - npcCenter.X;
-			float dirY = targetRoundedPosY - npcCenter.Y;
-
-			float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
+			Vector2 diff = targetPosition.Quantize(16) - NPC.Center.Quantize(16);
+			float length = diff.Length();
 
 			// If we do not have any type of collision, we want the NPC to fall down and de-accelerate along the X axis.
 			if (!collision && !CanFly) {
-				HeadAI_Movement_HandleFallingFromNoCollision(dirX, speed, acceleration);
+				HeadAI_Movement_HandleFallingFromNoCollision(diff.X, speed, acceleration);
 			} else {
 				// Else we want to play some audio (soundDelay) and move towards our target.
 				if (collision) HeadAI_Movement_PlayDigSounds(length);
 
-				HeadAI_Movement_HandleMovement(dirX, dirY, length, speed, acceleration);
+				HeadAI_Movement_HandleMovement(diff.X, diff.Y, length, speed, acceleration);
 			}
 
 			HeadAI_Movement_SetRotation(collision);
@@ -634,7 +619,7 @@ namespace Origins.NPCs {
 		}
 	}
 
-	public abstract class WormBody : Worm {
+	public abstract class WormBody : Worm, IOnHitByNPC {
 		public virtual bool SharesImmunityFrames => false;
 		public sealed override WormSegmentType SegmentType => WormSegmentType.Body;
 		protected internal override void BodyTailAI() {
@@ -702,6 +687,11 @@ namespace Origins.NPCs {
 			if (Main.npc[NPC.realLife].immune[player.whoAmI] <= 0) return null;
 			return false;
 		}
+		public override bool CanBeHitByNPC(NPC attacker) {
+			if (!SharesImmunityFrames) return true;
+			if (Main.npc[NPC.realLife].immune[Main.maxPlayers] <= 0) return true;
+			return false;
+		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			if (!SharesImmunityFrames) return;
 			if (projectile.usesLocalNPCImmunity) {
@@ -716,6 +706,10 @@ namespace Origins.NPCs {
 			if (!SharesImmunityFrames) return;
 			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
 		}
+		public void OnHitByNPC(NPC attacker, NPC.HitInfo hit) {
+			if (!SharesImmunityFrames) return;
+			Main.npc[NPC.realLife].immune[Main.maxPlayers] = NPC.immune[Main.maxPlayers];
+		}
 		public override void SetDefaults() {
 			NPC.aiStyle = 6;
 			NPC.netAlways = true;
@@ -729,7 +723,7 @@ namespace Origins.NPCs {
 	}
 
 	// Since the body and tail segments share the same AI
-	public abstract class WormTail : Worm {
+	public abstract class WormTail : Worm, IOnHitByNPC {
 		public virtual bool SharesImmunityFrames => false;
 		public sealed override WormSegmentType SegmentType => WormSegmentType.Tail;
 		protected internal override void BodyTailAI() {
@@ -756,6 +750,11 @@ namespace Origins.NPCs {
 			if (Main.npc[NPC.realLife].immune[player.whoAmI] <= 0) return null;
 			return false;
 		}
+		public override bool CanBeHitByNPC(NPC attacker) {
+			if (!SharesImmunityFrames) return true;
+			if (Main.npc[NPC.realLife].immune[Main.maxPlayers] <= 0) return true;
+			return false;
+		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			if (!SharesImmunityFrames) return;
 			if (projectile.usesLocalNPCImmunity) {
@@ -769,6 +768,10 @@ namespace Origins.NPCs {
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			if (!SharesImmunityFrames) return;
 			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
+		}
+		public void OnHitByNPC(NPC attacker, NPC.HitInfo hit) {
+			if (!SharesImmunityFrames) return;
+			Main.npc[NPC.realLife].immune[Main.maxPlayers] = NPC.immune[Main.maxPlayers];
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = 6;

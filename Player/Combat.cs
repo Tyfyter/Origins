@@ -992,6 +992,16 @@ namespace Origins {
 			if (scrapBarrierCursed && Player.statLife > Player.statLifeMax2 * 0.5f) {
 				Player.AddBuff(ModContent.BuffType<Scrap_Barrier_Debuff>(), 3 * 60);
 			}
+
+
+			if (Player.whoAmI == Main.myPlayer && info.DamageSource.TryGetCausingEntity(out Entity sourceEntity)) {
+				Entity entity = sourceEntity;
+				if (entity is Projectile proj) {
+					if (proj.ModProjectile is IPostHitPlayer postHitPlayer) postHitPlayer.PostHitPlayer(Player, info);
+				} else if (entity is NPC npc) {
+					if (npc.ModNPC is IPostHitPlayer postHitPlayer) postHitPlayer.PostHitPlayer(Player, info);
+				}
+			}
 		}
 		#endregion
 		/// <param name="target">the potential target</param>

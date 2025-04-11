@@ -679,6 +679,12 @@ namespace Origins {
 		bool NeedsSync => true;
 		void Interact();
 	}
+	public interface IOnHitByNPC {
+		public void OnHitByNPC(NPC attacker, NPC.HitInfo hit);
+	}
+	public interface IPostHitPlayer {
+		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo);
+	}
 	public interface IWhipProjectile {
 		void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
 	}
@@ -1417,6 +1423,19 @@ namespace Origins {
 			OnIncreaseMaxBreath?.Invoke(player, amount);
 		}
 		public static event Action<Player, int> OnIncreaseMaxBreath;
+		public static ref int GetCooldownCounter(this Player player, int cooldownCounter) {
+			switch (cooldownCounter) {
+				case -1:
+				return ref player.immuneTime;
+				case 0:
+				case 1:
+				case 3:
+				case 4:
+				return ref player.hurtCooldowns[cooldownCounter];
+			}
+			return ref discard;
+		}
+		static int discard = 0;
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -1517,6 +1536,9 @@ namespace Origins {
 		}
 		public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
 			return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
+		}
+		public static Vector2 Quantize(this Vector2 vector, float size) {
+			return (vector / size).Floor() * size;
 		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			float xoffset = 10f;
