@@ -1,4 +1,5 @@
-﻿using PegasusLib;
+﻿using Origins.Tiles.Other;
+using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -39,6 +40,13 @@ namespace Origins.Items.Armor.Other {
 			Item.useTime = Item.useAnimation = 12;
 			Item.createTile = ModContent.TileType<Lucky_Hat_Tile>();
 			Item.consumable = true;
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.Leather, 8)
+			.AddIngredient(ItemID.FallenStar, 3)
+			.AddIngredient<Ocotillo_Flower>()
+			.Register();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetCritChance(DamageClasses.RangedExplosiveInherit) += 8;
