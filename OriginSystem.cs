@@ -570,13 +570,6 @@ namespace Origins {
 				}
 			}
 		}
-		public override void PostUpdatePlayers() {
-			foreach (Player player in Main.ActivePlayers) {
-				if (player.wet && !player.HasBuff(Skimswim_Buff.ID)) {
-					Brine_Pool_NPC.Ripples.Add((player.Center, player.velocity.Length() * 8));
-				}
-			}
-		}
 		FastStaticFieldInfo<Main, float> _minWind;
 		FastStaticFieldInfo<Main, float> _maxWind;
 		public override void PreUpdateEntities() {

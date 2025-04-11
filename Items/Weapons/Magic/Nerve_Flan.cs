@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 40, Nerve_Flan_P.tick_motion, true);
 			Item.useTime /= 8;
 			Item.damage = 18;
-			Item.mana = 14;
+			Item.mana = 16;
 			Item.knockBack = 3;
 			Item.UseSound = null;
 			Item.value = Item.sellPrice(silver: 60);

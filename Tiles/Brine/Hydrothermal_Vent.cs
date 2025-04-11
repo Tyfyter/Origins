@@ -227,7 +227,7 @@ namespace Origins.Tiles.Brine {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			// check if uncommenting this makes the glowmasks draw
 			// if it does then I think I know how to actually fix it, I switched away from this because it doesn't currently support SetSpriteEffects
-			//this.DrawTileGlow(i, j, spriteBatch);
+			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }

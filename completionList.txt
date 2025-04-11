@@ -136,7 +136,6 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
-(X) Accessory Jump Speed Modifiers° !!!
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
@@ -150,7 +149,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(☻) Aqueoua
+(☻) Aqueoua (no wiggle or shelly variant :( ?)
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -846,7 +845,7 @@ MAGIC WEAPONS:
 (^) Breach
 (X) Divine Lite
 (X) Ghost Trap
-(☻) Hævateinn
+(^) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File*
@@ -861,6 +860,7 @@ MAGIC WEAPONS:
 (X) True Seam Beam
 
 (X) Ion Minigun
+(X) Last Nerve
 (^) Rigged Cubix
 ---
 
@@ -1057,7 +1057,6 @@ TILES:
 (@4) Brittle Quartz*
 (X) Brown Ice
 (^) Chambersite
-(X) Compacted Scrap°
 (X) Cubekon Altar°
 (^) Defiled Cactus*
 (^) Defiled Grass*
@@ -1089,12 +1088,14 @@ TILES:
 (^) Riven Grass*
 (^) Riven Jungle Grass*
 (@4, ^3) Sanguinite Ore*
+(X) Scrap Heap
 (^) Silica*
 (^) Silicon Ore*
 (X) Sootgrass°
 (X) Sootstone
 (X) Space Goo
 (^) Spug Flesh*
+(X) Truss Block
 (@4, ^3) Twilith*
 (X) Witherwood
 
@@ -1372,7 +1373,6 @@ CONSUMABLES:
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
-(#2, ^2) Skimswim Potion !!!
 (^) Super Mojo Flask
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
@@ -1415,7 +1415,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(#2?, ^2) Nerve Flan !!!
+(X) Nerve Flan
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
