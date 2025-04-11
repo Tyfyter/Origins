@@ -52,7 +52,7 @@ namespace Origins.Tiles {
 				foundBestMatch:
 				if (destinationType != type) {
 					bool isBaseTile = destinationType == baseTile.Type;
-					int destinationStyle = isBaseTile ? Main.rand.Next(baseTile.Styles.ToArray()) : Main.rand.Next(TileObjectData.GetTileData(destinationType, 0).RandomStyleRange);
+					int destinationStyle = isBaseTile ? WorldGen.genRand.Next(baseTile.Styles.ToArray()) : WorldGen.genRand.Next(TileObjectData.GetTileData(destinationType, 0).RandomStyleRange);
 					int wrappingIsBad = 0;
 					if (isBaseTile && sharedData.StyleWrapLimit > 0) {
 						destinationStyle = sharedData.CalculatePlacementStyle(destinationStyle, 0, 0) % sharedData.StyleWrapLimit;
@@ -111,7 +111,7 @@ namespace Origins.Tiles {
 				foundBestMatch:
 				if (destinationType != type) {
 					bool isBaseTile = destinationType == baseTile.Type;
-					int destinationStyle = isBaseTile ? Main.rand.Next(baseTile.Styles.ToArray()) : Main.rand.Next(TileObjectData.GetTileData(destinationType, 0).RandomStyleRange);
+					int destinationStyle = isBaseTile ? WorldGen.genRand.Next(baseTile.Styles.ToArray()) : WorldGen.genRand.Next(TileObjectData.GetTileData(destinationType, 0).RandomStyleRange);
 					int frameY = 0;
 					if (destinationStyle >= 100) {
 						frameY = 18;

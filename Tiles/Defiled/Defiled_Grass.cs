@@ -38,7 +38,7 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (fail && (!effectOnly || Main.rand.NextBool(3))) {
+			if (fail && (!effectOnly || WorldGen.genRand.NextBool(3))) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
 				WorldGen.SquareTileFrame(i, j);
 			}
@@ -51,10 +51,10 @@ namespace Origins.Tiles.Defiled {
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				if (Main.rand.NextBool(250)) {
+				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
 				} else {
-					if (Main.rand.NextBool(200)) {
+					if (WorldGen.genRand.NextBool(200)) {
 						ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
 						if (TileObject.CanPlace(i, j - 1, bramble, 0, 1, out TileObject objectData, onlyCheck: false)) {
 							TileObjectData tileData = TileObjectData.GetTileData(bramble, objectData.style);
@@ -120,10 +120,10 @@ namespace Origins.Tiles.Defiled {
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				if (Main.rand.NextBool(250)) {
+				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
 				} else {
-					if (Main.rand.NextBool(200)) {
+					if (WorldGen.genRand.NextBool(200)) {
 						ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
 						if (TileObject.CanPlace(i, j - 1, bramble, 0, 1, out TileObject objectData, onlyCheck: false)) {
 							TileObjectData tileData = TileObjectData.GetTileData(bramble, objectData.style);

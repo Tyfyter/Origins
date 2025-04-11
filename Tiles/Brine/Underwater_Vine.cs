@@ -62,7 +62,7 @@ namespace Origins.Tiles.Brine {
 					count++;
 					if (count >= min_chance) break;
 				}
-				if (Main.rand.NextBool(count) && TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
+				if (WorldGen.genRand.NextBool(count) && TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;
