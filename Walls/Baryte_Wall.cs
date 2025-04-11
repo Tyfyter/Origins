@@ -23,6 +23,20 @@ namespace Origins.Walls {
 				tile.LiquidType = LiquidID.Water;
 				WorldGen.SquareTileFrame(i, j);
 			}
+			if (!tile.HasTile && tile.LiquidAmount >= 200 && tile.LiquidType == LiquidID.Water) {
+				int coral = TileType<Venus_Coral>();
+				bool IsSolid(Tile tile) {
+					return tile.HasTile && (tile.TileType == coral || Main.tileSolid[tile.TileType]);
+				}
+				int k = 1;
+				for (; k < 10; k++) {
+					if (IsSolid(Framing.GetTileSafely(i + k, j))) break;
+					if (IsSolid(Framing.GetTileSafely(i - k, j))) break;
+					if (IsSolid(Framing.GetTileSafely(i, j + k))) break;
+					if (IsSolid(Framing.GetTileSafely(i, j - k))) break;
+				}
+				if (WorldGen.genRand.NextBool(k)) WorldGen.PlaceTile(i, j, coral, true);
+			}
 		}
 	}
 	[LegacyName("Sulphur_Stone_Wall_Safe", "Dolomite_Wall_Safe")]

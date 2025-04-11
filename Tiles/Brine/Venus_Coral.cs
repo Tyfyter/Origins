@@ -42,7 +42,7 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public override void RandomUpdate(int i, int j) {
-			switch (Main.rand.Next(4)) {
+			switch (WorldGen.genRand.Next(4)) {
 				default:
 				j++;
 				break;
@@ -57,8 +57,8 @@ namespace Origins.Tiles.Brine {
 				break;
 			}
 			Tile growTile = Framing.GetTileSafely(i, j);
-			if (!growTile.HasTile && growTile.LiquidAmount >= 255) {
-				WorldGen.PlaceTile(i, j, Type);
+			if (!growTile.HasTile && growTile.LiquidAmount >= 200) {
+				WorldGen.PlaceTile(i, j, Type, true);
 			}
 		}
 	}
