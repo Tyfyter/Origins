@@ -10,6 +10,7 @@ using Origins.Tiles.Brine;
 using Origins.Walls;
 using Terraria.ModLoader;
 using Microsoft.VisualBasic;
+using PegasusLib;
 
 namespace Origins.World {
 	public class GenRunners {
@@ -728,18 +729,20 @@ namespace Origins.World {
 		public static void AutoSlope(int i, int j, bool resetSlope = false) {
 			byte adj = 0;
 			Tile tile = Main.tile[i, j];
+			if (!tile.HasTile) return;
+			if (!Main.tileSolid[tile.TileType]) return;
 			if (resetSlope) {
 				tile.IsHalfBlock = false;
 				tile.Slope = SlopeID.None;
 			}
-			if (Main.tile[i - 1, j - 1].HasTile) adj |= tl;
-			if (Main.tile[i, j - 1].HasTile) adj |= t;
-			if (Main.tile[i + 1, j - 1].HasTile) adj |= tr;
-			if (Main.tile[i - 1, j].HasTile) adj |= l;
-			if (Main.tile[i + 1, j].HasTile) adj |= r;
-			if (Main.tile[i - 1, j + 1].HasTile) adj |= bl;
-			if (Main.tile[i, j + 1].HasTile) adj |= b;
-			if (Main.tile[i + 1, j + 1].HasTile) adj |= br;
+			if (Main.tile[i - 1, j - 1].HasSolidTile()) adj |= tl;
+			if (Main.tile[i, j - 1].HasSolidTile()) adj |= t;
+			if (Main.tile[i + 1, j - 1].HasSolidTile()) adj |= tr;
+			if (Main.tile[i - 1, j].HasSolidTile()) adj |= l;
+			if (Main.tile[i + 1, j].HasSolidTile()) adj |= r;
+			if (Main.tile[i - 1, j + 1].HasSolidTile()) adj |= bl;
+			if (Main.tile[i, j + 1].HasSolidTile()) adj |= b;
+			if (Main.tile[i + 1, j + 1].HasSolidTile()) adj |= br;
 			bool sloped = true;
 			retry:
 			switch (adj) {

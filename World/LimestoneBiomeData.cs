@@ -15,7 +15,9 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Biomes;
 using Terraria.GameContent.Biomes.Desert;
+using Terraria.GameContent.Generation;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Utilities;
@@ -29,7 +31,56 @@ namespace Origins.World {
 			On_ChambersEntrance.PlaceAt += On_ChambersEntrance_PlaceAt;
 			On_LarvaHoleEntrance.PlaceAt += On_LarvaHoleEntrance_PlaceAt;
 			On_PitEntrance.PlaceAt += On_PitEntrance_PlaceAt;
+
+			On_WorldGen.Pyramid += On_WorldGen_Pyramid;
+			WorldGen.DetourPass((PassLegacy)WorldGen.VanillaGenPasses["Shinies"], Detour_Shinies);
 		}
+		static void Detour_Shinies(WorldGen.orig_GenPassDetour orig, object self, GenerationProgress progress, GameConfiguration configuration) {
+			bool rope = TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope];
+			bool fire = TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire];
+
+			TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = false;
+			try {
+				orig(self, progress, configuration);
+			} catch (Exception) {
+				TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = rope;
+				TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = fire;
+				throw;
+			}
+			TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = rope;
+			TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = fire;
+		}
+		static int hatX, hatY;
+		bool On_WorldGen_Pyramid(On_WorldGen.orig_Pyramid orig, int i, int j) {
+			if (orig(i, j)) {
+				static bool CheckBarrelPlacement(int x, int y) {
+					for (int i = 0; i < 2; i++) {
+						for (int j = 0; j < 3; j++) {
+							if (Framing.GetTileSafely(x + i, y - j).HasTile) return false;
+						}
+						if (!Framing.GetTileSafely(x + i, y + 1).TileIsType(TileID.SandstoneBrick)) return false;
+					}
+					return true;
+				}
+				for (int k = 0; k < 50; k++) {
+					for (int l = 0; l <= 50; l++) {
+						if (CheckBarrelPlacement(i + l, j + k)) {
+							Gen.PlaceBarrel(i + l, j + k, -1);
+							goto placedBarrel;
+						}
+						if (CheckBarrelPlacement(i - l, j + k)) {
+							Gen.PlaceBarrel(i - l, j + k, 1);
+							goto placedBarrel;
+						}
+					}
+				}
+				placedBarrel:;
+				return true;
+			}
+			return false;
+		}
+
 		void On_AnthillEntrance_PlaceAt(On_AnthillEntrance.orig_PlaceAt orig, DesertDescription description, Point position, int holeRadius) {
 			orig(description, position, holeRadius);
 			desertEntrances.Add((position.X - 30, position.X + 30));
@@ -51,7 +102,7 @@ namespace Origins.World {
 		bool On_DesertBiome_Place(On_DesertBiome.orig_Place orig, DesertBiome self, Point origin, StructureMap structures) {
 			desertEntrances.Clear();
 			bool placed = orig(self, origin, structures);
-			if (placed) {
+			if (placed && (Main.tenthAnniversaryWorld || !Framing.GetTileSafely(hatX, hatY).TileIsType(ModContent.TileType<Lucky_Hat_Tile>()))) {
 				RangeRandom rand = new(WorldGen.genRand, GenVars.UndergroundDesertLocation.Left + 100, GenVars.UndergroundDesertLocation.Right - 100);
 				for (int i = 0; i < desertEntrances.Count; i++) {
 					rand.Multiply(desertEntrances[i].start, desertEntrances[i].end, 1.4e-42f);
@@ -173,10 +224,15 @@ namespace Origins.World {
 						}
 					}
 				}
-				for (int k = Math.Min(WorldGen.genRand.Next(1, 4), rayRand.elements.Count); k > 0; k--) {
-					if (k >= 3 && !WorldGen.genRand.NextBool()) k--;
-					(Vector2 startPos, Vector2 direction, float length) = rayRand.Pop();
-					GenRunners.VeinRunner((int)startPos.X / 16, (int)startPos.Y / 16, WorldGen.genRand.NextFloat(3, 5), direction, length / 16);
+				try {
+					TileID.Sets.CanBeClearedDuringGeneration[limestoneTile] = true;
+					for (int k = Math.Min(WorldGen.genRand.Next(1, 4), rayRand.elements.Count); k > 0; k--) {
+						if (k >= 3 && !WorldGen.genRand.NextBool()) k--;
+						(Vector2 startPos, Vector2 direction, float length) = rayRand.Pop();
+						GenRunners.VeinRunner((int)startPos.X / 16, (int)startPos.Y / 16, WorldGen.genRand.NextFloat(3, 5), direction, length / 16);
+					}
+				} finally {
+					TileID.Sets.CanBeClearedDuringGeneration[limestoneTile] = false;
 				}
 				static int DoSpike(int i, float j, int direction, ushort tileType, float size, float decay, float decayExp, float cutoff) {
 					for (int x = 0; x < 10; x++) {
@@ -202,7 +258,7 @@ namespace Origins.World {
 					i -= direction * loopCount;
 					for (int k = 0; k < loopCount; k++) {
 						for (int l = 1 - (int)currentSize; l < currentSize; l++) {
-							GenRunners.AutoSlope(i + k, (int)(j + l));
+							GenRunners.AutoSlope(i + k, (int)(j + l), true);
 						}
 						i += direction;
 						currentSize = size - decay * MathF.Pow(k, decayExp);
@@ -316,71 +372,73 @@ namespace Origins.World {
 						int tries = 18;
 						int x = i + WorldGen.genRand.Next(-sizeLeft, sizeRight);
 						int y = j + WorldGen.genRand.Next(0, caveHeight);
-						while (WorldGen.PlaceObject(x, y, piles[k])) {
+						while (WorldGen.PlaceObject(x, y, piles[k], random: WorldGen.genRand.Next(3))) {
 							if (k == 1) y--;
 							else y++;
 							if (tries-- > 0) break;
 						}
 					}
 				}
-				static bool PlaceBarrel(int x, int y, int direction) {
-					for (int i = 0; i < 2; i++) {
-						for (int j = 0; j < 3; j++) {
-							if (Framing.GetTileSafely(x + i, y - j).HasTile) return false;
-						}
+			}
+			public static bool PlaceBarrel(int x, int y, int direction) {
+				for (int i = 0; i < 2; i++) {
+					for (int j = 0; j < 3; j++) {
+						if (Framing.GetTileSafely(x + i, y - j).HasTile) return false;
 					}
-					int chestIndex = WorldGen.PlaceChest(x, y, style: ChestID.Barrel);
-					if (chestIndex != -1) {
-						int luckyHat = ModContent.TileType<Lucky_Hat_Tile>();
-						bool placedHat = false;
-						if (TileObject.CanPlace(x, y - 2, luckyHat, 0, direction, out TileObject objectData, onlyCheck: false)) {
-							if (TileObject.Place(objectData)) {
-								placedHat = true;
-								WorldGen.SquareTileFrame(x, y - 2);
-							}
-						}
-						Chest chest = Main.chest[chestIndex];
-						if (!placedHat) {
-							Chest.DestroyChest(chest.x, chest.y);
-							for (int i = 0; i < 2; i++) {
-								for (int j = 0; j < 2; j++) {
-									Tile tile = Framing.GetTileSafely(x + i, y - j);
-									tile.HasTile = false;
-								}
-							}
-							return false;
-						}
-						int itemIndex = 0;
-						chest.item[itemIndex].SetDefaults(WorldGen.genRand.NextFromList(ItemID.Revolver, ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>()));
-						if (WorldGen.genRand.NextBool(7, 8)) {
-							chest.item[++itemIndex].SetDefaults(ItemID.Rope);
-							chest.item[itemIndex].stack = WorldGen.genRand.Next(25, 76);
-						}
-						if (WorldGen.genRand.NextBool(3, 5)) {
-							chest.item[++itemIndex].SetDefaults(WorldGen.genRand.NextFromList(ItemID.Dynamite, ItemID.Explosives));
-							chest.item[itemIndex].stack = WorldGen.genRand.Next(1, 4);
-						}
-						if (WorldGen.genRand.NextBool(4, 5)) {
-							chest.item[++itemIndex].SetDefaults(ItemID.BottledWater);
-							chest.item[itemIndex].stack = WorldGen.genRand.Next(3, 9);
-						}
-						chest.item[++itemIndex].SetDefaults(ItemID.GoldCoin);
-						chest.item[itemIndex].stack = WorldGen.genRand.Next(4, 8);
-						if (WorldGen.genRand.NextBool(4, 5)) {
-							chest.item[++itemIndex].SetDefaults(ItemID.Cobweb);
-							chest.item[itemIndex].stack = WorldGen.genRand.Next(30, 91);
-						}
-
-						int infLoopGuard = 0;
-						while (++infLoopGuard < 1000) {
-							Point extraPos = new(x + WorldGen.genRand.Next(-20, 21), y + WorldGen.genRand.Next(-20, 21));
-							WorldGen.PlaceTile(extraPos.X, extraPos.Y, TileID.Campfire);
-							if (Framing.GetTileSafely(extraPos).TileIsType(TileID.Campfire)) break;
-						}
-						return true;
-					}
-					return false;
 				}
+				int chestIndex = WorldGen.PlaceChest(x, y, style: ChestID.Barrel);
+				if (chestIndex != -1) {
+					int luckyHat = ModContent.TileType<Lucky_Hat_Tile>();
+					bool placedHat = false;
+					if (TileObject.CanPlace(x, y - 2, luckyHat, 0, direction, out TileObject objectData, onlyCheck: false)) {
+						if (TileObject.Place(objectData)) {
+							placedHat = true;
+							WorldGen.SquareTileFrame(x, y - 2);
+						}
+					}
+					Chest chest = Main.chest[chestIndex];
+					if (!placedHat) {
+						Chest.DestroyChest(chest.x, chest.y);
+						for (int i = 0; i < 2; i++) {
+							for (int j = 0; j < 2; j++) {
+								Tile tile = Framing.GetTileSafely(x + i, y - j);
+								tile.HasTile = false;
+							}
+						}
+						return false;
+					}
+					hatX = x;
+					hatY = y - 2;
+					int itemIndex = 0;
+					chest.item[itemIndex].SetDefaults(WorldGen.genRand.NextFromList(ItemID.Revolver, ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>()));
+					if (WorldGen.genRand.NextBool(7, 8)) {
+						chest.item[++itemIndex].SetDefaults(ItemID.Rope);
+						chest.item[itemIndex].stack = WorldGen.genRand.Next(25, 76);
+					}
+					if (WorldGen.genRand.NextBool(3, 5)) {
+						chest.item[++itemIndex].SetDefaults(WorldGen.genRand.NextFromList(ItemID.Dynamite, ItemID.Explosives));
+						chest.item[itemIndex].stack = WorldGen.genRand.Next(1, 4);
+					}
+					if (WorldGen.genRand.NextBool(4, 5)) {
+						chest.item[++itemIndex].SetDefaults(ItemID.BottledWater);
+						chest.item[itemIndex].stack = WorldGen.genRand.Next(3, 9);
+					}
+					chest.item[++itemIndex].SetDefaults(ItemID.GoldCoin);
+					chest.item[itemIndex].stack = WorldGen.genRand.Next(4, 8);
+					if (WorldGen.genRand.NextBool(4, 5)) {
+						chest.item[++itemIndex].SetDefaults(ItemID.Cobweb);
+						chest.item[itemIndex].stack = WorldGen.genRand.Next(30, 91);
+					}
+
+					int infLoopGuard = 0;
+					while (++infLoopGuard < 1000) {
+						Point extraPos = new(x + WorldGen.genRand.Next(-20, 21), y + WorldGen.genRand.Next(-20, 21));
+						WorldGen.PlaceTile(extraPos.X, extraPos.Y, TileID.Campfire);
+						if (Framing.GetTileSafely(extraPos).TileIsType(TileID.Campfire)) break;
+					}
+					return true;
+				}
+				return false;
 			}
 		}
 	}
