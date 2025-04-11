@@ -1,25 +1,11 @@
-﻿using CalamityMod;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.Felnum;
-using Origins.Projectiles;
+﻿using Origins.Projectiles;
+using Origins.Tiles.Limestone;
 using PegasusLib;
-using ReLogic.Content;
-using ReLogic.Utilities;
-using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.MiscE {
 	public class Catacomb_Clearer : ModNPC {
@@ -43,7 +29,13 @@ namespace Origins.NPCs.MiscE {
 			NPC.value = 90;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return SpawnCondition.DungeonNormal.Chance * 0;
+			int limestoneTile = ModContent.TileType<Limestone>();
+			for (int i = 0; i < 10; i++) {
+				if (Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY + i).TileIsType(limestoneTile)) {
+					return 0.5f;
+				}
+			}
+			return 0;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
