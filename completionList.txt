@@ -150,7 +150,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(#, ^2) Aqueoua
+(☻) Aqueoua
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -846,7 +846,7 @@ MAGIC WEAPONS:
 (^) Breach
 (X) Divine Lite
 (X) Ghost Trap
-(#2, ^2) Hævateinn
+(☻) Hævateinn
 (^) Haunted Vase
 (X) Lunarfire
 (^) Missing File*
@@ -1415,7 +1415,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(#2, ^2) Nerve Flan !!!
+(#2?, ^2) Nerve Flan !!!
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*

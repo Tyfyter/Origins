@@ -5,8 +5,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+using Origins.Buffs;
+
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -87,6 +88,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 4);
+			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 240);
 		}
 		public override bool? CanHitNPC(NPC target) {
 			return target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>()) ? false : base.CanHitNPC(target);
