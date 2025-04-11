@@ -421,7 +421,12 @@ namespace Origins.World {
 					hatX = x;
 					hatY = y - 2;
 					int itemIndex = 0;
-					chest.item[itemIndex].SetDefaults(WorldGen.genRand.NextFromList(ItemID.Revolver, ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>()));
+					chest.item[itemIndex].SetDefaults(WorldGen.genRand.NextFromList(
+						ItemID.Revolver,
+						ItemID.SandstorminaBottle,
+						ItemID.FlyingCarpet,
+						ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>())
+					);
 					if (WorldGen.genRand.NextBool(7, 8)) {
 						chest.item[++itemIndex].SetDefaults(ItemID.Rope);
 						chest.item[itemIndex].stack = WorldGen.genRand.Next(25, 76);
