@@ -58,6 +58,25 @@ namespace Origins {
 			_items.AddLast(item);
 		}
 
+		public bool TryDequeue(out T item) {
+			if (_items.First is null) {
+				item = default;
+				return false;
+			}
+			item = _items.First.Value;
+			_items.RemoveFirst();
+
+			return true;
+		}
+		public bool TryDequeueAs<TCast>(out TCast item) {
+			if (TryDequeue(out T _item) && _item is TCast castItem) {
+				item = castItem;
+				return true;
+			}
+			item = default;
+			return false;
+		}
+		public TCast DequeueAsOrDefaultTo<TCast>(TCast defaultValue) => TryDequeueAs(out TCast item) ? item : defaultValue;
 		public T Dequeue() {
 			if (_items.First is null)
 				throw new InvalidOperationException("Queue empty.");
@@ -2984,7 +3003,7 @@ namespace Origins {
 		/// <param name="maxLength"></param>
 		/// <returns>The distance traveled before a tile was reached, or <paramref name="maxLength"/> if the distance would exceed it</returns>
 		/// <exception cref="ArgumentException"></exception>
-		public static float Raymarch(Vector2 position, Vector2 direction, Predicate<Tile> extraCheck, float maxLength = float.PositiveInfinity) {
+		public static float Raymarch(Vector2 position, Vector2 direction, Func<Tile, bool?> extraCheck, float maxLength = float.PositiveInfinity) {
 			if (direction == Vector2.Zero) throw new ArgumentException($"{nameof(direction)} may not be zero");
 			float length = 0;
 			Point tilePos = position.ToTileCoordinates();
@@ -3016,9 +3035,9 @@ namespace Origins {
 				bool doBreak = !WorldGen.InWorld(tilePos.X, tilePos.Y);
 				Vector2 diff = next - tileSubPos;
 				float dist = diff.Length();
-
-				if (!extraCheck(tile)) break;
-				if (tile.HasFullSolidTile()) {
+				bool? extraControl = extraCheck(tile);
+				if (extraControl == false) break;
+				if (!extraControl.HasValue && tile.HasFullSolidTile()) {
 					float flope = (float)slope;
 					bool doSICalc = true;
 					float tileSlope = 0;
@@ -3080,7 +3099,7 @@ namespace Origins {
 				DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, cos);
 				DoLoopyThing(next.Y, out next.Y, tilePos.Y, out tilePos.Y, sin);
 				tile = Framing.GetTileSafely(tilePos);
-				if (tile.HasFullSolidTile()) {
+				if (!extraControl.HasValue && tile.HasFullSolidTile()) {
 					switch (tile.BlockType) {
 						case BlockType.Solid:
 						doBreak = true;
@@ -3102,7 +3121,7 @@ namespace Origins {
 						break;
 					}
 				}
-				if (!doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
+				if (!extraControl.HasValue && !doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
 					bool IsSolidWithExceptions(int xOff, int yOff, params BlockType[] blockTypes) {
 						Tile tile = Framing.GetTileSafely(tilePos.X + xOff, tilePos.Y + yOff);
 						if (tile.HasFullSolidTile()) return !blockTypes.Contains(tile.BlockType);

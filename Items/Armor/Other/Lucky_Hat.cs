@@ -62,6 +62,7 @@ namespace Origins.Items.Armor.Other {
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 100;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 

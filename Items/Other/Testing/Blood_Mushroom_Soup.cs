@@ -72,7 +72,12 @@ namespace Origins.Items.Other.Testing {
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (Main.LocalPlayer.HeldItem.type == Item.type) {
-				Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, modes[mode].GetMouseText(parameters.Count), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
+				Point mousePos = new((int)(Main.MouseScreen.X / 16), (int)(Main.MouseScreen.Y / 16));
+				int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
+				double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
+				Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+				Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
+				Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, modes[mode].GetMouseText(parameters.Count, mousePos, mousePacked, mousePackedDouble, mouseTile, diffFromPlayer), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
 				if (Main.LocalPlayer.controlLeft && Main.LocalPlayer.controlRight && Main.LocalPlayer.controlUp && Main.LocalPlayer.controlDown) {
 					int O = 0;
 					int OwO = 0 / O;
@@ -304,17 +309,6 @@ namespace Origins.Items.Other.Testing {
 		}
 		void Apply() {
 			switch ((Mode)mode) {
-				case VeinRunner: {
-					GenRunners.VeinRunner(
-						i: (int)parameters.Dequeue(),
-						j: (int)parameters.Dequeue(),
-						strength: (double)parameters.Dequeue(),
-						speed: (Vector2)parameters.Dequeue(),
-						length: (double)parameters.Dequeue(),
-						twist: (float)parameters.Dequeue(),
-						randomtwist: (bool)parameters.Dequeue());
-					break;
-				}
 				case VeinRunner_Branching: {
 					int i = (int)parameters.Dequeue();
 					int j = (int)parameters.Dequeue();
@@ -541,7 +535,7 @@ namespace Origins.Items.Other.Testing {
 			}
 		}
 		public virtual SortOrder SortPosition => SortOrder.Default;
-		public abstract string GetMouseText(int parameterCount);
+		public abstract string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer);
 		public abstract void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer);
 		public abstract void Apply(LinkedQueue<object> parameters);
 		public void Load(Mod mod) {
@@ -551,7 +545,7 @@ namespace Origins.Items.Other.Testing {
 	}
 	public class Start_Limestone_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
-		public override string GetMouseText(int parameterCount) => "Start Limestone Cave";
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Limestone Cave";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Player.tileTargetX);
 			parameters.Enqueue(Player.tileTargetY);
@@ -561,9 +555,80 @@ namespace Origins.Items.Other.Testing {
 			Limestone_Cave.Gen.StartLimestone((int)parameters.Dequeue(), (int)parameters.Dequeue());
 		}
 	}
+	public class Spike_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			switch (parameterCount) {
+				case 0:
+				return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
+				case 1:
+				return $"j: {Player.tileTargetY}";
+				case 2:
+				return $"strength: {mousePackedDouble / 16}";
+				case 3:
+				return $"speed: {diffFromPlayer / 16}";
+				case 4:
+				return $"decay: {mousePackedDouble / 64}";
+				case 5:
+				return $"twist: {(Main.LocalPlayer.controlUp ? 0 : (double)diffFromPlayer.ToRotation())}";
+				case 6:
+				return "twist randomization: " + (Main.MouseScreen.Y > Main.screenHeight / 2f);
+				case 7:
+				return "smooth: " + (Main.MouseScreen.Y > Main.screenHeight / 2f);
+				case 8:
+				return "cutoff strength: " + mousePackedDouble / 16;
+			}
+			return "place";
+		}
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			switch (parameters.Count) {
+				case 0:
+				parameters.Enqueue(Player.tileTargetX);
+				parameters.Enqueue(Player.tileTargetY);
+				return;
+				case 1:
+				parameters.Enqueue(Player.tileTargetY);
+				return;
+				case 2:
+				parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
+				return;
+				case 3:
+				parameters.Enqueue(diffFromPlayer / 16);
+				return;
+				case 4:
+				parameters.Enqueue(mousePackedDouble / 64);
+				return;
+				case 5:
+				parameters.Enqueue(Main.LocalPlayer.controlUp ? 0 : diffFromPlayer.ToRotation());
+				return;
+				case 6:
+				parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
+				return;
+				case 7:
+				parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
+				return;
+				case 8:
+				parameters.Enqueue(mousePackedDouble / 16);
+				return;
+			}
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			GenRunners.SmoothSpikeRunner((int)parameters.Dequeue(), (int)parameters.Dequeue(),
+				parameters.DequeueAsOrDefaultTo(1.0),
+				TileID.AccentSlab,
+				parameters.DequeueAsOrDefaultTo(-Vector2.UnitY),
+				parameters.DequeueAsOrDefaultTo(0.5),
+				parameters.DequeueAsOrDefaultTo(0f),
+				parameters.DequeueAsOrDefaultTo(false),
+				parameters.DequeueAsOrDefaultTo(true),
+				parameters.DequeueAsOrDefaultTo(0.0)
+			);
+		}
+	}
 	public class Remove_Tree_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => new();
-		public override string GetMouseText(int parameterCount) => "Remove Tree";
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Remove Tree";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Main.MouseWorld.ToTileCoordinates());
 			Apply(parameters);
@@ -576,7 +641,7 @@ namespace Origins.Items.Other.Testing {
 	}
 	public class Continue_Worldgen_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => new(ModContent.GetInstance<Remove_Tree_Testing_Mode>());
-		public override string GetMouseText(int parameterCount) => "Continue";
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Continue";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {}
 		public override void Apply(LinkedQueue<object> parameters) {
 			Func<bool> function = (Func<bool>)parameters.Dequeue();

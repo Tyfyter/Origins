@@ -1846,7 +1846,7 @@ Biomes: {
 
 	Limestone_Cave: {
 		// DisplayName: Limestone Cave
-		// TownNPCDialogueName: the Limestone_ Cave
+		// TownNPCDialogueName: the Limestone Cave
 	}
 }
 
