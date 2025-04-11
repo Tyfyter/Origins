@@ -1166,6 +1166,11 @@ Buffs: {
 		// DisplayName: On Even More Fire
 		// Description: Mods.Origins.Buffs.On_Even_More_Fire.Description
 	}
+
+	Skimswim_Buff: {
+		// DisplayName: Skimswim Buff
+		// Description: Mods.Origins.Buffs.Skimswim_Buff.Description
+	}
 }
 
 DamageClassName: {

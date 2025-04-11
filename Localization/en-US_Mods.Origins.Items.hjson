@@ -5882,3 +5882,8 @@ Tangela_Bud: {
 		'Ooooh, preeeetty'
 		'''
 }
+
+Skimswim_Potion: {
+	DisplayName: Skimswim Potion
+	Tooltip: ""
+}

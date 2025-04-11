@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -566,6 +567,13 @@ namespace Origins {
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if ((projectile.wet || (projectile.ignoreWater && Collision.WetCollision(projectile.position, projectile.width, projectile.height))) && ProjectileID.Sets.CanDistortWater[projectile.type] && !ProjectileID.Sets.NoLiquidDistortion[projectile.type]) {
 					Brine_Pool_NPC.Ripples.Add((projectile.Center, projectile.velocity.Length()));
+				}
+			}
+		}
+		public override void PostUpdatePlayers() {
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.wet && !player.HasBuff(Skimswim_Buff.ID)) {
+					Brine_Pool_NPC.Ripples.Add((player.Center, player.velocity.Length() * 8));
 				}
 			}
 		}
