@@ -269,8 +269,8 @@ namespace Origins.NPCs.Defiled.Boss {
 								}
 							}
 						}
+						break;
 					}
-					break;
 
 					//single dash
 					case state_single_dash: {
@@ -288,8 +288,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							AIState = -state_single_dash;
 							NPC.ai[1] = 0;
 						}
+						break;
 					}
-					break;
 
 					//projectile spray
 					case state_projectiles: {
@@ -342,8 +342,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							}
 							break;
 						}
+						break;
 					}
-					break;
 
 					//triple dash and downtime after
 					case state_triple_dash: {
@@ -385,8 +385,8 @@ namespace Origins.NPCs.Defiled.Boss {
 								NPC.ai[1] = 100 * difficultyMult;
 							}
 						}
+						break;
 					}
-					break;
 
 					//"sidestep" dash
 					case state_sidestep_dash: {
@@ -408,8 +408,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							NPC.ai[1] = 160 + (difficultyMult * 40);
 						}
 						NPC.noTileCollide = true;
+						break;
 					}
-					break;
 
 					//"beckoning roar"
 					case state_summon_roar: {
@@ -450,8 +450,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							rightArmTarget = -1.25f;
 							armSpeed *= 5f;
 						}
+						break;
 					}
-					break;
 
 					//ground spikes
 					case state_ground_spikes: {
@@ -508,16 +508,15 @@ namespace Origins.NPCs.Defiled.Boss {
 						leftArmTarget = 0.6f;
 						rightArmTarget = 0.7f;
 						armSpeed = 0.2f;
+						break;
 					}
-					break;
 
 					case state_magic_missile: {
 						CheckTrappedCollision();
-						if (NPC.ai[1] is >= 19 and <= 21) {
-							NPC.ai[1]++;
-						} else {
-							NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
+						if (NPC.ai[1] < 5) {
+							NPC.ai[2] = 0;
 						}
+						NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
 						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
 						float speed = 1;
@@ -531,8 +530,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						rightArmTarget = -0.75f;
 						armSpeed = 0.1f;
 
-						switch ((int)NPC.ai[1]) {
-							case 20:
+						if (NPC.ai[1] > 20 && NPC.ai[2] == 0) {
 							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1f), NPC.Center);
 							SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1f), NPC.Center);
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
@@ -547,16 +545,13 @@ namespace Origins.NPCs.Defiled.Boss {
 									ai0: NPC.whoAmI
 								);
 							}
-							break;
-							default:
-							if (NPC.ai[1] > 60 * 7.5f) {
-								AIState = -AIState;
-								NPC.ai[1] = 0;
-							}
-							break;
+							NPC.ai[2] = 1;
+						} else if (NPC.ai[1] > 60 * 7.5f) {
+							AIState = -AIState;
+							NPC.ai[1] = 0;
 						}
+						break;
 					}
-					break;
 				}
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);

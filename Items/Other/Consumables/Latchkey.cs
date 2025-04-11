@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
+using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles;
 using PegasusLib;
 using PegasusLib.Graphics;
@@ -166,13 +167,20 @@ namespace Origins.Items.Other.Consumables {
 		bool oldHadLatchkeys = false;
 		public int? TangelaSeed { get; set; }
 		public override void PostDrawTiles() {
-			int type = ModContent.ProjectileType<Latchkey_P>();
+			int projType = ModContent.ProjectileType<Latchkey_P>();
 			List<Projectile> latchkeys = [];
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
-				if (projectile.type != type) continue;
+				if (projectile.type != projType) continue;
 				latchkeys.Add(projectile);
 			}
-			if (latchkeys.Count > 0) {
+
+			int amalgamationType = ModContent.NPCType<Defiled_Amalgamation>();
+			List<NPC> amalgamations = [];
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.type != amalgamationType || (int)npc.ai[0] != Defiled_Amalgamation.state_sidestep_dash) continue;
+				amalgamations.Add(npc);
+			}
+			if (latchkeys.Count > 0 || amalgamations.Count > 0) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				Utils.Swap(ref renderTarget, ref oldRenderTarget);
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
@@ -189,6 +197,9 @@ namespace Origins.Items.Other.Consumables {
 						player.fullRotationOrigin,
 						scale: 1
 					);
+				}
+				for (int i = 0; i < amalgamations.Count; i++) {
+					Main.instance.DrawNPCDirect(Main.spriteBatch, amalgamations[i], false, Main.screenPosition);
 				}
 
 				Main.spriteBatch.End();
