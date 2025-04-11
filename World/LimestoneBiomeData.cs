@@ -41,15 +41,24 @@ namespace Origins.World {
 
 			TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = false;
 			try {
 				orig(self, progress, configuration);
 			} catch (Exception) {
 				TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = rope;
 				TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = fire;
+				TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = true;
+				TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = true;
+				TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = true;
 				throw;
 			}
 			TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = rope;
 			TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = fire;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = true;
 		}
 		static int hatX, hatY;
 		bool On_WorldGen_Pyramid(On_WorldGen.orig_Pyramid orig, int i, int j) {
@@ -202,11 +211,13 @@ namespace Origins.World {
 								Tile tile = Framing.GetTileSafely(i + x, j + y);
 								tile.HasTile = false;
 								if (TileID.Sets.Falling[tile.TileType]) tile.TileType = limestoneTile;
+								if (tile.WallType == WallID.Dirt) tile.WallType = WallID.HardenedSand;
 								break;
 							}
 							case 1: {
 								Tile tile = Framing.GetTileSafely(i + x, j + y);
 								tile.TileType = limestoneTile;
+								if (tile.WallType == WallID.Dirt) tile.WallType = WallID.HardenedSand;
 								break;
 							}
 						}
