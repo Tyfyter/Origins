@@ -93,7 +93,7 @@ namespace Origins {
 				return currentLevel;
 			}
 		}
-		public List<Point> Defiled_Hearts { get; set; } = [];
+		public List<Point> DefiledHearts { get; set; } = [];
 		private List<Point> _abandonedBombs;
 		public List<Point> AbandonedBombs => _abandonedBombs ??= [];
 		private Dictionary<Point, Guid> _voidLocks;
@@ -108,7 +108,7 @@ namespace Origins {
 				peatSold = tag.GetAsInt("peatSold");
 			}
 			if (tag.ContainsKey("worldSurfaceLow")) _worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
-			if (tag.ContainsKey("defiledHearts")) Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
+			if (tag.ContainsKey("defiledHearts")) DefiledHearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
 			tag.TryGet("forceThunderstorm", out forceThunderstorm);
@@ -154,7 +154,7 @@ namespace Origins {
 			tag.Add("hasRiven", hasRiven);
 			tag.Add("forceThunderstorm", forceThunderstorm);
 			tag.Add("unlockedBrineNPC", unlockedBrineNPC);
-			tag.Add("defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
+			tag.Add("defiledHearts", DefiledHearts.Select(Utils.ToVector2).ToList());
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}

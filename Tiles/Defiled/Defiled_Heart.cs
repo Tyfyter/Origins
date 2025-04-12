@@ -65,7 +65,7 @@ namespace Origins.Tiles.Defiled {
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
 
 			}
-			ModContent.GetInstance<OriginSystem>().Defiled_Hearts.Add(new Point(i, j));
+			ModContent.GetInstance<OriginSystem>().DefiledHearts.Add(new Point(i, j));
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			heartBroken++;

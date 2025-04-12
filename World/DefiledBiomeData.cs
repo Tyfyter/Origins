@@ -31,6 +31,7 @@ using AltLibrary;
 using Terraria.Localization;
 using AltLibrary.Core;
 using PegasusLib;
+using System.Linq;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -61,10 +62,12 @@ namespace Origins.World.BiomeData {
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			const float heart_range = 16 * 50;
+			float heartProximity = Math.Max(0, heart_range - OriginSystem.Instance.DefiledHearts.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range;
 			Filters.Scene["Origins:ZoneDefiled"].GetShader()
-				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed)
-				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f)
-				.UseOpacity(Math.Max(OriginClientConfig.Instance.DefiledShaderNoise, float.Epsilon));
+				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed * (MathF.Pow(heartProximity, 4) + 1))
+				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f * (MathF.Pow(heartProximity, 2) * 1.25f + 1))
+				.UseOpacity(Math.Max(OriginClientConfig.Instance.DefiledShaderNoise * (MathF.Pow(heartProximity, 2) * 1.25f + 1), float.Epsilon));
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0 && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader, player.Center);
 		}
 		public override float GetWeight(Player player) {
@@ -993,7 +996,7 @@ namespace Origins.World.BiomeData {
 					}
 					TileObject.CanPlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1, out var data);
 					TileObject.Place(data);
-					OriginSystem.Instance.Defiled_Hearts.Add(heart);
+					OriginSystem.Instance.DefiledHearts.Add(heart);
 				}
 			}
 		}
