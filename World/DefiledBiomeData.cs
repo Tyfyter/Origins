@@ -63,7 +63,9 @@ namespace Origins.World.BiomeData {
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			const float heart_range = 16 * 50;
-			float heartProximity = Math.Max(0, heart_range - OriginSystem.Instance.DefiledHearts.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range;
+			float heartProximity = OriginSystem.Instance.DefiledHearts.Count > 0 ? 
+				Math.Max(0, heart_range - OriginSystem.Instance.DefiledHearts.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range
+				: 0;
 			Filters.Scene["Origins:ZoneDefiled"].GetShader()
 				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed * (MathF.Pow(heartProximity, 4) + 1))
 				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f * (MathF.Pow(heartProximity, 2) * 1.25f + 1))

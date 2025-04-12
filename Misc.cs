@@ -46,6 +46,7 @@ using CalamityMod.Items;
 using Terraria.Graphics.Light;
 using Origins.Tiles.Limestone;
 using Terraria.Enums;
+using Origins.World.BiomeData;
 
 namespace Origins {
 	#region classes
@@ -1845,6 +1846,73 @@ namespace Origins {
 				}
 			}
 			return points;
+		}
+		readonly ref struct SampleCells(int width, int height) {
+			readonly int[,] cells = new int[width, height];
+			public readonly int this[int x, int y] {
+				get => cells[x, y] - 1;
+				set => cells[x, y] = value + 1;
+			}
+			public readonly int this[Vector2 pos] {
+				get => cells[(int)pos.X, (int)pos.Y] - 1;
+				set => cells[(int)pos.X, (int)pos.Y] = value + 1;
+			}
+		}
+		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, float r, int k = 30) {
+			float cellSize = r / MathF.Sqrt(2);
+			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
+			Vector2 topLeft = area.TopLeft();
+			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
+			cells[(samples[0] - topLeft) / cellSize] = 0;
+			List<Vector2> activeList = [samples[0]];
+			while (activeList.Count > 0) {
+				int index = rand.Next(activeList.Count);
+				Vector2 currentSample = activeList[index];
+				Vector2 newSample;
+				for (int i = 0; i < k; i++) {
+					newSample = currentSample + GeometryUtils.Vec2FromPolar(r * (1 + MathF.Sqrt(rand.NextFloat())), rand.NextFloat(MathHelper.TwoPi));
+					if (area.Contains(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
+						goto foundPoint;
+					}
+				}
+				// no position found
+				activeList.RemoveAt(index);
+				continue;
+				foundPoint:;
+				cells[(newSample - topLeft) / cellSize] = samples.Count;
+				samples.Add(newSample);
+				activeList.Add(newSample);
+			}
+			return samples;
+		}
+		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, Predicate<Vector2> customShape, float r, int k = 30) {
+			float cellSize = r / MathF.Sqrt(2);
+			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
+			Vector2 topLeft = area.TopLeft();
+			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
+			cells[(samples[0] - topLeft) / cellSize] = 0;
+			List<Vector2> activeList = [samples[0]];
+			while (activeList.Count > 0) {
+				int index = rand.Next(activeList.Count);
+				Vector2 currentSample = activeList[index];
+				Vector2 newSample;
+				for (int i = 0; i < k; i++) {
+					newSample = currentSample + GeometryUtils.Vec2FromPolar(r * (1 + MathF.Sqrt(rand.NextFloat())), rand.NextFloat(MathHelper.TwoPi));
+					if (customShape(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
+						goto foundPoint;
+					}
+				}
+				// no position found
+				activeList.RemoveAt(index);
+				continue;
+				foundPoint:;
+				cells[(newSample - topLeft) / cellSize] = samples.Count;
+				samples.Add(newSample);
+				activeList.Add(newSample);
+			}
+			return samples;
 		}
 		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
 			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {

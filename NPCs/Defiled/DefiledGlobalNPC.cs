@@ -126,5 +126,6 @@ namespace Origins.NPCs.Defiled {
 			Mana += manaDrain;
 			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
 		}
+		public (Rectangle startArea, Predicate<Vector2> customShape)? GetCustomChrysalisShape(NPC chrysalisNPC) => null;
 	}
 }
