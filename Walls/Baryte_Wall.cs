@@ -23,19 +23,20 @@ namespace Origins.Walls {
 				tile.LiquidType = LiquidID.Water;
 				WorldGen.SquareTileFrame(i, j);
 			}
-			if (!tile.HasTile && tile.LiquidAmount >= 200 && tile.LiquidType == LiquidID.Water) {
+			if (!tile.HasTile && tile.LiquidAmount >= 200 && tile.LiquidType == LiquidID.Water && WorldGen.genRand.NextBool(4)) {
 				int coral = TileType<Venus_Coral>();
 				bool IsSolid(Tile tile) {
 					return tile.HasTile && (tile.TileType == coral || Main.tileSolid[tile.TileType]);
 				}
+				const int max_dist = 5;
 				int k = 1;
-				for (; k < 10; k++) {
+				for (; k < max_dist; k++) {
 					if (IsSolid(Framing.GetTileSafely(i + k, j))) break;
 					if (IsSolid(Framing.GetTileSafely(i - k, j))) break;
 					if (IsSolid(Framing.GetTileSafely(i, j + k))) break;
 					if (IsSolid(Framing.GetTileSafely(i, j - k))) break;
 				}
-				if (WorldGen.genRand.NextBool(k)) WorldGen.PlaceTile(i, j, coral, true);
+				if (k < max_dist && WorldGen.genRand.NextBool(k * k)) WorldGen.PlaceTile(i, j, coral, true);
 			}
 		}
 	}

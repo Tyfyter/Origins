@@ -42,6 +42,7 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public override void RandomUpdate(int i, int j) {
+			if (!WorldGen.genRand.NextBool(4)) return;
 			switch (WorldGen.genRand.Next(4)) {
 				default:
 				j++;
