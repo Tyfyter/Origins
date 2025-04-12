@@ -252,18 +252,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 
 			if (Projectile.localAI[2] <= 0) {
-				foreach (NPC npc in Main.ActiveNPCs) {
-					if (!npc.friendly && npc.damage > 0 && npc.Hitbox.Intersects(Projectile.Hitbox)) {
-						NPC.HitInfo hit = new() {
-							HitDirection = npc.Center.X > Projectile.Center.X ? -1 : 1,
-							Knockback = 2,
-							Crit = false
-						};
-						Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
-						this.DamageArtifactMinion(npc.damage / 2);
-						Projectile.localAI[2] = 20;
-						break;
-					}
+				if (this.GetHurtByHostiles()) {
+					// add sound
+					Projectile.localAI[2] = 20;
 				}
 			} else {
 				Projectile.localAI[2]--;

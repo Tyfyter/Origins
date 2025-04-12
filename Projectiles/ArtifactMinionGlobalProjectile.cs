@@ -272,5 +272,35 @@ namespace Origins.Projectiles {
 		public static void DamageArtifactMinion(this Projectile minion, int damage, bool fromDoT = false, bool noCombatText = false) {
 			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, fromDoT, noCombatText);
 		}
+		public static bool GetHurtByHostiles(this IArtifactMinion minion, StatModifier? damageModifier = null) {
+			if (minion is not ModProjectile proj) return false;
+			Projectile projectile = proj.Projectile;
+			StatModifier damageMod = damageModifier ?? StatModifier.Default;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (!npc.friendly && npc.damage > 0 && npc.Hitbox.Intersects(projectile.Hitbox)) {
+					NPC.HitInfo hit = new() {
+						HitDirection = npc.Center.X > projectile.Center.X ? -1 : 1,
+						Knockback = 2,
+						Crit = false
+					};
+					projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+					minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage));
+					return true;
+				}
+			}
+			foreach (Projectile enemyProj in Main.ActiveProjectiles) {
+				if (enemyProj.hostile && enemyProj.damage > 0 && enemyProj.Hitbox.Intersects(projectile.Hitbox)) {
+					NPC.HitInfo hit = new() {
+						HitDirection = enemyProj.direction,
+						Knockback = 2,
+						Crit = false
+					};
+					projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+					minion.DamageArtifactMinion((int)damageMod.ApplyTo(enemyProj.damage));
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }
