@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Gores;
+using Origins.Gores.NPCs;
 using PegasusLib;
 using System;
 using System.Collections.Generic;

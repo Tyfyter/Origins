@@ -6,27 +6,27 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace Origins.Gores {
-	public abstract class GoreProjectile: ModProjectile {
+namespace Origins.Gores.NPCs {
+	public abstract class GoreProjectile : ModProjectile {
 		protected abstract Vector2 Size { get; }
 
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.hide = true;
-			Projectile.Size = Size;
+			Projectile.width = (int)(Math.Min(Size.X, Size.Y) * 0.9f);
+			Projectile.height = Projectile.width;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.ai[0] = Gore.goreTime;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override bool PreAI() {
 			Projectile.rotation += Projectile.velocity.X * 0.1f;
 			Projectile.velocity.Y += 0.4f;
-			int size = (int)(Math.Min(Projectile.Hitbox.Width, Projectile.Hitbox.Height) * 0.9f * Projectile.scale);
-			Vector2 halfSize = new(size * 0.5f);
-			Vector4 slopeCollision = Collision.SlopeCollision(Projectile.position - halfSize, Projectile.velocity, size, size);
-			//Projectile.position = slopeCollision.XY() + halfSize;
+			Vector4 slopeCollision = Collision.SlopeCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			Projectile.position = slopeCollision.XY();
 			Projectile.velocity = slopeCollision.ZW();
-			Projectile.velocity = Collision.TileCollision(Projectile.position - halfSize, Projectile.velocity, size, size);
+			Projectile.velocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 			if (Projectile.velocity.Y == 0f) {
 				Projectile.velocity.X *= 0.97f;
 				if (Projectile.velocity.X > -0.01 && Projectile.velocity.X < 0.01) {
@@ -38,6 +38,7 @@ namespace Origins.Gores {
 			} else {
 				Projectile.alpha += 1;
 			}
+			Projectile.position += Projectile.velocity;
 			if (Projectile.alpha >= 255) {
 				Projectile.active = false;
 			}
@@ -52,11 +53,11 @@ namespace Origins.Gores {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Main.spriteBatch.Draw(
 				texture,
-				Projectile.position - Main.screenPosition,
+				Projectile.Center - Main.screenPosition,
 				null,
 				Lighting.GetColor(lightPos) * ((255f - Projectile.alpha) / 255f),
 				Projectile.rotation,
-				Projectile.Size * 0.5f,
+				texture.Size() * 0.5f,
 				Projectile.scale,
 				SpriteEffects.None,
 			0f);
