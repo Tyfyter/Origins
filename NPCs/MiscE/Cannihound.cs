@@ -79,6 +79,7 @@ namespace Origins.NPCs.MiscE {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
 		}
+		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override bool PreAI() {
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
