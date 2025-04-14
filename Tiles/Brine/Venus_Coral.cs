@@ -59,7 +59,19 @@ namespace Origins.Tiles.Brine {
 			}
 			Tile growTile = Framing.GetTileSafely(i, j);
 			if (!growTile.HasTile && growTile.LiquidAmount >= 200) {
-				WorldGen.PlaceTile(i, j, Type, true);
+				static bool IsSolid(Tile tile) {
+					return tile.HasTile && Main.tileSolid[tile.TileType];
+				}
+				const int max_dist = 5;
+				int k = 1;
+				for (; k < max_dist; k++) {
+					if (IsSolid(Framing.GetTileSafely(i + k, j))) break;
+					if (IsSolid(Framing.GetTileSafely(i - k, j))) break;
+					if (IsSolid(Framing.GetTileSafely(i, j + k))) break;
+					if (IsSolid(Framing.GetTileSafely(i, j - k))) break;
+				}
+				if (k < max_dist) WorldGen.PlaceTile(i, j, Type, true);
+
 			}
 		}
 	}

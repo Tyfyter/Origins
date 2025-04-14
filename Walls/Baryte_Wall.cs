@@ -36,7 +36,7 @@ namespace Origins.Walls {
 					if (IsSolid(Framing.GetTileSafely(i, j + k))) break;
 					if (IsSolid(Framing.GetTileSafely(i, j - k))) break;
 				}
-				if (k < max_dist && WorldGen.genRand.NextBool(k * k)) WorldGen.PlaceTile(i, j, coral, true);
+				if (k < max_dist && WorldGen.genRand.NextBool(k * k * 3)) WorldGen.PlaceTile(i, j, coral, true);
 			}
 		}
 	}
