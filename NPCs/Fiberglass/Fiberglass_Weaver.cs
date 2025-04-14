@@ -76,6 +76,11 @@ namespace Origins.NPCs.Fiberglass {
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
 		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
+		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData();
 			if (legs is null) {

@@ -1705,6 +1705,9 @@ Projectiles: {
 	Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
 	Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
 	Greasy_Gas.DisplayName: Greasy Gas
+	Cannihound_Gore1.DisplayName: Cannihound Gore1
+	Cannihound_Gore2.DisplayName: Cannihound Gore2
+	Cannihound_Gore3.DisplayName: Cannihound Gore3
 }
 
 Prefixes: {

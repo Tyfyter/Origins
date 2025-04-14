@@ -725,7 +725,7 @@ namespace Origins.World.BiomeData {
 	public class Riven_Hive_Ice_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";// todo: missing background
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Snow";
 		public override string BestiaryIcon => "Origins/UI/IconSnowRiven";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {

@@ -187,6 +187,12 @@ namespace Origins.NPCs.MiscE.Quests {
 		public override bool CheckActive() {
 			return Main.dayTime;
 		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Christmas
+			);
+		}
 	}
 	public class Spirit_Of_Christmas_Present : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 40, 56);

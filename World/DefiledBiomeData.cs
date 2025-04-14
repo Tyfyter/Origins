@@ -768,6 +768,7 @@ namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands_Ocean : ModBiome {
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Ocean";
+		public override string BestiaryIcon => "Origins/UI/WorldGen/IconDefiledOcean";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneBeach && player.InModBiome<Defiled_Wastelands>();
