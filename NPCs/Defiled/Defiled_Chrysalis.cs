@@ -1,6 +1,7 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.NPCs.Brine;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.Tiles;
 using PegasusLib;
 using ReLogic.Content;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -80,10 +82,37 @@ namespace Origins.NPCs.Defiled {
 					chunks[i].Explode(source, from);
 				}
 			}
+			if (Main.masterMode) {
+				int chanked = 0;
+				for (int i = 0; i < chunks.Length; i++) {
+					if (NPC.ai[1] >= chunks[i].animationTimeEnd) chanked += 1;
+				}
+				foreach (Player player in Main.ActivePlayers) {
+					if (NPC.Center.Clamp(player.Hitbox).IsWithin(NPC.Center, chanked * 12 * 0.5f)) player.AddBuff(Rasterized_Debuff.ID, chanked);
+				}
+			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			//no clue how I missed the 'u' key so badly
+			int chanked = 0;
 			for (int i = 0; i < chunks.Length; i++) {
 				chunks[i].Draw((int)NPC.ai[1]);
+				if (NPC.ai[1] >= chunks[i].animationTimeEnd) chanked += 1;
+			}
+			if (Main.masterMode) {
+				Mask_Rasterize.QueueDrawData(new(
+					TextureAssets.Projectile[Bile_Dart_Aura.ID].Value,
+					NPC.Center - Main.screenPosition,
+					null,
+					new Color(
+						0.5f,
+						0.5f,
+					0f),
+					0,
+					new Vector2(36),
+					chanked * 12f / TextureAssets.Projectile[Bile_Dart_Aura.ID].Width(),
+					0
+				));
 			}
 			return false;
 		}
@@ -97,7 +126,7 @@ namespace Origins.NPCs.Defiled {
 			readonly Vector2 basePos;
 			readonly Vector2 groundPos;
 			readonly int animationTimeStart;
-			readonly int animationTimeEnd;
+			public readonly int animationTimeEnd;
 			readonly int texture;
 			public ChunkData(UnifiedRandom rand, Vector2 basePos, int animationTimeMax) {
 				this.basePos = basePos;

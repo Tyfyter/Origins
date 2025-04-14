@@ -399,6 +399,7 @@ namespace Origins {
 					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 0),
 				EffectPriority.High);
 				Overlays.Scene["Origins:ZoneDefiled"] = new Tangela_Resaturate_Overlay();
+				Overlays.Scene["Origins:MaskedRasterizeFilter"] = new Tangela_Resaturate_Overlay();
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "RivenBloodCoating"), EffectPriority.VeryHigh);

@@ -41,7 +41,7 @@ float4 MaskedRasterizeFilter(float4 sampleColor : COLOR0, float2 coords : TEXCOO
 	float4 color = tex2D(uImage0, sourceCoords);
 	//color.rgb /= (color.rgb + 0.5f);
 	float median = (min(color.r, min(color.g, color.b)) + max(color.r, max(color.g, color.b))) / 2;
-	return lerp(tex2D(uImage0, coords), median, maskColor.a); //lerp(tex2D(uImage0, coords), color, maskColor.a); //
+	return lerp(tex2D(uImage0, coords), median, maskColor.a * (1 - tex2D(uImage3, coords).a)); //lerp(tex2D(uImage0, coords), color, maskColor.a); //
 
 }
 

@@ -60,9 +60,8 @@ namespace Origins.Graphics {
 				ModContent.Request<Effect>("Origins/Effects/Tangela"),
 				"Tangela"
 			))
-				.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
-				.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise")
-			);
+			.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
+			.UseImage(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(ModContent.ItemType<Krakram>());
 
 			Filters.Scene.OnPostDraw += Scene_OnPostDraw;
@@ -127,7 +126,10 @@ namespace Origins.Graphics {
 	}
 	public record struct TangelaDrawData(DrawData Data, int Seed, Vector2 ExtraOffset = default);
 	public class Tangela_Resaturate_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), IUnloadable {
+		static uint lastGameFrameCount;
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (lastGameFrameCount == Origins.gameFrameCount) return;
+			lastGameFrameCount = Origins.gameFrameCount;
 			if (TangelaVisual.DrawOver) {
 				return;
 			}
@@ -146,12 +148,13 @@ namespace Origins.Graphics {
 				Origins.shaderOroboros.Reset(default);
 			}
 			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseImage(renderTarget, 1);
+			Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(renderTarget, 2);
 		}
 		public override void Update(GameTime gameTime) { }
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }
 		public override bool IsVisible() {
-			return Main.LocalPlayer?.OriginPlayer()?.ZoneDefiledProgressSmoothed > 0 && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader;
+			return (Main.LocalPlayer?.OriginPlayer()?.ZoneDefiledProgressSmoothed > 0 || Mask_Rasterize.TimeSinceActive < 2) && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader;
 		}
 
 		public void Unload() {
