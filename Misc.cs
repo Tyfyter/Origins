@@ -3825,6 +3825,64 @@ namespace Origins {
 				return providedInfo.UnlockState > BestiaryEntryUnlockState.NotKnownAtAll_0;
 			}
 		}
+		/// <summary>
+		/// returns true if the entity tried to jump
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <param name="direction"></param>
+		/// <returns></returns>
+		public static bool TryJumpOverObstacles(this Entity entity, int direction, bool forceGrounded = false, bool stepsUp = true) {
+			direction = Math.Sign(direction);
+			int groundTileX = (int)(entity.position.X + entity.width * 0.5f * (1 + direction)) / 16;
+			int groundTileY = (int)(entity.position.Y + entity.height + 15) / 16;
+			if (forceGrounded || Framing.GetTileSafely(groundTileX, groundTileY).HasSolidTile()) {
+
+				try {
+					if (direction < 0) groundTileX--;
+					if (direction > 0) groundTileX++;
+					groundTileX += (int)entity.velocity.X;
+					int jumpHeight = 0;
+					for (int j = 0; j < 5; j++) {
+						bool blocked = false;
+						for (int i = 1; i <= Math.Ceiling(entity.height / 16f) && !blocked; i++) {
+							blocked = WorldGen.SolidTile(groundTileX, (groundTileY - i) - j);
+						}
+						jumpHeight = j;
+						if (!blocked) break;
+					}
+					switch (jumpHeight) {
+						case 0:
+						return false;
+
+						case 1:
+						if (stepsUp) goto case 0;
+						entity.velocity.Y = -5.1f;
+						break;
+
+						case 2:
+						entity.velocity.Y = -7.1f;
+						break;
+
+						default:
+						case 3:
+						entity.velocity.Y = -9.1f;
+						break;
+
+						case 4:
+						entity.velocity.Y = -10.1f;
+						break;
+
+						case 5:
+						entity.velocity.Y = -11.1f;
+						break;
+					}
+				} catch {
+					entity.velocity.Y = -9.1f;
+				}
+				return true;
+			}
+			return false;
+		}
 		public static void DoJellyfishAI(this NPC npc, float lungeThreshold = 0.2f, float lungeSpeed = 7f, Vector3 glowColor = default, bool canDoZappy = true) {
 			bool isZappy = false;
 			if (npc.wet && npc.ai[1] == 1f) {

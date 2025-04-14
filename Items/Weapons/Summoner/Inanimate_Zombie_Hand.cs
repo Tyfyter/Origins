@@ -222,34 +222,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (hasBarrier) {
 					if (Projectile.localAI[1] == Projectile.position.X) {
 						(walkLeft, walkRight) = (walkRight, walkLeft);
-					} else {
-						int groundTileX = (int)(Projectile.position.X + Projectile.width * (walkRight ? 1 : 0)) / 16;
-						int groundTileY = (int)(Projectile.position.Y + Projectile.height + 15) / 16;
-						if (Framing.GetTileSafely(groundTileX, groundTileY).HasSolidTile()) {
-							try {
-								if (walkLeft) {
-									groundTileX--;
-								}
-								if (walkRight) {
-									groundTileX++;
-								}
-								groundTileX += (int)Projectile.velocity.X;
-								if (!WorldGen.SolidTile(groundTileX, groundTileY - 1) && !WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
-									Projectile.velocity.Y = -5.1f;
-								} else if (!WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
-									Projectile.velocity.Y = -7.1f;
-								} else if (WorldGen.SolidTile(groundTileX, groundTileY - 5)) {
-									Projectile.velocity.Y = -11.1f;
-								} else if (WorldGen.SolidTile(groundTileX, groundTileY - 4)) {
-									Projectile.velocity.Y = -10.1f;
-								} else {
-									Projectile.velocity.Y = -9.1f;
-								}
-							} catch {
-								Projectile.velocity.Y = -9.1f;
-							}
-							Projectile.localAI[1] = Projectile.position.X;
-						}
+					} else if (Projectile.TryJumpOverObstacles(walkRight.ToInt() - walkLeft.ToInt())) {
+						Projectile.localAI[1] = Projectile.position.X;
 					}
 				}/* else if (hasHole && foundTarget && targetRect.Bottom <= Projectile.position.Y + Projectile.height) {
 					Projectile.velocity.Y = -9.1f;

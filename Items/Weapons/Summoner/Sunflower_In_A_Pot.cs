@@ -315,8 +315,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X != oldVelocity.X) {
 				Vector2 pos = Projectile.position;
-				Collision.StepUp(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
 				Collision.StepDown(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
+				Collision.StepUp(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
 
 				if (Projectile.position == pos) {
 					int dir = Math.Sign(oldVelocity.X);
