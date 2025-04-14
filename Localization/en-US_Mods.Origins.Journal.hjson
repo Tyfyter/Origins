@@ -560,6 +560,19 @@ Fifth_Spline: {
 		'''
 }
 
+Fleshy_Figurine: {
+	Name: Fleshy Figurine
+	Text:
+		'''
+		[header:Fleshy Figurine (4/4)]
+		[jimage/sc2.5d:Origins/Items/Accessories/Fleshy_Figurine]
+
+
+		*****
+		The contracts of knowing it all had forced me to accept these consequences, and I knew if I waited any longer that something terrible would've happened. So, I gave up my flesh and wished upon the world to be gone of them. Now they are in my thoughts, and with my knowledge, know of things previously unfathomable. From our eyes, we see things very- differently. It seems we couldn't resist omniscience ourselves, but it just makes what we've already been doing easier.
+		'''
+}
+
 Forbidden_Voice: {
 	Name: Forbidden Voice
 	Text:
@@ -569,6 +582,20 @@ Forbidden_Voice: {
 
 		*****
 		Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see it melting away. "Promises" of fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
+		'''
+}
+
+Haggard_Artery: {
+	Name: Haggard Artery
+	Text:
+		'''
+		[header:Haggard Artery (3/4)]
+		[jimage/sc2.5d:Origins/Items/Accessories/Haggard_Artery]
+
+
+
+		*****
+		My organs being removed from my body only left a more empty feeling, and made me reckless and dangerous to myself. My contemptedness towards the heroics made me a hypocrite, I already knew what was destined to happen.
 		'''
 }
 
@@ -878,6 +905,20 @@ Stone_Mask: {
 		'''
 }
 
+Sunder_Gut: {
+	Name: Sunder Gut
+	Text:
+		'''
+		[header:Sunder Gut (2/4)]
+		[jimage/sc3d:Origins/Items/Accessories/Sunder_Gut]
+
+
+
+		*****
+		Because I was so far into the gray, I could help those who cowered to the light while helping those who festered in darkness. I met many faces and went to many places, seeing the kinds of people that made my life interesting. But, people only recognized me because I was dangerous. Truly interesting people can be sometimes, it gives me my own excuses to be just as selfish. This selfishness and lust for knowledge had to be paid, however, and my debts only began to weigh.
+		'''
+}
+
 Symbiote_Skull: {
 	Name: Symbiote Skull
 	Text:
@@ -987,6 +1028,19 @@ Undead_Chunk: {
 
 		*****
 		Satisfaction exchanged for sure survival, an endless loop of suffering. Even for us, it still necessary for survival. That is how we get along, friend. Still, there is suffering after death.
+		'''
+}
+
+Unsought_Organ: {
+	Name: Unsought Organ
+	Text:
+		'''
+		[header:Unsought Organ (1/4)]
+		[jimage/sc3d:Origins/Items/Accessories/Unsought_Organ]
+
+
+		*****
+		I sought a wealth of knowledge and that led me here. I couldn't get anywhere being the middleman of it all, filling in for the role in everybody else's life. I pursued knowledge because I had nothing else. In order to get what I had wished, I had to divulge in little misdeeds. This kind of magic came with its curses, but I could've cared less about what the others thought. Despite my curses, I found my place in the world as its maintainer.
 		'''
 }
 

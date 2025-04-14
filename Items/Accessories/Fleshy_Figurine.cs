@@ -1,16 +1,18 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Fleshy_Figurine : ModItem, ICustomWikiStat {
+	public class Fleshy_Figurine : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat",
 			"Torn",
 			"TornSource"
 		];
-        static short glowmask;
+		public string EntryName => "Origins/" + typeof(Fleshy_Figurine_Entry).Name;
+		static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }
@@ -48,5 +50,8 @@ namespace Origins.Items.Accessories {
 			})
 			.Register();
 		}
+	}
+	public class Fleshy_Figurine_Entry : JournalEntry {
+		public override string TextKey => nameof(Fleshy_Figurine);
 	}
 }

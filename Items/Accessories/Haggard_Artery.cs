@@ -1,12 +1,14 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Haggard_Artery : ModItem, ICustomWikiStat {
+	public class Haggard_Artery : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat"
 		];
+		public string EntryName => "Origins/" + typeof(Haggard_Artery_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);
 			Item.damage = 45;
@@ -32,5 +34,8 @@ namespace Origins.Items.Accessories {
 			originPlayer.explosiveArteryItem = Item;
 			originPlayer.messyLeech = true;
 		}
+	}
+	public class Haggard_Artery_Entry : JournalEntry {
+		public override string TextKey => nameof(Haggard_Artery);
 	}
 }

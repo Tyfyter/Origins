@@ -1,15 +1,16 @@
-﻿using Origins.Buffs;
-using Origins.Dev;
+﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Unsought_Organ : ModItem, ICustomWikiStat {
+	public class Unsought_Organ : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat",
 			"GenericBoostAcc",
 			"ToxicSource"
 		];
+		public string EntryName => "Origins/" + typeof(Unsought_Organ_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);
 			Item.rare = ItemRarityID.LightPurple;
@@ -46,5 +47,8 @@ namespace Origins.Items.Accessories {
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
 		}
+	}
+	public class Unsought_Organ_Entry : JournalEntry {
+		public override string TextKey => nameof(Unsought_Organ);
 	}
 }
