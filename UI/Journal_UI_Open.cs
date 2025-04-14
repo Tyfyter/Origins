@@ -208,14 +208,30 @@ namespace Origins.UI {
 					StringBuilder unreadBuilder = new();
 					StringBuilder builder = new();
 					StringBuilder lockedBuilder = new();
+					string[] lastSeries = new string[3];
+					static void TryAddHeader(StringBuilder builder, ref string cache, JournalEntry entry, string options = null) {
+						if (!OriginClientConfig.Instance.EntryCategoryHeaders) return;
+						string series = entry.SortIndex.Series;
+						if (!Equals(cache, series)) {
+							cache = series;
+							if (!string.IsNullOrWhiteSpace(options)) options = "/" + options;
+							builder.AppendLine($"[jsh{options}:{Language.GetOrRegister($"Mods.{entry.Mod.Name}.Journal.Series.{series}").Value}]");
+						}
+					}
 					foreach (JournalEntry entry in Journal_Registry.OrderedEntries) {
+						string series = entry.SortIndex.Series;
 						if (!originPlayer.unlockedJournalEntries.Contains(entry.FullName)) {
-							if (OriginClientConfig.Instance.ShowLockedEntries) lockedBuilder.AppendLine($"[j/jl:{entry.FullName}]");
+							if (OriginClientConfig.Instance.ShowLockedEntries) {
+								TryAddHeader(lockedBuilder, ref lastSeries[2], entry, "l");
+								lockedBuilder.AppendLine($"[j/jl:{entry.FullName}]");
+							}
 							continue;
 						}
 						if (originPlayer.unreadJournalEntries.Contains(entry.FullName)) {
+							//TryAddHeader(unreadBuilder, ref lastSeries[1], entry);
 							unreadBuilder.AppendLine($"[j/ju:{entry.FullName}]");
 						} else {
+							TryAddHeader(builder, ref lastSeries[0], entry);
 							builder.AppendLine($"[j/j:{entry.FullName}]");
 						}
 					}

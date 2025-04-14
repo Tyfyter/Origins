@@ -51,6 +51,6 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Fleshy_Figurine_Entry : JournalEntry {
-		public override JournalSortIndex SortIndex => new("Lost Crone", 4);
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 4);
 	}
 }

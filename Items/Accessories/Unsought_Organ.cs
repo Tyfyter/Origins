@@ -48,6 +48,6 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Unsought_Organ_Entry : JournalEntry {
-		public override JournalSortIndex SortIndex => new("Lost Crone", 1);
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 1);
 	}
 }

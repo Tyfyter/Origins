@@ -35,6 +35,6 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Haggard_Artery_Entry : JournalEntry {
-		public override JournalSortIndex SortIndex => new("Lost Crone", 3);
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 3);
 	}
 }

@@ -14,7 +14,8 @@ namespace Origins.Journal {
 		public virtual string[] Aliases => [];
 		public virtual ArmorShaderData TextShader => null;
 		public virtual Color BaseColor => Color.Black;
-		public virtual JournalSortIndex SortIndex => default;
+		//µ will definitely sort it after anything we'll use in a key
+		public virtual JournalSortIndex SortIndex => new("µUncategorized", 0);
 		public string LocalizationCategory => "Journal";
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
@@ -25,6 +26,7 @@ namespace Origins.Journal {
 			}
 			Language.GetOrRegister(NameKey, PrettyPrintName);
 			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
+			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.Series.{SortIndex.Series}", () => SortIndex.Series);
 			Journal_Registry.Entries ??= [];
 			Journal_Registry.Entries.Add(FullName, this);
 		}
@@ -42,7 +44,11 @@ namespace Origins.Journal {
 			}
 			return indecies.Min();
 		}
-		public int CompareTo(JournalEntry other) => SortIndex.CompareTo(other.SortIndex);
+		public int CompareTo(JournalEntry other) {
+			int compareIndex = SortIndex.CompareTo(other.SortIndex);
+			if (compareIndex != 0) return compareIndex;
+			return Name.CompareTo(other.Name);
+		}
 		public readonly record struct JournalSortIndex(string Series, int Part) : IComparable<JournalSortIndex> {
 			public readonly int CompareTo(JournalSortIndex other) {
 				if (Series != other.Series) return Series.CompareTo(other.Series);

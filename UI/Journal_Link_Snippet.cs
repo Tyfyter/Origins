@@ -117,4 +117,58 @@ namespace Origins.UI {
 			L = 1 << 2,
 		}
 	}
+	public class Journal_Series_Header_Handler : ITagHandler {
+		public class Journal_Series_Header_Snippet : TextSnippet {
+			public readonly Flags flags;
+			int lastHovered = 0;
+			public Journal_Series_Header_Snippet(string text, Color color = default, Flags flags = Flags.NONE) : base(text) {
+				if (flags.HasFlag(Flags.L)) {
+					this.Color = Color.Lerp(color, Color.SlateGray, 0.5f);
+				} else {
+					this.Color = color;
+				}
+				this.flags = flags;
+			}
+			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
+				const float lightness = 0.95f;
+				if (justCheckingString || spriteBatch is null) {
+					size = default;
+					return false;
+				}
+				if (flags.HasFlag(Flags.U)) {
+					color = new Color(1f * lightness, 0.8f * lightness, lastHovered * 0.65f * lightness, 1f).MultiplyRGBA(Main.MouseTextColorReal);
+					float offset = 1.5f * scale;
+					//ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position - Vector2.UnitX * offset, color, 0, Vector2.Zero, new Vector2(scale));
+					ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position + Vector2.UnitX * offset, color, 0, Vector2.Zero, new Vector2(scale));
+					//ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position - Vector2.UnitY * offset, color, 0, Vector2.Zero, new Vector2(scale));
+					Vector2 pos = ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position + Vector2.UnitY * offset, color, 0, Vector2.Zero, new Vector2(scale));
+					if (flags.HasFlag(Flags.U)) {
+						pos.X += 8;
+						pos.Y = position.Y + 2 * scale;
+						spriteBatch.Draw(TextureAssets.QuicksIcon.Value, pos, Main.MouseTextColorReal);
+					}
+				}
+				size = default;
+				return false;
+			}
+		}
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			Flags flags = default;
+			for (int i = 0; i < options.Length; i++) {
+				if (Enum.TryParse(options[i].ToString(), true, out Flags flag)) flags |= flag;
+			}
+			return new Journal_Series_Header_Snippet(text, baseColor, flags);
+		}
+		public enum Flags {
+			NONE = 0,
+			/// <summary>
+			/// unread
+			/// </summary>
+			U = 1 << 0,
+			/// <summary>
+			/// locked
+			/// </summary>
+			L = 1 << 2,
+		}
+	}
 }

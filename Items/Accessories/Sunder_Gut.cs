@@ -41,6 +41,6 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Sunder_Gut_Entry : JournalEntry {
-		public override JournalSortIndex SortIndex => new("Lost Crone", 2);
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 2);
 	}
 }

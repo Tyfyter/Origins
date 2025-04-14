@@ -508,6 +508,9 @@ namespace Origins {
 				"journal",
 				"j"
 			]);
+			ChatManager.Register<Journal_Series_Header_Handler>([
+				"jsh"
+			]);
 			ChatManager.Register<Quest_Link_Handler>([
 				"quest",
 				"q"

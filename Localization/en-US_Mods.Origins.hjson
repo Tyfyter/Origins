@@ -2066,6 +2066,11 @@ Configs: {
 			Label: Quest Notification Position
 			Tooltip: ""
 		}
+
+		EntryCategoryHeaders: {
+			Label: Entry Category Headers
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

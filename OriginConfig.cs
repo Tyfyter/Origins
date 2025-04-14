@@ -146,7 +146,9 @@ namespace Origins {
 
 		[Header("Journal")]
 		[DefaultValue(true)]
-		public bool ShowLockedEntries = false;
+		public bool ShowLockedEntries = true;
+		[DefaultValue(true)]
+		public bool EntryCategoryHeaders = true;
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
