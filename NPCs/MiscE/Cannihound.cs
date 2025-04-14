@@ -69,7 +69,7 @@ namespace Origins.NPCs.MiscE {
 			);
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
-			if (NPC.frame.Y / NPC.frame.Height != 12) npcHitbox = default; // makes the NPC's attack hitbox 0, 0, 0, 0, preventing it from hitting 
+			if (NPC.frame.Y / NPC.frame.Height != 12) npcHitbox = default; // makes the NPC's attack hitbox 0, 0, 0, 0, preventing it from hitting anything, even things that aren't NPCs or Players
 			if (NPC.ai[3] > 0) damageMultiplier *= 1.1f;
 			return true;
 		}
