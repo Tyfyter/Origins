@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -148,6 +149,7 @@ namespace Origins.UI {
 						spriteBatch.Draw(TextureAssets.QuicksIcon.Value, pos, Main.MouseTextColorReal);
 					}
 				}
+				ChatManager.DrawColorCodedString(spriteBatch, StrikethroughFont.Font, Text, position + Vector2.UnitY * FontAssets.MouseText.Value.MeasureString(Text) * 0.25f * scale, color, 0, Vector2.Zero, new Vector2(scale));
 				size = default;
 				return false;
 			}

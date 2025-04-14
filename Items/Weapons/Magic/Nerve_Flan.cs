@@ -84,7 +84,7 @@ namespace Origins.Items.Weapons.Magic {
 			drawInfo.DrawDataCache.Add(data);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (player.ItemUsesThisAnimation is 1 or 5) return false;
+			if (player.ItemUsesThisAnimation is 1 or 5 or 9) return false;
 			Projectile.NewProjectile(
 				source,
 				player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation),
