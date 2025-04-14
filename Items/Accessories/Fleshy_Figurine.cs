@@ -5,13 +5,12 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Fleshy_Figurine : ModItem, ICustomWikiStat, IJournalEntrySource {
+	public class Fleshy_Figurine : ModItem, ICustomWikiStat, IJournalEntrySource<Fleshy_Figurine_Entry> {
 		public string[] Categories => [
 			"Combat",
 			"Torn",
 			"TornSource"
 		];
-		public string EntryName => "Origins/" + typeof(Fleshy_Figurine_Entry).Name;
 		static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
@@ -52,6 +51,6 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Fleshy_Figurine_Entry : JournalEntry {
-		public override string TextKey => nameof(Fleshy_Figurine);
+		public override JournalSortIndex SortIndex => new("Lost Crone", 4);
 	}
 }

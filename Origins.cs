@@ -52,6 +52,7 @@ using CalamityMod.Projectiles.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.TownNPCs;
 using Origins.Items.Other.Testing;
+using Origins.Journal;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -722,6 +723,7 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			Journal_Registry.SetupContent();
 			OriginsModIntegrations.PostSetupContent(this);
 			int blindDebuff = ModContent.BuffType<Blind_Debuff>();
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {

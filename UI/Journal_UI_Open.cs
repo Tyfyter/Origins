@@ -208,15 +208,15 @@ namespace Origins.UI {
 					StringBuilder unreadBuilder = new();
 					StringBuilder builder = new();
 					StringBuilder lockedBuilder = new();
-					foreach (string entry in Journal_Registry.Entries.Keys) {
-						if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
-							if (OriginClientConfig.Instance.ShowLockedEntries) lockedBuilder.AppendLine($"[j/jl:{entry}]");
+					foreach (JournalEntry entry in Journal_Registry.OrderedEntries) {
+						if (!originPlayer.unlockedJournalEntries.Contains(entry.FullName)) {
+							if (OriginClientConfig.Instance.ShowLockedEntries) lockedBuilder.AppendLine($"[j/jl:{entry.FullName}]");
 							continue;
 						}
-						if (originPlayer.unreadJournalEntries.Contains(entry)) {
-							unreadBuilder.AppendLine($"[j/ju:{entry}]");
+						if (originPlayer.unreadJournalEntries.Contains(entry.FullName)) {
+							unreadBuilder.AppendLine($"[j/ju:{entry.FullName}]");
 						} else {
-							builder.AppendLine($"[j/j:{entry}]");
+							builder.AppendLine($"[j/j:{entry.FullName}]");
 						}
 					}
 					SetText(unreadBuilder.ToString() + builder.ToString() + lockedBuilder.ToString(), Color.Black);
@@ -344,10 +344,10 @@ namespace Origins.UI {
 		public static string[] GetSearchResults(string query) {
 			if (string.IsNullOrWhiteSpace(query)) return [];
 			List<(string key, int weight)> entries = [];
-			foreach (var item in Journal_Registry.Entries) {
-				int index = item.Value.GetQueryIndex(query);
+			foreach (JournalEntry item in Journal_Registry.OrderedEntries) {
+				int index = item.GetQueryIndex(query);
 				if (index >= 0) {
-					entries.Add((item.Key, index));
+					entries.Add((item.FullName, index));
 				}
 			}
 			return entries.OrderBy(v => v.weight).Select(v => v.key).ToArray();
