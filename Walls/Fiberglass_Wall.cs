@@ -53,6 +53,7 @@ namespace Origins.Walls {
 			if (OriginsModIntegrations.FancyLighting is not null) {
 				RenderTarget2D wallTarget = Main.instance.wallTarget;
 				AnyWallsVisible = drawWalls.Count > 0;
+				if (!AnyWallsVisible) return;
 				drawWalls.Clear();
 				if (BackgroundMaskTarget is not null && (BackgroundMaskTarget.Width != Main.screenWidth || BackgroundMaskTarget.Height != Main.screenHeight)) {
 					BackgroundMaskTarget.Dispose();

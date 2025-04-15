@@ -53,7 +53,8 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 400;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type,
-				ModContent.GetInstance<Riven_Hive_Ocean>().Type
+				ModContent.GetInstance<Riven_Hive_Ocean>().Type,
+				ModContent.GetInstance<Riven_Hive_Desert>().Type
 			];
 			AnimationType = NPCID.SandsharkCrimson;
 			NPC.localAI[1] = 4;
