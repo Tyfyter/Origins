@@ -63,8 +63,10 @@ namespace Origins.Walls {
 				try {
 					drawingFancyLight = true;
 					Main.instance.wallTarget = BackgroundMaskTarget;
+					Main.screenPosition += Vector2.One;
 					orig(self);
 				} finally {
+					Main.screenPosition -= Vector2.One;
 					drawingFancyLight = false;
 					Main.instance.wallTarget = wallTarget;
 				}
