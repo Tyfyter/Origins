@@ -53,6 +53,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.NPCs.TownNPCs;
 using Origins.Items.Other.Testing;
 using Origins.Journal;
+using Origins.Backgrounds;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -400,6 +401,9 @@ namespace Origins {
 				EffectPriority.High);
 				Overlays.Scene["Origins:ZoneDefiled"] = new Tangela_Resaturate_Overlay();
 				Overlays.Scene["Origins:MaskedRasterizeFilter"] = new Tangela_Resaturate_Overlay();
+				Filters.Scene["Origins:ZoneFiberglassUndergrowth"] = new Filter(new FakeScreenShaderData());
+				Overlays.Scene["Origins:ZoneFiberglassUndergrowth"] = new Fiberglass_Background();
+
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "RivenBloodCoating"), EffectPriority.VeryHigh);

@@ -1,4 +1,5 @@
-﻿using Origins.NPCs.Fiberglass;
+﻿using Origins.Backgrounds;
+using Origins.NPCs.Fiberglass;
 using Origins.Tiles.Other;
 using Origins.Walls;
 using PegasusLib;
@@ -17,6 +18,9 @@ namespace Origins.World.BiomeData {
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneFiberglass = OriginSystem.fiberglassTiles > Fiberglass_Undergrowth.NeededTiles;
+		}
+		public override void SpecialVisuals(Player player, bool isActive) {
+			player.ManageSpecialBiomeVisuals("Origins:ZoneFiberglassUndergrowth", Fiberglass_Wall.AnyWallsVisible, player.Center);
 		}
 		public const int NeededTiles = 1000;
 		public const int ShaderTileCount = 75;

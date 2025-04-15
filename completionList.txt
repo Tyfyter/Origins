@@ -1622,7 +1622,7 @@ UI:
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
 (^) Underground Defiled Background
-(X) Underground Fiberglass Background !!!
+(☻) Underground Fiberglass Background !!!
 (^) Underground Riven Background
 
 (^) 30x30 Origins Icon

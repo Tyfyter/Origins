@@ -1988,7 +1988,7 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if (OriginPlayer.LocalOriginPlayer is not null && OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed > 0) {
+			} else if (Filters.Scene["Origins:ZoneDusk"].Active) {
 				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;

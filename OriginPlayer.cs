@@ -26,7 +26,6 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using static Fargowiltas.FargoSets;
 using static Origins.OriginExtensions;
 
 namespace Origins {
