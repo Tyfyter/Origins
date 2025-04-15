@@ -123,7 +123,7 @@ namespace Origins.Buffs {
 		public sealed override void Update(Player player, ref int buffIndex) {
 			AssimilationInfo info = player.OriginPlayer().GetAssimilation(AssimilationType);
 			float percent = info.EffectivePercent;
-			if (percent >= OriginPlayer.assimilation_max) {
+			if (percent >= OriginPlayer.assimilation_max && player.whoAmI == Main.myPlayer) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = DeathMessage.Key
 				}, 40, 0);
