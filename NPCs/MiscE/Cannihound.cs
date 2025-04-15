@@ -15,6 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.MiscE {
 	public class Cannihound : ModNPC, IWikiNPC {
@@ -22,9 +23,9 @@ namespace Origins.NPCs.MiscE {
 		public int AnimationFrames => 120;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		private readonly List<Projectile> goreList = [];
-		private Projectile? projTarget;
+		private Projectile projTarget;
 		private const int jumpDst = 230;
+		private const int jumpMinDst = 16 * 5;
 		private const int healAmt = 20;
 		public bool wasHit;
 		public bool turning;
@@ -69,7 +70,7 @@ namespace Origins.NPCs.MiscE {
 			);
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
-			if (NPC.frame.Y / NPC.frame.Height != 12) npcHitbox = default; // makes the NPC's attack hitbox 0, 0, 0, 0, preventing it from hitting anything, even things that aren't NPCs or Players
+			if (NPC.frame.Y / NPC.frame.Height != 12 && NPC.aiAction == 0) npcHitbox = default; // makes the NPC's attack hitbox 0, 0, 0, 0, preventing it from hitting anything, even things that aren't NPCs or Players
 			if (NPC.ai[3] > 0) damageMultiplier *= 1.1f;
 			return true;
 		}
@@ -80,7 +81,7 @@ namespace Origins.NPCs.MiscE {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
-		public override bool PreAI() {
+		public override void AI() {
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
 			if (projTarget is not null && (!projTarget.active || projTarget.ModProjectile is not GoreProjectile)) projTarget = null;
@@ -90,13 +91,13 @@ namespace Origins.NPCs.MiscE {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			if (!NPC.collideY && NPC.velocity.Y == 0) {
 				NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
-			} 
+			}
 			switch (NPC.aiAction) {
 				case 0:
 				if (NPC.ai[1]-- <= 0 && NPC.collideY) {
 					projTarget = null;
-					if (NPC.GetLifePercent() <= 0.35f || NPC.ai[2] > 0) {
-						float nearestTarget = NPC.Center.DistanceSQ(target.Center);
+					if (NPC.GetLifePercent() < 1f || NPC.ai[2] > 0) {
+						float nearestTarget = NPC.Center.DistanceSQ(target.Center) * 0.8f;
 						foreach (Projectile proj in Main.ActiveProjectiles) {
 							if (proj.ModProjectile is not GoreProjectile) continue;
 							float newDist = NPC.Center.DistanceSQ(proj.Center);
@@ -106,19 +107,12 @@ namespace Origins.NPCs.MiscE {
 								nearestTarget = newDist;
 							}
 						}
-						if (projTarget is not null && NPC.Center.Distance(projTarget.Center) <= jumpDst) {
-							NPC.aiAction = 2; // jump to food action
-							NPC.ai[0] = 43; // time in ticks for the anim of the jump
-							NPC.ai[2] = 180; // time in ticks to be looking for cannihound gores to consume
-							//Debugging.ChatOverhead(NPC.Center.Distance(projTgt.Center));
-							return true;
-						}
 					}
-					if (NPC.Center.Distance(target.Center) <= jumpDst && NPC.HasValidTarget) {
+					float dist = NPC.Center.DistanceSQ(NPC.targetRect.Center());
+					if (dist is <= jumpDst * jumpDst and >= jumpMinDst * jumpMinDst && (NPC.HasValidTarget || projTarget is not null)) {
 						NPC.aiAction = 1; // jump to target action
 						NPC.ai[0] = 43; // time in ticks for the anim of the jump
-						//Debugging.ChatOverhead(NPC.Center.Distance(target.Center));
-						return true;
+						return;
 					}
 					NPC.TryJumpOverObstacles(NPC.direction, NPC.collideY);
 					/*if (NPC.localAI[1] == NPC.position.X) {
@@ -151,53 +145,57 @@ namespace Origins.NPCs.MiscE {
 					NPC.ai[1] = 60; // time in ticks before can jump again
 				}
 				break;
-				case 2:
-				if (projTarget is null) {
-					NPC.aiAction = 0;
-					goto case 0;
+			}
+			float distanceFromTarget = NPC.targetRect.Center().Clamp(NPC.Hitbox).Distance(NPC.Center.Clamp(NPC.targetRect));
+			//Projectile.friendly = false;
+			bool attac = distanceFromTarget < 16 || ((!NPC.collideY || NPC.localAI[2] >= 24) && NPC.localAI[2] <= 21);
+			if (!attac) {
+				const int prediction = 12;
+				Rectangle projHitbox = NPC.Hitbox;
+				Rectangle targHitbox = NPC.targetRect;
+				Vector2 gravFactor = new(0, (prediction * (prediction + 1)) * 0.5f);
+				projHitbox.Offset((NPC.velocity * prediction + NPC.gravity * gravFactor).ToPoint());
+				if (projTarget is null) targHitbox.Offset((Main.player[NPC.target].velocity * prediction + Main.player[NPC.target].gravity * gravFactor).ToPoint());
+				if (projHitbox.Intersects(NPC.targetRect)) {
+					attac = true;
 				}
-				if (NPC.collideY && --NPC.ai[0] == 15) {
-					Vector2 pos = projTarget.Center - new Vector2(0, projTarget.height / 2);
-					Vector2 velocity;
-					float speed = 15;
-					if (GeometryUtils.AngleToTarget(pos - NPC.Center, speed, 0.2f, false) is float angle) {
-						velocity = angle.ToRotationVector2() * speed;
-					} else {
-						float val = 0.70710678119f;
-						velocity = new Vector2(val * NPC.direction, -val) * speed;
-					}
-					NPC.velocity = velocity;
-					NPC.direction = Math.Sign(NPC.velocity.X);
-				}
-				if (NPC.ai[0] <= 5 && (NPC.collideX || NPC.collideY || NPC.Center.Distance(projTarget.Center) >= 230 || NPC.getRect().Intersects(projTarget.Hitbox))) {
-					if (NPC.getRect().Intersects(projTarget.Hitbox)) {
-						int trueHealAmt = healAmt;
-						if (NPC.life + healAmt > NPC.lifeMax) {
-							trueHealAmt = NPC.lifeMax - NPC.life;
-							if (NPC.ai[3] <= 0) NPC.ai[3] = 3 * 60; // time in ticks for the cannihound buffs
-							else NPC.ai[3] += healAmt / 2;
+			}
+			float acceleration = 0.6f;
+			if (attac) {
+				if (++NPC.localAI[2] >= 21) {
+					if (NPC.localAI[2] == 24 && projTarget is not null) {
+						Rectangle meatRect = projTarget.Hitbox;
+						projTarget.ModProjectile?.ModifyDamageHitbox(ref meatRect);
+						if (NPC.Hitbox.Intersects(meatRect)) {
+							int trueHealAmt = healAmt;
+							if (NPC.life + healAmt > NPC.lifeMax) {
+								trueHealAmt = NPC.lifeMax - NPC.life;
+								if (NPC.ai[3] <= 0) NPC.ai[3] = 3 * 60; // time in ticks for the cannihound buffs
+								else NPC.ai[3] += healAmt / 2;
+							}
+							NPC.life = Math.Min(NPC.life + trueHealAmt, NPC.lifeMax);
+							NPC.HealEffect(trueHealAmt);
+							NPC.netUpdate = true;
+							projTarget.Kill();
 						}
-						NPC.life = Math.Min(NPC.life + trueHealAmt, NPC.lifeMax);
-						NPC.HealEffect(trueHealAmt);
-						NPC.netUpdate = true;
 					}
-					NPC.aiAction = 0;
-					NPC.ai[1] = 60;
+					if (NPC.localAI[2] >= 27) NPC.localAI[2] = 0;
 				}
-				break;
+				if (NPC.collideY) {
+					acceleration = NPC.localAI[2] >= 18 ? 1.6f : 0.4f;
+				}
+			} else if (NPC.collideY || NPC.localAI[2] < 15) {
+				NPC.localAI[2] = 0;
 			}
 			if (NPC.aiAction == 0) {
 				NPC.ai[2]--;
 				//NPC.aiStyle = NPCAIStyleID.Fighter;
 			}
-			return true;
-		}
-		public override void AI() {
+
 			bool targetInvalid = NPC.GetTargetData().Invalid;
 			int currentMoveDirection = (NPC.velocity.X >= 0).ToDirectionInt();
 			int targetMoveDirection = targetInvalid ? NPC.direction : (NPC.DirectionTo(NPC.targetRect.Center()).X >= 0).ToDirectionInt();
 
-			float acceleration = 0.6f;
 			if (NPC.aiAction != 0) acceleration = 0;
 			if (targetInvalid) acceleration /= 3;
 			if (currentMoveDirection != targetMoveDirection) {
@@ -210,7 +208,7 @@ namespace Origins.NPCs.MiscE {
 			if (!NPC.collideY) acceleration *= 0.25f;
 
 			NPC.velocity.X += acceleration * targetMoveDirection;
-			Debugging.ChatOverhead(NPC.ai[1]);
+			Debugging.ChatOverhead(NPC.frame.Y / NPC.frame.Height);
 
 			if (NPC.collideY || NPC.aiAction == 0) NPC.velocity.X *= 0.97f;
 			if (currentMoveDirection == targetMoveDirection && NPC.aiAction == 0) NPC.velocity.X *= 0.93f;
@@ -238,6 +236,9 @@ namespace Origins.NPCs.MiscE {
 				}
 			} else if (NPC.ai[0] >= 16) {
 				NPC.DoFrames(4, 6..15);
+			}
+			if (NPC.localAI[2] > 0) {
+				NPC.frame.Y = NPC.frame.Height * ((int)(NPC.localAI[2] / 3f) + 6);
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

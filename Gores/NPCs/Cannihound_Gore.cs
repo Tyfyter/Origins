@@ -42,8 +42,11 @@ namespace Origins.Gores.NPCs {
 			if (Projectile.alpha >= 255) {
 				Projectile.active = false;
 			}
-			Projectile.Hitbox.DrawDebugOutline();
 			return false;
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			int size = (int)(Math.Max(Size.X, Size.Y) * 0.9f);
+			hitbox = new Rectangle(0, 0, size, size).Recentered(hitbox.Center());
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCsAndTiles.Add(index);

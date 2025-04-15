@@ -26,7 +26,7 @@ namespace Origins.Graphics {
 		public int? TangelaSeed { get; set; }
 		public override void Apply(Entity entity, DrawData? drawData = null) {
 			if (drawData is DrawData data) {
-				TangelaVisual.drawDatas.Add(new(data, entity.whoAmI));
+				TangelaVisual.drawDatas.Add(new(data, entity?.whoAmI ?? drawData.Value.texture.Name?.GetHashCode() ?? 0));
 			}
 			if (_uImage2 != null) {
 				Main.graphics.GraphicsDevice.Textures[2] = _uImage2.Value;

@@ -157,7 +157,7 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(#, ^2) Cannihound !!!
+(☻) Cannihound !!!
 (^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
