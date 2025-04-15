@@ -122,6 +122,7 @@ namespace Origins.Items.Other.Consumables {
 		public override string DisplayValue() {
 			string baseValue = Language.GetOrRegister($"Mods.Origins.Items.{nameof(Crown_Jewel)}.Toggle_" + (CurrentState == 0 ? "On" : "Off")).Value;
 			int slainBossesCount = Crown_Jewel.SlainBossesCount;
+			baseValue += "\n" + Language.GetOrRegister($"Mods.Origins.Items.{nameof(Crown_Jewel)}.ScaledEffectTooltip").Format(slainBossesCount);
 			baseValue += "\n" + Language.GetOrRegister($"Mods.Origins.Items.{nameof(Crown_Jewel)}.BossesSlain").Format(slainBossesCount);
 			return baseValue;
 		}

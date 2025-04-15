@@ -4176,7 +4176,7 @@ namespace Origins {
 				int currentQuality = frames[k].match.Match(up, down, left, right, upLeft, upRight, downLeft, downRight);
 				if (currentQuality > matchQuality) {
 					bestMatch = frames[k].first;
-					bestMatch.OffsetBy(frames[k].offset.X * frameNumber, frames[k].offset.Y * frameNumber);
+					bestMatch = bestMatch.OffsetBy(frames[k].offset.X * frameNumber, frames[k].offset.Y * frameNumber);
 					matchQuality = currentQuality;
 					if (matchQuality >= 2) break;
 				}

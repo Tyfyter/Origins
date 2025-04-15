@@ -5181,13 +5181,20 @@ Lost_Diver_Helmet: {
 
 Crown_Jewel: {
 	DisplayName: Crown Jewel
+	EffectTooltip: Increases your damage, crit chance, and self-damage resistance by 1% for every Hardmode boss you've defeated
 	Tooltip:
 		'''
-		Increases your damage, crit chance and self-damage resistance by 1% for every Hardmode boss you've defeated
+		{$Mods.Origins.Items.Crown_Jewel.EffectTooltip}
 		'Many heroes have died for this, and yet you are the one to wield its power'
 		'''
-	Toggle_On: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} on"
-	Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} off"
+	Toggle_On: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} enabled"
+	Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} disabled"
+	ScaledEffectTooltip:
+		'''
+		+{0}% damage,
+		+{0}% crit chance
+		-{0}% explosive self-damage
+		'''
 	BossesSlain: "{0} bosses slain"
 }
 

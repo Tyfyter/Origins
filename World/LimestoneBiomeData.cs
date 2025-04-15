@@ -1,4 +1,5 @@
-﻿using Origins.Items.Accessories;
+﻿using AltLibrary.Common.Systems;
+using Origins.Items.Accessories;
 using Origins.Items.Armor.Other;
 using Origins.Reflection;
 using Origins.Tiles.Defiled;
@@ -22,6 +23,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
+using static Fargowiltas.UI.StatSheetUI;
 
 namespace Origins.World {
 	public class Limestone_Cave : ModBiome {
@@ -136,6 +138,7 @@ namespace Origins.World {
 		public const int NeededTiles = 400;
 		public static class Gen {
 			public static void StartLimestone(int i, int j) {
+				WorldBiomeGeneration.ChangeRange.ResetRange();
 				ushort limestoneTile = (ushort)ModContent.TileType<Limestone>();
 				int openingHeight = WorldGen.genRand.Next(25, 40);
 				int openingSize = WorldGen.genRand.Next(9 + openingHeight / 5, 20);
@@ -189,6 +192,7 @@ namespace Origins.World {
 						Tile tile = Framing.GetTileSafely(i + x, startY - y);
 						if (!tile.HasTile || !TileID.Sets.Conversion.Sand[tile.TileType]) break;
 						tile.TileType = limestoneTile;
+						WorldBiomeGeneration.ChangeRange.AddChangeToRange(i + x, startY - y);
 					}
 				}
 				static int Squirclish(float x, float y, float radius1, float radius2) {
@@ -211,13 +215,15 @@ namespace Origins.World {
 								Tile tile = Framing.GetTileSafely(i + x, j + y);
 								tile.HasTile = false;
 								if (TileID.Sets.Falling[tile.TileType]) tile.TileType = limestoneTile;
-								if (tile.WallType == WallID.Dirt) tile.WallType = WallID.HardenedSand;
+								if (tile.WallType == WallID.DirtUnsafe) tile.WallType = WallID.HardenedSand;
+								WorldBiomeGeneration.ChangeRange.AddChangeToRange(i + x, j + y);
 								break;
 							}
 							case 1: {
 								Tile tile = Framing.GetTileSafely(i + x, j + y);
 								tile.TileType = limestoneTile;
-								if (tile.WallType == WallID.Dirt) tile.WallType = WallID.HardenedSand;
+								if (tile.WallType == WallID.DirtUnsafe) tile.WallType = WallID.HardenedSand;
+								WorldBiomeGeneration.ChangeRange.AddChangeToRange(i + x, j + y);
 								break;
 							}
 						}
@@ -388,6 +394,12 @@ namespace Origins.World {
 							else y++;
 							if (tries-- > 0) break;
 						}
+					}
+				}
+				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
+				for (int x = genRange.Left; x < genRange.Right; x++) {
+					for (int y = genRange.Top; y < genRange.Bottom; y++) {
+						GenRunners.AutoSlope(x, y, true);
 					}
 				}
 			}
