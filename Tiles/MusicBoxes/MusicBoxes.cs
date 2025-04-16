@@ -5,8 +5,10 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Reflection;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
@@ -28,7 +30,29 @@ namespace Origins.Tiles.MusicBoxes {
 		public static int ItemType<TMusicBox>() where TMusicBox : Music_Box => GetInstance<TMusicBox>().Item.Type;
 		static List<Music_Box> musicBoxes = [];
 		public static ReadOnlySpan<Music_Box> MusicBoxes => CollectionsMarshal.AsSpan(musicBoxes);
-
+		static FastStaticFieldInfo<MusicLoader, Dictionary<int, int>> musicToItem = new(nameof(musicToItem), BindingFlags.NonPublic);
+		static FastStaticFieldInfo<MusicLoader, Dictionary<int, int>> itemToMusic = new(nameof(itemToMusic), BindingFlags.NonPublic);
+		static FastStaticFieldInfo<MusicLoader, Dictionary<int, Dictionary<int, int>>> tileToMusic = new(nameof(tileToMusic), BindingFlags.NonPublic);
+		/// <summary>
+		/// For OriginsMusic
+		/// </summary>
+		public static void ReloadMusicAssociations() {
+			Dictionary<int, int> musicToItem = Music_Box.musicToItem.Value;
+			Dictionary<int, int> itemToMusic = Music_Box.itemToMusic.Value;
+			Dictionary<int, Dictionary<int, int>> tileToMusic = Music_Box.tileToMusic.Value;
+			foreach (Music_Box box in MusicBoxes) {
+				if (itemToMusic.TryGetValue(box.Item.Type, out int oldTrack) && oldTrack >= MusicID.Count) {
+					musicToItem.Remove(oldTrack);
+					itemToMusic.Remove(box.Item.Type);
+					tileToMusic.Remove(box.Type);
+				}
+				if (box.MusicSlot >= MusicID.Count) {
+					musicToItem[box.MusicSlot] = box.Item.Type;
+					itemToMusic[box.Item.Type] = box.MusicSlot;
+					tileToMusic[box.Type] = new() { [0] = box.MusicSlot };
+				}
+			}
+		}
 		public override void Load() {
 			Item = new(this);
 			Mod.AddContent(Item);
@@ -47,13 +71,15 @@ namespace Origins.Tiles.MusicBoxes {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 			AddMapEntry(MapColor, Language.GetOrRegister("Mods.Origins.Tiles." + Name, PrettyPrintName));
-			
+
 			// The following code links the music box's item and tile with a music track:
 			//   When music with the given ID is playing, equipped music boxes have a chance to change their id to the given item type.
 			//   When an item with the given item type is equipped, it will play the music that has musicSlot as its ID.
 			//   When a tile with the given type and Y-frame is nearby, if its X-frame is >= 36, it will play the music that has musicSlot as its ID.
 			// When getting the music slot, you should not add the file extensions!
-			MusicLoader.AddMusicBox(Mod, Main.dedServ ? 0 : MusicSlot, Item.Type, Type);
+			if (ModLoader.HasMod("OriginsMusic") && MusicSlot >= MusicID.Count) {
+				MusicLoader.AddMusicBox(Mod, Main.dedServ ? 0 : MusicSlot, Item.Type, Type);
+			}
 			RegisterItemDrop(Item.Type);
 			base.DustType = this.DustType;
 		}
@@ -99,7 +125,7 @@ namespace Origins.Tiles.MusicBoxes {
 	#endregion
 	public class Music_Box_DW : Music_Box {
 		public override Color MapColor => new Color(255, 255, 255);
-		public override int MusicSlot => Origins.Music.Vol2.Defiled;
+		public override int MusicSlot => Origins.Music.Defiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -117,12 +143,12 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	public class Music_Box_DC : Music_Box {
 		public override Color MapColor => new Color(255, 255, 255);
-		public override int MusicSlot => Origins.Music.Vol2.UndergroundDefiled;
+		public override int MusicSlot => Origins.Music.UndergroundDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 	}
 	public class Music_Box_RH : Music_Box, IGlowingModTile {
 		public override Color MapColor => new Color(42, 59, 112);
-		public override int MusicSlot => Origins.Music.Vol2.Riven;
+		public override int MusicSlot => Origins.Music.Riven;
 		public override int DustType => Riven_Hive.DefaultTileDust;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
@@ -200,7 +226,7 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	public class Music_Box_BP : Music_Box, IGlowingModTile {
 		public override Color MapColor => new Color(42, 112, 59);
-		public override int MusicSlot => Origins.Music.Vol2.BrinePool;
+		public override int MusicSlot => Origins.Music.BrinePool;
 		public override int DustType => DustID.GreenMoss;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public static float GlowLightValue(Tile tile) => tile.TileFrameX >= 36 ? 1 : 0;
@@ -424,7 +450,7 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	public class Music_Box_FU : Music_Box {
 		public override Color MapColor => new Color(146, 253, 250);
-		public override int MusicSlot => Origins.Music.Vol2.Fiberglass;
+		public override int MusicSlot => Origins.Music.Fiberglass;
 		public override int DustType => DustID.Glass;
 	}
 }

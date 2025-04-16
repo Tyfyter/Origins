@@ -648,7 +648,6 @@ namespace Origins {
 				PitchVariance = 0.4f
 			};
 			//OriginExtensions.initClone();
-			Music.LoadMusic();
 
 			Main.OnPostDraw += IncrementFrameCount;
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
@@ -700,7 +699,6 @@ namespace Origins {
 			BreastplateGlowMasks = null;
 			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
-			Music.musicDisplay = null;
 			instance = null;
 			OriginExtensions.unInitExt();
 			OriginTile.IDs = null;
@@ -931,114 +929,23 @@ namespace Origins {
 			}
 		}
 		public static class Music {
-			public static int Fiberglass => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Fiberglass : Vol2.Fiberglass;
+			public static int Fiberglass = MusicID.OtherworldlyJungle;
 
-			public static int BrinePool => OriginClientConfig.Instance.OldSoundtrack ? Vol1.BrinePool : Vol2.BrinePool;
+			public static int BrinePool = MusicID.OtherworldlyEerie;
 			public static int AncientBrinePool;
 
 			public static int Dusk;
 
-			public static int Defiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Defiled : Vol2.Defiled;
-			public static int UndergroundDefiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundDefiled : Vol2.UndergroundDefiled;
-			public static int DefiledBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.DefiledBoss : Vol2.DefiledBoss;
+			public static int Defiled = MusicID.OtherworldlyMushrooms;
+			public static int UndergroundDefiled = MusicID.OtherworldlyUGHallow;
+			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
 			public static int AncientDefiled;
 
-			public static int Riven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Riven : Vol2.Riven;
-			public static int UndergroundRiven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundRiven : Vol2.UndergroundRiven;
-			public static int RivenBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenBoss : Vol2.RivenBoss;
-			public static int RivenOcean => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenOcean : Vol2.RivenOcean;
+			public static int Riven = MusicID.OtherworldlyCrimson;
+			public static int UndergroundRiven = MusicID.OtherworldlyIce;
+			public static int RivenBoss = MusicID.Boss5;
+			public static int RivenOcean = MusicID.OtherworldlyRain;
 			public static int AncientRiven;
-
-			public static class Vol2 {
-				public static int Fiberglass;
-
-				public static int BrinePool;
-
-				public static int Defiled;
-				public static int UndergroundDefiled;
-				public static int DefiledBoss;
-
-				public static int Riven;
-				public static int UndergroundRiven;
-				public static int RivenBoss;
-				public static int RivenOcean;
-			}
-			public static class Vol1 {
-				public static int Fiberglass;
-
-				public static int BrinePool;
-
-				public static int Defiled;
-				public static int UndergroundDefiled;
-				public static int DefiledBoss;
-
-				public static int Riven;
-				public static int UndergroundRiven;
-				public static int RivenBoss;
-				public static int RivenOcean;
-			}
-
-			internal static Mod musicDisplay;
-			internal static void LoadMusic() {
-				ModLoader.TryGetMod("MusicDisplay", out musicDisplay);
-				static int GetMusicSlotOld(string path) {
-					path = "Music/" + path;
-					MusicLoader.AddMusic(instance, path);
-					int slot = MusicLoader.GetMusicSlot(instance, path);
-					if (slot != -1 && musicDisplay is not null) {
-						string track = path.Split("/")[^1];
-						musicDisplay.Call("AddMusic",
-							(short)slot,
-							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
-							"chrersis",
-							Origins.instance.DisplayName
-						);
-					}
-					return slot;
-				}
-				static int GetMusicSlotNew(string path) {
-					path = "Sounds/Music/Volume II/" + path;
-					MusicLoader.AddMusic(instance, path);
-					int slot = MusicLoader.GetMusicSlot(instance, path);
-					if (slot != -1 && musicDisplay is not null) {
-						string track = path.Split("/")[^1];
-						musicDisplay.Call("AddMusic",
-							(short)slot,
-							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
-							"gojisturba",
-							Origins.instance.DisplayName
-						);
-					}
-					return slot;
-				}
-				Vol1.Fiberglass = GetMusicSlotOld("The_Room_Before");
-				Vol1.BrinePool = GetMusicSlotOld("Below_The_Brine");
-				AncientBrinePool = GetMusicSlotOld("Only_the_Brave");
-				Vol1.Defiled = GetMusicSlotOld("Stolen_Memories");
-				Vol1.UndergroundDefiled = GetMusicSlotOld("Heart_Of_The_Beast");
-				Vol1.DefiledBoss = GetMusicSlotOld("ADJUDICATE");
-				Vol1.Riven = GetMusicSlotOld("Pereunt_Unum_Scindendum");
-				Vol1.UndergroundRiven = GetMusicSlotOld("Festering_Hives");
-				Vol1.RivenBoss = GetMusicSlotOld("Ad_Laceratur");
-				Vol1.RivenOcean = GetMusicSlotOld("This_Ocean_Of_Alkahest");
-
-
-				Vol2.Fiberglass = GetMusicSlotNew("Skulking");
-				Vol2.BrinePool = GetMusicSlotNew("Deep_Luminance");
-				Dusk = GetMusicSlotOld("Dancing_With_Ghosts");
-
-				Vol2.Defiled = GetMusicSlotNew("Wasteland");
-				Vol2.UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
-				Vol2.DefiledBoss = GetMusicSlotNew("ADJUDICATE");
-
-				Vol2.Riven = GetMusicSlotNew("Skin");
-				Vol2.UndergroundRiven = GetMusicSlotNew("Internal_Organism");
-				Vol2.RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
-				Vol2.RivenOcean = GetMusicSlotNew("Alkahest");
-
-				AncientDefiled = GetMusicSlotOld("Shattered_Topography_Old");
-				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
-			}
 		}
 		public static class Sounds {
 			public static SoundStyle MultiWhip = SoundID.Item153;
