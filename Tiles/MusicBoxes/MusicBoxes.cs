@@ -56,6 +56,7 @@ namespace Origins.Tiles.MusicBoxes {
 		public override void Load() {
 			Item = new(this);
 			Mod.AddContent(Item);
+			musicBoxes.Add(this);
 		}
 		public override void Unload() {
 			musicBoxes = null;
@@ -71,15 +72,6 @@ namespace Origins.Tiles.MusicBoxes {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 			AddMapEntry(MapColor, Language.GetOrRegister("Mods.Origins.Tiles." + Name, PrettyPrintName));
-
-			// The following code links the music box's item and tile with a music track:
-			//   When music with the given ID is playing, equipped music boxes have a chance to change their id to the given item type.
-			//   When an item with the given item type is equipped, it will play the music that has musicSlot as its ID.
-			//   When a tile with the given type and Y-frame is nearby, if its X-frame is >= 36, it will play the music that has musicSlot as its ID.
-			// When getting the music slot, you should not add the file extensions!
-			if (ModLoader.HasMod("OriginsMusic") && MusicSlot >= MusicID.Count) {
-				MusicLoader.AddMusicBox(Mod, Main.dedServ ? 0 : MusicSlot, Item.Type, Type);
-			}
 			RegisterItemDrop(Item.Type);
 			base.DustType = this.DustType;
 		}
