@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -35,6 +34,13 @@ namespace Origins.Tiles.Defiled {
 			ID = Type;
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
+		}
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			Player player = Main.LocalPlayer;
+			if (player.HeldItem.hammer < 90) {
+				damage = 0;
+				HitSound = Origins.Sounds.DefiledIdle.WithPitch(-3f);
+			}
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 9) {

@@ -41,8 +41,8 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
-			NPC.lifeMax = 198;
-			NPC.defense = 20;
+			NPC.lifeMax = 70;
+			NPC.defense = 6;
 			NPC.damage = 25;
 			NPC.width = 54;
 			NPC.height = 50;

@@ -132,13 +132,16 @@ VANILLA MODIFICATIONS:
 (^) Wooden armor buffs*
 ---
 
-World Generation:
+WORLD GENERATION:
 |---
+(^) Brine Pool
 (^) Defiled Wastelands
-(^) Riven Hive
-(☻) Brine Pool
 (^) Fiberglass Undergrowth
-(☻) Limestone Cave
+(#3) Limestone Cave !!! (rubble spawning on slopes and rubble cut-off)
+(^) Riven Hive
+(#2, 々) The Dusk
+
+(X) Chambersite Conversion
 ---
 
 OTHER:
@@ -148,7 +151,7 @@ OTHER:
 (^) Journal*
 (^) Quest System General*
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
-(☻) Defiled "Chrysalis" Spawning
+(#2) Defiled "Chrysalis" Spawning (just needs to spawn)
 ---
 
 
@@ -157,7 +160,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(☻) Aqueoua (shelly variant does exist, and it wiggles as much as the sprite does, if that thing from spore is supposed to somehow indicate the desired wiggliness I'm afraid I have no clue how it moves)
+(#2, ^2) Aqueoua (wiggle) !!!
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -165,7 +168,7 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(☻) Cannihound !!!
+(#2, ^2) Cannihound !!! (spawn too rarely and reinforcements after death)
 (^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
@@ -1207,7 +1210,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
-(#2, 々) Defiled Heart
+(#2, 々) Defiled Heart !!! (needs hammer requirement, then remove priority marker)
 (^) Defiled Relay
 (^) Defiled Pot
 (X) Eden Tree°
@@ -1230,7 +1233,7 @@ TILES:
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
 (^) Underwater Vine
-(☻) Venus Coral !!!
+(^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
 (@4, ^3) Wrycoral*
@@ -1620,17 +1623,17 @@ UI:
 (X) Dusk Map/Bestiary Backdrop
 (^) Eutrophic Sea Icon
 (^) Fiberglass Icon
-(^) Fiberglass Map/Bestiary Backdrop !!!
+(^) Fiberglass Map/Bestiary Backdrop
 (X) Fractured Isles Icon
 (^) Riven Caverns Icon
 (^) Riven Desert Icon
 (^) Riven Hive Icon
-(^) Riven Map/Bestiary Backdrop !!! (surface one)
+(^) Riven Map/Bestiary Backdrop
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
 (^) Underground Defiled Background
-(☻) Underground Fiberglass Background !!!
+(@4) Underground Fiberglass Background
 (^) Underground Riven Background
 
 (^) 30x30 Origins Icon
