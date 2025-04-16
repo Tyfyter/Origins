@@ -5899,3 +5899,8 @@ Venus_Coral_Debug_Item: {
 	DisplayName: Venus Coral Debug Item
 	Tooltip: ""
 }
+
+Defiled_Regolith_Item: {
+	DisplayName: Defiled Regolith
+	Tooltip: ""
+}

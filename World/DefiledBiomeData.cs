@@ -420,7 +420,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static void DefiledRibs(float i, float j, float sizeMult = 1f) {
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
+				ushort stoneID = (ushort)ModContent.TileType<Defiled_Regolith>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
