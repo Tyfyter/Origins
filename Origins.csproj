@@ -1,38 +1,33 @@
 
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="..\tModLoader.targets" />
-	<PropertyGroup>
-		<AssemblyName>Origins</AssemblyName>
-		<LangVersion>preview</LangVersion>
-		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="AltLibrary">
-			<HintPath>..\ModAssemblies\AltLibrary_v1.2.dll</HintPath>
-		</Reference>
-		<Reference Include="BetterDialogue">
-			<HintPath>..\ModAssemblies\BetterDialogue_v1.1.5.3.dll</HintPath>
-		</Reference>
-		<Reference Include="CalamityMod">
-			<HintPath>..\ModAssemblies\CalamityMod_v2.0.4.5.dll</HintPath>
-		</Reference>
-		<Reference Include="Fargowiltas">
-			<HintPath>..\ModAssemblies\Fargowiltas_v3.3.5.5.dll</HintPath>
-		</Reference>
-		<Reference Include="PegasusLib">
-			<HintPath>..\ModAssemblies\PegasusLib_v1.0.6.1.dll</HintPath>
-		</Reference>
-		<Reference Include="ThoriumMod">
-			<HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
-		</Reference>
-		<Reference Include="MagicStorage">
-			<HintPath>..\ModAssemblies\MagicStorage_v0.6.0.3.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />
-	</Target>
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>Origins</AssemblyName>
+    <LangVersion>preview</LangVersion>
+	<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+	<OutputType>Library</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AltLibrary">
+      <HintPath>..\ModAssemblies\AltLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="BetterDialogue">
+      <HintPath>..\ModAssemblies\BetterDialogue.dll</HintPath>
+    </Reference>
+    <Reference Include="CalamityMod">
+      <HintPath>..\ModAssemblies\CalamityMod.dll</HintPath>
+    </Reference>
+    <Reference Include="PegasusLib">
+      <HintPath>..\ModAssemblies\PegasusLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoriumMod">
+      <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />
+  </Target>
 </Project>
