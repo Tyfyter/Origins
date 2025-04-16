@@ -1,5 +1,5 @@
 SYMBOL KEY:
----
+|---
 @: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
 @2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
 @3: Needs resource (missing texture for shader/filter)
@@ -48,7 +48,7 @@ X: No progress
 ---
 
 BOSSES AND MINI-BOSSES:
----
+|---
 (#, ^2, 々) Chambersite Sentinel
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
@@ -79,7 +79,7 @@ BOSSES AND MINI-BOSSES:
 
 
 TOWN NPCs:
----
+|---
 (^) Brine Fiend
 (ᗢ) Defiled Effigy
 
@@ -89,7 +89,7 @@ TOWN NPCs:
 ---
 
 TOWN NPC Quests:
----
+|---
 (^) TOWN NPC QUEST MECHANICS°
 
 (^) Arms Dealer - Live Fire*
@@ -118,7 +118,7 @@ TOWN NPC Quests:
 
 
 VANILLA MODIFICATIONS:
----
+|---
 (ᗢ) Recipes General*
 
 (^) Advanced weapon functionality in PVP*
@@ -132,9 +132,17 @@ VANILLA MODIFICATIONS:
 (^) Wooden armor buffs*
 ---
 
+World Generation:
+|---
+(^) Defiled Wastelands
+(^) Riven Hive
+(☻) Brine Pool
+(^) Fiberglass Undergrowth
+(☻) Limestone Cave
+---
 
 OTHER:
----
+|---
 (X) Cubekon Tinkerer's Modifiers*
 (^) Explosive Modifiers*
 (^) Journal*
@@ -145,7 +153,7 @@ OTHER:
 
 
 ENEMY NPCS:
----
+|---
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
@@ -268,7 +276,7 @@ ENEMY NPCS:
 
 
 EVENTS:
----
+|---
 (X) Ashen Invasion
 (#, %2) Corruption Invasion
 (#, %2) Crimson Invasion
@@ -281,7 +289,7 @@ EVENTS:
 ---
 
 STATUS EFFECTS:
----
+|---
 (^) Cavitation
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
@@ -301,7 +309,7 @@ STATUS EFFECTS:
 
 
 NPC DIALOGUE:
----
+|---
 (^) Cyborg
 (^) Demolitionist
 (^) Dryad
@@ -315,7 +323,7 @@ NPC DIALOGUE:
 
 
 ARMOR:
----
+|---
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -373,7 +381,7 @@ ARMOR:
 
 
 ACCESSORIES:
----
+|---
 (X) 5G Broadband Wi-Fi Router
 (^) Abyssal Anchor*
 (^) ACME Crate*
@@ -548,7 +556,7 @@ ACCESSORIES:
 
 
 VANITY:
----
+|---
 (^) Defiled Amalgamation Mask*
 (X) Duskord Mask
 (^) Fiberglass Weaver Head*
@@ -595,7 +603,7 @@ VANITY:
 
 
 UTILITIES:
----
+|---
 (^) Amoeba Hook*
 (^) Tangela Tether
 
@@ -610,7 +618,7 @@ UTILITIES:
 
 
 WINGS:
----
+|---
 (^) Acrid Beam Thrusters
 (X) Gills
 (X) Marrowick Mantle
@@ -624,7 +632,7 @@ WINGS:
 
 
 TOOLS:
----
+|---
 (^) Brick Breaker*
 (^) C6 Jackhammer*
 (^) Dismantler*
@@ -660,7 +668,7 @@ TOOLS:
 
 
 MELEE WEAPONS:
----
+|---
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
@@ -724,7 +732,7 @@ MELEE WEAPONS:
 
 
 RANGED WEAPONS:
----
+|---
 (^) Ancient Kruncher*
 (^) Bloodletter*
 (^) Blotopus*
@@ -806,7 +814,7 @@ RANGED WEAPONS:
 
 
 MAGIC WEAPONS:
----
+|---
 (^) Area Denial*
 (^) Avulsion*
 (^) Beginner's Tome
@@ -866,7 +874,7 @@ MAGIC WEAPONS:
 
 
 SUMMONER WEAPONS:
----
+|---
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
@@ -943,7 +951,7 @@ NO POST-ML CONTENT YET.
 
 
 EXPLOSIVE WEAPONS:
----
+|---
 (^) Abrasion Blaster*
 (^) Ace Shrapnel*
 (^) Ameballoon*
@@ -1032,7 +1040,7 @@ EXPLOSIVE WEAPONS:
 
 
 GENERIC WEAPONS:
----
+|---
 (^) Generic Weapon*
 (^) Potato Launcher*
 
@@ -1046,7 +1054,7 @@ GENERIC WEAPONS:
 
 
 TILES:
----
+|---
 (X) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
@@ -1270,7 +1278,7 @@ TILES:
 
 
 MATERIALS:
----
+|---
 (^) Acetabularia*
 (^) Adhesive Wrap*
 (X) Aetherite Bar
@@ -1334,7 +1342,7 @@ MATERIALS:
 
 
 CRITTERS AND FISH:
----
+|---
 (^) Amoeba Buggy*
 (^) Bug
 (X) Chambersite Bunny
@@ -1354,7 +1362,7 @@ CRITTERS AND FISH:
 
 
 CONSUMABLES:
----
+|---
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection*
@@ -1473,7 +1481,7 @@ CONSUMABLES:
 ---
 
 MOUNTS & PETS:
----
+|---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
@@ -1502,7 +1510,7 @@ MOUNTS & PETS:
 
 
 AMMO:
----
+|---
 (X) Aether Arrow
 (X) Aether Bullet
 (X) Aether Canister
@@ -1555,7 +1563,7 @@ AMMO:
 ---
 
 CROSS-MOD CONTENT:
----
+|---
 (#3) Fargo's caught npcs
 (^) Fargo's Fountain biome change
 (^, ᗢ) Fargo's sell boss/rare npc summons
@@ -1591,7 +1599,7 @@ CROSS-MOD CONTENT:
 ---
 
 UI:
----
+|---
 (^) Ashen Icon
 (X) Ashen Map/Bestiary Backdrop
 (X) Ashen Mines Icon
@@ -1630,7 +1638,7 @@ UI:
 ---
 
 VOLUME I MUSIC:
----
+|---
 
 (X) Ashen Factory
 (^) Brine Pool
