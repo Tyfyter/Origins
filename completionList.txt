@@ -47,7 +47,6 @@ X: No progress
  + Additionally, specific requests can be mentioned in "()" after the entry]
 ---
 
-
 BOSSES AND MINI-BOSSES:
 ---
 (#, ^2, 々) Chambersite Sentinel
@@ -141,6 +140,7 @@ OTHER:
 (^) Journal*
 (^) Quest System General*
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
+(☻) Defiled "Chrysalis" Spawning
 ---
 
 
@@ -149,7 +149,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(☻) Aqueoua (no wiggle or shelly variant :( ?)
+(☻) Aqueoua (shelly variant does exist, and it wiggles as much as the sprite does, if that thing from spore is supposed to somehow indicate the desired wiggliness I'm afraid I have no clue how it moves)
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
