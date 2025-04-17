@@ -98,7 +98,7 @@ namespace Origins.Tiles.Brine {
 	}
 	public class Hydrothermal_Vent_Goopy : Hydrothermal_Vent, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => new Color(1, 1, 1, 1);
+		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			(int i, int j) = tile.GetTilePosition();
 			int style = TileObjectData.GetTileStyle(tile);
@@ -128,6 +128,9 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileLighted[Type] = true;
@@ -223,11 +226,6 @@ namespace Origins.Tiles.Brine {
 				g = 0.0375f;
 				b = 0.015f;
 			}
-		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			// check if uncommenting this makes the glowmasks draw
-			// if it does then I think I know how to actually fix it, I switched away from this because it doesn't currently support SetSpriteEffects
-			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
