@@ -40,8 +40,6 @@ namespace Origins.Tiles.Riven {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
 			AddMapEntry(new Color(0, 125, 200));
-			//SetModTree(Defiled_Tree.Instance);
-			mergeID = TileID.Stone;
 			//soundType = SoundID.NPCDeath1;
 			MinPick = 65;
 			MineResist = 1.5f;

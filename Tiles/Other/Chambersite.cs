@@ -19,6 +19,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];
+			tile.TileFrameX = 0;
 			Tile up = Main.tile[i, j - 1];
 			Tile down = Main.tile[i, j + 1];
 			Tile left = Main.tile[i - 1, j];

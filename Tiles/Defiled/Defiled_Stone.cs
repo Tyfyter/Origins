@@ -30,7 +30,7 @@ namespace Origins.Tiles.Defiled {
 			//ItemDrop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
-			mergeID = TileID.Stone;
+			//mergeID = TileID.Stone;
 			MinPick = 65;
 			MineResist = 2;
 			AddDefiledTile();

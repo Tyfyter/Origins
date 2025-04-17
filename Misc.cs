@@ -47,6 +47,7 @@ using Terraria.Graphics.Light;
 using Origins.Tiles.Limestone;
 using Terraria.Enums;
 using Origins.World.BiomeData;
+using Origins.Tiles.Other;
 
 namespace Origins {
 	#region classes
@@ -2695,13 +2696,25 @@ namespace Origins {
 			}
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
+			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
+
+			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Topaz, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Emerald, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Ruby, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Diamond, oneWay: false, extraFunctions: false);
+
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
-			biome.GERunnerWallConversions.Add(WallID.AmethystUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.TopazUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.SapphireUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.EmeraldUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.RubyUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.DiamondUnsafe, wall);
+			biome.AddWallConversions(wall,
+				WallID.AmethystUnsafe,
+				WallID.TopazUnsafe,
+				WallID.SapphireUnsafe,
+				WallID.EmeraldUnsafe,
+				WallID.RubyUnsafe,
+				WallID.DiamondUnsafe
+			);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
