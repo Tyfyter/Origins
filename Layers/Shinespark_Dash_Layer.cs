@@ -16,7 +16,7 @@ namespace Origins.Layers {
 		AutoLoadingAsset<Texture2D> diagonalTexture = "Origins/Projectiles/Misc/Speed_Booster_Shinespark_Diagonal";
 		AutoLoadingAsset<Texture2D> verticalTexture = "Origins/Projectiles/Misc/Speed_Booster_Shinespark_Vertical";
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.OriginPlayer().shineSparkDashTime > 0;
-		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.EyebrellaCloud);
+		public override Position GetDefaultPosition() => PlayerDrawLayers.AfterLastVanillaLayer;
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			Player drawPlayer = drawInfo.drawPlayer;
 			Vector2 position = drawInfo.Position + drawPlayer.Size * 0.5f - Main.screenPosition;
