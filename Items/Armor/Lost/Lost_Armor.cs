@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Layers;
 using Origins.Tiles.Defiled;
 using ReLogic.Content;
 using Terraria;
@@ -16,7 +17,10 @@ namespace Origins.Items.Armor.Lost {
             "ManaShielding",
 			"MagicBoostGear"
         ];
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			Accessory_Tangela_Layer.AddTangelaMask<Head_Tangela_Layer>(Item.headSlot, Texture + "_Head_Tangela");
+		}
+		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
@@ -53,7 +57,7 @@ namespace Origins.Items.Armor.Lost {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
 				}
 			}
-			Item.ResearchUnlockCount = 1;
+			Accessory_Tangela_Layer.AddTangelaMask<Body_Tangela_Layer>(Item.bodySlot, Texture + "_Body_Tangela");
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
