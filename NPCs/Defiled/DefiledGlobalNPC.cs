@@ -127,5 +127,6 @@ namespace Origins.NPCs.Defiled {
 			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
 		}
 		public (Rectangle startArea, Predicate<Vector2> customShape)? GetCustomChrysalisShape(NPC chrysalisNPC) => null;
+		public void OnChrysalisSpawn() { }
 	}
 }

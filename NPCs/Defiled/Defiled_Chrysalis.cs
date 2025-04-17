@@ -79,6 +79,7 @@ namespace Origins.NPCs.Defiled {
 			}
 			if (++NPC.ai[1] > animationTimeMax) {
 				NPC.Transform(referenceNPC.netID);
+				if (NPC.ModNPC is IDefiledEnemy defiledEnemy) defiledEnemy.OnChrysalisSpawn();
 				IEntitySource source = NPC.GetSource_FromThis();
 				Vector2 from = new(NPC.position.X + NPC.width  * 0.5f, NPC.position.Y + NPC.height * 0.75f);
 				for (int i = 0; i < chunks.Length; i++) {

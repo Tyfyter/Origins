@@ -237,6 +237,17 @@ namespace Origins.NPCs.Defiled {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			Mana = reader.ReadSingle();
 		}
+		public (Rectangle startArea, Predicate<Vector2> customShape)? GetCustomChrysalisShape(NPC chrysalisNPC) {
+			Rectangle area = chrysalisNPC.Hitbox;
+			area.Width += 70;
+			if (chrysalisNPC.direction > 0) area.X -= 70;
+			return (area, pos => area.Contains(pos));
+		}
+		public void OnChrysalisSpawn() {
+			if (NPC.direction == -1) {
+				NPC.rotation = MathHelper.Pi;
+			}
+		}
 		public int? TangelaSeed { get; set; }
 		public AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Flyer).GetDefaultTMLName() + "_Tangela";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
