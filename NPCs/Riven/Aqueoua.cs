@@ -1,4 +1,6 @@
 ﻿using Origins.World.BiomeData;
+using PegasusLib;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -29,6 +31,8 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void AI() {
 			NPC.DoFlyingAI(5f, 0.025f, 0.5f);
+			if (!NPC.velocity.IsWithin(default, 1)) NPC.velocity = NPC.velocity.RotatedBy(MathF.Cos(NPC.ai[0] * MathHelper.PiOver4 * 0.25f) * 0.03f);
+			NPC.rotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(5);
@@ -54,6 +58,8 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void AI() {
 			NPC.DoFlyingAI(4f, 0.02f, 0.4f);
+			if (!NPC.velocity.IsWithin(default, 1)) NPC.velocity = NPC.velocity.RotatedBy(MathF.Cos(NPC.ai[0] * MathHelper.PiOver4 * 0.25f) * 0.03f);
+			NPC.rotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
 		}
 	}
 }
