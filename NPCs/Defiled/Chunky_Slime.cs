@@ -29,6 +29,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.alpha = 55;
+			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;

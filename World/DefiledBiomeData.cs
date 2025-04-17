@@ -114,6 +114,7 @@ namespace Origins.World.BiomeData {
 			public const float AncientCyclops = 0.03f;
 			public const float Asphyxiator = 0.5f;
 			public const float AncientFlyer = 0.04f;
+			public const float Nearby = 0.3f;
 			public override string Name => $"{nameof(Defiled_Wastelands)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.BiomeHigh;

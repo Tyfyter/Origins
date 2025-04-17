@@ -295,6 +295,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			NPC owner = Owner;
+			if (!owner.active) Projectile.active = false;
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi / 2f;
 			Projectile.ai[0] += 1f;
 			float timeToFlyOut = UseTime * Projectile.MaxUpdates;
