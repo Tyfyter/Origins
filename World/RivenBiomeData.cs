@@ -32,6 +32,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using ThoriumMod.PlayerLayers;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
 
@@ -42,7 +43,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.Riven;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Riven_Underground_Background>();
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;

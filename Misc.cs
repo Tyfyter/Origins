@@ -48,6 +48,7 @@ using Origins.Tiles.Limestone;
 using Terraria.Enums;
 using Origins.World.BiomeData;
 using Origins.Tiles.Other;
+using Origins.Backgrounds;
 
 namespace Origins {
 	#region classes
@@ -2944,6 +2945,15 @@ namespace Origins {
 					spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage[0];
 				}
 			}
+		}
+		public static ModUndergroundBackgroundStyle BiomeUGBackground<T>() where T : ModUndergroundBackgroundStyle {
+			double num2 = Main.maxTilesY - 330;
+			double num3 = (int)((num2 - Main.worldSurface) / 6.0) * 6;
+			num2 = Main.worldSurface + num3 - 5.0;
+			if ((Main.screenPosition.Y / 16f) > Main.rockLayer + 60 && (Main.screenPosition.Y / 16f) < num2 - 60) {
+				return ModContent.GetInstance<T>();
+			}
+			return null;
 		}
 	}
 	public static class ShopExtensions {
