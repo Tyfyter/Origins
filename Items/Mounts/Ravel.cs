@@ -8,6 +8,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.NPCs.TownNPCs;
 namespace Origins.Items.Mounts {
 	public class Ravel : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -183,9 +185,13 @@ namespace Origins.Items.Mounts {
 			playerDrawData.Add(item);
 			return false;
 		}
+		static bool CanPlayerFitInSpace(Player player) {
+			Vector2 position = player.position - new Vector2((20 - player.width) / 2, 42 - player.height);
+			return Collision.IsClearSpotTest(position + player.velocity, 16f, 20, 42, fallThrough: true, fall2: true);
+		}
 		internal static void On_Mount_Dismount(On_Mount.orig_Dismount orig, Mount self, Player mountedPlayer) {
 			if (RavelMounts.Contains(self.Type)) {
-				if (!mountedPlayer.CanFitSpace(0)) return;
+				if (!CanPlayerFitInSpace(mountedPlayer)) return;
 				if (OriginClientConfig.Instance.AnimatedRavel) {
 					if (mountedPlayer.mount._idleTime != 0 || mountedPlayer.mount._idleTimeNext != 0) {
 						self._idleTime = -transformAnimationFrames;
@@ -216,8 +222,8 @@ namespace Origins.Items.Mounts {
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.changeSize = true;
-			originPlayer.targetWidth = 15;
-			originPlayer.targetHeight = 15;
+			originPlayer.targetWidth = 12;
+			originPlayer.targetHeight = 12;
 		}
 	}
 	public class Ravel_Projectile_Layer : PlayerDrawLayer {

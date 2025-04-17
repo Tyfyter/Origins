@@ -32,6 +32,8 @@ using Terraria.Localization;
 using AltLibrary.Core;
 using PegasusLib;
 using System.Linq;
+using Terraria.DataStructures;
+using System.Collections.ObjectModel;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -63,8 +65,9 @@ namespace Origins.World.BiomeData {
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			const float heart_range = 16 * 50;
-			float heartProximity = OriginSystem.Instance.DefiledHearts.Count > 0 ? 
-				Math.Max(0, heart_range - OriginSystem.Instance.DefiledHearts.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range
+			ReadOnlyCollection<Point16> heartLocations = TESystem.GetLocations<Defiled_Heart_TE_System>();
+			float heartProximity = heartLocations.Count > 0 ? 
+				Math.Max(0, heart_range - heartLocations.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range
 				: 0;
 			Filters.Scene["Origins:ZoneDefiled"].GetShader()
 				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed * (MathF.Pow(heartProximity, 4) + 1))
@@ -295,7 +298,7 @@ namespace Origins.World.BiomeData {
 						WorldGen.PlaceTile(p.X + o, p.Y + 1, stoneID);
 						WorldGen.SlopeTile(p.X + o - 1, p.Y + 1, SlopeID.None);
 						WorldGen.SlopeTile(p.X + o, p.Y + 1, SlopeID.None);
-						if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to, checkStay: true)) {
+						if (TileExtenstions.CanActuallyPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to, checkStay: true)) {
 							TileObject.Place(to);
 							//WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
 							fisureCount++;
@@ -597,6 +600,10 @@ namespace Origins.World.BiomeData {
 							} else if (CanKillTile(tilePos.X + x, tilePos.Y + y)) {
 								tile.HasTile = false;
 								removedAnyTiles = true;
+								GenRunners.AutoSlope(tilePos.X + x + 1, tilePos.Y + y, true);
+								GenRunners.AutoSlope(tilePos.X + x - 1, tilePos.Y + y, true);
+								GenRunners.AutoSlope(tilePos.X + x, tilePos.Y + y + 1, true);
+								GenRunners.AutoSlope(tilePos.X + x, tilePos.Y + y - 1, true);
 							}
 							tile.WallType = stoneWallID;
 						}
@@ -997,9 +1004,8 @@ namespace Origins.World.BiomeData {
 							Main.tile[i, j].SetActive(false);
 						}
 					}
-					TileObject.CanPlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1, out var data);
-					TileObject.Place(data);
-					OriginSystem.Instance.DefiledHearts.Add(heart);
+					TileExtenstions.ForcePlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1);
+					ModContent.GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(heart.X, heart.Y));
 				}
 			}
 		}

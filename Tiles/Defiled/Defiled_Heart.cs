@@ -1,15 +1,18 @@
 ﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Heart : ModTile {
-		public int heartBroken = 0;
+	public class Defiled_Heart : ModTile, IComplexMineDamageTile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -36,10 +39,11 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
-			Player player = Main.LocalPlayer;
-			if (player.HeldItem.hammer < 90) {
+			if (minePower < 90) {
 				damage = 0;
 				HitSound = Origins.Sounds.DefiledIdle.WithPitch(-3f);
+			} else {
+				HitSound = Origins.Sounds.DefiledIdle;
 			}
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
@@ -68,15 +72,27 @@ namespace Origins.Tiles.Defiled {
 			r = g = b = 0.3f;
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
-			if (Main.netMode == NetmodeID.MultiplayerClient) {
-
-			}
-			ModContent.GetInstance<OriginSystem>().DefiledHearts.Add(new Point(i, j));
+			ModContent.GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(i, j));
 		}
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			heartBroken++;
-        }
-    }
+	}
+	public class Defiled_Heart_TE_System : TESystem {
+		public override void PreUpdateEntities() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			for (int i = 0; i < tileEntityLocations.Count; i++) {
+				Point16 pos = tileEntityLocations[i];
+				if (!Main.tile[pos.X, pos.Y].TileIsType(Defiled_Heart.ID)) {
+					tileEntityLocations.RemoveAt(i);
+					i--;
+					continue;
+				}
+			}
+		}
+		public override void LoadWorldData(TagCompound tag) {
+			base.LoadWorldData(tag);
+			tileEntityLocations.AddRange(ModContent.GetInstance<OriginSystem>().LegacySave_DefiledHearts);
+			tileEntityLocations = tileEntityLocations.Distinct().ToList();
+		}
+	}
 	public class Defiled_Heart_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";

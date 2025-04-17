@@ -123,18 +123,8 @@ namespace Origins.Tiles {
 				}
 				if (WorldGen.genRand.NextBool(hasLimestone ? 80 : 200)) {
 					ushort ocotillo = (ushort)ModContent.TileType<Ocotillo>();
-					if (TileObject.CanPlace(i, j - 1, ocotillo, 0, 1, out TileObject objectData, onlyCheck: false)) {
-						TileObjectData tileData = TileObjectData.GetTileData(ocotillo, objectData.style);
-						int left = i - tileData.Origin.X;
-						int top = (j - 1) - tileData.Origin.Y;
-						for (int y = 0; y < tileData.Height; y++) {
-							for (int x = 0; x < tileData.Width; x++) {
-								Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
-								if (tileSafely.HasTile || tileSafely.LiquidAmount > 0) goto fail;
-							}
-						}
+					if (TileExtenstions.CanActuallyPlace(i, j - 1, ocotillo, 0, 1, out TileObject objectData, onlyCheck: false)) {
 						if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
-						fail:;
 					}
 				}
 			}

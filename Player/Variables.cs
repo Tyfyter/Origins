@@ -885,6 +885,19 @@ namespace Origins {
 			hideAllLayers = false;
 			disableUseItem = false;
 			thornsVisualProjType = -1;
+			if (changeSize) {
+				Player.position.X -= (targetWidth - Player.width) / 2;
+				Player.position.Y -= targetHeight - Player.height;
+				Player.width = targetWidth;
+				Player.height = targetHeight;
+			} else if (targetWidth != 0) {
+				Player.position.X -= (20 - Player.width) / 2;
+				Player.position.Y -= 42 - Player.height;
+				Player.width = 20;
+				Player.height = 42;
+				targetWidth = 0;
+				targetHeight = 0;
+			}
 			changeSize = false;
 			minionSubSlots = new float[minionSubSlotValues];
 			if (timeSinceLastDeath < int.MaxValue) timeSinceLastDeath++;

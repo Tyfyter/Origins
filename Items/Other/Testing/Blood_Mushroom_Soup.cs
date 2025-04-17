@@ -93,12 +93,6 @@ namespace Origins.Items.Other.Testing {
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case (RavelHole, 0):
-				parameters.Enqueue(Main.MouseWorld);
-				break;
-				case (RavelHole, 1):
-				parameters.Enqueue(Main.MouseWorld);
-				Apply();
 				break;
 				case (SpreadRivenGrass, 0):
 				parameters.Enqueue(Player.tileTargetX);
@@ -496,10 +490,6 @@ namespace Origins.Items.Other.Testing {
 					Riven_Hive.Gen.SpreadRivenGrass((int)parameters.Dequeue(), (int)parameters.Dequeue());
 					break;
 				}
-				case RavelHole: {
-					Defiled_Wastelands.Gen.RavelConnection((Vector2)parameters.Dequeue(), (Vector2)parameters.Dequeue());
-					break;
-				}
 				case BrinePool_Opening: {
 					GenRunners.OpeningRunner(
 						(int)parameters.Dequeue(), (int)parameters.Dequeue(),
@@ -543,8 +533,19 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Start_Limestone_Testing_Mode : WorldgenTestingMode {
+	public class Ravel_Hole_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) =>
+			$"ravel hole {(parameterCount > 0 ? "end" : "start")} point: {Player.tileTargetX}, {Player.tileTargetY}";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Main.MouseWorld);
+			if (parameters.Count >= 2) Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Defiled_Wastelands.Gen.RavelConnection((Vector2)parameters.Dequeue(), (Vector2)parameters.Dequeue());
+		}
+	}
+	public class Start_Limestone_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Limestone Cave";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Player.tileTargetX);
@@ -556,7 +557,6 @@ namespace Origins.Items.Other.Testing {
 		}
 	}
 	public class Spike_Testing_Mode : WorldgenTestingMode {
-		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			switch (parameterCount) {
 				case 0:

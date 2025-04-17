@@ -413,7 +413,7 @@ namespace Origins.World {
 				if (chestIndex != -1) {
 					int luckyHat = ModContent.TileType<Lucky_Hat_Tile>();
 					bool placedHat = false;
-					if (TileObject.CanPlace(x, y - 2, luckyHat, 0, direction, out TileObject objectData, onlyCheck: false)) {
+					if (TileExtenstions.CanActuallyPlace(x, y - 2, luckyHat, 0, direction, out TileObject objectData, onlyCheck: false)) {
 						if (TileObject.Place(objectData)) {
 							placedHat = true;
 							WorldGen.SquareTileFrame(x, y - 2);

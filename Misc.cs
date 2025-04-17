@@ -49,6 +49,7 @@ using Terraria.Enums;
 using Origins.World.BiomeData;
 using Origins.Tiles.Other;
 using Origins.Backgrounds;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins {
 	#region classes
@@ -4356,6 +4357,39 @@ namespace Origins {
 #endif
 			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
+		}
+		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+
+				int left = i - tileData.Origin.X;
+				int top = j - tileData.Origin.Y;
+				for (int y = 0; y < tileData.Height; y++) {
+					for (int x = 0; x < tileData.Width; x++) {
+						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+						if (tileSafely.HasTile && !(Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		public static void ForcePlace(int i, int j, int type, int style, int dir, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+			if (TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData, onlyCheck, forcedRandom, checkStay)) {
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+
+				int left = i - tileData.Origin.X;
+				int top = j - tileData.Origin.Y;
+				for (int y = 0; y < tileData.Height; y++) {
+					for (int x = 0; x < tileData.Width; x++) {
+						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+						tileSafely.HasTile = false;
+					}
+				}
+				TileObject.Place(objectData);
+			}
 		}
 	}
 	public static class ProjectileExtensions {
