@@ -20,6 +20,12 @@
     <Reference Include="CalamityMod">
       <HintPath>..\ModAssemblies\CalamityMod.dll</HintPath>
     </Reference>
+    <Reference Include="Fargowiltas">
+      <HintPath>..\ModAssemblies\Fargowiltas.dll</HintPath>
+    </Reference>
+    <Reference Include="MagicStorage">
+      <HintPath>..\ModAssemblies\MagicStorage.dll</HintPath>
+    </Reference>
     <Reference Include="PegasusLib">
       <HintPath>..\ModAssemblies\PegasusLib.dll</HintPath>
     </Reference>

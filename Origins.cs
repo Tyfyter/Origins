@@ -451,6 +451,7 @@ namespace Origins {
 				GameShaders.Misc["Origins:LaserBlade"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "LaserBlade").UseSamplerState(SamplerState.PointWrap);
 				GameShaders.Misc["Origins:Identity"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Identity")
 				.UseSamplerState(SamplerState.PointClamp);
+				GameShaders.Misc["Origins:Defiled_Indicator"] = new MiscShaderData(Assets.Request<Effect>("Effects/Defiled_Indicator"), "Defiled_Indicator");
 
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
 				.UseSamplerState(SamplerState.PointClamp);
