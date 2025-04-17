@@ -22,7 +22,7 @@ namespace Origins.World.BiomeData {
 		public override string MapBackground => BackgroundPath;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Defiled_Underground_Background>();
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => null;
 		public static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			return OriginSystem.brineTiles > Brine_Pool.NeededTiles;
