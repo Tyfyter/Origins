@@ -38,10 +38,7 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {
-			Player player = Main.LocalPlayer;
-			if (player.HeldItem.hammer < 90) {
-				damage = 0;
-			}
+			if (minePower < 90) damage = 0;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!NPC.downedGolemBoss) return;
@@ -162,7 +159,7 @@ namespace Origins.Tiles.Brine {
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowColor = GlowColor;
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
-			drawData.glowTexture = GlowTexture;
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 
 			if (Main.rand.NextFloat(1000) >= Main.gfxQuality * 1000f) return;
 			Tile tile = Main.tile[i, j];
