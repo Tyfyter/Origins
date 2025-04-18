@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 24;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
-			Item.UseSound = Origins.Sounds.IMustScream;
+			Item.UseSound = Origins.Sounds.IMustScream.WithVolumeScale(0.4f);
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
 			Item.rare = ItemRarityID.Yellow;
 			Item.value = Item.sellPrice(gold: 3);
@@ -140,7 +140,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ExplosiveGlobalProjectile.ExplosionVisual(
 					Projectile,
 					true,
-					sound: SoundID.Item62
+					sound: SoundID.Item62.WithVolumeScale(0.6f)
 				);
 				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 				Projectile.ai[0] = 1;
