@@ -36,6 +36,7 @@ namespace Origins.World {
 
 			On_WorldGen.Pyramid += On_WorldGen_Pyramid;
 			WorldGen.DetourPass((PassLegacy)WorldGen.VanillaGenPasses["Shinies"], Detour_Shinies);
+			WorldGen.DetourPass((PassLegacy)WorldGen.VanillaGenPasses["Mountain Caves"], Detour_MountainCaves);
 		}
 		static void Detour_Shinies(WorldGen.orig_GenPassDetour orig, object self, GenerationProgress progress, GameConfiguration configuration) {
 			bool rope = TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope];
@@ -58,6 +59,22 @@ namespace Origins.World {
 			}
 			TileID.Sets.CanBeClearedDuringGeneration[TileID.Rope] = rope;
 			TileID.Sets.CanBeClearedDuringGeneration[TileID.Campfire] = fire;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = true;
+		}
+		static void Detour_MountainCaves(WorldGen.orig_GenPassDetour orig, object self, GenerationProgress progress, GameConfiguration configuration) {
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = false;
+			try {
+				orig(self, progress, configuration);
+			} catch (Exception) {
+				TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = true;
+				TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = true;
+				TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = true;
+				throw;
+			}
 			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Pile_Medium>()] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalactite>()] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[ModContent.TileType<Limestone_Stalagmite>()] = true;

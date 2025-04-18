@@ -533,8 +533,19 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Ravel_Hole_Testing_Mode : WorldgenTestingMode {
+	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Auto Slope";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			GenRunners.AutoSlope((int)parameters.Dequeue(), (int)parameters.Dequeue(), true);
+		}
+	}
+	public class Ravel_Hole_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) =>
 			$"ravel hole {(parameterCount > 0 ? "end" : "start")} point: {Player.tileTargetX}, {Player.tileTargetY}";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {

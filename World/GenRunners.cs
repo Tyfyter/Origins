@@ -11,6 +11,8 @@ using Origins.Walls;
 using Terraria.ModLoader;
 using Microsoft.VisualBasic;
 using PegasusLib;
+using Terraria.ObjectData;
+using Terraria.Enums;
 
 namespace Origins.World {
 	public class GenRunners {
@@ -735,13 +737,36 @@ namespace Origins.World {
 				tile.IsHalfBlock = false;
 				tile.Slope = SlopeID.None;
 			}
+			static bool HasSolidTile(int i, int j, int side) {
+				Tile tile = Main.tile[i, j];
+				if (!tile.HasTile) return false;
+				if (Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType]) return true;
+				if (TileObjectData.GetTileData(tile) is not TileObjectData objectData) return false;
+				TileUtils.GetMultiTileTopLeft(i, j, objectData, out int x, out int y);
+				i -= x;
+				j -= y;
+				switch (side) {
+					default:// bottom anchor
+					if (objectData.AnchorBottom.type == AnchorType.None) return false;
+					return i >= objectData.AnchorBottom.checkStart && i <= objectData.AnchorBottom.checkStart + objectData.AnchorBottom.tileCount;
+					case 1:// top anchor
+					if (objectData.AnchorTop.type == AnchorType.None) return false;
+					return i >= objectData.AnchorTop.checkStart && i <= objectData.AnchorTop.checkStart + objectData.AnchorTop.tileCount;
+					case 2:// left anchor
+					if (objectData.AnchorLeft.type == AnchorType.None) return false;
+					return j >= objectData.AnchorLeft.checkStart && j <= objectData.AnchorLeft.checkStart + objectData.AnchorLeft.tileCount;
+					case 3:// right anchor
+					if (objectData.AnchorRight.type == AnchorType.None) return false;
+					return j >= objectData.AnchorRight.checkStart && j <= objectData.AnchorRight.checkStart + objectData.AnchorRight.tileCount;
+				}
+			}
+			if (HasSolidTile(i, j - 1, 0)) adj |= t;
+			if (HasSolidTile(i - 1, j, 3)) adj |= l;
+			if (HasSolidTile(i + 1, j, 2)) adj |= r;
+			if (HasSolidTile(i, j + 1, 1)) adj |= b;
 			if (Main.tile[i - 1, j - 1].HasSolidTile()) adj |= tl;
-			if (Main.tile[i, j - 1].HasSolidTile()) adj |= t;
 			if (Main.tile[i + 1, j - 1].HasSolidTile()) adj |= tr;
-			if (Main.tile[i - 1, j].HasSolidTile()) adj |= l;
-			if (Main.tile[i + 1, j].HasSolidTile()) adj |= r;
 			if (Main.tile[i - 1, j + 1].HasSolidTile()) adj |= bl;
-			if (Main.tile[i, j + 1].HasSolidTile()) adj |= b;
 			if (Main.tile[i + 1, j + 1].HasSolidTile()) adj |= br;
 			bool sloped = true;
 			retry:

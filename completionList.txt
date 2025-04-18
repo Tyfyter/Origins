@@ -137,7 +137,7 @@ WORLD GENERATION:
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
-(#3) Limestone Cave !!! (rubble spawning on slopes and rubble cut-off)
+(☻) Limestone Cave !!! (rubble spawning on slopes and rubble cut-off)
 (^) Riven Hive
 (#2, 々) The Dusk
 
@@ -151,7 +151,7 @@ OTHER:
 (^) Journal*
 (^) Quest System General*
 (#2) Summoner Plus Modifiers* !!! (not all of them present)
-(#2) Defiled "Chrysalis" Spawning (just needs to spawn)
+(☻) Defiled "Chrysalis" Spawning (spawns naturally now)
 ---
 
 
@@ -168,7 +168,7 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(#2, ^2) Cannihound !!! (spawn too rarely and reinforcements after death)
+(☻) Cannihound !!! (spawn too rarely and reinforcements after death)
 (^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
