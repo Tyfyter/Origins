@@ -143,6 +143,7 @@ namespace Origins.Tiles.Riven {
 		public string EntryName => "Origins/" + typeof(Spug_Flesh_Entry).Name;
 		public class Spug_Flesh_Entry : JournalEntry {
 			public override string TextKey => "Spug_Flesh";
+			public override JournalSortIndex SortIndex => new("Riven", 11);
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

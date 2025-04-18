@@ -1156,4 +1156,6 @@ Zoologist.Text:
 Series: {
 	µUncategorized: Uncategorized
 	Lost_Crone: Lost Crone
+	Riven: "{§Riven_Hive}"
+	Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
 }

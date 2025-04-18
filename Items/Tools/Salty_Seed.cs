@@ -16,6 +16,7 @@ namespace Origins.Items.Tools {
 		public string EntryName => "Origins/" + typeof(Salty_Seed_Entry).Name;
 		public class Salty_Seed_Entry : JournalEntry {
 			public override string TextKey => "Salty_Seed";
+			public override JournalSortIndex SortIndex => new("Riven", 2);
 		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Plasma_Cutter>()] = Type;

@@ -20,6 +20,7 @@ namespace Origins.NPCs.Riven {
 		public string EntryName => "Origins/" + typeof(Riven_Protoform_Entry).Name;
 		public class Riven_Protoform_Entry : JournalEntry {
 			public override string TextKey => "Riven_Protoform";
+			public override JournalSortIndex SortIndex => new("Riven", 6);
 		}
 		public Rectangle DrawRect => new(0, 6, 36, 40);
 		public int AnimationFrames => 32;

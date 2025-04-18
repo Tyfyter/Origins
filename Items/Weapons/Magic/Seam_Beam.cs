@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Seam_Beam_Entry).Name;
 		public class Seam_Beam_Entry : JournalEntry {
 			public override string TextKey => "Seam_Beam";
+			public override JournalSortIndex SortIndex => new("Riven", 10);
 		}
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

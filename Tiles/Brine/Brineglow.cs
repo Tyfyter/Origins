@@ -366,6 +366,7 @@ namespace Origins.Tiles.Brine {
 		public string EntryName => "Origins/" + typeof(Brineglow_Entry).Name;
 		public class Brineglow_Entry : JournalEntry {
 			public override string TextKey => "Brineglow";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 2);
 		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

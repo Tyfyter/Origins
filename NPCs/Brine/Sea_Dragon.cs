@@ -23,6 +23,7 @@ namespace Origins.NPCs.Brine {
 		public string EntryName => "Origins/" + typeof(Sea_Dragon_Entry).Name;
 		public class Sea_Dragon_Entry : JournalEntry {
 			public override string TextKey => "Sea_Dragon";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 3);
 		}
 		public Rectangle DrawRect => new(-28, 0, 94, 26);
 		public int AnimationFrames => 64;

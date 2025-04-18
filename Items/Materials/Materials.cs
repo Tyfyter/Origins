@@ -76,6 +76,7 @@ namespace Origins.Items.Materials {
 		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
+			public override JournalSortIndex SortIndex => new("Riven", 0);
 		}
 	}
 	public class Alkaliphiliac_Tissue : MaterialItem {
@@ -403,6 +404,7 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Riven_Carapace_Entry).Name;
 		public class Riven_Carapace_Entry : JournalEntry {
 			public override string TextKey => "Riven_Carapace";
+			public override JournalSortIndex SortIndex => new("Riven", 5);
 		}
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;

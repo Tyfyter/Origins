@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Melee {
 		public string EntryName => "Origins/" + typeof(Boomboom_Entry).Name;
 		public class Boomboom_Entry : JournalEntry {
 			public override string TextKey => "Boomboom";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 1);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);

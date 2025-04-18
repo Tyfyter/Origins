@@ -106,7 +106,7 @@ namespace Origins.UI {
 					return false;
 				}
 				size = new(options.Width, options.Height);
-				if (renderTarget is null) return true;
+				if (renderTarget is null || justCheckingString) return true;
 				spriteBatch?.Draw(renderTarget, position, new(0, 0, (int)options.Width, (int)options.Height), Color.White);
 				return true;
 			}

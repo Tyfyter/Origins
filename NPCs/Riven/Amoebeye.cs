@@ -19,6 +19,7 @@ namespace Origins.NPCs.Riven {
 		public string EntryName => "Origins/" + typeof(Amoebeye_Entry).Name;
 		public class Amoebeye_Entry : JournalEntry {
 			public override string TextKey => "Amoebeye";
+			public override JournalSortIndex SortIndex => new("Riven", 7);
 		}
 		public Rectangle DrawRect => new(0, 0, 72, 68);
 		public int AnimationFrames => 32;
