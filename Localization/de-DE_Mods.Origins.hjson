@@ -1173,8 +1173,8 @@ Buffs: {
 	}
 
 	Cannihound_Lure_Debuff: {
-		// DisplayName: Cannihound Lure Debuff
-		// Description: Mods.Origins.Buffs.Cannihound_Lure_Debuff.Description
+		// DisplayName: Ill Omen of Hound
+		// Description: You smell like fresh meat
 	}
 }
 
@@ -1973,6 +1973,7 @@ Keybinds: {
 	// "Forbidden Voice.DisplayName": Use Forbidden Voice
 	// "Debug Screen Shader.DisplayName": Debug  Screen  Shader
 	// GoldenLotus.DisplayName: Golden Lotus
+	// UseMojoFlask.DisplayName: Use Mojo Flask
 }
 
 Configs: {

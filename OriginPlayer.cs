@@ -556,6 +556,16 @@ namespace Origins {
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
 				TriggerSetBonus();
 			}
+			if (Keybindings.UseMojoFlask.JustPressed && IterateAssimilation().Any(a => a.Percent > 0)) {
+				if (Player.nonTorch == -1) Player.nonTorch = Player.selectedItem;
+
+				for (int i = 0; i < Player.inventory.Length; i++) {
+					if (Player.inventory[i]?.ModItem is Mojo_Flask) {
+						Player.selectedItem = i;
+						Player.controlUseItem = true;
+					}
+				}
+			}
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;
 				doubleTapDownTimer = 0;
