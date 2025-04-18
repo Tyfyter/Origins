@@ -148,7 +148,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 	}
 	public class Crown_Jewel_Drop() : DropInstancedPerClient(ModContent.ItemType<Crown_Jewel>(), 1, 1, 1, null) {
-		/*
+		//*
 		public override bool CanDropForPlayer(Player player) => !player.OriginPlayer().crownJewel;
 		/*/
 		public override bool CanDropForPlayer(Player player) => true;
