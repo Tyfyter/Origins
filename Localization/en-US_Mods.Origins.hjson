@@ -39,6 +39,7 @@ RecipeGroups: {
 	EvilBoomerangs: Any Evil Boomerang
 	EvilGunMagazines: Any Evil Gun Magazine
 	AnyBanner: Any {0} Banner
+	GolfBalls: Any Golf Ball
 }
 
 Status_Messages: {
