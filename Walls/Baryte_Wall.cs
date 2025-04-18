@@ -1,6 +1,13 @@
-﻿using Origins.Items.Other.Testing;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Items.Other.Testing;
 using Origins.Tiles.Brine;
+using PegasusLib;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -8,7 +15,12 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Walls {
 	[LegacyName("Sulphur_Stone_Wall", "Dolomite_Wall")]
 	public class Baryte_Wall : ModWall {
+		Asset<Texture2D> perlin;
+		float[,] odds;
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				perlin = Request<Texture2D>("Terraria/Images/Misc/Perlin");
+			}
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			Origins.WallHammerRequirement[Type] = 70;
 			Origins.WallBlocksMinecartTracks[Type] = true;
@@ -39,6 +51,81 @@ namespace Origins.Walls {
 				if (k < max_dist && WorldGen.genRand.NextBool(k * k * 3)) WorldGen.PlaceTile(i, j, coral, true);
 			}
 		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (Main.dedServ) return;
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (tile.LiquidAmount < 200 || tile.HasFullSolidTile()) return;
+			if (perlin.IsLoaded && odds is null) {
+				Texture2D perlin = this.perlin.Value;
+				Color[] color = new Color[perlin.Width * perlin.Height];
+				perlin.GetData(color);
+				odds = new float[perlin.Width, perlin.Height];
+				for (int k = 0; k < color.Length; k++) {
+					odds[k % perlin.Width, k / perlin.Width] = color[k].R / 255f;
+				}
+			}
+			if (odds is null) return;
+			float localValue = odds[i % odds.GetLength(0), j % odds.GetLength(1)];
+			if (Main.rand.NextFloat(1000) < Main.gfxQuality * 500 * localValue * localValue * localValue * localValue) {
+				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts)).velocity *= 0.1f;
+				//Gore.NewGorePerfect(Entity.GetSource_None(), new Vector2(i, j + Main.rand.NextFloat()) * 16, Vector2.UnitX * Main.rand.NextFloat(-1, 1), GoreID.LightningBunnySparks);
+			}
+		}
+	}
+	public class Brine_Cloud_Dust : ModDust {
+		public override string Texture => "Terraria/Images/Gore_" + GoreID.AmbientFloorCloud1;
+		public static List<int> dusts = []; 
+		public override void SetStaticDefaults() {
+			dusts.Add(Type);
+		}
+		public override void OnSpawn(Dust dust) {
+			dust.alpha = 254;
+			dust.fadeIn = 240;
+			dust.frame = Texture2D.Frame();
+		}
+		public override bool Update(Dust dust) {
+			dust.fadeIn -= GoreID.Sets.DisappearSpeed[GoreID.AmbientFloorCloud1];
+			if (dust.fadeIn <= 0) {
+				dust.active = false;
+				return false;
+			}
+			bool flag = false;
+			Tile tile = Main.tile[dust.position.ToTileCoordinates()];
+			if (tile == null) {
+				dust.active = false;
+				return false;
+			}
+			if (WorldGen.SolidTile(tile)) {
+				flag = true;
+			}
+			if (dust.fadeIn <= 30) {
+				flag = true;
+			}
+			dust.velocity *= 0.99f;
+			if (!flag) {
+				if (dust.alpha > 220) {
+					dust.alpha--;
+				}
+			} else {
+				dust.alpha++;
+				if (dust.alpha >= 255) {
+					dust.active = false;
+					return false;
+				}
+			}
+			dust.position += dust.velocity;
+			return false;
+		}
+		public override bool MidUpdate(Dust dust) {
+			return false;
+		}
+		public override Color? GetAlpha(Dust dust, Color lightColor) => lightColor * ((255 - dust.alpha) / 255f);
+	}
+	public class Brine_Cloud_Dust2 : Brine_Cloud_Dust {
+		public override string Texture => "Terraria/Images/Gore_" + GoreID.AmbientFloorCloud2;
+	}
+	public class Brine_Cloud_Dust3 : Brine_Cloud_Dust {
+		public override string Texture => "Terraria/Images/Gore_" + GoreID.AmbientFloorCloud3;
 	}
 	[LegacyName("Sulphur_Stone_Wall_Safe", "Dolomite_Wall_Safe")]
 	public class Baryte_Wall_Safe : Baryte_Wall {
