@@ -2,6 +2,8 @@
 using Origins.Dev;
 using Origins.Journal;
 using Origins.LootConditions;
+using Origins.Music;
+using Origins.NPCs.Brine.Boss;
 using PegasusLib.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -46,7 +48,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.consumable = true;
 		}
 		public override void GrabRange(Player player, ref int grabRange) {
-			if (Item.newAndShiny) grabRange = 16 * 2;
+			if (Item.newAndShiny) grabRange = 0;
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (Item.newAndShiny) {
@@ -116,6 +118,9 @@ namespace Origins.Items.Other.Consumables {
 			player.GetCritChance(DamageClass.Generic) += 1f * slainBossesCount;
 		}
 	}
+	public class CJ_Music_Scene_Effect : CoolItemMusicSceneEffect<Crown_Jewel> {
+		public override int Music => Origins.Music.CrownJewel;
+	}
 	public class Crown_Jewel_Toggle : BuilderToggle {
 		public override string HoverTexture => Texture;
 		public override bool Active() => OriginPlayer.LocalOriginPlayer?.crownJewel ?? false;
@@ -143,7 +148,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 	}
 	public class Crown_Jewel_Drop() : DropInstancedPerClient(ModContent.ItemType<Crown_Jewel>(), 1, 1, 1, null) {
-		//*
+		/*
 		public override bool CanDropForPlayer(Player player) => !player.OriginPlayer().crownJewel;
 		/*/
 		public override bool CanDropForPlayer(Player player) => true;

@@ -2,6 +2,7 @@
 using Origins.Graphics;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
+using Origins.Music;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
@@ -727,6 +728,16 @@ namespace Origins.NPCs.Brine.Boss {
 			Torpedo_Tube,
 			Mildew_Whip,
 		}
+	}
+	public class LD_Music_Scene_Effect : BossMusicSceneEffect {
+		public override int Music => Origins.Music.LostDiver;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			npcIDs[ModContent.NPCType<Lost_Diver_Spawn>()] = true;
+			npcIDs[ModContent.NPCType<Lost_Diver>()] = true;
+			npcIDs[ModContent.NPCType<Rock_Bottom>()] = true;
+		}
+		public override bool CanNPCActivateSceneEffect(NPC npc) => npc.ModNPC is not Rock_Bottom || npc.ai[1] != 0;
 	}
 	public class Boss_Bar_LD : ModBossBar {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {

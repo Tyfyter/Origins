@@ -932,6 +932,9 @@ namespace Origins {
 			public static int Fiberglass = MusicID.OtherworldlyJungle;
 
 			public static int BrinePool = MusicID.OtherworldlyEerie;
+			public static int LostDiver = MusicID.OtherworldlyInvasion;
+			public static int MildewCarrion = MusicID.OtherworldlyPlantera;
+			public static int CrownJewel = MusicID.OtherworldlySpace;
 			public static int AncientBrinePool;
 
 			public static int Dusk;

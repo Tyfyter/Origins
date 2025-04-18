@@ -1219,7 +1219,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#3, ^2) Hydrothermal Vent !!! (figure out why I can't see the glows)
+(^) Hydrothermal Vent !!! (figured out why you couldn't see the glows)
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
