@@ -1171,6 +1171,11 @@ Buffs: {
 		// DisplayName: Skimswim Buff
 		// Description: Mods.Origins.Buffs.Skimswim_Buff.Description
 	}
+
+	Cannihound_Lure_Debuff: {
+		// DisplayName: Cannihound Lure Debuff
+		// Description: Mods.Origins.Buffs.Cannihound_Lure_Debuff.Description
+	}
 }
 
 DamageClassName: {

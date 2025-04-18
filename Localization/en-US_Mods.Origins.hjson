@@ -1171,6 +1171,11 @@ Buffs: {
 		DisplayName: Skimswim Buff
 		Description: Mods.Origins.Buffs.Skimswim_Buff.Description
 	}
+
+	Cannihound_Lure_Debuff: {
+		DisplayName: Ill Omen of Hound
+		Description: You smell like fresh meat
+	}
 }
 
 DamageClassName: {

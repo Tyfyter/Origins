@@ -15,7 +15,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
+using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.MiscE {
 	public class Cannihound : ModNPC, IWikiNPC {
@@ -53,9 +53,11 @@ namespace Origins.NPCs.MiscE {
 			NPC.value = 75;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
-			if (!spawnInfo.Player.ZoneCrimson) return 0;
-			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1) * (spawnInfo.Player.ZoneSnow ? 1.5f : 1);
+			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY > Main.worldSurface + 50) return 0;
+			if (!SpawnCondition.Crimson.Active) return 0;
+			float chance = 0.3f;
+			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 5;
+			return (spawnInfo.Player.ZoneSnow ? 1.5f : 1) * chance;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (Main.rand.NextBool()) target.AddBuff(BuffID.Bleeding, 20);
@@ -279,6 +281,12 @@ namespace Origins.NPCs.MiscE {
 					);
 				}
 			}
+		}
+	}
+	public class Cannihound_Lure_Debuff : ModBuff {
+		public override string Texture => $"{nameof(Origins)}/Buffs/{nameof(Cannihound_Lure_Debuff)}";
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
 		}
 	}
 }

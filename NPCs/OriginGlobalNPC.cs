@@ -16,6 +16,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Brine;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
@@ -514,6 +515,9 @@ namespace Origins.NPCs {
 			}
 			if (Framing.GetTileSafely(player.Bottom - Vector2.UnitY).WallType == ModContent.WallType<Baryte_Wall>()) {
 				spawnRateMultiplier *= 0.2f;
+			}
+			if (player.HasBuff<Cannihound_Lure_Debuff>()) {
+				spawnRateMultiplier *= 0.8f; 
 			}
 			spawnRate = (int)(spawnRate * spawnRateMultiplier);
 			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);
