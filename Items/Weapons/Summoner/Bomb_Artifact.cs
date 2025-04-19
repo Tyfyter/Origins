@@ -7,12 +7,13 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Items.Weapons.Summoner.Minions;
 using System.Collections.Generic;
 using Origins.Buffs;
+using Origins.NPCs.MiscE;
+
 namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
@@ -147,9 +148,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Vector2 vectorToIdlePosition = (idlePosition + new Vector2(6 * player.direction, 0)) - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (distanceToIdlePosition > 1000f) {
-				Projectile.ai[1]++;
-				if (Projectile.ai[1] > 3600f) {
-					OriginSystem.Instance.AbandonedBombs.Add(Projectile.Center.ToTileCoordinates());
+				if (++Projectile.ai[1] > 3600f) {
+					ModContent.GetInstance<Abandoned_Bomb_System>().BombPositions.Add((Projectile.Center.ToTileCoordinates(), player.OriginPlayer().guid));
 					Projectile.active = false;
 				}
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {

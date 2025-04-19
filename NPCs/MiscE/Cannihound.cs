@@ -54,7 +54,9 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY > Main.worldSurface + 50) return 0;
-			if (!SpawnCondition.Crimson.Active) return 0;
+			if (!((spawnInfo.SpawnTileType == TileID.Crimtane && spawnInfo.Player.ZoneCrimson)
+			|| spawnInfo.SpawnTileType == TileID.CrimsonGrass || spawnInfo.SpawnTileType == TileID.FleshIce
+			|| spawnInfo.SpawnTileType == TileID.Crimstone || spawnInfo.SpawnTileType == TileID.Crimsand)) return 0;
 			float chance = 0.3f;
 			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 5;
 			return (spawnInfo.Player.ZoneSnow ? 1.5f : 1) * chance;
@@ -210,7 +212,6 @@ namespace Origins.NPCs.MiscE {
 			if (!NPC.collideY) acceleration *= 0.25f;
 
 			NPC.velocity.X += acceleration * targetMoveDirection;
-			Debugging.ChatOverhead(NPC.frame.Y / NPC.frame.Height);
 
 			if (NPC.collideY || NPC.aiAction == 0) NPC.velocity.X *= 0.97f;
 			if (currentMoveDirection == targetMoveDirection && NPC.aiAction == 0) NPC.velocity.X *= 0.93f;

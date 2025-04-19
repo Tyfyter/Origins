@@ -98,8 +98,6 @@ namespace Origins {
 		[Obsolete("Use TESystem.GetLocations<Defiled_Heart_TE_System>() instead")]
 		public List<Point> DefiledHearts => ModContent.GetInstance<Defiled_Heart_TE_System>().tileEntityLocations.Select(Utils.ToPoint).ToList();
 		internal List<Point16> LegacySave_DefiledHearts { get; set; } = [];
-		private List<Point> _abandonedBombs;
-		public List<Point> AbandonedBombs => _abandonedBombs ??= [];
 		private Dictionary<Point, Guid> _voidLocks;
 		public Dictionary<Point, Guid> VoidLocks => _voidLocks ??= [];
 		public Vector2? shimmerPosition;
