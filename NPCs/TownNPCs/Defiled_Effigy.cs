@@ -38,6 +38,10 @@ namespace Origins.NPCs.TownNPCs {
 				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
 			InvalidateNPCHousing.NPCTypeIgnoresSpecificBiome.Add(Type, [ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>()]);
+
+			//TODO: remove when added
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;
+			TownNPCStayingHomeless = true;
 		}
 		public override void SetDefaults() {
 			NPC.width = 18;
