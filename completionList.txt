@@ -1251,7 +1251,7 @@ TILES:
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
 (#, $2) Music Box (Brine Pool)
-($2) Music Box (Defiled Caverns) !!!
+(☻) Music Box (Defiled Caverns) !!!
 (X) Music Box (Defiled Egregocide Route)
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
