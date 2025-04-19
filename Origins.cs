@@ -653,10 +653,10 @@ namespace Origins {
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 
-			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) { // WHY THIS NO WORK!!!
-				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Language.GetTextValue("Mods.Origins.NPCs.Brine_Fiend.Dialog.Standard3"), Name);
-				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Language.GetTextValue("Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content"), Name);
-				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), "", Name); // for future
+			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) {
+				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Name);
+				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
+				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), Name); // for future
 			}
 
 #if DEBUG

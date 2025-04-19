@@ -5904,3 +5904,13 @@ Defiled_Regolith_Item: {
 	DisplayName: Defiled Regolith
 	Tooltip: ""
 }
+
+Brine_Fiend_Item: {
+	DisplayName: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	Tooltip: "{$Mods.Origins.NPCs.Brine_Fiend.Dialogue.Standard3}"
+}
+
+Defiled_Effigy_Item: {
+	DisplayName: "{$Mods.Origins.NPCs.Defiled_Effigy.DisplayName}"
+	Tooltip: "{$Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content}"
+}
