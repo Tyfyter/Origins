@@ -472,6 +472,7 @@ namespace Origins {
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
 		public bool forceFallthrough = false;
+		public int timeSinceRainedOn = 0;
 		/// <summary>
 		/// not set to true by alt uses
 		/// </summary>
@@ -979,6 +980,7 @@ namespace Origins {
 			forceDrown = false;
 			heldProjOverArm = null;
 			shieldGlow = -1;
+			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
 	public class Chambersite : OriginTile {
-		public override void SetStaticDefaults() { //TODO: gemstone properties
+		public override void SetStaticDefaults() { //TODO: figure out what those gemstone properties are
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 500;
 			Main.tileObsidianKill[Type] = true;

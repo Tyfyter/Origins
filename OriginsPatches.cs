@@ -1306,7 +1306,7 @@ namespace Origins {
 		static bool rivenRain = false;
 		private void On_Main_DrawRain(On_Main.orig_DrawRain orig, Main self) {
 			Player player = Main.LocalPlayer;
-			if (player.dead) {
+			if (player is null || !player.active || player.dead) {
 				orig(self);
 				return;
 			}
@@ -1334,6 +1334,7 @@ namespace Origins {
 			rainedOnPlayer = false;
 			rivenRain = player.InModBiome<Riven_Hive>();
 			orig(self);
+			if (rainedOnPlayer) player.OriginPlayer().timeSinceRainedOn = 0;
 			if (rainedOnPlayer && rivenRain) {
 				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 				bool extraStrength = Main.remixWorld || (Main.masterMode && NPC.npcsFoundForCheckActive[MC.NPCType<World_Cracker_Head>()]);

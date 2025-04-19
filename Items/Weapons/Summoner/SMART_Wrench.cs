@@ -2,9 +2,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Tiles.Other;
+
 namespace Origins.Items.Weapons.Summoner {
     public class SMART_Wrench : ModItem, ICustomWikiStat {
         public override void SetDefaults() {
