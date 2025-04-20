@@ -1714,6 +1714,7 @@ Projectiles: {
 	// Cannihound_Gore1.DisplayName: Cannihound Gore1
 	// Cannihound_Gore2.DisplayName: Cannihound Gore2
 	// Cannihound_Gore3.DisplayName: Cannihound Gore3
+	// Brine_Haze_P.DisplayName: Brine Haze P
 }
 
 Prefixes: {
@@ -1953,6 +1954,7 @@ Tiles: {
 	// Fake_Riven_Altar.MapEntry: "{§Riven} Altar"
 	// Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	// Lucky_Hat_Tile.MapEntry: Lucky Hat
+	// Residual_Crate_Tile.MapEntry: Residual Crate
 }
 
 MapObject: {

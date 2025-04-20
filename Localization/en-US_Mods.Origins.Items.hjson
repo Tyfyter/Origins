@@ -3413,12 +3413,12 @@ Silica_Item: {
 
 Bilious_Crate: {
 	DisplayName: Bilious Crate
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Festering_Crate: {
 	DisplayName: Festering Crate
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Chambersite_Gemspark_Item: {
@@ -5310,7 +5310,7 @@ Mildew_Item: {
 
 Basic_Crate: {
 	DisplayName: Basic Crate
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 The_Jungles_Window_Item: {
@@ -5913,4 +5913,14 @@ Brine_Fiend_Item: {
 Defiled_Effigy_Item: {
 	DisplayName: "{$Mods.Origins.NPCs.Defiled_Effigy.DisplayName}"
 	Tooltip: "{$Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content}"
+}
+
+Residual_Crate: {
+	DisplayName: Residual Crate
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Brine_Haze: {
+	DisplayName: Brine Haze
+	Tooltip: ""
 }
