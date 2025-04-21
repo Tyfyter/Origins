@@ -154,7 +154,7 @@ namespace Origins.Graphics {
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }
 		public override bool IsVisible() {
-			return (Main.LocalPlayer?.OriginPlayer()?.ZoneDefiledProgressSmoothed > 0 || Mask_Rasterize.TimeSinceActive < 2) && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader;
+			return Mask_Rasterize.TimeSinceActive < 2 || Filters.Scene["Origins:ZoneDefiled"].IsActive();
 		}
 
 		public void Unload() {

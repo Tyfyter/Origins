@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(#2, ^2/4) Lost Diver/ (#, ^2/4) Mildew Carrion !!!
+(☻, ^2/4, †) Lost Diver/ (☻, ^2/4, †) Mildew Carrion !!!
 (X) Snowdrop
 
 (X) Crimson King
@@ -616,7 +616,7 @@ UTILITIES:
 (^) Impenetrable Trashcan Lid*
 (^) Indestructible Saddle*
 (^) Salty Seed (Mitosis Node)*
-(^5) Saltier Seed (Mitosis Node)
+(^5 ?) Saltier Seed (Mitosis Node)
 ---
 
 
@@ -1006,7 +1006,7 @@ EXPLOSIVE WEAPONS:
 (^) Rocket Rifle
 (X) Shroomcannon
 (^) Sonar Dynamite
-(ᗢ) Sonorous Shredder
+(ᗢ ?) Sonorous Shredder
 (^) Thermite Launcher*
 (^) Torpedo Tube
 
@@ -1250,18 +1250,18 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(#, $2) Music Box (Brine Pool)
+(☻) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
-($2) Music Box (Defiled Wastelands)
+(☻) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
 (^) Music Box (Fiberglass Undergrowth)
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
-($2) Music Box (Riven Hive)
+(☻) Music Box (Riven Hive)
 (@, #, $2) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
