@@ -9,9 +9,6 @@ using ReLogic.Content;
 using Origins.Walls;
 
 namespace Origins.Backgrounds {
-	public class FakeScreenShaderData() : ScreenShaderData(Asset<Effect>.Empty, null) {
-		public override void Apply() { }
-	}
 	public class Fiberglass_Background() : Overlay(EffectPriority.VeryHigh, RenderLayers.Background) {
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }

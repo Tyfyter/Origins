@@ -168,8 +168,8 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(#3, ^2) Cannihound !!! (spawn too rarely and reinforcements after death)
-(#3, ^2) Catacomb Clearer !!! (not spawning?)
+(☻) Cannihound !!! (spawn too rarely and reinforcements after death)
+(☻) Catacomb Clearer !!! (not spawning?)
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*

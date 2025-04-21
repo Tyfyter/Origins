@@ -57,8 +57,8 @@ namespace Origins.NPCs.MiscE {
 			if (!((spawnInfo.SpawnTileType == TileID.Crimtane && spawnInfo.Player.ZoneCrimson)
 			|| spawnInfo.SpawnTileType == TileID.CrimsonGrass || spawnInfo.SpawnTileType == TileID.FleshIce
 			|| spawnInfo.SpawnTileType == TileID.Crimstone || spawnInfo.SpawnTileType == TileID.Crimsand)) return 0;
-			float chance = 0.3f;
-			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 5;
+			float chance = 0.4f;
+			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 4;
 			return (spawnInfo.Player.ZoneSnow ? 1.5f : 1) * chance;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
