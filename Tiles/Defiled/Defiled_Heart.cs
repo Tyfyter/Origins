@@ -72,7 +72,8 @@ namespace Origins.Tiles.Defiled {
 					Vector2.Zero,
 					Vector2.One,
 					SpriteEffects.None,
-					x + y * 200
+					x + y * 787,
+					new(i * 16f, j * 16f)
 				);
 			}
 		}

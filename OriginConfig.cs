@@ -118,11 +118,14 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
 
-		[DefaultValue(0.2f), Range(0, 1), Increment(0.05f)]
+		[DefaultValue(0.2f), Range(0f, 1f), Increment(0.05f)]
 		public float DefiledShaderJitter = 0.2f;
 
-		[DefaultValue(0.1f), Range(0, 1), Increment(0.05f)]
+		[DefaultValue(0.1f), Range(0f, 1f), Increment(0.05f)]
 		public float DefiledShaderNoise = 0.1f;
+
+		[DefaultValue(10), Range(0f, 30f), Increment(0.5f)]
+		public float DefiledShaderSpeed = 10;
 
 		[DefaultValue(1f), Range(0, 2), Increment(0.1f)]
 		public float ScreenShakeMultiplier = 1f;

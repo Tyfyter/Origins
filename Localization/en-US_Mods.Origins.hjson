@@ -2051,6 +2051,11 @@ Configs: {
 			Tooltip: ""
 		}
 
+		DefiledShaderSpeed: {
+			Label: Defiled Wastelands Shader Speed
+			Tooltip: ""
+		}
+
 		ScreenShakeMultiplier: {
 			Label: Screen shake multiplier
 			Tooltip: Changes how much your screen shakes.

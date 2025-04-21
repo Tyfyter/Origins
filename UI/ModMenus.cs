@@ -59,7 +59,8 @@ namespace Origins.UI {
 						defiledFilter.GetShader()
 						.UseProgress(0.9f)
 						.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f)
-						.UseOpacity(MathHelper.Clamp(OriginClientConfig.Instance.DefiledShaderNoise * 5, float.Epsilon, 1));
+						.UseOpacity(MathHelper.Clamp(OriginClientConfig.Instance.DefiledShaderNoise * 5, float.Epsilon, 1))
+						.Shader.Parameters["uTimeScale"].SetValue(OriginClientConfig.Instance.DefiledShaderSpeed);
 						cantShade = false;
 					}
 				}
