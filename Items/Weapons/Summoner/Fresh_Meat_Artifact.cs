@@ -32,6 +32,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 17;
 			Item.shootSpeed = 9f;
+			Item.knockBack = 1f;
 			Item.width = 24;
 			Item.height = 38;
 			Item.useTime = 24;
@@ -262,7 +263,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
-			Origins.ArtifactMinion[Type] = true;
+			ProjectileID.Sets.MinionShot[Type] = true;
 			ID = Type;
 		}
 
@@ -272,8 +273,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.height = 40;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
-			Projectile.minion = true;
-			Projectile.minionSlots = 0f;
+			/*Projectile.minion = true;
+			Projectile.minionSlots = 0f;*/
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;

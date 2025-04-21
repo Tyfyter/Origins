@@ -74,6 +74,7 @@ namespace Origins.Projectiles {
 		public bool astoxoEffect = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public Vector2[] oldPositions = [];
+		public OwnerMinionKey ownerMinion = null;
 		public override void Load() {
 			itemSourceEffects = [];
 		}
@@ -179,6 +180,7 @@ namespace Origins.Projectiles {
 						}
 					}
 					OriginGlobalProj parentGlobalProjectile = parentProjectile.GetGlobalProjectile<OriginGlobalProj>();
+					ownerMinion = parentProjectile.minion || parentProjectile.sentry ? new(parentProjectile.type, parentProjectile.owner, parentProjectile.identity) : parentGlobalProjectile.ownerMinion;
 					Prefix = parentGlobalProjectile.Prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
@@ -529,6 +531,13 @@ namespace Origins.Projectiles {
 
 			bitWriter.WriteBit(extraGravity != default);
 			if (extraGravity != default) binaryWriter.WriteVector2(extraGravity);
+
+			bitWriter.WriteBit(ownerMinion is not null);
+			if (ownerMinion is not null) {
+				binaryWriter.Write(ownerMinion.Type);
+				binaryWriter.Write((byte)ownerMinion.Owner);
+				binaryWriter.Write(ownerMinion.Identity);
+			}
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
@@ -543,6 +552,8 @@ namespace Origins.Projectiles {
 			if (bitReader.ReadBit()) weakpointAnalyzerTarget = binaryReader.ReadVector2();
 
 			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
+
+			if (bitReader.ReadBit()) ownerMinion = new(binaryReader.ReadInt32(), binaryReader.ReadByte(), binaryReader.ReadInt32());
 		}
 		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
 			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;
@@ -684,4 +695,5 @@ namespace Origins.Projectiles {
 			}
 		}
 	}
+	public record OwnerMinionKey(int Type, int Owner, int Identity);
 }

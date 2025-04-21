@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Prefixes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -33,7 +35,7 @@ namespace Origins.Items {
 		StatModifier SelfDamage();
 	}
 	public interface IOnHitNPCPrefix {
-		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) { }
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone);
 	}
 	public static class Prefixes {
 		enum BonusStackType {
@@ -393,11 +395,24 @@ namespace Origins.Items {
 	}
 	#region minion prefixes
 	public abstract class MinionPrefix : ModPrefix {
+		public virtual bool HasDescription => false;
+		public virtual bool HasDescriptionBad => false;
 		public override PrefixCategory Category => PrefixCategory.Magic;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			_ = GetDescriptionLines().Count();
+		}
 		public override bool CanRoll(Item item) => ContentSamples.ProjectilesByType[item.shoot] is { minion: true } or { sentry: true };
 		public virtual void UpdateProjectile(Projectile projectile, int time) { }
 		public virtual void OnSpawn(Projectile projectile, IEntitySource source) { }
-		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
+			..this.GetStatLines(),
+			..GetDescriptionLines()
+		];
+		IEnumerable<TooltipLine> GetDescriptionLines() {
+			if (HasDescription) yield return new TooltipLine(Origins.instance, Name, this.GetLocalization("Description").Value) { IsModifier = true };
+			if (HasDescriptionBad) yield return new TooltipLine(Origins.instance, Name, this.GetLocalization("BadDescription").Value) { IsModifier = true, IsModifierBad = true };
+		}
 	}
 	public class Speedy_Prefix : MinionPrefix {
 		public override bool CanRoll(Item item) => base.CanRoll(item) && !Origins.ArtifactMinion[item.shoot];
@@ -420,6 +435,28 @@ namespace Origins.Items {
 			valueMult *= 1.289f;
 		}
 	}
+	public class Bloated_Prefix : MinionPrefix {
+		public override bool CanRoll(Item item) => base.CanRoll(item) && !Origins.ArtifactMinion[item.shoot];
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult += 0.15f;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			if (projectile.minion || projectile.sentry) {
+				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates -= 0.12f;
+			}
+		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
+			..base.GetTooltipLines(item),
+			new(Mod, "PrefixMinionSpeed", Language.GetOrRegister("Mods.Origins.Prefixes.PrefixMinionSpeed").Format($"-{0.12:P0}")) {
+				IsModifier = true,
+				IsModifierBad = true
+			}
+		];
+		public override void ModifyValue(ref float valueMult) {
+			base.ModifyValue(ref valueMult);
+			valueMult /= 1.289f;
+		}
+	}
 	#region artifact prefixes
 	public class Speedy_Artifact_Prefix : ArtifactPrefixVariant<Speedy_Prefix> {
 		public override StatModifier MaxLifeModifier => new(0.9f, 1);
@@ -439,6 +476,28 @@ namespace Origins.Items {
 			..base.GetTooltipLines(item),
 			new(Mod, "PrefixMinionSpeed", Language.GetOrRegister("Mods.Origins.Prefixes.PrefixMinionSpeed").Format($"+{0.15:P0}")) {
 				IsModifier = true
+			}
+		];
+	}
+	public class Bloated_Artifact_Prefix : ArtifactPrefixVariant<Bloated_Prefix> {
+		public override StatModifier MaxLifeModifier => new(1.1f, 1);
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult += 0.12f;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			if (projectile.minion || projectile.sentry) {
+				projectile.GetGlobalProjectile<MinionGlobalProjectile>().bonusUpdates -= 0.15f;
+			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			base.ModifyValue(ref valueMult);
+			valueMult /= 1.277f;
+		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
+			..base.GetTooltipLines(item),
+			new(Mod, "PrefixMinionSpeed", Language.GetOrRegister("Mods.Origins.Prefixes.PrefixMinionSpeed").Format($"-{0.15:P0}")) {
+				IsModifier = true,
+				IsModifierBad = true
 			}
 		];
 	}
@@ -469,7 +528,80 @@ namespace Origins.Items {
 	public class Brittle_Prefix : ArtifactMinionPrefix {
 		public override StatModifier MaxLifeModifier => new(0.75f, 1);
 	}
+	public class Wholesome_Prefix : ArtifactMinionPrefix {
+		public override StatModifier MaxLifeModifier => new(1.05f, 1);
+		public override bool HasDescription => true;
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult *= 1.05f;
+			knockbackMult *= 1.05f;
+			useTimeMult /= 1.05f;
+			manaMult *= 1.05f;
+		}
+		public override void OnKill(Projectile projectile) {
+			if (projectile.owner == Main.myPlayer) {
+				int item = Item.NewItem(
+					projectile.GetSource_Death(),
+					projectile.Center,
+					ItemID.Heart
+				);
+				if (Main.netMode == NetmodeID.MultiplayerClient) {
+					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+				}
+			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
+		}
+		public override void UpdateProjectile(Projectile projectile, int time) {
+			if (!projectile.minion && !projectile.sentry) return;
+			int team = Main.player[projectile.owner].team;
+			foreach (Player healee in Main.ActivePlayers) {
+				if (healee.team == team && healee.statLife < healee.statLifeMax2 && projectile.Center.Clamp(healee.Hitbox).WithinRange(projectile.Center, 16 * 15)) {
+					healee.lifeRegenTime += 4;
+					Dust dust = Dust.NewDustDirect(
+						healee.position,
+						healee.width,
+						healee.height,
+						DustID.HealingPlus
+					);
+					dust.noGravity = true;
+				}
+			}
+		}
+	}
+	public class Vampiric_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
+		public override StatModifier MaxLifeModifier => new(0.75f, 1);
+		public override bool HasDescription => true;
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult *= 1.05f;
+		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.type == NPCID.TargetDummy) return;
+			Projectile ownerMinion = null;
+			if (Origins.ArtifactMinion[projectile.type]) {
+				ownerMinion = projectile;
+			} else if (projectile.TryGetGlobalProjectile(out OriginGlobalProj global) && global.ownerMinion is OwnerMinionKey minionKey) {
+				foreach (Projectile proj in Main.ActiveProjectiles) {
+					if (proj.type == minionKey.Type && proj.owner == minionKey.Owner && proj.identity == minionKey.Identity) {
+						ownerMinion = proj;
+						break;
+					}
+				}
+			}
+			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
+				float oldHealth = artifactMinion.Life;
+				artifactMinion.Life += Math.Min(damageDone, target.lifeMax);
+				if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
+				CombatText.NewText(ownerMinion.Hitbox, CombatText.HealLife, (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
+			}
+		}
+	}
 	public class Firestarter_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
+		public override bool HasDescription => true;
+		public override bool HasDescriptionBad => true;
 		public override void UpdateProjectile(Projectile projectile, int time) {
 			if (projectile.numUpdates == -1 && time > 0 && time % 30 == 0) {
 				projectile.DamageArtifactMinion(2, true);
@@ -509,9 +641,6 @@ namespace Origins.Items {
 		public override void ModifyValue(ref float valueMult) {
 			valueMult *= 1.45f;
 		}
-		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => base.GetTooltipLines(item).Concat([
-			new TooltipLine(Origins.instance, Name, this.GetLocalizedValue("Description")) { IsModifier = true }
-		]);
 		public override bool AllStatChangesHaveEffectOn(Item item) {
 			if (!ContentSamples.ProjectilesByType.TryGetValue(item.shoot, out Projectile proj) || proj.ModProjectile is not IArtifactMinion) return false;
 			return base.AllStatChangesHaveEffectOn(item);

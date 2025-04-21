@@ -1745,13 +1745,29 @@ Prefixes: {
 		DisplayName: Firestarter's
 		Description:
 			'''
-			Minions are set ablaze
+			Minions set foes ablaze
 			Minions explode upon death
 			'''
+		BadDescription: Minions lose health over time
 	}
 
 	Brittle_Prefix.DisplayName: Brittle
 	Speedy_Prefix.DisplayName: Speedy
+	Bloated_Prefix.DisplayName: Bloated
+
+	Wholesome_Prefix: {
+		DisplayName: Wholesome
+		Description:
+			'''
+			Minions heal nearby allied players
+			Minions drop hearts when killed
+			'''
+	}
+
+	Vampiric_Prefix: {
+		DisplayName: Vampiric
+		Description: Minions steal life from struck enemies
+	}
 }
 
 BiomeName: {
