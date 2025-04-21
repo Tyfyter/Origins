@@ -160,7 +160,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(#2, ^2) Aqueoua (gores) !!!
+(☻) Aqueoua (gores) !!!
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Backgrounds;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
 using System.Linq;
@@ -19,6 +20,17 @@ namespace Origins.UI {
 		public override int Music => Origins.Music.Riven;
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Riven_Hive")).Value;
+		Asset<Texture2D> Loglow;
+		Asset<Texture2D> Subtitle;
+		public override void SetStaticDefaults() {
+			Loglow = ModContent.Request<Texture2D>("Origins/UI/Logos/Riven_Terraria_Glow");
+			Subtitle = ModContent.Request<Texture2D>("Origins/UI/Logos/Origins_Subheader");
+		}
+		public override void PostDrawLogo(SpriteBatch spriteBatch, Vector2 logoDrawCenter, float logoRotation, float logoScale, Color drawColor) {
+			spriteBatch.Draw(Loglow.Value, logoDrawCenter, null, Riven_Hive.GetGlowAlpha(drawColor), logoRotation, Loglow.Size() * 0.5f, logoScale, SpriteEffects.None, 0);
+			//Can't add Origins subtitle because it's as big as the actual logo
+			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
+		}
 	}
 	public class Defiled_Wastelands_Mod_Menu : ModMenu {
 		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Defiled_Terraria");
