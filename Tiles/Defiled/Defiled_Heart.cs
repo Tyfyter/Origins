@@ -1,4 +1,6 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Graphics;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -6,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -38,6 +41,7 @@ namespace Origins.Tiles.Defiled {
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
+		public static AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Heart).GetDefaultTMLName() + "_Tangela";
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower < 90) {
 				damage = 0;
@@ -50,6 +54,26 @@ namespace Origins.Tiles.Defiled {
 			if (++frameCounter >= 9) {
 				frameCounter = 0;
 				frame = ++frame % 4;
+			}
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomNonSolid);
+		}
+		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (TangelaVisual.DrawOver || TileDrawing.IsVisible(tile)) {
+				Vector2 position = new Vector2(i * 16f, j * 16f) - Main.screenPosition;
+				TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile), out int x, out int y);
+				TangelaVisual.DrawTangela(
+					tangelaTexture,
+					position,
+					new Rectangle(tile.TileFrameX, tile.TileFrameY, 48, 48),
+					0,
+					Vector2.Zero,
+					Vector2.One,
+					SpriteEffects.None,
+					x + y * 200
+				);
 			}
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {

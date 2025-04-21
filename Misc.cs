@@ -2745,35 +2745,35 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
-		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			for (int c = 0; c < area.Width; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Height; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Width; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Height; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
 		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default) {

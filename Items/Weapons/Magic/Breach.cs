@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Breach_Entry).Name;
 		public class Breach_Entry : JournalEntry {
 			public override string TextKey => "Breach";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 16);
 		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = Type;

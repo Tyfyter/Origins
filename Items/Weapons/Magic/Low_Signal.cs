@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Low_Signal_Entry).Name;
 		public class Low_Signal_Entry : JournalEntry {
 			public override string TextKey => "Low_Signal";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 9);
 		}
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;

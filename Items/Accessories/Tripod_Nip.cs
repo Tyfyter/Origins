@@ -25,5 +25,6 @@ namespace Origins.Items.Accessories {
 	}
 	public class Tripod_Nip_Entry : JournalEntry {
 		public override string TextKey => "Tripod_Nip";
+		public override JournalSortIndex SortIndex => new("The_Defiled", 17);
 	}
 }

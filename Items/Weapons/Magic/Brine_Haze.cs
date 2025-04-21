@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Dusts;
+using Origins.Items.Accessories;
+using Origins.Tiles.Brine;
 using Origins.Walls;
 using System;
 using Terraria;
@@ -47,7 +50,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.SpiderFang, 5)
+			.AddIngredient<Venom_Fang>(3)
 			.AddIngredient(ItemID.SpellTome)
             .AddIngredient(ItemID.SoulofNight, 15)
             .AddTile(TileID.Bookcases)
@@ -66,8 +69,8 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.height = 68 * 2;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
 			Projectile.ignoreWater = false;
 			Projectile.netImportant = true;
 			Projectile.timeLeft = 5 * 60;
@@ -108,24 +111,40 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			fallThrough = true;
+			fallThrough = true;/*
+			float val = 1.5f;
+			if (Projectile.ai[0]++ <= 60 && Projectile.ai[0] >= 0) val -= Projectile.ai[0];
+			width = (int)(width / val);
+			height = (int)(height / val);*/
 			return true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffType<Toxic_Shock_Debuff>(), 5 * 60);
-		}
+		}/*
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Red);
+		}*/
 		public override void PostDraw(Color lightColor) {
 			if (Main.dedServ) return;
 			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 1000 : 850)) {
-				Dust.NewDustDirect(Projectile.Center, (int)((Projectile.width + Projectile.velocity.X) * 1.5f), (int)((Projectile.height + Projectile.velocity.Y) * 1.5f), Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(18, 73, 56)).velocity *= 0.1f;
+				float width = Projectile.width + Projectile.velocity.X * 1.5f;
+				float height = Projectile.height + Projectile.velocity.Y * 1.5f;
+				Vector2 start = Projectile.TopLeft - new Vector2(Projectile.width, Projectile.height) / 4;
+				Dust.NewDustDirect(start, (int)width, (int)height, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(18, 73, 56)).velocity *= 0.1f;
+				int tmp1 = (int)start.X;
+				int tmp2 = (int)start.Y;
+				int tmp3 = (int)width;
+				int tmp4 = (int)height;
+				new Rectangle(tmp1, tmp2, tmp3, tmp4).DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Blue);
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
+			Vector2 pos = Projectile.Bottom - new Vector2(0, 4) - Main.screenPosition;
 			Main.EntitySpriteDraw(
 				texture,
-				Projectile.Bottom - new Vector2(0, 4) - Main.screenPosition,
+				pos,
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
 				Projectile.rotation,
@@ -135,7 +154,7 @@ namespace Origins.Items.Weapons.Magic {
 			0);
 			Main.EntitySpriteDraw(
 				texture,
-				Projectile.Center - Main.screenPosition,
+				pos - new Vector2(0, frame.Height),
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
 				Projectile.rotation,

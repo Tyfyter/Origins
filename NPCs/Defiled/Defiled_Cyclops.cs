@@ -1,19 +1,18 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
-using Origins.NPCs.Brine.Boss;
-using Origins.NPCs.Brine;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -21,8 +20,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Graphics;
-using System.Linq;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Cyclops : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
@@ -35,6 +32,7 @@ namespace Origins.NPCs.Defiled {
 		public string EntryName => "Origins/" + typeof(Defiled_Cyclops_Entry).Name;
 		public class Defiled_Cyclops_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Cyclops";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 12);
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 7;

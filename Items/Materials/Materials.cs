@@ -137,6 +137,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public class Black_Bile_Entry : JournalEntry {
 			public override string TextKey => "Black_Bile";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 11);
 		}
 	}
 	public class Bleeding_Obsidian_Shard : MaterialItem {
@@ -192,6 +193,7 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Defiled_Bar_Entry).Name;
 		public class Defiled_Bar_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Bar";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 8);
 		}
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
@@ -520,6 +522,7 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Undead_Chunk_Entry).Name;
 		public class Undead_Chunk_Entry : JournalEntry {
 			public override string TextKey => "Undead_Chunk";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 10);
 		}
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;

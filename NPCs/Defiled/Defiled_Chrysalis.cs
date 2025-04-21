@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -49,6 +50,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.netUpdate = true;
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-0.5f).WithVolume(0.4f), NPC.Center);
+			if (Main.rand.NextBool(4)) SoundEngine.PlaySound(SoundID.Item48.WithPitch(-3f).WithVolume(0.55f), NPC.Center);
 			if (NPC.ai[0] <= 0) {
 				NPC.active = false;
 				return;

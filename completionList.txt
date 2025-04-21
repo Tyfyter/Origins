@@ -137,7 +137,7 @@ WORLD GENERATION:
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
-(☻) Limestone Cave !!! (rubble spawning on slopes and rubble cut-off)
+(^) Limestone Cave
 (^) Riven Hive
 (#2, 々) The Dusk
 
@@ -147,11 +147,11 @@ WORLD GENERATION:
 OTHER:
 |---
 (X) Cubekon Tinkerer's Modifiers*
+(^) Defiled "Chrysalis" Spawning
 (^) Explosive Modifiers*
 (^) Journal*
 (^) Quest System General*
-(#2) Summoner Plus Modifiers* !!! (not all of them present)
-(☻) Defiled "Chrysalis" Spawning (spawns naturally now)
+(^) Summoner Plus Modifiers*
 ---
 
 
@@ -160,7 +160,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(☻) Aqueoua (wiggles) !!!
+(#2, ^2) Aqueoua (gores) !!!
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -168,8 +168,8 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(☻) Cannihound !!! (spawn too rarely and reinforcements after death)
-(^) Catacomb Clearer
+(#3, ^2) Cannihound !!! (spawn too rarely and reinforcements after death)
+(#3, ^2) Catacomb Clearer !!! (not spawning?)
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
@@ -1210,7 +1210,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
-(#2, 々) Defiled Heart !!! (needs hammer requirement, then remove priority marker)
+(々) Defiled Heart
 (^) Defiled Relay
 (^) Defiled Pot
 (X) Eden Tree°
@@ -1219,7 +1219,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(^) Hydrothermal Vent !!! (figured out why you couldn't see the glows)
+(^) Hydrothermal Vent
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
@@ -1251,7 +1251,7 @@ TILES:
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
 (#, $2) Music Box (Brine Pool)
-(☻) Music Box (Defiled Caverns) !!!
+(^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
