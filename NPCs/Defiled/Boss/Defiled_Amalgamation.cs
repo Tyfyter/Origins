@@ -64,6 +64,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public string EntryName => "Origins/" + typeof(Defiled_Amalgamation_Entry).Name;
 		public class Defiled_Amalgamation_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Amalgamation";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 13);
 		}
 		internal static IItemDropRule normalDropRule;
 		public override void Unload() {

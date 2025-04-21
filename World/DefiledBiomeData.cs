@@ -99,7 +99,7 @@ namespace Origins.World.BiomeData {
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
 		public class SpawnRates : SpawnPool {
-			public const float ChunkSlime = 1;
+			public const float ChunkSlime = 0.8f;
 			public const float Cyclops = 1;
 			public const float Mite = 1;
 			public const float Mummy = 1;
@@ -114,7 +114,7 @@ namespace Origins.World.BiomeData {
 			public const float AncientCyclops = 0.03f;
 			public const float Asphyxiator = 0.5f;
 			public const float AncientFlyer = 0.04f;
-			public const float Nearby = 0.3f;
+			public const float Nearby = 0.5f;
 			public override string Name => $"{nameof(Defiled_Wastelands)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.BiomeHigh;

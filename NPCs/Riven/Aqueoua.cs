@@ -23,7 +23,7 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 26;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit9;
-			NPC.DeathSound = SoundID.NPCDeath16;
+			NPC.DeathSound = SoundID.NPCDeath15;
 			NPC.noGravity = true;
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {

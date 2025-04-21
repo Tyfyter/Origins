@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Armor.Other;
-using Origins.Reflection;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
