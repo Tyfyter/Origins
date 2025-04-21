@@ -15,13 +15,13 @@ using Terraria.ModLoader;
 
 namespace Origins.UI {
 	public class Riven_Hive_Mod_Menu : ModMenu {
-		public override Asset<Texture2D> Logo => TextureAssets.Logo2;
+		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Riven_Terraria");
 		public override int Music => Origins.Music.Riven;
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Riven_Hive")).Value;
 	}
 	public class Defiled_Wastelands_Mod_Menu : ModMenu {
-		public override Asset<Texture2D> Logo => TextureAssets.Logo2;
+		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Defiled_Terraria");
 		public override int Music => Origins.Music.Defiled;
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Defiled_Wastelands")).Value;
