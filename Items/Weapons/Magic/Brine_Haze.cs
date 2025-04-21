@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
@@ -6,6 +7,7 @@ using Origins.Items.Accessories;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -106,18 +108,53 @@ namespace Origins.Items.Weapons.Magic {
 
 			// Some visuals here
 			#endregion
+
+			if (++Projectile.ai[0] <= 30) {
+				Rectangle hitbox = Projectile.Hitbox;
+				ShrinkHitbox(ref hitbox, Projectile.ai[0]);
+				Vector2 dir = Vector2.Zero;
+				if (hitbox.OverlapsAnyTiles(out List<Point> intersectingTiles)) {
+					float mult = 1f / intersectingTiles.Count;
+					for (int i = 0; i < intersectingTiles.Count; i++) {
+						dir -= (intersectingTiles[i].ToWorldCoordinates() - Projectile.Center) * mult;
+					}
+				}
+				if (dir != Vector2.Zero) {
+					Vector2 weight = dir.SafeNormalize(default);
+					Projectile.position += weight * new Vector2(Projectile.width, Projectile.height) * 0.51f / 30;
+				}
+			}
+		}
+		static void ShrinkHitbox(ref Rectangle hitbox, float frame) {
+			Vector2 center = hitbox.Center();
+			float val = 1f;
+			if (frame < 30) val *= frame / 30;
+			hitbox.Width = (int)(hitbox.Width * val);
+			hitbox.Height = (int)(hitbox.Height * val);
+			hitbox = hitbox.Recentered(center);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return false;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			fallThrough = true;/*
-			float val = 1.5f;
-			if (Projectile.ai[0]++ <= 60 && Projectile.ai[0] >= 0) val -= Projectile.ai[0];
-			width = (int)(width / val);
-			height = (int)(height / val);*/
+			fallThrough = true;
+			Rectangle hitbox = new(0, 0, width, height);
+			ShrinkHitbox(ref hitbox, Projectile.ai[0]);
+			width = hitbox.Width;
+			height = hitbox.Height;
 			return true;
 		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			Vector2 center = hitbox.Center();
+			float val = 1f;
+			if (Projectile.ai[0] <= 30) val *= Projectile.ai[0] / 30;
+			hitbox.Width = (int)(hitbox.Width * val);
+			hitbox.Height = (int)(hitbox.Height * val);
+			hitbox = hitbox.Recentered(center);
+		}/*
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Red);
+		}*/
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffType<Toxic_Shock_Debuff>(), 5 * 60);
 		}/*
@@ -127,15 +164,23 @@ namespace Origins.Items.Weapons.Magic {
 		public override void PostDraw(Color lightColor) {
 			if (Main.dedServ) return;
 			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 1000 : 850)) {
-				float width = Projectile.width + Projectile.velocity.X * 1.5f;
-				float height = Projectile.height + Projectile.velocity.Y * 1.5f;
+				float width = Projectile.width * 1.5f;
+				float height = Projectile.height * 1.5f;
 				Vector2 start = Projectile.TopLeft - new Vector2(Projectile.width, Projectile.height) / 4;
-				Dust.NewDustDirect(start, (int)width, (int)height, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(18, 73, 56)).velocity *= 0.1f;
-				int tmp1 = (int)start.X;
+				Dust.NewDustDirect(
+					start,
+					(int)width,
+					(int)height,
+					Main.rand.Next(Brine_Cloud_Dust.dusts),
+					Projectile.velocity.X,
+					Projectile.velocity.Y,
+					newColor: new(43, 217, 162)
+				).velocity *= 0.1f;
+				/*int tmp1 = (int)start.X;
 				int tmp2 = (int)start.Y;
 				int tmp3 = (int)width;
 				int tmp4 = (int)height;
-				new Rectangle(tmp1, tmp2, tmp3, tmp4).DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Blue);
+				new Rectangle(tmp1, tmp2, tmp3, tmp4).DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Blue);*/
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {

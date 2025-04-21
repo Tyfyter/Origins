@@ -65,9 +65,28 @@ namespace Origins.Walls {
 				}
 			}
 			if (odds is null) return;
-			float localValue = odds[i % odds.GetLength(0), j % odds.GetLength(1)];
+			int width = odds.GetLength(0);
+			int height = odds.GetLength(1);
+			float GetColor(float x, float y) {
+				float flooredX = MathF.Floor(x);
+				if (x == flooredX) {
+					float flooredY = MathF.Floor(y);
+					float factor = y - flooredY;
+					return odds[(int)x % width, ((int)flooredY) % height] * (1 - factor) + odds[(int)x % width, ((int)flooredY + 1) % height] * factor;
+				} else {
+					float factor = x - flooredX;
+					float flooredY = MathF.Floor(y);
+					if (y == flooredY) {
+						return odds[(int)flooredX % width, (int)y % height] * (1 - factor) + odds[((int)flooredX + 1) % width, (int)y % height] * factor;
+					} else {
+						return GetColor(flooredX, y) * (1 - factor) + GetColor(flooredX + 1, y) * factor;
+					}
+				}
+			}
+			const float inverse_scale = 0.8f;
+			float localValue = GetColor(i * inverse_scale, j * inverse_scale);
 			if (Main.rand.NextFloat(1000) < Main.gfxQuality * 500 * localValue * localValue * localValue * localValue) {
-				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts)).velocity *= 0.1f;
+				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(43, 217, 162)).velocity *= 0.1f;
 				//Gore.NewGorePerfect(Entity.GetSource_None(), new Vector2(i, j + Main.rand.NextFloat()) * 16, Vector2.UnitX * Main.rand.NextFloat(-1, 1), GoreID.LightningBunnySparks);
 			}
 		}
@@ -119,7 +138,7 @@ namespace Origins.Walls {
 		public override bool MidUpdate(Dust dust) {
 			return false;
 		}
-		public override Color? GetAlpha(Dust dust, Color lightColor) => lightColor * ((255 - dust.alpha) / 255f);
+		public override Color? GetAlpha(Dust dust, Color lightColor) => lightColor.MultiplyRGBA(dust.color) * ((255 - dust.alpha) / 255f);
 	}
 	public class Brine_Cloud_Dust2 : Brine_Cloud_Dust {
 		public override string Texture => "Terraria/Images/Gore_" + GoreID.AmbientFloorCloud2;
