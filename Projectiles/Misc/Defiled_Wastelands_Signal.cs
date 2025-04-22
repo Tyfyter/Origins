@@ -9,6 +9,9 @@ using Terraria.GameContent.Achievements;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Origins.NPCs.Defiled.Boss;
+using Origins.Tiles.Defiled;
+using Origins.Tiles;
+using System.Collections.ObjectModel;
 
 namespace Origins.Projectiles.Misc {
 	public class Defiled_Wastelands_Signal : ModProjectile {
@@ -45,8 +48,8 @@ namespace Origins.Projectiles.Misc {
 				Projectile.Kill();
 			}
 			if (Target == default) {
-				List<Point> hearts = ModContent.GetInstance<OriginSystem>().DefiledHearts;
-				Point current = default;
+				ReadOnlyCollection<Point16> hearts = TESystem.GetLocations<Defiled_Heart_TE_System>();
+				Point16 current = default;
 				float dist = float.PositiveInfinity;
 				for (int i = hearts.Count - 1; i >= 0; i--) {
 					float cdist = Projectile.DistanceSQ(hearts[i].ToVector2() * 16);
@@ -55,7 +58,7 @@ namespace Origins.Projectiles.Misc {
 						dist = cdist;
 					}
 				}
-				Target = current;
+				Target = current.ToPoint();
 				if (Target == default) Projectile.timeLeft -= 9;
 			} else {
 				Projectile.velocity = Projectile.DirectionTo(Target.ToVector2() * 16 + new Vector2(8)) * 8;

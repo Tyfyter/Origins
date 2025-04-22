@@ -1,24 +1,23 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Accessories;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Journal;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Journal;
-using Origins.Items.Other.Consumables;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using PegasusLib;
-using System.IO;
-using Origins.Buffs;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Brute : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
@@ -33,6 +32,7 @@ namespace Origins.NPCs.Defiled {
 		public string EntryName => "Origins/" + typeof(Defiled_Krusher_Entry).Name;
 		public class Defiled_Krusher_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Krusher";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 3);
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
@@ -134,7 +134,7 @@ namespace Origins.NPCs.Defiled {
 							pos,
 							velocity,
 							projType,
-							30,
+							(int)(30 * ContentExtensions.DifficultyDamageMultiplier),
 							8
 						);
 					}

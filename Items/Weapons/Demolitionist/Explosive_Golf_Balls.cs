@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +14,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.shoot = ModContent.ProjectileType<Impact_Golf_Ball_P>();
 			Item.value = Item.sellPrice(gold: 1);
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Explosive_Golf_Ball>()
+			.AddIngredient<Peat_Moss_Item>()
+			.Register();
 		}
 	}
 	public class Impact_Golf_Ball_P : Golf_Ball_Projectile {
@@ -31,6 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if ((Projectile.velocity - Projectile.oldVelocity).LengthSquared() > 8 * 8) {
 				Projectile.Kill();
 			}
+			if (Projectile.originalDamage == 0) Projectile.originalDamage = Origins.ExplosiveBaseDamage[Type];
 		}
 		public override bool? CanDamage() {
 			if (Projectile.velocity.LengthSquared() > 4) {
@@ -59,6 +68,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Explosive_Golf_Ball_P>();
 			Item.value = Item.sellPrice(gold: 1);
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddRecipeGroup(OriginSystem.GolfBallsRecipeGroupID)
+			.AddIngredient(ItemID.ExplosivePowder)
+			.Register();
+		}
 	}
 	public class Explosive_Golf_Ball_P : Golf_Ball_Projectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBlack;
@@ -73,6 +88,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 1;
 			Projectile.DamageType = DamageClasses.Explosive;
 			if (Projectile.damage <= 1) Projectile.damage = 1;
+		}
+		public override void AI() {
+			if (Projectile.originalDamage == 0) Projectile.originalDamage = Origins.ExplosiveBaseDamage[Type];
 		}
 		public override bool? CanDamage() {
 			if (Projectile.velocity.LengthSquared() > 4) {
@@ -89,18 +107,24 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Bouncy_Explosive_Golf_Ball : ModItem {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBlack;
+		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedPink;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);
 			Item.damage = 60;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.shoot = ModContent.ProjectileType<Bouncy_Explosive_Golf_Ball_P>();
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Explosive_Golf_Ball>()
+			.AddIngredient(ItemID.PinkGel)
+			.Register();
+		}
 	}
 	public class Bouncy_Explosive_Golf_Ball_P : Golf_Ball_Projectile {
 		int bounceTimer = 0;
 		protected override bool CloneNewInstances => true;
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBlack;
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedPink;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			// DisplayName.SetDefault("Ricochet Golf Ball");
@@ -128,9 +152,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (bounceTimer > 0) {
 				bounceTimer--;
 			}
+			if (Projectile.originalDamage == 0) Projectile.originalDamage = Origins.ExplosiveBaseDamage[Type];
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-
+			base.OnHitNPC(target, hit, damageDone);
+			Projectile.velocity += Projectile.velocity.SafeNormalize(default);
+			Projectile explosion = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.RocketI, Projectile.originalDamage, Projectile.knockBack, Projectile.owner);
+			explosion.DamageType = Projectile.DamageType;
+			explosion.timeLeft = 1;
+			if (bounceTimer <= 0) {
+				Projectile.penetrate--;
+				bounceTimer = 10;
+			}
 		}
 	}
 	public class Remote_Golf_Ball : ModItem {
@@ -169,6 +202,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.type = ProjectileID.MiniNukeGrenadeI;
 				Projectile.Kill();
 			}
+			if (Projectile.originalDamage == 0) Projectile.originalDamage = Origins.ExplosiveBaseDamage[Type];
 		}
 		public override bool? CanDamage() {
 			if (Projectile.type == ProjectileID.MiniNukeGrenadeI) {

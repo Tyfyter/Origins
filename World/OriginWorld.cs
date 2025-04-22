@@ -6,6 +6,7 @@ using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Limestone;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World;
 using System;
@@ -14,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -93,9 +95,9 @@ namespace Origins {
 				return currentLevel;
 			}
 		}
-		public List<Point> DefiledHearts { get; set; } = [];
-		private List<Point> _abandonedBombs;
-		public List<Point> AbandonedBombs => _abandonedBombs ??= [];
+		[Obsolete("Use TESystem.GetLocations<Defiled_Heart_TE_System>() instead")]
+		public List<Point> DefiledHearts => ModContent.GetInstance<Defiled_Heart_TE_System>().tileEntityLocations.Select(Utils.ToPoint).ToList();
+		internal List<Point16> LegacySave_DefiledHearts { get; set; } = [];
 		private Dictionary<Point, Guid> _voidLocks;
 		public Dictionary<Point, Guid> VoidLocks => _voidLocks ??= [];
 		public Vector2? shimmerPosition;
@@ -108,7 +110,9 @@ namespace Origins {
 				peatSold = tag.GetAsInt("peatSold");
 			}
 			if (tag.ContainsKey("worldSurfaceLow")) _worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
-			if (tag.ContainsKey("defiledHearts")) DefiledHearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
+			if (tag.ContainsKey("defiledHearts")) {
+				LegacySave_DefiledHearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint16).ToList();
+			}
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
 			tag.TryGet("forceThunderstorm", out forceThunderstorm);
@@ -154,7 +158,6 @@ namespace Origins {
 			tag.Add("hasRiven", hasRiven);
 			tag.Add("forceThunderstorm", forceThunderstorm);
 			tag.Add("unlockedBrineNPC", unlockedBrineNPC);
-			tag.Add("defiledHearts", DefiledHearts.Select(Utils.ToVector2).ToList());
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}

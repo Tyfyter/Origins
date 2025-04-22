@@ -8,6 +8,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public string EntryName => "Origins/" + typeof(Hearty_Broth_Entry).Name;
 		public class Hearty_Broth_Entry : JournalEntry {
 			public override string TextKey => "Hearty_Broth";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 4);
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

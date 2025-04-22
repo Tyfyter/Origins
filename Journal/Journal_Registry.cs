@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
 
 namespace Origins.Journal {
@@ -12,8 +14,12 @@ namespace Origins.Journal {
 		public static void SetupContent() {
 			OrderedEntries = Entries.Values.Order().ToList();
 		}
-		public void Load(Mod mod) { }
-
+		public void Load(Mod mod) {
+			On_NPCWasChatWithTracker.RegisterChatStartWith += On_NPCWasChatWithTracker_RegisterChatStartWith;
+		}
+		static void On_NPCWasChatWithTracker_RegisterChatStartWith(On_NPCWasChatWithTracker.orig_RegisterChatStartWith orig, NPCWasChatWithTracker self, Terraria.NPC npc) {
+			if (npc.ModNPC is IJournalEntrySource journalEntrySource) Main.LocalPlayer.OriginPlayer().UnlockJournalEntry(journalEntrySource);
+		}
 		public void Unload() {
 			Entries = null;
 			OrderedEntries = null;

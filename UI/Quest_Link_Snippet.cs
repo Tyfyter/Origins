@@ -85,9 +85,17 @@ namespace Origins.UI {
 						size = FontAssets.MouseText.Value.MeasureString(Text);
 						ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, color, 0, Vector2.Zero, new Vector2(scale));
 						if (Quest_Registry.GetQuestByKey(key).HasNotification) {
-							//TODO: use Terraria/UI/UI_quickicon1
-							float scaleValue = MathHelper.Lerp(0.5f, 1.15f, Main.mouseTextColor / 255f);
-							size = ChatManager.DrawColorCodedStringWithShadow(
+							Main.spriteBatch.Draw(
+								TextureAssets.QuicksIcon.Value,
+								position + new Vector2(size.X + 6 * scale, size.Y * scale * 0.3f),
+								null,
+								Main.MouseTextColorReal,
+								0,
+								TextureAssets.QuicksIcon.Size() * new Vector2(0.5f, 0.5f),
+								scale,
+								SpriteEffects.None,
+							0);
+							/*size = ChatManager.DrawColorCodedStringWithShadow(
 								spriteBatch,
 								FontAssets.MouseText.Value,
 								"!",
@@ -97,7 +105,7 @@ namespace Origins.UI {
 								0,
 								Vector2.Zero,
 								new Vector2(scale * scaleValue)
-							);
+							);*/
 						}
 						return true;
 					}

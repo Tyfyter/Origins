@@ -108,7 +108,7 @@ Defiled_Krusher: {
 	/* Text:
 		'''
 		[header:{§Defiled} Krusher (3/17)]
-		[jportrait/tw450h78:Origins/Defiled_Brute]
+		[jportrait/dw450h78:Origins/Defiled_Brute]
 
 		*****
 		The great maintainers of this world found us in vulnerability, but instead of being nurturing mothers they wanted to be known for, they instead tried to kill us. With no intelligent thought to rely on, we defended precious existence.
@@ -409,7 +409,7 @@ Crown_Jewel: {
 
 
 		*****
-		There she is. The crown jewel. Gleaming in this dark abyss, reminding me of her. The love of my life. ...perhaps, I really am not worthy. I am no hero, I am only a crowd-pleaser.
+		Gleaming in the dark abyss of the brine, this wretched gem smites bearers who are unworthy and absorbs their souls to grant all of that power to Terraria's true hero. That's you, Terrarian.
 		''' */
 }
 
@@ -1156,4 +1156,7 @@ Captured_Mojo: {
 Series: {
 	// µUncategorized: Uncategorized
 	// Lost_Crone: Lost Crone
+	// Riven: "{§Riven_Hive}"
+	// Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	// The_Defiled: The {§Defiled}
 }

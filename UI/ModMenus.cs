@@ -1,27 +1,36 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Backgrounds;
+using Origins.Graphics;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
-using System.Linq;
-using System.Reflection;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.UI {
 	public class Riven_Hive_Mod_Menu : ModMenu {
-		public override Asset<Texture2D> Logo => TextureAssets.Logo2;
+		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Riven_Terraria");
 		public override int Music => Origins.Music.Riven;
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Riven_Hive")).Value;
+		Asset<Texture2D> Loglow;
+		Asset<Texture2D> Subtitle;
+		public override void SetStaticDefaults() {
+			Loglow = ModContent.Request<Texture2D>("Origins/UI/Logos/Riven_Terraria_Glow");
+			Subtitle = ModContent.Request<Texture2D>("Origins/UI/Logos/Origins_Subheader");
+		}
+		public override void PostDrawLogo(SpriteBatch spriteBatch, Vector2 logoDrawCenter, float logoRotation, float logoScale, Color drawColor) {
+			spriteBatch.Draw(Loglow.Value, logoDrawCenter, null, Riven_Hive.GetGlowAlpha(drawColor), logoRotation, Loglow.Size() * 0.5f, logoScale, SpriteEffects.None, 0);
+			//Can't add Origins subtitle because it's as big as the actual logo
+			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
+		}
 	}
 	public class Defiled_Wastelands_Mod_Menu : ModMenu {
-		public override Asset<Texture2D> Logo => TextureAssets.Logo2;
+		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Defiled_Terraria");
 		public override int Music => Origins.Music.Defiled;
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Defiled_Wastelands")).Value;
@@ -47,13 +56,32 @@ namespace Origins.UI {
 						defiledFilter.GetShader()
 						.UseProgress(0.9f)
 						.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f)
-						.UseOpacity(MathHelper.Clamp(OriginClientConfig.Instance.DefiledShaderNoise * 5, float.Epsilon, 1));
+						.UseOpacity(MathHelper.Clamp(OriginClientConfig.Instance.DefiledShaderNoise * 5, float.Epsilon, 1))
+						.Shader.Parameters["uTimeScale"].SetValue(OriginClientConfig.Instance.DefiledShaderSpeed);
 						cantShade = false;
 					}
 				}
 			});
 		}
 		public override void Update(bool isOnTitleScreen) {
+		}
+		Asset<Texture2D> tangela;
+		public override void SetStaticDefaults() {
+			tangela = ModContent.Request<Texture2D>("Origins/UI/Logos/Defiled_Terraria_Tangela");
+		}
+		public override void PostDrawLogo(SpriteBatch spriteBatch, Vector2 logoDrawCenter, float logoRotation, float logoScale, Color drawColor) {
+			TangelaVisual.DrawTangela(
+				tangela.Value,
+				logoDrawCenter,
+				null,
+				logoRotation,
+				tangela.Size() * 0.5f,
+				new(logoScale),
+				SpriteEffects.None,
+				0
+			);
+			//Can't add Origins subtitle because it's as big as the actual logo
+			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
 		}
 	}
 }

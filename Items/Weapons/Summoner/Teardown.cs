@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public string EntryName => "Origins/" + typeof(Teardown_Entry).Name;
 		public class Teardown_Entry : JournalEntry {
 			public override string TextKey => "Teardown";
+			public override JournalSortIndex SortIndex => new("Riven", 9);
 		}
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

@@ -318,6 +318,7 @@ namespace Origins {
 		#region summon stats
 		public StatModifier artifactDamage = StatModifier.Default;
 		public float artifactManaCost = 1f;
+		public float necromancyPrefixMana = 0;
 		#endregion
 
 		#region biomes
@@ -472,6 +473,7 @@ namespace Origins {
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
 		public bool forceFallthrough = false;
+		public int timeSinceRainedOn = 0;
 		/// <summary>
 		/// not set to true by alt uses
 		/// </summary>
@@ -885,6 +887,19 @@ namespace Origins {
 			hideAllLayers = false;
 			disableUseItem = false;
 			thornsVisualProjType = -1;
+			if (changeSize) {
+				Player.position.X -= (targetWidth - Player.width) / 2;
+				Player.position.Y -= targetHeight - Player.height;
+				Player.width = targetWidth;
+				Player.height = targetHeight;
+			} else if (targetWidth != 0) {
+				Player.position.X -= (20 - Player.width) / 2;
+				Player.position.Y -= 42 - Player.height;
+				Player.width = 20;
+				Player.height = 42;
+				targetWidth = 0;
+				targetHeight = 0;
+			}
 			changeSize = false;
 			minionSubSlots = new float[minionSubSlotValues];
 			if (timeSinceLastDeath < int.MaxValue) timeSinceLastDeath++;
@@ -966,6 +981,7 @@ namespace Origins {
 			forceDrown = false;
 			heldProjOverArm = null;
 			shieldGlow = -1;
+			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
@@ -988,6 +1004,23 @@ namespace Origins {
 			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(journalEntrySource.EntryName)) {
 				unreadJournalEntries.Add(journalEntrySource.EntryName);
 				SoundEngine.PlaySound(Origins.Sounds.Journal);
+			}
+		}
+		bool necromanaUsedThisUse = false;
+		public override void OnConsumeMana(Item item, int manaConsumed) {
+			if (!necromanaUsedThisUse && (necroSet || necroSet2 || item.CountsAsClass(DamageClass.Summon)) && necromancyPrefixMana > 0) {
+				int restoreMana = (int)Math.Min(necromancyPrefixMana, manaConsumed);
+				necromancyPrefixMana -= restoreMana;
+				Player.statMana += restoreMana;
+				necromanaUsedThisUse = true;
+			}
+		}
+		public override void OnMissingMana(Item item, int neededMana) {
+			if (!necromanaUsedThisUse && (necroSet || necroSet2 || item.CountsAsClass(DamageClass.Summon)) && Player.statMana + necromancyPrefixMana >= neededMana) {
+				int restoreMana = neededMana - Player.statMana;
+				necromancyPrefixMana -= restoreMana;
+				Player.statMana += restoreMana;
+				necromanaUsedThisUse = true;
 			}
 		}
 	}

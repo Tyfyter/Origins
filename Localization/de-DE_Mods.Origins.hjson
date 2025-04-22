@@ -39,6 +39,7 @@ RecipeGroups: {
 	// EvilBoomerangs: Any Evil Boomerang
 	// EvilGunMagazines: Any Evil Gun Magazine
 	// AnyBanner: Any {0} Banner
+	// GolfBalls: Any Golf Ball
 }
 
 Status_Messages: {
@@ -1171,6 +1172,11 @@ Buffs: {
 		// DisplayName: Skimswim Buff
 		// Description: Mods.Origins.Buffs.Skimswim_Buff.Description
 	}
+
+	Cannihound_Lure_Debuff: {
+		// DisplayName: Ill Omen of Hound
+		// Description: You smell like fresh meat
+	}
 }
 
 DamageClassName: {
@@ -1708,14 +1714,10 @@ Projectiles: {
 	// Cannihound_Gore1.DisplayName: Cannihound Gore1
 	// Cannihound_Gore2.DisplayName: Cannihound Gore2
 	// Cannihound_Gore3.DisplayName: Cannihound Gore3
-	// Defiled_Spike_Indicator.DisplayName: Defiled Spike Indicator
-	// DA_Bendy_Spikes.DisplayName: D A Bendy Spikes
-	// DA_Arc_Bolt.DisplayName: D A Arc Bolt
-	// DA_Laser.DisplayName: D A Laser
-	// DA_Flan.DisplayName: D A Flan
-	// Bendy_Indicator.DisplayName: Bendy Indicator
-	// Defiled_Spike_Explosion_Hostile_Unused.DisplayName: Defiled Spike Explosion Hostile Unused
-	// Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: Defiled Spike Explosion Spike Hostile Unused
+	// Brine_Haze_P.DisplayName: Brine Haze P
+	// Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
+	// Defiled_Broadcaster_Flan.DisplayName: Defiled Broadcaster
+	// Defiled_Broadcaster_Teleport_Flan.DisplayName: Defiled Broadcaster Teleport
 }
 
 Prefixes: {
@@ -1746,13 +1748,36 @@ Prefixes: {
 		// DisplayName: Firestarter's
 		/* Description:
 			'''
-			Minions are set ablaze
+			Minions set foes ablaze
 			Minions explode upon death
 			''' */
+		// BadDescription: Minions lose health over time
 	}
 
 	// Brittle_Prefix.DisplayName: Brittle
 	// Speedy_Prefix.DisplayName: Speedy
+	// Bloated_Prefix.DisplayName: Bloated
+
+	Wholesome_Prefix: {
+		// DisplayName: Wholesome
+		/* Description:
+			'''
+			Minions heal nearby allied players
+			Minions drop hearts when killed
+			''' */
+	}
+
+	Vampiric_Prefix: {
+		// DisplayName: Vampiric
+		// Description: Minions steal life from struck enemies
+	}
+
+	Necromantic_Prefix: {
+		// DisplayName: Necromantic
+		// Description: Mods.Origins.Prefixes.Necromantic_Prefix.Description
+	}
+
+	// Necromantic_Artifact_Prefix.Description: Mods.Origins.Prefixes.Necromantic_Artifact_Prefix.Description
 }
 
 BiomeName: {
@@ -1955,6 +1980,7 @@ Tiles: {
 	// Fake_Riven_Altar.MapEntry: "{§Riven} Altar"
 	// Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	// Lucky_Hat_Tile.MapEntry: Lucky Hat
+	// Residual_Crate_Tile.MapEntry: Residual Crate
 }
 
 MapObject: {
@@ -1976,6 +2002,7 @@ Keybinds: {
 	// "Forbidden Voice.DisplayName": Use Forbidden Voice
 	// "Debug Screen Shader.DisplayName": Debug  Screen  Shader
 	// GoldenLotus.DisplayName: Golden Lotus
+	// UseMojoFlask.DisplayName: Use Mojo Flask
 }
 
 Configs: {
@@ -2047,6 +2074,11 @@ Configs: {
 
 		DefiledShaderNoise: {
 			// Label: Defiled Wastelands Shader Noise
+			// Tooltip: ""
+		}
+
+		DefiledShaderSpeed: {
+			// Label: Defiled Wastelands Shader Speed
 			// Tooltip: ""
 		}
 

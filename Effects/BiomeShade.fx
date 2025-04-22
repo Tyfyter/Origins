@@ -19,6 +19,7 @@ float2 uImageOffset;
 float uSaturation;
 float4 uSourceRect;
 float2 uZoom;
+float2 uTimeScale;
 
 float4 VoidShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
@@ -43,7 +44,7 @@ float Select(float3 a, float i) {
 }
 
 float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
-	float select = uTime * 10;
+	float select = uTime * uTimeScale;
 	select = select - floor(select / 3.0) * 3.0;
 	//coords.x += (Select(tex2D(uImage1, float2(0, Select(tex2D(uImage1, float2(uTime, 0)).rgb, select) * 5) + coords.y).rgb, select) - 0.5, select) * uIntensity;
 	coords.x += Select(tex2D(uImage1, float2(coords.y, coords.x) * 10).rgb, select) * uIntensity;

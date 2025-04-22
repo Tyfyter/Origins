@@ -27,7 +27,9 @@ namespace Origins.Items.Accessories {
 			player.manaMagnet = true;
 			player.magicCuffs = true;
 			player.statManaMax2 += 20;
-			player.GetModPlayer<OriginPlayer>().refactoringPieces = true;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.refactoringPieces = true;
+			originPlayer.manaShielding += 0.1f;
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {

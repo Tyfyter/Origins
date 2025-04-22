@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using System.Collections.Generic;

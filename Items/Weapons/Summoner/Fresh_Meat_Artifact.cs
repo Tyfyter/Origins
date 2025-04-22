@@ -16,6 +16,7 @@ using Origins.Projectiles;
 using Terraria.Audio;
 using Origins.Gores;
 using System.Collections.Generic;
+using PegasusLib;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Fresh_Meat_Artifact : ModItem, ICustomWikiStat {
@@ -32,6 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 17;
 			Item.shootSpeed = 9f;
+			Item.knockBack = 1f;
 			Item.width = 24;
 			Item.height = 38;
 			Item.useTime = 24;
@@ -235,7 +237,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			};
 		}
 	}
-	public class Fresh_Meat_Dog : ModProjectile {
+	public class Fresh_Meat_Dog : ModProjectile, IShadedProjectile {
 		public bool OnGround {
 			get {
 				return Projectile.localAI[1] > 0;
@@ -253,6 +255,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 		public static int ID { get; private set; }
+		public int Shader => Main.player[Projectile.owner].cMinion;
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 15;
@@ -262,7 +265,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
-			Origins.ArtifactMinion[Type] = true;
+			ProjectileID.Sets.MinionShot[Type] = true;
 			ID = Type;
 		}
 
@@ -272,8 +275,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.height = 40;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
-			Projectile.minion = true;
-			Projectile.minionSlots = 0f;
+			/*Projectile.minion = true;
+			Projectile.minionSlots = 0f;*/
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;

@@ -56,6 +56,9 @@ namespace Origins.Items.Other.Consumables {
 				}
 				tooltips[i].Text = tooltips[i].Text.Replace("{FlaskCureAmount}", Item.buffTime.ToString()).Replace("{FlaskUseCount}", FlaskUseCount.ToString());
 			}
+			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+				OriginsModIntegrations.GoToKeybind(Keybindings.UseMojoFlask);
+			}
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			if (player.DpadRadial.SelectedBinding != -1) {

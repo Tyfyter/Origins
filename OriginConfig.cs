@@ -118,11 +118,14 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
 
-		[DefaultValue(0.2f), Range(0, 1), Increment(0.05f)]
+		[DefaultValue(0.2f), Range(0f, 1f), Increment(0.05f)]
 		public float DefiledShaderJitter = 0.2f;
 
-		[DefaultValue(0.1f), Range(0, 1), Increment(0.05f)]
+		[DefaultValue(0.1f), Range(0f, 1f), Increment(0.05f)]
 		public float DefiledShaderNoise = 0.1f;
+
+		[DefaultValue(10), Range(0f, 30f), Increment(0.5f)]
+		public float DefiledShaderSpeed = 10;
 
 		[DefaultValue(1f), Range(0, 2), Increment(0.1f)]
 		public float ScreenShakeMultiplier = 1f;
@@ -551,8 +554,11 @@ namespace Origins {
 					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
 						glowLayer.LoadAllTextures();
 					}
+					foreach (Accessory_Tangela_Layer tangelaLayer in Origins.instance.GetContent<Accessory_Tangela_Layer>()) {
+						tangelaLayer.LoadAllTextures();
+					}
 					List<string> unused = [];
-					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
+					HashSet<string> loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
 					loadedAssets.Add("icon");
 					loadedAssets.Add("Buffs/BuffTemplate");
 					loadedAssets.Add("Buffs/DebuffTemplate");

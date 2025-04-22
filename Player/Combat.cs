@@ -10,6 +10,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
+using Origins.NPCs.MiscE;
 using Origins.Projectiles;
 using Origins.Questing;
 using PegasusLib.ID;
@@ -69,6 +70,7 @@ namespace Origins {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
 			}
+			necromanaUsedThisUse = false;
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
@@ -360,6 +362,9 @@ namespace Origins {
 				target.AddBuff(BuffID.Wet, 180);
 			}
 			if (target.life <= 0) {
+				if (target.ModNPC is Cannihound) {
+					Player.AddBuff(ModContent.BuffType<Cannihound_Lure_Debuff>(), 5 * 60);
+				}
 				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.KillEnemyEvent is not null) {
 						quest.KillEnemyEvent(target);

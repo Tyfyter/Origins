@@ -22,6 +22,7 @@ namespace Origins.NPCs.Defiled {
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public class Ancient_Defiled_Cyclops_Entry : JournalEntry {
 			public override string TextKey => "Ancient_Defiled_Cyclops";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 1);
 		}
 		public string EntryName => "Origins/" + typeof(Ancient_Defiled_Cyclops_Entry).Name;
 		public override void SetStaticDefaults() {

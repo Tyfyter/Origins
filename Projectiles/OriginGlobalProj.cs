@@ -74,6 +74,7 @@ namespace Origins.Projectiles {
 		public bool astoxoEffect = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public Vector2[] oldPositions = [];
+		public OwnerMinionKey ownerMinion = null;
 		public override void Load() {
 			itemSourceEffects = [];
 		}
@@ -179,6 +180,7 @@ namespace Origins.Projectiles {
 						}
 					}
 					OriginGlobalProj parentGlobalProjectile = parentProjectile.GetGlobalProjectile<OriginGlobalProj>();
+					ownerMinion = parentProjectile.minion || parentProjectile.sentry ? new(parentProjectile.type, parentProjectile.owner, parentProjectile.identity) : parentGlobalProjectile.ownerMinion;
 					Prefix = parentGlobalProjectile.Prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
@@ -412,6 +414,9 @@ namespace Origins.Projectiles {
 					SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 				}
 			}
+			if (prefix is IModifyHitNPCPrefix onHitNPCPrefix) {
+				onHitNPCPrefix.ModifyHitNPC(projectile, target, ref modifiers);
+			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (fiberglassLifesteal) {
@@ -529,6 +534,13 @@ namespace Origins.Projectiles {
 
 			bitWriter.WriteBit(extraGravity != default);
 			if (extraGravity != default) binaryWriter.WriteVector2(extraGravity);
+
+			bitWriter.WriteBit(ownerMinion is not null);
+			if (ownerMinion is not null) {
+				binaryWriter.Write(ownerMinion.Type);
+				binaryWriter.Write((byte)ownerMinion.Owner);
+				binaryWriter.Write(ownerMinion.Identity);
+			}
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
@@ -543,6 +555,8 @@ namespace Origins.Projectiles {
 			if (bitReader.ReadBit()) weakpointAnalyzerTarget = binaryReader.ReadVector2();
 
 			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
+
+			if (bitReader.ReadBit()) ownerMinion = new(binaryReader.ReadInt32(), binaryReader.ReadByte(), binaryReader.ReadInt32());
 		}
 		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
 			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;
@@ -574,7 +588,7 @@ namespace Origins.Projectiles {
 				}
 				projectile.ai[0]++;
 				for (int num354 = 0; num354 < 1; num354++) {
-					int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, color);
+					int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0, color);
 					Main.dust[d].noGravity = true;
 					Dust dust1 = Main.dust[d];
 					Dust dust2 = dust1;
@@ -684,4 +698,5 @@ namespace Origins.Projectiles {
 			}
 		}
 	}
+	public record OwnerMinionKey(int Type, int Owner, int Identity);
 }

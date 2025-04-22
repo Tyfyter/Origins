@@ -17,6 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Splashid_Entry).Name;
 		public class Splashid_Entry : JournalEntry {
 			public override string TextKey => "Splashid";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 5);
 		}
 		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {

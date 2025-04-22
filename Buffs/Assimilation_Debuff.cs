@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using BetterDialogue.UI.VanillaChatButtons;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -182,6 +184,30 @@ namespace Origins.Buffs {
 		public void AddMultiplier(float multiplier) {
 			currentMultiplier *= multiplier;
 			nextMultiplier *= multiplier;
+		}
+	}
+	public class Nurse_Assimilation_Dialog : ModPlayer {
+		static bool didHeal;
+		public override void Load() {
+			MonoModHooks.Add(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.OnClick)), static (Action<NurseHealButton, NPC, Player> orig, NurseHealButton self, NPC npc, Player player) => {
+				didHeal = false;
+				orig(self, npc, player);
+
+				foreach (AssimilationInfo info in player.OriginPlayer().IterateAssimilation()) {
+					if (info.Percent > 0) {
+						if (!didHeal) {
+							Main.npcChatText = Language.GetOrRegister("Mods.Origins.NPCs.Nurse.NoHealCantHealAssimilation").Value;
+						} else {
+							if (Main.npcChatText.Length > 0) Main.npcChatText += " ";
+							Main.npcChatText += Language.GetOrRegister("Mods.Origins.NPCs.Nurse.CantHealAssimilation").Value;
+						}
+						break;
+					}
+				}
+			});
+		}
+		public override void PostNurseHeal(NPC nurse, int health, bool removeDebuffs, int price) {
+			didHeal = true;
 		}
 	}
 }

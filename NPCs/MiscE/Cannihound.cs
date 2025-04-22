@@ -1,21 +1,17 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Gores.NPCs;
+using Origins.Items.Weapons.Summoner;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.MiscE {
 	public class Cannihound : ModNPC, IWikiNPC {
@@ -41,8 +37,8 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
-			NPC.lifeMax = 198;
-			NPC.defense = 20;
+			NPC.lifeMax = 70;
+			NPC.defense = 6;
 			NPC.damage = 25;
 			NPC.width = 54;
 			NPC.height = 50;
@@ -53,9 +49,13 @@ namespace Origins.NPCs.MiscE {
 			NPC.value = 75;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
-			if (!spawnInfo.Player.ZoneCrimson) return 0;
-			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1) * (spawnInfo.Player.ZoneSnow ? 1.5f : 1);
+			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY > Main.worldSurface + 50) return 0;
+			if (!((spawnInfo.SpawnTileType == TileID.Crimtane && spawnInfo.Player.ZoneCrimson)
+			|| spawnInfo.SpawnTileType == TileID.CrimsonGrass || spawnInfo.SpawnTileType == TileID.FleshIce
+			|| spawnInfo.SpawnTileType == TileID.Crimstone || spawnInfo.SpawnTileType == TileID.Crimsand)) return 0;
+			float chance = 0.6f;
+			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 2;
+			return (spawnInfo.Player.ZoneSnow ? 1.5f : 1) * chance;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (Main.rand.NextBool()) target.AddBuff(BuffID.Bleeding, 20);
@@ -79,6 +79,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fresh_Meat_Artifact>(), 40));
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public override void AI() {
@@ -208,7 +209,6 @@ namespace Origins.NPCs.MiscE {
 			if (!NPC.collideY) acceleration *= 0.25f;
 
 			NPC.velocity.X += acceleration * targetMoveDirection;
-			Debugging.ChatOverhead(NPC.frame.Y / NPC.frame.Height);
 
 			if (NPC.collideY || NPC.aiAction == 0) NPC.velocity.X *= 0.97f;
 			if (currentMoveDirection == targetMoveDirection && NPC.aiAction == 0) NPC.velocity.X *= 0.93f;
@@ -279,6 +279,12 @@ namespace Origins.NPCs.MiscE {
 					);
 				}
 			}
+		}
+	}
+	public class Cannihound_Lure_Debuff : ModBuff {
+		public override string Texture => $"{nameof(Origins)}/Buffs/{nameof(Cannihound_Lure_Debuff)}";
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
 		}
 	}
 }

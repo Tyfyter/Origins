@@ -1,14 +1,17 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Items.Potions.Alcohol;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.Tiles;
+using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -47,6 +50,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.netUpdate = true;
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-0.5f).WithVolume(0.4f), NPC.Center);
+			if (Main.rand.NextBool(4)) SoundEngine.PlaySound(SoundID.Item48.WithPitch(-3f).WithVolume(0.55f), NPC.Center);
 			if (NPC.ai[0] <= 0) {
 				NPC.active = false;
 				return;
@@ -62,6 +67,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.Bottom = bottom;
 			}
 			if (chunks is null) {
+				NPC.TargetClosest();
 				UnifiedRandom rand = new((int)NPC.ai[2]);
 				List<Vector2> vectors;
 				if (referenceNPC.ModNPC is IDefiledEnemy defiledEnemy && defiledEnemy.GetCustomChrysalisShape(NPC) is (Rectangle startArea, Predicate<Vector2> customShape)) {
@@ -76,6 +82,7 @@ namespace Origins.NPCs.Defiled {
 			}
 			if (++NPC.ai[1] > animationTimeMax) {
 				NPC.Transform(referenceNPC.netID);
+				if (NPC.ModNPC is IDefiledEnemy defiledEnemy) defiledEnemy.OnChrysalisSpawn();
 				IEntitySource source = NPC.GetSource_FromThis();
 				Vector2 from = new(NPC.position.X + NPC.width  * 0.5f, NPC.position.Y + NPC.height * 0.75f);
 				for (int i = 0; i < chunks.Length; i++) {
@@ -168,6 +175,93 @@ namespace Origins.NPCs.Defiled {
 					"Gores/NPCs/DF_Effect_Medium" + (texture + 1)
 				);
 			}
+		}
+	}
+	public class Defiled_Chrysalis_Nearby_Spawn : ModNPC, IDefiledEnemy {
+		public override string Texture => "Terraria/Images/NPC_0";
+		public float Mana { get; set; }
+		public override void SetStaticDefaults() {
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
+		}
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			lastSpawnInfo = spawnInfo;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, false) * Defiled_Wastelands.SpawnRates.Nearby * ContentExtensions.DifficultyDamageMultiplier;
+		}
+		static NPCSpawnInfo lastSpawnInfo;
+		public override int SpawnNPC(int tileX, int tileY) {
+			Vector2 playerTilePosition = lastSpawnInfo.Player.position / 16f;
+			int minX = (int)playerTilePosition.X - NPC.safeRangeX;
+			int maxX = (int)playerTilePosition.X + NPC.safeRangeX;
+			int minY = (int)playerTilePosition.Y - NPC.safeRangeY;
+			int maxY = (int)playerTilePosition.Y + NPC.safeRangeY;
+			int spawnTileType = 0;
+			int newTileX = 0;
+			int newTileY = 0;
+			for (int i = 0; i < 50; i++) {
+				bool foundValidSpot = false;
+				int x = Main.rand.Next(minX, maxX);
+				int y = Main.rand.Next(minY, maxY);
+				if (!Main.tile[x, y].HasUnactuatedTile || !Main.tileSolid[Main.tile[x, y].TileType]) {
+					for (int y1 = y; y1 < Main.maxTilesY && y1 < maxY; y1++) {
+						if (Main.tile[x, y1].HasUnactuatedTile && Main.tileSolid[Main.tile[x, y1].TileType]) {
+							if (!playerTilePosition.IsWithin(new(x, y1), 10)) {
+								spawnTileType = Main.tile[x, y1].TileType;
+								newTileX = x;
+								newTileY = y1 - 1;
+								foundValidSpot = true;
+							}
+							break;
+						}
+					}
+					if (foundValidSpot) {
+						int num22 = newTileX - 3 / 2;
+						int num23 = newTileX + 3 / 2;
+						int num24 = newTileY - 3;
+						int num25 = newTileY;
+						if (num22 < 0) {
+							foundValidSpot = false;
+						}
+						if (num23 > Main.maxTilesX) {
+							foundValidSpot = false;
+						}
+						if (num24 < 0) {
+							foundValidSpot = false;
+						}
+						if (num25 > Main.maxTilesY) {
+							foundValidSpot = false;
+						}
+						if (foundValidSpot) {
+							for (int x1 = num22; x1 < num23; x1++) {
+								for (int y1 = num24; y1 < num25; y1++) {
+									if (Main.tile[x1, y1].HasUnactuatedTile && Main.tileSolid[Main.tile[x1, y1].TileType]) {
+										foundValidSpot = false;
+										break;
+									}
+									if (Main.tile[x1, y1].LiquidType == LiquidID.Lava) {
+										foundValidSpot = false;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				if (foundValidSpot) {
+					break;
+				}
+			}
+
+			lastSpawnInfo.SpawnTileX = newTileX;
+			lastSpawnInfo.SpawnTileY = newTileY;
+			lastSpawnInfo.SpawnTileType = spawnTileType;
+			WeightedRandom<int> rand = new();
+			List<(int npcType, SpawnRate condition)> spawns = ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().Spawns;
+			for (int i = 0; i < spawns.Count; i++) {
+				(int npcType, SpawnRate condition) = spawns[i];
+				if (npcType == Type) continue;
+				rand.Add(npcType, condition.Rate(lastSpawnInfo));
+			}
+			return NPC.NewNPC(null, newTileX * 16 + 8, newTileY * 16, ModContent.NPCType<Defiled_Chrysalis>(), ai0: rand.Get());
 		}
 	}
 }

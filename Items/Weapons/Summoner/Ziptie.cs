@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Journal;
 using Origins.NPCs;
@@ -16,6 +15,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public string EntryName => "Origins/" + typeof(Ziptie_Entry).Name;
 		public class Ziptie_Entry : JournalEntry {
 			public override string TextKey => "Ziptie";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 6);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToWhip(ModContent.ProjectileType<Ziptie_P>(), 51, 5, 4, 35);

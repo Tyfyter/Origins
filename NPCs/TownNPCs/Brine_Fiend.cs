@@ -32,6 +32,7 @@ namespace Origins.NPCs.TownNPCs {
 		public string EntryName => "Origins/" + typeof(Brine_Fiend_Entry).Name;
 		public class Brine_Fiend_Entry : JournalEntry {
 			public override string TextKey => "Brine_Fiend";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 0);
 		}
 		public Rectangle DrawRect => new(0, 6, 36, 48);
 		public int AnimationFrames => 16;

@@ -26,6 +26,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Bunny, Type);
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BunnySlimed, Type);
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BunnyXmas, Type);
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.PartyBunny, Type);
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {

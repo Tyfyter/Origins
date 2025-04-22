@@ -58,7 +58,16 @@ namespace Origins.UI {
 						if (flags.HasFlag(Flags.U)) {
 							pos.X += 8;
 							pos.Y = position.Y + 2 * scale;
-							spriteBatch.Draw(TextureAssets.QuicksIcon.Value, pos, Main.MouseTextColorReal);
+							Main.spriteBatch.Draw(
+								TextureAssets.QuicksIcon.Value,
+								pos,
+								null,
+								Main.MouseTextColorReal,
+								0,
+								default,
+								scale,
+								SpriteEffects.None,
+							0);
 						}
 					}
 					if (flags.HasFlag(Flags.L)) {

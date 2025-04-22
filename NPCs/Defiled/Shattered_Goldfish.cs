@@ -14,6 +14,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Goldfish, Type);
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.GoldfishWalker, Type);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {

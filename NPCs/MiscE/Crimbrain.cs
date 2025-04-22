@@ -43,7 +43,7 @@ namespace Origins.NPCs.MiscE {
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			if (!spawnInfo.Player.ZoneCrimson) return 0;
-			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+			return 0.07f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Confused, 20);

@@ -312,6 +312,7 @@ namespace Origins {
 		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
 		public static int EvilBoomerangRecipeGroupID { get; private set; }
+		public static int GolfBallsRecipeGroupID { get; private set; }
 		public static RecipeGroup EvilGunMagazineRecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilGunMagazines").Value, ItemID.MagicQuiver);
 		public override void AddRecipeGroups() {
 			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
@@ -330,6 +331,10 @@ namespace Origins {
 				ModContent.ItemType<Riverang>(),
 				ModContent.ItemType<Orbital_Saw>(),
 			]));
+			GolfBallsRecipeGroupID = RecipeGroup.RegisterGroup("Origins:GolfBalls", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GolfBalls").Value, [
+				ItemID.GolfBall
+			]));
+			for (int i = ItemID.GolfBallDyedBlack; i <= ItemID.GolfBallDyedYellow; i++) RecipeGroup.recipeGroups[GolfBallsRecipeGroupID].ValidItems.Add(i);
 			EvilGunMagazineRecipeGroup.ValidItems.Remove(ItemID.MagicQuiver);
 			RecipeGroup.RegisterGroup("Origins:Evil Gun Magazines", EvilGunMagazineRecipeGroup);
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;

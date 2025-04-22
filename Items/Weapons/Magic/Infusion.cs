@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Infusion_Entry).Name;
 		public class Infusion_Entry : JournalEntry {
 			public override string TextKey => "Infusion";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 4);
 		}
 		public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;

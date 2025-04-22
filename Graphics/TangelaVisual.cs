@@ -1,15 +1,10 @@
-﻿using CalamityMod.Projectiles.Magic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Dyes;
-using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
@@ -75,7 +70,10 @@ namespace Origins.Graphics {
 				changeModeTime = DateTime.Now + TimeSpan.FromSeconds(Main.rand.Next(4, 11)) / (1 + DrawOver.ToInt());
 			}
 			if (drawDatas.Count <= 0) return;
-			if (DrawOver) {
+			if (Main.gameMenu && Overlays.Scene["Origins:ZoneDefiled"] is Tangela_Resaturate_Overlay resaturateOverlay) {
+				resaturateOverlay.Draw(Main.spriteBatch);
+			}
+			if (DrawOver && !Main.gameMenu) {
 				try {
 					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
@@ -110,7 +108,7 @@ namespace Origins.Graphics {
 		}
 		public static void DrawTangela(DrawData data, int tangelaSeed, Vector2 extraOffset = default) {
 			drawDatas.Add(new(data, tangelaSeed, extraOffset));
-			if (DrawOver) return;
+			if (DrawOver && !Main.gameMenu) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			try {
 				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
@@ -130,7 +128,7 @@ namespace Origins.Graphics {
 		public override void Draw(SpriteBatch spriteBatch) {
 			if (lastGameFrameCount == Origins.gameFrameCount) return;
 			lastGameFrameCount = Origins.gameFrameCount;
-			if (TangelaVisual.DrawOver) {
+			if (TangelaVisual.DrawOver && !Main.gameMenu) {
 				return;
 			}
 			if (renderTarget is null) {
@@ -140,6 +138,7 @@ namespace Origins.Graphics {
 			}
 			try {
 				Origins.shaderOroboros.Capture();
+				if (Main.gameMenu) Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.UIScaleMatrix);
 				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
 					TangelaVisual.drawDatas[i].Data.Draw(spriteBatch);
 				}
@@ -154,7 +153,7 @@ namespace Origins.Graphics {
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }
 		public override bool IsVisible() {
-			return (Main.LocalPlayer?.OriginPlayer()?.ZoneDefiledProgressSmoothed > 0 || Mask_Rasterize.TimeSinceActive < 2) && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader;
+			return Mask_Rasterize.TimeSinceActive < 2 || Filters.Scene["Origins:ZoneDefiled"].IsActive();
 		}
 
 		public void Unload() {

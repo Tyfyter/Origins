@@ -14,6 +14,7 @@ namespace Origins.NPCs.Riven {
 		public string EntryName => "Origins/" + typeof(Savage_Whip_Entry).Name;
 		public class Savage_Whip_Entry : JournalEntry {
 			public override string TextKey => "Savage_Whip";
+			public override JournalSortIndex SortIndex => new("Riven", 8);
 		}
 		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Savage_Whip_Preview");
 		public override void Load() {

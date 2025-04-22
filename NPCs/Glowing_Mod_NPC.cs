@@ -10,7 +10,13 @@ namespace Origins.NPCs {
 		public virtual Color? GetGlowColor(Color drawColor) => null;
 		//public virtual bool DrawOverTiles => false;
 		private Asset<Texture2D> _glowTexture;
-		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
+		private Asset<Texture2D> glowTexture {
+			get {
+				if (_glowTexture is null && !ModContent.RequestIfExists(GlowTexturePath, out _glowTexture)) _glowTexture = Asset<Texture2D>.Empty;
+				return _glowTexture;
+			}
+		}
+		public Texture2D GlowTexture => glowTexture.Value;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, GetGlowColor(drawColor));
 		}

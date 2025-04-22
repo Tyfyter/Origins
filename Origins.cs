@@ -401,7 +401,7 @@ namespace Origins {
 				EffectPriority.High);
 				Overlays.Scene["Origins:ZoneDefiled"] = new Tangela_Resaturate_Overlay();
 				Overlays.Scene["Origins:MaskedRasterizeFilter"] = new Tangela_Resaturate_Overlay();
-				Filters.Scene["Origins:ZoneFiberglassUndergrowth"] = new Filter(new FakeScreenShaderData());
+				Filters.Scene["Origins:ZoneFiberglassUndergrowth"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
 				Overlays.Scene["Origins:ZoneFiberglassUndergrowth"] = new Fiberglass_Background();
 
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
@@ -658,10 +658,10 @@ namespace Origins {
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 
-			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) { // WHY THIS NO WORK!!!
-				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Language.GetTextValue("Mods.Origins.NPCs.Brine_Fiend.Dialog.Standard3"), Name);
-				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Language.GetTextValue("Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content"), Name);
-				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), "", Name); // for future
+			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) {
+				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Name);
+				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
+				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), Name); // for future
 			}
 
 #if DEBUG
@@ -937,6 +937,9 @@ namespace Origins {
 			public static int Fiberglass = MusicID.OtherworldlyJungle;
 
 			public static int BrinePool = MusicID.OtherworldlyEerie;
+			public static int LostDiver = MusicID.OtherworldlyInvasion;
+			public static int MildewCarrion = MusicID.OtherworldlyPlantera;
+			public static int CrownJewel = MusicID.OtherworldlySpace;
 			public static int AncientBrinePool;
 
 			public static int Dusk;

@@ -38,10 +38,7 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {
-			Player player = Main.LocalPlayer;
-			if (player.HeldItem.hammer < 90) {
-				damage = 0;
-			}
+			if (minePower < 90) damage = 0;
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!NPC.downedGolemBoss) return;
@@ -98,7 +95,7 @@ namespace Origins.Tiles.Brine {
 	}
 	public class Hydrothermal_Vent_Goopy : Hydrothermal_Vent, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => new Color(1, 1, 1, 1);
+		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			(int i, int j) = tile.GetTilePosition();
 			int style = TileObjectData.GetTileStyle(tile);
@@ -128,6 +125,9 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			Main.tileLighted[Type] = true;
@@ -159,7 +159,7 @@ namespace Origins.Tiles.Brine {
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowColor = GlowColor;
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
-			drawData.glowTexture = GlowTexture;
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 
 			if (Main.rand.NextFloat(1000) >= Main.gfxQuality * 1000f) return;
 			Tile tile = Main.tile[i, j];
@@ -223,11 +223,6 @@ namespace Origins.Tiles.Brine {
 				g = 0.0375f;
 				b = 0.015f;
 			}
-		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			// check if uncommenting this makes the glowmasks draw
-			// if it does then I think I know how to actually fix it, I switched away from this because it doesn't currently support SetSpriteEffects
-			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }

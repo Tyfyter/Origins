@@ -60,10 +60,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Confused, 220);
+			if (target.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal) && blindGlobal.blindable) {
+				target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 120);
+			}else {
+				target.AddBuff(BuffID.Confused, 220);
+			}
 			target.AddBuff(BuffID.Slow, 300);
 			target.AddBuff(BuffID.Darkness, 120);
-			target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 120);
 		}
 	}
 	public class Flash_P : ModProjectile {

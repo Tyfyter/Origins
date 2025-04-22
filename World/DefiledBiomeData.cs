@@ -32,6 +32,8 @@ using Terraria.Localization;
 using AltLibrary.Core;
 using PegasusLib;
 using System.Linq;
+using Terraria.DataStructures;
+using System.Collections.ObjectModel;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -43,7 +45,7 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string MapBackground => BackgroundPath;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Defiled_Underground_Background>();
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Defiled_Underground_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();
 		public static bool forcedBiomeActive;
@@ -63,13 +65,15 @@ namespace Origins.World.BiomeData {
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			const float heart_range = 16 * 50;
-			float heartProximity = OriginSystem.Instance.DefiledHearts.Count > 0 ? 
-				Math.Max(0, heart_range - OriginSystem.Instance.DefiledHearts.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range
+			ReadOnlyCollection<Point16> heartLocations = TESystem.GetLocations<Defiled_Heart_TE_System>();
+			float heartProximity = heartLocations.Count > 0 ? 
+				Math.Max(0, heart_range - heartLocations.Select(heart => player.Distance(heart.ToWorldCoordinates())).Min()) / heart_range
 				: 0;
 			Filters.Scene["Origins:ZoneDefiled"].GetShader()
 				.UseProgress(originPlayer.ZoneDefiledProgressSmoothed * (MathF.Pow(heartProximity, 4) + 1))
 				.UseIntensity(OriginClientConfig.Instance.DefiledShaderJitter * 0.0035f * (MathF.Pow(heartProximity, 2) * 1.25f + 1))
-				.UseOpacity(Math.Max(OriginClientConfig.Instance.DefiledShaderNoise * (MathF.Pow(heartProximity, 2) * 1.25f + 1), float.Epsilon));
+				.UseOpacity(Math.Max(OriginClientConfig.Instance.DefiledShaderNoise * (MathF.Pow(heartProximity, 2) * 1.25f + 1), float.Epsilon))
+				.Shader.Parameters["uTimeScale"].SetValue(OriginClientConfig.Instance.DefiledShaderSpeed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0 && !OriginAccessibilityConfig.Instance.DisableDefiledWastelandsShader, player.Center);
 		}
 		public override float GetWeight(Player player) {
@@ -96,7 +100,7 @@ namespace Origins.World.BiomeData {
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
 		public class SpawnRates : SpawnPool {
-			public const float ChunkSlime = 1;
+			public const float ChunkSlime = 0.8f;
 			public const float Cyclops = 1;
 			public const float Mite = 1;
 			public const float Mummy = 1;
@@ -111,6 +115,8 @@ namespace Origins.World.BiomeData {
 			public const float AncientCyclops = 0.03f;
 			public const float Asphyxiator = 0.5f;
 			public const float AncientFlyer = 0.04f;
+			public const float Nearby = 0.5f;
+			public const float Broadcaster = 0.3f;
 			public override string Name => $"{nameof(Defiled_Wastelands)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.BiomeHigh;
@@ -295,7 +301,7 @@ namespace Origins.World.BiomeData {
 						WorldGen.PlaceTile(p.X + o, p.Y + 1, stoneID);
 						WorldGen.SlopeTile(p.X + o - 1, p.Y + 1, SlopeID.None);
 						WorldGen.SlopeTile(p.X + o, p.Y + 1, SlopeID.None);
-						if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to, checkStay: true)) {
+						if (TileExtenstions.CanActuallyPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to, checkStay: true)) {
 							TileObject.Place(to);
 							//WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
 							fisureCount++;
@@ -420,7 +426,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static void DefiledRibs(float i, float j, float sizeMult = 1f) {
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
+				ushort stoneID = (ushort)ModContent.TileType<Defiled_Regolith>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
@@ -597,6 +603,10 @@ namespace Origins.World.BiomeData {
 							} else if (CanKillTile(tilePos.X + x, tilePos.Y + y)) {
 								tile.HasTile = false;
 								removedAnyTiles = true;
+								GenRunners.AutoSlope(tilePos.X + x + 1, tilePos.Y + y, true);
+								GenRunners.AutoSlope(tilePos.X + x - 1, tilePos.Y + y, true);
+								GenRunners.AutoSlope(tilePos.X + x, tilePos.Y + y + 1, true);
+								GenRunners.AutoSlope(tilePos.X + x, tilePos.Y + y - 1, true);
 							}
 							tile.WallType = stoneWallID;
 						}
@@ -997,9 +1007,8 @@ namespace Origins.World.BiomeData {
 							Main.tile[i, j].SetActive(false);
 						}
 					}
-					TileObject.CanPlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1, out var data);
-					TileObject.Place(data);
-					OriginSystem.Instance.DefiledHearts.Add(heart);
+					TileExtenstions.ForcePlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1);
+					ModContent.GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(heart.X, heart.Y));
 				}
 			}
 		}

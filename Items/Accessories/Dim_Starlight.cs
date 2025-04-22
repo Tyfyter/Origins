@@ -14,6 +14,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Dim_Starlight_Entry).Name;
 		public class Dim_Starlight_Entry : JournalEntry {
 			public override string TextKey => "Dim_Starlight";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 7);
 		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofStarpower] = ModContent.ItemType<Dim_Starlight>();

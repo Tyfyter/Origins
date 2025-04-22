@@ -33,6 +33,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.GameContent.Bestiary;
+using Origins.Music;
+using Origins.NPCs.Riven.World_Cracker;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -788,6 +790,14 @@ namespace Origins.NPCs.Brine.Boss {
 				return NPC.GetNPCColorTintedByBuffs(npcColor);
 			}
 			*/
+		}
+	}
+	public class MC_Music_Scene_Effect : BossMusicSceneEffect {
+		public override int Music => Origins.Music.MildewCarrion;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			npcIDs[ModContent.NPCType<Lost_Diver_Transformation>()] = true;
+			npcIDs[ModContent.NPCType<Mildew_Carrion>()] = true;
 		}
 	}
 }

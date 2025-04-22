@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Origins.Tiles.Defiled;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -15,6 +18,7 @@ namespace Origins.Tiles {
 		static List<TESystem> TESystems;
 		public static int TESystemCount => TESystems.Count;
 		public List<Point16> tileEntityLocations = [];
+		public static ReadOnlyCollection<Point16> GetLocations<TSystem>() where TSystem : TESystem => ModContent.GetInstance<TSystem>().tileEntityLocations.AsReadOnly();
 		public override void Load() {
 			TESystems ??= [];
 			TESystemType = TESystems.Count;

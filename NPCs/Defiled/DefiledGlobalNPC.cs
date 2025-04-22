@@ -10,6 +10,8 @@ using Terraria.ModLoader.IO;
 namespace Origins.NPCs.Defiled {
 	public class DefiledGlobalNPC : GlobalNPC {
 		public static Dictionary<int, int> NPCTransformations { get; private set; } = [];
+		public override bool InstancePerEntity => true;
+		public NPC broadcasterHoldingThisNPC;
 		public override void Load() {
 			hasErroredAboutWrongNPC = [];
 		}
@@ -88,6 +90,16 @@ namespace Origins.NPCs.Defiled {
 				damage += totalDPS / 3;
 			}
 		}
+		public override void PostAI(NPC npc) {
+			if (broadcasterHoldingThisNPC?.ModNPC is Defiled_Broadcaster broadcaster) {
+				if (broadcasterHoldingThisNPC.ai[2] != 0 || broadcasterHoldingThisNPC.ai[1] != npc.WhoAmIToTargettingIndex) {
+					broadcasterHoldingThisNPC = null;
+					return;
+				}
+				npc.Top = broadcaster.CarryPosition;
+				npc.velocity = broadcasterHoldingThisNPC.velocity;
+			}
+		}
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
 				defiledEnemy.DrainMana(target);
@@ -127,5 +139,6 @@ namespace Origins.NPCs.Defiled {
 			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
 		}
 		public (Rectangle startArea, Predicate<Vector2> customShape)? GetCustomChrysalisShape(NPC chrysalisNPC) => null;
+		public void OnChrysalisSpawn() { }
 	}
 }

@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Armor.Other;
-using Origins.Reflection;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -55,7 +51,8 @@ namespace Origins.Tiles.Defiled {
 					Vector2.Zero,
 					Vector2.One,
 					SpriteEffects.None,
-					x + y * 787
+					x + y * 787,
+					new(i * 16f, j * 16f)
 				);
 			}
 		}

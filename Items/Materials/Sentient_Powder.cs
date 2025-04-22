@@ -2,12 +2,15 @@
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Defiled;
+using Origins.NPCs.Riven;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.Items.Materials {
 	public class Sentient_Powder : ModItem {
@@ -62,6 +65,28 @@ namespace Origins.Items.Materials {
 						50,
 						new Color(0.3f, 0.5f, 0.7f, 0.1f)
 					);
+				}
+			}
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				Rectangle hitbox = Projectile.Hitbox;
+				foreach (NPC target in Main.ActiveNPCs) {
+					if (target.Hitbox.Intersects(hitbox)) {
+						int targetType = -1;
+						switch (target.type) {
+							case NPCID.Bunny or NPCID.BunnySlimed or NPCID.BunnyXmas or NPCID.PartyBunny:
+							targetType = ModContent.NPCType<Barnacle_Bunny>();
+							break;
+							case NPCID.Penguin or NPCID.PenguinBlack:
+							targetType = ModContent.NPCType<Riven_Penguin>();
+							break;
+							case NPCID.Goldfish or NPCID.GoldfishWalker:
+							targetType = ModContent.NPCType<Bottomfeeder>();
+							break;
+						}
+						if (targetType != -1) {
+							target.Transform(targetType);
+						}
+					}
 				}
 			}
 			if (Main.myPlayer != Projectile.owner) return;

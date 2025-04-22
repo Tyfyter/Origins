@@ -108,7 +108,7 @@ namespace Origins.Items.Tools {
 			Vector2 position = (player.MountedCenter + new Vector2(0, 22)).RotatedBy(player.fullRotation, player.position + player.fullRotationOrigin - new Vector2(0, 10));//player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16).RotatedBy(player.fullRotation));
 			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
 			Item item = player.miscEquips[3].type == Indestructible_Saddle.ID ? player.miscEquips[3] : ContentSamples.ItemsByType[Indestructible_Saddle.ID];
-			void Explode() {//TODO: replace placeholder explosion & explode on timeout
+			void Explode() {
 				player.mount._abilityCooldown = 0;
 				player.mount.Dismount(player);
 				Projectile.NewProjectile(

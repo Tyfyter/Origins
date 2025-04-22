@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(#2, ^2/4) Lost Diver/ (#, ^2/4) Mildew Carrion !!!
+(☻, †) Lost Diver/(☻, †) Mildew Carrion !!!
 (X) Snowdrop
 
 (X) Crimson King
@@ -94,8 +94,8 @@ TOWN NPC Quests:
 
 (^) Arms Dealer - Live Fire*
 (^) Arms Dealer - Three Times the Charm*
-(☻) Brine Fiend - Basic Brewery !!!
-(☻) Brine Fiend - Get Freaky !!!
+(^) Brine Fiend - Basic Brewery
+(^) Brine Fiend - Get Freaky
 (^) Cyborg - Sensor Upgrade*
 (^) Dryad - I’ll Give You a Deal*
 (^) Dryad - Clearing the Way*
@@ -132,23 +132,26 @@ VANILLA MODIFICATIONS:
 (^) Wooden armor buffs*
 ---
 
-World Generation:
+WORLD GENERATION:
 |---
+(^) Brine Pool
 (^) Defiled Wastelands
-(^) Riven Hive
-(☻) Brine Pool
 (^) Fiberglass Undergrowth
-(☻) Limestone Cave
+(^) Limestone Cave
+(^) Riven Hive
+(#2, 々) The Dusk
+
+(X) Chambersite Conversion
 ---
 
 OTHER:
 |---
 (X) Cubekon Tinkerer's Modifiers*
+(^) Defiled "Chrysalis" Spawning
 (^) Explosive Modifiers*
 (^) Journal*
 (^) Quest System General*
-(#2) Summoner Plus Modifiers* !!! (not all of them present)
-(☻) Defiled "Chrysalis" Spawning
+(^) Summoner Plus Modifiers*
 ---
 
 
@@ -157,7 +160,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(☻) Aqueoua (shelly variant does exist, and it wiggles as much as the sprite does, if that thing from spore is supposed to somehow indicate the desired wiggliness I'm afraid I have no clue how it moves)
+(^) Aqueoua
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -165,7 +168,7 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(☻) Cannihound !!!
+(^) Cannihound
 (^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
@@ -176,7 +179,7 @@ ENEMY NPCS:
 (^) Cranivore*
 (^) Crimbrain*
 (X) Crying Creeper
-(#, ^2) Defiled Broadcaster
+(☻) Defiled Broadcaster
 (^) Defiled Cyclops*
 (^) Defiled Digger*
 (^) Defiled Krusher*
@@ -613,7 +616,7 @@ UTILITIES:
 (^) Impenetrable Trashcan Lid*
 (^) Indestructible Saddle*
 (^) Salty Seed (Mitosis Node)*
-(^5) Saltier Seed (Mitosis Node)
+(^5 ?) Saltier Seed (Mitosis Node)
 ---
 
 
@@ -831,7 +834,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(#, ^2) Brine Haze !!!
+(#2, ^2) Brine Haze !!! (randomly placed brine clouds)
 (X) Broadcast
 (^) Chemical Laser
 (^) Communion*
@@ -898,7 +901,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(^) Sunflower in a Pot
+(ᗢ) Sunflower in a Pot (Sunflower variants)
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff
@@ -1207,7 +1210,7 @@ TILES:
 (X) Barnacle Infested Coral
 (^) Brineglow Vine*
 (^) Defiled Foliage
-(#2, 々) Defiled Heart
+(々) Defiled Heart
 (^) Defiled Relay
 (^) Defiled Pot
 (X) Eden Tree°
@@ -1216,7 +1219,7 @@ TILES:
 (X) Fuzzvine
 (^) Gel Blister*
 (X) Heat Vent
-(#3, ^2) Hydrothermal Vent !!! (figure out why I can't see the glows)
+(^) Hydrothermal Vent
 (^) Limestone Rubble
 (X) Marrowick Coral
 (X) Marrowick Flange
@@ -1230,7 +1233,7 @@ TILES:
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
 (^) Underwater Vine
-(☻) Venus Coral !!!
+(^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
 (@4, ^3) Wrycoral*
@@ -1247,18 +1250,18 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(#, $2) Music Box (Brine Pool)
-($2) Music Box (Defiled Caverns) !!!
+(^) Music Box (Brine Pool)
+(^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
-($2) Music Box (Defiled Wastelands)
+(^) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
 (^) Music Box (Fiberglass Undergrowth)
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
-($2) Music Box (Riven Hive)
+(^) Music Box (Riven Hive)
 (@, #, $2) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
@@ -1452,7 +1455,7 @@ CONSUMABLES:
 (^) Festering Crate*
 (X) Holy Crate*
 (^) Pointy Crate*
-(X) Residual Crate !!!
+(^) Residual Crate
 (#2, ^2, 々) Riven Loot Box°
 (X) Twilight Crate*
 
@@ -1564,7 +1567,7 @@ AMMO:
 
 CROSS-MOD CONTENT:
 |---
-(#3) Fargo's caught npcs
+(^, ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
 (^, ᗢ) Fargo's sell boss/rare npc summons
 (^, ᗢ) Fargo's sell evil woods
@@ -1620,17 +1623,17 @@ UI:
 (X) Dusk Map/Bestiary Backdrop
 (^) Eutrophic Sea Icon
 (^) Fiberglass Icon
-(^) Fiberglass Map/Bestiary Backdrop !!!
+(^) Fiberglass Map/Bestiary Backdrop
 (X) Fractured Isles Icon
 (^) Riven Caverns Icon
 (^) Riven Desert Icon
 (^) Riven Hive Icon
-(^) Riven Map/Bestiary Backdrop !!! (surface one)
+(^) Riven Map/Bestiary Backdrop
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
 (X) Underground Ashen Background
 (^) Underground Defiled Background
-(☻) Underground Fiberglass Background !!!
+(@4) Underground Fiberglass Background
 (^) Underground Riven Background
 
 (^) 30x30 Origins Icon

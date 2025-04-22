@@ -277,6 +277,11 @@ Dryad: {
 	}
 }
 
+Nurse: {
+	// CantHealAssimilation: Mods.Origins.NPCs.Nurse.CantHealAssimilation
+	// NoHealCantHealAssimilation: Mods.Origins.NPCs.Nurse.NoHealCantHealAssimilation
+}
+
 // Jacob_Marley.DisplayName: Ominous Spirit
 // Spirit_Of_Christmas_Past.DisplayName: Spirit of Christmas Past
 
@@ -357,4 +362,6 @@ Lost_Diver: {
 // Aqueoua.DisplayName: Aqueoua
 // Shelly_Aqueoua.DisplayName: Shelly Aqueoua
 // Defiled_Chrysalis.DisplayName: Defiled Chrysalis
-// DA_Body_Part.DisplayName: D A Body Part
+// Defiled_Chrysalis_Nearby_Spawn.DisplayName: Defiled Chrysalis Nearby Spawn
+// Abandoned_Bomb.DisplayName: Abandoned Bomb
+// Defiled_Broadcaster.DisplayName: Defiled Broadcaster

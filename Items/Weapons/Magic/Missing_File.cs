@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Missing_File_Entry).Name;
 		public class Missing_File_Entry : JournalEntry {
 			public override string TextKey => "Missing_File";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 14);
 		}
 		public override void SetStaticDefaults() {
 			ID = Type;

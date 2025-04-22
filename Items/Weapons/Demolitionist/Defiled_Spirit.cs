@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string EntryName => "Origins/" + typeof(Defiled_Spirit_Entry).Name;
 		public class Defiled_Spirit_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Spirit";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 2);
 		}
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

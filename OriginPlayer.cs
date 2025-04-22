@@ -34,6 +34,7 @@ namespace Origins {
 		public const float explosive_defense_factor = 2f;
 		public static OriginPlayer LocalOriginPlayer { get; internal set; }
 		public override void PreUpdateMovement() {
+			_ = Player.Hitbox;
 			realControlUseItem = Player.controlUseItem;
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
@@ -363,12 +364,6 @@ namespace Origins {
 					Player.RefreshMovementAbilities();
 				}
 			}
-			if (changeSize) {
-				Player.position.X -= (targetWidth - Player.width) / 2;
-				Player.position.Y -= targetHeight - Player.height;
-				Player.width = targetWidth;
-				Player.height = targetHeight;
-			}
 			oldXSign = Math.Sign(Player.velocity.X);
 			oldYSign = Math.Sign(Player.velocity.Y);
 			//endCustomMovement:
@@ -394,8 +389,8 @@ namespace Origins {
 			if (rivenWet) {
 				Player.gravity = 0.25f;
 			}
+			ceilingRavel = false;
 			if (ravel && spiderRavel) {
-				ceilingRavel = false;
 				if (collidingX) {
 					Player.gravity = 0;
 					Player.velocity.Y *= 0.9f;
@@ -417,7 +412,7 @@ namespace Origins {
 						}
 					}
 					if (colliding) {
-						ceilingRavel = true;
+						ceilingRavel = Player.controlUp;
 						spiderRavelTime = 10;
 					}
 					if (Player.controlDown) {
@@ -560,6 +555,16 @@ namespace Origins {
 			controlTriggerSetBonus = Keybindings.TriggerSetBonus.Current;
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
 				TriggerSetBonus();
+			}
+			if (Keybindings.UseMojoFlask.JustPressed && IterateAssimilation().Any(a => a.Percent > 0)) {
+				if (Player.nonTorch == -1) Player.nonTorch = Player.selectedItem;
+
+				for (int i = 0; i < Player.inventory.Length; i++) {
+					if (Player.inventory[i]?.ModItem is Mojo_Flask) {
+						Player.selectedItem = i;
+						Player.controlUseItem = true;
+					}
+				}
 			}
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;

@@ -47,6 +47,9 @@ using Terraria.Graphics.Light;
 using Origins.Tiles.Limestone;
 using Terraria.Enums;
 using Origins.World.BiomeData;
+using Origins.Tiles.Other;
+using Origins.Backgrounds;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins {
 	#region classes
@@ -2695,13 +2698,25 @@ namespace Origins {
 			}
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
+			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
+
+			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Topaz, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Emerald, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Ruby, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Diamond, oneWay: false, extraFunctions: false);
+
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
-			biome.GERunnerWallConversions.Add(WallID.AmethystUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.TopazUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.SapphireUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.EmeraldUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.RubyUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.DiamondUnsafe, wall);
+			biome.AddWallConversions(wall,
+				WallID.AmethystUnsafe,
+				WallID.TopazUnsafe,
+				WallID.SapphireUnsafe,
+				WallID.EmeraldUnsafe,
+				WallID.RubyUnsafe,
+				WallID.DiamondUnsafe
+			);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
@@ -2730,35 +2745,35 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
-		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			for (int c = 0; c < area.Width; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Height; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Width; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Height; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
 		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default) {
@@ -2905,7 +2920,12 @@ namespace Origins {
 			XY = vector.XY();
 			ZW = vector.ZW();
 		}
-
+		public static string GetInternalName(this RecipeGroup recipeGroup) {
+			foreach (KeyValuePair<string, int> item in RecipeGroup.recipeGroupIDs) {
+				if (item.Value == recipeGroup.RegisteredId) return item.Key;
+			}
+			return null;
+		}
 		public static void UseOldRenderTargets(this SpriteBatch spriteBatch, RenderTargetBinding[] oldRenderTargets) {
 			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;
 			RenderTargetUsage[] renderTargetUsage = [];
@@ -2931,6 +2951,15 @@ namespace Origins {
 					spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage[0];
 				}
 			}
+		}
+		public static ModUndergroundBackgroundStyle BiomeUGBackground<T>() where T : ModUndergroundBackgroundStyle {
+			double num2 = Main.maxTilesY - 330;
+			double num3 = (int)((num2 - Main.worldSurface) / 6.0) * 6;
+			num2 = Main.worldSurface + num3 - 5.0;
+			if ((Main.screenPosition.Y / 16f) > Main.rockLayer + 60 && (Main.screenPosition.Y / 16f) < num2 - 60) {
+				return ModContent.GetInstance<T>();
+			}
+			return null;
 		}
 	}
 	public static class ShopExtensions {
@@ -4333,6 +4362,39 @@ namespace Origins {
 #endif
 			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
+		}
+		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+
+				int left = i - tileData.Origin.X;
+				int top = j - tileData.Origin.Y;
+				for (int y = 0; y < tileData.Height; y++) {
+					for (int x = 0; x < tileData.Width; x++) {
+						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+						if (tileSafely.HasTile && !(Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		public static void ForcePlace(int i, int j, int type, int style, int dir, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+			if (TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData, onlyCheck, forcedRandom, checkStay)) {
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+
+				int left = i - tileData.Origin.X;
+				int top = j - tileData.Origin.Y;
+				for (int y = 0; y < tileData.Height; y++) {
+					for (int x = 0; x < tileData.Width; x++) {
+						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+						tileSafely.HasTile = false;
+					}
+				}
+				TileObject.Place(objectData);
+			}
 		}
 	}
 	public static class ProjectileExtensions {

@@ -1,6 +1,7 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
 using Origins.Items.Tools;
@@ -482,6 +483,12 @@ namespace Origins {
 				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
 			} else {
 				mildewHealth = 0;
+			}
+			if (necromancyPrefixMana > Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) {
+				necromancyPrefixMana *= 0.97f;
+				Player.manaRegenBonus += (int)((necromancyPrefixMana - Player.statManaMax2) * 0.01f);
+				Player.manaRegenDelay = 0;
+				if (necromancyPrefixMana < Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) necromancyPrefixMana = Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier;
 			}
 			oldGravDir = Player.gravDir;
 		}

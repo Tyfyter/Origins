@@ -321,10 +321,10 @@ namespace Origins.Items {
 					itemLoot.Add(OriginGlobalNPC.EaterOfWorldsWeaponDrops);
 					break;
 				}
-				case ItemID.BrainOfCthulhuBossBag: {
+				/*case ItemID.BrainOfCthulhuBossBag: {
 					itemLoot.Add(OriginGlobalNPC.BrainOfCthulhuWeaponDrops);
 					break;
-				}
+				}*/
 				case ItemID.QueenBeeBossBag: {
 					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.BeeGun, ModContent.ItemType<Bee_Afraid_Incantation>())) {
 						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));

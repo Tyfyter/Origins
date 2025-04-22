@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Limestone {
-	public class Limestone : OriginTile, IDefiledTile {
+	public class Limestone : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.SandBiome[Type] = 1;

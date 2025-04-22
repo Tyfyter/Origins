@@ -32,6 +32,7 @@ namespace Origins.Tiles.Riven {
 		public string EntryName => "Origins/" + typeof(Primordial_Permafrost_Entry).Name;
 		public class Primordial_Permafrost_Entry : JournalEntry {
 			public override string TextKey => "Primordial_Permafrost";
+			public override JournalSortIndex SortIndex => new("Riven", 3);
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

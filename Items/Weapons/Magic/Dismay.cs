@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Magic {
 		public string EntryName => "Origins/" + typeof(Dismay_Entry).Name;
 		public class Dismay_Entry : JournalEntry {
 			public override string TextKey => "Dismay";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 5);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedFlames);

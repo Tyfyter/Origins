@@ -14,6 +14,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Symbiote_Skull_Entry).Name;
 		public class Symbiote_Skull_Entry : JournalEntry {
 			public override string TextKey => "Symbiote_Skull";
+			public override JournalSortIndex SortIndex => new("Riven", 4);
 		}
 		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

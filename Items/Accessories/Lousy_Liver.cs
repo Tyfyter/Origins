@@ -12,6 +12,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Lousy_Liver_Entry).Name;
 		public class Lousy_Liver_Entry : JournalEntry {
 			public override string TextKey => "Lousy_Liver";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 15);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);

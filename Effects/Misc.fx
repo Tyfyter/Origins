@@ -45,8 +45,15 @@ float4 MultiplyRGBA(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	return tex2D(uImage0, coords) * tex2D(uImage1, maskCoords);
 }
 
+float4 NoScreenShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	return tex2D(uImage0, coords);
+}
+
 technique Technique1 {
 	pass MultiplyRGBA {
 		PixelShader = compile ps_2_0 MultiplyRGBA();
+	}
+	pass NoScreenShader {
+		PixelShader = compile ps_2_0 NoScreenShader();
 	}
 }
