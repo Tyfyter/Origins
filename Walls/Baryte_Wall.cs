@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Items.Other.Testing;
+using Origins.Items.Tools;
 using Origins.Tiles.Brine;
 using PegasusLib;
 using ReLogic.Content;
@@ -51,8 +52,17 @@ namespace Origins.Walls {
 				if (k < max_dist && WorldGen.genRand.NextBool(k * k * 3)) WorldGen.PlaceTile(i, j, coral, true);
 			}
 		}
+		public List<(Vector2 pos, float size)> hydrolanterns = [];
+		public override void AnimateWall(ref byte frame, ref byte frameCounter) {
+			hydrolanterns.Clear();
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.ModProjectile is Hydrolantern_Use) {
+					hydrolanterns.Add((proj.position / 16, 10 * 10));
+				}
+			}
+		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (Main.dedServ) return;
+			if (Main.dedServ || Main.gamePaused) return;
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (tile.LiquidAmount < 200 || tile.HasFullSolidTile()) return;
 			if (perlin.IsLoaded && odds is null) {
@@ -85,7 +95,17 @@ namespace Origins.Walls {
 			}
 			const float inverse_scale = 0.8f;
 			float localValue = GetColor(i * inverse_scale, j * inverse_scale);
-			if (Main.rand.NextFloat(1000) < Main.gfxQuality * 500 * localValue * localValue * localValue * localValue) {
+			float lowestLanternDist = 1;
+			Vector2 lanternPos = new(i + 0.5f, j + 0.5f);
+			for (int k = 0; k < hydrolanterns.Count; k++) {
+				(Vector2 pos, float size) = hydrolanterns[k];
+				float dist = pos.DistanceSQ(lanternPos) / size;
+				if (dist < lowestLanternDist) {
+					lowestLanternDist = dist;
+				}
+			}
+			if (lowestLanternDist != 1) localValue *= lowestLanternDist;
+			if (Main.rand.NextFloat(1000) < Main.gfxQuality * 1000 * localValue * localValue * localValue * localValue) {
 				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(43, 217, 162)).velocity *= 0.1f;
 				//Gore.NewGorePerfect(Entity.GetSource_None(), new Vector2(i, j + Main.rand.NextFloat()) * 16, Vector2.UnitX * Main.rand.NextFloat(-1, 1), GoreID.LightningBunnySparks);
 			}
