@@ -13,6 +13,7 @@ namespace Origins.Items {
 	public class Necromantic_Prefix : MinionPrefix, IOnHitNPCPrefix, IModifyHitNPCPrefix {
 		public static float MaxManaMultiplier => 4;
 		public override bool HasDescription => true;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && !Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			const float max_bonus = 0.6f;
@@ -34,7 +35,7 @@ namespace Origins.Items {
 				if (projectile.Hitbox.Intersects(target.Hitbox)) {
 					spawnArea = Rectangle.Intersect(projectile.Hitbox, target.Hitbox);
 				} else {
-					Vector2 pos = (projectile.Center + target.Center) * 0.5f;
+					Vector2 pos = projectile.Center.Clamp(target.Hitbox);
 					spawnArea = new((int)pos.X, (int)pos.Y, 0, 0);
 				}
 				for (int i = 0; i < 6 + (spawnArea.Width * spawnArea.Height) * 0.01f; i++) {
@@ -50,6 +51,7 @@ namespace Origins.Items {
 	}
 	public class Necromantic_Artifact_Prefix : ArtifactPrefixVariant<Necromantic_Prefix>, IOnHitNPCPrefix, IModifyHitNPCPrefix {
 		public override bool HasDescription => true;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			const float max_bonus = 1f;

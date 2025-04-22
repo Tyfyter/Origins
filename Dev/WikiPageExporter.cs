@@ -718,7 +718,12 @@ namespace Origins.Dev {
 		public static string GetItemText(Item item, string note = "", bool imageOnly = false) {
 			string text = "";
 			int recipeGroup = item.GetGlobalItem<RecipeGroupTrackerGlobalItem>().recipeGroup;
-			if (recipeGroup != -1) {
+			bool useRecipeGroup = recipeGroup != -1;
+			if (useRecipeGroup) {
+				string internalName = RecipeGroup.recipeGroups[recipeGroup].GetInternalName();
+				if (internalName is null || (internalName.Contains(':') && !internalName.StartsWith("Origins:"))) useRecipeGroup = false;
+			}
+			if (useRecipeGroup) {
 				text = $"<a is=a-link image=\"RecipeGroups/{RecipeGroupPage.GetRecipeGroupWikiName(recipeGroup)}\" href=Recipe_Groups>{RecipeGroup.recipeGroups[recipeGroup].GetText()}</a>";
 			} else if (WikiPageExporter.TryGetLinkFormat(item.ModItem?.Mod, item.ModItem as ICustomLinkFormat, out WikiLinkFormatter formatter)) {
 				text = $"{formatter(item.Name, note, imageOnly, item.stack > 1)}";

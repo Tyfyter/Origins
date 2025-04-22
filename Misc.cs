@@ -2920,7 +2920,12 @@ namespace Origins {
 			XY = vector.XY();
 			ZW = vector.ZW();
 		}
-
+		public static string GetInternalName(this RecipeGroup recipeGroup) {
+			foreach (KeyValuePair<string, int> item in RecipeGroup.recipeGroupIDs) {
+				if (item.Value == recipeGroup.RegisteredId) return item.Key;
+			}
+			return null;
+		}
 		public static void UseOldRenderTargets(this SpriteBatch spriteBatch, RenderTargetBinding[] oldRenderTargets) {
 			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;
 			RenderTargetUsage[] renderTargetUsage = [];
