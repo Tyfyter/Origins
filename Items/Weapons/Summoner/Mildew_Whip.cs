@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.NPCs;
-using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -11,12 +8,11 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Mildew_Whip : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToWhip(ModContent.ProjectileType<Mildew_Whip_P>(), 33, 5, 4, 26);
+			Item.DefaultToWhip(ModContent.ProjectileType<Mildew_Whip_P>(), 46, 5, 4, 26);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
@@ -81,7 +77,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			timeToFlyOut = Main.player[Projectile.owner].itemAnimationMax * Projectile.MaxUpdates;
 			segments = 20;
-			rangeMultiplier = 1.3f * Projectile.scale;
+			rangeMultiplier = 1.5f * Projectile.scale;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Mildew_Whip_Buff.ID, 240);

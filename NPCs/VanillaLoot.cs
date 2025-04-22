@@ -39,7 +39,7 @@ namespace Origins.NPCs {
 			switch (npc.netID) {
 				case NPCID.BrainofCthulhu:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
-				npcLoot.Add(new LeadingConditionRule(new Conditions.NotExpert()).WithOnSuccess(BrainOfCthulhuWeaponDrops));
+				//npcLoot.Add(new LeadingConditionRule(new Conditions.NotExpert()).WithOnSuccess(BrainOfCthulhuWeaponDrops));
 				break;
 				case NPCID.EaterofWorldsHead or NPCID.EaterofWorldsBody or NPCID.EaterofWorldsTail:
 				npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsABoss())).WithOnSuccess(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));

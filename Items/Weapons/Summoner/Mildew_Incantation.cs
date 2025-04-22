@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.Misc;
 using Origins.NPCs;
 using Origins.NPCs.Brine;

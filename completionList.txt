@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(☻, ^2/4, †) Lost Diver/ (☻, ^2/4, †) Mildew Carrion !!!
+(☻, †) Lost Diver/ (☻, †) Mildew Carrion !!!
 (X) Snowdrop
 
 (X) Crimson King
@@ -834,7 +834,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(#, ^2) Brine Haze !!!
+(#2, ^2) Brine Haze !!! (randomly placed brine clouds)
 (X) Broadcast
 (^) Chemical Laser
 (^) Communion*
@@ -1006,7 +1006,7 @@ EXPLOSIVE WEAPONS:
 (^) Rocket Rifle
 (X) Shroomcannon
 (^) Sonar Dynamite
-(ᗢ ?) Sonorous Shredder
+(ᗢ) Sonorous Shredder
 (^) Thermite Launcher*
 (^) Torpedo Tube
 
@@ -1250,18 +1250,18 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(☻) Music Box (Brine Pool)
+(^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
-(☻) Music Box (Defiled Wastelands)
+(^) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
 (^) Music Box (Fiberglass Undergrowth)
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
-(☻) Music Box (Riven Hive)
+(^) Music Box (Riven Hive)
 (@, #, $2) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
@@ -1455,7 +1455,7 @@ CONSUMABLES:
 (^) Festering Crate*
 (X) Holy Crate*
 (^) Pointy Crate*
-(X) Residual Crate !!!
+(^) Residual Crate
 (#2, ^2, 々) Riven Loot Box°
 (X) Twilight Crate*
 
