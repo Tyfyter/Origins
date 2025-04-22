@@ -70,6 +70,7 @@ namespace Origins {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
 			}
+			necromanaUsedThisUse = false;
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {

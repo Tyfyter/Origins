@@ -35,7 +35,7 @@ namespace Origins.Items.Armor.Lost {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Lost");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.lostSet = true;
-			originPlayer.manaShielding += originPlayer.refactoringPieces ? 0.25f : 0.15f;
+			originPlayer.manaShielding += 0.15f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

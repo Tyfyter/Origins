@@ -318,6 +318,7 @@ namespace Origins {
 		#region summon stats
 		public StatModifier artifactDamage = StatModifier.Default;
 		public float artifactManaCost = 1f;
+		public float necromancyPrefixMana = 0;
 		#endregion
 
 		#region biomes
@@ -1003,6 +1004,23 @@ namespace Origins {
 			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(journalEntrySource.EntryName)) {
 				unreadJournalEntries.Add(journalEntrySource.EntryName);
 				SoundEngine.PlaySound(Origins.Sounds.Journal);
+			}
+		}
+		bool necromanaUsedThisUse = false;
+		public override void OnConsumeMana(Item item, int manaConsumed) {
+			if (!necromanaUsedThisUse && (necroSet || necroSet2 || item.CountsAsClass(DamageClass.Summon)) && necromancyPrefixMana > 0) {
+				int restoreMana = (int)Math.Min(necromancyPrefixMana, manaConsumed);
+				necromancyPrefixMana -= restoreMana;
+				Player.statMana += restoreMana;
+				necromanaUsedThisUse = true;
+			}
+		}
+		public override void OnMissingMana(Item item, int neededMana) {
+			if (!necromanaUsedThisUse && (necroSet || necroSet2 || item.CountsAsClass(DamageClass.Summon)) && Player.statMana + necromancyPrefixMana >= neededMana) {
+				int restoreMana = neededMana - Player.statMana;
+				necromancyPrefixMana -= restoreMana;
+				Player.statMana += restoreMana;
+				necromanaUsedThisUse = true;
 			}
 		}
 	}

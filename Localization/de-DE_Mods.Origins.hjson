@@ -1715,6 +1715,7 @@ Projectiles: {
 	// Cannihound_Gore2.DisplayName: Cannihound Gore2
 	// Cannihound_Gore3.DisplayName: Cannihound Gore3
 	// Brine_Haze_P.DisplayName: Brine Haze P
+	// Necromantic_Prefix_Orb.DisplayName: Necromantic Prefix Orb
 }
 
 Prefixes: {
@@ -1768,6 +1769,13 @@ Prefixes: {
 		// DisplayName: Vampiric
 		// Description: Minions steal life from struck enemies
 	}
+
+	Necromantic_Prefix: {
+		// DisplayName: Necromantic Prefix
+		// Description: Mods.Origins.Prefixes.Necromantic_Prefix.Description
+	}
+
+	// Necromantic_Artifact_Prefix.Description: Mods.Origins.Prefixes.Necromantic_Artifact_Prefix.Description
 }
 
 BiomeName: {

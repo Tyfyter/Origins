@@ -22,7 +22,9 @@ namespace Origins.Items.Accessories {
 			Item.glowMask = glowmask;
 		}
 		public override void UpdateEquip(Player player) {
-			player.OriginPlayer().refactoringPieces = true;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.refactoringPieces = true;
+			originPlayer.manaShielding += 0.1f;
 			player.endurance += (1 - player.endurance) * 0.1f;
 		}
 	}

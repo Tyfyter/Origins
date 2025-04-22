@@ -37,6 +37,9 @@ namespace Origins.Items {
 	public interface IOnHitNPCPrefix {
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone);
 	}
+	public interface IModifyHitNPCPrefix {
+		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers);
+	}
 	public static class Prefixes {
 		enum BonusStackType {
 			Base,

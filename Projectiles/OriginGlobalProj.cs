@@ -414,6 +414,9 @@ namespace Origins.Projectiles {
 					SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 				}
 			}
+			if (prefix is IModifyHitNPCPrefix onHitNPCPrefix) {
+				onHitNPCPrefix.ModifyHitNPC(projectile, target, ref modifiers);
+			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (fiberglassLifesteal) {
@@ -585,7 +588,7 @@ namespace Origins.Projectiles {
 				}
 				projectile.ai[0]++;
 				for (int num354 = 0; num354 < 1; num354++) {
-					int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, color);
+					int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0, color);
 					Main.dust[d].noGravity = true;
 					Dust dust1 = Main.dust[d];
 					Dust dust2 = dust1;

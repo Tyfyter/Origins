@@ -16,6 +16,7 @@ using Origins.Projectiles;
 using Terraria.Audio;
 using Origins.Gores;
 using System.Collections.Generic;
+using PegasusLib;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Fresh_Meat_Artifact : ModItem, ICustomWikiStat {
@@ -236,7 +237,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			};
 		}
 	}
-	public class Fresh_Meat_Dog : ModProjectile {
+	public class Fresh_Meat_Dog : ModProjectile, IShadedProjectile {
 		public bool OnGround {
 			get {
 				return Projectile.localAI[1] > 0;
@@ -254,6 +255,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 		public static int ID { get; private set; }
+		public int Shader => Main.player[Projectile.owner].cMinion;
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 15;
