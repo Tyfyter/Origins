@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(☻, †) Lost Diver/ (☻, †) Mildew Carrion !!!
+(☻, †) Lost Diver/(☻, †) Mildew Carrion !!!
 (X) Snowdrop
 
 (X) Crimson King

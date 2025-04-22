@@ -134,7 +134,7 @@ namespace Origins.NPCs.Defiled {
 							pos,
 							velocity,
 							projType,
-							30,
+							(int)(30 * ContentExtensions.DifficultyDamageMultiplier),
 							8
 						);
 					}

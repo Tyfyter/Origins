@@ -121,7 +121,7 @@ namespace Origins.NPCs.Defiled {
 						NPC.Center,
 						(targetPos - NPC.Center).SafeNormalize(default) * 8,
 						ModContent.ProjectileType<Defiled_Watcher_Spikes>(),
-						20,
+						(int)(20 * ContentExtensions.DifficultyDamageMultiplier),
 						3,
 						ai2: NPC.whoAmI
 					);
