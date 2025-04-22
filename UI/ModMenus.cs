@@ -1,15 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Backgrounds;
+using Origins.Graphics;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
-using System.Linq;
-using System.Reflection;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -67,6 +64,24 @@ namespace Origins.UI {
 			});
 		}
 		public override void Update(bool isOnTitleScreen) {
+		}
+		Asset<Texture2D> tangela;
+		public override void SetStaticDefaults() {
+			tangela = ModContent.Request<Texture2D>("Origins/UI/Logos/Defiled_Terraria_Tangela");
+		}
+		public override void PostDrawLogo(SpriteBatch spriteBatch, Vector2 logoDrawCenter, float logoRotation, float logoScale, Color drawColor) {
+			TangelaVisual.DrawTangela(
+				tangela.Value,
+				logoDrawCenter,
+				null,
+				logoRotation,
+				tangela.Size() * 0.5f,
+				new(logoScale),
+				SpriteEffects.None,
+				0
+			);
+			//Can't add Origins subtitle because it's as big as the actual logo
+			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
 		}
 	}
 }
