@@ -264,32 +264,32 @@ namespace Origins.NPCs.Defiled.Boss {
 									Main.rand,
 									[
 									new(0, 0f),
-									//new(state_single_dash, 0.9f),
-									//new(state_projectiles, 1f),
-									//new(state_laser_rotate, MathHelper.Lerp(0.1f,1f,NPC.life / (float)(NPC.lifeMax)) * difficultyMult)
-									//new(state_triple_dash, 0.35f),
-									//new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
-									//new(state_summon_roar, 0f),
-									//new(state_ground_spikes, 1f),
-									//new(state_magic_missile, 1f),
+									new(state_single_dash, 0.9f),
+									new(state_projectiles, 1f),
+									new(state_laser_rotate, MathHelper.Lerp(0.1f,1f,NPC.life / (float)(NPC.lifeMax)) * difficultyMult)
+									new(state_triple_dash, 0.35f),
+									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
+									new(state_summon_roar, 0f),
+									new(state_ground_spikes, 1f),
+									new(state_magic_missile, 1f),
 									new(state_split_amalgamation_start,1f)
 									]
 								);
 								int lastUsedAttack = -AIState;
 
-								//if (lastUsedAttack > 0) {
-								//	rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
-								//	if (Main.masterMode && lastUsedAttack == state_triple_dash) {
-								//		rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
-								//		rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
-								//	}
-								//}
+								if (lastUsedAttack > 0) {
+									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
+									if (Main.masterMode && lastUsedAttack == state_triple_dash) {
+										rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
+										rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
+									}
+								}
 
-								//if (!Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 16, 16)) {
-								//	rand.elements[0] = new(rand.elements[0].Item1, rand.elements[0].Item2 / 3f);
-								//	rand.elements[1] = new(rand.elements[1].Item1, rand.elements[1].Item2 * 6f);
-								//	rand.elements[2] = new(rand.elements[2].Item1, rand.elements[2].Item2 / 3f);
-								//}
+								if (!Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 16, 16)) {
+									rand.elements[0] = new(rand.elements[0].Item1, rand.elements[0].Item2 / 3f);
+									rand.elements[1] = new(rand.elements[1].Item1, rand.elements[1].Item2 * 6f);
+									rand.elements[2] = new(rand.elements[2].Item1, rand.elements[2].Item2 / 3f);
+								}
 
 								AIState = rand.Get();
 								NPC.ai[2] = NPC.targetRect.Center().X;

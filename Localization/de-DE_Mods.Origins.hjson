@@ -1718,6 +1718,14 @@ Projectiles: {
 	// Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
 	// Defiled_Broadcaster_Flan.DisplayName: Defiled Broadcaster
 	// Defiled_Broadcaster_Teleport_Flan.DisplayName: Defiled Broadcaster Teleport
+	// Bendy_Indicator.DisplayName: Bendy Indicator
+	// DA_Arc_Bolt.DisplayName: D A Arc Bolt
+	// DA_Bendy_Spikes.DisplayName: D A Bendy Spikes
+	// DA_Flan.DisplayName: D A Flan
+	// Defiled_Spike_Explosion_Hostile_Unused.DisplayName: Defiled Spike Explosion Hostile Unused
+	// Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: Defiled Spike Explosion Spike Hostile Unused
+	// Defiled_Spike_Indicator.DisplayName: Defiled Spike Indicator
+	// DA_Laser.DisplayName: D A Laser
 }
 
 Prefixes: {
