@@ -1716,6 +1716,8 @@ Projectiles: {
 	// Cannihound_Gore3.DisplayName: Cannihound Gore3
 	// Brine_Haze_P.DisplayName: Brine Haze P
 	// Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
+	// Defiled_Broadcaster_Flan.DisplayName: Defiled Broadcaster
+	// Defiled_Broadcaster_Teleport_Flan.DisplayName: Defiled Broadcaster Teleport
 }
 
 Prefixes: {

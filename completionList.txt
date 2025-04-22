@@ -179,7 +179,7 @@ ENEMY NPCS:
 (^) Cranivore*
 (^) Crimbrain*
 (X) Crying Creeper
-(#, ^2) Defiled Broadcaster
+(☻) Defiled Broadcaster
 (^) Defiled Cyclops*
 (^) Defiled Digger*
 (^) Defiled Krusher*
