@@ -23,3 +23,5 @@ Items/Armor/Vanity/Terlet/PlagueCowboy(Old)
 Properties/launchSettings.json
 *.csproj.user
 *.sln
+/NPCs/Defiled/Boss/DA_Spike_Base.png
+/NPCs/Defiled/Boss/DA_Spike.png
