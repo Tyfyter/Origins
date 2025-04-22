@@ -1715,7 +1715,7 @@ Projectiles: {
 	// Cannihound_Gore2.DisplayName: Cannihound Gore2
 	// Cannihound_Gore3.DisplayName: Cannihound Gore3
 	// Brine_Haze_P.DisplayName: Brine Haze P
-	// Necromantic_Prefix_Orb.DisplayName: Necromantic Prefix Orb
+	// Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
 }
 
 Prefixes: {
@@ -1771,7 +1771,7 @@ Prefixes: {
 	}
 
 	Necromantic_Prefix: {
-		// DisplayName: Necromantic Prefix
+		// DisplayName: Necromantic
 		// Description: Mods.Origins.Prefixes.Necromantic_Prefix.Description
 	}
 

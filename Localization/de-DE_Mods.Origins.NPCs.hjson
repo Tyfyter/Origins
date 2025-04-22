@@ -277,6 +277,11 @@ Dryad: {
 	}
 }
 
+Nurse: {
+	// CantHealAssimilation: Mods.Origins.NPCs.Nurse.CantHealAssimilation
+	// NoHealCantHealAssimilation: Mods.Origins.NPCs.Nurse.NoHealCantHealAssimilation
+}
+
 // Jacob_Marley.DisplayName: Ominous Spirit
 // Spirit_Of_Christmas_Past.DisplayName: Spirit of Christmas Past
 
