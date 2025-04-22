@@ -94,8 +94,8 @@ TOWN NPC Quests:
 
 (^) Arms Dealer - Live Fire*
 (^) Arms Dealer - Three Times the Charm*
-(☻) Brine Fiend - Basic Brewery !!!
-(☻) Brine Fiend - Get Freaky !!!
+(^) Brine Fiend - Basic Brewery
+(^) Brine Fiend - Get Freaky
 (^) Cyborg - Sensor Upgrade*
 (^) Dryad - I’ll Give You a Deal*
 (^) Dryad - Clearing the Way*
@@ -160,7 +160,7 @@ ENEMY NPCS:
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
-(☻) Aqueoua (gores) !!!
+(^) Aqueoua
 (ᗢ) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
@@ -168,8 +168,8 @@ ENEMY NPCS:
 (^) Bottomfeeder*
 (^) Boulder Mimic
 (^) Buckethead Zombie°
-(☻) Cannihound !!! (spawn too rarely and reinforcements after death)
-(☻) Catacomb Clearer !!! (not spawning?)
+(^) Cannihound
+(^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Chunky Slime*
 (^) Cleaver*
@@ -901,7 +901,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(^) Sunflower in a Pot
+(ᗢ) Sunflower in a Pot (Sunflower variants)
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff

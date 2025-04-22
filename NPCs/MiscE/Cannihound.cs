@@ -1,21 +1,17 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Gores.NPCs;
+using Origins.Items.Weapons.Summoner;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.MiscE {
 	public class Cannihound : ModNPC, IWikiNPC {
@@ -57,8 +53,8 @@ namespace Origins.NPCs.MiscE {
 			if (!((spawnInfo.SpawnTileType == TileID.Crimtane && spawnInfo.Player.ZoneCrimson)
 			|| spawnInfo.SpawnTileType == TileID.CrimsonGrass || spawnInfo.SpawnTileType == TileID.FleshIce
 			|| spawnInfo.SpawnTileType == TileID.Crimstone || spawnInfo.SpawnTileType == TileID.Crimsand)) return 0;
-			float chance = 0.4f;
-			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 4;
+			float chance = 0.6f;
+			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 2;
 			return (spawnInfo.Player.ZoneSnow ? 1.5f : 1) * chance;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
@@ -83,6 +79,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fresh_Meat_Artifact>(), 40));
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public override void AI() {
