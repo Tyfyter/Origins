@@ -271,7 +271,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
 									new(state_magic_missile, 1f),
-									new(state_laser_rotate, MathHelper.Lerp(0.1f,1f,NPC.life / (float)(NPC.lifeMax)) * difficultyMult),
+									new(state_laser_rotate, MathHelper.Lerp(0.1f, 1f, NPC.life / (float)NPC.lifeMax) * difficultyMult),
 									new(state_split_amalgamation_start, 1f)
 									]
 								);
