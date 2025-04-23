@@ -1782,10 +1782,18 @@ Prefixes: {
 
 	Necromantic_Prefix: {
 		// DisplayName: Necromantic
-		// Description: Mods.Origins.Prefixes.Necromantic_Prefix.Description
+		/* Description:
+			'''
+			Minions convert enemy health into necromana on enemy death
+			Necromana cannot be regenerated automatically and can only be used for summon weapons
+			''' */
 	}
 
-	// Necromantic_Artifact_Prefix.Description: Mods.Origins.Prefixes.Necromantic_Artifact_Prefix.Description
+	/* Necromantic_Artifact_Prefix.Description:
+		'''
+		Minions convert enemy health into necromana on enemy death
+		Necromana cannot be regenerated automatically and can only be used for summon weapons
+		''' */
 }
 
 BiomeName: {
