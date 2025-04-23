@@ -681,59 +681,6 @@ namespace Origins.NPCs.Defiled.Boss {
 
 						break;
 					}
-					// laser attack *UNUSED/SCRAPPED*
-					case state_laser_rotate: {
-						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
-						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
-						float speed = MathHelper.Lerp(15,1, MathHelper.Clamp(NPC.ai[1] / (60 * 3),0f,1f)) ;
-						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
-						float diffX = NPC.Center.X - NPC.targetRect.Center().X;
-						diffX -= Math.Sign(diffX) * targetX;
-						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
-						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), 0.4f);
-						leftArmTarget = -(0.1f - MathHelper.Pi + MathHelper.PiOver4);
-
-
-						rightArmTarget = -(0.1f - MathHelper.Pi + MathHelper.PiOver4);
-						if (NPC.ai[1] <= 15)
-							NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() + new Vector2(0,-250), NPC.ai[1] / 15f);
-
-						if (NPC.ai[1] == 15) 
-						{
-							// laser automatically fires after a 1/3 of its max timeleft has passed, Max time left is set in ai[1]
-							if (Main.netMode != NetmodeID.MultiplayerClient)
-								Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<DA_Laser>(), NPC.damage, 0, -1,NPC.whoAmI,60 * 15);
-
-
-						}
-
-						if (NPC.ai[1] > 60 * 5) 
-						{
-							armSpeed = 0.1f;
-							leftArmTarget = -( MathHelper.PiOver4);
-							rightArmTarget = -(MathHelper.PiOver4);
-							leftArmRot += Main.rand.NextFloat(-0.1f, 0.2f);
-							rightArmRot += Main.rand.NextFloat(-0.1f, 0.2f);
-
-						} else
-						{
-							leftArmRot += Main.rand.NextFloat(-0.025f, 0.025f);
-							rightArmRot += Main.rand.NextFloat(-0.025f, 0.025f);
-						}
-
-						if (++NPC.ai[1] == 60 * 16) 
-						{
-
-							AIState = -AIState;
-							NPC.ai[1] = 0;
-
-						}
-
-
-
-
-						break;
-					}
 				}
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
