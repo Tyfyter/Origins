@@ -268,7 +268,7 @@ Dryad: {
 
 	PurifySuccess: {
 		// 0: I thank you for not succumbing to evil. Hopefully this'll help keep the fight in you.
-		// 1: Long journey deep into evil's abode eh? Your bravery is inspiring.
+		// 1: Long journey deep into evil's abode, eh? Your bravery is inspiring.
 	}
 
 	NoSuccForYouess: {
@@ -278,8 +278,8 @@ Dryad: {
 }
 
 Nurse: {
-	// CantHealAssimilation: Mods.Origins.NPCs.Nurse.CantHealAssimilation
-	// NoHealCantHealAssimilation: Mods.Origins.NPCs.Nurse.NoHealCantHealAssimilation
+	// CantHealAssimilation: I got the other things, but the nasty assimilation stuff I can't do. Gross man... maybe a dryad can help?
+	// NoHealCantHealAssimilation: Look, man, sometimes we can be in-between a rock and a hard place, but I can't do a thing without the money to afford your treatment. I've heard "death" is a magical alternative for Terrarians in a pinch though! Maybe you should give it a try!
 }
 
 // Jacob_Marley.DisplayName: Ominous Spirit
