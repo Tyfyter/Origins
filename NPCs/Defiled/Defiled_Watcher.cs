@@ -1,28 +1,17 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Accessories;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
-using Origins.NPCs.Defiled.Boss;
-using Origins.Projectiles.Enemies;
 using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ITangelaHaver {

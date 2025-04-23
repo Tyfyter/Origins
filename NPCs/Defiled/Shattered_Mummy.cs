@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -16,7 +14,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 2;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.07f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				Velocity = 1

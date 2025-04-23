@@ -22,7 +22,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Flyer : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ITangelaHaver {
-		public AssimilationAmount? Assimilation => 0.05f;
+		public AssimilationAmount? Assimilation => 0.02f;
 		public Rectangle DrawRect => new(-30, 28, 104, 38);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;

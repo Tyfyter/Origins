@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
@@ -10,7 +8,6 @@ using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -41,7 +38,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
 			NPC.defense = 10;
-			NPC.damage = 10;
+			NPC.damage = 12;
 			NPC.width = 40;
 			NPC.height = 48;
 			NPC.hide = true;

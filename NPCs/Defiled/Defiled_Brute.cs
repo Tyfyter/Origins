@@ -25,7 +25,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.08f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public float SpeedMult => NPC.aiAction == 0 ? 0.85f : (NPC.frame.Y / NPC.frame.Height == 10 ? 2f : 0.15f);
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;

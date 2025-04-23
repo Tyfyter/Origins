@@ -179,7 +179,7 @@ ENEMY NPCS:
 (^) Cranivore*
 (^) Crimbrain*
 (X) Crying Creeper
-(☻) Defiled Broadcaster
+(#3, ^2) Defiled Broadcaster !!! (drops enemies in tiles)
 (^) Defiled Cyclops*
 (^) Defiled Digger*
 (^) Defiled Krusher*

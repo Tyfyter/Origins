@@ -1,5 +1,4 @@
-﻿using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;

@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables;
 using Origins.Projectiles.Enemies;
 using PegasusLib;
@@ -13,10 +10,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-using CalamityMod.NPCs.TownNPCs;
-using Newtonsoft.Json.Linq;
-using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Defiled {
 	public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {

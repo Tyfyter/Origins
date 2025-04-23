@@ -1,14 +1,13 @@
-using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Defiled;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Materials;
-using Terraria.GameContent.Bestiary;
-using Origins.Items.Armor.Defiled;
-using Origins.World.BiomeData;
-using Origins.Items.Other.Consumables;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
@@ -155,7 +154,7 @@ namespace Origins.NPCs.Defiled {
 	}
 
 	public abstract class Defiled_Digger : Glowing_Mod_NPC, IDefiledEnemy {
-		public AssimilationAmount? Assimilation => this is Defiled_Digger_Head ? 0.06f : 0.03f;
+		public AssimilationAmount? Assimilation => this is Defiled_Digger_Head ? 0.03f : 0.02f;
 		public int MaxMana => 40;
 		public virtual int MaxManaDrain => 10;
 		public abstract float Mana { get; set; }

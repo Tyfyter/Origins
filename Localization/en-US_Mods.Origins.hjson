@@ -1784,13 +1784,16 @@ Prefixes: {
 		DisplayName: Necromantic
 		Description:
 			'''
+			Minions deal more damage to enemies with less health
 			Minions convert enemy health into necromana on enemy death
-			Necromana cannot be regenerated automatically and can only be used for summon weapons
+			Necromana cannot be regenerated automatically
+			Necromana can only be used for summon weapons
 			'''
 	}
 
 	Necromantic_Artifact_Prefix.Description:
 		'''
+		Minions deal more damage to enemies with less health
 		Minions convert enemy health into necromana on enemy death
 		Necromana cannot be regenerated automatically
 		Necromana can only be used for summon weapons

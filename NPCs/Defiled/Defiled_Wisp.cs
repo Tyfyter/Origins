@@ -15,7 +15,7 @@ namespace Origins.NPCs.Defiled {
 		public Rectangle DrawRect => new(0, -2, 24, 26);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
-		public AssimilationAmount? Assimilation => 0.03f;
+		public AssimilationAmount? Assimilation => 0.01f;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
@@ -18,7 +17,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 18;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.04f;
+		public AssimilationAmount? Assimilation => 0.02f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;

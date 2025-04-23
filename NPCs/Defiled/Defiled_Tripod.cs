@@ -24,7 +24,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.07f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;

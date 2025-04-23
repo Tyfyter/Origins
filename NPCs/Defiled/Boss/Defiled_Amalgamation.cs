@@ -1,12 +1,7 @@
-﻿using CalamityMod.Projectiles.Magic;
-using CalamityMod.Projectiles.Ranged;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Dusts;
-using Origins.Gores;
-using Origins.Gores.NPCs;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
@@ -19,7 +14,6 @@ using Origins.Items.Weapons.Magic;
 using Origins.Journal;
 using Origins.LootConditions;
 using Origins.Music;
-using Origins.NPCs;
 using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
@@ -27,15 +21,11 @@ using Origins.Tiles.Defiled;
 using Origins.Walls;
 using Origins.World.BiomeData;
 using PegasusLib;
-using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -51,10 +41,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using ThoriumMod.Empowerments;
-using ThoriumMod.Items.Misc;
 using static Defiled_Spike_Indicator;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
@@ -67,7 +54,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		static string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 
 		public string CustomSpritePath => "DefiledAmalg";
-		public AssimilationAmount? Assimilation => 0.06f;
+		public AssimilationAmount? Assimilation => 0.03f;
 		public static bool spawnDA = false;
 		float rightArmRot = 0.25f;
 		float leftArmRot = 0.25f;

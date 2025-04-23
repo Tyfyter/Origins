@@ -1,16 +1,11 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
-using Origins.Items.Accessories;
-using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat, IWikiNPC {

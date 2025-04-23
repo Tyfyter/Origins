@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.Items.Armor.Defiled;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using System;
@@ -20,7 +17,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 36;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.11f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;

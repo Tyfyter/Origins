@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -14,7 +12,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
-		public AssimilationAmount? Assimilation => 0.05f;
+		public AssimilationAmount? Assimilation => 0.01f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BlueSlime, Type);
