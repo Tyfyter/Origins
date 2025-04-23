@@ -263,7 +263,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								int lastUsedAttack = -AIState;
 
 								if (lastUsedAttack > 0) {
-									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
+									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 * (0.05 + 0.05 * ContentExtensions.DifficultyDamageMultiplier));
 									if (Main.masterMode && lastUsedAttack == state_triple_dash) {
 										rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
 										rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
