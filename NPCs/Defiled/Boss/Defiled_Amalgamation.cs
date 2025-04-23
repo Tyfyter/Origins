@@ -213,9 +213,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		public const int state_summon_roar = 5;
 		public const int state_ground_spikes = 6;
 		public const int state_magic_missile = 7;
-		public const int state_laser_rotate = 8;
-		public const int state_split_amalgamation_active = 9;
-		public const int state_split_amalgamation_start = 10;
+		public const int state_split_amalgamation_active = 8;
+		public const int state_split_amalgamation_start = 9;
 		public int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public DrawData[] OutlineDrawDatas { get => outlineData; }
 		public int OutlineSteps { get => 8; }
@@ -271,7 +270,6 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
 									new(state_magic_missile, 1f),
-									new(state_laser_rotate, MathHelper.Lerp(0.1f, 1f, NPC.life / (float)NPC.lifeMax) * difficultyMult),
 									new(state_split_amalgamation_start, 1f)
 									]
 								);
@@ -337,7 +335,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					//projectile spray
 					case state_projectiles: {
 						CheckTrappedCollision();
-						NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
+						NPC.ai[1] += 1;
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
 						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
 						float speed = 3;
