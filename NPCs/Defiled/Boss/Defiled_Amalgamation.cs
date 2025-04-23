@@ -906,9 +906,6 @@ namespace Origins.NPCs.Defiled.Boss {
 					dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally)
 			];
 
-			if (AIState == state_laser_rotate && NPC.ai[1] > 60 * 3)
-				this.DrawOutline();
-
 			if (AIState == state_split_amalgamation_active) {
 				return false;
 			}
