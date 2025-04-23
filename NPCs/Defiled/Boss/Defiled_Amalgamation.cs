@@ -1436,6 +1436,10 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer {
 	}
 
 	public override void AI() {
+		if (DA is null) {
+			NPC.active = false;
+			return;
+		}
 		NPC.lifeMax = DA.NPC.lifeMax;
 		NPC.life = DA.NPC.life;
 		NPC.target = Main.maxPlayers;
