@@ -1,5 +1,7 @@
 ﻿using BetterDialogue.UI.VanillaChatButtons;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using Origins.NPCs;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -120,6 +122,7 @@ namespace Origins.Buffs {
 			Main.buffNoSave[Type] = true;
 			_ = DeathMessage.Value;
 		}
+		internal static bool isUpdatingAssimilation = false;
 		public virtual void Update(Player player, float percent) { }
 		public virtual void OnChanged(Player player, float oldValue, float newValue) { }
 		public sealed override void Update(Player player, ref int buffIndex) {
@@ -130,8 +133,12 @@ namespace Origins.Buffs {
 					Key = DeathMessage.Key
 				}, 40, 0);
 			}
-			Update(player, percent);
-
+			isUpdatingAssimilation = true;
+			try {
+				Update(player, percent);
+			} finally {
+				isUpdatingAssimilation = false;
+			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.OriginPlayer().GetAssimilation(AssimilationType).Percent;
@@ -188,6 +195,7 @@ namespace Origins.Buffs {
 	}
 	public class Nurse_Assimilation_Dialog : ModPlayer {
 		static bool didHeal;
+		public bool[] GotDebuffFromAssimilation = BuffID.Sets.Factory.CreateBoolSet();
 		public override void Load() {
 			MonoModHooks.Add(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.OnClick)), static (Action<NurseHealButton, NPC, Player> orig, NurseHealButton self, NPC npc, Player player) => {
 				didHeal = false;
@@ -205,6 +213,29 @@ namespace Origins.Buffs {
 					}
 				}
 			});
+			try {
+				MonoModHooks.Modify(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.HealPrice)), IL_DisableNurseOnAssDebuffs);
+				MonoModHooks.Modify(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.OnClick)), IL_DisableNurseOnAssDebuffs);
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_DisableNurseOnAssDebuffs), e)) throw;
+			}
+		}
+		static void IL_DisableNurseOnAssDebuffs(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel label = default;
+			int loc = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdsfld<BuffID.Sets>(nameof(BuffID.Sets.NurseCannotRemoveDebuff)),//IL_0047: ldsfld bool[] [tModLoader]Terraria.ID.BuffID/Sets::NurseCannotRemoveDebuff
+				i => i.MatchLdloc(out loc),//IL_004c: ldloc.3
+				i => i.MatchLdelemU1(),//IL_004d: ldelem.u1
+				i => i.MatchBrtrue(out label)//IL_004e: brtrue.s IL_0055
+			);
+			c.EmitLdarg2();
+			c.EmitLdloc(loc);
+			c.EmitDelegate((Player player, int buffType) => {
+				return player.GetModPlayer<Nurse_Assimilation_Dialog>().GotDebuffFromAssimilation[buffType];
+			});
+			c.EmitBrtrue(label);
 		}
 		public override void PostNurseHeal(NPC nurse, int health, bool removeDebuffs, int price) {
 			didHeal = true;

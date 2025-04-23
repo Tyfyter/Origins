@@ -724,6 +724,7 @@ namespace Origins {
 		}
 		public static bool processingDash = false;
 		private static void On_Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {
+			if (self.TryGetModPlayer(out Nurse_Assimilation_Dialog assTracker)) assTracker.GotDebuffFromAssimilation[type] = AssimilationDebuff.isUpdatingAssimilation;
 			orig(self, type, timeToAdd, quiet, foodHack);
 			if (Main.debuff[type]) {
 				OriginPlayer originPlayer = self.OriginPlayer();
