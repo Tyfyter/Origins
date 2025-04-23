@@ -50,6 +50,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 76;
 			NPC.noGravity = true;
+			NPC.noTileCollide = true;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];
