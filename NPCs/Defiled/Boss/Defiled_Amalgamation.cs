@@ -362,14 +362,13 @@ namespace Origins.NPCs.Defiled.Boss {
 							case 99:
 							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
 							Vector2 randomPosAroundTarget = NPC.targetRect.Center() + Main.rand.NextVector2CircularEdge(250, 250);
-							for (int i = 0; i < 160; i++) 
-							{
+							for (int i = 0; i < 160; i++) {
 								float progress = i / 160f;
 								Dust.NewDustDirect(
 									Vector2.Lerp(NPC.Center,
-									randomPosAroundTarget + new Vector2(0,-250f) * Utils.PingPongFrom01To010(MathF.Sqrt(1f - MathF.Pow(progress - 1f, 2f))),
+									randomPosAroundTarget + new Vector2(0, -250f) * Utils.PingPongFrom01To010(MathF.Sqrt(1f - MathF.Pow(progress - 1f, 2f))),
 									progress),
-									16,16,
+									16, 16,
 									DustID.AncientLight
 									).noGravity = true;
 
@@ -615,19 +614,16 @@ namespace Origins.NPCs.Defiled.Boss {
 					}
 
 					// split attack
-					case state_split_amalgamation_start: 
-					{
+					case state_split_amalgamation_start: {
 						time++;
 						NPC.ai[1]++;
-						if (NPC.ai[1] < 60) 
-						{
+						if (NPC.ai[1] < 60) {
 							NPC.velocity *= 0.95f;
 							armSpeed = 0.1f;
 							leftArmTarget = -(0.1f - MathHelper.Pi + MathHelper.PiOver4);
 							rightArmTarget = -(0.1f - MathHelper.Pi + MathHelper.PiOver4);
 						}
-						if (NPC.ai[1] == 60) 
-						{
+						if (NPC.ai[1] == 60) {
 							for (int i = 0; i < 128; i++) {
 								Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(100, 100);
 								Dust.NewDustPerfect(pos, DustID.AncientLight, NPC.Center.DirectionTo(pos) * 20);
@@ -635,8 +631,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							}
 							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1f), NPC.Center);
 							SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1f), NPC.Center);
-							if (Main.netMode != NetmodeID.MultiplayerClient) 
-							{
+							if (Main.netMode != NetmodeID.MultiplayerClient) {
 								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI).ModNPC as DA_Body_Part;
 								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI).ModNPC as DA_Body_Part;
 								arm = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.arm, NPC.whoAmI).ModNPC as DA_Body_Part;
@@ -658,14 +653,13 @@ namespace Origins.NPCs.Defiled.Boss {
 						break;
 					}
 					case state_split_amalgamation_active: {
-						time += MathHelper.Lerp(2, 0, MathHelper.Clamp(NPC.ai[1] / 180f,0,1));
+						time += MathHelper.Lerp(2, 0, MathHelper.Clamp(NPC.ai[1] / 180f, 0, 1));
 						NPC.ai[1]++;
-						NPC.Center = NPC.targetRect.Center() + new Vector2(0,-250);
+						NPC.Center = NPC.targetRect.Center() + new Vector2(0, -250);
 
 
 						// parts regroup takes 1 second
-						if (NPC.ai[1] == 60 * 16) 
-						{
+						if (NPC.ai[1] == 60 * 16) {
 							NPC.ShowNameOnHover = true;
 							NPC.dontTakeDamage = false;
 							AIState = -AIState;
@@ -749,8 +743,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				armFrame = 3;
 			} else if (++NPC.frameCounter > 7) {
 				NPC.frameCounter = 0;
-				if (AIState == state_split_amalgamation_active) 
-				{
+				if (AIState == state_split_amalgamation_active) {
 					int frameHeightTorso = 240 / 4;
 					NPC.frame = new Rectangle(0, (NPC.frame.Y + frameHeightTorso) % (frameHeightTorso * 3), 80, frameHeightTorso);
 					return;
@@ -772,8 +765,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				}
 			}
 		}
-		public void ResetFrameSize() 
-		{
+		public void ResetFrameSize() {
 
 			if (AIState == state_split_amalgamation_active)
 				NPC.frame = new Rectangle(0, 0, 122, 928 / 8);
@@ -855,8 +847,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			};
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if(AIState == state_split_amalgamation_active) 
-			{
+			if (AIState == state_split_amalgamation_active) {
 				return;
 			}
 
@@ -915,17 +906,16 @@ namespace Origins.NPCs.Defiled.Boss {
 					dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally)
 			];
 
-			if(AIState == state_laser_rotate && NPC.ai[1] > 60 * 3)
+			if (AIState == state_laser_rotate && NPC.ai[1] > 60 * 3)
 				this.DrawOutline();
 
-			if (AIState == state_split_amalgamation_active) 
-			{
+			if (AIState == state_split_amalgamation_active) {
 				return false;
 			}
 
 			return true;
 		}
-		public Color SetOutlineColor(float progress) => Color.Lerp(Color.White,Color.Black,MathF.Sin((float)Main.timeForVisualEffects * 0.1f ));
+		public Color SetOutlineColor(float progress) => Color.Lerp(Color.White, Color.Black, MathF.Sin((float)Main.timeForVisualEffects * 0.1f));
 
 		public class Spawn : SpawnPool {
 			public override string Name => $"{nameof(Defiled_Amalgamation)}_{base.Name}";
@@ -992,8 +982,7 @@ namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Music_Scene_Effect : BossMusicSceneEffect<Defiled_Amalgamation> {
 		public override int Music => Origins.Music.DefiledBoss;
 	}
-	public class DA_Laser : ModProjectile, ITangelaHaver
-	{
+	public class DA_Laser : ModProjectile, ITangelaHaver {
 
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public const int LASER_LENGTH = 2500;
@@ -1023,14 +1012,13 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			Projectile.Center = Main.npc[(int)DA].Center - Projectile.velocity;
 			Vector2 targetCenter = Main.npc[(int)DA].targetRect.Center();
-			Projectile.rotation = Projectile.rotation.AngleTowards(Projectile.Center.DirectionTo(targetCenter).ToRotation(),0.005f);
+			Projectile.rotation = Projectile.rotation.AngleTowards(Projectile.Center.DirectionTo(targetCenter).ToRotation(), 0.005f);
 			indicatorState = Projectile.timeLeft > maxTimeleft - maxTimeleft / 3f;
 			if (!indicatorState) Timer++;
-			if(Projectile.timeLeft == maxTimeleft / 2f) {
+			if (Projectile.timeLeft == maxTimeleft / 2f) {
 
 
-				for(int i = 0; i < LASER_LENGTH; i += LASER_LENGTH / 7) 
-				{
+				for (int i = 0; i < LASER_LENGTH; i += LASER_LENGTH / 7) {
 
 					if (i == 0 || i > LASER_LENGTH / 2)
 						continue;
@@ -1131,9 +1119,9 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 	}
 }
-	public class DA_Arc_Bolt : ModProjectile {
+public class DA_Arc_Bolt : ModProjectile {
 
-		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
+	public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 
 	public override void SetStaticDefaults() {
 		ProjectileID.Sets.TrailCacheLength[Type] = 40;
@@ -1202,8 +1190,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 }
 
-public class DA_Flan : ModProjectile, ITangelaHaver
-{
+public class DA_Flan : ModProjectile, ITangelaHaver {
 
 	public const int tick_motion = 8;
 	public override string Texture => "Origins/Projectiles/Weapons/Seam_Beam_P";
@@ -1235,7 +1222,7 @@ public class DA_Flan : ModProjectile, ITangelaHaver
 			Vector2 pos = Projectile.oldPos[^i];
 			if (pos == default) {
 				break;
-			} else if (Origins.OriginExtensions.Recentered(projHitbox,pos).Intersects(targetHitbox)) {
+			} else if (Origins.OriginExtensions.Recentered(projHitbox, pos).Intersects(targetHitbox)) {
 				return true;
 			}
 		}
@@ -1339,8 +1326,7 @@ public class DA_Flan : ModProjectile, ITangelaHaver
 
 }
 
-public class DA_Body_Part : ModNPC, IOutlineDrawer
-{
+public class DA_Body_Part : ModNPC, IOutlineDrawer {
 	static string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 	static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
 	static PegasusLib.AutoLoadingAsset<Texture2D> armPath = bodyPartsPath + "Arm";
@@ -1364,7 +1350,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 	int frameHeight = 0;
 	public override string Texture => bodyPartsPath + "Torso";
 	public override void SetDefaults() {
-		
+
 		NPC.friendly = false;
 		NPC.aiStyle = -1;
 		NPC.width = NPC.height = 32;
@@ -1374,9 +1360,8 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 		NPC.noTileCollide = true;
 		NPC.damage = 0;
 	}
-	public enum Part : byte 
-	{
-			
+	public enum Part : byte {
+
 		torso = 0,
 		arm = 1,
 		leg1 = 2,
@@ -1385,14 +1370,12 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 	}
 
-	public void SetupPart() 
-	{
-		switch ((Part)(int)PartType) 
-		{
+	public void SetupPart() {
+		switch ((Part)(int)PartType) {
 			// only the torso can take damage
 			case Part.torso:
 			maxFrames = 4;
-			NPC.frame = new Rectangle(0,0,80,60);
+			NPC.frame = new Rectangle(0, 0, 80, 60);
 			frameHeight = 60;
 			break;
 
@@ -1409,8 +1392,8 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 			NPC.noTileCollide = false;
 			NPC.noGravity = false;
 
-			break;		
-			
+			break;
+
 			case Part.leg2:
 			maxFrames = 5;
 			NPC.frame = new Rectangle(0, 0, 50, 380 / 5);
@@ -1421,21 +1404,20 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 			case Part.shoulder:
 			maxFrames = 5;
-			NPC.frame = new Rectangle(0,0,44,46);
+			NPC.frame = new Rectangle(0, 0, 44, 46);
 			frameHeight = 46;
 			break;
 		}
 
 
-			
 
-		
+
+
 
 	}
 
 	public override void OnSpawn(IEntitySource source) {
-		if(Main.npc[(int)NPC.ai[1]].ModNPC is Defiled_Amalgamation DA) 
-		{
+		if (Main.npc[(int)NPC.ai[1]].ModNPC is Defiled_Amalgamation DA) {
 			this.DA = DA;
 
 		}
@@ -1445,10 +1427,10 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 	ref float Timer => ref NPC.ai[3];
 
-	public DrawData[] OutlineDrawDatas => 
+	public DrawData[] OutlineDrawDatas =>
 	[
 		new(RightArmPath, NPC.Center, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), Color.White, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0)
-		
+
 	];
 
 	public int OutlineSteps => 4;
@@ -1463,8 +1445,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 		UpdateDAHealth(hit);
 	}
 
-	public void UpdateDAHealth(NPC.HitInfo hit) 
-	{
+	public void UpdateDAHealth(NPC.HitInfo hit) {
 		int damageDone = DA.NPC.StrikeNPC(hit, fromNet: false, false);
 		if (Main.netMode != NetmodeID.SinglePlayer)
 			NetMessage.SendStrikeNPC(DA.NPC, hit);
@@ -1475,8 +1456,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 		NPC.life = DA.NPC.life;
 		NPC.target = Main.maxPlayers;
 		NPC.TargetClosest(true);
-		if (!NPC.HasValidTarget) 
-		{
+		if (!NPC.HasValidTarget) {
 			NPC.position.Y += 10;
 			NPC.EncourageDespawn(2);
 			return;
@@ -1487,9 +1467,8 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 				currentFrame = 0;
 
 		NPC.ai[2]++;
-		if (NPC.ai[2] < 200) 
-		{
-			NPC.Center = Vector2.Lerp(NPC.Center,NPC.targetRect.Center() + 
+		if (NPC.ai[2] < 200) {
+			NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() +
 				new Vector2(MathF.Sin(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 400,
 				MathF.Cos(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 200), NPC.ai[2] / 160f);
 			NPC.velocity = Vector2.Zero;
@@ -1499,22 +1478,21 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 		NPC.damage = DA.NPC.damage;
 
 		//regroup
-		if (NPC.ai[2] >= 60 * 15) 
-		{
+		if (NPC.ai[2] >= 60 * 15) {
 			float progress = (NPC.ai[2] - 60 * 15) / 60f;
-			NPC.Center = Vector2.Lerp(NPC.Center, DA.NPC.Center,progress);
+			NPC.Center = Vector2.Lerp(NPC.Center, DA.NPC.Center, progress);
 			NPC.damage = 0;
 
 
-			if (progress >= 1) 
-			{
+			if (progress >= 1) {
 				NPC.active = false;
-				
+
 			}
 
 
 			return;
-		};
+		}
+		;
 		NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : 1;
 
 		switch ((Part)(int)PartType) {
@@ -1537,30 +1515,25 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 		NPC.width = NPC.frame.Height;
 		NPC.height = NPC.frame.Height;
 	}
-	public void TorsoAI() 
-	{
+	public void TorsoAI() {
 
 		NPC.velocity = NPC.Center.DirectionTo(NPC.targetRect.Center()) * 3;
 	}
 
-	public void ShoulderAI() 
-	{
+	public void ShoulderAI() {
 		Timer++;
 		NPC.velocity *= 0.96f;
-		if (Timer < 120) 
-		{
+		if (Timer < 120) {
 
 			NPC.rotation += MathHelper.Lerp(0, 1f, Timer / 120);
 		}
-		if (Timer == 120) 
-		{
+		if (Timer == 120) {
 
 			NPC.velocity = NPC.Center.DirectionTo(NPC.targetRect.Center()) * 35;
 			NPC.rotation = NPC.velocity.ToRotation();
 		}
 
-		if (Timer == 160) 
-		{
+		if (Timer == 160) {
 
 			NPC.velocity = Vector2.Zero;
 			NPC.ai[3] = 0;
@@ -1569,15 +1542,12 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 	}
 	bool charging = false;
-	public void ArmAI() 
-	{
+	public void ArmAI() {
 
 		Timer++;
 		NPC.velocity.Y = MathF.Sin(Timer * 0.05f) * 2;
-		if(Timer >= 60 && !charging) 
-		{
-			if (Main.rand.NextBool()) 
-			{
+		if (Timer >= 60 && !charging) {
+			if (Main.rand.NextBool()) {
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
@@ -1588,15 +1558,13 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 				charging = true;
 
-			}
-			else
+			} else
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
 
-		
+
 		}
 
-		if (charging)
-		{
+		if (charging) {
 			NPC.rotation = NPC.rotation.AngleTowards(NPC.targetRect.Center().DirectionFrom(NPC.Center).ToRotation(), 0.005f);
 
 			if (Timer >= 120) {
@@ -1605,8 +1573,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 			}
 		}
 
-		if (!charging) 
-		{
+		if (!charging) {
 			NPC.Center = Vector2.Lerp(NPC.Center - new Vector2(5, 0).RotatedBy(NPC.rotation), NPC.Center + new Vector2(10, 0).RotatedBy(NPC.rotation), Timer / 60f);
 			NPC.rotation = NPC.rotation.AngleTowards(NPC.targetRect.Center().DirectionFrom(NPC.Center).ToRotation(), 0.02f);
 
@@ -1617,8 +1584,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 
 	}
-	public void LegsAI() 
-	{
+	public void LegsAI() {
 
 		// tried anti-stuck it, tho idk
 		if (Timer == -1) {
@@ -1633,25 +1599,23 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 
 
 
-		if(Timer >= 20 && (NPC.collideY || NPC.collideX)) 
-		{
+		if (Timer >= 20 && (NPC.collideY || NPC.collideX)) {
 			Timer = 0;
-			if((Part)PartType == Part.leg1)
-				NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(14,-7) : new Vector2(-14,-7);
+			if ((Part)PartType == Part.leg1)
+				NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(14, -7) : new Vector2(-14, -7);
 			else
 				NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(7, -14) : new Vector2(-7, -14);
 
 		}
 
-		if (NPC.collideY && NPC.velocity.Y > 0) 
-		{
+		if (NPC.collideY && NPC.velocity.Y > 0) {
 
 			NPC.velocity.Y = 0;
 		}
 
 		NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.1f;
-		}
-	
+	}
+
 	public override void FindFrame(int frameHeight) {
 		NPC.frame.Y = currentFrame * ((this.frameHeight * (maxFrames - 1)) / (maxFrames - 1));
 	}
@@ -1661,9 +1625,8 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 		Texture2D texture = torsoPath;
 		Texture2D glowTexture = torsoGlowPath;
-		switch ((Part)(int)PartType) 
-		{
-		
+		switch ((Part)(int)PartType) {
+
 			case Part.leg1:
 			texture = leg1Path;
 			glowTexture = leg1GlowPath;
@@ -1683,7 +1646,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 			case Part.arm:
 			texture = armPath;
 			glowTexture = armGlowPath;
-			if(Timer > 60)
+			if (Timer > 60)
 				this.DrawOutline();
 			// assumes that the maximum amount of frames is same as the wings 
 			spriteBatch.Draw(RightArmPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), drawColor, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
@@ -1694,57 +1657,42 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 		}
 
 
-		spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally | SpriteEffects.FlipHorizontally,0);
-		spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically,0);
+		spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally | SpriteEffects.FlipHorizontally, 0);
+		spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically, 0);
 
-		if (charging) 
-		{
+		if (charging) {
 
-			default(DefiledIndicator).Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi],MathHelper.Lerp(15,1,(Timer - 60f) / 60f),0f,0.5f);
-			
+			default(DefiledIndicator).Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
+
 		}
 
 		return false;
 	}
 
-	public Color SetOutlineColor(float progress) => Color.Lerp(Color.Green,Color.Purple, progress);
+	public Color SetOutlineColor(float progress) => Color.Lerp(Color.Green, Color.Purple, progress);
 }
-	public class Bendy_Indicator : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
-		
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-			Projectile.DamageType = DamageClass.Default;
-			Projectile.friendly = false;
-			if (Main.masterMode || Main.expertMode) {
-				Projectile.hostile = true;
-			}
-			Projectile.timeLeft = 40;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 60;
-			Projectile.aiStyle = 0;
-			Projectile.width = 8;
-			Projectile.height = 8;
-			Projectile.penetrate = 1;
-			Projectile.hide = true;
+public class Bendy_Indicator : ModProjectile {
+	public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
+
+	public override void SetDefaults() {
+		Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+		Projectile.DamageType = DamageClass.Default;
+		Projectile.friendly = false;
+		if (Main.masterMode || Main.expertMode) {
+			Projectile.hostile = true;
 		}
-		public override void AI() {
-			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
-			if (Projectile.timeLeft % 15 == 0) {
-				Projectile.localNPCImmunity.CopyTo(Projectile.NewProjectileDirect(
-					Projectile.GetSource_FromThis(),
-					Projectile.Center,
-					Vector2.Zero,
-					ModContent.ProjectileType<Defiled_Spike_Explosion_Hostile_Unused>(),
-					Projectile.damage,
-					0,
-					Projectile.owner,
-					7,
-					ai2: 0.5f
-				).localNPCImmunity.AsSpan());
-			}
-		}
-		public override void OnKill(int timeLeft) {
+		Projectile.timeLeft = 40;
+		Projectile.usesLocalNPCImmunity = true;
+		Projectile.localNPCHitCooldown = 60;
+		Projectile.aiStyle = 0;
+		Projectile.width = 8;
+		Projectile.height = 8;
+		Projectile.penetrate = 1;
+		Projectile.hide = true;
+	}
+	public override void AI() {
+		Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
+		if (Projectile.timeLeft % 15 == 0) {
 			Projectile.localNPCImmunity.CopyTo(Projectile.NewProjectileDirect(
 				Projectile.GetSource_FromThis(),
 				Projectile.Center,
@@ -1753,397 +1701,408 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 				Projectile.damage,
 				0,
 				Projectile.owner,
-			7).localNPCImmunity.AsSpan());
+				7,
+				ai2: 0.5f
+			).localNPCImmunity.AsSpan());
 		}
 	}
-	public class Defiled_Spike_Explosion_Hostile_Unused : ModProjectile {
-		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
-		public override void SetDefaults() {
-			Projectile.timeLeft = 600;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.hide = true;
-			Projectile.rotation = Main.rand.NextFloatDirection();
-			Projectile.tileCollide = false;
-			Projectile.npcProj = true;
-			Projectile.hostile = false;
-			Projectile.friendly = false;
-			Projectile.DamageType = DamageClass.Default;
-		}
-		public override bool? CanHitNPC(NPC target) => false;
-		public override bool CanHitPlayer(Player target) => false;
-		public override bool CanHitPvp(Player target) => false;
-		public override void AI() {
-			if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
-			if (Projectile.ai[0] > 0) {
-				Projectile.ai[0]--;
-				Projectile.NewProjectileDirect(
-					Projectile.GetSource_FromThis(),
-					Projectile.Center,
-					(Vector2)new PolarVec2(Main.rand.NextFloat(8, 16), Projectile.ai[1]++),
-					ModContent.ProjectileType<DA_Bendy_Spikes>(),
-					Projectile.damage,
-					0,
-					Projectile.owner,
-					10,
-					ai1: Projectile.whoAmI,
-					20
-				);
-			}
-		}
+	public override void OnKill(int timeLeft) {
+		Projectile.localNPCImmunity.CopyTo(Projectile.NewProjectileDirect(
+			Projectile.GetSource_FromThis(),
+			Projectile.Center,
+			Vector2.Zero,
+			ModContent.ProjectileType<Defiled_Spike_Explosion_Hostile_Unused>(),
+			Projectile.damage,
+			0,
+			Projectile.owner,
+		7).localNPCImmunity.AsSpan());
 	}
-	public class Defiled_Spike_Explosion_Spike_Hostile_Unused : ModProjectile {
-		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
-		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
-		public static int ID { get; private set; }
-		Vector2 realPosition;
-		public override void SetStaticDefaults() {
-			ID = Projectile.type;
-			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
-		}
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-			Projectile.timeLeft = Main.rand.Next(22, 25);
-			Projectile.width = 18;
-			Projectile.height = 18;
-			Projectile.aiStyle = 0;
-			Projectile.penetrate = -1;
-			Projectile.tileCollide = false;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 0;
-			Projectile.hide = true;
-			Projectile.npcProj = true;
-			Projectile.hostile = true;
-			Projectile.friendly = false;
-			Projectile.DamageType = DamageClass.Default;
-		}
-		public override void OnSpawn(IEntitySource source) {
-		}
-		public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
-		public float movementFactor {
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
-		}
-		public override void AI() {
-			Projectile.Center = ParentProjectile.Center - Projectile.velocity;
-			if (movementFactor == 0f) {
-				movementFactor = 1f;
-				//if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
-				Projectile.netUpdate = true;
-			}
-			if (Projectile.timeLeft > 18) {
-				movementFactor += 1f;
-			}
-			Projectile.position += Projectile.velocity * movementFactor;
-			Projectile.rotation = Projectile.velocity.ToRotation();
-			Projectile.rotation += MathHelper.PiOver2;
-			ParentProjectile.timeLeft = 7;
-		}
-		public override bool? CanHitNPC(NPC target) {
-			if (ParentProjectile.localNPCImmunity[target.whoAmI] == 0) {
-				return null;
-			}
-			return false;
-		}
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			behindNPCsAndTiles.Add(index);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
-		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if (DifficultyMult >= 2) {
-				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
-				}
-			}
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			float totalLength = Projectile.velocity.Length() * movementFactor;
-			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
-			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
-			totalLength -= 58;
-			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
-			int c = 0;
-			Vector2 pos;
-			for (int i = (int)totalLength; i > 0; i -= 58) {
-				c++;
-				pos = (Projectile.Center - Main.screenPosition) - (offset * c);
-				//lightColor = Projectile.GetAlpha(new Color(Lighting.GetColor((pos + Projectile.velocity * 2).ToTileCoordinates()).ToVector4()));
-				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
-			}
-			return false;
-		}
+}
+public class Defiled_Spike_Explosion_Hostile_Unused : ModProjectile {
+	public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+	public override void SetDefaults() {
+		Projectile.timeLeft = 600;
+		Projectile.usesLocalNPCImmunity = true;
+		Projectile.hide = true;
+		Projectile.rotation = Main.rand.NextFloatDirection();
+		Projectile.tileCollide = false;
+		Projectile.npcProj = true;
+		Projectile.hostile = false;
+		Projectile.friendly = false;
+		Projectile.DamageType = DamageClass.Default;
 	}
-	public class DA_Bendy_Spikes : ModProjectile {
-		float progress = 0;
-		public int maxTimeleft = 20 + (int)(10 * Origins.ContentExtensions.DifficultyDamageMultiplier);
-		public override string Texture => PegasusLib.PegasusExt.GetDefaultTMLName(typeof(DA_Spike));
-		public override void SetDefaults() {
-			Projectile.DamageType = DamageClass.Magic;
-			Projectile.width = 34;
-			Projectile.height = 0;
-			Projectile.aiStyle = 0;
-			Projectile.penetrate = -1;
-			Projectile.tileCollide = false;
-			Projectile.hostile = true;
-			Projectile.hide = true;
-			Projectile.timeLeft = maxTimeleft + 60;
-			Projectile.knockBack = 0;
-		}
-		Projectile parentProj => Main.projectile[(int)Projectile.ai[1]];
-
-		public override void AI() {
-			if(Projectile.timeLeft <= maxTimeleft)
-				progress = Utils.GetLerpValue(0f,1f, Utils.PingPongFrom01To010((((Projectile.timeLeft) / (float)maxTimeleft))),true);
-			Projectile.Center = parentProj.Center - Projectile.velocity;
-			float maxGrowth = 128 * Origins.ContentExtensions.DifficultyDamageMultiplier;
-			if (Projectile.ai[0] < maxGrowth) {
-				int diff = (int)(Math.Min(Projectile.ai[0] + 16, maxGrowth) - Projectile.ai[0]);
-				Projectile.ai[0] += diff;
-				Projectile.Center -= Projectile.rotation.ToRotationVector2() * diff;
-			}
-		}
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			hitbox.Height += (int)Projectile.ai[0];
-		}
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			behindNPCsAndTiles.Add(index);
-		}
-		public override void OnKill(int timeLeft) {
-			
-		}
-		/// <summary>
-		/// Call a programmer if this method lasts longer than four hours
-		/// </summary>
-		/// <returns></returns>
-		public (Vector2 pos, Vector2 perpendicular)[] GetCurve(float progress) {
-			if (Projectile.localAI[2] != Projectile.ai[0]) {
-				const int precision = 16;
-				_curve = new (Vector2 pos, Vector2 perpendicular)[(int)Math.Ceiling((Projectile.ai[0] * progress) / precision)];
-				Vector2 pos = Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Pi) / 16f * Projectile.ai[0];
-				Vector2 mov = -Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Pi) * precision;
-				int index = 0;
-				for (int i = 0; i < Math.Round(Projectile.ai[0] * progress); i += precision) {
-					_curve[index++] = (pos, mov.RotatedBy(MathHelper.PiOver2) / precision);
-					pos += mov;
-					mov = mov.RotatedBy(Projectile.ai[2]);
-				}
-			}
-			return _curve;
-		}
-		(Vector2 pos, Vector2 perpendicular)[] _curve = [];
-		public (Vector2 pos, Vector2 perpendicular)[] Curve {
-			get {
-				return _curve;
-			}
-		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			(Vector2 pos, Vector2 perpendicular)[] curve = GetCurve(progress);
-			if (curve.Length <= 0)
-				return false;
-			Vector2 lastPos0 = curve[0].pos - curve[0].perpendicular * 17;
-			Vector2 lastPos1 = curve[0].pos + curve[0].perpendicular * 17;
-			Vector2 nextPos0 = default, nextPos1 = default;
-			List<(Vector2 start, Vector2 end)> _lines = [(lastPos1, lastPos0)];
-			for (int i = 0; i < curve.Length; i++) {
-
-		
-
-				Vector2 nextPos = curve[i].pos;
-				if (nextPos == default) break;
-				nextPos0 = nextPos - curve[i].perpendicular * 17;
-				nextPos1 = nextPos + curve[i].perpendicular * 17;
-
-				_lines.Add((lastPos0, nextPos0));
-				_lines.Add((nextPos1, lastPos1));
-				lastPos0 = nextPos0;
-				lastPos1 = nextPos1;
-			}
-			_lines.Add((nextPos0, nextPos1));
-			return Origins.CollisionExtensions.PolygonIntersectsRect(_lines.ToArray(), targetHitbox);
-		}
-		public static float InExpo(float t, float strength) => (float)Math.Pow(2, strength * (t - 1));
-		public static float OutExpo(float t, float strength) => 1 - InExpo(1 - t, strength);
-		public static float InOutExpo(float t, float strength) {
-			if (t < 0.5) return InExpo(t * 2, strength) * .5f;
-			return 1 - InExpo((1 - t) * 2, strength) * .5f;
-		}
-		public override bool PreDraw(ref Color lightColor) {
-
-			var curve = GetCurve(1f);
-
-			Vector2[] positions = new Vector2[curve.Length];
-			float[] rotations = new float[curve.Length];
-
-			for (int i = 0; i < curve.Length; i++) 
-			{
-
-				positions[i] = curve[i].pos;
-				rotations[i] = curve[i].perpendicular.ToRotation() + MathHelper.PiOver2;
-				
-
-			}
-
-
-			if(progress > 0) {
-				default(DefiledPortal).Draw(curve[0].pos - Main.screenPosition, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (MAX_TIMELEFT + Projectile.timeLeft) / (float)MAX_TIMELEFT));
-				default(DefiledSpikeStrip).Draw(TextureAssets.Projectile[Type], positions, rotations, progress, Projectile.ai[0]);
-
-			}
-			return false;
-		}
-	}
-	public class Defiled_Spike_Indicator : ModProjectile {
-
-		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
-
-
-		public const int INDICATOR_DURATION = 40;
-		public const int MAX_TIMELEFT = 120;
-		public Vector2 startingPosition;
-		public float curveAmount = 0;
-		public int segments = 15;
-		public DA_Bendy_Spikes childSpike;
-		public int fadeInOutTimer = 0;
-		public override void OnSpawn(IEntitySource source) {
-			if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
-			startingPosition = Projectile.Center;
-			Projectile.rotation = Projectile.Center.DirectionTo(Main.player[(int)Projectile.ai[1]].Center).RotatedByRandom(1).ToRotation();
-			curveAmount = Main.rand.NextFloat() * MathHelper.Pi * (Main.rand.NextBool() ? -1 : 1);
-			childSpike = Projectile.NewProjectileDirect(
+	public override bool? CanHitNPC(NPC target) => false;
+	public override bool CanHitPlayer(Player target) => false;
+	public override bool CanHitPvp(Player target) => false;
+	public override void AI() {
+		if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
+		if (Projectile.ai[0] > 0) {
+			Projectile.ai[0]--;
+			Projectile.NewProjectileDirect(
 				Projectile.GetSource_FromThis(),
 				Projectile.Center,
-				(Vector2)Projectile.rotation.ToRotationVector2() * 92,
+				(Vector2)new PolarVec2(Main.rand.NextFloat(8, 16), Projectile.ai[1]++),
 				ModContent.ProjectileType<DA_Bendy_Spikes>(),
 				Projectile.damage,
 				0,
 				Projectile.owner,
-				segments * 32f,
-				Projectile.whoAmI, curveAmount / 2f / (segments)
-			).ModProjectile as DA_Bendy_Spikes;
+				10,
+				ai1: Projectile.whoAmI,
+				20
+			);
 		}
-		public override void SetDefaults() {
-			Projectile.timeLeft = MAX_TIMELEFT;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.hide = true;
-			Projectile.rotation = Main.rand.NextFloatDirection();
-			Projectile.tileCollide = false;
-			Projectile.npcProj = true;
-			Projectile.hostile = false;
-			Projectile.friendly = false;
-			Projectile.DamageType = DamageClass.Default;
+	}
+}
+public class Defiled_Spike_Explosion_Spike_Hostile_Unused : ModProjectile {
+	public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+	public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+	public static int ID { get; private set; }
+	Vector2 realPosition;
+	public override void SetStaticDefaults() {
+		ID = Projectile.type;
+		ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+	}
+	public override void SetDefaults() {
+		Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+		Projectile.timeLeft = Main.rand.Next(22, 25);
+		Projectile.width = 18;
+		Projectile.height = 18;
+		Projectile.aiStyle = 0;
+		Projectile.penetrate = -1;
+		Projectile.tileCollide = false;
+		Projectile.usesLocalNPCImmunity = true;
+		Projectile.localNPCHitCooldown = 0;
+		Projectile.hide = true;
+		Projectile.npcProj = true;
+		Projectile.hostile = true;
+		Projectile.friendly = false;
+		Projectile.DamageType = DamageClass.Default;
+	}
+	public override void OnSpawn(IEntitySource source) {
+	}
+	public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
+	public float movementFactor {
+		get => Projectile.ai[0];
+		set => Projectile.ai[0] = value;
+	}
+	public override void AI() {
+		Projectile.Center = ParentProjectile.Center - Projectile.velocity;
+		if (movementFactor == 0f) {
+			movementFactor = 1f;
+			//if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
+			Projectile.netUpdate = true;
 		}
-		public override bool? CanHitNPC(NPC target) => false;
-		public override bool CanHitPlayer(Player target) => false;
-		public override bool CanHitPvp(Player target) => false;
-
-		public override bool PreDraw(ref Color lightColor) {
-			(Vector2 pos, Vector2 per)[] curve = childSpike.GetCurve(1f);
-			Vector2[] pos = new Vector2[segments * 32];
-			float[] rot = new float[segments * 32];
-			for (int i = 0; i < curve.Length; i++) {
-
-				pos[i] = curve[i].pos;
-				rot[i] = curve[i].per.ToRotation() + MathHelper.PiOver2;
-
+		if (Projectile.timeLeft > 18) {
+			movementFactor += 1f;
+		}
+		Projectile.position += Projectile.velocity * movementFactor;
+		Projectile.rotation = Projectile.velocity.ToRotation();
+		Projectile.rotation += MathHelper.PiOver2;
+		ParentProjectile.timeLeft = 7;
+	}
+	public override bool? CanHitNPC(NPC target) {
+		if (ParentProjectile.localNPCImmunity[target.whoAmI] == 0) {
+			return null;
+		}
+		return false;
+	}
+	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		behindNPCsAndTiles.Add(index);
+	}
+	public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+		ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
+	}
+	public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+		if (DifficultyMult >= 2) {
+			if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
+				target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
 			}
+		}
+	}
+	public override bool PreDraw(ref Color lightColor) {
+		float totalLength = Projectile.velocity.Length() * movementFactor;
+		int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
+		lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
+		Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
+		totalLength -= 58;
+		Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
+		Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
+		int c = 0;
+		Vector2 pos;
+		for (int i = (int)totalLength; i > 0; i -= 58) {
+			c++;
+			pos = (Projectile.Center - Main.screenPosition) - (offset * c);
+			//lightColor = Projectile.GetAlpha(new Color(Lighting.GetColor((pos + Projectile.velocity * 2).ToTileCoordinates()).ToVector4()));
+			Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
+		}
+		return false;
+	}
+}
+public class DA_Bendy_Spikes : ModProjectile {
+	float progress = 0;
+	public int maxTimeleft = 20 + (int)(10 * Origins.ContentExtensions.DifficultyDamageMultiplier);
+	public override string Texture => PegasusLib.PegasusExt.GetDefaultTMLName(typeof(DA_Spike));
+	public override void SetDefaults() {
+		Projectile.DamageType = DamageClass.Magic;
+		Projectile.width = 34;
+		Projectile.height = 0;
+		Projectile.aiStyle = 0;
+		Projectile.penetrate = -1;
+		Projectile.tileCollide = false;
+		Projectile.hostile = true;
+		Projectile.hide = true;
+		Projectile.timeLeft = maxTimeleft + 60;
+		Projectile.knockBack = 0;
+	}
+	Projectile parentProj => Main.projectile[(int)Projectile.ai[1]];
 
-			if (Projectile.timeLeft > MAX_TIMELEFT - 10)
-				return false;
+	public override void AI() {
+		if (Projectile.timeLeft <= maxTimeleft)
+			progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((((Projectile.timeLeft) / (float)maxTimeleft))), true);
+		Projectile.Center = parentProj.Center - Projectile.velocity;
+		float maxGrowth = 128 * Origins.ContentExtensions.DifficultyDamageMultiplier;
+		if (Projectile.ai[0] < maxGrowth) {
+			int diff = (int)(Math.Min(Projectile.ai[0] + 16, maxGrowth) - Projectile.ai[0]);
+			Projectile.ai[0] += diff;
+			Projectile.Center -= Projectile.rotation.ToRotationVector2() * diff;
+		}
+	}
+	public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+		hitbox.Height += (int)Projectile.ai[0];
+	}
+	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		behindNPCsAndTiles.Add(index);
+	}
+	public override void OnKill(int timeLeft) {
 
-
-			default(DefiledIndicator).Draw(
-				pos, rot, 16f, Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((Projectile.timeLeft) / (float)MAX_TIMELEFT)), ((Projectile.timeLeft) / (float)MAX_TIMELEFT));
-
-
+	}
+	/// <summary>
+	/// Call a programmer if this method lasts longer than four hours
+	/// </summary>
+	/// <returns></returns>
+	public (Vector2 pos, Vector2 perpendicular)[] GetCurve(float progress) {
+		if (Projectile.localAI[2] != Projectile.ai[0]) {
+			const int precision = 16;
+			_curve = new (Vector2 pos, Vector2 perpendicular)[(int)Math.Ceiling((Projectile.ai[0] * progress) / precision)];
+			Vector2 pos = Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Pi) / 16f * Projectile.ai[0];
+			Vector2 mov = -Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(MathHelper.Pi) * precision;
+			int index = 0;
+			for (int i = 0; i < Math.Round(Projectile.ai[0] * progress); i += precision) {
+				_curve[index++] = (pos, mov.RotatedBy(MathHelper.PiOver2) / precision);
+				pos += mov;
+				mov = mov.RotatedBy(Projectile.ai[2]);
+			}
+		}
+		return _curve;
+	}
+	(Vector2 pos, Vector2 perpendicular)[] _curve = [];
+	public (Vector2 pos, Vector2 perpendicular)[] Curve {
+		get {
+			return _curve;
+		}
+	}
+	public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+		(Vector2 pos, Vector2 perpendicular)[] curve = GetCurve(progress);
+		if (curve.Length <= 0)
 			return false;
+		Vector2 lastPos0 = curve[0].pos - curve[0].perpendicular * 17;
+		Vector2 lastPos1 = curve[0].pos + curve[0].perpendicular * 17;
+		Vector2 nextPos0 = default, nextPos1 = default;
+		List<(Vector2 start, Vector2 end)> _lines = [(lastPos1, lastPos0)];
+		for (int i = 0; i < curve.Length; i++) {
+
+
+
+			Vector2 nextPos = curve[i].pos;
+			if (nextPos == default) break;
+			nextPos0 = nextPos - curve[i].perpendicular * 17;
+			nextPos1 = nextPos + curve[i].perpendicular * 17;
+
+			_lines.Add((lastPos0, nextPos0));
+			_lines.Add((nextPos1, lastPos1));
+			lastPos0 = nextPos0;
+			lastPos1 = nextPos1;
 		}
+		_lines.Add((nextPos0, nextPos1));
+		return Origins.CollisionExtensions.PolygonIntersectsRect(_lines.ToArray(), targetHitbox);
+	}
+	public static float InExpo(float t, float strength) => (float)Math.Pow(2, strength * (t - 1));
+	public static float OutExpo(float t, float strength) => 1 - InExpo(1 - t, strength);
+	public static float InOutExpo(float t, float strength) {
+		if (t < 0.5) return InExpo(t * 2, strength) * .5f;
+		return 1 - InExpo((1 - t) * 2, strength) * .5f;
+	}
+	public override bool PreDraw(ref Color lightColor) {
 
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			behindNPCsAndTiles.Add(index);
-		}
-		public override void AI() {
+		var curve = GetCurve(1f);
 
-			if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
-			fadeInOutTimer++;
-		}
-		public override void OnKill(int timeLeft) {
+		Vector2[] positions = new Vector2[curve.Length];
+		float[] rotations = new float[curve.Length];
 
-		}
+		for (int i = 0; i < curve.Length; i++) {
 
+			positions[i] = curve[i].pos;
+			rotations[i] = curve[i].perpendicular.ToRotation() + MathHelper.PiOver2;
 
-		public struct DefiledIndicator {
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Vector2[] positions, float[] rotations, float width, float alpha, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseColor(Color.Black);
-				shader.UseSecondaryColor(Color.Green);
-				shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition,false);
-				vertexStrip.DrawTrail();
-
-			}
-		}
-
-		public struct DefiledSpikeStrip {
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Asset<Texture2D> tex,Vector2[] positions, float[] rotations, float progress, float length) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledSpike"];
-				shader.UseImage1(tex);
-				shader.UseImage2(ModContent.Request<Texture2D>("Origins/NPCs/Defiled/Boss/DA_Spike_Base"));
-				shader.UseSamplerState(SamplerState.AnisotropicClamp);
-				shader.UseColor(Color.Beige);
-				shader.UseSecondaryColor(Color.Pink);
-				shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => 16, -Main.screenPosition, false);
-				vertexStrip.DrawTrail();
-
-			}
-		}
-
-		public struct DefiledPortal {
-			private static VertexRectangle rect = new VertexRectangle();
-
-			public void Draw(Vector2 position, float rotation, Vector2 size, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledPortal"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseSamplerState(SamplerState.PointWrap);
-				shader.UseColor(Color.Cyan);
-				shader.UseSecondaryColor(Color.Purple);
-				shader.UseShaderSpecificData(new Vector4(0,0,Main.LocalPlayer.Center.X,Main.LocalPlayer.Center.Y));
-				shader.Apply();
-				rect.Draw(position,Color.White,((progress)) * size,rotation,position);
-
-			}
-		} 
-
-		public struct DefiledLaser 
-		{
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Vector2[] positions, float[] rotations, float width, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseColor(Color.Black);
-				shader.UseSecondaryColor(Color.Green);
-				shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
-				vertexStrip.DrawTrail();
-
-			}
 
 		}
 
-		public struct DefiledBolt 
-		{
+
+		if (progress > 0) {
+			default(DefiledPortal).Draw(curve[0].pos - Main.screenPosition, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (MAX_TIMELEFT + Projectile.timeLeft) / (float)MAX_TIMELEFT));
+			default(DefiledSpikeStrip).Draw(TextureAssets.Projectile[Type], positions, rotations, progress, Projectile.ai[0]);
+
+		}
+		return false;
+	}
+}
+public class Defiled_Spike_Indicator : ModProjectile {
+
+	public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+
+
+	public const int INDICATOR_DURATION = 40;
+	public const int MAX_TIMELEFT = 120;
+	public Vector2 startingPosition;
+	public float curveAmount = 0;
+	public int segments = 15;
+	public DA_Bendy_Spikes childSpike;
+	public int fadeInOutTimer = 0;
+	public override void OnSpawn(IEntitySource source) {
+		if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
+		startingPosition = Projectile.Center;
+		Projectile.rotation = Projectile.Center.DirectionTo(Main.player[(int)Projectile.ai[1]].Center).RotatedByRandom(1).ToRotation();
+		curveAmount = Main.rand.NextFloat() * MathHelper.Pi * (Main.rand.NextBool() ? -1 : 1);
+		childSpike = Projectile.NewProjectileDirect(
+			Projectile.GetSource_FromThis(),
+			Projectile.Center,
+			(Vector2)Projectile.rotation.ToRotationVector2() * 92,
+			ModContent.ProjectileType<DA_Bendy_Spikes>(),
+			Projectile.damage,
+			0,
+			Projectile.owner,
+			segments * 32f,
+			Projectile.whoAmI, curveAmount / 2f / (segments)
+		).ModProjectile as DA_Bendy_Spikes;
+	}
+	public override void SetDefaults() {
+		Projectile.timeLeft = MAX_TIMELEFT;
+		Projectile.usesLocalNPCImmunity = true;
+		Projectile.hide = true;
+		Projectile.rotation = Main.rand.NextFloatDirection();
+		Projectile.tileCollide = false;
+		Projectile.npcProj = true;
+		Projectile.hostile = false;
+		Projectile.friendly = false;
+		Projectile.DamageType = DamageClass.Default;
+	}
+	public override bool? CanHitNPC(NPC target) => false;
+	public override bool CanHitPlayer(Player target) => false;
+	public override bool CanHitPvp(Player target) => false;
+
+	public override bool PreDraw(ref Color lightColor) {
+		(Vector2 pos, Vector2 per)[] curve = childSpike.GetCurve(1f);
+		Vector2[] pos = new Vector2[segments * 32];
+		float[] rot = new float[segments * 32];
+		for (int i = 0; i < curve.Length; i++) {
+
+			pos[i] = curve[i].pos;
+			rot[i] = curve[i].per.ToRotation() + MathHelper.PiOver2;
+
+		}
+
+		if (Projectile.timeLeft > MAX_TIMELEFT - 10)
+			return false;
+
+
+		default(DefiledIndicator).Draw(
+			pos, rot, 16f, Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((Projectile.timeLeft) / (float)MAX_TIMELEFT)), ((Projectile.timeLeft) / (float)MAX_TIMELEFT));
+
+
+		return false;
+	}
+
+	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		behindNPCsAndTiles.Add(index);
+	}
+	public override void AI() {
+
+		if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
+		fadeInOutTimer++;
+	}
+	public override void OnKill(int timeLeft) {
+
+	}
+
+
+	public struct DefiledIndicator {
+		private static VertexStrip vertexStrip = new VertexStrip();
+
+		public void Draw(Vector2[] positions, float[] rotations, float width, float alpha, float progress) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
+			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseColor(Color.Black);
+			shader.UseSecondaryColor(Color.Green);
+			shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
+			shader.Apply();
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
+			vertexStrip.DrawTrail();
+
+		}
+	}
+
+	public struct DefiledSpikeStrip {
+		private static VertexStrip vertexStrip = new VertexStrip();
+
+		public void Draw(Asset<Texture2D> tex, Vector2[] positions, float[] rotations, float progress, float length) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledSpike"];
+			shader.UseImage1(tex);
+			shader.UseImage2(ModContent.Request<Texture2D>("Origins/NPCs/Defiled/Boss/DA_Spike_Base"));
+			shader.UseSamplerState(SamplerState.AnisotropicClamp);
+			shader.UseColor(Color.Beige);
+			shader.UseSecondaryColor(Color.Pink);
+			shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
+			shader.Apply();
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => 16, -Main.screenPosition, false);
+			vertexStrip.DrawTrail();
+
+		}
+	}
+
+	public struct DefiledPortal {
+		private static VertexRectangle rect = new VertexRectangle();
+
+		public void Draw(Vector2 position, float rotation, Vector2 size, float progress) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledPortal"];
+			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseSamplerState(SamplerState.PointWrap);
+			shader.UseColor(Color.Cyan);
+			shader.UseSecondaryColor(Color.Purple);
+			shader.UseShaderSpecificData(new Vector4(0, 0, Main.LocalPlayer.Center.X, Main.LocalPlayer.Center.Y));
+			shader.Apply();
+			rect.Draw(position, Color.White, ((progress)) * size, rotation, position);
+
+		}
+	}
+
+	public struct DefiledLaser {
+		private static VertexStrip vertexStrip = new VertexStrip();
+
+		public void Draw(Vector2[] positions, float[] rotations, float width, float progress) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser"];
+			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseColor(Color.Black);
+			shader.UseSecondaryColor(Color.Green);
+			shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
+			shader.Apply();
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
+			vertexStrip.DrawTrail();
+
+		}
+
+	}
+
+	public struct DefiledBolt {
 		private static VertexStrip vertexStrip = new VertexStrip();
 
 		public void Draw(Vector2[] positions, float[] rotations, float progress) {
@@ -2153,7 +2112,7 @@ public class DA_Body_Part : ModNPC, IOutlineDrawer
 			shader.UseSecondaryColor(Color.Green);
 			shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
 			shader.Apply();
-			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(64,0,1f - p),1,p), -Main.screenPosition, false);
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(64, 0, 1f - p), 1, p), -Main.screenPosition, false);
 			vertexStrip.DrawTrail();
 
 		}
