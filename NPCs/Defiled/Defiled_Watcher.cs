@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.NPCs.Defiled.Boss;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
