@@ -99,6 +99,7 @@ namespace Origins.NPCs.Defiled {
 					NPCAimedTarget playerTarget = NPC.GetTargetData();
 					searchResults = SearchForTarget(NPC, TargetSearchFlag.NPCs, null, (other) => {
 						if (!other.noGravity && other.ModNPC is IDefiledEnemy) {
+							//return true;
 							return NPC.ai[1] == 0 ?
 								other.position.Y > playerTarget.Position.Y + playerTarget.Height + 16 * 7 :
 								NPC.ai[1] == other.WhoAmIToTargettingIndex;
@@ -116,10 +117,11 @@ namespace Origins.NPCs.Defiled {
 						NPC.ai[0] = 0;
 						NPC.ai[1] = 0;
 						if (!playerTarget.Invalid) {
+							Vector2 spawnPos = (NPC.Center + new Vector2(0 * NPC.direction, 16));
 							Projectile.NewProjectile(
 								NPC.GetSource_FromAI(),
-								NPC.Center,
-								((playerTarget.Center + playerTarget.Velocity * 15) - NPC.Center).SafeNormalize(default) * Nerve_Flan_P.tick_motion,
+								spawnPos,
+								((playerTarget.Center + playerTarget.Velocity * 15) - spawnPos).SafeNormalize(default) * Nerve_Flan_P.tick_motion,
 								ModContent.ProjectileType<Defiled_Broadcaster_Flan>(),
 								10,
 								1
@@ -164,8 +166,7 @@ namespace Origins.NPCs.Defiled {
 				carriedNPC.Top = CarryPosition;
 				NPC.ai[0]++;
 				if (NPC.ai[2] == 1) {
-					NPC.velocity = Collision.AnyCollision(carriedNPC.position, NPC.velocity, carriedNPC.width, carriedNPC.height);
-					if (NPC.ai[0] > 60) {
+					if (NPC.ai[0] > 60 && AI_AttemptToFindTeleportSpot(ref targetPos)) {
 						Vector2 diff = targetPos - NPC.Center;
 						float dist = diff.Length();
 						Projectile.NewProjectile(
@@ -177,7 +178,7 @@ namespace Origins.NPCs.Defiled {
 							1,
 							ai1: dist / Nerve_Flan_P.tick_motion
 						);
-						NPC.Teleport(targetPos, -1);
+						NPC.Teleport(targetPos - Vector2.UnitY * (12), -1);
 						NPC.ai[2] = 2;
 					} else {
 						NPC.velocity += (targetPos - NPC.Center).SafeNormalize(default) * 0.5f;
@@ -197,10 +198,33 @@ namespace Origins.NPCs.Defiled {
 					NPC.ai[2] = 0;
 					NPC.ai[0] = 0;
 				}
+				NPC.velocity = Collision.AnyCollision(carriedNPC.position, NPC.velocity, carriedNPC.width, carriedNPC.height);
 				global.broadcasterHoldingThisNPC = NPC;
 				carriedNPC.velocity = NPC.velocity;
 			}
 			NPC.velocity *= 0.9f;
+		}
+		public bool AI_AttemptToFindTeleportSpot(ref Vector2 pos) {
+			const float rangeFromTargetTile = 10;
+			NPC carriedNPC = Main.npc[(int)NPC.ai[1] - 300];
+			Rectangle carriedRect = carriedNPC.Hitbox;
+			bool posIsValid(Vector2 pos) {
+				carriedRect.X = (int)(pos.X - carriedRect.Width * 0.5f);
+				carriedRect.Y = (int)pos.Y;
+				return !carriedRect.OverlapsAnyTiles();
+			}
+			if (posIsValid(pos)) {
+				return true;
+			}
+			int tries = 0;
+			while (++tries < 100) {
+				Vector2 testPos = pos + new Vector2(Main.rand.NextBool().ToDirectionInt() * Main.rand.NextFloat(rangeFromTargetTile * 16), Main.rand.NextBool().ToDirectionInt() * Main.rand.NextFloat(rangeFromTargetTile * 16));
+				if (posIsValid(testPos)) {
+					pos = testPos;
+					return true;
+				}
+			}
+			return false;
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
@@ -280,6 +304,7 @@ namespace Origins.NPCs.Defiled {
 			Projectile.friendly = false;
 			Projectile.hostile = true;
 			Projectile.extraUpdates = 3;
+			startupDelay = 0;
 			Projectile.localAI[1] = float.PositiveInfinity;
 		}
 		public override void AI() {
@@ -314,10 +339,14 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.AddBuff(Rasterized_Debuff.ID, 60);
+			target.AddBuff(Rasterized_Debuff.ID, (int)(30 * (1 + ContentExtensions.DifficultyDamageMultiplier)));
 		}
 	}
 	public class Defiled_Broadcaster_Teleport_Flan : Defiled_Broadcaster_Flan {
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.tileCollide = false;
+		}
 		public override void AI() {
 			base.AI();
 			if (Projectile.ai[0] != 1) Projectile.extraUpdates = 25;
