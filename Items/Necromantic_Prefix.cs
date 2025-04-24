@@ -286,9 +286,12 @@ namespace Origins.Items {
 			return true;
 		}
 		public override bool DisplayHoverText(PlayerStatsSnapshot snapshot, IPlayerResourcesDisplaySet displaySet, bool drawingLife) {
+			if (drawingLife) return true;
+			float mana = Main.LocalPlayer.OriginPlayer().necromancyPrefixMana;
+			if (mana < 1) return true;
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.cursorItemIconEnabled = false;
-			string text = $"{snapshot.Mana}/{snapshot.ManaMax}\n[c/00586e:{Main.LocalPlayer.OriginPlayer().necromancyPrefixMana}/{snapshot.ManaMax * Necromantic_Prefix.MaxManaMultiplier}]";
+			string text = $"{snapshot.Mana}/{snapshot.ManaMax}\n[c/00586e:{mana}/{snapshot.ManaMax * Necromantic_Prefix.MaxManaMultiplier}]";
 			Main.instance.MouseTextHackZoom(text);
 			Main.mouseText = true;
 			return false;
