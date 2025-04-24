@@ -1395,7 +1395,7 @@ namespace Origins {
 
 		private int On_Player_AddBuff_DetermineBuffTimeToAdd(On_Player.orig_AddBuff_DetermineBuffTimeToAdd orig, Player self, int type, int time) {
 			int value = orig(self, type, time);
-			if (self.TryGetModPlayer(out OriginPlayer originPlayer)) {
+			if (type != BuffID.PotionSickness && self.TryGetModPlayer(out OriginPlayer originPlayer)) {
 				float mult = 1f;
 				if (originPlayer.plasmaPhial && Main.debuff[type]) {
 					mult *= OriginPlayer.plasmaPhialMult;

@@ -654,15 +654,17 @@ namespace Origins {
 				Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
 				oldPlasmaPhial = plasmaPhial;
 				plasmaPhial = false;
+
 				Player.ApplyBuffTimeAccessory(oldDonorWristband, donorWristband, donorWristbandMult, Main.debuff);
 				oldDonorWristband = donorWristband;
 				donorWristband = false;
+
+				Player.ApplyBuffTimeAccessory(oldMithrafin, mithrafin, mithrafinSelfMult, Mithrafin.buffTypes);
+				oldMithrafin = mithrafin;
+				mithrafin = false;
 			} finally {
 				Main.debuff[BuffID.PotionSickness] = true;
 			}
-			Player.ApplyBuffTimeAccessory(oldMithrafin, mithrafin, mithrafinSelfMult, Mithrafin.buffTypes);
-			oldMithrafin = mithrafin;
-			mithrafin = false;
 			fullSend = false;
 			akaliegis = false;
 			dashHitDebuffs.Clear();
