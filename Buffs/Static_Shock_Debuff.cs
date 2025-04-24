@@ -79,7 +79,7 @@ namespace Origins.Buffs {
 						if (ShouldInflict(other.Hitbox, other.wet)) other.AddBuff(damageDebuffID, 20);
 					}
 					foreach (NPC other in Main.ActiveNPCs) {
-						if (other.buffImmune[damageDebuffID]) continue;
+						if (other.buffImmune[damageDebuffID] || (other.dontTakeDamage && !other.ShowNameOnHover)) continue;
 						if (other.friendly && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) {
 							other.AddBuff(damageDebuffID, 20);
 						}
@@ -95,7 +95,7 @@ namespace Origins.Buffs {
 					entityHitbox = npc.Hitbox;
 					if (npc.type == NPCID.TargetDummy || !npc.friendly) {
 						foreach (NPC other in Main.ActiveNPCs) {
-							if (other == npc || other.buffImmune[damageDebuffID]) continue;
+							if (other == npc || other.buffImmune[damageDebuffID] || (other.dontTakeDamage && !other.ShowNameOnHover)) continue;
 							if ((other.type == NPCID.TargetDummy || !other.friendly) && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) {
 								other.AddBuff(damageDebuffID, 20);
 							}
@@ -106,7 +106,7 @@ namespace Origins.Buffs {
 							if (ShouldInflict(other.Hitbox, other.wet)) other.AddBuff(damageDebuffID, 20);
 						}
 						foreach (NPC other in Main.ActiveNPCs) {
-							if (other == npc || other.buffImmune[damageDebuffID]) continue;
+							if (other == npc || other.buffImmune[damageDebuffID] || (other.dontTakeDamage && !other.ShowNameOnHover)) continue;
 							if (!(other.type == NPCID.TargetDummy || other.friendly) && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) {
 								other.AddBuff(damageDebuffID, 20);
 							}
