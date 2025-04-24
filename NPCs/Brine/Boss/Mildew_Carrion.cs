@@ -52,7 +52,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
-			NPC.lifeMax = 4000;
+			NPC.lifeMax = 10800;
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 76;
@@ -191,7 +191,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.damage = 58;
-			NPC.lifeMax = 6000;
+			NPC.lifeMax = 10800;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
 			NPC.width = 76;
@@ -242,7 +242,7 @@ namespace Origins.NPCs.Brine.Boss {
 				default:
 				case AIModes.Idle:
 				NPC.ai[0] += 0.65f + (0.35f * difficultyMult);
-				if (NPC.ai[0] > 180 && NPC.HasValidTarget) {
+				if (NPC.ai[0] > 150 && NPC.HasValidTarget) {
 					HeldProjectile = -1;
 					WeightedRandom<AIModes> rand = new(Main.rand);
 					void AddMode(AIModes mode, double weight) {
@@ -250,7 +250,7 @@ namespace Origins.NPCs.Brine.Boss {
 						rand.Add(mode, weight);
 					}
 					AddMode(AIModes.Idle, 0);
-					AddMode(AIModes.Spores, 1);
+					if (CollisionExt.CanHitRay(NPC.Center, TargetPos)) AddMode(AIModes.Spores, 1);
 					int tendrilCountMax = 8 + (int)(difficultyMult * 2);
 					int tendrilCount = 0;
 					foreach (NPC other in Main.ActiveNPCs) {

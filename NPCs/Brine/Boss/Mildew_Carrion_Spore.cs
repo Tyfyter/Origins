@@ -30,7 +30,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.Center);
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				if (Main.masterMode && Projectile.penetrate != 0) {
+				if (Main.rand.NextFloat(3) < ContentExtensions.DifficultyDamageMultiplier && Projectile.penetrate != 0) {
 					Vector2[] directions = [
 						Vector2.UnitX,
 					-Vector2.UnitX,

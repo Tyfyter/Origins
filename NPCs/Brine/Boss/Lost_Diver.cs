@@ -57,7 +57,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
 			NPC.damage = 0; // redundant, already defaults to 0, just for clarification
-			NPC.lifeMax = 6000;
+			NPC.lifeMax = 7200;
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 20;
@@ -106,7 +106,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
 			NPC.damage = 58;
-			NPC.lifeMax = 6000;
+			NPC.lifeMax = 7200;
 			NPC.defense = 32;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
@@ -204,6 +204,7 @@ namespace Origins.NPCs.Brine.Boss {
 					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
 					float fast_distance = 16 * 20;
 					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
+					float away_distance = CanSeeTarget ? 16 * 7 : 0;
 					if (differenceFromTarget.Y > 64) {
 						NPC.velocity.Y += 0.6f;
 					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0) || swimCharge <= 0) {
@@ -231,6 +232,10 @@ namespace Origins.NPCs.Brine.Boss {
 						NPC.velocity.X -= fast_speed;
 					} else if (differenceFromTarget.X < -slow_distance) {
 						NPC.velocity.X -= slow_speed;
+					} else if (differenceFromTarget.X < away_distance) {
+						NPC.velocity.X -= fast_speed;
+					} else if (differenceFromTarget.X > -away_distance) {
+						NPC.velocity.X += fast_speed;
 					}
 					if (NPC.collideY) {
 						swimCharge = 60 * 10;

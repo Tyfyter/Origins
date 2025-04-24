@@ -21,6 +21,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Projectile.height = 4;
 			Projectile.hostile = true;
 			Projectile.hide = true;
+			Projectile.ignoreWater = true;
 			Projectile.penetrate = -1;
 			Projectile.alpha = 255;
 			Projectile.DamageType = DamageClass.Ranged;
