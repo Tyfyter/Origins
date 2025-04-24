@@ -558,6 +558,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						break;
 					}
 
+					//magic missile
 					case state_magic_missile: {
 						CheckTrappedCollision();
 						if (NPC.ai[1] < 5) {
@@ -600,7 +601,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						break;
 					}
 
-					// split attack
+					//split attack
 					case state_split_amalgamation_start: {
 						time++;
 						NPC.ai[1]++;
@@ -616,8 +617,10 @@ namespace Origins.NPCs.Defiled.Boss {
 								Dust.NewDustPerfect(pos, DustID.AncientLight, NPC.Center.DirectionTo(pos) * 20);
 
 							}
-							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1f), NPC.Center);
-							SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-5f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2f), NPC.Center);
+
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
 								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI).ModNPC as DA_Body_Part;
 								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI).ModNPC as DA_Body_Part;
@@ -647,6 +650,10 @@ namespace Origins.NPCs.Defiled.Boss {
 
 						// parts regroup takes 1 second
 						if (NPC.ai[1] == 60 * 16) {
+							SoundEngine.PlaySound(SoundID.Item103.WithPitch(-2f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.NPCHit42.WithPitch(-0.4f).WithVolume(0.5f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(-5f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(-0.2f), NPC.Center);
 							NPC.ShowNameOnHover = true;
 							NPC.dontTakeDamage = false;
 							AIState = -AIState;
@@ -1215,6 +1222,9 @@ namespace Origins.NPCs.Defiled.Boss {
 		protected int startupDelay = 2;
 		protected float randomArcing = 0.3f;
 		public override void AI() {
+			SoundEngine.PlaySound(Origins.Sounds.defiledKillAF.WithPitchRange(-1f, -0.2f).WithVolume(0.2f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(-1f, -0.2f).WithVolume(0.6f), Projectile.Center);
+
 			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
 			if (Projectile.numUpdates == -1 && ++Projectile.ai[2] >= 20) {
 				Projectile.Kill();
@@ -1509,7 +1519,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 		public void ShoulderAI() {
 			Timer++;
-			NPC.velocity *= 0.96f;
+			NPC.velocity *= 0.91f;
 			if (Timer < 120) {
 
 				NPC.rotation += MathHelper.Lerp(0, 1f, Timer / 120);
@@ -1535,6 +1545,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.velocity.Y = MathF.Sin(Timer * 0.05f) * 2;
 			if (Timer >= 60 && !charging) {
 				if (Main.rand.NextBool()) {
+					SoundEngine.PlaySound(Origins.Sounds.RivenBass.WithPitch(-4f).WithVolume(0.4f), NPC.Center);
+					SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithVolume(1.4f), NPC.Center);
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
@@ -1546,9 +1558,8 @@ namespace Origins.NPCs.Defiled.Boss {
 					charging = true;
 
 				} else
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
-
-
+				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
+				SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
 			}
 
 			if (charging) {
@@ -1575,7 +1586,6 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			// tried anti-stuck it, tho idk
 			if (Timer == -1) {
-
 				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() - new Microsoft.Xna.Framework.Vector2(0, 500), 0.2f);
 				if (NPC.collideX || NPC.collideY)
 					return;
@@ -1587,6 +1597,8 @@ namespace Origins.NPCs.Defiled.Boss {
 
 
 			if (Timer >= 20 && (NPC.collideY || NPC.collideX)) {
+				SoundEngine.PlaySound(SoundID.Item174.WithPitchRange(0.5f, 0.75f), NPC.Center);
+				SoundEngine.PlaySound(SoundID.NPCHit38.WithPitchRange(-2f, -1.75f).WithVolume(0.1f), NPC.Center);
 				Timer = 0;
 				if ((Part)PartType == Part.leg1)
 					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(14, -7) : new Vector2(-14, -7);
@@ -1596,7 +1608,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 
 			if (NPC.collideY && NPC.velocity.Y > 0) {
-
 				NPC.velocity.Y = 0;
 			}
 
@@ -1844,6 +1855,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		Projectile parentProj => Main.projectile[(int)Projectile.ai[1]];
 
 		public override void AI() {
+			SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-1f, -0.8f).WithVolume(0.08f), Projectile.Center);
+			SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1).WithVolume(0.14f), Projectile.Center);
 			if (Projectile.timeLeft <= maxTimeleft)
 				progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((((Projectile.timeLeft) / (float)maxTimeleft))), true);
 			Projectile.Center = parentProj.Center - Projectile.velocity;

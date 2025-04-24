@@ -1714,18 +1714,18 @@ Projectiles: {
 	Cannihound_Gore1.DisplayName: Cannihound Gore1
 	Cannihound_Gore2.DisplayName: Cannihound Gore2
 	Cannihound_Gore3.DisplayName: Cannihound Gore3
-	Brine_Haze_P.DisplayName: Brine Haze P
+	Brine_Haze_P.DisplayName: Brine Haze Cloud
 	Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
 	Defiled_Broadcaster_Flan.DisplayName: Defiled Broadcaster
 	Defiled_Broadcaster_Teleport_Flan.DisplayName: Defiled Broadcaster Teleport
-	Bendy_Indicator.DisplayName: Bendy Indicator
+	Bendy_Indicator.DisplayName: D A Bendy Indicator
 	DA_Arc_Bolt.DisplayName: D A Arc Bolt
 	DA_Bendy_Spikes.DisplayName: D A Bendy Spikes
-	DA_Flan.DisplayName: D A Flan
+	DA_Flan.DisplayName: D A Nerve Flan
 	Defiled_Spike_Explosion_Hostile_Unused.DisplayName: Defiled Spike Explosion Hostile Unused
 	Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: Defiled Spike Explosion Spike Hostile Unused
-	Defiled_Spike_Indicator.DisplayName: Defiled Spike Indicator
-	DA_Laser.DisplayName: D A Laser
+	Defiled_Spike_Indicator.DisplayName: D A Spike Indicator
+	DA_Laser.DisplayName: D A Laser Spin
 }
 
 Prefixes: {
