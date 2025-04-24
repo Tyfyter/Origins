@@ -30,7 +30,8 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.Center);
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				if (Main.rand.NextFloat(3) < ContentExtensions.DifficultyDamageMultiplier && Projectile.penetrate != 0) {
+				int npcType = ModContent.NPCType<Mildew_Carrion_Mildew_Creeper>();
+				if (Main.rand.NextFloat(3 + NPC.CountNPCS(npcType)) < ContentExtensions.DifficultyDamageMultiplier && Projectile.penetrate != 0) {
 					Vector2[] directions = [
 						Vector2.UnitX,
 					-Vector2.UnitX,
@@ -57,7 +58,7 @@ namespace Origins.NPCs.Brine.Boss {
 							Projectile.GetSource_Death(),
 							(int)bestPosition.X,
 							(int)bestPosition.Y,
-							ModContent.NPCType<Mildew_Carrion_Mildew_Creeper>(),
+							npcType,
 							ai3: directionIndex
 						);
 					}
@@ -109,6 +110,9 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.lifeMax = 200;
 			NPC.value = 0;
 			// stat changes here
+		}
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
+			NPC.lifeMax = (int)(NPC.lifeMax / MathF.Sqrt(ContentExtensions.DifficultyDamageMultiplier));
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) { }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;

@@ -204,7 +204,7 @@ namespace Origins.NPCs.Brine.Boss {
 					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
 					float fast_distance = 16 * 20;
 					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
-					float away_distance = CanSeeTarget ? 16 * 7 : 0;
+					float away_distance = CanSeeTarget ? 16 * (6 + difficultyMult) : 0;
 					if (differenceFromTarget.Y > 64) {
 						NPC.velocity.Y += 0.6f;
 					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0) || swimCharge <= 0) {

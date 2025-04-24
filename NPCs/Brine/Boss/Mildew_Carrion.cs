@@ -251,7 +251,7 @@ namespace Origins.NPCs.Brine.Boss {
 					}
 					AddMode(AIModes.Idle, 0);
 					if (CollisionExt.CanHitRay(NPC.Center, TargetPos)) AddMode(AIModes.Spores, 1);
-					int tendrilCountMax = 8 + (int)(difficultyMult * 2);
+					int tendrilCountMax = 9 + (int)(difficultyMult);
 					int tendrilCount = 0;
 					foreach (NPC other in Main.ActiveNPCs) {
 						if (other.type == tendrilType && ++tendrilCount >= tendrilCountMax) break;
@@ -265,14 +265,14 @@ namespace Origins.NPCs.Brine.Boss {
 				break;
 				case AIModes.Spores: {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
-						for (int i = Main.rand.RandomRound(difficultyMult + 0.5f); i > 0; i--) {
-							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.8f, 1f);
+						for (int i = Main.rand.RandomRound(difficultyMult * 0.5f + 0.75f); i > 0; i--) {
+							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (11 + difficultyMult) * Main.rand.NextFloat(0.8f, 1f);
 							Projectile.NewProjectile(
 								NPC.GetSource_FromAI(),
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
-								(int)(25 * difficultyMult),
+								10 + (int)(15 * difficultyMult),
 								2
 							);
 						}
