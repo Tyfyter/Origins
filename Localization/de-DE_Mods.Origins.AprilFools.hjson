@@ -86,14 +86,17 @@ Biomes: {
 	}
 }
 
-/* Buffs.Optiphage_Debuff.Description:
-	'''
-	It's eating them.
-	And then it's going to eat me!
-	(voracious gobbling)
-	Oh, my God!
-	I don't like this place, not one bit.
-	''' */
+Buffs: {
+	/* Optiphage_Debuff.Description:
+		'''
+		It's eating them.
+		And then it's going to eat me!
+		(voracious gobbling)
+		Oh, my God!
+		I don't like this place, not one bit.
+		''' */
+	// Static_Shock_Debuff.Description: You've been grounded until you learn to conduct yourself properly
+}
 
 DefiledRelaySignals: {
 	// Security1: Code word: male genitalia.

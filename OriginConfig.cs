@@ -35,6 +35,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins {
 	public class OriginConfig : ModConfig {
+		const string add_debuff_tooltip = "$Mods.Origins.Configs.OriginConfig.AddDebuff";
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
@@ -44,6 +45,12 @@ namespace Origins {
 		public bool WoodBuffs = true;
 		[DefaultValue(true)]
 		public bool RainSetBuff = true;
+		[LabelKey($"$ItemName.{nameof(ItemID.ThunderStaff)}"), DefaultValue(true)]
+		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderStaff)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
+		public bool ThunderStaff = true;
+		[LabelKey($"$ItemName.{nameof(ItemID.ThunderSpear)}"), DefaultValue(true)]
+		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderSpear)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
+		public bool ThunderSpear = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool RoyalGel = true;

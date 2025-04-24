@@ -462,6 +462,17 @@ namespace Origins.Projectiles {
 					player.OriginPlayer().neuralNetworkMisses = 0;
 				}
 			}
+			switch (projectile.type) {
+				case ProjectileID.ThunderStaffShot:
+				if (OriginConfig.Instance.ThunderStaff && Main.rand.NextBool()) Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
+				break;
+				case ProjectileID.ThunderSpear:
+				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool()) Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
+				break;
+				case ProjectileID.ThunderSpearShot:
+				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool(3)) Static_Shock_Debuff.Inflict(target, Main.rand.Next(90, 180));
+				break;
+			}
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
 			return ownerSafe ? target.whoAmI != projectile.owner : true;
