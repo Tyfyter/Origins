@@ -103,7 +103,6 @@ namespace Origins.NPCs.Brine {
 				if (Math.Abs(tileAvoidance) < 0.3f) tileAvoidance = 0;
 				if (tileAvoidance == 0 && tileAvoidTiebreaker != 0) tileAvoidance = tileAvoidTiebreaker;
 				if (tileAvoidance != 0) {
-					Debugging.ChatOverhead(tileAvoidance);
 					NPC.velocity = NPC.velocity.RotatedBy(Math.Clamp(tileAvoidance * 0.1f, -MathHelper.PiOver4, MathHelper.PiOver4));
 				}
 			}
