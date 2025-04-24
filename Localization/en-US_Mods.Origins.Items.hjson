@@ -5795,7 +5795,11 @@ Mildew_Incantation: {
 
 Lucky_Hat: {
 	DisplayName: Lucky Hat
-	Tooltip: +8% ranged and explosive critical strike chance
+	Tooltip: 
+	'''
+	+8% ranged and explosive critical strike chance
+	'The Western look goes well with anything you wear!'
+	'''
 }
 
 Eye_Of_Aether: {
