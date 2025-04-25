@@ -345,9 +345,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							case 80:
 							case 85:
 							case 95:
-							break;
-							case 99:
-							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(1).WithVolume(0.14f), NPC.Center);
+
 							Vector2 randomPosAroundTarget = NPC.targetRect.Center() + Main.rand.NextVector2CircularEdge(250, 250);
 							for (int i = 0; i < 160; i++) {
 								float progress = i / 160f;
@@ -1319,7 +1318,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 	}
 
-	public class DA_Body_Part : ModNPC, IOutlineDrawer {
+	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy {
 		static string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 		static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
 		static PegasusLib.AutoLoadingAsset<Texture2D> armPath = bodyPartsPath + "Arm";
@@ -1379,7 +1378,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				break;
 
 				case Part.leg1:
-				maxFrames = 5;
+				maxFrames = 3;
 				NPC.frame = new Rectangle(0, 0, 40, 90);
 				frameHeight = 90;
 				NPC.noTileCollide = false;
@@ -1388,7 +1387,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				break;
 
 				case Part.leg2:
-				maxFrames = 5;
+				maxFrames = 3;
 				NPC.frame = new Rectangle(0, 0, 50, 380 / 5);
 				frameHeight = 380 / 5;
 				NPC.noTileCollide = false;
@@ -1401,48 +1400,25 @@ namespace Origins.NPCs.Defiled.Boss {
 				frameHeight = 46;
 				break;
 			}
-
-
-
-
-
-
 		}
-
 		public override void OnSpawn(IEntitySource source) {
 			if (Main.npc[(int)NPC.ai[1]].ModNPC is Defiled_Amalgamation DA) {
 				this.DA = DA;
-
+				NPC.realLife = DA.NPC.whoAmI;
 			}
-
 			SetupPart();
 		}
-
 		ref float Timer => ref NPC.ai[3];
-
 		public DrawData[] OutlineDrawDatas =>
 		[
 			new(RightArmPath, NPC.Center, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), Color.White, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0)
-
 		];
 
 		public int OutlineSteps => 4;
 
 		public float OutlineOffset => 15 * ((Timer - 60f) / 60f);
 
-		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			UpdateDAHealth(hit);
-		}
-
-		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
-			UpdateDAHealth(hit);
-		}
-
-		public void UpdateDAHealth(NPC.HitInfo hit) {
-			int damageDone = DA.NPC.StrikeNPC(hit, fromNet: false, false);
-			if (Main.netMode != NetmodeID.SinglePlayer)
-				NetMessage.SendStrikeNPC(DA.NPC, hit);
-		}
+		public float Mana { get => 1; set { } }
 
 		public override void AI() {
 			if (DA is null) {
@@ -1459,8 +1435,8 @@ namespace Origins.NPCs.Defiled.Boss {
 				return;
 			}
 
-			if ((Part)PartType != Part.leg1 && (Part)PartType != Part.leg2 && ++NPC.frameCounter % 7 == 0)
-				if (++currentFrame == maxFrames - 1)
+			if (++NPC.frameCounter % 7 == 0)
+				if (++currentFrame >= maxFrames - 1)
 					currentFrame = 0;
 
 			NPC.ai[2]++;
@@ -1469,6 +1445,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					new Vector2(MathF.Sin(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 400,
 					MathF.Cos(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 200), NPC.ai[2] / 160f);
 				NPC.velocity = Vector2.Zero;
+				NPC.spriteDirection = NPC.targetRect.Center().X > NPC.Center.X ? -1 : 1;
 				return;
 			}
 
@@ -1490,7 +1467,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				return;
 			}
 			;
-			NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : 1;
+			NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : NPC.velocity.X < 0 ? 1 : NPC.spriteDirection;
 
 			switch ((Part)(int)PartType) {
 
@@ -1558,7 +1535,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					charging = true;
 
 				} else
-				Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
 				SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
 			}
 
@@ -1584,17 +1561,20 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public void LegsAI() {
 
-			// tried anti-stuck it, tho idk
-			if (Timer == -1) {
-				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() - new Microsoft.Xna.Framework.Vector2(0, 500), 0.2f);
-				if (NPC.collideX || NPC.collideY)
-					return;
-				Timer = 0;
+			var coords = Utils.ToTileCoordinates(NPC.Center);
+			if (!WorldGen.TileEmpty(coords.X,coords.Y) && WorldGen.TileType(coords.X,coords.Y) != TileID.Platforms) 
+			{
+
+				NPC.Center = Vector2.Lerp(NPC.Center,NPC.targetRect.Center() - new Vector2(0,200),0.2f);
+
+
+
 			}
 
-			Timer++;
-
-
+			if (NPC.collideY) {
+				Timer++;
+				NPC.velocity.X = 0;
+			}
 
 			if (Timer >= 20 && (NPC.collideY || NPC.collideX)) {
 				SoundEngine.PlaySound(SoundID.Item174.WithPitchRange(0.5f, 0.75f), NPC.Center);
@@ -1607,14 +1587,18 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			}
 
-			if (NPC.collideY && NPC.velocity.Y > 0) {
-				NPC.velocity.Y = 0;
-			}
 
-			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.1f;
+			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.05f;
 		}
 
 		public override void FindFrame(int frameHeight) {
+			if ((Part)PartType == Part.leg1 || (Part)PartType == Part.leg2) {
+				if (NPC.velocity.Y < 0)
+					currentFrame = 3;
+				else if (NPC.velocity.Y > 0)
+					currentFrame = 4;
+
+			}
 			NPC.frame.Y = currentFrame * ((this.frameHeight * (maxFrames - 1)) / (maxFrames - 1));
 		}
 
@@ -1644,7 +1628,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				case Part.arm:
 				texture = armPath;
 				glowTexture = armGlowPath;
-				if (Timer > 60)
+				if (Timer > 60 && NPC.ai[2] < 60 * 15)
 					this.DrawOutline();
 				// assumes that the maximum amount of frames is same as the wings 
 				spriteBatch.Draw(RightArmPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), drawColor, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
@@ -1655,10 +1639,10 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 
 
-			spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally | SpriteEffects.FlipHorizontally, 0);
-			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically, 0);
+			spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-			if (charging) {
+			if (charging && NPC.ai[2] < 15 * 60) {
 
 				default(DefiledIndicator).Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
 
@@ -1855,8 +1839,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		Projectile parentProj => Main.projectile[(int)Projectile.ai[1]];
 
 		public override void AI() {
-			SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-1f, -0.8f).WithVolume(0.08f), Projectile.Center);
-			SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1).WithVolume(0.14f), Projectile.Center);
 			if (Projectile.timeLeft <= maxTimeleft)
 				progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((((Projectile.timeLeft) / (float)maxTimeleft))), true);
 			Projectile.Center = parentProj.Center - Projectile.velocity;
@@ -1950,7 +1932,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			if (progress > 0) {
 				default(DefiledPortal).Draw(curve[0].pos - Main.screenPosition, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (MAX_TIMELEFT + Projectile.timeLeft) / (float)MAX_TIMELEFT));
-				default(DefiledSpikeStrip).Draw(TextureAssets.Projectile[Type], positions, rotations, progress, Projectile.ai[0]);
+				default(DefiledSpikeStrip).Draw(TextureAssets.Projectile[Type], positions, rotations, progress - 1, Projectile.ai[0]);
 
 			}
 			return false;
@@ -2047,6 +2029,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				shader.Apply();
 				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
 				vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 			}
 		}
@@ -2054,17 +2037,18 @@ namespace Origins.NPCs.Defiled.Boss {
 		public struct DefiledSpikeStrip {
 			private static VertexStrip vertexStrip = new VertexStrip();
 
-			public void Draw(Asset<Texture2D> tex, Vector2[] positions, float[] rotations, float progress, float length) {
+
+			public void Draw(Asset<Texture2D> tex,Vector2[] positions, float[] rotations, float progress, float length) {
 				MiscShaderData shader = GameShaders.Misc["Origins:DefiledSpike"];
-				shader.UseImage1(tex);
-				shader.UseImage2(ModContent.Request<Texture2D>("Origins/NPCs/Defiled/Boss/DA_Spike_Base"));
-				shader.UseSamplerState(SamplerState.AnisotropicClamp);
-				shader.UseColor(Color.Beige);
-				shader.UseSecondaryColor(Color.Pink);
+				shader.UseImage1(ModContent.Request<Texture2D>("Origins/NPCs/Defiled/Boss/DA_Spike_rotated"));
+				shader.UseColor(Color.Black);
+				shader.UseSecondaryColor(Color.Green);
+				shader.UseSamplerState(SamplerState.PointClamp);
 				shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
 				shader.Apply();
 				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => 16, -Main.screenPosition, false);
 				vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 			}
 		}
@@ -2081,6 +2065,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				shader.UseShaderSpecificData(new Vector4(0, 0, Main.LocalPlayer.Center.X, Main.LocalPlayer.Center.Y));
 				shader.Apply();
 				rect.Draw(position, Color.White, ((progress)) * size, rotation, position);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 			}
 		}
@@ -2091,7 +2076,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			public void Draw(Vector2[] positions, float[] rotations, float width, float progress) {
 				MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser"];
 				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseColor(Color.Black);
+				shader.UseImage2("Terraria/Images/Misc/Perlin");
+				shader.UseColor(Color.Purple);
 				shader.UseSecondaryColor(Color.Green);
 				shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
 				shader.Apply();
@@ -2108,12 +2094,14 @@ namespace Origins.NPCs.Defiled.Boss {
 			public void Draw(Vector2[] positions, float[] rotations, float progress) {
 				MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser"];
 				shader.UseImage1(TextureAssets.Extra[193]);
+				shader.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
 				shader.UseColor(Color.Black);
 				shader.UseSecondaryColor(Color.Green);
 				shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
 				shader.Apply();
 				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(64, 0, 1f - p), 1, p), -Main.screenPosition, false);
 				vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 			}
 
