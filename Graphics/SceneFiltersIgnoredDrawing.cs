@@ -37,13 +37,11 @@ namespace Origins.Graphics {
 			drawDatas.Clear();
 		}
 
-		public static void DrawWithoutFilters(DrawData drawData) 
-		{
+		public static void DrawWithoutFilters(DrawData drawData) {
 			drawDatas.Add(drawData);
 		}
 
-		public static void DrawWithoutFilters(Texture2D texture, Vector2 position, Rectangle? sourceRectangle,Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects) 
-		{
+		public static void DrawWithoutFilters(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects) {
 			drawDatas.Add(new(texture, position, sourceRectangle, color, rotation, origin, scale, effects));
 		}
 	}

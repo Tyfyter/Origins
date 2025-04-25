@@ -54,7 +54,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			leg1 = 2,
 			leg2 = 3,
 			shoulder = 4
-
 		}
 
 		public void SetupPart() {
@@ -141,7 +140,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					MathF.Cos(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 200), NPC.ai[2] / 160f);
 				NPC.velocity = Vector2.Zero;
 				NPC.spriteDirection = NPC.targetRect.Center().X > NPC.Center.X ? -1 : 1;
-				
+
 				return;
 			}
 
@@ -153,12 +152,9 @@ namespace Origins.NPCs.Defiled.Boss {
 				NPC.Center = Vector2.Lerp(NPC.Center, DA.NPC.Center, progress);
 				NPC.damage = 0;
 
-
 				if (progress >= 1) {
 					NPC.active = false;
-
 				}
-
 
 				return;
 			}
@@ -207,9 +203,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				NPC.velocity = Vector2.Zero;
 				NPC.ai[3] = 0;
-
 			}
-
 		}
 		bool charging = false;
 		public void ArmAI() {
@@ -224,12 +218,9 @@ namespace Origins.NPCs.Defiled.Boss {
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
 					Timer = 0;
-
-
 				} else if (Main.rand.NextBool()) {
 
 					charging = true;
-
 				} else {
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
 					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
@@ -259,21 +250,14 @@ namespace Origins.NPCs.Defiled.Boss {
 				if (Timer >= 60)
 					Timer = 0;
 			}
-
-
-
 		}
 		public void LegsAI() {
 
 			var coords = Utils.ToTileCoordinates(NPC.Center);
-			int tileType = WorldGen.TileType(coords.X,coords.Y);
-			if (tileType != -1 && Main.tileSolid[tileType]) 
-			{
+			int tileType = WorldGen.TileType(coords.X, coords.Y);
+			if (tileType != -1 && Main.tileSolid[tileType]) {
 
-				NPC.Center = Vector2.Lerp(NPC.Center,NPC.targetRect.Center() - new Vector2(0,200),0.2f);
-
-
-
+				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() - new Vector2(0, 200), 0.2f);
 			}
 
 			if (NPC.collideY || NPC.velocity.Y == 0) {
@@ -289,9 +273,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(14, -7) : new Vector2(-14, -7);
 				else
 					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(7, -14) : new Vector2(-7, -14);
-
 			}
-
 
 			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.05f;
 		}
@@ -302,11 +284,9 @@ namespace Origins.NPCs.Defiled.Boss {
 					currentFrame = 3;
 				else if (NPC.velocity.Y > 0)
 					currentFrame = 4;
-
 			}
 			NPC.frame.Y = currentFrame * ((this.frameHeight * (maxFrames - 1)) / (maxFrames - 1));
 		}
-
 
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -339,10 +319,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				spriteBatch.Draw(RightArmPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), drawColor, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 				spriteBatch.Draw(RightArmGlowPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), Microsoft.Xna.Framework.Color.White, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 				break;
-
-
 			}
-
 
 			spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
@@ -350,7 +327,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (charging && NPC.ai[2] < 15 * 60) {
 
 				default(DefiledIndicator).Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
-
 			}
 
 			return false;
@@ -365,7 +341,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = 40;
 			ProjectileID.Sets.TrailingMode[Type] = 3;
-
 		}
 		public override void SetDefaults() {
 			Projectile.width = 16;
@@ -397,7 +372,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = renderTarget.Size() * 0.5f;
 
-
 			TangelaVisual.DrawAntiGray(new(renderTarget,
 				center,
 				null,
@@ -427,7 +401,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
-
 	}
 	public class DA_Flan : ModProjectile, ITangelaHaver {
 
@@ -565,6 +538,5 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
-
 	}
 }
