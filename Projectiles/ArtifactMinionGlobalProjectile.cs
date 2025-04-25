@@ -276,16 +276,23 @@ namespace Origins.Projectiles {
 			if (minion is not ModProjectile proj) return false;
 			Projectile projectile = proj.Projectile;
 			StatModifier damageMod = damageModifier ?? StatModifier.Default;
+			Rectangle projHitbox = projectile.Hitbox;
+			int specialHitSetter = 1;
+			float damageMultiplier = 1f;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (!npc.friendly && npc.damage > 0 && npc.Hitbox.Intersects(projectile.Hitbox)) {
-					NPC.HitInfo hit = new() {
-						HitDirection = npc.Center.X > projectile.Center.X ? -1 : 1,
-						Knockback = 2,
-						Crit = false
-					};
-					projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
-					minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage));
-					return true;
+				if (!npc.friendly && npc.damage > 0) {
+					Rectangle npcRect = npc.Hitbox;
+					NPC.GetMeleeCollisionData(projHitbox, npc.whoAmI, ref specialHitSetter, ref damageMultiplier, ref npcRect);
+					if (npc.Hitbox.Intersects(projectile.Hitbox)) {
+						NPC.HitInfo hit = new() {
+							HitDirection = npc.Center.X > projectile.Center.X ? -1 : 1,
+							Knockback = 2,
+							Crit = false
+						};
+						projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+						minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage * damageMultiplier));
+						return true;
+					}
 				}
 			}
 			foreach (Projectile enemyProj in Main.ActiveProjectiles) {
