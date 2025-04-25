@@ -1535,16 +1535,24 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					charging = true;
 
-				} else
+				} else {
 					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
-				SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+				}
 			}
 
 			if (charging) {
-				NPC.rotation = NPC.rotation.AngleTowards(NPC.targetRect.Center().DirectionFrom(NPC.Center).ToRotation(), 0.005f);
+				Vector2 diff = NPC.targetRect.Center() - NPC.Center;
+				float dist = diff.Length();
+				// A constant rate of turning covers a lot more distance at longer ranges, this compensates for that
+				float distFactor = dist == 0 ? 1 : Math.Min((16 * 20) / dist, 1);
+				// Makes the turning slow down the closer it gets to firing
+				float slowdownFactor = 1 - MathF.Pow(((Timer - 60) / 60), 2);
+				NPC.rotation = NPC.rotation.AngleTowards(diff.ToRotation(), 0.05f * distFactor * slowdownFactor);
 
 				if (Timer >= 120) {
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<DA_Flan>(), NPC.damage, 0, -1, 0, 0, 0);
+					// DA_Flan.tick_motion is used here because it's used to set the max length 
+					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion, ModContent.ProjectileType<DA_Flan>(), NPC.damage, 0, -1, 0, 0, 0);
 					charging = false;
 				}
 			}
