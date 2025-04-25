@@ -154,26 +154,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
-			/*Vector2 width = new(8, 0);
-			Vector2 rot = width.RotatedBy(Projectile.rotation);
-			Vector2 lastPos0 = Projectile.position - rot;
-			Vector2 lastPos1 = Projectile.position + rot;
-			Vector2 nextPos0 = default, nextPos1 = default;
-			Color color = Color.Orange;
-			OriginExtensions.DrawDebugLineSprite(lastPos1, lastPos0, color, -Main.screenPosition);
-			for (int i = 0; i < Projectile.oldPos.Length; i++) {
-				Vector2 nextPos = Projectile.oldPos[i];
-				if (nextPos == default) break;
-				rot = width.RotatedBy(Projectile.oldRot[i]);
-				nextPos0 = nextPos - rot;
-				nextPos1 = nextPos + rot;
-
-				OriginExtensions.DrawDebugLineSprite(lastPos0, nextPos0, color, -Main.screenPosition);
-				OriginExtensions.DrawDebugLineSprite(nextPos1, lastPos1, color, -Main.screenPosition);
-				lastPos0 = nextPos0;
-				lastPos1 = nextPos1;
-			}
-			OriginExtensions.DrawDebugLineSprite(nextPos0, nextPos1, color, -Main.screenPosition);*/
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
 
 			Vector2[] positions = new Vector2[Projectile.oldPos.Length - 1];

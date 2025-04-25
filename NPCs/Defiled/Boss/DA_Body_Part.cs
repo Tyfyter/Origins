@@ -8,13 +8,15 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.NPCs.Defiled.Boss.Defiled_Spike_Indicator;
 
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy {
-		static string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
+		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 		static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
 		static PegasusLib.AutoLoadingAsset<Texture2D> armPath = bodyPartsPath + "Arm";
 		static PegasusLib.AutoLoadingAsset<Texture2D> leg1Path = bodyPartsPath + "Leg1";
@@ -253,7 +255,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public void LegsAI() {
 
-			var coords = Utils.ToTileCoordinates(NPC.Center);
+			Point coords = Utils.ToTileCoordinates(NPC.Center);
 			int tileType = WorldGen.TileType(coords.X, coords.Y);
 			if (tileType != -1 && Main.tileSolid[tileType]) {
 
@@ -325,8 +327,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
 			if (charging && NPC.ai[2] < 15 * 60) {
-
-				default(DefiledIndicator).Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
+				Defiled_Spike_Indicator.Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
 			}
 
 			return false;
@@ -335,7 +336,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		public Color SetOutlineColor(float progress) => Color.Lerp(Color.Green, Color.Purple, progress);
 	}
 	public class DA_Arc_Bolt : ModProjectile {
-
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 
 		public override void SetStaticDefaults() {
@@ -367,7 +367,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				return false;
 			}
 			Origins.shaderOroboros.Capture();
-			default(DefiledBolt).Draw(Projectile.oldPos, Projectile.oldRot, Projectile.timeLeft / 300f);
+			DrawDefiledBolt(Projectile.oldPos, Projectile.oldRot, Projectile.timeLeft / 300f);
 			Origins.shaderOroboros.DrawContents(renderTarget);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = renderTarget.Size() * 0.5f;
@@ -384,7 +384,18 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			return false;
 		}
-
+		private static readonly VertexStrip vertexStrip = new();
+		public static void DrawDefiledBolt(Vector2[] positions, float[] rotations, float progress) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser2"];
+			shader.UseColor(Color.Black);
+			shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
+			Main.graphics.GraphicsDevice.Textures[3] = TextureAssets.Extra[193].Value;
+			Main.graphics.GraphicsDevice.SamplerStates[3] = SamplerState.LinearWrap;
+			shader.Apply();
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(64, 0, 1f - p), 1, p), -Main.screenPosition, false);
+			vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
 				Main.QueueMainThreadAction(renderTarget.Dispose);

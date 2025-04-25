@@ -51,7 +51,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
 		static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
-		static string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
+		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 
 		public string CustomSpritePath => "DefiledAmalg";
 		public AssimilationAmount? Assimilation => 0.03f;
@@ -63,7 +63,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		int roars = 0;
 		int armFrame = 0;
 		DrawData[] outlineData;
-		int laserDuration = 60 * 9;
 		DA_Body_Part torso;
 		DA_Body_Part arm;
 		DA_Body_Part shoulder;
@@ -257,7 +256,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
 									new(state_magic_missile, 1f),
-									new(state_split_amalgamation_start, 10000f)
+									new(state_split_amalgamation_start, 1f)
 									]
 								);
 								int lastUsedAttack = -AIState;
@@ -356,7 +355,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									progress),
 									16, 16,
 									DustID.AncientLight
-									).noGravity = true;
+								).noGravity = true;
 							}
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
 								float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
@@ -957,7 +956,7 @@ namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Bendy_Spikes : ModProjectile {
 		float progress = 0;
 		public int maxTimeleft = 20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier);
-		public override string Texture => PegasusLib.PegasusExt.GetDefaultTMLName(typeof(DA_Spike));
+		public override string Texture => "Origins/NPCs/Defiled/Boss/DA_Spike_Rotated";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.width = 34;
@@ -970,12 +969,12 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.timeLeft = maxTimeleft + 60;
 			Projectile.knockBack = 0;
 		}
-		Projectile parentProj => Main.projectile[(int)Projectile.ai[1]];
+		Projectile ParentProj => Main.projectile[(int)Projectile.ai[1]];
 
 		public override void AI() {
 			if (Projectile.timeLeft <= maxTimeleft)
 				progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((((Projectile.timeLeft) / (float)maxTimeleft))), true);
-			Projectile.Center = parentProj.Center - Projectile.velocity;
+			Projectile.Center = ParentProj.Center - Projectile.velocity;
 			float maxGrowth = 128 * ContentExtensions.DifficultyDamageMultiplier;
 			if (Projectile.ai[0] < maxGrowth) {
 				int diff = (int)(Math.Min(Projectile.ai[0] + 16, maxGrowth) - Projectile.ai[0]);
@@ -1048,7 +1047,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 
-			var curve = GetCurve(1f);
+			(Vector2 pos, Vector2 perpendicular)[] curve = GetCurve(1f);
 
 			Vector2[] positions = new Vector2[curve.Length];
 			float[] rotations = new float[curve.Length];
@@ -1060,14 +1059,39 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 
 			if (progress > 0) {
-				default(DefiledPortal).Draw(curve[0].pos - Main.screenPosition, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (MAX_TIMELEFT + Projectile.timeLeft) / (float)MAX_TIMELEFT));
-				default(DefiledSpikeStrip).Draw(TextureAssets.Projectile[Type], positions, rotations, progress - 1, Projectile.ai[0]);
+				DrawDefiledPortal(curve[0].pos - Main.screenPosition, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (MAX_TIMELEFT + Projectile.timeLeft) / (float)MAX_TIMELEFT));
+				DrawDefiledSpikeStrip(TextureAssets.Projectile[Type], positions, rotations, progress - 1, Projectile.ai[0]);
 			}
 			return false;
 		}
+		private static readonly VertexStrip vertexStrip = new();
+		private static readonly VertexRectangle rect = new();
+		public static void DrawDefiledSpikeStrip(Asset<Texture2D> tex, Vector2[] positions, float[] rotations, float progress, float length) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledSpike"];
+			shader.UseImage1(tex);
+			shader.UseColor(Color.Black);
+			shader.UseSecondaryColor(Color.Green);
+			shader.UseSamplerState(SamplerState.PointClamp);
+			shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
+			shader.Apply();
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => 16, -Main.screenPosition, false);
+			vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
+
+		public static void DrawDefiledPortal(Vector2 position, float rotation, Vector2 size, float progress) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledPortal"];
+			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseSamplerState(SamplerState.PointWrap);
+			shader.UseColor(Color.Cyan);
+			shader.UseSecondaryColor(Color.Purple);
+			shader.UseShaderSpecificData(new Vector4(0, 0, Main.LocalPlayer.Center.X, Main.LocalPlayer.Center.Y));
+			shader.Apply();
+			rect.Draw(position, Color.White, progress * size, rotation, position);
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
 	}
 	public class Defiled_Spike_Indicator : ModProjectile {
-
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 
 		public const int INDICATOR_DURATION = 40;
@@ -1085,13 +1109,13 @@ namespace Origins.NPCs.Defiled.Boss {
 			childSpike = Projectile.NewProjectileDirect(
 				Projectile.GetSource_FromThis(),
 				Projectile.Center,
-				(Vector2)Projectile.rotation.ToRotationVector2() * 92,
+				Projectile.rotation.ToRotationVector2() * 92,
 				ModContent.ProjectileType<DA_Bendy_Spikes>(),
 				Projectile.damage,
 				0,
 				Projectile.owner,
 				segments * 32f,
-				Projectile.whoAmI, curveAmount / 2f / (segments)
+				Projectile.whoAmI, curveAmount / 2f / segments
 			).ModProjectile as DA_Bendy_Spikes;
 		}
 		public override void SetDefaults() {
@@ -1122,8 +1146,13 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (Projectile.timeLeft > MAX_TIMELEFT - 10)
 				return false;
 
-			default(DefiledIndicator).Draw(
-				pos, rot, 16f, Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((Projectile.timeLeft) / (float)MAX_TIMELEFT)), ((Projectile.timeLeft) / (float)MAX_TIMELEFT));
+			Draw(
+				pos,
+				rot,
+				16f,
+				Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010(Projectile.timeLeft / (float)MAX_TIMELEFT)),
+				Projectile.timeLeft / (float)MAX_TIMELEFT
+			);
 
 			return false;
 		}
@@ -1136,91 +1165,17 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
 			fadeInOutTimer++;
 		}
-		public override void OnKill(int timeLeft) {
-		}
-
-		public struct DefiledIndicator {
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Vector2[] positions, float[] rotations, float width, float alpha, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseColor(Color.Black);
-				shader.UseSecondaryColor(Color.Green);
-				shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
-				vertexStrip.DrawTrail();
-				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			}
-		}
-
-		public struct DefiledSpikeStrip {
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Asset<Texture2D> tex, Vector2[] positions, float[] rotations, float progress, float length) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledSpike"];
-				shader.UseImage1(ModContent.Request<Texture2D>("Origins/NPCs/Defiled/Boss/DA_Spike_rotated"));
-				shader.UseColor(Color.Black);
-				shader.UseSecondaryColor(Color.Green);
-				shader.UseSamplerState(SamplerState.PointClamp);
-				shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => 16, -Main.screenPosition, false);
-				vertexStrip.DrawTrail();
-				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			}
-		}
-
-		public struct DefiledPortal {
-			private static VertexRectangle rect = new VertexRectangle();
-
-			public void Draw(Vector2 position, float rotation, Vector2 size, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledPortal"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseSamplerState(SamplerState.PointWrap);
-				shader.UseColor(Color.Cyan);
-				shader.UseSecondaryColor(Color.Purple);
-				shader.UseShaderSpecificData(new Vector4(0, 0, Main.LocalPlayer.Center.X, Main.LocalPlayer.Center.Y));
-				shader.Apply();
-				rect.Draw(position, Color.White, ((progress)) * size, rotation, position);
-				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			}
-		}
-
-		public struct DefiledLaser {
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Vector2[] positions, float[] rotations, float width, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseImage2("Terraria/Images/Misc/Perlin");
-				shader.UseColor(Color.Purple);
-				shader.UseSecondaryColor(Color.Green);
-				shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
-				vertexStrip.DrawTrail();
-			}
-		}
-
-		public struct DefiledBolt {
-			private static VertexStrip vertexStrip = new VertexStrip();
-
-			public void Draw(Vector2[] positions, float[] rotations, float progress) {
-				MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser2"];
-				//shader.UseImage1(TextureAssets.Extra[193]);
-				//shader.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
-				shader.UseColor(Color.Black);
-				//shader.UseSecondaryColor(Color.Green);
-				shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
-				Main.graphics.GraphicsDevice.Textures[3] = TextureAssets.Extra[193].Value;
-				Main.graphics.GraphicsDevice.SamplerStates[3] = SamplerState.LinearWrap;
-				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(64, 0, 1f - p), 1, p), -Main.screenPosition, false);
-				vertexStrip.DrawTrail();
-				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			}
+		private static readonly VertexStrip vertexStrip = new();
+		public static void Draw(Vector2[] positions, float[] rotations, float width, float alpha, float progress) {
+			MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
+			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseColor(Color.Black);
+			shader.UseSecondaryColor(Color.Green);
+			shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
+			shader.Apply();
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
+			vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
 	}
 	public class Low_Signal_Hostile : ModProjectile {
@@ -1307,7 +1262,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public static int ID { get; private set; }
-		Vector2 realPosition;
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
@@ -1329,22 +1283,22 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.DamageType = DamageClass.Magic;
 		}
 		public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
-		public float movementFactor {
+		public float MovementFactor {
 			get => Projectile.ai[0];
 			set => Projectile.ai[0] = value;
 		}
 		public override void AI() {
 			Projectile.scale = ParentProjectile.scale;
 			Projectile.Center = ParentProjectile.Center - Projectile.velocity;
-			if (movementFactor == 0f) {
-				movementFactor = 1f;
+			if (MovementFactor == 0f) {
+				MovementFactor = 1f;
 				//if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
 				Projectile.netUpdate = true;
 			}
 			if (Projectile.timeLeft > 18) {
-				movementFactor += 1f;
+				MovementFactor += 1f;
 			}
-			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
+			Projectile.position += Projectile.velocity * MovementFactor * Projectile.scale;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.rotation += MathHelper.PiOver2;
 			ParentProjectile.timeLeft = 7;
@@ -1369,7 +1323,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			float totalLength = Projectile.velocity.Length() * movementFactor;
+			float totalLength = Projectile.velocity.Length() * MovementFactor;
 			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
 			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);

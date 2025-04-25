@@ -21,7 +21,7 @@ namespace Origins.Graphics {
 			Terraria.Graphics.Effects.Filters.Scene.OnPostDraw += Scene_OnPostDraw;
 		}
 
-		public static List<DrawData> drawDatas = new();
+		public static List<DrawData> drawDatas = [];
 
 		private void Scene_OnPostDraw() {
 

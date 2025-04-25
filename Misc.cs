@@ -86,7 +86,7 @@ namespace Origins {
 			if (_items.First is null)
 				throw new InvalidOperationException("Queue empty.");
 
-			var item = _items.First.Value;
+			T item = _items.First.Value;
 			_items.RemoveFirst();
 
 			return item;
@@ -122,7 +122,7 @@ namespace Origins {
 		}
 
 		public IEnumerable<LinkedListNode<T>> GetNodeEnumerator() {
-			IEnumerator<LinkedListNode<T>> enumerator = new LLNodeEnumerator<T>(_items);
+			LLNodeEnumerator<T> enumerator = new(_items);
 			yield return enumerator.Current;
 			while (enumerator.MoveNext()) yield return enumerator.Current;
 		}

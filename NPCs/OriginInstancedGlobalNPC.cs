@@ -70,7 +70,7 @@ namespace Origins.NPCs {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
 				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);
-				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
 					rasterizedTime = Math.Min(rasterizedTime, adjustment.maxLevel);
 				}
 			} else {

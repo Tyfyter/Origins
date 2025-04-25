@@ -457,7 +457,9 @@ namespace Origins {
 				GameShaders.Misc["Origins:DefiledSpike"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledSpike"), "DefiledSpike");
 				GameShaders.Misc["Origins:DefiledPortal"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledPortal"), "DefiledPortal");
 				GameShaders.Misc["Origins:DefiledLaser"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledLaser"), "DefiledLaser");
-				GameShaders.Misc["Origins:DefiledLaser2"] = new MiscShaderData(Assets.Request<Effect>("Effects/Tangela"), "DefiledLaser");
+				GameShaders.Misc["Origins:DefiledLaser2"] = new MiscShaderData(Assets.Request<Effect>("Effects/Tangela"), "DefiledLaser")
+				.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
+				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
 				GameShaders.Misc["Origins:SilhouetteShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/SilhouetteShader"), "SilhouetteShader");
 
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
