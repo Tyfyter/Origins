@@ -184,7 +184,7 @@ namespace Origins.Projectiles {
 					Prefix = parentGlobalProjectile.Prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
-					neuralNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
+					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);

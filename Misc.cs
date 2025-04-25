@@ -50,6 +50,7 @@ using Origins.World.BiomeData;
 using Origins.Tiles.Other;
 using Origins.Backgrounds;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using ThoriumMod.Projectiles;
 
 namespace Origins {
 	#region classes
@@ -2535,6 +2536,27 @@ namespace Origins {
 				}
 				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
 					if (set[modPrefix.Type]) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
+				}
+			}
+			return wr;
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="prefixCategories">Weight functions default to "_ => 1" if null</param>
+		/// <returns></returns>
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, Func<int, double> weightFunction)[] prefixCategories) {
+			WeightedRandom<int> wr = new(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				(PrefixCategory category, Func<int, double> weightFunction) = prefixCategories[i];
+				weightFunction ??= _ => 1;
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					double weight = weightFunction(pre);
+					if (weight > 0) wr.Add(pre, weight);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					double weight = weightFunction(modPrefix.Type);
+					if (weight > 0) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
 				}
 			}
 			return wr;
