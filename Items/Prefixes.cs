@@ -583,17 +583,7 @@ namespace Origins.Items {
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.type == NPCID.TargetDummy) return;
-			Projectile ownerMinion = null;
-			if (Origins.ArtifactMinion[projectile.type]) {
-				ownerMinion = projectile;
-			} else if (projectile.TryGetGlobalProjectile(out OriginGlobalProj global) && global.ownerMinion is OwnerMinionKey minionKey) {
-				foreach (Projectile proj in Main.ActiveProjectiles) {
-					if (proj.type == minionKey.Type && proj.owner == minionKey.Owner && proj.identity == minionKey.Identity) {
-						ownerMinion = proj;
-						break;
-					}
-				}
-			}
+			Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
 			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
 				float oldHealth = artifactMinion.Life;
 				artifactMinion.Life += Math.Min(damageDone, target.lifeMax);

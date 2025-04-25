@@ -178,5 +178,22 @@ namespace Origins.Projectiles {
 			if (!projectile.TryGetGlobalProjectile(out MinionGlobalProjectile minionGlobal)) return false;
 			return minionGlobal.fromArtifact;
 		}
+		/// <summary>
+		/// Gets the minion or sentry that spawned this projectile, or the projectile itself if it's a minion or sentry
+		/// </summary>
+		/// <param name="projectile"></param>
+		/// <returns></returns>
+		public static Projectile GetOwnerMinion(Projectile projectile) {
+			if (projectile.minion || projectile.sentry) {
+				return projectile;
+			} else if (projectile.TryGetGlobalProjectile(out OriginGlobalProj global) && global.ownerMinion is OwnerMinionKey minionKey) {
+				foreach (Projectile proj in Main.ActiveProjectiles) {
+					if (proj.type == minionKey.Type && proj.owner == minionKey.Owner && proj.identity == minionKey.Identity) {
+						return proj;
+					}
+				}
+			}
+			return null;
+		}
 	}
 }

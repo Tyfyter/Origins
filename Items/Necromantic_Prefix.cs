@@ -8,6 +8,8 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using System.Reflection;
 using Origins.Dusts;
+using Origins.Projectiles;
+using Terraria.ID;
 
 namespace Origins.Items {
 	public class Necromantic_Prefix : MinionPrefix, IOnHitNPCPrefix, IModifyHitNPCPrefix {
@@ -48,6 +50,9 @@ namespace Origins.Items {
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			OnHit(projectile, target, hit, damageDone);
 		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
+		}
 	}
 	public class Necromantic_Artifact_Prefix : ArtifactPrefixVariant<Necromantic_Prefix>, IOnHitNPCPrefix, IModifyHitNPCPrefix {
 		public override bool HasDescription => true;
@@ -60,8 +65,18 @@ namespace Origins.Items {
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			Necromantic_Prefix.OnHit(projectile, target, hit, damageDone);
 			if (target.life <= 0) {
-
+				Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
+				if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
+					if (artifactMinion.Life < 0 && !artifactMinion.CanDie) artifactMinion.Life = 0;
+					float oldHealth = artifactMinion.Life;
+					artifactMinion.Life += Math.Min(target.lifeMax / 4, target.lifeMax);
+					if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
+					CombatText.NewText(ownerMinion.Hitbox, new(0, 110, 88), (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
+				}
 			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
 		}
 	}
 	public class Necromantic_Prefix_Orb : ModProjectile {
