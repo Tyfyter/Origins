@@ -149,8 +149,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.damage = DA.NPC.damage;
 
 			//regroup
-			if (NPC.ai[2] >= 60 * 15) {
-				float progress = (NPC.ai[2] - 60 * 15) / 60f;
+			if (NPC.ai[2] >= Defiled_Amalgamation.SplitDuration) {
+				float progress = (NPC.ai[2] - Defiled_Amalgamation.SplitDuration) / Defiled_Amalgamation.SplitRegroupDuration;
 				NPC.Center = Vector2.Lerp(NPC.Center, DA.NPC.Center, progress);
 				NPC.damage = 0;
 
@@ -315,7 +315,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				case Part.arm:
 				texture = armPath;
 				glowTexture = armGlowPath;
-				if (Timer > 60 && NPC.ai[2] < 60 * 15)
+				if (Timer > 60 && NPC.ai[2] < Defiled_Amalgamation.SplitDuration)
 					this.DrawOutline();
 				// assumes that the maximum amount of frames is same as the wings 
 				spriteBatch.Draw(RightArmPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), drawColor, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
@@ -326,7 +326,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-			if (charging && NPC.ai[2] < 15 * 60) {
+			if (charging && NPC.ai[2] < Defiled_Amalgamation.SplitDuration) {
 				Defiled_Spike_Indicator.Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
 			}
 

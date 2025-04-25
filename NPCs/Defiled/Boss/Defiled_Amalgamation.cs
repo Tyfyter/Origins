@@ -68,6 +68,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		DA_Body_Part shoulder;
 		DA_Body_Part leg1;
 		DA_Body_Part leg2;
+		public static int SplitDuration => 60 * 15;
+		public static int SplitRegroupDuration => 60 * 1;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int TripleDashCD {
 			get {
@@ -632,7 +634,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						NPC.Center = NPC.targetRect.Center() + new Vector2(0, -250);
 
 						// parts regroup takes 1 second
-						if (NPC.ai[1] == 60 * 16) {
+						if (NPC.ai[1] >= SplitDuration + SplitRegroupDuration) {
 							SoundEngine.PlaySound(SoundID.Item103.WithPitch(-2f), NPC.Center);
 							SoundEngine.PlaySound(SoundID.NPCHit42.WithPitch(-0.4f).WithVolume(0.5f), NPC.Center);
 							SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(-5f), NPC.Center);
