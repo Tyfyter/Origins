@@ -3382,6 +3382,13 @@ namespace Origins {
 		/// <param name="hitbox"></param>
 		/// <returns></returns>
 		public static bool PolygonIntersectsRect((Vector2 start, Vector2 end)[] lines, Rectangle hitbox) {
+			Vector2 min = new(float.MaxValue);
+			Vector2 max = new(float.MinValue);
+			for (int i = 0; i < lines.Length; i++) {
+				min = Vector2.Min(min, lines[i].start);
+				max = Vector2.Max(max, lines[i].start);
+			}
+			if (!hitbox.Intersects(OriginExtensions.BoxOf(min, max))) return false;
 			int intersections = 0;
 			Vector2 rectPos = hitbox.TopLeft();
 			Vector2 rectSize = hitbox.Size();
