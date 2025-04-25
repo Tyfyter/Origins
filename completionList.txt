@@ -191,7 +191,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow*
 (^) Enchanted Fiberglass Cannon*
 (^) Enchanted Fiberglass Pistol*
-(#, ^2) Enchanted Fiberglass Slime
+(☻, @ (needs slime-like sprite)) Enchanted Fiberglass Slime
 (^) Enchanted Fiberglass Sword*
 (^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri*

@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Origins.Backgrounds;
 using Origins.Items.Other.Dyes;
 using Origins.Tiles.Other;
+using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
@@ -32,6 +33,7 @@ namespace Origins.Walls {
 			WallID.Sets.Transparent[Type] = true;
 			Main.wallLight[Type] = true;
 			AddMapEntry(new Color(16, 83, 122));
+			RegisterItemDrop(ItemType<Fiberglass_Wall_Item>());
 			HitSound = SoundID.Shatter;
 			DustType = DustID.Glass;
 			maskTexture ??= Request<Texture2D>(Texture + "_Mask");
@@ -146,6 +148,17 @@ namespace Origins.Walls {
 			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();
+		}
+	}
+	public class Enchanted_Fiberglass_Wall_Item : ModItem {
+		public override string Texture => typeof(Fiberglass_Wall_Item).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			ItemID.Sets.DrawUnsafeIndicator[Type] = true;
+			ItemID.Sets.ShimmerTransformToItem[ItemType<Fiberglass_Wall_Item>()] = Type;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.GlassWall);
+			Item.createWall = WallType<Fiberglass_Wall>();
 		}
 	}
 }
