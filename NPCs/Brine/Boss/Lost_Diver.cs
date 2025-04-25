@@ -139,7 +139,16 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
 		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
-		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
+		public override bool CheckTargetLOS(Vector2 target) {
+			if (!NPC.wet) return true;
+			if (!base.CheckTargetLOS(target)) return false;
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					if (!CollisionExt.CanHitRay(NPC.position + new Vector2((NPC.width - 2) * i + 1, (NPC.height - 2) * j + 1), target)) return false;
+				}
+			}
+			return true;
+		}
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
