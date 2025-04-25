@@ -22,7 +22,9 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().strangeToothItem = Item;
 		}
-		public override bool MagicPrefix() => false;
+		public override int ChoosePrefix(UnifiedRandom rand) {
+			return OriginExtensions.AccessoryOrSpecialPrefix(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
+		}
 	}
 	public class Strange_Tooth_Buff : ModBuff {
 		public static int ID { get; private set; }
