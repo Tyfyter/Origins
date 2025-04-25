@@ -16,6 +16,9 @@ namespace Origins.Items {
 		public static float MaxManaMultiplier => 4;
 		public override bool HasDescription => true;
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && !Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			const float max_bonus = 0.6f;
@@ -57,6 +60,9 @@ namespace Origins.Items {
 	public class Necromantic_Artifact_Prefix : ArtifactPrefixVariant<Necromantic_Prefix>, IOnHitNPCPrefix, IModifyHitNPCPrefix {
 		public override bool HasDescription => true;
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			const float max_bonus = 1f;
