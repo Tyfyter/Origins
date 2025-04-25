@@ -252,7 +252,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									[
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
-									new(state_projectiles, 10000f),
+									new(state_projectiles, 1f),
 									new(state_triple_dash, 0.35f),
 									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
@@ -880,7 +880,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			return true;
 		}
-		public Color SetOutlineColor(float progress) => Color.Lerp(Color.White, Color.Black, MathF.Sin((float)Main.timeForVisualEffects * 0.1f));
+		public Color? SetOutlineColor(float progress) => Color.Lerp(Color.White, Color.Black, MathF.Sin((float)Main.timeForVisualEffects * 0.1f));
 
 		public class Spawn : SpawnPool {
 			public override string Name => $"{nameof(Defiled_Amalgamation)}_{base.Name}";
@@ -1112,7 +1112,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.timeLeft = max_lifetime;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.hide = true;
-			Projectile.rotation = Main.rand.NextFloatDirection();
 			Projectile.tileCollide = false;
 			Projectile.npcProj = true;
 			Projectile.hostile = false;
@@ -1263,7 +1262,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override bool CanHitPvp(Player target) => false;
 		public override void AI() {
 			if (Projectile.ai[2] != 0) Projectile.scale = Projectile.ai[2];
-			if (Projectile.ai[0] > 0) {
+			if (Projectile.ai[0] > 0 && Main.netMode != NetmodeID.MultiplayerClient) {
 				Projectile.ai[0]--;
 				Projectile.NewProjectileDirect(
 					Projectile.GetSource_FromThis(),

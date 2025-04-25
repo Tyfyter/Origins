@@ -141,7 +141,6 @@ namespace Origins.Graphics {
 		}
 		public static void DrawAntiGray(DrawData data) {
 			drawDatas.Add(new(data, default, default));
-			if (DrawOver && !Main.gameMenu) return;
 			data.Draw(Main.spriteBatch);
 		}
 	}

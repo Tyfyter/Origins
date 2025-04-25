@@ -13,6 +13,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
+using System.IO;
 
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy {
@@ -32,7 +33,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		static PegasusLib.AutoLoadingAsset<Texture2D> RightArmGlowPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
 		static PegasusLib.AutoLoadingAsset<Texture2D> LeftArmPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		static PegasusLib.AutoLoadingAsset<Texture2D> LeftArmGlowPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
-		ref float PartType => ref NPC.ai[0];
+		Part PartType => (Part)(int)NPC.ai[0];
 		Defiled_Amalgamation DA;
 		int maxFrames = -1;
 		int currentFrame = 0;
@@ -59,7 +60,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 
 		public void SetupPart() {
-			switch ((Part)(int)PartType) {
+			switch (PartType) {
 				// only the torso can take damage
 				case Part.torso:
 				maxFrames = 4;
@@ -138,8 +139,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.ai[2]++;
 			if (NPC.ai[2] < 200) {
 				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() +
-					new Vector2(MathF.Sin(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 400,
-					MathF.Cos(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 200), NPC.ai[2] / 160f);
+					new Vector2(MathF.Sin(DA.time * 0.1f + (MathHelper.TwoPi * 0.2f * NPC.ai[0])) * 400,
+					MathF.Cos(DA.time * 0.1f + (MathHelper.TwoPi * 0.2f * NPC.ai[0])) * 200), NPC.ai[2] / 160f);
 				NPC.velocity = Vector2.Zero;
 				NPC.spriteDirection = NPC.targetRect.Center().X > NPC.Center.X ? -1 : 1;
 
@@ -163,7 +164,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			;
 			NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : NPC.velocity.X < 0 ? 1 : NPC.spriteDirection;
 
-			switch ((Part)(int)PartType) {
+			switch (PartType) {
 
 				case Part.leg1:
 				case Part.leg2:
@@ -180,84 +181,114 @@ namespace Origins.NPCs.Defiled.Boss {
 				break;
 			}
 
-			NPC.width = NPC.frame.Height;
-			NPC.height = NPC.frame.Height;
+			switch (PartType) {
+				default:
+				NPC.width = NPC.frame.Height;
+				NPC.height = NPC.frame.Height;
+				break;
+
+				case Part.leg1:
+				NPC.width = 40;
+				NPC.height = 90;
+				NPC.frame = new Rectangle(0, 0, 40, 90);
+				break;
+
+				case Part.leg2:
+				NPC.width = 50;
+				NPC.height = 76;
+				NPC.frame = new Rectangle(0, 0, 50, 380 / 5);
+				break;
+			}
 		}
 		public void TorsoAI() {
-
 			NPC.velocity = NPC.Center.DirectionTo(NPC.targetRect.Center()) * 3;
 		}
 
 		public void ShoulderAI() {
 			Timer++;
-			NPC.velocity *= 0.91f;
+			NPC.velocity *= 0.97f;
 			if (Timer < 120) {
 
 				NPC.rotation += MathHelper.Lerp(0, 1f, Timer / 120);
 			}
-			if (Timer == 120) {
 
-				NPC.velocity = NPC.Center.DirectionTo(NPC.targetRect.Center()) * 35;
+			if (Timer == 120) {
+				NPC.velocity = NPC.Center.DirectionTo(NPC.targetRect.Center()) * 20;
 				NPC.rotation = NPC.velocity.ToRotation();
 			}
 
 			if (Timer == 160) {
-
 				NPC.velocity = Vector2.Zero;
 				NPC.ai[3] = 0;
 			}
 		}
-		bool charging = false;
+		bool Charging => NPC.aiAction == 1;
 		public void ArmAI() {
-
 			Timer++;
 			NPC.velocity.Y = MathF.Sin(Timer * 0.05f) * 2;
-			if (Timer >= 60 && !charging) {
-				if (Main.rand.NextBool()) {
-					SoundEngine.PlaySound(Origins.Sounds.RivenBass.WithPitch(-4f).WithVolume(0.4f), NPC.Center);
-					SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithVolume(1.4f), NPC.Center);
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
-					Timer = 0;
-				} else if (Main.rand.NextBool()) {
+			Point coords = Utils.ToTileCoordinates(NPC.Center);
+			int tileType = WorldGen.TileType(coords.X, coords.Y);
+			if (tileType != -1 && Main.tileSolid[tileType] && !Main.tileSolidTop[tileType]) {
 
-					charging = true;
-				} else {
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
-					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
-				}
+				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() - new Vector2(0, 200), 0.2f);
 			}
-
-			if (charging) {
-				Vector2 diff = NPC.targetRect.Center() - NPC.Center;
-				float dist = diff.Length();
-				// A constant rate of turning covers a lot more distance at longer ranges, this compensates for that
-				float distFactor = dist == 0 ? 1 : Math.Min((16 * 20) / dist, 1);
-				// Makes the turning slow down the closer it gets to firing
-				float slowdownFactor = 1 - MathF.Pow(((Timer - 60) / 60), 2);
-				NPC.rotation = NPC.rotation.AngleTowards(diff.ToRotation(), 0.05f * distFactor * slowdownFactor);
-
-				if (Timer >= 120) {
-					// DA_Flan.tick_motion is used here because it's used to set the max length 
-					Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion, ModContent.ProjectileType<DA_Flan>(), NPC.damage, 0, -1, 0, 0, 0);
-					charging = false;
-				}
+			void PickNextAction() {
+				Timer = 0;
+				NPC.aiAction = Main.rand.Next(3);
+				NPC.netUpdate = true;
 			}
+			switch (NPC.aiAction) {
+				case 0: {
+					if (Timer >= 60) {
+						SoundEngine.PlaySound(Origins.Sounds.RivenBass.WithPitch(-4f).WithVolume(0.4f), NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithVolume(1.4f), NPC.Center);
+						if (Main.netMode != NetmodeID.MultiplayerClient) {
+							//center projectile removed for classic mode to make it sometimes better to stay still to dodge arm attacks
+							if (Main.expertMode) Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
+							PickNextAction();
+						}
+					}
+					NPC.Center = Vector2.Lerp(NPC.Center - new Vector2(5, 0).RotatedBy(NPC.rotation), NPC.Center + new Vector2(10, 0).RotatedBy(NPC.rotation), Timer / 60f);
+					NPC.rotation = NPC.rotation.AngleTowards(NPC.targetRect.Center().DirectionFrom(NPC.Center).ToRotation(), 0.02f);
+					break;
+				}
+				case 1: {
+					Vector2 diff = NPC.targetRect.Center() - NPC.Center;
+					float dist = diff.Length();
+					// A constant rate of turning covers a lot more distance at longer ranges, this compensates for that
+					float distFactor = dist == 0 ? 1 : Math.Min((16 * 20) / dist, 1);
+					// Makes the turning slow down the closer it gets to firing
+					float slowdownFactor = 1 - MathF.Pow(((Timer - 60) / 60), 2);
+					NPC.rotation = NPC.rotation.AngleTowards(diff.ToRotation(), 0.05f * distFactor * slowdownFactor);
 
-			if (!charging) {
-				NPC.Center = Vector2.Lerp(NPC.Center - new Vector2(5, 0).RotatedBy(NPC.rotation), NPC.Center + new Vector2(10, 0).RotatedBy(NPC.rotation), Timer / 60f);
-				NPC.rotation = NPC.rotation.AngleTowards(NPC.targetRect.Center().DirectionFrom(NPC.Center).ToRotation(), 0.02f);
-
-				if (Timer >= 60)
-					Timer = 0;
+					if (Timer >= 120 && Main.netMode != NetmodeID.MultiplayerClient) {
+						// DA_Flan.tick_motion is used here because it's used to set the max length 
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion, ModContent.ProjectileType<DA_Flan>(), NPC.damage, 0, -1, 0, 0, 0);
+						PickNextAction();
+					}
+					break;
+				}
+				case 2: {
+					if (Timer >= 60) {
+						SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+						if (Main.netMode != NetmodeID.MultiplayerClient) {
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 25, ModContent.ProjectileType<Low_Signal_Hostile>(), NPC.damage, 0, -1, 0, 0, 0);
+							PickNextAction();
+						}
+					}
+					NPC.Center = Vector2.Lerp(NPC.Center - new Vector2(5, 0).RotatedBy(NPC.rotation), NPC.Center + new Vector2(10, 0).RotatedBy(NPC.rotation), Timer / 60f);
+					NPC.rotation = NPC.rotation.AngleTowards(NPC.targetRect.Center().DirectionFrom(NPC.Center).ToRotation(), 0.02f);
+					break;
+				}
 			}
 		}
 		public void LegsAI() {
 
 			Point coords = Utils.ToTileCoordinates(NPC.Center);
 			int tileType = WorldGen.TileType(coords.X, coords.Y);
-			if (tileType != -1 && Main.tileSolid[tileType]) {
+			if (tileType != -1 && Main.tileSolid[tileType] && !Main.tileSolidTop[tileType]) {
 
 				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() - new Vector2(0, 200), 0.2f);
 			}
@@ -271,17 +302,20 @@ namespace Origins.NPCs.Defiled.Boss {
 				SoundEngine.PlaySound(SoundID.Item174.WithPitchRange(0.5f, 0.75f), NPC.Center);
 				SoundEngine.PlaySound(SoundID.NPCHit38.WithPitchRange(-2f, -1.75f).WithVolume(0.1f), NPC.Center);
 				Timer = 0;
-				if ((Part)PartType == Part.leg1)
-					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(14, -7) : new Vector2(-14, -7);
-				else
-					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(7, -14) : new Vector2(-7, -14);
+				float highSpeed = 10 + ContentExtensions.DifficultyDamageMultiplier;
+				if (PartType == Part.leg1) {
+					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(highSpeed, -7) : new Vector2(-highSpeed, -7);
+				} else {
+					highSpeed += 2;
+					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(7, -highSpeed) : new Vector2(-7, -highSpeed);
+				}
 			}
 
 			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.05f;
 		}
 
 		public override void FindFrame(int frameHeight) {
-			if ((Part)PartType == Part.leg1 || (Part)PartType == Part.leg2) {
+			if (PartType == Part.leg1 || PartType == Part.leg2) {
 				if (NPC.velocity.Y < 0)
 					currentFrame = 3;
 				else if (NPC.velocity.Y > 0)
@@ -290,11 +324,10 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.frame.Y = currentFrame * ((this.frameHeight * (maxFrames - 1)) / (maxFrames - 1));
 		}
 
-
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = torsoPath;
 			Texture2D glowTexture = torsoGlowPath;
-			switch ((Part)(int)PartType) {
+			switch (PartType) {
 
 				case Part.leg1:
 				texture = leg1Path;
@@ -319,21 +352,26 @@ namespace Origins.NPCs.Defiled.Boss {
 					this.DrawOutline();
 				// assumes that the maximum amount of frames is same as the wings 
 				spriteBatch.Draw(RightArmPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), drawColor, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-				spriteBatch.Draw(RightArmGlowPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), Microsoft.Xna.Framework.Color.White, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+				spriteBatch.Draw(RightArmGlowPath, NPC.Center - Main.screenPosition, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), Color.White, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 				break;
 			}
 
 			spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-			if (charging && NPC.ai[2] < Defiled_Amalgamation.SplitDuration) {
+			if (Charging && Timer > 60 && NPC.ai[2] < Defiled_Amalgamation.SplitDuration) {
 				Defiled_Spike_Indicator.Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
 			}
 
 			return false;
 		}
-
-		public Color SetOutlineColor(float progress) => Color.Lerp(Color.Green, Color.Purple, progress);
+		public Color? SetOutlineColor(float progress) => Color.Lerp(Color.Green, Color.Purple, progress);
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((byte)NPC.aiAction);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.aiAction = reader.ReadByte();
+		}
 	}
 	public class DA_Arc_Bolt : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
