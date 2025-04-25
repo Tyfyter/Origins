@@ -5933,3 +5933,8 @@ Enchanted_Fiberglass_Wall_Item: {
 	// DisplayName: Enchanted Fiberglass Wall
 	// Tooltip: ""
 }
+
+Anti_Gray_Dye: {
+	// DisplayName: Anti Gray Dye
+	// Tooltip: ""
+}

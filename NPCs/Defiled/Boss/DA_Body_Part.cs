@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Graphics;
 using Origins.Items.Tools;
@@ -398,14 +398,15 @@ namespace Origins.NPCs.Defiled.Boss {
 			Vector2 center = renderTarget.Size() * 0.5f;
 
 
-			SceneFiltersIgnoredDrawing.DrawWithoutFilters(renderTarget,
+			TangelaVisual.DrawAntiGray(new(renderTarget,
 				center,
 				null,
 				Color.White,
 				0,
 				center,
 				Vector2.One / Main.GameViewMatrix.Zoom,
-				SpriteEffects.None);
+				SpriteEffects.None
+			));
 
 			return false;
 		}

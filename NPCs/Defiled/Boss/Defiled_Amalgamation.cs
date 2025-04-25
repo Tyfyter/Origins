@@ -257,7 +257,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
 									new(state_magic_missile, 1f),
-									new(state_split_amalgamation_start, 1f)
+									new(state_split_amalgamation_start, 10000f)
 									]
 								);
 								int lastUsedAttack = -AIState;
@@ -1245,10 +1245,10 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			public void Draw(Vector2[] positions, float[] rotations, float progress) {
 				MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser2"];
-				shader.UseImage1(TextureAssets.Extra[193]);
-				shader.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
+				//shader.UseImage1(TextureAssets.Extra[193]);
+				//shader.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
 				shader.UseColor(Color.Black);
-				shader.UseSecondaryColor(Color.Green);
+				//shader.UseSecondaryColor(Color.Green);
 				shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
 				Main.graphics.GraphicsDevice.Textures[3] = TextureAssets.Extra[193].Value;
 				Main.graphics.GraphicsDevice.SamplerStates[3] = SamplerState.LinearWrap;

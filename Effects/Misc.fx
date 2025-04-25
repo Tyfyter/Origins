@@ -49,11 +49,18 @@ float4 NoScreenShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : 
 	return tex2D(uImage0, coords);
 }
 
+float4 NoArmorShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	return tex2D(uImage0, coords) * sampleColor;
+}
+
 technique Technique1 {
 	pass MultiplyRGBA {
 		PixelShader = compile ps_2_0 MultiplyRGBA();
 	}
 	pass NoScreenShader {
 		PixelShader = compile ps_2_0 NoScreenShader();
+	}
+	pass NoArmorShader {
+		PixelShader = compile ps_2_0 NoArmorShader();
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Projectiles.Magic;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Melee;
 using PegasusLib.Graphics;
@@ -16,11 +17,22 @@ namespace Origins.Graphics {
 	public interface ITangelaHaver {
 		public int? TangelaSeed { get; set; }
 	}
+	class AntiGrayArmorShaderData() : ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/Misc"), "NoArmorShader") {
+		public override void Apply(Entity entity, DrawData? drawData = null) {
+			if (drawData is DrawData data) {
+				data.shader = 0;
+				TangelaVisual.drawDatas.Add(new(data, entity?.whoAmI ?? drawData.Value.texture.Name?.GetHashCode() ?? 0));
+			}
+			base.Apply(entity, drawData);
+		}
+	}
 	class TangelaArmorShaderData() : ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/Tangela"), "Tangela"), ITangelaHaver {
-		private Asset<Texture2D> _uImage2 = ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin");
+		private readonly Asset<Texture2D> _uImage2 = ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin");
 		public int? TangelaSeed { get; set; }
 		public override void Apply(Entity entity, DrawData? drawData = null) {
 			if (drawData is DrawData data) {
+				data.shader = TangelaVisual.ShaderID;
+				data.color = Color.White;
 				TangelaVisual.drawDatas.Add(new(data, entity?.whoAmI ?? drawData.Value.texture.Name?.GetHashCode() ?? 0));
 			}
 			if (_uImage2 != null) {
@@ -79,9 +91,13 @@ namespace Origins.Graphics {
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
 					for (int i = 0; i < drawDatas.Count; i++) {
 						(DrawData data, int seed, Vector2 extraOffset) = drawDatas[i];
-						FastRandom random = new(seed);
-						shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
-						shader.Apply(null, data);
+						if (data.shader == ShaderID) {
+							FastRandom random = new(seed);
+							shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
+							shader.Apply(null, data);
+						} else {
+							Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+						}
 						data.Draw(Main.spriteBatch);
 					}
 				} finally {
@@ -107,6 +123,8 @@ namespace Origins.Graphics {
 			), tangelaSeed, extraOffset);
 		}
 		public static void DrawTangela(DrawData data, int tangelaSeed, Vector2 extraOffset = default) {
+			data.shader = ShaderID;
+			data.color = Color.White;
 			drawDatas.Add(new(data, tangelaSeed, extraOffset));
 			if (DrawOver && !Main.gameMenu) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
@@ -120,6 +138,11 @@ namespace Origins.Graphics {
 			} finally {
 				Main.spriteBatch.Restart(state);
 			}
+		}
+		public static void DrawAntiGray(DrawData data) {
+			drawDatas.Add(new(data, default, default));
+			if (DrawOver && !Main.gameMenu) return;
+			data.Draw(Main.spriteBatch);
 		}
 	}
 	public record struct TangelaDrawData(DrawData Data, int Seed, Vector2 ExtraOffset = default);
