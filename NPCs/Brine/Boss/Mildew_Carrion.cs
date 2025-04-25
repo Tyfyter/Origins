@@ -35,6 +35,7 @@ using Terraria.Utilities;
 using Terraria.GameContent.Bestiary;
 using Origins.Music;
 using Origins.NPCs.Riven.World_Cracker;
+using Terraria.GameContent.Creative;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -52,7 +53,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
-			NPC.lifeMax = 10800;
+			NPC.lifeMax = Mildew_Carrion.GetMaxLife();
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 76;
@@ -185,13 +186,22 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void Unload() {
 			normalDropRule = null;
 		}
+		public static int GetMaxLife() {
+			if (Main.masterMode) {
+				return 21600;
+			} else if (Main.expertMode) {
+				return 19440;
+			} else {
+				return 17280;
+			}
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.damage = 24;
-			NPC.lifeMax = 10800;
+			NPC.lifeMax = GetMaxLife();
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
 			NPC.width = 76;
@@ -338,6 +348,25 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.localAI[1] > 0) NPC.localAI[1]--;
 			NPC.velocity *= 0.97f;
 			return false;
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			if (damage < 0) damage = 50;
+			float minutesToDie = 4 + ContentExtensions.DifficultyDamageMultiplier;
+			NPC.lifeRegen -= Main.rand.RandomRound((NPC.lifeMax * 2) / (minutesToDie * 60));
+		}
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
+			float terriblyPlacedHookMult = 1;
+			if (Main.GameModeInfo.IsJourneyMode) {
+				CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+				if (power != null && power.GetIsUnlocked()) {
+					if (power.StrengthMultiplierToGiveNPCs > 2) {
+						terriblyPlacedHookMult /= 3;
+					} else if (power.StrengthMultiplierToGiveNPCs > 1) {
+						terriblyPlacedHookMult /= 2;
+					}
+				}
+			}
+			NPC.lifeMax = (int)(GetMaxLife() * balance * terriblyPlacedHookMult);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(6);
