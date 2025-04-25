@@ -499,7 +499,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Vector2 compositeOffset_FrontArm = new(-5 * NPC.direction, 0);
 			Vector2 frontArmPosition = vector + compositeOffset_FrontArm;
 			Vector2 frontArmOrigin = bodyVect + compositeOffset_FrontArm;
-			Vector2 frontShoulderPosition = frontArmPosition;
+			Vector2 frontShoulderPosition = frontArmPosition + new Vector2(3 * NPC.direction, 0);
 			Point backShoulderFrameIndex = new(1, 1);
 			Point frontShoulderFrameIndex = new(0, 1);
 			Point backArmframeIndex = default;
