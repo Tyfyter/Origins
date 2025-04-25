@@ -190,7 +190,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 58;
+			NPC.damage = 24;
 			NPC.lifeMax = 10800;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
@@ -272,7 +272,7 @@ namespace Origins.NPCs.Brine.Boss {
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
-								10 + (int)(15 * difficultyMult),
+								10 + (int)(10 * difficultyMult),
 								2
 							);
 						}
@@ -636,7 +636,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 32;
+			NPC.damage = 24;
 			NPC.lifeMax = 150;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;

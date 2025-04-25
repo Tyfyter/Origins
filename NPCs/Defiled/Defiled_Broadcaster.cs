@@ -308,6 +308,8 @@ namespace Origins.NPCs.Defiled {
 			Projectile.localAI[1] = float.PositiveInfinity;
 		}
 		public override void AI() {
+			SoundEngine.PlaySound(Origins.Sounds.defiledKillAF.WithPitchRange(-1f, -0.2f).WithVolume(0.1f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(-1f, -0.2f).WithVolume(0.3f), Projectile.Center);
 			target ??= Projectile.Center + Projectile.velocity * 25 * (10 - Projectile.ai[2]);
 			if (++Projectile.localAI[0] > 25) {
 				Projectile.localAI[0] = 0;
