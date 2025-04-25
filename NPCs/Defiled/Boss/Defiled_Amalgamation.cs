@@ -1446,6 +1446,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					MathF.Cos(DA.time * 0.1f + (float.Tau * 0.2f * PartType)) * 200), NPC.ai[2] / 160f);
 				NPC.velocity = Vector2.Zero;
 				NPC.spriteDirection = NPC.targetRect.Center().X > NPC.Center.X ? -1 : 1;
+				
 				return;
 			}
 
@@ -1562,7 +1563,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		public void LegsAI() {
 
 			var coords = Utils.ToTileCoordinates(NPC.Center);
-			if (!WorldGen.TileEmpty(coords.X,coords.Y) && WorldGen.TileType(coords.X,coords.Y) != TileID.Platforms) 
+			int tileType = WorldGen.TileType(coords.X,coords.Y);
+			if (tileType != -1 && Main.tileSolid[tileType]) 
 			{
 
 				NPC.Center = Vector2.Lerp(NPC.Center,NPC.targetRect.Center() - new Vector2(0,200),0.2f);
@@ -1571,12 +1573,12 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			}
 
-			if (NPC.collideY) {
-				Timer++;
+			if (NPC.collideY || NPC.velocity.Y == 0) {
 				NPC.velocity.X = 0;
+				Timer++;
 			}
 
-			if (Timer >= 20 && (NPC.collideY || NPC.collideX)) {
+			if (Timer >= 20 && (NPC.collideY || NPC.collideX || NPC.velocity.X == 0)) {
 				SoundEngine.PlaySound(SoundID.Item174.WithPitchRange(0.5f, 0.75f), NPC.Center);
 				SoundEngine.PlaySound(SoundID.NPCHit38.WithPitchRange(-2f, -1.75f).WithVolume(0.1f), NPC.Center);
 				Timer = 0;
