@@ -8,12 +8,17 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using System.Reflection;
 using Origins.Dusts;
+using Origins.Projectiles;
+using Terraria.ID;
 
 namespace Origins.Items {
 	public class Necromantic_Prefix : MinionPrefix, IOnHitNPCPrefix, IModifyHitNPCPrefix {
 		public static float MaxManaMultiplier => 4;
 		public override bool HasDescription => true;
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && !Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			const float max_bonus = 0.6f;
@@ -48,10 +53,16 @@ namespace Origins.Items {
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			OnHit(projectile, target, hit, damageDone);
 		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
+		}
 	}
 	public class Necromantic_Artifact_Prefix : ArtifactPrefixVariant<Necromantic_Prefix>, IOnHitNPCPrefix, IModifyHitNPCPrefix {
 		public override bool HasDescription => true;
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			const float max_bonus = 1f;
@@ -60,8 +71,18 @@ namespace Origins.Items {
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			Necromantic_Prefix.OnHit(projectile, target, hit, damageDone);
 			if (target.life <= 0) {
-
+				Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
+				if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
+					if (artifactMinion.Life < 0 && !artifactMinion.CanDie) artifactMinion.Life = 0;
+					float oldHealth = artifactMinion.Life;
+					artifactMinion.Life += Math.Min(target.lifeMax / 4, target.lifeMax);
+					if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
+					CombatText.NewText(ownerMinion.Hitbox, new(0, 110, 88), (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
+				}
 			}
+		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
 		}
 	}
 	public class Necromantic_Prefix_Orb : ModProjectile {
@@ -286,9 +307,12 @@ namespace Origins.Items {
 			return true;
 		}
 		public override bool DisplayHoverText(PlayerStatsSnapshot snapshot, IPlayerResourcesDisplaySet displaySet, bool drawingLife) {
+			if (drawingLife) return true;
+			float mana = Main.LocalPlayer.OriginPlayer().necromancyPrefixMana;
+			if (mana < 1) return true;
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.cursorItemIconEnabled = false;
-			string text = $"{snapshot.Mana}/{snapshot.ManaMax}\n[c/00586e:{Main.LocalPlayer.OriginPlayer().necromancyPrefixMana}/{snapshot.ManaMax * Necromantic_Prefix.MaxManaMultiplier}]";
+			string text = $"{snapshot.Mana}/{snapshot.ManaMax}\n[c/00586e:{mana}/{snapshot.ManaMax * Necromantic_Prefix.MaxManaMultiplier}]";
 			Main.instance.MouseTextHackZoom(text);
 			Main.mouseText = true;
 			return false;

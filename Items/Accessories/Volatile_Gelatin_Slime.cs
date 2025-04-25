@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -17,10 +18,15 @@ namespace Origins.Items.Accessories {
 		];
 		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.VolatileGelatin;
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.VolatileGelatin;
+		public override void SetStaticDefaults() {
+			ContentSamples.ItemsByType[ItemID.VolatileGelatin].GetPrefixCategories().AddRange([PrefixCategory.AnyWeapon]);
+		}
 		public override void SetDefaults(Item entity) {
 			entity.DamageType = DamageClasses.Explosive;
 			entity.damage = 65;
 			entity.knockBack = 7;
+			entity.useTime = 40;
+			entity.useAnimation = 40;
 		}
 		public override void Load() {
 			IL_Player.VolatileGelatin += IL_Player_VolatileGelatin;
@@ -28,6 +34,13 @@ namespace Origins.Items.Accessories {
 
 		private void IL_Player_VolatileGelatin(ILContext il) {
 			ILCursor c = new(il);
+			c.GotoNext(MoveType.Before,
+				i => i.MatchLdcI4(40)
+			);
+			c.Remove();
+			c.EmitLdarg0();
+			c.EmitLdarg1();
+			c.EmitDelegate((Player player, Item item) => CombinedHooks.TotalUseTime(item.useTime, player, item));
 			c.GotoNext(MoveType.Before,
 				i => i.MatchLdcI4(65),
 				i => i.MatchStloc(out _)
@@ -45,6 +58,9 @@ namespace Origins.Items.Accessories {
 			c.Emit(OpCodes.Ldarg_0);
 			c.Emit(OpCodes.Ldarg_1);
 			c.Emit<Player>(OpCodes.Call, nameof(Player.GetWeaponKnockback));
+		}
+		public override int ChoosePrefix(Item item, UnifiedRandom rand) {
+			return OriginExtensions.GetAllPrefixes(item, rand, (PrefixCategory.AnyWeapon, pre => Origins.SpecialPrefix[pre] ? 1 : 0.25f), (PrefixCategory.Accessory, null));
 		}
 	}
 	public class Volatile_Gelatin_Global : GlobalProjectile {
@@ -71,10 +87,10 @@ namespace Origins.Items.Accessories {
 			if (slimeTime > 0) slimeTime--;
 		}
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			if (slimeTime > 0 && (ExplosiveGlobalProjectile.IsExploding(projectile) || projectile.type is ProjectileID.Sunfury or ProjectileID.Flamelash)) {
+			if (slimeTime > 0 && (ExplosiveGlobalProjectile.IsExploding(projectile, true) || projectile.type is ProjectileID.Sunfury or ProjectileID.Flamelash)) {
 				slimeTime = 0;
 				Projectile.NewProjectile(
-					npc.GetSource_OnHurt(projectile),
+					projectile.GetSource_OnHit(npc),
 					npc.Center,
 					default,
 					ModContent.ProjectileType<Volatile_Gelatin_Slime_Explosion>(),

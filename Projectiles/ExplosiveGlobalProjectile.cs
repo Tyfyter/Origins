@@ -255,7 +255,7 @@ namespace Origins.Projectiles {
 			}
 			scrapCompactor = bitReader.ReadBit();
 		}
-		public static bool IsExploding(Projectile projectile) {
+		public static bool IsExploding(Projectile projectile, bool isHitting = false) {
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
 				return explodingProjectile.IsExploding();
@@ -273,6 +273,10 @@ namespace Origins.Projectiles {
 				case ProjectileID.DD2ExplosiveTrapT2Explosion:
 				case ProjectileID.DD2ExplosiveTrapT3Explosion:
 				return true;
+
+				case ProjectileID.ExplosiveBullet:
+				if (isHitting) return true;
+				goto default;
 
 				default:
 				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
@@ -573,6 +577,7 @@ namespace Origins.Projectiles {
 				case ProjectileID.Stynger:
 				case ProjectileID.StyngerShrapnel:
 				case ProjectileID.JackOLantern:
+				case ProjectileID.ExplosiveBullet:
 				return 2;
 
 				case ProjectileID.Volcano:

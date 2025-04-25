@@ -50,6 +50,7 @@ using Origins.World.BiomeData;
 using Origins.Tiles.Other;
 using Origins.Backgrounds;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using ThoriumMod.Projectiles;
 
 namespace Origins {
 	#region classes
@@ -2525,6 +2526,48 @@ namespace Origins {
 				}
 			}
 			return wr;
+		}
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, bool[] set, double weight)[] prefixCategories) {
+			WeightedRandom<int> wr = new(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				(PrefixCategory category, bool[] set, double weight) = prefixCategories[i];
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					if (set[pre]) wr.Add(pre, weight);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					if (set[modPrefix.Type]) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
+				}
+			}
+			return wr;
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="prefixCategories">Weight functions default to "_ => 1" if null</param>
+		/// <returns></returns>
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, Func<int, double> weightFunction)[] prefixCategories) {
+			WeightedRandom<int> wr = new(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				(PrefixCategory category, Func<int, double> weightFunction) = prefixCategories[i];
+				weightFunction ??= _ => 1;
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					double weight = weightFunction(pre);
+					if (weight > 0) wr.Add(pre, weight);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					double weight = weightFunction(modPrefix.Type);
+					if (weight > 0) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
+				}
+			}
+			return wr;
+		}
+		public static WeightedRandom<int> AccessoryOrSpecialPrefix(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
+			(PrefixCategory category, bool[] set, double weight)[] categories = new (PrefixCategory category, bool[] set, double weight)[prefixCategories.Length + 1];
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				categories[i] = (prefixCategories[i], Origins.SpecialPrefix, 1);
+			}
+			categories[^1] = (PrefixCategory.Accessory, PrefixID.Sets.Factory.CreateBoolSet(true), 1);
+			return GetAllPrefixes(item, rand, categories);
 		}
 		#region font
 		static FieldInfo _spriteCharacters;

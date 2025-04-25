@@ -401,10 +401,11 @@ namespace Origins.Items {
 		public virtual bool HasDescription => false;
 		public virtual bool HasDescriptionBad => false;
 		public override PrefixCategory Category => PrefixCategory.Magic;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
+		public sealed override void Load() {
 			_ = GetDescriptionLines().Count();
+			OnLoad();
 		}
+		public virtual void OnLoad() { }
 		public override bool CanRoll(Item item) => ContentSamples.ProjectilesByType[item.shoot] is { minion: true } or { sentry: true };
 		public virtual void UpdateProjectile(Projectile projectile, int time) { }
 		public virtual void OnSpawn(Projectile projectile, IEntitySource source) { }
@@ -534,6 +535,9 @@ namespace Origins.Items {
 	public class Wholesome_Prefix : ArtifactMinionPrefix {
 		public override StatModifier MaxLifeModifier => new(1.05f, 1);
 		public override bool HasDescription => true;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult *= 1.05f;
 			knockbackMult *= 1.05f;
@@ -575,6 +579,9 @@ namespace Origins.Items {
 	public class Vampiric_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
 		public override StatModifier MaxLifeModifier => new(0.75f, 1);
 		public override bool HasDescription => true;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult *= 1.05f;
 		}
@@ -583,17 +590,7 @@ namespace Origins.Items {
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.type == NPCID.TargetDummy) return;
-			Projectile ownerMinion = null;
-			if (Origins.ArtifactMinion[projectile.type]) {
-				ownerMinion = projectile;
-			} else if (projectile.TryGetGlobalProjectile(out OriginGlobalProj global) && global.ownerMinion is OwnerMinionKey minionKey) {
-				foreach (Projectile proj in Main.ActiveProjectiles) {
-					if (proj.type == minionKey.Type && proj.owner == minionKey.Owner && proj.identity == minionKey.Identity) {
-						ownerMinion = proj;
-						break;
-					}
-				}
-			}
+			Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
 			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
 				float oldHealth = artifactMinion.Life;
 				artifactMinion.Life += Math.Min(damageDone, target.lifeMax);
@@ -605,6 +602,9 @@ namespace Origins.Items {
 	public class Firestarter_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
 		public override bool HasDescription => true;
 		public override bool HasDescriptionBad => true;
+		public override void SetStaticDefaults() {
+			Origins.SpecialPrefix[Type] = true;
+		}
 		public override void UpdateProjectile(Projectile projectile, int time) {
 			if (projectile.numUpdates == -1 && time > 0 && time % 30 == 0) {
 				projectile.DamageArtifactMinion(2, true);

@@ -91,6 +91,8 @@ namespace Origins {
 		public static bool[] TileBlocksMinecartTracks { get => tileBlocksMinecartTracks; }
 		static bool[] wallBlocksMinecartTracks;
 		public static bool[] WallBlocksMinecartTracks { get => wallBlocksMinecartTracks; }
+		static bool[] specialPrefix;
+		public static bool[] SpecialPrefix { get => specialPrefix; }
 		public static short[] itemGlowmasks = [];
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
@@ -685,6 +687,7 @@ namespace Origins {
 			PotType = null;
 			PileType = null;
 			artifactMinion = null;
+			specialPrefix = null;
 			celestineBoosters = null;
 			perlinFade0 = null;
 			blackHoleShade = null;
@@ -905,6 +908,7 @@ namespace Origins {
 			Amebic_Vial.canBeDeflected = ProjectileID.Sets.Factory.CreateBoolSet(true);
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
+			Array.Resize(ref specialPrefix, PrefixLoader.PrefixCount);
 		}
 		static void LoadCloudBottoms() {
 			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];

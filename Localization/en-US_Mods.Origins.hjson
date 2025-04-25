@@ -1020,7 +1020,7 @@ Buffs: {
 
 	Static_Shock_Damage_Debuff: {
 		DisplayName: Static Shock
-		Description: It hurts to be near conductors!
+		Description: "{§Mods.Origins.Buffs.Static_Shock_Debuff.Description}"
 	}
 
 	Soulhide_Debuff: {
@@ -2184,6 +2184,9 @@ Configs: {
 			Label: Stat share multipliers
 			Tooltip: These values will determine how much bonuses for the class contribute to generic damage when using stat-sharing effects
 		}
+
+		AddDebuff: Makes {0} inflict the {1} debuff
+		ThunderSpear.Tooltip: Makes {0} inflict the {1} debuff
 	}
 
 	DebugConfig: {

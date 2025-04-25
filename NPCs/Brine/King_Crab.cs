@@ -270,7 +270,7 @@ namespace Origins.NPCs.Brine {
 				}
 				break;
 			}
-			damageMultiplier *= 0.5f;
+			if (npcHitbox.Intersects(victimHitbox)) damageMultiplier *= 0.5f;
 			return true;
 		}
 		public override void FindFrame(int frameHeight) {

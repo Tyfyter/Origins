@@ -57,7 +57,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
 			NPC.damage = 0; // redundant, already defaults to 0, just for clarification
-			NPC.lifeMax = 6000;
+			NPC.lifeMax = 7200;
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 20;
@@ -106,7 +106,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
 			NPC.damage = 58;
-			NPC.lifeMax = 6000;
+			NPC.lifeMax = 7200;
 			NPC.defense = 32;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
@@ -139,7 +139,16 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
 		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
-		public override bool CheckTargetLOS(Vector2 target) => !NPC.wet || base.CheckTargetLOS(target);
+		public override bool CheckTargetLOS(Vector2 target) {
+			if (!NPC.wet) return true;
+			if (!base.CheckTargetLOS(target)) return false;
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 2; j++) {
+					if (!CollisionExt.CanHitRay(NPC.position + new Vector2((NPC.width - 2) * i + 1, (NPC.height - 2) * j + 1), target)) return false;
+				}
+			}
+			return true;
+		}
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -200,10 +209,14 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.wet) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
+					if (Math.Abs(differenceFromTarget.Y) > 16 * 100) {
+						swimCharge = 60 * 10;
+					}
 					const float fast_speed = 0.6f;
 					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
 					float fast_distance = 16 * 20;
 					float slow_distance = CanSeeTarget ? 16 * 15 : 0;
+					float away_distance = CanSeeTarget ? 16 * (6 + difficultyMult) : 0;
 					if (differenceFromTarget.Y > 64) {
 						NPC.velocity.Y += 0.6f;
 					} else if (differenceFromTarget.Y > (CanSeeTarget ? 32 : 0) || swimCharge <= 0) {
@@ -231,6 +244,10 @@ namespace Origins.NPCs.Brine.Boss {
 						NPC.velocity.X -= fast_speed;
 					} else if (differenceFromTarget.X < -slow_distance) {
 						NPC.velocity.X -= slow_speed;
+					} else if (differenceFromTarget.X < away_distance) {
+						NPC.velocity.X -= fast_speed;
+					} else if (differenceFromTarget.X > -away_distance) {
+						NPC.velocity.X += fast_speed;
 					}
 					if (NPC.collideY) {
 						swimCharge = 60 * 10;
@@ -314,7 +331,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							dir,
 							ModContent.ProjectileType<Lost_Diver_Harpoon>(),
-							60,
+							15 + (int)(15 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						).identity;
@@ -345,7 +362,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction.RotatedBy(NPC.direction * -0.5f) * speed,
 							ModContent.ProjectileType<Lost_Diver_Depth_Charge>(),
-							60,
+							15 + (int)(15 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						).identity;
@@ -368,7 +385,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Torpedo_Tube>(),
-							60,
+							15 + (int)(15 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						);
@@ -395,7 +412,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Mildew_Whip>(),
-							60,
+							15 + (int)(15 * difficultyMult),
 							2,
 							ai2: NPC.whoAmI
 						).identity;

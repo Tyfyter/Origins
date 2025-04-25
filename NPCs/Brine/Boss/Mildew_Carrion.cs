@@ -35,6 +35,7 @@ using Terraria.Utilities;
 using Terraria.GameContent.Bestiary;
 using Origins.Music;
 using Origins.NPCs.Riven.World_Cracker;
+using Terraria.GameContent.Creative;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -52,7 +53,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
-			NPC.lifeMax = 4000;
+			NPC.lifeMax = Mildew_Carrion.GetMaxLife();
 			NPC.defense = 24;
 			NPC.noGravity = true;
 			NPC.width = 76;
@@ -185,13 +186,22 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void Unload() {
 			normalDropRule = null;
 		}
+		public static int GetMaxLife() {
+			if (Main.masterMode) {
+				return 21600;
+			} else if (Main.expertMode) {
+				return 19440;
+			} else {
+				return 17280;
+			}
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 58;
-			NPC.lifeMax = 6000;
+			NPC.damage = 24;
+			NPC.lifeMax = GetMaxLife();
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
 			NPC.width = 76;
@@ -242,7 +252,7 @@ namespace Origins.NPCs.Brine.Boss {
 				default:
 				case AIModes.Idle:
 				NPC.ai[0] += 0.65f + (0.35f * difficultyMult);
-				if (NPC.ai[0] > 180 && NPC.HasValidTarget) {
+				if (NPC.ai[0] > 150 && NPC.HasValidTarget) {
 					HeldProjectile = -1;
 					WeightedRandom<AIModes> rand = new(Main.rand);
 					void AddMode(AIModes mode, double weight) {
@@ -250,8 +260,8 @@ namespace Origins.NPCs.Brine.Boss {
 						rand.Add(mode, weight);
 					}
 					AddMode(AIModes.Idle, 0);
-					AddMode(AIModes.Spores, 1);
-					int tendrilCountMax = 8 + (int)(difficultyMult * 2);
+					if (CollisionExt.CanHitRay(NPC.Center, TargetPos)) AddMode(AIModes.Spores, 1);
+					int tendrilCountMax = 9 + (int)(difficultyMult);
 					int tendrilCount = 0;
 					foreach (NPC other in Main.ActiveNPCs) {
 						if (other.type == tendrilType && ++tendrilCount >= tendrilCountMax) break;
@@ -265,14 +275,14 @@ namespace Origins.NPCs.Brine.Boss {
 				break;
 				case AIModes.Spores: {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
-						for (int i = Main.rand.RandomRound(difficultyMult + 0.5f); i > 0; i--) {
-							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.8f, 1f);
+						for (int i = Main.rand.RandomRound(difficultyMult * 0.5f + 0.75f); i > 0; i--) {
+							Vector2 sporeDirection = direction.RotatedByRandom(0.4f) * (11 + difficultyMult) * Main.rand.NextFloat(0.8f, 1f);
 							Projectile.NewProjectile(
 								NPC.GetSource_FromAI(),
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
-								(int)(25 * difficultyMult),
+								10 + (int)(10 * difficultyMult),
 								2
 							);
 						}
@@ -338,6 +348,25 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.localAI[1] > 0) NPC.localAI[1]--;
 			NPC.velocity *= 0.97f;
 			return false;
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			if (damage < 0) damage = 50;
+			float minutesToDie = 4 + ContentExtensions.DifficultyDamageMultiplier;
+			NPC.lifeRegen -= Main.rand.RandomRound((NPC.lifeMax * 2) / (minutesToDie * 60));
+		}
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
+			float terriblyPlacedHookMult = 1;
+			if (Main.GameModeInfo.IsJourneyMode) {
+				CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+				if (power != null && power.GetIsUnlocked()) {
+					if (power.StrengthMultiplierToGiveNPCs > 2) {
+						terriblyPlacedHookMult /= 3;
+					} else if (power.StrengthMultiplierToGiveNPCs > 1) {
+						terriblyPlacedHookMult /= 2;
+					}
+				}
+			}
+			NPC.lifeMax = (int)(GetMaxLife() * balance * terriblyPlacedHookMult);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(6);
@@ -636,7 +665,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 32;
+			NPC.damage = 24;
 			NPC.lifeMax = 150;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
