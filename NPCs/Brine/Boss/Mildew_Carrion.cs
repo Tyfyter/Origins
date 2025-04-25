@@ -350,7 +350,7 @@ namespace Origins.NPCs.Brine.Boss {
 			return false;
 		}
 		public override void UpdateLifeRegen(ref int damage) {
-			if (damage < 0) damage = 50;
+			if (damage < 0) damage = 20;
 			float minutesToDie = 4 + ContentExtensions.DifficultyDamageMultiplier;
 			NPC.lifeRegen -= Main.rand.RandomRound((NPC.lifeMax * 2) / (minutesToDie * 60));
 		}
