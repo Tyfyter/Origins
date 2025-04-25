@@ -23,6 +23,7 @@ using Origins.Dusts;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Other;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Fiberglass {
 	public class Enchanted_Fiberglass_Cannon : ModNPC, IWikiNPC {
@@ -50,6 +51,11 @@ namespace Origins.NPCs.Fiberglass {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
+			]);
 		}
 		public override void AI() {
 			NPC.velocity *= 0.85f;

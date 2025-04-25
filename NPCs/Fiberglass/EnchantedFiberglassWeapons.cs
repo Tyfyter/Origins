@@ -9,6 +9,7 @@ using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,6 +44,11 @@ namespace Origins.NPCs.Fiberglass {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
+			]);
 		}
 		public override void AI() {
 			NPC.velocity *= 0.85f;
@@ -160,6 +166,11 @@ namespace Origins.NPCs.Fiberglass {
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
 		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
+			]);
+		}
 		public override void AI() {
 			NPC.velocity *= 0.85f;
 			NPC.TargetClosest();
@@ -254,6 +265,11 @@ namespace Origins.NPCs.Fiberglass {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
+			]);
 		}
 		public override bool PreAI() {
 			if (stuck > 0) {
