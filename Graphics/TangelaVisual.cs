@@ -17,7 +17,7 @@ namespace Origins.Graphics {
 	public interface ITangelaHaver {
 		public int? TangelaSeed { get; set; }
 	}
-	class AntiGrayArmorShaderData() : ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/Misc"), "NoArmorShader") {
+	class AntiGrayArmorShaderData() : ArmorShaderData(Main.Assets.Request<Effect>("PixelShader"), "Default") {
 		public override void Apply(Entity entity, DrawData? drawData = null) {
 			if (drawData is DrawData data) {
 				data.shader = 0;
@@ -96,7 +96,7 @@ namespace Origins.Graphics {
 							shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512 + extraOffset);
 							shader.Apply(null, data);
 						} else {
-							Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+							continue;
 						}
 						data.Draw(Main.spriteBatch);
 					}
@@ -152,7 +152,14 @@ namespace Origins.Graphics {
 			if (lastGameFrameCount == Origins.gameFrameCount) return;
 			lastGameFrameCount = Origins.gameFrameCount;
 			if (TangelaVisual.DrawOver && !Main.gameMenu) {
-				return;
+				bool anyAntiGray = false;
+				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
+					if (TangelaVisual.drawDatas[i].Data.shader != TangelaVisual.ShaderID) {
+						anyAntiGray = true;
+						break;
+					}
+				}
+				if (!anyAntiGray) return;
 			}
 			if (renderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
@@ -163,7 +170,8 @@ namespace Origins.Graphics {
 				Origins.shaderOroboros.Capture();
 				if (Main.gameMenu) Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.UIScaleMatrix);
 				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
-					TangelaVisual.drawDatas[i].Data.Draw(spriteBatch);
+					DrawData data = TangelaVisual.drawDatas[i].Data;
+					if (!TangelaVisual.DrawOver || data.shader != TangelaVisual.ShaderID) data.Draw(spriteBatch);
 				}
 			} finally {
 				Origins.shaderOroboros.DrawContents(renderTarget);

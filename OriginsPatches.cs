@@ -1891,6 +1891,7 @@ namespace Origins {
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
 				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
+					if (keepPlayerShader == -1) keepPlayerShader = Anti_Gray_Dye.ShaderID;
 					forcePlayerShader = Rasterized_Dye.ShaderID;
 				}
 				if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
