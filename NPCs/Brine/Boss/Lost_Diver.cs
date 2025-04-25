@@ -209,6 +209,9 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.wet) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
+					if (Math.Abs(differenceFromTarget.Y) > 16 * 100) {
+						swimCharge = 60 * 10;
+					}
 					const float fast_speed = 0.6f;
 					float slow_speed = CanSeeTarget ? 0.2f : 0.4f;
 					float fast_distance = 16 * 20;
