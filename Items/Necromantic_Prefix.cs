@@ -33,7 +33,7 @@ namespace Origins.Items {
 					ModContent.ProjectileType<Necromantic_Prefix_Orb>(),
 					0,
 					0,
-					ai0: target.lifeMax
+					ai0: target.lifeMax * 0.75f
 				);
 			} else {
 				Rectangle spawnArea;
