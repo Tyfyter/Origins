@@ -593,7 +593,7 @@ VANITY:
 (^) Acrid Dye
 (^) Amber Dye
 (X) Ancient Riven Dye
-(X) Anti-gray Dye
+(☻, @) Anti-gray Dye
 (X) Ashen Dye
 (X) Defiled Dye
 (^) High Contrast Dye
