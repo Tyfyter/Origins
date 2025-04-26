@@ -364,8 +364,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (Projectile.velocity.Y > 10f) {
 					Projectile.velocity.Y = 10f;
 				}
+				if (Projectile.direction != 0) Projectile.spriteDirection = Projectile.direction;
 			}
-			if (Projectile.direction != 0) Projectile.spriteDirection = Projectile.direction;
 			if (Projectile.owner == Main.myPlayer) {
 				if (foundTarget && ++Projectile.localAI[2] > 60 && Projectile.WithinRange(Projectile.Center.Clamp(targetRect), 16 * 5)) {
 					int spikeCount = Main.rand.Next(3, 7);
