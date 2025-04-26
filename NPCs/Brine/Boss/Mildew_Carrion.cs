@@ -36,6 +36,7 @@ using Terraria.GameContent.Bestiary;
 using Origins.Music;
 using Origins.NPCs.Riven.World_Cracker;
 using Terraria.GameContent.Creative;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -170,6 +171,7 @@ namespace Origins.NPCs.Brine.Boss {
 	public class Mildew_Carrion : Brine_Pool_NPC {
 		internal static IItemDropRule normalDropRule;
 		public override bool AggressivePathfinding => true;
+
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 4;
@@ -187,13 +189,7 @@ namespace Origins.NPCs.Brine.Boss {
 			normalDropRule = null;
 		}
 		public static int GetMaxLife() {
-			if (Main.masterMode) {
-				return 21600;
-			} else if (Main.expertMode) {
-				return 19440;
-			} else {
-				return 17280;
-			}
+			return (int)(15120 + 2160 * ContentExtensions.DifficultyDamageMultiplier);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -349,10 +345,26 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.velocity *= 0.97f;
 			return false;
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (damage < 0) damage = 20;
+		int lifeRegenCount = 0;
+		public override void PostAI() {
 			float minutesToDie = 4 + ContentExtensions.DifficultyDamageMultiplier;
-			NPC.lifeRegen -= Main.rand.RandomRound((NPC.lifeMax * 2) / (minutesToDie * 60));
+			lifeRegenCount -= Main.rand.RandomRound((NPC.lifeMax * 2) / (minutesToDie * 60));
+			while (lifeRegenCount <= -120) {
+				lifeRegenCount += 120;
+				int num14 = NPC.whoAmI;
+				if (NPC.realLife >= 0) {
+					num14 = NPC.realLife;
+				}
+				if (!Main.npc[num14].immortal) {
+					Main.npc[num14].life--;
+				}
+			}
+			if (NPC.life <= 0 && !NPC.immortal) {
+				NPC.life = 1;
+				if (Main.netMode != NetmodeID.MultiplayerClient) {
+					NPC.StrikeInstantKill();
+				}
+			}
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
 			float terriblyPlacedHookMult = 1;
