@@ -1797,10 +1797,7 @@ Prefixes: {
 
 	Defiled_Prefix: {
 		DisplayName: Defiled
-		Description:
-			'''
-			Projectiles steal mana and occasionally explode into defiled spikes
-			'''
+		Description: Projectiles steal mana and occasionally explode into defiled spikes
 	}
 }
 

@@ -124,6 +124,21 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.position += weight * new Vector2(Projectile.width, Projectile.height) * 0.51f / 30;
 				}
 			}
+			if (Main.dedServ) return;
+			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 1000 : 850)) {
+				float width = Projectile.width * 1.5f;
+				float height = Projectile.height * 1.5f;
+				Vector2 start = Projectile.TopLeft - new Vector2(Projectile.width, Projectile.height) / 4;
+				Dust.NewDustDirect(
+					start,
+					(int)width,
+					(int)height,
+					Main.rand.Next(Brine_Cloud_Dust.dusts),
+					Projectile.velocity.X,
+					Projectile.velocity.Y,
+					newColor: new(43, 217, 162)
+				).velocity *= 0.1f;
+			}
 		}
 		static void ShrinkHitbox(ref Rectangle hitbox, float frame) {
 			Vector2 center = hitbox.Center();
@@ -161,28 +176,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Red);
 		}*/
-		public override void PostDraw(Color lightColor) {
-			if (Main.dedServ) return;
-			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 1000 : 850)) {
-				float width = Projectile.width * 1.5f;
-				float height = Projectile.height * 1.5f;
-				Vector2 start = Projectile.TopLeft - new Vector2(Projectile.width, Projectile.height) / 4;
-				Dust.NewDustDirect(
-					start,
-					(int)width,
-					(int)height,
-					Main.rand.Next(Brine_Cloud_Dust.dusts),
-					Projectile.velocity.X,
-					Projectile.velocity.Y,
-					newColor: new(43, 217, 162)
-				).velocity *= 0.1f;
-				/*int tmp1 = (int)start.X;
-				int tmp2 = (int)start.Y;
-				int tmp3 = (int)width;
-				int tmp4 = (int)height;
-				new Rectangle(tmp1, tmp2, tmp3, tmp4).DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Blue);*/
-			}
-		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);

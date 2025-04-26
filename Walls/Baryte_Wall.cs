@@ -104,9 +104,12 @@ namespace Origins.Walls {
 					lowestLanternDist = dist;
 				}
 			}
+			float brightness = Lighting.Brightness(i, j) * 0.5f;
+			brightness *= brightness;
+			if (lowestLanternDist > 1 - brightness) lowestLanternDist = 1 - brightness;
 			if (lowestLanternDist != 1) localValue *= lowestLanternDist;
 			if (Main.rand.NextFloat(1000) < Main.gfxQuality * 1000 * localValue * localValue * localValue * localValue) {
-				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(43, 217, 162)).velocity *= 0.1f;
+				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(65, 217, 169)).velocity *= 0.1f;
 				//Gore.NewGorePerfect(Entity.GetSource_None(), new Vector2(i, j + Main.rand.NextFloat()) * 16, Vector2.UnitX * Main.rand.NextFloat(-1, 1), GoreID.LightningBunnySparks);
 			}
 		}
@@ -158,7 +161,7 @@ namespace Origins.Walls {
 		public override bool MidUpdate(Dust dust) {
 			return false;
 		}
-		public override Color? GetAlpha(Dust dust, Color lightColor) => lightColor.MultiplyRGBA(dust.color) * ((255 - dust.alpha) / 255f);
+		public override Color? GetAlpha(Dust dust, Color lightColor) => lightColor.MultiplyRGBA(dust.color) * (((255 - dust.alpha) / 255f) * 1.5f);
 	}
 	public class Brine_Cloud_Dust2 : Brine_Cloud_Dust {
 		public override string Texture => "Terraria/Images/Gore_" + GoreID.AmbientFloorCloud2;
