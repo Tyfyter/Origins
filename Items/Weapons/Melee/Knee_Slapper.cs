@@ -1,3 +1,4 @@
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
@@ -67,6 +68,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.extraUpdates = 3;
 			Projectile.ownerHitCheck = false;
 			Projectile.tileCollide = false;
+			Projectile.noEnchantmentVisuals = true;
 		}
 		public override void AI() {
 			Player owner = Main.player[Projectile.owner];
@@ -87,16 +89,32 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			owner.direction = (int)Projectile.localAI[0];
 			Projectile.direction = (int)Projectile.ai[0];
-			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
+			Vector2 basePosition = owner.MountedCenter;
+			Vector2 vector = new Vector2(Projectile.width, Projectile.height) * Projectile.scale;
 			for (int i = 0; i < nodes.Count; i++) {
 				PolarVec2 vec = nodes[i];
 				position.R += vec.R;
 				position.Theta += vec.Theta;
 				vec.Theta += Projectile.direction * 0.015f * Projectile.localAI[1];// / (i + 1);
 				nodes[i] = vec;
+				if (Main.rand.NextBool(nodes.Count - i)) Projectile.EmitEnchantmentVisualsAt((basePosition + (Vector2)position) - vector, (int)(vector.X * 2), (int)(vector.Y * 2));
 			}
 			owner.heldProj = Projectile.whoAmI;
+		}
+		public override void CutTiles() {
+			if (nodes is null) return;
+			Vector2 basePosition = Main.player[Projectile.owner].MountedCenter;
+			PolarVec2 position = GetSwingStartOffset;
+			Vector2 lastPosition = basePosition;
+			Vector2 vector = new(Projectile.width * Projectile.scale * 0.5f, 0f);
+			for (int i = 0; i < nodes.Count; i++) {
+				PolarVec2 vec = nodes[i];
+				position.R += vec.R;
+				position.Theta += vec.Theta;
+				Vector2 pos = basePosition + (Vector2)position;
+				Utils.PlotTileLine(pos - vector, pos + vector, Projectile.height * Projectile.scale, DelegateMethods.CutTiles);
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (nodes is null) return false;
