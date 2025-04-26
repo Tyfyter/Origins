@@ -148,7 +148,7 @@ namespace Origins {
 		public bool messyLeech = false;
 		public bool magmaLeech = false;
 		public bool noU = false;
-		public const float donorWristbandMult = 0.52f;
+		public const float donorWristbandMult = 0.7f;
 		public bool donorWristband = false;
 		public bool oldDonorWristband = false;
 		public HashSet<Point> preHitBuffs;

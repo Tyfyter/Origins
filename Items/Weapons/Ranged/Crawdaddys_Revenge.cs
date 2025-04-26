@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Ranged {
 			});
 		}
 		public override void SetDefaults() {
-			Item.DefaultToRangedWeapon(ProjectileID.Bullet, AmmoID.Bullet, 7, 9.1f, true);
+			Item.DefaultToRangedWeapon(ProjectileID.Bullet, AmmoID.Bullet, 10, 9.1f, true);
 			Item.damage = 30;
 			Item.knockBack = 2;
 			Item.UseSound = SoundID.Item11;

@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using System;
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem, ICustomWikiStat {
         public string[] Categories => [

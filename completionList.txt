@@ -54,14 +54,14 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(#2, ^2) Defiled Amalgamation* !!!
+(☻, †) Defiled Amalgamation* !!!
 ($, ^2/3) Fiberglass Weaver*
 (X) Shimmer Construct
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
 (X) Corrupt Harvester
-(☻, †) Lost Diver/(☻, †) Mildew Carrion !!!
+(^) Lost Diver/Mildew Carrion
 (X) Snowdrop
 
 (X) Crimson King
@@ -191,7 +191,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow*
 (^) Enchanted Fiberglass Cannon*
 (^) Enchanted Fiberglass Pistol*
-(☻, @ (needs slime-like sprite)) Enchanted Fiberglass Slime
+(@, ^3) Enchanted Fiberglass Slime
 (^) Enchanted Fiberglass Sword*
 (^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri*
@@ -593,7 +593,7 @@ VANITY:
 (^) Acrid Dye
 (^) Amber Dye
 (X) Ancient Riven Dye
-(☻, @) Anti-gray Dye
+(☻, @) Anti-gray Dye !!!
 (X) Ashen Dye
 (X) Defiled Dye
 (^) High Contrast Dye

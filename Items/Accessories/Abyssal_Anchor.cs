@@ -32,6 +32,7 @@ namespace Origins.Items.Accessories {
 			player.statManaMax2 += 20;
 			originPlayer.manaShielding += 0.25f;
 			originPlayer.abyssalAnchor = true;
+			originPlayer.refactoringPieces = true;
 
 			player.GetAttackSpeed(DamageClass.Melee) += 0.15f;
 			player.GetDamage(DamageClass.Generic) += 0.1f;

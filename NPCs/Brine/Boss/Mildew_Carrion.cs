@@ -1,7 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.VisualBasic;
-using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
 using Origins.Gores.NPCs;
@@ -15,7 +12,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.Misc;
-using Origins.NPCs.Defiled;
+using Origins.Music;
 using Origins.Tiles.BossDrops;
 using PegasusLib;
 using ReLogic.Content;
@@ -25,18 +22,15 @@ using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.BigProgressBar;
-using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.GameContent.Bestiary;
-using Origins.Music;
-using Origins.NPCs.Riven.World_Cracker;
-using Terraria.GameContent.Creative;
-using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
@@ -280,7 +274,7 @@ namespace Origins.NPCs.Brine.Boss {
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
-								10 + (int)(10 * difficultyMult),
+								30 + (int)(4 * difficultyMult),
 								2
 							);
 						}
@@ -688,7 +682,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void SetDefaults() {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 24;
+			NPC.damage = 26;
 			NPC.lifeMax = 150;
 			NPC.defense = 18;
 			NPC.aiStyle = 0;

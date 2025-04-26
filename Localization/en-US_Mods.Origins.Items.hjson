@@ -254,7 +254,7 @@ Donor_Wristband: {
 	Tooltip:
 		'''
 		Increased life regeneration
-		Debuff durations reduced by 48%
+		Debuff durations reduced by 30%
 		'''
 }
 
@@ -632,6 +632,7 @@ Plasma_Bag: {
 		'''
 		Slightly increased regeneration
 		Debuff durations reduced by 30%
+		Does not affect Potion Sickness
 		Rapidly lose life when Bleeding
 		'''
 }

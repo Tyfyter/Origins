@@ -57,8 +57,8 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
 			NPC.damage = 0; // redundant, already defaults to 0, just for clarification
-			NPC.lifeMax = 7200;
-			NPC.defense = 24;
+			NPC.lifeMax = 7800;
+			NPC.defense = 22;
 			NPC.noGravity = true;
 			NPC.width = 20;
 			NPC.height = 42;
@@ -105,9 +105,9 @@ namespace Origins.NPCs.Brine.Boss {
 			base.SetDefaults();
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
-			NPC.damage = 58;
-			NPC.lifeMax = 7200;
-			NPC.defense = 32;
+			NPC.damage = 28;
+			NPC.lifeMax = 7800;
+			NPC.defense = 26;
 			NPC.aiStyle = 0;
 			NPC.width = 20;
 			NPC.height = 42;
@@ -331,7 +331,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							dir,
 							ModContent.ProjectileType<Lost_Diver_Harpoon>(),
-							15 + (int)(15 * difficultyMult),
+							28 + (int)(6 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						).identity;
@@ -362,7 +362,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction.RotatedBy(NPC.direction * -0.5f) * speed,
 							ModContent.ProjectileType<Lost_Diver_Depth_Charge>(),
-							15 + (int)(15 * difficultyMult),
+							30 + (int)(5 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						).identity;
@@ -385,7 +385,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Torpedo_Tube>(),
-							15 + (int)(15 * difficultyMult),
+							26 + (int)(4 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						);
@@ -412,7 +412,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Mildew_Whip>(),
-							15 + (int)(15 * difficultyMult),
+							24 + (int)(5 * difficultyMult),
 							2,
 							ai2: NPC.whoAmI
 						).identity;

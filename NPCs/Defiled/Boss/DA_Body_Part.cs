@@ -49,6 +49,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.knockBackResist = 0L;
 			NPC.noTileCollide = true;
 			NPC.damage = 0;
+			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0f, 0.25f);
+			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
 		}
 		public enum Part : byte {
 
