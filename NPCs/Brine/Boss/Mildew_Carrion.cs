@@ -366,6 +366,9 @@ namespace Origins.NPCs.Brine.Boss {
 				}
 			}
 		}
+		public override void BossLoot(ref string name, ref int potionType) {
+			potionType = ItemID.GreaterHealingPotion;
+		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
 			float terriblyPlacedHookMult = 1;
 			if (Main.GameModeInfo.IsJourneyMode) {
