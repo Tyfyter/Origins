@@ -54,7 +54,8 @@ namespace Origins.Projectiles.Weapons {
 					Projectile.damage,
 					0,
 					Projectile.owner,
-					ai1: Projectile.whoAmI
+					ai1: Projectile.whoAmI,
+					ai2: Projectile.ai[2]
 				);
 			}
 		}
@@ -104,6 +105,7 @@ namespace Origins.Projectiles.Weapons {
 			get => Projectile.ai[0];
 			set => Projectile.ai[0] = value;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Projectile.Center = realPosition - Projectile.velocity;
 			if (movementFactor == 0f) {
@@ -114,7 +116,7 @@ namespace Origins.Projectiles.Weapons {
 			if (Projectile.timeLeft > 18) {
 				movementFactor += 1f;
 			}
-			Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor * Projectile.ai[2];
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.rotation += MathHelper.PiOver2;
 			ParentProjectile.timeLeft = 7;
@@ -132,11 +134,11 @@ namespace Origins.Projectiles.Weapons {
 			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			float totalLength = Projectile.velocity.Length() * movementFactor;
+			float totalLength = Projectile.velocity.Length() * movementFactor * Projectile.ai[2];
 			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
-			totalLength -= 58;
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, (int)Math.Min(58 * Projectile.ai[2], (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
+			totalLength -= 58 * Projectile.ai[2];
 			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
 			int c = 0;
@@ -145,7 +147,7 @@ namespace Origins.Projectiles.Weapons {
 				c++;
 				pos = (Projectile.Center - Main.screenPosition) - (offset * c);
 				//lightColor = Projectile.GetAlpha(new Color(Lighting.GetColor((pos + Projectile.velocity * 2).ToTileCoordinates()).ToVector4()));
-				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
 			}
 			return false;
 		}

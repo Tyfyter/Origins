@@ -312,6 +312,9 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void AI(Projectile projectile) {
+			if (prefix is IProjectileAIPrefix projectileAIPrefix) {
+				projectileAIPrefix.ProjectileAI(projectile);
+			}
 			if (!isFromMitosis && !hasUsedMitosis && projectile.owner == Main.myPlayer && !ProjectileID.Sets.IsAWhip[projectile.type] && projectile.type != ModContent.ProjectileType<Mitosis_P>()) {
 				for (int i = 0; i < Mitosis_P.mitosises.Count; i++) {
 					if (projectile.Colliding(projectile.Hitbox, Main.projectile[Mitosis_P.mitosises[i]].Hitbox)) {

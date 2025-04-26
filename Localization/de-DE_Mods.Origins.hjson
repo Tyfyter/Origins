@@ -1726,6 +1726,7 @@ Projectiles: {
 	// Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: Defiled Spike Explosion Spike Hostile Unused
 	// Defiled_Spike_Indicator.DisplayName: D A Spike Indicator
 	// DA_Laser.DisplayName: D A Laser Spin
+	// Defiled_Prefix_Orb.DisplayName: Defiled Prefix Orb
 }
 
 Prefixes: {
@@ -1793,6 +1794,11 @@ Prefixes: {
 	}
 
 	// Necromantic_Artifact_Prefix.Description: "{$Mods.Origins.Prefixes.Necromantic_Prefix.SharedDescription}"
+
+	Defiled_Prefix: {
+		// Description: Mods.Origins.Prefixes.Defiled_Prefix.Description
+		// DisplayName: Defiled Prefix
+	}
 }
 
 BiomeName: {

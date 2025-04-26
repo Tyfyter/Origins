@@ -37,6 +37,9 @@ namespace Origins.Items {
 	public interface IOnHitNPCPrefix {
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone);
 	}
+	public interface IProjectileAIPrefix {
+		public void ProjectileAI(Projectile projectile);
+	}
 	public interface IModifyHitNPCPrefix {
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers);
 	}
@@ -93,6 +96,23 @@ namespace Origins.Items {
 				if (maxLife.Multiplicative != 1) yield return GetLine(maxLife.Multiplicative, "ArtifactMaxLife", BonusStackType.Multiplicative, false);
 				if (maxLife.Flat != 0) yield return GetLine(maxLife.Flat, "ArtifactMaxLife", BonusStackType.Flat, false);
 			}
+		}
+	}
+	public abstract class OriginsPrefix : ModPrefix {
+		public virtual bool HasDescription => false;
+		public virtual bool HasDescriptionBad => false;
+		public sealed override void Load() {
+			_ = GetDescriptionLines().Count();
+			OnLoad();
+		}
+		public virtual void OnLoad() { }
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
+			..this.GetStatLines(),
+			..GetDescriptionLines()
+		];
+		IEnumerable<TooltipLine> GetDescriptionLines() {
+			if (HasDescription) yield return new TooltipLine(Origins.instance, Name, this.GetLocalization("Description").Value) { IsModifier = true };
+			if (HasDescriptionBad) yield return new TooltipLine(Origins.instance, Name, this.GetLocalization("BadDescription").Value) { IsModifier = true, IsModifierBad = true };
 		}
 	}
 	public class Heavy_Cal_Prefix : ModPrefix {
@@ -397,26 +417,11 @@ namespace Origins.Items {
 		public bool CanReforge(Item item) => false;
 	}
 	#region minion prefixes
-	public abstract class MinionPrefix : ModPrefix {
-		public virtual bool HasDescription => false;
-		public virtual bool HasDescriptionBad => false;
+	public abstract class MinionPrefix : OriginsPrefix {
 		public override PrefixCategory Category => PrefixCategory.Magic;
-		public sealed override void Load() {
-			_ = GetDescriptionLines().Count();
-			OnLoad();
-		}
-		public virtual void OnLoad() { }
 		public override bool CanRoll(Item item) => ContentSamples.ProjectilesByType[item.shoot] is { minion: true } or { sentry: true };
 		public virtual void UpdateProjectile(Projectile projectile, int time) { }
 		public virtual void OnSpawn(Projectile projectile, IEntitySource source) { }
-		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => [
-			..this.GetStatLines(),
-			..GetDescriptionLines()
-		];
-		IEnumerable<TooltipLine> GetDescriptionLines() {
-			if (HasDescription) yield return new TooltipLine(Origins.instance, Name, this.GetLocalization("Description").Value) { IsModifier = true };
-			if (HasDescriptionBad) yield return new TooltipLine(Origins.instance, Name, this.GetLocalization("BadDescription").Value) { IsModifier = true, IsModifierBad = true };
-		}
 	}
 	public class Speedy_Prefix : MinionPrefix {
 		public override bool CanRoll(Item item) => base.CanRoll(item) && !Origins.ArtifactMinion[item.shoot];
@@ -679,4 +684,57 @@ namespace Origins.Items {
 	}
 	#endregion artifact prefixes
 	#endregion minion prefixes
+	public class Prefix_Timer_Global : GlobalProjectile {
+		internal static List<ProjectileEffectTimer> timers = [];
+		public override bool InstancePerEntity => true;
+		TimerInstance[] timerInstances = [];
+		bool initialized = false;
+		public override bool PreAI(Projectile projectile) {
+			if (!initialized) {
+				initialized = true;
+				List<TimerInstance> relevantTimers = [];
+				for (int i = 0; i < timers.Count; i++) {
+					if (timers[i].AppliesToEntity(projectile)) {
+						relevantTimers.Add(new(timers[i].Index));
+					}
+				}
+				timerInstances = relevantTimers.ToArray();
+			}
+			for (int i = 0; i < timerInstances.Length; i++) {
+				ref int time = ref timerInstances[i].time;
+				if (time < int.MaxValue) time++;
+			}
+			return true;
+		}
+		public ref int Get<TTimer>() where TTimer : ProjectileEffectTimer {
+			int timerIndex = ModContent.GetInstance<TTimer>().Index;
+			for (int i = 0; i < timerInstances.Length; i++) {
+				if (timerInstances[i].Type == timerIndex) return ref timerInstances[i].time;
+			}
+			Array.Resize(ref timerInstances, timerInstances.Length + 1);
+			timerInstances[^1] = new(timerIndex);
+			return ref timerInstances[^1].time;
+		}
+		struct TimerInstance(int type) {
+			internal readonly int Type = type;
+			internal int time = int.MaxValue;
+		}
+	}
+	public static class ProjectileTimerExtensions {
+		public static ref int GetEffectTimer<TTimer>(this Projectile projectile) where TTimer : ProjectileEffectTimer {
+			return ref projectile.GetGlobalProjectile<Prefix_Timer_Global>().Get<TTimer>();
+		}
+	}
+	public abstract class ProjectileEffectTimer : ILoadable {
+		public int Index { get; private set; }
+		public abstract bool AppliesToEntity(Projectile projectile);
+		public void Load(Mod mod) {
+			Index = Prefix_Timer_Global.timers.Count;
+			Prefix_Timer_Global.timers.Add(this);
+		}
+		public void Unload() {}
+	}
+	public abstract class PrefixProjectileEffectTimer<TPrefix> : ProjectileEffectTimer where TPrefix : ModPrefix {
+		public override bool AppliesToEntity(Projectile projectile) => projectile.GetGlobalProjectile<OriginGlobalProj>().prefix is TPrefix;
+	}
 }
