@@ -359,12 +359,18 @@ namespace Origins.NPCs.Brine.Boss {
 					Main.npc[num14].life--;
 				}
 			}
+			NPC.scale = 0.95f + NPC.GetLifePercent() * 0.15f;
 			if (NPC.life <= 0 && !NPC.immortal) {
 				NPC.life = 1;
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					NPC.StrikeInstantKill();
 				}
 			}
+		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			float factor = (NPC.scale - 1) * 0.5f;
+			npcHitbox.Inflate((int)(npcHitbox.Width * factor), (int)(npcHitbox.Height * factor));
+			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
 		public override void BossLoot(ref string name, ref int potionType) {
 			potionType = ItemID.GreaterHealingPotion;
