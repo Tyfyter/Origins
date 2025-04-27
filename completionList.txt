@@ -480,7 +480,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Power Lotus
-(^) Powerflower*
+(#2, ^2) Powerflower* !!! (tangela and glowmask)
 (^) Primordial Soup*
 (^) Priority Mail*
 (^) Protomind*
@@ -593,7 +593,7 @@ VANITY:
 (^) Acrid Dye
 (^) Amber Dye
 (X) Ancient Riven Dye
-(☻, @) Anti-gray Dye !!!
+(^) Anti-gray Dye
 (X) Ashen Dye
 (X) Defiled Dye
 (^) High Contrast Dye
@@ -1180,6 +1180,9 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
+(X) Ravel Lock: 21
+(X) Ravel Lock: Builder
+(X) Ravel Lock: Stacker
 (X) Ravel Locker
 (X) Residue Block° !!!
 (X) Residue Furniture° !!!

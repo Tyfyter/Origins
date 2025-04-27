@@ -39,6 +39,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		int currentFrame = 0;
 		int frameHeight = 0;
 		public override string Texture => bodyPartsPath + "Torso";
+		public AssimilationAmount? Assimilation => 0.01f;
 		public override void SetDefaults() {
 
 			NPC.friendly = false;
