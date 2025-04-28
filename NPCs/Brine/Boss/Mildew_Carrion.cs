@@ -168,7 +168,7 @@ namespace Origins.NPCs.Brine.Boss {
 
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -178,7 +178,7 @@ namespace Origins.NPCs.Brine.Boss {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 0f
 			};
-			Origins.RasterizeAdjustment[Type] = (0, 0f, 0f);
+			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0.8f);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void Unload() {
@@ -466,6 +466,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public static int DestructionCooldown => 300;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;

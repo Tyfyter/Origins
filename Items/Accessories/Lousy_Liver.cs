@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Journal;
 using Terraria;
 using Terraria.ID;
@@ -29,6 +30,9 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			BuffID.Sets.GrantImmunityWith[Type] = [
+				ModContent.BuffType<Rasterized_Debuff>()
+			];
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
