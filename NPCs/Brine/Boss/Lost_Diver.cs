@@ -54,14 +54,12 @@ namespace Origins.NPCs.Brine.Boss {
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
+			base.SetDefaults();
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.dontTakeDamage = true;
-			NPC.damage = 0; // redundant, already defaults to 0, just for clarification
-			NPC.lifeMax = 7800;
-			NPC.defense = 22;
+			NPC.damage = 0;
 			NPC.noGravity = true;
-			NPC.width = 20;
-			NPC.height = 42;
+			NPC.BossBar = null;
 			NPC.hide = true;
 		}
 		public override void AI() {

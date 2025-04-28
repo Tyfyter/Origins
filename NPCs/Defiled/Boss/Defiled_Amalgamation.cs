@@ -258,7 +258,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
 									new(state_magic_missile, 1f),
-									new(state_split_amalgamation_start, 1f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
+									new(state_split_amalgamation_start, 0.9f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
 									new(state_split_amalgamation_active, 0f)
 									]
 								);
