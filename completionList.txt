@@ -480,7 +480,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Power Lotus
-(#2, ^2) Powerflower* !!! (tangela and glowmask)
+(^) Powerflower* !!! (tangela and glowmask)
 (^) Primordial Soup*
 (^) Priority Mail*
 (^) Protomind*
@@ -834,7 +834,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(#2, ^2) Brine Haze !!! (randomly placed brine clouds)
+(#2, ^2) Brine Haze !!! (randomly placed brine clouds ?)
 (X) Broadcast
 (^) Chemical Laser
 (^) Communion*
