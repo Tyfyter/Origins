@@ -44,4 +44,5 @@ namespace Origins.Layers {
 
 	public class Head_Tangela_Layer() : Accessory_Tangela_Layer(nameof(Player.head), PlayerDrawLayers.Head, nameof(TextureAssets.ArmorHead)) { }
 	public class Body_Tangela_Layer() : Accessory_Tangela_Layer(nameof(Player.body), PlayerDrawLayers.ArmOverItem, nameof(TextureAssets.ArmorBodyComposite)) { }
+	public class Face_Tangela_Layer() : Accessory_Tangela_Layer(nameof(Player.face), PlayerDrawLayers.FaceAcc, nameof(TextureAssets.AccFace)) { }
 }
