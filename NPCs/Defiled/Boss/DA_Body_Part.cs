@@ -164,7 +164,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				return;
 			}
-			;
+
 			NPC.spriteDirection = NPC.velocity.X > 0 ? -1 : NPC.velocity.X < 0 ? 1 : NPC.spriteDirection;
 
 			switch (PartType) {
@@ -316,7 +316,11 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.05f;
 		}
-
+		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
+			if (NPC.ai[2] < 200 || NPC.ai[2] >= Defiled_Amalgamation.SplitDuration) {
+				modifiers.FinalDamage /= projectile.penetrate > 0 ? Math.Min(projectile.maxPenetrate, 5f) : 5f;
+			}
+		}
 		public override void FindFrame(int frameHeight) {
 			if (PartType == Part.leg1 || PartType == Part.leg2) {
 				if (NPC.velocity.Y < 0)
@@ -326,7 +330,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 			NPC.frame.Y = currentFrame * ((this.frameHeight * (maxFrames - 1)) / (maxFrames - 1));
 		}
-
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = torsoPath;
 			Texture2D glowTexture = torsoGlowPath;
@@ -371,9 +374,11 @@ namespace Origins.NPCs.Defiled.Boss {
 		public Color? SetOutlineColor(float progress) => Color.Lerp(Color.Green, Color.Purple, progress);
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);
+			writer.Write((short)NPC.realLife);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
+			NPC.realLife = reader.ReadInt16();
 		}
 	}
 	public class DA_Arc_Bolt : ModProjectile {
