@@ -177,6 +177,8 @@ namespace Origins.Walls {
 			Main.wallHouse[Type] = true;
 		}
 		public override void RandomUpdate(int i, int j) { }
+		public override void AnimateWall(ref byte frame, ref byte frameCounter) { }
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) { }
 	}
 	[LegacyName("Sulphur_Stone_Wall_Item", "Dolomite_Wall_Item")]
 	public class Baryte_Wall_Item : ModItem {

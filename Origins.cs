@@ -54,6 +54,8 @@ using Origins.NPCs.TownNPCs;
 using Origins.Items.Other.Testing;
 using Origins.Journal;
 using Origins.Backgrounds;
+using Terraria.ModLoader.Core;
+using Origins.Dusts;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -912,6 +914,7 @@ namespace Origins {
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 			Array.Resize(ref specialPrefix, PrefixLoader.PrefixCount);
+			LoaderUtils.ResetStaticMembers(typeof(Deprioritized_Dust));
 		}
 		static void LoadCloudBottoms() {
 			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];

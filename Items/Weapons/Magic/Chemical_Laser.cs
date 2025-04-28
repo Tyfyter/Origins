@@ -45,12 +45,16 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ShadowBeamFriendly);
+			Projectile.timeLeft = 250;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 1;
 			Projectile.hide = true;
 		}
 		public override void AI() {
+			int offScreenDist = 128;
+			if (Projectile.position.X < Main.screenPosition.X - offScreenDist || Projectile.position.Y < Main.screenPosition.Y - offScreenDist
+				|| Projectile.position.X > Main.screenPosition.X + Main.screenWidth + offScreenDist || Projectile.position.Y > Main.screenPosition.Y + Main.screenHeight + offScreenDist) return;
 			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
 			for (int i = 0; i < 2; i++) {
 				Dust dust = Dust.NewDustDirect(Projectile.position, 1, 1, DustID.Electric);
