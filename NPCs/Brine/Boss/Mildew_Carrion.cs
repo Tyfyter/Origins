@@ -639,7 +639,6 @@ namespace Origins.NPCs.Brine.Boss {
 				if (frame.Height < 8) return false;
 				while (dist > frame.Height) {
 					frame.Y = rand.Next(4) * frame.Height;
-					pos += diff;
 					Main.EntitySpriteDraw(
 						texture,
 						pos - screenPos,
@@ -650,6 +649,7 @@ namespace Origins.NPCs.Brine.Boss {
 						1,
 						SpriteEffects.None
 					);
+					pos += diff;
 					dist -= frame.Height - 8;
 				}
 			}
