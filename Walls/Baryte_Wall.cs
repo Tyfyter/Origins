@@ -22,7 +22,6 @@ namespace Origins.Walls {
 			if (!Main.dedServ) {
 				perlin = Request<Texture2D>("Terraria/Images/Misc/Perlin");
 			}
-			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			Origins.WallHammerRequirement[Type] = 70;
 			Origins.WallBlocksMinecartTracks[Type] = true;
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
