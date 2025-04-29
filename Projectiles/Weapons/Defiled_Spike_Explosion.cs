@@ -98,6 +98,7 @@ namespace Origins.Projectiles.Weapons {
 				Projectile.friendly = parentProj.friendly;
 				Projectile.DamageType = parentProj.DamageType;
 			}
+			if (Projectile.ai[2] == 0) Projectile.ai[2] = 1;
 			realPosition = Projectile.Center;
 		}
 		public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
