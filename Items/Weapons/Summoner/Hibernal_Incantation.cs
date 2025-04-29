@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Summoner {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
-			Item.damage = 15;
+			Item.damage = 10;
 			Item.DamageType = DamageClasses.Incantation;
 			Item.noMelee = true;
 			Item.width = 22;

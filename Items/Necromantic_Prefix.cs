@@ -21,7 +21,7 @@ namespace Origins.Items {
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && !Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
-			const float max_bonus = 0.6f;
+			const float max_bonus = 0.4f;
 			modifiers.FinalDamage *= 1 + max_bonus - target.GetLifePercent() * max_bonus;
 		}
 		public static void OnHit(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
@@ -65,7 +65,7 @@ namespace Origins.Items {
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass(DamageClass.Summon) && Origins.ArtifactMinion[item.shoot];
 		public void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
-			const float max_bonus = 1f;
+			const float max_bonus = 0.6f;
 			modifiers.FinalDamage *= 1 + max_bonus - target.GetLifePercent() * max_bonus;
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {

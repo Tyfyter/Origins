@@ -207,7 +207,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Vector2 diff = targetCenter - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
-					if (++Projectile.ai[1] >= 10) {
+					if (++Projectile.ai[1] >= 25) {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1.5f).WithVolume(0.25f), Projectile.Center);
 						if (Main.myPlayer == player.whoAmI) Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
