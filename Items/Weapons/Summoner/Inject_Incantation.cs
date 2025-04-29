@@ -39,7 +39,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Book, 5)
-			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
+			.AddIngredient<Defiled_Bar>(10)
+			.AddIngredient<Undead_Chunk>(6)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
