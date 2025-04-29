@@ -119,7 +119,11 @@ namespace Origins.Items.Weapons.Melee {
 			if (player.channel) {
 				Projectile.timeLeft = player.itemTimeMax * Projectile.MaxUpdates;
 				if (Projectile.owner == Main.myPlayer) {
-					Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
+					Vector2 newVel = (Main.MouseWorld - Projectile.Center).SafeNormalize(default);
+					if (Projectile.velocity != newVel) {
+						Projectile.velocity = newVel;
+						Projectile.netUpdate = true;
+					}
 				}
 				player.SetDummyItemTime(player.itemTimeMax - 1);
 				Projectile.ai[0] += 1f / Projectile.timeLeft;

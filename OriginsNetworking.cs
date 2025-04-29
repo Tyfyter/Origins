@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Questing;
 using Origins.Reflection;
@@ -121,6 +122,11 @@ namespace Origins {
 					}
 					break;
 
+					case tyrfing_zap: {
+						Tyrfing_P.DoArcVisual(reader.ReadVector2(), reader.ReadVector2());
+						break;
+					}
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -213,6 +219,15 @@ namespace Origins {
 						packet.Send(whoAmI);
 					}
 					break;
+
+					case tyrfing_zap: {
+						ModPacket packet = GetPacket();
+						packet.Write(type);
+						packet.WriteVector2(reader.ReadVector2());
+						packet.WriteVector2(reader.ReadVector2());
+						packet.Send(ignoreClient: whoAmI);
+						break;
+					}
 
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on server");
@@ -456,6 +471,7 @@ namespace Origins {
 			internal const byte request_chest_sync_projectile = chest_sync_projectile;
 			internal const byte chest_sync_projectile = 25;
 			internal const byte soul_snatcher_activate = 26;
+			internal const byte tyrfing_zap = 27;
 		}
 	}
 	public interface IChestSyncRecipient {

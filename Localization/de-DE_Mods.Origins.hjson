@@ -1727,6 +1727,7 @@ Projectiles: {
 	// Defiled_Spike_Indicator.DisplayName: D A Spike Indicator
 	// DA_Laser.DisplayName: D A Laser Spin
 	// Defiled_Prefix_Orb.DisplayName: Defiled Orb
+	// Tyrfing_P.DisplayName: Tyrfing P
 }
 
 Prefixes: {

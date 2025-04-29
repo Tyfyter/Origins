@@ -2784,8 +2784,7 @@ Tyrfing: {
 	Tooltip:
 		'''
 		Receives 50% higher damage bonuses
-		Hold right click to stab
-		'Behold'
+		Hold <right> for an alternate attack
 		'''
 }
 

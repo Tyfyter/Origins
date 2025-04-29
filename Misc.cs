@@ -2254,11 +2254,11 @@ namespace Origins {
 			}
 		}
 		public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f, params (float scale, Color color)[] colors) {
-			Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+			Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
 			if (!screen.Contains(start) && !screen.Contains(end)) {
 				return;
 			}
-			List<Vector2> positions = new List<Vector2>();
+			List<Vector2> positions = [];
 			Vector2 normal = (end - start).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * (sineMult + Math.Sign(sineMult));
 			for (float i = 0; i < 1f; i += precision) {
 				positions.Add(Vector2.Lerp(start, end, i) + (normal * (float)Math.Sin(i * Math.PI) * Main.rand.NextFloat(0.75f, 1.25f)));

@@ -8,400 +8,340 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-
 using Origins.Dev;
+using PegasusLib;
+using System.Linq;
+using System;
+using Terraria.Enums;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
+using Origins.Buffs;
+using SteelSeries.GameSense;
+using Origins.NPCs.Defiled;
+using Origins.NPCs;
+using System.Collections.Generic;
+
 namespace Origins.Items.Weapons.Melee {
-	//this took seven and a half hours to make, now that's dedication
-	public class Tyrfing : AnimatedModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Sword"
-        ];
-        protected override bool CloneNewInstances => true;
-		internal static DrawAnimationManual animation;
-		public override DrawAnimation Animation {
-			get {
-				animation.Frame = frame;
-				return animation;
-			}
-		}
-		public int charge = 0;
-		internal int frame = 5;
+	public class Tyrfing : ModItem, PegasusLib.ICustomDrawItem {
 		public override void SetStaticDefaults() {
-			animation = new DrawAnimationManual(6) {
-				Frame = 5
-			};
-			Main.RegisterItemAnimation(Item.type, animation);
-			Item.ResearchUnlockCount = 1;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 88;
+			Item.damage = 62;
 			Item.DamageType = DamageClass.Melee;
-			Item.width = 42;
-			Item.height = 68;
-			Item.useTime = 88;
-			Item.useAnimation = 16;
+			Item.width = 78;
+			Item.height = 78;
+			Item.useTime = 17;
+			Item.useAnimation = 17;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 9;
+			Item.knockBack = 4;
 			Item.autoReuse = true;
-			Item.useTurn = false;
+			Item.useTurn = true;
+			Item.shoot = ModContent.ProjectileType<Tyrfing_P>();
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Lime;
 			Item.UseSound = SoundID.Item1;
+			Item.channel = true;
 		}
 		public override void AddRecipes() {
-			return;//todo: fix, maybe entirely redesign
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Excalibur)
 			.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
-
-		public override bool AltFunctionUse(Player player) {
-			return true;
-		}
-		public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback) {
-			if (player.altFunctionUse == 2) knockback *= 2.1111111111111111111111111111112f;
-		}
-
-		public override bool CanUseItem(Player player) {
-			if (player.altFunctionUse == 2) {
-				Item.useStyle = ItemUseStyleID.Shoot;
-				Item.shoot = ModContent.ProjectileType<Tyrfing_Stab>();
-				Item.shootSpeed = 3.4f;
-				Item.noUseGraphic = true;
-				Item.noMelee = true;
-				Item.UseSound = null;
-			} else {
-				Item.useStyle = ItemUseStyleID.Swing;
-				Item.shoot = ModContent.ProjectileType<Tyrfing_Shard>();
-				Item.shootSpeed = 6.5f;
-				Item.noUseGraphic = false;
-				Item.noMelee = false;
-				Item.UseSound = SoundID.Item1;
-			}
-			return base.CanUseItem(player);
-		}
-
-		public override void HoldItem(Player player) {
-			if (player.itemAnimation != 0 && player.altFunctionUse != 2) {
-				player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
-			}
-		}
-
-		public override void LoadData(TagCompound tag) {
-			frame = tag.GetInt("frame");
-		}
-		public override void SaveData(TagCompound tag) {
-			tag.Add("frame", frame);
-		}
-
+		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
-			OriginExtensions.FixedUseItemHitbox(Item, player, ref hitbox, ref noHitbox);
-			if (frame == 5) {
-				hitbox = new Rectangle(0, 0, 0, 0);
+			if (player.altFunctionUse != 2) {
+				if (player.itemAnimation < player.itemAnimationMax * 0.333) {
+					OriginExtensions.FixedUseItemHitbox(Item, player, ref hitbox, ref noHitbox);
+					hitbox.Height += 16;
+				} else if (player.itemAnimation >= player.itemAnimationMax * 0.666) {
+					hitbox.Y += 16;
+					hitbox.Height -= 16;
+					hitbox.Inflate(-24, 0);
+					hitbox.X -= player.direction * 16;
+				}
+			} else {
+				hitbox = default;
+				noHitbox = true;
 			}
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (player.altFunctionUse == 2) {
-				Item.noUseGraphic = true;
-				player.itemLocation = Vector2.Zero;
-				Item.useStyle = ItemUseStyleID.Shoot;
-				if (player.controlUseTile && (charge >= 15 || frame == 0 || player.CheckMana(7, true))) {
-					player.itemTime = 0;
-					player.itemAnimation = 5;
-					if (charge < 15) {
-						if (++charge >= 15)
-							for (int i = 0; i < 3; i++) {
-								int a = Dust.NewDust(position - velocity, 0, 0, DustID.Frost);
-								Main.dust[a].noGravity = true;
-							}
-					} else if (Main.GameUpdateCount % 12 <= 1) {
-						int a = Dust.NewDust(position - velocity, 0, 0, DustID.Frost);
-						Main.dust[a].noGravity = true;
-					}
-					return false;
-				}
-				if (charge >= 15) {
-					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: animation.Frame > 0 ? 0 : -1);
-					charge = 0;
-					player.itemAnimation = 16;
-					player.itemAnimationMax = 16;
-					if (frame == 5) {
-						SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(0.75f), position);
-					}
-				}
-			} else if (frame != 5) {
-				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(0.25f), position);
-				int prev = -1;
-				int curr = -1;
-				Vector2 perp = velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
-				for (int i = 3; --i > -3;) {
-					curr = Projectile.NewProjectile(source, position + perp * i * 4, velocity.RotatedBy(i / 16d) * (1.5f - System.Math.Abs(i / 6f)), type, damage / 3, knockback, player.whoAmI, prev);
-					if (prev > 0) {
-						Main.projectile[prev].ai[1] = curr;
-					}
-					prev = curr;
-				}
-			}
-			return false;
+		public override bool CanShoot(Player player) => player.altFunctionUse == 2;
+		public override float UseSpeedMultiplier(Player player) => player.altFunctionUse == 2 ? 0.8f : 1;
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 180);
 		}
-		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			Texture2D texture = TextureAssets.Item[Item.type].Value;
-			spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
-			return false;
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			if (drawInfo.drawPlayer.altFunctionUse == 2) return;
+			Rectangle bounds = itemTexture.Bounds;
+			drawInfo.DrawDataCache.Add(new(
+				itemTexture,
+				(drawInfo.drawPlayer.HandPosition ?? drawInfo.drawPlayer.GetFrontHandPosition(drawInfo.drawPlayer.compositeFrontArm.stretch, drawInfo.drawPlayer.compositeFrontArm.rotation)) - Main.screenPosition,
+				bounds,
+				lightColor,
+				drawInfo.drawPlayer.itemRotation + MathHelper.ToRadians(7.31f) * drawInfo.drawPlayer.direction,
+				new Vector2(7, 79).Apply(drawInfo.itemEffect, bounds.Size()),
+				drawInfo.drawPlayer.GetAdjustedItemScale(Item),
+				drawInfo.itemEffect
+			));
 		}
 	}
-	public class Tyrfing_Shard : ModProjectile {
-		public const float magRange = 16 * 7.5f;
-		public const float speed = 16f;
-		public const float inertia = 1f;
-
-		public override string Texture => "Origins/Items/Weapons/Melee/Tyrfing_Shard";
+	public class Tyrfing_P : ModProjectile {
+		public const int trail_length = 20;
+		public override string Texture => typeof(Tyrfing).GetDefaultTMLName();
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tyrfing");
-			Main.projFrames[Projectile.type] = 3;
+			ID = Type;
 		}
+		protected const int HitboxSteps = 4;
+		protected static float Startup => 0.25f;
+		protected static float End => 0.25f;
+		protected float MinAngle => (-2.5f) - Projectile.ai[0] * 0.25f;
+		protected float MaxAngle => 2.5f + Projectile.ai[0] * 0.25f;
+		protected Rectangle lastHitHitbox;
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
+			Projectile.width = 24;
+			Projectile.height = 24;
 			Projectile.aiStyle = 0;
-			Projectile.extraUpdates = 1;
-			Projectile.timeLeft = 60;
-			Projectile.width = 10;
-			Projectile.height = 10;
-			Projectile.penetrate = -1;
-			Projectile.tileCollide = false;
-			Projectile.frame = Main.rand.Next(3);
-			Projectile.spriteDirection = Main.rand.NextBool() ? 1 : -1;
-			Projectile.ai[0] = -1f;
-			Projectile.ai[1] = -1f;
+			Projectile.extraUpdates = 3;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+			Projectile.noEnchantmentVisuals = true;
+			//DrawHeldProjInFrontOfHeldItemAndArms = true;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				Projectile.scale *= itemUse.Item.scale;
+				itemUse.Player.ApplyMeleeScale(ref Projectile.scale);
+				Projectile.ai[1] = -itemUse.Player.direction;
+			}
+		}
+		protected float SwingFactor {
+			get => Projectile.ai[2];
+			set => Projectile.ai[2] = value;
+		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
-			Projectile.rotation += Projectile.spriteDirection * 0.3f;
+			Player player = Main.player[Projectile.owner];
+			if (!player.active || player.dead) {
+				Projectile.Kill();
+				return;
+			}
+			float updateOffset = (Projectile.MaxUpdates - (Projectile.numUpdates + 1)) / (float)(Projectile.MaxUpdates + 1);
+			if (player.channel) {
+				updateOffset = 0;
+				Projectile.timeLeft = player.itemTimeMax * Projectile.MaxUpdates;
+				if (Projectile.owner == Main.myPlayer) {
+					Vector2 newVel = (Main.MouseWorld - Projectile.Center).SafeNormalize(default);
+					if (Projectile.velocity != newVel) {
+						Projectile.velocity = newVel;
+						Projectile.netUpdate = true;
+					}
+				}
+				player.SetDummyItemTime(player.itemTimeMax - 1);
+				Projectile.ai[0] += 2f / Projectile.timeLeft;
+				if (Projectile.ai[0] >= 1) {
+					Projectile.ai[0] = 1;
+					Projectile.timeLeft += Projectile.timeLeft / 2;
+				}
+			}
+			if (player.itemTime <= 2) {
+				Projectile.localAI[2] = 1;
+			}
+			SwingFactor = ((player.itemTime - updateOffset) / (float)player.itemTimeMax) * (1 + Startup + End) - End;
+			if (SwingFactor > 0) SwingFactor = MathHelper.Lerp(MathF.Pow(SwingFactor, 2f), MathF.Pow(SwingFactor, 0.5f), SwingFactor * SwingFactor);
+			if (Projectile.localAI[2] == 1) {
+				player.SetDummyItemTime(2);
+				SwingFactor = 0;
+			}
+			Projectile.rotation = MathHelper.Lerp(
+				MaxAngle,
+				MinAngle,
+				MathHelper.Clamp(SwingFactor, 0, 1)
+			) * Projectile.ai[1];
+
+			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
+			player.heldProj = Projectile.whoAmI;
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+			player.itemLocation = Projectile.Center + GeometryUtils.Vec2FromPolar(26, realRotation + 0.3f * player.direction);
+			player.itemRotation = player.compositeFrontArm.rotation;
+			player.direction = Math.Sign(Projectile.velocity.X);
 			if (Projectile.localAI[1] > 0) {
 				Projectile.localAI[1]--;
-				Projectile.timeLeft = 61;
-				if (Projectile.localAI[1] <= 0) {
-					Projectile.localAI[1] = -Projectile.localAI[0];
-					Projectile.localAI[0] = 0;
-				}
-				return;
 			}
-			if (Projectile.timeLeft < 57) Projectile.tileCollide = true;
-			Vector2 targetCenter = Projectile.Center;
-			bool foundTarget = false;
-			float rangeMult = 1f;
-			if (Projectile.localAI[1] < 0) rangeMult = -Projectile.localAI[1];
-			for (int i = 0; i < Main.maxNPCs; i++) {
-				NPC npc = Main.npc[i];
-				if (npc.CanBeChasedBy() && npc.HasBuff(Mag_Debuff.ID)) {
-					float distance = Vector2.Distance(npc.Center, Projectile.Center);
-					bool closest = Vector2.Distance(Projectile.Center, targetCenter) > distance;
-					bool inRange = distance < magRange * rangeMult;
-					if ((!foundTarget || closest) && inRange) {
-						targetCenter = npc.Center;
-						foundTarget = true;
-					}
+			EmitEnchantmentVisuals();
+		}
+		public virtual void EmitEnchantmentVisuals() {
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.95f;
+			float velocityMult = 0;
+			float rotMult = 0.15f;
+			if (Projectile.localAI[2] == 0) {
+				if (Main.player[Projectile.owner].channel) {
+					velocityMult = 2;
+				} else {
+					velocityMult = 8;
+					rotMult = 0.05f;
 				}
 			}
-			if (foundTarget) {
-				Vector2 direction = targetCenter - Projectile.Center;
-				direction.Normalize();
-				direction *= speed;
-				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
-				if (direction.Length() <= Projectile.velocity.Length()) {
-					Projectile.velocity = direction;
-					Projectile.localAI[0] = 1;
+			Player player = Main.player[Projectile.owner];
+			int swingingDustFactor = (!player.channel && Projectile.localAI[2] != 1).ToInt();
+			for (int j = 0; j <= HitboxSteps; j++) {
+				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
+				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < swingingDustFactor + Projectile.ai[0]) {
+					Dust dust = Dust.NewDustDirect(
+						Projectile.position + vel * j,
+						Projectile.width, Projectile.height,
+						DustID.PortalBoltTrail,
+						newColor: new(0, 225, 255, 64)
+					);
+					dust.velocity = dust.velocity * 0.25f + Projectile.velocity.RotatedBy(Projectile.rotation * rotMult) * velocityMult;
+					dust.position += dust.velocity * 2;
+					dust.noGravity = true;
 				}
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			Projectile.ArmorPenetration += (int)(target.defense * 0.3f);
+		public override void CutTiles() {
+			if (Main.player[Projectile.owner].channel) return;
+			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+			Vector2 end = Projectile.Center + (Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * HitboxSteps);
+			Utils.PlotTileLine(Projectile.Center, end, Projectile.width, DelegateMethods.CutTiles);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (Main.player[Projectile.owner].channel) return false;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width;
+			Vector2 additionalOffset = vel.SafeNormalize(default) * 12;
+			for (int j = 0; j <= HitboxSteps; j++) {
+				Rectangle hitbox = projHitbox;
+				Vector2 offset = vel * j + additionalOffset;
+				hitbox.Offset((int)offset.X, (int)offset.Y);
+				if (hitbox.Intersects(targetHitbox)) {
+					lastHitHitbox = hitbox;
+					return true;
+				}
+			}
+			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.CanBeChasedBy()) target.buffImmune[Mag_Debuff.ID] = false;
-			target.AddBuff(Mag_Debuff.ID, 180);
-			target.immune[Projectile.owner] = 1;
-			if (Projectile.localAI[0] == 1) {
-				Projectile.localAI[0] = -1;
-				Projectile.position.X += Projectile.width / 2;
-				Projectile.position.Y += Projectile.height / 2;
-				Projectile.width = 64;
-				Projectile.height = 64;
-				Projectile.position.X -= Projectile.width / 2;
-				Projectile.position.Y -= Projectile.height / 2;
-				target.immune[Projectile.owner] = 0;
-				Projectile.damage *= 2;
-				Projectile.Damage();
-				Projectile.Kill();
-			} else if (Projectile.localAI[0] == -1) {
-				return;
-			}
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			if (Projectile.localAI[1] > 0) return true;
-			Dust dust;
-			for (int i = 0; i < 2; i++) {
-				for (int i2 = 1; i2 < 3; i2++) {
-					if (Projectile.ai[i] >= 0) {
-						Projectile proj = Main.projectile[(int)Projectile.ai[i]];
-						if (proj.active && proj.type == Projectile.type) {
-							dust = Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, proj.Center, 0.33f * i2), 226, Vector2.Lerp(Projectile.velocity, proj.velocity, 0.33f), 200, Scale: 0.25f);
-							dust.noGravity = true;
-							dust.noLight = true;
-						} else {
-							Projectile.ai[i] = -1f;
-						}
-					}
-				}
-			}
-			dust = Dust.NewDustPerfect(Projectile.Center, 226, Projectile.velocity, 200, Scale: 0.25f);
-			dust.noGravity = true;
-			return true;
-		}
-	}
-	public class Mag_Debuff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_160";
-		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Magnetized");
-			ID = Type;
-		}
-	}
-	public class Tyrfing_Stab : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Melee/Tyrfing_B";
-		protected override bool CloneNewInstances => true;
-		int stabee = -1;
-		bool noGrow = false;
-		
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Spear);
-			Projectile.timeLeft = 16;
-			Projectile.width = 32;
-			Projectile.height = 32;
-			Projectile.aiStyle = 0;
-		}
-		public float movementFactor {
-			get => Projectile.ai[0];
-			set => Projectile.ai[0] = value;
-		}
+			int debuffID = ModContent.BuffType<Electrified_Debuff>();
+			int hasBuff = target.HasBuff(debuffID).ToInt();
+			float range_per_arc = 8 + hasBuff * 2;
+			const float max_chain_count = 3;
+			float baseRange = range_per_arc * max_chain_count * (Projectile.ai[0] * 0.7f + hasBuff * 0.3f);
+			target.AddBuff(debuffID, 180);
 
-		public override void AI() {
-			Player projOwner = Main.player[Projectile.owner];
-			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-			Projectile.direction = projOwner.direction;
-			projOwner.heldProj = Projectile.whoAmI;
-			projOwner.itemTime = projOwner.itemAnimation;
-			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
-			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
-			if (!projOwner.frozen) {
-				if (movementFactor == 0f) {
-					movementFactor = 4.7f;
-					if (Projectile.ai[1] == -1) noGrow = true;
-					Projectile.ai[1] = 4;
-					Projectile.netUpdate = true;
+			bool ShouldInflict(Rectangle fromHitbox, Rectangle hitbox, bool fromDefiled, bool defiled, float range) {
+				Vector2 pointA = hitbox.Center().Clamp(fromHitbox);
+				Vector2 pointB = fromHitbox.Center().Clamp(hitbox);
+				if (pointA.IsWithin(pointB, 16 * Math.Min(range, range_per_arc) * ((fromDefiled || defiled) ? 2 : 1))) {
+					DoArcVisual(pointA, pointB);
+					if (Main.netMode != NetmodeID.SinglePlayer) {
+						ModPacket packet = Mod.GetPacket();
+						packet.Write(Origins.NetMessageType.tyrfing_zap);
+						packet.WriteVector2(pointA);
+						packet.WriteVector2(pointB);
+						packet.Send();
+					}
+					return true;
 				}
-				if (projOwner.itemAnimation < 3) {
-					movementFactor -= 1.7f;
-				} else if (Projectile.ai[1] > 0) {
-					movementFactor += 1.3f;
-					Projectile.ai[1]--;
-				}
-			}
-			Projectile.position += Projectile.velocity * movementFactor;
-			if (projOwner.itemAnimation == 0) {
-				Projectile.Kill();
-			}
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-			if (Projectile.spriteDirection == 1) {
-				Projectile.rotation -= MathHelper.Pi / 2f;
-			}
-			if (stabee >= 0) {
-				if (!Main.npc[stabee].active) {
-					stabee = -2;
-					return;
-				}
-				NPC victim = Main.npc[stabee];
-				victim.AddBuff(Impaled_Debuff.ID, 2);
-				victim.position += Projectile.position - Projectile.oldPosition;
-				victim.Center = Vector2.Lerp(victim.Center, Projectile.Center + Projectile.velocity, 0.035f);
-				victim.oldPosition = victim.position;
-			}
-		}
-		public override bool? CanHitNPC(NPC target) {
-			Player player = Main.player[Projectile.owner];
-			if (stabee >= 0) {
-				return target.whoAmI == stabee && player.itemAnimation == 3;
-			}
-			return base.CanHitNPC(target);
-		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			if (stabee == -1) {
-				modifiers.Knockback *= 0;
-			} else {
-				modifiers.SetCrit();
-			}
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (stabee >= 0) {
-				target.AddBuff(Mag_Debuff.ID, 180);
-				int proj;
-				bool bias = Main.rand.NextBool();
-				for (int i = 8; --i > 0;) {
-					proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.PiOver2 * ((bias ^ i % 2 == 0) ? -1 : 1)).RotatedByRandom(1f) * Main.rand.NextFloat(0.25f, 0.3f), ModContent.ProjectileType<Tyrfing_Shard>(), damageDone / 6, Projectile.knockBack, Projectile.owner);
-					Main.projectile[proj].localAI[1] = 45;
-					Main.projectile[proj].localAI[0] = 3;
-					Main.projectile[proj].tileCollide = false;
-				}
-				target.velocity += Projectile.velocity * target.knockBackResist * 2;
-				target.DelBuff(target.FindBuffIndex(Impaled_Debuff.ID));
-				target.AddBuff(Stunned_Debuff.ID, 5);
-				stabee = -2;
-				return;
-			}
-			if (target.boss || target.type == NPCID.TargetDummy || stabee == -2) {
-				stabee = -2;
-				return;
+				return false;
 			}
 			Player player = Main.player[Projectile.owner];
-			player.itemAnimation += player.itemAnimationMax;
-			player.itemAnimationMax *= 2;
-			Projectile.timeLeft = player.itemAnimation;
-			stabee = target.whoAmI;
+			float centerX = player.Center.X;
+			float luck = player.luck;
+			List<(NPC npc, float range)> fromNPC = [(target, baseRange)];
+			HashSet<NPC> arcedTo = [target];
+			HashSet<NPC> arcedFrom = [];
+			for (int i = 0; i < fromNPC.Count; i++) {
+				(NPC from, float range) = fromNPC[i];
+				if (!arcedFrom.Add(from)) continue;
+				Rectangle entityHitbox = from.Hitbox;
+				bool entityDefiled = from.ModNPC is IDefiledEnemy;
+				foreach (NPC other in Main.ActiveNPCs) {
+					if (arcedTo.Contains(other) || other.buffImmune[debuffID] || (other.dontTakeDamage && !other.ShowNameOnHover)) continue;
+					if ((other.type == NPCID.TargetDummy || !other.friendly) && ShouldInflict(entityHitbox, other.Hitbox, entityDefiled, other.ModNPC is IDefiledEnemy, range)) {
+						other.AddBuff(debuffID, 120);
+						arcedTo.Add(other);
+						fromNPC.Add((other, range - range_per_arc));
+						float damageMult = (range - range_per_arc) / (range_per_arc * max_chain_count);
+						float entityCenterX = other.Center.X;
+						other.SimpleStrikeNPC(
+							damageMult > 0 ? Main.rand.RandomRound(damageMult * hit.SourceDamage) : 1,
+							entityCenterX == centerX ? Projectile.direction : (entityCenterX > centerX).ToDirectionInt(),
+							false,
+							damageMult * Projectile.knockBack,
+							Projectile.DamageType,
+							true,
+							luck
+						);
+					}
+				}
+			}
+		}
+		static uint lastSoundFrame = 0;
+		public static void DoArcVisual(Vector2 pointA, Vector2 pointB) {
+			if (!Main.dedServ && Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), pointA, pointB)) {
+				Dust.NewDustPerfect(pointA, ModContent.DustType<Tyrfing_Arc_Dust>(), pointB);
+				if (lastSoundFrame < Origins.gameFrameCount) {
+					lastSoundFrame = Origins.gameFrameCount + 5;
+					SoundEngine.PlaySound(Main.rand.Next(Origins.Sounds.LightningSounds), (pointA + pointB) * 0.5f);
+				}
+			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			if (noGrow) {
-				Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Tyrfing_B").Value, (Projectile.Center - Projectile.velocity * 2) - Main.screenPosition, new Rectangle(0, 0, 40, 40), lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0);
-				return false;
-			}
-			if (Main.player[Projectile.owner].HeldItem.ModItem is Tyrfing sword) {
-				Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Tyrfing").Value;
-				Rectangle frame = sword.Animation.GetFrame(texture);
-				if (sword.frame > 0) sword.frame--;
-				Main.EntitySpriteDraw(texture, (Projectile.Center - Projectile.velocity * 2) - Main.screenPosition, frame, lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0);
-				return false;
-			}
-			return true;
+			SpriteEffects spriteEffects = Projectile.ai[1] < 0 ? SpriteEffects.FlipVertically : SpriteEffects.None;
+			float rotation = Projectile.rotation + Projectile.velocity.ToRotation() + ((MathHelper.PiOver4 + MathHelper.ToRadians(7.31f)) * Projectile.ai[1]);
+			Vector2 origin = new Vector2(7, 79).Apply(spriteEffects, TextureAssets.Projectile[Type].Size());
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				rotation,
+				origin,// origin point in the sprite, 'round which the whole sword rotates
+				Projectile.scale,
+				spriteEffects,
+				0
+			);
+			return false;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+			modifiers.Knockback *= 1 + Projectile.ai[0] * 0.5f;
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+			modifiers.Knockback *= 1 + Projectile.ai[0] * 0.5f;
 		}
 	}
-	public class Impaled_Debuff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_160";
-		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Impaled");
-			ID = Type;
+	public class Tyrfing_Arc_Dust : ModDust {
+		public override string Texture => "Terraria/Images/Item_1";
+		public override void OnSpawn(Dust dust) {
+			dust.alpha = 0;
 		}
-	}
-	public class Stunned_Debuff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_160";
-		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			ID = Type;
-			BuffID.Sets.GrantImmunityWith[Type] = new() {
-				BuffID.Confused
-			};
+		public override bool Update(Dust dust) {
+			dust.alpha++;
+			if (dust.alpha > 7) dust.active = false;
+			return false;
+		}
+		public override bool MidUpdate(Dust dust) {
+			return false;
+		}
+		public override bool PreDraw(Dust dust) {
+			Main.spriteBatch.DrawLightningArcBetween(
+				dust.position - Main.screenPosition,
+				dust.velocity - Main.screenPosition,
+				Main.rand.NextFloat(-4, 4),
+				0.1f,
+				(0.225f, new Color(35, 156, 169, 0) * 0.5f),
+				(0.150f, new Color(80, 204, 219, 0) * 0.5f),
+				(0.075f, new Color(80, 251, 255, 0) * 0.5f),
+				(0.025f, new Color(200, 255, 255, 0) * 0.5f)
+			);
+			return false;
 		}
 	}
 }

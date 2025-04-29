@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Melee {
 				label = c.DefineLabel();
 				c.EmitLdarg0();
 				c.EmitDelegate((Player player) => {
-					return player.HeldItem.ModItem is Soul_Snatcher;
+					return player.HeldItem.ModItem is Soul_Snatcher or Tyrfing;
 				});
 				c.EmitBrtrue(label);
 				c.Index += predicates.Length;

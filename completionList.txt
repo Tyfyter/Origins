@@ -724,7 +724,7 @@ MELEE WEAPONS:
 (^) Terrarang*
 (^) True Light Disc*
 (^) True Waning Crescent*
-(○, #2, ^2) Tyrfing
+(☻) Tyrfing
 
 (X) Celestial Point
 (X) Chromakama
