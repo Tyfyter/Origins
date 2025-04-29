@@ -111,13 +111,12 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.Center = realPosition - Projectile.velocity;
 			if (movementFactor == 0f) {
 				movementFactor = 1f;
-				//if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
 				Projectile.netUpdate = true;
 			}
 			if (Projectile.timeLeft > 18) {
 				movementFactor += 1f;
 			}
-			Projectile.position += Projectile.velocity * movementFactor * Projectile.ai[2];
+			Projectile.position += Projectile.velocity * (movementFactor + 1) * Projectile.ai[2];
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.rotation += MathHelper.PiOver2;
 			ParentProjectile.timeLeft = 7;
@@ -130,6 +129,7 @@ namespace Origins.Projectiles.Weapons {
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCsAndTiles.Add(index);
+			overWiresUI.Add(index);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
@@ -139,14 +139,13 @@ namespace Origins.Projectiles.Weapons {
 			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
 			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, (int)Math.Min(58, totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
-			totalLength -= 58 * Projectile.ai[2];
 			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero);
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
 			Vector2 pos;
-			for (float i = 0; i <= totalLength; i += 58 * Projectile.ai[2]) {
+			for (float i = 58 * Projectile.ai[2]; i < totalLength; i += Math.Min(totalLength - i, 58 * Projectile.ai[2])) {
 				pos = (Projectile.Center - Main.screenPosition) - (offset * i * Projectile.ai[2]);
 				//lightColor = Projectile.GetAlpha(new Color(Lighting.GetColor((pos + Projectile.velocity * 2).ToTileCoordinates()).ToVector4()));
-				int frameSize = Math.Min(58, (int)i);
+				int frameSize = Math.Min(58, (int)(totalLength - i));
 				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 58 - frameSize, 18, frameSize), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
 			}
 			return false;
