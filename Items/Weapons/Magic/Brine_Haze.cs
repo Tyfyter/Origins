@@ -166,38 +166,34 @@ namespace Origins.Items.Weapons.Magic {
 			hitbox.Width = (int)(hitbox.Width * val);
 			hitbox.Height = (int)(hitbox.Height * val);
 			hitbox = hitbox.Recentered(center);
-		}/*
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Red);
-		}*/
+			//hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Blue);
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffType<Toxic_Shock_Debuff>(), 5 * 60);
-		}/*
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Red);
-		}*/
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-			Vector2 pos = Projectile.Bottom - new Vector2(0, 4) - Main.screenPosition;
+			float scale = Projectile.scale * Math.Min(Projectile.ai[0] / 30, 1);
+			Vector2 pos = Projectile.Center - new Vector2(0, 4) - Main.screenPosition;
 			Main.EntitySpriteDraw(
 				texture,
 				pos,
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
 				Projectile.rotation,
-				new Vector2(frame.Width / 2, frame.Height - 4),
-				new Vector2(Projectile.scale * 1.5f, Projectile.scale * 1.05f),
+				new Vector2(frame.Width / 2, 0),
+				new Vector2(scale * 1.5f, scale * 1.05f),
 				SpriteEffects.None,
 			0);
 			Main.EntitySpriteDraw(
 				texture,
-				pos - new Vector2(0, frame.Height),
+				pos,
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
 				Projectile.rotation,
-				new Vector2(frame.Width / 2, frame.Height - 4),
-				new Vector2(Projectile.scale * 1.5f, Projectile.scale * 1.05f),
+				new Vector2(frame.Width / 2, frame.Height),
+				new Vector2(scale * 1.5f, scale * 1.05f),
 				SpriteEffects.None,
 			0);
 			return false;
