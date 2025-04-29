@@ -205,6 +205,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public const int state_split_amalgamation_start = 9;
 		public int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public int AttacksSinceTripleDash { get => (int)NPC.localAI[0]; set => NPC.localAI[0] = value; }
+		public int AttacksSinceSplit { get => (int)NPC.localAI[1]; set => NPC.localAI[1] = value; }
 		public DrawData[] OutlineDrawDatas { get => outlineData; }
 		public int OutlineSteps { get => 8; }
 		public float OutlineOffset { get => MathF.Sin((float)Main.timeForVisualEffects * 0.3f) * 3; }
@@ -254,12 +255,12 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
 									new(state_projectiles, 1f),
-									new(state_triple_dash, 0.1f * Math.Min(AttacksSinceTripleDash - 1, 5)),
+									new(state_triple_dash, 0.1f * Math.Clamp(AttacksSinceTripleDash - 1, 0, 5)),
 									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 0.9f),
 									new(state_magic_missile, 1f),
-									new(state_split_amalgamation_start, NPC.AnyNPCs(ModContent.NPCType<Defiled_Swarmer>()) ? 0 : 0.7f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
+									new(state_split_amalgamation_start, NPC.AnyNPCs(ModContent.NPCType<Defiled_Swarmer>()) ? 0 : 0.12f * Math.Clamp(AttacksSinceSplit - 1, 0, 5)),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
 									new(state_split_amalgamation_active, 0f)
 									]
 								);
@@ -295,6 +296,11 @@ namespace Origins.NPCs.Defiled.Boss {
 									AttacksSinceTripleDash = 0;
 								} else {
 									AttacksSinceTripleDash++;
+								}
+								if (AIState == state_split_amalgamation_start) {
+									AttacksSinceSplit = 0;
+								} else {
+									AttacksSinceSplit++;
 								}
 
 								if (AIState == state_single_dash) {
