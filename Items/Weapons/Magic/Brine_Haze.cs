@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Magic {
 			for (int i = 0; i < vel.Length * 2; i++) {
 				Vector2 toAdd = vel[i % vel.Length];
 				if (i >= vel.Length) toAdd.X = -toAdd.X;
-				Projectile.NewProjectile(source, position, velocity + (toAdd * 74 / 32), type, damage, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity + (toAdd * 74 / 32) + Main.rand.NextVector2Circular(1, 1), type, damage, knockback, player.whoAmI);
 			}
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 			return false;
@@ -122,7 +122,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 			if (Main.dedServ) return;
-			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 500 : 400)) {
+			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 400 : 320)) {
 				float width = hitbox.Width * 1.5f;
 				float height = hitbox.Height * 1.5f;
 				Vector2 start = hitbox.TopLeft() - new Vector2(hitbox.Width, hitbox.Height) / 4;
