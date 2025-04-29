@@ -266,18 +266,18 @@ namespace Origins.NPCs.Defiled.Boss {
 								);
 								int lastUsedAttack = -AIState;
 
+								if (!Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 16, 16)) {
+									rand.elements[0] = new(rand.elements[0].Item1, rand.elements[0].Item2 / 3f);
+									rand.elements[1] = new(rand.elements[1].Item1, rand.elements[1].Item2 * 6f);
+									rand.elements[2] = new(rand.elements[2].Item1, rand.elements[2].Item2 / 3f);
+								}
+
 								if (lastUsedAttack > 0) {
 									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 * (0.04 + 0.04 * ContentExtensions.DifficultyDamageMultiplier));
 									if (Main.masterMode && lastUsedAttack == state_triple_dash) {
 										rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
 										rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
 									}
-								}
-
-								if (!Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 16, 16)) {
-									rand.elements[0] = new(rand.elements[0].Item1, rand.elements[0].Item2 / 3f);
-									rand.elements[1] = new(rand.elements[1].Item1, rand.elements[1].Item2 * 6f);
-									rand.elements[2] = new(rand.elements[2].Item1, rand.elements[2].Item2 / 3f);
 								}
 
 								AIState = rand.Get();

@@ -1364,8 +1364,6 @@ Projectiles: {
 	// Ripper_Lance_P.DisplayName: Ripper Lance
 	// Riverang_P.DisplayName: Riverang
 	// Telephone_Pole_Shock.DisplayName: Telephone Pole
-	// Tyrfing_Shard.DisplayName: Tyrfing
-	// Tyrfing_Stab.DisplayName: Tyrfing
 	// Vorpal_Sword_Slash.DisplayName: Vorpal Sword
 	// Potato_P.DisplayName: Potato
 	// Bleeding_Obsidian_Kunai_P.DisplayName: Bleeding Obsidian Kunai
@@ -1727,7 +1725,7 @@ Projectiles: {
 	// Defiled_Spike_Indicator.DisplayName: D A Spike Indicator
 	// DA_Laser.DisplayName: D A Laser Spin
 	// Defiled_Prefix_Orb.DisplayName: Defiled Orb
-	// Tyrfing_P.DisplayName: Tyrfing P
+	// Tyrfing_P.DisplayName: Tyrfing
 }
 
 Prefixes: {
