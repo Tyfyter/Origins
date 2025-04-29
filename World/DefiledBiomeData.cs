@@ -34,6 +34,7 @@ using PegasusLib;
 using System.Linq;
 using Terraria.DataStructures;
 using System.Collections.ObjectModel;
+using Origins.NPCs.Defiled.Boss;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -51,16 +52,16 @@ namespace Origins.World.BiomeData {
 		public static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			int defiledTiles = OriginSystem.defiledTiles + NPC.CountNPCS(ModContent.NPCType<Defiled_Amalgamation>()) * 25;
 			originPlayer.ZoneDefiledProgress = (Math.Min(
-				OriginSystem.defiledTiles - (NeededTiles - ShaderTileCount),
+				defiledTiles - (NeededTiles - ShaderTileCount),
 				ShaderTileCount
 			) / ShaderTileCount) * 0.9f;
 
-			float before = originPlayer.ZoneDefiledProgressSmoothed;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 			originPlayer.DefiledMonolith = false;
 
-			return OriginSystem.defiledTiles > NeededTiles;
+			return defiledTiles > NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
