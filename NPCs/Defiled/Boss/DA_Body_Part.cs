@@ -307,12 +307,13 @@ namespace Origins.NPCs.Defiled.Boss {
 				SoundEngine.PlaySound(SoundID.Item174.WithPitchRange(0.5f, 0.75f), NPC.Center);
 				SoundEngine.PlaySound(SoundID.NPCHit38.WithPitchRange(-2f, -1.75f).WithVolume(0.1f), NPC.Center);
 				Timer = 0;
-				float highSpeed = 10 + ContentExtensions.DifficultyDamageMultiplier;
+				float highSpeed = 7 + ContentExtensions.DifficultyDamageMultiplier * 2;
+				float lowSpeed = 4 + ContentExtensions.DifficultyDamageMultiplier;
 				if (PartType == Part.leg1) {
-					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(highSpeed, -7) : new Vector2(-highSpeed, -7);
+					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(highSpeed, -lowSpeed) : new Vector2(-highSpeed, -lowSpeed);
 				} else {
 					highSpeed += 2;
-					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(7, -highSpeed) : new Vector2(-7, -highSpeed);
+					NPC.velocity = NPC.targetRect.X > NPC.Center.X ? new Vector2(lowSpeed, -highSpeed) : new Vector2(-lowSpeed, -highSpeed);
 				}
 			}
 

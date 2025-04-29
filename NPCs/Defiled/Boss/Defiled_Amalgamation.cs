@@ -258,7 +258,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 0.9f),
 									new(state_magic_missile, 1f),
-									new(state_split_amalgamation_start, 0.7f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
+									new(state_split_amalgamation_start, NPC.AnyNPCs(ModContent.NPCType<Defiled_Swarmer>()) ? 0 : 0.7f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
 									new(state_split_amalgamation_active, 0f)
 									]
 								);
@@ -624,6 +624,8 @@ namespace Origins.NPCs.Defiled.Boss {
 							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2f), NPC.Center);
 
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
+								int staticShock = NPC.FindBuffIndex(ModContent.BuffType<Static_Shock_Debuff>());
+								if (staticShock >= 0) NPC.DelBuff(staticShock);
 								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI);
 								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI);
 								arm = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.arm, NPC.whoAmI);
@@ -759,7 +761,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
 		public void SpawnWisp(NPC npc) {
-			if (AIState == state_split_amalgamation_active) {
+			if (AIState is state_split_amalgamation_active or state_split_amalgamation_start) {
 				NPC.NewNPC(npc.GetSource_Death(), (int)torso.position.X + Main.rand.Next(torso.width), (int)torso.position.Y + Main.rand.Next(torso.height), ModContent.NPCType<Defiled_Wisp>());
 				NPC.NewNPC(npc.GetSource_Death(), (int)arm.position.X + Main.rand.Next(arm.width), (int)arm.position.Y + Main.rand.Next(arm.height), ModContent.NPCType<Defiled_Wisp>());
 				NPC.NewNPC(npc.GetSource_Death(), (int)shoulder.position.X + Main.rand.Next(shoulder.width), (int)shoulder.position.Y + Main.rand.Next(shoulder.height), ModContent.NPCType<Defiled_Wisp>());
