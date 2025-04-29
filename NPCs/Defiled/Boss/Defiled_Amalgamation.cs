@@ -207,7 +207,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public DrawData[] OutlineDrawDatas { get => outlineData; }
 		public int OutlineSteps { get => 8; }
 		public float OutlineOffset { get => MathF.Sin((float)Main.timeForVisualEffects * 0.3f) * 3; }
-
+		List<Vector2> oldPositions = [];
 		public override void AI() {
 			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
 			NPC.target = Main.maxPlayers;
@@ -253,12 +253,12 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
 									new(state_projectiles, 1f),
-									new(state_triple_dash, 0.35f),
+									new(state_triple_dash, 0.35f * 10000),
 									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 1f),
 									new(state_magic_missile, 1f),
-									new(state_split_amalgamation_start, 0.9f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
+									new(state_split_amalgamation_start, 0.7f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
 									new(state_split_amalgamation_active, 0f)
 									]
 								);
@@ -299,6 +299,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								}
 							}
 						}
+						oldPositions.Clear();
 						break;
 					}
 
@@ -314,9 +315,12 @@ namespace Origins.NPCs.Defiled.Boss {
 							float speed = 7 + (5 * difficultyMult);
 							OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3f);
 							NPC.oldVelocity = NPC.velocity;
+							oldPositions.Add(NPC.position);
 						} else if (NPC.ai[1] > 80) {
 							AIState = -state_single_dash;
 							NPC.ai[1] = 0;
+						} else {
+							oldPositions.Add(NPC.position);
 						}
 						break;
 					}
@@ -397,16 +401,22 @@ namespace Origins.NPCs.Defiled.Boss {
 								float speed = 4;
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
 								NPC.oldVelocity = NPC.velocity;
+								oldPositions.Add(NPC.position);
 							} else if (NPC.ai[1] % cycleLength < 18 - (difficultyMult * 2)) {
 								float speed = 8 + (4 * difficultyMult);
 								OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 8f);
 								NPC.oldVelocity = NPC.velocity;
+								oldPositions.Add(NPC.position);
 							} else if (NPC.ai[1] % cycleLength > dashLength || NPC.collideX || NPC.collideY) {
 								NPC.ai[2] = NPC.targetRect.Center().X;
 								NPC.ai[3] = NPC.targetRect.Center().Y;
+								oldPositions.Clear();
 								goto default;
+							} else {
+								oldPositions.Add(NPC.position);
 							}
 						} else {
+							oldPositions.Clear();
 							NPC.velocity.X *= 0.97f;
 							if (NPC.velocity.Y < 0) NPC.velocity.Y *= 0.97f;
 							//SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
@@ -444,6 +454,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							AIState = -state_sidestep_dash;
 							NPC.ai[1] = 160 + (difficultyMult * 40);
 						}
+						oldPositions.Add(NPC.position);
 						NPC.noTileCollide = true;
 						break;
 					}
@@ -667,7 +678,6 @@ namespace Origins.NPCs.Defiled.Boss {
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
 			}
 			NPC.alpha = NPC.noTileCollide ? 75 : 0;
-
 		}
 		public void CheckTrappedCollision() {
 			if (NPC.position.Y > Main.UnderworldLayer * 16 && NPC.HasValidTarget) {
@@ -817,6 +827,18 @@ namespace Origins.NPCs.Defiled.Boss {
 				for (int i = 0; i < 10; i++)
 					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
+		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			Rectangle hitbox = npcHitbox;
+			for (int i = 0; i < oldPositions.Count; i++) {
+				hitbox.X = (int)oldPositions[i].X;
+				hitbox.Y = (int)oldPositions[i].Y;
+				if (hitbox.Intersects(victimHitbox)) {
+					npcHitbox = hitbox;
+					return false;
+				}
+			}
+			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
 		void SpawnGore(Vector2 position, int num) {
 			Gore gore = Main.gore[Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), position, NPC.velocity, $"Gores/NPCs/DA{num}_Gore")];

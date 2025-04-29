@@ -7,6 +7,7 @@ using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles;
 using PegasusLib;
 using PegasusLib.Graphics;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
@@ -177,8 +178,22 @@ namespace Origins.Items.Other.Consumables {
 			int amalgamationType = ModContent.NPCType<Defiled_Amalgamation>();
 			List<NPC> amalgamations = [];
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.type != amalgamationType || (int)npc.ai[0] != Defiled_Amalgamation.state_sidestep_dash) continue;
-				amalgamations.Add(npc);
+				if (npc.type != amalgamationType) continue;
+				int difficultyMult = Defiled_Amalgamation.DifficultyMult;
+				switch ((int)npc.ai[0]) {
+					case Defiled_Amalgamation.state_sidestep_dash:
+					amalgamations.Add(npc);
+					break;
+					case Defiled_Amalgamation.state_single_dash:
+					if (npc.ai[1] >= 30 - difficultyMult * 5) amalgamations.Add(npc);
+					break;
+					case Defiled_Amalgamation.state_triple_dash:
+					int cycleLength = 100 - (difficultyMult * 4);
+					int dashLength = 60 - (difficultyMult * 2);
+					int activeLength = cycleLength * 2 + dashLength;
+					if (npc.ai[1] < activeLength && npc.ai[1] % cycleLength >= 10 - (difficultyMult * 3) && npc.ai[1] % cycleLength <= dashLength) amalgamations.Add(npc);
+					break;
+				}
 			}
 			if (latchkeys.Count > 0 || amalgamations.Count > 0) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();

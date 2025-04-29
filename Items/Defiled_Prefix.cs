@@ -1,5 +1,6 @@
 ﻿using Origins.Dusts;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
@@ -33,6 +34,11 @@ namespace Origins.Items {
 			if (projectile.ModProjectile is Defiled_Spike_Explosion or Defiled_Spike_Explosion_Spike) return;
 			ref int timer = ref projectile.GetEffectTimer<Defiled_Prefix_Mana_Steal_Timer>();
 			if (Main.rand.Next(120) < timer) {
+				float mana = 5 + MathF.Pow(damageDone * 0.1f, 0.75f);
+				if (target.ModNPC is IDefiledEnemy defiledEnemy) {
+					mana = Math.Min(mana, defiledEnemy.Mana);
+				}
+				if (mana <= 0) return;
 				timer = 0;
 				Projectile.NewProjectile(
 					projectile.GetSource_OnHit(target),
@@ -41,7 +47,7 @@ namespace Origins.Items {
 					ModContent.ProjectileType<Defiled_Prefix_Orb>(),
 					0,
 					0,
-					ai0: 5 + MathF.Pow(damageDone * 0.1f, 0.75f)
+					ai0: mana
 				);
 			}
 		}
