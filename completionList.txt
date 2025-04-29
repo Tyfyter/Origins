@@ -480,7 +480,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Power Lotus
-(^) Powerflower* !!! (tangela and glowmask)
+(^) Powerflower*
 (^) Primordial Soup*
 (^) Priority Mail*
 (^) Protomind*

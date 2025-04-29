@@ -123,7 +123,7 @@ namespace Origins.NPCs.Defiled {
 								spawnPos,
 								((playerTarget.Center + playerTarget.Velocity * 15) - spawnPos).SafeNormalize(default) * Nerve_Flan_P.tick_motion,
 								ModContent.ProjectileType<Defiled_Broadcaster_Flan>(),
-								10,
+								30,
 								1
 							);
 						}

@@ -54,7 +54,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 
 		public string CustomSpritePath => "DefiledAmalg";
-		public AssimilationAmount? Assimilation => 0.03f;
+		public AssimilationAmount? Assimilation => 0.05f;
 		public static bool spawnDA = false;
 		float rightArmRot = 0.25f;
 		float leftArmRot = 0.25f;
@@ -253,10 +253,10 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
 									new(state_projectiles, 1f),
-									new(state_triple_dash, 0.35f * 10000),
-									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult)),
+									new(state_triple_dash, 0.5f),
+									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
-									new(state_ground_spikes, 1f),
+									new(state_ground_spikes, 0.9f),
 									new(state_magic_missile, 1f),
 									new(state_split_amalgamation_start, 0.7f),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
 									new(state_split_amalgamation_active, 0f)

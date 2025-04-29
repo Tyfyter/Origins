@@ -39,7 +39,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		int currentFrame = 0;
 		int frameHeight = 0;
 		public override string Texture => bodyPartsPath + "Torso";
-		public AssimilationAmount? Assimilation => 0.01f;
+		public AssimilationAmount? Assimilation => 0.03f;
+		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override void SetDefaults() {
 
 			NPC.friendly = false;
@@ -50,6 +51,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.knockBackResist = 0L;
 			NPC.noTileCollide = true;
 			NPC.damage = 0;
+			NPC.defense = 12;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0f, 0.25f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
 		}
@@ -79,7 +81,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				case Part.leg1:
 				maxFrames = 3;
-				NPC.frame = new Rectangle(0, 0, 40, 90);
+				NPC.frame = new Rectangle(0, 0, 40, 75);
 				frameHeight = 90;
 				NPC.noTileCollide = false;
 				NPC.noGravity = false;
@@ -88,7 +90,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				case Part.leg2:
 				maxFrames = 3;
-				NPC.frame = new Rectangle(0, 0, 50, 380 / 5);
+				NPC.frame = new Rectangle(0, 0, 38, 380 / 5);
 				frameHeight = 380 / 5;
 				NPC.noTileCollide = false;
 				NPC.noGravity = false;
@@ -96,7 +98,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				case Part.shoulder:
 				maxFrames = 5;
-				NPC.frame = new Rectangle(0, 0, 44, 46);
+				NPC.frame = new Rectangle(0, 0, 40, 40);
 				frameHeight = 46;
 				break;
 			}
@@ -150,7 +152,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				return;
 			}
 
-			NPC.damage = DA.NPC.damage;
+			NPC.damage = DA.NPC.damage / 2;
 
 			//regroup
 			if (NPC.ai[2] >= Defiled_Amalgamation.SplitDuration) {
@@ -193,13 +195,13 @@ namespace Origins.NPCs.Defiled.Boss {
 				case Part.leg1:
 				NPC.width = 40;
 				NPC.height = 90;
-				NPC.frame = new Rectangle(0, 0, 40, 90);
+				NPC.frame = new Rectangle(0, 0, 40, 75);
 				break;
 
 				case Part.leg2:
 				NPC.width = 50;
 				NPC.height = 76;
-				NPC.frame = new Rectangle(0, 0, 50, 380 / 5);
+				NPC.frame = new Rectangle(0, 0, 38, 380 / 5);
 				break;
 			}
 		}
@@ -247,9 +249,9 @@ namespace Origins.NPCs.Defiled.Boss {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithVolume(1.4f), NPC.Center);
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
 							//center projectile removed for classic mode to make it sometimes better to stay still to dodge arm attacks
-							if (Main.expertMode) Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
-							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
-							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), NPC.damage, 0, -1, -1, -1, -1);
+							if (Main.expertMode) Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), (NPC.damage + (5 * DifficultyMult)) / 2, 0, -1, -1, -1, -1);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), (NPC.damage + (5 * DifficultyMult)) / 2, 0, -1, -1, -1, -1);
+							Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2().RotatedBy(-0.1f) * 15, ModContent.ProjectileType<DA_Arc_Bolt>(), (NPC.damage + (5 * DifficultyMult)) / 2, 0, -1, -1, -1, -1);
 							PickNextAction();
 						}
 					}
@@ -268,7 +270,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					if (Timer >= 120 && Main.netMode != NetmodeID.MultiplayerClient) {
 						// DA_Flan.tick_motion is used here because it's used to set the max length 
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion, ModContent.ProjectileType<DA_Flan>(), NPC.damage, 0, -1, 0, 0, 0);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion, ModContent.ProjectileType<DA_Flan>(), (NPC.damage + (5 * DifficultyMult)) / 2, 0, -1, 0, 0, 0);
 						PickNextAction();
 					}
 					break;

@@ -26,14 +26,16 @@ namespace Origins.Items.Weapons.Magic {
 			useTangelaTexture.LoadAsset();
 		}
 		public override void SetDefaults() {
-			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 40, Nerve_Flan_P.tick_motion, true);
-			Item.useTime /= 8;
-			Item.damage = 18;
+			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Nerve_Flan_P>(), 50, Nerve_Flan_P.tick_motion, true);
+			Item.useTime /= 10;
+			Item.damage = 14;
 			Item.mana = 16;
 			Item.knockBack = 3;
 			Item.UseSound = null;
+			Item.crit -= 2;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
+			Item.ArmorPenetration = 5;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
