@@ -276,6 +276,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 * (0.04 + 0.04 * ContentExtensions.DifficultyDamageMultiplier));
 									if (Main.masterMode && lastUsedAttack == state_triple_dash) {
 										rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
+										rand.elements[state_sidestep_dash] = new(rand.elements[state_single_dash].Item1, 0);
 										rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
 									}
 								}
@@ -810,7 +811,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			if (DifficultyMult >= 2) {
 				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
-					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (DifficultyMult - 1) * 46);
+					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 23);
 				}
 			}
 		}

@@ -58,7 +58,7 @@ namespace Origins.World.BiomeData {
 			Rectangle screenRect = new Rectangle(0, 0, NPC.sWidth, NPC.sHeight).Recentered(player.Center);
 			Rectangle npcRect = new(0, 0, 5000 * 2, 5000 * 2);
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.type == defiledAmalgamation && screenRect.Intersects(npcRect.Recentered(npc.Center))) defiledTiles += 25;
+				if (npc.type == defiledAmalgamation && screenRect.Intersects(npcRect.Recentered(npc.Center))) defiledTiles += 50;
 			}
 			originPlayer.ZoneDefiledProgress = (Math.Min(
 				defiledTiles - (NeededTiles - ShaderTileCount),
