@@ -834,7 +834,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(#2, ^2) Brine Haze !!! (randomly placed brine clouds ?)
+(☻) Brine Haze !!! (randomly placed brine clouds ?)
 (X) Broadcast
 (^) Chemical Laser
 (^) Communion*
