@@ -35,6 +35,7 @@ using System.Linq;
 using Terraria.DataStructures;
 using System.Collections.ObjectModel;
 using Origins.NPCs.Defiled.Boss;
+using Origins.Items.Weapons.Summoner;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -93,7 +94,7 @@ namespace Origins.World.BiomeData {
 			FissureDropRule = new OneFromRulesRule(1,
 				FirstFissureDropRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>()),
-				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Monolith_Rod>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Monolith_Rod>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Krakram>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Suspicious_Looking_Pebble>())
 			);
