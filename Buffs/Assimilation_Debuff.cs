@@ -39,7 +39,8 @@ namespace Origins.Buffs {
 		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override void Update(Player player, float percent) {
 			if (percent >= 0.25) {
-				player.AddBuff(BuffID.Weak, 300);
+				player.AddBuff(BuffID.Weak, 180);
+				player.manaCost *= 1.1f;
 			}
 			if (percent >= 0.5) {
 				player.AddBuff(BuffID.BrokenArmor, 180);

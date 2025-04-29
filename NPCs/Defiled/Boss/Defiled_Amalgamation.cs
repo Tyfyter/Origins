@@ -682,6 +682,9 @@ namespace Origins.NPCs.Defiled.Boss {
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
 			} else {
+				if (AIState == state_split_amalgamation_active) {
+					NPC.Center = NPC.targetRect.Center() + new Vector2(0, -250);
+				}
 				NPC.EncourageDespawn(300);
 				if (++trappedTime > 30) {
 					NPC.noTileCollide = true;
@@ -787,25 +790,19 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
-			switch (AIState) {
-				case 2:
-				case 3:
-				break;
-				default: {
-					Rectangle highHitbox = NPC.Hitbox;
-					highHitbox.Height /= 4;
+			if (AIState <= 0) {
+				Rectangle highHitbox = NPC.Hitbox;
+				highHitbox.Height /= 4;
 
-					Rectangle lowHitbox = NPC.Hitbox;
-					lowHitbox.Y += highHitbox.Height;
-					lowHitbox.Height -= highHitbox.Height;
-					lowHitbox.Width /= 2;
-					lowHitbox.X += lowHitbox.Width / 2;
+				Rectangle lowHitbox = NPC.Hitbox;
+				lowHitbox.Y += highHitbox.Height;
+				lowHitbox.Height -= highHitbox.Height;
+				lowHitbox.Width /= 2;
+				lowHitbox.X += lowHitbox.Width / 2;
 
-					if (!highHitbox.Intersects(projectile.Hitbox) && !lowHitbox.Intersects(projectile.Hitbox)) {
-						modifiers.DefenseEffectiveness *= 1 + DifficultyMult;
-					}
+				if (!highHitbox.Intersects(projectile.Hitbox) && !lowHitbox.Intersects(projectile.Hitbox)) {
+					modifiers.DefenseEffectiveness *= 1 + DifficultyMult * 0.5f;
 				}
-				break;
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
@@ -844,6 +841,10 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			if (AIState is state_split_amalgamation_start or state_split_amalgamation_active) {
+				npcHitbox = default;
+				return false;
+			}
 			Rectangle hitbox = npcHitbox;
 			for (int i = 0; i < oldPositions.Count; i++) {
 				hitbox.X = (int)oldPositions[i].X;

@@ -155,8 +155,12 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.damage = DA.NPC.damage / 2;
 
 			//regroup
-			if (NPC.ai[2] >= Defiled_Amalgamation.SplitDuration) {
-				float progress = (NPC.ai[2] - Defiled_Amalgamation.SplitDuration) / Defiled_Amalgamation.SplitRegroupDuration;
+			if (DA.NPC.ai[0] is not Defiled_Amalgamation.state_split_amalgamation_start and not Defiled_Amalgamation.state_split_amalgamation_active) {
+				NPC.active = false;
+				return;
+			}
+			if (DA.NPC.ai[1] >= Defiled_Amalgamation.SplitDuration) {
+				float progress = (DA.NPC.ai[1] - Defiled_Amalgamation.SplitDuration) / Defiled_Amalgamation.SplitRegroupDuration;
 				NPC.Center = Vector2.Lerp(NPC.Center, DA.NPC.Center, progress);
 				NPC.damage = 0;
 
