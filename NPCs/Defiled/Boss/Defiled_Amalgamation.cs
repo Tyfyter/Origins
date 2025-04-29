@@ -204,6 +204,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public const int state_split_amalgamation_active = 8;
 		public const int state_split_amalgamation_start = 9;
 		public int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
+		public int AttacksSinceTripleDash { get => (int)NPC.localAI[0]; set => NPC.localAI[0] = value; }
 		public DrawData[] OutlineDrawDatas { get => outlineData; }
 		public int OutlineSteps { get => 8; }
 		public float OutlineOffset { get => MathF.Sin((float)Main.timeForVisualEffects * 0.3f) * 3; }
@@ -253,7 +254,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
 									new(state_projectiles, 1f),
-									new(state_triple_dash, 0.5f),
+									new(state_triple_dash, 0.1f * Math.Min(AttacksSinceTripleDash - 1, 5)),
 									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 0.9f),
@@ -265,7 +266,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								int lastUsedAttack = -AIState;
 
 								if (lastUsedAttack > 0) {
-									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 * (0.05 + 0.05 * ContentExtensions.DifficultyDamageMultiplier));
+									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 * (0.04 + 0.04 * ContentExtensions.DifficultyDamageMultiplier));
 									if (Main.masterMode && lastUsedAttack == state_triple_dash) {
 										rand.elements[state_single_dash] = new(rand.elements[state_single_dash].Item1, 0);
 										rand.elements[state_triple_dash] = new(rand.elements[state_triple_dash].Item1, 0);
@@ -289,6 +290,11 @@ namespace Origins.NPCs.Defiled.Boss {
 								if (roarCount - roars > NPC.life / roarHP) {
 									AIState = state_summon_roar;
 									roars++;
+								}
+								if (AIState == state_triple_dash) {
+									AttacksSinceTripleDash = 0;
+								} else {
+									AttacksSinceTripleDash++;
 								}
 
 								if (AIState == state_single_dash) {
