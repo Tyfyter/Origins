@@ -1,10 +1,7 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Dusts;
 using Origins.Items.Accessories;
-using Origins.Tiles.Brine;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
@@ -33,7 +30,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.noUseGraphic = false;
 			Item.useTime = 50;
 			Item.useAnimation = 50;
-			Item.knockBack = 8;
+			Item.knockBack = 2;
 			Item.shootSpeed = 14f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.UseSound = SoundID.Item82;
@@ -109,8 +106,8 @@ namespace Origins.Items.Weapons.Magic {
 			// Some visuals here
 			#endregion
 
+			Rectangle hitbox = Projectile.Hitbox;
 			if (++Projectile.ai[0] <= 30) {
-				Rectangle hitbox = Projectile.Hitbox;
 				ShrinkHitbox(ref hitbox, Projectile.ai[0]);
 				Vector2 dir = Vector2.Zero;
 				if (hitbox.OverlapsAnyTiles(out List<Point> intersectingTiles)) {
@@ -125,10 +122,10 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 			if (Main.dedServ) return;
-			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 1000 : 850)) {
-				float width = Projectile.width * 1.5f;
-				float height = Projectile.height * 1.5f;
-				Vector2 start = Projectile.TopLeft - new Vector2(Projectile.width, Projectile.height) / 4;
+			if (Main.rand.NextFloat(1000) < Main.gfxQuality * (!Projectile.wet ? 500 : 400)) {
+				float width = hitbox.Width * 1.5f;
+				float height = hitbox.Height * 1.5f;
+				Vector2 start = hitbox.TopLeft() - new Vector2(hitbox.Width, hitbox.Height) / 4;
 				Dust.NewDustDirect(
 					start,
 					(int)width,
@@ -166,7 +163,6 @@ namespace Origins.Items.Weapons.Magic {
 			hitbox.Width = (int)(hitbox.Width * val);
 			hitbox.Height = (int)(hitbox.Height * val);
 			hitbox = hitbox.Recentered(center);
-			//hitbox.DrawDebugOutline(dustType: DustType<Tintable_Torch_Dust>(), color: Color.Blue);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffType<Toxic_Shock_Debuff>(), 5 * 60);
@@ -192,7 +188,7 @@ namespace Origins.Items.Weapons.Magic {
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
 				Projectile.rotation,
-				new Vector2(frame.Width / 2, frame.Height),
+				new Vector2(frame.Width / 2, frame.Height - 10),
 				new Vector2(scale * 1.5f, scale * 1.05f),
 				SpriteEffects.None,
 			0);
