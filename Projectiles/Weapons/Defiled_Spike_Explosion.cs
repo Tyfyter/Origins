@@ -135,20 +135,19 @@ namespace Origins.Projectiles.Weapons {
 			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			float totalLength = Projectile.velocity.Length() * movementFactor * Projectile.ai[2];
+			float totalLength = Projectile.velocity.Length() * movementFactor;
 			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, (int)Math.Min(58 * Projectile.ai[2], (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, (int)Math.Min(58, totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
 			totalLength -= 58 * Projectile.ai[2];
-			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
+			Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero);
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
-			int c = 0;
 			Vector2 pos;
-			for (int i = (int)totalLength; i > 0; i -= 58) {
-				c++;
-				pos = (Projectile.Center - Main.screenPosition) - (offset * c);
+			for (float i = 0; i <= totalLength; i += 58 * Projectile.ai[2]) {
+				pos = (Projectile.Center - Main.screenPosition) - (offset * i * Projectile.ai[2]);
 				//lightColor = Projectile.GetAlpha(new Color(Lighting.GetColor((pos + Projectile.velocity * 2).ToTileCoordinates()).ToVector4()));
-				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
+				int frameSize = Math.Min(58, (int)i);
+				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 58 - frameSize, 18, frameSize), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.ai[2], SpriteEffects.None, 0);
 			}
 			return false;
 		}
