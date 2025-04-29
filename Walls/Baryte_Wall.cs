@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Dusts;
 using Origins.Items.Other.Testing;
 using Origins.Items.Tools;
 using Origins.Tiles.Brine;
@@ -118,6 +119,7 @@ namespace Origins.Walls {
 		public static List<int> dusts = []; 
 		public override void SetStaticDefaults() {
 			dusts.Add(Type);
+			Deprioritized_Dust.Set[Type] = 1;
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.alpha = 254;
