@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 using System.IO;
 
 namespace Origins.NPCs.Defiled.Boss {
-	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy {
+	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy, IOnHitByNPC {
 		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
 		static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
 		static PegasusLib.AutoLoadingAsset<Texture2D> armPath = bodyPartsPath + "Arm";
@@ -316,11 +316,11 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.05f;
 		}
-		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
+		/*public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (NPC.ai[2] < 200 || NPC.ai[2] >= Defiled_Amalgamation.SplitDuration) {
 				modifiers.FinalDamage /= projectile.penetrate > 0 ? Math.Min(projectile.maxPenetrate, 5f) : 5f;
 			}
-		}
+		}*/
 		public override void FindFrame(int frameHeight) {
 			if (PartType == Part.leg1 || PartType == Part.leg2) {
 				if (NPC.velocity.Y < 0)
@@ -372,6 +372,46 @@ namespace Origins.NPCs.Defiled.Boss {
 			return false;
 		}
 		public Color? SetOutlineColor(float progress) => Color.Lerp(Color.Green, Color.Purple, progress);
+		#region i-frame sharing
+		public override bool? CanBeHitByProjectile(Projectile projectile) {
+			if (projectile.usesLocalNPCImmunity) {
+				if (projectile.localNPCImmunity[NPC.realLife] == 0) return null;
+				return false;
+			}
+			if (projectile.usesIDStaticNPCImmunity) {
+				if (Projectile.perIDStaticNPCImmunity[projectile.type][NPC.realLife] < Main.GameUpdateCount) return null;
+				return false;
+			}
+			if (projectile.penetrate != 1) {
+				if (Main.npc[NPC.realLife].immune[projectile.owner] <= 0) return null;
+				return false;
+			}
+			return null;
+		}
+		public override bool? CanBeHitByItem(Player player, Item item) {
+			if (Main.npc[NPC.realLife].immune[player.whoAmI] <= 0) return null;
+			return false;
+		}
+		public override bool CanBeHitByNPC(NPC attacker) {
+			if (Main.npc[NPC.realLife].immune[Main.maxPlayers] <= 0) return true;
+			return false;
+		}
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			if (projectile.usesLocalNPCImmunity) {
+				projectile.localNPCImmunity[NPC.realLife] = projectile.localNPCImmunity[NPC.whoAmI];
+			} else if (projectile.usesIDStaticNPCImmunity) {
+				Projectile.perIDStaticNPCImmunity[projectile.type][NPC.realLife] = Projectile.perIDStaticNPCImmunity[projectile.type][NPC.whoAmI];
+			} else if (projectile.penetrate != 1) {
+				Main.npc[NPC.realLife].immune[projectile.owner] = NPC.immune[projectile.owner];
+			}
+		}
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			Main.npc[NPC.realLife].immune[player.whoAmI] = NPC.immune[player.whoAmI];
+		}
+		public void OnHitByNPC(NPC attacker, NPC.HitInfo hit) {
+			Main.npc[NPC.realLife].immune[Main.maxPlayers] = NPC.immune[Main.maxPlayers];
+		}
+		#endregion
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);
 			writer.Write((short)NPC.realLife);

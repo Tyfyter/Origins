@@ -63,11 +63,11 @@ namespace Origins.NPCs.Defiled.Boss {
 		int roars = 0;
 		int armFrame = 0;
 		DrawData[] outlineData;
-		DA_Body_Part torso;
-		DA_Body_Part arm;
-		DA_Body_Part shoulder;
-		DA_Body_Part leg1;
-		DA_Body_Part leg2;
+		NPC torso;
+		NPC arm;
+		NPC shoulder;
+		NPC leg1;
+		NPC leg2;
 		public static int SplitDuration => 60 * 15;
 		public static int SplitRegroupDuration => 60 * 1;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
@@ -613,11 +613,11 @@ namespace Origins.NPCs.Defiled.Boss {
 							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2f), NPC.Center);
 
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
-								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI).ModNPC as DA_Body_Part;
-								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI).ModNPC as DA_Body_Part;
-								arm = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.arm, NPC.whoAmI).ModNPC as DA_Body_Part;
-								shoulder = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.shoulder, NPC.whoAmI).ModNPC as DA_Body_Part;
-								torso = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.torso, NPC.whoAmI).ModNPC as DA_Body_Part;
+								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI);
+								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI);
+								arm = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.arm, NPC.whoAmI);
+								shoulder = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.shoulder, NPC.whoAmI);
+								torso = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.torso, NPC.whoAmI);
 							}
 							NPC.dontTakeDamage = true;
 							NPC.ShowNameOnHover = false;
@@ -749,8 +749,16 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
 		public void SpawnWisp(NPC npc) {
-			for (int releasedWisps = 0; releasedWisps < 5; releasedWisps++) {
-				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X + Main.rand.Next(npc.width), (int)npc.position.Y + Main.rand.Next(npc.height), ModContent.NPCType<Defiled_Wisp>());
+			if (AIState == state_split_amalgamation_active) {
+				NPC.NewNPC(npc.GetSource_Death(), (int)torso.position.X + Main.rand.Next(torso.width), (int)torso.position.Y + Main.rand.Next(torso.height), ModContent.NPCType<Defiled_Wisp>());
+				NPC.NewNPC(npc.GetSource_Death(), (int)arm.position.X + Main.rand.Next(arm.width), (int)arm.position.Y + Main.rand.Next(arm.height), ModContent.NPCType<Defiled_Wisp>());
+				NPC.NewNPC(npc.GetSource_Death(), (int)shoulder.position.X + Main.rand.Next(shoulder.width), (int)shoulder.position.Y + Main.rand.Next(shoulder.height), ModContent.NPCType<Defiled_Wisp>());
+				NPC.NewNPC(npc.GetSource_Death(), (int)leg1.position.X + Main.rand.Next(leg1.width), (int)leg1.position.Y + Main.rand.Next(leg1.height), ModContent.NPCType<Defiled_Wisp>());
+				NPC.NewNPC(npc.GetSource_Death(), (int)leg2.position.X + Main.rand.Next(leg2.width), (int)leg2.position.Y + Main.rand.Next(leg2.height), ModContent.NPCType<Defiled_Wisp>());
+			} else {
+				for (int releasedWisps = 0; releasedWisps < 5; releasedWisps++) {
+					NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X + Main.rand.Next(npc.width), (int)npc.position.Y + Main.rand.Next(npc.height), ModContent.NPCType<Defiled_Wisp>());
+				}
 			}
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
