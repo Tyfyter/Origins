@@ -52,7 +52,13 @@ namespace Origins.World.BiomeData {
 		public static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			int defiledTiles = OriginSystem.defiledTiles + NPC.CountNPCS(ModContent.NPCType<Defiled_Amalgamation>()) * 25;
+			int defiledTiles = OriginSystem.defiledTiles;
+			int defiledAmalgamation = ModContent.NPCType<Defiled_Amalgamation>();
+			Rectangle screenRect = new Rectangle(0, 0, NPC.sWidth, NPC.sHeight).Recentered(player.Center);
+			Rectangle npcRect = new(0, 0, 5000 * 2, 5000 * 2);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.type == defiledAmalgamation && screenRect.Intersects(npcRect.Recentered(npc.Center))) defiledTiles += 25;
+			}
 			originPlayer.ZoneDefiledProgress = (Math.Min(
 				defiledTiles - (NeededTiles - ShaderTileCount),
 				ShaderTileCount
