@@ -373,7 +373,13 @@ namespace Origins.NPCs.Defiled.Boss {
 			spriteBatch.Draw(glowTexture, NPC.Center - Main.screenPosition, NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
 			if (Charging && Timer > 60 && NPC.ai[2] < Defiled_Amalgamation.SplitDuration) {
-				Defiled_Spike_Indicator.Draw([NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * 1500], [NPC.rotation, NPC.rotation + MathHelper.Pi], MathHelper.Lerp(15, 1, (Timer - 60f) / 60f), 0f, 0.5f);
+				Defiled_Spike_Indicator.Draw(
+					[NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion * ProjectileID.Sets.TrailCacheLength[ModContent.ProjectileType<DA_Flan>()]],
+					[NPC.rotation, NPC.rotation + MathHelper.Pi],
+					MathHelper.Lerp(15, 1, (Timer - 60f) / 60f),
+					0f,
+					0.5f
+				);
 			}
 
 			return false;
