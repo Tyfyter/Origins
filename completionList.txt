@@ -724,7 +724,7 @@ MELEE WEAPONS:
 (^) Terrarang*
 (^) True Light Disc*
 (^) True Waning Crescent*
-(☻) Tyrfing
+(^) Tyrfing
 
 (X) Celestial Point
 (X) Chromakama
@@ -834,7 +834,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(☻) Brine Haze !!! (randomly placed brine clouds ?)
+(^) Brine Haze
 (X) Broadcast
 (^) Chemical Laser
 (^) Communion*
