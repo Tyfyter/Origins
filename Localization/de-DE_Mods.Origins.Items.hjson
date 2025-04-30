@@ -5938,3 +5938,13 @@ Anti_Gray_Dye: {
 	// DisplayName: Anti-Gray Dye
 	// Tooltip: ""
 }
+
+Encrusted_Brick_Wall_Item: {
+	// DisplayName: Encrusted Brick Wall
+	// Tooltip: ""
+}
+
+Lost_Brick_Wall_Item: {
+	// DisplayName: Lost Brick Wall
+	// Tooltip: ""
+}
