@@ -26,6 +26,9 @@ namespace Origins.NPCs.Riven {
 			NPC.HitSound = SoundID.NPCHit9;
 			NPC.DeathSound = SoundID.NPCDeath15;
 			NPC.noGravity = true;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+			];
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
