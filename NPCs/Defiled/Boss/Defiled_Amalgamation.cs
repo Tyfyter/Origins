@@ -254,7 +254,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									[
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
-									new(state_projectiles, 1f),
+									new(state_projectiles, 10000f),
 									new(state_triple_dash, 0.1f * Math.Clamp(AttacksSinceTripleDash - 1, 0, 5)),
 									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
@@ -1013,7 +1013,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 		public override void AI() {
 			if (Projectile.timeLeft <= maxTimeleft)
-				progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010((((Projectile.timeLeft) / (float)maxTimeleft))), true);
+				progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010(Projectile.timeLeft / (float)maxTimeleft), true);
 			Projectile.Center = ParentProj.Center - Projectile.velocity;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
@@ -1176,17 +1176,26 @@ namespace Origins.NPCs.Defiled.Boss {
 			Vector2[] pos = new Vector2[segments * 32];
 			float[] rot = new float[segments * 32];
 			for (int i = 0; i < curve.Length; i++) {
-
 				pos[i] = curve[i].pos;
 				rot[i] = curve[i].per.ToRotation() + MathHelper.PiOver2;
+			}
+
+			float progress = Projectile.timeLeft / (float)max_lifetime;
+			float alpha;
+			if (childSpike.Projectile.timeLeft < childSpike.maxTimeleft) {
+				//alpha = 0;
+				alpha = childSpike.Projectile.timeLeft / (float)childSpike.maxTimeleft;
+				alpha *= alpha * alpha * alpha;
+			} else {
+				alpha = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010(progress));
 			}
 
 			Draw(
 				pos,
 				rot,
 				16f,
-				Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010(Projectile.timeLeft / (float)max_lifetime)),
-				Projectile.timeLeft / (float)max_lifetime
+				alpha,
+				progress
 			);
 
 			return false;
@@ -1221,7 +1230,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			shader.UseSecondaryColor(Color.Green);
 			shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
 			shader.Apply();
-			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => width, -Main.screenPosition, false);
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White * alpha, (p) => width, -Main.screenPosition, false);
 			vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
