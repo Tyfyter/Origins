@@ -254,7 +254,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									[
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
-									new(state_projectiles, 10000f),
+									new(state_projectiles, 1f),
 									new(state_triple_dash, 0.1f * Math.Clamp(AttacksSinceTripleDash - 1, 0, 5)),
 									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
