@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using MonoMod.Cil;
+using Origins.Buffs;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -7,16 +8,48 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine.Boss {
 	public class Mildew_Carrion_Spore : ModProjectile {
 		public static List<int> types = [];
 		public override void SetStaticDefaults() {
+			if (types.Count == 0) {
+				try {
+					IL_WaterShaderData.DrawWaves += IL_WaterShaderData_DrawWaves;
+				} catch (Exception e) {
+					if (Origins.LogLoadingILError(nameof(IL_WaterShaderData_DrawWaves), e)) throw;
+				}
+			}
 			types.Add(Type);
 		}
+
+		private static void IL_WaterShaderData_DrawWaves(ILContext il) {
+			ILCursor c = new(il);
+			int loc_projectile = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdsfld<Main>(nameof(Main.projectile)),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdelemRef(),
+				i => i.MatchStloc(out loc_projectile)
+			);
+			int loc_strength = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdloc(loc_projectile),
+				i => i.MatchLdflda<Entity>(nameof(Entity.velocity)),
+				i => i.MatchCall<Vector2>(nameof(Vector2.Length)),
+				i => i.MatchStloc(out loc_strength)
+			);
+			c.GotoNext(MoveType.AfterLabel,
+				i => i.MatchStloc(loc_strength)
+			);
+
+			c.EmitLdloc(loc_projectile);
+			c.EmitDelegate((float strength, Projectile proj) => (types.Contains(proj.type) ? (proj.timeLeft % 10 < 5 ? 2 : 0) : strength));
+		}
+
 		public override void SetDefaults() {
 			Projectile.hostile = true;
 			Projectile.ignoreWater = true;
