@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.width = (int)(74 * 1.5f);
-			Projectile.height = 68 * 2;
+			Projectile.height = 68;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.usesIDStaticNPCImmunity = true;
@@ -178,17 +178,7 @@ namespace Origins.Items.Weapons.Magic {
 				frame,
 				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
 				Projectile.rotation,
-				new Vector2(frame.Width / 2, 0),
-				new Vector2(scale * 1.5f, scale * 1.05f),
-				SpriteEffects.None,
-			0);
-			Main.EntitySpriteDraw(
-				texture,
-				pos,
-				frame,
-				Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(18, 73, 56, 200))),
-				Projectile.rotation,
-				new Vector2(frame.Width / 2, frame.Height - 10),
+				new Vector2(frame.Width / 2, frame.Height / 2.3f),
 				new Vector2(scale * 1.5f, scale * 1.05f),
 				SpriteEffects.None,
 			0);
