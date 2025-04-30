@@ -6,10 +6,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Grenade_Lawnchair : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Launcher"
-        ];
-        public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
+		public string[] Categories => [
+			"Launcher"
+		];
+		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {
 			UseTexture = null;
 		}
@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = SoundID.Item36;
 			Item.shootSpeed = 5.35f;
 			Item.noMelee = false;
-			Item.damage = 1;
+			Item.damage = 10;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.useAmmo = ItemID.Grenade;
 			Item.value = Item.sellPrice(gold: 5);
@@ -40,6 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			int count = Main.rand.Next(6, 9);
 			Vector2 speed = new(velocity.Length() * player.direction, 0);
+			damage -= damage / 2;
 			for (int i = count; i-- > 0;) {
 				Projectile.NewProjectile(source, position, speed.RotatedBy(-2 * (i / (float)count) * player.direction) * Main.rand.NextFloat(0.9f, 1), type, damage, knockback, player.whoAmI);
 			}
