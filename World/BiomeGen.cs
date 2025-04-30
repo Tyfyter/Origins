@@ -17,6 +17,7 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
@@ -213,6 +214,34 @@ namespace Origins {
 				}
 				if (skipped > 0) {
 					Mod.Logger.Info($"Skipped {skipped} Evil Spikes");
+				}
+				for (int index = 0; index < Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge.Count; index++) {
+					int minX = Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge[index];
+					int maxX = Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge[index];
+					ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
+					for (int i0 = genRand.Next(50, 100); i0-- > 0;) {
+						int tries = 20;
+						int x = genRand.Next(minX, maxX);
+						int y = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh);
+						while (tries-- > 0) {
+							if (TileObject.CanPlace(x, y, bramble, 0, 1, out TileObject objectData, onlyCheck: false)) {
+								TileObjectData tileData = TileObjectData.GetTileData(bramble, objectData.style);
+								int left = x - tileData.Origin.X;
+								int top = y - tileData.Origin.Y;
+								for (int y0 = 0; y0 < tileData.Height; y0++) {
+									for (int x0 = 0; x0 < tileData.Width; x0++) {
+										Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+										if (tileSafely.HasTile && !Main.tileCut[tileSafely.TileType]) goto fail;
+										//tileSafely.HasTile = false;
+									}
+								}
+								if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(x, y);
+								break;
+								fail:;
+							}
+							y++;
+						}
+					}
 				}
 			}));
 			tasks.Add(new PassLegacy("Stone Mask", (GenerationProgress progress, GameConfiguration _) => {

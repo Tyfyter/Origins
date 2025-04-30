@@ -74,6 +74,7 @@ namespace Origins.World {
 						}
 						tile = Main.tile[l, k];
 						if (tile.HasTile ? TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] : tile.WallType != ignoreWallType) {
+							if (tile.TileType == TileID.Trees) OriginSystem.RemoveTree(l, k);
 							tile.TileType = (ushort)type;
 							Main.tile[l, k].SetActive(true);
 							Main.tile[l, k].LiquidAmount = 0;
