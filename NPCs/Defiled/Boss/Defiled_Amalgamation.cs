@@ -254,7 +254,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									[
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
-									new(state_projectiles, 1f),
+									new(state_projectiles, 10000f),
 									new(state_triple_dash, 0.1f * Math.Clamp(AttacksSinceTripleDash - 1, 0, 5)),
 									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
@@ -1009,17 +1009,15 @@ namespace Origins.NPCs.Defiled.Boss {
 			Projectile.timeLeft = maxTimeleft + 60;
 			Projectile.knockBack = 0;
 		}
-		Projectile ParentProj => Main.projectile[(int)Projectile.ai[1]];
-
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			if (Projectile.timeLeft <= maxTimeleft)
 				progress = Utils.GetLerpValue(0f, 1f, Utils.PingPongFrom01To010(Projectile.timeLeft / (float)maxTimeleft), true);
-			Projectile.Center = ParentProj.Center - Projectile.velocity;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			behindNPCsAndTiles.Add(index);
+			behindNPCs.Add(index);
 		}
 		/// <summary>
 		/// Call a programmer if this method lasts longer than four hours
@@ -1103,7 +1101,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			shader.UseSamplerState(SamplerState.PointClamp);
 			shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
 			shader.Apply();
-			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => 16, -Main.screenPosition, false);
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Lighting.GetColor(positions[(int)Math.Round(p * (positions.Length - 1))].ToTileCoordinates()), (p) => 16, -Main.screenPosition, false);
 			vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
@@ -1202,7 +1200,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			behindNPCsAndTiles.Add(index);
+			behindNPCs.Add(index);
 		}
 		public override void AI() {
 			if (fadeInOutTimer == 0) {

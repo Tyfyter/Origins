@@ -23,29 +23,25 @@ const float SpikeSegmentWidth = 34;
 const float SpikeTextureLength = 289;
 
 
-float2 Rotate(float2 uv, float amount)
-{
-    float2 uv2 = uv;
-    float s = sin(amount);
-    float c = cos(amount);
-    uv2.x = (uv.x * c) + (uv.y * -s);
-    uv2.y = (uv.x * s) + (uv.y * c);
+float2 Rotate(float2 uv, float amount) {
+	float2 uv2 = uv;
+	float s = sin(amount);
+	float c = cos(amount);
+	uv2.x = (uv.x * c) + (uv.y * -s);
+	uv2.y = (uv.x * s) + (uv.y * c);
 
-    return uv2;
+	return uv2;
     
 }
 
 
-float4 DefiledSpike(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
-{
-    return tex2D(uImage1, float2(coords.x - (uShaderSpecificData.x), coords.y));
+float4 DefiledSpike(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	return tex2D(uImage1, float2(coords.x - (uShaderSpecificData.x), coords.y)) * sampleColor;
 
 }
 
-technique Technique1
-{
-	pass DefiledSpike
-	{
+technique Technique1 {
+	pass DefiledSpike {
 		PixelShader = compile ps_3_0 DefiledSpike();
 	}
 }
