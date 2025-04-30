@@ -180,6 +180,7 @@ namespace Origins.NPCs.Defiled {
 		public override string Texture => "Terraria/Images/NPC_0";
 		public float Mana { get; set; }
 		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {

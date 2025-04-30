@@ -361,9 +361,19 @@ Lost_Diver: {
 // Cannihound.DisplayName: Cannihound
 // Aqueoua.DisplayName: Aqueoua
 // Shelly_Aqueoua.DisplayName: Shelly Aqueoua
-// Defiled_Chrysalis.DisplayName: Defiled Chrysalis
-// Defiled_Chrysalis_Nearby_Spawn.DisplayName: Defiled Chrysalis Nearby Spawn
+// Defiled_Chrysalis.DisplayName: "{§Defiled} Chrysalis"
+// Defiled_Chrysalis_Nearby_Spawn.DisplayName: "{§Defiled} Chrysalis Nearby Spawn"
 // Abandoned_Bomb.DisplayName: Abandoned Bomb
-// Defiled_Broadcaster.DisplayName: Defiled Broadcaster
-// DA_Body_Part.DisplayName: D A Body Part
+// Defiled_Broadcaster.DisplayName: "{§Defiled} Broadcaster"
+
+DA_Body_Part: {
+	// DisplayName: "{§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Body Part"
+	// DisplayNameFormattable: "{§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} {0}"
+	// torso: Torso
+	// arm: Arm
+	// leg1: Leg
+	// leg2: Leg
+	// shoulder: Shoulder
+}
+
 // Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglass Slime

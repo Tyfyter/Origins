@@ -18,11 +18,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static Terraria.Utilities.NPCUtils;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.MiscE {
 	public class Abandoned_Bomb : Glowing_Mod_NPC {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 12;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 120;
@@ -166,7 +168,7 @@ namespace Origins.NPCs.MiscE {
 			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
 			spriteBatch.Draw(
 				texture,
-				NPC.Center - Main.screenPosition,
+				NPC.Center - screenPos,
 				NPC.frame,
 				drawColor,
 				NPC.rotation,
@@ -181,7 +183,7 @@ namespace Origins.NPCs.MiscE {
 			if (owner == Guid.Empty) frame.X += frame.Width;
 			spriteBatch.Draw(
 				GlowTexture,
-				NPC.Center - Main.screenPosition,
+				NPC.Center - screenPos,
 				frame,
 				Color.White,
 				NPC.rotation,
@@ -189,6 +191,12 @@ namespace Origins.NPCs.MiscE {
 				NPC.scale,
 				NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 			0);
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground
+			);
 		}
 		static (Point pos, Guid owner) chosenSource;
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {

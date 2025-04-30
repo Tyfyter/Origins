@@ -14,6 +14,7 @@ using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.IO;
+using Terraria.Localization;
 
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy, IOnHitByNPC {
@@ -41,6 +42,9 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override string Texture => bodyPartsPath + "Torso";
 		public AssimilationAmount? Assimilation => 0.03f;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+		}
 		public override void SetDefaults() {
 
 			NPC.friendly = false;
@@ -102,6 +106,8 @@ namespace Origins.NPCs.Defiled.Boss {
 				frameHeight = 46;
 				break;
 			}
+
+			NPC.GivenName = Language.GetOrRegister("Mods.Origins.NPCs.DA_Body_Part.DisplayNameFormattable").Format(Language.GetOrRegister("Mods.Origins.NPCs.DA_Body_Part." + PartType));
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (Main.npc[(int)NPC.ai[1]].ModNPC is Defiled_Amalgamation DA) {
@@ -140,6 +146,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			if (++NPC.frameCounter % 7 == 0)
 				if (++currentFrame >= maxFrames - 1)
 					currentFrame = 0;
+
+			NPC.GivenName = Language.GetOrRegister("Mods.Origins.NPCs.DA_Body_Part.DisplayNameFormattable").Format(Language.GetOrRegister("Mods.Origins.NPCs.DA_Body_Part." + PartType));
 
 			NPC.ai[2]++;
 			if (NPC.ai[2] < 200) {
