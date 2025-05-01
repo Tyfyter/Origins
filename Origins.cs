@@ -131,7 +131,7 @@ namespace Origins {
 			instance = this;
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
-			this.MusicAutoloadingEnabled = true;
+			this.MusicAutoloadingEnabled = false;
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));
@@ -823,7 +823,7 @@ namespace Origins {
 			Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
 			Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
 			Array.Resize(ref wallHammerRequirement, WallLoader.WallCount);
-			flatDamageMultiplier = new SetFactory(ItemLoader.ItemCount).CreateFloatSet(1f,
+			flatDamageMultiplier = ItemID.Sets.Factory.CreateFloatSet(1f,
 				ItemID.Minishark, 3f / 8f
 			);
 			Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
