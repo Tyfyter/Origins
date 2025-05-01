@@ -35,7 +35,6 @@ namespace Origins.Items.Tools {
 	}
 	public class Mitosis_P : ModProjectile {
 		static readonly AutoLoadingAsset<Texture2D> seedTexture = typeof(Mitosis_P).GetDefaultTMLName() + "_Seed";
-		public static bool[][] aiVariableResets = [];
 		public static List<int> mitosises = [];
 		public static List<int> nextMitosises = [];
 		public override void Unload() {

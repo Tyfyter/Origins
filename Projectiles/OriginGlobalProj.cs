@@ -326,9 +326,9 @@ namespace Origins.Projectiles {
 							projectile.damage,
 							projectile.knockBack,
 							projectile.owner,
-							Mitosis_P.aiVariableResets[projectile.type][0] ? 0 : projectile.ai[0],
-							Mitosis_P.aiVariableResets[projectile.type][1] ? 0 : projectile.ai[1],
-							Mitosis_P.aiVariableResets[projectile.type][2] ? 0 : projectile.ai[2]
+							OriginsSets.Projectiles.DuplicationAIVariableResets[projectile.type].first ? 0 : projectile.ai[0],
+							OriginsSets.Projectiles.DuplicationAIVariableResets[projectile.type].second ? 0 : projectile.ai[1],
+							OriginsSets.Projectiles.DuplicationAIVariableResets[projectile.type].third ? 0 : projectile.ai[2]
 						);
 						duplicated.rotation += 0.25f;
 

@@ -13,8 +13,7 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Combat"
 		];
-		internal static bool[] canBeDeflected;
-		public static bool[] CanBeDeflected { get => canBeDeflected; }
+		public static bool[] CanBeDeflected => OriginsSets.Projectiles.CanBeDeflected;
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
@@ -47,7 +46,7 @@ namespace Origins.Items.Accessories {
 			Vector2 diff;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				projectile = Main.projectile[i];
-				if (projectile.active && (projectile.hostile || (Main.player[projectile.owner].hostile && Main.player[projectile.owner].team != player.team)) && Amebic_Vial.canBeDeflected[projectile.type]) {
+				if (projectile.active && (projectile.hostile || (Main.player[projectile.owner].hostile && Main.player[projectile.owner].team != player.team)) && Amebic_Vial.CanBeDeflected[projectile.type]) {
 					currentPos = projectile.Hitbox.ClosestPointInRect(player.MountedCenter);
 					diff = player.Hitbox.ClosestPointInRect(projectile.Center) - currentPos;
 					float dist = diff.LengthSquared();
@@ -136,7 +135,7 @@ namespace Origins.Items.Accessories {
 			Projectile other;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				other = Main.projectile[i];
-				if (other.active && other.hostile && Amebic_Vial.canBeDeflected[other.type] && (Colliding(Projectile.Hitbox, other.Hitbox) ?? false)) {
+				if (other.active && other.hostile && Amebic_Vial.CanBeDeflected[other.type] && (Colliding(Projectile.Hitbox, other.Hitbox) ?? false)) {
 					other.velocity = Vector2.Lerp(other.velocity, Projectile.velocity, 0.5f);
 				}
 			}

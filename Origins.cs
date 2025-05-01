@@ -62,27 +62,15 @@ namespace Origins {
 		public static Origins instance;
 
 		public static Dictionary<int, int> ExplosiveBaseDamage { get; private set; }
+		#region sets
 		public static bool[] DamageModOnHit;
 		public static ushort[] VanillaElements { get; private set; }
-		static bool[] forceFelnumShockOnShoot;
-		public static bool[] ForceFelnumShockOnShoot { get => forceFelnumShockOnShoot; }
 		static float[] flatDamageMultiplier;
 		public static float[] FlatDamageMultiplier { get => flatDamageMultiplier; }
 		static int[] wallHammerRequirement;
 		public static int[] WallHammerRequirement { get => wallHammerRequirement; }
-		public static Dictionary<int, (int maxLevel, float accelerationFactor, float velocityFactor)> RasterizeAdjustment { get; private set; }
 		static bool[] artifactMinion;
 		public static bool[] ArtifactMinion { get => artifactMinion; }
-		static float[] homingEffectivenessMultiplier;
-		public static float[] HomingEffectivenessMultiplier { get => homingEffectivenessMultiplier; }
-		static int[] magicTripwireRange;
-		public static int[] MagicTripwireRange { get => magicTripwireRange; }
-		static int[] magicTripwireDetonationStyle;
-		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
-		static bool[] itemsThatAllowRemoteRightClick;
-		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
-		static float[] damageBonusScale;
-		public static float[] DamageBonusScale { get => damageBonusScale; }
 		static bool[] brothBuffs;
 		public static bool[] BrothBuffs { get => brothBuffs; }
 		static bool[] isFineWithCrowdedParties;
@@ -93,9 +81,16 @@ namespace Origins {
 		public static bool[] TileBlocksMinecartTracks { get => tileBlocksMinecartTracks; }
 		static bool[] wallBlocksMinecartTracks;
 		public static bool[] WallBlocksMinecartTracks { get => wallBlocksMinecartTracks; }
-		static bool[] specialPrefix;
-		public static bool[] SpecialPrefix { get => specialPrefix; }
+		public static bool[] ForceFelnumShockOnShoot => OriginsSets.Projectiles.ForceFelnumShockOnShoot;
+		public static float[] HomingEffectivenessMultiplier => OriginsSets.Projectiles.HomingEffectivenessMultiplier;
+		public static int[] MagicTripwireRange => OriginsSets.Projectiles.MagicTripwireRange;
+		public static int[] MagicTripwireDetonationStyle => OriginsSets.Projectiles.MagicTripwireDetonationStyle;
+		public static bool[] ItemsThatAllowRemoteRightClick => OriginsSets.Items.ItemsThatAllowRemoteRightClick;
+		public static float[] DamageBonusScale => OriginsSets.Items.DamageBonusScale;
+		public static bool[] SpecialPrefix => OriginsSets.Prefixes.SpecialPrefix;
+		#endregion
 		public static short[] itemGlowmasks = [];
+		public static Dictionary<int, (int maxLevel, float accelerationFactor, float velocityFactor)> RasterizeAdjustment { get; private set; }
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
 		public static Dictionary<int, (ushort pileType, int minStyle, int maxStyle)> PileType { get; private set; }
@@ -258,7 +253,6 @@ namespace Origins {
 			DamageModOnHit[ProjectileID.LavaBomb] = true;
 			DamageModOnHit[ProjectileID.HoneyBomb] = true;
 			DamageModOnHit[ProjectileID.ScarabBomb] = true;
-			forceFelnumShockOnShoot = new bool[ProjectileLoader.ProjectileCount];
 			#region vanilla weapon elements
 			VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
 			#region fire
@@ -352,32 +346,6 @@ namespace Origins {
 				(ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
 			#endregion earth
 			#endregion vanilla weapon elements
-			homingEffectivenessMultiplier = ProjectileID.Sets.Factory.CreateFloatSet(
-				1f,
-				ProjectileID.ScarabBomb, 0f,
-				ProjectileID.StyngerShrapnel, 0f,
-				ProjectileID.ClusterFragmentsI, 0f,
-				ProjectileID.ClusterFragmentsII, 0f,
-				ProjectileID.BloodCloudMoving, 0f,
-				ProjectileID.BloodCloudRaining, 0f,
-				ProjectileID.RainCloudMoving, 0f,
-				ProjectileID.RainCloudRaining, 0f,
-				ProjectileID.PrincessWeapon, 0f,
-				ProjectileID.ClingerStaff, 0f,
-				ProjectileID.VilethornBase, 0f,
-				ProjectileID.VilethornTip, 0f,
-				ProjectileID.CrystalVileShardShaft, 0f,
-				ProjectileID.CrystalVileShardHead, 0f,
-				ProjectileID.NettleBurstLeft, 0f,
-				ProjectileID.NettleBurstRight, 0f,
-				ProjectileID.NettleBurstEnd, 0f,
-				ProjectileID.MedusaHead, 0f,
-				ProjectileID.PrincessWeapon, 0f,
-				ProjectileID.MagnetSphereBolt, 0f,
-				ProjectileID.InfernoFriendlyBlast, 0f,
-				ProjectileID.LastPrism, 2f,
-				ProjectileID.LastPrismLaser, 2f
-			);
 			PotType = new();
 			PileType = new();
 
@@ -680,19 +648,14 @@ namespace Origins {
 			AssimilationLoader.Unload();
 			ExplosiveBaseDamage = null;
 			DamageModOnHit = null;
-			forceFelnumShockOnShoot = null;
 			VanillaElements = null;
 			flatDamageMultiplier = null;
 			RasterizeAdjustment = null;
-			homingEffectivenessMultiplier = null;
-			itemsThatAllowRemoteRightClick = null;
-			damageBonusScale = null;
 			brothBuffs = null;
 			isFineWithCrowdedParties = null;
 			PotType = null;
 			PileType = null;
 			artifactMinion = null;
-			specialPrefix = null;
 			celestineBoosters = null;
 			perlinFade0 = null;
 			blackHoleShade = null;
@@ -782,6 +745,37 @@ namespace Origins {
 					}
 				}
 			}
+			SetBalanceSetValues();
+		}
+		/// <summary>
+		/// Set here rather than in the initializer so that they can be changed freely
+		/// </summary>
+		static void SetBalanceSetValues() {
+			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(OriginsSets.Projectiles.MagicTripwireRange, OriginsSets.Projectiles.MagicTripwireDetonationStyle);
+
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ScarabBomb] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.StyngerShrapnel] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsI] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsII] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudMoving] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudRaining] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudMoving] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudRaining] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClingerStaff] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornBase] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornTip] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardShaft] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardHead] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstLeft] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstRight] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstEnd] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MedusaHead] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MagnetSphereBolt] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.InfernoFriendlyBlast] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrism] = 2f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrismLaser] = 2f;
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
@@ -884,37 +878,19 @@ namespace Origins {
 		}
 		internal static void ResizeArrays() {
 			Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
-			Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
 			Array.Resize(ref wallHammerRequirement, WallLoader.WallCount);
 			flatDamageMultiplier = ItemID.Sets.Factory.CreateFloatSet(1f,
 				ItemID.Minishark, 3f / 8f
 			);
 			Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
-			int oldCanGainHomingLength = homingEffectivenessMultiplier.Length;
-			Array.Resize(ref homingEffectivenessMultiplier, ProjectileLoader.ProjectileCount);
-			for (int i = oldCanGainHomingLength; i < ProjectileLoader.ProjectileCount; i++) {
-				homingEffectivenessMultiplier[i] = 1f;
-			}
-			Array.Resize(ref Mitosis_P.aiVariableResets, ProjectileLoader.ProjectileCount);
-			for (int i = 0; i < Mitosis_P.aiVariableResets.Length; i++) {
-				Mitosis_P.aiVariableResets[i] = new bool[3];
-			}
-			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
-			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
-			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
-			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
-			damageBonusScale = ItemID.Sets.Factory.CreateFloatSet(1f);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
 			tileTransformsOnKill = TileID.Sets.Factory.CreateBoolSet(false);
 			tileBlocksMinecartTracks = TileID.Sets.Factory.CreateBoolSet(false);
 			wallBlocksMinecartTracks = WallID.Sets.Factory.CreateBoolSet(false);
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
-			Amebic_Vial.canBeDeflected = ProjectileID.Sets.Factory.CreateBoolSet(true);
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
-			Array.Resize(ref specialPrefix, PrefixLoader.PrefixCount);
-			LoaderUtils.ResetStaticMembers(typeof(Deprioritized_Dust));
 		}
 		static void LoadCloudBottoms() {
 			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];

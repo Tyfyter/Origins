@@ -276,7 +276,7 @@ namespace Origins.NPCs.Defiled {
 		public override string Texture => typeof(Bone_Latcher_P).GetDefaultTMLName();
 		public NPC Owner => Main.npc[(int)Projectile.ai[2]];
 		public override void SetStaticDefaults() {
-			Amebic_Vial.canBeDeflected[Type] = false;
+			Amebic_Vial.CanBeDeflected[Type] = false;
 			AssimilationLoader.AddProjectileAssimilation<Defiled_Assimilation>(Type, 0.04f);
 		}
 		public override void SetDefaults() {

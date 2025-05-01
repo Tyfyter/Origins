@@ -25,7 +25,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override string Texture => typeof(Mildew_Whip_P).GetDefaultTMLName();
 		public NPC Owner => Main.npc[(int)Projectile.ai[2]];
 		public override void SetStaticDefaults() {
-			Amebic_Vial.canBeDeflected[Type] = false;
+			Amebic_Vial.CanBeDeflected[Type] = false;
 		}
 		public override void SetDefaults() {
 			Projectile.DefaultToWhip();

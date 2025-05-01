@@ -529,7 +529,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
 			Origins.HomingEffectivenessMultiplier[Type] = 25f;
-			Mitosis_P.aiVariableResets[Type][1] = true;
+			OriginsSets.Projectiles.DuplicationAIVariableResets[Type].second = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;

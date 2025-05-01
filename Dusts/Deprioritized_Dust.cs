@@ -1,12 +1,13 @@
 ﻿using MonoMod.Cil;
 using System;
 using Terraria;
-using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
+	[ReinitializeDuringResizeArrays]
 	public class Deprioritized_Dust : ILoadable {
-		public static int[] Set = new int[ChildSafety.SafeDust.Length];
+		public static int[] Set = DustID.Sets.Factory.CreateIntSet(0);
 		public void Load(Mod mod) {
 			try {
 				IL_Dust.NewDust += IL_Dust_NewDust;

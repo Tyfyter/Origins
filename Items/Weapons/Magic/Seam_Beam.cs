@@ -67,7 +67,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
-			Mitosis_P.aiVariableResets[Type][1] = true;
+			OriginsSets.Projectiles.DuplicationAIVariableResets[Type].second = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
