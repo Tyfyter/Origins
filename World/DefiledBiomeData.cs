@@ -58,7 +58,12 @@ namespace Origins.World.BiomeData {
 			Rectangle screenRect = new Rectangle(0, 0, NPC.sWidth, NPC.sHeight).Recentered(player.Center);
 			Rectangle npcRect = new(0, 0, 5000 * 2, 5000 * 2);
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.type == defiledAmalgamation && screenRect.Intersects(npcRect.Recentered(npc.Center))) defiledTiles += 50;
+				if (npc.type == defiledAmalgamation) {
+					if (screenRect.Intersects(npcRect.Recentered(npc.Center))) defiledTiles += 100;
+					if (npc.target == player.whoAmI) defiledTiles += 100;
+				} else if (npc.ModNPC is IDefiledEnemy && screenRect.Intersects(npcRect.Recentered(npc.Center))) {
+					defiledTiles += 5;
+				}
 			}
 			originPlayer.ZoneDefiledProgress = (Math.Min(
 				defiledTiles - (NeededTiles - ShaderTileCount),
@@ -68,7 +73,7 @@ namespace Origins.World.BiomeData {
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 			originPlayer.DefiledMonolith = false;
 
-			return defiledTiles > NeededTiles;
+			return defiledTiles >= NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
