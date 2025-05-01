@@ -21,14 +21,13 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
-using Terraria.ModLoader.Config;
-using static ThoriumMod.Projectiles.Pets.SuspiciousMoisturizerBottlePro;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
 		public static AutoCastingAsset<Texture2D> BackTexture;
 		public static AutoCastingAsset<Texture2D> PageTexture;
 		public static AutoCastingAsset<Texture2D> TabsTexture;
+		public static AutoLoadingAsset<Texture2D> ArrowsTexture = "Origins/UI/Lore/Journal_Arrows";
 		UIElement baseElement;
 		List<List<TextSnippet>> pages;
 		float yMargin;
@@ -497,141 +496,98 @@ namespace Origins.UI {
 			}
 			#region arrows
 			if (canDrawArrows) {
+				Texture2D arrows = ArrowsTexture;
+				Rectangle frame = arrows.Frame(verticalFrames: 3);
+				Rectangle area = new(0, 0, frame.Width, frame.Height);
+				Color hoverColor = new(213, 170, 225);
 				if (pageOffset < (pages?.Count ?? 0) - 2) {
-					Vector2 position = new Vector2(bounds.X + bounds.Width - xMarginOuter * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
-					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-					//temp highlight
-					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+					Vector2 position = new(bounds.X + bounds.Width - xMarginOuter * 1.3f - frame.Width / 2, bounds.Y + bounds.Height - yMargin * 0.8f);
+					area.X = (int)position.X;
+					area.Y = (int)position.Y;
+					frame.Y = frame.Height * 0;
+					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
 							pageOffset += 2;
 						}
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position + new Vector2(0, 2),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							-MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position - new Vector2(0, 2),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							-MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position + new Vector2(2, 0),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							-MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position - new Vector2(2, 0),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							-MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 					}
 					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
+						arrows,
 						position,
-						null,
-						Color.White,
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
+						frame,
+						Color.Black
 					);
 				}
 				if (pageOffset > 0) {
-					Vector2 position = new Vector2(bounds.X + xMarginOuter * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
-					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-					//temp highlight
-					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+					Vector2 position = new(bounds.X + xMarginOuter - frame.Width / 2, bounds.Y + bounds.Height - yMargin * 0.8f);
+					area.X = (int)position.X;
+					area.Y = (int)position.Y;
+					frame.Y = frame.Height * 1;
+					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
 							pageOffset = Math.Max(pageOffset - 2, 0);
 						}
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position + new Vector2(0, 2),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position - new Vector2(0, 2),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position + new Vector2(2, 0),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position - new Vector2(2, 0),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.PiOver2,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 					}
 					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
+						arrows,
 						position,
-						null,
-						Color.White,
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
+						frame,
+						Color.Black
 					);
 				}
 				if (mode is Journal_UI_Mode.Normal_Page or Journal_UI_Mode.Quest_Page) {
-					Vector2 position = new Vector2(bounds.X + xMarginOuter * 0.9f, bounds.Y + yMargin * 0.9f);
-					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-					//temp highlight
-					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+					Vector2 position = new(bounds.X + xMarginOuter * 0.7f, bounds.Y + yMargin * 0.5f);
+					area.X = (int)position.X;
+					area.Y = (int)position.Y;
+					frame.Y = frame.Height * 2;
+					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
 							Journal_UI_Mode? switchMode = null;
 							switch (mode) {
@@ -649,60 +605,35 @@ namespace Origins.UI {
 							}
 						}
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position + new Vector2(0, 2),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.Pi,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position - new Vector2(0, 2),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.Pi,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position + new Vector2(2, 0),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.Pi,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 						spriteBatch.Draw(
-							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							arrows,
 							position - new Vector2(2, 0),
-							null,
-							new Color(1f, 1f, 0f, 0f),
-							MathHelper.Pi,
-							new Vector2(7, 16),
-							1,
-							0,
-							0
+							frame,
+							hoverColor
 						);
 					}
 					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
+						arrows,
 						position,
-						null,
-						Color.White,
-						MathHelper.Pi,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
+						frame,
+						Color.Black
 					);
 				}
 			}
