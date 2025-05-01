@@ -446,7 +446,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.TrailCacheLength[Type] = 40;
+			ProjectileID.Sets.TrailCacheLength[Type] = 15;
 			ProjectileID.Sets.TrailingMode[Type] = 3;
 		}
 		public override void SetDefaults() {
@@ -492,14 +492,15 @@ namespace Origins.NPCs.Defiled.Boss {
 			return false;
 		}
 		private static readonly VertexStrip vertexStrip = new();
-		public static void DrawDefiledBolt(Vector2[] positions, float[] rotations, float progress) {
+		public void DrawDefiledBolt(Vector2[] positions, float[] rotations, float progress) {
 			MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser2"];
 			shader.UseColor(Color.Black);
 			shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
 			Main.graphics.GraphicsDevice.Textures[3] = TextureAssets.Extra[193].Value;
 			Main.graphics.GraphicsDevice.SamplerStates[3] = SamplerState.LinearWrap;
 			shader.Apply();
-			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(64, 0, 1f - p), 1, p), -Main.screenPosition, false);
+			Vector2 visualOffset = Projectile.Size * 0.5f + Projectile.velocity.SafeNormalize(Vector2.Zero) * 8;
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Color.White, (p) => MathHelper.Lerp(MathHelper.Lerp(80, 0, 1f - p), 1, MathF.Sqrt(p)), visualOffset - Main.screenPosition, false);
 			vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
