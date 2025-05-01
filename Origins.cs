@@ -147,7 +147,7 @@ namespace Origins {
 			instance = this;
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
-			this.MusicAutoloadingEnabled = true;
+			this.MusicAutoloadingEnabled = false;
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));
