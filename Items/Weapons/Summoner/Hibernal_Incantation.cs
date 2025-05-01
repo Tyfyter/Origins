@@ -146,7 +146,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Hibernal_Incantation_Buff.ID, 240);
-			target.AddBuff(BuffID.Frostburn, damageDone * 6);
+			if (Main.rand.NextBool(4)) target.AddBuff(BuffID.Frostburn, damageDone * 6);
 			if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			if (Projectile.ai[0] != 0) Projectile.damage = (int)(Projectile.damage * 0.96f);
 			Projectile.localAI[2]++;
@@ -217,7 +217,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Hibernal_Incantation_Buff.ID, 240);
-			target.AddBuff(BuffID.Frostburn, damageDone * 6);
+			if (Main.rand.NextBool(4)) target.AddBuff(BuffID.Frostburn, damageDone * 4);
 			if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			if (Projectile.ai[0] != 0) Projectile.damage = (int)(Projectile.damage * 0.96f);
 		}
