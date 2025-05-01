@@ -150,8 +150,5 @@ namespace Origins.Tiles {
 	}
 	public abstract class WaterFountainBase<TBiome> : WaterFountain where TBiome : ModBiome {
 		public override ModBiome Biome => ModContent.GetInstance<TBiome>();
-		public override void NearbyEffects(int i, int j, bool closer) {
-			if (closer && IsEnabled(i, j)) Main.SceneMetrics.ActiveFountainColor = ModContent.GetInstance<TBiome>().WaterStyle.Slot;
-		}
 	}
 }
