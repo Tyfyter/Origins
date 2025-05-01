@@ -1,5 +1,1 @@
-ExpandedTooltips: {
-	FountainDefiled: Forces surrounding biome state to {$Mods.Origins.Biomes.Defiled_Wastelands.DisplayName} upon activation
-	FountainRiven: Forces surrounding biome state to {$Mods.Origins.Biomes.Riven_Hive.DisplayName} upon activation
-	FountainBrine: Forces surrounding biome state to {$Mods.Origins.Biomes.Brine_Pool.DisplayName} upon activation
-}
+ExpandedTooltips.Fountain: Forces surrounding biome state to {0} upon activation
