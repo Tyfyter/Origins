@@ -385,7 +385,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					[NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion * ProjectileID.Sets.TrailCacheLength[ModContent.ProjectileType<DA_Flan>()]],
 					[NPC.rotation, NPC.rotation + MathHelper.Pi],
 					MathHelper.Lerp(15, 1, (Timer - 60f) / 60f),
-					0f,
+					1f,
 					0.5f
 				);
 			}
