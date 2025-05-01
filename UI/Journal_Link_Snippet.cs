@@ -17,7 +17,7 @@ namespace Origins.UI {
 			int lastHovered = 0;
 			public Journal_Link_Snippet(string key, Color color = default, Flags flags = Flags.NONE) : base() {
 				this.key = key;
-				Text = Journal_Registry.Entries[key].NameValue;
+				Text = Journal_Registry.Entries[key].DisplayName.Value;
 				if (flags.HasFlag(Flags.L)) {
 					this.Color = Color.Lerp(color, Color.SlateGray, 0.5f);
 					CheckForHover = false;

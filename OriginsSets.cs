@@ -16,6 +16,9 @@ namespace Origins {
 			public static bool[] ItemsThatAllowRemoteRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
 			public static float[] DamageBonusScale { get; } = ItemID.Sets.Factory.CreateFloatSet(1f);
+			public static string[] JournalEntries { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntries)}")
+			.Description("Controls which items are associated with which journal entries")
+			.RegisterCustomSet<string>(null);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {
@@ -37,6 +40,12 @@ namespace Origins {
 			public static (bool first, bool second, bool third)[] DuplicationAIVariableResets { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(DuplicationAIVariableResets))
 			.Description("Controls which ai variables will be carried over to duplicates from compatible projectile duplication effects, false to carry over, true to reset")
 			.RegisterCustomSet((false, false, false));
+		}
+		[ReinitializeDuringResizeArrays]
+		public static class NPCs {
+			public static string[] JournalEntries { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(NPCs)}_{nameof(JournalEntries)}")
+			.Description("Controls which npcs are associated with which journal entries")
+			.RegisterCustomSet<string>(null);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {

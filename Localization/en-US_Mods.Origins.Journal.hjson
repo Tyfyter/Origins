@@ -10,6 +10,22 @@ Indicator: {
 	Other: Detailed description available.
 }
 
+Series: {
+	µUncategorized: Uncategorized
+	Lost_Crone: Lost Crone
+	Riven: "The {§Riven_Hive}"
+	Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	The_Defiled: "{§The_Defiled_Wastelands}"
+	The_Dungeon: The Dungeon
+	Brine_Pool_And_Lost_Diver: The Brine Pool and the Lost Diver
+	The_Ashen: The Ashen
+	The_Crimson: The Crimson
+	Ashen_Armor: Ashen Armor
+	Mechanicus_Sovereignty: The Mechanicus Sovereignty
+	Birth_Of_The_Gods: Birth Of The Gods
+	Ocean_Tribe: The Ocean Tribe
+}
+
 // Places
 
 
@@ -1153,10 +1169,8 @@ Zoologist.Text:
 		- aiding the Terrarian
 	'''
 
-Series: {
-	µUncategorized: Uncategorized
-	Lost_Crone: Lost Crone
-	Riven: "{§Riven_Hive}"
-	Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
-	The_Defiled: The {§Defiled}
-}
+Blockus_Tube.Text: Mods.Origins.Journal.Blockus_Tube.Text
+Bladetongue.Text: Mods.Origins.Journal.Bladetongue.Text
+Brain_Of_Cthulhu.Text: Mods.Origins.Journal.Brain_Of_Cthulhu.Text
+Rotted_Fork.Text: Mods.Origins.Journal.Rotted_Fork.Text
+Undertaker.Text: Mods.Origins.Journal.Undertaker.Text

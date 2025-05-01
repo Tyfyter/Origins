@@ -17,6 +17,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public string EntryName => "Origins/" + typeof(Tendon_Tear_Entry).Name;
 		public class Tendon_Tear_Entry : JournalEntry {
 			public override string TextKey => "Tendon_Tear";
+			public override JournalSortIndex SortIndex => new("The_Crimson", 10);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);

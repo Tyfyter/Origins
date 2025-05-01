@@ -7,19 +7,19 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Ashen
-{
-    [AutoloadEquip(EquipType.Head)]
+namespace Origins.Items.Armor.Ashen {
+	[AutoloadEquip(EquipType.Head)]
 	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, IJournalEntrySource {
-        public string[] Categories => [
-            "ArmorSet",
-            "ExplosiveBoostGear",
+		public string[] Categories => [
+			"ArmorSet",
+			"ExplosiveBoostGear",
 			"GenericBoostGear",
 			"SelfDamageProtek"
 		];
 		public string EntryName => "Origins/" + typeof(Ashen_Helmet_Entry).Name;
 		public class Ashen_Helmet_Entry : JournalEntry {
 			public override string TextKey => "Ashen_Helmet";
+			public override JournalSortIndex SortIndex => new("Ashen_Armor", 1);
 		}
 		public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
@@ -32,19 +32,19 @@ namespace Origins.Items.Armor.Ashen
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) += 0.08f;
 		}
-        public override bool IsArmorSet(Item head, Item body, Item legs) {
+		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Ashen_Breastplate>() && legs.type == ModContent.ItemType<Ashen_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Ashen");
-            player.GetModPlayer<OriginPlayer>().ashenKBReduction = true;
-            player.GetKnockback(DamageClass.Generic) += 0.15f;
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.4f;
-        }
+			player.GetModPlayer<OriginPlayer>().ashenKBReduction = true;
+			player.GetKnockback(DamageClass.Generic) += 0.15f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.4f;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<NE8>(), 10)
-            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 15)
+			.AddIngredient(ModContent.ItemType<NE8>(), 10)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 15)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -58,6 +58,7 @@ namespace Origins.Items.Armor.Ashen
 		public string EntryName => "Origins/" + typeof(Ashen_Breastplate_Entry).Name;
 		public class Ashen_Breastplate_Entry : JournalEntry {
 			public override string TextKey => "Ashen_Breastplate";
+			public override JournalSortIndex SortIndex => new("Ashen_Armor", 2);
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -65,12 +66,12 @@ namespace Origins.Items.Armor.Ashen
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-            player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
-        }
+			player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<NE8>(), 20)
-            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 25)
+			.AddIngredient(ModContent.ItemType<NE8>(), 20)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 25)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -80,6 +81,7 @@ namespace Origins.Items.Armor.Ashen
 		public string EntryName => "Origins/" + typeof(Ashen_Greaves_Entry).Name;
 		public class Ashen_Greaves_Entry : JournalEntry {
 			public override string TextKey => "Ashen_Greaves";
+			public override JournalSortIndex SortIndex => new("Ashen_Armor", 3);
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -87,12 +89,12 @@ namespace Origins.Items.Armor.Ashen
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-            player.GetCritChance(DamageClass.Generic) += 8;
-        }
+			player.GetCritChance(DamageClass.Generic) += 8;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-            .AddIngredient(ModContent.ItemType<NE8>(), 15)
-            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 20)
+			.AddIngredient(ModContent.ItemType<NE8>(), 15)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 20)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string EntryName => "Origins/" + typeof(Torpedo_Tube_Entry).Name;
 		public class Torpedo_Tube_Entry : JournalEntry {
 			public override string TextKey => "Torpedo_Tube";
+			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 2);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Torpedo_Tube_P>(54, 44, 8f, 44, 18);

@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public string EntryName => "Origins/" + typeof(Boat_Rocker_Entry).Name;
 		public class Boat_Rocker_Entry : JournalEntry {
 			public override string TextKey => "Boat_Rocker";
+			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 4);
 		}
 		public override void SetStaticDefaults() {
 			ChainFrames = 3;

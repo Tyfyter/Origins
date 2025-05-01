@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public string EntryName => "Origins/" + typeof(Fifth_Spline_Entry).Name;
 		public class Fifth_Spline_Entry : JournalEntry {
 			public override string TextKey => "Fifth_Spline";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 6);
 		}
 		public static int ID { get; set; }
 		public override void SetStaticDefaults() {

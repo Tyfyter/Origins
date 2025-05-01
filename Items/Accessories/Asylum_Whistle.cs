@@ -30,5 +30,6 @@ namespace Origins.Items.Accessories {
 	}
 	public class Asylum_Whistle_Entry : JournalEntry {
 		public override string TextKey => "Asylum_Whistle";
+		public override JournalSortIndex SortIndex => new("The_Dungeon", 1);
 	}
 }

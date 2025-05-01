@@ -12,6 +12,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Weakpoint_Analyzer_Entry).Name;
 		public class Weakpoint_Analyzer_Entry : JournalEntry {
 			public override string TextKey => "Weakpoint_Analyzer";
+			public override JournalSortIndex SortIndex => new("The_Crimson", 11);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(14, 28);

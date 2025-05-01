@@ -17,6 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string EntryName => "Origins/" + typeof(Internal_Combustionfish_Entry).Name;
 		public class Internal_Combustionfish_Entry : JournalEntry {
 			public override string TextKey => "Internal_Combustionfish";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 4);
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 7;

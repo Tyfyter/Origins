@@ -107,6 +107,7 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Biocomponent_10_Entry).Name;
 		public class Biocomponent_10_Entry : JournalEntry {
 			public override string TextKey => "Biocomponent_10";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 1);
 		}
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
@@ -349,6 +350,7 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(NE_8_Entry).Name;
 		public class NE_8_Entry : JournalEntry {
 			public override string TextKey => "NE_8";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 3);
 		}
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);

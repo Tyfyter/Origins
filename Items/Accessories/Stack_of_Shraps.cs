@@ -49,5 +49,6 @@ namespace Origins.Items.Accessories {
 	}
 	public class Stack_of_Shraps_Entry : JournalEntry {
 		public override string TextKey => nameof(Stack_of_Shraps);
+		public override JournalSortIndex SortIndex => new("The_Ashen", 1);
 	}
 }

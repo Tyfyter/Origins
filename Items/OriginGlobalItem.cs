@@ -298,7 +298,7 @@ namespace Origins.Items {
 						quest.UpdateInventoryEvent(item);
 					}
 				}
-				if (item.ModItem is IJournalEntrySource journalEntrySource) player.OriginPlayer().UnlockJournalEntry(journalEntrySource);
+				if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) player.OriginPlayer().UnlockJournalEntry(OriginsSets.Items.JournalEntries[item.type]);
 			}
 		}
 		static OneFromRulesRule originsDevSetRule;

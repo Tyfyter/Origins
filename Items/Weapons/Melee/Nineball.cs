@@ -12,6 +12,7 @@ namespace Origins.Items.Weapons.Melee {
 		public string EntryName => "Origins/" + typeof(Nineball_Entry).Name;
 		public class Nineball_Entry : JournalEntry {
 			public override string TextKey => "Nineball";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 2);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Code1);

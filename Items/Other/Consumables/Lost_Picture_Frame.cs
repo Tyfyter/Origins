@@ -1,4 +1,5 @@
-﻿using Origins.NPCs.Brine.Boss;
+﻿using Origins.Journal;
+using Origins.NPCs.Brine.Boss;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -8,10 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Lost_Picture_Frame : ModItem {
-        public string[] Categories => [
-            "BossSummon"
-        ];
+    public class Lost_Picture_Frame : ModItem, IJournalEntrySource<Lost_Picture_Frame_Entry> {
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
@@ -55,5 +53,8 @@ namespace Origins.Items.Other.Consumables {
 			player.itemAnimation = 0;
 			return false;
 		}
+	}
+	public class Lost_Picture_Frame_Entry : JournalEntry {
+		public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 6);
 	}
 }

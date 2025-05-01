@@ -371,7 +371,7 @@ namespace Origins {
 					}
 				}
 
-				if (target.ModNPC is IJournalEntrySource journalEntrySource) UnlockJournalEntry(journalEntrySource);
+				if (!string.IsNullOrWhiteSpace(OriginsSets.NPCs.JournalEntries[target.type])) UnlockJournalEntry(OriginsSets.NPCs.JournalEntries[target.type]);
 				if (necroSet) {
 					necroSetAmount += target.lifeMax;
 				}

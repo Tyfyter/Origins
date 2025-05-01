@@ -47,6 +47,7 @@ namespace Origins.Tiles.Brine {
 		public string EntryName => "Origins/" + typeof(Baryte_Entry).Name;
 		public class Baryte_Entry : JournalEntry {
 			public override string TextKey => "Baryte";
+			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 3);
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

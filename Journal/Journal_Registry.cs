@@ -17,8 +17,8 @@ namespace Origins.Journal {
 		public void Load(Mod mod) {
 			On_NPCWasChatWithTracker.RegisterChatStartWith += On_NPCWasChatWithTracker_RegisterChatStartWith;
 		}
-		static void On_NPCWasChatWithTracker_RegisterChatStartWith(On_NPCWasChatWithTracker.orig_RegisterChatStartWith orig, NPCWasChatWithTracker self, Terraria.NPC npc) {
-			if (npc.ModNPC is IJournalEntrySource journalEntrySource) Main.LocalPlayer.OriginPlayer().UnlockJournalEntry(journalEntrySource);
+		static void On_NPCWasChatWithTracker_RegisterChatStartWith(On_NPCWasChatWithTracker.orig_RegisterChatStartWith orig, NPCWasChatWithTracker self, NPC npc) {
+			if (!string.IsNullOrWhiteSpace(OriginsSets.NPCs.JournalEntries[npc.type])) Main.LocalPlayer.OriginPlayer().UnlockJournalEntry(OriginsSets.NPCs.JournalEntries[npc.type]);
 		}
 		public void Unload() {
 			Entries = null;

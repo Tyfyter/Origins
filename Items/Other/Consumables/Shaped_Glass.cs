@@ -8,9 +8,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Shaped_Glass : ModItem {
-		public string[] Categories => [
-			"BossSummon"
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 1;

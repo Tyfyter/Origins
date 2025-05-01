@@ -17,6 +17,7 @@ namespace Origins.Items.Tools {
 		public string EntryName => "Origins/" + typeof(C6_Jackhammer_Entry).Name;
 		public class C6_Jackhammer_Entry : JournalEntry {
 			public override string TextKey => "C6_Jackhammer";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 5);
 		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

@@ -54,8 +54,8 @@ namespace Origins.Dev {
 				context["PageTextMain"] = Language.GetOrRegister(key).Value;
 				pageTexts = WikiPageExporter.GetDefaultPageTexts(modItem);
 			}
-			foreach (var text in pageTexts) {
-				context[text.name] = text.text;
+			foreach ((string name, LocalizedText text) in pageTexts) {
+				context[name] = text;
 			}
 			return (WikiTemplate, context);
 		}
@@ -332,6 +332,7 @@ namespace Origins.Dev {
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
 			if (item.accessory) types.Add("Accessory");
+			if (ItemID.Sets.SortingPriorityBossSpawns[item.type] != -1) types.Add("BossSummon");
 			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == "Tool") || types.Any(t => t.ToString() == "ToolWeapon"))) {
 				types.Add("Weapon");
 				WeaponTypes weaponType = WeaponTypes.None;

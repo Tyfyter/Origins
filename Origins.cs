@@ -746,6 +746,14 @@ namespace Origins {
 				}
 			}
 			SetBalanceSetValues();
+			foreach (ModItem item in MC.GetContent<ModItem>()) {
+				if (item is not IJournalEntrySource source) continue;
+				OriginsSets.Items.JournalEntries[item.Type] = source.EntryName;
+			}
+			foreach (ModNPC npc in MC.GetContent<ModNPC>()) {
+				if (npc is not IJournalEntrySource source) continue;
+				OriginsSets.NPCs.JournalEntries[npc.Type] = source.EntryName;
+			}
 		}
 		/// <summary>
 		/// Set here rather than in the initializer so that they can be changed freely

@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Faith_Beads_Entry).Name;
 		public class Faith_Beads_Entry : JournalEntry {
 			public override string TextKey => "Faith_Beads";
+			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 5);
 		}
 		public override void Load() {
 			MonoModHooks.Add(

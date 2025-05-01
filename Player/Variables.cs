@@ -1002,9 +1002,9 @@ namespace Origins {
 			talkingPet = index;
 			talkingPetTime = 2;
 		}
-		public void UnlockJournalEntry(IJournalEntrySource journalEntrySource) {
-			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(journalEntrySource.EntryName)) {
-				unreadJournalEntries.Add(journalEntrySource.EntryName);
+		public void UnlockJournalEntry(string entryName) {
+			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
+				unreadJournalEntries.Add(entryName);
 				SoundEngine.PlaySound(Origins.Sounds.Journal);
 			}
 		}

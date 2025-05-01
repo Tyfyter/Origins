@@ -22,6 +22,7 @@ namespace Origins.Items.Other.Consumables {
 		public string EntryName => "Origins/" + typeof(Crown_Jewel_Entry).Name;
 		public class Crown_Jewel_Entry : JournalEntry {
 			public override string TextKey => "Crown_Jewel";
+			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 7);
 		}
 		static List<int> bosses = [];
 		public override void Unload() => bosses = null;

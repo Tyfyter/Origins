@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Mildew_Heart_Entry).Name;
 		public class Mildew_Heart_Entry : JournalEntry {
 			public override string TextKey => "Mildew_Heart";
+			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 8);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

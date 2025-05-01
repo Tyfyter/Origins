@@ -1159,4 +1159,18 @@ Series: {
 	// Riven: "{§Riven_Hive}"
 	// Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
 	// The_Defiled: The {§Defiled}
+	// The_Dungeon: The_Dungeon
+	// Brine_Pool_And_Lost_Diver: Brine_Pool_And_Lost_Diver
+	// The_Ashen: The_Ashen
+	// The_Crimson: The_Crimson
+	// Ashen_Armor: Ashen_Armor
+	// Mechanicus_Sovereignty: Mechanicus_Sovereignty
+	// Birth_Of_The_Gods: Birth_Of_The_Gods
+	// Ocean_Tribe: Ocean_Tribe
 }
+
+// Blockus_Tube.Text: Mods.Origins.Journal.Blockus_Tube.Text
+// Bladetongue.Text: Mods.Origins.Journal.Bladetongue.Text
+// Brain_Of_Cthulhu.Text: Mods.Origins.Journal.Brain_Of_Cthulhu.Text
+// Rotted_Fork.Text: Mods.Origins.Journal.Rotted_Fork.Text
+// Undertaker.Text: Mods.Origins.Journal.Undertaker.Text

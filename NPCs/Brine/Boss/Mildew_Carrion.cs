@@ -33,11 +33,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine.Boss {
-	public class Lost_Diver_Transformation : ModNPC, IJournalEntrySource {
-		public class Mildew_Carrion_Entry : JournalEntry {
-			public override string TextKey => "Mildew_Carrion";
-		}
-		public string EntryName => "Origins/" + typeof(Mildew_Carrion_Entry).Name;
+	public class Lost_Diver_Transformation : ModNPC {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 10;
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
@@ -162,7 +158,7 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	[AutoloadBossHead]
-	public class Mildew_Carrion : Brine_Pool_NPC {
+	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry> {
 		internal static IItemDropRule normalDropRule;
 		public override bool AggressivePathfinding => true;
 
@@ -449,6 +445,9 @@ namespace Origins.NPCs.Brine.Boss {
 				TextureAssets.Npc[Type] = normalTexture;
 			}
 		}
+	}
+	public class Mildew_Carrion_Entry : JournalEntry {
+		public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 9);
 	}
 	public class Boss_Bar_MC : ModBossBar {
 		int bossHeadIndex = -1;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -9,8 +10,16 @@ using Terraria.ModLoader;
 namespace Origins.Journal {
 	public abstract class JournalEntry : ModType, ILocalizedModType, IComparable<JournalEntry> {
 		public virtual string TextKey => GetType().Name.Replace("_Entry", "");
-		public string NameKey { get; private set; }
-		public string NameValue => Language.GetTextValue(NameKey);
+		public virtual LocalizedText DisplayName {
+			get {
+				string nameKey = $"Mods.{Mod.Name}.{LocalizationCategory}.{TextKey}.Name";
+				if (!Language.Exists(nameKey)) {
+					string itemName = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
+					if (Language.Exists(itemName)) nameKey = itemName;
+				}
+				return Language.GetOrRegister(nameKey, PrettyPrintName);
+			}
+		}
 		public virtual string[] Aliases => [];
 		public virtual ArmorShaderData TextShader => null;
 		public virtual Color BaseColor => Color.Black;
@@ -19,23 +28,18 @@ namespace Origins.Journal {
 		public string LocalizationCategory => "Journal";
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
-			NameKey = $"Mods.{Mod.Name}.{LocalizationCategory}.{TextKey}.Name";
-			if (!Language.Exists(NameKey)) {
-				string itemName = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
-				if (Language.Exists(itemName)) NameKey = itemName;
-			}
-			Language.GetOrRegister(NameKey, PrettyPrintName);
 			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
 			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.Series.{SortIndex.Series}", () => SortIndex.Series);
 			Journal_Registry.Entries ??= [];
 			Journal_Registry.Entries.Add(FullName, this);
+			_ = DisplayName.Value;
 		}
 		internal int GetQueryIndex(string query) {
 			IEnumerable<int> indecies = Aliases
 				.Select(v => {
 					return v.IndexOf(query, StringComparison.CurrentCultureIgnoreCase);
 				})
-				.Prepend(NameValue.IndexOf(query, StringComparison.CurrentCultureIgnoreCase))
+				.Prepend(DisplayName.Value.IndexOf(query, StringComparison.CurrentCultureIgnoreCase))
 				.Where(v => {
 					return v >= 0;
 				});
@@ -54,6 +58,20 @@ namespace Origins.Journal {
 				if (Series != other.Series) return Series.CompareTo(other.Series);
 				return Part.CompareTo(other.Part);
 			}
+		}
+	}
+	public abstract class VanillaItemJournalEntry : JournalEntry {
+		public abstract int ItemType { get; }
+		public override LocalizedText DisplayName => Lang.GetItemName(ItemType);
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.JournalEntries[ItemType] = FullName;
+		}
+	}
+	public abstract class VanillaNPCJournalEntry : JournalEntry {
+		public abstract int NPCType { get; }
+		public override LocalizedText DisplayName => Lang.GetNPCName(NPCType);
+		public override void SetStaticDefaults() {
+			OriginsSets.NPCs.JournalEntries[NPCType] = FullName;
 		}
 	}
 }
