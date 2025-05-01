@@ -50,22 +50,15 @@ namespace Origins.CrossMod {
 	}
 	[ExtendsFromMod("Fargowiltas")]
 	public class FargosFountainsForceFbiomes : ForceActivateBiomeController {
+		public Dictionary<int, (ModBiome biome, Action setActive)> fountainAssociations = [];
+		public static void AddFountainAssociation(ModBiome biome, int waterStyle, Action setActive = null) {
+			ModContent.GetInstance<FargosFountainsForceFbiomes>().fountainAssociations[waterStyle] = (biome, setActive);
+		}
 		public override void CheckBiomes(Player player) {
 			int fountain = Main.SceneMetrics.ActiveFountainColor;
-			int brine = ModContent.GetInstance<Brine_Water_Style>().Slot;
-			int defiled = ModContent.GetInstance<Defiled_Water_Style>().Slot;
-			int riven = ModContent.GetInstance<Riven_Water_Style>().Slot;
-			if (FargoServerConfig.Instance.Fountains) {
-				if (fountain == brine) {
-					ForceActivateBiomes.forcedModBiomes.Add(ModContent.GetInstance<Brine_Pool>());
-					Brine_Pool.forcedBiomeActive = true;
-				} else if (fountain == defiled) {
-					ForceActivateBiomes.forcedModBiomes.Add(ModContent.GetInstance<Defiled_Wastelands>());
-					Defiled_Wastelands.forcedBiomeActive = true;
-				} else if (fountain == riven) {
-					ForceActivateBiomes.forcedModBiomes.Add(ModContent.GetInstance<Riven_Hive>());
-					Riven_Hive.forcedBiomeActive = true;
-				}
+			if (FargoServerConfig.Instance.Fountains && fountainAssociations.TryGetValue(Main.SceneMetrics.ActiveFountainColor, out (ModBiome biome, Action setActive) association)) {
+				ForceActivateBiomes.forcedModBiomes.Add(association.biome);
+				association.setActive?.Invoke();
 			}
 		}
 	}

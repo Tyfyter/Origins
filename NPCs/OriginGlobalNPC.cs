@@ -148,9 +148,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.WitchDoctor: {
-					shop.InsertAfter<Defiled_Fountain_Item>(ItemID.CorruptWaterFountain);
-					shop.InsertAfter<Riven_Fountain_Item>(ModContent.ItemType<Defiled_Fountain_Item>());
-					shop.InsertAfter<Brine_Fountain_Item>(ModContent.ItemType<Riven_Fountain_Item>());
+					shop.InsertAfter(ItemID.CorruptWaterFountain, WaterFountain.ItemType<Defiled_Fountain>());
+					shop.InsertAfter(WaterFountain.ItemType<Defiled_Fountain>(), WaterFountain.ItemType<Riven_Fountain>());
+					shop.InsertAfter(WaterFountain.ItemType<Riven_Fountain>(), WaterFountain.ItemType<Brine_Fountain>());
 					break;
 				}
 				case NPCID.Mechanic: {
@@ -163,6 +163,7 @@ namespace Origins.NPCs {
 				}
 			}
 		}
+
 		public override bool PreAI(NPC npc) {
 			if (npc.oldPosition == default && npc.oldVelocity == default && npc.position.LengthSquared() > 16) {
 				npc.oldPosition = npc.position;

@@ -1,14 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.Water;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
-	public class Riven_Fountain : WaterFountainBase<Riven_Water_Style>, IGlowingModTile {
+	public class Riven_Fountain : WaterFountainBase<Riven_Hive>, IGlowingModTile {
+		public override void SetBiomeActive() => Riven_Hive.forcedBiomeActive = true;
 		readonly AutoLoadingAsset<Texture2D> glowTexture;
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new Color(196, 196, 196, 100);
@@ -26,8 +22,7 @@ namespace Origins.Tiles.Other {
 				frame = (frame + 1) % Frames;
 			}
 		}
-		public override void Load() => this.SetupGlowKeys();
+		public override void OnLoad() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Fountain_Item : WaterFountainItem<Riven_Fountain> { }
 }
