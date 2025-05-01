@@ -199,7 +199,7 @@ namespace Origins.Items.Accessories {
 		public override void OnKill(int timeLeft) {
 			if (Main.myPlayer == Projectile.owner) {
 				Player owner = Main.player[Projectile.owner];
-				if (owner.statLife < owner.statLifeMax2 && Main.rand.NextBool(5)) {
+				if (owner.statLife < owner.statLifeMax2 && Main.rand.NextBool(10)) {
 					int item = Item.NewItem(Projectile.GetSource_Death(), Projectile.Hitbox, ItemID.Heart);
 					if (Main.netMode == NetmodeID.MultiplayerClient) {
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
