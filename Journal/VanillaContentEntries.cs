@@ -39,7 +39,7 @@ namespace Origins.Journal {
 		public override int ItemType => ItemID.ViciousMushroom;
 		public override JournalSortIndex SortIndex => new("The_Crimson", 2);
 	}
-	public class Rotted_Fork_Entry : VanillaItemJournalEntry {
+	public class The_Rotted_Fork_Entry : VanillaItemJournalEntry {
 		public override int ItemType => ItemID.TheRottedFork;
 		public override JournalSortIndex SortIndex => new("The_Crimson", 3);
 	}
@@ -47,7 +47,7 @@ namespace Origins.Journal {
 		public override int ItemType => ItemID.CrimsonHeart;
 		public override JournalSortIndex SortIndex => new("The_Crimson", 4);
 	}
-	public class Undertaker_Entry : VanillaItemJournalEntry {
+	public class The_Undertaker_Entry : VanillaItemJournalEntry {
 		public override int ItemType => ItemID.TheUndertaker;
 		public override JournalSortIndex SortIndex => new("The_Crimson", 5);
 	}

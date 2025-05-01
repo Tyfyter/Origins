@@ -453,9 +453,9 @@ namespace Origins {
 		public bool collidingX = false;
 		public bool collidingY = false;
 		public bool onSlope = false;
-		public HashSet<string> unlockedJournalEntries = new();
-		public HashSet<string> unreadJournalEntries = new();
-		public HashSet<string> startedQuests = new();
+		public HashSet<string> unlockedJournalEntries = [];
+		public HashSet<string> unreadJournalEntries = [];
+		public HashSet<string> startedQuests = [];
 		public int dashDirection = 0;
 		public int dashDirectionY = 0;
 		public int dashDelay = 0;
@@ -465,7 +465,7 @@ namespace Origins {
 		public float oldGravDir = 0;
 		public float lifeRegenTimeSinceHit = 0;
 		public int itemUseOldDirection = 0;
-		public List<Vector2> oldVelocities = new();
+		public List<Vector2> oldVelocities = [];
 		public Guid guid = Guid.Empty;
 		public Item voodooDoll = null;
 		public float manaShielding = 0f;

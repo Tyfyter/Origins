@@ -10,6 +10,22 @@ Indicator: {
 	// Other: Detailed description available.
 }
 
+Series: {
+	// µUncategorized: Uncategorized
+	// Lost_Crone: Lost Crone
+	// Riven: The {§Riven_Hive}
+	// Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	// The_Defiled: "{§The_Defiled_Wastelands}"
+	// The_Dungeon: The Dungeon
+	// Brine_Pool_And_Lost_Diver: The Brine Pool and the Lost Diver
+	// The_Ashen: The Ashen
+	// The_Crimson: The Crimson
+	// Ashen_Armor: Ashen Armor
+	// Mechanicus_Sovereignty: The Mechanicus Sovereignty
+	// Birth_Of_The_Gods: Birth Of The Gods
+	// Ocean_Tribe: The Ocean Tribe
+}
+
 // Places
 
 
@@ -40,12 +56,12 @@ Ancient_Defiled_Cyclops: {
 		''' */
 }
 
-Brain_of_Cthulhu: {
+Brain_Of_Cthulhu: {
 	// Name: Brain of Cthulhu
 	/* Text:
 		'''
 		[header:Brain of Cthulhu (13/13)]
-		[jportrait/s1.2dw600:Brain_of_Cthulhu]
+		[jportrait/s1.2dw300:BrainofCthulhu]
 
 		*****
 		As long as the Crimson bleeds, there will always be evil. Making it bleed more makes it worse for all. These are the tricky tactics it uses to confuse and halt its enemies. But, all it takes is a decided one to see through its lies.
@@ -279,12 +295,12 @@ Black_Bile: {
 		''' */
 }
 
-Blade_Tongue: {
-	// Name: Blade Tongue
+Bladetongue: {
+	// Name: "{$ItemName.Bladetongue}"
 	/* Text:
 		'''
-		[header:Blade Tongue (1/13)]
-		[jimage/sc3d:Blade_Tongue]
+		[header:Bladetongue (1/13)]
+		[jimage/sc1d:Terraria/Images/Item_3211]
 
 		*****
 		Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria.
@@ -316,7 +332,7 @@ Bone_Rattle: {
 	/* Text:
 		'''
 		[header:Bone Rattle (8/13)]
-		[jimage/sc3d:Bone_Rattle]
+		[jimage/sc3d:Terraria/Images/Item_3060]
 
 		*****
 		Their king was well-received, garnering liking by his people, especially winning over the children's children. He drank from the blood with no care to celebrate his trophy. So, did the wild animals that surrounded the sacred lake.
@@ -381,7 +397,7 @@ Crimson_Heart: {
 	/* Text:
 		'''
 		[header:Crimson Heart (4/13)]
-		[jimage/sc3d:Crimson_Heart_Item]
+		[jimage/sc3d:Terraria/Images/Item_3062]
 
 		*****
 		Like the rest, this one’s heart was locked away, protected by his most devout after removing it from his body. To outsiders, a mortal sin punishable by death. To them, a festive tradition to honor their new king.
@@ -393,7 +409,7 @@ Crimson_Rod: {
 	/* Text:
 		'''
 		[header:Crimson Rod (6/13)]
-		[jimage/sc3d:Crimson_Rod]
+		[jimage/sc3d:Terraria/Images/Item_1256]
 
 		*****
 		Even in present time, its blood rains and continues to satiate the blood-thirsty, devolved denizens of this horrible place.
@@ -616,7 +632,7 @@ Hearty_Broth: {
 /* Ichor.Text:
 	'''
 	[header:Ichor (12/13)]
-	[jimage/sc3d:Ichor]
+	[jimage/sc2d:Terraria/Images/Item_1332]
 
 	*****
 	The Crimson, despite the dryads' best efforts, could not be stopped. They began to understand that it was necessary for this world unless a hero could step up to the rite of keeping the balance themselves.
@@ -787,7 +803,7 @@ Panic_Necklace: {
 	/* Text:
 		'''
 		[header:Panic Necklace (7/13)]
-		[jimage/sc3d:Panic_Necklace]
+		[jimage/sc3d:Terraria/Images/Item_1290]
 
 		*****
 		For the first few hours there was panic, but after the First King had struck down the beast with a single blow it began to calm. The panic still found itself in their fragile hearts later.
@@ -961,7 +977,7 @@ The_Rotted_Fork: {
 	/* Text:
 		'''
 		[header:The Rotted Fork (3/13)]
-		[jimage/sc3d:The_Rotteed_Fork]
+		[jimage/sc3d:Terraria/Images/Item_802]
 
 		*****
 		It became a tradition written in blood. The king must drink from the blood of the giant beast their first had slain. Sacred ichor, instead the deemer of righteous king. The fork would be there for the pouring, and the fork of his first.
@@ -973,7 +989,7 @@ The_Undertaker: {
 	/* Text:
 		'''
 		[header:The Undertaker (5/13)]
-		[jimage/sc3d:The_Undertaker]
+		[jimage/sc3d:Terraria/Images/Item_800]
 
 		*****
 		The kingdom's people weren't always this consumed by witchcraft. It had been the blood that was spilled onto the lands of Terraria by a giant, otherworldly beast.
@@ -985,7 +1001,7 @@ Tissue_Sample: {
 	/* Text:
 		'''
 		[header:Tissue Sample (9/13)]
-		[jimage/sc3d:Tissue_Sample]
+		[jimage/sc2d:Terraria/Images/Item_1329]
 
 		*****
 		But, it was too late before the last sane of the populous began to realize his evil plots... even from hundreds of years after his death. These cultists wanted to restore their old king by first restoring the organ that made him.
@@ -1049,7 +1065,7 @@ Vicious_Mushroom: {
 	/* Text:
 		'''
 		[header:Vicious Mushroom (2/13)]
-		[jimage/sc3d:Vicious_Mushroom]
+		[jimage/sc2d:Terraria/Images/Item_2887]
 
 		*****
 		Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order. But, first must understand the Crimson's long history in this world.
@@ -1152,25 +1168,6 @@ Captured_Mojo: {
 	Contributions:
 		- aiding the Terrarian
 	''' */
-
-Series: {
-	// µUncategorized: Uncategorized
-	// Lost_Crone: Lost Crone
-	// Riven: "{§Riven_Hive}"
-	// Brine_Fiend: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
-	// The_Defiled: The {§Defiled}
-	// The_Dungeon: The_Dungeon
-	// Brine_Pool_And_Lost_Diver: Brine_Pool_And_Lost_Diver
-	// The_Ashen: The_Ashen
-	// The_Crimson: The_Crimson
-	// Ashen_Armor: Ashen_Armor
-	// Mechanicus_Sovereignty: Mechanicus_Sovereignty
-	// Birth_Of_The_Gods: Birth_Of_The_Gods
-	// Ocean_Tribe: Ocean_Tribe
-}
-
 // Blockus_Tube.Text: Mods.Origins.Journal.Blockus_Tube.Text
-// Bladetongue.Text: Mods.Origins.Journal.Bladetongue.Text
-// Brain_Of_Cthulhu.Text: Mods.Origins.Journal.Brain_Of_Cthulhu.Text
 // Rotted_Fork.Text: Mods.Origins.Journal.Rotted_Fork.Text
 // Undertaker.Text: Mods.Origins.Journal.Undertaker.Text

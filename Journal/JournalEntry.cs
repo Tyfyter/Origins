@@ -28,11 +28,14 @@ namespace Origins.Journal {
 		public string LocalizationCategory => "Journal";
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
-			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
-			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.Series.{SortIndex.Series}", () => SortIndex.Series);
 			Journal_Registry.Entries ??= [];
 			Journal_Registry.Entries.Add(FullName, this);
+		}
+		public sealed override void SetupContent() {
+			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
+			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.Series.{SortIndex.Series}", () => SortIndex.Series);
 			_ = DisplayName.Value;
+			SetStaticDefaults();
 		}
 		internal int GetQueryIndex(string query) {
 			IEnumerable<int> indecies = Aliases

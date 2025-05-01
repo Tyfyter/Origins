@@ -22,6 +22,7 @@ using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
 using Terraria.ModLoader.Config;
+using static ThoriumMod.Projectiles.Pets.SuspiciousMoisturizerBottlePro;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -35,6 +36,7 @@ namespace Origins.UI {
 		float xMarginInner;
 		float XMarginTotal => xMarginOuter + xMarginInner;
 		int pageOffset = 0;
+		int lastPageOffset = 0;
 		int timeSinceSwitch = 0;
 		Journal_UI_Mode lastMode = Journal_UI_Mode.Normal_Page;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
@@ -189,6 +191,7 @@ namespace Origins.UI {
 		}
 		public void SwitchMode(Journal_UI_Mode newMode, string key, bool resetPageNumber = true) {
 			if (newMode != mode) {
+				lastPageOffset = pageOffset;
 				lastMode = timeSinceSwitch == 0 ? lastMode : mode;
 				timeSinceSwitch = 0;
 			}
@@ -342,7 +345,7 @@ namespace Origins.UI {
 			currentPage.Add(new TextSnippet("\n"));
 			lineCount += 1;
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			foreach (var entry in GetSearchResults(query)) {
+			foreach (string entry in GetSearchResults(query)) {
 				if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
 					continue;
 				}
@@ -618,6 +621,84 @@ namespace Origins.UI {
 						null,
 						Color.White,
 						MathHelper.PiOver2,
+						new Vector2(7, 16),
+						1,
+						0,
+						0
+					);
+				}
+				if (mode is Journal_UI_Mode.Normal_Page or Journal_UI_Mode.Quest_Page) {
+					Vector2 position = new Vector2(bounds.X + xMarginOuter * 0.9f, bounds.Y + yMargin * 0.9f);
+					Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+					//temp highlight
+					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+						if (Main.mouseLeft && Main.mouseLeftRelease) {
+							Journal_UI_Mode? switchMode = null;
+							switch (mode) {
+								case Journal_UI_Mode.Normal_Page:
+								switchMode = Journal_UI_Mode.Index_Page;
+								break;
+								case Journal_UI_Mode.Quest_Page:
+								switchMode = Journal_UI_Mode.Quest_List;
+								break;
+							}
+							if (switchMode.HasValue) {
+								int oldPageOffset = lastPageOffset;
+								SwitchMode(switchMode.Value, "");
+								pageOffset = oldPageOffset;
+							}
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position + new Vector2(0, 2),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.Pi,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position - new Vector2(0, 2),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.Pi,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position + new Vector2(2, 0),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.Pi,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position - new Vector2(2, 0),
+							null,
+							new Color(1f, 1f, 0f, 0f),
+							MathHelper.Pi,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					spriteBatch.Draw(
+						TextureAssets.Item[ItemID.WoodenArrow].Value,
+						position,
+						null,
+						Color.White,
+						MathHelper.Pi,
 						new Vector2(7, 16),
 						1,
 						0,

@@ -2,25 +2,27 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
+using Origins.Questing;
 using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Origins.UI {
 	public class Journal_Link_Handler : ITagHandler {
 		public class Journal_Link_Snippet : TextSnippet {
 			public readonly string key;
-			public readonly Flags flags;
+			public Flags flags;
 			int lastHovered = 0;
 			public Journal_Link_Snippet(string key, Color color = default, Flags flags = Flags.NONE) : base() {
 				this.key = key;
 				Text = Journal_Registry.Entries[key].DisplayName.Value;
 				if (flags.HasFlag(Flags.L)) {
 					this.Color = Color.Lerp(color, Color.SlateGray, 0.5f);
-					CheckForHover = false;
+					CheckForHover = OriginClientConfig.Instance.DebugMenuButton.DebugMode;
 				} else {
 					this.Color = color;
 					CheckForHover = true;
@@ -38,6 +40,15 @@ namespace Origins.UI {
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			public override void OnClick() {
+				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.DebugMenuButton.DebugMode) {
+					flags ^= Flags.L;
+					if (flags.HasFlag(Flags.L)) {
+						OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Remove(key);
+					} else {
+						OriginPlayer.LocalOriginPlayer.UnlockJournalEntry(key);
+					}
+					return;
+				}
 				if (flags.HasFlag(Flags.L)) return;
 				Origins.OpenJournalEntry(key);
 			}
