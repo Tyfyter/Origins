@@ -5818,7 +5818,7 @@ Soul_Snatcher: {
 }
 
 Tangela_Tether: {
-	DisplayName: Tangela Tether
+	DisplayName: "{§Tangela} Tether"
 	Tooltip: ""
 }
 
@@ -5876,20 +5876,20 @@ Spicy_Broth: {
 }
 
 Tangela_Dye: {
-	DisplayName: Tangela Dye
+	DisplayName: "{§Tangela} Dye"
 	Tooltip: Makes things intangible to your computer
 }
 
 Tangela_Bramble_Item: {
-	DisplayName: Tangela Bramble
+	DisplayName: "{§Tangela} Bramble"
 	Tooltip: ""
 }
 
 Tangela_Bud: {
-	DisplayName: Tangela Bud
+	DisplayName: "{§Tangela} Bud"
 	Tooltip:
 		'''
-		Used to make Tangela Dye
+		Used to make {§Tangela} Dye
 		'Ooooh, preeeetty'
 		'''
 }
