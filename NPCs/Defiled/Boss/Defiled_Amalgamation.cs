@@ -21,6 +21,7 @@ using Origins.Tiles.Defiled;
 using Origins.Walls;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -966,7 +967,47 @@ namespace Origins.NPCs.Defiled.Boss {
 			life = lastTickPercent * lifeMax;
 			return life > 0;
 		}
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			Point barSize = new Point(456, 22); //Size of the bar
+			Point topLeftOffset = new Point(32, 24); //Where the top left of the bar starts
+			int frameCount = 6;
 
+			Rectangle bgFrame = drawParams.BarTexture.Frame(verticalFrames: frameCount, frameY: 3);
+			bgFrame.X += topLeftOffset.X;
+			bgFrame.Y += topLeftOffset.Y;
+			bgFrame.Width = 2;
+			bgFrame.Height = barSize.Y;
+
+			int shieldScale = (int)(barSize.X * drawParams.Life / drawParams.LifeMax);
+			shieldScale -= shieldScale % 2;
+
+			Rectangle barPosition = Utils.CenteredRectangle(drawParams.BarCenter, barSize.ToVector2());
+			Vector2 barTopLeft = barPosition.TopLeft();
+
+			SpriteBatchState state = spriteBatch.GetState();
+			try {
+				spriteBatch.Restart(state, SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
+				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(TangelaVisual.ShaderID, Main.LocalPlayer);
+				FastRandom random = new(npc.whoAmI);
+				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512);
+				bgFrame.Width = shieldScale;
+				DrawData data = new(
+					drawParams.BarTexture,
+					barTopLeft,
+					bgFrame,
+					Color.White,
+					0,
+					Vector2.Zero,
+					Vector2.One,
+					SpriteEffects.None
+				);
+				shader.Apply(null, data);
+				data.Draw(spriteBatch);
+			} finally {
+				spriteBatch.Restart(state);
+			}
+			return true;
+		}
 		public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams) {
 			int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
 			Vector2 barSize = new(456, 22);
