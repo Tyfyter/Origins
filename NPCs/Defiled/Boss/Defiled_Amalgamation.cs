@@ -42,6 +42,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.WorldBuilding;
 using static Origins.NPCs.Defiled.Boss.Defiled_Spike_Indicator;
 
 namespace Origins.NPCs.Defiled.Boss {
@@ -808,9 +809,36 @@ namespace Origins.NPCs.Defiled.Boss {
 				}
 			}
 		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			if (AIState is state_split_amalgamation_start or state_split_amalgamation_active) {
+				npcHitbox = default;
+				return false;
+			}
+			if (npcHitbox.Intersects(victimHitbox)) return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
+			Rectangle hitbox = npcHitbox;
+			for (int i = 0; i < oldPositions.Count; i++) {
+				hitbox.X = (int)oldPositions[i].X;
+				hitbox.Y = (int)oldPositions[i].Y;
+				if (hitbox.Intersects(victimHitbox)) {
+					npcHitbox = hitbox;
+					/// checks the same counter as the default -1, but is distinguishable in <see cref="ModifyHitPlayer"></see> and <see cref="OnHitPlayer"></see>
+					immunityCooldownSlot = -2;
+					return true;
+				}
+			}
+			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			if (modifiers.CooldownCounter == -2) {
+				modifiers.Knockback *= 0;
+			}
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			if (DifficultyMult >= 2) {
-				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
+			if (hurtInfo.CooldownCounter == -2) {
+				target.immune = true;
+				target.immuneTime = (hurtInfo.Damage == 1) ? (target.longInvince ? 40 : 20) : (target.longInvince ? 80 : 40);
+			} else {
+				if (DifficultyMult >= 2 && Main.rand.NextBool(2 * DifficultyMult, 9)) {
 					target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 23);
 				}
 			}
@@ -842,22 +870,6 @@ namespace Origins.NPCs.Defiled.Boss {
 				for (int i = 0; i < 10; i++)
 					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
-		}
-		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
-			if (AIState is state_split_amalgamation_start or state_split_amalgamation_active) {
-				npcHitbox = default;
-				return false;
-			}
-			Rectangle hitbox = npcHitbox;
-			for (int i = 0; i < oldPositions.Count; i++) {
-				hitbox.X = (int)oldPositions[i].X;
-				hitbox.Y = (int)oldPositions[i].Y;
-				if (hitbox.Intersects(victimHitbox)) {
-					npcHitbox = hitbox;
-					return false;
-				}
-			}
-			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
 		void SpawnGore(Vector2 position, int num) {
 			Gore gore = Main.gore[Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), position, NPC.velocity, $"Gores/NPCs/DA{num}_Gore")];
