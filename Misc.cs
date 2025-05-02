@@ -2088,6 +2088,10 @@ namespace Origins {
 			}
 			return output;
 		}
+		public static T GetIfInRange<T>(this T[] array, int index, T fallback = default) {
+			if (!array.IndexInRange(index)) return fallback;
+			return array[index];
+		}
 		public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
 			return BoxOf(a, b, new Vector2(buffer));
 		}

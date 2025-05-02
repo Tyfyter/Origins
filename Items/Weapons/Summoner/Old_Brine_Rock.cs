@@ -24,8 +24,8 @@ namespace Origins.Items.Weapons.Summoner {
 			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 1);
 		}
 		public override void SetStaticDefaults() {
-			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
-			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
+			ItemID.Sets.GamepadWholeScreenUseRange[Type] = true; // This lets the player target anywhere on the whole screen while using a controller
+			ItemID.Sets.LockOnIgnoresCollision[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 40;
@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.ignoreWater = false;
 			Projectile.manualDirectionChange = true;
 			Projectile.netImportant = true;
-			Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().defense = 20;
+			Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().defense += 20;
 			MaxLife = 1000;
 		}
 		public override bool? CanCutTiles() => false;
@@ -401,7 +401,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 				}
 				if (Projectile.localAI[0] <= 0) {
-					if (hurtAmount > 0) {
+					if (this.GetHurtByHostiles(skipNPCs: true)) {
+						Projectile.localAI[0] = 20;
+					} else if (hurtAmount > 0) {
 						this.DamageArtifactMinion(hurtAmount);
 						Projectile.localAI[0] = 5;
 					}
@@ -439,6 +441,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			).shader = shaderData;*/
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			if (Projectile.localAI[0] > 0 && Projectile.localAI[0] % 10 > 5) {
+				lightColor *= 0.3f;
+			}
 			if (!Projectile.wet) return true;
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (Projectile.spriteDirection != 1) {
@@ -461,12 +466,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.damage > 0) {
+			if (target.damage > 0 && Projectile.localAI[0] <= 0) {
 				hit.HitDirection *= -1;
 				hit.Knockback = 2;
 				hit.Crit = false;
 				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+				float oldLife = Life;
 				this.DamageArtifactMinion(target.damage);
+				if (Life < oldLife) Projectile.localAI[0] = 20;
 			}
 		}
 		public void OnHurt(int damage, bool fromDoT) {

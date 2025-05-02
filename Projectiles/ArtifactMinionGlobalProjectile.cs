@@ -1,13 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection.Metadata;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -120,6 +124,9 @@ namespace Origins.Projectiles {
 		public static List<int> artifactMinions = [];
 		public static List<int> nextArtifactMinions = [];
 		public static int hoveredMinion = -1;
+		public override void Load() {
+			On_Player.FreeUpPetsAndMinions += On_Player_FreeUpPetsAndMinions;
+		}
 		public override void Unload() {
 			artifactMinions = null;
 			nextArtifactMinions = null;
@@ -232,6 +239,29 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
+		private static void On_Player_FreeUpPetsAndMinions(On_Player.orig_FreeUpPetsAndMinions orig, Player self, Item sItem) {
+			if (Origins.ArtifactMinion.GetIfInRange(sItem.shoot)) {
+				List<(Projectile projectile, float antiPriority)> existingMinions = [];
+				float totalUsedSlots = 0f;
+				foreach (Projectile other in Main.ActiveProjectiles) {
+					if (other.owner != self.whoAmI || !other.minion || other.ModProjectile is not IArtifactMinion artifactMinion) {
+						continue;
+					}
+					existingMinions.Add((other, (artifactMinion.Life / artifactMinion.MaxLife) * other.minionSlots));
+					totalUsedSlots += other.minionSlots;
+				}
+				float neededSlots = ItemID.Sets.StaffMinionSlotsRequired[sItem.type] - (self.maxMinions - totalUsedSlots);
+				if (neededSlots > 0) {
+					existingMinions = existingMinions.OrderBy(m => m.antiPriority).ToList();
+					for (int i = 0; i < existingMinions.Count && neededSlots > 0; i++) {
+						neededSlots -= existingMinions[i].projectile.minionSlots;
+						existingMinions[i].projectile.Kill();
+					}
+				}
+				if (neededSlots <= 0) return;
+			}
+			orig(self, sItem);
+		}
 	}
 	public interface IArtifactMinion {
 		int MaxLife { get; set; }
@@ -272,39 +302,46 @@ namespace Origins.Projectiles {
 		public static void DamageArtifactMinion(this Projectile minion, int damage, bool fromDoT = false, bool noCombatText = false) {
 			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, fromDoT, noCombatText);
 		}
-		public static bool GetHurtByHostiles(this IArtifactMinion minion, StatModifier? damageModifier = null) {
+		public static bool GetHurtByHostiles(this IArtifactMinion minion, StatModifier? damageModifier = null, bool skipNPCs = false) {
 			if (minion is not ModProjectile proj) return false;
 			Projectile projectile = proj.Projectile;
 			StatModifier damageMod = damageModifier ?? StatModifier.Default;
 			Rectangle projHitbox = projectile.Hitbox;
-			int specialHitSetter = 1;
-			float damageMultiplier = 1f;
-			foreach (NPC npc in Main.ActiveNPCs) {
-				if (!npc.friendly && npc.damage > 0) {
-					Rectangle npcRect = npc.Hitbox;
-					NPC.GetMeleeCollisionData(projHitbox, npc.whoAmI, ref specialHitSetter, ref damageMultiplier, ref npcRect);
-					if (npc.Hitbox.Intersects(projectile.Hitbox)) {
-						NPC.HitInfo hit = new() {
-							HitDirection = npc.Center.X > projectile.Center.X ? -1 : 1,
-							Knockback = 2,
-							Crit = false
-						};
-						projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
-						minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage * damageMultiplier));
-						return true;
+			if (!skipNPCs) {
+				int specialHitSetter = 1;
+				float damageMultiplier = 1f;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (!npc.friendly && npc.damage > 0) {
+						Rectangle npcRect = npc.Hitbox;
+						NPC.GetMeleeCollisionData(projHitbox, npc.whoAmI, ref specialHitSetter, ref damageMultiplier, ref npcRect);
+						if (npc.Hitbox.Intersects(projectile.Hitbox)) {
+							NPC.HitInfo hit = new() {
+								HitDirection = npc.Center.X > projectile.Center.X ? -1 : 1,
+								Knockback = 2,
+								Crit = false
+							};
+							projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+							float oldLife = minion.Life;
+							minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage * damageMultiplier));
+							return minion.Life < oldLife;
+						}
 					}
 				}
 			}
 			foreach (Projectile enemyProj in Main.ActiveProjectiles) {
-				if (enemyProj.hostile && enemyProj.damage > 0 && enemyProj.Hitbox.Intersects(projectile.Hitbox)) {
+				if ((enemyProj.hostile || (enemyProj.type == ProjectileID.RottenEgg && enemyProj.owner == projectile.owner)) && enemyProj.damage > 0 && enemyProj.Hitbox.Intersects(projectile.Hitbox)) {
 					NPC.HitInfo hit = new() {
 						HitDirection = enemyProj.direction,
 						Knockback = 2,
 						Crit = false
 					};
 					projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
+					float oldLife = minion.Life;
 					minion.DamageArtifactMinion((int)damageMod.ApplyTo(enemyProj.damage));
-					return true;
+					if (!enemyProj.hostile) {
+						enemyProj.penetrate--;
+					}
+					return minion.Life < oldLife;
 				}
 			}
 			return false;
