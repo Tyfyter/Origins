@@ -577,7 +577,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					//magic missile
 					case state_magic_missile: {
 						CheckTrappedCollision();
-						if (NPC.ai[1] < 5) {
+						if (NPC.ai[1] < 5 || NPC.ai[2] is not 0 and not 1) {
 							NPC.ai[2] = 0;
 						}
 						NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
