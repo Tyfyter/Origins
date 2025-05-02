@@ -128,13 +128,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						Projectile.position = idlePosition;
 						Projectile.velocity *= 0.1f;
 						Projectile.netUpdate = true;
-					} else {
+					} else if (Projectile.localAI[1] <= 0) {
 						Projectile.ai[2] = 1;
 						Projectile.netUpdate = true;
 					}
 				}
 			}
 			if (Projectile.ai[2] == 1) {
+				Projectile.localAI[1] = 300;
 				float speed = 8f;
 				float inertia = 12f;
 				Vector2 direction = vectorToIdlePosition * (speed / distanceToIdlePosition);
@@ -144,9 +145,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (++Projectile.frameCounter >= 20) Projectile.frameCounter = 0;
 				Projectile.frame = 9;
 				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
+				Rectangle floorbox = Projectile.Hitbox;
+				floorbox.Offset(0, Projectile.height);
+				floorbox.Height = 16 * 4;
+				if (!floorbox.OverlapsAnyTiles(false)) return;
 				Projectile.ai[2] = 0;
 				Projectile.netUpdate = true;
 			}
+			Projectile.localAI[1]--;
 			Projectile.tileCollide = true;
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (other.type == Type && other.owner == Projectile.owner && other.Hitbox.Intersects(Projectile.Hitbox)) {
@@ -282,6 +288,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.velocity.Y != 0) {
 				Projectile.frameCounter = 0;
 				Projectile.frame = 9;
+			}
+			if (Projectile.velocity.Y == 0 && vectorToIdlePosition.Y < 16 * 2) {
+				Rectangle floorbox = Projectile.Hitbox;
+				floorbox.Inflate(-8, 0);
+				floorbox.Offset((int)(Projectile.velocity.X * 4 + Projectile.direction * 8), Projectile.height - 16);
+				floorbox.Height = 16 * 7;
+				if (!floorbox.OverlapsAnyTiles(false)) {
+					Projectile.direction = Math.Sign(Projectile.velocity.X);
+					Projectile.velocity.X = 0;
+				}
 			}
 			Projectile.velocity.Y += 0.4f;
 		}
