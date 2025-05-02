@@ -118,7 +118,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 				if (dir != Vector2.Zero) {
 					Vector2 weight = dir.SafeNormalize(default);
-					Projectile.position += weight * new Vector2(Projectile.width, Projectile.height) * 0.51f / 30;
+					Projectile.position += weight * new Vector2(Projectile.width, Projectile.height) * 0.52f / 30;
 				}
 			}
 			if (Main.dedServ) return;

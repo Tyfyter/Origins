@@ -90,6 +90,10 @@ namespace Origins.Items {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || !player.active) {
+				Projectile.Kill();
+				return;
+			}
 			Vector2 direction = player.Center - Projectile.Center;
 			float dist = direction.LengthSquared();
 			if (dist < 50f && Projectile.Hitbox.Intersects(player.Hitbox)) {
