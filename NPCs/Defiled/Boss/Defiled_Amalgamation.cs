@@ -704,7 +704,9 @@ namespace Origins.NPCs.Defiled.Boss {
 				trappedTime = 30;
 				return;
 			}
-			if (!NPC.Hitbox.OverlapsAnyTiles()) {
+			Rectangle hitbox = NPC.Hitbox;
+			hitbox.Inflate(-1, -1);
+			if (!hitbox.OverlapsAnyTiles()) {
 				NPC.noTileCollide = false;
 			} else if (AIState == state_triple_dash) {
 				NPC.velocity.Y = -4;
@@ -968,8 +970,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			return life > 0;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
-			Point barSize = new Point(456, 22); //Size of the bar
-			Point topLeftOffset = new Point(32, 24); //Where the top left of the bar starts
+			Point barSize = new(456, 22); //Size of the bar
+			Point topLeftOffset = new(32, 24); //Where the top left of the bar starts
 			int frameCount = 6;
 
 			Rectangle bgFrame = drawParams.BarTexture.Frame(verticalFrames: frameCount, frameY: 3);
