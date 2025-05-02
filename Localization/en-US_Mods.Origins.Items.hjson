@@ -5905,7 +5905,7 @@ Venus_Coral_Debug_Item: {
 }
 
 Defiled_Regolith_Item: {
-	DisplayName: Defiled Regolith
+	DisplayName: "{§Defiled} Regolith"
 	Tooltip: ""
 }
 

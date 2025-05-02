@@ -1630,10 +1630,10 @@ Projectiles: {
 	Hydrolantern_Use.DisplayName: Hydrolantern
 	Airsnatcher_Bubble.DisplayName: Airsnatcher Bubble
 	Unsatisfied_Soul.DisplayName: Unsatisfied Soul
-	DA_Spike_Summon.DisplayName: D A Spike Summon
-	DA_Spike.DisplayName: D A Spike
-	DA_Spike_Bendy.DisplayName: D A Spike Bendy
-	DA_Guided_Missile.DisplayName: D A Guided Missile
+	DA_Spike_Summon.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Summon"
+	DA_Spike.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike"
+	DA_Spike_Bendy.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Bendy"
+	DA_Guided_Missile.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Guided Missile"
 	Torpedo_Tube_P.DisplayName: Torpedo Tube
 	Faith_Beads_Explosion.DisplayName: Faith Beads Explosion
 	Mildew_Blob.DisplayName: Mildew Blob
@@ -1714,17 +1714,17 @@ Projectiles: {
 	Cannihound_Gore3.DisplayName: Cannihound Gore3
 	Brine_Haze_P.DisplayName: Brine Haze Cloud
 	Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
-	Defiled_Broadcaster_Flan.DisplayName: Defiled Broadcaster
-	Defiled_Broadcaster_Teleport_Flan.DisplayName: Defiled Broadcaster Teleport
-	Bendy_Indicator.DisplayName: D A Bendy Indicator
-	DA_Arc_Bolt.DisplayName: D A Arc Bolt
-	DA_Bendy_Spikes.DisplayName: D A Bendy Spikes
-	DA_Flan.DisplayName: D A Nerve Flan
-	Defiled_Spike_Explosion_Hostile_Unused.DisplayName: Defiled Spike Explosion Hostile Unused
-	Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: Defiled Spike Explosion Spike Hostile Unused
-	Defiled_Spike_Indicator.DisplayName: D A Spike Indicator
-	DA_Laser.DisplayName: D A Laser Spin
-	Defiled_Prefix_Orb.DisplayName: Defiled Orb
+	Defiled_Broadcaster_Flan.DisplayName: "{§Defiled} Broadcaster"
+	Defiled_Broadcaster_Teleport_Flan.DisplayName: "{§Defiled} Broadcaster Teleport"
+	Bendy_Indicator.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Bendy Indicator"
+	DA_Arc_Bolt.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Arc Bolt"
+	DA_Bendy_Spikes.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Bendy Spikes"
+	DA_Flan.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Nerve Flan"
+	Defiled_Spike_Explosion_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Hostile Unused"
+	Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Spike Hostile Unused"
+	Defiled_Spike_Indicator.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Indicator"
+	DA_Laser.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Laser Spin"
+	Defiled_Prefix_Orb.DisplayName: "{§Defiled} Orb"
 	Tyrfing_P.DisplayName: Tyrfing
 }
 
@@ -1795,8 +1795,8 @@ Prefixes: {
 	Necromantic_Artifact_Prefix.Description: "{$Mods.Origins.Prefixes.Necromantic_Prefix.SharedDescription}"
 
 	Defiled_Prefix: {
-		DisplayName: Defiled
-		Description: Projectiles steal mana and occasionally explode into defiled spikes
+		DisplayName: "{§Defiled}"
+		Description: Projectiles steal mana and occasionally explode into {§Defiled} spikes
 	}
 }
 
@@ -1896,8 +1896,8 @@ Biomes: {
 	}
 
 	Defiled_Wastelands_Ice_Biome: {
-		DisplayName: Defiled Ice
-		TownNPCDialogueName: the Defiled Ice
+		DisplayName: "{§Defiled} Ice"
+		TownNPCDialogueName: the {§Defiled} Ice
 	}
 
 	Defiled_Wastelands_Ocean: {
