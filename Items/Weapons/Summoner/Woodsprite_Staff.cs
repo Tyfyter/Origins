@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using System.Collections.Generic;
+using Origins.Projectiles;
 namespace Origins.Items.Weapons.Summoner {
 	public class Woodsprite_Staff : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -272,16 +273,60 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
 			Projectile.timeLeft = 300;
+			Projectile.friendly = false;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			if (player.dead || !player.active) Projectile.Kill();
+			if (player.dead || !player.active) {
+				Projectile.Kill();
+				return;
+			}
+			if (player.statLife >= player.statLifeMax2 && Projectile.ai[0] == 0) {
+				float lowestHealth = 1;
+				foreach (Projectile otherProj in Main.ActiveProjectiles) {
+					if (otherProj.owner == Projectile.owner && otherProj.ModProjectile is IArtifactMinion artifactMinion) {
+						float healthPercent = artifactMinion.Life / artifactMinion.MaxLife;
+						if (healthPercent < lowestHealth) {
+							lowestHealth = healthPercent;
+							Projectile.ai[0] = otherProj.identity + 1;
+						}
+					}
+				}
+			}
+			Vector2 unit;
+			if (Projectile.ai[0] != 0) {
+				IArtifactMinion targetProj = null;
+				Rectangle targetProjHitbox = default;
+				foreach (Projectile otherProj in Main.ActiveProjectiles) {
+					if (otherProj.owner == Projectile.owner && otherProj.ModProjectile is IArtifactMinion artifactMinion && otherProj.identity + 1 == Projectile.ai[0]) {
+						targetProj = artifactMinion;
+						targetProjHitbox = otherProj.Hitbox;
+						break;
+					}
+				}
+				if (targetProj is null) {
+					Projectile.ai[0] = 0;
+					return;
+				}
+				if (targetProjHitbox.Contains(Projectile.Center.ToPoint())) {
+					float oldHealth = targetProj.Life;
+					targetProj.Life += Projectile.damage;
+					if (targetProj.Life > targetProj.MaxLife) targetProj.Life = targetProj.MaxLife;
+					CombatText.NewText(targetProjHitbox, CombatText.HealLife, (int)Math.Round(targetProj.Life - oldHealth), true, dot: true);
+					Projectile.Kill();
+					return;
+				}
+				unit = (targetProjHitbox.Center() - Projectile.Center).SafeNormalize(Projectile.velocity);
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit * 8, 0.1f);
+				Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
+				return;
+			}
 			if (player.Hitbox.Contains(Projectile.Center.ToPoint())) {
 				player.Heal(Projectile.damage);
 				Projectile.Kill();
 				return;
 			}
-			Vector2 unit = (player.Center - Projectile.Center).SafeNormalize(Projectile.velocity);
+			unit = (player.Center - Projectile.Center).SafeNormalize(Projectile.velocity);
 			Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit * 8, 0.1f);
 			Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
 		}
