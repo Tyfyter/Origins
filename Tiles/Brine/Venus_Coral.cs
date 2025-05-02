@@ -34,6 +34,7 @@ namespace Origins.Tiles.Brine {
 			Main.tileSolid[Type] = false;
 			Main.tileCut[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			//RegisterItemDrop(ItemType<Venus_Coral_Item>());
 			AddMapEntry(new(164, 103, 32));
@@ -42,7 +43,7 @@ namespace Origins.Tiles.Brine {
 		}
 
 		public override void RandomUpdate(int i, int j) {
-			if (!WorldGen.genRand.NextBool(4)) return;
+			if (!WorldGen.genRand.NextBool(2)) return;
 			switch (WorldGen.genRand.Next(4)) {
 				default:
 				j++;

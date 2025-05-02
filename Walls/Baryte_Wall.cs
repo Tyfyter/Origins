@@ -38,8 +38,8 @@ namespace Origins.Walls {
 			}
 			if (!tile.HasTile && tile.LiquidAmount >= 200 && tile.LiquidType == LiquidID.Water && WorldGen.genRand.NextBool(4)) {
 				int coral = TileType<Venus_Coral>();
-				bool IsSolid(Tile tile) {
-					return tile.HasTile && (tile.TileType == coral || Main.tileSolid[tile.TileType]);
+				static bool IsSolid(Tile tile) {
+					return tile.HasTile && Main.tileSolid[tile.TileType];
 				}
 				const int max_dist = 5;
 				int k = 1;
@@ -49,7 +49,7 @@ namespace Origins.Walls {
 					if (IsSolid(Framing.GetTileSafely(i, j + k))) break;
 					if (IsSolid(Framing.GetTileSafely(i, j - k))) break;
 				}
-				if (k < max_dist && WorldGen.genRand.NextBool(k * k * 3)) WorldGen.PlaceTile(i, j, coral, true);
+				if (k < max_dist && WorldGen.genRand.NextBool(k * k * 10)) WorldGen.PlaceTile(i, j, coral, true);
 			}
 		}
 		public List<(Vector2 pos, float size)> hydrolanterns = [];

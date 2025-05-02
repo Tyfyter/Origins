@@ -12,6 +12,7 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -170,11 +171,51 @@ namespace Origins.Projectiles {
 				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 			} else if (source is EntitySource_Parent sourceParent && sourceParent.Entity is Projectile parent && parent.TryGetGlobalProjectile(out ExplosiveGlobalProjectile parentGlobal)) {
 				modifierBlastRadius = parentGlobal.modifierBlastRadius;
-				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
+				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.selfDamageModifier);
 				novaCascade = parentGlobal.novaCascade;
 				novaSwarm = parentGlobal.novaSwarm;
 				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 				noTileSplode = parentGlobal.noTileSplode;
+			}
+		}
+		public override void CutTiles(Projectile projectile) {
+			if (IsExploding(projectile)) {
+				OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+				Rectangle hitbox = projectile.Hitbox;
+				bool modifiedBlastRadius = false;
+				if (modifierBlastRadius != StatModifier.Default) {
+					StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+					modifiedBlastRadius = true;
+				}
+				if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
+					StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+					modifiedBlastRadius = true;
+				}
+				if (modifiedBlastRadius) {
+					int minX = hitbox.X / 16;
+					int maxX = (hitbox.X + hitbox.Width) / 16 + 1;
+					int minY = hitbox.Y / 16;
+					int maxY = (hitbox.Y + hitbox.Height) / 16 + 1;
+
+					if (minX < 0) minX = 0;
+					if (maxX > Main.maxTilesX) maxX = Main.maxTilesX;
+					if (minY < 0) minY = 0;
+					if (maxY > Main.maxTilesY) maxY = Main.maxTilesY;
+
+					bool[] tileCutIgnorance = Main.player[projectile.owner].GetTileCutIgnorance(allowRegrowth: false, projectile.trap);
+					for (int i = minX; i < maxX; i++) {
+						for (int j = minY; j < maxY; j++) {
+							if (Main.tile[i, j] != null && Main.tileCut[Main.tile[i, j].TileType] && !tileCutIgnorance[Main.tile[i, j].TileType] && WorldGen.CanCutTile(i, j, TileCuttingContext.AttackProjectile)) {
+								WorldGen.KillTile(i, j);
+								if (Main.netMode != NetmodeID.SinglePlayer) {
+									NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {

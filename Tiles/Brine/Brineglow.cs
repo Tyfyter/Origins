@@ -108,14 +108,14 @@ namespace Origins.Tiles.Brine {
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
-				const int min_chance = 10;
+				const int min_chance = 6;
 				int count = 1;
 				for (int k = 1; k < min_chance; k++) {
 					if (!Framing.GetTileSafely(i, j - k).TileIsType(Type)) break;
 					count++;
 					if (count >= min_chance) break;
 				}
-				if (WorldGen.genRand.NextBool(count) && TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
+				if (WorldGen.genRand.NextBool(1 + count / 2) && TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;
