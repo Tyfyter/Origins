@@ -259,6 +259,8 @@ namespace Origins.NPCs.Defiled {
 			for (int i = 0; i < spawns.Count; i++) {
 				(int npcType, SpawnRate condition) = spawns[i];
 				if (npcType == Type) continue;
+				if (npcType == ModContent.NPCType<Ancient_Defiled_Cyclops>()) continue;
+				if (npcType == ModContent.NPCType<Ancient_Defiled_Flyer>()) continue;
 				rand.Add(npcType, condition.Rate(lastSpawnInfo));
 			}
 			return NPC.NewNPC(null, newTileX * 16 + 8, newTileY * 16, ModContent.NPCType<Defiled_Chrysalis>(), ai0: rand.Get());
