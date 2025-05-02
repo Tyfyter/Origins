@@ -73,7 +73,7 @@ namespace Origins.World.BiomeData {
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 			originPlayer.DefiledMonolith = false;
 
-			return defiledTiles >= NeededTiles;
+			return defiledTiles > NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
