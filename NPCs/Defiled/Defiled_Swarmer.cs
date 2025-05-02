@@ -63,6 +63,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
 		}
 		public override void AI() {
+			if (NPC.velocity.HasNaNs()) NPC.velocity = Vector2.Zero;
 			NPC.noGravity = true;
 			NPCAimedTarget target = NPC.GetTargetData();
 			NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;

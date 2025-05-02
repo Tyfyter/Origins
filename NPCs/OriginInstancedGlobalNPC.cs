@@ -17,7 +17,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-    public partial class OriginGlobalNPC : GlobalNPC {
+	public partial class OriginGlobalNPC : GlobalNPC {
 		protected override bool CloneNewInstances => true;
 		public override bool InstancePerEntity => true;
 		internal int shockTime = 0;
@@ -155,7 +155,7 @@ namespace Origins.NPCs {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {
-				modifiers.SourceDamage *= Main.masterMode ? 1.5f: (Main.expertMode ? 1.55f : 1.6f);
+				modifiers.SourceDamage *= Main.masterMode ? 1.5f : (Main.expertMode ? 1.55f : 1.6f);
 			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
@@ -206,7 +206,7 @@ namespace Origins.NPCs {
 				}
 				npc.lifeRegen -= 15;
 				damage += 1;
-				if(Main.rand.Next(5) < 3) {
+				if (Main.rand.Next(5) < 3) {
 					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Shadowflame, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
 					dust.noGravity = true;
 					dust.velocity *= 0.75f;
