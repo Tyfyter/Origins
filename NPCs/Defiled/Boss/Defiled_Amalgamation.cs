@@ -969,7 +969,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			life = lastTickPercent * lifeMax;
 			return life > 0;
 		}
-#if true
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
 			Point barSize = new(456, 22); //Size of the bar
 			Point topLeftOffset = new(32, 24); //Where the top left of the bar starts
@@ -1011,92 +1010,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 			return true;
 		}
-#else
-		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
-			float progress = npc.ai[0] / Main.npcFrameCount[npc.type];
-			float inverseProgress = MathF.Pow(1 - progress, 0.5f);
-			(Texture2D barTexture, Vector2 barCenter, Texture2D iconTexture, Rectangle iconFrame, Color iconColor, float life, float lifeMax, float shield, float shieldMax, float iconScale, bool showText, Vector2 textOffset) = drawParams;
-
-			Point barSize = new Point(456, 22); //Size of the bar
-			Point topLeftOffset = new Point(32, 24); //Where the top left of the bar starts
-			int frameCount = 6;
-
-			Rectangle bgFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 3);
-			Color bgColor = Color.White * 0.2f;
-
-			int scale = (int)(barSize.X * life / lifeMax);
-			scale -= scale % 2;
-			Rectangle barFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 5);
-			barFrame.X += topLeftOffset.X;
-			barFrame.Y += topLeftOffset.Y;
-			barFrame.Width = 2;
-			barFrame.Height = barSize.Y;
-
-			Rectangle tipFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 4);
-			tipFrame.X += topLeftOffset.X;
-			tipFrame.Y += topLeftOffset.Y;
-			tipFrame.Width = 2;
-			tipFrame.Height = barSize.Y;
-
-			Rectangle barPosition = Utils.CenteredRectangle(barCenter, barSize.ToVector2());
-			Vector2 barTopLeft = barPosition.TopLeft();
-			Vector2 topLeft = barTopLeft - topLeftOffset.ToVector2();
-
-			// Background
-			spriteBatch.Draw(barTexture, topLeft, bgFrame, bgColor * inverseProgress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-			// Bar itself
-			Vector2 stretchScale = new Vector2(scale / barFrame.Width, 1f);
-			Color barColor = Color.White;
-			spriteBatch.Draw(barTexture, barTopLeft, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
-
-			// Tip
-			spriteBatch.Draw(barTexture, barTopLeft + new Vector2(scale - 2, 0f), tipFrame, barColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-			SpriteBatchState state = spriteBatch.GetState();
-			try {
-				spriteBatch.Restart(state, SpriteSortMode.Immediate, samplerState: SamplerState.PointClamp);
-				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(TangelaVisual.ShaderID, Main.LocalPlayer);
-				FastRandom random = new(npc.whoAmI);
-				shader.Shader.Parameters["uOffset"]?.SetValue(new Vector2(random.NextFloat(), random.NextFloat()) * 512);
-				int shieldScale = (int)(barSize.X * shield / shieldMax);
-				shieldScale -= shieldScale % 2;
-				barFrame.Y = bgFrame.Y + topLeftOffset.Y;
-				barFrame.Width = shieldScale;
-				DrawData data = new(
-					drawParams.BarTexture,
-					barTopLeft,
-					barFrame,
-					Color.White,
-					0,
-					Vector2.Zero,
-					Vector2.One,
-					SpriteEffects.None
-				);
-				shader.Apply(null, data);
-				data.Draw(spriteBatch);
-			} finally {
-				spriteBatch.Restart(state);
-			}
-
-			// Frame
-			Rectangle frameFrame = barTexture.Frame(verticalFrames: frameCount, frameY: 0);
-			spriteBatch.Draw(barTexture, topLeft, frameFrame, barColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-			// Icon
-			Vector2 iconOffset = new Vector2(4f, 20f);
-			Vector2 iconSize = new Vector2(26f, 28f);
-			// The vanilla method with the shieldCurrent parameter, which is used only by the lunar pillars, uses iconSize = iconFrame.Size() instead, which have a size of 26x30,
-			// causing a slight vertical offset that is barely noticeable. Considering that the non-shieldCurrent method is the more general one, let's keep it like this
-			// (changing that using the lunar pillar code will cause many other icons to be offset instead) --direwolf420
-			Vector2 iconPos = iconOffset + iconSize / 2f;
-			// iconFrame Centered around iconPos
-			spriteBatch.Draw(iconTexture, topLeft + iconPos, iconFrame, iconColor, 0f, iconFrame.Size() / 2f, iconScale, SpriteEffects.None, 0f);
-
-			BigProgressBarHelper.DrawHealthText(spriteBatch, barPosition, textOffset, shield, shieldMax);
-			return false;
-		}
-#endif
 		public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams) {
 			int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
 			Vector2 barSize = new(456, 22);
