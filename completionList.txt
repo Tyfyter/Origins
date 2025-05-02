@@ -54,7 +54,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(☻, †) Defiled Amalgamation* !!!
+(#2, ^2) Defiled Amalgamation* !!! (tangela smear nerf and shoulder rotat e)
 ($, ^2/3) Fiberglass Weaver*
 (X) Shimmer Construct
 (#, ^2) Trenchmaker
@@ -898,10 +898,10 @@ SUMMONER WEAPONS:
 (^) Ocotillo Finger
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
-(^) Relay Rod
+(#2, ^2) Relay Rod !!! (needs regen re-balance)
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(ᗢ) Sunflower in a Pot (Sunflower variants)
+(#2, ^2, ᗢ) Sunflower in a Pot (Sunflower variants, turret mode distance) !!!
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff

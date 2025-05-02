@@ -307,6 +307,19 @@ Bladetongue: {
 		'''
 }
 
+Blockus_Tube: {
+	Name: Blockus Tube
+	Text:
+		'''
+		[header:Blockus Tube (18/18)]
+		[jimage/sc3d:Origins/Items/Pets/Blockus_Tube]
+
+
+		*****
+		That Hound is different. Most savage, they willfully departed to hunt. Now nothing more than rabid animals; even hostile to the rest of us. But, we accept for protection nonetheless.
+		'''
+}
+
 Boat_Rocker: {
 	Name: Boat Rocker
 	Text:
@@ -1168,6 +1181,3 @@ Zoologist.Text:
 	Contributions:
 		- aiding the Terrarian
 	'''
-Blockus_Tube.Text: Mods.Origins.Journal.Blockus_Tube.Text
-Rotted_Fork.Text: Mods.Origins.Journal.Rotted_Fork.Text
-Undertaker.Text: Mods.Origins.Journal.Undertaker.Text

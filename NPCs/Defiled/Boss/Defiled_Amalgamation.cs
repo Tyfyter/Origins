@@ -1217,7 +1217,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			(Vector2 pos, Vector2 per)[] curve = childSpike.GetCurve(1f);
 			Vector2[] pos = new Vector2[segments * 32];
 			float[] rot = new float[segments * 32];
-			for (int i = 0; i < curve.Length; i++) {
+			for (int i = 0; i < curve.Length && i < pos.Length; i++) {
 				pos[i] = curve[i].pos;
 				rot[i] = curve[i].per.ToRotation() + MathHelper.PiOver2;
 			}

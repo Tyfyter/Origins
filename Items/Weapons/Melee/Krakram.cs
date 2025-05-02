@@ -1,11 +1,9 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using PegasusLib;
-using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Krakram : ModItem, ICustomWikiStat {
         public string[] Categories => [
