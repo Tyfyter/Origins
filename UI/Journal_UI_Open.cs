@@ -200,7 +200,7 @@ namespace Origins.UI {
 				case Journal_UI_Mode.Normal_Page: {
 					JournalEntry entry = Journal_Registry.Entries[key];
 					currentEffect = entry.TextShader;
-					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}.Text")), entry.BaseColor);
+					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.FullTextKey}.Text")), entry.BaseColor);
 					OriginPlayer.LocalOriginPlayer.unreadJournalEntries.Remove(key);
 				}
 				break;
@@ -217,11 +217,10 @@ namespace Origins.UI {
 						if (!Equals(cache, series)) {
 							cache = series;
 							if (!string.IsNullOrWhiteSpace(options)) options = "/" + options;
-							builder.AppendLine($"[jsh{options}:{Language.GetOrRegister($"Mods.{entry.Mod.Name}.Journal.Series.{series}").Value}]");
+							builder.AppendLine($"[jsh{options}:{Language.GetOrRegister($"Mods.{entry.Mod.Name}.Journal.{series}.DisplayName").Value}]");
 						}
 					}
 					foreach (JournalEntry entry in Journal_Registry.OrderedEntries) {
-						string series = entry.SortIndex.Series;
 						if (!originPlayer.unlockedJournalEntries.Contains(entry.FullName)) {
 							if (OriginClientConfig.Instance.ShowLockedEntries) {
 								TryAddHeader(lockedBuilder, ref lastSeries[2], entry, "l");
@@ -639,6 +638,22 @@ namespace Origins.UI {
 			}
 			#endregion arrows
 			spriteBatch.Restart(spriteBatchState);
+			if (Keybindings.JournalBack.JustPressed) {
+				Journal_UI_Mode? switchMode = null;
+				switch (mode) {
+					case Journal_UI_Mode.Normal_Page:
+					switchMode = Journal_UI_Mode.Index_Page;
+					break;
+					case Journal_UI_Mode.Quest_Page:
+					switchMode = Journal_UI_Mode.Quest_List;
+					break;
+				}
+				if (switchMode.HasValue) {
+					int oldPageOffset = lastPageOffset;
+					SwitchMode(switchMode.Value, "");
+					pageOffset = oldPageOffset;
+				}
+			}
 		}
 		int memoPage_selectedSide = -1;
 		int memoPage_cursorPosition = 0;

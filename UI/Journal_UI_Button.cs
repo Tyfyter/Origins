@@ -55,6 +55,8 @@ namespace Origins.UI {
 					ItemSlot.Handle(ref originPlayer.journalDye);
 					Main.mouseLeft = Main.mouseLeftRelease = false;
 					Main.mouseRight = true;
+				} else if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+					OriginsModIntegrations.SearchKeybind("Journal");
 				}
 				if (Main.LocalPlayer.HeldItem.dye > 0) {
 					journalShader = Main.LocalPlayer.HeldItem.dye;

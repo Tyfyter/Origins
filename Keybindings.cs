@@ -17,6 +17,10 @@ namespace Origins {
 		public static ModKeybind GoldenLotus { get; private set; }
 		[Keybind(Keys.J)]
 		public static ModKeybind UseMojoFlask { get; private set; }
+		/*[Keybind("mouse3")]
+		public static ModKeybind OpenJournal { get; private set; }*/
+		[Keybind(Keys.Up)]
+		public static ModKeybind JournalBack { get; private set; }
 #if DEBUG
 		[Keybind("Debug Screen Shader", Keys.OemQuotes)]
 		public static ModKeybind DebugScreenShader { get; private set; }

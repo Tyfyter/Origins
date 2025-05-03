@@ -2024,6 +2024,7 @@ Keybinds: {
 	// "Debug Screen Shader.DisplayName": Debug  Screen  Shader
 	// GoldenLotus.DisplayName: Golden Lotus
 	// UseMojoFlask.DisplayName: Use Mojo Flask
+	// JournalBack.DisplayName: Journal: Back
 }
 
 Configs: {

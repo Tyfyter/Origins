@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Origins.Tiles.Other;
+using rail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +13,18 @@ using Terraria.ModLoader;
 namespace Origins.Journal {
 	public abstract class JournalEntry : ModType, ILocalizedModType, IComparable<JournalEntry> {
 		public virtual string TextKey => GetType().Name.Replace("_Entry", "");
+		public virtual string FullTextKey => $"{SortIndex.Series}.{TextKey}";
 		public virtual LocalizedText DisplayName {
 			get {
-				string nameKey = $"Mods.{Mod.Name}.{LocalizationCategory}.{TextKey}.Name";
+				string nameKey = $"Mods.{Mod.Name}.{LocalizationCategory}.{FullTextKey}.Name";
 				if (!Language.Exists(nameKey)) {
 					string itemName = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
-					if (Language.Exists(itemName)) nameKey = itemName;
+					if (Language.Exists(itemName)) {
+						nameKey = itemName;
+					} else {
+						itemName = $"Mods.{Mod.Name}.NPCs.{TextKey}.DisplayName";
+						if (Language.Exists(itemName)) nameKey = itemName;
+					}
 				}
 				return Language.GetOrRegister(nameKey, PrettyPrintName);
 			}
@@ -32,8 +41,8 @@ namespace Origins.Journal {
 			Journal_Registry.Entries.Add(FullName, this);
 		}
 		public sealed override void SetupContent() {
-			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{TextKey}.Text");
-			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.Series.{SortIndex.Series}", () => SortIndex.Series);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{FullTextKey}.Text");
+			Language.GetOrRegister($"Mods.{Mod.Name}.Journal.{SortIndex.Series}.DisplayName", () => SortIndex.Series);
 			_ = DisplayName.Value;
 			SetStaticDefaults();
 		}

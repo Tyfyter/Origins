@@ -77,8 +77,12 @@ namespace Origins {
 		ModKeybind goToKeybindKeybind;
 		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
 		Action<ModKeybind> goToKeybind;
+		Action<string> searchKeybinds;
 		public static void GoToKeybind(ModKeybind keybind) {
 			instance.goToKeybind?.Invoke(keybind);
+		}
+		public static void SearchKeybind(string text) {
+			instance.searchKeybinds?.Invoke(text);
 		}
 		public void Load(Mod mod) {
 			instance = this;
@@ -323,6 +327,7 @@ namespace Origins {
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {
 				instance.goToKeybindKeybind = keybind;
 				instance.goToKeybind = (keybind) => controllerConfigurator.Call("OPENKEYBINDSTOSEARCH", keybind);
+				instance.searchKeybinds = (text) => controllerConfigurator.Call("OPENKEYBINDSTOSEARCH", text);
 			}
 			if (ModLoader.TryGetMod("GlobalLootViewer", out Mod globalLootViewer)) {
 				globalLootViewer.Call("IgnoreConditionWhenHighLighting", DropConditions.PlayerInteraction);
