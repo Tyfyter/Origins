@@ -75,12 +75,14 @@ namespace Origins.UI {
 			List<List<TextSnippet>> snippetPages = [];
 			StringBuilder currentText = new();
 			List<TextSnippet> currentPage = [];
+			int minNewLines = 0;
 			void finishPage() {
 				cursor = Vector2.Zero;
 				currentPage.Add(new TextSnippet(currentText.ToString(), baseColor));
 				currentText.Clear();
 				snippetPages.Add(currentPage.ToList());
 				currentPage.Clear();
+				minNewLines = 0;
 			}
 			for (int i = 0; i < snippets.Count; i++) {
 				TextSnippet textSnippet = snippets[i];
@@ -95,9 +97,10 @@ namespace Origins.UI {
 				textSnippet.Update();
 				snippetScale = textSnippet.Scale;
 				Color snippetColor = textSnippet.GetVisibleColor();
-				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
+				if (textSnippet.UniqueDraw(justCheckingString: true, out Vector2 size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					currentPage.Add(textSnippet);
+					minNewLines = Math.Max(minNewLines, (int)Math.Ceiling(size.Y / (font.LineSpacing * num3 * baseScale.Y)));
 					while (cursor.X > bounds.Width) {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
 						cursor.X -= bounds.Width;
@@ -130,7 +133,14 @@ namespace Origins.UI {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
 						cursor.X = 0f;
 						//result.Y = Math.Max(result.Y, cursor.Y);
-						currentPage.Add(new TextSnippet("\n"));
+						if (minNewLines > 0) {
+							for (int k = 0; k < minNewLines; k++) {
+								currentPage.Add(new TextSnippet("\n"));
+							}
+							minNewLines = 0;
+						} else {
+							currentPage.Add(new TextSnippet("\n"));
+						}
 						if (cursor.Y > bounds.Height) {
 							finishPage();
 							//snippetPages.Add(currentPage.ToArray());
@@ -174,7 +184,14 @@ namespace Origins.UI {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
 						cursor.X = 0f;
 						//result.Y = Math.Max(result.Y, cursor.Y);
-						currentPage.Add(new TextSnippet("\n"));
+						if (minNewLines > 0) {
+							for (int k = 0; k < minNewLines; k++) {
+								currentPage.Add(new TextSnippet("\n"));
+							}
+							minNewLines = 0;
+						} else {
+							currentPage.Add(new TextSnippet("\n"));
+						}
 						if (cursor.Y > bounds.Height) {
 							finishPage();
 							//snippetPages.Add(currentPage.ToArray());

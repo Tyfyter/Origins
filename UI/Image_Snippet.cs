@@ -28,6 +28,7 @@ namespace Origins.UI {
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
 				size = default;
 				if (image is null) return false;
+				image.Wait();
 				size = image.Size() * Scale;
 				if (justCheckingString) return true;
 				if (options.Shader != JournalImageShader.None) shaderOroboros.Capture();
