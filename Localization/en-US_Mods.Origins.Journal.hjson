@@ -461,7 +461,7 @@ The_Crimson: {
 		Text:
 			'''
 			[header:Bladetongue (1/{$SeriesLength})]
-			[jimage/sc1d:Terraria/Images/Item_3211]
+			[jimage/sc2d:Terraria/Images/Item_3211]
 
 
 			*****
@@ -487,7 +487,7 @@ The_Crimson: {
 		Text:
 			'''
 			[header:The Rotted Fork (3/{$SeriesLength})]
-			[jimage/sc3d:Terraria/Images/Item_802]
+			[jimage/sc2.2d:Terraria/Images/Item_802]
 
 
 			*****
@@ -565,7 +565,7 @@ The_Crimson: {
 		Text:
 			'''
 			[header:Tissue Sample (9/{$SeriesLength})]
-			[jimage/sc2d:Terraria/Images/Item_1329]
+			[jimage/sc2.5d:Terraria/Images/Item_1329]
 
 
 			*****

@@ -54,7 +54,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
-(#2, ^2) Defiled Amalgamation* !!! (tangela smear nerf and shoulder rotat e)
+(^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
 (X) Shimmer Construct
 (#, ^2) Trenchmaker
@@ -141,7 +141,7 @@ WORLD GENERATION:
 (^) Riven Hive
 (#2, 々) The Dusk
 
-(X) Chambersite Conversion
+(^) Chambersite Conversion
 ---
 
 OTHER:
