@@ -149,9 +149,6 @@ namespace Origins {
 		[DefaultValue(~QuestNotificationPositions.None), ConfigFlags<QuestNotificationPositions>, JsonConverter(typeof(FlagsEnumConverter<QuestNotificationPositions>))]
 		public QuestNotificationPositions QuestNotificationPosition = ~QuestNotificationPositions.None;
 
-		[DefaultValue(false)]
-		public bool OldSoundtrack = false;
-
 		public LaserTagConfig laserTagConfig = new();
 
 		[Header("Journal")]

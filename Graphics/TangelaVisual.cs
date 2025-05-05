@@ -17,7 +17,7 @@ namespace Origins.Graphics {
 	public interface ITangelaHaver {
 		public int? TangelaSeed { get; set; }
 	}
-	class AntiGrayArmorShaderData() : ArmorShaderData(Main.Assets.Request<Effect>("PixelShader"), "Default") {
+	class AntiGrayArmorShaderData() : ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/AntiGrayDye"), "AntiGrayDye") {
 		public override void Apply(Entity entity, DrawData? drawData = null) {
 			if (drawData is DrawData data) {
 				data.shader = 0;
