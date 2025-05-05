@@ -38,9 +38,19 @@ namespace Origins.NPCs.TownNPCs {
 				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
 			InvalidateNPCHousing.NPCTypeIgnoresSpecificBiome.Add(Type, [ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>()]);
+
+			//TODO: remove when added
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;
+			TownNPCStayingHomeless = true;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.WitchDoctor);
+			NPC.width = 18;
+			NPC.height = 40;
+			NPC.aiStyle = 7;
+			NPC.damage = 10;
+			NPC.defense = 15;
+			NPC.lifeMax = 250;
+			NPC.knockBackResist = 0.5f;
 			NPC.townNPC = true;
 			NPC.friendly = true;
 			NPC.HitSound = SoundID.Dig;

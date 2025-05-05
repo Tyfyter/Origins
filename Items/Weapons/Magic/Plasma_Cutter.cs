@@ -11,17 +11,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Riven_Dungeon_Chest_Placeholder_Item")]
-    public class Plasma_Cutter : ModItem, ICustomWikiStat {
+	public class Plasma_Cutter : ModItem, ICustomWikiStat {
 		public const int baseDamage = 64;
 		static short glowmask;
 		public string[] Categories => [
-            "MagicGun"
-        ];
+			"MagicGun"
+		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 27;
+			Item.damage = 60;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Plasma_Cutter_P>();
 			Item.knockBack = 6;
@@ -117,7 +117,7 @@ namespace Origins.Items.Weapons.Magic {
 			Main.EntitySpriteDraw(
 				texture,
 				Projectile.Center - Main.screenPosition,
-				texture.Frame(verticalFrames: Main.projFrames[Type], frameY:Projectile.frame),
+				texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame),
 				color,
 				Projectile.rotation,
 				new(21, 5),

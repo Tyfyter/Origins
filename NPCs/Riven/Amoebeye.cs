@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Gores.NPCs;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
@@ -15,7 +15,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC {
+	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Amoebeye_Entry).Name;
+		public class Amoebeye_Entry : JournalEntry {
+			public override string TextKey => "Amoebeye";
+			public override JournalSortIndex SortIndex => new("Riven", 7);
+		}
 		public Rectangle DrawRect => new(0, 0, 72, 68);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
@@ -28,6 +33,7 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			ID = Type;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.IchorSticker);
@@ -47,7 +53,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Amoebeye;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

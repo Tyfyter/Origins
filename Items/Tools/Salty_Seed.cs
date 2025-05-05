@@ -1,21 +1,23 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Summoner;
-using Origins.Projectiles;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Salty_Seed : ModItem, ICustomWikiStat {
+	public class Salty_Seed : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Tool"
 		];
+		public string EntryName => "Origins/" + typeof(Salty_Seed_Entry).Name;
+		public class Salty_Seed_Entry : JournalEntry {
+			public override string TextKey => "Salty_Seed";
+			public override JournalSortIndex SortIndex => new("Riven", 2);
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Plasma_Cutter>()] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Plasma_Cutter>();
@@ -33,9 +35,12 @@ namespace Origins.Items.Tools {
 	}
 	public class Mitosis_P : ModProjectile {
 		static readonly AutoLoadingAsset<Texture2D> seedTexture = typeof(Mitosis_P).GetDefaultTMLName() + "_Seed";
-		public static bool[][] aiVariableResets = [];
 		public static List<int> mitosises = [];
 		public static List<int> nextMitosises = [];
+		public override void Unload() {
+			mitosises = null;
+			nextMitosises = null;
+		}
 		public const int minion_duplicate_duration = 300;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 10;

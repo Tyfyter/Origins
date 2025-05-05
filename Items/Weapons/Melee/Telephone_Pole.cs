@@ -10,14 +10,17 @@ namespace Origins.Items.Weapons.Melee {
         public string[] Categories => [
             "Sword"
         ];
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			ItemID.Sets.UsesBetterMeleeItemLocation[Type] = true;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.damage = 110;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = false;
 			Item.noMelee = false;
-			Item.width = 104;
-			Item.height = 110;
+			Item.width = 84;
+			Item.height = 130;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 40;
 			Item.useAnimation = 40;

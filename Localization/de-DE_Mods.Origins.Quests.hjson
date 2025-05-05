@@ -1,22 +1,38 @@
 Guide: {
 	// Quest_Menu: Need some advice?
 
-	Journal: {
-		// Name: Journal Get!
+	Quest_Quest: {
+		// Name: Get Questing!
 		/* Journal:
 			'''
-			{$Mods.Origins.Quests.Guide.Journal.Name}
+			{$Mods.Origins.Quests.Guide.Quest_Quest.Name}
 			Client: [npcname:Guide]
-								
-			'{$Mods.Origins.Quests.Guide.Journal.Inquire}'
-								
-			- [qs/completed:Get a feather]
-			- [qs/completed:Get a book]
-			- [qs/completed:Get ink]
-			Unlocks: [i:Origins/Journal_Item]
+
+			'{$Mods.Origins.Quests.Guide.Quest_Quest.Inquire}'
+
+			- [qs{0}:Complete a quest]
 			''' */
-		// Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in."
-		// Start: You could use a book from the dungeon, a harpy feather, and squid ink to keep track of your quests.
+		// Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in. I happen to have a Journal on hand for you! Accept my quest if you want it."
+		// Start: You did it! Here, have this.
+	}
+
+	Assimilation_Quest: {
+		// Name: Troubling Trouble
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Guide.Assimilation_Quest.Name}
+			Client: [npcname:Guide]
+
+			'{$Mods.Origins.Quests.Guide.Assimilation_Quest.Inquire}'
+
+			[npcname:Guide] said to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to a place he called "the Aether"
+
+			- [qs/completed:Be assimilated by the <evil:_>]
+			- [qs/completed:Ask the guide for help curing yourself]
+			Reward: [i:SpelunkerPotion] x5, [i:Origins/Eye_Of_Aether] x5
+			''' */
+		// Inquire: That isn't good, it looks like the [evil:_] has started spreading to you! If you can find a Dryad she'll be able to cure you, but if you can't, I have some things that should help you make a cure for yourself.
+		// Start: Here, you'll need to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to the Aether, these should help you find both.
 	}
 }
 
@@ -29,9 +45,9 @@ Merchant: {
 			'''
 			{$Mods.Origins.Quests.Merchant.Blue_Bovine.Name}
 			Client: [npcname:Merchant]
-								
+
 			'{$Mods.Origins.Quests.Merchant.Blue_Bovine.Inquire}'
-								
+
 			- [qs{3}:Slay {2} Harpies ({1}/{2})]
 			Unlocks: [i:Origins/Blue_Bovine]
 			''' */
@@ -47,9 +63,9 @@ Merchant: {
 			'''
 			{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Name}
 			Client: [npcname:Merchant]
-								
+
 			'{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Inquire}'
-								
+
 			- [qs{2}:Slay {1} rare enemies ({0}/{1})]
 			Unlocks: [i:Origins/Lottery_Ticket]
 			''' */
@@ -69,9 +85,9 @@ Party_Girl: {
 			'''
 			{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Name}
 			Client: [npcname:PartyGirl]
-								
+
 			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Inquire}'
-								
+
 			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
 			Unlocks: [i:Origins/Partybringer]
 			''' */
@@ -93,9 +109,9 @@ Goblin_Tinkerer: {
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Name}
 			Client: [npcname:GoblinTinkerer]
-								
+
 			'{$Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Inquire}'
-								
+
 			- [qs{2}:Collect {1} Iron Bar ({0}/{1})]
 			- [qs{5}:Collect {4} Chains ({3}/{4})]
 			- [qs{8}:Collect {7} Adhesive Wrap ({6}/{7})]
@@ -114,9 +130,9 @@ Goblin_Tinkerer: {
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Name}
 			Client: [npcname:GoblinTinkerer]
-								
+
 			'{$Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Inquire}'
-								
+
 			- [qs{2}:Collect {1} Leather ({0}/{1})]
 			- [qs{3}:Collect Flintlock Pistol]
 			- [qs{4}:Collect Zombie Arm]
@@ -134,9 +150,9 @@ Goblin_Tinkerer: {
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Name}
 			Client: [npcname:GoblinTinkerer]
-								
+
 			'{$Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Inquire}'
-								
+
 			- [qs{0}:Collect Minecart]
 			- [qs{3}:Collect {2} Rocket I ({1}/{2})]
 			- [qs{6}:Collect {5} Adhesive Wrap ({4}/{5})]
@@ -159,9 +175,9 @@ Arms_Dealer: {
 			'''
 			{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Name}
 			Client: [npcname:ArmsDealer]
-								
+
 			'{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire}'
-								
+
 			- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
 			Unlocks: [i:Origins/Shardcannon]
 			''' */
@@ -179,9 +195,9 @@ Arms_Dealer: {
 			'''
 			{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Name}
 			Client: [npcname:ArmsDealer]
-								
+
 			'{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Inquire}'
-								
+
 			- [qs{2}:Slay {1} Enemies with the <imperfect:Origins/Harpoon_Burst_Rifle> ({0}/{1})]
 			Unlocks: [i:Origins/Harpoon_Burst_Rifle]
 			''' */
@@ -203,11 +219,11 @@ Zoologist: {
 			'''
 			{$Mods.Origins.Quests.Zoologist.Discount_1_Quest.Name}
 			Client: [npcname:BestiaryGirl]
-								
+
 			'{$Mods.Origins.Quests.Zoologist.Discount_1_Quest.Inquire}'
-								
-			- [qs{2}: Obtain any {1} critters ({0}/{1})]
-			- [qs{3}: Give critters to <npcname:BestiaryGirl>]
+
+			- [qs{2}:Obtain any {1} critters ({0}/{1})]
+			- [qs{3}:Give critters to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			''' */
 		// Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring 'em back to me? Yah? Thank yah, hun! Oh and I'll give you some discounts for being nice!
@@ -222,11 +238,11 @@ Zoologist: {
 			'''
 			{$Mods.Origins.Quests.Zoologist.Discount_2_Quest.Name}
 			Client: [npcname:BestiaryGirl]
-								
+
 			'{$Mods.Origins.Quests.Zoologist.Discount_2_Quest.Inquire}'
-								
-			- [qs{0}: Catch a <itemname:SquirrelGold>]
-			- [qs{1}: Give the squirrel to <npcname:BestiaryGirl>]
+
+			- [qs{0}:Catch a <itemname:SquirrelGold>]
+			- [qs{1}:Give the squirrel to <npcname:BestiaryGirl>]
 			Reward: 3% discount
 			''' */
 		// Inquire: This is gettin' out of hand! I've been hearin' that gold squirrels sell big and are even bein' a part of people's meals 'round here! Put an end to this and retrieve me one!
@@ -241,11 +257,11 @@ Zoologist: {
 			'''
 			{$Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Name}
 			Client: [npcname:BestiaryGirl]
-								
+
 			'{$Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Inquire}'
-								
-			- [qs{2}: Obtain {1} <itemname:EnchantedNightcrawler>s ({0}/{1})]
-			- [qs{3}: Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
+
+			- [qs{2}:Obtain {1} <itemname:EnchantedNightcrawler>s ({0}/{1})]
+			- [qs{3}:Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
 			Reward: [i:Origins/Eccentric_Stone]
 			''' */
 		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that's a whole 'nother can 'o worms. Get it? Can 'o worms? Can you please give me ten [itemname:EnchantedNightcrawler]s? They make for great bait, but they living creatures too!
@@ -264,9 +280,9 @@ Dryad: {
 			'''
 			{$Mods.Origins.Quests.Dryad.Cleansing_Station.Name}
 			Client: [npcname:Dryad]
-								
+
 			'{$Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire}'
-								
+
 			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Cleansing_Station_Item]
 			''' */
@@ -282,9 +298,9 @@ Dryad: {
 			'''
 			{$Mods.Origins.Quests.Dryad.Bloombomb.Name}
 			Client: [npcname:Dryad]
-								
+
 			'{$Mods.Origins.Quests.Dryad.Bloombomb.Inquire}'
-								
+
 			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
 			Unlocks: [i:Origins/Bloombomb]
 			''' */
@@ -304,11 +320,11 @@ Stylist: {
 			'''
 			{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Name}
 			Client: [npcname:Stylist]
-								
+
 			'{$Mods.Origins.Quests.Stylist.Magic_Hair_Spray.Inquire}'
-								
-			- [qs{2}: Obtain {1} <itemname:Origins/Magic_Hair_Spray> ({0}/{1})]
-			- [qs{3}: Give <itemname:Origins/Magic_Hair_Spray> to <npcname:Stylist>]
+
+			- [qs{2}:Obtain {1} <itemname:Origins/Magic_Hair_Spray> ({0}/{1})]
+			- [qs{3}:Give <itemname:Origins/Magic_Hair_Spray> to <npcname:Stylist>]
 			Unlocks: 4 new hairstyles
 			''' */
 		// Inquire: Ever since I was captured by those spiders I've run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
@@ -323,11 +339,11 @@ Stylist: {
 			'''
 			{$Mods.Origins.Quests.Stylist.Comb.Name}
 			Client: [npcname:Stylist]
-								
+
 			'{$Mods.Origins.Quests.Stylist.Comb.Inquire}'
-								
-			- [qs{0}: Obtain a <itemname:Origins/Comb>]
-			- [qs{1}: Give <itemname:Origins/Comb> to <npcname:Stylist>]
+
+			- [qs{0}:Obtain a <itemname:Origins/Comb>]
+			- [qs{1}:Give <itemname:Origins/Comb> to <npcname:Stylist>]
 			Unlocks: 2 new hairstyles
 			''' */
 		// Inquire: Hey [player:_]. I've been needing a comb so I can properly cut some hair since my other one broke. Yes, I pulled a lot of hair out last Blood Moon, but anyway, yeah could you do that for me?
@@ -342,11 +358,11 @@ Stylist: {
 			'''
 			{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Name}
 			Client: [npcname:Stylist]
-								
+
 			'{$Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.Inquire}'
-								
-			- [qs{0}: Obtain <itemname:Origins/Crystal_Cutters>]
-			- [qs{1}: Give <itemname:Origins/Crystal_Cutters> to <npcname:Stylist>]
+
+			- [qs{0}:Obtain <itemname:Origins/Crystal_Cutters>]
+			- [qs{1}:Give <itemname:Origins/Crystal_Cutters> to <npcname:Stylist>]
 			Unlocks: [i:Origins/Holiday_Hair_Dye]
 			''' */
 		// Inquire: Heyo [player:_]. I have another favor to ask of you. My customers have been complaining that it hurts whenever I use my old scissors and frankly, the blades are going bad. So, naturally I'd need new scissors... well, I've been talking it up with [npcname:Wizard] and he's told me there's crystal-bladed scissors out there... you see my point? GET THEM PLEASE.
@@ -365,11 +381,11 @@ Cyborg: {
 			'''
 			{$Mods.Origins.Quests.Cyborg.Advanced_Imaging.Name}
 			Client: [npcname:Cyborg]
-								
+
 			'{$Mods.Origins.Quests.Cyborg.Advanced_Imaging.Inquire}'
-								
-			- [qs{1}: Investigate the electronic presence]
-			- [qs{2}: Return to <npcname:Cyborg>]
+
+			- [qs{1}:Investigate the electronic presence]
+			- [qs{2}:Return to <npcname:Cyborg>]
 			Unlocks: [i:Origins/Advanced_Imaging]
 			''' */
 		// Inquire: Terrarian, my sensors indicate there is an electronic presence in the skies of {0}. The signal is coming from the ocean. Investigate, this information could improve my systems.
@@ -390,13 +406,59 @@ Tax_Collector: {
 			'{$Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Inquire}'
 			He said the first spirit told him of the others: "Expect the first tonight, when the bell tolls one, expect the second on the stroke of two, The third, more mercurial, shall appear in his own good time."
 
-			- [qs{1}: Vanquish the spirits ({0}/4)]
-			- [qs{2}: Return to <npcname:TaxCollector>]
+			- [qs{1}:Vanquish the spirits ({0}/4)]
+			- [qs{2}:Return to <npcname:TaxCollector>]
 			''' */
 		// Request: I shan't give something for nothing, if you want me to wear one of those ridiculous hats you'd best do something for me.
 		// Inquire: Dreadful apparitions have been haunting me night after night, spouting humbug about "the common welfare" and "reclamation"; They haven't even the courtesy to all come at once and have it over swiftly; Rid me of them and I'll wear your frivolous hat.
 		// Start: Good, now, if you will go about your business and allow me to go about mine.
 		// ReadyToComplete: Well? Are the spirits gone?
 		// Complete: Thank you, now I suppose it's time to hold up my end of the bargain.
+	}
+}
+
+Brine_Fiend: {
+	// Quest_Menu: Yeah, what? Oh, you wanna help with something? I got work for yah.
+
+	Alkaliegis: {
+		// Name: Basic Brewery
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Brine_Fiend.Alkaliegis.Name}
+			Client: [npcname:Origins/Brine_Fiend]
+
+			'{$Mods.Origins.Quests.Brine_Fiend.Alkaliegis.Inquire}'
+
+			- [qs{1}:Collect <itemname:TeleportationPotion>]
+			- [qs{0}:Collect <itemname:Origins/Greater_Summoning_Potion>]
+			- [qs{2}:Collect <itemname:TitanPotion>]
+			- [qs{1}:Give items to <npcname:Origins/Brine_Fiend>]
+			Unlocks: [i:Origins/Akaliegis]
+			''' */
+		// Inquire: "[player:_], I'm in the mood for something 'experimental', but I don't know how to get my hands on the ingredients I need, so something artificial will do. It's simple. I need a [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion] and [itemname:TitanPotion]. Can you get those for me so I can make some new brews with chemicals I haven't tried yet?"
+		// Start: Sick. Now go away, I'm busy.
+		// ReadyToComplete: Well, that wasn't long.
+		// Complete: Sorry for shoo-ing you, I wasn't in the mood at that time. As the old man likes the say, "I embody appreciation." Anyhoo, I have some weird shield-thingy I found in the Brine Pool the other day. I'd give it to you for free, but let's be honest, you're the only person keeping Terraria's economy running these days.
+	}
+
+	Ancient_Brine_Music_Box: {
+		// Name: Get Freaky
+		/* Journal:
+			'''
+			{$Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.Name}
+			Client: [npcname:Origins/Brine_Fiend]
+
+			'{$Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.Inquire}'
+
+			- [qs{0}:Collect <itemname:Origins/Fervor_Potion>]
+			- [qs{1}:Collect <itemname:LovePotion>]
+			- [qs{2}:Collect <itemname:MagicPowerPotion>]
+			- [qs{1}:Give items to <npcname:Origins/Brine_Fiend>]
+			Unlocks: [i:Origins/Ancient_Music_Box_BP_Item]
+			''' */
+		// Inquire: Oh, [player:_]. Man/woman of the hour, I need you to go play fetch for me again. This time around I need a [itemname:Origins/Fervor_Potion], [itemname:LovePotion] and [itemname:MagicPowerPotion]. Get those and I think I can conjure up something fun for [npcname:PartyGirl]'s birthday coming up. It'll be a surprise!
+		// Start: Great! She likes surprises, right?
+		// ReadyToComplete: You have the ingredients I need, Terrarian?
+		// Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it.
 	}
 }

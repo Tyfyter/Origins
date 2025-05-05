@@ -1,8 +1,12 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.NPCs.Brine.Boss;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.Balloon)]
 	public class Focus_Crystal : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat"
@@ -23,6 +27,22 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.rubyReticle = true;
 			originPlayer.focusCrystal = true;
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Focus_Crystal).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Focus_Crystal).GetDefaultTMLName() + "_AF";
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Item[Type] = afTexture;
+			} else {
+				TextureAssets.Item[Type] = normalTexture;
+			}
+		}
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Item[Type] = afTexture;
+			} else {
+				TextureAssets.Item[Type] = normalTexture;
+			}
 		}
 	}
 }

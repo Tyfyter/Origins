@@ -5,12 +5,10 @@ Generic: {
 	// Defiled_Wastelands: Blŏkusland™
 	// the_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
 	// The_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
-	// Defiled_Amalgamation: District Attorney
 	// Defiled_Antibody: Blŏkusland™ Employee
 	// Defiled_Antibodies: Blŏkusland™ Employees
-	// Defiled_Tripod: Blŏkusland™ Certified Weaponized Catgirl
 	// Mildew_Carrion: Mildew Chadlion
-	// Riven_Fighter: Riven Knownolimitsoform
+	// Tangela: Clown Vomit
 }
 
 Status_Messages: {
@@ -42,6 +40,23 @@ Items: {
 	// Unmisfire.Tooltip: Corrects your shitty aim
 	// Spirit_Shard.DisplayName: SpiritS hard
 	// Terrarian_Voodoo_Doll.Tooltip: Should be thrown in lava or amebic gel
+	// Eye_Of_Aether.DisplayName: Laether Pointer
+
+	Meteor: {
+		// DisplayName: Meteor Toaster
+		// Tooltip: Ding!
+	}
+
+	Unsuspicious_Bush_Item: {
+		// DisplayName: Unsussy Bush
+		/* Tooltip:
+			'''
+			{$Mods.Origins.Items.Unsuspicious_Bush_Item.Tooltip}
+			'Sussy baka!'
+			''' */
+	}
+
+	// Tripod_Nip.DisplayName: Cat Nip
 }
 
 // Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!
@@ -66,20 +81,23 @@ Biomes: {
 		// TownNPCDialogueName: the {§Defiled_Wastelands} Signature Patent-Pending Cold-Park
 	}
 
-	Riven_Hive_Ocean_Biome: {
+	Riven_Hive_Ocean: {
 		// DisplayName: "{§Riven_Hive} but wetter"
 		// TownNPCDialogueName: the place where Riven Jesus, our savior: {§Riven_Hive} can be found
 	}
 }
 
-/* Buffs.Optiphage_Debuff.Description:
-	'''
-	It's eating them.
-	And then it's going to eat me!
-	(voracious gobbling)
-	Oh, my God!
-	I don't like this place, not one bit.
-	''' */
+Buffs: {
+	/* Optiphage_Debuff.Description:
+		'''
+		It's eating them.
+		And then it's going to eat me!
+		(voracious gobbling)
+		Oh, my God!
+		I don't like this place, not one bit.
+		''' */
+	// Static_Shock_Debuff.Description: You've been grounded until you learn to conduct yourself properly
+}
 
 DefiledRelaySignals: {
 	// Security1: Code word: male genitalia.
@@ -104,6 +122,14 @@ DefiledRelaySignals: {
 	// BeingDestroyed5: Go away in profane language.
 }
 
+NPCs: {
+	// Leaf_Snapper.DisplayName: Brine Turtle
+	// Defiled_Amalgamation.DisplayName: District Attorney
+	// Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
+	// Riven_Fighter.DisplayName: Riven Knownolimitsoform
+}
+
+// Bestiary.Leaf_Snapper: Hello!
 /* SetBonuses.Rubber:
 	'''
 	Immunity to Static Shock, Electrified, and traffic laws

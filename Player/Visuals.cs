@@ -3,6 +3,8 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Layers;
+using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
 using Terraria;
@@ -27,8 +29,12 @@ namespace Origins {
 				}
 			}
 			if (hideAllLayers) {
-				foreach (var layer in PlayerDrawLayerLoader.Layers) {
+				foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.Layers) {
 					layer.Hide();
+				}
+			} else if (dashVaseVisual) {
+				foreach (PlayerDrawLayer layer in PlayerDrawLayerLoader.Layers) {
+					if (layer is not Fallacious_Vase_Dash_Layer) layer.Hide();
 				}
 			}
 		}
@@ -78,7 +84,7 @@ namespace Origins {
 			}
 		}
 		public override void FrameEffects() {
-			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {
+			for (int i = 13; i < 18 + Player.extraAccessorySlots * 2; i++) {
 				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
 			}
 			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
@@ -107,6 +113,24 @@ namespace Origins {
 		}
 		public override void PostUpdateRunSpeeds() {
 			oldGravDir = Player.gravDir;
+			if (forceFallthrough) Player.GoingDownWithGrapple = true;
+			forceFallthrough = false;
+			if (cursedCrown && Player.velocity.Y == 0) {
+				Player.maxRunSpeed *= 0.9f;
+				Player.accRunSpeed *= 0.9f;
+			}
+			if (dashVase && Player.dashDelay < 0) {
+				const float factor = 1.5f;
+				Player.accRunSpeed *= factor;
+				Player.maxRunSpeed *= factor;
+			}
+			int brambleType = ModContent.TileType<Tangela_Bramble>();
+			foreach (Point point in Collision.GetTilesIn(Player.position, Player.BottomRight)) {
+				if (Framing.GetTileSafely(point).TileIsType(brambleType)) {
+					Tangela_Bramble.StandInside(Player);
+					break;
+				}
+			}
 		}
 	}
 }

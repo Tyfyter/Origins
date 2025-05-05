@@ -1,9 +1,10 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Haggard_Artery : ModItem, ICustomWikiStat {
+	public class Haggard_Artery : ModItem, ICustomWikiStat, IJournalEntrySource<Haggard_Artery_Entry> {
 		public string[] Categories => [
 			"Combat"
 		];
@@ -32,5 +33,8 @@ namespace Origins.Items.Accessories {
 			originPlayer.explosiveArteryItem = Item;
 			originPlayer.messyLeech = true;
 		}
+	}
+	public class Haggard_Artery_Entry : JournalEntry {
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 3);
 	}
 }

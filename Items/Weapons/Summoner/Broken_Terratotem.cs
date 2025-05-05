@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -51,22 +52,13 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Terratotem_Buff : ModBuff {
+	public class Terratotem_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Broken_Terratotem_Orb.ID] > 0 || player.ownedProjectileCounts[Terratotem_Orb.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Broken_Terratotem_Orb.ID,
+			Terratotem_Orb.ID,
+		];
+		public override bool IsArtifact => true;
 	}
 }
 
@@ -102,7 +94,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.ignoreWater = false;
 			Projectile.netImportant = true;
-			MaxLife = 60 * 45;
+			MaxLife = 15 * 45;
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;
@@ -228,7 +220,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 
 			#endregion
-			Life--;
+			Life -= 0.25f;
 		}
 		public override void OnKill(int timeLeft) {
 			const float diameter = 16;

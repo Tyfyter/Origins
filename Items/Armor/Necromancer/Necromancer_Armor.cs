@@ -1,6 +1,10 @@
 using Origins.Dev;
+using Origins.Items.Armor.Acrid;
 using Origins.Items.Materials;
+using Origins.Items.Weapons;
+using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -74,6 +78,9 @@ namespace Origins.Items.Armor.Necromancer {
 			.Register();
 		}
 		public string ArmorSetName => "Necromancer_Armor";
+		public IEnumerable<int> SharedPageItems => [
+			ModContent.ItemType<Necromancer_Crown>()
+		];
 		public int HeadItemID => Type;
 		public int BodyItemID => ModContent.ItemType<Necromancer_Breastplate>();
 		public int LegsItemID => ModContent.ItemType<Necromancer_Greaves>();
@@ -108,7 +115,7 @@ namespace Origins.Items.Armor.Necromancer {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().artifactDamage += 0.25f;
+			player.OriginPlayer().artifactDamage += 0.25f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -117,6 +124,95 @@ namespace Origins.Items.Armor.Necromancer {
 			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7)
 			.AddTile(TileID.DemonAltar)
 			.Register();
+		}
+	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Necromancer_Crown : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+		public string[] Categories => [
+			"ArmorSet",
+			"SummonBoostGear"
+		];
+		public override void SetDefaults() {
+			Item.defense = 7;
+			Item.value = Item.sellPrice(gold: 5);
+			Item.rare = ItemRarityID.Yellow;
+		}
+		public override void UpdateEquip(Player player) {
+			player.GetAttackSpeed(DamageClass.Summon) += 0.15f;
+		}
+		public override bool IsArmorSet(Item head, Item body, Item legs) {
+			return body.type == ModContent.ItemType<Necromancer_Breastplate>() && legs.type == ModContent.ItemType<Necromancer_Greaves>();
+		}
+		public override void UpdateArmorSet(Player player) {
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.NecromancerCrown");
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (player.ZoneGraveyard) {
+				player.manaCost *= 0.5f;
+			}
+			originPlayer.necroSet2 = true;
+
+			player.maxMinions += 3;
+		}
+		public override void ArmorSetShadows(Player player) {
+			player.armorEffectDrawShadowLokis = true;
+			player.armorEffectDrawShadowSubtle = true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.ChlorophyteBar, 12)
+			.AddIngredient(ItemID.DarkShard)
+			.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Black_Bile>(), 7)
+			.AddTile(TileID.DemonAltar)
+			.Register();
+		}
+		public bool SharedPageSecondary => true;
+		public string ArmorSetName => "Necromancer_Crown";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Necromancer_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Necromancer_Greaves>();
+	}
+	public class Unsatisfied_Soul : ModProjectile {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+			Main.projFrames[Type] = 5;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.width = 30;
+			Projectile.height = 30;
+			Projectile.penetrate = 1;
+			Projectile.ArmorPenetration += 15;
+		}
+		public override void AI() {
+			float targetWeight = 16 * 20;
+			Vector2 targetPos = default;
+			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
+				Vector2 currentPos = target.Center;
+				float dist = Math.Abs(Projectile.Center.X - currentPos.X) + Math.Abs(Projectile.Center.Y - currentPos.Y);
+				if (target is Player) dist *= 2.5f;
+				if (dist < targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
+					targetWeight = dist;
+					targetPos = currentPos;
+					return true;
+				}
+				return false;
+			});
+
+			if (foundTarget) {
+				float scaleFactor = 12f * Origins.HomingEffectivenessMultiplier[Projectile.type];
+
+				Vector2 targetVelocity = (targetPos - Projectile.Center).SafeNormalize(-Vector2.UnitY);
+				scaleFactor += Vector2.Dot(Projectile.velocity.SafeNormalize(-Vector2.UnitY), targetVelocity) * 4;
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity * scaleFactor, 0.06f);
+			}
+			if (++Projectile.frameCounter >= 3) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
+			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 	}
 }

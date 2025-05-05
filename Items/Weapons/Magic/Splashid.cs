@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
 using Terraria;
@@ -8,24 +8,29 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Splashid : ModItem, IElementalItem {
+	public class Splashid : ModItem, IElementalItem, IJournalEntrySource {
 		static short glowmask;
 		public string[] Categories => [
 			"Wand",
 			"ToxicSource"
 		];
+		public string EntryName => "Origins/" + typeof(Splashid_Entry).Name;
+		public class Splashid_Entry : JournalEntry {
+			public override string TextKey => "Splashid";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 5);
+		}
 		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
+			Item.staff[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 52;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
-			Item.noUseGraphic = true;
-			Item.useStyle = ItemUseStyleID.Swing;
+			Item.noUseGraphic = false;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.width = 28;
 			Item.height = 30;
 			Item.useTime = 24;

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Pets;
+using Origins.Journal;
 using Origins.Tiles;
 using ReLogic.Content;
 using System;
@@ -12,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Blockus_Tube : ModItem, ICustomWikiStat, ICustomPetFrames {
+	public class Blockus_Tube : ModItem, ICustomWikiStat, ICustomPetFrames, IJournalEntrySource<Blockus_Tube_Entry> {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
@@ -150,6 +151,9 @@ namespace Origins.Items.Pets {
 			// Some visuals here
 			#endregion
 		}
+	}
+	public class Blockus_Tube_Entry : JournalEntry {
+		public override JournalSortIndex SortIndex => new("The_Defiled", 18);
 	}
 }
 

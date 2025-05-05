@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Items.Other.Fish;
 using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
@@ -24,7 +25,7 @@ namespace Origins.Items.Other.Consumables {
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ItemID.FallenStar)
 			.AddIngredient(ModContent.ItemType<Brineglow_Item>())
-			//.AddIngredient(ModContent.ItemType<Toadfish>())
+			.AddIngredient(ModContent.ItemType<Toadfish>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}

@@ -1,13 +1,13 @@
-using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Defiled;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Materials;
-using Terraria.GameContent.Bestiary;
-using Origins.Items.Armor.Defiled;
-using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
@@ -17,6 +17,7 @@ namespace Origins.NPCs.Defiled {
 				Position = new Vector2(4f, 8f),
 				PortraitPositionYOverride = 16f
 			};
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
@@ -42,7 +43,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.lifeRegen += 24 / (NPC.life / 20);
 			}
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Worm;
 		}
@@ -53,6 +54,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
@@ -152,7 +154,7 @@ namespace Origins.NPCs.Defiled {
 	}
 
 	public abstract class Defiled_Digger : Glowing_Mod_NPC, IDefiledEnemy {
-		public AssimilationAmount? Assimilation => this is Defiled_Digger_Head ? 0.06f : 0.03f;
+		public AssimilationAmount? Assimilation => this is Defiled_Digger_Head ? 0.03f : 0.02f;
 		public int MaxMana => 40;
 		public virtual int MaxManaDrain => 10;
 		public abstract float Mana { get; set; }

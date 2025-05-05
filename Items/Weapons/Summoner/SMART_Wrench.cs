@@ -2,13 +2,16 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Tiles.Other;
+
 namespace Origins.Items.Weapons.Summoner {
-    public class SMART_Wrench : ModItem, ICustomWikiStat {
+	/// <summary>
+	/// TODO: implement
+	/// </summary>
+	public class SMART_Wrench : ModItem, ICustomWikiStat {
         public override void SetDefaults() {
-			return;//TODO: implement
+			return;
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 18;
@@ -23,7 +26,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noMelee = true;
 		}
 		public override void AddRecipes() {
-			return;//TODO: implement
+			return;
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15)
 			.AddIngredient(ModContent.ItemType<Power_Core>())

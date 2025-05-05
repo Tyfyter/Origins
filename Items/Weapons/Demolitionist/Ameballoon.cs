@@ -7,7 +7,6 @@ using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
@@ -22,19 +21,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 25;
-			Item.width = 20;
-			Item.height = 22;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.damage = 32;
 			Item.shoot = ModContent.ProjectileType<Ameballoon_P>();
-			Item.shootSpeed = 8.75f;
-			Item.knockBack = 5f;
+			Item.shootSpeed *= 1.75f;
 			Item.value = Item.sellPrice(copper: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;
-            Item.ArmorPenetration += 1;
+            Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 20)
@@ -56,6 +50,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 60;
 			Projectile.alpha = 150;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			return base.PreKill(timeLeft);
@@ -65,7 +62,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.owner == Main.myPlayer) {
 				PolarVec2 vel = new(4, Main.rand.NextFloat(MathHelper.TwoPi));
 				for (int i = Main.rand.Next(12, 16); i-- > 0;) {
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vector2)vel, ModContent.ProjectileType<Ameballoon_Shrapnel>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vector2)vel, ModContent.ProjectileType<Ameballoon_Shrapnel>(), Projectile.damage / 12, Projectile.knockBack, Projectile.owner);
 					vel.Theta += Main.rand.NextFloat(0.5f) + 1.618033988749894848204586834f;
 					vel.R += Main.rand.NextFloat(0.5f);
 				}
@@ -94,9 +91,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 1;
+			Projectile.ArmorPenetration += 25;
 			Projectile.width = 10;
 			Projectile.height = 10;
+			Projectile.knockBack = 0;
 			Projectile.ignoreWater = true;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override void AI() {
 			Projectile.rotation -= MathHelper.PiOver2;

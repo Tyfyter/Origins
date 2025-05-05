@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.Brine;
@@ -60,6 +62,7 @@ namespace Origins {
 				queuedUIStates[i].AddToList();
 			}
 			queuedUIStates = null;
+			DamageClasses.Patch();
 		}
 		public override void Unload() {
 			queuedUIStates = null;
@@ -309,6 +312,7 @@ namespace Origins {
 		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
 		public static int EvilBoomerangRecipeGroupID { get; private set; }
+		public static int GolfBallsRecipeGroupID { get; private set; }
 		public static RecipeGroup EvilGunMagazineRecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilGunMagazines").Value, ItemID.MagicQuiver);
 		public override void AddRecipeGroups() {
 			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
@@ -327,18 +331,38 @@ namespace Origins {
 				ModContent.ItemType<Riverang>(),
 				ModContent.ItemType<Orbital_Saw>(),
 			]));
+			GolfBallsRecipeGroupID = RecipeGroup.RegisterGroup("Origins:GolfBalls", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GolfBalls").Value, [
+				ItemID.GolfBall
+			]));
+			for (int i = ItemID.GolfBallDyedBlack; i <= ItemID.GolfBallDyedYellow; i++) RecipeGroup.recipeGroups[GolfBallsRecipeGroupID].ValidItems.Add(i);
 			EvilGunMagazineRecipeGroup.ValidItems.Remove(ItemID.MagicQuiver);
 			RecipeGroup.RegisterGroup("Origins:Evil Gun Magazines", EvilGunMagazineRecipeGroup);
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
 			CursedFlameRecipeGroupID = ALRecipeGroups.CursedFlames.RegisteredId;
-			RecipeGroup sandGroup = RecipeGroup.recipeGroups[RecipeGroupID.Sand];
-			sandGroup.ValidItems.Add(ModContent.ItemType<Defiled_Sand_Item>());
-			sandGroup.ValidItems.Add(ModContent.ItemType<Silica_Item>());
-			RecipeGroup woodGroup = RecipeGroup.recipeGroups[RecipeGroupID.Wood];
-			woodGroup.ValidItems.Add(ModContent.ItemType<Endowood_Item>());
-			woodGroup.ValidItems.Add(ModContent.ItemType<Marrowick_Item>());
+			static void AddItemsToGroup(RecipeGroup group, params int[] items) {
+				for (int i = 0; i < items.Length; i++) {
+					group.ValidItems.Add(items[i]);
+				}
+			}
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Sand],
+				ModContent.ItemType<Defiled_Sand_Item>(),
+				ModContent.ItemType<Silica_Item>()
+			);
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Wood],
+				ModContent.ItemType<Endowood_Item>(),
+				ModContent.ItemType<Marrowick_Item>()
+			);
+			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Fruit],
+				ModContent.ItemType<Bileberry>(),
+				ModContent.ItemType<Pawpaw>(),
+				ModContent.ItemType<Periven>(),
+				ModContent.ItemType<Prickly_Pear>(),
+				ModContent.ItemType<Sour_Apple>()
+			);
+
+			OriginsModIntegrations.AddRecipeGroups();
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;
@@ -497,30 +521,32 @@ namespace Origins {
 		}
 		public override void OnLocalizationsLoaded() {
 			Dictionary<string, LocalizedText> texts = LocalizationMethods._localizedTexts.GetValue(LanguageManager.Instance);
-			texts["Riven"] = texts["Mods.Origins.Generic.Riven"];
+			/*texts["Riven"] = texts["Mods.Origins.Generic.Riven"];
 			texts["Riven_Hive"] = texts["Mods.Origins.Generic.Riven_Hive"];
 			texts["Dusk"] = texts["Mods.Origins.Generic.Dusk"];
 			texts["Defiled"] = texts["Mods.Origins.Generic.Defiled"];
 			texts["Defiled_Wastelands"] = texts["Mods.Origins.Generic.Defiled_Wastelands"];
 			texts["the_Defiled_Wastelands"] = texts["Mods.Origins.Generic.the_Defiled_Wastelands"];
-			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				foreach (var text in texts.ToList()) {
-					if (text.Key.StartsWith("Mods.Origins.AprilFools")) {
-						string key = text.Key.Replace("AprilFools.", "");
-						if (texts.TryGetValue(key, out LocalizedText targetText)) {
-							LocalizationMethods._value.SetValue(targetText, text.Value.Value);
-							LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
-							LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
-						} else {
-							Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
-							texts[key] = text.Value;
-						}
+			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];*/
+			bool isAprilFools = OriginsModIntegrations.CheckAprilFools();
+			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
+				if (isAprilFools && text.Key.StartsWith("Mods.Origins.AprilFools")) {
+					string key = text.Key.Replace("AprilFools.", "");
+					if (texts.TryGetValue(key, out LocalizedText targetText)) {
+						LocalizationMethods._value.SetValue(targetText, text.Value.Value);
+						LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
+						LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
+					} else {
+						Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
+						texts[key] = text.Value;
 					}
+				} else if (text.Key.StartsWith("Mods.Origins.Generic")) {
+					string key = text.Key.Replace("Mods.Origins.Generic.", "");
+					texts[key] = text.Value;
 				}
 			}
 			Regex substitutionRegex = new Regex("{§(.*?)}", RegexOptions.Compiled);
-			foreach (var text in texts.ToList()) {
+			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
 				Match subMatch = substitutionRegex.Match(text.Value.Value);
 				while (subMatch.Success) {
 					LocalizationMethods._value.SetValue(text.Value, text.Value.Value.Replace(subMatch.Groups[0].Value, Language.GetTextValue(subMatch.Groups[1].Value)));
@@ -538,6 +564,7 @@ namespace Origins {
 			}
 			OriginExtensions.SwapClear(ref ExplosiveGlobalProjectile.nextExplodingProjectiles, ref ExplosiveGlobalProjectile.explodingProjectiles);
 			OriginExtensions.SwapClear(ref Mitosis_P.nextMitosises, ref Mitosis_P.mitosises);
+			OriginExtensions.SwapClear(ref The_Bird_Swing.nextReflectors, ref The_Bird_Swing.reflectors);
 			Brine_Pool_NPC.Ripples.Clear();
 		}
 		public override void PostUpdateProjectiles() {

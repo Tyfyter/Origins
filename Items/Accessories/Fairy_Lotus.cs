@@ -1,11 +1,9 @@
 ﻿using MonoMod.Cil;
 using Origins.Dev;
-using Origins.Items.Materials;
 using PegasusLib.Reflection;
 using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
@@ -18,7 +16,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool isHidden) {
 			player.OriginPlayer().fairyLotus = true;
 		}
 		internal static void IL_NPC_SpawnNPC_CheckToSpawnUndergroundFairy(ILContext il) {

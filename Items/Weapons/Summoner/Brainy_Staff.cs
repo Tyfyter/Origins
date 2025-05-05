@@ -1,7 +1,9 @@
 ﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,7 +11,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Brainy_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
-		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Type] = 2;
 		}
@@ -25,7 +26,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
-			Item.buffType = buffID;
+			Item.buffType = Brainy_Buff.ID;
 			Item.shoot = projectileID;
 			Item.noMelee = true;
 		}
@@ -33,30 +34,19 @@ namespace Origins.Items.Weapons.Summoner {
 			position = Main.MouseWorld;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Brainy_Buff>();
-			player.AddBuff(buffID, 2);
+			player.AddBuff(Brainy_Buff.ID, 2);
 			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
 			return false;
 		}
 	}
 }
 namespace Origins.Buffs {
-	public class Brainy_Buff : ModBuff, ICustomWikiStat {
+	public class Brainy_Buff : MinionBuff, ICustomWikiStat {
+		public static int ID { get; private set; }
+		public override IEnumerable<int> ProjectileTypes() => [
+			Brainy_Staff.projectileID
+		];
 		public string CustomStatPath => nameof(Brainy_Buff);
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Brainy_Staff.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Brainy_Staff.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
 	}
 }
 
@@ -108,9 +98,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Brainy_Staff.buffID);
+				player.ClearBuff(Brainy_Buff.ID);
 			}
-			if (player.HasBuff(Brainy_Staff.buffID)) {
+			if (player.HasBuff(Brainy_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -231,6 +221,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Projectile.spriteDirection = Projectile.direction;
 			#endregion
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = true;
+			return true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.Next(10) < 3 && (target.Center - Main.player[Projectile.owner].Center).Length() < 480) {

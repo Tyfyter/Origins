@@ -9,6 +9,9 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Projectiles;
+using Origins.Items.Weapons.Magic;
+using Origins.Projectiles.Weapons;
+using Terraria.Graphics.Shaders;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -26,8 +29,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.noUseGraphic = true;
 			Item.width = 66;
 			Item.height = 68;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
+			Item.useTime = 22;
+			Item.useAnimation = 22;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Amenonuhoko_P>();
@@ -70,21 +73,21 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.Center = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
 			if (!projOwner.frozen) {
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
-					movementFactor -= 1.1f;
+					movementFactor -= 0.8f;
 					if (Projectile.ai[2] == 0) {
 						Projectile.ai[2] = 1;
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							Projectile.Center + Projectile.velocity * movementFactor * Projectile.scale,
 							Projectile.velocity,
-							ModContent.ProjectileType<Amenonuhoko_Cloud>(),
+							ModContent.ProjectileType<Amenonuhoko_Laser>(),
 							Projectile.damage,
 							Projectile.knockBack,
 							Projectile.owner
 						);
 					}
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 1.2f;
+					movementFactor += 2.2f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor * Projectile.scale;
@@ -97,20 +100,63 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			SpriteEffects effects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition + Projectile.velocity * 5,
 				null,
 				lightColor,
 				Projectile.rotation,
-				new Vector2(39 + 34 * Projectile.spriteDirection, 7),
+				new Vector2(105, 7).Apply(effects, TextureAssets.Projectile[Type].Size()),
 				Projectile.scale,
-				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+				effects,
 			0);
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+		}
+	}
+	public class Amenonuhoko_Laser : ModProjectile {
+		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.ShadowBeamFriendly);
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.friendly = true;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = 1;
+			Projectile.hide = true;
+			Projectile.timeLeft = 120;
+		}
+		public override void AI() {
+			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
+			for (int i = 0; i < 2; i++) {
+				Dust dust = Dust.NewDustDirect(Projectile.position, 1, 1, DustID.Electric);
+				dust.position = Projectile.position - Projectile.velocity * (i * 0.5f);
+				dust.position.X += Projectile.width / 2;
+				dust.position.Y += Projectile.height / 2;
+				dust.scale = Main.rand.NextFloat(0.65f, 0.65f);
+				dust.velocity = dust.velocity * 0.2f + Projectile.velocity * 0.1f;
+				dust.shader = shader;
+				dust.noGravity = false;
+				dust.noLight = true;
+			}
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);
+		}
+		public override void OnKill(int timeLeft) {
+			if (Projectile.owner != Main.myPlayer && Projectile.hide) {
+				Projectile.hide = false;
+				try {
+					Projectile.active = true;
+					Projectile.timeLeft = timeLeft;
+					Projectile.Update(Projectile.whoAmI);
+				} finally {
+					Projectile.active = false;
+					Projectile.timeLeft = 0;
+				}
+			}
 		}
 	}
 	public class Amenonuhoko_Cloud : ModProjectile {

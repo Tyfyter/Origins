@@ -5,10 +5,12 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Pets;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -69,9 +71,15 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.HitSound = SoundID.NPCHit4;
 			NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.value = Item.buyPrice(gold: 5);
+			NPC.npcSlots = 200;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData();
@@ -126,7 +134,8 @@ namespace Origins.NPCs.Fiberglass {
 						} else if (legStart.DistanceSQ(legTargets[i]) > (totalLegLength * totalLegLength)) {
 							legTargets[i] = GetStandPosition(
 								((legs[i].start + new Vector2(0, 15.75f + (i / 2) * 0.0625f)) * new Vector2(0.85f, 2.04f)).RotatedBy(NPC.rotation) * 4 + NPC.Center,
-								legStart
+								legStart,
+								totalLegLength
 							);
 						}
 					}
@@ -189,7 +198,7 @@ namespace Origins.NPCs.Fiberglass {
 									position,
 									velocity,
 									projectileType,
-									10,
+									(int)(10 * ContentExtensions.DifficultyDamageMultiplier),
 									0,
 									Main.myPlayer,
 									ai0: -velocity.X,
@@ -214,7 +223,7 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 		}
-		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart) {//candidate
+		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart, float legth) {//candidate
 			HashSet<Point> checkedPoints = new HashSet<Point>();
 			Queue<Point> candidates = new Queue<Point>();
 			candidates.Enqueue(target.ToWorldCoordinates().ToPoint());
@@ -223,7 +232,7 @@ namespace Origins.NPCs.Fiberglass {
 			while (candidates.Count > 0) {
 				current = candidates.Dequeue();
 				checkedPoints.Add(current);
-				if (legStart.DistanceSQ(current.ToWorldCoordinates()) > (totalLegLength * totalLegLength)) {
+				if (legStart.DistanceSQ(current.ToWorldCoordinates()) > (legth * legth)) {
 					continue;
 				}
 				tile = Main.tile[current];
@@ -263,15 +272,16 @@ namespace Origins.NPCs.Fiberglass {
 			);
 			armorDropRule.OnSuccess(weaponDropRule);
 			armorDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Weaver_Head>(), 10));
+			armorDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				armorDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Fiberglass_Weaver_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fiberglass_Dagger>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Fiberglass_Weaver_Relic>()));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terlet_Paper>(), 4));
 			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
-			//npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
-			//npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
@@ -284,7 +294,7 @@ namespace Origins.NPCs.Fiberglass {
 				AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
 				AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i ? 1f : 0.3f);
 
-				Vector2 screenStart = legs[i].start - Main.screenPosition;
+				Vector2 screenStart = legs[i].start - screenPos;
 				Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
 				Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
 				legs[i].start = baseStart;
@@ -303,7 +313,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override void OnKill() {
-			ModContent.GetInstance<Boss_Tracker>().downedFiberglassWeaver = true;
+			Boss_Tracker.Instance.downedFiberglassWeaver = true;
 			NetMessage.SendData(MessageID.WorldData);
 		}
 	}

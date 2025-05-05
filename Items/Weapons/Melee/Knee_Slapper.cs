@@ -1,15 +1,14 @@
-using Microsoft.Xna.Framework;
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
+using Origins.Graphics;
+using Origins.Projectiles;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
-using PegasusLib;
-using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -39,31 +38,21 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile proj = Projectile.NewProjectileDirect(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, player.itemAnimationMax, velocity.ToRotation());
+			Projectile.NewProjectileDirect(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, player.itemAnimationMax, velocity.ToRotation());
 			return false;
 		}
 	}
 	public class Knee_Slapper_P : ModProjectile {
-		static AutoCastingAsset<Texture2D> HeadTexture;
-		static AutoCastingAsset<Texture2D> BodyTexture;
-		static AutoCastingAsset<Texture2D> TailTexture;
-		public class TextureLoader : ILoadable {
-			public void Load(Mod mod) {
-				HeadTexture = mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Head");
-				BodyTexture = mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Body");
-				TailTexture = mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Tail");
-			}
-
-			public void Unload() {
-				HeadTexture = null;
-				BodyTexture = null;
-				TailTexture = null;
-			}
-		}
+		static AutoLoadingAsset<Texture2D> HeadTexture = "Origins/Items/Weapons/Melee/Knee_Slapper_Head";
+		static AutoLoadingAsset<Texture2D> HeadGlowTexture = "Origins/Items/Weapons/Melee/Knee_Slapper_Head_Glow";
+		static AutoLoadingAsset<Texture2D> BodyTexture = "Origins/Items/Weapons/Melee/Knee_Slapper_Body";
+		static AutoLoadingAsset<Texture2D> BodyGlowTexture = "Origins/Items/Weapons/Melee/Knee_Slapper_Body_Glow";
+		static AutoLoadingAsset<Texture2D> TailTexture = "Origins/Items/Weapons/Melee/Knee_Slapper_Tail";
+		static AutoLoadingAsset<Texture2D> TailGlowTexture = "Origins/Items/Weapons/Melee/Knee_Slapper_Tail_Glow";
 		static bool lastSlapDir = false;
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public List<PolarVec2> nodes;
-		PolarVec2 GetSwingStartOffset => new PolarVec2(0, Projectile.ai[1] - Projectile.direction * 0.35f);
+		PolarVec2 GetSwingStartOffset => new(0, Projectile.ai[1] - Projectile.direction * 0.35f);
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
@@ -79,6 +68,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.extraUpdates = 3;
 			Projectile.ownerHitCheck = false;
 			Projectile.tileCollide = false;
+			Projectile.noEnchantmentVisuals = true;
 		}
 		public override void AI() {
 			Player owner = Main.player[Projectile.owner];
@@ -89,26 +79,42 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.localAI[0] = owner.direction;
 				Projectile.ai[0] = Projectile.direction = (lastSlapDir = !lastSlapDir) ? 1 : -1;
 				float offset = Projectile.direction * 0.1f * Projectile.localAI[1];
-				nodes = new List<PolarVec2>() {
-					new PolarVec2(24 * Projectile.scale, -offset),
-					new PolarVec2(24 * Projectile.scale, -offset * 2),
-					new PolarVec2(24 * Projectile.scale, -offset * 3),
-					new PolarVec2(24 * Projectile.scale, -offset * 4),
-					new PolarVec2(36 * Projectile.scale, -offset * 5)
-				};
+				nodes = [
+					new(24 * Projectile.scale, -offset),
+					new(24 * Projectile.scale, -offset * 2),
+					new(24 * Projectile.scale, -offset * 3),
+					new(24 * Projectile.scale, -offset * 4),
+					new(36 * Projectile.scale, -offset * 5)
+				];
 			}
 			owner.direction = (int)Projectile.localAI[0];
 			Projectile.direction = (int)Projectile.ai[0];
-			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
+			Vector2 basePosition = owner.MountedCenter;
+			Vector2 vector = new Vector2(Projectile.width, Projectile.height) * Projectile.scale;
 			for (int i = 0; i < nodes.Count; i++) {
 				PolarVec2 vec = nodes[i];
 				position.R += vec.R;
 				position.Theta += vec.Theta;
 				vec.Theta += Projectile.direction * 0.015f * Projectile.localAI[1];// / (i + 1);
 				nodes[i] = vec;
+				if (Main.rand.NextBool(nodes.Count - i)) Projectile.EmitEnchantmentVisualsAt((basePosition + (Vector2)position) - vector, (int)(vector.X * 2), (int)(vector.Y * 2));
 			}
 			owner.heldProj = Projectile.whoAmI;
+		}
+		public override void CutTiles() {
+			if (nodes is null) return;
+			Vector2 basePosition = Main.player[Projectile.owner].MountedCenter;
+			PolarVec2 position = GetSwingStartOffset;
+			Vector2 lastPosition = basePosition;
+			Vector2 vector = new(Projectile.width * Projectile.scale * 0.5f, 0f);
+			for (int i = 0; i < nodes.Count; i++) {
+				PolarVec2 vec = nodes[i];
+				position.R += vec.R;
+				position.Theta += vec.Theta;
+				Vector2 pos = basePosition + (Vector2)position;
+				Utils.PlotTileLine(pos - vector, pos + vector, Projectile.height * Projectile.scale, DelegateMethods.CutTiles);
+			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (nodes is null) return false;
@@ -135,7 +141,6 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
 			Vector2 lastPosition = basePosition;
-			Texture2D texture = BodyTexture;
 			PolarVec2 diff = default;
 			for (int i = 0; i < nodes.Count - 1; i++) {
 				PolarVec2 vec = nodes[i];
@@ -152,10 +157,20 @@ namespace Origins.Items.Weapons.Melee {
 						new Vector2(-8, 21),
 						new Vector2(diff.R / 30f, 0.9f) * Projectile.scale,
 						SpriteEffects.None,
-						0);
+					0);
+					TangelaVisual.DrawTangela(
+						TailGlowTexture,
+						lastPosition - Main.screenPosition,
+						null,
+						diff.Theta,
+						new Vector2(-8, 21),
+						new Vector2(diff.R / 30f, 0.9f) * Projectile.scale,
+						SpriteEffects.None,
+						i + Projectile.owner
+					);
 				} else {
 					Main.EntitySpriteDraw(
-						texture,
+						BodyTexture,
 						lastPosition - Main.screenPosition,
 						null,
 						new Color(Lighting.GetSubLight(lastPosition)),
@@ -163,7 +178,17 @@ namespace Origins.Items.Weapons.Melee {
 						new Vector2(2, 21),
 						new Vector2(diff.R / 30f, 0.9f) * Projectile.scale,
 						(i % 2 == 0) ? SpriteEffects.None : SpriteEffects.FlipVertically,
-						0);
+					0);
+					TangelaVisual.DrawTangela(
+						BodyGlowTexture,
+						lastPosition - Main.screenPosition,
+						null,
+						diff.Theta,
+						new Vector2(2, 21),
+						new Vector2(diff.R / 30f, 0.9f) * Projectile.scale,
+						(i % 2 == 0) ? SpriteEffects.None : SpriteEffects.FlipVertically,
+						i + Projectile.owner
+					);
 				}
 				lastPosition = basePosition + (Vector2)position;
 			}
@@ -177,7 +202,17 @@ namespace Origins.Items.Weapons.Melee {
 				new Vector2(2, 21),
 				new Vector2(1, 0.9f) * Projectile.scale,
 				SpriteEffects.None,
-				0);
+			0);
+			Main.EntitySpriteDraw(
+				HeadGlowTexture,
+				lastPosition - Main.screenPosition,
+				null,
+				Color.White,
+				diff.Theta,
+				new Vector2(2, 21),
+				new Vector2(1, 0.9f) * Projectile.scale,
+				SpriteEffects.None,
+			0);
 			return false;
 		}
 	}

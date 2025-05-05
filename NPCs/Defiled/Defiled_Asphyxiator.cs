@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -17,13 +17,14 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 36;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.11f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -43,6 +44,11 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
+		}
 		public int MaxMana => 100;
 		public int MaxManaDrain => 100;
 		public float Mana { get; set; }
@@ -51,17 +57,19 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if ((spawnInfo.SpawnTileX > WorldGen.oceanDistance && spawnInfo.SpawnTileX < Main.maxTilesX - WorldGen.oceanDistance) || !spawnInfo.Water || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public int Frame {
 			get => NPC.frame.Y / 58;
@@ -124,7 +132,7 @@ namespace Origins.NPCs.Defiled {
 											projPos,
 											default,
 											projectileType,
-											20,
+											(int)(20 * ContentExtensions.DifficultyDamageMultiplier),
 											4,
 											ai1: target.Center.X,
 											ai2: target.Center.Y

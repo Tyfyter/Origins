@@ -1,16 +1,17 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Fleshy_Figurine : ModItem, ICustomWikiStat {
+	public class Fleshy_Figurine : ModItem, ICustomWikiStat, IJournalEntrySource<Fleshy_Figurine_Entry> {
 		public string[] Categories => [
 			"Combat",
 			"Torn",
 			"TornSource"
 		];
-        static short glowmask;
+		static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }
@@ -48,5 +49,8 @@ namespace Origins.Items.Accessories {
 			})
 			.Register();
 		}
+	}
+	public class Fleshy_Figurine_Entry : JournalEntry {
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 4);
 	}
 }

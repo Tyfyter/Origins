@@ -12,9 +12,7 @@ namespace Origins.Water {
 		public override int GetDropletGore() => GoreID.PearlsandDrip;
 		public override int GetSplashDust() => DustID.RainCloud;
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
-			r = 0.9475f;
-			g = 0.9475f;
-			b = 0.9475f;
+			r = g = b = 0.9475f;
 		}
 		public override Color BiomeHairColor() => new(150, 150, 150);
 	}

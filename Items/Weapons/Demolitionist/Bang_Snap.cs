@@ -17,12 +17,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.damage = 10;
+			Item.crit = 0;
 			Item.DamageType = DamageClasses.ThrownExplosive;
 			Item.shoot = ModContent.ProjectileType<Bang_Snap_P>();
-			Item.shootSpeed = 12;
+			Item.shootSpeed = 11;
             Item.knockBack = 0;
 			Item.value = Item.sellPrice(copper: 1);
-            Item.ArmorPenetration += 3;
+            Item.ArmorPenetration += 12;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 60)
@@ -62,6 +63,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
 			Projectile.DamageType = DamageClasses.ThrownExplosive;
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;

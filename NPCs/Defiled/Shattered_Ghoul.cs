@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
@@ -16,12 +16,13 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.10f;
+		public AssimilationAmount? Assimilation => 0.5f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				Velocity = 1
 			});
 			Main.npcFrameCount[NPC.type] = 8;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DesertGhoulCorruption);
@@ -56,7 +57,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 180f;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.DesertCave) return 0;
 			if (!spawnInfo.Player.InModBiome<Defiled_Wastelands>()) return 0;
 			return Defiled_Wastelands.SpawnRates.Ghoul;
@@ -69,6 +70,8 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
 		}
 		public override void AI() {

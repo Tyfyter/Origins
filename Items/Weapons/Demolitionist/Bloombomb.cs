@@ -1,10 +1,9 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bloombomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -17,14 +16,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 54;
+			Item.damage = 35;
 			Item.shoot = ModContent.ProjectileType<Bloombomb_P>();
-			Item.shootSpeed = 5f;
-			Item.knockBack = 5f;
 			Item.ammo = ItemID.Bomb;
 			Item.value = Item.sellPrice(silver: 4);
-			Item.rare = ItemRarityID.LightRed;
-            Item.ArmorPenetration += 5;
+			Item.rare = ItemRarityID.Green;
+			Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -42,6 +39,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.timeLeft = 135;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Grenade;
@@ -82,6 +82,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.DamageType = DamageClasses.ThrownExplosive;
             Projectile.timeLeft = 240;
             Projectile.penetrate = 3;
+			Projectile.ArmorPenetration += 10;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Vector2 realPos = Projectile.oldPosition + oldVelocity;

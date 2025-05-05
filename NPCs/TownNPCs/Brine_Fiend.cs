@@ -1,17 +1,25 @@
 ﻿using AltLibrary.Core;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables.Broths;
-using Origins.Projectiles.Weapons;
+using Origins.Items.Weapons.Melee;
+using Origins.Journal;
+using Origins.Questing;
 using Origins.Tiles.Brine;
+using Origins.Tiles.MusicBoxes;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Events;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
@@ -20,7 +28,12 @@ using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
-	public class Brine_Fiend : ModNPC, IWikiNPC {
+	public class Brine_Fiend : ModNPC, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Brine_Fiend_Entry).Name;
+		public class Brine_Fiend_Entry : JournalEntry {
+			public override string TextKey => "Brine_Fiend";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 0);
+		}
 		public Rectangle DrawRect => new(0, 6, 36, 48);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 2;
@@ -31,7 +44,7 @@ namespace Origins.NPCs.TownNPCs {
 			NPCID.Sets.ExtraFramesCount[Type] = 8; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
 			NPCID.Sets.AttackFrameCount[Type] = 4;
 			NPCID.Sets.DangerDetectRange[Type] = 700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
-			NPCID.Sets.AttackType[Type] = 0;
+			NPCID.Sets.AttackType[Type] = 1;
 			NPCID.Sets.AttackTime[Type] = 90; // The amount of time it takes for the NPC's attack animation to be over once it starts.
 			NPCID.Sets.AttackAverageChance[Type] = 30;
 			NPCID.Sets.HatOffsetY[Type] = 4; // For when a party is active, the party hat spawns at a Y offset.
@@ -59,9 +72,17 @@ namespace Origins.NPCs.TownNPCs {
 			//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
 			InvalidateNPCHousing.NPCTypeIgnoresAllEvil.Add(Type);
+			BetterDialogue.BetterDialogue.SupportedNPCs.Add(Type);
+			BetterDialogue.BetterDialogue.RegisterShoppableNPC(Type);
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.WitchDoctor);
+			NPC.width = 18;
+			NPC.height = 40;
+			NPC.aiStyle = 7;
+			NPC.damage = 10;
+			NPC.defense = 15;
+			NPC.lifeMax = 250;
+			NPC.knockBackResist = 0.5f;
 			NPC.townNPC = true;
 			NPC.friendly = true;
 			NPC.HitSound = SoundID.NPCHit26;
@@ -89,10 +110,24 @@ namespace Origins.NPCs.TownNPCs {
 		}
 		public override void AddShops() {
 			new NPCShop(Type)
+			.Add<Plain_Broth>()
 			.Add<Hearty_Broth>()
 			.Add<Sour_Broth>()
 			.Add<Foul_Broth>()
+			.Add<Sharp_Broth>()
+			.Add<Minty_Broth>()
+			.Add<Umami_Broth>()
+			.Add<Light_Broth>()
+			.Add<Sweet_Broth>()
+			.Add<Greasy_Broth>()
+			.Add<Savory_Broth>()
+			.Add<Spicy_Broth>()
+			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
+			.Add(Music_Box.ItemType<Ancient_Music_Box_BP>(), Quest.QuestCondition<Old_Brine_Music_Box_Quest>())
 			.Register();
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Boomboom>()));
 		}
 		public override string GetChat() {
 			WeightedRandom<string> chat = new();
@@ -129,23 +164,8 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override List<string> SetNPCNameList() => this.GetGivenName().ToList();
-		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
-		public override bool CanTownNPCSpawn(int numTownNPCs) { // Requirements for the town NPC to spawn.
-			if (OriginSystem.Instance.unlockedBrineNPC) return true;
-			for (int k = 0; k < 255; k++) {
-				Player player = Main.player[k];
-				if (!player.active) {
-					continue;
-				}
-
-				if (player.HasItemInAnyInventory(ModContent.ItemType<Eitrite_Ore_Item>())) {
-					OriginSystem.Instance.unlockedBrineNPC = true;
-					return true;
-				}
-			}
-
-			return false;
-		}
+		public override bool CanGoToStatue(bool toKingStatue) => !toKingStatue;
+		public override bool CanTownNPCSpawn(int numTownNPCs) => Boss_Tracker.Instance.downedLostDiver;
 
 		public override void SetChatButtons(ref string button, ref string button2) { // What the chat buttons are when you open up the chat UI
 			button = Language.GetTextValue("LegacyInterface.28");
@@ -168,18 +188,70 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay) {
-			projType = ModContent.ProjectileType<Brine_Droplet>();
+			projType = ModContent.ProjectileType<Brine_Fiend_Boomboom>();
 			attackDelay = 1;
 		}
 
 		public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset) {
 			multiplier = 8f;
-			randomOffset = 2f;
-			gravityCorrection = 30;
+			randomOffset = 0f;
+			gravityCorrection = 0;
 		}
 
 		public override ITownNPCProfile TownNPCProfile() {
 			return new Brine_Fiend_Profile();
+		}
+	}
+	public class Brine_Fiend_Boomboom : Boomboom_P {
+		public override string Texture => typeof(Boomboom_P).GetDefaultTMLName();
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.penetrate = -1;
+			Projectile.aiStyle = -1;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			base.OnSpawn(source);
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC npc) Projectile.localAI[2] = npc.whoAmI;
+		}
+		public override void AI() {
+			if (!Main.npc.IndexInRange((int)Projectile.localAI[2])) {
+				Projectile.Kill();
+				return;
+			}
+			NPC owner = Main.npc[(int)Projectile.localAI[2]];
+			if (!owner.active) {
+				Projectile.Kill();
+				return;
+			}
+			Projectile.DoBoomerangAI(owner);
+
+			base.AI();
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((int)Projectile.localAI[2]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[2] = reader.ReadInt32(); 
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			base.OnHitNPC(target, hit, damageDone);
+			if (Projectile.ai[0] == 0f) {
+				Projectile.velocity = -Projectile.velocity;
+				Projectile.netUpdate = true;
+			}
+
+			Projectile.ai[0] = 1f;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			if (Projectile.ai[0] == 0f) {
+				Projectile.velocity = -Projectile.oldVelocity;
+				Projectile.netUpdate = true;
+			}
+
+			Projectile.ai[0] = 1f;
+			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+			return false;
 		}
 	}
 	public class Brine_Fiend_Profile : ITownNPCProfile {

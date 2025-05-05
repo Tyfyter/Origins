@@ -23,6 +23,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();

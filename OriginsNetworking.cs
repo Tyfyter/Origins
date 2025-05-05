@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Questing;
 using Origins.Reflection;
@@ -16,6 +17,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 using static Origins.Origins.NetMessageType;
 
@@ -40,7 +42,13 @@ namespace Origins {
 					case inflict_assimilation:
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
 					case custom_knockback:
+					case entity_interaction:
+					case soul_snatcher_activate:
 					altHandle = true;
+					break;
+
+					case place_tile_entity:
+					TESystem.Get(reader.ReadUInt16()).tileEntityLocations.Add(new(reader.ReadInt16(), reader.ReadInt16()));
 					break;
 
 					case win_lottery: {
@@ -95,6 +103,30 @@ namespace Origins {
 					}
 					break;
 
+					case chest_sync or chest_sync_projectile: {
+						ushort chestIndex = reader.ReadUInt16();
+						if (Main.chest[chestIndex] == null) {
+							Main.chest[chestIndex] = new Chest();
+						}
+						Chest chest = Main.chest[chestIndex];
+						for (int i = 0; i < 40; i++) {
+							chest.item[i] ??= new();
+							ItemIO.Receive(chest.item[i], reader, readStack: true);
+						}
+						switch (type) {
+							case chest_sync_projectile:
+							Projectile lotus = Main.projectile[reader.ReadUInt16()];
+							if (lotus.ModProjectile is IChestSyncRecipient recipient) recipient.ReceiveChestSync(chestIndex);
+							break;
+						}
+					}
+					break;
+
+					case tyrfing_zap: {
+						Tyrfing_P.DoArcVisual(reader.ReadVector2(), reader.ReadVector2());
+						break;
+					}
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -114,6 +146,8 @@ namespace Origins {
 					case inflict_assimilation:
 					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
 					case custom_knockback:
+					case entity_interaction:
+					case soul_snatcher_activate:
 					altHandle = true;
 					break;
 
@@ -167,6 +201,33 @@ namespace Origins {
 						packet.Send(-1, whoAmI);
 					}
 					break;
+
+					case request_chest_sync or request_chest_sync_projectile: {
+						ushort chestIndex = reader.ReadUInt16();
+						Chest chest = Main.chest[chestIndex];
+						ModPacket packet = GetPacket();
+						packet.Write(type);
+						packet.Write(chestIndex);
+						for (int i = 0; i < 40; i++) {
+							ItemIO.Send(chest.item[i], packet, writeStack: true);
+						}
+						switch (type) {
+							case request_chest_sync_projectile:
+							packet.Write(reader.ReadUInt16());
+							break;
+						}
+						packet.Send(whoAmI);
+					}
+					break;
+
+					case tyrfing_zap: {
+						ModPacket packet = GetPacket();
+						packet.Write(type);
+						packet.WriteVector2(reader.ReadVector2());
+						packet.WriteVector2(reader.ReadVector2());
+						packet.Send(ignoreClient: whoAmI);
+						break;
+					}
 
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on server");
@@ -347,6 +408,34 @@ namespace Origins {
 						Main.npc[reader.ReadInt32()].DoCustomKnockback(new(reader.ReadSingle(), reader.ReadSingle()), Main.netMode == NetmodeID.MultiplayerClient);
 						break;
 					}
+					case entity_interaction: {
+						byte npcIndex = reader.ReadByte();
+						if (Main.npc[npcIndex].ModNPC is IInteractableNPC npc) {
+							npc.Interact();
+							if (npc.NeedsSync && Main.netMode == NetmodeID.Server) {
+								// Forward the changes to the other clients
+								ModPacket packet = GetPacket();
+								packet.Write(entity_interaction);
+								packet.Write(npcIndex);
+								packet.Send(-1, whoAmI);
+							}
+						}
+						break;
+					}
+					case soul_snatcher_activate: {
+						byte player = reader.ReadByte();
+						OriginPlayer originPlayer = Main.player[player].OriginPlayer();
+						originPlayer.soulSnatcherActive = reader.ReadBoolean();
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = instance.GetPacket();
+							packet.Write(soul_snatcher_activate);
+							packet.Write(player);
+							packet.Write(originPlayer.soulSnatcherActive);
+							packet.Send(ignoreClient: player);
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -376,6 +465,33 @@ namespace Origins {
 			internal const byte custom_combat_text = 20;
 			internal const byte sync_neural_network = 21;
 			internal const byte defiled_relay_message = 22;
+			internal const byte entity_interaction = 23;
+			internal const byte request_chest_sync = chest_sync;
+			internal const byte chest_sync = 24;
+			internal const byte request_chest_sync_projectile = chest_sync_projectile;
+			internal const byte chest_sync_projectile = 25;
+			internal const byte soul_snatcher_activate = 26;
+			internal const byte tyrfing_zap = 27;
+		}
+	}
+	public interface IChestSyncRecipient {
+		public void ReceiveChestSync(int i);
+	}
+	public static class NetworkingExtensions {
+		public static void RequestChestSync(this IChestSyncRecipient recipient, int chestIndex) {
+			byte messageType;
+			ushort recipientIndex;
+			if (recipient is ModProjectile proj) {
+				messageType = request_chest_sync_projectile;
+				recipientIndex = (ushort)proj.Projectile.whoAmI;
+			} else {
+				throw new NotImplementedException();
+			}
+			ModPacket packet = Origins.instance.GetPacket();
+			packet.Write(messageType);
+			packet.Write((ushort)chestIndex);
+			packet.Write(recipientIndex);
+			packet.Send();
 		}
 	}
 }

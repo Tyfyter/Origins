@@ -19,6 +19,7 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			Main.tileNoFail[Type] = true;
 			Main.tileLighted[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
@@ -50,7 +51,7 @@ namespace Origins.Tiles.Riven {
 		}
 
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			Main.tile[i, j].TileFrameX = (short)(Main.rand.Next(6) * 18);
+			Main.tile[i, j].TileFrameX = (short)(WorldGen.genRand.Next(6) * 18);
 			ushort anchorType = Main.tile[i, j + 1].TileType;
 			if (!TileObjectData.GetTileData(Main.tile[i, j]).isValidTileAnchor(anchorType)) {
 				if (TileID.Sets.Conversion.Grass[anchorType]) {

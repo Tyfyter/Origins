@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using BetterDialogue.UI.VanillaChatButtons;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using Origins.NPCs;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -38,13 +38,14 @@ namespace Origins.Buffs {
 	public class Defiled_Assimilation : AssimilationDebuff {
 		public override string BestiaryStatTexture => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override void Update(Player player, float percent) {
-			if (percent >= 0.125 /*&& Main.rand.NextFloat(0, 200) < percent - 0.125*/) {
-				player.AddBuff(BuffID.Weak, 300);
-			}
-			if (percent >= 0.35 /*&& Main.rand.NextFloat(0, 200) < percent - 0.35*/) {
-				player.AddBuff(BuffID.BrokenArmor, 180);
+			if (percent >= 0.25) {
+				player.AddBuff(BuffID.Weak, 180);
+				player.manaCost *= 1.1f;
 			}
 			if (percent >= 0.5) {
+				player.AddBuff(BuffID.BrokenArmor, 180);
+			}
+			if (percent >= 0.75) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
 			player.OriginPlayer().GetAssimilation(AssimilationType).Percent += percent * player.InModBiome<Defiled_Wastelands>().ToDirectionInt() * 0.0000444f;
@@ -122,18 +123,23 @@ namespace Origins.Buffs {
 			Main.buffNoSave[Type] = true;
 			_ = DeathMessage.Value;
 		}
+		internal static bool isUpdatingAssimilation = false;
 		public virtual void Update(Player player, float percent) { }
 		public virtual void OnChanged(Player player, float oldValue, float newValue) { }
 		public sealed override void Update(Player player, ref int buffIndex) {
 			AssimilationInfo info = player.OriginPlayer().GetAssimilation(AssimilationType);
 			float percent = info.EffectivePercent;
-			if (percent >= OriginPlayer.assimilation_max) {
+			if (percent >= OriginPlayer.assimilation_max && player.whoAmI == Main.myPlayer) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = DeathMessage.Key
 				}, 40, 0);
 			}
-			Update(player, percent);
-
+			isUpdatingAssimilation = true;
+			try {
+				Update(player, percent);
+			} finally {
+				isUpdatingAssimilation = false;
+			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.OriginPlayer().GetAssimilation(AssimilationType).Percent;
@@ -186,6 +192,54 @@ namespace Origins.Buffs {
 		public void AddMultiplier(float multiplier) {
 			currentMultiplier *= multiplier;
 			nextMultiplier *= multiplier;
+		}
+	}
+	public class Nurse_Assimilation_Dialog : ModPlayer {
+		static bool didHeal;
+		public bool[] GotDebuffFromAssimilation = BuffID.Sets.Factory.CreateBoolSet();
+		public override void Load() {
+			MonoModHooks.Add(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.OnClick)), static (Action<NurseHealButton, NPC, Player> orig, NurseHealButton self, NPC npc, Player player) => {
+				didHeal = false;
+				orig(self, npc, player);
+
+				foreach (AssimilationInfo info in player.OriginPlayer().IterateAssimilation()) {
+					if (info.Percent > 0) {
+						if (!didHeal) {
+							Main.npcChatText = Language.GetOrRegister("Mods.Origins.NPCs.Nurse.NoHealCantHealAssimilation").Value;
+						} else {
+							if (Main.npcChatText.Length > 0) Main.npcChatText += " ";
+							Main.npcChatText += Language.GetOrRegister("Mods.Origins.NPCs.Nurse.CantHealAssimilation").Value;
+						}
+						break;
+					}
+				}
+			});
+			try {
+				MonoModHooks.Modify(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.HealPrice)), IL_DisableNurseOnAssDebuffs);
+				MonoModHooks.Modify(typeof(NurseHealButton).GetMethod(nameof(NurseHealButton.OnClick)), IL_DisableNurseOnAssDebuffs);
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_DisableNurseOnAssDebuffs), e)) throw;
+			}
+		}
+		static void IL_DisableNurseOnAssDebuffs(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel label = default;
+			int loc = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdsfld<BuffID.Sets>(nameof(BuffID.Sets.NurseCannotRemoveDebuff)),//IL_0047: ldsfld bool[] [tModLoader]Terraria.ID.BuffID/Sets::NurseCannotRemoveDebuff
+				i => i.MatchLdloc(out loc),//IL_004c: ldloc.3
+				i => i.MatchLdelemU1(),//IL_004d: ldelem.u1
+				i => i.MatchBrtrue(out label)//IL_004e: brtrue.s IL_0055
+			);
+			c.EmitLdarg2();
+			c.EmitLdloc(loc);
+			c.EmitDelegate((Player player, int buffType) => {
+				return player.GetModPlayer<Nurse_Assimilation_Dialog>().GotDebuffFromAssimilation[buffType];
+			});
+			c.EmitBrtrue(label);
+		}
+		public override void PostNurseHeal(NPC nurse, int health, bool removeDebuffs, int price) {
+			didHeal = true;
 		}
 	}
 }

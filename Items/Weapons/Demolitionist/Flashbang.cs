@@ -17,14 +17,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 26;
-			Item.knockBack = 0;
-			Item.crit += 16;
-			Item.shootSpeed *= 2;
+			Item.damage = 32;
+			Item.crit += 6;
+			Item.shootSpeed *= 1.75f;
 			Item.shoot = ModContent.ProjectileType<Flashbang_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 15);
-            Item.ArmorPenetration += 2;
+            Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -42,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = -1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
@@ -60,10 +60,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Confused, 220);
+			if (target.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal) && blindGlobal.blindable) {
+				target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 120);
+			}else {
+				target.AddBuff(BuffID.Confused, 220);
+			}
 			target.AddBuff(BuffID.Slow, 300);
 			target.AddBuff(BuffID.Darkness, 120);
-			target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 120);
 		}
 	}
 	public class Flash_P : ModProjectile {

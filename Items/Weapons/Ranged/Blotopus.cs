@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.rotation -= MathHelper.PiOver2;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Bleeding, Main.rand.Next(119, 241));
+			target.AddBuff(BuffID.Bleeding, Main.rand.Next(120, 241));
 		}
 	}
 }

@@ -119,14 +119,14 @@ namespace Origins.Items.Weapons.Summoner {
 
 			Vector2 pos = list[0];
 
-			for (int i = 0; i < list.Count - 1; i++) {
+			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
 				Rectangle frame = new Rectangle(0, 0, 48, 28);
 				Vector2 origin = new Vector2(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
-				if (i == list.Count - 2) {
+				if (i == list.Count - 1) {
 					frame.Y = 112;
 				} else if (i > 10) {
 					frame.Y = 84;
@@ -137,7 +137,12 @@ namespace Origins.Items.Weapons.Summoner {
 				}
 
 				Vector2 element = list[i];
-				Vector2 diff = list[i + 1] - element;
+				Vector2 diff;
+				if (i == list.Count - 1) {
+					diff = element - list[i - 1];
+				} else {
+					diff = list[i + 1] - element;
+				}
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
 				Color color = Lighting.GetColor(element.ToTileCoordinates());
@@ -150,7 +155,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Joint_Pop_Explosion : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.SummonMeleeSpeed];
 			Projectile.width = 96;

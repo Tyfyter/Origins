@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Layers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,10 @@ namespace Origins.Items.Accessories {
 			"Vitality",
 			"MagicBoostAcc"
 		];
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Accessory_Tangela_Layer.AddTangelaMask<Face_Tangela_Layer>(Item.faceSlot, Texture + "_Face_Tangela");
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 28);
 			Item.rare = ItemRarityID.Pink;

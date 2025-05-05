@@ -5,11 +5,21 @@ using Terraria.ID;
 using Terraria.Localization;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Dungeon_Chest : ModChest {
+	public class Defiled_Dungeon_Chest : ModChest, IGlowingModTile {
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = Vector3.Max(color, new Vector3(0.394f));
+		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			base.SetStaticDefaults();
+			Main.tileLighted[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("{$Defiled} Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
@@ -22,6 +32,12 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
+		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = g = b = 0.01f;
+		}
+		public override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Defiled_Dungeon_Chest_Item : ModItem {
 		public override void SetDefaults() {

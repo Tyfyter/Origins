@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
-			Item.useAnimation = 3;
-			Item.useTime = 3;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
 			Item.reuseDelay = 2;
 			Item.width = 58;
 			Item.height = 22;

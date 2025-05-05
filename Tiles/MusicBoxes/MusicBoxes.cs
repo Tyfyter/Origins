@@ -5,9 +5,14 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Reflection;
 using Origins.World.BiomeData;
+using PegasusLib;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,11 +26,40 @@ namespace Origins.Tiles.MusicBoxes {
 		public abstract Color MapColor { get; }
 		public abstract int MusicSlot { get; }
 		public virtual new int DustType => 0;
-		protected int itemType = -1;
+		public Music_Box_Item Item { get; private set; }
+		public static int ItemType<TMusicBox>() where TMusicBox : Music_Box => GetInstance<TMusicBox>().Item.Type;
+		static List<Music_Box> musicBoxes = [];
+		public static ReadOnlySpan<Music_Box> MusicBoxes => CollectionsMarshal.AsSpan(musicBoxes);
+		static FastStaticFieldInfo<MusicLoader, Dictionary<int, int>> musicToItem = new(nameof(musicToItem), BindingFlags.NonPublic);
+		static FastStaticFieldInfo<MusicLoader, Dictionary<int, int>> itemToMusic = new(nameof(itemToMusic), BindingFlags.NonPublic);
+		static FastStaticFieldInfo<MusicLoader, Dictionary<int, Dictionary<int, int>>> tileToMusic = new(nameof(tileToMusic), BindingFlags.NonPublic);
+		/// <summary>
+		/// For OriginsMusic
+		/// </summary>
+		public static void ReloadMusicAssociations() {
+			Dictionary<int, int> musicToItem = Music_Box.musicToItem.Value;
+			Dictionary<int, int> itemToMusic = Music_Box.itemToMusic.Value;
+			Dictionary<int, Dictionary<int, int>> tileToMusic = Music_Box.tileToMusic.Value;
+			foreach (Music_Box box in MusicBoxes) {
+				if (itemToMusic.TryGetValue(box.Item.Type, out int oldTrack) && oldTrack >= MusicID.Count) {
+					musicToItem.Remove(oldTrack);
+					itemToMusic.Remove(box.Item.Type);
+					tileToMusic.Remove(box.Type);
+				}
+				if (box.MusicSlot >= MusicID.Count) {
+					musicToItem[box.MusicSlot] = box.Item.Type;
+					itemToMusic[box.Item.Type] = box.MusicSlot;
+					tileToMusic[box.Type] = new() { [0] = box.MusicSlot };
+				}
+			}
+		}
 		public override void Load() {
-			Music_Box_Item item = new(this);
-			Mod.AddContent(item);
-			itemType = item.Type;
+			Item = new(this);
+			Mod.AddContent(Item);
+			musicBoxes.Add(this);
+		}
+		public override void Unload() {
+			musicBoxes = null;
 		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -36,22 +70,17 @@ namespace Origins.Tiles.MusicBoxes {
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			AddMapEntry(MapColor, Language.GetOrRegister("Mods.Origins.Tiles." + Name));
-
-			// The following code links the music box's item and tile with a music track:
-			//   When music with the given ID is playing, equipped music boxes have a chance to change their id to the given item type.
-			//   When an item with the given item type is equipped, it will play the music that has musicSlot as its ID.
-			//   When a tile with the given type and Y-frame is nearby, if its X-frame is >= 36, it will play the music that has musicSlot as its ID.
-			// When getting the music slot, you should not add the file extensions!
-			MusicLoader.AddMusicBox(Mod, MusicSlot, itemType, Type);
-			RegisterItemDrop(itemType);
+			TileID.Sets.HasOutlines[Type] = true;
+			AddMapEntry(MapColor, Language.GetOrRegister("Mods.Origins.Tiles." + Name, PrettyPrintName));
+			RegisterItemDrop(Item.Type);
 			base.DustType = this.DustType;
 		}
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = itemType;
+			player.cursorItemIconID = Item.Type;
 		}
 	}
 	[Autoload(false)]
@@ -63,7 +92,7 @@ namespace Origins.Tiles.MusicBoxes {
 		[CloneByReference]
 		readonly Music_Box tile = tile;
 		public override string Name => tile.Name + "_Item";
-		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.Tiles." + tile.Name);
+		public override LocalizedText DisplayName => Language.GetText("Mods.Origins.Tiles." + tile.Name);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
@@ -187,6 +216,57 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
+	public class Music_Box_BP : Music_Box, IGlowingModTile {
+		public override Color MapColor => new Color(42, 112, 59);
+		public override int MusicSlot => Origins.Music.BrinePool;
+		public override int DustType => DustID.GreenMoss;
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public static float GlowLightValue(Tile tile) => tile.TileFrameX >= 36 ? 1 : 0;
+		public Color GlowColor => Color.White;
+		public static bool ShouldGlow(Tile tile) => tile.TileFrameX >= 36;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			TileID.Sets.HasSlopeFrames[Type] = true;
+			Main.tileLighted[Type] = true;
+			AnimationFrameHeight = 36;
+			if (!Main.dedServ) {
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0f, 0.45f, 0.2f) * GlowLightValue(tile));
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY + Main.tileFrame[Type] * AnimationFrameHeight, 18, 18);
+			drawData.glowTexture = GlowTexture;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			Tile tile = Main.tile[i, j];
+
+			// If the torch is on
+			if (ShouldGlow(tile)) {
+				float glowLightValue = GlowLightValue(tile);
+				r = 0f;
+				g = 0.2f * glowLightValue;
+				b = 0.05f * glowLightValue;
+			}
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 8) {
+				frameCounter = 0;
+				frame = ++frame % 3;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
+		}
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
 	public class Ancient_Music_Box_DW : Music_Box {
 		public override string[] Categories => [
 			"Hardmode"
@@ -282,5 +362,87 @@ namespace Origins.Tiles.MusicBoxes {
 			this.SetupGlowKeys();
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
+	public class Ancient_Music_Box_BP : Music_Box, IGlowingModTile {
+		public override Color MapColor => new Color(42, 112, 59);
+		public override int MusicSlot => Origins.Music.AncientBrinePool;
+		public override int DustType => DustID.GreenMoss;
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public static float GlowLightValue(Tile tile) {
+			int frameNumberOffset = tile.TileFrameX >= 36 ? 1 : 0;
+			return ((frameNumberOffset + tile.TileFrameNumber) / 3f);
+		}
+		public Color GlowColor => Color.White;
+		public static bool ShouldGlow(Tile tile) {
+			if (tile.TileFrameY == 0) {
+				if (tile.TileFrameX % 36 < 16) return false;
+				return tile.TileFrameNumber > 1;
+			} else {
+				return tile.TileFrameNumber > 0 || tile.Slope > 0;
+			}
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			TileID.Sets.HasSlopeFrames[Type] = true;
+			Main.tileLighted[Type] = true;
+			if (!Main.dedServ) {
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0f, 0.912f, 0.394f) * GlowLightValue(tile));
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 18, 18);
+			drawData.glowTexture = GlowTexture;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			Tile tile = Main.tile[i, j];
+
+			// If the torch is on
+			if (ShouldGlow(tile)) {
+				float glowLightValue = GlowLightValue(tile);
+				r = 0f;
+				g = 0.35f * glowLightValue;
+				b = 0.1f * glowLightValue;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Tile tile = Main.tile[i, j];
+			int frameTime = (int)tile.Slope;
+			if (tile.TileFrameX >= 36) {
+				frameYOffset += tile.TileFrameNumber * 36;
+				if (tile.TileFrameNumber < 2) {
+					if (frameTime >= 5) {
+						tile.TileFrameNumber++;
+						tile.Slope = 0;
+					} else {
+						tile.Slope = (SlopeType)(frameTime + 1);
+					}
+				}
+			} else if (tile.TileFrameNumber > 0) {
+				frameXOffset += 36;
+				frameYOffset += (tile.TileFrameNumber - 1) * 36;
+				if (tile.TileFrameNumber > 0) {
+					if (frameTime >= 5) {
+						tile.TileFrameNumber--;
+						tile.Slope = 0;
+					} else {
+						tile.Slope = (SlopeType)(frameTime + 1);
+					}
+				}
+			}
+		}
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
+	public class Music_Box_FU : Music_Box {
+		public override Color MapColor => new Color(146, 253, 250);
+		public override int MusicSlot => Origins.Music.Fiberglass;
+		public override int DustType => DustID.Glass;
 	}
 }

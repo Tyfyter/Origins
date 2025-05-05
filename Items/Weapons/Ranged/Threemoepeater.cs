@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Threemoepeater : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -22,8 +20,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 5;
 			Item.noMelee = true;
-			Item.useTime = 13;
-			Item.useAnimation = 13;
+			Item.useTime = 17;
+			Item.useAnimation = 17;
 			Item.width = 50;
 			Item.height = 10;
 			Item.UseSound = SoundID.Item11;
@@ -45,7 +43,7 @@ namespace Origins.Items.Weapons.Ranged {
 					position,
 					velocity.RotatedByRandom(0.2f) * Main.rand.NextFloat(0.9f, 1.1f),
 					Threemoepeater_P.ID,
-					damage,
+					damage / 2,
 					knockback,
 					player.whoAmI
 				);
@@ -57,12 +55,12 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Origins/Projectiles/Weapons/Amoeba_Ball";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Ball");
 			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SpikyBall);
 			Projectile.timeLeft = 180;
+			Projectile.ArmorPenetration += 15;
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			const float add = 510;

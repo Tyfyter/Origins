@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.knockBack = 5;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
-			Item.useAnimation = 3;
-			Item.useTime = 3;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
 			Item.reuseDelay = 2;
 			Item.width = 56;
 			Item.height = 26;
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.MythrilAnvil, 10)
+			.AddIngredient(ItemID.OrichalcumBar, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

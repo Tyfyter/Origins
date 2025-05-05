@@ -23,6 +23,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
@@ -157,6 +158,7 @@ namespace Origins.Tiles.Ashen {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout_Item>()] = ItemID.Deathweed;
+			Item.ResearchUnlockCount = 25;
 		}
 	}
 }

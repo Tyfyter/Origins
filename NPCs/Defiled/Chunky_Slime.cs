@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -14,10 +12,11 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
-		public AssimilationAmount? Assimilation => 0.05f;
+		public AssimilationAmount? Assimilation => 0.01f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BlueSlime, Type);
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Slime;
@@ -28,6 +27,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.alpha = 55;
+			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;
@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 120f;// 1 mana for every 1 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.DesertCave || spawnInfo.SpawnTileY > Main.worldSurface) return 0;
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, false) * Defiled_Wastelands.SpawnRates.ChunkSlime;
 		}

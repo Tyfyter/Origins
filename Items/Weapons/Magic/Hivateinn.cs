@@ -5,14 +5,15 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+using Origins.Buffs;
+
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Wand"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"Wand"
+		];
+		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 			Origins.DamageBonusScale[Type] = 1.5f;
@@ -47,7 +48,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Felnum_Lightning : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_466";
-		
+
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.DamageType = DamageClass.Magic;
@@ -87,6 +88,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 4);
+			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 240);
 		}
 		public override bool? CanHitNPC(NPC target) {
 			return target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>()) ? false : base.CanHitNPC(target);

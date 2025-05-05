@@ -44,6 +44,7 @@ namespace Origins.NPCs.Felnum {
 			NPC.noGravity = true;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.4f;
 			return 0;
 		}
@@ -51,11 +52,12 @@ namespace Origins.NPCs.Felnum {
 			NPC.DoFrames(4);
 		}
 		public override bool? CanFallThroughPlatforms() => true;
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.playerInteraction[target.whoAmI] || !target.OriginPlayer().felnumEnemiesFriendly;
 		Vector2 ShoulderPos => NPC.Center - new Vector2(9 * NPC.spriteDirection, 7);
 		public override void AI() {
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All,
-				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet,
-				null
+				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumEnemiesFriendly,
+				npc => npc.CanBeChasedBy()
 			);
 			NPC.target = searchResults.NearestTargetIndex;
 			if (searchResults.FoundTarget) {
@@ -92,7 +94,7 @@ namespace Origins.NPCs.Felnum {
 								ShoulderPos,
 								GeometryUtils.Vec2FromPolar(8, NPC.rotation),
 								ModContent.ProjectileType<Cloud_Elemental_P>(),
-								30,
+								20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier),
 								4
 							);
 						}
@@ -175,5 +177,6 @@ namespace Origins.NPCs.Felnum {
 			base.SetDefaults();
 			Projectile.friendly = false;
 		}
+		public override bool CanHitPlayer(Player target) => !target.OriginPlayer().felnumEnemiesFriendly;
 	}
 }

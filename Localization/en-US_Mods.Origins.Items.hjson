@@ -2,6 +2,7 @@ GenericTooltip: {
 	MinuteCooldown: "{0} minute cooldown"
 	SecondCooldown: "{0} second cooldown"
 	TornSeverity: +{0}% applied torn severity
+	ArtifactTag: "[c/ffb300:-Artifact Minion-]"
 }
 
 Krunch_Mix: {
@@ -27,6 +28,8 @@ Advanced_Imaging: {
 	Tooltip:
 		'''
 		Increased projectile speed
+		10% increased critical strike chance
+		20% increased explosive blast radius
 		Immunity to Confusion
 		'''
 }
@@ -177,7 +180,11 @@ CFHES: {
 
 Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
-	Tooltip: Five of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+	Tooltip:
+		'''
+		All attacks inflict Bleeding and set enemies ablaze
+		Four of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+		'''
 }
 
 Comb: {
@@ -189,8 +196,8 @@ Coologne: {
 	DisplayName: Coologne
 	Tooltip:
 		'''
-		Increases life regeneration at low health
-		Puts a shell around the owner when below 50% life that reduces damage by 25%
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		{$ItemTooltip.FrozenTurtleShell}
 		'20% cooler than competing brands!'
 		'''
 }
@@ -247,7 +254,7 @@ Donor_Wristband: {
 	Tooltip:
 		'''
 		Increased life regeneration
-		Debuff durations reduced by 48%
+		Debuff durations reduced by 30%
 		'''
 }
 
@@ -258,17 +265,13 @@ Dryads_Inheritance: {
 		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Emit a damaging aura that inflicts poison
+		Summons spores over time that will damage enemies
 		'''
 }
 
 Eccentric_Stone: {
 	DisplayName: Eccentric Stone
-	Tooltip: ""
-}
-
-Endless_Explosives: {
-	DisplayName: Dysfunctional Endless Explosives Bag
-	Tooltip: 15% chance not to consume thrown explosives or explosive ammo
+	Tooltip: +1 minion slot
 }
 
 Entangled_Energy: {
@@ -466,7 +469,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: Four of the nearest enemies will be afflicted with Rasterized
+	Tooltip: Three of the nearest enemies will be afflicted with Rasterized
 }
 
 Lovers_Leap: {
@@ -504,8 +507,8 @@ Makeover_Choker: {
 	DisplayName: Makeover Choker
 	Tooltip:
 		'''
-		Increases life regeneration at low health
-		Increases length of invincibility after taking damage
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		{$ItemTooltip.CrossNecklace}
 		'You look like a mess, let's get that taken care of'
 		'''
 }
@@ -557,9 +560,10 @@ Mojo_Injection: {
 
 Mysterious_Spray: {
 	DisplayName: Mysterious Spray
+	EffectTooltip: Increases life regeneration at low health
 	Tooltip:
 		'''
-		Increases life regeneration at low health
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
 		'The perfect ailment to attack your senses'
 		'''
 }
@@ -628,6 +632,7 @@ Plasma_Bag: {
 		'''
 		Slightly increased regeneration
 		Debuff durations reduced by 30%
+		Does not affect Potion Sickness
 		Rapidly lose life when Bleeding
 		'''
 }
@@ -700,8 +705,8 @@ Refactoring_Pieces: {
 	DisplayName: Refactoring Pieces
 	Tooltip:
 		'''
-		Increases mana shielding by 10%
-		Reduces damage taken by 5% if Lost Armor is not equipped
+		Increases mana shielding and damage reduction by 10%
+		Grants a dash that allows you to glitch through {§Defiled} blocks
 		'''
 }
 
@@ -711,7 +716,7 @@ Resin_Shield: {
 		'''
 		Grants immunity to knockback and fire blocks
 		Blocks all self-damage on next hit
-		5 second cooldown
+		3.3 second cooldown
 		'A shield to withstand the test of time'
 		'''
 }
@@ -764,6 +769,8 @@ Sonar_Visor: {
 	Tooltip:
 		'''
 		Increased projectile speed
+		10% increased critical strike chance
+		20% increased explosive blast radius
 		Immunity to Confusion
 		Highlights the outermost layer of tiles
 		'''
@@ -780,7 +787,11 @@ Sonic_Radar: {
 
 Shrap_Stack: {
 	DisplayName: Stack of Shraps
-	Tooltip: Double the gunpowder, double the fun.
+	Tooltip:
+		'''
+		Explosives have a chance to be duplicated
+		'Double the gunpowder, double the fun.'
+		'''
 }
 
 Speed_Ravel: {
@@ -799,7 +810,12 @@ Spider_Ravel: {
 
 Spirit_Shard: {
 	DisplayName: Spirit Shard
-	Tooltip: Artifact minions turn into ghosts of their former selves upon death
+	Tooltip:
+		'''
+		Artifact minions turn into ghosts of their former selves upon death
+		10% increased summon damage
+		+2 minion slots
+		'''
 }
 
 Stealth_Ravel: {
@@ -881,7 +897,7 @@ Tripod_Nip: {
 	Tooltip:
 		'''
 		Reduces enemy aggression and spawn rates
-		Defiled Tripods become friendly
+		{§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}s become friendly
 		'''
 }
 
@@ -903,7 +919,7 @@ Unsought_Organ: {
 	DisplayName: Unsought Organ
 	Tooltip:
 		'''
-		All damage received is reflected to 3 nearby enemies, inflicting 'Toxic Shock'
+		All damage received is reflected to 3 nearby enemies
 		5% increased damage and critical strike chance
 		All attacks inflict Toxic Shock
 		Enemies are less likely to target you
@@ -1322,37 +1338,37 @@ Riptide_Helmet: {
 	Tooltip:
 		'''
 		5% increased magic damage
-		Greatly extends underwater breathing
+		Slightly increased underwater breathing
 		'''
 }
 
 Riven_Coat: {
-	DisplayName: Riven Coat
+	DisplayName: "{§Riven} Coat"
 	Tooltip: 6% increased weapon speed
 }
 
 Riven_Mask: {
-	DisplayName: Riven Mask
+	DisplayName: "{§Riven} Mask"
 	Tooltip: 6% increased weapon speed
 }
 
 Riven_Pants: {
-	DisplayName: Riven Pants
+	DisplayName: "{§Riven} Pants"
 	Tooltip: 6% increased weapon speed
 }
 
 Riven2_Mask: {
-	DisplayName: Ancient Riven Mask
+	DisplayName: Ancient {§Riven} Mask
 	Tooltip: 6% increased weapon speed
 }
 
 Riven2_Coat: {
-	DisplayName: Ancient Riven Coat
+	DisplayName: Ancient {§Riven} Coat
 	Tooltip: 6% increased weapon speed
 }
 
 Riven2_Pants: {
-	DisplayName: Ancient Riven Pants
+	DisplayName: Ancient {§Riven} Pants
 	Tooltip: 6% increased weapon speed
 }
 
@@ -1493,7 +1509,7 @@ Defiled_Bar.DisplayName: "{§Defiled} Bar"
 
 Defiled_Key: {
 	DisplayName: "{§Defiled} Key"
-	Tooltip: Unlocks a Defiled Chest in the Dungeon
+	Tooltip: Unlocks a {§Defiled} Chest in the Dungeon
 }
 
 Dawn_Key: {
@@ -1502,8 +1518,8 @@ Dawn_Key: {
 }
 
 Dusk_Key: {
-	DisplayName: Dusk Key
-	Tooltip: Unlocks a Dusk Chest in the Dungeon
+	DisplayName: "{§Dusk} Key"
+	Tooltip: Unlocks a {§Dusk} Chest in the Dungeon
 }
 
 Dreadful_Powder: {
@@ -1582,7 +1598,7 @@ Riven_Carapace.DisplayName: "{§Riven} Carapace"
 
 Riven_Key: {
 	DisplayName: "{§Riven} Key"
-	Tooltip: Unlocks a Riven Chest in the Dungeon
+	Tooltip: Unlocks a {§Riven} Chest in the Dungeon
 }
 
 Rotor.DisplayName: Rotor
@@ -1821,7 +1837,8 @@ Mojo_Flask: {
 	DisplayName: Mojo Flask
 	Tooltip:
 		'''
-		Reduces all assimilation by 20% each
+		{FlaskUseCount} uses
+		Reduces all assimilation by {FlaskCureAmount}% each
 		All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
 		'''
 }
@@ -1881,7 +1898,7 @@ The_Button: {
 }
 
 The_Defiled_Will: {
-	DisplayName: The Defiled Will
+	DisplayName: The {§Defiled} Will
 	Tooltip: Will you continue the legacy?
 }
 
@@ -1945,7 +1962,7 @@ Crusty_Crate: {
 }
 
 Duskarp: {
-	DisplayName: Duskarp
+	DisplayName: "{§Dusk}arp"
 	Tooltip: ""
 }
 
@@ -1970,7 +1987,7 @@ Journal_Item: {
 }
 
 Defiled_Amalgamation_Bag: {
-	DisplayName: Treasure Bag (Defiled Amalgamation)
+	DisplayName: Treasure Bag ({§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName})
 	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
@@ -2341,7 +2358,7 @@ Crystal_Grenade: {
 }
 
 Defiled_Spirit: {
-	DisplayName: Defiled Spirit
+	DisplayName: "{§Defiled} Spirit"
 	Tooltip: ""
 }
 
@@ -2387,7 +2404,7 @@ Hand_Grenade_Launcher: {
 
 Happy_Bomb: {
 	DisplayName: Happy Bomb
-	Tooltip: Laughs at downed enemies
+	Tooltip: This one is giggly.
 }
 
 Hellfire_Bomb: {
@@ -2498,11 +2515,7 @@ Thermite_Launcher: {
 
 Dragons_Breath: {
 	DisplayName: Dragon's Breath
-	Tooltip:
-		'''
-		Uses fireblossoms as ammo
-		Desperately needs rework
-		'''
+	Tooltip: Uses fireblossoms as ammo
 }
 
 Felnum_Golf_Ball: {
@@ -2710,7 +2723,11 @@ Knee_Slapper: {
 
 Krakram: {
 	DisplayName: Krakram
-	Tooltip: "'Very pointy'"
+	Tooltip:
+		'''
+		Double backs on enemies
+		'Very pointy'
+		'''
 }
 
 Nematoclaw: {
@@ -2756,6 +2773,7 @@ The_Bird: {
 	DisplayName: The Bird
 	Tooltip:
 		'''
+		Perfectly time your swings to deal incredible damage
 		Developer item
 		'How's being 96000/r in the air going for yah? Thought so'
 		'''
@@ -2766,8 +2784,7 @@ Tyrfing: {
 	Tooltip:
 		'''
 		Receives 50% higher damage bonuses
-		Hold right click to stab
-		'Behold'
+		Hold <right> for an alternate attack
 		'''
 }
 
@@ -2931,7 +2948,7 @@ Magma_Grappler: {
 }
 
 Riven_Splitter: {
-	DisplayName: Riven Splitter
+	DisplayName: "{§Riven} Splitter"
 	Tooltip:
 		'''
 		Uses harpoons as ammo
@@ -3164,7 +3181,7 @@ Hardened_Defiled_Sand_Item: {
 }
 
 Locked_Defiled_Dungeon_Chest_Item: {
-	DisplayName: Defiled Chest (locked)
+	DisplayName: "{§Defiled} Chest (locked)"
 	Tooltip: ""
 }
 
@@ -3179,7 +3196,7 @@ Bleeding_Obsidian_Item: {
 }
 
 Dusk_Light_Item: {
-	DisplayName: Dusklight
+	DisplayName: "{§Dusk}light"
 	Tooltip: ""
 }
 
@@ -3190,7 +3207,7 @@ Dusk_Stone_Item: {
 
 A_Perfect_World_Item: {
 	DisplayName: A Perfect World
-	Tooltip: "'The Defiled'"
+	Tooltip: "'The {§Defiled}'"
 }
 
 Batholith_Item: {
@@ -3205,7 +3222,7 @@ Carburite_Item: {
 
 Cleansing_Station_Item: {
 	DisplayName: Cleansing Station
-	Tooltip: Use to cleanse all assimilation
+	Tooltip: Use to cleanse all assimilation while not in an evil biome
 }
 
 Felnum_Ore_Item: {
@@ -3316,22 +3333,22 @@ Baryte_Wall_Item: {
 }
 
 Defiled_Dungeon_Chest_Placeholder_Item: {
-	DisplayName: Defiled Dungeon Chest Placeholder Item
+	DisplayName: "{§Defiled} Dungeon Chest Placeholder Item"
 	Tooltip: ""
 }
 
 Riven_Dungeon_Chest_Placeholder_Item: {
-	DisplayName: Riven Dungeon Chest Placeholder Item
+	DisplayName: "{§Riven} Dungeon Chest Placeholder Item"
 	Tooltip: ""
 }
 
 Defiled_Torch: {
-	DisplayName: Defiled Torch
+	DisplayName: "{§Defiled} Torch"
 	Tooltip: ""
 }
 
 Riven_Torch: {
-	DisplayName: Riven Torch
+	DisplayName: "{§Riven} Torch"
 	Tooltip: ""
 }
 
@@ -3346,7 +3363,7 @@ Alkahest_Torch: {
 }
 
 Surveysprout.DisplayName: Surveysprout
-NE8.DisplayName: NE8
+NE8.DisplayName: NE-8
 Nova_Fragment.DisplayName: Nova Fragment
 
 Polyeel: {
@@ -3360,7 +3377,7 @@ Snapthrow: {
 }
 
 Outreach: {
-	DisplayName: Outreach
+	DisplayName: Piston Rod
 	Tooltip: ""
 }
 
@@ -3396,12 +3413,12 @@ Silica_Item: {
 
 Bilious_Crate: {
 	DisplayName: Bilious Crate
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Festering_Crate: {
 	DisplayName: Festering Crate
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Chambersite_Gemspark_Item: {
@@ -3413,18 +3430,19 @@ Ambition_Potion: {
 	DisplayName: Ambition Potion
 	Tooltip:
 		'''
-		2.5% increased damage, crit chance, weapon speed
-		12.5% stat share 
+		12.5% stat share
+		+10% generic weapon velocity
+		+10% melee weapon size
 		'''
 }
 
 Defiled_Amalgamation_Relic_Item: {
-	DisplayName: Defiled Amalgamation Relic
+	DisplayName: "{§Defiled} Amalgamation Relic"
 	Tooltip: ""
 }
 
 Defiled_Amalgamation_Trophy_Item: {
-	DisplayName: Defiled Amalgamation Trophy
+	DisplayName: "{§Defiled} Amalgamation Trophy"
 	Tooltip: ""
 }
 
@@ -3458,22 +3476,22 @@ Riven_Cactus_Item: {
 }
 
 Riven_Campfire_Item: {
-	DisplayName: Riven Campfire
+	DisplayName: "{§Riven} Campfire"
 	Tooltip: ""
 }
 
 Defiled_Campfire_Item: {
-	DisplayName: Defiled Campfire
+	DisplayName: "{§Defiled} Campfire"
 	Tooltip: ""
 }
 
 Riven_Fountain_Item: {
-	DisplayName: Riven Water Fountain
+	DisplayName: "{§Riven} Water Fountain"
 	Tooltip: ""
 }
 
 Defiled_Fountain_Item: {
-	DisplayName: Defiled Water Fountain
+	DisplayName: "{§Defiled} Water Fountain"
 	Tooltip: ""
 }
 
@@ -3489,7 +3507,7 @@ Orbital_Saw: {
 
 Neural_Network: {
 	DisplayName: Neural Network
-	Tooltip: ""
+	Tooltip: Repeatedly striking enemies increases its fire rate
 }
 
 Eruption: {
@@ -3544,7 +3562,11 @@ Chambersite_Item: {
 
 Dysfunctional_Endless_Explosives_Bag: {
 	DisplayName: Dysfunctional Endless Explosives Bag
-	Tooltip: 15% chance not to consume thrown explosives or explosive ammo
+	Tooltip:
+		'''
+		15% chance not to consume thrown explosives or explosive ammo
+		'Where's a bomb when you need it?!'
+		'''
 }
 
 Shield_of_Retribution: {
@@ -3568,8 +3590,8 @@ Binding_Book: {
 		Increases pickup range for mana stars
 		Increases maximum mana by 20
 		Restores mana when damaged
-		Increases mana shielding by 10%
-		Reduces damage taken by 5% if Lost Armor is not equipped
+		Increases mana shielding and damage reduction by 10%
+		Grants a dash that allows you to glitch through {§Defiled} blocks
 		'''
 }
 
@@ -3609,12 +3631,12 @@ Batholith_Wall_Placed_Unsafe_Item: {
 }
 
 Riven_Grass_Wall_Safe_Item: {
-	DisplayName: Riven Grass Wall
+	DisplayName: "{§Riven} Grass Wall"
 	Tooltip: ""
 }
 
 Riven_Grass_Wall_Placed_Unsafe_Item: {
-	DisplayName: Infested Riven Grass Wall
+	DisplayName: Infested {§Riven} Grass Wall
 	Tooltip: ""
 }
 
@@ -3702,7 +3724,7 @@ Control_Locus: {
 		Ranged projectiles are duplicated 5 times
 		Explosive projectiles are duplicated twice
 		All duplicated projectiles actually deal damage based on whether or not ammo was consumed
-		20% chance not to consume ammo
+		12% chance not to consume ammo
 		'''
 }
 
@@ -3711,6 +3733,7 @@ Terrarian_Voodoo_Doll: {
 	Tooltip: ""
 	TooltipPlayer: It looks kind of like {0}...
 	TooltipYouDoNotRecognizeTheBodiesInTheWater: It doesn't look familiar...
+	WhyDontYouExist: It doesn't look familiar, but somehow you get the feeling that you don't either...
 }
 
 Avulsion: {
@@ -4123,12 +4146,12 @@ Blast_Helmet: {
 }
 
 Defiled_Grass_Wall_Safe_Item: {
-	DisplayName: Defiled Grass Wall
+	DisplayName: "{§Defiled} Grass Wall"
 	Tooltip: ""
 }
 
 Defiled_Grass_Wall_Placed_Unsafe_Item: {
-	DisplayName: Infested Defiled Grass Wall Placed
+	DisplayName: Infested {§Defiled} Grass Wall
 	Tooltip: ""
 }
 
@@ -4146,20 +4169,15 @@ Abyssal_Anchor: {
 	DisplayName: Abyssal Anchor
 	Tooltip:
 		'''
-		+15% melee speed
-		+10% generic damage
-		+5% magic damage
-		+4% critical strike chance
-		+4 HP/s life regeneration
-		+20 mana
-		+8 defense
-		+5% damage reduction
+		Increase to damage, melee speed, mana,
+		critical strike chance, life regeneration,
+		defense, mining speed, damage reduction 
+		and minion knockback
 		+25% mana shielding
-		+25% mining speed
-		+1 minion knockback
 		Increased pick-up range for stars
-		-25% movement speed
-		-40% jump speed
+		-25% movement speed and -40% jump speed
+		Allows you to fall faster through liquids
+		Grants a dash that allows you to glitch through {§Defiled} blocks
 		'''
 }
 
@@ -4377,17 +4395,13 @@ Lost_Brick_Item: {
 	Tooltip: ""
 }
 
-Chunky_Hook: {
-	DisplayName: Chunky Hook
-	Tooltip: ""
-}
-
 Bee_Afraid_Incantation: {
 	DisplayName: Bee Afraid Incantation
 	Tooltip:
 		'''
 		Summons a swarm of bees to your cursor
 		6 summon tag damage
+		{$CommonItemTooltip.Whips}
 		'''
 }
 
@@ -4501,7 +4515,7 @@ Wilting_Rose_Planter_Box_Item: {
 }
 
 Riven_Altar_Item: {
-	DisplayName: Riven Altar (Debugging Item)
+	DisplayName: "{§Riven} Altar (Debugging Item)"
 	Tooltip: ""
 }
 
@@ -4841,7 +4855,7 @@ Mildew_Whip: {
 }
 
 Defiled_Relay_Item: {
-	DisplayName: Defiled Relay Item
+	DisplayName: "{§Defiled} Relay Item"
 	Tooltip: ""
 }
 
@@ -4886,7 +4900,7 @@ Eitrite_Gun_Magazine: {
 }
 
 Crimtane_Gun_Magazine.DisplayName: Crimtane Gun Magazine
-Defiled_Gun_Magazine.DisplayName: Defiled Gun Magazine
+Defiled_Gun_Magazine.DisplayName: "{§Defiled} Gun Magazine"
 Demonite_Gun_Magazine.DisplayName: Demonite Gun Magazine
 Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
 Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
@@ -4957,7 +4971,7 @@ Rubber_Dynamite: {
 
 Felnum_Shock_Glasses: {
 	DisplayName: Felnum Shock Glasses
-	Tooltip: ""
+	Tooltip: Felnum enemies become friendly when worn
 }
 
 Sparking_Flame_Barrel.DisplayName: Sparking Flame Barrel
@@ -4969,7 +4983,7 @@ Fairy_Lotus: {
 
 Rubber_Breastplate: {
 	DisplayName: Rubber Breastplate
-	Tooltip: Reduces damage taken from projectiles by 10%
+	Tooltip: +10% damage reduction
 }
 
 Rubber_Greaves: {
@@ -4995,4 +5009,942 @@ Pink_Cryosten_Breastplate: {
 Pink_Cryosten_Greaves: {
 	DisplayName: Pink {$Mods.Origins.Items.Cryosten_Greaves.DisplayName}
 	Tooltip: "{$Mods.Origins.Items.Cryosten_Greaves.Tooltip}"
+}
+
+Bobbit_Worm: {
+	DisplayName: Bobbit Worm
+	Tooltip: ""
+}
+
+Toadfish: {
+	DisplayName: Toadfish
+	Tooltip: ""
+}
+
+Framing_Tester: {
+	DisplayName: Framing Tester
+	Tooltip: ""
+}
+
+Defective_Mortar_Shell: {
+	DisplayName: Defective Mortar Shell
+	Tooltip: Summons a mortar turret to fight for you
+}
+
+Sour_Apple: {
+	DisplayName: Sour Apple
+	Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
+
+Ocotillo_Item: {
+	DisplayName: Ocotillo Item
+	Tooltip: ""
+}
+
+Ocotillo_Finger: {
+	DisplayName: Ocotillo Finger
+	Tooltip:
+		'''
+		Has a chance to inflict Bleeding
+		2 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}
+
+Brine_Convergence_Incantation: {
+	DisplayName: Brine Convergence Incantation
+	Tooltip:
+		'''
+		Inflicts Toxic Shock
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}
+
+Monolith_Rod: {
+	DisplayName: Relay Rod
+	Tooltip: Summons a {§Defiled} Relay to boost you and your minions
+	StrengthTooltip: "{0:P0} strength"
+	StrengthPrefixTooltip: "{0} strength"
+	CritTooltip: "{0:P0} critical chance"
+}
+
+Peat_Moss_Debug_Item: {
+	DisplayName: Peat Moss Debug Item
+	Tooltip: ""
+}
+
+Crawdaddys_Revenge: {
+	DisplayName: Crawdaddy's Revenge
+	Tooltip: Enemies repeatedly struck get clawed
+}
+
+Acrid_Laser_Rod: {
+	DisplayName: Acrid Laser Rod
+	Tooltip: The bobber will light up the area around it
+}
+
+Acrid_Beam_Thrusters: {
+	DisplayName: Acrid Beam Thrusters
+	Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
+}
+
+Hydrolantern: {
+	DisplayName: Hydrolantern
+	Tooltip:
+		'''
+		Non-consumable
+		Floats in the water and follows movement
+		'''
+}
+
+Mildew_Heart: {
+	DisplayName: Mildew Heart
+	Tooltip:
+		'''
+		Up to 65% of your max life is gradually converted into mildew health
+		Mildew health regenerates faster than regular health
+		Your death is delayed for as long as your max mildew health decays
+		'''
+}
+
+Party_Ring_Balloon: {
+	DisplayName: Party Ring Balloon
+	Tooltip:
+		'''
+		{$Mods.Origins.Items.Donor_Wristband.Tooltip}
+		{$ItemTooltip.BalloonHorseshoeHoney}
+		'''
+}
+
+Rockstar_Choker.DisplayName: Rockstar Choker
+
+Necromancer_Crown: {
+	DisplayName: Necromancer Mask
+	Tooltip: +15% summon attack speed
+}
+
+Lost_Diver_Bag: {
+	DisplayName: Treasure Bag (Lost Diver)
+	Tooltip: ""
+}
+
+Torpedo_Tube: {
+	DisplayName: Torpedo Tube
+	Tooltip:
+		'''
+		Inflicts Cavitation
+		Fires a torpedo that seeks enemies while submerged
+		'''
+}
+
+Faith_Beads: {
+	DisplayName: Faith Beads
+	Tooltip:
+		'''
+		Immunity to Suffocation and reduces damage from loss of breath
+		Grants the ability to swim and easy movement through liquids
+		All of your attacks inflict Cavitation, Wet and have a chance to cause explosions underwater
+		+40% explosive blast radius
+		'Only through struggle do we find ourselves'
+		'''
+}
+
+Wet_Wood: {
+	DisplayName: Wet Wood
+	Tooltip: Summons a Mildew Blob to blob around
+}
+
+Watered_Down_Keytar: {
+	DisplayName: Watered-down Keytar
+	Tooltip:
+		'''
+		Left-click for a Toxic Shock-inflicting synth
+		Right-click for a cavitating bass
+		'''
+}
+
+Lost_Diver_Chest: {
+	DisplayName: Lost Diver Chest
+	Tooltip: ""
+}
+
+Lost_Diver_Greaves: {
+	DisplayName: Lost Diver Greaves
+	Tooltip: ""
+}
+
+Lost_Diver_Helmet: {
+	DisplayName: Lost Diver Helmet
+	Tooltip: It's smelly in here...
+}
+
+Crown_Jewel: {
+	DisplayName: Crown Jewel
+	EffectTooltip: Increases your damage, crit chance, and self-damage resistance by 1% for every Hardmode boss you've defeated
+	Tooltip:
+		'''
+		{$Mods.Origins.Items.Crown_Jewel.EffectTooltip}
+		'Many heroes have died for this, and yet you are the one to wield its power'
+		'''
+	Toggle_On: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} enabled"
+	Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} disabled"
+	ScaledEffectTooltip:
+		'''
+		+{0}% damage,
+		+{0}% crit chance
+		-{0}% explosive self-damage
+		'''
+	BossesSlain: "{0} bosses slain"
+}
+
+Retaliatory_Tendril: {
+	DisplayName: Retaliatory Tendril
+	Tooltip: Increases your attack speed as you take damage until you deal 500 damage
+}
+
+First_Dream: {
+	DisplayName: First Dream ({0})
+	Mode_Chrersis: Chrersis
+	Mode_Diver: Diver
+	Tooltip:
+		'''
+		Right-click to change your appearance!
+		Makes you look like one of Origins' spriters!
+		'''
+}
+
+Tender_Flesh_Heart: {
+	DisplayName: Tender Flesh Heart
+	Tooltip:
+		'''
+		Up to 65% of your max life is gradually converted into mildew health
+		Mildew health regenerates faster than regular health
+		Your death is delayed for as long as your max mildew health decays
+		Increased life regeneration, defense and mildew health conversion based on the torn severity you're affected by
+		'''
+}
+
+Torpedo_Tube_Alt: {
+	DisplayName: "{$Mods.Origins.Items.Torpedo_Tube.DisplayName}"
+	Tooltip: "{$Mods.Origins.Items.Torpedo_Tube.Tooltip}"
+}
+
+Boat_Rocker_Alt: {
+	DisplayName: "{$Mods.Origins.Items.Boat_Rocker.DisplayName}"
+	Tooltip: "{$Mods.Origins.Items.Boat_Rocker.Tooltip}"
+}
+
+Feathery_Crest: {
+	DisplayName: Feathery Crest
+	Tooltip:
+		'''
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		'''
+}
+
+Feather_Cape: {
+	DisplayName: Feather Cape
+	Tooltip:
+		'''
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		'''
+}
+
+Harpy_Horseshoe_Balloon: {
+	DisplayName: Harpy Horseshoe Balloon
+	Tooltip:
+		'''
+		Allows the holder to double jump
+		Increases jump height and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		'''
+}
+
+Soldering_Iron: {
+	DisplayName: Soldering Iron
+	Tooltip: Release your input right as it strikes for a critical hit
+}
+
+Old_Brine_Rock: {
+	DisplayName: Old Brine Rock
+	Tooltip: Summons an armed leaf snapper to fight for you
+}
+
+Rebreather_Gear.DisplayName: Rebreather Gear
+Sunder_Gut.DisplayName: Sunder Gut
+
+Laser_Line_Bow: {
+	DisplayName: Laser Line Bow
+	Tooltip: Fired arrows release brine rain in their wake
+}
+
+Guardian_Rod: {
+	DisplayName: Guardian Rod
+	Tooltip: Summons a miniature Felnum Guardian to fight for you
+}
+
+Heartache_Dynamite: {
+	DisplayName: Heartache Dynamite
+	Tooltip: Enemies slain are more likely to drop healing hearts
+}
+
+Sonar_Dynamite: {
+	DisplayName: Sonar Dynamite
+	Tooltip: Explodes when enemies are pinged by it
+}
+
+Brine_Key: {
+	DisplayName: Brine Key
+	Tooltip: Unlocks a Brine Chest in the Dungeon
+}
+
+Mildew_Item: {
+	DisplayName: Mildew Block
+	Tooltip: "'Gross. Just gross'"
+}
+
+Basic_Crate: {
+	DisplayName: Basic Crate
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+The_Jungles_Window_Item: {
+	DisplayName: The Jungle's Window
+	Tooltip: "'Albert Kiln'"
+}
+
+Defiled_Monolith_Item: {
+	DisplayName: "{§Defiled} Monolith"
+	Tooltip: "'Harness a fraction of the {§Defiled}'s ability to break the 4th wall'"
+}
+
+Charm_Of_Naivety: {
+	DisplayName: Charm of Naivety
+	Tooltip: ""
+}
+
+Unsuspicious_Bush_Item: {
+	DisplayName: Unsuspicious Bush
+	Tooltip: "'Does absolutely nothing'"
+}
+
+Explosive_Barrel: {
+	DisplayName: Explosive Barrel
+	Tooltip: ""
+}
+
+Acrid_Spout: {
+	DisplayName: Acrid Spout
+	Tooltip:
+		'''
+		Spews droplets of brine
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}
+
+Liars_Tongue: {
+	DisplayName: Liar's Tongue
+	Tooltip: ""
+}
+
+Caeser_Salad: {
+	DisplayName: Caeser Salad
+	Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
+
+Fiberglass_Weaver_Relic_Item: {
+	DisplayName: Fiberglass Weaver Relic
+	Tooltip: ""
+}
+
+Fiberglass_Weaver_Trophy_Item: {
+	DisplayName: Fiberglass Weaver Trophy
+	Tooltip: ""
+}
+
+Mithrafin: {
+	DisplayName: Mithrafin
+	Tooltip:
+		'''
+		Extends any Poison, Acid Venom or Toxic Shock inflicted onto enemies
+		Reduces the duration of these effects when applied to you
+		'''
+}
+
+Noxious_Mithrafin.DisplayName: Noxious Mithrafin
+Ornamental_Keepsake.DisplayName: Ornamental Keepsake
+
+Boomboom: {
+	DisplayName: Boomboom
+	Tooltip: "'She loves her toys, especially the deadly ones!'"
+}
+
+Fumethrower: {
+	DisplayName: Fumethrower
+	Tooltip: Spits colorful flames
+}
+
+Lost_Picture_Frame: {
+	DisplayName: Lost Picture Frame
+	Tooltip: Summons the Lost Diver
+}
+
+Lost_Diver_Relic_Item: {
+	DisplayName: Lost Diver Relic
+	Tooltip: ""
+}
+
+Lost_Diver_Trophy_Item: {
+	DisplayName: Lost Diver Trophy
+	Tooltip: ""
+}
+
+Extremophile_Breastplate: {
+	DisplayName: Extremophile Breastplate
+	Tooltip:
+		'''
+		+15% generic damage
+		+10% generic attack speed
+		'''
+}
+
+Extremophile_Greaves: {
+	DisplayName: Extremophile Greaves
+	Tooltip:
+		'''
+		+25% movement speed
+		10% increased speed when submerged
+		Grants the ability to swim
+		'''
+}
+
+Extremophile_Helmet: {
+	DisplayName: Extremophile Helmet
+	Tooltip: +15% generic velocity
+}
+
+Bomb_Trap_Item: {
+	DisplayName: Bomb Trap
+	Tooltip: ""
+}
+
+Limestone_Item: {
+	DisplayName: Limestone
+	Tooltip: ""
+}
+
+Brine_Dungeon_Chest_Item: {
+	DisplayName: Brine Chest
+	Tooltip: ""
+}
+
+Locked_Brine_Dungeon_Chest_Item: {
+	DisplayName: Brine Dungeon Chest (locked)
+	Tooltip: ""
+}
+
+Soulslasher: {
+	DisplayName: Soulslasher
+	Tooltip: ""
+}
+
+Latchkey: {
+	DisplayName: Latchkey
+	Tooltip: Use to glitch through {§Defiled} blocks
+}
+
+Sharp_Broth: {
+	DisplayName: Sharp Broth
+	Tooltip:
+		'''
+		Artifact minions inflict Electrified
+		All minions inflict Static Shock
+		'''
+}
+
+Minty_Broth: {
+	DisplayName: Minty Broth
+	Tooltip:
+		'''
+		All artifact minions have the Thorns effect
+		All minions inflict Frostburn for a small area around them
+		'''
+}
+
+Full_Send: {
+	DisplayName: Full Send
+	Tooltip:
+		'''
+		Allows the holder to perform a glitchy double jump
+		Increases jump height but doesn't negate fall damage
+		86% of fall damage is instead directed towards three nearby enemies
+		'''
+}
+
+Akaliegis: {
+	DisplayName: Alkaliegis
+	Tooltip:
+		'''
+		15% damage reduction while an artifact minion is active
+		Artifact minions heal while at max life
+		'''
+}
+
+The_Foot: {
+	DisplayName: The Foot
+	Tooltip:
+		'''
+		Inflicts Toxic Shock
+		Releases a akaline aura when striking the ground
+		Hold and right-click to use it like a flail
+		Right-click and release to use it as an anchor
+		'''
+}
+
+Terlet_Paper: {
+	DisplayName: Terlet Paper
+	Tooltip: Summons a kawaii spooder
+}
+
+Shotgun_Glove: {
+	DisplayName: Shotgun Glove
+	Tooltip: Shoots as you swing
+}
+
+Wilting_Rose_Seeds: {
+	DisplayName: Wilting Rose Seeds
+	Tooltip: ""
+}
+
+Grenade_Lawnchair: {
+	DisplayName: Grenade Lawnchair
+	Tooltip: Releases grenades in your inventory as you swing
+}
+
+Fiberbass: {
+	DisplayName: Fiberbass
+	Tooltip: ""
+}
+
+Regurgitator_Of_Souls: {
+	DisplayName: Regurgitator of Souls
+	Tooltip: Inflicts Shadefire
+}
+
+Venom_Shield: {
+	DisplayName: Venom Shield
+	Tooltip:
+		'''
+		Attacks inflict Toxic Shock
+		Effects are stronger while Acrid Armor is equipped
+		Grants immunity to knockback and fire blocks
+		All damage received is reflected to 3 nearby enemies
+		Allows the player to dash into the enemy
+		Double tap a direction
+		'''
+}
+
+Sunflower_In_A_Pot: {
+	DisplayName: Sunflower in a Pot
+	Tooltip:
+		'''
+		Summons a sunny sunflower to fight for you
+		Heals you and slightly increases your speed during the day
+		'''
+}
+
+Tiki_Buckler.DisplayName: Tiki Buckler
+
+Fallacious_Vase: {
+	DisplayName: Fallacious Vase
+	Tooltip:
+		'''
+		Grants a quick dash
+		Increases dash speed by 20%
+		'''
+}
+
+Golden_Lotus: {
+	DisplayName: Golden Lotus
+	Tooltip:
+		'''
+		Increases pickup range for items
+		Press <key> to enable/disable loot search
+		Press <key> over discovered loot to have a golden fairy bring it to you
+		'''
+}
+
+DefiledRenewal: {
+	DisplayName: "{§Defiled} Renewal"
+	Tooltip: "{§Defiled_Wastelands} a large radius"
+}
+
+DefiledSupremeRenewal: {
+	DisplayName: "{§Defiled} Renewal Supreme"
+	Tooltip: "{§Defiled_Wastelands} the entire world"
+}
+
+RivenRenewal: {
+	DisplayName: "{§Riven} Renewal"
+	Tooltip: "{§Riven_Hive}s a large radius"
+}
+
+RivenSupremeRenewal: {
+	DisplayName: "{§Riven} Renewal Supreme"
+	Tooltip: "{§Riven_Hive}s the entire world"
+}
+
+AshenRenewal: {
+	DisplayName: Ashen Renewal
+	Tooltip: Ashs a large radius
+}
+
+AshenSupremeRenewal: {
+	DisplayName: Ashen Renewal Supreme
+	Tooltip: Ashs the entire world
+}
+
+Power_Lotus: {
+	DisplayName: Power Lotus
+	Tooltip:
+		'''
+		Power fairies will protect you from projectiles and enemies
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Increases the size of melee weapons
+		Increases pickup range for items
+		Press <key> to enable/disable loot search
+		Press <key> over discovered loot to have a power fairy bring it to you
+		'''
+}
+
+Defiled_Storage_Upgrade: {
+	DisplayName: "{§Defiled} Storage Upgrade"
+	Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		'''
+}
+
+Defiled_Storage_Unit_Item: {
+	DisplayName: "{§Defiled} Storage Unit"
+	Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		'''
+}
+
+Encrusted_Storage_Upgrade: {
+	DisplayName: Encrusted Storage Upgrade
+	Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		'''
+}
+
+Encrusted_Storage_Unit_Item: {
+	DisplayName: Encrusted Storage Unit
+	Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		'''
+}
+
+Sanguinite_Storage_Upgrade: {
+	DisplayName: Sanguinite Storage Upgrade
+	Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		'''
+}
+
+Sanguinite_Storage_Unit_Item: {
+	DisplayName: Sanguinite Storage Unit
+	Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		'''
+}
+
+Light_Broth: {
+	DisplayName: Light Broth
+	Tooltip: Artifact minions receive 25% less damage
+}
+
+Keytar: {
+	DisplayName: Keytar
+	Tooltip: Right click to alternate between different instruments!
+	Mode0: Synth Mode
+	Mode1: Bass Mode
+	Mode2: Lead Mode
+}
+
+Nerve_Flan: {
+	DisplayName: Nerve Flan
+	Tooltip: "'Putting the soul in fan-dancing'"
+}
+
+Defiled_Chest: {
+	DisplayName: "{§Defiled} Chest"
+	Tooltip: Summons {§Defiled} Mimic
+}
+
+Riven_Chest: {
+	DisplayName: "{§Riven} Chest"
+	Tooltip: Summons {§Riven} Mimic
+}
+
+Ashen_Chest: {
+	DisplayName: Ashen Chest
+	Tooltip: Summons Ashen Mimic
+}
+
+Greater_Summoning_Potion: {
+	DisplayName: Greater Summoning Potion
+	Tooltip: Increases your max number of minions by 2
+}
+
+Fake_Defiled_Altar_Item: {
+	DisplayName: "{§Defiled} Altar"
+	Tooltip: A placeable {§Defiled} Altar. Cannot be mined to get hardmode ores
+}
+
+Fake_Riven_Altar_Item: {
+	DisplayName: "{§Riven} Altar"
+	Tooltip: A placeable {§Riven} Altar. Cannot be mined to get hardmode ores
+}
+
+Fake_Ashen_Altar_Item: {
+	DisplayName: Ashen Altar
+	Tooltip: A placeable Ashen Altar. Cannot be mined to get hardmode ores
+}
+
+Impetus: {
+	DisplayName: Impetus
+	Tooltip: Projectiles split apart until there's no more splitting apart to be done
+}
+
+Sweet_Broth: {
+	DisplayName: Sweet Broth
+	Tooltip:
+		'''
+		15% increased minion attack speed
+		10% increased artifact minion damage
+		'''
+}
+
+Rocket_Rifle: {
+	DisplayName: Rocket Rifle
+	Tooltip:
+		'''
+		Uses canisters and rockets as ammo
+		Using canisters as ammo has limited fuel
+		'''
+}
+
+Ocotillo_Flower: {
+	DisplayName: Ocotillo Flower
+	Tooltip: ""
+}
+
+Geothermal_Sludge: {
+	DisplayName: Geothermal Sludge
+	Tooltip: ""
+}
+
+Inject_Incantation: {
+	DisplayName: Inject Incantation
+	Tooltip:
+		'''
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'''
+}
+
+Huff_Puffer_Bait: {
+	DisplayName: Huff Puffer Bait
+	Tooltip: ""
+}
+
+Umami_Broth: {
+	DisplayName: Umami Broth
+	Tooltip:
+		'''
+		All minions inflict Acid Venom
+		Artifact minions also inflict Toxic Shock
+		'''
+}
+
+Mildew_Incantation: {
+	DisplayName: Mildew Incantation
+	Tooltip: Cast mildew spores that summon miniature creepers on tiles
+}
+
+Lucky_Hat: {
+	DisplayName: Lucky Hat
+	Tooltip:
+		'''
+		+8% ranged and explosive critical strike chance
+		'The Western look goes well with anything you wear!'
+		'''
+}
+
+Eye_Of_Aether: {
+	DisplayName: Spyglass
+	Tooltip: Locates the Aether
+}
+
+Soul_Snatcher: {
+	DisplayName: Soul Snatcher
+	Tooltip:
+		'''
+		Hold <right> to spin it around
+		Becomes empowered after striking enemies, inflicting Shadefire
+		Pressing <left> while empowered and holding <right> launches it
+		'''
+}
+
+Tangela_Tether: {
+	DisplayName: "{§Tangela} Tether"
+	Tooltip: ""
+}
+
+Mildew_Breastplate: {
+	DisplayName: Mildew Wrap
+	Tooltip:
+		'''
+		+10% generic velocity
+		+10% summon damage and +10% additional artifact damage
+		'''
+}
+
+Mildew_Greaves: {
+	DisplayName: Mildew Pants
+	Tooltip: Increases your max number of minions by 2
+}
+
+Mildew_Helmet: {
+	DisplayName: Mildew Wreath
+	Tooltip:
+		'''
+		Incantations slightly home to targets
+		+10% summon damage and +10% additional artifact damage
+		'''
+}
+
+Plain_Broth: {
+	DisplayName: Plain Broth
+	Tooltip: Increases minion size by 25%
+}
+
+Greasy_Broth: {
+	DisplayName: Greasy Broth
+	Tooltip:
+		'''
+		All minions inflict Oiled
+		Artifact minions release greasy gas that burns enemies
+		'''
+}
+
+Savory_Broth: {
+	DisplayName: Savory Broth
+	Tooltip:
+		'''
+		Increases debuff duration from minions by 20%
+		Artifact minions tenderize targets
+		'''
+}
+
+Super_Mojo_Flask.DisplayName: Super Mojo Flask
+
+Spicy_Broth: {
+	DisplayName: Spicy Broth
+	Tooltip: Minions engulf enemies in flames
+}
+
+Tangela_Dye: {
+	DisplayName: "{§Tangela} Dye"
+	Tooltip: Makes things intangible to your computer
+}
+
+Tangela_Bramble_Item: {
+	DisplayName: "{§Tangela} Bramble"
+	Tooltip: ""
+}
+
+Tangela_Bud: {
+	DisplayName: "{§Tangela} Bud"
+	Tooltip:
+		'''
+		Used to make {§Tangela} Dye
+		'Ooooh, preeeetty'
+		'''
+}
+
+Skimswim_Potion: {
+	DisplayName: Skimswim Potion
+	Tooltip: ""
+}
+
+Venus_Coral_Debug_Item: {
+	DisplayName: Venus Coral Debug Item
+	Tooltip: ""
+}
+
+Defiled_Regolith_Item: {
+	DisplayName: "{§Defiled} Regolith"
+	Tooltip: ""
+}
+
+Brine_Fiend_Item: {
+	DisplayName: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	Tooltip: "{$Mods.Origins.NPCs.Brine_Fiend.Dialogue.Standard3}"
+}
+
+Defiled_Effigy_Item: {
+	DisplayName: "{$Mods.Origins.NPCs.Defiled_Effigy.DisplayName}"
+	Tooltip: "{$Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content}"
+}
+
+Residual_Crate: {
+	DisplayName: Residual Crate
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Brine_Haze: {
+	DisplayName: Brine Haze
+	Tooltip: ""
+}
+
+Enchanted_Fiberglass_Wall_Item: {
+	DisplayName: Enchanted Fiberglass Wall
+	Tooltip: ""
+}
+
+Anti_Gray_Dye: {
+	DisplayName: Anti-Gray Dye
+	Tooltip: ""
+}
+
+Encrusted_Brick_Wall_Item: {
+	DisplayName: Encrusted Brick Wall
+	Tooltip: ""
+}
+
+Lost_Brick_Wall_Item: {
+	DisplayName: Lost Brick Wall
+	Tooltip: ""
 }

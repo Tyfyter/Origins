@@ -17,6 +17,7 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
@@ -79,7 +80,7 @@ namespace Origins {
 					brineCenter = new(X, Y);
 					//}
 				}));
-				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration _) {
+				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
 					Mod.Logger.Info("Fiberglass Undergrowth");
 					progress.Message = "Undergrowing Fiberglass";
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
@@ -90,6 +91,11 @@ namespace Origins {
 						int Y;
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(350, 450);
+						int templeTop = GenVars.tTop - 100;
+						int templeBottom = GenVars.tBottom + 100;
+						if (Y > templeTop && Y < templeBottom) {
+							Y = Math.Abs(Y - templeTop) < Math.Abs(Y - templeBottom) ? templeTop : templeBottom;
+						}
 						if (GenVars.structures.CanPlace(new Rectangle(X - 32 - (32 + 16), Y - (32 + 16), 64 + 16, 64 + 16)) || ++tries > 1000) {
 							Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
 							Fiberglass_Undergrowth.Gen.FiberglassStart(X, Y);
@@ -209,6 +215,34 @@ namespace Origins {
 				if (skipped > 0) {
 					Mod.Logger.Info($"Skipped {skipped} Evil Spikes");
 				}
+				for (int index = 0; index < Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge.Count; index++) {
+					int minX = Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge[index];
+					int maxX = Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge[index];
+					ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
+					for (int i0 = genRand.Next(50, 100); i0-- > 0;) {
+						int tries = 20;
+						int x = genRand.Next(minX, maxX);
+						int y = genRand.Next((int)GenVars.worldSurfaceLow, (int)GenVars.worldSurfaceHigh);
+						while (tries-- > 0) {
+							if (TileObject.CanPlace(x, y, bramble, 0, 1, out TileObject objectData, onlyCheck: false)) {
+								TileObjectData tileData = TileObjectData.GetTileData(bramble, objectData.style);
+								int left = x - tileData.Origin.X;
+								int top = y - tileData.Origin.Y;
+								for (int y0 = 0; y0 < tileData.Height; y0++) {
+									for (int x0 = 0; x0 < tileData.Width; x0++) {
+										Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+										if (tileSafely.HasTile && !Main.tileCut[tileSafely.TileType]) goto fail;
+										//tileSafely.HasTile = false;
+									}
+								}
+								if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(x, y);
+								break;
+								fail:;
+							}
+							y++;
+						}
+					}
+				}
 			}));
 			tasks.Add(new PassLegacy("Stone Mask", (GenerationProgress progress, GameConfiguration _) => {
 				int i = 0;
@@ -252,6 +286,19 @@ namespace Origins {
 					);
 				}
 			}));
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Remove Broken Traps"));
+			tasks.Insert(genIndex, new PassLegacy("Boom", (GenerationProgress progress, GameConfiguration _) => {
+				ushort type = (ushort)TileType<Bomb_Trap>();
+				for (int i = 0; i < Main.maxTilesX; i++) {
+					for (int j = (int)GenVars.worldSurfaceHigh; j < Main.maxTilesY; j++) {
+						Tile tile = Framing.GetTileSafely(i, j);
+						if (tile.TileType == TileID.Traps && tile.TileFrameY == 0 && genRand.NextBool(10) && HasTriggerWithinRange(i, j, 10)) {
+							tile.TileType = type;
+						}
+					}
+				}
+			}));
+
 			if (remixWorldGen) {
 				genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
 				tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
@@ -274,6 +321,47 @@ namespace Origins {
 					Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
 				}));
 			}
+
+		}
+		public static bool HasTriggerWithinRange(int i, int j, int range) {
+			List<Point> currentPoints = [];
+			List<Point> nextPoints = [];
+			HashSet<Point> prevPoints = [];
+			nextPoints.Add(new(i, j));
+			while (nextPoints.Count > 0) {
+				Utils.Swap(ref currentPoints, ref nextPoints);
+				while (currentPoints.Count > 0) {
+					Point item = currentPoints[0];
+					currentPoints.RemoveAt(0);
+					if (!InWorld(item.X, item.Y, 5)) {
+						continue;
+					}
+					Tile tile = Main.tile[item.X, item.Y];
+					if (tile.RedWire) {
+						prevPoints.Add(item);
+						if (IsItATrigger(tile) && Math.Abs(item.X - i) <= range) {
+							return true;
+						}
+						Point item2 = new(item.X - 1, item.Y);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+						item2 = new(item.X + 1, item.Y);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+						item2 = new(item.X, item.Y - 1);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+						item2 = new(item.X, item.Y + 1);
+						if (!prevPoints.Contains(item2)) {
+							nextPoints.Add(item2);
+						}
+					}
+				}
+			}
+			return false;
 		}
 		public static void RemoveTree(int i, int j) {
 			Tile tile = Main.tile[i, j];
@@ -326,30 +414,6 @@ namespace Origins {
 				sandstoneType = TileID.CorruptSandstone;
 				hardenedSandType = TileID.CorruptHardenedSand;
 				iceType = TileID.CorruptIce;
-				break;
-			}
-		}
-		public static void getEvilWallConversionTypes(byte evilType, out ushort[] stoneWallTypes, out ushort[] hardenedSandWallTypes, out ushort[] sandstoneWallTypes) {
-			switch (evilType) {
-				case evil_wastelands:
-				stoneWallTypes = [(ushort)WallType<Defiled_Stone_Wall>()];
-				hardenedSandWallTypes = [(ushort)WallType<Hardened_Defiled_Sand_Wall>()];
-				sandstoneWallTypes = [(ushort)WallType<Defiled_Sandstone_Wall>()];
-				break;
-				case evil_riven:
-				stoneWallTypes = [WallID.CrimstoneUnsafe];
-				hardenedSandWallTypes = [WallID.CrimsonHardenedSand];
-				sandstoneWallTypes = [WallID.CrimsonSandstone];
-				break;
-				case evil_crimson:
-				stoneWallTypes = [WallID.CrimstoneUnsafe];
-				hardenedSandWallTypes = [WallID.CrimsonHardenedSand];
-				sandstoneWallTypes = [WallID.CrimsonSandstone];
-				break;
-				default:
-				stoneWallTypes = [WallID.EbonstoneUnsafe];
-				hardenedSandWallTypes = [WallID.CorruptHardenedSand];
-				sandstoneWallTypes = [WallID.CorruptSandstone];
 				break;
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Other;
 using Origins.Items.Weapons;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
@@ -17,13 +18,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
-using static Terraria.ID.ContentSamples.CreativeHelper;
 
 namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
@@ -280,13 +280,9 @@ namespace Origins.Items {
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 			AddVanillaTooltips(item.type, tooltips);
+			if (item.shoot > ProjectileID.None && Origins.ArtifactMinion[item.shoot]) tooltips.Insert(1, new(Mod, "ArtifactTag", Language.GetOrRegister("Mods.Origins.Items.GenericTooltip.ArtifactTag").Value));
 			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
 				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
-			}
-			if (item.ModItem is IJournalEntryItem journalItem) {
-				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().DisplayJournalTooltip(journalItem)) {
-					tooltips.Add(new TooltipLine(Mod, "JournalIndicator", Language.GetTextValue(journalItem.IndicatorKey)));
-				}
 			}
 		}
 		public override bool CanReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {
@@ -297,11 +293,12 @@ namespace Origins.Items {
 		}
 		public override void UpdateInventory(Item item, Player player) {
 			if (player.whoAmI == Main.myPlayer) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.UpdateInventoryEvent is not null) {
 						quest.UpdateInventoryEvent(item);
 					}
 				}
+				if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) player.OriginPlayer().UnlockJournalEntry(OriginsSets.Items.JournalEntries[item.type]);
 			}
 		}
 		static OneFromRulesRule originsDevSetRule;
@@ -324,10 +321,10 @@ namespace Origins.Items {
 					itemLoot.Add(OriginGlobalNPC.EaterOfWorldsWeaponDrops);
 					break;
 				}
-				case ItemID.BrainOfCthulhuBossBag: {
+				/*case ItemID.BrainOfCthulhuBossBag: {
 					itemLoot.Add(OriginGlobalNPC.BrainOfCthulhuWeaponDrops);
 					break;
-				}
+				}*/
 				case ItemID.QueenBeeBossBag: {
 					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.BeeGun, ModContent.ItemType<Bee_Afraid_Incantation>())) {
 						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
@@ -364,7 +361,7 @@ namespace Origins.Items {
 						rule.Add(
 							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Boiler>()),
 							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Firespit>()),
-							//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>()),
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dragons_Breath>()),
 							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Hand_Grenade_Launcher>())
 						);
 						foundMain = true;

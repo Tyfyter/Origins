@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
 using System;
@@ -11,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
@@ -50,7 +52,11 @@ namespace Origins.NPCs.Dungeon {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Joint_Pop>(), 15));
+			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Joint_Pop>(), 10, 5));
+			npcLoot.Add(new DropBasedOnExpertMode(
+				ItemDropRule.Common(ModContent.ItemType<Explosive_Barrel>(), 3, 15, 30),
+				ItemDropRule.Common(ModContent.ItemType<Explosive_Barrel>(), 2, 20, 40)
+			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientNecroHelmet, 450));
 			npcLoot.Add(ItemDropRule.Common(ItemID.ClothierVoodooDoll, 300));
 			npcLoot.Add(ItemDropRule.Common(ItemID.BoneWand, 250)).OnFailedRoll(ItemDropRule.Common(ItemID.TallyCounter, 100)).OnFailedRoll(ItemDropRule.Common(ItemID.GoldenKey, 65)).OnFailedRoll(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemID.Bone, 1, 1, 3));
@@ -153,7 +159,7 @@ namespace Origins.NPCs.Dungeon {
 			NPC.chaseable = false;
 		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
-			if (modifiers.DamageType.CountsAsClass<Explosive>()) modifiers.SetInstantKill();
+			if (modifiers.DamageType?.CountsAsClass<Explosive>() ?? false) modifiers.SetInstantKill();
 			modifiers.SourceDamage.Base += 8;
 		}
 		public override void AI() {
@@ -262,7 +268,7 @@ namespace Origins.NPCs.Dungeon {
 		}
 	}
 	public class Cellarkeep_Barrel_Explosion : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.width = 96;
@@ -270,6 +276,7 @@ namespace Origins.NPCs.Dungeon {
 			Projectile.friendly = true;
 			Projectile.hostile = true;
 			Projectile.trap = true;
+			Projectile.hide = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;

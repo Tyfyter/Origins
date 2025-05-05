@@ -15,6 +15,7 @@ using Origins.Projectiles;
 using Origins.Gores.NPCs;
 using Origins.Buffs;
 using Origins.Dev;
+using Newtonsoft.Json.Linq;
 
 namespace Origins.NPCs.Riven {
 	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -28,6 +29,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new();
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
@@ -38,6 +40,7 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 32;
 			NPC.height = 42;
 			NPC.frame.Height = 40;
+			NPC.value = 800f;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type,
@@ -50,7 +53,7 @@ namespace Origins.NPCs.Riven {
 			);
 			bestiaryEntry.Icon = new NPCExtensions.MultipleUnlockableNPCEntryIcon(Type, [0, 0, 0, 0], [0, 0, 0, 1]);
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0f;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BlisterBoi;
 		}

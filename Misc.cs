@@ -39,6 +39,18 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using Terraria.GameInput;
 using Terraria.UI;
+using Origins.Items.Other.Testing;
+using Stubble.Core.Helpers;
+using Terraria.GameContent.Creative;
+using CalamityMod.Items;
+using Terraria.Graphics.Light;
+using Origins.Tiles.Limestone;
+using Terraria.Enums;
+using Origins.World.BiomeData;
+using Origins.Tiles.Other;
+using Origins.Backgrounds;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using ThoriumMod.Projectiles;
 
 namespace Origins {
 	#region classes
@@ -51,11 +63,30 @@ namespace Origins {
 			_items.AddLast(item);
 		}
 
+		public bool TryDequeue(out T item) {
+			if (_items.First is null) {
+				item = default;
+				return false;
+			}
+			item = _items.First.Value;
+			_items.RemoveFirst();
+
+			return true;
+		}
+		public bool TryDequeueAs<TCast>(out TCast item) {
+			if (TryDequeue(out T _item) && _item is TCast castItem) {
+				item = castItem;
+				return true;
+			}
+			item = default;
+			return false;
+		}
+		public TCast DequeueAsOrDefaultTo<TCast>(TCast defaultValue) => TryDequeueAs(out TCast item) ? item : defaultValue;
 		public T Dequeue() {
 			if (_items.First is null)
 				throw new InvalidOperationException("Queue empty.");
 
-			var item = _items.First.Value;
+			T item = _items.First.Value;
 			_items.RemoveFirst();
 
 			return item;
@@ -91,7 +122,7 @@ namespace Origins {
 		}
 
 		public IEnumerable<LinkedListNode<T>> GetNodeEnumerator() {
-			IEnumerator<LinkedListNode<T>> enumerator = new LLNodeEnumerator<T>(_items);
+			LLNodeEnumerator<T> enumerator = new(_items);
 			yield return enumerator.Current;
 			while (enumerator.MoveNext()) yield return enumerator.Current;
 		}
@@ -251,6 +282,7 @@ namespace Origins {
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
 	}
+	[Obsolete($"Use PegasusLib.AutoLoadingAsset<T> instead")]
 	public struct AutoLoadingAsset<T> : IUnloadable where T : class {
 		public readonly bool IsLoaded => asset.Value?.IsLoaded ?? false;
 		public T Value {
@@ -301,6 +333,14 @@ namespace Origins {
 					}
 				}
 			}
+		}
+		public void Wait() {
+			LoadAsset();
+			asset.Value.Wait();
+		}
+		public static void Wait(params AutoLoadingAsset<T>[] assets) {
+			for (int i = 0; i < assets.Length; i++) assets[i].LoadAsset();
+			for (int i = 0; i < assets.Length; i++) assets[i].asset.Value.Wait();
 		}
 		public static implicit operator AutoLoadingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator AutoLoadingAsset<T>(string asset) => new(asset);
@@ -500,6 +540,26 @@ namespace Origins {
 		public int handOffSlot;
 		public int handOnSlot;
 		public int balloonSlot;
+		public ItemSlotSet(int headSlot = -2, int bodySlot = -2, int legSlot = -2, int beardSlot = -2, int backSlot = -2, int faceSlot = -2, int neckSlot = -2, int shieldSlot = -2, int wingSlot = -2, int waistSlot = -2, int shoeSlot = -2, int frontSlot = -2, int handOffSlot = -2, int handOnSlot = -2, int balloonSlot = -2) {
+			this.headSlot = headSlot;
+			this.bodySlot = bodySlot;
+			this.legSlot = legSlot;
+			this.beardSlot = beardSlot;
+			this.backSlot = backSlot;
+			this.faceSlot = faceSlot;
+			this.neckSlot = neckSlot;
+			this.shieldSlot = shieldSlot;
+			this.wingSlot = wingSlot;
+			this.waistSlot = waistSlot;
+			this.shoeSlot = shoeSlot;
+			this.frontSlot = frontSlot;
+			this.handOffSlot = handOffSlot;
+			this.handOnSlot = handOnSlot;
+			this.balloonSlot = balloonSlot;
+		}
+		static void ApplySlot(ref int target, int value) {
+			if (value != -2) target = value;
+		}
 		public ItemSlotSet(Item item) {
 			headSlot = item.headSlot;
 			bodySlot = item.bodySlot;
@@ -517,22 +577,22 @@ namespace Origins {
 			handOnSlot = item.handOnSlot;
 			balloonSlot = item.balloonSlot;
 		}
-		public void Apply(Item item) {
-			item.headSlot = headSlot;
-			item.bodySlot = bodySlot;
-			item.legSlot = legSlot;
-			item.beardSlot = beardSlot;
-			item.backSlot = backSlot;
-			item.faceSlot = faceSlot;
-			item.neckSlot = neckSlot;
-			item.shieldSlot = shieldSlot;
-			item.wingSlot = wingSlot;
-			item.waistSlot = waistSlot;
-			item.shoeSlot = shoeSlot;
-			item.frontSlot = frontSlot;
-			item.handOffSlot = handOffSlot;
-			item.handOnSlot = handOnSlot;
-			item.balloonSlot = balloonSlot;
+		public readonly void Apply(Item item) {
+			ApplySlot(ref item.headSlot, headSlot);
+			ApplySlot(ref item.bodySlot, bodySlot);
+			ApplySlot(ref item.legSlot, legSlot);
+			ApplySlot(ref item.beardSlot, beardSlot);
+			ApplySlot(ref item.backSlot, backSlot);
+			ApplySlot(ref item.faceSlot, faceSlot);
+			ApplySlot(ref item.neckSlot, neckSlot);
+			ApplySlot(ref item.shieldSlot, shieldSlot);
+			ApplySlot(ref item.wingSlot, wingSlot);
+			ApplySlot(ref item.waistSlot, waistSlot);
+			ApplySlot(ref item.shoeSlot, shoeSlot);
+			ApplySlot(ref item.frontSlot, frontSlot);
+			ApplySlot(ref item.handOffSlot, handOffSlot);
+			ApplySlot(ref item.handOnSlot, handOnSlot);
+			ApplySlot(ref item.balloonSlot, balloonSlot);
 		}
 		public ItemSlotSet(Player player) {
 			headSlot = player.head;
@@ -551,22 +611,22 @@ namespace Origins {
 			handOnSlot = player.handon;
 			balloonSlot = player.balloon;
 		}
-		public void Apply(Player player) {
-			player.head = headSlot;
-			player.body = bodySlot;
-			player.legs = legSlot;
-			player.beard = beardSlot;
-			player.back = backSlot;
-			player.face = faceSlot;
-			player.neck = neckSlot;
-			player.shield = shieldSlot;
-			player.wings = wingSlot;
-			player.waist = waistSlot;
-			player.shoe = shoeSlot;
-			player.front = frontSlot;
-			player.handoff = handOffSlot;
-			player.handon = handOnSlot;
-			player.balloon = balloonSlot;
+		public readonly void Apply(Player player) {
+			ApplySlot(ref player.head, headSlot);
+			ApplySlot(ref player.body, bodySlot);
+			ApplySlot(ref player.legs, legSlot);
+			ApplySlot(ref player.beard, beardSlot);
+			ApplySlot(ref player.back, backSlot);
+			ApplySlot(ref player.face, faceSlot);
+			ApplySlot(ref player.neck, neckSlot);
+			ApplySlot(ref player.shield, shieldSlot);
+			ApplySlot(ref player.wings, wingSlot);
+			ApplySlot(ref player.waist, waistSlot);
+			ApplySlot(ref player.shoe, shoeSlot);
+			ApplySlot(ref player.front, frontSlot);
+			ApplySlot(ref player.handoff, handOffSlot);
+			ApplySlot(ref player.handon, handOnSlot);
+			ApplySlot(ref player.balloon, balloonSlot);
 		}
 	}
 	public class GeneratorCache<TKey, TValue>(Func<TKey, TValue> generator) : IReadOnlyDictionary<TKey, TValue> {
@@ -627,6 +687,16 @@ namespace Origins {
 	}
 	public interface IMeleeCollisionDataNPC {
 		void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
+	}
+	public interface IInteractableNPC {
+		bool NeedsSync => true;
+		void Interact();
+	}
+	public interface IOnHitByNPC {
+		public void OnHitByNPC(NPC attacker, NPC.HitInfo hit);
+	}
+	public interface IPostHitPlayer {
+		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo);
 	}
 	public interface IWhipProjectile {
 		void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
@@ -1255,7 +1325,7 @@ namespace Origins {
 		public const int Desert = 56 + 12;
 		public const int LockedDesert = 56 + 13;
 		public const int Reef = 56 + 14;
-		public const int Baloon = 56 + 15;
+		public const int Balloon = 56 + 15;
 		public const int AshWood = 56 + 16;
 		public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
 	}
@@ -1366,6 +1436,19 @@ namespace Origins {
 			OnIncreaseMaxBreath?.Invoke(player, amount);
 		}
 		public static event Action<Player, int> OnIncreaseMaxBreath;
+		public static ref int GetCooldownCounter(this Player player, int cooldownCounter) {
+			switch (cooldownCounter) {
+				case -1:
+				return ref player.immuneTime;
+				case 0:
+				case 1:
+				case 3:
+				case 4:
+				return ref player.hurtCooldowns[cooldownCounter];
+			}
+			return ref discard;
+		}
+		static int discard = 0;
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -1396,6 +1479,15 @@ namespace Origins {
 			value -= amount;
 			if (amount == 0) return (int)value;
 			if (random.NextFloat() < amount) {
+				value++;
+			}
+			return (int)value;
+		}
+		public static int RandomRound(this UnifiedRandom random, double value) {
+			double amount = value % 1;
+			value -= amount;
+			if (amount == 0) return (int)value;
+			if (random.NextDouble() < amount) {
 				value++;
 			}
 			return (int)value;
@@ -1457,6 +1549,9 @@ namespace Origins {
 		}
 		public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
 			return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
+		}
+		public static Vector2 Quantize(this Vector2 vector, float size) {
+			return (vector / size).Floor() * size;
 		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			float xoffset = 10f;
@@ -1764,6 +1859,73 @@ namespace Origins {
 			}
 			return points;
 		}
+		readonly ref struct SampleCells(int width, int height) {
+			readonly int[,] cells = new int[width, height];
+			public readonly int this[int x, int y] {
+				get => cells[x, y] - 1;
+				set => cells[x, y] = value + 1;
+			}
+			public readonly int this[Vector2 pos] {
+				get => cells[(int)pos.X, (int)pos.Y] - 1;
+				set => cells[(int)pos.X, (int)pos.Y] = value + 1;
+			}
+		}
+		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, float r, int k = 30) {
+			float cellSize = r / MathF.Sqrt(2);
+			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
+			Vector2 topLeft = area.TopLeft();
+			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
+			cells[(samples[0] - topLeft) / cellSize] = 0;
+			List<Vector2> activeList = [samples[0]];
+			while (activeList.Count > 0) {
+				int index = rand.Next(activeList.Count);
+				Vector2 currentSample = activeList[index];
+				Vector2 newSample;
+				for (int i = 0; i < k; i++) {
+					newSample = currentSample + GeometryUtils.Vec2FromPolar(r * (1 + MathF.Sqrt(rand.NextFloat())), rand.NextFloat(MathHelper.TwoPi));
+					if (area.Contains(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
+						goto foundPoint;
+					}
+				}
+				// no position found
+				activeList.RemoveAt(index);
+				continue;
+				foundPoint:;
+				cells[(newSample - topLeft) / cellSize] = samples.Count;
+				samples.Add(newSample);
+				activeList.Add(newSample);
+			}
+			return samples;
+		}
+		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, Predicate<Vector2> customShape, float r, int k = 30) {
+			float cellSize = r / MathF.Sqrt(2);
+			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
+			Vector2 topLeft = area.TopLeft();
+			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
+			cells[(samples[0] - topLeft) / cellSize] = 0;
+			List<Vector2> activeList = [samples[0]];
+			while (activeList.Count > 0) {
+				int index = rand.Next(activeList.Count);
+				Vector2 currentSample = activeList[index];
+				Vector2 newSample;
+				for (int i = 0; i < k; i++) {
+					newSample = currentSample + GeometryUtils.Vec2FromPolar(r * (1 + MathF.Sqrt(rand.NextFloat())), rand.NextFloat(MathHelper.TwoPi));
+					if (customShape(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
+						goto foundPoint;
+					}
+				}
+				// no position found
+				activeList.RemoveAt(index);
+				continue;
+				foundPoint:;
+				cells[(newSample - topLeft) / cellSize] = samples.Count;
+				samples.Add(newSample);
+				activeList.Add(newSample);
+			}
+			return samples;
+		}
 		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
 			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
 				DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);
@@ -1862,10 +2024,11 @@ namespace Origins {
 				self.frame.Y += heightEtBuffer;
 				self.frameCounter = 0;
 			}
-			if (self.frame.Y >= heightEtBuffer * frames.End.Value) {
-				self.frame.Y = heightEtBuffer * frames.Start.Value;
-			} else if (self.frame.Y < heightEtBuffer * frames.Start.Value) {
-				self.frame.Y = heightEtBuffer * (frames.End.Value - 1);
+			int frameCount = Main.npcFrameCount[self.type];
+			if (self.frame.Y >= heightEtBuffer * frames.End.GetOffset(frameCount)) {
+				self.frame.Y = heightEtBuffer * frames.Start.GetOffset(frameCount);
+			} else if (self.frame.Y < heightEtBuffer * frames.Start.GetOffset(frameCount)) {
+				self.frame.Y = heightEtBuffer * (frames.End.GetOffset(frameCount) - 1);
 			}
 		}
 		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
@@ -1932,6 +2095,10 @@ namespace Origins {
 				output[i] = input[i];
 			}
 			return output;
+		}
+		public static T GetIfInRange<T>(this T[] array, int index, T fallback = default) {
+			if (!array.IndexInRange(index)) return fallback;
+			return array[index];
 		}
 		public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
 			return BoxOf(a, b, new Vector2(buffer));
@@ -2074,27 +2241,36 @@ namespace Origins {
 			return area.Contains((int)point.X, (int)point.Y);
 		}
 		#region drawing
-		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
-			if (texture is null) {
-				texture = TextureAssets.Extra[33].Value;
-			}
+		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, Vector2 offset = default, params (float scale, Color color)[] colors) {
+			texture ??= TextureAssets.Extra[33].Value;
 			Vector2 size;
 			int colorLength = colors.Length;
 			DelegateMethods.f_1 = 1;
+			Rectangle screenBounds = new(
+				0,
+				0,
+				Main.screenWidth,
+				Main.screenHeight
+			);
+			int extraSize = (int)(Math.Max(texture.Width, texture.Height) * scale);
+			screenBounds.Inflate(extraSize, extraSize);
 			for (int colorIndex = 0; colorIndex < colorLength; colorIndex++) {
 				size = new Vector2(scale) * colors[colorIndex].scale;
 				DelegateMethods.c_1 = colors[colorIndex].color;
 				for (int i = positions.Length; --i > 0;) {
-					Utils.DrawLaser(spriteBatch, texture, positions[i], positions[i - 1], size, DelegateMethods.LightningLaserDraw);
+					Vector2 a = positions[i] + offset;
+					Vector2 b = positions[i - 1] + offset;
+					if (!Collision.CheckAABBvLineCollision(screenBounds.TopLeft(), screenBounds.Size(), a, b)) continue;
+					Utils.DrawLaser(spriteBatch, texture, a, b, size, DelegateMethods.LightningLaserDraw);
 				}
 			}
 		}
 		public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f, params (float scale, Color color)[] colors) {
-			Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+			Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
 			if (!screen.Contains(start) && !screen.Contains(end)) {
 				return;
 			}
-			List<Vector2> positions = new List<Vector2>();
+			List<Vector2> positions = [];
 			Vector2 normal = (end - start).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * (sineMult + Math.Sign(sineMult));
 			for (float i = 0; i < 1f; i += precision) {
 				positions.Add(Vector2.Lerp(start, end, i) + (normal * (float)Math.Sin(i * Math.PI) * Main.rand.NextFloat(0.75f, 1.25f)));
@@ -2111,6 +2287,7 @@ namespace Origins {
 				positions.ToArray(),
 				null,
 				1.333f,
+				default,
 				colors
 			);
 		}
@@ -2185,6 +2362,16 @@ namespace Origins {
 		/// </summary>
 		public static bool TileIsType(this Tile self, int type) {
 			return self.HasTile && self.TileType == type;
+		}
+		public static void SetupRubblemakerClone<TItem>(this FlexibleTileWand wand, ModTile tile, params int[] variants) where TItem : ModItem {
+			TileObjectData tileObjectData = TileObjectData.GetTileData(tile.Type, 0, 0);
+			tileObjectData.RandomStyleRange = 0;
+			for (int i = 0; i < tileObjectData.AlternatesCount; i++) {
+				TileObjectData.GetTileData(tile.Type, 0, 0).RandomStyleRange = 0;
+			}
+			tileObjectData.RandomStyleRange = 0;
+			wand.AddVariations(ModContent.ItemType<TItem>(), tile.Type, variants);
+			tile.RegisterItemDrop(ModContent.ItemType<TItem>());
 		}
 		#endregion
 		public static T SafeGet<T>(this TagCompound self, string key, T fallback = default) {
@@ -2352,6 +2539,48 @@ namespace Origins {
 			}
 			return wr;
 		}
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, bool[] set, double weight)[] prefixCategories) {
+			WeightedRandom<int> wr = new(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				(PrefixCategory category, bool[] set, double weight) = prefixCategories[i];
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					if (set[pre]) wr.Add(pre, weight);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					if (set[modPrefix.Type]) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
+				}
+			}
+			return wr;
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="prefixCategories">Weight functions default to "_ => 1" if null</param>
+		/// <returns></returns>
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params (PrefixCategory category, Func<int, double> weightFunction)[] prefixCategories) {
+			WeightedRandom<int> wr = new(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				(PrefixCategory category, Func<int, double> weightFunction) = prefixCategories[i];
+				weightFunction ??= _ => 1;
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					double weight = weightFunction(pre);
+					if (weight > 0) wr.Add(pre, weight);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					double weight = weightFunction(modPrefix.Type);
+					if (weight > 0) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
+				}
+			}
+			return wr;
+		}
+		public static WeightedRandom<int> AccessoryOrSpecialPrefix(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
+			(PrefixCategory category, bool[] set, double weight)[] categories = new (PrefixCategory category, bool[] set, double weight)[prefixCategories.Length + 1];
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				categories[i] = (prefixCategories[i], Origins.SpecialPrefix, 1);
+			}
+			categories[^1] = (PrefixCategory.Accessory, PrefixID.Sets.Factory.CreateBoolSet(true), 1);
+			return GetAllPrefixes(item, rand, categories);
+		}
 		#region font
 		static FieldInfo _spriteCharacters;
 		static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -2425,7 +2654,7 @@ namespace Origins {
 		public static void RegisterForUnload(this IUnloadable unloadable) {
 			Origins.unloadables.Add(unloadable);
 		}
-		public static string GetDefaultTMLName(this Type type) => PegasusLib.PegasusExt.GetDefaultTMLName(type);
+		public static string GetDefaultTMLName(this Type type) => PegasusExt.GetDefaultTMLName(type);
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
 			T[] possibleFlags = Enum.GetValues<T>();
 			for (int i = 0; i < possibleFlags.Length; i++) {
@@ -2524,13 +2753,25 @@ namespace Origins {
 			}
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
+			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
+
+			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Topaz, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Emerald, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Ruby, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Diamond, oneWay: false, extraFunctions: false);
+
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
-			biome.GERunnerWallConversions.Add(WallID.AmethystUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.TopazUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.SapphireUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.EmeraldUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.RubyUnsafe, wall);
-			biome.GERunnerWallConversions.Add(WallID.DiamondUnsafe, wall);
+			biome.AddWallConversions(wall,
+				WallID.AmethystUnsafe,
+				WallID.TopazUnsafe,
+				WallID.SapphireUnsafe,
+				WallID.EmeraldUnsafe,
+				WallID.RubyUnsafe,
+				WallID.DiamondUnsafe
+			);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
@@ -2559,35 +2800,35 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
-		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			for (int c = 0; c < area.Width; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Height; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Width; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (int c = 0; c < area.Height; c += 2) {
-				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.a, area.b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.b, area.c, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch) {
+		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
-				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero).noGravity = true;
+				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
 		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default) {
@@ -2633,6 +2874,25 @@ namespace Origins {
 
 				default:
 				return Language.GetOrRegister("Mods.Origins.Items.CombineTooltips").WithFormatArgs(parts[0], CombineTooltips(parts[1..]));
+			}
+		}
+		public static LocalizedText CombineWithAnd(params LocalizedText[] parts) {
+			if (parts.Length == 2) return Language.GetOrRegister("Mods.Origins.Conditions.And").WithFormatArgs(parts[0], parts[1]);
+			return CombineWithAndInternal(parts);
+		}
+		static LocalizedText CombineWithAndInternal(params LocalizedText[] parts) {
+			switch (parts.Length) {
+				case 0:
+				return LocalizedText.Empty;
+
+				case 1:
+				return parts[0];
+
+				case 2:
+				return Language.GetOrRegister("Mods.Origins.Conditions.CommaAnd").WithFormatArgs(parts[0], CombineWithAndInternal(parts[1..]));
+
+				default:
+				return Language.GetOrRegister("Mods.Origins.Conditions.Comma").WithFormatArgs(parts[0], CombineWithAndInternal(parts[1..]));
 			}
 		}
 		public static LocalizedText GetRandomText(string key) {
@@ -2703,6 +2963,59 @@ namespace Origins {
 			}
 			return origin;
 		}
+		public static void Deconstruct(this Vector2 vector, out float X, out float Y) {
+			X = vector.X;
+			Y = vector.Y;
+		}
+		public static void Deconstruct(this Point vector, out int X, out int Y) {
+			X = vector.X;
+			Y = vector.Y;
+		}
+		public static void Deconstruct(this Vector4 vector, out Vector2 XY, out Vector2 ZW) {
+			XY = vector.XY();
+			ZW = vector.ZW();
+		}
+		public static string GetInternalName(this RecipeGroup recipeGroup) {
+			foreach (KeyValuePair<string, int> item in RecipeGroup.recipeGroupIDs) {
+				if (item.Value == recipeGroup.RegisteredId) return item.Key;
+			}
+			return null;
+		}
+		public static void UseOldRenderTargets(this SpriteBatch spriteBatch, RenderTargetBinding[] oldRenderTargets) {
+			bool anyOldTargets = (oldRenderTargets?.Length ?? 0) != 0;
+			RenderTargetUsage[] renderTargetUsage = [];
+			try {
+				if (anyOldTargets) {
+					renderTargetUsage = new RenderTargetUsage[oldRenderTargets.Length];
+					for (int i = 0; i < oldRenderTargets.Length; i++) {
+						RenderTarget2D renderTarget = (RenderTarget2D)oldRenderTargets[i].RenderTarget;
+						renderTargetUsage[i] = renderTarget.RenderTargetUsage;
+						PegasusLib.Graphics.GraphicsMethods.SetRenderTargetUsage(renderTarget, RenderTargetUsage.PreserveContents);
+					}
+				} else {
+					renderTargetUsage = [spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage];
+					spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+				}
+				spriteBatch.GraphicsDevice.SetRenderTargets(oldRenderTargets);
+			} finally {
+				if (anyOldTargets) {
+					for (int i = 0; i < oldRenderTargets.Length; i++) {
+						PegasusLib.Graphics.GraphicsMethods.SetRenderTargetUsage((RenderTarget2D)oldRenderTargets[i].RenderTarget, renderTargetUsage[i]);
+					}
+				} else {
+					spriteBatch.GraphicsDevice.PresentationParameters.RenderTargetUsage = renderTargetUsage[0];
+				}
+			}
+		}
+		public static ModUndergroundBackgroundStyle BiomeUGBackground<T>() where T : ModUndergroundBackgroundStyle {
+			double num2 = Main.maxTilesY - 330;
+			double num3 = (int)((num2 - Main.worldSurface) / 6.0) * 6;
+			num2 = Main.worldSurface + num3 - 5.0;
+			if ((Main.screenPosition.Y / 16f) > Main.rockLayer + 60 && (Main.screenPosition.Y / 16f) < num2 - 60) {
+				return ModContent.GetInstance<T>();
+			}
+			return null;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
@@ -2749,6 +3062,8 @@ namespace Origins {
 	public static class CollisionExtensions {
 		static Triangle[] tileTriangles;
 		static Rectangle[] tileRectangles;
+		public static ReadOnlySpan<Triangle> TileTriangles => tileTriangles.AsSpan();
+		public static ReadOnlySpan<Rectangle> TileRectangles => tileRectangles.AsSpan();
 		public static void Load() {
 			Vector2 topLeft = Vector2.Zero * 16;
 			Vector2 topRight = Vector2.UnitX * 16;
@@ -2854,18 +3169,20 @@ namespace Origins {
 			}
 			return false;
 		}
-		public static bool CanHitRay(Vector2 position, Vector2 target) {
-			Vector2 diff = target - position;
-			float length = diff.Length();
-			return Raycast(position, diff, length) == length;
-		}
-		public static float Raycast(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+		/// <summary>
+		/// Throws <see cref="ArgumentException"/> if <paramref name="direction"/> is zero
+		/// </summary>
+		/// <param name="position"></param>
+		/// <param name="direction"></param>
+		/// <param name="maxLength"></param>
+		/// <returns>The distance traveled before a tile was reached, or <paramref name="maxLength"/> if the distance would exceed it</returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static float Raymarch(Vector2 position, Vector2 direction, Func<Tile, bool?> extraCheck, float maxLength = float.PositiveInfinity) {
 			if (direction == Vector2.Zero) throw new ArgumentException($"{nameof(direction)} may not be zero");
 			float length = 0;
 			Point tilePos = position.ToTileCoordinates();
 			Vector2 tileSubPos = (position - tilePos.ToWorldCoordinates(0, 0)) / 16;
 			float angle = direction.ToRotation();
-			//OriginExtensions.DrawDebugLine(Vector2.Zero, GeometryUtils.Vec2FromPolar(16, angle), position, 27);
 			double sin = Math.Sin(angle);
 			double cos = Math.Cos(angle);
 			double slope = cos == 0 ? Math.CopySign(double.PositiveInfinity, sin) : sin / cos;
@@ -2889,11 +3206,12 @@ namespace Origins {
 				Vector2 next = RaycastStep(tileSubPos, sin, cos);
 				if (next == tileSubPos) break;
 				Tile tile = Framing.GetTileSafely(tilePos);
-				bool doBreak = false;
+				bool doBreak = !WorldGen.InWorld(tilePos.X, tilePos.Y);
 				Vector2 diff = next - tileSubPos;
 				float dist = diff.Length();
-
-				if (tile.HasFullSolidTile()) {
+				bool? extraControl = extraCheck(tile);
+				if (extraControl == false) break;
+				if (!extraControl.HasValue && tile.HasFullSolidTile()) {
 					float flope = (float)slope;
 					bool doSICalc = true;
 					float tileSlope = 0;
@@ -2955,7 +3273,7 @@ namespace Origins {
 				DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, cos);
 				DoLoopyThing(next.Y, out next.Y, tilePos.Y, out tilePos.Y, sin);
 				tile = Framing.GetTileSafely(tilePos);
-				if (tile.HasFullSolidTile()) {
+				if (!extraControl.HasValue && tile.HasFullSolidTile()) {
 					switch (tile.BlockType) {
 						case BlockType.Solid:
 						doBreak = true;
@@ -2977,7 +3295,7 @@ namespace Origins {
 						break;
 					}
 				}
-				if (!doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
+				if (!extraControl.HasValue && !doBreak && (next.X == 0 || next.X == 1) && (next.Y == 0 || next.Y == 1)) {
 					bool IsSolidWithExceptions(int xOff, int yOff, params BlockType[] blockTypes) {
 						Tile tile = Framing.GetTileSafely(tilePos.X + xOff, tilePos.Y + yOff);
 						if (tile.HasFullSolidTile()) return !blockTypes.Contains(tile.BlockType);
@@ -2995,7 +3313,7 @@ namespace Origins {
 						}
 						break;
 						case (0, 1):
-						
+
 						if (IsSolidWithExceptions(0, +1, BlockType.SlopeDownRight, BlockType.HalfBlock) && IsSolidWithExceptions(-1, 0, BlockType.SlopeUpLeft)) {
 							doBreak = true;
 						}
@@ -3013,13 +3331,13 @@ namespace Origins {
 			if (length > maxLength) return maxLength;
 			return length;
 		}
-		static Vector2 RaycastStep(Vector2 pos, double sin, double cos) {
+		public static Vector2 RaycastStep(Vector2 pos, double sin, double cos) {
 			if (cos == 0) return new(pos.X, sin > 0 ? 1 : 0);
 			if (sin == 0) return new(cos > 0 ? 1 : 0, pos.Y);
 			double slope = sin / cos;
 			int xVlaue = cos > 0 ? 1 : 0;
 			double yIntercept = pos.Y - slope * (pos.X - xVlaue);
-			if (yIntercept >= 0f && yIntercept <= 1f) return new Vector2(xVlaue, (float)yIntercept);
+			if (yIntercept >= 0 && yIntercept <= 1) return new Vector2(xVlaue, (float)yIntercept);
 			int yVlaue = sin > 0 ? 1 : 0;
 			double xIntercept = (pos.Y - yVlaue) / -slope + pos.X;
 			return new Vector2((float)xIntercept, yVlaue);
@@ -3076,6 +3394,13 @@ namespace Origins {
 		/// <param name="hitbox"></param>
 		/// <returns></returns>
 		public static bool PolygonIntersectsRect((Vector2 start, Vector2 end)[] lines, Rectangle hitbox) {
+			Vector2 min = new(float.MaxValue);
+			Vector2 max = new(float.MinValue);
+			for (int i = 0; i < lines.Length; i++) {
+				min = Vector2.Min(min, lines[i].start);
+				max = Vector2.Max(max, lines[i].start);
+			}
+			if (!hitbox.Intersects(OriginExtensions.BoxOf(min, max))) return false;
 			int intersections = 0;
 			Vector2 rectPos = hitbox.TopLeft();
 			Vector2 rectSize = hitbox.Size();
@@ -3591,6 +3916,64 @@ namespace Origins {
 				return providedInfo.UnlockState > BestiaryEntryUnlockState.NotKnownAtAll_0;
 			}
 		}
+		/// <summary>
+		/// returns true if the entity tried to jump
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <param name="direction"></param>
+		/// <returns></returns>
+		public static bool TryJumpOverObstacles(this Entity entity, int direction, bool forceGrounded = false, bool stepsUp = true) {
+			direction = Math.Sign(direction);
+			int groundTileX = (int)(entity.position.X + entity.width * 0.5f * (1 + direction)) / 16;
+			int groundTileY = (int)(entity.position.Y + entity.height + 15) / 16;
+			if (forceGrounded || Framing.GetTileSafely(groundTileX, groundTileY).HasSolidTile()) {
+
+				try {
+					if (direction < 0) groundTileX--;
+					if (direction > 0) groundTileX++;
+					groundTileX += (int)entity.velocity.X;
+					int jumpHeight = 0;
+					for (int j = 0; j < 5; j++) {
+						bool blocked = false;
+						for (int i = 1; i <= Math.Ceiling(entity.height / 16f) && !blocked; i++) {
+							blocked = WorldGen.SolidTile(groundTileX, (groundTileY - i) - j);
+						}
+						jumpHeight = j;
+						if (!blocked) break;
+					}
+					switch (jumpHeight) {
+						case 0:
+						return false;
+
+						case 1:
+						if (stepsUp) goto case 0;
+						entity.velocity.Y = -5.1f;
+						break;
+
+						case 2:
+						entity.velocity.Y = -7.1f;
+						break;
+
+						default:
+						case 3:
+						entity.velocity.Y = -9.1f;
+						break;
+
+						case 4:
+						entity.velocity.Y = -10.1f;
+						break;
+
+						case 5:
+						entity.velocity.Y = -11.1f;
+						break;
+					}
+				} catch {
+					entity.velocity.Y = -9.1f;
+				}
+				return true;
+			}
+			return false;
+		}
 		public static void DoJellyfishAI(this NPC npc, float lungeThreshold = 0.2f, float lungeSpeed = 7f, Vector3 glowColor = default, bool canDoZappy = true) {
 			bool isZappy = false;
 			if (npc.wet && npc.ai[1] == 1f) {
@@ -3716,9 +4099,416 @@ namespace Origins {
 				npc.ai[0] = 1f;
 			}
 		}
+		public static void DoFlyingAI(this NPC npc, float speed = 4f, float acceleration = 0.02f, float bounciness = 0.4f) {
+			if (!npc.HasValidTarget) npc.TargetClosest();
+
+			NPCAimedTarget targetData = npc.GetTargetData();
+			bool leave = false;
+			if (targetData.Type == NPCTargetType.Player)
+				leave = Main.player[npc.target].dead;
+
+			Vector2 npcCenter = (npc.Center / 8f).Floor() * 8;
+			Vector2 targetCenter = (targetData.Center / 8f).Floor() * 8;
+			Vector2 diff = targetCenter - npcCenter;
+			float distanceToTarget = diff.Length();
+
+			if (distanceToTarget == 0f) {
+				diff = npc.velocity;
+			} else {
+				diff *= speed / distanceToTarget;
+			}
+
+			if (distanceToTarget > 100f) {
+				npc.ai[0] += 1f;
+				if (npc.ai[0] > 0f)
+					npc.velocity.Y += 0.023f;
+				else
+					npc.velocity.Y -= 0.023f;
+
+				if (npc.ai[0] < -100f || npc.ai[0] > 100f)
+					npc.velocity.X += 0.023f;
+				else
+					npc.velocity.X -= 0.023f;
+
+				if (npc.ai[0] > 200f)
+					npc.ai[0] = -200f;
+			}
+
+			if (distanceToTarget < 150f) {
+				npc.velocity += diff * 0.007f;
+			}
+
+			if (leave) {
+				diff = new(npc.direction * speed / 0.5f, speed * -0.5f);
+			}
+			if (npc.velocity.X < diff.X) {
+				npc.velocity.X += acceleration;
+			} else if (npc.velocity.X > diff.X) {
+				npc.velocity.X -= acceleration;
+			}
+
+			if (npc.velocity.Y < diff.Y) {
+				npc.velocity.Y += acceleration;
+			} else if (npc.velocity.Y > diff.Y) {
+				npc.velocity.Y -= acceleration;
+			}
+
+			npc.rotation = diff.ToRotation() - MathHelper.PiOver2;
+
+			if (npc.collideX) {
+				npc.netUpdate = true;
+				npc.velocity.X = npc.oldVelocity.X * -bounciness;
+				if (npc.direction == -1 && npc.velocity.X > 0f && npc.velocity.X < 2f)
+					npc.velocity.X = 2f;
+
+				if (npc.direction == 1 && npc.velocity.X < 0f && npc.velocity.X > -2f)
+					npc.velocity.X = -2f;
+			}
+
+			if (npc.collideY) {
+				npc.netUpdate = true;
+				npc.velocity.Y = npc.oldVelocity.Y * -bounciness;
+				if (npc.velocity.Y > 0f && npc.velocity.Y < 1.5f)
+					npc.velocity.Y = 2f;
+
+				if (npc.velocity.Y < 0f && npc.velocity.Y > -1.5f)
+					npc.velocity.Y = -2f;
+			}
+
+			if (npc.wet) {
+				if (npc.velocity.Y > 0f)
+					npc.velocity.Y *= 0.95f;
+
+				npc.velocity.Y -= 0.3f;
+				if (npc.velocity.Y < -2f)
+					npc.velocity.Y = -2f;
+			}
+
+			if (leave) {
+				npc.velocity.Y -= acceleration * 2f;
+				npc.EncourageDespawn(10);
+			}
+
+			if (((npc.velocity.X > 0f && npc.oldVelocity.X < 0f) || (npc.velocity.X < 0f && npc.oldVelocity.X > 0f) || (npc.velocity.Y > 0f && npc.oldVelocity.Y < 0f) || (npc.velocity.Y < 0f && npc.oldVelocity.Y > 0f)) && !npc.justHit)
+				npc.netUpdate = true;
+		}
 		public static void DrawGlowingNPCPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
+		}
+	}
+	public static class TileExtenstions {
+		public record class MergeMatcher(int Up, int Down, int Left, int Right, int? UpLeft = null, int? UpRight = null, int? DownLeft = null, int? DownRight = null) {
+			public int Match(int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
+				if (up != Up) return 0;
+				if (down != Down) return 0;
+				if (left != Left) return 0;
+				if (right != Right) return 0;
+				if (upLeft != UpLeft) return 1;
+				if (upRight != UpRight) return 1;
+				if (upLeft != UpLeft) return 1;
+				if (downLeft != DownLeft) return 1;
+				if (downRight != DownRight) return 1;
+				return 2;
+			}
+		}
+		public static void DoFrameCheck(int i, int j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, params (int tileType, int frameType)[] map) {
+			void FixFraming(out int frame, int x, int y, params BlockType[] invalidBlockTypes) {
+				Tile tile = Framing.GetTileSafely(x, y);
+				frame = -1;
+				if (!tile.HasTile || invalidBlockTypes.Contains(tile.BlockType)) return;
+				for (int i = 0; i < map.Length; i++) {
+					if (tile.TileType == map[i].tileType) {
+						frame = map[i].frameType;
+						return;
+					}
+				}
+			}
+			FixFraming(out up, i, j - 1, BlockType.SlopeUpLeft, BlockType.SlopeUpRight);
+			FixFraming(out down, i, j + 1, BlockType.HalfBlock, BlockType.SlopeDownLeft, BlockType.SlopeDownRight);
+			FixFraming(out left, i - 1, j, BlockType.HalfBlock, BlockType.SlopeUpLeft, BlockType.SlopeDownLeft);
+			FixFraming(out right, i + 1, j, BlockType.HalfBlock, BlockType.SlopeUpRight, BlockType.SlopeDownRight);
+			switch (Framing.GetTileSafely(i, j).BlockType) {
+				case BlockType.HalfBlock:
+				up = -1;
+				left = -1;
+				right = -1;
+				break;
+				case BlockType.SlopeDownLeft:
+				up = -1;
+				right = -1;
+				break;
+				case BlockType.SlopeDownRight:
+				up = -1;
+				left = -1;
+				break;
+				case BlockType.SlopeUpLeft:
+				down = -1;
+				right = -1;
+				break;
+				case BlockType.SlopeUpRight:
+				down = -1;
+				left = -1;
+				break;
+			}
+
+			FixFraming(out upLeft, i - 1, j - 1);
+			FixFraming(out upRight, i + 1, j - 1);
+			FixFraming(out downLeft, i - 1, j + 1);
+			FixFraming(out downRight, i + 1, j + 1);
+		}
+		public static void DoFraming(int i, int j, bool resetFrame, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight, params (MergeMatcher match, Point first, Point offset)[] frames) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (resetFrame) tile.TileFrameNumber = WorldGen.genRand.Next(0, 3);
+			int frameNumber = tile.TileFrameNumber;
+			Point bestMatch = default;
+			int matchQuality = 0;
+			for (int k = 0; k < frames.Length; k++) {
+				int currentQuality = frames[k].match.Match(up, down, left, right, upLeft, upRight, downLeft, downRight);
+				if (currentQuality > matchQuality) {
+					bestMatch = frames[k].first;
+					bestMatch = bestMatch.OffsetBy(frames[k].offset.X * frameNumber, frames[k].offset.Y * frameNumber);
+					matchQuality = currentQuality;
+					if (matchQuality >= 2) break;
+				}
+			}
+			if (matchQuality == 0) return;
+			tile.TileFrameX = (short)(bestMatch.X * 18);
+			tile.TileFrameY = (short)(bestMatch.Y * 18);
+		}
+		public static (MergeMatcher match, Point first, Point offset)[] ExtraTileBlending {
+			get {
+				Point right = new(1, 0);
+				Point down = new(0, 1);
+				Point single = new(0, 0);
+				const int NONE = -1;
+				const int ROCK = 1;
+				const int _MUD = 2;
+				return [
+					(new(ROCK, ROCK, NONE, ROCK), new Point(0, 0), down),
+					(new(NONE, ROCK, ROCK, ROCK), new Point(1, 0), right),
+					(new(ROCK, ROCK, ROCK, ROCK), new Point(1, 1), right),
+					(new(ROCK, NONE, ROCK, ROCK), new Point(1, 2), right),
+					(new(ROCK, ROCK, ROCK, NONE), new Point(4, 0), down),
+					(new(ROCK, ROCK, NONE, NONE), new Point(5, 0), down),
+					(new(NONE, ROCK, NONE, NONE), new Point(6, 0), right),
+					(new(ROCK, ROCK, ROCK, ROCK, UpLeft: NONE, UpRight: NONE), new Point(6, 1), right),
+					(new(ROCK, ROCK, ROCK, ROCK, DownLeft: NONE, DownRight: NONE), new Point(6, 2), right),
+					(new(ROCK, NONE, NONE, NONE), new Point(6, 3), right),
+					(new(NONE, NONE, NONE, ROCK), new Point(9, 0), down),
+					(new(ROCK, ROCK, ROCK, ROCK, UpLeft: NONE, DownLeft: NONE), new Point(10, 0), down),
+					(new(ROCK, ROCK, ROCK, ROCK, UpRight: NONE, DownRight: NONE), new Point(11, 0), down),
+					(new(NONE, NONE, ROCK, NONE), new Point(12, 0), down),
+					(new(NONE, _MUD, ROCK, ROCK), new Point(13, 0), right),
+					(new(_MUD, NONE, ROCK, ROCK), new Point(13, 1), right),
+					(new(ROCK, ROCK, NONE, _MUD), new Point(13, 2), right),
+					(new(ROCK, ROCK, _MUD, NONE), new Point(13, 3), right),
+					(new(NONE, ROCK, NONE, ROCK), new Point(0, 3), new Point(2, 0)),
+					(new(NONE, ROCK, ROCK, NONE), new Point(1, 3), new Point(2, 0)),
+					(new(ROCK, NONE, NONE, ROCK), new Point(0, 4), new Point(2, 0)),
+					(new(ROCK, NONE, ROCK, NONE), new Point(1, 4), new Point(2, 0)),
+					(new(NONE, NONE, NONE, NONE), new Point(9, 3), right),
+					(new(NONE, NONE, ROCK, ROCK), new Point(6, 4), right),
+					(new(ROCK, ROCK, ROCK, ROCK, DownRight: _MUD), new Point(0, 5), new Point(0, 2)),
+					(new(ROCK, ROCK, ROCK, ROCK, DownLeft: _MUD), new Point(1, 5), new Point(0, 2)),
+					(new(ROCK, ROCK, ROCK, ROCK, UpRight: _MUD), new Point(0, 6), new Point(0, 2)),
+					(new(ROCK, ROCK, ROCK, ROCK, UpLeft: _MUD), new Point(1, 5), new Point(0, 2)),
+					(new(_MUD, ROCK, _MUD, ROCK), new Point(2, 5), new Point(0, 2)),
+					(new(_MUD, ROCK, ROCK, _MUD), new Point(3, 5), new Point(0, 2)),
+					(new(ROCK, _MUD, _MUD, ROCK), new Point(2, 6), new Point(0, 2)),
+					(new(ROCK, _MUD, ROCK, _MUD), new Point(3, 6), new Point(0, 2)),
+					(new(ROCK, _MUD, NONE, ROCK), new Point(4, 5), down),
+					(new(ROCK, _MUD, ROCK, NONE), new Point(5, 5), down),
+					(new(_MUD, ROCK, NONE, ROCK), new Point(4, 8), down),
+					(new(_MUD, ROCK, ROCK, NONE), new Point(5, 8), down),
+					(new(NONE, _MUD, NONE, NONE), new Point(6, 5), down),
+					(new(_MUD, NONE, NONE, NONE), new Point(6, 8), down),
+					(new(ROCK, _MUD, NONE, NONE), new Point(7, 5), down),
+					(new(_MUD, ROCK, NONE, NONE), new Point(7, 8), down),
+					(new(ROCK, _MUD, ROCK, ROCK), new Point(8, 5), right),
+					(new(_MUD, ROCK, ROCK, ROCK), new Point(8, 6), right),
+					(new(ROCK, ROCK, ROCK, _MUD), new Point(8, 7), down),
+					(new(ROCK, ROCK, _MUD, ROCK), new Point(9, 7), down),
+					(new(_MUD, ROCK, _MUD, _MUD), new Point(11, 5), down),
+					(new(_MUD, _MUD, _MUD, ROCK), new Point(12, 5), down),
+					(new(ROCK, _MUD, _MUD, _MUD), new Point(11, 8), down),
+					(new(_MUD, _MUD, ROCK, _MUD), new Point(12, 8), down),
+					(new(ROCK, ROCK, _MUD, _MUD), new Point(10, 7), down),
+					(new(_MUD, _MUD, ROCK, ROCK), new Point(8, 10), right),
+					(new(NONE, ROCK, _MUD, ROCK), new Point(0, 11), right),
+					(new(NONE, ROCK, ROCK, _MUD), new Point(3, 11), right),
+					(new(ROCK, NONE, _MUD, ROCK), new Point(0, 12), right),
+					(new(ROCK, NONE, ROCK, _MUD), new Point(3, 12), right),
+					(new(_MUD, _MUD, _MUD, _MUD), new Point(6, 11), right),
+					(new(NONE, NONE, _MUD, _MUD), new Point(9, 11), right),
+					(new(_MUD, _MUD, NONE, NONE), new Point(6, 12), down),
+					(new(NONE, NONE, _MUD, NONE), new Point(0, 13), right),
+					(new(NONE, NONE, NONE, _MUD), new Point(3, 13), right),
+					(new(NONE, NONE, _MUD, ROCK), new Point(0, 14), right),
+					(new(NONE, NONE, ROCK, _MUD), new Point(3, 14), right),
+
+					(new(NONE, ROCK, NONE, _MUD), new Point(0, 3), new Point(2, 0)),
+					(new(NONE, ROCK, _MUD, NONE), new Point(1, 3), new Point(2, 0)),
+					(new(ROCK, NONE, NONE, _MUD), new Point(0, 4), new Point(2, 0)),
+					(new(ROCK, NONE, _MUD, NONE), new Point(1, 4), new Point(2, 0)),
+					(new(NONE, _MUD, NONE, ROCK), new Point(0, 3), new Point(2, 0)),
+					(new(NONE, _MUD, ROCK, NONE), new Point(1, 3), new Point(2, 0)),
+					(new(_MUD, NONE, NONE, ROCK), new Point(0, 4), new Point(2, 0)),
+					(new(_MUD, NONE, ROCK, NONE), new Point(1, 4), new Point(2, 0)),
+
+					(new(_MUD, NONE, _MUD, _MUD), new Point(14, 8), single),
+					(new(ROCK, NONE, _MUD, _MUD), new Point(15, 8), single),
+					(new(_MUD, NONE, _MUD, ROCK), new Point(13, 9), single),
+					(new(NONE, ROCK, _MUD, _MUD), new Point(14, 9), single),
+					(new(NONE, _MUD, _MUD, _MUD), new Point(15, 9), single),
+					(new(NONE, _MUD, _MUD, ROCK), new Point(13, 10), single),
+					(new(_MUD, _MUD, _MUD, NONE), new Point(14, 10), single),
+					(new(_MUD, ROCK, _MUD, NONE), new Point(15, 10), single),
+					(new(NONE, _MUD, _MUD, NONE), new Point(13, 11), single),
+					(new(ROCK, _MUD, _MUD, NONE), new Point(14, 11), single),
+					(new(_MUD, NONE, _MUD, NONE), new Point(15, 11), single),
+					(new(_MUD, NONE, ROCK, _MUD), new Point(13, 12), single),
+					(new(NONE, _MUD, ROCK, _MUD), new Point(14, 12), single),
+					(new(_MUD, _MUD, ROCK, NONE), new Point(15, 12), single),
+					(new(_MUD, NONE, NONE, _MUD), new Point(13, 13), single),
+					(new(_MUD, ROCK, NONE, _MUD), new Point(14, 13), single),
+					(new(_MUD, _MUD, NONE, _MUD), new Point(15, 13), single),
+					(new(_MUD, _MUD, NONE, ROCK), new Point(13, 14), single),
+					(new(NONE, _MUD, NONE, _MUD), new Point(14, 14), single),
+					(new(ROCK, _MUD, NONE, _MUD), new Point(15, 14), single),
+				];
+			}
+		}
+		public static void DoFraming(int i, int j, bool resetFrame, (int tileType, int frameType)[] map, params (MergeMatcher match, Point first, Point offset)[] frames) {
+#if DEBUG && false
+			List<int> types = [-1];
+			for (int k = 0; k < map.Length; k++) {
+				if (!types.Contains(map[k].frameType)) types.Add(map[k].frameType);
+			}
+			List<(int up, int down, int left, int right)> missingConfigurations = [];
+			for (int l = 0; l < types.Count; l++) {
+				for (int r = 0; r < types.Count; r++) {
+					for (int u = 0; u < types.Count; u++) {
+						for (int d = 0; d < types.Count; d++) {
+							bool foundMatch = false;
+							for (int k = 0; k < frames.Length && !foundMatch; k++) {
+								if (frames[k].match.Match(types[u], types[d], types[l], types[r], -1, -1, -1, -1) > 0) {
+									foundMatch = true;
+								}
+							}
+							if (!foundMatch) missingConfigurations.Add((types[u], types[d], types[l], types[r]));
+						}
+					}
+				}
+			}
+			if (missingConfigurations.Count > 0) {
+				Framing_Tester.type = Framing.GetTileSafely(i, j).TileType;
+				Dictionary<int, int> rev = new() {
+					[-1] = -1
+				};
+				for (int k = 0; k < map.Length && rev.Count < types.Count; k++) {
+					rev.TryAdd(map[k].frameType, map[k].tileType);
+				}
+				Framing_Tester.missingConfigurations = missingConfigurations.Select(v => (rev[v.up], rev[v.down], rev[v.left], rev[v.right])).ToList();
+				Framing_Tester.allConfigurations = frames.Select(v => {
+					List<(Vector2, int)> extras = [];
+					if (v.match.UpLeft.HasValue) extras.Add((new(-1, -1), rev[v.match.UpLeft.Value]));
+					if (v.match.UpRight.HasValue) extras.Add((new(1, -1), rev[v.match.UpRight.Value]));
+					if (v.match.DownLeft.HasValue) extras.Add((new(-1, 1), rev[v.match.DownLeft.Value]));
+					if (v.match.DownRight.HasValue) extras.Add((new(1, 1), rev[v.match.DownRight.Value]));
+					return (rev[v.match.Up], rev[v.match.Down], rev[v.match.Left], rev[v.match.Right], extras);
+				}).ToList();
+				List<(Vector2, int)> empty = [];
+				Framing_Tester.allConfigurations.AddRange(Framing_Tester.missingConfigurations.Select(v => (v.up, v.down, v.left, v.right, empty)));
+			}
+#endif
+			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
+			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
+		}
+		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+
+				int left = i - tileData.Origin.X;
+				int top = j - tileData.Origin.Y;
+				for (int y = 0; y < tileData.Height; y++) {
+					for (int x = 0; x < tileData.Width; x++) {
+						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+						if (tileSafely.HasTile && !(Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		public static void ForcePlace(int i, int j, int type, int style, int dir, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+			if (TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData, onlyCheck, forcedRandom, checkStay)) {
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+
+				int left = i - tileData.Origin.X;
+				int top = j - tileData.Origin.Y;
+				for (int y = 0; y < tileData.Height; y++) {
+					for (int x = 0; x < tileData.Width; x++) {
+						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+						tileSafely.HasTile = false;
+					}
+				}
+				TileObject.Place(objectData);
+			}
+		}
+	}
+	public static class ProjectileExtensions {
+		public static void DoBoomerangAI(this Projectile projectile, Entity owner, float returnSpeed = 9f, float returnAcceleration = 0.4f, bool doSound = true) {
+			if (doSound && projectile.soundDelay == 0) {
+				projectile.soundDelay = 8;
+				SoundEngine.PlaySound(SoundID.Item7, projectile.position);
+			}
+			if (projectile.ai[0] == 0f) {
+				projectile.ai[1] += 1f;
+
+				if (projectile.ai[1] >= 30f) {
+					projectile.ai[0] = 1f;
+					projectile.ai[1] = 0f;
+					projectile.netUpdate = true;
+				}
+			} else {
+				projectile.tileCollide = false;
+
+				Vector2 offset = owner.Center - projectile.Center;
+				float distance = offset.Length();
+				if (distance > 3000f) {
+					projectile.Kill();
+					return;
+				}
+
+				offset *= returnSpeed / distance;
+				if (projectile.velocity.X < offset.X) {
+					projectile.velocity.X += returnAcceleration;
+					if (projectile.velocity.X < 0f && offset.X > 0f)
+						projectile.velocity.X += returnAcceleration;
+				} else if (projectile.velocity.X > offset.X) {
+					projectile.velocity.X -= returnAcceleration;
+					if (projectile.velocity.X > 0f && offset.X < 0f)
+						projectile.velocity.X -= returnAcceleration;
+				}
+
+				if (projectile.velocity.Y < offset.Y) {
+					projectile.velocity.Y += returnAcceleration;
+					if (projectile.velocity.Y < 0f && offset.Y > 0f)
+						projectile.velocity.Y += returnAcceleration;
+				} else if (projectile.velocity.Y > offset.Y) {
+					projectile.velocity.Y -= returnAcceleration;
+					if (projectile.velocity.Y > 0f && offset.Y < 0f)
+						projectile.velocity.Y -= returnAcceleration;
+				}
+
+				if (Main.myPlayer == projectile.owner) {
+					if (projectile.Hitbox.Intersects(owner.Hitbox))
+						projectile.Kill();
+				}
+			}
 		}
 	}
 	public static class ContentExtensions {
@@ -3763,6 +4553,17 @@ namespace Origins {
 			}
 			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
 				OriginsModIntegrations.GoToKeybind(keybind);
+			}
+		}
+		public static float DifficultyDamageMultiplier {
+			get {
+				if (Main.GameModeInfo.IsJourneyMode) {
+					CreativePowers.DifficultySliderPower power = CreativePowerManager.Instance.GetPower<CreativePowers.DifficultySliderPower>();
+					if (power.GetIsUnlocked()) {
+						return power.StrengthMultiplierToGiveNPCs;
+					}
+				}
+				return Main.GameModeInfo.EnemyDamageMultiplier;
 			}
 		}
 	}

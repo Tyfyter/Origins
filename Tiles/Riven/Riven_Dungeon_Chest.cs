@@ -12,7 +12,7 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f));
+			color = Vector3.Max(color, new Vector3(0f, 0.25f, 0.5f));
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
@@ -32,13 +32,14 @@ namespace Origins.Tiles.Riven {
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
+		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawChestGlow(i, j, spriteBatch);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = 0.2f;
-			g = 0.15f;
-			b = 0.06f;
+			r = 0f;
+			g = 0.05f;
+			b = 0.1f;
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }

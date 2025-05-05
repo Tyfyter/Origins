@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Items.Placeables;
+using CalamityMod.Items.Potions.Alcohol;
+using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Reflection;
 using System;
@@ -11,6 +13,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.WorldBuilding;
 namespace Origins.Items.Accessories {
 	public class Terrarian_Voodoo_Doll : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -49,16 +52,21 @@ namespace Origins.Items.Accessories {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			if (RefreshPlayer() is not null) {
 				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.TooltipPlayer", player.name)));
+			} else if (OriginPlayer.LocalOriginPlayer?.guid == Guid.Empty) {
+				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.WhyDontYouExist")));
 			} else {
 				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.TooltipYouDoNotRecognizeTheBodiesInTheWater")));
 			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.GetModPlayer<OriginPlayer>().pickupRangeBoost += 75;
+			if (!Main.dedServ && owner == Guid.Empty) {
+				owner = player.OriginPlayer().guid;
+			}
+			player.OriginPlayer().pickupRangeBoost += 75;
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (RefreshPlayer() is OriginPlayer originPlayer) {
-				originPlayer.voodooDollIndex = Item.whoAmI;
+				originPlayer.voodooDoll = Item;
 				if (player.whoAmI == Main.myPlayer && !player.shimmerImmune && !player.shimmerUnstuckHelper.ShouldUnstuck) {
 					int headX = (int)(Item.Center.X / 16f);
 					int headY = (int)((Item.position.Y + 1f) / 16f);
@@ -151,6 +159,57 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class Voodoo_Doll_Persistence_System : ModSystem {
+			public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
+				if (OriginPlayer.LocalOriginPlayer?.voodooDoll is null) return;
+				Point center = OriginPlayer.LocalOriginPlayer.voodooDoll.Center.ToTileCoordinates();
+				Rectangle tileRectangle = new(center.X - Main.buffScanAreaWidth / 2, center.Y - Main.buffScanAreaHeight / 2, Main.buffScanAreaWidth, Main.buffScanAreaHeight);
+				tileRectangle = WorldUtils.ClampToWorld(tileRectangle);
+				for (int i = tileRectangle.Left; i < tileRectangle.Right; i++) {
+					for (int j = tileRectangle.Top; j < tileRectangle.Bottom; j++) {
+						if (!tileRectangle.Contains(i, j)) continue;
+						Tile tile = Main.tile[i, j];
+						if (tile == null) continue;
+						if (!tile.HasTile) continue;
+						tileRectangle.Contains(i, j);
+						if (tile.TileType == TileID.Campfire && tile.TileFrameY < 36) {
+							Main.SceneMetrics.HasCampfire = true;
+						}
+						if (tile.TileType == TileID.WaterCandle && tile.TileFrameX < 18) {
+							Main.SceneMetrics.WaterCandleCount++;
+						}
+						if (tile.TileType == TileID.PeaceCandle && tile.TileFrameX < 18) {
+							Main.SceneMetrics.PeaceCandleCount++;
+						}
+						if (tile.TileType == TileID.ShadowCandle && tile.TileFrameX < 18) {
+							Main.SceneMetrics.ShadowCandleCount++;
+						}
+						if (tile.TileType == TileID.Chimney && tile.TileFrameX < 54) {
+							Main.SceneMetrics.HasCampfire = true;
+						}
+						if (tile.TileType == TileID.CatBast && tile.TileFrameX < 72) {
+							Main.SceneMetrics.HasCatBast = true;
+						}
+						if (tile.TileType == TileID.HangingLanterns && tile.TileFrameY >= 324 && tile.TileFrameY <= 358) {
+							Main.SceneMetrics.HasHeartLantern = true;
+						}
+						if (tile.TileType == TileID.HangingLanterns && tile.TileFrameY >= 252 && tile.TileFrameY <= 286) {
+							Main.SceneMetrics.HasStarInBottle = true;
+						}
+						if (tile.TileType == TileID.Banners && (tile.TileFrameX >= 396 || tile.TileFrameY >= 54)) {
+							int bannerType = tile.TileFrameX / 18 - 21;
+							for (int k = tile.TileFrameY; k >= 54; k -= 54) {
+								bannerType += 90 + 21;
+							}
+							int bannerItemType = Item.BannerToItem(bannerType);
+							if (ItemID.Sets.BannerStrength.IndexInRange(bannerItemType) && ItemID.Sets.BannerStrength[bannerItemType].Enabled) {
+								Main.SceneMetrics.NPCBannerBuff[bannerType] = true;
+								Main.SceneMetrics.hasBanner = true;
+							}
+						}
+						TileLoader.NearbyEffects(i, j, tile.TileType, closer: false);
+					}
+				}
+			}
 			public override void SaveWorldData(TagCompound tag) {
 				List<TagCompound> dolls = [];
 				foreach (Item item in Main.ActiveItems) {

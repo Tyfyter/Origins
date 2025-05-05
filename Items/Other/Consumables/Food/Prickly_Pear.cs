@@ -24,18 +24,5 @@ namespace Origins.Items.Other.Consumables.Food {
 				60 * 60 * 5
 			);
 		}
-		/*public override void AddRecipes() {
-			Recipe.Create(ItemID.FruitJuice))
-			.AddIngredient(ItemID.Bottle)
-			.AddIngredient(this, 2) we need to create a new recipe group including origins' fruits
-			.AddTile(TileID.CookingPots)
-			.Register();
-
-			Recipe.Create(ItemID.FruitSalad))
-			.AddIngredient(ItemID.Bowl)
-			.AddIngredient(this, 3) we need to create a new recipe group including origins' fruits
-			.AddTile(TileID.CookingPots)
-			.Register();
-		}*/
 	}
 }

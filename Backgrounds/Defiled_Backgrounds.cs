@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace Origins.Backgrounds {
 	public class Defiled_Surface_Background : ModSurfaceBackgroundStyle {
@@ -35,6 +36,7 @@ namespace Origins.Backgrounds {
 			for (int i = 0; i < 4; i++) {
 				textureSlots[i] = ModContent.GetModBackgroundSlot(GetType().GetDefaultTMLName() + i);
 			}
+			textureSlots[4] = 128 + Main.hellBackStyle;
 		}
 	}
 }

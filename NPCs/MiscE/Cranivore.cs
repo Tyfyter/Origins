@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Armor.Vanity.Other;
 using PegasusLib;
 using System;
 using Terraria;
@@ -56,6 +57,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cranivore_Beanie>(), 15));
 		}
 		public override void AI() {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {

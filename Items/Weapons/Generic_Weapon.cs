@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Weapons.Magic;
+using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,6 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons {
 	public class Generic_Weapon : ModItem, ICustomWikiStat {
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[Type] = Type;
+			OriginExtensions.InsertIntoShimmerCycle(ModContent.ItemType<Unsuspicious_Bush_Item>(), Type);
+		}
 		public override void SetDefaults() {
 			Item.DamageType = DamageClass.Generic;
 			Item.useStyle = ItemUseStyleID.HoldUp;

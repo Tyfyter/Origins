@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Terraria.GameContent;
 using PegasusLib;
+using Terraria.DataStructures;
+using Terraria.Audio;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -24,6 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 6;
 			Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
+			if (OriginsModIntegrations.CheckAprilFools()) Item.UseSound = null;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -31,8 +33,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			type = Item.shoot;
+		public override bool? UseItem(Player player) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				SoundEngine.PlaySound(SoundID.Camera, player.MountedCenter);
+				SoundEngine.PlaySound(SoundID.Item171.WithPitchOffset(1), player.MountedCenter);
+			}
+			return null;
+		}
+		static void DoFindAngle(Vector2 position, ref Vector2 velocity, ref int type) {
 			float speed = velocity.Length();
 			Vector2 target = Main.MouseWorld - position;
 			float dist = Math.Abs(target.X);
@@ -51,6 +59,30 @@ namespace Origins.Items.Weapons.Demolitionist {
 				goto loop;
 			}
 			velocity = new Vector2(speed, 0).RotatedBy(angle.Value);
+		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			type = Item.shoot;
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				velocity = new(velocity.Length() * player.direction, 0);
+			} else {
+				DoFindAngle(position, ref velocity, ref type);
+			}
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				position.X += player.direction * 16;
+				DoFindAngle(position, ref velocity, ref type);
+				Projectile.NewProjectile(
+					source,
+					position,
+					velocity,
+					type,
+					damage,
+					knockback
+				);
+				return false;
+			}
+			return true;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-2, 0);

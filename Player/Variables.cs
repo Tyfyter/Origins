@@ -3,6 +3,9 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Journal;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
@@ -10,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -49,6 +53,7 @@ namespace Origins {
 		public bool cryostenSet = false;
 		public bool cryostenBody = false;
 		public bool felnumSet = false;
+		public bool felnumEnemiesFriendly = false;
 		public float felnumShock = 0;
 		public bool usedFelnumShock = false;
 		public float oldFelnumShock = 0;
@@ -64,10 +69,11 @@ namespace Origins {
 		public int riptideDashTime = 0;
 		public int meatDashTime = 0;
 		public bool necroSet = false;
+		public bool necroSet2 = false;
+		public float necroSetAmount = 0f;
 		public bool novaSet = false;
 		public bool tendonSet = false;
 		public bool acridSet = false;
-		public float necroSetAmount = 0f;
 		public bool soulhideSet = false;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
@@ -84,6 +90,14 @@ namespace Origins {
 		public bool rainSet = false;
 		public bool rubberBody = false;
 		public int nearTrafficCone = 0;
+		public bool extremophileSet = false;
+		public int extremophileSetHits = 0;
+		public int extremophileSetTime = 0;
+		public bool luckyHatSet = false;
+		public int luckyHatSetTime = 0;
+		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
+		public bool mildewHead = false;
+		public bool mildewSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -103,7 +117,8 @@ namespace Origins {
 		public bool asylumWhistle = false;
 		public int asylumWhistleTarget = -1;
 		public int mitosisCooldown = 0;
-		public bool refactoringPieces;
+		public bool refactoringPieces = false;
+		public int refactoringPiecesDashCooldown = 0;
 		public float mysteriousSprayMult = 1;
 		public bool protozoaFood = false;
 		public int protozoaFoodCooldown = 0;
@@ -128,10 +143,12 @@ namespace Origins {
 		public int spiderRavelTime;
 		public int vanityRavel;
 		public bool heliumTank = false;
+		public bool heliumTankSqueak = false;
+		public float heliumTankStrength = 1f;
 		public bool messyLeech = false;
 		public bool magmaLeech = false;
 		public bool noU = false;
-		public const float donorWristbandMult = 0.52f;
+		public const float donorWristbandMult = 0.7f;
 		public bool donorWristband = false;
 		public bool oldDonorWristband = false;
 		public HashSet<Point> preHitBuffs;
@@ -166,6 +183,7 @@ namespace Origins {
 		public bool magicTripwire = false;
 		public int lousyLiverCount = 0;
 		public List<(int id, int duration)> lousyLiverDebuffs = [];
+		public float lousyLiverRange = 256;
 		public bool summonTagForceCrit = false;
 		public bool rubyReticle = false;
 		public bool taintedFlesh = false;
@@ -209,6 +227,11 @@ namespace Origins {
 		public bool bindingBookVisual = false;
 		public int bindingBookDye = 0;
 		public Physics.Chain[] bindingBookChains = new Physics.Chain[3];
+		public bool abyssalAnchorVisual = false;
+		public int abyssalAnchorDye = 0;
+		public Physics.Chain abyssalAnchorChain = null;
+		public Vector2 abyssalAnchorPosition;
+		public Vector2 abyssalAnchorVelocity;
 		public bool priorityMail = false;
 		public bool emergencyBeeCanister = false;
 		public bool blizzardwalkerJacket = false;
@@ -225,6 +248,7 @@ namespace Origins {
 		public bool bugZapper = false;
 		public int bugZapperFlyTime = 0;
 		public bool bombCharminIt = false;
+		public int bombCharminItStrength = 24;
 		public bool cursedVoice = false;
 		public Item cursedVoiceItem = null;
 		public int cursedVoiceCooldown = 0;
@@ -244,6 +268,35 @@ namespace Origins {
 		public float meleeScaleMultiplier = 1;
 		public bool eitriteGunMagazine = false;
 		public bool fairyLotus = false;
+		public bool abyssalAnchor = false;
+		public bool mildewHeart = false;
+		public float mildewHeartRegenMult = 1f;
+		public float mildewHealth = 0;
+		public PlayerDeathReason lastMildewDeathReason;
+		public bool lastMildewDeathPvP = false;
+		public bool faithBeads = false;
+		public Item faithBeadsItem = null;
+		public bool retaliatoryTendril = false;
+		public Item retaliatoryTendrilItem = null;
+		public float retaliatoryTendrilStrength = 0;
+		public int retaliatoryTendrilCharge = 0;
+		public bool mithrafin = false;
+		public bool oldMithrafin = false;
+		public const float mithrafinSelfMult = 0.8f;
+		public bool fullSend = false;
+		public Item fullSendItem = null;
+		public Vector2 fullSendStartPos;
+		public Vector2 fullSendPos;
+		public bool akaliegis = false;
+		public List<(int type, Range duration)> dashHitDebuffs = [];
+		public bool dashVase = false;
+		public int vaseDashDirection = 0;
+		public bool dashVaseVisual = false;
+		public int dashVaseDye = 0;
+		public float dashVaseFrameCount = 0;
+		public bool goldenLotus = false;
+		public Item goldenLotusItem = null;
+		public int goldenLotusProj = -1;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -265,6 +318,7 @@ namespace Origins {
 		#region summon stats
 		public StatModifier artifactDamage = StatModifier.Default;
 		public float artifactManaCost = 1f;
+		public float necromancyPrefixMana = 0;
 		#endregion
 
 		#region biomes
@@ -273,6 +327,11 @@ namespace Origins {
 		public float ZoneVoidProgressSmoothed = 0;
 
 		public float ZoneDefiledProgress = 0;
+		int DefiledMonolithTime = 0;
+		public bool DefiledMonolith {
+			get => DefiledMonolithTime > 0;
+			set => DefiledMonolithTime = value ? 5 : Math.Max(DefiledMonolithTime - 1, 0);
+		}
 		public float ZoneDefiledProgressSmoothed = 0;
 
 		public float ZoneRivenProgress = 0;
@@ -302,11 +361,13 @@ namespace Origins {
 		public bool swarmStatue = false;
 		public bool focusPotion = false;
 		public BrothBase broth = null;
+		public int staticBrothEffectCooldown = 0;
 		public bool cavitationDebuff = false;
 		public bool staticShock = false;
 		public bool miniStaticShock = false;
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
+		public int relayRodStrength = 0;
 		#endregion
 
 		#region keybinds
@@ -318,6 +379,7 @@ namespace Origins {
 		public int laserBladeCharge = 0;
 		public int tolrukCharge = 0;
 		public bool boatRockerAltUse = false;
+		public bool boatRockerAltUse2 = false;
 		public int mojoFlaskCount = 5;
 		public int mojoFlaskCountMax = 5;
 
@@ -328,6 +390,12 @@ namespace Origins {
 			set => Player.BuilderToggleState<Mojo_Injection_Toggle>() = (!value).ToInt();
 		}
 		public bool MojoInjectionActive => mojoInjection && MojoInjectionEnabled;
+		public bool crownJewel = false;
+		public bool CrownJewelEnabled {
+			get => Player.BuilderToggleState<Crown_Jewel_Toggle>() == 0;
+			set => Player.BuilderToggleState<Crown_Jewel_Toggle>() = (!value).ToInt();
+		}
+		public bool CrownJewelActive => crownJewel && CrownJewelEnabled;
 		public int defiledWill = 0;
 
 		public int talkingPet = 0;
@@ -337,6 +405,11 @@ namespace Origins {
 		public Vector2 nextActiveHarpoonAveragePosition = default;
 		public Vector2 currentActiveHarpoonAveragePosition = default;
 		public float aprilFoolsRubberDynamiteTracker = 0;
+		public int crawdadNetworkCount = 0;
+		public int neuralNetworkMisses = 0;
+		public int keytarMode = 0;
+		public float soulSnatcherTime = 0;
+		public bool soulSnatcherActive = false;
 		#endregion
 
 		#region visuals
@@ -344,11 +417,14 @@ namespace Origins {
 		#endregion visuals
 
 		public float statSharePercent = 0f;
+		public StatModifier projectileSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
 		public Item journalDye = null;
 
+		public bool releaseAltUse = false;
 		public bool itemLayerWrench = false;
+		public int itemComboAnimationTime = 0;
 		public bool plagueSight = false;
 		public bool plagueSightLight = false;
 
@@ -376,8 +452,10 @@ namespace Origins {
 		public int oldYSign = 0;
 		public bool collidingX = false;
 		public bool collidingY = false;
-		public HashSet<string> unlockedJournalEntries = new();
-		public HashSet<string> startedQuests = new();
+		public bool onSlope = false;
+		public HashSet<string> unlockedJournalEntries = [];
+		public HashSet<string> unreadJournalEntries = [];
+		public HashSet<string> startedQuests = [];
 		public int dashDirection = 0;
 		public int dashDirectionY = 0;
 		public int dashDelay = 0;
@@ -387,13 +465,19 @@ namespace Origins {
 		public float oldGravDir = 0;
 		public float lifeRegenTimeSinceHit = 0;
 		public int itemUseOldDirection = 0;
-		public List<Vector2> oldVelocities = new();
+		public List<Vector2> oldVelocities = [];
 		public Guid guid = Guid.Empty;
-		public int voodooDollIndex = -1;
+		public Item voodooDoll = null;
 		public float manaShielding = 0f;
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
+		public bool forceFallthrough = false;
+		public int timeSinceRainedOn = 0;
+		/// <summary>
+		/// not set to true by alt uses
+		/// </summary>
+		public bool realControlUseItem = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
 		public override void ResetEffects() {
@@ -432,9 +516,25 @@ namespace Origins {
 
 			ashenKBReduction = false;
 			felnumSet = false;
+			felnumEnemiesFriendly = false;
 			minerSet = false;
 			lostSet = false;
 			refactoringPieces = false;
+			if (refactoringPiecesDashCooldown > 0) {
+				if (--refactoringPiecesDashCooldown <= 0) {
+					for (int i = 0; i < 8; i++) {
+						Dust.NewDust(
+							Player.position,
+							Player.width,
+							Player.height,
+							DustID.TintableDustLighted,
+							Scale: 1.5f,
+							newColor: Main.hslToRgb(Main.rand.NextFloat(6), 1, 0.5f)
+						);
+					}
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
+				}
+			}
 			rivenSet = false;
 			rivenSetBoost = false;
 			bleedingObsidianSet = false;
@@ -443,12 +543,13 @@ namespace Origins {
 			riptideSet = false;
 			riptideLegs = false;
 			necroSet = false;
-			novaSet = false;
-			tendonSet = false;
-			acridSet = false;
+			necroSet2 = false;
 			if (necroSetAmount > 0) {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
+			novaSet = false;
+			tendonSet = false;
+			acridSet = false;
 			soulhideSet = false;
 			scavengerSet = false;
 			amberSet = false;
@@ -464,6 +565,33 @@ namespace Origins {
 			rainSet = false;
 			rubberBody = false;
 			if (nearTrafficCone > 0) nearTrafficCone--;
+			if (extremophileSet) {
+				if (extremophileSetTime > 0 && extremophileSetTime < 60 * 15) extremophileSetTime++;
+				extremophileSet = false;
+			} else {
+				extremophileSetHits = 0;
+				extremophileSetTime = 0;
+			}
+			if (luckyHatSet) {
+				if (Player.ItemAnimationActive) {
+					luckyHatSetTime = LuckyHatSetActive && Player.itemAnimation > 1 ? -1 : 0;
+				} else if (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) {
+					if (luckyHatSetTime < 90) {
+						luckyHatSetTime++;
+						if (LuckyHatSetActive) {
+							SoundEngine.PlaySound(SoundID.Camera.WithPitchRange(0.6f, 1f), Player.Center);
+							SoundEngine.PlaySound(SoundID.Coins.WithPitchRange(0.6f, 1f), Player.Center);
+						}
+					}
+				} else {
+					luckyHatSetTime = 0;
+				}
+				luckyHatSet = false;
+			} else {
+				luckyHatSetTime = 0;
+			}
+			mildewHead = false;
+			mildewSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
@@ -499,10 +627,7 @@ namespace Origins {
 			endlessExplosives = false;
 			if (!Player.immune) cinderSealCount = cinderSealItem?.useAnimation ?? 4;
 			cinderSealItem = null;
-			if (toxicShock) {
-				if (Player.breath > oldBreath) Player.breath = oldBreath;
-				toxicShock = false;
-			}
+			toxicShock = false;
 			gunGlove = false;
 			gunGloveItem = null;
 			guardedHeart = false;
@@ -515,6 +640,7 @@ namespace Origins {
 			spiritShard = false;
 			ravel = false;
 			heliumTank = false;
+			heliumTankSqueak = false;
 			messyLeech = false;
 			magmaLeech = false;
 			noU = false;
@@ -523,12 +649,28 @@ namespace Origins {
 			turboReel2 = false;
 			boomerangMagnet = false;
 
-			Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
-			oldPlasmaPhial = plasmaPhial;
-			plasmaPhial = false;
-			Player.ApplyBuffTimeAccessory(oldDonorWristband, donorWristband, donorWristbandMult, Main.debuff);
-			oldDonorWristband = donorWristband;
-			donorWristband = false;
+			try {
+				Main.debuff[BuffID.PotionSickness] = false;
+				Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
+				oldPlasmaPhial = plasmaPhial;
+				plasmaPhial = false;
+
+				Player.ApplyBuffTimeAccessory(oldDonorWristband, donorWristband, donorWristbandMult, Main.debuff);
+				oldDonorWristband = donorWristband;
+				donorWristband = false;
+
+				Player.ApplyBuffTimeAccessory(oldMithrafin, mithrafin, mithrafinSelfMult, Mithrafin.buffTypes);
+				oldMithrafin = mithrafin;
+				mithrafin = false;
+			} finally {
+				Main.debuff[BuffID.PotionSickness] = true;
+			}
+			fullSend = false;
+			akaliegis = false;
+			dashHitDebuffs.Clear();
+			dashVase = false;
+			dashVaseDye = 0;
+			goldenLotus = false;
 
 			trapCharm = false;
 			dangerBarrel = false;
@@ -566,6 +708,7 @@ namespace Origins {
 			shineSpark = false;
 			magicTripwire = false;
 			lousyLiverCount = 0;
+			lousyLiverRange = 256;
 			if (lousyLiverDebuffs.Count > 0) lousyLiverDebuffs.Clear();
 			summonTagForceCrit = false;
 			rubyReticle = false;
@@ -611,6 +754,7 @@ namespace Origins {
 			dryadNecklace = false;
 			weakpointAnalyzer = false;
 			bindingBookVisual = false;
+			abyssalAnchorVisual = false;
 			priorityMail = false;
 			emergencyBeeCanister = false;
 			if (!blizzardwalkerJacket) blizzardwalkerActiveTime = 0;
@@ -625,6 +769,7 @@ namespace Origins {
 			bugZapper = false;
 			if (bugZapperFlyTime > 0) bugZapperFlyTime--;
 			bombCharminIt = false;
+			bombCharminItStrength = 24;
 			cursedVoice = false;
 			cursedVoiceItem = null;
 			if (cursedVoiceCooldown > 0) cursedVoiceCooldown--;
@@ -640,6 +785,15 @@ namespace Origins {
 			meleeScaleMultiplier = 1;
 			eitriteGunMagazine = false;
 			fairyLotus = false;
+			abyssalAnchor = false;
+			mildewHeart = false;
+			mildewHeartRegenMult = 1f;
+			faithBeads = false;
+			if (!retaliatoryTendril) {
+				retaliatoryTendrilStrength = 0;
+				retaliatoryTendrilCharge = 0;
+			}
+			retaliatoryTendril = false;
 			if (laserTagVest) {
 				if (laserTagRespawnDelay > 0) laserTagRespawnDelay--;
 			} else {
@@ -655,9 +809,17 @@ namespace Origins {
 			staticShock = false;
 			miniStaticShock = false;
 			staticShockDamage = false;
+			if (!Player.HasBuff<Relay_Rod_Buff>()) relayRodStrength = 0;
 			broth = null;
+			if (staticBrothEffectCooldown > 0)
+				staticBrothEffectCooldown--;
 
+			for (int i = 0; i < Player.inventory.Length; i++) {
+				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask) mojoFlaskCountMax = mojoFlask.FlaskUseCount;
+			}
+			
 			boatRockerAltUse = false;
+			boatRockerAltUse2 = false;
 
 			manaShielding = 0f;
 
@@ -676,6 +838,11 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
+			projectileSpeedBoost = StatModifier.Default;
+
+			if (itemComboAnimationTime > 0)
+				itemComboAnimationTime--;
+
 			if (cryostenLifeRegenCount > 0)
 				cryostenLifeRegenCount--;
 			if (bombCharminItLifeRegenCount > 0)
@@ -715,12 +882,26 @@ namespace Origins {
 			} else if (!Player.HasBuff<Defiled_Asphyxiator_Debuff_3>()) {
 				rasterizedTime = 0;
 			}
+			Soul_Snatcher.UpdateCharge(Player, ref soulSnatcherTime, ref soulSnatcherActive);
 			plagueSight = false;
 			plagueSightLight = false;
 			mountOnly = false;
 			hideAllLayers = false;
 			disableUseItem = false;
 			thornsVisualProjType = -1;
+			if (changeSize) {
+				Player.position.X -= (targetWidth - Player.width) / 2;
+				Player.position.Y -= targetHeight - Player.height;
+				Player.width = targetWidth;
+				Player.height = targetHeight;
+			} else if (targetWidth != 0) {
+				Player.position.X -= (20 - Player.width) / 2;
+				Player.position.Y -= 42 - Player.height;
+				Player.width = 20;
+				Player.height = 42;
+				targetWidth = 0;
+				targetHeight = 0;
+			}
 			changeSize = false;
 			minionSubSlots = new float[minionSubSlotValues];
 			if (timeSinceLastDeath < int.MaxValue) timeSinceLastDeath++;
@@ -792,17 +973,17 @@ namespace Origins {
 				dashDelay--;
 			}
 			#endregion
-			if (voodooDollIndex >= 0) {
-				Item voodooDoll = Main.item[voodooDollIndex];
+			if (voodooDoll is not null) {
 				Player.wet |= forceWetCollision = voodooDoll.wet;
 				Player.lavaWet |= forceLavaCollision = voodooDoll.lavaWet;
 				Player.honeyWet |= forceHoneyCollision = voodooDoll.honeyWet;
 				Player.shimmerWet |= forceShimmerCollision = voodooDoll.shimmerWet;
-				voodooDollIndex = -1;
 			}
+			voodooDoll = null;
 			forceDrown = false;
 			heldProjOverArm = null;
 			shieldGlow = -1;
+			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
@@ -820,6 +1001,29 @@ namespace Origins {
 		public void SetTalkingPet(int index) {
 			talkingPet = index;
 			talkingPetTime = 2;
+		}
+		public void UnlockJournalEntry(string entryName) {
+			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
+				unreadJournalEntries.Add(entryName);
+				SoundEngine.PlaySound(Origins.Sounds.Journal);
+			}
+		}
+		bool necromanaUsedThisUse = false;
+		public override void OnConsumeMana(Item item, int manaConsumed) {
+			if (!necromanaUsedThisUse && (necroSet || necroSet2 || item.CountsAsClass(DamageClass.Summon)) && necromancyPrefixMana > 0) {
+				int restoreMana = (int)Math.Min(necromancyPrefixMana, manaConsumed);
+				necromancyPrefixMana -= restoreMana;
+				Player.statMana += restoreMana;
+				necromanaUsedThisUse = true;
+			}
+		}
+		public override void OnMissingMana(Item item, int neededMana) {
+			if (!necromanaUsedThisUse && (necroSet || necroSet2 || item.CountsAsClass(DamageClass.Summon)) && Player.statMana + necromancyPrefixMana >= neededMana) {
+				int restoreMana = neededMana - Player.statMana;
+				necromancyPrefixMana -= restoreMana;
+				Player.statMana += restoreMana;
+				necromanaUsedThisUse = true;
+			}
 		}
 	}
 }

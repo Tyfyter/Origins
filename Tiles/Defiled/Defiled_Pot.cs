@@ -13,6 +13,7 @@ namespace Origins.Tiles.Defiled {
 		public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			//Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;

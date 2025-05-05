@@ -1,6 +1,7 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
 using Origins.Items.Tools;
@@ -17,7 +18,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-    public partial class OriginPlayer : ModPlayer {
+	public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
 			if (bugZapper && tornCurrentSeverity > 0) {
 				Player.statDefense *= 1.15f + tornCurrentSeverity;
@@ -69,7 +70,7 @@ namespace Origins {
 				}
 			}
 			if (lousyLiverCount > 0) {
-				const float maxDist = 256 * 256;
+				float maxDist = lousyLiverRange * lousyLiverRange;
 				List<(NPC target, float dist)> targets = new(lousyLiverCount);
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC currentTarget = Main.npc[i];
@@ -261,7 +262,7 @@ namespace Origins {
 			if (tendonSet) {
 				Player.moveSpeed *= Math.Min((Player.statLife / 167) + 1, 1.65f);
 				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
-				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
+				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.375f);
 			}
 			if (explosiveArtery) {
 				if (explosiveArteryCount == -1) {
@@ -313,6 +314,35 @@ namespace Origins {
 						Player.AddBuff(cursedVoiceItem.buffType, cursedVoiceCooldown);
 					} finally {
 						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = longerExpertDebuff;
+					}
+				}
+			}
+			if (goldenLotus && Main.myPlayer == Player.whoAmI) {
+				if (Keybindings.GoldenLotus.JustPressed) {
+					int projType = goldenLotusItem.shoot;
+					if (Player.ownedProjectileCounts[projType] <= 0) {
+						goldenLotusProj = Projectile.NewProjectile(
+							Player.GetSource_Accessory(goldenLotusItem),
+							Player.Center,
+							Vector2.Zero,
+							projType,
+							0,
+							0,
+							Player.whoAmI
+						);
+					} else {
+						Projectile goldenLotusFairy = Main.projectile[goldenLotusProj];
+						goldenLotusFairy.ai[0] = -1;
+						for (int i = 0; i < Main.chest.Length; i++) {
+							Chest chest = Main.chest[i];
+							if (chest is null) continue;
+							if (Player.tileTargetX >= chest.x && Player.tileTargetX <= chest.x + 1 && Player.tileTargetY >= chest.y && Player.tileTargetY <= chest.y + 1) {
+								goldenLotusFairy.ai[0] = -2;
+								goldenLotusFairy.ai[1] = i;
+								break;
+							}
+						}
+						goldenLotusFairy.netUpdate = true;
 					}
 				}
 			}
@@ -411,8 +441,8 @@ namespace Origins {
 
 			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) { 
 				for (int i = 0; i < cinderSealCount; i++) {
-                    Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
-                }
+					Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
+				}
 				if (Player.immuneTime % cinderSealItem.useTime == 1) {
 					cinderSealCount--;
 					cinderSealItem.ModItem.Shoot(
@@ -440,16 +470,44 @@ namespace Origins {
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
 			if (staticShock) Static_Shock_Debuff.ProcessShocking(Player, miniStaticShock ? 7 : 5);
 			else if (miniStaticShock) Static_Shock_Debuff.ProcessShocking(Player, 2);
+			if (mildewHeart) {
+				float speed = 0.25f * mildewHeartRegenMult;
+				if (Player.statLife <= 0) {
+					Player.lifeRegenCount = 0;
+					speed = 0.81f;
+					Player.KillMe(lastMildewDeathReason, 0, 0, lastMildewDeathPvP);
+				} else if (Player.statLife < mildewHealth) {
+					Player.lifeRegenCount += 24;
+					speed = 0.1f;
+				}
+				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
+			} else {
+				mildewHealth = 0;
+			}
+			if (necromancyPrefixMana > Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) {
+				necromancyPrefixMana *= 0.97f;
+				Player.manaRegenBonus += (int)((necromancyPrefixMana - Player.statManaMax2) * 0.01f);
+				Player.manaRegenDelay = 0;
+				if (necromancyPrefixMana < Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) necromancyPrefixMana = Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier;
+			}
 			oldGravDir = Player.gravDir;
 		}
+		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
+			if (mildewHeart && mildewHealth > 0) {
+				lastMildewDeathReason = damageSource;
+				lastMildewDeathPvP = pvp;
+				return mildewHealth <= 0;
+			}
+			return true;
+		}
 		public override void UpdateDyes() {
-			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
+			if (dashVaseVisual) {
 				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-					if (Player.armor[i].ModItem is Ravel) {
-						Player.cMount = Player.dye[i].dye;
+					if (Player.armor[i].ModItem is Fallacious_Vase) {
+						dashVaseDye = Player.dye[i].dye;
 					}
-					if (Player.armor[i + 10].ModItem is Ravel) {
-						Player.cMount = Player.dye[i].dye;
+					if (Player.armor[i + 10].ModItem is Fallacious_Vase) {
+						dashVaseDye = Player.dye[i].dye;
 						break;
 					}
 				}
@@ -547,9 +605,12 @@ namespace Origins {
 			}
 		}
 		public override void UpdateLifeRegen() {
+			if (extremophileSet && Player.lifeRegen < 0) {
+				Player.lifeRegen -= Main.rand.RandomRound(Player.lifeRegen * 0.333f);
+			}
 			if (oldCryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
 			if (bombCharminItLifeRegenCount > 0) {
-				Player.lifeRegenCount += 24;
+				Player.lifeRegenCount += bombCharminItStrength;
 				const float offsetMult = 1;
 				const float fadeIn = 0;
 				Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Asphalt, Scale: 0.75f);
@@ -571,11 +632,11 @@ namespace Origins {
 			}
 			if (primordialSoup) {
 				Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
-            }
+			}
 			if (bugZapper) {
-                Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
-            }
-        }
+				Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
+			}
+		}
 		public void SetMimicSetChoice(int level, int choice) {
 			mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
 		}

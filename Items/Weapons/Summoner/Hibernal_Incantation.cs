@@ -22,8 +22,9 @@ namespace Origins.Items.Weapons.Summoner {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
-			Item.damage = 15;
+			Item.damage = 10;
 			Item.DamageType = DamageClasses.Incantation;
+			Item.noMelee = true;
 			Item.width = 22;
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -145,7 +146,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Hibernal_Incantation_Buff.ID, 240);
-			target.AddBuff(BuffID.Frostburn, damageDone * 6);
+			if (Main.rand.NextBool(4)) target.AddBuff(BuffID.Frostburn, damageDone * 6);
 			if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			if (Projectile.ai[0] != 0) Projectile.damage = (int)(Projectile.damage * 0.96f);
 			Projectile.localAI[2]++;
@@ -191,7 +192,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);//sets the projectile stat values to those of Ruby Bolts
+			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.penetrate = 2;//when projectile.penetrate reaches 0 the projectile is destroyed
 			Projectile.extraUpdates = 1;
@@ -216,7 +217,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Hibernal_Incantation_Buff.ID, 240);
-			target.AddBuff(BuffID.Frostburn, damageDone * 6);
+			if (Main.rand.NextBool(4)) target.AddBuff(BuffID.Frostburn, damageDone * 4);
 			if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			if (Projectile.ai[0] != 0) Projectile.damage = (int)(Projectile.damage * 0.96f);
 		}

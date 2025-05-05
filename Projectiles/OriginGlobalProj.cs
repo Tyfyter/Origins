@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items;
@@ -8,22 +9,29 @@ using Origins.Items.Armor.Felnum;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.MiscE;
+using Origins.Projectiles.Weapons;
 using Origins.Questing;
 using Origins.Reflection;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Origins.Projectiles {
 	public class OriginGlobalProj : GlobalProjectile, IDrawProjectileEffect {
@@ -55,13 +63,18 @@ namespace Origins.Projectiles {
 		}
 		public bool neuralNetworkEffect = false;
 		public bool neuralNetworkHit = false;
+		public bool crawdadNetworkEffect = false;
 		public Vector2? weakpointAnalyzerTarget = default;
 		public Vector2 extraGravity = default;
 		public bool shouldUnmiss = false;
 		public int unmissTarget = -1;
 		public Vector2 unmissTargetPos = default;
 		public int unmissAnimation = 0;
+		public bool laserBow = false;
+		public bool astoxoEffect = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
+		public Vector2[] oldPositions = [];
+		public OwnerMinionKey ownerMinion = null;
 		public override void Load() {
 			itemSourceEffects = [];
 		}
@@ -96,6 +109,9 @@ namespace Origins.Projectiles {
 				projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 				break;
 			}
+			if (projectile.ModProjectile?.Mod is Origins) {
+				ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[projectile.type] = true;
+			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			felnumBonus = MainReflection._currentPlayerOverride.GetValue() is null ? 0 : Main.CurrentPlayer.OriginPlayer().felnumShock;
@@ -106,7 +122,7 @@ namespace Origins.Projectiles {
 				weakpointAnalyzerTarget = Main.MouseWorld;
 			}
 			if (source is EntitySource_ItemUse itemUseSource) {
-				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out var itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
+				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
 				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && originPlayer.entangledEnergy) {
 					fiberglassLifesteal = true;
@@ -164,9 +180,11 @@ namespace Origins.Projectiles {
 						}
 					}
 					OriginGlobalProj parentGlobalProjectile = parentProjectile.GetGlobalProjectile<OriginGlobalProj>();
+					ownerMinion = parentProjectile.minion || parentProjectile.sentry ? new(parentProjectile.type, parentProjectile.owner, parentProjectile.identity) : parentGlobalProjectile.ownerMinion;
 					Prefix = parentGlobalProjectile.Prefix;
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
+					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -267,8 +285,36 @@ namespace Origins.Projectiles {
 			} else if (unmissAnimation > 0) {
 				unmissAnimation--;
 			}
+			{
+				bool mildewArmor = false;
+				if (projectile.friendly && projectile.TryGetOwner(out Player owner)) {
+					mildewArmor = owner.OriginPlayer().mildewSet;
+				}
+				int neededTrailLength = 0;
+				if (mildewArmor) neededTrailLength = Math.Max(neededTrailLength, 30);
+				if (neededTrailLength != 0) {
+					if (oldPositions.Length != neededTrailLength) Array.Resize(ref oldPositions, neededTrailLength);
+					Rectangle mildewHitbox = new(0, 0, 8, 8);
+					for (int i = oldPositions.Length - 1; i > 0; i--) {
+						oldPositions[i] = oldPositions[i - 1];
+						if (mildewArmor) {
+							mildewHitbox.X = (int)oldPositions[i].X - 4;
+							mildewHitbox.Y = (int)oldPositions[i].Y - 4;
+							foreach (NPC npc in Main.ActiveNPCs) {
+								if (npc.chaseable && !npc.immortal && !npc.friendly && mildewHitbox.Intersects(npc.Hitbox)) {
+									npc.AddBuff(Toxic_Shock_Debuff.ID, 60);
+								}
+							}
+						}
+					}
+					oldPositions[0] = projectile.Center;
+				}
+			}
 		}
 		public override void AI(Projectile projectile) {
+			if (prefix is IProjectileAIPrefix projectileAIPrefix) {
+				projectileAIPrefix.ProjectileAI(projectile);
+			}
 			if (!isFromMitosis && !hasUsedMitosis && projectile.owner == Main.myPlayer && !ProjectileID.Sets.IsAWhip[projectile.type] && projectile.type != ModContent.ProjectileType<Mitosis_P>()) {
 				for (int i = 0; i < Mitosis_P.mitosises.Count; i++) {
 					if (projectile.Colliding(projectile.Hitbox, Main.projectile[Mitosis_P.mitosises[i]].Hitbox)) {
@@ -280,9 +326,9 @@ namespace Origins.Projectiles {
 							projectile.damage,
 							projectile.knockBack,
 							projectile.owner,
-							Mitosis_P.aiVariableResets[projectile.type][0] ? 0 : projectile.ai[0],
-							Mitosis_P.aiVariableResets[projectile.type][1] ? 0 : projectile.ai[1],
-							Mitosis_P.aiVariableResets[projectile.type][2] ? 0 : projectile.ai[2]
+							OriginsSets.Projectiles.DuplicationAIVariableResets[projectile.type].first ? 0 : projectile.ai[0],
+							OriginsSets.Projectiles.DuplicationAIVariableResets[projectile.type].second ? 0 : projectile.ai[1],
+							OriginsSets.Projectiles.DuplicationAIVariableResets[projectile.type].third ? 0 : projectile.ai[2]
 						);
 						duplicated.rotation += 0.25f;
 
@@ -302,6 +348,22 @@ namespace Origins.Projectiles {
 				}
 				if (hasUsedMitosis && projectile.minion && --mitosisTimeLeft <= 0) {
 					hasUsedMitosis = false;
+				}
+			}
+			if (!projectile.ownerHitCheck && projectile.damage > 0) {
+				for (int i = 0; i < The_Bird_Swing.reflectors.Count; i++) {
+					Projectile reflector = Main.projectile[The_Bird_Swing.reflectors[i]];
+					Rectangle hitbox = reflector.Hitbox;
+					hitbox.Inflate(16, 16);
+					if (projectile.WithinRange(reflector.Center, 10 * 16) && projectile.Colliding(projectile.Hitbox, hitbox)) {
+						projectile.reflected = true;
+						if (projectile.hostile) projectile.damage *= 3;
+						projectile.hostile = false;
+						projectile.friendly = true;
+						float speed = Math.Max(12f / projectile.MaxUpdates, projectile.velocity.Length());
+						projectile.velocity = reflector.velocity * speed;
+						projectile.owner = reflector.owner;
+					}
 				}
 			}
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor) {
@@ -324,6 +386,17 @@ namespace Origins.Projectiles {
 				projectile.velocity += extraGravity;
 				break;
 			}
+			if (laserBow && projectile.timeLeft % 10 == 0) {
+				Projectile.NewProjectile(
+					projectile.GetSource_FromAI(),
+					projectile.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Brine_Droplet>(),
+					projectile.damage / 3,
+					projectile.knockBack,
+					projectile.owner
+				);
+			}
 		}
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			if (viperEffect) {
@@ -343,6 +416,9 @@ namespace Origins.Projectiles {
 					Main.player[projectile.owner].OriginPlayer().usedFelnumShock = true;
 					SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 				}
+			}
+			if (prefix is IModifyHitNPCPrefix onHitNPCPrefix) {
+				onHitNPCPrefix.ModifyHitNPC(projectile, target, ref modifiers);
 			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
@@ -365,12 +441,40 @@ namespace Origins.Projectiles {
 					target.AddBuff(Toxic_Shock_Debuff.ID, 450);
 				}
 			}
+			if (crawdadNetworkEffect) {
+				ref int crawdadNetworkCount = ref Main.player[projectile.owner].OriginPlayer().crawdadNetworkCount;
+				if (++crawdadNetworkCount >= 7) {
+					crawdadNetworkCount = 0;
+					if (projectile.owner == Main.myPlayer) {
+						Projectile.NewProjectile(
+							projectile.GetSource_OnHit(target),
+							projectile.Center,
+							projectile.velocity,
+							ModContent.ProjectileType<Crawdaddys_Revenge_P>(),
+							projectile.damage,
+							projectile.knockBack
+						);
+					}
+				}
+			}
 			if (neuralNetworkEffect) {
 				neuralNetworkHit = true;
 				if (target.CanBeChasedBy(projectile)) {
-					int buffType = ModContent.BuffType<Neural_Network_Buff>();
-					Main.player[projectile.owner].AddBuff(buffType, 1);
+					Player player = Main.player[projectile.owner];
+					player.AddBuff(ModContent.BuffType<Neural_Network_Buff>(), 1);
+					player.OriginPlayer().neuralNetworkMisses = 0;
 				}
+			}
+			switch (projectile.type) {
+				case ProjectileID.ThunderStaffShot:
+				if (OriginConfig.Instance.ThunderStaff && Main.rand.NextBool()) Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
+				break;
+				case ProjectileID.ThunderSpear:
+				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool()) Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
+				break;
+				case ProjectileID.ThunderSpearShot:
+				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool(3)) Static_Shock_Debuff.Inflict(target, Main.rand.Next(90, 180));
+				break;
 			}
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
@@ -403,9 +507,20 @@ namespace Origins.Projectiles {
 			}
 			if (neuralNetworkEffect && !neuralNetworkHit) {
 				neuralNetworkEffect = false;
-				if (projectile.owner == Main.myPlayer) {
-					Main.player[projectile.owner].ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
+				Player player = Main.player[projectile.owner];
+				if (projectile.owner == Main.myPlayer && ++player.OriginPlayer().neuralNetworkMisses >= 4) {
+					player.ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
 				}
+			}
+			if (astoxoEffect) Astoxo.DoEffect(projectile);
+			if (projectile.type == ProjectileID.Boulder && Main.noTrapsWorld && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(3)) {
+				Vector2 pos = projectile.Bottom;
+				NPC.NewNPC(
+					projectile.GetSource_Death(),
+					(int)pos.X,
+					(int)pos.Y,
+					ModContent.NPCType<Boulder_Mimic>()
+				);
 			}
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
@@ -422,6 +537,7 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(viperEffect);
 			bitWriter.WriteBit(isFromMitosis);
 			bitWriter.WriteBit(shouldUnmiss);
+			bitWriter.WriteBit(laserBow);
 
 			binaryWriter.Write(Prefix);
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) binaryWriter.Write(felnumBonus);
@@ -432,11 +548,19 @@ namespace Origins.Projectiles {
 
 			bitWriter.WriteBit(extraGravity != default);
 			if (extraGravity != default) binaryWriter.WriteVector2(extraGravity);
+
+			bitWriter.WriteBit(ownerMinion is not null);
+			if (ownerMinion is not null) {
+				binaryWriter.Write(ownerMinion.Type);
+				binaryWriter.Write((byte)ownerMinion.Owner);
+				binaryWriter.Write(ownerMinion.Identity);
+			}
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
 			isFromMitosis = bitReader.ReadBit();
 			shouldUnmiss = bitReader.ReadBit();
+			laserBow = bitReader.ReadBit();
 
 			Prefix = binaryReader.ReadInt32();
 			if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = binaryReader.ReadSingle();
@@ -445,6 +569,8 @@ namespace Origins.Projectiles {
 			if (bitReader.ReadBit()) weakpointAnalyzerTarget = binaryReader.ReadVector2();
 
 			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
+
+			if (bitReader.ReadBit()) ownerMinion = new(binaryReader.ReadInt32(), binaryReader.ReadByte(), binaryReader.ReadInt32());
 		}
 		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
 			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;
@@ -476,7 +602,7 @@ namespace Origins.Projectiles {
 				}
 				projectile.ai[0]++;
 				for (int num354 = 0; num354 < 1; num354++) {
-					int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, color);
+					int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0, color);
 					Main.dust[d].noGravity = true;
 					Dust dust1 = Main.dust[d];
 					Dust dust2 = dust1;
@@ -491,6 +617,70 @@ namespace Origins.Projectiles {
 				projectile.ai[0]++;
 			}
 			projectile.rotation += 0.3f * projectile.direction;
+		}
+		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
+			if (projectile.friendly && projectile.TryGetOwner(out Player owner) && owner.OriginPlayer().mildewSet) {
+				Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Mildew_Whip_P>()].Value;
+				int frameSeed = projectile.type + projectile.whoAmI;
+				for (int i = 0; i < oldPositions.Length - 1; i++) {
+					if (i < 30) {
+						if (oldPositions[i + 1] == Vector2.Zero) break;
+						frameSeed = DrawMildewVine(texture, oldPositions[i], oldPositions[i + 1], frameSeed,
+							new Rectangle(18, 32, 14, 16),
+							new Rectangle(18, 62, 10, 12),
+							new Rectangle(18, 90, 12, 14)
+						);
+					}
+				}
+			}
+			return true;
+		}
+		static int DrawMildewVine(Texture2D texture, Vector2 a, Vector2 b, int frameSeed, params Rectangle[] frames) {
+			if (frames.Length == 0) throw new ArgumentException("Must have frames", nameof(frames));
+			float rotation = (b - a).ToRotation() + MathHelper.PiOver2;
+			Rectangle frame;
+			float length = (b - a).Length();
+			/*if (length > 12) {
+				frame = frames[new FastRandom(++frameSeed).Next(frames.Length)];
+				Main.EntitySpriteDraw(
+					texture,
+					a - Main.screenPosition,
+					frame,
+					Lighting.GetColor(a.ToTileCoordinates()),
+					rotation,
+					frame.Size() * 0.5f,
+					1,
+					(SpriteEffects)new FastRandom(++frameSeed).Next(4)
+				);
+				frame = frames[new FastRandom(++frameSeed).Next(frames.Length)];
+				Main.EntitySpriteDraw(
+					texture,
+					b - Main.screenPosition,
+					frame,
+					Lighting.GetColor(a.ToTileCoordinates()),
+					rotation,
+					frame.Size() * 0.5f,
+					1,
+					(SpriteEffects)new FastRandom(++frameSeed).Next(4)
+				);
+			}*/
+			Vector2 dir = (b - a) / length;
+			while (length > 0) {
+				frame = frames[new FastRandom(++frameSeed).Next(frames.Length)];
+				Main.EntitySpriteDraw(
+					texture,
+					a - Main.screenPosition,
+					frame,
+					Lighting.GetColor(a.ToTileCoordinates()),
+					rotation,
+					frame.Size() * 0.5f * Vector2.UnitX,
+					1,
+					(SpriteEffects)new FastRandom(++frameSeed).Next(4)
+				);
+				a += dir * (frame.Height - 2);
+				length -= frame.Height - 2;
+			}
+			return frameSeed;
 		}
 		public override void PostDraw(Projectile projectile, Color lightColor) {
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2 && ProjectileID.Sets.IsAWhip[projectile.type]) {
@@ -522,4 +712,5 @@ namespace Origins.Projectiles {
 			}
 		}
 	}
+	public record OwnerMinionKey(int Type, int Owner, int Identity);
 }

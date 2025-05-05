@@ -1,38 +1,37 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Accessories;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
 namespace Origins.Items.Other.Consumables {
 	public class Mojo_Flask : ModItem, ICustomWikiStat {
-		public const int cooldown_time = 5 * 60;
-		public static int ID { get; private set; }
 		public string[] Categories => [
 			"Potion"
 		];
+		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{nameof(Mojo_Flask)}.{nameof(Tooltip)}"));
 		public override void SetStaticDefaults() {
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrame));
-			ID = Type;
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrameGetter(Type, FlaskUseCount + 1)));
 		}
-		public static Rectangle GetFrame(Texture2D texture) {
-			const int frameCount = 5;
+		public virtual int CooldownTime => 5 * 60;
+		public virtual int FlaskUseCount => 5;
+		public static Func<Texture2D, Rectangle> GetFrameGetter(int type, int frameCount) => (Texture2D texture) => {
 			int frame = 5;
 			if (!Main.gameMenu) {
-				frame = Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
-				if (Main.LocalPlayer.ItemAnimationActive && Main.LocalPlayer.HeldItem.type == ID) {
+				frame = Main.CurrentPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
+				if (Main.CurrentPlayer.ItemAnimationActive && Main.CurrentPlayer.HeldItem.type == type) {
 					frame++;
 				}
 			}
+			if (frame > frameCount) frame = frameCount;
 			return texture.Frame(frameCount, 1, Math.Min(frame, frameCount - 1), 0);
-		}
+		};
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.HealingPotion);
 			Item.maxStack = 1;
@@ -46,14 +45,19 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = 0; i < tooltips.Count; i++) {
-				if (tooltips[i].Name == "BuffTime") {
+				switch (tooltips[i].Name) {
+					case "BuffTime":
 					tooltips[i] = new TooltipLine(
 						Mod,
 						"Cooldown",
-						OriginExtensions.GetCooldownText(cooldown_time)
+						OriginExtensions.GetCooldownText(CooldownTime)
 					);
 					break;
 				}
+				tooltips[i].Text = tooltips[i].Text.Replace("{FlaskCureAmount}", Item.buffTime.ToString()).Replace("{FlaskUseCount}", FlaskUseCount.ToString());
+			}
+			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+				OriginsModIntegrations.GoToKeybind(Keybindings.UseMojoFlask);
 			}
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
@@ -69,7 +73,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			player.GetModPlayer<OriginPlayer>().mojoFlaskCount--;
-			player.AddBuff(ModContent.BuffType<Mojo_Flask_Cooldown>(), cooldown_time);
+			player.AddBuff(ModContent.BuffType<Mojo_Flask_Cooldown>(), CooldownTime);
 			player.AddBuff(Purifying_Buff.ID, Item.buffTime);
 			return true;
 		}

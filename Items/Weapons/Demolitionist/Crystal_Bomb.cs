@@ -1,12 +1,11 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Crystal_Bomb : ModItem, ICustomWikiStat {
+	public class Crystal_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsBomb",
@@ -17,15 +16,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 69;
+			Item.damage = 65;
 			Item.value *= 14;
 			Item.shoot = ModContent.ProjectileType<Crystal_Bomb_P>();
 			Item.shootSpeed *= 1.5f;
-			Item.knockBack = 5f;
 			Item.ammo = ItemID.Bomb;
 			Item.value = Item.sellPrice(silver: 5);
 			Item.rare = ItemRarityID.LightRed;
-            Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
@@ -44,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = -1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
@@ -63,7 +61,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int count = 14 - Main.rand.Next(3);
 			float rot = TwoPi / count;
 			for (int i = count; i > 0; i--) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 4, 6, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
 			}
 		}
 	}

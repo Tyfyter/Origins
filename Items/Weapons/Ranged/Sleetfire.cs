@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Ranged {
     }
 	public class Sleetfire_P : ModProjectile {
 
-        public override string Texture => "Origins/Items/Weapons/Ranged/Projectile_85";
+        public override string Texture => "Terraria/Images/Projectile_85";
         public static float Lifetime => 30f;
         public static float MinSize => 16f;
         public static float MaxSize => 66f;

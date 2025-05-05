@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ranged;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -12,16 +13,22 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy, IWikiNPC {
+	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy, IWikiNPC, IJournalEntrySource {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public Rectangle DrawRect => new(-3, 6, 90, 118);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public class Ancient_Defiled_Cyclops_Entry : JournalEntry {
+			public override string TextKey => "Ancient_Defiled_Cyclops";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 1);
+		}
+		public string EntryName => "Origins/" + typeof(Ancient_Defiled_Cyclops_Entry).Name;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 7;
 			ItemID.Sets.KillsToBanner[Type] *= 3;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -41,7 +48,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, false) * Defiled_Wastelands.SpawnRates.AncientCyclops;
 		}
@@ -52,6 +59,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 14));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 14));

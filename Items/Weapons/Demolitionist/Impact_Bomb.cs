@@ -15,12 +15,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 42;
-			Item.useTime = (int)(Item.useTime * 0.75);
-			Item.useAnimation = (int)(Item.useAnimation * 0.75);
+			Item.damage = 40;
+			/*Item.useTime = (int)(Item.useTime * 0.75);
+			Item.useAnimation = (int)(Item.useAnimation * 0.75);*/
 			Item.shoot = ModContent.ProjectileType<Impact_Bomb_P>();
 			Item.shootSpeed *= 1.75f;
-			Item.knockBack = 13f;
 			Item.value = Item.sellPrice(silver: 4);
 			Item.rare = ItemRarityID.Green;
             //Item.ArmorPenetration += 3;
@@ -42,6 +41,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
 			if (Projectile.timeLeft < 60 && Main.rand.Next(0, Projectile.timeLeft) == 0) Projectile.Kill();

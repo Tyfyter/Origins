@@ -84,6 +84,11 @@ using Terraria.GameContent.Generation;
 using Origins.Items.Mounts;
 using BetterDialogue.UI;
 using Terraria.ModLoader.Config;
+using Microsoft.Xna.Framework.Audio;
+using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
+using Origins.NPCs.Brine;
+using Terraria.GameContent.Shaders;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -109,7 +114,6 @@ namespace Origins {
 			On_NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
 			//On.Terraria.WorldGen.GERunner += OriginSystem.GERunnerHook;
 			//On.Terraria.WorldGen.Convert += OriginSystem.ConvertHook;
-			Petrified_Tree.Load();
 			OriginSystem worldInstance = MC.GetInstance<OriginSystem>();
 			if (worldInstance is not null) {
 				worldInstance.defiledResurgenceTiles = [];
@@ -219,8 +223,21 @@ namespace Origins {
 				return orig(self);
 			};
 			On_NPC.AddBuff += (orig, self, type, time, quiet) => {
+				Player inflictingPlayer = Main.CurrentPlayer;
+				float durationModifier = 1f;
+				if (Main.ProjectileUpdateLoopIndex != -1) {
+					Projectile projectile = Main.projectile[Main.ProjectileUpdateLoopIndex];
+					if (projectile.TryGetOwner(out Player owner)) {
+						inflictingPlayer = owner;
+						OriginPlayer originPlayer = owner.OriginPlayer();
+						if (projectile.IsMinionOrSentryRelated && originPlayer.broth is Savory_Broth) {
+							durationModifier *= 1.2f;
+						}
+					}
+				}
+				time = (int)(time * durationModifier);
 				orig(self, type, time, quiet);
-				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsATagBuff[type] && Main.LocalPlayer.GetModPlayer<OriginPlayer>().summonTagForceCrit) {
+				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsATagBuff[type] && inflictingPlayer.OriginPlayer().summonTagForceCrit) {
 					orig(self, Headphones_Buff.ID, 300, quiet);
 				}
 			};
@@ -582,7 +599,6 @@ namespace Origins {
 				c.EmitRet();
 			};
 			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
-			On_ItemSlot.MouseHover_ItemArray_int_int += On_ItemSlot_MouseHover_ItemArray_int_int;
 			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
 				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
 				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
@@ -632,7 +648,6 @@ namespace Origins {
 				if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && TileTransformsOnKill[tileTarget.TileType]) return true;
 				return false;
 			};
-			IL_NPC.SpawnNPC += IL_NPC_SpawnNPC;
 			On_TrackGenerator.IsLocationInvalid += (orig, x, y) => {
 				if (orig(x, y)) return true;
 				Tile tile = Main.tile[x, y];
@@ -662,25 +677,90 @@ namespace Origins {
 				if (original is OriginConfig originConfig && config is OriginConfig newConfig) originConfig.CloneTo(newConfig);
 				return config;
 			});
+			On_Player.Hurt_HurtInfo_bool += On_Player_Hurt_HurtInfo_bool;
+			On_SoundEngine.PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback += On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1;
+			On_Item.FitsAmmoSlot += (orig, self) => {
+				return orig(self) || self.ammo == ItemID.Grenade;
+			};
+			IL_Player.CheckDrowning += Toxic_Shock_Debuff.IL_Player_CheckDrowning;
+			IL_Player.WaterCollision += Abyssal_Anchor.IL_Player_WaterCollision;
+			IL_Player.ApplyTouchDamage += Trap_Charm.IL_Player_ApplyTouchDamage;
+			/*
+			FastFieldInfo<SoundEffect, FAudio.FAudioBuffer> _handle = new("handle", BindingFlags.NonPublic);
+			FastFieldInfo<SoundEffect, ushort> _channels = new("channels", BindingFlags.NonPublic);
+			FastFieldInfo<SoundEffect, uint> _sampleRate = new("sampleRate", BindingFlags.NonPublic);
+			MonoModHooks.Add(typeof(SoundEffect).GetMethod(nameof(SoundEffect.CreateInstance)), (Func<SoundEffect, SoundEffectInstance> orig, SoundEffect self) => {
+				FAudio.FAudioBuffer handle = _handle.GetValue(self);
+				int sampleRate = (int)_sampleRate.GetValue(self);
+				byte[] bytes = new byte[handle.AudioBytes];
+				Marshal.Copy(handle.pAudioData, bytes, 0, bytes.Length);
+				ushort[] buffer = new ushort[bytes.Length / 2];
+				Buffer.BlockCopy(bytes, 0, buffer, 0, bytes.Length);
+				for (int i = 0; i < buffer.Length; i++) {
+					//buffer[i] = (ushort)(buffer[i] / 2);//(ushort)(buffer[i] * 1.1f);
+					//bytes[i] = (byte)(bytes[i] / 2);//Math.Min(buffer[i], (ushort)(ushort.MaxValue / 8));
+				}
+				Buffer.BlockCopy(buffer, 0, bytes, 0, bytes.Length);
+				SoundEffect newEffect = new(bytes, sampleRate, (AudioChannels)_channels.GetValue(self));
+				return orig(newEffect);//orig(self);
+			});//*/
+			On_Player.UpdateJumpHeight += On_Player_UpdateJumpHeight;
+			On_Player.AddBuff += On_Player_AddBuff;
+			IL_Player.UpdateLifeRegen += Akaliegis.IL_Player_UpdateLifeRegen;
+			On_Player.DashMovement += (orig, self) => {
+				try {
+					processingDash = true;
+					orig(self);
+				} finally {
+					processingDash = false;
+				}
+			};
+			IL_WaterShaderData.DrawWaves += Brine_Pool_NPC.DisableRipples;
+			On_Player.SlopingCollision += (On_Player.orig_SlopingCollision orig, Player self, bool fallThrough, bool ignorePlats) => {
+				float startY = self.position.Y;
+				orig(self, fallThrough, ignorePlats);
+				if (self.position.Y != startY) self.OriginPlayer().onSlope = true;
+			};
 		}
-		private static void IL_NPC_SpawnNPC(ILContext il) {
-			ILCursor c = new(il);
-			int startYPosition = -1;
-			int yPosition = -1;
-			if (c.TryGotoNext(MoveType.Before,
-				il => il.MatchLdloc(out startYPosition),
-				il => il.MatchStloc(out yPosition),
-				il => il.MatchBr(out _),
-				il => il.MatchLdsflda<Main>(nameof(Main.tile)),
-				il => il.MatchLdloc(out _),
-				il => il.MatchLdloc(out yPosition),
-				il => il.MatchCall<Tilemap>("get_Item")
-			)) {
-				c.Index += 2;
-				c.EmitLdloc(startYPosition);
-				c.EmitStsfld(typeof(OriginGlobalNPC).GetField(nameof(OriginGlobalNPC.aerialSpawnPosition)));
+		public static bool processingDash = false;
+		private static void On_Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {
+			if (self.TryGetModPlayer(out Nurse_Assimilation_Dialog assTracker)) assTracker.GotDebuffFromAssimilation[type] = AssimilationDebuff.isUpdatingAssimilation;
+			orig(self, type, timeToAdd, quiet, foodHack);
+			if (Main.debuff[type]) {
+				OriginPlayer originPlayer = self.OriginPlayer();
+				if (originPlayer.extremophileSet && originPlayer.extremophileSetTime <= 0) {
+					originPlayer.extremophileSetTime++;
+				}
+			}
+		}
+
+		private void On_Player_UpdateJumpHeight(On_Player.orig_UpdateJumpHeight orig, Player self) {
+			orig(self);
+			if (self.jumpBoost && self.OriginPlayer().heliumTank) {
+				Player.jumpHeight = (int)(Player.jumpHeight * 1.2f);
+			}
+		}
+
+		static bool shouldDoHeliumSound = false;
+		static float heliumSoundPitch = 0f;
+		private static ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
+			if (shouldDoHeliumSound) {
+				SoundStyle styleCopy = style.WithPitchOffset(heliumSoundPitch);
+				return orig(ref styleCopy, position, updateCallback);
 			} else {
-				LogError($"Could not find search for ground in NPC.SpawnNPC");
+				return orig(ref style, position, updateCallback);
+			}
+		}
+		private static void On_Player_Hurt_HurtInfo_bool(On_Player.orig_Hurt_HurtInfo_bool orig, Player self, Player.HurtInfo info, bool quiet) {
+			try {
+				if (!self.stoned && !self.frostArmor && !self.boneArmor) {
+					OriginPlayer originPlayer = self.OriginPlayer();
+					shouldDoHeliumSound = originPlayer.heliumTankSqueak;
+					heliumSoundPitch = originPlayer.heliumTankStrength;
+				}
+				orig(self, info, quiet);
+			} finally {
+				shouldDoHeliumSound = false;
 			}
 		}
 
@@ -724,16 +804,6 @@ namespace Origins {
 				});
 			} else {
 				LogError($"Could not find mushroom torch drop in WorldGen.SpawnThingsFromPot");
-			}
-		}
-
-		private static void On_ItemSlot_MouseHover_ItemArray_int_int(On_ItemSlot.orig_MouseHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
-			orig(inv, context, slot);
-			if (context != ItemSlot.Context.CraftingMaterial && inv[slot]?.ModItem is IJournalEntryItem journalItem && Keybindings.InspectItem.JustPressed && (OriginPlayer.LocalOriginPlayer?.DisplayJournalTooltip(journalItem) ?? false)) {
-				OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Add(journalItem.EntryName);
-				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
-					OpenJournalEntry(journalItem.EntryName);
-				}
 			}
 		}
 
@@ -1237,7 +1307,7 @@ namespace Origins {
 		static bool rivenRain = false;
 		private void On_Main_DrawRain(On_Main.orig_DrawRain orig, Main self) {
 			Player player = Main.LocalPlayer;
-			if (player.dead) {
+			if (player is null || !player.active || player.dead) {
 				orig(self);
 				return;
 			}
@@ -1265,6 +1335,7 @@ namespace Origins {
 			rainedOnPlayer = false;
 			rivenRain = player.InModBiome<Riven_Hive>();
 			orig(self);
+			if (rainedOnPlayer) player.OriginPlayer().timeSinceRainedOn = 0;
 			if (rainedOnPlayer && rivenRain) {
 				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 				bool extraStrength = Main.remixWorld || (Main.masterMode && NPC.npcsFoundForCheckActive[MC.NPCType<World_Cracker_Head>()]);
@@ -1324,13 +1395,16 @@ namespace Origins {
 
 		private int On_Player_AddBuff_DetermineBuffTimeToAdd(On_Player.orig_AddBuff_DetermineBuffTimeToAdd orig, Player self, int type, int time) {
 			int value = orig(self, type, time);
-			if (self.TryGetModPlayer(out OriginPlayer originPlayer)) {
+			if (type != BuffID.PotionSickness && self.TryGetModPlayer(out OriginPlayer originPlayer)) {
 				float mult = 1f;
 				if (originPlayer.plasmaPhial && Main.debuff[type]) {
 					mult *= OriginPlayer.plasmaPhialMult;
 				}
 				if (originPlayer.donorWristband && Main.debuff[type]) {
 					mult *= OriginPlayer.donorWristbandMult;
+				}
+				if (originPlayer.mithrafin && Mithrafin.buffTypes[type]) {
+					mult *= OriginPlayer.mithrafinSelfMult;
 				}
 				value = (int)(value * mult);
 			}
@@ -1387,7 +1461,7 @@ namespace Origins {
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
 			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
 				rollingLotteryTicket = true;
-				if (self.RollLuck(2 + range * currentChanceNumerator / lottery_ticket_min_denominator) == 0) {
+				if (self.RollLuck((int)MathF.Ceiling(MathF.Pow(range, 0.75f) + range * 0.05f)) < currentChanceNumerator) {
 					if (Main.netMode == NetmodeID.Server && !originPlayer.lotteryTicketItem.IsAir) {
 						ModPacket packet = instance.GetPacket();
 						packet.Write(NetMessageType.win_lottery);
@@ -1545,14 +1619,6 @@ namespace Origins {
 				tile.TileType = wiltedRose;
 				tile.TileFrameX = 0;
 				tile.TileFrameY = 0;
-				return true;
-			}
-			ushort brineClover = (ushort)MC.TileType<Brine_Leaf_Clover_Tile>();
-			if (TileObject.CanPlace(x, y, brineClover, 0, 0, out TileObject objectData, false)) {
-				objectData.style = 0;
-				objectData.alternate = 0;
-				objectData.random = 0;
-				TileObject.Place(objectData);
 				return true;
 			}
 			return false;
@@ -1825,6 +1891,7 @@ namespace Origins {
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
 				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
+					if (keepPlayerShader == -1) keepPlayerShader = Anti_Gray_Dye.ShaderID;
 					forcePlayerShader = Rasterized_Dye.ShaderID;
 				}
 				if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
@@ -1924,7 +1991,7 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if (OriginPlayer.LocalOriginPlayer is not null && OriginPlayer.LocalOriginPlayer.ZoneVoidProgressSmoothed > 0) {
+			} else if (Filters.Scene["Origins:ZoneDusk"].Active) {
 				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;

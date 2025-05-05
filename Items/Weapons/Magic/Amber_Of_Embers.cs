@@ -1,18 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
-using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
-    public class Amber_Of_Embers : ModItem, ICustomWikiStat {
+	public class Amber_Of_Embers : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "Wand"
         ];
@@ -25,9 +22,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useAnimation = 11;
 			Item.useTime = 11;
-			Item.width = 48;
-			Item.height = 54;
-			Item.mana = 7;
+			Item.mana = 8;
 			Item.shoot = ModContent.ProjectileType<Amber_Of_Embers_P>();
 			Item.shootSpeed = 8f;
 			Item.autoReuse = true;

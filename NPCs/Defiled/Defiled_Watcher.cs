@@ -1,27 +1,21 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Armor.Defiled;
+using Origins.Graphics;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
+using Origins.Items.Other.Consumables;
 using Origins.NPCs.Defiled.Boss;
-using Origins.Projectiles.Enemies;
 using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Watcher : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ITangelaHaver {
 		public Rectangle DrawRect => new(0, 0, 74, 68);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
@@ -33,6 +27,7 @@ namespace Origins.NPCs.Defiled {
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
 				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Defiled_Watcher_Spikes.assimilation_amount
 			});
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;
@@ -53,6 +48,11 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));
+		}
 		public int MaxMana => 100;
 		public int MaxManaDrain => 100;
 		public float Mana { get; set; }
@@ -61,17 +61,19 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY < Main.worldSurface || spawnInfo.DesertCave) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Asphyxiator;
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public int Frame {
 			get => NPC.frame.Y / 68;
@@ -109,7 +111,7 @@ namespace Origins.NPCs.Defiled {
 						NPC.Center,
 						(targetPos - NPC.Center).SafeNormalize(default) * 8,
 						ModContent.ProjectileType<Defiled_Watcher_Spikes>(),
-						20,
+						(int)(20 * ContentExtensions.DifficultyDamageMultiplier),
 						3,
 						ai2: NPC.whoAmI
 					);
@@ -148,6 +150,24 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
+		}
+		public int? TangelaSeed { get; set; }
+		public AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Watcher).GetDefaultTMLName() + "_Tangela";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			base.PostDraw(spriteBatch, screenPos, drawColor);
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (NPC.spriteDirection == 1) spriteEffects = SpriteEffects.FlipHorizontally;
+			Vector2 halfSize = new(tangelaTexture.Value.Width / 2, tangelaTexture.Value.Height / Main.npcFrameCount[NPC.type] / 2);
+			TangelaVisual.DrawTangela(
+				this,
+				tangelaTexture,
+				new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - tangelaTexture.Value.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - tangelaTexture.Value.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + Main.NPCAddHeight(NPC) + NPC.gfxOffY),
+				NPC.frame,
+				NPC.rotation,
+				halfSize,
+				new(NPC.scale),
+				spriteEffects
+			);
 		}
 	}
 	public class Defiled_Watcher_Spikes : ModProjectile {

@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.DamageType = DamageClass.Summon;
-			Item.damage = 12;
+			Item.damage = 9;
 			Item.knockBack = 2;
 			Item.useTime = Item.useAnimation = 45;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
@@ -22,7 +22,9 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().strangeToothItem = Item;
 		}
-		public override bool MagicPrefix() => false;
+		public override int ChoosePrefix(UnifiedRandom rand) {
+			return OriginExtensions.AccessoryOrSpecialPrefix(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
+		}
 	}
 	public class Strange_Tooth_Buff : ModBuff {
 		public static int ID { get; private set; }
@@ -193,10 +195,11 @@ namespace Origins.Items.Accessories {
 			}
 			#endregion
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) => fallThrough = true;
 		public override void OnKill(int timeLeft) {
-			if (Main.myPlayer != Projectile.owner) {
+			if (Main.myPlayer == Projectile.owner) {
 				Player owner = Main.player[Projectile.owner];
-				if (owner.statLife < owner.statLifeMax2 && Main.rand.NextBool(5)) {
+				if (owner.statLife < owner.statLifeMax2 && Main.rand.NextBool(10)) {
 					int item = Item.NewItem(Projectile.GetSource_Death(), Projectile.Hitbox, ItemID.Heart);
 					if (Main.netMode == NetmodeID.MultiplayerClient) {
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);

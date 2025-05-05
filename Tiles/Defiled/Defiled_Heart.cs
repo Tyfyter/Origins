@@ -1,16 +1,21 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Heart : ModTile {
-		public int heartBroken = 0;
+	public class Defiled_Heart : ModTile, IComplexMineDamageTile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -36,10 +41,40 @@ namespace Origins.Tiles.Defiled {
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
+		public static AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Heart).GetDefaultTMLName() + "_Tangela";
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			if (minePower < 90) {
+				damage = 0;
+				HitSound = Origins.Sounds.DefiledIdle.WithPitch(-3f);
+			} else {
+				HitSound = Origins.Sounds.DefiledIdle;
+			}
+		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 9) {
 				frameCounter = 0;
 				frame = ++frame % 4;
+			}
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomNonSolid);
+		}
+		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (TangelaVisual.DrawOver || TileDrawing.IsVisible(tile)) {
+				Vector2 position = new Vector2(i * 16f, j * 16f) - Main.screenPosition;
+				TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile), out int x, out int y);
+				TangelaVisual.DrawTangela(
+					tangelaTexture,
+					position,
+					new Rectangle(tile.TileFrameX, tile.TileFrameY, 48, 48),
+					0,
+					Vector2.Zero,
+					Vector2.One,
+					SpriteEffects.None,
+					x + y * 787,
+					new(i * 16f, j * 16f)
+				);
 			}
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
@@ -62,15 +97,27 @@ namespace Origins.Tiles.Defiled {
 			r = g = b = 0.3f;
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
-			if (Main.netMode == NetmodeID.MultiplayerClient) {
-
-			}
-			ModContent.GetInstance<OriginSystem>().Defiled_Hearts.Add(new Point(i, j));
+			ModContent.GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(i, j));
 		}
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			heartBroken++;
-        }
-    }
+	}
+	public class Defiled_Heart_TE_System : TESystem {
+		public override void PreUpdateEntities() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			for (int i = 0; i < tileEntityLocations.Count; i++) {
+				Point16 pos = tileEntityLocations[i];
+				if (!Main.tile[pos.X, pos.Y].TileIsType(Defiled_Heart.ID)) {
+					tileEntityLocations.RemoveAt(i);
+					i--;
+					continue;
+				}
+			}
+		}
+		public override void LoadWorldData(TagCompound tag) {
+			base.LoadWorldData(tag);
+			tileEntityLocations.AddRange(ModContent.GetInstance<OriginSystem>().LegacySave_DefiledHearts);
+			tileEntityLocations = tileEntityLocations.Distinct().ToList();
+		}
+	}
 	public class Defiled_Heart_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";

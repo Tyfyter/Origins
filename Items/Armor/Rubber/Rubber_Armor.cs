@@ -1,16 +1,9 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Materials;
-using PegasusLib;
-using System;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Armor.Rubber {
 	[AutoloadEquip(EquipType.Head)]
@@ -20,7 +13,7 @@ namespace Origins.Items.Armor.Rubber {
         ];
 		public override void SetDefaults() {
 			Item.defense = 2;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(copper: 60);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -60,7 +53,7 @@ namespace Origins.Items.Armor.Rubber {
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 1, copper: 50);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -78,7 +71,7 @@ namespace Origins.Items.Armor.Rubber {
 		
 		public override void SetDefaults() {
 			Item.defense = 2;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(copper: 90);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {

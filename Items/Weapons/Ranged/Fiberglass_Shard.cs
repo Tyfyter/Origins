@@ -1,16 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Weapons.Magic;
-using Terraria.WorldBuilding;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Shard : ModItem, IElementalItem, ICustomWikiStat {
 		public string[] Categories => [

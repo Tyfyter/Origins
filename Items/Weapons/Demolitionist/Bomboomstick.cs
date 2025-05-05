@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomboomstick : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => [
@@ -26,7 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.damage = 43;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.useAmmo = ItemID.Grenade;
-			Item.value = Item.sellPrice(gold: 4, silver: 32);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override void AddRecipes() {
@@ -74,7 +72,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = Main.rand.Next(3, 5); i-- > 0;) {
-				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.3f), type, damage, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.3f), type, damage / 2, knockback, player.whoAmI);
 			}
 			return false;
 		}

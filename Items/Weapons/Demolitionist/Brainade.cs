@@ -15,12 +15,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 50;
+			Item.damage = 32;
+			Item.crit = 4;
 			Item.value *= 5;
 			Item.shoot = ModContent.ProjectileType<Brainade_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 50);
 			Item.rare = ItemRarityID.Blue;
+			Item.ArmorPenetration += 5;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 25)
@@ -39,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = -1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}

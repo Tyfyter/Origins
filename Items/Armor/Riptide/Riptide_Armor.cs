@@ -31,8 +31,9 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Riptide");
-			player.GetModPlayer<OriginPlayer>().riptideSet = true;
-			if (player.wet) {//TODO: rain
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.riptideSet = true;
+			if (player.wet || originPlayer.timeSinceRainedOn < 60) {
 				player.GetDamage(DamageClass.Magic) += 0.06f;
 			}
 		}

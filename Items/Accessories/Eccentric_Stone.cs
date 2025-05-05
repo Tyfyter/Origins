@@ -1,25 +1,25 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Eccentric_Stone : ModItem, IJournalEntryItem, ICustomWikiStat, IItemObtainabilityProvider {
+	public class Eccentric_Stone : ModItem, IJournalEntrySource, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
-			"Misc",
-			"LoreItem"
+			"Combat",
+			"LoreItem",
+			"SummonBoostAcc"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
+			player.maxMinions += 1;
 			Lighting.AddLight(player.MountedCenter - new Vector2(0, 6), 0.2f, 0.05f, 0.175f);
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];

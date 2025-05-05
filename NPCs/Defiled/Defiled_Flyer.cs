@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Melee;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -21,8 +21,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Flyer : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
-		public AssimilationAmount? Assimilation => 0.05f;
+	public class Defiled_Flyer : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ITangelaHaver {
+		public AssimilationAmount? Assimilation => 0.02f;
 		public Rectangle DrawRect => new(-30, 28, 104, 38);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -36,6 +36,7 @@ namespace Origins.NPCs.Defiled {
 				Velocity = 1f
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
@@ -64,9 +65,14 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 180f;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Flyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags([
@@ -75,8 +81,9 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 19));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Infusion>(), 38));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Infusion>(), 44));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
@@ -119,7 +126,7 @@ namespace Origins.NPCs.Defiled {
 			}
 			diff.Normalize();
 			Vector2 position = NPC.position;
-			position += diff * CollisionExtensions.Raycast(position, diff, 16 * 50);
+			position += diff * CollisionExt.Raymarch(position, diff, 16 * 50);
 			Vector2 clockwiseTarget = default;
 			Vector2 counterclockwiseTarget = default;
 			if (Crawl(target, position.ToTileCoordinates(), bestMatch, false) is Point pos1) {
@@ -156,15 +163,15 @@ namespace Origins.NPCs.Defiled {
 			List<Point> path = [pos];
 			//Rectangle rect = new(0, 0, 16, 16);
 			test:
-			if (CollisionExtensions.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
-				if (CollisionExtensions.CanHitRay(NPC.Center, path[^1].ToWorldCoordinates())) return path[^1];
+			if (CollisionExt.CanHitRay(pos.ToWorldCoordinates(), target.Position)) {
+				if (CollisionExt.CanHitRay(NPC.Center, path[^1].ToWorldCoordinates())) return path[^1];
 				if (path.Count <= 1) return null;
 				Point? nextTarget = path[1];
 				for (int i = 1; i < path.Count; i++) {
 					/*rect.X = path[i].X * 16;
 					rect.Y = path[i].Y * 16;
 					OriginExtensions.DrawDebugOutline(rect);*/
-					if (CollisionExtensions.CanHitRay(NPC.Center, path[i].ToWorldCoordinates())) {
+					if (CollisionExt.CanHitRay(NPC.Center, path[i].ToWorldCoordinates())) {
 						nextTarget = path[i];
 					} else {
 						Point step = path[i] - nextTarget.Value;
@@ -230,6 +237,19 @@ namespace Origins.NPCs.Defiled {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			Mana = reader.ReadSingle();
 		}
+		public (Rectangle startArea, Predicate<Vector2> customShape)? GetCustomChrysalisShape(NPC chrysalisNPC) {
+			Rectangle area = chrysalisNPC.Hitbox;
+			area.Width += 70;
+			if (chrysalisNPC.direction > 0) area.X -= 70;
+			return (area, pos => area.Contains(pos));
+		}
+		public void OnChrysalisSpawn() {
+			if (NPC.direction == -1) {
+				NPC.rotation = MathHelper.Pi;
+			}
+		}
+		public int? TangelaSeed { get; set; }
+		public AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Flyer).GetDefaultTMLName() + "_Tangela";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection == -1) {
@@ -259,10 +279,19 @@ namespace Origins.NPCs.Defiled {
 				NPC.scale,
 				spriteEffects,
 			0);
+
+			TangelaVisual.DrawTangela(
+				this,
+				tangelaTexture,
+				position,
+				NPC.frame,
+				NPC.rotation,
+				origin,
+				new(NPC.scale),
+				spriteEffects
+			);
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			
-		}
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) { }
 	}
 }

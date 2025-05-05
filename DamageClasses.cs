@@ -19,16 +19,20 @@ namespace Origins {
 		private static DamageClass rangedMagic;
 		private static DamageClass incantation;
 		private static DamageClass meleeMagic;
+		private static DamageClass noSummonInherit;
+		private static DamageClass rangedExplosiveInherit;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
 		public static DamageClass ThrownExplosive => thrownExplosive ??= ModContent.GetInstance<Thrown_Explosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
 		public static DamageClass RangedMagic => rangedMagic ??= ModContent.GetInstance<Ranged_Magic>();
 		public static DamageClass Incantation => incantation ??= ModContent.GetInstance<Incantation>();
 		public static DamageClass MeleeMagic => meleeMagic ??= ModContent.GetInstance<Melee_Magic>();
+		public static DamageClass NoSummonInherit => noSummonInherit ??= ModContent.GetInstance<No_Summon_Inherit>();
+		public static DamageClass RangedExplosiveInherit => rangedExplosiveInherit ??= ModContent.GetInstance<Ranged_Explosive_Inherit>();
 		public static DamageClassList All => new();
 		public static HashSet<DamageClass> HideInConfig { get; private set; } = [];
 		public void Load(Mod mod) {
-			IList<DamageClass> damageClasses = All;
+			DamageClassList damageClasses = All;
 			int len = damageClasses.Count;
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
 			mod.AddContent(explosive = new Explosive());
@@ -47,12 +51,24 @@ namespace Origins {
 				}
 			}
 		}
-
+		public static void Patch() {
+			HashSet<MethodInfo> patched = [];
+			foreach (DamageClass damageClass in All) {
+				MethodInfo method = damageClass.GetType().GetMethod(nameof(DamageClass.GetModifierInheritance));
+				if (!patched.Add(method)) continue;
+				MonoModHooks.Add(method, (Func<DamageClass, DamageClass, StatInheritanceData> orig, DamageClass self, DamageClass other) => {
+					if (self != DamageClass.Summon && other == NoSummonInherit) return orig(self, DamageClass.Generic);
+					if (self == DamageClass.Ranged && other == RangedExplosiveInherit) return StatInheritanceData.Full;
+					return orig(self, other);
+				});
+			}
+		}
 		public void Unload() {
-			explosive = null;
-			ExplosiveVersion = null;
-			rangedMagic = null;
-			HideInConfig = null;
+			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)) {
+				if (field.FieldType.IsClass) {
+					field.SetValue(null, null);
+				}
+			}
 		}
 	}
 	public readonly struct DamageClassList : IList<DamageClass> {
@@ -72,6 +88,7 @@ namespace Origins {
 			}
 		}
 		public int IndexOf(DamageClass item) {
+			if (Equals(item, this[item.Type])) return item.Type;
 			for (int i = 0; i < Count; i++) {
 				if (Equals(item, this[i])) return i;
 			}
@@ -105,7 +122,7 @@ namespace Origins {
 			//player.GetCritChance(this) += 4;
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
-			if (damageClass == DamageClasses.Explosive) {
+			if (damageClass == DamageClasses.Explosive || damageClass == DamageClasses.RangedExplosiveInherit) {
 				return StatInheritanceData.Full;
 			}
 			if (damageClass == Generic) {
@@ -117,7 +134,7 @@ namespace Origins {
 	[Autoload(false)]
 	public class Thrown_Explosive : DamageClass {
 		public override bool GetEffectInheritance(DamageClass damageClass) {
-			return damageClass == DamageClasses.Explosive || damageClass == Throwing;
+			return damageClass == DamageClasses.Explosive || damageClass == DamageClasses.RangedExplosiveInherit || damageClass == Throwing;
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == DamageClasses.Explosive) {
@@ -133,7 +150,7 @@ namespace Origins {
 		}
 		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || Throwing.GetsPrefixesFor(damageClass);
 		public override void SetDefaultStats(Player player) {
-			//player.GetCritChance(this) += 4;
+			player.GetCritChance(this) -= 4;
 		}
 	}
 	[Autoload(false)]
@@ -149,7 +166,7 @@ namespace Origins {
 			return newClass;
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
-			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);
+			return damageClass == DamageClasses.Explosive || damageClass == DamageClasses.RangedExplosiveInherit || damageClass == other || other.GetEffectInheritance(damageClass);
 		}
 		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || other.GetsPrefixesFor(damageClass);
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
@@ -159,7 +176,7 @@ namespace Origins {
 			return other.GetModifierInheritance(damageClass);
 		}
 		public override void SetDefaultStats(Player player) {
-			//player.GetCritChance(this) -= 4;
+			player.GetCritChance(this) -= 4;
 		}
 	}
 	public class Ranged_Magic : DamageClass {
@@ -204,4 +221,6 @@ namespace Origins {
 			return damageClass == Generic || damageClass == Melee || damageClass == Magic;
 		}
 	}
+	public class No_Summon_Inherit : DamageClass { }
+	public class Ranged_Explosive_Inherit : DamageClass { }
 }

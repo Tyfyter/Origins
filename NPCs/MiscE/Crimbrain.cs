@@ -1,8 +1,11 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.Defiled;
 using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -40,7 +43,7 @@ namespace Origins.NPCs.MiscE {
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			if (!spawnInfo.Player.ZoneCrimson) return 0;
-			return 0.1f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+			return 0.07f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Confused, 20);
@@ -65,6 +68,15 @@ namespace Origins.NPCs.MiscE {
 			if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 112, 34, 26);
 				NPC.frameCounter = 0;
+			}
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Crimbrain).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Crimbrain).GetDefaultTMLName() + "_AF";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
 			}
 		}
 	}

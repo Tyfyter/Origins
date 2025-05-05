@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useTime = Item.useAnimation = 32;
 			Item.shootSpeed *= 2.5f;
 			Item.autoReuse = false;
-			Item.value = Item.sellPrice(silver: 50);
+			Item.value = Item.sellPrice(silver: 65);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {

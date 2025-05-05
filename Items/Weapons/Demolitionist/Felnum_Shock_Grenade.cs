@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
@@ -17,15 +18,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 32;
+			Item.damage = 38;
 			Item.shoot = ModContent.ProjectileType<Felnum_Shock_Grenade_P>();
-			Item.shootSpeed *= 1.5f;
-			Item.knockBack = 5f;
+			Item.shootSpeed *= 1.25f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 70);
 			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 9999;
-            Item.ArmorPenetration += 3;
+            Item.ArmorPenetration += 4;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 6)
@@ -47,6 +46,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;
 			Projectile.penetrate = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Grenade;
@@ -84,6 +86,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 2;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile projParent) {
+				Projectile.DamageType = projParent.DamageType;
+			}
 		}
 		public override void AI() {
 			if (Projectile.penetrate == 1) {

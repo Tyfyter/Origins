@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs.Critters;
 using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.IO;
@@ -17,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC {
-		//public override void Load() => this.AddBanner(); //TODO: missing banner
+		public override void Load() => this.AddBanner();
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var asset) ? asset : null))?.Value;
 		public Rectangle DrawRect => new(0, -41, 34, 22);
@@ -29,6 +30,7 @@ namespace Origins.NPCs.Riven {
 				Position = new(0, 20),
 				PortraitPositionYOverride = 40
 			};
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
@@ -58,9 +60,9 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
-			int spawnY = tileY * 16;
-			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
-			return NPC.NewNPC(null, tileX * 16 + 8, spawnY, NPC.type);
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 		public override void AI() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -76,7 +78,7 @@ namespace Origins.NPCs.Riven {
 					-Vector2.UnitY
 				];
 				for (int i = 0; i < directions.Length; i++) {
-					float newDist = CollisionExtensions.Raycast(NPC.Center, directions[i], dist);
+					float newDist = CollisionExt.Raymarch(NPC.Center, directions[i], dist);
 					if (newDist < dist) {
 						dist = newDist;
 						bestPosition = NPC.Center + directions[i] * (dist - offsetLen);
@@ -107,7 +109,7 @@ namespace Origins.NPCs.Riven {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.rotation = reader.ReadSByte() * MathHelper.PiOver2;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

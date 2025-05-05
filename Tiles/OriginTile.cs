@@ -11,14 +11,13 @@ namespace Origins.Tiles {
 	public abstract class OriginTile : ModTile {
 		public static List<OriginTile> IDs { get; internal set; }
 		public static List<int> DefiledTiles { get; internal set; }
-		public ushort mergeID;
+		public int mergeID = -1;
 		public override void Load() {
 			if (IDs != null) {
 				IDs.Add(this);
 			} else {
 				IDs = new List<OriginTile>() { this };
 			}
-			mergeID = Type;
 			if (this is IDefiledTile) {
 				if (DefiledTiles != null) {
 					DefiledTiles.Add(Type);

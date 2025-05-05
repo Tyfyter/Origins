@@ -1,10 +1,9 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Floaty_Bomb : ModItem, ICustomWikiStat {
+	public class Floaty_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsBomb",
@@ -15,12 +14,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 70;
+			Item.damage = 55;
 			Item.shoot = ModContent.ProjectileType<Floaty_Bomb_P>();
-			Item.shootSpeed *= 1.4f;
 			Item.value *= 6;
 			Item.rare = ItemRarityID.Green;
-            Item.ArmorPenetration += 2;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 35)
@@ -41,6 +38,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
 			Projectile.velocity.Y -= 0.1f;

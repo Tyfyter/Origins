@@ -1,17 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Armor.Vanity.Dev;
+using Origins.Items.Armor.Vanity.Dev.cher;
 using Origins.Items.Pets;
-using Origins.LootConditions;
+using Origins.Items.Weapons.Melee;
 using Origins.Tiles;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,8 +19,10 @@ using static Origins.Items.Pets.Chee_Toy_Message_Types;
 
 namespace Origins.Items.Pets {
 	public class Chee_Set : DevSet<Chew_Toy> {
-		public override IEnumerable<int> GetDrops() {
+		public override IEnumerable<ItemTypeDropRuleWrapper> GetDrops() {
+			yield return ModContent.ItemType<First_Dream>();
 			yield return ModContent.ItemType<Chew_Toy>();
+			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<The_Bird>()));
 		}
 	}
 	public class Chew_Toy : ModItem, ICustomWikiStat, ICustomPetFrames {

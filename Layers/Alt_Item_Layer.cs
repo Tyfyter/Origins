@@ -17,7 +17,7 @@ namespace Origins.Layers {
 			Multiple position = new Multiple {
 				{ new Between(PlayerDrawLayers.BladedGlove, PlayerDrawLayers.ProjectileOverArm), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && customDraw.DrawOverHand) },
 				{ new Between(PlayerDrawLayers.Skin, PlayerDrawLayers.Leggings), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && customDraw.BackHand) },
-				{ new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && !customDraw.DrawOverHand && !customDraw.BackHand) }
+				{ new Between(null, PlayerDrawLayers.ArmOverItem), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && !customDraw.DrawOverHand && !customDraw.BackHand) }
 			};
 			return position;
 		}

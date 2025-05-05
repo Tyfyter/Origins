@@ -17,12 +17,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 39;
-			Item.shootSpeed *= 1.1f;
+			Item.damage = 48;
+			Item.shootSpeed *= 1.25f;
 			Item.value += Item.value / 3;
 			Item.shoot = ModContent.ProjectileType<Eyenade_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.Blue;
+			//Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 3)

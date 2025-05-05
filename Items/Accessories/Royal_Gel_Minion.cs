@@ -1,9 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Projectiles.Weapons;
 using System;
+using System.Drawing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+using ThoriumMod.Items.Donate;
+using ThoriumMod.Projectiles;
+using static Fargowiltas.FargoSets;
+
 namespace Origins.Items.Accessories {
 	public class Royal_Gel_Global : GlobalItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -11,6 +18,9 @@ namespace Origins.Items.Accessories {
 		];
 		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.RoyalGel;
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.RoyalGel;
+		public override void SetStaticDefaults() {
+			ContentSamples.ItemsByType[ItemID.RoyalGel].GetPrefixCategories().AddRange([PrefixCategory.AnyWeapon, PrefixCategory.Magic]);
+		}
 		public override void SetDefaults(Item entity) {
 			entity.DamageType = DamageClass.Summon;
 			entity.damage = 11;
@@ -22,6 +32,9 @@ namespace Origins.Items.Accessories {
 			if (player.ownedProjectileCounts[minionID] <= 0) {
 				Projectile.NewProjectile(player.GetSource_Accessory(item), player.MountedCenter, Vector2.Zero, minionID, player.GetWeaponDamage(item), player.GetWeaponKnockback(item), player.whoAmI);
 			}
+		}
+		public override int ChoosePrefix(Item item, UnifiedRandom rand) {
+			return OriginExtensions.AccessoryOrSpecialPrefix(item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
 		}
 	}
 	public class Spiked_Slime_Minion : ModProjectile {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -19,7 +20,7 @@ namespace Origins.Tiles.Brine {
         public string[] Categories => [
             "Plant"
         ];
-        public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, 0);
@@ -75,6 +76,7 @@ namespace Origins.Tiles.Brine {
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
@@ -105,8 +107,15 @@ namespace Origins.Tiles.Brine {
 			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.19f; g = 0.33f; b = 0.44f;
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {
-				if (TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
+				const int min_chance = 6;
+				int count = 1;
+				for (int k = 1; k < min_chance; k++) {
+					if (!Framing.GetTileSafely(i, j - k).TileIsType(Type)) break;
+					count++;
+					if (count >= min_chance) break;
+				}
+				if (WorldGen.genRand.NextBool(1 + count / 2) && TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;
@@ -351,9 +360,14 @@ namespace Origins.Tiles.Brine {
 			Item.value = Item.sellPrice(copper: 30);
         }
     }
-    public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider {
+    public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider, IJournalEntrySource {
 		public IEnumerable<int> ProvideItemObtainability() => [Type];
 		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
+		public string EntryName => "Origins/" + typeof(Brineglow_Entry).Name;
+		public class Brineglow_Entry : JournalEntry {
+			public override string TextKey => "Brineglow";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 2);
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}

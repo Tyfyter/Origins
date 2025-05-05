@@ -1,16 +1,22 @@
 ﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Symbiote_Skull : ModItem, ICustomWikiStat {
+	public class Symbiote_Skull : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat",
 			"Torn",
 			"TornSource"
 		];
         static short glowmask;
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Symbiote_Skull_Entry).Name;
+		public class Symbiote_Skull_Entry : JournalEntry {
+			public override string TextKey => "Symbiote_Skull";
+			public override JournalSortIndex SortIndex => new("Riven", 4);
+		}
+		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }
         public override void SetDefaults() {

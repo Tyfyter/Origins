@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Boiler : ModItem, ICustomWikiStat {
 		static short glowmask;

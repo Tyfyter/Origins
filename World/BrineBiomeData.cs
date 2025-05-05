@@ -1,16 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Backgrounds;
-using Origins.NPCs;
+﻿using Origins.Backgrounds;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
 
@@ -23,7 +22,8 @@ namespace Origins.World.BiomeData {
 		public override string MapBackground => BackgroundPath;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Defiled_Underground_Background>();
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => null;
+		public static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			return OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 		}
@@ -32,16 +32,47 @@ namespace Origins.World.BiomeData {
 		}
 		public const int NeededTiles = 250;
 		public const int ShaderTileCount = 75;
-		public static class SpawnRates {
-			public const float Carpalfish = 0.8f;
-			public const float Dragon = 0.6f;
-			public const float Creeper = 0/*.6f*/;
-			public const float Crab = 0/*.6f*/;
-			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate) {
-				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, OriginGlobalNPC.aerialSpawnPosition);
-				if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || tile.WallType != ModContent.WallType<Baryte_Wall>()) return 0;
+		public class DisableOtherSpawns : SpawnPool {
+			public override string Name => $"{nameof(Brine_Pool)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.Environment;
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				if (SpawnRates.IsInBrinePool(spawnInfo) || !spawnInfo.Player.InModBiome<Brine_Pool>()) return false;
+				
+				return Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>()
+					|| Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).WallType == ModContent.WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive;
+			}
+		}
+		public class SpawnRates : SpawnPool {
+			public const float Carpalfish = 8000f;
+			public const float Dragon = 6000f;
+			public const float Creeper = 6000f;
+			public const float Crab = 6000f;
+			public const float A_GUN = 9000f; // yes, this is a reference
+			public const float Turtle = 6000f;
+			public const float Swarm = 9000f;
+			public const float Snek = 9000f;
+			public const float Crawdad = 9000f;
+			public const float Airsnatcher = 8000f;
+			public const float Dead_Guy = 1000f;
+			public override string Name => $"{nameof(Brine_Pool)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.Environment;
+			}
+			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate, bool needsMoss = false) {
 				return rate;
 			}
+
+			public static bool IsInBrinePool(NPCSpawnInfo spawnInfo) {
+				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
+			}
+			public static bool IsInBrinePool(Vector2 pos) {
+				Tile tile = Framing.GetTileSafely(pos);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}
 		public static class Gen {
 			static int minGenX, maxGenX, minGenY, maxGenY;
@@ -279,6 +310,15 @@ namespace Origins.World.BiomeData {
 						75,
 						validTiles
 					);
+				}
+				ushort rivenAltar = (ushort)ModContent.TileType<Hydrothermal_Vent>();
+				for (int k = genRand.Next(40, 60); k > 0;) {
+					int posX = genRand.Next(minGenX, maxGenX);
+					int posY = genRand.Next(minGenY, maxGenY);
+					if (TileExtenstions.CanActuallyPlace(posX, posY, rivenAltar, 0, 0, out TileObject objectData, false, checkStay: true)) {
+						TileObject.Place(objectData);
+						k--;
+					}
 				}
 				int vineTries = 0;
 				int brineglowTile = ModContent.TileType<Brineglow>();

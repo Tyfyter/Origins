@@ -1,22 +1,16 @@
-﻿using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.NPCs.ExoMechs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Melee;
+using Origins.Journal;
 using Origins.Misc;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -25,13 +19,19 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC {
+	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Sea_Dragon_Entry).Name;
+		public class Sea_Dragon_Entry : JournalEntry {
+			public override string TextKey => "Sea_Dragon";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 3);
+		}
 		public Rectangle DrawRect => new(-28, 0, 94, 26);
 		public int AnimationFrames => 64;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public Range FrameRange => new Range(28, 64);
 		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
+		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 7;
@@ -40,6 +40,9 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Velocity = 1f
 			};
+			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
+			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
+			PredatorNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
@@ -67,28 +70,50 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40));
+			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 3)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40)
+			).WithOnSuccess(
+				new LeadingConditionRule(new Conditions.IsHardmode()).WithOnSuccess(ItemDropRule.Food(ModContent.ItemType<Sour_Apple>(), 40))
+			));
 		}
 		public override void AI() {
 			DoTargeting();
 			Vector2 direction;
 			if (NPC.wet) {
 				NPC.noGravity = true;
+				if (TargetPos != default && !(NPC.HasValidTarget || TargetIsRipple)) TargetPos = default;
 				if (TargetPos != default) {
 					direction = NPC.DirectionTo(TargetPos);
-					float oldRot = NPC.rotation;
-					GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
-					float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int dir) * 0.75f;
-					NPC.velocity = NPC.velocity.RotatedBy(diff * dir) * (1 - diff * 0.1f);
+					if (!TargetIsRipple && NPC.HasNPCTarget && PredatorNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type)) {
+						direction *= -1;
+					}
 				} else {
 					if (NPC.collideX) NPC.velocity.X = -NPC.direction;
 					NPC.direction = Math.Sign(NPC.velocity.X);
 					if (NPC.direction == 0) NPC.direction = 1;
 					direction = Vector2.UnitX * NPC.direction;
-					GeometryUtils.AngularSmoothing(ref NPC.rotation, MathHelper.PiOver2 - NPC.direction * MathHelper.PiOver2, 0.1f);
 				}
 				NPC.velocity *= 0.96f;
+				const float dist = 16 * 4;
+				float tileAvoidance = 0;
+				for (int i = -3; i < 4; i++) {
+					if (i == 0) continue;
+					Vector2 dir = Vector2.UnitX.RotatedBy(NPC.rotation + i * 0.5f * NPC.direction);
+					float newDist = CollisionExt.Raymarch(NPC.Center, dir, dist);
+					//OriginExtensions.DrawDebugLine(NPC.Center, NPC.Center + dir * newDist);
+					if (newDist < dist && Framing.GetTileSafely(NPC.Center + dir * (newDist + 2)).HasFullSolidTile()) {
+						tileAvoidance += dist / (newDist * i + 1);
+					}
+				}
+				if (tileAvoidance != 0) {
+					direction = direction.RotatedBy(Math.Clamp(tileAvoidance * -0.5f * NPC.direction, -MathHelper.PiOver2, MathHelper.PiOver2));
+				}
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.1f);
+				float oldRot = NPC.rotation;
+				float diff = GeometryUtils.AngleDif(oldRot, NPC.rotation, out int bankDir) * 0.75f;
+				NPC.velocity = NPC.velocity.RotatedBy(diff * bankDir) * (1 - diff * 0.1f);
 				if (++NPC.ai[2] >= 40) {
 					NPC.velocity += direction * 2;
 					NPC.ai[2] = 0;
@@ -164,8 +189,8 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			target.AddBuff(BuffID.Venom, Main.rand.Next(119, 181));
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), Main.rand.Next(179, 241));
+			target.AddBuff(BuffID.Venom, Main.rand.Next(120, 180));
+			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), Main.rand.Next(180, 240));
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

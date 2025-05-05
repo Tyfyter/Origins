@@ -1,16 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Humanizer;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Origins.Tiles {
 	public class OriginsGlobalTile : GlobalTile {
@@ -109,6 +113,21 @@ namespace Origins.Tiles {
 				baseY += direction;
 			}
 			return stalactiteTextures.TryGetValue(Main.tile[i, baseY].TileType, out texture);
+		}
+		public override void RandomUpdate(int i, int j, int type) {
+			if (i > WorldGen.beachDistance && i < Main.maxTilesX - WorldGen.beachDistance && Ocotillo.data.AnchorValidTiles.Contains(type)) {
+				bool hasLimestone = false;
+				int limestone = ModContent.TileType<Limestone.Limestone>();
+				for (int y = 0; y < 10 && !hasLimestone; y++) {
+					if (Framing.GetTileSafely(i, j + y).TileIsType(limestone)) hasLimestone = true;
+				}
+				if (WorldGen.genRand.NextBool(hasLimestone ? 80 : 200)) {
+					ushort ocotillo = (ushort)ModContent.TileType<Ocotillo>();
+					if (TileExtenstions.CanActuallyPlace(i, j - 1, ocotillo, 0, 1, out TileObject objectData, onlyCheck: false)) {
+						if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
+					}
+				}
+			}
 		}
 		public override void DrawEffects(int i, int j, int type, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			if (type == TileID.Stalactite) {

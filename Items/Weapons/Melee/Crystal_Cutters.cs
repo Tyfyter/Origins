@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -43,10 +42,12 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CrystalDart);
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.aiStyle = 0;
 			Projectile.alpha = 0;
+			Projectile.timeLeft = 300;
 		}
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 200);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 200) * Math.Min(Projectile.timeLeft / 30f, 1f);
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) => fallThrough = true; // only works because we happen to want to set fallThrough to the same value we want to return
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X != oldVelocity.X) {
@@ -55,7 +56,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (Projectile.velocity.Y != oldVelocity.Y) {
 				Projectile.velocity.Y = 0f - oldVelocity.Y;
 			}
-			Projectile.timeLeft -= 60;
+			Projectile.timeLeft -= 3;
 			return false;
 		}
 	}

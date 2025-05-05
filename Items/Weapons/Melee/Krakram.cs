@@ -1,9 +1,9 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Krakram : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -44,9 +44,41 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool PreAI() {
 			Projectile.aiStyle = 3;
-			Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.15f);
-			Projectile.localAI[0] = (float)System.Math.Sin(Projectile.timeLeft);
+			//Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.15f);
+			//Projectile.localAI[0] = (float)System.Math.Sin(Projectile.timeLeft);
 			return true;
+		}
+		public override void AI() {
+			if (Projectile.localAI[1] > 0 && --Projectile.localAI[1] > 0) return;
+			float dist = 16 * 5;
+			dist *= dist;
+			int targetIndex = -1;
+			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
+				float newDist = Projectile.DistanceSQ(target.Center);
+				if (target.whoAmI == Projectile.ai[2]) newDist *= 0.25f;
+				if (newDist < dist) {
+					dist = newDist;
+					targetIndex = target.whoAmI;
+					return true;
+				}
+				return false;
+			});
+			if (targetIndex != Projectile.ai[2]) {
+				Projectile.localAI[0] = 0;
+				Projectile.ai[2] = targetIndex;
+			} else if (targetIndex != -1) {
+				if (Projectile.ai[0] == 0) Projectile.ai[1] = 0;
+				OriginGlobalProj globalProj = Projectile.GetGlobalProjectile<OriginGlobalProj>();
+
+				globalProj.unmissTargetPos = Main.npc[targetIndex].Center - Projectile.velocity;
+				globalProj.unmissAnimation = (int)++Projectile.localAI[0];
+				if (globalProj.unmissAnimation == 8) {
+					(globalProj.unmissTargetPos, Projectile.Center) = (Projectile.Center, globalProj.unmissTargetPos);
+					Projectile.localAI[0] = 0;
+					Projectile.localAI[1] = 9;
+					Projectile.ai[2] = -1;
+				}
+			}
 		}
 		public override bool? CanHitNPC(NPC target) {
 			Projectile.aiStyle = 0;

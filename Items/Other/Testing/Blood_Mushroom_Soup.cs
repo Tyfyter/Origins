@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World;
 using Terraria;
@@ -9,19 +8,24 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using Origins.World.BiomeData;
+using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
-		int mode;
-		const int modeCount = 20;
-		long packedMode => (long)mode | ((long)parameters.Count << 32);
+		public static int mode;
+		static int ModeCount => modes.Count;
 		LinkedQueue<object> parameters = new LinkedQueue<object>();
 		Vector2 basePosition;
+		public static List<WorldgenTestingMode> modes = [];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 0;
+			modes = new TopoSort<WorldgenTestingMode>(modes,
+				mode => mode.Order.After is WorldgenTestingMode v ? [v] : [],
+				mode => mode.Order.Before is WorldgenTestingMode v ? [v] : []
+			).Sort();
+
 		}
 		public override void SetDefaults() {
-			//item.name = "jfdjfrbh";
 			Item.width = 16;
 			Item.height = 26;
 			Item.value = 25000;
@@ -33,22 +37,33 @@ namespace Origins.Items.Other.Testing {
 		public override bool AltFunctionUse(Player player) {
 			return true;
 		}
-		public override bool? UseItem(Player player)/* Suggestion: Return null instead of false */ {
+		public override bool? UseItem(Player player) {
 			if (Main.myPlayer == player.whoAmI) {
 				if (player.altFunctionUse == 2) {
 					parameters.Clear();
+					bool loopGuard = true;
+					skipContinue:
 					if (player.controlSmart) {
-						mode = (mode + modeCount) % (modeCount + 1);
+						mode = (mode + ModeCount - 1) % ModeCount;
 					} else {
-						mode = (mode + 1) % (modeCount + 1);
+						mode = (mode + 1) % ModeCount;
+					}
+					if (loopGuard) {
+						loopGuard = false;
+						if (modes[mode] is Continue_Worldgen_Testing_Mode) goto skipContinue;
 					}
 				} else {
 					if (player.controlSmart) {
-						Apply();
+						modes[mode].Apply(parameters);
 					} else if (player.controlDown) {
 						if (parameters.Count > 0) parameters.RemoveAt(parameters.Count - 1);
 					} else {
-						SetParameter();
+						Point mousePos = new((int)(Main.MouseScreen.X / 16), (int)(Main.MouseScreen.Y / 16));
+						int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
+						double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
+						Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+						Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
+						modes[mode].SetParameter(parameters, mousePos, mousePacked, mousePackedDouble, mouseTile, diffFromPlayer);
 					}
 				}
 				return true;
@@ -57,7 +72,12 @@ namespace Origins.Items.Other.Testing {
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (Main.LocalPlayer.HeldItem.type == Item.type) {
-				Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, GetMouseText(), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
+				Point mousePos = new((int)(Main.MouseScreen.X / 16), (int)(Main.MouseScreen.Y / 16));
+				int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
+				double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
+				Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+				Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
+				Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, modes[mode].GetMouseText(parameters.Count, mousePos, mousePacked, mousePackedDouble, mouseTile, diffFromPlayer), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
 				if (Main.LocalPlayer.controlLeft && Main.LocalPlayer.controlRight && Main.LocalPlayer.controlUp && Main.LocalPlayer.controlDown) {
 					int O = 0;
 					int OwO = 0 / O;
@@ -65,151 +85,132 @@ namespace Origins.Items.Other.Testing {
 			}
 
 		}
-		const long p0 = (0L << 32);
-		const long p1 = (1L << 32);
-		const long p2 = (2L << 32);
-		const long p3 = (3L << 32);
-		const long p4 = (4L << 32);
-		const long p5 = (5L << 32);
-		const long p6 = (6L << 32);
-		const long p7 = (7L << 32);
+		/*
 		void SetParameter() {
-			Point mousePos = new Point((int)(Main.MouseScreen.X / 16), (int)(Main.MouseScreen.Y / 16));
-			int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
-			double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
-			Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
-			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
-			switch (packedMode) {
-				case 16 | p0:
+			switch (((Mode)mode, parameters.Count)) {
+				case (BrinePool_Opening, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case 15 | p0:
-				parameters.Enqueue(Main.MouseWorld);
 				break;
-				case 15 | p1:
-				parameters.Enqueue(Main.MouseWorld);
-				Apply();
-				break;
-				case 14 | p0:
+				case (SpreadRivenGrass, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case 13 | p0:
+				case (BrinePool_Start, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case 12 | p0:
+				case (BrinePool_SmallCave, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				basePosition = new Vector2(Player.tileTargetX, Player.tileTargetY);
 				break;
-				case 12 | p2:
+				case (BrinePool_SmallCave, 2):
 				parameters.Enqueue((new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition).Length() / 35f);
 				break;
-				case 12 | p3:
+				case (BrinePool_SmallCave, 3):
 				parameters.Enqueue((new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition) / 10f);
 				break;
-				case 11 | p0:
+				case (FiberglassStart, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case 10 | p0:
+				case (WFCTest, 0):
 				parameters.Enqueue(Player.tileTargetX);
-				goto case 10 | p1;
-				case 10 | p1:
 				parameters.Enqueue(Player.tileTargetY);
 				break;
-				case 10 | p2:
+				case (WFCTest, 1):
+				parameters.Enqueue(Player.tileTargetY);
+				break;
+				case (WFCTest, 2):
 				parameters.Enqueue(Player.tileTargetX);
-				goto case 10 | p3;
-				case 10 | p3:
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case 9 | p0:
+				case (WFCTest, 3):
+				parameters.Enqueue(Player.tileTargetY);
+				Apply();
+				break;
+				case (DefiledFissure, 0):
 				parameters.Enqueue(new Point(Player.tileTargetX, Player.tileTargetY));
 				Apply();
 				break;
-				case 8 | p0:
+				case (DefiledVeinRunner, 0):
 				parameters.Enqueue(new Point(Player.tileTargetX, Player.tileTargetY));
 				break;
-				case 8 | p1:
+				case (DefiledVeinRunner, 1):
 				parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
 				break;
-				case 8 | p2:
+				case (DefiledVeinRunner, 2):
 				parameters.Enqueue(Main.MouseWorld);
 				break;
-				case 8 | p3:
+				case (DefiledVeinRunner, 3):
 				parameters.Enqueue(mousePackedDouble);
 				break;
-				case 8 | p4:
+				case (DefiledVeinRunner, 4):
 				parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
 				break;
-				case 8 | p5:
+				case (DefiledVeinRunner, 5):
 				parameters.Enqueue(Main.LocalPlayer.controlUp ? 0 : diffFromPlayer.ToRotation());
 				break;
-				case 8 | p6:
+				case (DefiledVeinRunner, 6):
 				parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
 				break;
-				case 8 | p7:
+				case (DefiledVeinRunner, 7):
 				Apply();
 				break;
-				case 7 | p0:
-				parameters.Enqueue(Main.MouseWorld.ToTileCoordinates());
-				Apply();
-				break;
-				case 6 | p0:
+				case (DefiledRibs, 0):
 				parameters.Enqueue(Main.MouseWorld.X / 16);
 				parameters.Enqueue(Main.MouseWorld.Y / 16);
 				Apply();
 				break;
-				case 2 | p0:
-				case 3 | p0:
-				case 4 | p0:
-				case 5 | p0:
+				case (StartRivenHive, 0):
+				case (RivenHiveCave_Old, 0):
+				case (BrinePool_Old, 0):
+				case (StartDefiled, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
 				break;
-				case 1 | p0:
-				case 0 | p0:
+				case (VeinRunner_Branching, 0):
+				case (VeinRunner, 0):
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				break;
-				case 1 | p1:
-				case 0 | p1:
+				case (VeinRunner_Branching, 1):
+				case (VeinRunner, 1):
 				parameters.Enqueue(Player.tileTargetY);
 				break;
-				case 1 | p2:
-				case 0 | p2:
+				case (VeinRunner_Branching, 2):
+				case (VeinRunner, 2):
 				parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
 				break;
-				case 1 | p3:
-				case 0 | p3:
+				case (VeinRunner_Branching, 3):
+				case (VeinRunner, 3):
 				parameters.Enqueue(diffFromPlayer / 16);
 				break;
-				case 1 | p4:
-				case 0 | p4:
+				case (VeinRunner_Branching, 4):
+				case (VeinRunner, 4):
 				parameters.Enqueue(mousePackedDouble);
 				break;
-				case 1 | p5:
-				case 0 | p5:
+				case (VeinRunner_Branching, 5):
+				case (VeinRunner, 5):
 				parameters.Enqueue(Main.LocalPlayer.controlUp ? 0 : diffFromPlayer.ToRotation());
 				break;
-				case 1 | p6:
-				case 0 | p6:
+				case (VeinRunner_Branching, 6):
+				case (VeinRunner, 6):
 				parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
 				break;
-				case 1 | p7:
+				case (VeinRunner_Branching, 7):
 				parameters.Enqueue((byte)((mousePacked / 16) % 256));
 				break;
 
-				case -1 | p1:
+				case (Continue, 1):
 				Apply();
 				break;
 			}
@@ -219,112 +220,90 @@ namespace Origins.Items.Other.Testing {
 			int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
 			double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
-			switch (packedMode) {
-				case 16 | p0:
+			switch (((Mode)mode, parameters.Count)) {
+				case (BrinePool_Opening, 0):
 				return $"place brine pool opening: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 15 | p0:
+				case (RavelHole, 0):
 				return $"ravel hole start point: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 15 | p1:
+				case (RavelHole, 1):
 				return $"ravel hole end point: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 14 | p0:
+				case (SpreadRivenGrass, 0):
 				return $"spread riven grass: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 13 | p0:
+				case (BrinePool_Start, 0):
 				return $"place brine pool start: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 12 | p0:
+				case (BrinePool_SmallCave, 0):
 				return $"place brine cave start: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 12 | p2:
+				case (BrinePool_SmallCave, 2):
 				return $"brine cave scale: {(new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition).Length() / 35f}";
-				case 12 | p3:
+				case (BrinePool_SmallCave, 3):
 				return $"brine cave stretch: {(new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition) / 10f}";
-				case 11 | p0:
+				case (FiberglassStart, 0):
 				return "start fiberglass undergrowth";
-				case 10 | p0:
+				case (WFCTest, 0):
 				return "place WFC test point 1";
-				case 10 | p2:
+				case (WFCTest, 2):
 				return "place WFC test point 2";
-				case 9 | p0:
+				case (DefiledFissure, 0):
 				return "place defiled fissure";
-				case 8 | p0:
+				case (DefiledVeinRunner, 0):
 				return "defiled vein position";
-				case 8 | p1:
+				case (DefiledVeinRunner, 1):
 				return "defiled vein strength: " + Math.Sqrt(mousePackedDouble / 16);
-				case 8 | p2:
+				case (DefiledVeinRunner, 2):
 				return "defiled vein target";
-				case 8 | p3:
+				case (DefiledVeinRunner, 3):
 				return "defiled vein length: " + mousePackedDouble;
-				case 8 | p4:
+				case (DefiledVeinRunner, 4):
 				return "defiled vein wall thickness: " + Math.Sqrt(mousePackedDouble / 16);
-				case 8 | p5:
+				case (DefiledVeinRunner, 5):
 				return "defiled vein twist: " + (Main.LocalPlayer.controlUp ? 0 : (double)diffFromPlayer.ToRotation());
-				case 8 | p6:
+				case (DefiledVeinRunner, 6):
 				return "defiled vein twist randomization: " + (Main.MouseScreen.Y > Main.screenHeight / 2f);
-				case 8 | p7:
+				case (DefiledVeinRunner, 7):
 				return "start defiled vein";
-				case 7 | p0:
-				return "remove tree";
-				case 6 | p0:
+				case (DefiledRibs, 0):
 				return "place defiled stone ring";
-				case 5 | p0:
+				case (StartDefiled, 0):
 				return "place defiled start";
-				case 4 | p0:
+				case (BrinePool_Old, 0):
 				return "place brine pool";
-				case 3 | p0:
+				case (RivenHiveCave_Old, 0):
 				return "place riven cave";
-				case 2 | p0:
+				case (StartRivenHive, 0):
 				return "place riven start";
-				case 1 | p0:
-				case 0 | p0:
+				case (VeinRunner_Branching, 0):
+				case (VeinRunner, 0):
 				return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
-				case 1 | p1:
-				case 0 | p1:
+				case (VeinRunner_Branching, 1):
+				case (VeinRunner, 1):
 				return $"j: {Player.tileTargetY}";
-				case 1 | p2:
-				case 0 | p2:
+				case (VeinRunner_Branching, 2):
+				case (VeinRunner, 2):
 				return $"strength: {mousePackedDouble / 16}";
-				case 1 | p3:
-				case 0 | p3:
+				case (VeinRunner_Branching, 3):
+				case (VeinRunner, 3):
 				return $"speed: {diffFromPlayer / 16}";
-				case 1 | p4:
-				case 0 | p4:
+				case (VeinRunner_Branching, 4):
+				case (VeinRunner, 4):
 				return $"length: {mousePackedDouble}";
-				case 1 | p5:
-				case 0 | p5:
+				case (VeinRunner_Branching, 5):
+				case (VeinRunner, 5):
 				return $"twist: {(Main.LocalPlayer.controlUp ? 0 : (double)diffFromPlayer.ToRotation())}";
-				case 1 | p6:
-				case 0 | p6:
+				case (VeinRunner_Branching, 6):
+				case (VeinRunner, 6):
 				return $"random twist: {Main.MouseScreen.Y > Main.screenHeight / 2f}";
-				case 1 | p7:
+				case (VeinRunner_Branching, 7):
 				return $"branch count (optional): {(byte)((mousePacked / 16) % 256)}";
 
-				case -1 | p1:
+				case (Continue, 1):
 				return $"continue";
 				//return $":{}";
 			}
 			return "";
 		}
 		void Apply() {
-			switch (mode) {
-				case -1: {
-					Func<bool> function = (Func<bool>)parameters.Dequeue();
-					if (function()) {
-						parameters.Enqueue(function);
-					} else {
-						mode = 0;
-					}
-					break;
-				}
-				case 0: {
-					GenRunners.VeinRunner(
-						i: (int)parameters.Dequeue(),
-						j: (int)parameters.Dequeue(),
-						strength: (double)parameters.Dequeue(),
-						speed: (Vector2)parameters.Dequeue(),
-						length: (double)parameters.Dequeue(),
-						twist: (float)parameters.Dequeue(),
-						randomtwist: (bool)parameters.Dequeue());
-					break;
-				}
-				case 1: {
+			switch ((Mode)mode) {
+				case VeinRunner_Branching: {
 					int i = (int)parameters.Dequeue();
 					int j = (int)parameters.Dequeue();
 					double strength = (double)parameters.Dequeue();
@@ -357,21 +336,21 @@ namespace Origins.Items.Other.Testing {
 					}
 					break;
 				}
-				case 2:
-				World.BiomeData.Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
+				case StartRivenHive:
+				Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
 				break;
-				case 3:
-				World.BiomeData.Riven_Hive.Gen.HiveCave_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
+				case RivenHiveCave_Old:
+				Riven_Hive.Gen.HiveCave_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
 				break;
-				case 4:
-				World.BiomeData.Brine_Pool.Gen.BrineStart_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
+				case BrinePool_Old:
+				Brine_Pool.Gen.BrineStart_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
 				break;
-				case 5:
-				World.BiomeData.Defiled_Wastelands.Gen.StartDefiled((int)parameters.Dequeue(), (int)parameters.Dequeue());
+				case StartDefiled:
+				Defiled_Wastelands.Gen.StartDefiled((int)parameters.Dequeue(), (int)parameters.Dequeue());
 				break;
-				case 6: {
+				case DefiledRibs: {
 					Vector2 a = new Vector2((float)parameters.Dequeue(), (float)parameters.Dequeue());
-					World.BiomeData.Defiled_Wastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
+					Defiled_Wastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
 					for (int i = (int)a.X - 1; i < (int)a.X + 3; i++) {
 						for (int j = (int)a.Y - 2; j < (int)a.Y + 2; j++) {
 							Main.tile[i, j].SetActive(false);
@@ -381,12 +360,9 @@ namespace Origins.Items.Other.Testing {
 					TileObject.Place(data);
 					break;
 				}
-				case 7:
-				Point treeLoc = (Point)parameters.Dequeue();
-				//Main.NewText(treeLoc);
-				OriginSystem.RemoveTree(treeLoc.X, treeLoc.Y);
+				case RemoveTree:
 				break;
-				case 8: {
+				case DefiledVeinRunner: {
 					Point pos = (Point)parameters.Dequeue();
 					double strength = (double)parameters.Dequeue();
 					Vector2 speed = (((Vector2)parameters.Dequeue()) - pos.ToVector2() * 16).SafeNormalize(Vector2.UnitY);
@@ -394,7 +370,7 @@ namespace Origins.Items.Other.Testing {
 					double wallThickness = (double)parameters.Dequeue();
 					float twist = (float)parameters.Dequeue();
 					bool twistRand = (bool)parameters.Dequeue();
-					World.BiomeData.Defiled_Wastelands.Gen.DefiledVeinRunner(
+					Defiled_Wastelands.Gen.DefiledVeinRunner(
 						pos.X, pos.Y,
 						strength,
 						speed,
@@ -407,7 +383,7 @@ namespace Origins.Items.Other.Testing {
 					);
 					break;
 				}
-				case 9: {
+				case DefiledFissure: {
 					ushort stoneID = (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Stone>();
 					ushort fissureID = (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Fissure>();
 					Point pos = (Point)parameters.Dequeue();
@@ -436,7 +412,7 @@ namespace Origins.Items.Other.Testing {
 					}
 					break;
 				}
-				case 10: {
+				case WFCTest: {
 					int x1 = (int)parameters.Dequeue();
 					int y1 = (int)parameters.Dequeue();
 					int x2 = (int)parameters.Dequeue();
@@ -447,13 +423,13 @@ namespace Origins.Items.Other.Testing {
 						}
 					}
 					WorldGen.RangeFrame(x1, y1, x2, y2);
-					x2 = x2 - x1;
+					x2 -= x1;
 					if (x2 < 0) {
 						x1 += x2;
 						x2 = -x2;
 					}
 					x2++;
-					y2 = y2 - y1;
+					y2 -= y1;
 					if (y2 < 0) {
 						y1 += y2;
 						y2 = -y2;
@@ -468,14 +444,14 @@ namespace Origins.Items.Other.Testing {
 						new(new(BlockType.SlopeUpRight,   mask_full, mask_none, mask_none, mask_full), 1)
 					]);
 					/*mode = -1;
-                    parameters.Enqueue((Func<bool>)(() => {
-                        return generator.CollapseStepWith(
+					parameters.Enqueue((Func<bool>)(() => {
+						return generator.CollapseStepWith(
 							(int i, int j, BlockType type) => {
-                                Main.NewText(type);
-                                Framing.GetTileSafely(i + x1, j + y1).BlockType = type;
-                            }
-                        );
-                    }));*/
+								Main.NewText(type);
+								Framing.GetTileSafely(i + x1, j + y1).BlockType = type;
+							}
+						);
+					}));* /
 					//generator.Force(0, 0, new(BlockType.SlopeDownLeft, mask_none, mask_full, mask_full, mask_none));
 					retry:
 					try {
@@ -493,11 +469,11 @@ namespace Origins.Items.Other.Testing {
 					}
 					break;
 				}
-				case 11: {
+				case FiberglassStart: {
 					Fiberglass_Undergrowth.Gen.FiberglassStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
 					break;
 				}
-				case 12: {
+				case BrinePool_SmallCave: {
 					Brine_Pool.Gen.SmallCave(
 						(int)parameters.Dequeue(),
 						(int)parameters.Dequeue(),
@@ -506,19 +482,15 @@ namespace Origins.Items.Other.Testing {
 					);
 					break;
 				}
-				case 13: {
+				case BrinePool_Start: {
 					Brine_Pool.Gen.BrineStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
 					break;
 				}
-				case 14: {
+				case SpreadRivenGrass: {
 					Riven_Hive.Gen.SpreadRivenGrass((int)parameters.Dequeue(), (int)parameters.Dequeue());
 					break;
 				}
-				case 15: {
-					Defiled_Wastelands.Gen.RavelConnection((Vector2)parameters.Dequeue(), (Vector2)parameters.Dequeue());
-					break;
-				}
-				case 16: {
+				case BrinePool_Opening: {
 					GenRunners.OpeningRunner(
 						(int)parameters.Dequeue(), (int)parameters.Dequeue(),
 						Main.rand.NextFloat(4, 6),
@@ -528,6 +500,166 @@ namespace Origins.Items.Other.Testing {
 					);
 					break;
 				}
+				case StartLimestone: {
+					Limestone_Cave.Gen.StartLimestone((int)parameters.Dequeue(), (int)parameters.Dequeue());
+					break;
+				}
+}
+		}
+		*/
+	}
+	public abstract class WorldgenTestingMode : ILoadable {
+		public record struct SortOrder(WorldgenTestingMode After = null, WorldgenTestingMode Before = null) {
+			public static SortOrder New => new(ModContent.GetInstance<Remove_Tree_Testing_Mode>(), ModContent.GetInstance<Continue_Worldgen_Testing_Mode>());
+			public static SortOrder Default => new(ModContent.GetInstance<Continue_Worldgen_Testing_Mode>());
+		}
+		bool gotOrder;
+		SortOrder order;
+		internal SortOrder Order {
+			get {
+				if (!gotOrder) {
+					gotOrder = true;
+					order = SortPosition;
+				}
+				return order;
+			}
+		}
+		public virtual SortOrder SortPosition => SortOrder.Default;
+		public abstract string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer);
+		public abstract void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer);
+		public abstract void Apply(LinkedQueue<object> parameters);
+		public void Load(Mod mod) {
+			modes.Add(this);
+		}
+		public void Unload() { }
+	}
+	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Auto Slope";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			GenRunners.AutoSlope((int)parameters.Dequeue(), (int)parameters.Dequeue(), true);
+		}
+	}
+	public class Ravel_Hole_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) =>
+			$"ravel hole {(parameterCount > 0 ? "end" : "start")} point: {Player.tileTargetX}, {Player.tileTargetY}";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Main.MouseWorld);
+			if (parameters.Count >= 2) Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Defiled_Wastelands.Gen.RavelConnection((Vector2)parameters.Dequeue(), (Vector2)parameters.Dequeue());
+		}
+	}
+	public class Start_Limestone_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Limestone Cave";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Limestone_Cave.Gen.StartLimestone((int)parameters.Dequeue(), (int)parameters.Dequeue());
+		}
+	}
+	public class Spike_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			switch (parameterCount) {
+				case 0:
+				return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
+				case 1:
+				return $"j: {Player.tileTargetY}";
+				case 2:
+				return $"strength: {mousePackedDouble / 16}";
+				case 3:
+				return $"speed: {diffFromPlayer / 16}";
+				case 4:
+				return $"decay: {mousePackedDouble / 64}";
+				case 5:
+				return $"twist: {(Main.LocalPlayer.controlUp ? 0 : (double)diffFromPlayer.ToRotation())}";
+				case 6:
+				return "twist randomization: " + (Main.MouseScreen.Y > Main.screenHeight / 2f);
+				case 7:
+				return "smooth: " + (Main.MouseScreen.Y > Main.screenHeight / 2f);
+				case 8:
+				return "cutoff strength: " + mousePackedDouble / 16;
+			}
+			return "place";
+		}
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			switch (parameters.Count) {
+				case 0:
+				parameters.Enqueue(Player.tileTargetX);
+				parameters.Enqueue(Player.tileTargetY);
+				return;
+				case 1:
+				parameters.Enqueue(Player.tileTargetY);
+				return;
+				case 2:
+				parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
+				return;
+				case 3:
+				parameters.Enqueue(diffFromPlayer / 16);
+				return;
+				case 4:
+				parameters.Enqueue(mousePackedDouble / 64);
+				return;
+				case 5:
+				parameters.Enqueue(Main.LocalPlayer.controlUp ? 0 : diffFromPlayer.ToRotation());
+				return;
+				case 6:
+				parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
+				return;
+				case 7:
+				parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
+				return;
+				case 8:
+				parameters.Enqueue(mousePackedDouble / 16);
+				return;
+			}
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			GenRunners.SmoothSpikeRunner((int)parameters.Dequeue(), (int)parameters.Dequeue(),
+				parameters.DequeueAsOrDefaultTo(1.0),
+				TileID.AccentSlab,
+				parameters.DequeueAsOrDefaultTo(-Vector2.UnitY),
+				parameters.DequeueAsOrDefaultTo(0.5),
+				parameters.DequeueAsOrDefaultTo(0f),
+				parameters.DequeueAsOrDefaultTo(false),
+				parameters.DequeueAsOrDefaultTo(true),
+				parameters.DequeueAsOrDefaultTo(0.0)
+			);
+		}
+	}
+	public class Remove_Tree_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => new();
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Remove Tree";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Main.MouseWorld.ToTileCoordinates());
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Point treeLoc = (Point)parameters.Dequeue();
+			//Main.NewText(treeLoc);
+			OriginSystem.RemoveTree(treeLoc.X, treeLoc.Y);
+		}
+	}
+	public class Continue_Worldgen_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => new(ModContent.GetInstance<Remove_Tree_Testing_Mode>());
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Continue";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Func<bool> function = (Func<bool>)parameters.Dequeue();
+			if (function()) {
+				parameters.Enqueue(function);
+			} else {
+				mode = 0;
 			}
 		}
 	}

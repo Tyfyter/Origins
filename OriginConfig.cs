@@ -1,11 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Origins.LootConditions;
+using Origins.Projectiles;
+using Origins.Questing;
 using Origins.Reflection;
 using Origins.UI;
 using Origins.UI.Event;
@@ -32,6 +35,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins {
 	public class OriginConfig : ModConfig {
+		const string add_debuff_tooltip = "$Mods.Origins.Configs.OriginConfig.AddDebuff";
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
@@ -41,6 +45,12 @@ namespace Origins {
 		public bool WoodBuffs = true;
 		[DefaultValue(true)]
 		public bool RainSetBuff = true;
+		[LabelKey($"$ItemName.{nameof(ItemID.ThunderStaff)}"), DefaultValue(true)]
+		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderStaff)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
+		public bool ThunderStaff = true;
+		[LabelKey($"$ItemName.{nameof(ItemID.ThunderSpear)}"), DefaultValue(true)]
+		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderSpear)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
+		public bool ThunderSpear = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool RoyalGel = true;
@@ -58,7 +68,7 @@ namespace Origins {
 		[JsonDefaultDictionaryKeyValue("{\"Mod\": \"Terraria\", \"Name\": \"GenericDamageClass\"}")]
 		[JsonIgnore, ShowDespiteJsonIgnore]
 		public Dictionary<DamageClassDefinition, float> StatShareRatio { get; set; } = new() {
-			[new("Terraria/SummonDamageClass")] = 0.5f
+			[new("Terraria/SummonDamageClass")] = 0.25f
 		};
 
 		[JsonIgnore]
@@ -115,11 +125,14 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
 
-		[DefaultValue(0.2f), Range(0, 1), Increment(0.05f)]
+		[DefaultValue(0.2f), Range(0f, 1f), Increment(0.05f)]
 		public float DefiledShaderJitter = 0.2f;
 
-		[DefaultValue(0.1f), Range(0, 1), Increment(0.05f)]
+		[DefaultValue(0.1f), Range(0f, 1f), Increment(0.05f)]
 		public float DefiledShaderNoise = 0.1f;
+
+		[DefaultValue(10), Range(0f, 30f), Increment(0.5f)]
+		public float DefiledShaderSpeed = 10;
 
 		[DefaultValue(1f), Range(0, 2), Increment(0.1f)]
 		public float ScreenShakeMultiplier = 1f;
@@ -130,14 +143,19 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool TwentyFourHourTime = false;
 
-		[DefaultValue(false)]
-		public bool OldSoundtrack = false;
+		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
+		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
+
+		[DefaultValue(~QuestNotificationPositions.None), ConfigFlags<QuestNotificationPositions>, JsonConverter(typeof(FlagsEnumConverter<QuestNotificationPositions>))]
+		public QuestNotificationPositions QuestNotificationPosition = ~QuestNotificationPositions.None;
 
 		public LaserTagConfig laserTagConfig = new();
 
 		[Header("Journal")]
 		[DefaultValue(true)]
-		public bool OpenJournalOnUnlock = true;
+		public bool ShowLockedEntries = true;
+		[DefaultValue(true)]
+		public bool EntryCategoryHeaders = true;
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
@@ -540,8 +558,11 @@ namespace Origins {
 					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
 						glowLayer.LoadAllTextures();
 					}
+					foreach (Accessory_Tangela_Layer tangelaLayer in Origins.instance.GetContent<Accessory_Tangela_Layer>()) {
+						tangelaLayer.LoadAllTextures();
+					}
 					List<string> unused = [];
-					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
+					HashSet<string> loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
 					loadedAssets.Add("icon");
 					loadedAssets.Add("Buffs/BuffTemplate");
 					loadedAssets.Add("Buffs/DebuffTemplate");
@@ -676,7 +697,7 @@ namespace Origins {
 						if (!missingIngredients.TryGetValue(result, out HashSet<int> missing)) {
 							missingIngredients.Add(result, ingredients.ToHashSet());
 						} else {
-							foreach (var item in ingredients) {
+							foreach (int item in ingredients) {
 								missing.Add(item);
 							}
 						}

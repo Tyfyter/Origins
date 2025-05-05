@@ -1,6 +1,7 @@
 using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -17,16 +18,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 35;
-			Item.useTime = (int)(Item.useTime * 0.75);
-			Item.useAnimation = (int)(Item.useAnimation * 0.75);
+			Item.damage = 55;
+			Item.useTime = (int)(Item.useTime * 0.5);
+			Item.useAnimation = (int)(Item.useAnimation * 0.5);
 			Item.shoot = ModContent.ProjectileType<Sticky_Link_Grenade_P>();
-			Item.shootSpeed *= 0.75f;
-			Item.knockBack = 10f;
+			Item.shootSpeed *= 1.25f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
-			Item.rare = ItemRarityID.Green;
-            Item.ArmorPenetration += 3;
+			Item.rare = ItemRarityID.Blue;
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
@@ -48,6 +47,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 60 * 20;
 			Projectile.friendly = false;
 			Projectile.penetrate = 1;
+			/*Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;*/
 		}
 		public override void AI() {
 			if (Projectile.ai[2] == 0) {
@@ -90,6 +92,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.timeLeft == 0 && !Projectile.IsNPCIndexImmuneToProjectileType(Type, target.whoAmI)) return false;
 			return null;
 		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			Link_Grenade_P.AccumulateDamageFromKin(Projectile, target, ref modifiers);
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.perIDStaticNPCImmunity[Type][target.whoAmI] = Main.GameUpdateCount + 1;
 		}
@@ -115,8 +120,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = -1;
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 192;
-			Projectile.height = 192;
+			Projectile.width = 128;
+			Projectile.height = 128;
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();

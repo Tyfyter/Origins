@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Journal;
 using Origins.NPCs;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,12 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
-	public class Ziptie : ModItem {
+	public class Ziptie : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Ziptie_Entry).Name;
+		public class Ziptie_Entry : JournalEntry {
+			public override string TextKey => "Ziptie";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 6);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToWhip(ModContent.ProjectileType<Ziptie_P>(), 51, 5, 4, 35);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
@@ -158,14 +163,14 @@ namespace Origins.Items.Weapons.Summoner {
 
 			Vector2 pos = list[0];
 
-			for (int i = 0; i < list.Count - 1; i++) {
+			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
 				Rectangle frame = new(0, 0, 48, 28);
 				Vector2 origin = new(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
-				if (i == list.Count - 2) {
+				if (i == list.Count - 1) {
 					frame.Y = 112;
 				} else if (i > 10) {
 					frame.Y = 84;
@@ -176,7 +181,12 @@ namespace Origins.Items.Weapons.Summoner {
 				}
 
 				Vector2 element = list[i];
-				Vector2 diff = list[i + 1] - element;
+				Vector2 diff;
+				if (i == list.Count - 1) {
+					diff = element - list[i - 1];
+				} else {
+					diff = list[i + 1] - element;
+				}
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
 				Color color = Lighting.GetColor(element.ToTileCoordinates());

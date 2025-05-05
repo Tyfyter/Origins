@@ -15,6 +15,8 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
+using Origins.Music;
+using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -27,6 +29,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
@@ -47,6 +50,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override int BodyType => ModContent.NPCType<World_Cracker_Body>();
 		public override int TailType => ModContent.NPCType<World_Cracker_Tail>();
 		public override bool SharesDebuffs => true;
+		public override float RotationOffset => MathHelper.Pi;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int DifficultyScaledSegmentCount => 13 + 2 * DifficultyMult;
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
@@ -56,9 +60,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		internal static IItemDropRule normalDropRule;
 		internal static IItemDropRule armorBreakDropRule;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
+		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public override void SetStaticDefaults() {
-			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifier = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/World_Cracker_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(40f, 24f),
 				PortraitPositionXOverride = 0f,
@@ -72,7 +76,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
-			Origins.RasterizeAdjustment.Add(Type, (8, 0f, 0f));
+			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Riven_Hive>());
 		}
 		public override void Unload() {
@@ -90,7 +94,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax = 3800;
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
-			Music = Origins.Music.RivenBoss;
 			NPC.value = Item.sellPrice(gold: 1);
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
@@ -126,6 +129,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			modifiers.ModifyHitInfo += (ref NPC.HitInfo hit) => {
 				if (hit.Damage < 100) hit.Knockback = 0;
 			};
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
@@ -169,7 +177,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			ProcessShoot(NPC);
 
-			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
 		}
 		public static void ProcessShoot(NPC npc) {
@@ -271,7 +278,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 							npc.Center,
 							velocity,
 							projType,
-							9 + DifficultyMult, // for some reason NPC projectile damage is just arbitrarily doubled
+							(int)((9 + DifficultyMult) * ContentExtensions.DifficultyDamageMultiplier), // for some reason NPC projectile damage is just arbitrarily doubled
 							0f
 						);
 						if (isHead) npc.localAI[2] = -1;
@@ -404,7 +411,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 1, 134));
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Vorpal_Sword_Cursed>()));
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Trophy_Item>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<World_Cracker_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
@@ -413,7 +420,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fleshy_Globe>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Amebic_Vial>(), 4));
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<World_Cracker_Relic_Item>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<World_Cracker_Relic>()));
 
 			armorBreakDropRule = new LeadingSuccessRule();
 
@@ -622,6 +629,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			drawParams.BarTexture = Asset<Texture2D>.DefaultValue;
 			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
 			return false;
+		}
+	}
+	public class WC_Music_Scene_Effect : BossMusicSceneEffect {
+		public override int Music => Origins.Music.RivenBoss;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			npcIDs[ModContent.NPCType<World_Cracker_Head>()] = true;
+			npcIDs[ModContent.NPCType<World_Cracker_Body>()] = true;
+			npcIDs[ModContent.NPCType<World_Cracker_Tail>()] = true;
 		}
 	}
 	public class World_Cracker_Master_Biome : ModBiome {

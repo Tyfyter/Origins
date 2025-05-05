@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Tiles.Cubekon;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -33,6 +32,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;
@@ -40,8 +40,6 @@ namespace Origins.Tiles.Riven {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
 			AddMapEntry(new Color(0, 125, 200));
-			//SetModTree(Defiled_Tree.Instance);
-			mergeID = TileID.Stone;
 			//soundType = SoundID.NPCDeath1;
 			MinPick = 65;
 			MineResist = 1.5f;
@@ -124,13 +122,13 @@ namespace Origins.Tiles.Riven {
 			return !(Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile);
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (Main.rand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+			if (WorldGen.genRand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
 				TileObject.Place(objectData);
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				if (Main.rand.NextBool(250)) {
+				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
 				} else {
 					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
@@ -141,7 +139,12 @@ namespace Origins.Tiles.Riven {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Flesh_Item : ModItem {
+	public class Riven_Flesh_Item : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Spug_Flesh_Entry).Name;
+		public class Spug_Flesh_Entry : JournalEntry {
+			public override string TextKey => "Spug_Flesh";
+			public override JournalSortIndex SortIndex => new("Riven", 11);
+		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);

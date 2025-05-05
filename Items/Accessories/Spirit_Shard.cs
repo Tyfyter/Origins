@@ -4,13 +4,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Spirit_Shard : ModItem, IJournalEntryItem, ICustomWikiStat {
+	public class Spirit_Shard : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
 			"Combat",
-			"LoreItem",
 			"SummonBoostAcc"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		
 		public override void SetDefaults() {
@@ -18,6 +16,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {
+			player.maxMinions += 1;
+			player.GetDamage(DamageClass.Summon) += 0.1f;
 			player.GetModPlayer<OriginPlayer>().spiritShard = true;
 		}
 	}

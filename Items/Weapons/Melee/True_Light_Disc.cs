@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using System;
 using Terraria;

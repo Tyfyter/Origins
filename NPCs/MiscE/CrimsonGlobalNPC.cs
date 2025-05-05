@@ -1,12 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class CrimsonGlobalNPC : GlobalNPC {
+	public class CrimsonGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; } = [
 			NPCID.BloodCrawler,
 			NPCID.BloodCrawlerWall,

@@ -12,12 +12,11 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
-    public class Stone_Mask : ModItem, IJournalEntryItem, ICustomWikiStat {
+    public class Stone_Mask : ModItem, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
             "Vitality",
 			"LoreItem"
         ];
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
         public string EntryName => "Origins/" + typeof(Stone_Mask_Entry).Name;
 
         public override void SetDefaults() {
@@ -36,14 +35,15 @@ namespace Origins.Items.Accessories {
 		}
     }
 	public class Stone_Mask_Tile : ModTile, IItemObtainabilityProvider {
-		public const int NextStyleHeight = 40; // Calculated by adding all CoordinateHeights + CoordinatePaddingFix.Y applied to all of them + 2
-
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileFrameImportant[Type] = true;
 			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
+			Main.tileSpelunker[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 100;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.Stone;

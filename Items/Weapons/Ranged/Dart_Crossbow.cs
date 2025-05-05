@@ -27,5 +27,6 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item99;
 		}
+		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 	}
 }

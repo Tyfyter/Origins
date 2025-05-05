@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Riven {
 	public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -19,6 +22,9 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CrimsonBunny);
+			NPC.damage = 21;
+			NPC.lifeMax = 75;
+			NPC.value = 500f;
 			AnimationType = NPCID.CrimsonBunny;
 			AIType = NPCID.CrimsonBunny;
         }

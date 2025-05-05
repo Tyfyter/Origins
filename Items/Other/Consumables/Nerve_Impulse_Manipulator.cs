@@ -10,10 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Nerve_Impulse_Manipulator : ModItem {
 		static short glowmask;
-        public string[] Categories => [
-            "BossSummon"
-        ];
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
@@ -24,6 +21,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.glowMask = glowmask;
 		}
 		public override bool CanUseItem(Player player) {
+			if (Defiled_Amalgamation.spawnDA || player.ownedProjectileCounts[ModContent.ProjectileType<Defiled_Wastelands_Signal>()] > 0) return false;
 			return player.InModBiome<Defiled_Wastelands>() && !NPC.AnyNPCs(ModContent.NPCType<Defiled_Amalgamation>());
 		}
 		public override bool? UseItem(Player player) {

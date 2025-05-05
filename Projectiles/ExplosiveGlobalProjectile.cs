@@ -12,10 +12,12 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.WorldBuilding;
 
 namespace Origins.Projectiles {
 	public class ExplosiveGlobalProjectile : GlobalProjectile {
@@ -158,7 +160,7 @@ namespace Origins.Projectiles {
 			if (source is EntitySource_Death) fromDeath = true;
 			else if (source is EntitySource_ItemUse itemUse) {
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is IBlastRadiusPrefix brPrefix) {
-					modifierBlastRadius = brPrefix.BlastRadius();
+					modifierBlastRadius = modifierBlastRadius.CombineWith(brPrefix.BlastRadius());
 				}
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is ISelfDamagePrefix sdPrefix) {
 					selfDamageModifier = selfDamageModifier.CombineWith(sdPrefix.SelfDamage());
@@ -169,11 +171,51 @@ namespace Origins.Projectiles {
 				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 			} else if (source is EntitySource_Parent sourceParent && sourceParent.Entity is Projectile parent && parent.TryGetGlobalProjectile(out ExplosiveGlobalProjectile parentGlobal)) {
 				modifierBlastRadius = parentGlobal.modifierBlastRadius;
-				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
+				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.selfDamageModifier);
 				novaCascade = parentGlobal.novaCascade;
 				novaSwarm = parentGlobal.novaSwarm;
 				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 				noTileSplode = parentGlobal.noTileSplode;
+			}
+		}
+		public override void CutTiles(Projectile projectile) {
+			if (IsExploding(projectile)) {
+				OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+				Rectangle hitbox = projectile.Hitbox;
+				bool modifiedBlastRadius = false;
+				if (modifierBlastRadius != StatModifier.Default) {
+					StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+					modifiedBlastRadius = true;
+				}
+				if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
+					StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+					modifiedBlastRadius = true;
+				}
+				if (modifiedBlastRadius) {
+					int minX = hitbox.X / 16;
+					int maxX = (hitbox.X + hitbox.Width) / 16 + 1;
+					int minY = hitbox.Y / 16;
+					int maxY = (hitbox.Y + hitbox.Height) / 16 + 1;
+
+					if (minX < 0) minX = 0;
+					if (maxX > Main.maxTilesX) maxX = Main.maxTilesX;
+					if (minY < 0) minY = 0;
+					if (maxY > Main.maxTilesY) maxY = Main.maxTilesY;
+
+					bool[] tileCutIgnorance = Main.player[projectile.owner].GetTileCutIgnorance(allowRegrowth: false, projectile.trap);
+					for (int i = minX; i < maxX; i++) {
+						for (int j = minY; j < maxY; j++) {
+							if (Main.tile[i, j] != null && Main.tileCut[Main.tile[i, j].TileType] && !tileCutIgnorance[Main.tile[i, j].TileType] && WorldGen.CanCutTile(i, j, TileCuttingContext.AttackProjectile)) {
+								WorldGen.KillTile(i, j);
+								if (Main.netMode != NetmodeID.SinglePlayer) {
+									NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
@@ -254,7 +296,7 @@ namespace Origins.Projectiles {
 			}
 			scrapCompactor = bitReader.ReadBit();
 		}
-		public static bool IsExploding(Projectile projectile) {
+		public static bool IsExploding(Projectile projectile, bool isHitting = false) {
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
 				return explodingProjectile.IsExploding();
@@ -272,6 +314,10 @@ namespace Origins.Projectiles {
 				case ProjectileID.DD2ExplosiveTrapT2Explosion:
 				case ProjectileID.DD2ExplosiveTrapT3Explosion:
 				return true;
+
+				case ProjectileID.ExplosiveBullet:
+				if (isHitting) return true;
+				goto default;
 
 				default:
 				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
@@ -572,6 +618,7 @@ namespace Origins.Projectiles {
 				case ProjectileID.Stynger:
 				case ProjectileID.StyngerShrapnel:
 				case ProjectileID.JackOLantern:
+				case ProjectileID.ExplosiveBullet:
 				return 2;
 
 				case ProjectileID.Volcano:
@@ -773,8 +820,9 @@ namespace Origins.Projectiles {
 			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
 			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
-		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch) {
-			projectile.friendly = true;
+		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch, bool hostile = false, bool alsoFriendly = false) {
+			projectile.friendly = !hostile || alsoFriendly;
+			projectile.hostile = hostile;
 			projectile.penetrate = -1;
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
@@ -893,7 +941,7 @@ namespace Origins.Projectiles {
 		}
 	}
 	public abstract class ExplosionProjectile : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public abstract DamageClass DamageType { get; }
 		public abstract int Size { get; }
 		public virtual bool Hostile => false;
@@ -916,6 +964,7 @@ namespace Origins.Projectiles {
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.hide = true;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount, smokeGoreAmount: SmokeGoreAmount);

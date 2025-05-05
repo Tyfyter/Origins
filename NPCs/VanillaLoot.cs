@@ -1,6 +1,8 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Audio;
+using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Pets;
 using Origins.Items.Weapons;
@@ -30,14 +32,14 @@ namespace Origins.NPCs {
 		static OneFromOptionsDropRule _eaterOfWorldsWeaponDrops;
 		public static OneFromOptionsDropRule EaterOfWorldsWeaponDrops => _eaterOfWorldsWeaponDrops ??=  new(1, 1, ModContent.ItemType<Rotting_Worm_Staff>(), ModContent.ItemType<Eaterboros>());
 		static OneFromOptionsDropRule _brainOfCthulhuWeaponDrops;
-		public static OneFromOptionsDropRule BrainOfCthulhuWeaponDrops => _brainOfCthulhuWeaponDrops ??=  new(1, 1, ModContent.ItemType<Hemoptysis>(), ModContent.ItemType<Fresh_Meat_Artifact>());
+		//public static OneFromOptionsDropRule BrainOfCthulhuWeaponDrops => _brainOfCthulhuWeaponDrops ??=  new(1, 1, ModContent.ItemType<Hemoptysis>(), ModContent.ItemType<Fresh_Meat_Artifact>());
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			static LocalizedText GetWarningText(string key) => Language.GetText("Mods.Origins.Warnings." + key);
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
 				case NPCID.BrainofCthulhu:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
-				npcLoot.Add(new LeadingConditionRule(new Conditions.NotExpert()).WithOnSuccess(BrainOfCthulhuWeaponDrops));
+				//npcLoot.Add(new LeadingConditionRule(new Conditions.NotExpert()).WithOnSuccess(BrainOfCthulhuWeaponDrops));
 				break;
 				case NPCID.EaterofWorldsHead or NPCID.EaterofWorldsBody or NPCID.EaterofWorldsTail:
 				npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsABoss())).WithOnSuccess(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));
@@ -119,6 +121,7 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.Harpy:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Feathery_Crest>(), 30));
 				break;
 				case NPCID.Nymph:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>()));
@@ -159,7 +162,6 @@ namespace Origins.NPCs {
 				case NPCID.SkeletonArcher:
 				case NPCID.SkeletonAstonaut:
 				case NPCID.SkeletonCommando:
-				case NPCID.SkeletonMerchant:
 				case NPCID.SkeletonTopHat:
 				case NPCID.ArmoredSkeleton:
 				case NPCID.BigHeadacheSkeleton:
@@ -182,6 +184,10 @@ namespace Origins.NPCs {
 				case NPCID.TacticalSkeleton:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
 				break;
+				case NPCID.SkeletonMerchant:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>(), 5));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+				break;
 				case NPCID.TheGroom:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>()));
 				break;
@@ -192,7 +198,25 @@ namespace Origins.NPCs {
 				case NPCID.MaggotZombie:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Grave_Danger>(), 20));
 				break;
-				default:
+				case NPCID.LunarTowerNebula or NPCID.LunarTowerSolar or NPCID.LunarTowerStardust or NPCID.LunarTowerVortex: {
+					DropOneByOne.Parameters normalParameters = default;
+					normalParameters.MinimumItemDropsCount = 4;
+					normalParameters.MaximumItemDropsCount = 6;
+					normalParameters.ChanceNumerator = 1;
+					normalParameters.ChanceDenominator = 1;
+					normalParameters.MinimumStackPerChunkBase = 1;
+					normalParameters.MaximumStackPerChunkBase = 3;
+					normalParameters.BonusMinDropsPerChunkPerPlayer = 0;
+					normalParameters.BonusMaxDropsPerChunkPerPlayer = 0;
+
+					DropOneByOne.Parameters expertParameters = normalParameters;
+					expertParameters.BonusMinDropsPerChunkPerPlayer = 0;
+					expertParameters.BonusMaxDropsPerChunkPerPlayer = 1;
+					expertParameters.MinimumStackPerChunkBase = (int)(expertParameters.MinimumStackPerChunkBase * 1.25f);
+					expertParameters.MaximumStackPerChunkBase = (int)(expertParameters.MaximumStackPerChunkBase * 1.25f);
+					int itemType = ModContent.ItemType<Nova_Fragment>();
+					npcLoot.Add(new DropBasedOnExpertMode(new DropOneByOne(itemType, normalParameters), new DropOneByOne(itemType, expertParameters)));
+				}
 				break;
 			}
 			bool alreadyAddedHandDrop = false;
@@ -220,7 +244,7 @@ namespace Origins.NPCs {
 				break;
 			}
 			CommonDrop harpoonRule = null;
-			foreach (var rule in npcLoot.Get(includeGlobalDrops: false)) {
+			foreach (IItemDropRule rule in npcLoot.Get(includeGlobalDrops: false)) {
 				List<DropRateInfo> drops = [];
 				DropRateInfoChainFeed ratesInfo = new();
 				rule.ReportDroprates(drops, ratesInfo);
@@ -280,16 +304,10 @@ namespace Origins.NPCs {
 			if (shrapnelIndex > -1) {
 				Impeding_Shrapnel_Debuff.SpawnShrapnel(npc, npc.buffTime[shrapnelIndex]);
 			}
-			int outbreakIndex = npc.FindBuffIndex(Outbreak_Bomb_Owner_Buff.ID);
-			if (outbreakIndex > -1) {
-				Projectile.NewProjectile(npc.GetSource_Death(), npc.Center, default, ModContent.ProjectileType<Outbreak_Bomb_Cloud>(), 60, 1, npc.buffTime[outbreakIndex] - 1);
-			}
 		}
 		public override void ModifyGlobalLoot(GlobalLoot globalLoot) {
-			foreach (var rule in globalLoot.Get()) {
-				if ((rule is ItemDropWithConditionRule conditionalRule) && conditionalRule.condition is Conditions.SoulOfNight) {
-					conditionalRule.condition = new LootConditions.SoulOfNight();
-				}
+			foreach (ItemDropWithConditionRule rule in globalLoot.Get().FindDropRules<ItemDropWithConditionRule>(rule => rule.condition is Conditions.SoulOfNight)) {
+				rule.condition = new LootConditions.SoulOfNight();
 			}
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dawn_Key>(), 2500, 1, 1, new LootConditions.Dawn_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.Defiled_Key_Condition()));
@@ -298,6 +316,8 @@ namespace Origins.NPCs {
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Mushroom_Key>(), 2500, 1, 1, new LootConditions.Mushroom_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ocean_Key>(), 2500, 1, 1, new LootConditions.Ocean_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Riven_Key>(), 2500, 1, 1, new LootConditions.Riven_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Brine_Key>(), 2500, 1, 1, new LootConditions.Brine_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Lost_Picture_Frame>(), 25, 1, 1, new LootConditions.Lost_Picture_Frame_Condition()));
 			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<Generic_Weapon>(), 50000));
 		}
 

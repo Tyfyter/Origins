@@ -1,13 +1,11 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Projectiles;
 namespace Origins.Items.Weapons.Melee {
 	public class Decimator : ModItem, ICustomWikiStat {
 		static short glowmask;

@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
-using Origins.Items.Accessories;
-using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -33,7 +30,16 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.PigronCorruption);
+			NPC.width = 44;
+			NPC.height = 36;
+			NPC.aiStyle = 2;
+			NPC.damage = 70;
+			NPC.defense = 16;
+			NPC.lifeMax = 210;
+			NPC.HitSound = SoundID.NPCHit27;
+			NPC.DeathSound = SoundID.NPCDeath30;
+			NPC.knockBackResist = 0.5f;
+			NPC.value = 2000f;
 			AnimationType = NPCID.PigronCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Ice_Biome>().Type
@@ -54,6 +60,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 25, 1, 1, new Conditions.DontStarveIsNotUp()));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				new FlavorTextBestiaryInfoElement("CommonBestiaryFlavor.Pigron")
 			);

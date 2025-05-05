@@ -9,8 +9,12 @@ using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
+using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Felnum;
+using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -32,14 +36,17 @@ namespace Origins.NPCs.Brine {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public static HashSet<int> FriendlyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = Vector2.UnitY * -16,
 				PortraitPositionYOverride = -32
 			};
+			FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
+			base.SetDefaults();
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 500;
 			NPC.defense = 24;
@@ -53,14 +60,13 @@ namespace Origins.NPCs.Brine {
 			NPC.value = 5000;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			SpawnModBiomes = [
-				ModContent.GetInstance<Brine_Pool>().Type
-			];
 		}
+		// Mildew Creepers can and will attack anything except other Mildew Creepers
+		public override bool CanHitNPC(NPC target) => !FriendlyNPCTypes.Contains(target.type);
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 1, 7));
-			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
-			//npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 7, 16));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Creeper);
@@ -83,6 +89,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CheckTargetLOS(Vector2 target) => true;
 		Physics.Chain chain;
+		public virtual int ChainLength => 15;
 		public override void AI() {
 			DoTargeting();
 			if (chain is null) {
@@ -94,7 +101,7 @@ namespace Origins.NPCs.Brine {
 				Vector2 anchor = NPC.Center;
 				anchor.Y += 8;
 				const float spring = 0.5f;
-				for (int i = 0; i < 15; i++) {
+				for (int i = 0; i < ChainLength; i++) {
 					links.Add(new(anchor, default, 16f, gravity, drag: 0.93f, spring: spring));
 				}
 				links.Add(new(anchor, default, 20f, [new NPCTargetGravity(this)], drag: 0.93f, spring: spring));
@@ -226,15 +233,16 @@ namespace Origins.NPCs.Brine {
 			-Vector2.UnitY
 		];
 		public override int SpawnNPC(int tileX, int tileY) {
-			int spawnY = tileY * 16;
-			if (Math.Abs(tileY - OriginGlobalNPC.aerialSpawnPosition) < 100) spawnY = OriginGlobalNPC.aerialSpawnPosition * 16 + 8;
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this, (spawnY) => CanSpawnInPosition(tileX, spawnY));
+			if (tileY == -1) return Main.maxNPCs;
+
 			const float offsetLen = 0;
-			Vector2 basePos = new(tileX * 16 + 8, spawnY);
+			Vector2 basePos = new(tileX * 16 + 8, tileY * 16);
 			float dist = 800;
 			int directionIndex = 2;
 			Vector2 bestPosition = basePos + directions[directionIndex] * (dist - offsetLen);
 			for (int i = 0; i < directions.Length; i++) {
-				float newDist = CollisionExtensions.Raycast(basePos, directions[i], dist);
+				float newDist = CollisionExt.Raymarch(basePos, directions[i], dist);
 				if (newDist < dist) {
 					dist = newDist;
 					bestPosition = basePos + directions[i] * (dist - offsetLen);

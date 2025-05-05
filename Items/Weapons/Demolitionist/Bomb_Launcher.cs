@@ -1,33 +1,29 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Origins.OriginExtensions;
-
-using Origins.Dev;
-using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Launcher"
 		];
 		public override void SetDefaults() {
-			Item.DefaultToLauncher(2, 40, 78, 30, true);
+			Item.DefaultToLauncher(20, 50, 78, 30, true);
 			Item.shoot = ProjectileID.Bomb;
 			Item.useAmmo = ItemID.Bomb;
-			Item.knockBack = 1.6f;
 			Item.shootSpeed = 6f;
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;
+			Item.ArmorPenetration -= 10;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-16, 2);
@@ -40,15 +36,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 				if (type == ModContent.ProjectileType<Impact_Bomb_P>()) {
 					type = ModContent.ProjectileType<Impact_Bomb_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
-					damage += damage / 2;
-					knockback *= 3;
+					damage *= 2;
+					knockback = 8;
 					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
 				if (type == ModContent.ProjectileType<Acid_Bomb_P>()) {
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
 					type = ModContent.ProjectileType<Brine_Droplet>();
-					damage -= 20;
+					//damage -= 20;
 					for (int i = Main.rand.Next(2); ++i < 5;) {
 						Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 3, knockback, player.whoAmI).scale = 0.85f;
 					}
@@ -83,83 +79,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 			return true;
-		}
-	}
-	public class Awe_Bomb_P : ModProjectile {
-		Vector2 oldVelocity;
-		
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Bomb);
-			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Projectile.timeLeft = 45;
-			Projectile.penetrate = 1;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			oldVelocity = Projectile.velocity;
-		}
-		public override void AI() {
-			float diff = (Projectile.velocity - oldVelocity).LengthSquared();
-			if (diff > 256) {
-				Projectile.timeLeft = 0;
-			}
-			oldVelocity = Projectile.velocity;
-		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			return true;
-		}
-		public override void OnKill(int timeLeft) {
-			SoundEngine.PlaySound(SoundID.Item38.WithVolume(0.75f), Projectile.Center);
-			SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(5), Projectile.Center);
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Bomb_Blast>(), Projectile.damage, 24, Projectile.owner);
-		}
-	}
-	public class Awe_Bomb_Blast : ModProjectile {
-		
-		public override string Texture => "Origins/Projectiles/Pixel";
-		const int duration = 15;
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Bomb);
-			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Projectile.friendly = true;
-			Projectile.hostile = true;
-			Projectile.aiStyle = 0;
-			Projectile.timeLeft = duration;
-			Projectile.width = Projectile.height = 160;
-			Projectile.penetrate = 1;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = duration;
-			Projectile.tileCollide = false;
-		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 closest = Projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-			return (Projectile.Center - closest).Length() <= 160 * ((duration - Projectile.timeLeft) / (float)duration) * Projectile.scale;
-		}
-		public override bool? CanHitNPC(NPC target) {
-			return target.friendly ? false : base.CanHitNPC(target);
-		}
-		public override bool CanHitPlayer(Player target) {
-			Vector2 closest = Projectile.Center.Clamp(target.TopLeft, target.BottomRight);
-			return (Projectile.Center - closest).Length() <= 160 * ((duration - Projectile.timeLeft) / (float)duration) * Projectile.scale;
-		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 1 - ((duration - Projectile.timeLeft) / (float)duration) * 0.6f;
-		}
-		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			modifiers.SourceDamage *= 1- ((duration - Projectile.timeLeft) / (float)duration) * 0.95f;
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			Main.spriteBatch.Restart(
-				sortMode: SpriteSortMode.Immediate,
-				samplerState: SamplerState.PointClamp,
-				transformMatrix: Main.LocalPlayer.gravDir == 1f ? Main.GameViewMatrix.ZoomMatrix : Main.GameViewMatrix.TransformationMatrix
-			);
-			float percent = (duration - Projectile.timeLeft) / (float)duration;
-			DrawData data = new DrawData(Main.Assets.Request<Texture2D>("Images/Misc/Perlin").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f, 0.35f, 0.35f, 0.6f) * (1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent / 1.61803399f) * Projectile.scale, SpriteEffects.None, 0);
-			GameShaders.Misc["ForceField"].UseColor(new Vector3(2f));
-			GameShaders.Misc["ForceField"].Apply(data);
-			data.Draw(Main.spriteBatch);
-			Main.spriteBatch.Restart();
-			return false;
 		}
 	}
 	public class Impact_Bomb_Blast : ModProjectile {

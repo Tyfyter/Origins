@@ -1,7 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Items.Other.Testing;
+using Origins.Projectiles;
+using Origins.Tiles.Other;
+using PegasusLib;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
@@ -19,15 +25,28 @@ namespace Origins.Tiles.Brine {
 			HitSound = SoundID.Dig;
 			DustType = DustID.GrassBlades;
 		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			if (!fail) {
+				Projectile.NewProjectile(
+					WorldGen.GetItemSource_FromTileBreak(i, j),
+					new Vector2(i * 16 + 8, j * 16 + 8),
+					Vector2.Zero,
+					ProjectileType<Peat_Moss_Tile_Explosion>(),
+					20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier),
+					4
+				);
+			}
+		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
-				if (TileObject.CanPlace(i, j + 1, TileType<Brineglow>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile && Framing.GetTileSafely(i, j + 1).LiquidAmount >= 255) {
+				if (TileObject.CanPlace(i, j + 1, WorldGen.genRand.NextBool(3) ? TileType<Brineglow>() : TileType<Underwater_Vine>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;
 					TileObject.Place(objectData);
 				}
 			}
+			Brine_Leaf_Clover_Tile.TryGrowOnTile(i, j);
 		}
 	}
 	public class Peat_Moss_Item : MaterialItem {
@@ -42,6 +61,27 @@ namespace Origins.Tiles.Brine {
 			.AddTile(TileID.GlassKiln)
 			.DisableDecraft()
 			.Register();
+		}
+	}
+	public class Peat_Moss_Tile_Explosion : ExplosionProjectile {
+		public override DamageClass DamageType => DamageClasses.Explosive;
+		public override int Size => 48;
+		public override SoundStyle? Sound => SoundID.Item14.WithVolume(0.66f);
+		public override bool Hostile => true;
+		public override int FireDustAmount => 0;
+		public override int SmokeDustAmount => 15;
+		public override int SmokeGoreAmount => 2;
+		public override int SelfDamageCooldownCounter => ImmunityCooldownID.TileContactDamage;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.friendly = true;
+			Projectile.trap = true;
+		}
+	}
+	public class Peat_Moss_Debug_Item : TestingItem {
+		public override string Texture => typeof(Peat_Moss_Item).GetDefaultTMLName();
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss>());
 		}
 	}
 }

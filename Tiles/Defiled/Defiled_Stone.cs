@@ -20,6 +20,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.Stone[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;
@@ -29,12 +30,19 @@ namespace Origins.Tiles.Defiled {
 			//ItemDrop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
-			mergeID = TileID.Stone;
+			//mergeID = TileID.Stone;
 			MinPick = 65;
 			MineResist = 2;
 			AddDefiledTile();
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
+		}
+		public override void RandomUpdate(int i, int j) {
+			Tile above = Framing.GetTileSafely(i, j - 1);
+			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid && Main.rand.NextBool(250)) {
+				above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+				WorldGen.TileFrame(i, j - 1);
+			}
 		}
 	}
 	public class Defiled_Stone_Item : ModItem, ICustomWikiStat {

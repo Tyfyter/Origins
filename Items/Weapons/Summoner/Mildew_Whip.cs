@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.NPCs;
-using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -11,12 +8,11 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Mildew_Whip : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToWhip(ModContent.ProjectileType<Mildew_Whip_P>(), 33, 5, 4, 26);
+			Item.DefaultToWhip(ModContent.ProjectileType<Mildew_Whip_P>(), 46, 5, 4, 26);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
@@ -81,7 +77,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			timeToFlyOut = Main.player[Projectile.owner].itemAnimationMax * Projectile.MaxUpdates;
 			segments = 20;
-			rangeMultiplier = 1.3f * Projectile.scale;
+			rangeMultiplier = 1.5f * Projectile.scale;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Mildew_Whip_Buff.ID, 240);
@@ -100,14 +96,14 @@ namespace Origins.Items.Weapons.Summoner {
 
 			Vector2 pos = list[0];
 
-			for (int i = 0; i < list.Count - 1; i++) {
+			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
 				Rectangle frame = new Rectangle(0, 0, 48, 28);
 				Vector2 origin = new Vector2(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
-				if (i == list.Count - 2) {
+				if (i == list.Count - 1) {
 					frame.Y = 112;
 				} else if (i > 10) {
 					frame.Y = 84;
@@ -118,7 +114,12 @@ namespace Origins.Items.Weapons.Summoner {
 				}
 
 				Vector2 element = list[i];
-				Vector2 diff = list[i + 1] - element;
+				Vector2 diff;
+				if (i == list.Count - 1) {
+					diff = element - list[i - 1];
+				} else {
+					diff = list[i + 1] - element;
+				}
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
 				Color color = Lighting.GetColor(element.ToTileCoordinates());

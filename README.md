@@ -7,7 +7,7 @@ Wiki: https://tyfyter.github.io/OriginsWiki/
 
 This mod is a collaboration since April of 2017.
 
-Programmer: Tyfyter2002 and Reivax
+Programmer: Tyfyter2002, Reivax, Josh Wilson, John
 Artist: chrersis, forg
 Music: chrersis and gojisturba
 Sound designer: chrersis

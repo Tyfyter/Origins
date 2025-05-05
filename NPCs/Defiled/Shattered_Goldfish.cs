@@ -1,9 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
 	public class Shattered_Goldfish : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
@@ -14,6 +12,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Goldfish, Type);
+			DefiledGlobalNPC.NPCTransformations.Add(NPCID.GoldfishWalker, Type);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {

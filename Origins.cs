@@ -1,4 +1,7 @@
 global using Microsoft.Xna.Framework;
+global using Vector2 = Microsoft.Xna.Framework.Vector2;
+global using Color = Microsoft.Xna.Framework.Color;
+global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Origins.Gores.NPCs;
@@ -44,33 +47,30 @@ using PegasusLib;
 using Origins.Items.Other.Consumables;
 using CalamityMod.Items.Placeables.FurnitureAuric;
 using Origins.Items;
+using Origins.Items.Other;
+using CalamityMod.Projectiles.Magic;
+using Origins.Items.Weapons.Melee;
+using Origins.NPCs.TownNPCs;
+using Origins.Items.Other.Testing;
+using Origins.Journal;
+using Origins.Backgrounds;
+using Terraria.ModLoader.Core;
+using Origins.Dusts;
 
 namespace Origins {
 	public partial class Origins : Mod {
 		public static Origins instance;
 
 		public static Dictionary<int, int> ExplosiveBaseDamage { get; private set; }
+		#region sets
 		public static bool[] DamageModOnHit;
 		public static ushort[] VanillaElements { get; private set; }
-		static bool[] forceFelnumShockOnShoot;
-		public static bool[] ForceFelnumShockOnShoot { get => forceFelnumShockOnShoot; }
 		static float[] flatDamageMultiplier;
 		public static float[] FlatDamageMultiplier { get => flatDamageMultiplier; }
 		static int[] wallHammerRequirement;
 		public static int[] WallHammerRequirement { get => wallHammerRequirement; }
-		public static Dictionary<int, (int maxLevel, float accelerationFactor, float velocityFactor)> RasterizeAdjustment { get; private set; }
 		static bool[] artifactMinion;
 		public static bool[] ArtifactMinion { get => artifactMinion; }
-		static float[] homingEffectivenessMultiplier;
-		public static float[] HomingEffectivenessMultiplier { get => homingEffectivenessMultiplier; }
-		static int[] magicTripwireRange;
-		public static int[] MagicTripwireRange { get => magicTripwireRange; }
-		static int[] magicTripwireDetonationStyle;
-		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
-		static bool[] itemsThatAllowRemoteRightClick;
-		public static bool[] ItemsThatAllowRemoteRightClick { get => itemsThatAllowRemoteRightClick; }
-		static float[] damageBonusScale;
-		public static float[] DamageBonusScale { get => damageBonusScale; }
 		static bool[] brothBuffs;
 		public static bool[] BrothBuffs { get => brothBuffs; }
 		static bool[] isFineWithCrowdedParties;
@@ -81,7 +81,16 @@ namespace Origins {
 		public static bool[] TileBlocksMinecartTracks { get => tileBlocksMinecartTracks; }
 		static bool[] wallBlocksMinecartTracks;
 		public static bool[] WallBlocksMinecartTracks { get => wallBlocksMinecartTracks; }
+		public static bool[] ForceFelnumShockOnShoot => OriginsSets.Projectiles.ForceFelnumShockOnShoot;
+		public static float[] HomingEffectivenessMultiplier => OriginsSets.Projectiles.HomingEffectivenessMultiplier;
+		public static int[] MagicTripwireRange => OriginsSets.Projectiles.MagicTripwireRange;
+		public static int[] MagicTripwireDetonationStyle => OriginsSets.Projectiles.MagicTripwireDetonationStyle;
+		public static bool[] ItemsThatAllowRemoteRightClick => OriginsSets.Items.ItemsThatAllowRemoteRightClick;
+		public static float[] DamageBonusScale => OriginsSets.Items.DamageBonusScale;
+		public static bool[] SpecialPrefix => OriginsSets.Prefixes.SpecialPrefix;
+		#endregion
 		public static short[] itemGlowmasks = [];
+		public static Dictionary<int, (int maxLevel, float accelerationFactor, float velocityFactor)> RasterizeAdjustment { get; private set; }
 		public static Dictionary<int, ModBiome> NPCOnlyTargetInBiome { get; private set; } = [];
 		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
 		public static Dictionary<int, (ushort pileType, int minStyle, int maxStyle)> PileType { get; private set; }
@@ -111,6 +120,8 @@ namespace Origins {
 		public static ArmorShaderData solventShader;
 		public static MiscShaderData rasterizeShader;
 		public static ArmorShaderData amebicProtectionShader;
+		public static ArmorShaderData journalDrawingShader;
+		public static ArmorShaderData journalTransparentShader;
 		public static HairShaderData amebicProtectionHairShader;
 		public static ArmorShaderData coordinateMaskFilter;
 		public static ArmorShaderData tileOutlineShader;
@@ -182,8 +193,7 @@ namespace Origins {
 			//Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
 			for (int oID = 0; oID < OriginTile.IDs.Count; oID++) {
 				OriginTile oT = OriginTile.IDs[oID];
-				if (oT.mergeID == oT.Type) continue;
-				Logger.Info("fixing tilemerge for " + oT.GetType());
+				if (oT.mergeID == oT.Type || oT.mergeID == -1) continue;
 				//Main.tileMergeDirt[oT.Type] = Main.tileMergeDirt[oT.mergeID];
 				Main.tileMerge[oT.Type] = Main.tileMerge[oT.mergeID];
 				Main.tileMerge[oT.mergeID][oT.Type] = true;
@@ -243,7 +253,6 @@ namespace Origins {
 			DamageModOnHit[ProjectileID.LavaBomb] = true;
 			DamageModOnHit[ProjectileID.HoneyBomb] = true;
 			DamageModOnHit[ProjectileID.ScarabBomb] = true;
-			forceFelnumShockOnShoot = new bool[ProjectileLoader.ProjectileCount];
 			#region vanilla weapon elements
 			VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
 			#region fire
@@ -337,32 +346,6 @@ namespace Origins {
 				(ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
 			#endregion earth
 			#endregion vanilla weapon elements
-			homingEffectivenessMultiplier = ProjectileID.Sets.Factory.CreateFloatSet(
-				1f,
-				ProjectileID.ScarabBomb, 0f,
-				ProjectileID.StyngerShrapnel, 0f,
-				ProjectileID.ClusterFragmentsI, 0f,
-				ProjectileID.ClusterFragmentsII, 0f,
-				ProjectileID.BloodCloudMoving, 0f,
-				ProjectileID.BloodCloudRaining, 0f,
-				ProjectileID.RainCloudMoving, 0f,
-				ProjectileID.RainCloudRaining, 0f,
-				ProjectileID.PrincessWeapon, 0f,
-				ProjectileID.ClingerStaff, 0f,
-				ProjectileID.VilethornBase, 0f,
-				ProjectileID.VilethornTip, 0f,
-				ProjectileID.CrystalVileShardShaft, 0f,
-				ProjectileID.CrystalVileShardHead, 0f,
-				ProjectileID.NettleBurstLeft, 0f,
-				ProjectileID.NettleBurstRight, 0f,
-				ProjectileID.NettleBurstEnd, 0f,
-				ProjectileID.MedusaHead, 0f,
-				ProjectileID.PrincessWeapon, 0f,
-				ProjectileID.MagnetSphereBolt, 0f,
-				ProjectileID.InfernoFriendlyBlast, 0f,
-				ProjectileID.LastPrism, 2f,
-				ProjectileID.LastPrismLaser, 2f
-			);
 			PotType = new();
 			PileType = new();
 
@@ -380,13 +363,19 @@ namespace Origins {
 				perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
 				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
+				Filters.Scene["Origins:TestingShader"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/TestingShader"), "TestingShader"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "VoidShade"), EffectPriority.High);
 				if (Filters.Scene["Origins:ZoneDefiled"]?.IsActive() ?? false) {
 					Filters.Scene["Origins:ZoneDefiled"].Deactivate();
 				}
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "DefiledShade")
-					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 1),
+					.UseImage(MC.Request<Texture2D>("Terraria/Images/Misc/noise"), 0),
 				EffectPriority.High);
+				Overlays.Scene["Origins:ZoneDefiled"] = new Tangela_Resaturate_Overlay();
+				Overlays.Scene["Origins:MaskedRasterizeFilter"] = new Tangela_Resaturate_Overlay();
+				Filters.Scene["Origins:ZoneFiberglassUndergrowth"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Overlays.Scene["Origins:ZoneFiberglassUndergrowth"] = new Fiberglass_Background();
+
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "RivenBloodCoating"), EffectPriority.VeryHigh);
@@ -426,15 +415,33 @@ namespace Origins {
 				tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
 				tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));
 
-				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura");
-				GameShaders.Misc["Origins:SapphireAura"].UseImage0(TextureAssets.Extra[194]);
+				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura")
+				.UseImage0(TextureAssets.Extra[194]);
 
 				GameShaders.Misc["Origins:Framed"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Framed");
 				GameShaders.Misc["Origins:AnimatedTrail"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "AnimatedTrail").UseSamplerState(SamplerState.PointWrap);
 				GameShaders.Misc["Origins:LaserBlade"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "LaserBlade").UseSamplerState(SamplerState.PointWrap);
+				GameShaders.Misc["Origins:Identity"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Identity")
+				.UseSamplerState(SamplerState.PointClamp);
+				GameShaders.Misc["Origins:DefiledIndicator"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledIndicator"), "DefiledIndicator");
+				GameShaders.Misc["Origins:DefiledSpike"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledSpike"), "DefiledSpike");
+				GameShaders.Misc["Origins:DefiledPortal"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledPortal"), "DefiledPortal");
+				GameShaders.Misc["Origins:DefiledLaser"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledLaser"), "DefiledLaser");
+				GameShaders.Misc["Origins:DefiledLaser2"] = new MiscShaderData(Assets.Request<Effect>("Effects/Tangela"), "DefiledLaser")
+				.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
+				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
+				GameShaders.Misc["Origins:SilhouetteShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/SilhouetteShader"), "SilhouetteShader");
 
-				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam");
-				GameShaders.Misc["Origins:Beam"].UseSamplerState(SamplerState.PointClamp);
+				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
+				.UseSamplerState(SamplerState.PointClamp);
+
+				journalDrawingShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "Drawing");
+				GameShaders.Armor.BindShader(MC.ItemType<Journal_Item>(), journalDrawingShader);
+
+				journalTransparentShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "LightnessToTransparency");
+				GameShaders.Armor.BindShader(MC.ItemType<Framing_Tester>(), journalTransparentShader);
+
+				TangelaVisual.LoadShader();
 
 				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
@@ -485,6 +492,9 @@ namespace Origins {
 				"journal",
 				"j"
 			]);
+			ChatManager.Register<Journal_Series_Header_Handler>([
+				"jsh"
+			]);
 			ChatManager.Register<Quest_Link_Handler>([
 				"quest",
 				"q"
@@ -514,6 +524,15 @@ namespace Origins {
 			]);
 			ChatManager.Register<Evil_Handler>([
 				"evil"
+			]);
+			ChatManager.Register<Journal_Portrait_Handler>([
+				"jportrait"
+			]);
+			ChatManager.Register<Image_Handler>([
+				"jimage"
+			]);
+			ChatManager.Register<Item_Hint_Handler>([
+				"itemhint"
 			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
@@ -603,12 +622,23 @@ namespace Origins {
 				MaxInstances = 0,
 				PitchVariance = 0.4f
 			};
+			Sounds.Journal = new SoundStyle("Origins/Sounds/Custom/WritingFire", SoundType.Sound) {
+				MaxInstances = 1,
+				SoundLimitBehavior = SoundLimitBehavior.IgnoreNew,
+				PitchVariance = 0.4f
+			};
 			//OriginExtensions.initClone();
-			Music.LoadMusic();
 
 			Main.OnPostDraw += IncrementFrameCount;
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
+
+			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) {
+				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Name);
+				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
+				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), Name); // for future
+			}
+
 #if DEBUG
 			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
@@ -618,13 +648,9 @@ namespace Origins {
 			AssimilationLoader.Unload();
 			ExplosiveBaseDamage = null;
 			DamageModOnHit = null;
-			forceFelnumShockOnShoot = null;
 			VanillaElements = null;
 			flatDamageMultiplier = null;
 			RasterizeAdjustment = null;
-			homingEffectivenessMultiplier = null;
-			itemsThatAllowRemoteRightClick = null;
-			damageBonusScale = null;
 			brothBuffs = null;
 			isFineWithCrowdedParties = null;
 			PotType = null;
@@ -649,9 +675,7 @@ namespace Origins {
 			BreastplateGlowMasks = null;
 			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
-			Music.musicDisplay = null;
 			instance = null;
-			Petrified_Tree.Unload();
 			OriginExtensions.unInitExt();
 			OriginTile.IDs = null;
 			OriginTile.DefiledTiles = null;
@@ -681,6 +705,7 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			Journal_Registry.SetupContent();
 			OriginsModIntegrations.PostSetupContent(this);
 			int blindDebuff = ModContent.BuffType<Blind_Debuff>();
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
@@ -720,6 +745,45 @@ namespace Origins {
 					}
 				}
 			}
+			SetBalanceSetValues();
+			foreach (ModItem item in MC.GetContent<ModItem>()) {
+				if (item is not IJournalEntrySource source) continue;
+				OriginsSets.Items.JournalEntries[item.Type] = source.EntryName;
+			}
+			foreach (ModNPC npc in MC.GetContent<ModNPC>()) {
+				if (npc is not IJournalEntrySource source) continue;
+				OriginsSets.NPCs.JournalEntries[npc.Type] = source.EntryName;
+			}
+		}
+		/// <summary>
+		/// Set here rather than in the initializer so that they can be changed freely
+		/// </summary>
+		static void SetBalanceSetValues() {
+			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(OriginsSets.Projectiles.MagicTripwireRange, OriginsSets.Projectiles.MagicTripwireDetonationStyle);
+
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ScarabBomb] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.StyngerShrapnel] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsI] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsII] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudMoving] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudRaining] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudMoving] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudRaining] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClingerStaff] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornBase] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornTip] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardShaft] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardHead] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstLeft] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstRight] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstEnd] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MedusaHead] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MagnetSphereBolt] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.InfernoFriendlyBlast] = 0f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrism] = 2f;
+			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrismLaser] = 2f;
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
@@ -741,6 +805,7 @@ namespace Origins {
 			NPC self = Main.npc[enemyIndex];
 			MeleeCollisionNPCData.knockbackMult = 1f;
 			if (self.ModNPC is IMeleeCollisionDataNPC meleeNPC) {
+				orig(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect);
 				meleeNPC.GetMeleeCollisionData(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect, ref MeleeCollisionNPCData.knockbackMult);
 			} else {
 				orig(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect);
@@ -821,26 +886,11 @@ namespace Origins {
 		}
 		internal static void ResizeArrays() {
 			Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
-			Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
 			Array.Resize(ref wallHammerRequirement, WallLoader.WallCount);
 			flatDamageMultiplier = ItemID.Sets.Factory.CreateFloatSet(1f,
 				ItemID.Minishark, 3f / 8f
 			);
 			Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
-			int oldCanGainHomingLength = homingEffectivenessMultiplier.Length;
-			Array.Resize(ref homingEffectivenessMultiplier, ProjectileLoader.ProjectileCount);
-			for (int i = oldCanGainHomingLength; i < ProjectileLoader.ProjectileCount; i++) {
-				homingEffectivenessMultiplier[i] = 1f;
-			}
-			Array.Resize(ref Mitosis_P.aiVariableResets, ProjectileLoader.ProjectileCount);
-			for (int i = 0; i < Mitosis_P.aiVariableResets.Length; i++) {
-				Mitosis_P.aiVariableResets[i] = new bool[3];
-			}
-			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
-			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
-			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
-			itemsThatAllowRemoteRightClick = ItemID.Sets.Factory.CreateBoolSet();
-			damageBonusScale = ItemID.Sets.Factory.CreateFloatSet(1f);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
 			isFineWithCrowdedParties = NPCID.Sets.Factory.CreateBoolSet(false, NPCID.PartyGirl, NPCID.DD2Bartender, NPCID.Steampunker, NPCID.Pirate, NPCID.Princess, NPCID.PantlessSkeleton);
 			tileTransformsOnKill = TileID.Sets.Factory.CreateBoolSet(false);
@@ -878,112 +928,26 @@ namespace Origins {
 			}
 		}
 		public static class Music {
-			public static int Fiberglass => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Fiberglass : Vol2.Fiberglass;
+			public static int Fiberglass = MusicID.OtherworldlyJungle;
 
-			public static int BrinePool => OriginClientConfig.Instance.OldSoundtrack ? Vol1.BrinePool : Vol2.BrinePool;
+			public static int BrinePool = MusicID.OtherworldlyEerie;
+			public static int LostDiver = MusicID.OtherworldlyInvasion;
+			public static int MildewCarrion = MusicID.OtherworldlyPlantera;
+			public static int CrownJewel = MusicID.OtherworldlySpace;
+			public static int AncientBrinePool;
 
 			public static int Dusk;
 
-			public static int Defiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Defiled : Vol2.Defiled;
-			public static int UndergroundDefiled => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundDefiled : Vol2.UndergroundDefiled;
-			public static int DefiledBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.DefiledBoss : Vol2.DefiledBoss;
+			public static int Defiled = MusicID.OtherworldlyMushrooms;
+			public static int UndergroundDefiled = MusicID.OtherworldlyUGHallow;
+			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
 			public static int AncientDefiled;
 
-			public static int Riven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.Riven : Vol2.Riven;
-			public static int UndergroundRiven => OriginClientConfig.Instance.OldSoundtrack ? Vol1.UndergroundRiven : Vol2.UndergroundRiven;
-			public static int RivenBoss => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenBoss : Vol2.RivenBoss;
-			public static int RivenOcean => OriginClientConfig.Instance.OldSoundtrack ? Vol1.RivenOcean : Vol2.RivenOcean;
+			public static int Riven = MusicID.OtherworldlyCrimson;
+			public static int UndergroundRiven = MusicID.OtherworldlyIce;
+			public static int RivenBoss = MusicID.Boss5;
+			public static int RivenOcean = MusicID.OtherworldlyRain;
 			public static int AncientRiven;
-
-			public static class Vol2 {
-				public static int Fiberglass;
-
-				public static int BrinePool;
-
-				public static int Defiled;
-				public static int UndergroundDefiled;
-				public static int DefiledBoss;
-
-				public static int Riven;
-				public static int UndergroundRiven;
-				public static int RivenBoss;
-				public static int RivenOcean;
-			}
-			public static class Vol1 {
-				public static int Fiberglass;
-
-				public static int BrinePool;
-
-				public static int Defiled;
-				public static int UndergroundDefiled;
-				public static int DefiledBoss;
-
-				public static int Riven;
-				public static int UndergroundRiven;
-				public static int RivenBoss;
-				public static int RivenOcean;
-			}
-
-			internal static Mod musicDisplay;
-			internal static void LoadMusic() {
-				ModLoader.TryGetMod("MusicDisplay", out musicDisplay);
-				static int GetMusicSlotOld(string path) {
-					path = "Music/" + path;
-					MusicLoader.AddMusic(instance, path);
-					int slot = MusicLoader.GetMusicSlot(instance, path);
-					if (slot != -1 && musicDisplay is not null) {
-						string track = path.Split("/")[^1];
-						musicDisplay.Call("AddMusic",
-							(short)slot,
-							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
-							"chrersis",
-							Origins.instance.DisplayName
-						);
-					}
-					return slot;
-				}
-				static int GetMusicSlotNew(string path) {
-					path = "Sounds/Music/Volume II/" + path;
-					MusicLoader.AddMusic(instance, path);
-					int slot = MusicLoader.GetMusicSlot(instance, path);
-					if (slot != -1 && musicDisplay is not null) {
-						string track = path.Split("/")[^1];
-						musicDisplay.Call("AddMusic",
-							(short)slot,
-							Language.GetOrRegister($"Mods.Origins.Music.{track}.Name", () => track.Replace('_', ' ')),
-							"gojisturba",
-							Origins.instance.DisplayName
-						);
-					}
-					return slot;
-				}
-				Vol1.Fiberglass = GetMusicSlotOld("The_Room_Before");
-				Vol1.BrinePool = GetMusicSlotOld("Below_The_Brine");
-				Vol1.Defiled = GetMusicSlotOld("Stolen_Memories");
-				Vol1.UndergroundDefiled = GetMusicSlotOld("Heart_Of_The_Beast");
-				Vol1.DefiledBoss = GetMusicSlotOld("ADJUDICATE");
-				Vol1.Riven = GetMusicSlotOld("Pereunt_Unum_Scindendum");
-				Vol1.UndergroundRiven = GetMusicSlotOld("Festering_Hives");
-				Vol1.RivenBoss = GetMusicSlotOld("Ad_Laceratur");
-				Vol1.RivenOcean = GetMusicSlotOld("This_Ocean_Of_Alkahest");
-
-
-				Vol2.Fiberglass = GetMusicSlotNew("Skulking");
-				Vol2.BrinePool = GetMusicSlotNew("Deep_Luminance");
-				Dusk = GetMusicSlotOld("Dancing_With_Ghosts");
-
-				Vol2.Defiled = GetMusicSlotNew("Wasteland");
-				Vol2.UndergroundDefiled = GetMusicSlotNew("Dread_Heart");
-				Vol2.DefiledBoss = GetMusicSlotNew("ADJUDICATE");
-
-				Vol2.Riven = GetMusicSlotNew("Skin");
-				Vol2.UndergroundRiven = GetMusicSlotNew("Internal_Organism");
-				Vol2.RivenBoss = GetMusicSlotNew("Frayed_And_Stretched");
-				Vol2.RivenOcean = GetMusicSlotNew("Alkahest");
-
-				AncientDefiled = GetMusicSlotOld("Shattered_Topography_Old");
-				AncientRiven = UndergroundRiven;//GetMusicSlot("Music/Festering_Hives");
-			}
 		}
 		public static class Sounds {
 			public static SoundStyle MultiWhip = SoundID.Item153;
@@ -1011,6 +975,7 @@ namespace Origins {
 			public static SoundStyle LittleZap = SoundID.Roar;
 
 			public static SoundStyle Bonk = SoundID.Roar;
+			public static SoundStyle Journal = SoundID.Roar;
 			public static void Unload() {
 				LightningSounds = null;
 			}
@@ -1045,6 +1010,15 @@ namespace Origins {
 			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName, exception));
 			return false;
 #endif
+		}
+		// for DevHelper
+		static string DevHelpBrokenReason {
+			get {
+#if DEBUG
+				return "Mod was last built in DEBUG configuration";
+#endif
+				return null;
+			}
 		}
 	}
 }

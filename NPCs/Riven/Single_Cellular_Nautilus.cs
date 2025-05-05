@@ -20,6 +20,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Tumbleweed);
@@ -50,7 +51,7 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText()
 			);
 		}
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+        public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
             return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Seashell;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

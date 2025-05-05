@@ -1,7 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
-using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -33,7 +32,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using Tyfyter.Utils;
+using ThoriumMod.PlayerLayers;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
 
@@ -44,15 +43,16 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.Riven;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<Riven_Underground_Background>();
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilRiven";
-		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Surface";
 		public override string MapBackground => BackgroundPath;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public static FrameCachedValue<float> NormalGlowValue { get; private set; } = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
+		public static bool forcedBiomeActive;
 		public static Vector3 ColoredGlow(float intensity) => new Vector3(0.394f, 0.879f, 0.912f) * intensity * NormalGlowValue.GetValue();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -95,7 +95,7 @@ namespace Origins.World.BiomeData {
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.BlueMoss;
-		public static class SpawnRates {
+		public class SpawnRates : SpawnPool {
 			public const float AmebSlime = 0.65f;
 			public const float Fighter = 1;
 			public const float Flajelly = 0.37f;
@@ -103,6 +103,7 @@ namespace Origins.World.BiomeData {
 			public const float Amoebeye = 0.25f;
 			public const float BlisterBoi = 0.75f;
 			public const float Seashell = 0.6f;
+			public const float Aqueoua = 0.5f;
 			public const float Spighter = 1;
 			public const float Mummy = 1;
 			public const float Ghoul = 2;
@@ -113,16 +114,32 @@ namespace Origins.World.BiomeData {
 			public const float Crawler = 0.8f;
 			public const float Mimic = 0.01f;
 			public const float Whip = 0.01f;
+			public override string Name => $"{nameof(Riven_Hive)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.BiomeHigh;
+				static float DesertCave(NPCSpawnInfo spawnInfo) => spawnInfo.DesertCave ? 1 : 0;
+				AddSpawn(NPCID.DesertDjinn, DesertCave);
+				AddSpawn(NPCID.DesertLamiaDark, DesertCave);
+				AddSpawn(NPCID.DesertBeast, DesertCave);
+				static Func<NPCSpawnInfo, float> MimicRate(float rate) => (spawnInfo) => {
+					if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) return rate;
+					return 0;
+				};
+				AddSpawn(ModContent.NPCType<Riven_Mimic>(), MimicRate(Mimic));
+				AddSpawn(ModContent.NPCType<Savage_Whip>(), MimicRate(Whip));
+			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>()) || forcedBiomeActive) {
 					return 1f;
 				}
 				return 0f;
 			}
 			public static float FlyingEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
-				if (hardmode && !Main.hardMode) return 0f;
-				return spawnInfo.Player.InModBiome<Riven_Hive>() ? 0.25f : 0f;
+				return LandEnemyRate(spawnInfo, hardmode);
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>()) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {
@@ -137,6 +154,7 @@ namespace Origins.World.BiomeData {
 				ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				ushort gooBlockType = (ushort)ModContent.TileType<Amoeba_Fluid>();
+				int oreID = ModContent.TileType<Encrusted_Ore>();
 				HashSet<ushort> cleaveReplacables = [fleshBlockType];
 				Tile tile;
 				int X0 = int.MaxValue;
@@ -254,7 +272,9 @@ namespace Origins.World.BiomeData {
 							fleshBlockType,
 							Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), genRand.NextFloat(4, 8)),
 							8,
-							twist: genRand.NextFloat(-2, 2) + MathHelper.Pi
+							twist: genRand.NextFloat(-2, 2) + MathHelper.Pi,
+							oreType: oreID,
+							oreRarity: 50
 						);
 						break;
 						case FeatureType.CUSP:
@@ -262,7 +282,9 @@ namespace Origins.World.BiomeData {
 							fleshBlockType,
 							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(2, 4)),
 							8,
-							twist: genRand.NextFloat(-0.2f, 0.2f)
+							twist: genRand.NextFloat(-0.2f, 0.2f),
+							oreType: oreID,
+							oreRarity: 50
 						);
 						break;
 						case FeatureType.CAVE:
@@ -273,7 +295,9 @@ namespace Origins.World.BiomeData {
 							12,
 							fleshBlockType,//fleshBlockType
 							6,
-							wallType: fleshWallType
+							wallType: fleshWallType,
+							oreType: oreID,
+							oreRarity: 25
 						);
 						pos = Defiled_Wastelands.Gen.DefiledVeinRunner(
 							x, y,
@@ -282,7 +306,9 @@ namespace Origins.World.BiomeData {
 							genRand.NextFloat(12, 24),
 							fleshBlockType,//fleshBlockType
 							6,
-							wallType: fleshWallType
+							wallType: fleshWallType,
+							oreType: oreID,
+							oreRarity: 25
 						).position;
 						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
 						break;
@@ -700,7 +726,7 @@ namespace Origins.World.BiomeData {
 	public class Riven_Hive_Ice_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";// todo: missing background
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Snow";
 		public override string BestiaryIcon => "Origins/UI/IconSnowRiven";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {

@@ -1,23 +1,28 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Summoner;
+using Origins.Journal;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Teardown : ModItem, ICustomWikiStat {
+	public class Teardown : ModItem, ICustomWikiStat, IJournalEntrySource {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		static short glowmask;
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Teardown_Entry).Name;
+		public class Teardown_Entry : JournalEntry {
+			public override string TextKey => "Teardown";
+			public override JournalSortIndex SortIndex => new("Riven", 9);
+		}
+		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 		}
@@ -253,21 +258,10 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Teardown_Buff : ModBuff {
+	public class Teardown_Buff : MinionBuff {
+		public override IEnumerable<int> ProjectileTypes() => [
+			Teardown.projectileID
+		];
 		public override string Texture => "Origins/Buffs/Exoskeleton_Buff";
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Teardown.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Teardown.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
 	}
 }

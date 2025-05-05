@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
+using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -16,10 +17,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Hemoptysis_P>(14, 50, 8f, 46, 28, true);
-			Item.value = Item.sellPrice(silver: 24);
+			Item.value = Item.sellPrice(silver: 45);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.NPCDeath17;
+			Item.UseSound = SoundID.NPCDeath17.WithVolume(0.5f);
 			Item.ArmorPenetration += 1;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrimtaneBar, 10)
+			.AddIngredient(ItemID.TissueSample, 15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-8f, -8f);
@@ -70,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				dir.Normalize();
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
-					Projectile.Center + dir * CollisionExtensions.Raycast(Projectile.Center, dir, 32),
+					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
 					dir,
 					ModContent.ProjectileType<Hemoptysis_P2>(),
 					Projectile.damage / 2,
@@ -83,7 +91,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				dir.Normalize();
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
-					Projectile.Center + dir * CollisionExtensions.Raycast(Projectile.Center, dir, 32),
+					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
 					dir,
 					ModContent.ProjectileType<Hemoptysis_P2>(),
 					Projectile.damage / 2,

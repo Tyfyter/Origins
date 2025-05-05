@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
+using CalamityMod.Items.Potions.Alcohol;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
@@ -12,8 +13,10 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.Brine;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
@@ -21,11 +24,13 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -86,17 +91,17 @@ namespace Origins.NPCs {
 					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
 					shop.Add<Link_Grenade>(PeatSoldCondition(85), ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>());
 					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
-					shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
 					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
 					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));
 					shop.Add<Trash_Lid>(PeatSoldCondition(160));
 					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170), Condition.NotTheBeesWorld);
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode); // Lost Diver condition for both
-					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
+					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]); // Lost Diver condition for both
+					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
+					shop.Add<Sonar_Dynamite>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
 					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
-					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
+					shop.Add<Caustica>(PeatSoldCondition(999), Condition.DownedGolem);
 					break;
 				}
 				case NPCID.Steampunker: {
@@ -143,9 +148,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.WitchDoctor: {
-					shop.InsertAfter<Defiled_Fountain_Item>(ItemID.CorruptWaterFountain);
-					shop.InsertAfter<Riven_Fountain_Item>(ModContent.ItemType<Defiled_Fountain_Item>());
-					shop.InsertAfter<Brine_Fountain_Item>(ModContent.ItemType<Riven_Fountain_Item>());
+					shop.InsertAfter(ItemID.CorruptWaterFountain, WaterFountain.ItemType<Defiled_Fountain>());
+					shop.InsertAfter(WaterFountain.ItemType<Defiled_Fountain>(), WaterFountain.ItemType<Riven_Fountain>());
+					shop.InsertAfter(WaterFountain.ItemType<Riven_Fountain>(), WaterFountain.ItemType<Brine_Fountain>());
 					break;
 				}
 				case NPCID.Mechanic: {
@@ -158,6 +163,7 @@ namespace Origins.NPCs {
 				}
 			}
 		}
+
 		public override bool PreAI(NPC npc) {
 			if (npc.oldPosition == default && npc.oldVelocity == default && npc.position.LengthSquared() > 16) {
 				npc.oldPosition = npc.position;
@@ -173,11 +179,6 @@ namespace Origins.NPCs {
 				}
 				return false;
 			}
-			if (npc.HasBuff(Impaled_Debuff.ID)) {
-				//npc.position = npc.oldPosition;//-=npc.velocity;
-				npc.velocity = Vector2.Zero;
-				return false;
-			}
 			if (rasterizedTime > 0 && npc.oldPosition != default) {
 				if (Math.Abs(npc.velocity.Y) < 0.001f) {
 					switch (npc.aiStyle) {
@@ -188,8 +189,8 @@ namespace Origins.NPCs {
 						break;
 					}
 				}
-				float accelerationFactor = 1; 
-				float velocityFactor = 1; 
+				float accelerationFactor = 1;
+				float velocityFactor = 1;
 				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
 					accelerationFactor = adjustment.accelerationFactor;
 					velocityFactor = adjustment.velocityFactor;
@@ -294,7 +295,7 @@ namespace Origins.NPCs {
 			return true;
 		}
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
-			if ((birdedTime > 0 && (deadBird || npc.knockBackResist != 0)) || npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;
+			if ((birdedTime > 0 && (deadBird || npc.knockBackResist != 0))) return false;
 			return base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
@@ -346,14 +347,26 @@ namespace Origins.NPCs {
 				if (ziptieDebuff) {
 					damageBoost += 6f;
 				}
-				if (beeIncantationDebuff) {
-					damageBoost += 5f;
-				}
-				if (beeIncantationDebuff) {
+				if (mildewWhipDebuff) {
 					damageBoost += 7f;
+				}
+				if (ocotilloFingerDebuff) {
+					damageBoost += 2f;
+				}
+				if (brineIncantationDebuff) {
+					damageBoost += 6f;
+				}
+				if (acridSpoutDebuff) {
+					damageBoost += 6f;
 				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
+				}
+				if (injectIncantationDebuff) {
+					damageBoost += 6f;
+				}
+				if (mildewIncantationDebuff) {
+					damageBoost += 6f;
 				}
 				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost * ProjectileID.Sets.SummonTagDamageMultiplier[projectile.type]);
 			} else if (npc.HasBuff(Futurephones_Buff.ID)) {
@@ -431,82 +444,54 @@ namespace Origins.NPCs {
 				priorityMailTime = 300;
 			}
 		}
-		/*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
-			knockback*=MeleeCollisionNPCData.knockbackMult;
-			MeleeCollisionNPCData.knockbackMult = 1f;
-		}*/
-		public static int aerialSpawnPosition = 0;
+		public override void OnHitNPC(NPC npc, NPC target, NPC.HitInfo hit) {
+			if (target.ModNPC is IOnHitByNPC onHitByNPC) onHitByNPC.OnHitByNPC(npc, hit);
+		}
+		public static int GetAerialSpawnPosition(int tileX, int tileY, ModNPC npc, Predicate<int> isHeightValidCheck = null) {
+			int startPos = tileY;
+			isHeightValidCheck += (height) => {
+				Rectangle hitbox = npc.NPC.Hitbox;
+				hitbox.X = tileX * 16 - npc.NPC.width / 2;
+				hitbox.Y = height * 16 - npc.NPC.height;
+				return !hitbox.OverlapsAnyTiles();
+			};
+			RangeRandom random = new(Main.rand, tileY - 24, tileY);
+			for (int i = random.Start; i < random.End; i++) {
+				if (!isHeightValidCheck(i)) {
+					random.Multiply(i, i + 1, 0);
+				}
+			}
+			if (!random.AnyWeight) return -1;
+			int safeAreaHeight = (NPC.sHeight + NPC.safeRangeY * 2) / 16;
+			foreach (Player player in Main.ActivePlayers) {
+				Vector2 invalidRangeCorner = player.Center - new Vector2((NPC.sWidth / 2) - NPC.safeRangeX, (NPC.sHeight / 2) - NPC.safeRangeY);
+				invalidRangeCorner /= 16;
+				if (tileX >= invalidRangeCorner.X && tileX < invalidRangeCorner.X + NPC.sWidth + NPC.safeRangeX * 2) {
+					random.Multiply((int)invalidRangeCorner.Y, (int)invalidRangeCorner.Y + safeAreaHeight, 0);
+				}
+			}
+			if (!random.AnyWeight) return -1;
+			return random.Get();
+		}
+		public override void EditSpawnRange(Player player, ref int spawnRangeX, ref int spawnRangeY, ref int safeRangeX, ref int safeRangeY) {
+			if (player.InModBiome<Brine_Pool>() && Framing.GetTileSafely(player.Center.ToTileCoordinates()).WallType == ModContent.WallType<Baryte_Wall>()) {
+				spawnRangeY = safeRangeY + (spawnRangeX - safeRangeX);
+			}
+		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
 			}
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), Fiberglass_Undergrowth.SpawnRates.Sword);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), Fiberglass_Undergrowth.SpawnRates.Bow);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), Fiberglass_Undergrowth.SpawnRates.Gun);
-				pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Cannon>(), Fiberglass_Undergrowth.SpawnRates.Gun);
-				pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), Fiberglass_Undergrowth.SpawnRates.Spider);
-				pool[0] = 0;
-				return;
-			}
-			if (originPlayer.ZoneFiberglass) {
-				pool[0] = 0;
-				return;
-			}
-			if (player.InModBiome<Defiled_Wastelands>()) {
-				if (Defiled_Amalgamation.spawnDA) {
-					foreach (var entry in pool) {
-						pool[entry.Key] = 0;
-					}
-					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
-						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 9999);
-					}
-					return;
-				}
-			}
-			if (spawnInfo.DesertCave) {
-				if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
-					pool[NPCID.DesertDjinn] = 1f;
-					pool[NPCID.DesertLamiaDark] = 1f;
-					pool[NPCID.DesertBeast] = 1f;
-				}
-			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile) {
-				if (Main.invasionType <= 0) pool[0] = 0;
-
-				if (spawnInfo.SpawnTileY > Main.worldSurface && !spawnInfo.DesertCave) {
-					int yPos = spawnInfo.SpawnTileY;
-					Tile tile;
-					for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
-						tile = Main.tile[spawnInfo.SpawnTileX, ++yPos];
-						if (tile.HasTile) {
-							yPos--;
-							break;
-						}
-					}
-					bool? halfSlab = null;
-					for (int i = spawnInfo.SpawnTileX - 1; i < spawnInfo.SpawnTileX + 2; i++) {
-						tile = Main.tile[i, yPos + 1];
-						if (!tile.HasTile || !Main.tileSolid[tile.TileType] || tile.Slope != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.IsHalfBlock)) {
-							goto SkipMiteSpawn;
-						}
-						halfSlab = tile.IsHalfBlock;
-					}
-					pool.Add(ModContent.NPCType<Defiled_Mite>(), Defiled_Wastelands.SpawnRates.Mite);
-					SkipMiteSpawn:;
-				}
-			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || player.InModBiome<Riven_Hive>()) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 			}
 			if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) {
-				if (player.InModBiome<Defiled_Wastelands>()) {
+				if (player.InModBiome<Defiled_Wastelands>() && !ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().IsActive(spawnInfo)) {
 					pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
 					pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 				}
-				if (player.InModBiome<Riven_Hive>()) {
+				if (player.InModBiome<Riven_Hive>() && !ModContent.GetInstance<Riven_Hive.SpawnRates>().IsActive(spawnInfo)) {
 					pool.Add(ModContent.NPCType<Riven_Mimic>(), Riven_Hive.SpawnRates.Mimic);
 					pool.Add(ModContent.NPCType<Savage_Whip>(), Riven_Hive.SpawnRates.Whip);
 				}
@@ -516,13 +501,19 @@ namespace Origins.NPCs {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			float spawnRateMultiplier = 1f;
 			float maxSpawnsMultiplier = 1f;
-			if (originPlayer.necroSet) {
+			if (originPlayer.necroSet || originPlayer.necroSet2) {
 				spawnRateMultiplier *= 0.5f;
 				maxSpawnsMultiplier *= 2f;
 			}
 			if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
 				spawnRateMultiplier *= 0.65f;
 				maxSpawnsMultiplier *= 1.3f;
+			}
+			if (Framing.GetTileSafely(player.Bottom - Vector2.UnitY).WallType == ModContent.WallType<Baryte_Wall>()) {
+				spawnRateMultiplier *= 0.2f;
+			}
+			if (player.HasBuff<Cannihound_Lure_Debuff>()) {
+				spawnRateMultiplier *= 0.8f; 
 			}
 			spawnRate = (int)(spawnRate * spawnRateMultiplier);
 			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);

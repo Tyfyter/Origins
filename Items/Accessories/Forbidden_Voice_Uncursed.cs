@@ -1,21 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Melee;
 using Origins.Journal;
-using PegasusLib;
-using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
-	public class Forbidden_Voice_Uncursed : Uncursed_Cursed_Item<Forbidden_Voice>, IJournalEntryItem, ICustomWikiStat {
+	public class Forbidden_Voice_Uncursed : Uncursed_Cursed_Item<Forbidden_Voice>, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Forbidden_Voice_Entry).Name;
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {

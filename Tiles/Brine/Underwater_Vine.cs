@@ -29,6 +29,7 @@ namespace Origins.Tiles.Brine {
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
@@ -53,8 +54,15 @@ namespace Origins.Tiles.Brine {
 			DustType = DustID.GrassBlades;
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(20)) {
-				if (TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
+				const int min_chance = 6;
+				int count = 1;
+				for (int k = 1; k < min_chance; k++) {
+					if (!Framing.GetTileSafely(i, j - k).TileIsType(Type)) break;
+					count++;
+					if (count >= min_chance) break;
+				}
+				if (WorldGen.genRand.NextBool(1 + count / 2) && TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;

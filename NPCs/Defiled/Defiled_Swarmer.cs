@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
@@ -28,10 +27,11 @@ namespace Origins.NPCs.Defiled {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-			NPC.lifeMax = NPC.life = 20;
+			//NPC.aiStyle = NPCAIStyleID.Duke_Fishron;
+			NPC.aiStyle = NPCAIStyleID.Star_Cell;
+			NPC.lifeMax = NPC.life = 40;
 			NPC.defense = 8;
-			NPC.damage = 10;
+			NPC.damage = 34;
 			NPC.width = 28;
 			NPC.height = 26;
 			NPC.friendly = false;
@@ -63,6 +63,8 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
 		}
 		public override void AI() {
+			if (NPC.velocity.HasNaNs()) NPC.velocity = Vector2.Zero;
+			NPC.noGravity = true;
 			NPCAimedTarget target = NPC.GetTargetData();
 			NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
 			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.2f), NPC.Center);

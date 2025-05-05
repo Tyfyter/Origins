@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Shotty_x2 : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -23,6 +21,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
+		public override Vector2? HoldoutOffset() => new Vector2(6, 0);
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = Main.rand.Next(5, 8); i-- > 0;) {
 				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.5f), type, damage, knockback, player.whoAmI);
@@ -50,6 +49,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
+		public override Vector2? HoldoutOffset() => new Vector2(6, 0);
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = Main.rand.Next(8, 12); i-- > 0;) {
 				Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.5f), type, damage, knockback, player.whoAmI);

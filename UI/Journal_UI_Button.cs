@@ -55,6 +55,8 @@ namespace Origins.UI {
 					ItemSlot.Handle(ref originPlayer.journalDye);
 					Main.mouseLeft = Main.mouseLeftRelease = false;
 					Main.mouseRight = true;
+				} else if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+					OriginsModIntegrations.SearchKeybind("Journal");
 				}
 				if (Main.LocalPlayer.HeldItem.dye > 0) {
 					journalShader = Main.LocalPlayer.HeldItem.dye;
@@ -70,20 +72,18 @@ namespace Origins.UI {
 			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);
 			data.Draw(spriteBatch);
 			spriteBatch.Restart(oldstate);
-			if (Quest_Registry.Quests.Any(q => q.HasNotification)) {
-				//TODO: use Terraria/UI/UI_quickicon1
+			if (((OriginPlayer.LocalOriginPlayer?.unreadJournalEntries?.Count ?? 0) > 0) || Quest_Registry.Quests.Any(q => q.HasNotification)) {
 				float scaleValue = MathHelper.Lerp(0.5f, 1.15f, Main.mouseTextColor / 255f);
-				ChatManager.DrawColorCodedStringWithShadow(
-					spriteBatch,
-					FontAssets.MouseText.Value,
-					"!",
-					rectangle.TopRight() - FontAssets.MouseText.Value.MeasureString("!") * new Vector2(1.85f, 0.1f),
-					Color.Yellow,
-					Color.DarkGoldenrod,
+				Main.spriteBatch.Draw(
+					TextureAssets.QuicksIcon.Value,
+					rectangle.TopRight() + new Vector2(-4, 2),
+					null,
+					Main.MouseTextColorReal,
 					0,
-					Vector2.Zero,
-					new Vector2(scaleValue)
-				);
+					TextureAssets.QuicksIcon.Size() * new Vector2(0.5f, 0.5f),
+					(Main.mouseTextColor / 255f) * Main.UIScale,
+					SpriteEffects.None,
+				0);
 			}
 			//UILinkPointNavigator.SetPosition(15001, position);
 			if (!Main.mouseText && flag) {

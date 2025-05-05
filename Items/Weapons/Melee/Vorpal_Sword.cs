@@ -14,11 +14,10 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntryItem, ICustomWikiStat {
+	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
             "Sword"
         ];
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {

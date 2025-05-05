@@ -13,10 +13,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
-	public class Forbidden_Voice : ModItem, IJournalEntryItem, ICustomWikiStat {
+	public class Forbidden_Voice : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Forbidden_Voice_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 32);

@@ -1,16 +1,15 @@
-﻿using Origins.Projectiles;
-using PegasusLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.Journal;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Broths {
-	public class Hearty_Broth : BrothBase {
+	public class Hearty_Broth : BrothBase, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Hearty_Broth_Entry).Name;
+		public class Hearty_Broth_Entry : JournalEntry {
+			public override string TextKey => "Hearty_Broth";
+			public override JournalSortIndex SortIndex => new("Brine_Fiend", 4);
+		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.DrinkParticleColors[Type] = [

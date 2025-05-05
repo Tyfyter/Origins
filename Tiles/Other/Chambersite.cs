@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
 	public class Chambersite : OriginTile {
-		public override void SetStaticDefaults() { //TODO: gemstone properties
+		public override void SetStaticDefaults() { //TODO: figure out what those gemstone properties are
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 500;
 			Main.tileObsidianKill[Type] = true;
@@ -19,6 +19,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];
+			tile.TileFrameX = 0;
 			Tile up = Main.tile[i, j - 1];
 			Tile down = Main.tile[i, j + 1];
 			Tile left = Main.tile[i - 1, j];

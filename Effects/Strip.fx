@@ -46,6 +46,14 @@ float4 LaserBlade(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	return color * ApplyAlphaMatrix(tex2D(uImage0, uv + float2(uTime.x * uSaturation, 0)), uAlphaMatrix0) * factor * uOpacity;
 }
 
+float2 ApplySourceRect(float2 uv, float4 sourceRect) {
+	return uSourceRect0.xy + uv * uSourceRect0.zw;
+}
+
+float4 Identity(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	return color * ApplyAlphaMatrix(tex2D(uImage0, ApplySourceRect(uv, uSourceRect0)), uAlphaMatrix0) * uOpacity;
+}
+
 technique Technique1 {
 	pass SapphireAura {
 		PixelShader = compile ps_2_0 SapphireAura();
@@ -58,5 +66,8 @@ technique Technique1 {
 	}
 	pass LaserBlade {
 		PixelShader = compile ps_2_0 LaserBlade();
+	}
+	pass Identity {
+		PixelShader = compile ps_2_0 Identity();
 	}
 }

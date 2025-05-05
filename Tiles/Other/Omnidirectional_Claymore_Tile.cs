@@ -145,7 +145,7 @@ namespace Origins.Tiles.Other {
 					}
 					Vector2 laserStartPoint = LaserStartPoint;
 					Vector2 oldVel = Projectile.velocity;
-					Projectile.velocity = unit * CollisionExtensions.Raycast(laserStartPoint, unit, 8 * 16);
+					Projectile.velocity = unit * CollisionExt.Raymarch(laserStartPoint, unit, 8 * 16);
 					if (Projectile.velocity != oldVel) {
 						Projectile.netUpdate = true;
 					}

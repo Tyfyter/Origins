@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Other;
 using System;
@@ -28,11 +29,13 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
+			NPC.value = 100f;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if ((spawnInfo.Player.ZoneGraveyard || !Main.dayTime) && spawnInfo.Player.ZoneForest) {
 				return 0.05f;
 			}

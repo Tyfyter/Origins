@@ -1,11 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
-using PegasusLib;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,13 +13,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			//Origins.FlatDamageMultiplier[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Glass_Cannon_P>(2, 28, 11f, 48, 32);
+			Item.DefaultToCanisterLauncher<Glass_Cannon_P>(2, 28, 7.5f, 48, 32);
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.Green;
-			Item.value = Item.sellPrice(silver: 20);
+			Item.value = Item.sellPrice(gold: 1, silver: 20);
 			Item.UseSound = SoundID.Item62.WithPitch(0.4f);
 			Item.reuseDelay = 50;
-			Item.ArmorPenetration += 1;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, 0);

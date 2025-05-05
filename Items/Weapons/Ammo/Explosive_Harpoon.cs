@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Explosive_Harpoon_Explosion : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.width = 36;

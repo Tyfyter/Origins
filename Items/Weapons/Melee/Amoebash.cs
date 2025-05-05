@@ -2,10 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Gores.NPCs;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.Projectiles;
+using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -17,6 +20,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.BardItems;
 using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
 	public class Amoebash : ModItem, ICustomWikiStat {
@@ -48,97 +52,38 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool MeleePrefix() => true;
 		public bool? Hardmode => true;
 	}
-	public class Amoebash_Smash : ModProjectile {
+	public class Amoebash_Smash : MeleeSlamProjectile {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Amoebash).GetDefaultTMLName() + "_Glow";
 		public override string Texture => typeof(Amoebash).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
-		}
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
-			Projectile.aiStyle = 0;
-			Projectile.extraUpdates = 0;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 600;
-			Projectile.noEnchantmentVisuals = true;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse itemUse) {
-				Projectile.ai[1] = itemUse.Player.direction;
-			}
-			Projectile.ai[2] = float.NaN;
-		}
-		public override void AI() {
-			Player player = Main.player[Projectile.owner];
-			if (player.dead) {
-				Projectile.active = false;
-				return;
-			}
-			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
-			swingFactor = MathHelper.Lerp(MathF.Pow(swingFactor, 2f), MathF.Pow(swingFactor, 0.5f), swingFactor * swingFactor);
-			if (!float.IsNaN(Projectile.ai[2])) {
-				Projectile.rotation = Projectile.ai[2];
-			} else {
-				Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
-			}
-			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, realRotation);
-			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
-			player.heldProj = Projectile.whoAmI;
-			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+		public override bool CanHitTiles() => Projectile.rotation * Projectile.ai[1] > -0.85f;
+		public override void OnHitTiles(Vector2 position, Vector2 direction) {
+			Vector2 slamDir = direction.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
+			Collision.HitTiles(position, slamDir, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, position + Projectile.Size * 0.5f);
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 5f, 3f, 12, 500f, -1f, nameof(Amoebash)
+			));
 
-			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f * Projectile.scale;
-			Vector2 size = Projectile.Size * Projectile.scale;
-			Vector2 boxPos = Projectile.Center + vel * 2 - size * 0.5f;
-			Projectile.EmitEnchantmentVisualsAt(boxPos, (int)size.X, (int)size.Y);
-			if (swingFactor > 0.4f && float.IsNaN(Projectile.ai[2])) {
-				if (OriginExtensions.BoxOf(boxPos, boxPos + size).OverlapsAnyTiles()) {
-					Projectile.ai[2] = Projectile.rotation;
-					Vector2 slamDir = vel.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
-					Collision.HitTiles(boxPos, slamDir, Projectile.width, Projectile.height);
-					SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, boxPos + Projectile.Size * 0.5f);
-
-					IEntitySource source = Projectile.GetSource_FromAI();
-					int projType = ModContent.ProjectileType<Amoebash_Shrapnel>();
-					for (int j = 0; j <= 4; j++) {
-						Projectile.NewProjectile(
-							source,
-							boxPos + new Vector2(Main.rand.NextFloat(Projectile.width), Main.rand.NextFloat(Projectile.height)),
-							vel.RotatedBy(Projectile.ai[1] * -0.5f + Main.rand.NextFloat(-0.2f, 0.4f)) * Main.rand.NextFloat(0.2f, 0.3f),
-							projType,
-							Projectile.damage / 2,
-							Projectile.knockBack * 0.2f,
-							Projectile.owner
-						);
-						if (!Main.dedServ) Gore.NewGore(
-							source,
-							boxPos + new Vector2(Main.rand.NextFloat(Projectile.width), Main.rand.NextFloat(Projectile.height)),
-							slamDir * 0.1f,
-							Main.rand.Next(R_Effect_Blood1.GoreIDs),
-							1f
-						);
-					}
-					Projectile.netUpdate = true;
-				}
+			IEntitySource source = Projectile.GetSource_FromAI();
+			int projType = ModContent.ProjectileType<Amoebash_Shrapnel>();
+			for (int j = 0; j <= 4; j++) {
+				if (Main.myPlayer == Projectile.owner) Projectile.NewProjectile(
+					source,
+					position + new Vector2(Main.rand.NextFloat(Projectile.width), Main.rand.NextFloat(Projectile.height)),
+					direction.RotatedBy(Projectile.ai[1] * -0.5f + Main.rand.NextFloat(-0.2f, 0.4f)) * Main.rand.NextFloat(0.2f, 0.3f),
+					projType,
+					Projectile.damage / 2,
+					Projectile.knockBack * 0.2f,
+					Projectile.owner
+				);
+				if (!Main.dedServ) Gore.NewGore(
+					source,
+					position + new Vector2(Main.rand.NextFloat(Projectile.width), Main.rand.NextFloat(Projectile.height)),
+					slamDir * 0.1f,
+					Main.rand.Next(R_Effect_Blood1.GoreIDs),
+					1f
+				);
 			}
-		}
-		public override bool ShouldUpdatePosition() => false;
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f * Projectile.scale;
-			projHitbox.Inflate((int)((projHitbox.Width * Projectile.scale - projHitbox.Width) * 0.5f), (int)((projHitbox.Height * Projectile.scale - projHitbox.Height) * 0.5f));
-			for (int j = 1; j <= 2; j++) {
-				Rectangle hitbox = projHitbox;
-				if (j == 1) {
-					int shrink = (int)(-8 * Projectile.scale);
-					hitbox.Inflate(shrink, shrink);
-				}
-				Vector2 offset = vel * (j - 0.5f);
-				hitbox.Offset((int)offset.X, (int)offset.Y);
-				if (hitbox.Intersects(targetHitbox)) {
-					return true;
-				}
-			}
-			return false;
 		}
 		static bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -166,34 +111,12 @@ namespace Origins.Items.Weapons.Melee {
 			target.SyncCustomKnockback();
 			forcedCrit = false;
 		}
-		public override void CutTiles() {
-			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Vector2 end = Projectile.Center + Projectile.velocity.RotatedBy(Projectile.rotation).SafeNormalize(Vector2.UnitX) * 50f * Projectile.scale;
-			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
-		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.EntitySpriteDraw(
-				TextureAssets.Projectile[Type].Value,
-				Projectile.Center - Main.screenPosition,
-				null,
-				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
-				new Vector2(10, 39 + 28 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
-				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
-				0
-			);
-			Main.EntitySpriteDraw(
-				glowTexture,
-				Projectile.Center - Main.screenPosition,
-				null,
-				Riven_Hive.GetGlowAlpha(lightColor),
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
-				new Vector2(10, 39 + 28 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
-				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
-				0
-			);
+			DrawData data = GetDrawData(lightColor, new Vector2(10, 39 + 28));
+			Main.EntitySpriteDraw(data);
+			data.texture = glowTexture;
+			data.color = Riven_Hive.GetGlowAlpha(lightColor);
+			Main.EntitySpriteDraw(data);
 			return false;
 		}
 	}

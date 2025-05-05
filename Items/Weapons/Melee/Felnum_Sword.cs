@@ -1,20 +1,15 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Projectiles;
+using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Origins.Dev;
-using Origins.NPCs;
-using Origins.Projectiles;
-using PegasusLib;
-using Terraria.Enums;
-using System;
-using Origins.Buffs;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Sword : ModItem, ICustomWikiStat {
@@ -41,7 +36,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Felnum_Sword_Slash>();
 			Item.shootSpeed = 12;
 			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {

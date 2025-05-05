@@ -4,10 +4,12 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Gores;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -50,22 +52,12 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Friendly_Zombie_Buff : ModBuff {
+	public class Friendly_Zombie_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Friendly_Zombie.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Friendly_Zombie.ID
+		];
+		public override bool IsArtifact => true;
 	}
 }
 
@@ -74,7 +66,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
-		public bool CanDie => true || ++Projectile.ai[2] >= 60 * 5;
+		public bool CanDie => ++Projectile.ai[2] >= 60 * 5;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -126,6 +118,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
+			player.tankPet = Projectile.whoAmI;
+			player.tankPetReset = false;
 			bool walkLeft = Projectile.direction == -1;
 			bool walkRight = Projectile.direction == 1;
 			bool hasBarrier = false;
@@ -197,7 +191,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				endPos += startPos;
 				Vector2 offset = Vector2.UnitY * 16;
-				if (!CollisionExtensions.CanHitRay(startPos, endPos) || !CollisionExtensions.CanHitRay(startPos + offset, endPos + offset) || !CollisionExtensions.CanHitRay(startPos - offset, endPos - offset)) {
+				if (!CollisionExt.CanHitRay(startPos, endPos) || !CollisionExt.CanHitRay(startPos + offset, endPos + offset) || !CollisionExt.CanHitRay(startPos - offset, endPos - offset)) {
 					hasBarrier = true;
 				}
 			}
@@ -228,34 +222,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (hasBarrier) {
 					if (Projectile.localAI[1] == Projectile.position.X) {
 						(walkLeft, walkRight) = (walkRight, walkLeft);
-					} else {
-						int groundTileX = (int)(Projectile.position.X + Projectile.width * (walkRight ? 1 : 0)) / 16;
-						int groundTileY = (int)(Projectile.position.Y + Projectile.height + 15) / 16;
-						if (Framing.GetTileSafely(groundTileX, groundTileY).HasSolidTile()) {
-							try {
-								if (walkLeft) {
-									groundTileX--;
-								}
-								if (walkRight) {
-									groundTileX++;
-								}
-								groundTileX += (int)Projectile.velocity.X;
-								if (!WorldGen.SolidTile(groundTileX, groundTileY - 1) && !WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
-									Projectile.velocity.Y = -5.1f;
-								} else if (!WorldGen.SolidTile(groundTileX, groundTileY - 2)) {
-									Projectile.velocity.Y = -7.1f;
-								} else if (WorldGen.SolidTile(groundTileX, groundTileY - 5)) {
-									Projectile.velocity.Y = -11.1f;
-								} else if (WorldGen.SolidTile(groundTileX, groundTileY - 4)) {
-									Projectile.velocity.Y = -10.1f;
-								} else {
-									Projectile.velocity.Y = -9.1f;
-								}
-							} catch {
-								Projectile.velocity.Y = -9.1f;
-							}
-							Projectile.localAI[1] = Projectile.position.X;
-						}
+					} else if (Projectile.TryJumpOverObstacles(walkRight.ToInt() - walkLeft.ToInt())) {
+						Projectile.localAI[1] = Projectile.position.X;
 					}
 				}/* else if (hasHole && foundTarget && targetRect.Bottom <= Projectile.position.Y + Projectile.height) {
 					Projectile.velocity.Y = -9.1f;

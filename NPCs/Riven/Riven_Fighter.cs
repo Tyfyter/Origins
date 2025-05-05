@@ -1,22 +1,31 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Journal;
+using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
 using System.IO;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Riven_Protoform_Entry).Name;
+		public class Riven_Protoform_Entry : JournalEntry {
+			public override string TextKey => "Riven_Protoform";
+			public override JournalSortIndex SortIndex => new("Riven", 6);
+		}
 		public Rectangle DrawRect => new(0, 6, 36, 40);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
+		private int FrameHeight = 40;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.09f;
@@ -24,6 +33,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -32,7 +42,7 @@ namespace Origins.NPCs.Riven {
 			NPC.defense = 10;
 			NPC.damage = 33;
 			NPC.width = 20;
-			NPC.height = 38;
+			NPC.height = OriginsModIntegrations.CheckAprilFools() ? 766 : 38;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
@@ -42,7 +52,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Fighter;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -105,12 +115,12 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.aiAction != 0) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 40) % 160, 36, 40);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + FrameHeight) % (FrameHeight * 4), 36, FrameHeight);
 				NPC.frameCounter = 0;
 			}
 			if (NPC.velocity.Y == 0 && ++NPC.frameCounter > 7) {
 				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 40) % 160, 36, 40);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + FrameHeight) % (FrameHeight * 4), 36, FrameHeight);
 				//reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
 			}
@@ -121,8 +131,23 @@ namespace Origins.NPCs.Riven {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4));
 			}
-			NPC.frame = new Rectangle(0, 160, 36, 40);
+			NPC.frame = new Rectangle(0, FrameHeight * 4, 36, FrameHeight);
 			NPC.frameCounter = 0;
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Riven_Fighter).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_AF";
+		public static AutoLoadingAsset<Texture2D> normalGlowTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_Glow";
+		public static AutoLoadingAsset<Texture2D> afGlowTexture = typeof(Riven_Fighter).GetDefaultTMLName() + "_AF_Glow";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				DrawGlow(spriteBatch, screenPos, afGlowTexture, NPC, GetGlowColor(drawColor));
+				FrameHeight = 768;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				DrawGlow(spriteBatch, screenPos, normalGlowTexture, NPC, GetGlowColor(drawColor));
+				FrameHeight = 40;
+			}
 		}
 	}
 }

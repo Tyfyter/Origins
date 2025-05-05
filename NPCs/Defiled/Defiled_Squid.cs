@@ -1,10 +1,9 @@
 ﻿using AltLibrary.Common.AltBiomes;
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Materials;
-using Origins.Projectiles.Enemies;
+using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -35,6 +34,7 @@ namespace Origins.NPCs.Defiled {
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
 				[ModContent.GetInstance<Defiled_Assimilation>().AssimilationType] = Squid_Bile_P.assimilation_amount
 			});
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.width = 26;
@@ -56,9 +56,14 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Sqid;
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -68,6 +73,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.BlackInk));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public override bool CanHitNPC(NPC target) {
@@ -103,7 +109,7 @@ namespace Origins.NPCs.Defiled {
 										NPC.Center,
 										NPC.velocity * -0.5f,
 										ModContent.ProjectileType<Squid_Bile_P>(),
-										12,
+										(int)(12 * ContentExtensions.DifficultyDamageMultiplier),
 										3
 									);
 
@@ -125,7 +131,7 @@ namespace Origins.NPCs.Defiled {
 											NPC.Center,
 											NPC.velocity * -0.5f,
 											ModContent.ProjectileType<Squid_Bile_P>(),
-											12,
+											(int)(12 * ContentExtensions.DifficultyDamageMultiplier),
 											3
 										);
 									}

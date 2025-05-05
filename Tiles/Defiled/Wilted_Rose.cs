@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Tiles.Ashen;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Metadata;
@@ -20,6 +21,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
 			Main.tileNoFail[Type] = true;
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
@@ -98,7 +100,7 @@ namespace Origins.Tiles.Defiled {
 			int herbItemType = ItemType<Wilting_Rose_Item>();
 			int herbItemStack = 1;
 
-			int seedItemType = 27;//ModContent.ItemType<ExampleHerbSeeds>();
+			int seedItemType = ItemType<Wilting_Rose_Seeds>();
 			int seedItemStack = 1;
 
 			if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth) {
@@ -128,13 +130,12 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override void RandomUpdate(int i, int j) {
-			Tile tile = Framing.GetTileSafely(i, j);
 			int stage = GetStage(i, j);
 
 			// Only grow to the next stage if there is a next stage. We don't want our tile turning pink!
 			if (stage < 2) {
 				// Increase the x frame to change the stage
-				tile.TileFrameX += FrameWidth;
+				Framing.GetTileSafely(i, j).TileFrameX += FrameWidth;
 
 				// If in multiplayer, sync the frame change
 				if (Main.netMode != NetmodeID.SinglePlayer) {
@@ -158,6 +159,14 @@ namespace Origins.Tiles.Defiled {
 			Item.width = 12;
 			Item.height = 14;
 			Item.value = Item.sellPrice(copper: 20);
+        }
+    }
+    public class Wilting_Rose_Seeds : ModItem {
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 25;
+        }
+        public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(TileType<Wilted_Rose>());
         }
     }
 }

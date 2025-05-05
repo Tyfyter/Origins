@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -11,7 +10,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Savage_Whip : ModNPC, IRivenEnemy, ICustomWikiStat {
+	public class Savage_Whip : ModNPC, IRivenEnemy, ICustomWikiStat, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Savage_Whip_Entry).Name;
+		public class Savage_Whip_Entry : JournalEntry {
+			public override string TextKey => "Savage_Whip";
+			public override JournalSortIndex SortIndex => new("Riven", 8);
+		}
 		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Savage_Whip_Preview");
 		public override void Load() {
 			this.AddBanner();

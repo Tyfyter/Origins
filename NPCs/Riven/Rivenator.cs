@@ -24,6 +24,7 @@ namespace Origins.NPCs.Riven {
 				CustomTexturePath = "Origins/UI/Rivenator_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(4f, 8f)
 			};
+			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
@@ -38,7 +39,7 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Worm;
 		}
@@ -136,18 +137,21 @@ namespace Origins.NPCs.Riven {
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
-				while (current.ai[0] != 0) {
+				int bodyType = ModContent.NPCType<Rivenator_Body>();
+				int tailType = ModContent.NPCType<Rivenator_Tail>();
+				HashSet<int> indecies = [];
+				while (current.active && current.ai[0] != 0) {
+					if (!indecies.Add(current.whoAmI)) break;
 					current.velocity = current.oldVelocity;
 					deathEffect(current);
 					current = Main.npc[(int)current.ai[0]];
+					if (current.type != bodyType && current.type != tailType) break;
 				}
 			}
 		}
 		protected static void deathEffect(NPC npc) {
-			//Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
 			for (int i = 0; i < 5; i++) Origins.instance.SpawnGoreByName(npc.GetSource_Death(), npc.position, npc.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
-            //for(int i = 0; i < 3; i++)
-        }
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 480, targetSeverity: 1f - 0.67f);
 		}

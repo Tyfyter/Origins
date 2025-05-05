@@ -17,7 +17,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-    public partial class OriginGlobalNPC : GlobalNPC {
+	public partial class OriginGlobalNPC : GlobalNPC {
 		protected override bool CloneNewInstances => true;
 		public override bool InstancePerEntity => true;
 		internal int shockTime = 0;
@@ -29,8 +29,12 @@ namespace Origins.NPCs {
 		internal bool hibernalIncantationDebuff = false;
 		internal bool jointPopDebuff = false;
 		internal bool ziptieDebuff = false;
-		internal bool beeIncantationDebuff = false;
 		internal bool mildewWhipDebuff = false;
+		internal bool ocotilloFingerDebuff = false;
+		internal bool acridSpoutDebuff = false;
+		internal bool brineIncantationDebuff = false;
+		internal bool injectIncantationDebuff = false;
+		internal bool mildewIncantationDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;
@@ -48,9 +52,11 @@ namespace Origins.NPCs {
 		public bool miniStaticShock = false;
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
+		public bool electrified = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public bool amberDebuff = false;
+		public bool onSoMuchFire = false;
 		public Vector2 preAIVelocity = default;
 		public int priorityMailTime = 0;
 		public int prevPriorityMailTime = 0;
@@ -59,23 +65,28 @@ namespace Origins.NPCs {
 		public int birdedDamage = 0;
 		public bool airBird = false;
 		public bool deadBird = false;
+		public int sonarDynamiteTime = 0;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
 				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);
-				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
 					rasterizedTime = Math.Min(rasterizedTime, adjustment.maxLevel);
 				}
 			} else {
 				rasterizedTime = 0;
 			}
+			jointPopDebuff = false;
+			ziptieDebuff = false;
+			mildewWhipDebuff = false;
+			ocotilloFingerDebuff = false;
+			acridSpoutDebuff = false;
 			amebolizeDebuff = false;
 			beeAfraidDebuff = false;
 			hibernalIncantationDebuff = false;
-			jointPopDebuff = false;
-			ziptieDebuff = false;
-			beeIncantationDebuff = false;
-			mildewWhipDebuff = false;
+			brineIncantationDebuff = false;
+			injectIncantationDebuff = false;
+			mildewIncantationDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 				if (tornCurrentSeverity >= 1 && Main.netMode != NetmodeID.MultiplayerClient) {
@@ -103,10 +114,13 @@ namespace Origins.NPCs {
 			staticShock = false;
 			miniStaticShock = false;
 			staticShockDamage = false;
+			electrified = false;
 			amberDebuff = false;
+			onSoMuchFire = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 			if (birdedTime > 0) birdedTime--;
 			if (birdedTime <= 0) airBird = false;
+			if (sonarDynamiteTime > 0) sonarDynamiteTime--;
 			if (deadBird) {
 				npc.noTileCollide = false;
 				if (birdedTime <= 0) {
@@ -119,6 +133,11 @@ namespace Origins.NPCs {
 				drawColor.R = (byte)Math.Max(drawColor.R - 85, 0);
 				drawColor.G = (byte)Math.Min(drawColor.G + 50, 255);
 				drawColor.B = (byte)Math.Min(drawColor.B + 85, 255);
+			}
+			if (sonarDynamiteTime > 0) {
+				drawColor.R = (byte)Math.Max(drawColor.R - 150, 0);
+				drawColor.G = 255;
+				drawColor.B = 255;
 			}
 			if (Missing_File_UI.drawingMissingFileUI) {
 				drawColor = Missing_File_UI.currentNPCColor;
@@ -136,7 +155,7 @@ namespace Origins.NPCs {
 				modifiers.SourceDamage *= (1f - soulhideWeakenAmount);
 			}
 			if (barnacleBuff) {
-				modifiers.SourceDamage *= Main.masterMode ? 1.5f: (Main.expertMode ? 1.55f : 1.6f);
+				modifiers.SourceDamage *= Main.masterMode ? 1.5f : (Main.expertMode ? 1.55f : 1.6f);
 			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
@@ -174,13 +193,20 @@ namespace Origins.NPCs {
 				}
 				npc.lifeRegen -= 4;
 			}
+			if (onSoMuchFire) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 20;
+				damage += 3;
+			}
 			if (shadeFire) {
 				if (npc.lifeRegen > 0) {
 					npc.lifeRegen = 0;
 				}
 				npc.lifeRegen -= 15;
 				damage += 1;
-				if(Main.rand.Next(5) < 3) {
+				if (Main.rand.Next(5) < 3) {
 					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Shadowflame, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
 					dust.noGravity = true;
 					dust.velocity *= 0.75f;
@@ -198,7 +224,7 @@ namespace Origins.NPCs {
 				}
 				npc.lifeRegen -= 66;
 				if (damage < 3) damage = 3;
-				Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.BreatheBubble, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+				/*Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.BreatheBubble, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
 				dust.noGravity = true;
 				dust.velocity *= 0.75f;
 				dust.velocity.X *= 0.75f;
@@ -206,7 +232,7 @@ namespace Origins.NPCs {
 				if (Main.rand.NextBool(4)) {
 					dust.noGravity = false;
 					dust.scale *= 0.5f;
-				}
+				}*/
 			}
 			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (npc.lifeRegen > 0) {
@@ -215,6 +241,11 @@ namespace Origins.NPCs {
 				int damageMult = 1 + npc.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
 				npc.lifeRegen -= 8 * damageMult;
 				if (damage < 3 * damageMult) damage = 3 * damageMult;
+			}
+			if (electrified) {
+				int damageMult = 1 + npc.wet.ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+				npc.lifeRegen -= 40 * damageMult;
+				if (damage < 40 * damageMult) damage = 20 * damageMult;
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				npc.lifeRegen -= 15;

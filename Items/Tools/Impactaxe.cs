@@ -96,7 +96,7 @@ namespace Origins.Items.Tools {
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f * Projectile.scale;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.95f * Projectile.scale;
 			Vector2 boxPos = Projectile.position + vel;
 			Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
 			if (float.IsNaN(Projectile.ai[2])) {
@@ -111,7 +111,7 @@ namespace Origins.Items.Tools {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f * Projectile.scale;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.95f * Projectile.scale;
 			projHitbox.Offset((int)vel.X, (int)vel.Y);
 			return projHitbox.Intersects(targetHitbox);
 		}
@@ -120,7 +120,7 @@ namespace Origins.Items.Tools {
 		}
 		void Explode(params int[] immuneTargets) {
 			if (float.IsNaN(Projectile.ai[2])) {
-				Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.85f * Projectile.scale;
+				Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.95f * Projectile.scale;
 				Vector2 boxPos = Projectile.position + vel;
 				Projectile.ai[2] = Projectile.rotation;
 				Vector2 slamDir = vel.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
@@ -150,15 +150,16 @@ namespace Origins.Items.Tools {
 			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			SpriteEffects spriteEffects = Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
 				Projectile.rotation + Projectile.velocity.ToRotation() + MathHelper.PiOver4 * Projectile.ai[1],
-				new Vector2(10, 20 + 10 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
+				new Vector2(10, 48).Apply(spriteEffects, TextureAssets.Projectile[Type].Size()),// origin point in the sprite, 'round which the whole sword rotates
 				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				spriteEffects,
 				0
 			);
 			return false;

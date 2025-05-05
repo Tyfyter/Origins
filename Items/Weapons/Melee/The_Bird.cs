@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.NPCs;
 using Origins.Projectiles;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.damage = 99;
-			Item.crit = 44;
+			Item.crit = 21;
 			Item.useAnimation = Item.useTime = 20;
 			Item.rare = ItemRarityID.Cyan;
 			Item.knockBack = 16;
@@ -34,14 +34,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.channel = true;
 			Item.UseSound = SoundID.Item82.WithPitchRange(0.8f, 1f);
 			Item.scale = 1f;
-		}
-		public override void AddRecipes() {
-			/*
-			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Baseball_Bat>())
-			.AddIngredient(ModContent.ItemType<Razorwire>())
-			.Register();
-			//*/
 		}
 		public override bool? CanHitNPC(Player player, NPC target) => player.altFunctionUse == 2 ? null : false;
 		public override bool CanShoot(Player player) => player.altFunctionUse != 2;
@@ -119,6 +111,12 @@ namespace Origins.Items.Weapons.Melee {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 			Main.projFrames[Type] = 5;
 		}
+		public static List<int> reflectors = [];
+		public static List<int> nextReflectors = [];
+		public override void Unload() {
+			reflectors = null;
+			nextReflectors = null;
+		}
 		public override void SetDefaults() {
 			Projectile.friendly = false;
 			Projectile.width = 48;
@@ -131,6 +129,10 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || !player.active) {
+				Projectile.Kill();
+				return;
+			}
 			Projectile.Center = player.MountedCenter;
 			if (player.channel) {
 				if (Projectile.owner == Main.myPlayer) {
@@ -142,6 +144,7 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
 				if (++Projectile.localAI[0] == player.itemAnimationMax) {
+					SoundEngine.PlaySound(SoundID.Item29.WithVolume(0.5f).WithPitchRange(1f, 1.2f), Projectile.Center);
 					ParticleOrchestrator.RequestParticleSpawn(false,
 						ParticleOrchestraType.SilverBulletSparkle,
 						new() {
@@ -169,10 +172,8 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				Projectile.direction = Math.Sign(Projectile.velocity.X);
 				player.OriginPlayer().heldProjOverArm = this;
-				if (Projectile.owner == Main.myPlayer) {
-					foreach (Projectile other in Main.ActiveProjectiles) {
-
-					}
+				if (Projectile.friendly) {
+					nextReflectors.Add(Projectile.whoAmI);
 				}
 			}
 			player.SetDummyItemTime(2);
@@ -198,6 +199,7 @@ namespace Origins.Items.Weapons.Melee {
 				forcedCrit = true;
 			}
 		}
+		public override bool? CanCutTiles() => Projectile.friendly;
 		public override bool CanHitPvp(Player target) => Projectile.frameCounter > 0;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			float knockback = The_Bird.GetBirdKnockback(target, hit, Projectile.knockBack);

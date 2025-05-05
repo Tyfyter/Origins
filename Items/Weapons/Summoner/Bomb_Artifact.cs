@@ -7,13 +7,16 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Projectiles;
+using Origins.Items.Weapons.Summoner.Minions;
+using System.Collections.Generic;
+using Origins.Buffs;
+using Origins.NPCs.MiscE;
+
 namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
-		internal static int buffID = 0;
         public string[] Categories => [
             "Artifact",
 			"Minion"
@@ -35,13 +38,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
-			Item.buffType = buffID;
+			Item.buffType = Friendly_Bomb_Buff.ID;
 			Item.shoot = projectileID;
 			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
-			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage + (int)(damage - player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage)), knockback);
+			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage + (int)player.GetTotalDamage(Item.DamageType).CombineWith(player.OriginPlayer().artifactDamage).GetInverse().ApplyTo(Item.damage), knockback);
 			//var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
 			//projectile.originalDamage = Item.damage;
 			return false;
@@ -49,21 +52,13 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Friendly_Bomb_Buff : ModBuff {
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			Bomb_Artifact.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Bomb_Artifact.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+	public class Friendly_Bomb_Buff : MinionBuff {
+		public static int ID { get; private set; }
+		public override IEnumerable<int> ProjectileTypes() => [
+			Bomb_Artifact.projectileID
+		];
+		public override bool IsArtifact => true;
+		public override bool DrawHealthBars => false;
 	}
 }
 
@@ -137,9 +132,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Bomb_Artifact.buffID);
+				player.ClearBuff(Friendly_Bomb_Buff.ID);
 			}
-			if (player.HasBuff(Bomb_Artifact.buffID)) {
+			if (player.HasBuff(Friendly_Bomb_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -153,9 +148,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Vector2 vectorToIdlePosition = (idlePosition + new Vector2(6 * player.direction, 0)) - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (distanceToIdlePosition > 1000f) {
-				Projectile.ai[1]++;
-				if (Projectile.ai[1] > 3600f) {
-					OriginSystem.Instance.AbandonedBombs.Add(Projectile.Center.ToTileCoordinates());
+				if (++Projectile.ai[1] > 3600f) {
+					ModContent.GetInstance<Abandoned_Bomb_System>().BombPositions.Add((Projectile.Center.ToTileCoordinates(), player.OriginPlayer().guid));
 					Projectile.active = false;
 				}
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {
@@ -299,7 +293,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.frame = 7 + (int)(Projectile.ai[0] / 6f);
 				if (++Projectile.ai[0] > 30) {
 					//Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, projectile.damage, 0, projectile.owner, 1, 1);
-					Projectile.DamageArtifactMinion(9999, noCombatText: true);
+					Projectile.DamageArtifactMinion(50, noCombatText: true);
 				}
 			} else if (OnGround) {
 				Projectile.localAI[1]--;

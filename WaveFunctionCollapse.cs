@@ -13,7 +13,7 @@ namespace Tyfyter.Utils {
 			Cell?[,] actuals;
 			bool matchAll;
 			public Generator(int width, int height, UnifiedRandom random = null, bool matchAll = false, params Tuple<Cell, double>[] cellTypes) {
-				this.random = random ?? Main.rand;
+				this.random = random ?? WorldGen.genRand;
 				potentials = new WeightedRandom<Cell>[width, height];
 				actuals = new Cell?[width, height];
 				this.cellTypes = cellTypes.ToList();
@@ -21,7 +21,7 @@ namespace Tyfyter.Utils {
 				Reset();
 			}
 			public Generator(Cell?[,] actuals, UnifiedRandom random = null, bool matchAll = false, params Tuple<Cell, double>[] cellTypes) {
-				this.random = random ?? Main.rand;
+				this.random = random ?? WorldGen.genRand;
 				potentials = new WeightedRandom<Cell>[actuals.GetLength(0), actuals.GetLength(1)];
 				this.actuals = actuals;
 				this.cellTypes = cellTypes.ToList();

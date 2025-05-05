@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -16,12 +14,13 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 2;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.07f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				Velocity = 1
 			});
 			Main.npcFrameCount[NPC.type] = 16;
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
@@ -51,7 +50,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 180f;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Defiled_Sand>()], true) * Defiled_Wastelands.SpawnRates.Mummy / 3f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -73,7 +73,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public override void SetDefaults() {
-			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+			if (OriginsModIntegrations.CheckAprilFools()) Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.timeLeft = 5;
 			Projectile.width = 20;
 			Projectile.height = 28;

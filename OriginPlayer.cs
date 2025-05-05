@@ -34,16 +34,58 @@ namespace Origins {
 		public const float explosive_defense_factor = 2f;
 		public static OriginPlayer LocalOriginPlayer { get; internal set; }
 		public override void PreUpdateMovement() {
+			_ = Player.Hitbox;
+			realControlUseItem = Player.controlUseItem;
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
 				Player.velocity *= 1.006f;
 				Player.ignoreWater = true;
 			}
-			if (riptideSet && !Player.mount.Active) {
+			if (Player.ownedProjectileCounts[ModContent.ProjectileType<Latchkey_P>()] > 0) {
+				Player.tongued = true;
+			}
+			bool otherDash = Player.dashType != 0;
+			if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+				otherDash = true;
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int shineSparkDuration = 90;
+				float shineSparkSpeed = 16f;
+				if (dashVase) shineSparkSpeed *= 1.2f;
+				if (shineSparkDashTime > 0) {
+					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
+					if (shineSparkDashDirection.X != 0 && onSlope) {
+						shineSparkDashTime = 1;
+						shineSparkCharge = 60;
+					}
+					if (collidingX || collidingY) {
+						shineSparkDashTime = 1;
+						Collision.HitTiles(Player.position, Player.velocity, Player.width, Player.height);
+						if (!collidingX && shineSparkDashDirection.X != 0) {
+							shineSparkCharge = 60;
+						}
+					}
+					shineSparkDashTime--;
+					dashDelay = 30;
+					loversLeapDashTime = 0;
+					Player.velocity.Y -= Player.gravity * Player.gravDir * 0.1f;
+				} else {
+					if (dashDirection != 0 || dashDirectionY != 0) {
+						shineSparkDashTime = shineSparkDuration;
+						shineSparkDashSpeed = shineSparkSpeed;
+						Player.timeSinceLastDashStarted = 0;
+						shineSparkDashDirection = new((Player.controlRight ? 1 : 0) - (Player.controlLeft ? 1 : 0), (Player.controlDown ? 1 : 0) - (Player.controlUp ? 1 : 0));
+						shineSparkDashDirection.Normalize();
+						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
+					}
+				}
+			} else if(riptideSet && !Player.mount.Active) {
+				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const int riptideDashDuration = 12;
-				const float riptideDashSpeed = 9f;
+				float riptideDashSpeed = 9f;
+				if (dashVase) riptideDashSpeed *= 1.2f;
 				if (dashDirection != 0 && (Player.velocity.X * dashDirection < riptideDashSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
@@ -58,22 +100,25 @@ namespace Origins {
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
 						new Vector2(dashDirection * riptideDashSpeed, 0),
 						Riptide_Dash_P.ID,
-						25,
+						48,
 						riptideDashSpeed + 3,
 						Player.whoAmI
 					);
 				}
 				if (riptideDashTime != 0) {
+					Player.dashDelay = -1;
 					Player.velocity.X = riptideDashSpeed * Math.Sign(riptideDashTime);
 					riptideDashTime -= Math.Sign(riptideDashTime);
 					dashDelay = 25;
+					if (riptideDashTime == 0) Player.dashDelay = 25;
 				}
-			}
-			if (meatScribeItem is not null && meatDashCooldown <= 0) {
+			} else if (meatScribeItem is not null && meatDashCooldown <= 0) {
+				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const float meatDashTotalSpeed = 12f;
-				const float meatDashSpeed = meatDashTotalSpeed / Scribe_of_the_Meat_God_P.max_updates;
+				float meatDashSpeed = meatDashTotalSpeed / Scribe_of_the_Meat_God_P.max_updates;
+				if (dashVase) meatDashSpeed *= 1.2f;
 				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashTotalSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
@@ -95,35 +140,37 @@ namespace Origins {
 					dashDelay = Scribe_of_the_Meat_God_P.dash_duration + 6;
 					meatDashCooldown = 120 + Scribe_of_the_Meat_God_P.dash_duration;
 				}
-			}
-			if (shineSpark && ((loversLeapDashTime <= 0 && shineSparkCharge > 0) || shineSparkDashTime > 0)) {
+			} else if (refactoringPieces && refactoringPiecesDashCooldown <= 0) {
+				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
-				const int shineSparkDuration = 90;
-				const float shineSparkSpeed = 16f;
-				if (shineSparkDashTime > 0) {
-					Player.velocity = shineSparkDashDirection * shineSparkDashSpeed;
-					if (collidingX || collidingY) {
-						shineSparkDashTime = 1;
-						Collision.HitTiles(Player.position, Player.velocity, Player.width, Player.height);
+				float keyDashSpeed = 4;
+				if (dashVase) keyDashSpeed *= 1.2f;
+				if (dashDirection != 0) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					Player.timeSinceLastDashStarted = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
 					}
-					shineSparkDashTime--;
-					dashDelay = 30;
-					loversLeapDashTime = 0;
-					Player.velocity.Y -= Player.gravity * Player.gravDir * 0.1f;
-				} else {
-					if (dashDirection != 0 || dashDirectionY != 0) {
-						shineSparkDashTime = shineSparkDuration;
-						shineSparkDashSpeed = shineSparkSpeed;
-						Player.timeSinceLastDashStarted = 0;
-						shineSparkDashDirection = new((Player.controlRight ? 1 : 0) - (Player.controlLeft ? 1 : 0), (Player.controlDown ? 1 : 0) - (Player.controlUp ? 1 : 0));
-						shineSparkDashDirection.Normalize();
-						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
-					}
+					Projectile.NewProjectile(
+						Player.GetSource_Misc("refactor"),
+						Player.Center + new Vector2(Player.width * dashDirection, 0),
+						new Vector2(dashDirection * keyDashSpeed, 0),
+						ModContent.ProjectileType<Latchkey_P>(),
+						0,
+						0,
+						Player.whoAmI
+					);
+					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
+					dashDelay = 10 + 6;
+					refactoringPiecesDashCooldown = 120;
 				}
 			} else if (loversLeap) {
 				const int loversLeapDuration = 6;
-				const float loversLeapSpeed = 12f;
+				float loversLeapSpeed = 12f;
+				if (dashVase) loversLeapSpeed *= 1.2f;
 				if (collidingX || collidingY) {
 					Player.dashType = 0;
 					Player.dashTime = 0;
@@ -255,7 +302,40 @@ namespace Origins {
 					} else if(loversLeapDashTime == 1) {
 						loversLeapDashTime = 0;
 					}
+				} else {
+					otherDash = true;
 				}
+			}
+			if (dashVase && !otherDash) {
+				Player.dashTime = 0;
+				const int vaseDashDuration = 12;
+				float vaseDashSpeed = 8f;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < vaseDashSpeed)) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					Player.dashDelay = vaseDashDuration;
+					Player.timeSinceLastDashStarted = 0;
+					vaseDashDirection = dashDirection;
+					if (Player.velocity.Y * Player.gravDir > Player.gravity * Player.gravDir * 8) {
+						Player.velocity.Y = Player.gravity * 8;
+					}
+				}
+				if (Player.dashDelay > 0 && vaseDashDirection != 0) {
+					if (Player.velocity.X * vaseDashDirection < vaseDashSpeed) Player.velocity.X = vaseDashSpeed * vaseDashDirection;
+					Dust.NewDust(
+						Player.position,
+						Player.width,
+						Player.height,
+						DustID.YellowTorch,
+						0,
+						Player.velocity.Y
+					);
+				} else {
+					dashVaseVisual = false;
+				}
+			} else {
+				vaseDashDirection = 0;
+				dashVaseVisual = false;
 			}
 			if (rebreather && Player.breath < Player.breathMax) {
 				if (Player.breathCD == 0 || rebreatherCounting) {
@@ -284,12 +364,6 @@ namespace Origins {
 					Player.RefreshMovementAbilities();
 				}
 			}
-			if (changeSize) {
-				Player.position.X -= (targetWidth - Player.width) / 2;
-				Player.position.Y -= targetHeight - Player.height;
-				Player.width = targetWidth;
-				Player.height = targetHeight;
-			}
 			oldXSign = Math.Sign(Player.velocity.X);
 			oldYSign = Math.Sign(Player.velocity.Y);
 			//endCustomMovement:
@@ -304,6 +378,7 @@ namespace Origins {
 					windSpeed = (short)Math.Clamp(windSpeed + Player.velocity.X, -128, 128);
 				}
 			}*/
+			onSlope = false;
 		}
 		public override void PreUpdate() {
 			if (OriginConfig.Instance.Assimilation) {
@@ -314,8 +389,8 @@ namespace Origins {
 			if (rivenWet) {
 				Player.gravity = 0.25f;
 			}
+			ceilingRavel = false;
 			if (ravel && spiderRavel) {
-				ceilingRavel = false;
 				if (collidingX) {
 					Player.gravity = 0;
 					Player.velocity.Y *= 0.9f;
@@ -337,7 +412,7 @@ namespace Origins {
 						}
 					}
 					if (colliding) {
-						ceilingRavel = true;
+						ceilingRavel = Player.controlUp;
 						spiderRavelTime = 10;
 					}
 					if (Player.controlDown) {
@@ -459,6 +534,7 @@ namespace Origins {
 				}
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
+			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {
@@ -479,6 +555,16 @@ namespace Origins {
 			controlTriggerSetBonus = Keybindings.TriggerSetBonus.Current;
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
 				TriggerSetBonus();
+			}
+			if (Keybindings.UseMojoFlask.JustPressed && IterateAssimilation().Any(a => a.Percent > 0)) {
+				if (Player.nonTorch == -1) Player.nonTorch = Player.selectedItem;
+
+				for (int i = 0; i < Player.inventory.Length; i++) {
+					if (Player.inventory[i]?.ModItem is Mojo_Flask) {
+						Player.selectedItem = i;
+						Player.controlUseItem = true;
+					}
+				}
 			}
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;
@@ -551,12 +637,6 @@ namespace Origins {
 				}
 			}
 		}
-		public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
-			if (!journalUnlocked) {
-				return true;
-			}
-			return !unlockedJournalEntries.Contains(journalItem.EntryName);
-		}
 
 		public override void SaveData(TagCompound tag) {
 			if (eyndumCore is not null) {
@@ -573,11 +653,14 @@ namespace Origins {
 			if (unlockedJournalEntries is not null) {
 				tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
 			}
+			if (unreadJournalEntries is not null) {
+				tag.Add("UnreadJournalEntries", unreadJournalEntries.ToList());
+			}
 			if (startedQuests is not null) {
 				tag.Add("UnlockedQuests", startedQuests.ToList());
 			}
 			TagCompound questsTag = [];
-			foreach (var quest in Quest_Registry.Quests) {
+			foreach (Quest quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
 					TagCompound questTag = [];
 					quest.SaveData(questTag);
@@ -599,6 +682,7 @@ namespace Origins {
 			}
 			tag.Add("Assimilations", assimilations);
 			tag.Add("mojoInjection", mojoInjection);
+			tag.Add("crownJewel", crownJewel);
 			tag.Add("GUID", guid.ToByteArray());
 		}
 		public override void LoadData(TagCompound tag) {
@@ -613,6 +697,9 @@ namespace Origins {
 			}
 			if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
 				unlockedJournalEntries = journalEntries.ToHashSet();
+			}
+			if (tag.SafeGet<List<string>>("UnreadJournalEntries") is List<string> _unreadJournalEntries) {
+				unreadJournalEntries = _unreadJournalEntries.ToHashSet();
 			}
 			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> unlockedQuests) {
 				startedQuests = unlockedQuests.ToHashSet();
@@ -631,6 +718,7 @@ namespace Origins {
 				}
 			}
 			mojoInjection = tag.SafeGet<bool>("mojoInjection");
+			crownJewel = tag.SafeGet<bool>("crownJewel");
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
 				guid = new Guid(guidBytes, false);
 			} else {
@@ -643,15 +731,16 @@ namespace Origins {
 			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? [];
 			Origins.instance.Logger.Debug("player quests: " + questsTag.ToString());
 			Origins.instance.Logger.Debug("world quests: " + worldQuestsTag.ToString());
-			foreach (var quest in Quest_Registry.Quests) {
+			foreach (Quest quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
 					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
-				} else {
+				} else if (Main.netMode != NetmodeID.MultiplayerClient) {
 					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 				}
 			}
 			netInitialized = false;
 			ResetLaserTag();
+			mojoFlaskCount = mojoFlaskCountMax;
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
@@ -675,6 +764,9 @@ namespace Origins {
 				itemUseOldDirection = Player.direction;
 				return false;
 			}
+			if (luckyHatSet && !Player.ItemAnimationActive && Player.HeldItem.ChangePlayerDirectionOnShoot && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) && luckyHatSetTime < 90) {
+				Player.direction = itemUseOldDirection;
+			}
 			ItemChecking = true;
 			if (Player.HeldItem.ModItem is C6_Jackhammer or Miter_Saw && Player.controlUseTile) {
 				if (Player.ItemAnimationEndingOrEnded) {
@@ -684,8 +776,12 @@ namespace Origins {
 				}
 			}
 			itemUseOldDirection = Player.direction;
+			bool goingToUseItem = Player.controlUseItem && Player.releaseUseItem && Player.itemAnimation == 0 && Player.HeldItem.useStyle != ItemUseStyleID.None;
+			if (goingToUseItem && (Player.HeldItem.IsAir || !CombinedHooks.CanUseItem(Player, Player.HeldItem))) {
+				goingToUseItem = true;
+			}
 			if (focusPotion) {
-				if (Player.ItemAnimationJustStarted) {
+				if (goingToUseItem) {
 					focusPotionThisUse = Player.CheckMana(Focus_Potion.GetManaCost(Player.HeldItem), true);
 					Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				} else if (Player.ItemAnimationEndingOrEnded) {
@@ -694,10 +790,27 @@ namespace Origins {
 			} else {
 				focusPotionThisUse = false;
 			}
+			if (goingToUseItem) {
+				if (Player.HeldItem.ChangePlayerDirectionOnShoot && !LuckyHatSetActive) {
+					Vector2 unitX = Vector2.UnitX.RotatedBy(Player.fullRotation);
+					Vector2 shootDirection = Main.MouseWorld - Player.RotatedRelativePoint(Player.MountedCenter);
+					if (shootDirection != Vector2.Zero) shootDirection.Normalize();
+					if (Player.direction != (Vector2.Dot(unitX, shootDirection) > 0 ? 1 : -1) && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive))) {
+						if (luckyHatSet && luckyHatSetTime > 0) {
+							luckyHatSetTime += 30;
+							if (LuckyHatSetActive) {
+								SoundEngine.PlaySound(SoundID.Camera.WithPitchRange(0.6f, 1f), Player.Center);
+								SoundEngine.PlaySound(SoundID.Coins.WithPitchRange(0.6f, 1f), Player.Center);
+							}
+						}
+					}
+				}
+			}
 			return true;
 		}
 		public override void PostItemCheck() {
 			ItemChecking = false;
+			releaseAltUse = !Player.controlUseTile;
 		}
 		public void InflictAssimilation<TAssimilation>(float assimilationAmount) where TAssimilation : AssimilationDebuff => InflictAssimilation((ushort)ModContent.GetInstance<TAssimilation>().AssimilationType, assimilationAmount);
 		public void InflictAssimilation(ushort assimilationType, float assimilationAmount) {

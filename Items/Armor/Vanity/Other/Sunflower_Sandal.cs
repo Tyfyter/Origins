@@ -15,5 +15,12 @@ namespace Origins.Items.Armor.Vanity.Other {
 			Item.rare = ItemRarityID.Green;
 			Item.vanity = true;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.Silk, 20)
+			.AddIngredient(ItemID.Sunflower, 2)
+			.AddTile(TileID.Loom)
+			.Register();
+		}
 	}
 }

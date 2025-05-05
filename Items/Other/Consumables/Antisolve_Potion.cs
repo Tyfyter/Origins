@@ -1,5 +1,5 @@
 ﻿using Origins.Buffs;
-using Origins.Items.Materials;
+using Origins.Items.Other.Fish;
 using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
@@ -22,9 +22,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.BottledWater)
-			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 8)
-			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 10)
-			//.AddIngredient(ModContent.ItemType<Toadfish>())
+			.AddIngredient(ModContent.ItemType<Brineglow_Item>(), 5)
+			.AddIngredient(ModContent.ItemType<Toadfish>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}

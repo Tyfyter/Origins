@@ -1,17 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Limestone;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -28,6 +34,7 @@ namespace Origins {
 		public static int rivenTiles;
 		public static int brineTiles;
 		public static int fiberglassTiles;
+		public static int limestoneTiles;
 		public int peatSold;
 		public const float biomeShaderSmoothing = 0.025f;
 		internal bool hasDefiled = false;
@@ -58,6 +65,25 @@ namespace Origins {
 		public bool forceThunderstorm = false;
 		public int forceThunderstormDelay = 0;
 
+		bool forceAF = false;
+		public bool ForceAF {
+			get => forceAF;
+			set {
+				if (value != forceAF) {
+					forceAF = value;
+					OriginsModIntegrations.HolidayForceChanged();
+					GameCulture culture = LanguageManager.Instance.ActiveCulture;
+					try {
+						GameCulture french = GameCulture.FromCultureName(GameCulture.CultureName.French);
+						LanguageManager.Instance.SetLanguage(culture == french ? GameCulture.FromCultureName(GameCulture.CultureName.Italian) : french);
+					} finally {
+						LanguageManager.Instance.SetLanguage(culture);
+					}
+					NetMessage.SendData(MessageID.WorldData);
+				}
+			}
+		}
+
 		public bool unlockedBrineNPC = false;
 		public static int MimicSetLevel {
 			get {
@@ -69,11 +95,12 @@ namespace Origins {
 				return currentLevel;
 			}
 		}
-		public List<Point> Defiled_Hearts { get; set; } = [];
-		private List<Point> _abandonedBombs;
-		public List<Point> AbandonedBombs => _abandonedBombs ??= [];
+		[Obsolete("Use TESystem.GetLocations<Defiled_Heart_TE_System>() instead")]
+		public List<Point> DefiledHearts => ModContent.GetInstance<Defiled_Heart_TE_System>().tileEntityLocations.Select(Utils.ToPoint).ToList();
+		internal List<Point16> LegacySave_DefiledHearts { get; set; } = [];
 		private Dictionary<Point, Guid> _voidLocks;
 		public Dictionary<Point, Guid> VoidLocks => _voidLocks ??= [];
+		public Vector2? shimmerPosition;
 		public override void OnWorldUnload() {
 			forceThunderstorm = false;
 		}
@@ -83,7 +110,9 @@ namespace Origins {
 				peatSold = tag.GetAsInt("peatSold");
 			}
 			if (tag.ContainsKey("worldSurfaceLow")) _worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
-			if (tag.ContainsKey("defiledHearts")) Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
+			if (tag.ContainsKey("defiledHearts")) {
+				LegacySave_DefiledHearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint16).ToList();
+			}
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
 			tag.TryGet("forceThunderstorm", out forceThunderstorm);
@@ -101,13 +130,26 @@ namespace Origins {
 			defiledAltResurgenceTiles = [];
 			questsTag = tag.SafeGet<TagCompound>("Quests");
 			if (Main.dedServ) {
-				foreach (var quest in Quest_Registry.Quests) {
+				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.SaveToWorld) {
 						quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? []);
 					}
 				}
 			}
 			hasLoggedPUP = false;
+			if (tag.TryGet(nameof(shimmerPosition), out Vector2 _shimmerPosition)) shimmerPosition = _shimmerPosition;
+			else {
+				for (int i = 0; i < Main.maxTilesX; i++) {
+					for (int j = 0; j < Main.maxTilesY; j++) {
+						Tile tile = Framing.GetTileSafely(i, j);
+						if (tile.LiquidAmount > 0 && tile.LiquidType == LiquidID.Shimmer) {
+							shimmerPosition = new(i, j);
+							goto foundShimmer;
+						}
+					}
+				}
+				foundShimmer:;
+			}
 		}
 		internal TagCompound questsTag;
 		public override void SaveWorldData(TagCompound tag) {
@@ -116,7 +158,6 @@ namespace Origins {
 			tag.Add("hasRiven", hasRiven);
 			tag.Add("forceThunderstorm", forceThunderstorm);
 			tag.Add("unlockedBrineNPC", unlockedBrineNPC);
-			tag.Add("defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}
@@ -125,7 +166,7 @@ namespace Origins {
 				["uuid"] = kvp.Value.ToString()
 			}).ToList());
 			TagCompound questsTag = [];
-			foreach (var quest in Quest_Registry.Quests) {
+			foreach (Quest quest in Quest_Registry.Quests) {
 				if (quest.SaveToWorld) {
 					TagCompound questTag = [];
 					quest.SaveData(questTag);
@@ -140,6 +181,16 @@ namespace Origins {
 			if (questsTag.Count > 0) {
 				tag.Add("Quests", questsTag);
 			}
+			if (shimmerPosition.HasValue) tag.Add(nameof(shimmerPosition), shimmerPosition.Value);
+		}
+		public override void NetSend(BinaryWriter writer) {
+			writer.WriteFlags(forceAF, forceThunderstorm);
+			if (shimmerPosition.HasValue) writer.WriteVector2(shimmerPosition.Value);
+		}
+		public override void NetReceive(BinaryReader reader) {
+			reader.ReadFlags(out bool forceAF, out forceThunderstorm);
+			ForceAF = forceAF;
+			if (reader.ReadBoolean()) shimmerPosition = reader.ReadVector2();
 		}
 		public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
@@ -147,6 +198,7 @@ namespace Origins {
 			rivenTiles = 0;
 			brineTiles = 0;
 			fiberglassTiles = 0;
+			limestoneTiles = 0;
 		}
 
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
@@ -171,6 +223,21 @@ namespace Origins {
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
 			fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
+
+			limestoneTiles = tileCounts[ModContent.TileType<Limestone>()]
+				+ tileCounts[ModContent.TileType<Limestone_Stalactite>()]
+				+ tileCounts[ModContent.TileType<Limestone_Stalagmite>()]
+				+ tileCounts[ModContent.TileType<Limestone_Pile_Medium>()];
+
+			if (!Main.SceneMetrics.HasSunflower && Main.dayTime) {
+				int team = Main.LocalPlayer.team;
+				foreach (Projectile projectile in Main.ActiveProjectiles) {
+					if (projectile.type == Sunny_Sunflower.ID && projectile.ai[2] != 1 && team == Main.player[projectile.owner].team && projectile.Center.Clamp(Main.LocalPlayer.Hitbox).WithinRange(projectile.Center, 16 * 15)) {
+						Main.SceneMetrics.HasSunflower = true;
+						break;
+					}
+				}
+			}
 		}
 		public bool TryAddVoidLock(Point position, Guid owner, bool fromNet = false, int netOwner = -1) {
 			if (VoidLocks.TryAdd(position, owner)) {
@@ -260,6 +327,7 @@ namespace Origins {
 			queuedKillTiles.Enqueue((i, j));
 		}
 		public override void PostWorldGen() {
+			shimmerPosition = new((float)GenVars.shimmerPosition.X, (float)GenVars.shimmerPosition.Y);
 			ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56 + 17,
 				ChestID.Normal,
 				ChestID.Gold,
@@ -274,7 +342,8 @@ namespace Origins {
 				ChestID.Granite,
 				ChestID.Marble,
 				ChestID.DeadMan,
-				ChestID.Sandstone
+				ChestID.Sandstone,
+				ChestID.LockedHallow
 			);
 			Chest chest;
 			int lootType;
@@ -372,6 +441,10 @@ namespace Origins {
 					}
 					break;
 				}
+				if (cache is null) {
+					Origins.instance.Logger.Info($"failed to use chest cache ");
+					return;
+				}
 				cache = new ChestLootCache(cache.Where((c) => c.Value.Count > 0));
 				Origins.instance.Logger.Info($"using chest cache #{actions[actionIndex].param} {ChestID.Search.GetName(actions[actionIndex].param)} with mode {(int)actions[actionIndex].weight}: {string.Join(", ", cache.Select(v => $"{v.Value.Count} {new Item(v.Key).Name} (s)"))}");
 			}
@@ -440,9 +513,14 @@ namespace Origins {
 					random = cache.GetWeightedRandom();
 				}
 			}
-			if (actionIndex < actions.Length && actions[actionIndex].action == CHANGE_QUEUE) {
+			if (actionIndex < actions.Length && actions[actionIndex].action is CHANGE_QUEUE) {
 				cache = lootCaches[actions[actionIndex].param];
 				filterCache();
+				actionIndex++;
+				goto cont;
+			}
+			if (actionIndex < actions.Length && actions[actionIndex].action is SET_COUNT_RANGE) {
+				countRange = (actions[actionIndex].param, (int)actions[actionIndex].weight);
 				actionIndex++;
 				goto cont;
 			}
@@ -477,50 +555,6 @@ namespace Origins {
 				packet.Write(tRiven);
 			}
 			totalDefiled2 = 0;
-		}
-		public static bool ConvertWall(ref ushort tileType, byte evilType, bool convert = true) {
-			getEvilWallConversionTypes(evilType, out ushort[] stoneTypes, out ushort[] hardenedSandTypes, out ushort[] sandstoneTypes);
-			switch (tileType) {
-				case WallID.Stone:
-				if (convert) tileType = WorldGen.genRand.Next(stoneTypes);
-				return true;
-				case WallID.Sandstone:
-				if (convert) tileType = WorldGen.genRand.Next(sandstoneTypes);
-				return true;
-				case WallID.HardenedSand:
-				if (convert) tileType = WorldGen.genRand.Next(hardenedSandTypes);
-				return true;
-			}
-			return false;
-		}
-
-		public static bool ConvertTileWeak(ref ushort tileType, byte evilType, bool convert = true) {
-			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out _, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
-			switch (tileType) {
-				case TileID.Grass:
-				if (convert) tileType = grassType;
-				return true;
-				case TileID.Stone:
-				if (convert) tileType = stoneType;
-				return true;
-				case TileID.Sand:
-				if (convert) tileType = sandType;
-				return true;
-				case TileID.Sandstone:
-				if (convert) tileType = sandstoneType;
-				return true;
-				case TileID.HardenedSand:
-				if (convert) tileType = hardenedSandType;
-				return true;
-				case TileID.IceBlock:
-				if (convert) tileType = iceType;
-				return true;
-			}
-			if (Main.tileMoss[tileType]) {
-				if (convert) tileType = stoneType;
-				return true;
-			}
-			return false;
 		}
 		public static bool ConvertTile(ref ushort tileType, byte evilType, bool aggressive = false) {
 			getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out _, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);

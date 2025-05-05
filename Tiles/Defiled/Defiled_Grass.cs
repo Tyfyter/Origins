@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Grass : OriginTile, IDefiledTile {
@@ -37,8 +38,9 @@ namespace Origins.Tiles.Defiled {
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (fail && !effectOnly) {
+			if (fail && (!effectOnly || WorldGen.genRand.NextBool(3))) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
+				WorldGen.SquareTileFrame(i, j);
 			}
 			OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
 			if (originWorld is not null) {
@@ -49,9 +51,26 @@ namespace Origins.Tiles.Defiled {
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				if (Main.rand.NextBool(250)) {
+				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
 				} else {
+					if (WorldGen.genRand.NextBool(200)) {
+						ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
+						if (TileObject.CanPlace(i, j - 1, bramble, 0, 1, out TileObject objectData, onlyCheck: false)) {
+							TileObjectData tileData = TileObjectData.GetTileData(bramble, objectData.style);
+							int left = i - tileData.Origin.X;
+							int top = (j - 1) - tileData.Origin.Y;
+							for (int y = 0; y < tileData.Height; y++) {
+								for (int x = 0; x < tileData.Width; x++) {
+									Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+									if (tileSafely.HasTile || tileSafely.LiquidAmount > 0) goto fail;
+								}
+							}
+							if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
+							return;
+							fail:;
+						}
+					}
 					above.ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
 				}
 				WorldGen.TileFrame(i, j - 1);
@@ -101,9 +120,26 @@ namespace Origins.Tiles.Defiled {
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				if (Main.rand.NextBool(250)) {
+				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
 				} else {
+					if (WorldGen.genRand.NextBool(200)) {
+						ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
+						if (TileObject.CanPlace(i, j - 1, bramble, 0, 1, out TileObject objectData, onlyCheck: false)) {
+							TileObjectData tileData = TileObjectData.GetTileData(bramble, objectData.style);
+							int left = i - tileData.Origin.X;
+							int top = (j - 1) - tileData.Origin.Y;
+							for (int y = 0; y < tileData.Height; y++) {
+								for (int x = 0; x < tileData.Width; x++) {
+									Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
+									if (tileSafely.HasTile || tileSafely.LiquidAmount > 0) goto fail;
+								}
+							}
+							if (TileObject.Place(objectData)) WorldGen.SquareTileFrame(i, j - 1);
+							return;
+							fail:;
+						}
+					}
 					above.ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
 				}
 				WorldGen.TileFrame(i, j - 1);

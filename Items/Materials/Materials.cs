@@ -57,11 +57,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Alkahest : MaterialItem, IJournalEntryItem {
+	public class Alkahest : MaterialItem, IJournalEntrySource {
         public string[] Categories => [
             "LoreItem"
         ];
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
@@ -77,6 +76,7 @@ namespace Origins.Items.Materials {
 		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
+			public override JournalSortIndex SortIndex => new("Riven", 0);
 		}
 	}
 	public class Alkaliphiliac_Tissue : MaterialItem {
@@ -103,7 +103,12 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Biocomponent10 : MaterialItem {
+	public class Biocomponent10 : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Biocomponent_10_Entry).Name;
+		public class Biocomponent_10_Entry : JournalEntry {
+			public override string TextKey => "Biocomponent_10";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 1);
+		}
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
@@ -123,17 +128,17 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Black_Bile : MaterialItem, IJournalEntryItem {
+	public class Black_Bile : MaterialItem, IJournalEntrySource {
         public string[] Categories => [
             "LoreItem"
         ];
-        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
 		public override bool Hardmode => true;
 		public class Black_Bile_Entry : JournalEntry {
 			public override string TextKey => "Black_Bile";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 11);
 		}
 	}
 	public class Bleeding_Obsidian_Shard : MaterialItem {
@@ -181,12 +186,17 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this);
 		}
 	}
-	public class Defiled_Bar : MaterialItem, ICustomWikiStat {
+	public class Defiled_Bar : MaterialItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
             "LoreItem",
 			"Bar"
         ];
-        public override int Value => Item.sellPrice(silver: 30);
+		public string EntryName => "Origins/" + typeof(Defiled_Bar_Entry).Name;
+		public class Defiled_Bar_Entry : JournalEntry {
+			public override string TextKey => "Defiled_Bar";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 8);
+		}
+		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override bool Hardmode => false;
 		public override void Load() {
@@ -262,14 +272,13 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Felnum_Bar : MaterialItem, IJournalEntryItem, ICustomWikiStat {
+	public class Felnum_Bar : MaterialItem, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
             "LoreItem",
 			"Bar"
         ];
         public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override bool Hardmode => false;
 		public override void Load() {
@@ -337,7 +346,12 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class NE8 : MaterialItem {
+	public class NE8 : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(NE_8_Entry).Name;
+		public class NE_8_Entry : JournalEntry {
+			public override string TextKey => "NE_8";
+			public override JournalSortIndex SortIndex => new("Mechanicus_Sovereignty", 3);
+		}
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
@@ -390,7 +404,12 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Orange;
 		public override bool Hardmode => true;
 	}
-	public class Riven_Carapace : MaterialItem {
+	public class Riven_Carapace : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Riven_Carapace_Entry).Name;
+		public class Riven_Carapace_Entry : JournalEntry {
+			public override string TextKey => "Riven_Carapace";
+			public override JournalSortIndex SortIndex => new("Riven", 5);
+		}
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
@@ -464,11 +483,24 @@ namespace Origins.Items.Materials {
 	public class Strange_String : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
+		public override bool HasTooltip => true;
 		public override void AddRecipes() {
             Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
             .AddIngredient(Type)
             .AddTile(TileID.Anvils)
+			.Register();
+		}
+	}
+	public class Tangela_Bud : MaterialItem {
+		public override int ResearchUnlockCount => 25;
+		public override int Rare => ItemRarityID.Blue;
+		public override int Value => Item.sellPrice(copper: 18);
+		public override bool HasTooltip => true;
+		public override bool Hardmode => false;
+		public override void AddRecipes() {
+			Recipe.Create(Type, 3)
+			.AddIngredient(ModContent.ItemType<Tangela_Bramble_Item>())
 			.Register();
 		}
 	}
@@ -488,7 +520,12 @@ namespace Origins.Items.Materials {
             .Register();
         }
 	}
-	public class Undead_Chunk : MaterialItem {
+	public class Undead_Chunk : MaterialItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Undead_Chunk_Entry).Name;
+		public class Undead_Chunk_Entry : JournalEntry {
+			public override string TextKey => "Undead_Chunk";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 10);
+		}
 		public override bool HasGlowmask => true;
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
@@ -528,13 +565,28 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
 		}
 	}
-	public class Defiled_Key : Dawn_Key { }
+	public class Defiled_Key : Dawn_Key {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
+		}
+	}
 	public class Dusk_Key : Dawn_Key { }
 	public class Hell_Key : Dawn_Key { }
 	public class Mushroom_Key : Dawn_Key { }
 	public class Ocean_Key : Dawn_Key { }
 	public class Riven_Key : Dawn_Key {
 		public override bool HasGlowmask => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
+		}
+	}
+	public class Brine_Key : Dawn_Key {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Brine_Dungeon_Chest_Item>();
+		}
 	}
 	#endregion
 }

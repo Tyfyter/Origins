@@ -1,23 +1,28 @@
 using Origins.Dev;
+using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Low_Signal : ModItem, ICustomWikiStat {
-		static short glowmask;
+	public class Low_Signal : ModItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
             "Wand"
         ];
-        public override void SetStaticDefaults() {
+		public string EntryName => "Origins/" + typeof(Low_Signal_Entry).Name;
+		public class Low_Signal_Entry : JournalEntry {
+			public override string TextKey => "Low_Signal";
+			public override JournalSortIndex SortIndex => new("The_Defiled", 9);
+		}
+		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 40;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Magic;
+			Item.crit = 5;
 			Item.mana = 9;
 			Item.noMelee = true;
 			Item.noUseGraphic = false;
@@ -34,7 +39,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
 			Item.autoReuse = true;
-			Item.glowMask = glowmask;
 		}
 	}
 	public class Low_Signal_P : ModProjectile {

@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,6 +43,11 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
+		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -50,7 +56,7 @@ namespace Origins.NPCs.Defiled {
 				ModContent.ItemType<Incision>(),
 				ModContent.ItemType<Ziptie>(),
 				ModContent.ItemType<Ravel>(),
-				ModContent.ItemType<Chunky_Hook>()
+				ModContent.ItemType<Tangela_Tether>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
@@ -60,6 +66,10 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF3_Gore");
 				for (int i = 0; i < 6; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4));
 			}
+		}
+		public override void OnKill() {
+			Boss_Tracker.Instance.downedDefiledMimic = true;
+			NetMessage.SendData(MessageID.WorldData);
 		}
 	}
 }

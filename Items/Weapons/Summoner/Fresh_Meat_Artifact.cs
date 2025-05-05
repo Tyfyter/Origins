@@ -15,6 +15,8 @@ using Terraria.Graphics.Shaders;
 using Origins.Projectiles;
 using Terraria.Audio;
 using Origins.Gores;
+using System.Collections.Generic;
+using PegasusLib;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Fresh_Meat_Artifact : ModItem, ICustomWikiStat {
@@ -31,6 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 17;
 			Item.shootSpeed = 9f;
+			Item.knockBack = 1f;
 			Item.width = 24;
 			Item.height = 38;
 			Item.useTime = 24;
@@ -46,7 +49,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
-			damage = (int)Math.Ceiling(player.GetTotalDamage(Item.DamageType).GetInverse().ApplyTo(damage));
+			damage = (int)Math.Ceiling(player.GetTotalDamage(Item.DamageType).CombineWith(player.OriginPlayer().artifactDamage).GetInverse().ApplyTo(damage));
 			Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
 			projectile.originalDamage = damage;
 			return false;
@@ -54,22 +57,12 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-	public class Fresh_Meat_Buff : ModBuff {
+	public class Fresh_Meat_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Fresh_Meat_Artifact_P.ID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
+		public override IEnumerable<int> ProjectileTypes() => [
+			Fresh_Meat_Artifact_P.ID
+		];
+		public override bool IsArtifact => true;
 	}
 }
 
@@ -244,7 +237,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			};
 		}
 	}
-	public class Fresh_Meat_Dog : ModProjectile {
+	public class Fresh_Meat_Dog : ModProjectile, IShadedProjectile {
 		public bool OnGround {
 			get {
 				return Projectile.localAI[1] > 0;
@@ -262,6 +255,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 		public static int ID { get; private set; }
+		public int Shader => Main.player[Projectile.owner].cMinion;
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 15;
@@ -271,7 +265,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
-			Origins.ArtifactMinion[Type] = true;
+			ProjectileID.Sets.MinionShot[Type] = true;
 			ID = Type;
 		}
 
@@ -281,8 +275,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.height = 40;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
-			Projectile.minion = true;
-			Projectile.minionSlots = 0f;
+			/*Projectile.minion = true;
+			Projectile.minionSlots = 0f;*/
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;

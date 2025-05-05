@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Primitives;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -22,7 +20,8 @@ namespace Origins.Tiles.Defiled {
 		public static int ID { get; private set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White * GlowValue;
-		public float GlowValue => Main.tileFrame[Type] switch {
+		public float GlowValue => GetGlowValue(Main.tileFrame[Type]);
+		public static float GetGlowValue(int frame) => frame switch {
 			6 or 7 => 0.3f,
 			8 => 0.5f,
 			9 => 0.38f,
@@ -116,7 +115,7 @@ namespace Origins.Tiles.Defiled {
 			return random;
 		}
 		public static void DisplayMessage(string key, bool fromNet = false) {
-			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
+			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer && Origins.instance.NetID >= 0) {
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(key);
 				packet.Send();

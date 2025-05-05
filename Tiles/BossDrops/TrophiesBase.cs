@@ -9,9 +9,15 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using ThoriumMod.Items.Placeable.Relics;
 
 namespace Origins.Tiles.BossDrops {
-	public abstract class TrophyItemBase<T> : ModItem where T : ModTile {
+	[Autoload(false)]
+	public class TrophyItem(TrophyTileBase tile) : ModItem {
+		public TrophyTileBase Tile { get; } = tile;
+		public override string Name => Tile.Name + "_Item";
+		public override string Texture => Tile.Texture + "_Item";
+		protected override bool CloneNewInstances => true;
 		public override void SetDefaults() {
 			Item.width = 30;
 			Item.height = 30;
@@ -24,10 +30,15 @@ namespace Origins.Tiles.BossDrops {
 			Item.consumable = true;
 			Item.value = 50000;
 			Item.rare = ItemRarityID.Blue;
-			Item.createTile = ModContent.TileType<T>();
+			Item.createTile = Tile.Type;
 		}
 	}
 	public abstract class TrophyTileBase : ModTile {
+		public static int ItemType<T>() where T : TrophyTileBase => ModContent.GetInstance<T>().Item.Type;
+		public TrophyItem Item { get; private set; }
+		public override void Load() {
+			Mod.AddContent(Item = new TrophyItem(this));
+		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -43,11 +54,16 @@ namespace Origins.Tiles.BossDrops {
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 		}
 	}
-	public abstract class RelicItemBase<T> : ModItem where T : ModTile {
+	[Autoload(false)]
+	public class RelicItem(RelicTileBase tile) : ModItem {
+		public RelicTileBase Tile { get; } = tile;
+		public override string Name => Tile.Name + "_Item";
+		public override string Texture => Tile.RelicTextureName + "_Item";
+		protected override bool CloneNewInstances => true;
 		public override void SetDefaults() {
 			// Vanilla has many useful methods like these, use them! This substitutes setting Item.createTile and Item.placeStyle as well as setting a few values that are common across all placeable items
 			// The place style (here by default 0) is important if you decide to have more than one relic share the same tile type (more on that in the tiles' code)
-			Item.DefaultToPlaceableTile(ModContent.TileType<T>(), 0);
+			Item.DefaultToPlaceableTile(Tile.Type, 0);
 
 			Item.width = 30;
 			Item.height = 40;
@@ -57,6 +73,8 @@ namespace Origins.Tiles.BossDrops {
 		}
 	}
 	public abstract class RelicTileBase : ModTile {
+		public static int ItemType<T>() where T : RelicTileBase => ModContent.GetInstance<T>().Item.Type;
+		public RelicItem Item { get; private set; }
 		public const int FrameWidth = 18 * 3;
 		public const int FrameHeight = 18 * 4;
 		public const int HorizontalFrames = 1;
@@ -70,6 +88,7 @@ namespace Origins.Tiles.BossDrops {
 		public override string Texture => "Terraria/Images/Tiles_" + TileID.MasterTrophyBase;
 
 		public override void Load() {
+			Mod.AddContent(Item = new RelicItem(this));
 			if (!Main.dedServ) {
 				// Cache the extra texture displayed on the pedestal
 				RelicTexture = ModContent.Request<Texture2D>(RelicTextureName);

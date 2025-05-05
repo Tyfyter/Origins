@@ -1,10 +1,10 @@
-﻿using Origins.Buffs;
-using Origins.Dev;
+﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Unsought_Organ : ModItem, ICustomWikiStat {
+	public class Unsought_Organ : ModItem, ICustomWikiStat, IJournalEntrySource<Unsought_Organ_Entry> {
 		public string[] Categories => [
 			"Combat",
 			"GenericBoostAcc",
@@ -46,5 +46,8 @@ namespace Origins.Items.Accessories {
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
 		}
+	}
+	public class Unsought_Organ_Entry : JournalEntry {
+		public override JournalSortIndex SortIndex => new("Lost_Crone", 1);
 	}
 }

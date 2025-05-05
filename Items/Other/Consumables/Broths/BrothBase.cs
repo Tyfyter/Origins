@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Broths {
@@ -11,6 +12,8 @@ namespace Origins.Items.Other.Consumables.Broths {
 		];
 		protected override bool CloneNewInstances => true;
 		public BrothBuff Buff { get; private set; }
+		public virtual LocalizedText BuffDisplayName => DisplayName;
+		public virtual LocalizedText BuffDescription => Tooltip;
 		public override void Load() {
 			Mod.AddContent(Buff = new(this));
 		}
@@ -23,7 +26,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			Item.DefaultToFood(
 				30, 28,
 				Buff.Type,
-				60 * 60 * 6,
+				60 * 60 * Duration,
 				true
 			);
 			Item.useStyle = ItemUseStyleID.EatFood;
@@ -36,9 +39,21 @@ namespace Origins.Items.Other.Consumables.Broths {
 			}
 			return true;
 		}
+		public virtual int Duration => 6;
 		public virtual void UpdateBuff(Player player, ref int buffIndex) { }
 		public virtual void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) { }
+		public virtual void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) { }
 		public virtual void PreUpdateMinion(Projectile minion) { }
+		public virtual void UpdateMinion(Projectile minion, int time) { }
+		public virtual void ModifyHurt(Projectile minion, ref int damage, bool fromDoT) { }
+		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT) { }
+		public virtual void PostDrawMinion(Projectile minion, Color lightColor) { }
+		/// <summary>
+		/// Runs when the broth a minion is affected by changes, including when a new minion is spawned
+		/// </summary>
+		/// <param name="minion">The minion</param>
+		/// <param name="active">1 if the broth is becoming active, -1 if the broth is becoming inactive</param>
+		public virtual void SwitchActive(Projectile minion, int active) { }
 		internal static bool On_Player_QuickBuff_ShouldBotherUsingThisBuff(On_Player.orig_QuickBuff_ShouldBotherUsingThisBuff orig, Player self, int attemptedType) {
 			bool result = orig(self, attemptedType);
 			bool isBroth = Origins.BrothBuffs[attemptedType];
@@ -54,7 +69,10 @@ namespace Origins.Items.Other.Consumables.Broths {
 	[Autoload(false)]
 	public class BrothBuff(BrothBase item) : ModBuff {
 		public override string Name => item.Name + "_Buff";
+		public override LocalizedText DisplayName => item.BuffDisplayName;
+		public override LocalizedText Description => item.BuffDescription;
 		public override void SetStaticDefaults() {
+			Main.persistentBuff[Type] = true;
 			Origins.BrothBuffs[Type] = true;
 		}
 		public override void Update(Player player, ref int buffIndex) {

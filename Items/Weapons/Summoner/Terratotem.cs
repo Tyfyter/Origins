@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using System;
@@ -93,7 +91,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.localNPCHitCooldown = 20;
 			Projectile.ignoreWater = true;
 			Projectile.netImportant = true;
-			MaxLife = 60 * 45;
+			MaxLife = 15 * 45;
 		}
 		public override bool? CanCutTiles() => false;
 		public override bool MinionContactDamage() => true;
@@ -218,7 +216,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Animation and visuals
 
 			#endregion
-			Life--;
+			Life -= 0.25f;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			return Projectile.Center.Clamp(targetHitbox).WithinRange(Projectile.Center, 64);

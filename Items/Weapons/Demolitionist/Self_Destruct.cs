@@ -5,6 +5,7 @@ using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,6 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;
@@ -27,11 +29,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 24;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
-			Item.UseSound = Origins.Sounds.IMustScream;
+			Item.UseSound = Origins.Sounds.IMustScream.WithVolumeScale(0.4f);
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
 			Item.rare = ItemRarityID.Yellow;
 			Item.value = Item.sellPrice(gold: 3);
-			Item.ArmorPenetration += 6;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -40,6 +41,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddIngredient(ModContent.ItemType<Power_Core>(), 2)
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
+		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(Item.UseSound, player.Center, (sound) => {
+				sound.Position = player.Center;
+				return true;
+			});
+			return null;
 		}
 		public override bool WeaponPrefix() => true;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
@@ -50,7 +58,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Self_Destruct_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Body";
 		public override void SetDefaults() {
-			Projectile.timeLeft = 80;
+			Projectile.timeLeft = 110;
 			Projectile.tileCollide = false;
 			Projectile.width = 32;
 			Projectile.height = 48;
@@ -64,20 +72,30 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
 				Projectile.Center, 10f, 18f, 30, 1000f, 2f, nameof(Self_Destruct)
 			));
+			/*if (Main.rand.NextBool(5)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Electric, 0, 0, 255, [255, 0, 0]);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+			}*/
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return false;
 		}
 		public override void OnKill(int timeLeft) {
-			Projectile.NewProjectile(
-				Projectile.GetSource_Death(),
-				Projectile.Center,
-				default,
-				ModContent.ProjectileType<Self_Destruct_Explosion>(),
-				Projectile.damage,
-				Projectile.knockBack,
-				Projectile.owner
-			);
+			if (Projectile.owner == Main.myPlayer) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Self_Destruct_Explosion>(),
+					Projectile.damage,
+					Projectile.knockBack,
+					Projectile.owner
+				);
+			}
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 10f, 18f, 30, 1000f, 2f, nameof(Self_Destruct)
+			));
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
@@ -122,7 +140,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ExplosiveGlobalProjectile.ExplosionVisual(
 					Projectile,
 					true,
-					sound: SoundID.Item62
+					sound: SoundID.Item62.WithVolumeScale(0.6f)
 				);
 				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 				Projectile.ai[0] = 1;

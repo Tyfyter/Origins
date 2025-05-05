@@ -1,9 +1,13 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Walls;
+using Origins.World.BiomeData;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.LootConditions {
@@ -54,10 +58,40 @@ namespace Origins.LootConditions {
 			return result;
 		}
 	}
+	public class DropInstancedPerClient(int itemId, int chanceDenominator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1, IItemDropRuleCondition condition = null) : CommonDrop(itemId, chanceDenominator, amountDroppedMinimum, amountDroppedMaximum) {
+		public IItemDropRuleCondition condition = condition;
+		public override bool CanDrop(DropAttemptInfo info) => condition is null || condition.CanDrop(info);
+		public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result;
+			if (info.rng.Next(chanceDenominator) < chanceNumerator) {
+				NPC npc = info.npc;
+				int stack = info.rng.Next(amountDroppedMinimum, amountDroppedMaximum + 1);
+				if (Main.netMode == NetmodeID.Server && npc is not null) {
+					int num = Item.NewItem(npc.GetSource_Loot(), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, itemId, stack, noBroadcast: true, -1);
+					Main.timeItemSlotCannotBeReusedFor[num] = 54000;
+					foreach (Player player in Main.ActivePlayers) {
+						if (npc.playerInteraction[player.whoAmI] && CanDropForPlayer(player)) {
+							NetMessage.SendData(MessageID.InstancedItem, player.whoAmI, -1, null, num);
+						}
+					}
+					Main.item[num].active = false;
+				} else {
+					if (CanDropForPlayer(Main.LocalPlayer)) CommonCode.DropItem(info, itemId, stack);
+				}
+				result = default;
+				result.State = ItemDropAttemptResultState.Success;
+				return result;
+			}
+			result = default;
+			result.State = ItemDropAttemptResultState.FailedRandomRoll;
+			return result;
+		}
+		public virtual bool CanDropForPlayer(Player player) => true;
+	}
 	public class Dawn_Key_Condition : IItemDropRuleCondition {
 #if false
 		public bool CanDrop(DropAttemptInfo info) {
-			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
+			return false && info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
 #else
@@ -141,6 +175,24 @@ namespace Origins.LootConditions {
 		public bool CanShowItemDropInUI() => Main.hardMode;
 		public string GetConditionDescription() {
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Riven_Hive"));
+		}
+	}
+	public class Brine_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Brine_Pool>();
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Brine_Pool"));
+		}
+	}
+	public class Lost_Picture_Frame_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && Brine_Pool.SpawnRates.IsInBrinePool(info.npc.position) && info.player.InModBiome<Brine_Pool>() && info.npc.AnyInteractions();
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Brine_Pool"));
 		}
 	}
 	public class DownedPlantera : IItemDropRuleCondition {

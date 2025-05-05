@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Other.Fish;
+using Origins.NPCs.Riven;
 using Origins.World.BiomeData;
 using rail;
 using System;

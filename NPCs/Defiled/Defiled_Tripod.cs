@@ -3,9 +3,9 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Tiles;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +24,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public AssimilationAmount? Assimilation => 0.07f;
+		public AssimilationAmount? Assimilation => 0.04f;
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;
@@ -37,6 +37,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitScale = 1f,
 				Velocity = 2f,
 			};
+			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;//NPCAIStyleID.Fighter;
@@ -47,7 +48,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 90;
 			NPC.scale = 0.85f;
 			NPC.friendly = false;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
+			NPC.HitSound = OriginsModIntegrations.CheckAprilFools() ? SoundID.Meowmere : Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 2300;
 			NPC.knockBackResist = 0.5f;
@@ -68,7 +69,7 @@ namespace Origins.NPCs.Defiled {
 			lifeRegen = factor;
 			Mana -= factor / 60f;// 2 mana for every 1 health regenerated
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerSafe || spawnInfo.DesertCave || spawnInfo.SpawnTileY <= Main.worldSurface) return 0;
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Tripod;
 		}
@@ -80,6 +81,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tripod_Nip>(), 48));
 		}

@@ -29,6 +29,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.defense = 28;
 			NPC.damage = 30;
 			NPC.chaseable = false;
+			NPC.value = 0;
 			AIType = NPCID.Ghost;
 			AnimationType = NPCID.Ghost;
 			Banner = Item.NPCtoBanner(NPCID.Ghost);
@@ -97,6 +98,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.defense = 0;
 			NPC.damage = 0;
 			NPC.chaseable = false;
+			NPC.value = 0;
 			AIType = NPCID.FairyCritterBlue;
 			AnimationType = NPCID.FairyCritterBlue;
 			Banner = Item.NPCtoBanner(NPCID.FairyCritterBlue);
@@ -136,7 +138,7 @@ namespace Origins.NPCs.MiscE.Quests {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Graveyard
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow
 			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
@@ -154,7 +156,7 @@ namespace Origins.NPCs.MiscE.Quests {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.TaxCollector;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.TaxCollector];
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.SpawnsWithCustomName[Type] = true;
 			NPCID.Sets.ActsLikeTownNPC[Type] = true;
 		}
@@ -165,6 +167,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.dontTakeDamage = true;
 			NPC.alpha = 100;
 			NPC.chaseable = false;
+			NPC.value = 0;
 			AIType = NPCID.TaxCollector;
 			AnimationType = NPCID.TaxCollector;
 			Banner = Item.NPCtoBanner(NPCID.TaxCollector);
@@ -186,6 +189,12 @@ namespace Origins.NPCs.MiscE.Quests {
 		}
 		public override bool CheckActive() {
 			return Main.dayTime;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Christmas
+			);
 		}
 	}
 	public class Spirit_Of_Christmas_Present : ModNPC, IWikiNPC {
@@ -210,6 +219,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.chaseable = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.value = 0;
 			AIType = NPCID.Merchant;
 			AnimationType = NPCID.SantaClaus;
 			Banner = Item.NPCtoBanner(NPCID.SantaClaus);
@@ -265,9 +275,9 @@ namespace Origins.NPCs.MiscE.Quests {
 				NPC.ai[3] = 0;
 				NPC.aiAction = 1;
 			}
-			_ = NPC.position;
-			if (NPC.justHit) {
-				if (FindTeleportPosition(out int bestX, out int bestY, out int minValue, out int maxValue)) {
+			if (NPC.justHit || NPC.localAI[2] > 0) {
+				if (++NPC.localAI[2] > 60 && FindTeleportPosition(out int bestX, out int bestY, out int minValue, out int maxValue)) {
+					NPC.localAI[2] = 0;
 					ParticleOrchestraSettings particleSettings;
 					int taxCollectorID = ModContent.NPCType<Spirit_Of_Christmas_Present_Tax_Collector>();
 					foreach (NPC other in Main.ActiveNPCs) {
@@ -309,7 +319,6 @@ namespace Origins.NPCs.MiscE.Quests {
 				Tax_Collector_Ghosts_Quest.GetTime(out int hour, out _);
 				if ((hour < 2 || Main.dayTime) && ++NPC.alpha > 255) NPC.active = false;
 			}
-			NPC.aiAction = 1;
 		}
 		public override bool CheckActive() {
 			return Main.dayTime;
@@ -323,7 +332,8 @@ namespace Origins.NPCs.MiscE.Quests {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Christmas
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Christmas,
+				new NPCStatsReportInfoElement(Type)
 			);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
@@ -367,6 +377,7 @@ namespace Origins.NPCs.MiscE.Quests {
 			NPC.defense = 40;
 			NPC.damage = 0;
 			NPC.chaseable = false;
+			NPC.value = 0;
 			AIType = NPCID.Wraith;
 			AnimationType = NPCID.Wraith;
 			Banner = Item.NPCtoBanner(NPCID.Ghost);

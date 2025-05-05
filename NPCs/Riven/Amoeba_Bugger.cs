@@ -18,6 +18,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Bat;
@@ -31,7 +32,7 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath16;
 			NPC.noGravity = true;
 			NPC.npcSlots = 0.25f;
-			//this.CopyBanner<Barnacle_Mound>();
+			this.CopyBanner<Barnacle_Mound>();
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

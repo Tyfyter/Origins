@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,6 +20,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
 		}
 
@@ -34,6 +36,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.scale = 1.15f;
 			NPC.HitSound = SoundID.NPCHit2;
 			NPC.DeathSound = SoundID.NPCDeath2;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override bool CheckActive() {
 			int headType = ModContent.NPCType<World_Cracker_Head>();

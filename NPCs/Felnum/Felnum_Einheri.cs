@@ -40,7 +40,7 @@ namespace Origins.NPCs.Felnum {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 210;
-			NPC.defense = 26;
+			NPC.defense = 14;
 			NPC.damage = 18;
 			NPC.width = 44;
 			NPC.height = 40;
@@ -61,6 +61,7 @@ namespace Origins.NPCs.Felnum {
 			return time > 0;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if (spawnInfo.Player.ZoneSkyHeight && NPC.downedBoss3) return 0.4f;
 			return 0;
 		}
@@ -72,6 +73,7 @@ namespace Origins.NPCs.Felnum {
 			}
 		}
 		public override bool CanHitNPC(NPC target) => !Felnum_Guardian.FriendlyNPCTypes.Contains(target.type);
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot) => NPC.playerInteraction[target.whoAmI] || !target.OriginPlayer().felnumEnemiesFriendly;
 		public override void PostAI() {
 			int specialHitSetter = 1;
 			float damageMultiplier = 1f;
@@ -100,7 +102,7 @@ namespace Origins.NPCs.Felnum {
 		public override void AI() {
 			NPC dummyTarget = null;
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.All,
-				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumSet,
+				player => NPC.playerInteraction[player.whoAmI] || !player.OriginPlayer().felnumEnemiesFriendly,
 				npc => Felnum_Guardian.ShouldChaseNPC(npc, NPC.Center, ref dummyTarget)
 			);
 			NPC.target = searchResults.NearestTargetIndex;

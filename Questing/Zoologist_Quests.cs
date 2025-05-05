@@ -196,7 +196,7 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool CanStart(NPC npc) => npc.type == NPCID.BestiaryGirl && Stage == 0 && ModContent.GetInstance<Discount_2_Quest>().Completed;
+		public override bool CanStart(NPC npc) => NPC.downedMechBossAny && npc.type == NPCID.BestiaryGirl && Stage == 0 && ModContent.GetInstance<Discount_2_Quest>().Completed;
 		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;

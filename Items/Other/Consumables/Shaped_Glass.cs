@@ -8,9 +8,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Shaped_Glass : ModItem {
-		public string[] Categories => [
-			"BossSummon"
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 1;
@@ -27,10 +24,11 @@ namespace Origins.Items.Other.Consumables {
 			return false;
 		}
 		public override void AddRecipes() {
-			/*CreateRecipe()
+			CreateRecipe()
 			.AddIngredient<Fiberglass_Item>(12)
-			.AddTile(TileID.WorkBenches)
-			.Register();*/
+			.AddIngredient(ItemID.Vine, 3)
+			.AddTile(TileID.GlassKiln)
+			.Register();
 		}
 	}
 }

@@ -22,6 +22,8 @@ using Terraria.Audio;
 using Origins.Dusts;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Tiles.Other;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Fiberglass {
 	public class Enchanted_Fiberglass_Cannon : ModNPC, IWikiNPC {
@@ -31,6 +33,7 @@ namespace Origins.NPCs.Fiberglass {
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 		}
@@ -48,6 +51,11 @@ namespace Origins.NPCs.Fiberglass {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Fiberglass_Undergrowth>().Type
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags([
+				this.GetBestiaryFlavorText()
+			]);
 		}
 		public override void AI() {
 			NPC.velocity *= 0.85f;
@@ -68,7 +76,7 @@ namespace Origins.NPCs.Fiberglass {
 								NPC.Center,
 								velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(0.9f, 1f),
 								type,
-								60,
+								(int)(60 * ContentExtensions.DifficultyDamageMultiplier),
 								1
 							);
 						}
@@ -92,6 +100,9 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.ByCondition(new AnyPlayerInteraction(), ModContent.ItemType<Shaped_Glass>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Item>(), 10, 3, 8));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Vine, 7));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Shard>(), 1, 1, 7));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
@@ -115,6 +126,11 @@ namespace Origins.NPCs.Fiberglass {
 			oldDir[0] = NPC.spriteDirection;
 			oldColor[0] = drawColor;
 			return true;
+		}
+		public override int SpawnNPC(int tileX, int tileY) {
+			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this);
+			if (tileY == -1) return Main.maxNPCs;
+			return NPC.NewNPC(null, tileX * 16 + 8, tileY * 16, NPC.type);
 		}
 	}
 	public class Enchanted_Fiberglass_Cannon_P : ModProjectile {

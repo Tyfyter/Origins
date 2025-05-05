@@ -1,6 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
+using Origins.Tiles;
+using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -11,15 +17,18 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static System.Reflection.Metadata.BlobBuilder;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.ID.ItemID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items.Other.Fish {
 	#region chunky crate
-	public class Chunky_Crate : Fishing_Crate_Item<Chunky_Crate_Tile> {
+	public class Chunky_Crate : Fishing_Crate_Item {
+		public override Color MapColor => new(200, 200, 200);
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
-			IItemDropRule[] riven = [
+			IItemDropRule[] defiled = [
 				Defiled_Wastelands.FissureDropRule,
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
@@ -27,42 +36,38 @@ namespace Origins.Items.Other.Fish {
 					new OneFromRulesRule(3, 2, Bars)),
 				new OneFromRulesRule(3, Potions)
 			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
+			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(defiled));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
 		}
 	}
-	public class Chunky_Crate_Tile : Fishing_Crate_Tile<Chunky_Crate> {
-		public override string Texture => "Origins/Items/Other/Fish/Chunky_Crate";
-		public override Color MapColor => new Color(200, 200, 200);
-	}
 	#endregion
 	#region bilious crate
-	public class Bilious_Crate : Fishing_Crate_Item<Bilious_Crate_Tile> {
+	public class Bilious_Crate : Fishing_Crate_Item {
+		public override Color MapColor => new(100, 100, 100);
 		public override bool Hardmode => true;
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 
-			IItemDropRule[] riven = [
+			IItemDropRule[] defiled = [
 				Defiled_Wastelands.FissureDropRule,
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, Ores.Concat(HardmodeOres).ToArray()),
-					new OneFromRulesRule(3, 2, Bars.Concat(HardmodeBars).ToArray())),
+					new OneFromRulesRule(5, [..Ores, ..HardmodeOres]),
+					new OneFromRulesRule(3, 2, [..Bars, ..HardmodeBars])),
 				new OneFromRulesRule(3, Potions),
 				BiomeCrate_SoulOfNight,
 				ItemDropRule.NotScalingWithLuck(ItemType<Black_Bile>(), 2, 2, 5)
 			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
+			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(defiled));
 			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
 		}
 	}
-	public class Bilious_Crate_Tile : Fishing_Crate_Tile<Bilious_Crate> {
-		public override Color MapColor => new Color(100, 100, 100);
-	}
 	#endregion
 	#region crusty crate
-	public class Crusty_Crate : Fishing_Crate_Item<Crusty_Crate_Tile> {
+	public class Crusty_Crate : Fishing_Crate_Item {
+		public override Color MapColor => new(0, 125, 165);
+		public override Color TileGlowColor => new(0.394f, 0.879f, 0.912f);
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -86,13 +91,11 @@ namespace Origins.Items.Other.Fish {
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
 		}
 	}
-	public class Crusty_Crate_Tile : Fishing_Crate_Tile<Crusty_Crate> {
-		public override string Texture => "Origins/Items/Other/Fish/Crusty_Crate";
-		public override Color MapColor => new Color(0, 125, 165);
-	}
 	#endregion
 	#region festering crate
-	public class Festering_Crate : Fishing_Crate_Item<Festering_Crate_Tile> {
+	public class Festering_Crate : Fishing_Crate_Item {
+		public override Color MapColor => new(100, 100, 100);
+		public override Color TileGlowColor => new(0.394f, 0.879f, 0.912f);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
@@ -103,8 +106,8 @@ namespace Origins.Items.Other.Fish {
 				Riven_Hive.LesionDropRule,
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, Ores.Concat(HardmodeOres).ToArray()),
-					new OneFromRulesRule(3, 2, Bars.Concat(HardmodeBars).ToArray())),
+					new OneFromRulesRule(5, [..Ores, ..HardmodeOres]),
+					new OneFromRulesRule(3, 2, [..Bars, ..HardmodeBars])),
 				new OneFromRulesRule(3, Potions),
 				BiomeCrate_SoulOfNight,
 				ItemDropRule.NotScalingWithLuck(ItemType<Alkahest>(), 2, 2, 5)
@@ -114,11 +117,69 @@ namespace Origins.Items.Other.Fish {
 			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
 		}
 	}
-	public class Festering_Crate_Tile : Fishing_Crate_Tile<Festering_Crate> {
-		public override Color MapColor => new Color(100, 100, 100);
+	#endregion
+	#region resual crate
+	public class Residual_Crate : Fishing_Crate_Item {
+		public override Color MapColor => new(0, 100, 102);
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
+
+			IItemDropRule[] brine = [
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Brineglow_Item>(), 1, 5, 16),
+					ItemDropRule.NotScalingWithLuck(ItemType<Peat_Moss_Item>(), 1, 5, 16)
+				),
+				BiomeChest_GoldCoin,
+				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
+					new OneFromRulesRule(5, Ores),
+					new OneFromRulesRule(3, 2, Bars)),
+				new OneFromRulesRule(3, Potions)
+			];
+			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(brine));
+			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
+			itemLoot.Add(new OneFromRulesRule(2,
+				ItemDropRule.NotScalingWithLuck(ItemType<Focus_Potion>(), 1, 1, 3),
+				ItemDropRule.NotScalingWithLuck(ItemType<Antisolve_Potion>(), 1, 1, 3)
+			));
+			itemLoot.Add(ItemDropRule.OneFromOptions(4,
+				ItemType<Sour_Apple>(),
+				ItemType<Caeser_Salad>()
+			));
+			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
+		}
 	}
 	#endregion
-	public abstract class Fishing_Crate_Item<TTile> : ModItem, ICustomWikiStat where TTile : ModTile {
+	#region basic crate
+	public class Basic_Crate : Fishing_Crate_Item {
+		public override Color MapColor => new(0, 62, 64);
+		public override bool Hardmode => true;
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
+			IItemDropRule[] brine = [
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Brineglow_Item>(), 1, 5, 16),
+					ItemDropRule.NotScalingWithLuck(ItemType<Peat_Moss_Item>(), 1, 5, 16),
+					ItemDropRule.NotScalingWithLuck(ItemType<Geothermal_Sludge>(), 1, 5, 16)
+				),
+				BiomeChest_GoldCoin,
+				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
+					new OneFromRulesRule(5, [.. Ores, .. HardmodeOres]),
+					new OneFromRulesRule(3, 2, [.. Bars, .. HardmodeBars])),
+				new OneFromRulesRule(3, Potions)
+			];
+			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(brine));
+			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
+			itemLoot.Add(new OneFromRulesRule(2,
+				ItemDropRule.NotScalingWithLuck(ItemType<Focus_Potion>(), 1, 1, 3),
+				ItemDropRule.NotScalingWithLuck(ItemType<Antisolve_Potion>(), 1, 1, 3)
+			));
+			itemLoot.Add(ItemDropRule.OneFromOptions(4,
+				ItemType<Sour_Apple>(),
+				ItemType<Caeser_Salad>()
+			));
+			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
+		}
+	}
+	#endregion
+	public abstract class Fishing_Crate_Item : ModItem, ICustomWikiStat {
 		string[] ICustomWikiStat.Categories {
 			get {
 				return [
@@ -129,6 +190,10 @@ namespace Origins.Items.Other.Fish {
 			}
 		}
 		public virtual IEnumerable<string> Categories => [];
+		public virtual Color TileGlowColor => Color.Black;
+		public virtual float TileGlowLightAmount => 0.01f;
+		public virtual float TileGlowFancyLightAmount => 0.2f;
+		public abstract Color MapColor { get; }
 		public static IItemDropRule BiomeChest_GoldCoin => ItemDropRule.Common(GoldCoin, 4, 5, 13);//normally NotScalingWithLuck
 		public static IItemDropRule BiomeCrate_SoulOfNight => ItemDropRule.NotScalingWithLuck(SoulofNight, 2, 2, 5);
 		public static IItemDropRule[] Ores => [
@@ -182,14 +247,20 @@ namespace Origins.Items.Other.Fish {
 			ItemDropRule.NotScalingWithLuck(2675, 1, 2, 6)
 		];
 		public virtual bool Hardmode => false;
+		protected override bool CloneNewInstances => true;
+		[CloneByReference]
+		Fishing_Crate_Tile tile;
+		public override void Load() {
+			Mod.AddContent(tile = new Fishing_Crate_Tile(this));
+		}
 		public override void SetStaticDefaults() {
-			ItemID.Sets.IsFishingCrate[Type] = true;
-			ItemID.Sets.IsFishingCrateHardmode[Type] = Hardmode;
+			Sets.IsFishingCrate[Type] = true;
+			Sets.IsFishingCrateHardmode[Type] = Hardmode;
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CrimsonFishingCrate);
-			Item.createTile = ModContent.TileType<TTile>();
+			Item.CloneDefaults(CrimsonFishingCrate);
+			Item.createTile = tile.Type;
 			Item.placeStyle = 0;
 			Item.rare = Hardmode ? ItemRarityID.LightRed : ItemRarityID.Green;
 		}
@@ -200,31 +271,57 @@ namespace Origins.Items.Other.Fish {
 			return true;
 		}
 	}
-	public abstract class Fishing_Crate_Tile<TItem> : ModTile where TItem : ModItem, new() {
-		public override string Texture => new TItem().Texture;
-		public abstract Color MapColor { get; }
+	[Autoload(false)]
+	public class Fishing_Crate_Tile(Fishing_Crate_Item item) : ModTile, IGlowingModTile {
+		public override string Texture => item.Texture;
+		public override string Name => item.Name + "_Tile";
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public bool Glows { get; private set; } = false;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (!Glows) return;
+			color = Vector3.Max(color, item.TileGlowColor.ToVector3() * item.TileGlowFancyLightAmount);
+		}
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileFrameImportant[Type] = true;
 			Main.tileSolidTop[Type] = true;
 			Main.tileTable[Type] = true;
 
+			if (Glows) {
+				Main.tileLighted[Type] = true;
+				if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
+
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-			SetTileObjectData(TileObjectData.newTile);
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
+			TileObjectData.newTile.StyleHorizontal = true; // Optional, if you add more placeStyles for the item
+			TileObjectData.newTile.CoordinatePadding = 0;
+			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.addTile(Type);
 
-			SetMapEntry();
-		}
-		protected virtual void SetTileObjectData(TileObjectData data) {
-			data.CoordinateHeights = [16, 18];
-			data.StyleHorizontal = true; // Optional, if you add more placeStyles for the item
-			data.CoordinatePadding = 0;
-			data.CoordinateWidth = 16;
-		}
-		public virtual void SetMapEntry() {
-			AddMapEntry(MapColor, CreateMapEntryName());
+			AddMapEntry(item.MapColor, CreateMapEntryName());
 		}
 		public override bool CreateDust(int i, int j, ref int type) => false;
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (!Glows) return;
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 18, 18);
+			drawData.glowTexture = GlowTexture;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (!Glows) return;
+			r = (item.TileGlowColor.R / 255f) * item.TileGlowLightAmount;
+			g = (item.TileGlowColor.G / 255f) * item.TileGlowLightAmount;
+			b = (item.TileGlowColor.B / 255f) * item.TileGlowLightAmount;
+		}
+		public override void Load() {
+			if (item.TileGlowColor != Color.Black) {
+				Glows = true;
+				this.SetupGlowKeys();
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }

@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -14,7 +13,7 @@ namespace Origins.Items.Tools {
 			Item.fishingPole = 27;
 			Item.shootSpeed = 14f;
 			Item.shoot = ModContent.ProjectileType<Parasitic_Bobber>();
-			Item.value = Item.sellPrice(gold: 4, silver: 36);
+			Item.value = Item.sellPrice(gold: 3, silver: 12);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
@@ -24,8 +23,8 @@ namespace Origins.Items.Tools {
 			.Register();
 		}
 		public override void ModifyFishingLine(Projectile bobber, ref Vector2 lineOriginOffset, ref Color lineColor) {
-			lineOriginOffset.X = 45;
-			lineOriginOffset.Y = -30;
+			lineOriginOffset.X = 38;
+			lineOriginOffset.Y = -32;
 		}
 	}
 	public class Parasitic_Bobber : ModProjectile {

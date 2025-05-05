@@ -9,12 +9,11 @@ using Terraria.Localization;
 using Origins.World.BiomeData;
 
 namespace Origins.Items.Accessories {
-	public class Stack_of_Shraps : ModItem, ICustomWikiStat, IJournalEntryItem {
+	public class Stack_of_Shraps : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
 			"Combat",
 			"ExplosiveBoostAcc"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Stack_of_Shraps_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 26);
@@ -25,8 +24,6 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.madHand = true;
-			originPlayer.explosiveBlastRadius += 0.15f;
-			originPlayer.explosiveThrowSpeed += 0.2f;
 		}
 		public override void AddRecipes() {
 			AddShimmerRecipe<CorruptionAltBiome, Forbidden_Voice>();
@@ -52,5 +49,6 @@ namespace Origins.Items.Accessories {
 	}
 	public class Stack_of_Shraps_Entry : JournalEntry {
 		public override string TextKey => nameof(Stack_of_Shraps);
+		public override JournalSortIndex SortIndex => new("The_Ashen", 1);
 	}
 }

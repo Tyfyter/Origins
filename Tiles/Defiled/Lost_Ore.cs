@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Journal;
+using Origins.Tiles.Riven;
 using PegasusLib;
 using Terraria;
 using Terraria.ID;
@@ -34,12 +35,13 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	[LegacyName("Defiled_Ore_Item")]
-	public class Lost_Ore_Item : ModItem, ICustomWikiStat, IJournalEntryItem {
+	public class Lost_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"Ore"
 		];
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
-		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 100;
+        }
         public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Lost_Ore>());
 			Item.rare = ItemRarityID.Blue;
@@ -52,8 +54,5 @@ namespace Origins.Tiles.Defiled {
 			data.Add("Tier", 5);
 			data["PickReq"] = 55;
 		}
-	}
-	public class Lost_Ore_Entry : JournalEntry {
-		public override string TextKey => "Lost_Ore";
 	}
 }

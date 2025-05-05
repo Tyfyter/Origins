@@ -38,6 +38,8 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Velocity = 1f
 			};
+			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
+			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
@@ -66,7 +68,9 @@ namespace Origins.NPCs.Brine {
 			]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4));
+			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 4)
+			));
 		}
 		public override void AI() {
 			NPC.knockBackResist = 0.45f;

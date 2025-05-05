@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
 
 namespace Origins.Projectiles.Weapons {
 	public class Lava_Shot : ModProjectile {
@@ -41,6 +42,13 @@ namespace Origins.Projectiles.Weapons {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, hit.Crit ? 600 : 300);
 			target.AddBuff(BuffID.Oiled, hit.Crit ? 60 : 30);
+		}
+		public override void OnKill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
+			for (int i = 0; i < 8; i++) {
+				Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Lava);
+				dust.noGravity = false;
+			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			//

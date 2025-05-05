@@ -19,6 +19,7 @@ float2 uImageOffset;
 float uSaturation;
 float4 uSourceRect;
 float2 uZoom;
+float2 uTimeScale;
 
 float4 VoidShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
@@ -43,7 +44,7 @@ float Select(float3 a, float i) {
 }
 
 float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
-	float select = uTime * 10;
+	float select = uTime * uTimeScale;
 	select = select - floor(select / 3.0) * 3.0;
 	//coords.x += (Select(tex2D(uImage1, float2(0, Select(tex2D(uImage1, float2(uTime, 0)).rgb, select) * 5) + coords.y).rgb, select) - 0.5, select) * uIntensity;
 	coords.x += Select(tex2D(uImage1, float2(coords.y, coords.x) * 10).rgb, select) * uIntensity;
@@ -54,7 +55,7 @@ float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	if (progress < 0) progress = 0;
 	float median = (min(color.r, min(color.g, color.b)) + max(color.r, max(color.g, color.b))) / 2;
 	median += (Select(tex2D(uImage1, float2(median, 0) + coords * float2(1, 4)).rgb, select) - 0.5) * uOpacity * (sampleColor + (1, 1, 1, 1)) / 2; //
-	color.rgb = lerp(color.rgb, median, progress);
+	color.rgb = lerp(color.rgb, median, progress * (1 - tex2D(uImage2, coords).a));
 	return color;
 }
 

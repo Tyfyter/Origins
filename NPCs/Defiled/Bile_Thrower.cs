@@ -1,14 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Projectiles.Enemies;
 using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
 	public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
@@ -33,11 +34,18 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CorruptPenguin);
+			NPC.damage = 20;
+			NPC.lifeMax = 70;
+			NPC.value = 500f;
 			AnimationType = NPCID.CorruptPenguin;
 			AIType = NPCID.CorruptPenguin;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			this.CopyBanner<Defiled_Banner_NPC>();
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData(false);
@@ -58,7 +66,7 @@ namespace Origins.NPCs.Defiled {
 								spawnPos,
 								new Vector2(speed, 0).RotatedBy(angle),
 								ModContent.ProjectileType<Defiled_Goop>(),
-								12,
+								(int)(12 * ContentExtensions.DifficultyDamageMultiplier),
 								3
 							);
 						}

@@ -122,7 +122,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.DamageType = DamageClass.Ranged;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Static_Shock_Debuff.Inflict(target, Main.rand.Next(180, 300));
+			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), Main.rand.Next(180, 301));
 		}
 	}
 }
