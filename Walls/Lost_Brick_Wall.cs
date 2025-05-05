@@ -14,7 +14,6 @@ namespace Origins.Walls {
 		}
 	}
 	public class Lost_Brick_Wall_Item : ModItem {
-		public override string Texture => "Origins/Tiles/Other/Lost_Brick_Item";
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableWall(WallType<Lost_Brick_Wall>());
 		}

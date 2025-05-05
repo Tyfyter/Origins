@@ -13,7 +13,6 @@ namespace Origins.Walls {
 		}
 	}
 	public class Encrusted_Brick_Wall_Item : ModItem {
-		public override string Texture => "Origins/Tiles/Other/Encrusted_Brick_Item";
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableWall(WallType<Encrusted_Brick_Wall>());
 		}
