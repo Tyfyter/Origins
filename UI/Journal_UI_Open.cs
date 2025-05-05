@@ -84,6 +84,15 @@ namespace Origins.UI {
 				currentPage.Clear();
 				minNewLines = 0;
 			}
+			float lineSpace = font.LineSpacing * baseScale.Y;
+			switch (mode) {
+				case Journal_UI_Mode.Normal_Page:
+				lineSpace *= Main.UIScale;
+				break;
+				case Journal_UI_Mode.Search_Page:
+				lineSpace *= Main.UIScale;
+				break;
+			}
 			for (int i = 0; i < snippets.Count; i++) {
 				TextSnippet textSnippet = snippets[i];
 				if (textSnippet is Journal_Control_Handler.Journal_Control_Snippet ctrl) {
@@ -100,9 +109,9 @@ namespace Origins.UI {
 				if (textSnippet.UniqueDraw(justCheckingString: true, out Vector2 size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					currentPage.Add(textSnippet);
-					minNewLines = Math.Max(minNewLines, (int)Math.Ceiling(size.Y / (font.LineSpacing * num3 * baseScale.Y)));
+					minNewLines = Math.Max(minNewLines, (int)Math.Ceiling(size.Y / (lineSpace * num3)));
 					while (cursor.X > bounds.Width) {
-						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
+						cursor.Y += lineSpace * num3;
 						cursor.X -= bounds.Width;
 						currentPage.Add(new TextSnippet("\n"));
 					}
@@ -130,15 +139,17 @@ namespace Origins.UI {
 				foreach (string line in lines) {
 					lineNum++;
 					if (line == "\n") {
-						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
-						cursor.X = 0f;
 						//result.Y = Math.Max(result.Y, cursor.Y);
 						if (minNewLines > 0) {
 							for (int k = 0; k < minNewLines; k++) {
+								cursor.Y += lineSpace * num3;
+								cursor.X = 0f;
 								currentPage.Add(new TextSnippet("\n"));
 							}
 							minNewLines = 0;
 						} else {
+							cursor.Y += lineSpace * num3;
+							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
 						}
 						if (cursor.Y > bounds.Height) {
@@ -158,7 +169,7 @@ namespace Origins.UI {
 						float currentWordWidth = font.MeasureString(words[j]).X * baseScale.X * snippetScale;
 						if (cursor.X - 0f + currentWordWidth > bounds.Width) {
 							cursor.X = 0f;
-							cursor.Y += font.LineSpacing * num3 * baseScale.Y;
+							cursor.Y += lineSpace * num3;
 							//result.Y = Math.Max(result.Y, cursor.Y);
 							if (cursor.Y > bounds.Height) {
 								finishPage();
@@ -181,15 +192,17 @@ namespace Origins.UI {
 					currentPage.Add(new TextSnippet(currentText.ToString(), snippetColor, snippetScale));
 					currentText.Clear();
 					if (lines.Length > lineNum && realLine) {
-						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
-						cursor.X = 0f;
 						//result.Y = Math.Max(result.Y, cursor.Y);
 						if (minNewLines > 0) {
+							cursor.Y += lineSpace * num3;
+							cursor.X = 0f;
 							for (int k = 0; k < minNewLines; k++) {
 								currentPage.Add(new TextSnippet("\n"));
 							}
 							minNewLines = 0;
 						} else {
+							cursor.Y += lineSpace * num3;
+							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
 						}
 						if (cursor.Y > bounds.Height) {
@@ -366,7 +379,7 @@ namespace Origins.UI {
 				}
 				currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
 				currentPage.Add(new TextSnippet("\n"));
-				if (++lineCount > 16) {
+				if (++lineCount * Main.UIScale > 22) {
 					snippetPages.Add(currentPage.ToList());
 					currentPage = [];
 					lineCount = 0;

@@ -14,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.Utilities;
 using Origins.Graphics;
+using Terraria.GameContent;
 
 namespace Origins.UI {
 	public class Journal_Portrait_Handler : ITagHandler {
