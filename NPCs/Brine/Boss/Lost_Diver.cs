@@ -462,6 +462,7 @@ namespace Origins.NPCs.Brine.Boss {
 		AutoLoadingAsset<Texture2D> legTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Legs";
 		AutoLoadingAsset<Texture2D> backTexture = typeof(Lost_Diver).GetDefaultTMLName() + "_Back";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.IsABestiaryIconDummy && !OriginsModIntegrations.CheckAprilFools()) AutoLoadingAsset<Texture2D>.Wait(headTexture, bodyTexture, legTexture, backTexture);
 			//conveniently, the drop it has that'd use the proper composite arms is the keytar, so nothing it's definitely going to do needs me to support them
 			SpriteEffects effect = NPC.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Vector2 headVect = legFrame.Size() * new Vector2(0.5f, 0.4f);

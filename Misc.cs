@@ -334,6 +334,14 @@ namespace Origins {
 				}
 			}
 		}
+		public void Wait() {
+			LoadAsset();
+			asset.Value.Wait();
+		}
+		public static void Wait(params AutoLoadingAsset<T>[] assets) {
+			for (int i = 0; i < assets.Length; i++) assets[i].LoadAsset();
+			for (int i = 0; i < assets.Length; i++) assets[i].asset.Value.Wait();
+		}
 		public static implicit operator AutoLoadingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator AutoLoadingAsset<T>(string asset) => new(asset);
 		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
