@@ -181,7 +181,7 @@ Brine_Fiend: {
 	Hearty_Broth.Text:
 		'''
 		[header:Hearty Broth (5/{$SeriesLength})]
-		[jimage/sc3d:Origins/Items/Other/Consumables/Broths/Hearty_Broth]
+		[jimage/sc3dfr0,0,30,30:Origins/Items/Other/Consumables/Broths/Hearty_Broth]
 		*****
 		Cooking and brewing quickly became her hobbies. She drew a fascination in it after collecting rare ingredients from all over the jungle. The broths she fed to animals made her find her real talents in brewery.
 		'''

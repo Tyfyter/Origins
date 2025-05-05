@@ -29,10 +29,10 @@ namespace Origins.UI {
 				size = default;
 				if (image is null) return false;
 				image.Wait();
-				size = image.Size() * Scale;
+				size = (options.Frame?.Size() ?? image.Size()) * Scale;
 				if (justCheckingString) return true;
 				if (options.Shader != JournalImageShader.None) shaderOroboros.Capture();
-				spriteBatch?.Draw(image.Value, position, null, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+				spriteBatch?.Draw(image.Value, position, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
 				switch (options.Shader) {
 					case JournalImageShader.Sketch:
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
@@ -49,7 +49,7 @@ namespace Origins.UI {
 				return true;
 			}
 		}
-		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color? Color = null, float Scale = 1f) {
+		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color? Color = null, float Scale = 1f, Rectangle? Frame = null) {
 			public readonly bool Sketch => Shader == JournalImageShader.Sketch;
 		}
 		record struct SnippetOption(string Name, [StringSyntax(StringSyntaxAttribute.Regex)] string Data, Action<string> Action) {
@@ -92,6 +92,7 @@ namespace Origins.UI {
 			Options settings = new(Color: baseColor);
 			ParseOptions(options,
 				new SnippetOption("sc", "[\\d\\.]+", match => settings.Scale = float.Parse(match)),
+				new SnippetOption("fr", "(?:\\d+,){3}\\d+", match => { string[] args = match.Split(','); settings.Frame = new(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), int.Parse(args[3])); }),
 				new SnippetOption("s", "[\\d\\.]+", match => settings.Sharpness = float.Parse(match)),
 				new SnippetOption("d", "", match => settings.Shader = JournalImageShader.Sketch),
 				new SnippetOption("t", "", match => settings.Shader = JournalImageShader.Transparent),
