@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-    public class Encrusted_Brick_Wall : ModWall {
+	public class Encrusted_Brick_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			AddMapEntry(new Color(70, 110, 177));
 			DustType = DustID.Astra;
