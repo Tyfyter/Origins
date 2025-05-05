@@ -95,6 +95,9 @@ namespace Origins.UI {
 			}
 			for (int i = 0; i < snippets.Count; i++) {
 				TextSnippet textSnippet = snippets[i];
+				if (textSnippet is Journal_Series_Header_Handler.Journal_Series_Header_Snippet && cursor.Y + font.LineSpacing * baseScale.Y > bounds.Height) {
+					finishPage();
+				}
 				if (textSnippet is Journal_Control_Handler.Journal_Control_Snippet ctrl) {
 					switch (ctrl.Text.ToLower()) {
 						case "end_page":
