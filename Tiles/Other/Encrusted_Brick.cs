@@ -16,6 +16,7 @@ namespace Origins.Tiles.Other {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(70, 110, 177));
 			DustType = DustID.Astra;
+			HitSound = SoundID.Tink;
 		}
 	}
 	public class Encrusted_Brick_Item : ModItem {
