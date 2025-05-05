@@ -322,7 +322,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			float strength = player.OriginPlayer().relayRodStrength * 0.01f;
 			player.GetDamage<No_Summon_Inherit>() += 0.1f * strength;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f * strength;
-			player.lifeRegenCount += Main.rand.RandomRound(20 * strength);
+			player.lifeRegenCount += Main.rand.RandomRound(6 * strength);
 		}
 	}
 	public class FloatCurve(float minY, float maxY, float min = 0, float max = 1) : Curve<float>(min, max) {
