@@ -1,7 +1,7 @@
 ﻿using AltLibrary.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -101,6 +101,12 @@ namespace Origins.NPCs.TownNPCs {
 			if (firstButton) {
 				shopName = "Shop";
 			}
+		}
+
+		public override void AddShops() {
+			new NPCShop(Type)
+			.Add<Nerve_Flan_Food>()
+			.Register();
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) {

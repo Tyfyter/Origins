@@ -1178,6 +1178,15 @@ Buffs: {
 		DisplayName: Ill Omen of Hound
 		Description: You smell like fresh meat
 	}
+
+	Nerve_Flan_Food_Buff: {
+		DisplayName: Nerve Flan
+		Description:
+			'''
+			Extreme improvements to all stats…
+			Except bandwidth
+			'''
+	}
 }
 
 DamageClassName: {

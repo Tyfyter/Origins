@@ -1429,7 +1429,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(X) Nerve Flan !!!
+(@, ☻) Nerve Flan !!!
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*

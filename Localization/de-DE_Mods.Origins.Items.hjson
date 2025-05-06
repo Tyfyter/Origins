@@ -5948,3 +5948,5 @@ Lost_Brick_Wall_Item: {
 	// DisplayName: Lost Brick Wall
 	// Tooltip: ""
 }
+
+// Nerve_Flan_Food.Tooltip: "{$Buffs.Nerve_Flan_Food_Buff.Description}"
