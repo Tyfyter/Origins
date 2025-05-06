@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,6 @@ using System.Reflection;
 using Terraria.Utilities;
 using System.Collections;
 using Terraria.ModLoader.IO;
-using Tyfyter.Utils;
 using Origins.Tiles;
 using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
@@ -24,7 +22,6 @@ using ReLogic.Reflection;
 using Terraria.Localization;
 using ReLogic.Graphics;
 using System.Reflection.Emit;
-using Terraria.GameContent.Personalities;
 using Terraria.Map;
 using Origins.Reflection;
 using Terraria.GameContent.Bestiary;
@@ -38,19 +35,9 @@ using Terraria.ObjectData;
 using PegasusLib;
 using PegasusLib.Graphics;
 using Terraria.GameInput;
-using Terraria.UI;
-using Origins.Items.Other.Testing;
-using Stubble.Core.Helpers;
 using Terraria.GameContent.Creative;
-using CalamityMod.Items;
-using Terraria.Graphics.Light;
-using Origins.Tiles.Limestone;
 using Terraria.Enums;
-using Origins.World.BiomeData;
 using Origins.Tiles.Other;
-using Origins.Backgrounds;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using ThoriumMod.Projectiles;
 
 namespace Origins {
 	#region classes

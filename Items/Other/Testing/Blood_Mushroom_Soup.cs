@@ -9,6 +9,9 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using Origins.World.BiomeData;
 using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
+using Terraria.GameInput;
+using ThoriumMod.Items.ZRemoved;
+using Origins.Tiles.Brine;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -76,6 +79,7 @@ namespace Origins.Items.Other.Testing {
 				int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
 				double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 				Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+				PlayerInput.SetZoom_MouseInWorld();
 				Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 				Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, modes[mode].GetMouseText(parameters.Count, mousePos, mousePacked, mousePackedDouble, mouseTile, diffFromPlayer), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
 				if (Main.LocalPlayer.controlLeft && Main.LocalPlayer.controlRight && Main.LocalPlayer.controlUp && Main.LocalPlayer.controlDown) {
@@ -83,7 +87,6 @@ namespace Origins.Items.Other.Testing {
 					int OwO = 0 / O;
 				}
 			}
-
 		}
 		/*
 		void SetParameter() {
@@ -533,8 +536,52 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {
+	public class Carver_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			Vector2 min = new(float.PositiveInfinity);
+			Vector2 max = new(float.NegativeInfinity);
+			
+			Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Baryte>(), TileID.Mud, ModContent.TileType<Peat_Moss>()))
+			+ Carver.PointyLemon(new(Player.tileTargetX, Player.tileTargetY), 4, diffFromPlayer.ToRotation() + MathHelper.PiOver2, 2, 1, ref min, ref max);
+			Carver.DoCarve(
+				filter,
+				pos => {
+					Dust.NewDustPerfect(pos * 16 + Vector2.One * 8, 29, Vector2.Zero).noGravity = true;
+					return 1;
+				},
+				min,
+				max,
+				9
+			);
+			return "";
+		}
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(diffFromPlayer.ToRotation() + MathHelper.PiOver2);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Vector2 posMin = new(float.PositiveInfinity);
+			Vector2 posMax = new(float.NegativeInfinity);
+			ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
+			Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Baryte>(), TileID.Mud, ModContent.TileType<Peat_Moss>()))
+			+ Carver.PointyLemon(new(Player.tileTargetX, Player.tileTargetY), 4, parameters.DequeueAsOrDefaultTo(0f), 2, 1, ref posMin, ref posMax);
+			Carver.DoCarve(
+				filter,
+				pos => {
+					Framing.GetTileSafely(pos.ToPoint()).TileType = oreID;
+					return 1;
+				},
+				posMin,
+				posMax,
+				9
+			);
+			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
+			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
+			WorldGen.RangeFrame((int)posMin.X, (int)posMin.Y, (int)posMax.X, (int)posMax.Y);
+		}
+	}
+	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Auto Slope";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Player.tileTargetX);
