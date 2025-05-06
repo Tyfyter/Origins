@@ -2,7 +2,6 @@ Additions:
 + Added the Lost Diver/Mildew Carrion 2-in-1 boss from the Brine Pool
 + Added A LOT of Journal entries to go and collect!
 + Added 4 new Defiled Amalgamation attacks O.O
-+ Added Abandoned Bomb enemy. Don't abandon your bombs while they're happy!
 + Added new alternate functionality with Fiberglass Sword being able to be thrown
 + Added new Defiled material "tangela". All of the glitchiness built-in!
 + Added new prefixes: Bloated (summon), Necromantic (summon), Vampiric (summon), Wholesome (summon), Defiled (magic)
