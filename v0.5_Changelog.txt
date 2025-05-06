@@ -1,0 +1,156 @@
+Additions:
++ Added the Lost Diver/Mildew Carrion 2-in-1 boss from the Brine Pool
++ Added A LOT of Journal entries to go and collect!
++ Added 4 new Defiled Amalgamation attacks O.O
++ Added new alternate functionality with Fiberglass Sword being able to be thrown
++ Added new Defiled material "tangela". All of the glitchiness built-in!
++ Added new prefixes: Bloated (summon), Necromantic (summon), Vampiric (summon), Wholesome (summon), Defiled (magic)
++ Added functionality for Link Grenades and Sticky Link Grenades to deal additive damage depending on how many are close-by to each other
++ Added very many Brine-themed, Lost Diver-themed, Defiled-themed, and explosive items
++ Added a handful of new Brine Pool enemies and the friendly Leaf Snappers
++ Added the Unsuspicious Bush, which does nothing
++ Added Hydrothermal Vents in the Brine Pool which you can right-click with a pickaxe to collect Geothermal Sludge (to be extractinated)
++ Added Tangela and Anti-Gray Dye for the new shader effects introduced by the Defiled
++ Added the Super Mojo Flask which has 7 charges of 25% cleanse instead of 5 charges of 20%!
++ Added Latchkey and an alternate, dash functionality to the Refactoring Pieces which both allow you to glitch through Defiled blocks! Annoying Defiled spike worldgen begone!
++ Added a quest from the Guide whenever the player is inflicted with any assimilation to serve as a tutorial for assimilation mechanics
++ Added many new flavors of broths all sold by the Brine Fiend for you to feed to your minions!
++ Added Defiled Broadcaster support enemy. It can teleport other Defiled anti-bodies and drop them on your head!
++ Added the Limestone Caves generation in the Desert with a new Catacomb Clearer enemy and Lucky Hat! Keep an eye out pardner!
++ Some more funny April Fools' effects
++ Added compatibility with MagicStorage mod with our own evil-equivalent storage upgrades!
++ Minion buffs now display the number of the associated minions active, and can show health bars for artifact minions (configurable)
++ Added a hotkey to use your Mojo Flask
++ Defiled Enemies can occasionally be assembled on-screen
++ Added a setting to change the speed of the Defiled Wastelands shader
++ Quest Notifications can now be shown over NPCs (configurable)
++ (for devs) Some sets are now named
++ Players using Control Configurator can now search for journal related hotkeys by hovering over the journal button and using its hotkey
++ 2 Brine Fiend quests
++ Visual and audio indicator for newly-unlocked Journal entries
++ Defiledified and Rivenated "Terraria" logos for the respective menu themes
++ Silly screen FX when you get closer to Defiled Hearts
++ Added Bomb Traps! They will naturally spawn on world generation and replace Dart Traps
+
+
+Changes:
+** Rebalanced ALL explosive content: damage, armor penetration, self-damage protection
+** Revamped the Brine Pool in all aspects! This was its dedicated update lol
+** Reworked the Journal lore system and made it more intuitive
+* Amenonuhoko grew longer, has faster jabs and releases a laser projectile instead of the cloud
+* Bone Latcher, Lost armor, Unmisfire, Low Signal and a few other pre-existing Defiled items inherited "tangela" on their sprites. Missing File's UI also becomes "tangela'd"
+* Cyah Nara now has a custom sound effect
+* Firestarter's summon prefix now makes minions inflict the Hellfire debuff instead of On Fire!
+* General improvements to Impactaxe
+* Generic Weapon can now be shimmered into something
+* Improved Self-Destruct sound effect and increased delay before detonation to accomodate
+* Matrix now has a custom sound effect
+* Reduced Hemoptysis volume and made it craftable
+* Renamed the Chunky Hook to the Tangela Tether
+* Resprited a lot of pre-existing content
+* The Impenetrable Trash Can Lid is no longer heinously-expensive
+* Shaped Glass recipe now requires Vines
+* Defiled Assimilation now dissipates with time when outside of a Defiled biome
+* AI and visual rework to Defiled Cyclopes and Defiled Krushers! Cannonfodder no-longer!
+* Riptide armor now receives its boosts from rain
+* Improvements to Volatile Gelatin to make it more synergous with other equipment
+* Abyssal Anchor properly weighs the player down and has cool accessory visuals now!
+* Cursed Crown no longer hinders player acceleration while mid-air
+* Replaced Outreach with the sickomode Soldering Iron spear
+* Harpoon guns can now receive speed modifiers
+* Astoxo now calls down lightning to smite your foes
+* Ambition Potion now increases projectile speed and melee size
+* Krakram now un-misses target
+* Neural Network now gains armor penetration based on its stacks, to compensate for the loss of damage
+* Broken Fiberglass Bow now has a custom re-stringing animation
+* The Bird can now beguile you — the player — into running directly into projectiles, trying to reflect them
+* Friendly Bombs get less friendly if you abandon them
+* Friendly Zombies now forget to die, and attract enemy attention
+* Abyssal Anchor now has an equip visual
+* Improved the visual effect of Speed Booster's dash
+* Bile Throwers now drop Strange String
+* Defiled Asphyxiators now drop Strange String
+* Defiled Defiled Cyclopes now drop Lousy Liver
+* Defiled Shattered Ghouls now drop Strange String
+* Many Defiled enemies now drop Latchkeys
+* Added a new attack to the Defiled Cyclops
+* Added a new attack to the Defiled Krusher
+* Added new attacks to the Defiled Amalgamation
+* Fiberglass enemies now drop fiberglass blocks, vines, and fiberglass shards
+* Fiberglass Weaver now takes up more spawn slots
+* Slightly reduced Crimbrain spawn rates
+* Demolitionist now only sells Alkaline Grenades and Alkaline Bombs after defeating the Lost Diver
+* Demolitionist now only sells Caustica after defeating Golem
+* Trijaw Sharks now have friends :)
+* Skeleton Merchant now drops Dysfunctional Endless Explosives Bag
+* Lunar pillars now drop Nova Fragments
+* Thunder Zapper now inflicts static shock (configurable)
+* Storm Spear now inflicts static shock (configurable)
+* Defiled Amalgamation threshold health now uses the tangela shader
+* Peat Moss blocks now explode when destroyed. Keep your distance!
+* Lost and Encrusted Brick blocks are now craftable
+
+
+Balance:
+- Spirit Shard has increased minions by 1 and 10% increased summoning damage as a boost now
+- Advanced Imaging and Sonar Visor now increase generic crit chance by 10% and explosive blast radius by 20%
+- Nerfed Donor Wristband debuff cooldown reduction (48% -> 30%)
+- Lousy Liver and Cirrhosis' Abhorrence affected enemy counts both reduced by 1
+- Changed Amber of Embers' mana cost (7 -> 8)
+- Changed Low Signal stats (base damage: 40 -> 48, crit chance: 4% -> 9%)
+- Changed Plasma Cutter base damage (27 -> 60)
+- Added 15-turret limit for the Partybringer, and increased Partybringer base damage (40 -> 64)
+- Changed Purification Potion effect duration (6min -> 8min)
+- Changed True Waning Crescent stats (projectile speed: 11.75 -> 15, sell value: 50 silver -> 10 gold)
+- Changed Waning Crescent stats (sell value: 50 silver -> 4 gold)
+- Changed Bolt Gun stats (damage: 26 -> 38, use time 17 -> 38)
+- Changed Felnum Longbow stats (sell value: 50 silver -> 65 silver)
+- Changed HNO-3 "Viper" stats (damage: 72 -> 58, crit 20 -> 15, sell value: 50 silver -> 5 gold)
+- Changed Threemoepeater stats (use time: 13 -> 17, amoeba balls' damage halved, but added 15 armor penetration)
+- Changed Broken Terratotem and Terratotem Orb stats (max life 2700 -> 675, life decay rate: 60/sec -> 15/sec)
+- Changed Hibernal Incantation stats (damage: 15 -> 10, frostburn chance: 100% -> 25%, frostburn duration from icicles: damage * 6 -> damage * 4)
+- Changed Defiled Amalgamation stats (damage: 48/64/72 -> 62/73/99, max life: 3100/4960/7936 -> 3250/5200/8320)
+- Changed Chunky Slime stats (assimilation: 5/6.5/7.5 -> 1/1.3/1.5)
+- Changed Defiled Asphyxiator stats (assimilation: 11/14.3/14.3 -> 4/5.2/6)
+- Changed Defiled Krusher stats (assimilation: 8/10.4/12 -> 4/5.2/6, knockback formula: x0.5 -> x0.5 - 1.2)
+- Changed Defiled Cyclops stats (assimilation: 8/10.4/12 -> 3/3.9/4.5)
+- Changed Defiled Digger stats (head assimilation: 6/7.8/9 -> 3/3.9/4.5, body assimilation: 3/3.9/4.5 -> 2/2.6/3)
+- Changed Defiled Phantom stats (assimilation: 5/6.5/7.5 -> 2/2.6/3)
+- Changed Defiled Swarmer stats (damage: 10 -> 34, max life: 20 -> 40, AI style: demon eye -> star cell)
+- Changed Defiled Tripod stats (assimilation: 7/9.1/10.5 -> 4/5.2/6)
+- Changed Defiled Wisp stats (assimilation: 0 -> 1/1.3/1.5)
+- Changed Shattered Ghoul stats (assimilation: 10/13/15 -> 5/6.5/7.5)
+- Changed Felnum Guardian stats (defense: 32 -> 14)
+- Changed Felnum Slime stats (max slam distance: 50 blocks -> 250 blocks)
+- Changed Enchanted Fiberglass Bow stats (attack rate: 0.8/sec -> 0.5/sec)
+- Changed Conehead Zombie stats (value: 60 copper -> 80 copper)
+- Changed Graveshield Zombie stats (value: 60 copper -> 100 copper)
+- Changed Riptide Armor stats (set bonus dash damage: 25 -> 48)
+- Changed Resin Shield stats (cooldown: 5 seconds -> 3.3 seconds)
+- Changed Tendon Armor stats (max speed boost: 85% -> 37.5%)
+- Changed Cursed Crown stats (only slows down on the ground, slightly increases acceleration in the air)
+- Christmas Ghosts no longer have pocket change
+
+
+Fixes:
+* Amoebash now properly shakes the screen
+* Crystal Cutters and their projectiles now properly register as melee damage and have after-effects
+* Fixed rarity of the Thunderbolt appearing as Lime instead of Green. Caustica is also changed from Butterscotch to Lime
+* Fixed the use style of the Splashid
+* Fixed the holdout offset of some weapons to look less-awkward
+* Fixed Partybringer Turrets unable to assemble themselves if they're stuck by simply allowing them to time-out
+* Hivateinn now inflicts Static Shock as originally intended
+* Missing File can now properly target boss' body parts for bosses with separate body parts
+* Made Ravel spheres tinier
+* Sunflower Sandals are now craftable
+* Stack of Shraps now properly duplicates explosive projectiles
+* Dryad's Inheritance now inherits Spore Sac's ability
+* Blast-Resistant Plate no longer gives you double the defense bonus than was intended
+* Fixed flask visuals on Knee Slapper appearing odd
+* You no longer hit enemies with the book when you use incantations
+* Brainchildren now understand how to go through platforms
+* Fixed Dawn Keys dropping when they shouldn't
+* Fixed Control Locus not providing ammo conservation to ranged weapons
+* Soulspores, Wilting Roses and Acetabularia no longer have a hard time spawning
+* Cleaned up worm enemy bestiary sprites
+* Chambersite now properly converts in the world

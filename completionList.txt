@@ -898,10 +898,10 @@ SUMMONER WEAPONS:
 (^) Ocotillo Finger
 (^) Ocotoral Bud*
 (X) Pinwheel Pole
-(#2, ^2) Relay Rod !!! (needs regen re-balance)
+(^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(#2, ^2, ᗢ) Sunflower in a Pot (Sunflower variants, turret mode distance) !!!
+(ᗢ) Sunflower in a Pot (Sunflower variants)
 (^) Teardown*
 (^) Thread Rod*
 (^) Woodsprite Staff
