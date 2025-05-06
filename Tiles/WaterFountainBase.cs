@@ -23,7 +23,7 @@ namespace Origins.Tiles {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			FountainTile.RegisterItemDrop(Type);
-			if (ModLoader.HasMod(nameof(Fargowiltas))) {
+			if (!Main.dedServ && ModLoader.HasMod(nameof(Fargowiltas))) {
 				FargosFountainsForceFbiomes.AddFountainAssociation(FountainTile.Biome, FountainTile.WaterStyle.Slot, FountainTile.SetBiomeActive);
 			}
 		}
