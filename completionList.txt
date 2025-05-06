@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(X) Shimmer Construct
+(X) Shimmer Construct !!!
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -1058,7 +1058,7 @@ GENERIC WEAPONS:
 
 TILES:
 |---
-(X) Aetherite Ore
+(X) Aetherite Ore !!!
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Baryte*
@@ -1287,7 +1287,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(X) Aetherite Bar
+(X) Aetherite Bar !!!
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
@@ -1517,9 +1517,9 @@ MOUNTS & PETS:
 
 AMMO:
 |---
-(X) Aether Arrow
-(X) Aether Bullet
-(X) Aether Canister
+(X) Aether Arrow !!!
+(@, ☻) Aether Bullet !!!
+(X) Aether Canister !!!
 (^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*
@@ -1675,7 +1675,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(X) Shimmer Construct
+(X) Shimmer Construct !!!
 (X) Tearror
 (X) Trenchmaker
 

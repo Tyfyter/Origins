@@ -5950,3 +5950,8 @@ Lost_Brick_Wall_Item: {
 }
 
 // Nerve_Flan_Food.Tooltip: "{$Buffs.Nerve_Flan_Food_Buff.Description}"
+
+Aether_Bullet: {
+	// DisplayName: Aether Bullet
+	// Tooltip: ""
+}
