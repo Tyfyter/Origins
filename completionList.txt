@@ -1065,7 +1065,7 @@ TILES:
 (^) Batholith°
 (^) Bleeding Obsidian*
 (^) Bomb Trap
-(@4) Brittle Quartz*
+(@4) Brittle Quartz* !!!
 (X) Brown Ice
 (^) Chambersite
 (X) Cubekon Altar°
@@ -1073,7 +1073,7 @@ TILES:
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (X) Defiled Regolith
-(@4) Defiled Sand*
+(@4) Defiled Sand* !!!
 (^) Defiled Sandstone*
 (^) Defiled Stone*
 (^) Dusklight°
@@ -1085,7 +1085,7 @@ TILES:
 (^) Felnum Ore*
 (^) Fiberglass Block*
 (^) Gray Ice Block*
-(@4) Hardened Defiled Sand*
+(@4) Hardened Defiled Sand* !!!
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (^) Limestone
@@ -1094,11 +1094,11 @@ TILES:
 (^) Mildew Block°
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(@4) Quartz Block*
+(@4) Quartz Block* !!!
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
-(@4, ^3) Sanguinite Ore*
+(@4, ^3) Sanguinite Ore* !!!
 (X) Scrap Heap
 (^) Silica*
 (^) Silicon Ore*
@@ -1111,11 +1111,11 @@ TILES:
 (X) Witherwood
 
 (^) Amebic Gel Wall
-(X) Barnacle Wall
+(X) Barnacle Wall !!!
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(X) Calcified Spug Flesh Wall
+(X) Calcified Spug Flesh Wall !!!
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -1126,11 +1126,11 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Edenwood Wall
-(^3) Encrusted Brick Wall !!!
+(^) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Harmony Brick Wall
-(^3) Lost Brick Wall !!!
+(^) Lost Brick Wall
 (^) Marrowick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
@@ -1138,7 +1138,7 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(X) Amoeba Buggy Cage*
+(X) Amoeba Buggy Cage* !!!
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1147,16 +1147,16 @@ TILES:
 (X) Bug Cage°
 (X) Cancer Block° !!!
 (X) Cancer Furniture° !!!
-(X) Chambersite Bunny Cage°
-(X) Chambersite Gem Lock°
+(X) Chambersite Bunny Cage° !!!
+(X) Chambersite Gem Lock° !!!
 (^) Chambersite Gemspark°
-(X) Chambersite Gemstone°
-(X) Chambersite Gemstone (Corruption)°
-(X) Chambersite Gemstone (Crimson)°
-(X) Chambersite Gemstone (Defiled)°
-(X) Chambersite Gemstone (Riven)°
-(X) Chambersite Squirrel Cage°
-(X) Cicada 3301 Cage°
+(^) Chambersite Gemstone°
+(^) Chambersite Gemstone (Corruption)°
+(^) Chambersite Gemstone (Crimson)°
+(^) Chambersite Gemstone (Defiled)°
+(^) Chambersite Gemstone (Riven)°
+(X) Chambersite Squirrel Cage° !!!
+(X) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1210,7 +1210,7 @@ TILES:
 (^) Acetabularia*
 (X) Ashen Scrap Foliage
 (X) Ashen Soot Foliage
-(X) Barnacle Infested Coral
+(X) Barnacle Infested Coral !!!
 (^) Brineglow Vine*
 (^) Defiled Foliage
 (々) Defiled Heart
@@ -1219,19 +1219,19 @@ TILES:
 (X) Eden Tree°
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(X) Fuzzvine
+(X) Fuzzvine !!!
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble
-(X) Marrowick Coral
-(X) Marrowick Flange
+(X) Marrowick Coral !!!
+(X) Marrowick Flange !!!
 (X) Moonshine°
 (^) Ocotillo
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
-(X) Shelf Coral
+(X) Shelf Coral !!!
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
@@ -1239,10 +1239,10 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(@4, ^3) Wrycoral*
+(@4, ^3) Wrycoral* !!!
 
 (^) A Perfect World
-(X) Deceptive Beauty
+(X) Deceptive Beauty !!!
 (X) Four Corners
 (X) Light And Dark
 (^) The Jungle's Window
@@ -1351,8 +1351,8 @@ CRITTERS AND FISH:
 |---
 (^) Amoeba Buggy*
 (^) Bug
-(X) Chambersite Bunny
-(X) Chambersite Squirrel
+(X) Chambersite Bunny !!!
+(X) Chambersite Squirrel !!!
 (^) Cicada 3301*
 
 (^) Bilemouth*
@@ -1429,7 +1429,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(X) Nerve Flan
+(X) Nerve Flan !!!
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
@@ -1540,19 +1540,19 @@ AMMO:
 (^) Alkahest Bullet*
 (^) Alkahest Canister*
 (^) Alkahest Dart
-(X) Alkahest Harpoon
+(X) Alkahest Harpoon !!!
 (^) Alkaline Canister*
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
 (^) Bile Canister*
 (^) Bile Dart*
-(X) Bile Harpoon
+(X) Bile Harpoon !!!
 (^) Coolant Canister*
 (^) Cursed Canister*
 (^) Cursed Harpoon*
 (^) Ichor Canister*
-(X) Ichor Harpoon
+(X) Ichor Harpoon !!!
 (^) Metal Slug*
 (^) Resizable Mine V*
 
@@ -1570,10 +1570,10 @@ AMMO:
 
 CROSS-MOD CONTENT:
 |---
-(^, ᗢ) Fargo's caught npcs
+(ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
-(^, ᗢ) Fargo's sell boss/rare npc summons
-(^, ᗢ) Fargo's sell evil woods
+(ᗢ) Fargo's sell boss/rare npc summons
+(ᗢ) Fargo's sell evil woods
 
 (X) Contagion Assimilation
 
