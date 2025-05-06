@@ -22,6 +22,12 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GrenadeI);
 		}
+		public override void AI() {
+			if (Projectile.ai[0] > 5f) {
+				Projectile.velocity.Y -= 0.2f;
+				this.DoGravity(0.2f);
+			}
+		}
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
 			SpriteEffects spriteEffects = SpriteEffects.None;
@@ -75,7 +81,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				dust.velocity *= 0.05f;
 				dust.noGravity = true;
 			}
-			Projectile.velocity.Y += 0.2f;
+			this.DoGravity(0.2f);
 			Projectile.velocity *= 0.97f;
 			if (Projectile.velocity.X > -0.1 && Projectile.velocity.X < 0.1)
 				Projectile.velocity.X = 0f;

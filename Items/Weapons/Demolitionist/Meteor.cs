@@ -12,6 +12,7 @@ using Terraria.GameContent;
 using PegasusLib;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using static Origins.Misc.Physics;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
@@ -112,7 +113,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
-				Projectile.velocity.Y += 0.12f;
+				this.DoGravity(0.12f);
 				Projectile.rotation += Projectile.velocity.X * 0.075f;
 			} else if (++Projectile.ai[1] > 180) {
 				/*Projectile.NewProjectile(

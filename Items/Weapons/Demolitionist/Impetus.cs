@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Impetus : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -113,7 +114,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center = handPosition + offset.RotatedBy(player.itemRotation);
 			} else {
 				Projectile.ai[0] = 2;
-				Projectile.velocity.Y += 0.08f;
+				this.DoGravity(0.08f);
 				Projectile.rotation += Projectile.velocity.X * 0.03f;
 			}
 		}
@@ -175,7 +176,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {
 			if (Main.rand.NextBool(5)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, Riven_Hive.DefaultTileDust);
-			Projectile.velocity.Y += 0.12f;
+			this.DoGravity(0.12f);
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

@@ -1736,8 +1736,9 @@ Projectiles: {
 	DA_Laser.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Laser Spin"
 	Defiled_Prefix_Orb.DisplayName: "{§Defiled} Orb"
 	Tyrfing_P.DisplayName: Tyrfing
-	Aether_Bullet_Duplicate_P.DisplayName: "${Aether_Bullet_P.DisplayName}"
+	Aether_Bullet_Duplicate_P.DisplayName: ${Aether_Bullet_P.DisplayName}
 	Aether_Bullet_P.DisplayName: Aether Bullet
+	Aether_Canister_P.DisplayName: Aether Canister P
 }
 
 Prefixes: {

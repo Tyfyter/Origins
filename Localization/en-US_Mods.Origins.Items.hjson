@@ -5955,3 +5955,8 @@ Aether_Bullet: {
 	DisplayName: Aether Bullet
 	Tooltip: ""
 }
+
+Aether_Canister: {
+	DisplayName: Aether Canister
+	Tooltip: ""
+}

@@ -4,8 +4,10 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Misc;
 using Origins.NPCs;
 using Origins.Projectiles;
+using Origins.Reflection;
 using Origins.Tiles.Brine;
 using PegasusLib;
 using System;
@@ -15,6 +17,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Liquid;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -88,6 +91,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public ICanisterAmmo Ammo { get; internal set; } = ammo;
 	}
 	public class CanisterGlobalProjectile : GlobalProjectile {
+		public float gravityMultiplier = 1f;
 		public override bool InstancePerEntity => true;
 		ICanisterProjectile canister;
 		int canisterID;
@@ -143,6 +147,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 	}
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
+		public float gravityMultiplier = 1f;
 		public override bool InstancePerEntity => true;
 		int canisterID;
 		public CanisterData CanisterData { get; private set; }
@@ -215,6 +220,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	}
 	public interface ICanisterChildProjectile {
 		bool IsVisual => false;
+	}
+	public static class CanisterExtensions {
+		public static void DoGravity<T>(this T self, float value) where T : ModProjectile, ICanisterProjectile {
+			self.Projectile.velocity.Y += value * self.Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().gravityMultiplier;
+		}
 	}
 	#endregion global stuff
 	public class Coolant_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
@@ -292,7 +302,15 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
 			}
 			for (int i = 0; i < 5; i++) {
-				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, (projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<Napalm_P>(), (int)(projectile.damage * 0.65f), 0, projectile.owner);
+				Projectile.NewProjectile(
+					projectile.GetSource_FromThis(),
+					projectile.Center,
+					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)),
+					ModContent.ProjectileType<Napalm_P>(),
+					(int)(projectile.damage * 0.65f),
+					0,
+					projectile.owner
+				);
 			}
 		}
 	}
@@ -719,6 +737,105 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 					projectile.owner
 				);
 			}
+		}
+	}
+	public class Aether_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		public override string Texture => typeof(Bee_Canister).GetDefaultTMLName();
+		public CanisterData GetCanisterData => new(new(182, 194, 211), new(100, 222, 242));
+		public bool? Hardmode => false;
+		static readonly FrameCachedValue<Color> color = new(() => new(LiquidRenderer.GetShimmerBaseColor(0, 0)));
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(26);
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.ArmorPenetration += 3;
+		}
+		/*public override void AddRecipes() {
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient<Felnum_Bar>(3)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}*/
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile, DustID.ShimmerTorch);
+			}
+			if (Main.myPlayer != projectile.owner) return;
+			for (int i = 0; i < 5; i++) {
+				Projectile.NewProjectile(
+					projectile.GetSource_Death(),
+					projectile.Center,
+					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)),
+					ModContent.ProjectileType<Aether_Canister_P>(),
+					(int)(projectile.damage * 0.65f),
+				0);
+			}
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(BuffID.Shimmer, 91);
+		}
+		public void AI(Projectile projectile, bool child) {
+			projectile.velocity *= 0.99f;
+			if (child) {
+				CanisterChildGlobalProjectile childGlobal = projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>();
+				childGlobal.gravityMultiplier = 0;
+				return;
+			}
+			CanisterGlobalProjectile global = projectile.GetGlobalProjectile<CanisterGlobalProjectile>();
+			global.CanisterData.InnerColor = color.Value;
+			global.gravityMultiplier = 0;
+			if (Main.myPlayer == projectile.owner) {
+				if (Main.rand.NextBool(2)) projectile.timeLeft--;
+				if (projectile.timeLeft % (10 * projectile.MaxUpdates) == 0) {
+					for (int i = 0; i < 5; i++) {
+						Projectile.NewProjectile(
+							projectile.GetSource_FromAI(),
+							projectile.Center,
+							Vector2.Zero,
+							ModContent.ProjectileType<Aether_Canister_P>(),
+							(int)(projectile.damage * 0.65f),
+						0);
+					}
+				}
+			}
+		}
+	}
+	public class Aether_Canister_P : ModProjectile, ICanisterChildProjectile {
+		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.friendly = true;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = 25;
+			Projectile.timeLeft = Main.rand.Next(300, 451);
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+		}
+		public override void AI() {
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			Lighting.AddLight(Projectile.Center, v, v * 0.5f, 0);
+			Projectile.velocity.Y -= 0.1f;
+			Projectile.velocity *= 0.997f;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = height = 2;
+			fallThrough = true;
+			return true;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			//target.AddBuff(BuffID.Shimmer, 91);
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			int v = 200 + (int)(25 * (Math.Sin(Projectile.timeLeft / 5f) + Math.Sin(Projectile.timeLeft / 60f)));
+			return new Color(v + 20, v + 25, v - 90, 0);
 		}
 	}
 }

@@ -91,7 +91,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
 		}
 		public override void AI() {
-			Projectile.velocity.Y += 0.2f;
+			this.DoGravity(0.2f);
 			Projectile.rotation += Projectile.velocity.X * 0.1f;
 			Projectile auraProj = Projectile.GetRelatedProjectile(1);
 			if (auraProj is null) {

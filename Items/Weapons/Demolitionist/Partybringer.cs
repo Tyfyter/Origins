@@ -102,6 +102,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Partybringer_P).GetDefaultTMLName() + "_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public override void AI() {
+			this.DoGravity(0.02f * (MathF.Pow((++Projectile.ai[0]) / 30, 0.5f) + 1));
+			Projectile.rotation += Projectile.direction * 0.15f;
+		}
 	}
 	public class Partybringer_P1 : Partybringer_P_Base {
 		public override void OnKill(int timeLeft) {

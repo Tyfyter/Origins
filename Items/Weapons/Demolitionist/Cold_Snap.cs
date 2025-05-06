@@ -63,6 +63,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Dust.NewDust(Projectile.Center, 0, 0, DustID.IceTorch, 0, 0, 155, default, 0.75f);
+			if (Projectile.ai[0] > 5f) {
+				Projectile.velocity.Y -= 0.2f;
+				this.DoGravity(0.2f);
+			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Frostburn, 300);

@@ -99,7 +99,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.velocity = (Vector2)velocity;
 				}
 			} else {
-				Projectile.velocity.Y += Gravity;
+				this.DoGravity(Gravity);
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)

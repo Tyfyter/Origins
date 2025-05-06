@@ -102,5 +102,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
 		}
+		public override void AI() {
+			Projectile.velocity.Y -= 0.2f;
+			this.DoGravity(0.2f);
+		}
 	}
 }
