@@ -12,6 +12,8 @@ using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
 using Terraria.GameInput;
 using ThoriumMod.Items.ZRemoved;
 using Origins.Tiles.Brine;
+using PegasusLib;
+using Origins.Tiles.Riven;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -536,45 +538,59 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Carver_Testing_Mode : WorldgenTestingMode {
+	public class Start_Riven_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Riven Hive";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
+		}
+	}
+	public class Carver_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			Vector2 min = new(float.PositiveInfinity);
-			Vector2 max = new(float.NegativeInfinity);
-			
-			Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Baryte>(), TileID.Mud, ModContent.TileType<Peat_Moss>()))
-			+ Carver.PointyLemon(new(Player.tileTargetX, Player.tileTargetY), 4, diffFromPlayer.ToRotation() + MathHelper.PiOver2, 2, 1, ref min, ref max);
 			Carver.DoCarve(
-				filter,
+				GetFilter(out Vector2 posMin, out Vector2 posMax),
 				pos => {
 					Dust.NewDustPerfect(pos * 16 + Vector2.One * 8, 29, Vector2.Zero).noGravity = true;
 					return 1;
 				},
-				min,
-				max,
-				9
+				posMin,
+				posMax,
+				0
 			);
+			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
+			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
+			Dust.NewDustPerfect(posMin, 6, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(posMax, 6, Vector2.Zero).noGravity = true;
 			return "";
 		}
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			parameters.Enqueue(diffFromPlayer.ToRotation() + MathHelper.PiOver2);
 			Apply(parameters);
 		}
+		static Carver.Filter GetFilter(out Vector2 posMin, out Vector2 posMax) {
+			posMin = new(float.PositiveInfinity);
+			posMax = new(float.NegativeInfinity);
+			PlayerInput.SetZoom_MouseInWorld();
+			Vector2 direction = (Main.MouseWorld - Main.LocalPlayer.MountedCenter).SafeNormalize(Vector2.UnitX);
+			float dist = CollisionExt.Raymarch(Main.LocalPlayer.MountedCenter, direction, 16 * 50);
+			return Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Riven_Flesh>()))
+			+ Carver.PointyLemon((Main.LocalPlayer.MountedCenter + direction * dist) / 16, 10, direction.ToRotation() + MathHelper.PiOver2, 6, 1, ref posMin, ref posMax);
+		}
 		public override void Apply(LinkedQueue<object> parameters) {
-			Vector2 posMin = new(float.PositiveInfinity);
-			Vector2 posMax = new(float.NegativeInfinity);
-			ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
-			Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Baryte>(), TileID.Mud, ModContent.TileType<Peat_Moss>()))
-			+ Carver.PointyLemon(new(Player.tileTargetX, Player.tileTargetY), 4, parameters.DequeueAsOrDefaultTo(0f), 2, 1, ref posMin, ref posMax);
+			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();
 			Carver.DoCarve(
-				filter,
+				GetFilter(out Vector2 posMin, out Vector2 posMax),
 				pos => {
 					Framing.GetTileSafely(pos.ToPoint()).TileType = oreID;
 					return 1;
 				},
 				posMin,
 				posMax,
-				9
+				0
 			);
 			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
 			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));

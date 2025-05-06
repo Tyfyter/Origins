@@ -22,7 +22,7 @@ namespace Origins.World {
 				if (pos == center) return;
 				offset = new(offset.X * cos + offset.Y * sin, offset.X * sin - offset.Y * cos);
 				float dist = offset.Y * offset.Y + MathF.Pow(Math.Abs(offset.X * aspectRatio), Math.Abs(offset.Y * roundness));
-				output = dist < 1;
+				output = dist <= 1;
 			}
 			return DoFilter;
 		}

@@ -28,11 +28,11 @@ using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
-using ThoriumMod.PlayerLayers;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
 
@@ -313,7 +313,14 @@ namespace Origins.World.BiomeData {
 						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
 						break;
 						case FeatureType.CLEAVE:
-						Vector2 cleaveDir = Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(3, 4));
+						DoScar(
+							new(x, y),
+							genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0),
+							gooBlockType,
+							genRand.NextFloat(4, 8),
+							genRand.NextFloat(3, 5)
+						);
+						/*Vector2 cleaveDir = Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(3, 4));
 						int step = rightSide ? 1 : -1;
 						int steps = 14;
 						while (Main.tile[x - step, y].HasSolidTile() && --steps > 0) x -= step;
@@ -332,7 +339,7 @@ namespace Origins.World.BiomeData {
 							-cleaveDir,
 							genRand.NextFloat(0.75f, 1f),
 							twist: 0
-						);
+						);*/
 						break;
 					}
 					tile.HasTile = true;
@@ -390,8 +397,7 @@ namespace Origins.World.BiomeData {
 						if (tries-- > 0) break;
 					}
 				}
-				WorldGen.RangeFrame(X0, Y0, X1, Y1);
-				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1, Y1);
 			}
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
@@ -544,7 +550,38 @@ namespace Origins.World.BiomeData {
 				while (!placedBlister) {
 					placedBlister |= PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
 				}
+				DoScar(
+					new(i2, j2),
+					genRand.NextFloat(0, MathHelper.TwoPi),
+					(ushort)ModContent.TileType<Amoeba_Fluid>(),
+					genRand.NextFloat(6, 10),
+					genRand.NextFloat(3, 6)
+				);
 				return new Point(i2, j2);
+			}
+			public static void DoScar(Vector2 start, float angle, ushort scarBlockID, float scale, float aspectRatio, float roundness = 1) {
+				Vector2 posMin = new(float.PositiveInfinity);
+				Vector2 posMax = new(float.NegativeInfinity);
+				PlayerInput.SetZoom_MouseInWorld();
+				start *= 16;
+				Vector2 direction = angle.ToRotationVector2();
+				float dist = CollisionExt.Raymarch(start, direction, 16 * 50);
+				Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Riven_Flesh>()))
+				+ Carver.PointyLemon((start + direction * dist) / 16, scale, direction.ToRotation() + MathHelper.PiOver2, aspectRatio, roundness, ref posMin, ref posMax);
+
+				Carver.DoCarve(
+					filter,
+					pos => {
+						Framing.GetTileSafely(pos.ToPoint()).TileType = scarBlockID;
+						return 1;
+					},
+					posMin,
+					posMax,
+					8
+				);
+				posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
+				posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
+				WorldGen.RangeFrame((int)posMin.X, (int)posMin.Y, (int)posMax.X, (int)posMax.Y);
 			}
 			public static void SpreadRivenGrass(int i, int j) {
 				const int maxDepth = 150;
