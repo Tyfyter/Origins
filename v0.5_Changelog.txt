@@ -93,15 +93,15 @@ Changes:
 
 
 Balance:
-- Amber of Embers' mana cost increased from 7 to 8
-- Low Signal base damage increased from 40 to 48, and critical strike chance from 4% to 9%
-- Plasma Cutter base damage increased from 27 to 60
-- Added 15-turret limit for the Partybringer, and increased Partybringer base damage from 40 to 64
-- Buff Purification Potion effect from 6 minutes to 8
 - Spirit Shard has increased minions by 1 and 10% increased summoning damage as a boost now
 - Advanced Imaging and Sonar Visor now increase generic crit chance by 10% and explosive blast radius by 20%
-- Nerfed Donor Wristband debuff cooldown reduction from 48% to 30%
+- Nerfed Donor Wristband debuff cooldown reduction (48% -> 30%)
 - Lousy Liver and Cirrhosis' Abhorrence affected enemy counts both reduced by 1
+- Changed Amber of Embers' mana cost (7 -> 8)
+- Changed Low Signal stats (base damage: 40 -> 48, crit chance: 4% -> 9%)
+- Changed Plasma Cutter base damage (27 -> 60)
+- Added 15-turret limit for the Partybringer, and increased Partybringer base damage (40 -> 64)
+- Changed Purification Potion effect duration (6min -> 8min)
 - Changed True Waning Crescent stats (projectile speed: 11.75 -> 15, sell value: 50 silver -> 10 gold)
 - Changed Waning Crescent stats (sell value: 50 silver -> 4 gold)
 - Changed Bolt Gun stats (damage: 26 -> 38, use time 17 -> 38)

@@ -1,4 +1,4 @@
-author = Moonlight Glint, Jadams, chrersis, Reivax and Josh Wilson
+author = Origins Dev Team
 version = 0.5
 displayName = Terraria Origins
 
