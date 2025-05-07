@@ -49,7 +49,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 |---
-(#, ^2, 々) Chambersite Sentinel
+(#, ^2) Chambersite Sentinel !!!
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
@@ -358,7 +358,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(X) Chambersite Armor°
+(X) Chambersite Armor° !!!
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -449,7 +449,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(ᗢ) Lazy Cloak°
+(@4, #2) Lazy Cloak° !!!
 (^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
@@ -473,6 +473,7 @@ ACCESSORIES:
 (^) Noxious Mithrafin
 (^) Olid Organ*
 (^) Ornamental Keepsake
+(X) Otherworldly Cloak !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -675,6 +676,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
+(X) Cool Sword !!!
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -683,12 +685,13 @@ MELEE WEAPONS:
 (^) Fiberglass Sword*
 (^) Hemorang*
 (^) Krakram*
+(X) Laminus !!!
 (^) Marrowick Sword*
 (^) Nineball*
 (^) Orbital Saw*
 (^) Ripper Lance*
 (^) Riverang*
-(X) Silicon Sword
+(#, ^2) Silicon Sword !!!
 (^) Snapthrow*
 (^) Soldering Iron
 (^) Soul Snatcher*
@@ -697,6 +700,7 @@ MELEE WEAPONS:
 (^) Switchblade*
 (^) Thunderbolt
 (^) Triple Threat*
+(X) Twinsies !!!
 (^) Vorpal Sword (Cursed)*
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent*
@@ -741,6 +745,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun
 (^) Chipper Knife*
+(X) Constellation !!!
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -798,6 +803,7 @@ RANGED WEAPONS:
 (X) Tripod Jawbow
 
 (^) Astoxo
+(X) Chambersite Minigun !!!
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
@@ -845,7 +851,7 @@ MAGIC WEAPONS:
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
-(X) Shinedown
+(X) Shinedown !!!
 (X) Siphon Staff
 (^) Splashid
 (^) Startillery
@@ -997,7 +1003,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(X) Chambersite Mine Launcher
+(X) Chambersite Mine Launcher !!!
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair
@@ -1037,7 +1043,7 @@ EXPLOSIVE WEAPONS:
 (@4, ^3) Caustica
 (^) Flakjack
 (X) Helix
-(X) Shimmer Dynamite !!!
+(#, ^2) Shimmer Dynamite !!!
 (@4, #) Starburst
 ---
 
@@ -1170,6 +1176,7 @@ TILES:
 (^) Encrusted Brick
 (^) Endowood Furniture*
 (^) Laser Tag Console*
+(X) Limestone Furniture !!!
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
@@ -1192,7 +1199,7 @@ TILES:
 (^) Riven Water Fountain
 (X) Rusty Locker
 (X) Sanguinite Brick
-(X) Shadow Torch°
+(X) Shadow Torch° !!!
 (^) Traffic Cone*
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
@@ -1208,6 +1215,7 @@ TILES:
 (^) Unsuspicious Bush
 
 (^) Acetabularia*
+(#, ^2) Aether Core !!!
 (X) Ashen Scrap Foliage
 (X) Ashen Soot Foliage
 (X) Barnacle Infested Coral !!!
@@ -1343,7 +1351,7 @@ MATERIALS:
 (^) Qube°
 (X) Weapon Blueprint°
 
-(X) Large Chambersite
+(X) Large Chambersite !!!
 ---
 
 
@@ -1440,6 +1448,7 @@ CONSUMABLES:
 (^) Sour Apple
 (^) Vanilla Shake*
 
+(#, ^2) Aether Orb !!!
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
 (^) Lost Picture Frame
@@ -1517,9 +1526,8 @@ MOUNTS & PETS:
 
 AMMO:
 |---
-(X) Aether Arrow !!!
-(@, ^3) Aether Bullet !!!
-(@, ^3) Aether Canister !!!
+(#2, ^2) Aether Bullet !!! (proper proj. color and recipe)
+(#2, ^2) Aether Canister !!! (proper proj. color and recipe)
 (^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*
@@ -1540,14 +1548,14 @@ AMMO:
 (^) Alkahest Bullet*
 (^) Alkahest Canister*
 (^) Alkahest Dart
-(X) Alkahest Harpoon !!!
+(#, ^2) Alkahest Harpoon !!!
 (^) Alkaline Canister*
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
 (^) Bile Canister*
 (^) Bile Dart*
-(X) Bile Harpoon !!!
+(#, ^2) Bile Harpoon !!!
 (^) Coolant Canister*
 (^) Cursed Canister*
 (^) Cursed Harpoon*

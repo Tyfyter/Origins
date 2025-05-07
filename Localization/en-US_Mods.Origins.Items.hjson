@@ -4309,7 +4309,11 @@ Defiled_Banner_NPC_Banner_Item: {
 
 Link_Grenade: {
 	DisplayName: Link Grenade
-	Tooltip: Only explodes when another explosive detonates nearby or when its fuse runs out
+	Tooltip:
+		'''
+		Only explodes when another explosive detonates nearby or when its fuse runs out
+		Damage adds up when exploding nearby other Link Grenades
+		'''
 }
 
 Sticky_Link_Grenade: {

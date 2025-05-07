@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -9,7 +6,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Aether_Bullet : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.SilverBullet;
 		public string[] Categories => [
 			"Bullet"
 		];

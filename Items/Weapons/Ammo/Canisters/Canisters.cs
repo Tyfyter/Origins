@@ -740,7 +740,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 	}
 	public class Aether_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
-		public override string Texture => typeof(Bee_Canister).GetDefaultTMLName();
 		public CanisterData GetCanisterData => new(new(182, 194, 211), new(100, 222, 242));
 		public bool? Hardmode => false;
 		static readonly FrameCachedValue<Color> color = new(() => new(LiquidRenderer.GetShimmerBaseColor(0, 0)));
@@ -805,7 +804,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 	}
 	public class Aether_Canister_P : ModProjectile, ICanisterChildProjectile {
-		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
+		public override string Texture => "Origins/Projectiles/Ammo/Aether_Star";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.friendly = true;
