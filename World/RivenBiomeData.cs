@@ -117,7 +117,7 @@ namespace Origins.World.BiomeData {
 			public override string Name => $"{nameof(Riven_Hive)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.BiomeHigh;
-				static float DesertCave(NPCSpawnInfo spawnInfo) => spawnInfo.DesertCave ? 1 : 0;
+				static float DesertCave(NPCSpawnInfo spawnInfo) => spawnInfo.DesertCave && Main.hardMode ? 1 : 0;
 				AddSpawn(NPCID.DesertDjinn, DesertCave);
 				AddSpawn(NPCID.DesertLamiaDark, DesertCave);
 				AddSpawn(NPCID.DesertBeast, DesertCave);
