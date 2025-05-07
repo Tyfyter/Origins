@@ -1738,7 +1738,10 @@ Projectiles: {
 	Tyrfing_P.DisplayName: Tyrfing
 	Aether_Bullet_Duplicate_P.DisplayName: ${Aether_Bullet_P.DisplayName}
 	Aether_Bullet_P.DisplayName: Aether Bullet
-	Aether_Canister_P.DisplayName: Aether Canister P
+	Aether_Canister_P.DisplayName: Aether Drop
+	Shimmer_Construct_Cloud_Ball.DisplayName: Shimmer Cloud Ball
+	Shimmer_Construct_Cloud_P.DisplayName: Shimmer Cloud
+	Shimmer_Construct_Cloud_Rain.DisplayName: Shimmer Rain
 }
 
 Prefixes: {

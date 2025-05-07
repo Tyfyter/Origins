@@ -2087,6 +2087,13 @@ namespace Origins {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
 		}
+		public static void Roll<T>(this T[] array, params T[] pushIn) {
+			if (pushIn.Length == 0) return;
+			for (int i = array.Length - 1; i >= 0; i--) {
+				int index = i - pushIn.Length;
+				array[i] = array.IndexInRange(index) ? array[index] : pushIn[i];
+			}
+		}
 		public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
 			return BoxOf(a, b, new Vector2(buffer));
 		}
