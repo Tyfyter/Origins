@@ -1037,7 +1037,7 @@ EXPLOSIVE WEAPONS:
 (@4, ^3) Caustica
 (^) Flakjack
 (X) Helix
-(X) Shimmer Dynamite
+(X) Shimmer Dynamite !!!
 (@4, #) Starburst
 ---
 
@@ -1126,11 +1126,11 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Edenwood Wall
-(^) Encrusted Brick Wall
+(@, ^3) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Harmony Brick Wall
-(^) Lost Brick Wall
+(@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
@@ -1429,7 +1429,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(@, ☻) Nerve Flan !!!
+(@, ^3) Nerve Flan !!!
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
@@ -1518,8 +1518,8 @@ MOUNTS & PETS:
 AMMO:
 |---
 (X) Aether Arrow !!!
-(@, ☻) Aether Bullet !!!
-(@, ☻) Aether Canister !!!
+(@, ^3) Aether Bullet !!!
+(@, ^3) Aether Canister !!!
 (^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*

@@ -5894,11 +5894,6 @@ Tangela_Bud: {
 		''' */
 }
 
-Skimswim_Potion: {
-	// DisplayName: Skimswim Potion
-	// Tooltip: ""
-}
-
 Venus_Coral_Debug_Item: {
 	// DisplayName: Venus Coral Debug Item
 	// Tooltip: ""
@@ -5926,7 +5921,7 @@ Residual_Crate: {
 
 Brine_Haze: {
 	// DisplayName: Brine Haze
-	// Tooltip: ""
+	// Tooltip: Releases clouds of brine that linger
 }
 
 Enchanted_Fiberglass_Wall_Item: {
@@ -5953,10 +5948,10 @@ Lost_Brick_Wall_Item: {
 
 Aether_Bullet: {
 	// DisplayName: Aether Bullet
-	// Tooltip: ""
+	// Tooltip: Fires behind you as well
 }
 
 Aether_Canister: {
 	// DisplayName: Aether Canister
-	// Tooltip: ""
+	// Tooltip: Floats in air and releases aether stars
 }
