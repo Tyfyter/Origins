@@ -793,15 +793,13 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			if (Main.myPlayer == projectile.owner) {
 				if (Main.rand.NextBool(2)) projectile.timeLeft--;
 				if (projectile.timeLeft % (10 * projectile.MaxUpdates) == 0) {
-					for (int i = 0; i < 5; i++) {
-						Projectile.NewProjectile(
-							projectile.GetSource_FromAI(),
-							projectile.Center,
-							Vector2.Zero,
-							ModContent.ProjectileType<Aether_Canister_P>(),
-							(int)(projectile.damage * 0.65f),
-						0);
-					}
+					Projectile.NewProjectile(
+						projectile.GetSource_FromAI(),
+						projectile.Center,
+						Main.rand.NextVector2Circular(1, 1),
+						ModContent.ProjectileType<Aether_Canister_P>(),
+						(int)(projectile.damage * 0.65f),
+					0);
 				}
 			}
 		}
