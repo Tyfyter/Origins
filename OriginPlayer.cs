@@ -24,6 +24,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static Origins.OriginExtensions;
@@ -511,9 +512,9 @@ namespace Origins {
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
 				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer) {
-					Player.KillMe(new KeyedPlayerDeathReason() {
-						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
-					}, 1, 0);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Torn").SelectFrom(Player.name).ToNetworkText()),
+						0, 0
+					);
 				}
 			}
 			if (cryostenBody) {

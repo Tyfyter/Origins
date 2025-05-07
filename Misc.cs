@@ -38,6 +38,7 @@ using Terraria.GameInput;
 using Terraria.GameContent.Creative;
 using Terraria.Enums;
 using Origins.Tiles.Other;
+using Newtonsoft.Json.Linq;
 
 namespace Origins {
 	#region classes
@@ -363,9 +364,6 @@ namespace Origins {
 		public override int GetHashCode() {
 			return a.GetHashCode() + b.GetHashCode();
 		}
-	}
-	public class KeyedPlayerDeathReason : PlayerDeathReason {
-		public string Key { get => SourceCustomReason; set => SourceCustomReason = value; }
 	}
 	public struct PlayerShaderSet {
 		public int cHead;
@@ -4506,6 +4504,14 @@ namespace Origins {
 		}
 	}
 	public static class ContentExtensions {
+		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
+		public static LocalizedText SelectFrom(this LanguageTree languageTree, params object[] formatArgs) => Main.rand.Next(languageTree.GetChildren()).WithFormatArgs(formatArgs);
+		public static string SelectFromFormatArg(this LanguageTree languageTree, object format, UnifiedRandom rand = null) => (rand ?? Main.rand)
+			.Next(languageTree.Values
+				.Select(tree => tree.value)
+				.Where(text => text.CanFormatWith(format))
+			.ToArray())
+			.FormatWith(format);
 		public static void AddBanner(this ModNPC self) {
 			self.Mod.AddContent(new Banner(self));
 			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());

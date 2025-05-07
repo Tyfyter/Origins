@@ -406,11 +406,15 @@ DeathMessage: {
 	// Self_Damage_3: "{0} got carried away."
 	// Self_Damage_4: "{0} really let themselves go."
 	// Self_Damage_5: "{0} committed insurance fraud."
-	// Torn_0: "{0} watched their body dissolve."
-	// Torn_1: "{0} likes to play in amebic gel."
-	// Torn_2: "{0} became primordial food for the Primordial Amoeba."
-	// Torn_3: "{0} got digested."
-	// Torn_4: "{0} got dissolved."
+
+	Torn: {
+		// 0: "{0} watched their body dissolve."
+		// 1: "{0} likes to play in amebic gel."
+		// 2: "{0} became primordial food for the Primordial Amoeba."
+		// 3: "{0} got digested."
+		// 4: "{0} got dissolved."
+	}
+
 	// Tripod_0: "{0} forgot the tripod nip."
 	// Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
 }

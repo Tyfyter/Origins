@@ -244,9 +244,6 @@ namespace Origins {
 			On_Player.RollLuck += Player_RollLuck;
 			On_TileDrawing.Draw += TileDrawing_Draw;
 			On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
-			On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
-			On_PlayerDeathReason.WriteSelfTo += On_PlayerDeathReason_WriteSelfTo;
-			On_PlayerDeathReason.FromReader += On_PlayerDeathReason_FromReader;
 			On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			On_WorldGen.PlacePot += WorldGen_PlacePot;
 			On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
@@ -1416,39 +1413,6 @@ namespace Origins {
 		}
 
 		#region combat
-		private void On_PlayerDeathReason_WriteSelfTo(On_PlayerDeathReason.orig_WriteSelfTo orig, PlayerDeathReason self, System.IO.BinaryWriter writer) {
-			orig(self, writer);
-			writer.Write(self is KeyedPlayerDeathReason);
-		}
-
-		private PlayerDeathReason On_PlayerDeathReason_FromReader(On_PlayerDeathReason.orig_FromReader orig, System.IO.BinaryReader reader) {
-			PlayerDeathReason value = orig(reader);
-			if (reader.ReadBoolean()) {
-				return new KeyedPlayerDeathReason() {
-					SourceCustomReason = value.SourceCustomReason,
-					SourceProjectileLocalIndex = value.SourceProjectileLocalIndex,
-					SourceNPCIndex = value.SourceNPCIndex,
-					SourcePlayerIndex = value.SourcePlayerIndex,
-					SourceItem = value.SourceItem,
-					SourceOtherIndex = value.SourceOtherIndex,
-					SourceProjectileType = value.SourceProjectileType
-				};
-			}
-			return value;
-		}
-		private NetworkText PlayerDeathReason_GetDeathText(On_PlayerDeathReason.orig_GetDeathText orig, PlayerDeathReason self, string deadPlayerName) {
-			if (self is KeyedPlayerDeathReason keyedReason) {
-				return NetworkText.FromKey(
-					keyedReason.Key,
-					deadPlayerName,
-					keyedReason.SourcePlayerIndex > -1 ? NetworkText.FromLiteral(Main.player[keyedReason.SourcePlayerIndex].name) : NetworkText.Empty,
-					keyedReason.SourceItem?.Name ?? "",
-					keyedReason.SourceNPCIndex > -1 ? Main.npc[keyedReason.SourceNPCIndex].GetGivenOrTypeNetName() : NetworkText.Empty,
-					keyedReason.SourceProjectileType > -1 ? Lang.GetProjectileName(keyedReason.SourceProjectileType).ToNetworkText() : NetworkText.Empty
-				);
-			}
-			return orig(self, deadPlayerName);
-		}
 		private void Projectile_ExplodeTiles(On_Projectile.orig_ExplodeTiles orig, Projectile self, Vector2 compareSpot, int radius, int minI, int maxI, int minJ, int maxJ, bool wallSplode) {
 			if (self.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) && global.noTileSplode) return;
 			orig(self, compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
