@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -142,6 +143,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 3600;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
+			Projectile.hide = true;
 			Projectile.tileCollide = false;
 			Projectile.ArmorPenetration += 25;
 		}
@@ -164,6 +166,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.ai[0] = -1;
 				}
 			}
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			overPlayers.Add(index);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			float range = projHitbox.Width * Projectile.scale * 0.5f;
@@ -196,6 +201,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
 			Projectile.tileCollide = false;
+			Projectile.hide = true;
 			Projectile.ArmorPenetration += 25;
 		}
 		public override void AI() {
@@ -221,6 +227,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.OnFire3, Main.rand.Next(300, 451));
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			overPlayers.Add(index);
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color(255, 180, 50, 0);
