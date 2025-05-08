@@ -7,7 +7,6 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Misc;
 using Origins.NPCs;
 using Origins.Projectiles;
-using Origins.Reflection;
 using Origins.Tiles.Brine;
 using PegasusLib;
 using System;
@@ -770,7 +769,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				Projectile.NewProjectile(
 					projectile.GetSource_Death(),
 					projectile.Center,
-					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)),
+					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(3, 6), (i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi),
 					ModContent.ProjectileType<Aether_Canister_P>(),
 					(int)(projectile.damage * 0.65f),
 				0);
@@ -812,15 +811,18 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Projectile.height = 6;
 			Projectile.aiStyle = -1;
 			Projectile.penetrate = 25;
+			Projectile.alpha = Main.rand.Next(180, 256);
 			Projectile.timeLeft = Main.rand.Next(300, 451);
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 15;
+			(Projectile.localAI[0], Projectile.localAI[1], Projectile.localAI[2]) = CanisterGlobalItem.CanisterDatas[CanisterGlobalItem.GetCanisterType(typeof(Aether_Canister))].InnerColor.ToVector3();
 		}
 		public override void AI() {
 			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
-			Lighting.AddLight(Projectile.Center, v, v * 0.5f, 0);
+			Lighting.AddLight(Projectile.Center, Projectile.localAI[0] * v, Projectile.localAI[1] * v, Projectile.localAI[2] * v);
 			Projectile.velocity.Y -= 0.1f;
 			Projectile.velocity *= 0.997f;
+			Projectile.ai[0]++;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = height = 2;
@@ -830,9 +832,10 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			//target.AddBuff(BuffID.Shimmer, 91);
 		}
+		public override bool OnTileCollide(Vector2 oldVelocity) => Projectile.ai[0] > 10;
 		public override Color? GetAlpha(Color lightColor) {
-			int v = 200 + (int)(25 * (Math.Sin(Projectile.timeLeft / 5f) + Math.Sin(Projectile.timeLeft / 60f)));
-			return new Color(v + 20, v + 25, v - 90, 0);
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			return new(Projectile.localAI[0] * v, Projectile.localAI[1] * v, Projectile.localAI[2] * v, Projectile.alpha * v / 255f);
 		}
 	}
 }

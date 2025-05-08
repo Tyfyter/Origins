@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}*/
 	}
 	public class Aether_Bullet_P : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.SilverBullet;
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CursedBullet);
 			Projectile.extraUpdates = 2;

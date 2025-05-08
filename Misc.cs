@@ -2972,6 +2972,11 @@ namespace Origins {
 			X = vector.X;
 			Y = vector.Y;
 		}
+		public static void Deconstruct(this Vector3 vector, out float X, out float Y, out float Z) {
+			X = vector.X;
+			Y = vector.Y;
+			Z = vector.Z;
+		}
 		public static void Deconstruct(this Point vector, out int X, out int Y) {
 			X = vector.X;
 			Y = vector.Y;
