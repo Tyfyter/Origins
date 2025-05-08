@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -671,6 +670,59 @@ namespace Origins.Tiles {
 			AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
 
 			glowTexture = Texture + "_Glow";
+		}
+	}
+	public abstract class CageBase : ModTile {
+		protected internal TileItem item;
+		public virtual bool LavaDeath => true;
+		public virtual Color MapColor => new(122, 217, 232);
+		public abstract int LidType { get; }
+		public virtual bool IsSmall => false; // for critters in jars
+		public abstract int[] FrameIndexArray { get; }
+		protected AutoLoadingAsset<Texture2D> glowTexture;
+		public virtual Color GlowmaskColor => Color.White;
+		public sealed override void Load() {
+			Mod.AddContent(item = new TileItem(this));
+			OnLoad();
+		}
+		public virtual void OnLoad() { }
+		public override void SetStaticDefaults() {
+			Main.tileFrameImportant[Type] = true;
+			Main.tileSolidTop[Type] = true;
+			Main.tileTable[Type] = true;
+			Main.tileLavaDeath[Type] = LavaDeath;
+			Main.critterCage = true;
+			TileID.Sets.CritterCageLidStyle[Type] = LidType;
+
+			AdjTiles = [IsSmall ? TileID.MonarchButterflyJar : TileID.BunnyCage];
+			DustType = DustID.Glass;
+
+			// Names
+			if (!Main.dedServ) AddMapEntry(MapColor, item.DisplayName);
+
+			// Placement
+			// In addition to copying from the TileObjectData.Something templates, modders can copy from specific tile types. CopyFrom won't copy subtile data, so style specific properties won't be copied, such as how Obsidian doors are immune to lava.
+			TileObjectData.newTile.CopyFrom(IsSmall ? TileObjectData.Style2xX : TileObjectData.Style6x3);
+			TileObjectData.newTile.LavaDeath = LavaDeath;
+			TileObjectData.newTile.DrawYOffset = IsSmall ? 1 : 2;
+			AnimationFrameHeight = TileObjectData.newTile.CoordinateFullHeight;
+			TileObjectData.addTile(Type);
+			glowTexture = Texture + "_Glow";
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!glowTexture.Exists) return;
+			OriginExtensions.DrawTileGlow(glowTexture, GlowmaskColor, i, j, spriteBatch);
+		}
+
+		public override void NumDust(int i, int j, bool fail, ref int num) {
+			num = fail ? 6 : 3;
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			int frameIndex;
+			if (IsSmall) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
+			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
+			frameYOffset = FrameIndexArray[frameIndex];
 		}
 	}
 	[Autoload(false)]

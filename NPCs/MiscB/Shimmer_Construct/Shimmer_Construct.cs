@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,6 +34,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.noTileCollide = true;
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			Array.Fill(previousStates, NPC.aiAction);
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				// this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
+			);
 		}
 		public override void AI() {
 			aiStates[NPC.aiAction].DoAIState(this);

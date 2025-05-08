@@ -5959,3 +5959,23 @@ Aether_Canister: {
 	DisplayName: Aether Canister
 	Tooltip: Floats in air and releases aether stars
 }
+
+Chambersite_Bunny_Cage_Item: {
+	DisplayName: Chambersite Bunny Cage
+	Tooltip: ""
+}
+
+Chambersite_Squirrel_Cage_Item: {
+	DisplayName: Chambersite Squirrel Cage
+	Tooltip: ""
+}
+
+Chambersite_Bunny_Item: {
+	DisplayName: Chambersite Bunny
+	Tooltip: ""
+}
+
+Chambersite_Squirrel_Item: {
+	DisplayName: Chambersite Squirrel
+	Tooltip: ""
+}
