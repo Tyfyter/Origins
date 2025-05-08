@@ -77,6 +77,30 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			SetAIState(boss, states);
 		}
+		public class AutomaticIdleState : AIState {
+			public delegate int StatePriority(Shimmer_Construct boss);
+			public static List<(AIState state, StatePriority condition)> aiStates = [];
+			public override void StartAIState(Shimmer_Construct boss) {
+				NPC npc = boss.NPC;
+				npc.ai[0] = 0;
+				npc.ai[1] = 0;
+				npc.ai[2] = 0;
+				npc.ai[3] = 0;
+				int bestPriority = int.MinValue;
+				for (int i = 0; i < aiStates.Count; i++) {
+					(AIState state, StatePriority condition) = aiStates[i];
+					int priority = condition(boss);
+					if (priority > bestPriority) {
+						npc.aiAction = state.Index;
+						bestPriority = priority;
+					}
+				}
+			}
+			public override void DoAIState(Shimmer_Construct boss) {
+				StartAIState(boss);
+			}
+			public override void TrackState(int[] previousStates) { }
+		}
 		public abstract class AIState : ILoadable {
 			public int Index { get; private set; }
 			public void Load(Mod mod) {

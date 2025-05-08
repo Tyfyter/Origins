@@ -11,15 +11,11 @@ using Terraria.Graphics;
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
 		public static List<AIState> aiStates = [];
+		public override void Load() {
+			AutomaticIdleState.aiStates.Add((this, boss => (boss.NPC.life * 2 < boss.NPC.lifeMax).Mul(2)));
+		}
 		public override void SetStaticDefaults() {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
-		}
-		public override void StartAIState(Shimmer_Construct boss) {
-			NPC npc = boss.NPC;
-			npc.ai[0] = 0;
-			npc.ai[1] = 0;
-			npc.ai[2] = 0;
-			npc.ai[3] = 0;
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -69,7 +65,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					1
 				);
 				if (--npc.ai[2] <= 0) {
-					SetAIState(boss, StateIndex<PhaseOneIdleState>());
+					SetAIState(boss, StateIndex<AutomaticIdleState>());
 					npc.ai[0] -= ContentExtensions.DifficultyDamageMultiplier * 8;
 				}
 			}

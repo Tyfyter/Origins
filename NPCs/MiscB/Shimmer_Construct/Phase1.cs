@@ -15,12 +15,8 @@ using Origins.Items.Other.Dyes;
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
 		public static List<AIState> aiStates = [];
-		public override void StartAIState(Shimmer_Construct boss) {
-			NPC npc = boss.NPC;
-			npc.ai[0] = 0;
-			npc.ai[1] = 0;
-			npc.ai[2] = 0;
-			npc.ai[3] = 0;
+		public override void Load() {
+			AutomaticIdleState.aiStates.Add((this, _ => 1));
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -30,7 +26,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
 				SelectAIState(boss, aiStates);
 			}
-			if (npc.life * 2 < npc.lifeMax) SetAIState(boss, StateIndex<PhaseTwoIdleState>());
 		}
 		public override void TrackState(int[] previousStates) { }
 	}
@@ -43,7 +38,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity.X = npc.ai[1];
 			npc.velocity.Y = npc.ai[2];
 			npc.rotation = npc.velocity.ToRotation();
-			if ((++npc.ai[0]) * npc.ai[3] > 16 * 30) SetAIState(boss, StateIndex<PhaseOneIdleState>());
+			if ((++npc.ai[0]) * npc.ai[3] > 16 * 30) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -75,7 +70,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					1
 				);
 			}
-			if (npc.ai[0] > 120) SetAIState(boss, StateIndex<PhaseOneIdleState>());
+			if (npc.ai[0] > 120) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -137,7 +132,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				unfurlPos.Y,
 				1
 			);
-			SetAIState(boss, StateIndex<PhaseOneIdleState>());
+			SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
 			int cloudType = ModContent.ProjectileType<Shimmer_Construct_Cloud_P>();
