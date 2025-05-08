@@ -302,6 +302,12 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public void LegsAI() {
+			CheckTrappedCollision();
+			if (NPC.noTileCollide) {
+				NPC.Center += (NPC.targetRect.Center() - NPC.Center).WithMaxLength(6);
+				NPC.GravityMultiplier *= 0;
+				return;
+			}
 
 			Point coords = Utils.ToTileCoordinates(NPC.Center);
 			int tileType = WorldGen.TileType(coords.X, coords.Y);
@@ -330,6 +336,28 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 
 			NPC.rotation = NPC.velocity.Y * NPC.spriteDirection * 0.05f;
+		}
+		int trappedTime = 0;
+		public void CheckTrappedCollision() {
+			if (NPC.position.Y > Main.UnderworldLayer * 16 && NPC.HasValidTarget) {
+				NPC.noTileCollide = false;
+				trappedTime = 30;
+				return;
+			}
+			Rectangle hitbox = NPC.Hitbox;
+			hitbox.Inflate(-1, -1);
+			if (!hitbox.OverlapsAnyTiles()) {
+				NPC.noTileCollide = false;
+			}
+			if (NPC.collideX || NPC.collideY) {
+				trappedTime += 5;
+				if (trappedTime > 150) {
+					NPC.noTileCollide = true;
+					NPC.collideX = NPC.collideY = false;
+				}
+			} else if (trappedTime > 0) {
+				trappedTime--;
+			}
 		}
 		/*public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (NPC.ai[2] < 200 || NPC.ai[2] >= Defiled_Amalgamation.SplitDuration) {
@@ -385,7 +413,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					[NPC.Center, NPC.Center + NPC.rotation.ToRotationVector2() * DA_Flan.tick_motion * ProjectileID.Sets.TrailCacheLength[ModContent.ProjectileType<DA_Flan>()]],
 					[NPC.rotation, NPC.rotation + MathHelper.Pi],
 					MathHelper.Lerp(15, 1, (Timer - 60f) / 60f),
-					1f,
+					0.02f,
 					0.5f
 				);
 			}
