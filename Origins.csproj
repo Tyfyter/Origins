@@ -3,7 +3,6 @@
 	<Import Project="..\tModLoader.targets" />
 	<PropertyGroup>
 		<AssemblyName>Origins</AssemblyName>
-		<LangVersion>preview</LangVersion>
 		<ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

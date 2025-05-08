@@ -70,7 +70,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public abstract void DoAIState(Shimmer_Construct boss);
 			public virtual void StartAIState(Shimmer_Construct boss) { }
 			public virtual double GetWeight(Shimmer_Construct boss, int[] previousStates) {
-				int index = previousStates.IndexOf(Index);
+				int index = Array.IndexOf(previousStates, Index);
 				if (index == -1) index = previousStates.Length;
 				return index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f;
 			}
