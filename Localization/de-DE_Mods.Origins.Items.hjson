@@ -5979,3 +5979,8 @@ Chambersite_Squirrel_Item: {
 	// DisplayName: Chambersite Squirrel
 	// Tooltip: ""
 }
+
+Silicon_Sword: {
+	// DisplayName: Silicon Sword
+	// Tooltip: "'TO will never exist'"
+}

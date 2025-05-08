@@ -9,6 +9,7 @@ using Origins.Items.Weapons;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Tiles.Brine;
@@ -319,6 +320,7 @@ namespace Origins.NPCs {
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Brine_Key>(), 2500, 1, 1, new LootConditions.Brine_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Lost_Picture_Frame>(), 25, 1, 1, new LootConditions.Lost_Picture_Frame_Condition()));
 			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<Generic_Weapon>(), 50000));
+			globalLoot.Add(ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Silicon_Sword>(), 5000));
 		}
 
 		static void GenFelnumOre() {
