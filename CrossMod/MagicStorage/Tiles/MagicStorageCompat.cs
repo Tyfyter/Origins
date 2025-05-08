@@ -19,6 +19,14 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public class OriginsStorageUpgrading : GlobalTile {
+		public override void Load() {
+			MonoModHooks.Add(typeof(TEStorageUnit).GetMethod(nameof(TEStorageUnit.ValidTile)), ValidTile);
+		}
+		delegate bool orig_ValidTile(TEStorageUnit self, in Tile tile);
+		static bool ValidTile(orig_ValidTile orig, TEStorageUnit self, in Tile tile) {
+			if (TileLoader.GetTile(tile.TileType) is StorageUnit && tile.TileFrameX % 36 == 0 && tile.TileFrameY % 36 == 0) return true;
+			return orig(self, tile);
+		}
 		public override void RightClick(int i, int j, int type) {
 			TryUpgradeStorage(i, j, type);
 		}
