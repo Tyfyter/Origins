@@ -19,13 +19,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class Shimmer_Construct : ModNPC {
 		protected readonly static List<AIState> aiStates = [];
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeofCthulhu;
-		public readonly int[] previousStates = new int[5];
+		public readonly int[] previousStates = new int[6];
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
+			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
 			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
 		public override void SetDefaults() {
-			base.SetDefaults();
 			NPC.width = 100;
 			NPC.height = 110;
 			NPC.lifeMax = 100;
@@ -38,12 +39,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				// this.GetBestiaryFlavorText(),
+				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}
 		public override void AI() {
+			if (NPC.shimmerTransparency > 0) {
+				NPC.shimmerTransparency -= 0.005f;
+				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
+			}
 			aiStates[NPC.aiAction].DoAIState(this);
+		}
+		public override void BossLoot(ref string name, ref int potionType) {
+			potionType = ItemID.RestorationPotion;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);
@@ -87,6 +95,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
 			public void Unload() { }
+		}
+	}
+	class Eye_Shimmer_Collision : GlobalNPC {
+		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.EyeofCthulhu;
+		public override void AI(NPC npc) {
+			Collision.WetCollision(npc.position, npc.width, npc.height);
+			if (Collision.shimmer) {
+				npc.AddBuff(BuffID.Shimmer, 100, true); // Pass true to quiet as clients execute this as well.
+			}
 		}
 	}
 }

@@ -4563,6 +4563,24 @@ namespace Origins {
 				}
 			}
 		}
+		public static void BulletShimmer(this Projectile projectile) {
+			if (projectile.shimmerWet) {
+				int x = (int)(projectile.Center.X / 16f);
+				int y = (int)(projectile.position.Y / 16f);
+				if (WorldGen.InWorld(x, y) && Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount == byte.MaxValue && Main.tile[x, y].LiquidType == LiquidID.Shimmer && WorldGen.InWorld(x, y - 1) && Main.tile[x, y - 1] != null && Main.tile[x, y - 1].LiquidAmount > 0 && Main.tile[x, y - 1].LiquidType == LiquidID.Shimmer) {
+					projectile.Kill();
+				} else if (projectile.velocity.Y > 0f) {
+					projectile.velocity.Y *= -1f;
+					projectile.netUpdate = true;
+					if (projectile.timeLeft > 600)
+						projectile.timeLeft = 600;
+
+					projectile.timeLeft -= 60;
+					projectile.shimmerWet = false;
+					projectile.wet = false;
+				}
+			}
+		}
 	}
 	public static class ContentExtensions {
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();

@@ -112,11 +112,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			Vector2 targetPos = npc.GetTargetData().Center;
-			float xDist = 55 - 10 * ContentExtensions.DifficultyDamageMultiplier;
+			float difficultyMultiplier = ContentExtensions.DifficultyDamageMultiplier;
+			float xDist = 53 - 8 * difficultyMultiplier;
 			Vector2 unfurlPos = targetPos - new Vector2(-xDist, 25) * 16;
+			float speed = 4.5f + difficultyMultiplier * 4.5f;
 			npc.SpawnProjectile(null,
 				npc.Center,
-				npc.DirectionTo(unfurlPos) * 9,
+				npc.DirectionTo(unfurlPos) * speed,
 				ModContent.ProjectileType<Shimmer_Construct_Cloud_Ball>(),
 				1,
 				1,
@@ -127,7 +129,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			unfurlPos = targetPos - new Vector2(xDist, 25) * 16;
 			npc.SpawnProjectile(null,
 				npc.Center,
-				npc.DirectionTo(unfurlPos) * 9,
+				npc.DirectionTo(unfurlPos) * speed,
 				ModContent.ProjectileType<Shimmer_Construct_Cloud_Ball>(),
 				1,
 				1,
@@ -183,14 +185,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						Projectile.Kill();
 						OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Shimmer_Construct_Cloud_P>(), ModContent.ProjectileType<Shimmer_Construct_Cloud_Ball>()], 3, 52);
 						return;
-					}
-				}
-				float inShimmer = Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer ? 1 : 0;
-				if (Projectile.localAI[0] != inShimmer) {
-					Projectile.localAI[0] = inShimmer;
-					if (inShimmer == 1) {
-						Projectile.velocity.Y = -Projectile.velocity.Y;
-						Projectile.ai[1] += (Projectile.Center.Y - Projectile.ai[1]) * 2;
 					}
 				}
 
@@ -296,13 +290,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.width = 4;
 				Projectile.height = 4;
 				Projectile.tileCollide = false;
+				CooldownSlot = ImmunityCooldownID.WrongBugNet;
 			}
 			public override void AI() {
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 				if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer) {
 					Projectile.velocity.Y -= 0.2f;
 				}
-				if (!Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
+				Rectangle hitbox = Projectile.Hitbox;
+				hitbox.Inflate(6, 6);
+				if (!Projectile.tileCollide && !hitbox.OverlapsAnyTiles()) {
 					Projectile.tileCollide = true;
 				}
 			}

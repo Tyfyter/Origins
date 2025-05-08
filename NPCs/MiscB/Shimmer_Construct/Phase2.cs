@@ -103,7 +103,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					if (target.active && !target.dead) {
 						float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 						if (++Projectile.ai[1] > 30f - difficultyMult) {
-							Projectile.velocity += Projectile.DirectionTo(target.Center) * (Projectile.ai[1] >= 40 ? (0.2f + difficultyMult * 0.1f) : 2);
+							float acceleration = 2;
+							if (Projectile.ai[1] >= 40) {
+								acceleration = (0.2f + difficultyMult * 0.1f) * Math.Max(1 - (Projectile.ai[1] - 40) / 80, 0);
+							}
+							Projectile.velocity += Projectile.DirectionTo(target.Center) * acceleration;
 						}
 					} else {
 						Projectile.ai[0] = -1;
@@ -117,7 +121,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				if (Projectile.velocity.X != 0) modifiers.HitDirectionOverride = Math.Sign(Projectile.velocity.X);
-				//modifiers.KnockbackImmunityEffectiveness *= 0.8f;
 				modifiers.Knockback.Base += 4;
 			}
 			public override bool PreDraw(ref Color lightColor) {
