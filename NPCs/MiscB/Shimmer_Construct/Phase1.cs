@@ -43,7 +43,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity.X = npc.ai[1];
 			npc.velocity.Y = npc.ai[2];
 			npc.rotation = npc.velocity.ToRotation();
-			if ((++npc.ai[0]) * npc.ai[3] > 16 * 40) SetAIState(boss, StateIndex<PhaseOneIdleState>());
+			if ((++npc.ai[0]) * npc.ai[3] > 16 * 30) SetAIState(boss, StateIndex<PhaseOneIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -79,7 +79,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[3] = 15;
+			npc.ai[3] = 16 - ContentExtensions.DifficultyDamageMultiplier * 0.75f;
 		}
 	}
 	public class SpawnCloudsState : AIState {
