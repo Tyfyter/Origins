@@ -121,7 +121,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				1,
 				1,
 				unfurlPos.X,
-				unfurlPos.Y
+				unfurlPos.Y,
+				-1
 			);
 			unfurlPos = targetPos - new Vector2(xDist, 25) * 16;
 			npc.SpawnProjectile(null,
@@ -131,7 +132,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				1,
 				1,
 				unfurlPos.X,
-				unfurlPos.Y
+				unfurlPos.Y,
+				1
 			);
 			SetAIState(boss, StateIndex<PhaseOneIdleState>());
 		}
@@ -175,7 +177,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							Projectile.damage,
 							Projectile.knockBack,
 							Projectile.owner,
-							Projectile.ai[2]
+							Projectile.ai[2],
+							ai2: NPC.FindFirstNPC(ModContent.NPCType<Shimmer_Construct>())
 						);
 						Projectile.Kill();
 						OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Shimmer_Construct_Cloud_P>(), ModContent.ProjectileType<Shimmer_Construct_Cloud_Ball>()], 3, 52);
@@ -188,7 +191,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					if (inShimmer == 1) {
 						Projectile.velocity.Y = -Projectile.velocity.Y;
 						Projectile.ai[1] += (Projectile.Center.Y - Projectile.ai[1]) * 2;
-						Projectile.ai[2] = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
 					}
 				}
 
@@ -229,9 +231,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.tileCollide = false;
 			}
 			public override void AI() {
-				Projectile.rotation = Projectile.ai[0];
 				if (++Projectile.ai[1] % 10f < 1) {
-					Vector2 unit = new Vector2(0, 1).RotatedBy(Projectile.rotation);
+					Vector2 unit = Vector2.UnitY;
 					Vector2 perp = new(unit.Y, -unit.X);
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromAI(),
@@ -241,9 +242,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						Projectile.damage,
 						Projectile.knockBack,
 						Projectile.owner,
-						Projectile.ai[2]
+						Projectile.ai[0]
 					);
-					if (Projectile.timeLeft > 52 && !NPC.AnyNPCs(ModContent.NPCType<Shimmer_Construct>())) Projectile.timeLeft = 52;
+					if (Projectile.timeLeft > 52) {
+						if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is NPC construct) {
+							if (!construct.active || construct.type != ModContent.NPCType<Shimmer_Construct>() || (Projectile.Center.X - construct.targetRect.Center.X) * Projectile.ai[0] > 16 * 20) {
+								Projectile.timeLeft = 52;
+							}
+						}
+					}
 				}
 				Projectile.frameCounter++;
 				if (Projectile.frameCounter > 4) {
@@ -298,6 +305,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (!Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
 					Projectile.tileCollide = true;
 				}
+			}
+			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+				modifiers.HitDirectionOverride = (int)Projectile.ai[0];
+				modifiers.KnockbackImmunityEffectiveness *= 0.6f;
+				modifiers.Knockback.Base += 6;
 			}
 			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 				if (projHitbox.Intersects(targetHitbox)) return true;
