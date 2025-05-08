@@ -72,6 +72,9 @@ namespace Origins.Items {
 				);
 			}
 		}
+		public override void ModifyValue(ref float valueMult) {
+			valueMult *= 1.25f;
+		}
 	}
 	public class Defiled_Prefix_Mana_Steal_Timer : PrefixProjectileEffectTimer<Defiled_Prefix> {
 		public override bool AppliesToEntity(Projectile projectile) => projectile.friendly && base.AppliesToEntity(projectile);
