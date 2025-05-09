@@ -66,6 +66,7 @@ namespace Origins.NPCs {
 		public bool airBird = false;
 		public bool deadBird = false;
 		public int sonarDynamiteTime = 0;
+		public bool lazyCloakShimmer = false;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -127,6 +128,7 @@ namespace Origins.NPCs {
 					npc.StrikeInstantKill();
 				}
 			}
+			lazyCloakShimmer = false;
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {

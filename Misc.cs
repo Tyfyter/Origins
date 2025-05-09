@@ -4645,5 +4645,9 @@ namespace Origins {
 				return Main.GameModeInfo.EnemyDamageMultiplier;
 			}
 		}
+		public static bool IsWithin(this Entity a, Entity b, float range) => a.Center.Clamp(b.Hitbox).IsWithin(b.Center.Clamp(a.Hitbox), range);
+		public static bool IsWithinRectangular(this Entity a, Entity b, Vector2 range) => a.Center.Clamp(b.Hitbox).IsWithinRectangular(b.Center.Clamp(a.Hitbox), range);
+		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
+		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
 	}
 }

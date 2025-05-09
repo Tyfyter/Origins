@@ -1,21 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-	public class Lazy_Cloak : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-		];
+	public class Lazy_Cloak : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
-			Item.damage = 30;
+			Item.damage = 10;
 			Item.DamageType = DamageClass.Summon;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
@@ -66,7 +64,7 @@ namespace Origins.Items.Accessories {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 40;
 			Projectile.height = 28;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 0f;
@@ -178,7 +176,6 @@ namespace Origins.Items.Accessories {
 			if (foundTarget) {
 				Projectile.hide = false;
 				Projectile.ai[0] = 1;
-				//Projectile.tileCollide = true;
 				// Minion has a target: attack (here, fly towards the enemy)
 				//if (distanceFromTarget > 40f || !projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
 				// The immediate range around the target (so it doesn't latch onto it when close)
@@ -188,7 +185,6 @@ namespace Origins.Items.Accessories {
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 				//}
 			} else {
-				Projectile.tileCollide = false;
 				if (distanceToIdlePosition > 600f) {
 					speed = 24f;
 					inertia = 12f;
@@ -235,10 +231,9 @@ namespace Origins.Items.Accessories {
 			#endregion
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Ichor, 60);
-			if (hit.Crit && target.life < damageDone * 3) {
-				target.life = 0;
-				//target.checkDead();
+			if (Main.player[Projectile.owner].IsWithinRectangular(target, new Vector2(16 * 4, 16 * 2))) {
+				target.AddBuff(Lazy_Cloak_Buff.ID, 10);
+				target.DoCustomKnockback(Vector2.UnitY * Main.player[Projectile.owner].GetTotalKnockback(DamageClass.Summon).ApplyTo(4));
 			}
 		}
 	}
@@ -248,17 +243,38 @@ namespace Origins.Buffs {
 		public string CustomStatPath => nameof(Lazy_Cloak_Buff);
 		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
 		public static int ID { get; private set; }
+		public override void Load() {
+			try {
+				IL_NPC.UpdateNPC_Inner += DoLazyCloakShimmer;
+			} catch (Exception ex) {
+				if (Origins.LogLoadingILError(nameof(DoLazyCloakShimmer), ex)) throw;
+			}
+		}
+		static void DoLazyCloakShimmer(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCallOrCallvirt<NPC>("UpdateCollision"));
+
+			c.GotoPrev(MoveType.After, i => i.MatchLdfld<NPC>(nameof(NPC.noTileCollide)));
+			c.EmitLdarg0();
+			c.EmitDelegate((bool noTileCollide, NPC npc) => noTileCollide || (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer));
+
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<Entity>(nameof(Entity.velocity)));
+			c.EmitLdarg0();
+			c.EmitDelegate((Vector2 velocity, NPC npc) => velocity * (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer ? 0.375f : 1));
+		}
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			ID = Type;
 		}
-
 		public override void Update(Player player, ref int buffIndex) {
 			if (player.ownedProjectileCounts[Lazy_Cloak_P.ID] <= 0) {
 				player.DelBuff(buffIndex);
 				buffIndex--;
 			}
+		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			npc.GetGlobalNPC<OriginGlobalNPC>().lazyCloakShimmer = true;
 		}
 	}
 }
