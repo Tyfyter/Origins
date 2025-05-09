@@ -25,6 +25,9 @@ namespace Origins.NPCs.Brine.Boss {
 			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
 			return null;
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 	}
 	public class Lost_Diver_Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
@@ -61,6 +64,9 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);

@@ -137,6 +137,9 @@ namespace Origins.NPCs.Brine {
 			Acceleration = 0.1f;
 			DigSound = null;
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Poisoned, 240);
 			target.GetCooldownCounter(hurtInfo.CooldownCounter) /= 2;
@@ -264,8 +267,7 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 	}
-
-	public class Brine_Serpent_Body : WormBody, IPostHitPlayer {
+	public class Brine_Serpent_Body : WormBody, IBrineSerpentPart, IPostHitPlayer {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
@@ -288,6 +290,9 @@ namespace Origins.NPCs.Brine {
 			base.PostAI();
 			Brine_Pool_NPC.HitOtherNPCs(NPC);
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Poisoned, 30);
 			target.GetCooldownCounter(hurtInfo.CooldownCounter) /= 2;
@@ -302,8 +307,7 @@ namespace Origins.NPCs.Brine {
 			HeadSegment?.HitEffect(hit);
 		}
 	}
-
-	public class Brine_Serpent_Body2 : WormBody, IPostHitPlayer {
+	public class Brine_Serpent_Body2 : WormBody, IBrineSerpentPart, IPostHitPlayer {
 		public override string Texture => typeof(Brine_Serpent_Head).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -327,6 +331,9 @@ namespace Origins.NPCs.Brine {
 			base.PostAI();
 			Brine_Pool_NPC.HitOtherNPCs(NPC);
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Poisoned, 30);
 			target.GetCooldownCounter(hurtInfo.CooldownCounter) /= 2;
@@ -341,8 +348,7 @@ namespace Origins.NPCs.Brine {
 			HeadSegment?.HitEffect(hit);
 		}
 	}
-
-	public class Brine_Serpent_Tail : WormTail, IPostHitPlayer {
+	public class Brine_Serpent_Tail : WormTail, IBrineSerpentPart, IPostHitPlayer {
 		public override string Texture => typeof(Brine_Serpent_Head).GetDefaultTMLName();
 		public override float SegmentSeparation => 36;
 		public override void SetStaticDefaults() {
@@ -365,6 +371,9 @@ namespace Origins.NPCs.Brine {
 			base.PostAI();
 			Brine_Pool_NPC.HitOtherNPCs(NPC);
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public void PostHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Poisoned, 30);
 			target.GetCooldownCounter(hurtInfo.CooldownCounter) /= 2;
@@ -375,5 +384,16 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CanHitNPC(NPC target) => Brine_Serpent_Head.TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !Brine_Serpent_Head.SegmentTypes.Contains(target.type));
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) => false;
+	}
+	public interface IBrineSerpentPart : IBrinePoolNPC {
+		int IBrinePoolNPC.PathfindingTime { get => default; set { } }
+		bool IBrinePoolNPC.TargetIsRipple { get => default; set { } }
+		bool IBrinePoolNPC.CanSeeTarget { get => default; set { } }
+		Vector2 IBrinePoolNPC.TargetPos { get => default; set { } }
+		bool IBrinePoolNPC.AggressivePathfinding { get => default; }
+		[CloneByReference]
+		HashSet<int> IBrinePoolNPC.TargetNPCTypes { get => default; }
+		bool IBrinePoolNPC.CheckTargetLOS(Vector2 target) => true;
+		bool IBrinePoolNPC.CanTargetNPC(NPC other) => false;
 	}
 }

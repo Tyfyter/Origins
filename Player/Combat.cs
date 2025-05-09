@@ -696,7 +696,7 @@ namespace Origins {
 					Player.GetModPlayer<OriginPlayer>().stunTime;
 				}*/
 				Player.lifeRegen -= 15;
-				modifiers.ScalingArmorPenetration += 0.2f;
+				modifiers.ScalingArmorPenetration += 0.1f;
 			}
 			if (ashenKBReduction) {
 				modifiers.Knockback -= 0.15f;

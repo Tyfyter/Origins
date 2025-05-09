@@ -162,6 +162,7 @@ namespace Origins.NPCs.Brine {
 			return true;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			base.ModifyHitPlayer(target, ref modifiers);// inherit armor penetration
 			modifiers.Knockback *= 0.25f;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
