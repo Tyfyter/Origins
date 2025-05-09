@@ -1,0 +1,140 @@
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
+
+namespace Origins.Items.Weapons.Ranged {
+	public class Chambersite_Minigun : ModItem {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.Megashark;
+		public override void SetStaticDefaults() {
+			ItemID.Sets.gunProj[Type] = true;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Handgun);
+			Item.damage = 27;
+			Item.knockBack = 5;
+			Item.useTime = Item.useAnimation = 42;
+			Item.shoot = ModContent.ProjectileType<Chambersite_Minigun_P>();
+			Item.shootSpeed = 8;
+			Item.width = 38;
+			Item.height = 18;
+			Item.autoReuse = true;
+			Item.channel = true;
+			Item.noUseGraphic = true;
+			Item.value = Item.sellPrice(silver: 80);
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = Origins.Sounds.HeavyCannon;
+		}
+		public static bool isShooting = false;
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (source.Context?.Contains("gunProj") != true) {
+				Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, ai1: 1);
+				return false;
+			}
+			return true;
+		}
+	}
+	public class Chambersite_Minigun_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.Megashark;//typeof(Chambersite_Minigun).GetDefaultTMLName();
+		public override void SetDefaults() {
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.aiStyle = ProjAIStyleID.HeldProjectile;
+			Projectile.friendly = false;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.hide = true;
+			Projectile.ignoreWater = true;
+		}
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (Projectile.ai[2] == 2) {
+				SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.position);
+				Projectile.ai[2] = 1;
+			}
+			if (Main.myPlayer == Projectile.owner) {
+				if (!player.noItems && !player.CCed) {
+					Vector2 position = player.MountedCenter + ((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 12).Floor();
+					Projectile.position = position;
+					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
+					if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
+
+					Vector2 velocity = Vector2.Normalize(direction);
+					if (velocity.HasNaNs()) velocity = -Vector2.UnitY;
+					if (Projectile.velocity != velocity) {
+						Projectile.velocity = velocity;
+						Projectile.netUpdate = true;
+					}
+					Projectile.rotation = velocity.ToRotation();
+					if (Projectile.ai[1] > 0 && --Projectile.ai[0] <= 0) {
+						if (!player.channel || !ActuallyShoot()) Projectile.Kill();
+					}
+				} else {
+					Projectile.Kill();
+				}
+			}
+			Projectile.position.Y += player.gravDir * 2f;
+		}
+		bool ActuallyShoot() {
+			Player player = Main.player[Projectile.owner];
+			Vector2 position = Projectile.position;
+			if (player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemId)) {
+				EntitySource_ItemUse_WithAmmo projectileSource = new(player, player.HeldItem, usedAmmoItemId, "gunProj");
+				Vector2 velocity = Projectile.velocity;
+				velocity *= speed;
+
+				CombinedHooks.ModifyShootStats(player, player.HeldItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockBack);
+				float spread = 0.7f - Math.Min(Projectile.ai[1], 6) * 0.1f;
+				int projectiles = 1;
+				if (Projectile.ai[2] == 0) {
+					spread = 0.5f;
+					projectiles = 5;
+				}
+				try {
+					Chambersite_Minigun.isShooting = true;
+					for (; projectiles > 0; projectiles--) {
+						Vector2 vel = velocity.RotatedByRandom(spread);
+						if (CombinedHooks.Shoot(player, player.HeldItem, projectileSource, position, vel, projToShoot, damage, knockBack)) {
+							Projectile.NewProjectile(projectileSource, position, vel, projToShoot, damage, knockBack, Projectile.owner);
+						}
+					}
+				} finally {
+					Chambersite_Minigun.isShooting = false;
+				}
+				Projectile.ai[2] = 2;
+				Projectile.ai[1]++;
+				Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem) / Math.Min(Projectile.ai[1], 6);
+				Projectile.netUpdate = true;
+				return true;
+			}
+			return false;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override bool PreDraw(ref Color lightColor) {
+			SpriteEffects dir = Main.player[Projectile.owner].direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			if (Main.player[Projectile.owner].gravDir == -1f) {
+				dir ^= SpriteEffects.FlipVertically;
+			}
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 origin = new Vector2(27, 25);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.position - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				origin.Apply(dir, texture.Size()),
+				Projectile.scale,
+				dir
+			);
+			return false;
+		}
+	}
+}

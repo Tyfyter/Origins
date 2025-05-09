@@ -1752,6 +1752,7 @@ Projectiles: {
 	// Shimmer_Construct_Cloud_P.DisplayName: Shimmer Cloud
 	// Shimmer_Construct_Cloud_Rain.DisplayName: Shimmer Rain
 	// Shimmer_Construct_Missiles.DisplayName: Shimmer Construct Missiles
+	// Chambersite_Minigun_P.DisplayName: Chambersite Minigun P
 }
 
 Prefixes: {

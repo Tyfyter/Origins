@@ -5984,3 +5984,8 @@ Silicon_Sword: {
 	DisplayName: Silicon Sword
 	Tooltip: "'TO will never exist'"
 }
+
+Chambersite_Minigun: {
+	DisplayName: Chambersite Minigun
+	Tooltip: ""
+}
