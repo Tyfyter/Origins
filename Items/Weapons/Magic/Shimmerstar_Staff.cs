@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 13;
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = true;
 			Item.useLimitPerAnimation = MainFireCount;
