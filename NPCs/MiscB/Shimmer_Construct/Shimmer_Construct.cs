@@ -56,7 +56,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Rectangle playerRect = new(0, 0, active_range * 2, active_range * 2);
 				foreach (Player player in Main.ActivePlayers) {
 					if (npcRect.Intersects(playerRect.Recentered(player.Center))) {
-						player.AddBuff(Weak_Shimmer_Debuff.ID, 2, true);
+						player.AddBuff(Weak_Shimmer_Debuff.ID, 5, true);
 					}
 				}
 			}

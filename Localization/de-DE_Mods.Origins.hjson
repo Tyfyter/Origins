@@ -1193,8 +1193,8 @@ Buffs: {
 	}
 
 	Weak_Shimmer_Debuff: {
-		// DisplayName: Weak Shimmer Debuff
-		// Description: Mods.Origins.Buffs.Weak_Shimmer_Debuff.Description
+		// DisplayName: Shimmering?
+		// Description: Any proof you might have of what's happening to you has gone insubstantial!
 	}
 }
 

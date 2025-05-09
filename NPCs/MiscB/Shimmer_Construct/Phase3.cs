@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria;
 using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using Terraria.ModLoader;
+using MonoMod.Cil;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -44,7 +45,21 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					Collision.down = false;
 				}
 			};
+			try {
+				IL_Projectile.HandleMovement += IL_Projectile_HandleMovement;
+			} catch (Exception ex) {
+				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
+			}
 		}
+		static void IL_Projectile_HandleMovement(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdfld<Projectile>(nameof(Projectile.tileCollide))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate((bool tileCollide, Projectile projectile) => tileCollide && (!projectile.friendly || !projectile.TryGetOwner(out Player player) || !player.OriginPlayer().weakShimmer));
+		}
+
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
@@ -54,8 +69,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.shimmering = true;
-			player.timeShimmering = 0;
 			player.OriginPlayer().weakShimmer = true;
+			player.fallStart = (int)(player.position.Y / 16f);
+			if (player.buffTime[buffIndex] > 2) {
+				player.timeShimmering = 0;
+			} else {
+				bool isBlocked = false;
+				for (int i = (int)(player.position.X / 16f); i <= (player.position.X + player.width) / 16; i++) {
+					for (int j = (int)(player.position.Y / 16f); j <= (player.position.Y + player.height) / 16; j++) {
+						if (WorldGen.SolidTile3(i, j))
+							isBlocked = true;
+					}
+				}
+
+				if (isBlocked) {
+					player.buffTime[buffIndex]++;
+				} else {
+					player.DelBuff(buffIndex--);
+				}
+			}
 		}
 	}
 }
