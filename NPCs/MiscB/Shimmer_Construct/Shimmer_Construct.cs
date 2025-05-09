@@ -1,16 +1,9 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Origins.Graphics;
-using Origins.Items.Other.Dyes;
-using Origins.Items.Weapons.Magic;
-using PegasusLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.Graphics.Shaders;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -54,9 +47,34 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Rectangle npcRect = NPC.Hitbox;
 				const int active_range = 5000;
 				Rectangle playerRect = new(0, 0, active_range * 2, active_range * 2);
+				Vector2 min = NPC.TopLeft;
+				Vector2 max = NPC.BottomRight;
+				List<Player> players = [];
 				foreach (Player player in Main.ActivePlayers) {
 					if (npcRect.Intersects(playerRect.Recentered(player.Center))) {
+						min = Vector2.Min(min, player.TopLeft);
+						max = Vector2.Max(max, player.BottomRight);
 						player.AddBuff(Weak_Shimmer_Debuff.ID, 5, true);
+						players.Add(player);
+					}
+				}
+				if (max.Y >= Main.bottomWorld - 640f - 64f) {
+					Vector2 top = (min.Y - (640f + 16f)) * Vector2.UnitY;
+					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+						PositionInWorld = NPC.Bottom
+					});
+					NPC.Teleport(NPC.position - top, 12);
+					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+						PositionInWorld = NPC.Bottom
+					});
+					for (int i = 0; i < players.Count; i++) {
+						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+							PositionInWorld = players[i].Bottom
+						});
+						players[i].Teleport(players[i].position - top, 12);
+						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+							PositionInWorld = players[i].Bottom
+						});
 					}
 				}
 			}
