@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -677,7 +678,18 @@ namespace Origins.Tiles {
 		public virtual bool LavaDeath => true;
 		public virtual Color MapColor => new(122, 217, 232);
 		public abstract int LidType { get; }
-		public virtual bool IsSmall => false; // for critters in jars
+		/// <summary>
+		/// Used to set the base kind of cage this tile is.
+		/// <br/><br/> 0 = Small Terrarium Cage
+		/// <br/> 1 = Large Terrarium Cage
+		/// <br/> 2 = Jar Cage
+		/// </summary>
+		public abstract int CageKind { get; }
+		private static readonly Dictionary<int, (int, TileObjectData, int)> CageKindMap = new() {
+			[0] = (TileID.CageBuggy, TileObjectData.Style3x2, 1),
+			[1] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
+			[2] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
+		};
 		public abstract int[] FrameIndexArray { get; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
@@ -694,7 +706,7 @@ namespace Origins.Tiles {
 			Main.critterCage = true;
 			TileID.Sets.CritterCageLidStyle[Type] = LidType;
 
-			AdjTiles = [IsSmall ? TileID.MonarchButterflyJar : TileID.BunnyCage];
+			AdjTiles = [CageKindMap[CageKind].Item1];
 			DustType = DustID.Glass;
 
 			// Names
@@ -702,9 +714,9 @@ namespace Origins.Tiles {
 
 			// Placement
 			// In addition to copying from the TileObjectData.Something templates, modders can copy from specific tile types. CopyFrom won't copy subtile data, so style specific properties won't be copied, such as how Obsidian doors are immune to lava.
-			TileObjectData.newTile.CopyFrom(IsSmall ? TileObjectData.Style2xX : TileObjectData.Style6x3);
+			TileObjectData.newTile.CopyFrom(CageKindMap[CageKind].Item2);
 			TileObjectData.newTile.LavaDeath = LavaDeath;
-			TileObjectData.newTile.DrawYOffset = IsSmall ? 1 : 2;
+			TileObjectData.newTile.DrawYOffset = CageKindMap[CageKind].Item3;
 			AnimationFrameHeight = TileObjectData.newTile.CoordinateFullHeight;
 			TileObjectData.addTile(Type);
 			glowTexture = Texture + "_Glow";
@@ -720,7 +732,7 @@ namespace Origins.Tiles {
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			int frameIndex;
-			if (IsSmall) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
+			if (CageKind != 1) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			frameYOffset = FrameIndexArray[frameIndex];
 		}
