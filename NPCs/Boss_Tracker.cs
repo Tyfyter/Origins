@@ -18,6 +18,7 @@ namespace Origins.NPCs {
 		public static Boss_Tracker Instance => ModContent.GetInstance<Boss_Tracker>();
 		public bool downedFiberglassWeaver;
 		public bool downedLostDiver;
+		public bool downedShimmerConstruct;
 
 		public bool downedDefiledMimic;
 		public bool downedRivenMimic;

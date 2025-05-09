@@ -377,7 +377,12 @@ DA_Body_Part: {
 }
 
 // Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglass Slime
-// Shimmer_Construct.DisplayName: Shimmer Construct
+
+Shimmer_Construct: {
+	// DisplayName: Shimmer Construct
+	// BossChecklistIntegration.SpawnCondition: Shimmer an {$NPCName.EyeofCthulhu}
+}
+
 // Chambersite_Bunny.DisplayName: Chambersite Bunny
 // Chambersite_Squirrel.DisplayName: Chambersite Squirrel
 // Shimmer_Drone.DisplayName: Shimmer Drone

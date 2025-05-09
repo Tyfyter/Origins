@@ -46,6 +46,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Fargowiltas.Common.Configs;
 using Origins.Water;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -277,12 +278,28 @@ namespace Origins {
 						}
 					}
 				);
+				bossChecklist.Call("LogBoss",
+					mod,
+					nameof(Shimmer_Construct).Replace("_", ""),
+					6.8f,
+					() => Boss_Tracker.Instance.downedShimmerConstruct,
+					ModContent.NPCType<Shimmer_Construct>(),
+					new Dictionary<string, object> {
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
+						/*["collectibles"] = new List<int> {
+							RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
+							TrophyTileBase.ItemType<Shimmer_Construct_Trophy>()
+						},*/
+						["overrideHeadTextures"] = ModContent.GetInstance<Shimmer_Construct>().BossHeadTexture,
+					}
+				);
 			}
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
 				FargosMutant.Call("AddSummon", 3, ModContent.ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ModContent.ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 2.1, ModContent.ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
 				FargosMutant.Call("AddSummon", 7.3, ModContent.ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
+				FargosMutant.Call("AddSummon", 6.8, ModContent.ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
 			}
 
 			void AddModdedNPCAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount, HashSet<int> set = null) where TDebuff : AssimilationDebuff {
