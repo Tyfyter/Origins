@@ -7,6 +7,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -46,8 +47,8 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(Type, 9)
 			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
-            .AddIngredient(ModContent.ItemType<Tree_Sap>(), 9)
-            .AddTile(TileID.WorkBenches)
+			.AddIngredient(ModContent.ItemType<Tree_Sap>(), 9)
+			.AddTile(TileID.WorkBenches)
 			.Register();
 
 			Recipe.Create(ItemID.AdhesiveBandage)
@@ -57,10 +58,16 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
+	public class Aetherite_Bar : MaterialItem {
+		public override string Texture => typeof(Bleeding_Obsidian_Shard).GetDefaultTMLName();
+		public override int ResearchUnlockCount => 25;
+		public override int Value => Item.sellPrice(silver: 1);
+		public override bool Hardmode => false;
+	}
 	public class Alkahest : MaterialItem, IJournalEntrySource {
-        public string[] Categories => [
-            "LoreItem"
-        ];
+		public string[] Categories => [
+			"LoreItem"
+		];
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
@@ -129,9 +136,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntrySource {
-        public string[] Categories => [
-            "LoreItem"
-        ];
+		public string[] Categories => [
+			"LoreItem"
+		];
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
@@ -187,10 +194,10 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Defiled_Bar : MaterialItem, ICustomWikiStat, IJournalEntrySource {
-        public string[] Categories => [
-            "LoreItem",
+		public string[] Categories => [
+			"LoreItem",
 			"Bar"
-        ];
+		];
 		public string EntryName => "Origins/" + typeof(Defiled_Bar_Entry).Name;
 		public class Defiled_Bar_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Bar";
@@ -221,11 +228,11 @@ namespace Origins.Items.Materials {
 		}
 
 		public override void SetStaticDefaults() {
-            base.SetStaticDefaults();
+			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.HallowedBar] = ModContent.ItemType<Eitrite_Bar>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Eitrite_Bar>()] = ItemID.HallowedBar;
-        }
-        public override int Value => Item.sellPrice(silver: 81);
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Eitrite_Bar>()] = ItemID.HallowedBar;
+		}
+		public override int Value => Item.sellPrice(silver: 81);
 		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -233,12 +240,12 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.AdamantiteForge)
 			.Register();
 
-            Recipe.Create(Type)
-            .AddRecipeGroup("AdamantiteBars")
-            .AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
-            .AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 3)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
+			Recipe.Create(Type)
+			.AddRecipeGroup("AdamantiteBars")
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 3)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Element36_Bundle : MaterialItem {
@@ -273,11 +280,11 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Felnum_Bar : MaterialItem, IJournalEntrySource, ICustomWikiStat {
-        public string[] Categories => [
-            "LoreItem",
+		public string[] Categories => [
+			"LoreItem",
 			"Bar"
-        ];
-        public override int Value => Item.sellPrice(silver: 40);
+		];
+		public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override bool Hardmode => false;
@@ -485,10 +492,10 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override bool HasTooltip => true;
 		public override void AddRecipes() {
-            Recipe.Create(ItemID.UnholyArrow, 5)
+			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
-            .AddIngredient(Type)
-            .AddTile(TileID.Anvils)
+			.AddIngredient(Type)
+			.AddTile(TileID.Anvils)
 			.Register();
 		}
 	}
@@ -513,12 +520,12 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.GlassKiln)
 			.Register();
 
-            Recipe.Create(ItemID.LesserHealingPotion, 2)
-            .AddIngredient(ItemID.Bottle, 2)
-            .AddIngredient(ModContent.ItemType<Tree_Sap>())
-            .AddTile(TileID.Bottles)
-            .Register();
-        }
+			Recipe.Create(ItemID.LesserHealingPotion, 2)
+			.AddIngredient(ItemID.Bottle, 2)
+			.AddIngredient(ModContent.ItemType<Tree_Sap>())
+			.AddTile(TileID.Bottles)
+			.Register();
+		}
 	}
 	public class Undead_Chunk : MaterialItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Undead_Chunk_Entry).Name;

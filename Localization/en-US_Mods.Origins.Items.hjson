@@ -5989,3 +5989,10 @@ Chambersite_Minigun: {
 	DisplayName: Chambersite Minigun
 	Tooltip: ""
 }
+
+Aetherite_Bar.DisplayName: Aetherite Bar
+
+Shimmerstar_Staff: {
+	DisplayName: Shimmerstar Staff
+	Tooltip: ""
+}
