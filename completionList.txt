@@ -6,7 +6,7 @@ SYMBOL KEY:
 @4: Resource needs modification (resprite/reformat)
 
 #: Needs code (not implemented at all)
-#2: Needs code (partial implementation. Includes code of a re-used mechanic)
+#2: Needs code (partial implementation/needs changes)
 #3: Has bug or change specified in bugs channel
 #4: Code complete other than graphical code, for which it needs design
 
@@ -526,7 +526,7 @@ ACCESSORIES:
 (^) Venom Fang*
 (^) Venom Shield
 
-(@4, #2) Bomb Rack
+(@4, #) Bomb Rack
 (^) Entangled Energy*
 (^) Mana Drive°
 (X) Probe Pack
@@ -948,7 +948,7 @@ SUMMONER WEAPONS:
 (X) Probe Controller
 (X) Ribatar
 (X) Seraphim Song
-(X, @2, #2) SMART Wrench
+(X, @2, #) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
 (@4, ^3) Terratotem
@@ -1683,7 +1683,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(X) Shimmer Construct !!!
+(@, #2) Shimmer Construct !!!
 (X) Tearror
 (X) Trenchmaker
 
