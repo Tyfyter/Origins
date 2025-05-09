@@ -1191,6 +1191,11 @@ Buffs: {
 			except bandwidth
 			'''
 	}
+
+	Weak_Shimmer_Debuff: {
+		DisplayName: Shimmering?
+		Description: Any proof you might have of what's happening to you has gone insubstantial!
+	}
 }
 
 DamageClassName: {

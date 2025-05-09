@@ -25,6 +25,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static Origins.OriginExtensions;
@@ -486,7 +487,17 @@ namespace Origins {
 					}
 				}
 			}
+			if (Player.controlJump) {
+				if (Player.controlRight) {
+					min = float.MaxValue;
+					max = float.MinValue;
+				}
+				if (min > Player.velocity.Y) min = Player.velocity.Y;
+				if (max < Player.velocity.Y) max = Player.velocity.Y;
+			}
 		}
+		float min = float.MaxValue;
+		float max = float.MinValue;
 		public override void OnRespawn() {
 			oldGravDir = Player.gravDir;
 			if (hasProtOS) {
@@ -753,12 +764,11 @@ namespace Origins {
 			}
 		}
 		public override bool CanUseItem(Item item) {
-			if (ravel) {
-				return false;
-			}
+			if (ravel) return false;
 			return true;
 		}
 		public override bool PreItemCheck() {
+			if (weakShimmer) Player.shimmering = false;
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
 			if (disableUseItem) {

@@ -368,6 +368,7 @@ namespace Origins {
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
 		public int relayRodStrength = 0;
+		public bool weakShimmer = false;
 		#endregion
 
 		#region keybinds
@@ -810,6 +811,7 @@ namespace Origins {
 			miniStaticShock = false;
 			staticShockDamage = false;
 			if (!Player.HasBuff<Relay_Rod_Buff>()) relayRodStrength = 0;
+			weakShimmer = false;
 			broth = null;
 			if (staticBrothEffectCooldown > 0)
 				staticBrothEffectCooldown--;

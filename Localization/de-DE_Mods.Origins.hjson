@@ -1191,6 +1191,11 @@ Buffs: {
 			except bandwidth
 			''' */
 	}
+
+	Weak_Shimmer_Debuff: {
+		// DisplayName: Weak Shimmer Debuff
+		// Description: Mods.Origins.Buffs.Weak_Shimmer_Debuff.Description
+	}
 }
 
 DamageClassName: {

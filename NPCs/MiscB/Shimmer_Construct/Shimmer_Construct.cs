@@ -20,6 +20,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		protected readonly static List<AIState> aiStates = [];
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeofCthulhu;
 		public readonly int[] previousStates = new int[6];
+		public bool IsInPhase3 => Main.expertMode && NPC.life * 10 < NPC.lifeMax;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
@@ -29,7 +30,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetDefaults() {
 			NPC.width = 100;
 			NPC.height = 110;
-			NPC.lifeMax = 100;
+			NPC.lifeMax = 1000;
 			NPC.damage = 1;
 			NPC.boss = true;
 			NPC.noGravity = true;
@@ -49,6 +50,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
 			}
 			aiStates[NPC.aiAction].DoAIState(this);
+			if (IsInPhase3) {
+				Rectangle npcRect = NPC.Hitbox;
+				const int active_range = 5000;
+				Rectangle playerRect = new(0, 0, active_range * 2, active_range * 2);
+				foreach (Player player in Main.ActivePlayers) {
+					if (npcRect.Intersects(playerRect.Recentered(player.Center))) {
+						player.AddBuff(Weak_Shimmer_Debuff.ID, 2, true);
+					}
+				}
+			}
 		}
 		public override void BossLoot(ref string name, ref int potionType) {
 			potionType = ItemID.RestorationPotion;
@@ -122,10 +133,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	class Eye_Shimmer_Collision : GlobalNPC {
-		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.EyeofCthulhu;
+		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type is NPCID.EyeofCthulhu or NPCID.ServantofCthulhu;
 		public override void AI(NPC npc) {
 			Collision.WetCollision(npc.position, npc.width, npc.height);
 			if (Collision.shimmer) {
+				npc.buffImmune[BuffID.Shimmer] = false;
 				npc.AddBuff(BuffID.Shimmer, 100, true); // Pass true to quiet as clients execute this as well.
 			}
 		}

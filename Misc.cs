@@ -3442,7 +3442,7 @@ namespace Origins {
 			return maxDist <= 0;
 		}*/
 		public static (Vector2 start, Vector2 end)[] FlipLines((Vector2 start, Vector2 end)[] lines) {
-			var output = new (Vector2 start, Vector2 end)[lines.Length];
+			(Vector2 start, Vector2 end)[] output = new (Vector2 start, Vector2 end)[lines.Length];
 			for (int i = 0; i < lines.Length; i++) {
 				output[i] = (lines[i].end, lines[i].start);
 			}

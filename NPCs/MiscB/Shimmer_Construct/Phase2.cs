@@ -75,9 +75,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[1] = 6 - ContentExtensions.DifficultyDamageMultiplier;
 			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier);
 		}
-		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
-			return base.GetWeight(boss, previousStates);
-		}
 		public class Shimmer_Construct_Missiles : ModProjectile {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
 			public static int ID { get; private set; }
@@ -123,6 +120,54 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				default(MagicMissileDrawer).Draw(Projectile);
 				return false;
 			}
+		}
+	}
+
+	public class SpawnDronesStateState : AIState {
+		public override void Load() {
+			PhaseTwoIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+
+			const float spin_spawn_ratio = 2f;
+			float spinAccelFactor = npc.ai[1] * spin_spawn_ratio;
+			if (npc.ai[2] > -4 + spin_spawn_ratio) npc.ai[3] += 1 / spinAccelFactor;
+			else npc.ai[3] -= 1 / spinAccelFactor;
+			npc.ai[3] = float.Clamp(npc.ai[3], 0, 1);
+			npc.rotation += npc.direction * (0.5f * Math.Max(npc.ai[3] * npc.ai[3], 0));
+
+			if (++npc.ai[0] >= npc.ai[1]) {
+				npc.ai[0] -= npc.ai[1];
+				if (npc.ai[2] > 0 && Main.netMode != NetmodeID.MultiplayerClient) {
+					NPC.NewNPCDirect(
+						npc.GetSource_FromAI(),
+						npc.Center,
+						ModContent.NPCType<Shimmer_Drone>()
+					).velocity = Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * Main.rand.NextFloat(4, 8);
+				}
+				if (--npc.ai[2] <= -4) {
+					SetAIState(boss, StateIndex<AutomaticIdleState>());
+					npc.ai[0] -= ContentExtensions.DifficultyDamageMultiplier * 8;
+				}
+			}
+		}
+		public override void StartAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.ai[1] = 15 - ContentExtensions.DifficultyDamageMultiplier;
+			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier);
+			npc.ai[3] = 0;
+		}
+		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
+			double weight = base.GetWeight(boss, previousStates);
+			if (weight <= 0) return 0;
+			int droneType = ModContent.NPCType<Shimmer_Drone>();
+			int drones = 0;
+			const int threshold = 4;
+			foreach (NPC other in Main.ActiveNPCs) {
+				if (other.type == droneType && ++drones >= threshold) return 0;
+			}
+			return weight * (1 - drones / (float)threshold);
 		}
 	}
 }
