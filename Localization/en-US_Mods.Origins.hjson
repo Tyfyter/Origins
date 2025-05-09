@@ -1755,6 +1755,7 @@ Projectiles: {
 	Shimmer_Construct_Missiles.DisplayName: Shimmer Construct Missiles
 	Chambersite_Minigun_P.DisplayName: Chambersite Minigun
 	Shimmerstar_Staff_P.DisplayName: Shimmerstar
+	Shimmerstar_Staff_P2.DisplayName: Shimmerstar
 }
 
 Prefixes: {

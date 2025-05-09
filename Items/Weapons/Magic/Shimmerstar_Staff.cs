@@ -1,10 +1,7 @@
-using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
-using Origins.NPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
 using PegasusLib;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -13,20 +10,21 @@ using Terraria.GameContent.Liquid;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using Origins.Graphics;
 using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmerstar_Staff : ModItem, ICustomDrawItem {
 		public override string Texture => typeof(Bled_Out_Staff).GetDefaultTMLName();
+		public static int MainFireCount => 6;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 28;
-			Item.noMelee = false;
+			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
 			Item.useTime = 6;
@@ -39,17 +37,37 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = true;
-			Item.useLimitPerAnimation = 6;
+			Item.useLimitPerAnimation = MainFireCount;
+			Item.ChangePlayerDirectionOnShoot = false;
 		}
-		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
-			noHitbox = player.altFunctionUse != 2;
-		}
+		public override bool AltFunctionUse(Player player) => true;
+		public override float UseAnimationMultiplier(Player player) => player.altFunctionUse == 2 ? 0.5f : 1;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
-				int arcIndex = player.direction == 1 ? player.ItemUsesThisAnimation : (7 - player.ItemUsesThisAnimation);
-				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: arcIndex, ai1: player.itemAnimation);
-			} else {
+				int turnDir = (velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt();
+				if (player.ItemUsesThisAnimation == 1) player.ChangeDir(turnDir);
 
+				int arcIndex = player.direction == 1 ? player.ItemUsesThisAnimation : ((MainFireCount + 1) - player.ItemUsesThisAnimation);
+				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: (arcIndex - 0.5f) / (float)MainFireCount, ai1: player.itemAnimation);
+
+				if (player.ItemUsesThisAnimation == Item.useLimitPerAnimation) player.ChangeDir(turnDir);
+			} else {
+				if (player.ItemUsesThisAnimation == 1) {
+					player.ChangeDir((velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt());
+					position = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+					bool secondSwing = player.OriginPlayer().itemComboAnimationTime > 0;
+					Vector2 staffOffset = (player.compositeFrontArm.rotation - (MathHelper.PiOver4 * (secondSwing.ToInt() + 1)) * player.direction).ToRotationVector2() * 32;
+					if (player.direction != -1) staffOffset = -staffOffset;
+					Projectile.NewProjectile(
+						source,
+						position + staffOffset,
+						velocity.RotatedBy(secondSwing.ToDirectionInt() * MathHelper.PiOver2 * -1.25f),
+						ModContent.ProjectileType<Shimmerstar_Staff_P2>(),
+						damage,
+						knockback,
+						ai0: -3
+					);
+				}
 			}
 			return false;
 		}
@@ -57,10 +75,13 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.altFunctionUse != 2) {
 				float offset;
 				float timePerSwing = player.itemAnimationMax * 0.5f;
+				const float stop = 0.5f;
 				if (player.itemAnimation > timePerSwing) {
 					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
+					offset = float.Clamp(offset * (1 + stop), -1, 1);
 				} else {
 					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
+					offset = float.Clamp(offset * (1 + stop), -1, 1);
 				}
 				player.SetCompositeArmFront(
 					true,
@@ -69,13 +90,16 @@ namespace Origins.Items.Weapons.Magic {
 				);
 			} else {
 				float offset;
-				float timePerSwing = player.itemAnimationMax * 0.5f;
-				if (player.itemAnimation > timePerSwing) {
-					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
+				float timePerSwing = player.itemAnimationMax;
+				ref int itemComboAnimationTime = ref player.OriginPlayer().itemComboAnimationTime;
+				if (itemComboAnimationTime > 0) {
+					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing - 1;
+					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 0 : 4; 
 				} else {
 					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
+					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 4 : 0;
 				}
-				offset = Math.Clamp(offset * 2, -1, 1);
+				offset *= 1.65f;
 				player.SetCompositeArmFront(
 					true,
 					Player.CompositeArmStretchAmount.Full,
@@ -91,10 +115,10 @@ namespace Origins.Items.Weapons.Magic {
 			} else {
 				offset = (timePerSwing - drawInfo.drawPlayer.itemAnimation) * -2 / timePerSwing + 1;
 			}
-			Vector2 origin = new Vector2(13, 13);
+			Vector2 origin = new(13, 13);
 			float rotOffset = MathHelper.PiOver2 * 0.875f;
 			if (drawInfo.drawPlayer.altFunctionUse == 2) {
-				origin = new Vector2(9, 9);
+				origin = new(9, 9);
 				rotOffset = MathHelper.PiOver4;
 			}
 			DrawData data = new(
@@ -131,6 +155,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.timeLeft = 600;
 			Projectile.ignoreWater = true;
 			Projectile.hide = true;
+			Projectile.tileCollide = false;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.ai[2] = Projectile.velocity.Length();
@@ -140,13 +165,13 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[1] > 0) {
 				Projectile.hide = true;
 				Player player = Main.player[Projectile.owner];
-				Vector2 targetPos = player.Top - (((Projectile.ai[0] - 0.5f) / 6) * MathHelper.Pi).ToRotationVector2() * 32;
+				Vector2 targetPos = player.Top - ((Projectile.ai[0]) * MathHelper.Pi).ToRotationVector2() * 32;
 				Projectile.velocity = (targetPos - Projectile.Center).WithMaxLength(8) + player.velocity;
 				if (--Projectile.ai[1] <= 0) {
 					Projectile.ai[0] = -1;
 					if (Projectile.owner == Main.myPlayer) {
 						float bestAngle = 0.5f;
-						Vector2 aimOrigin = player.MountedCenter;
+						Vector2 aimOrigin = player.Top;
 						Vector2 aimVector = aimOrigin.DirectionTo(Main.MouseWorld);
 						bool foundTarget = player.DoHoming((target) => {
 							float angle = Vector2.Dot(aimOrigin.DirectionTo(Main.MouseWorld.Clamp(target.Hitbox)), aimVector);
@@ -166,10 +191,13 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			} else if(Projectile.ai[0] != -1) {
 				NPC target = Main.npc[(int)Projectile.ai[0]];
-				if (target.active) {
+				if (target.CanBeChasedBy(Projectile)) {
 					Projectile.velocity = Projectile.DirectionTo(target.Center) * Projectile.ai[2];
 				} else {
 					Projectile.ai[0] = -1;
+				}
+				if (!Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
+					Projectile.tileCollide = true;
 				}
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
@@ -212,6 +240,72 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			//Main.EntitySpriteDraw(texture, vector73, null, color, rotation, origin, vector74, SpriteEffects.None);
 			return false;
+		}
+	}
+	public class Shimmerstar_Staff_P2 : Shimmerstar_Staff_P {
+		public override bool ShouldUpdatePosition() => Projectile.ai[0] != -3;
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			if (Projectile.ai[0] == -3) {
+				if (player.ItemAnimationEndingOrEnded) {
+					Projectile.ai[0] = -2;
+					Projectile.penetrate = 1;
+				} else {
+					Vector2 position = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+					bool secondSwing = player.OriginPlayer().itemComboAnimationTime > 0;
+					Vector2 staffDir = (player.compositeFrontArm.rotation - MathHelper.PiOver2 * player.direction).ToRotationVector2();
+					if (player.direction != -1) staffDir = -staffDir;
+					Projectile.velocity = staffDir.RotatedBy(secondSwing.ToDirectionInt() * player.direction * MathHelper.PiOver2 * -0.5f) * Projectile.ai[2];
+					Projectile.Center = position + staffDir * 40;
+					Projectile.penetrate = -1;
+					return;
+				}
+			}
+			if (Projectile.ai[0] == -2) {
+				Projectile.ai[0] = -1;
+				if (Projectile.owner == Main.myPlayer) {
+					float bestAngle = 0.5f;
+					Vector2 aimOrigin = Projectile.Center;
+					Vector2 aimVector = aimOrigin.DirectionTo(Main.MouseWorld);
+					bool foundTarget = player.DoHoming((target) => {
+						float angle = Vector2.Dot(aimOrigin.DirectionTo(Main.MouseWorld.Clamp(target.Hitbox)), aimVector);
+						if (angle > bestAngle) {
+							Projectile.ai[0] = target.whoAmI;
+							bestAngle = angle;
+							return true;
+						}
+						return false;
+					});
+					if (foundTarget) {
+						aimVector = Main.npc[(int)Projectile.ai[0]].Center - Projectile.Center;
+					}
+					Projectile.ai[1] = aimVector.ToRotation();
+					Projectile.netUpdate = true;
+				}
+			} else {
+				if (Projectile.ai[0] != -1) {
+					NPC target = Main.npc[(int)Projectile.ai[0]];
+					if (target.CanBeChasedBy(Projectile)) {
+						Projectile.ai[1] = (Main.npc[(int)Projectile.ai[0]].Center - Projectile.Center).ToRotation();
+					} else {
+						Projectile.ai[0] = -1;
+					}
+				}
+				PolarVec2 movement = (PolarVec2)Projectile.velocity;
+				float growingTurnSpeed = Math.Min(Projectile.localAI[0] / 20, 1f);
+				growingTurnSpeed *= growingTurnSpeed;
+				GeometryUtils.AngularSmoothing(ref movement.Theta, Projectile.ai[1], 0.1f + growingTurnSpeed * 0.1f);
+				Projectile.velocity = (Vector2)movement;
+			}
+			if (++Projectile.localAI[0] >= 15 && !Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
+				Projectile.tileCollide = true;
+			}
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.Knockback *= 2;
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.Knockback *= 2;
 		}
 	}
 }
