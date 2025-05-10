@@ -211,6 +211,7 @@ ENEMY NPCS:
 (^) Riven Protoform*
 (X) Scanner Scout
 (^) Shattered Goldfish*
+(@, ^3) Shimmer Drone !!!
 (X) Shooter Creeper
 (^) Single-Cellular Nautilus*
 (^) Slime Worm (Slorm)*
@@ -304,6 +305,7 @@ STATUS EFFECTS:
 (^) Rasterized*
 (^) Riven Assimilation*
 (^) Shadefire*
+(@, #2) Shimmering? !!! (faster fall and unaffected by liquids)
 (^) Static Shock*
 (^) Torn*
 (^) Totally Safe*
@@ -450,7 +452,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(@4, #2) Lazy Cloak° !!!
+(@4, ^3) Lazy Cloak° !!!
 (^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
@@ -460,6 +462,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
+(X) Master Magician's Cloak !!!
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Mildew Heart
@@ -686,13 +689,12 @@ MELEE WEAPONS:
 (^) Fiberglass Sword*
 (^) Hemorang*
 (^) Krakram*
-(X) Laminus !!!
 (^) Marrowick Sword*
 (^) Nineball*
 (^) Orbital Saw*
 (^) Ripper Lance*
 (^) Riverang*
-(#, ^2) Silicon Sword !!!
+(^) Silicon Sword
 (^) Snapthrow*
 (^) Soldering Iron
 (^) Soul Snatcher*
@@ -701,7 +703,6 @@ MELEE WEAPONS:
 (^) Switchblade*
 (^) Thunderbolt
 (^) Triple Threat*
-(X) Twinsies !!!
 (^) Vorpal Sword (Cursed)*
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent*
@@ -709,6 +710,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Boomboom
+(X) Chambersite Phasesaber !!!
 (^) Crystal Cutters
 (^) Depth Charge
 (^) Knee Slapper*
@@ -804,7 +806,7 @@ RANGED WEAPONS:
 (X) Tripod Jawbow
 
 (^) Astoxo
-(X) Chambersite Minigun !!!
+(@, ^3) Chambersite Minigun !!!
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
@@ -837,6 +839,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Manasynk*
 (^) Nerve Flan
+(@, #2) Shimmerstar Staff !!!
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -1216,11 +1219,12 @@ TILES:
 (^) Unsuspicious Bush
 
 (^) Acetabularia*
-(#, ^2) Aether Core !!!
 (X) Ashen Scrap Foliage
 (X) Ashen Soot Foliage
 (X) Barnacle Infested Coral !!!
 (^) Brineglow Vine*
+(X) Cargo Elevator Door
+(X) Chambersite Gem Tree !!!
 (^) Defiled Foliage
 (々) Defiled Heart
 (^) Defiled Relay
@@ -1324,10 +1328,11 @@ MATERIALS:
 (^) Urn of Ashes*
 
 (^) Alkahest*
+(^) Alkaliphiliac Tissue
 (^) Black Bile*
 (^) Bleeding Obsidian Shard*
-(^) Alkaliphiliac Tissue
 (^) Brineglow*
+(X) Chambersite Gemcorn !!!
 (^) Eitrite Bar*
 (^) Respyrite*
 
@@ -1360,8 +1365,8 @@ CRITTERS AND FISH:
 |---
 (^) Amoeba Buggy*
 (^) Bug
-(X) Chambersite Bunny !!!
-(X) Chambersite Squirrel !!!
+(^) Chambersite Bunny
+(^) Chambersite Squirrel
 (^) Cicada 3301*
 
 (^) Bilemouth*
@@ -1449,7 +1454,6 @@ CONSUMABLES:
 (^) Sour Apple
 (^) Vanilla Shake*
 
-(#, ^2) Aether Orb !!!
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
 (^) Lost Picture Frame
@@ -1496,6 +1500,7 @@ CONSUMABLES:
 (^) World Cracker Bag*
 ---
 
+
 MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
@@ -1527,8 +1532,8 @@ MOUNTS & PETS:
 
 AMMO:
 |---
-(#2, ^2) Aether Bullet !!! (proper proj. color and recipe)
-(#2, ^2) Aether Canister !!! (proper proj. color and recipe)
+(#2, ^2) Aether Bullet !!! (recipe)
+(#2, ^2) Aether Canister !!! (recipe)
 (^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*
@@ -1577,6 +1582,7 @@ AMMO:
 (^) Teal Solution*
 ---
 
+
 CROSS-MOD CONTENT:
 |---
 (ᗢ) Fargo's caught npcs
@@ -1586,6 +1592,7 @@ CROSS-MOD CONTENT:
 
 (X) Contagion Assimilation
 
+(^) Aether Orb
 (々) Ashen Chest
 (々) Ashen Renewal
 (々) Ashen Renewal Supreme

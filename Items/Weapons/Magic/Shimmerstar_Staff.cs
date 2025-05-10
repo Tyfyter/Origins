@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 28;
+			Item.damage = 18;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
@@ -31,9 +31,9 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 42;
 			Item.shoot = ModContent.ProjectileType<Shimmerstar_Staff_P>();
 			Item.shootSpeed = 12f;
-			Item.mana = 13;
+			Item.mana = 17;
 			Item.knockBack = 3f;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = true;
@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.ChangePlayerDirectionOnShoot = false;
 		}
 		public override bool AltFunctionUse(Player player) => true;
-		public override float UseAnimationMultiplier(Player player) => player.altFunctionUse == 2 ? 0.5f : 1;
+		public override float UseAnimationMultiplier(Player player) => player.altFunctionUse == 2 ? 0.35f : 1;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
 				int turnDir = (velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt();

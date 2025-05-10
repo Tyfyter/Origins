@@ -5987,12 +5987,16 @@ Silicon_Sword: {
 
 Chambersite_Minigun: {
 	DisplayName: Chambersite Minigun
-	Tooltip: ""
+	Tooltip: Fires in a spread before ramping up
 }
 
 Aetherite_Bar.DisplayName: Aetherite Bar
 
 Shimmerstar_Staff: {
 	DisplayName: Shimmerstar Staff
-	Tooltip: ""
+	Tooltip:
+		'''
+		Has an interesting effect of which a tooltip has yet to be added, but she definitely made sure to include the reference of what the item is inspired by for now
+		'Oh hey... this is the area I was in charge for three seconds'
+		'''
 }
