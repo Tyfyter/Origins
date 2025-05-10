@@ -660,8 +660,8 @@ namespace Origins {
 			if (fullSend && modifiers.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				modifiers.FinalDamage *= 0.14f;
 			}
-			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
-				modifiers.SourceDamage *= 2;
+			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 12) < 3) {
+				modifiers.FinalDamage *= 1.5f;
 			}
 			allManaDamage = false;
 			manaDamageToTake = 0;
@@ -696,7 +696,7 @@ namespace Origins {
 					Player.GetModPlayer<OriginPlayer>().stunTime;
 				}*/
 				Player.lifeRegen -= 15;
-				modifiers.ScalingArmorPenetration += 0.2f;
+				modifiers.ScalingArmorPenetration += 0.1f;
 			}
 			if (ashenKBReduction) {
 				modifiers.Knockback -= 0.15f;

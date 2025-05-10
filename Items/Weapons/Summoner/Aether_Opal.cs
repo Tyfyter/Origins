@@ -30,14 +30,14 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.damage = 30;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 4;
-			Item.mana = 12;
+			Item.mana = 24;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Shimmer_Guardian_Buff.ID;
 			Item.shoot = Shimmer_Guardian_Counter.ID;

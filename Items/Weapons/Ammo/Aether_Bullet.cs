@@ -1,4 +1,5 @@
 using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -21,12 +22,12 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(copper: 14);
 			Item.rare = ItemRarityID.Green;
 		}
-		/*public override void AddRecipes() {
-			Recipe.Create(Type, 60)
-			.AddIngredient(ItemID.MusketBall, 60)
-			.AddIngredient(ItemID.MusketBall, 60)
+		public override void AddRecipes() {
+			Recipe.Create(Type, 90)
+			.AddIngredient(ItemID.MusketBall, 90)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>())
 			.Register();
-		}*/
+		}
 	}
 	public class Aether_Bullet_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;

@@ -436,6 +436,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
+(X) Gaming Glove !!!
 (^) Golden Lotus
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
@@ -494,6 +495,7 @@ ACCESSORIES:
 (^) Rebreather Gear
 (X) Reformward
 (^) Resin Shield*
+(X) Resizing Glove !!!
 (^) Return To Sender*
 (^) Rockstar Choker
 (^) Ruby Reticle*
@@ -613,13 +615,12 @@ VANITY:
 UTILITIES:
 |---
 (^) Amoeba Hook*
+(#, ^2) Chambersite Hook !!!
 (^) Tangela Tether
 
 (X) Strange Backpack
 
 (^) Hydrolantern
-(^) Impenetrable Trashcan Lid*
-(^) Indestructible Saddle*
 (^) Salty Seed (Mitosis Node)*
 (^5 ?) Saltier Seed (Mitosis Node)
 ---
@@ -710,7 +711,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Boomboom
-(X) Chambersite Phasesaber !!!
+(#, ^2) Chambersite Phasesaber !!!
 (^) Crystal Cutters
 (^) Depth Charge
 (^) Knee Slapper*
@@ -806,7 +807,7 @@ RANGED WEAPONS:
 (X) Tripod Jawbow
 
 (^) Astoxo
-(@, ^3) Chambersite Minigun !!!
+(#2, ^2) Chambersite Minigun !!! (needs visual code)
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
@@ -888,6 +889,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
+(@, #2) Aether Opal !!! (custom sounds)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
@@ -1002,12 +1004,13 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
+(X) Voltefuse !!!
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(X) Chambersite Mine Launcher !!!
+(#, ^2) Chambersite Mine Launcher !!!
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair
@@ -1157,15 +1160,15 @@ TILES:
 (X) Bug Cage°
 (X) Cancer Block° !!!
 (X) Cancer Furniture° !!!
-(X) Chambersite Bunny Cage° !!!
-(X) Chambersite Gem Lock° !!!
+(^) Chambersite Bunny Cage°
+(#, ^2) Chambersite Gem Lock° !!!
 (^) Chambersite Gemspark°
 (^) Chambersite Gemstone°
 (^) Chambersite Gemstone (Corruption)°
 (^) Chambersite Gemstone (Crimson)°
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
-(X) Chambersite Squirrel Cage° !!!
+(^) Chambersite Squirrel Cage°
 (X) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
@@ -1224,7 +1227,7 @@ TILES:
 (X) Barnacle Infested Coral !!!
 (^) Brineglow Vine*
 (X) Cargo Elevator Door
-(X) Chambersite Gem Tree !!!
+(#, ^2) Chambersite Gem Tree !!!
 (^) Defiled Foliage
 (々) Defiled Heart
 (^) Defiled Relay
@@ -1332,7 +1335,7 @@ MATERIALS:
 (^) Black Bile*
 (^) Bleeding Obsidian Shard*
 (^) Brineglow*
-(X) Chambersite Gemcorn !!!
+(#, ^2) Chambersite Gemcorn !!!
 (^) Eitrite Bar*
 (^) Respyrite*
 
@@ -1357,7 +1360,7 @@ MATERIALS:
 (^) Qube°
 (X) Weapon Blueprint°
 
-(X) Large Chambersite !!!
+(#, ^2) Large Chambersite !!!
 ---
 
 
@@ -1517,10 +1520,13 @@ MOUNTS & PETS:
 (^) Chew Toy (Chee Toy)*
 (^) Strange Power-Up (Platformer Mech)*
 
+(#, ^2) Chambersite Minecart !!!
 (^) Dash Ravel*
 (^) Depth Ravel*
 (X) Drill Ravel°
 (X) Grapple Ravel°
+(^) Impenetrable Trashcan Lid*
+(^) Indestructible Saddle*
 (^) Ninja Ravel*
 (^) Ravel*
 (^) Spider Ravel*
@@ -1532,8 +1538,8 @@ MOUNTS & PETS:
 
 AMMO:
 |---
-(#2, ^2) Aether Bullet !!! (recipe)
-(#2, ^2) Aether Canister !!! (recipe)
+(^) Aether Bullet
+(^) Aether Canister
 (^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*

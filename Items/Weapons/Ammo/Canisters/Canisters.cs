@@ -278,7 +278,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 5;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.Fireblossom)
 			.AddRecipeGroup(RecipeGroupID.IronBar, 10)
 			.AddTile(TileID.Anvils)
@@ -456,7 +456,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.Ichor)
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -487,7 +487,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient<Black_Bile>()
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -568,7 +568,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient<Alkahest>()
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -640,7 +640,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient<Brineglow_Item>()
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -682,7 +682,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddIngredient<Felnum_Bar>(3)
 			.AddTile(TileID.Anvils)
@@ -714,7 +714,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 15;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.BeeWax)
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.SilverBars, 10)
 			.AddTile(TileID.Anvils)
@@ -752,13 +752,12 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.rare = ItemRarityID.Orange;
 			Item.ArmorPenetration += 3;
 		}
-		/*public override void AddRecipes() {
-			Recipe.Create(Type, 10)
-			.AddIngredient(ItemID.FallenStar)
-			.AddIngredient<Felnum_Bar>(3)
-			.AddTile(TileID.Anvils)
+		public override void AddRecipes() {
+			Recipe.Create(Type, 50)
+			.AddIngredient(ItemID.ExplosivePowder, 50)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 3)
 			.Register();
-		}*/
+		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
 			if (projectile.ModProjectile is ICanisterProjectile canister) {

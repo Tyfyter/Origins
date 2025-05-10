@@ -10,7 +10,6 @@ using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Chambersite_Minigun : ModItem {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.Megashark;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.gunProj[Type] = true;
 		}
