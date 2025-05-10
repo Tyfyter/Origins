@@ -411,6 +411,8 @@ namespace Origins {
 		public int keytarMode = 0;
 		public float soulSnatcherTime = 0;
 		public bool soulSnatcherActive = false;
+
+		public bool shimmerGuardianMinion = false;
 		#endregion
 
 		#region visuals
@@ -822,6 +824,8 @@ namespace Origins {
 			
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
+
+			shimmerGuardianMinion = false;
 
 			manaShielding = 0f;
 

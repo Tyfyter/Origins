@@ -1197,6 +1197,11 @@ Buffs: {
 		// DisplayName: Shimmering?
 		// Description: Any proof you might have of what's happening to you has gone insubstantial!
 	}
+
+	Shimmer_Guardian_Buff: {
+		// DisplayName: Shimmer Guardian Buff
+		// Description: Mods.Origins.Buffs.Shimmer_Guardian_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1756,6 +1761,9 @@ Projectiles: {
 	// Chambersite_Minigun_P.DisplayName: Chambersite Minigun
 	// Shimmerstar_Staff_P.DisplayName: Shimmerstar
 	// Shimmerstar_Staff_P2.DisplayName: Shimmerstar
+	// Shimmer_Guardian.DisplayName: Shimmer Guardian
+	// Shimmer_Guardian_Counter.DisplayName: Shimmer Guardian Counter
+	// Shimmer_Guardian_Shard.DisplayName: Shimmer Guardian Shard
 }
 
 Prefixes: {

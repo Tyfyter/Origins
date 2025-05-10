@@ -238,7 +238,6 @@ namespace Origins.Items.Weapons.Magic {
 				Vector2 pos = vector73 + spinningpoint6.RotatedBy(f * MathHelper.TwoPi);
 				Main.EntitySpriteDraw(texture, pos, null, new(LiquidRenderer.GetShimmerBaseColor(pos.X, pos.Y) * new Vector4(Vector3.One, 0.5f)), rotation, origin, scale, SpriteEffects.None);
 			}
-			//Main.EntitySpriteDraw(texture, vector73, null, color, rotation, origin, vector74, SpriteEffects.None);
 			return false;
 		}
 	}

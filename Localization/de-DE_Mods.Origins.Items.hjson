@@ -6000,3 +6000,8 @@ Shimmerstar_Staff: {
 		'Oh hey... this is the area I was in charge for three seconds'
 		''' */
 }
+
+Aether_Opal: {
+	// DisplayName: Aether Opal
+	// Tooltip: ""
+}
