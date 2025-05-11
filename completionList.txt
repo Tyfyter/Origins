@@ -362,6 +362,7 @@ ARMOR:
 
 (^) Blast Armor*
 (X) Chambersite Armor° !!!
+(X) Chambersite Robe !!!
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -711,6 +712,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Boomboom
+(X) Chambersite Phaseblade !!!
 (#, ^2) Chambersite Phasesaber !!!
 (^) Crystal Cutters
 (^) Depth Charge
@@ -1598,7 +1600,7 @@ CROSS-MOD CONTENT:
 
 (X) Contagion Assimilation
 
-(^) Aether Orb
+(#3) Aether Orb (instantly spawns the SC on shimmer contact)
 (々) Ashen Chest
 (々) Ashen Renewal
 (々) Ashen Renewal Supreme
