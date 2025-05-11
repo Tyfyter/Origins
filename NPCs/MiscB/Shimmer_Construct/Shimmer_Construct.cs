@@ -88,6 +88,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
 		}
+		public override void OnKill() {
+			Boss_Tracker.Instance.downedShimmerConstruct = true;
+			NetMessage.SendData(MessageID.WorldData);
+		}
 		public static void SetAIState(Shimmer_Construct boss, int state) {
 			NPC npc = boss.NPC;
 			aiStates[npc.aiAction].TrackState(boss.previousStates);

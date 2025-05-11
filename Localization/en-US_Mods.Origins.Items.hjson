@@ -6005,3 +6005,8 @@ Aether_Opal: {
 	DisplayName: Aether Opal
 	Tooltip: Summons a Shimmer Guardian to fight for you
 }
+
+Aether_Orb: {
+	DisplayName: Aether Orb
+	Tooltip: Throw into some shimmer to summon the {$Mods.Origins.NPCs.Shimmer_Construct.DisplayName}
+}
