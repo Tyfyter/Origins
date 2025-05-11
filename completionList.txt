@@ -616,7 +616,7 @@ VANITY:
 UTILITIES:
 |---
 (^) Amoeba Hook*
-(#, ^2) Chambersite Hook !!!
+(☻) Chambersite Hook !!!
 (^) Tangela Tether
 
 (X) Strange Backpack

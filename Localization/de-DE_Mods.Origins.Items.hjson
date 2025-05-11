@@ -6010,3 +6010,8 @@ Aether_Orb: {
 	// DisplayName: Aether Orb
 	// Tooltip: Throw into some shimmer to summon the {$Mods.Origins.NPCs.Shimmer_Construct.DisplayName}
 }
+
+Chambersite_Hook: {
+	// DisplayName: Chambersite Hook
+	// Tooltip: ""
+}

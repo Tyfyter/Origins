@@ -1629,7 +1629,7 @@ Projectiles: {
 	// TUDFLOMD_Rocket_Green.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
 	// Eternanite_P.DisplayName: Eternanite
 	// Felnum_Ore_Slime_Zap.DisplayName: Felnum Slime
-	// Harpoon_Burst_Rifle_P.DisplayName: Harpoon Burst Rifle P
+	// Harpoon_Burst_Rifle_P.DisplayName: Harpoon Burst Rifle
 	// Mildew_Whip_P.DisplayName: Mildew Whip
 	// Eyenade_P.DisplayName: Eyenade
 	// Chipper_Knife_P.DisplayName: Chipper Knife
@@ -1678,16 +1678,16 @@ Projectiles: {
 	// Explosive_Barrel_P.DisplayName: Explosive Barrel
 	// Acrid_Spout_P.DisplayName: Acrid Spout
 	// Acrid_Spout_Droplet.DisplayName: Acrid Spout Droplet
-	// Boomboom_P.DisplayName: Boomboom P
+	// Boomboom_P.DisplayName: Boomboom
 	// Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
-	// Fumethrower_P.DisplayName: Fumethrower P
+	// Fumethrower_P.DisplayName: Fumethrower
 	// Bomb_Trap_Bomb.DisplayName: Bomb Trap Bomb
 	// Bomb_Trap_Grenade.DisplayName: Bomb Trap Grenade
 	// Bomb_Trap_Dynamite.DisplayName: Bomb Trap Dynamite
 	// Soulslasher_Slash.DisplayName: Soulslasher Slash
 	// Soulslasher_Swing.DisplayName: Soulslasher Swing
-	// Soulslasher_P.DisplayName: Soulslasher P
-	// Latchkey_P.DisplayName: Latchkey P
+	// Soulslasher_P.DisplayName: Soulslasher
+	// Latchkey_P.DisplayName: Latchkey
 	// Minty_Retaliation_Visual.DisplayName: Minty Retaliation Visual
 	// The_Foot_Smash.DisplayName: The Foot Smash
 	// The_Foot_Flail.DisplayName: The Foot Flail
@@ -1696,8 +1696,8 @@ Projectiles: {
 	// Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls
 	// Venom_Shield_P.DisplayName: Venom Shield
 	// Sunny_Sunflower.DisplayName: Sunny Sunflower
-	// Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed P
-	// Sunny_Sunflower_P.DisplayName: Sunny Sunflower P
+	// Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed
+	// Sunny_Sunflower_P.DisplayName: Sunny Sunflower
 	// Golden_Lotus_Fairy.DisplayName: Golden Lotus Fairy
 	// DefiledNukeProj.DisplayName: "{§Defiled} Nuke"
 	// DefiledNukeSupremeProj.DisplayName: "{§Defiled} Nuke Supreme"
@@ -1711,26 +1711,26 @@ Projectiles: {
 	// Keytar_Lead.DisplayName: Keytar Lead
 	// Keytar_Synth.DisplayName: Keytar Synth
 	// Astoxo_Lightning.DisplayName: Astoxo Lightning
-	// Nerve_Flan_P.DisplayName: Nerve Flan P
+	// Nerve_Flan_P.DisplayName: Nerve Flan
 	// Defiled_Cyclops_Bone_Latcher.DisplayName: "{§Defiled} Cyclops Bone Latcher"
 	// Defiled_Krusher_P1.DisplayName: "{§Defiled} Krusher"
 	// Defiled_Krusher_P2.DisplayName: "{§Defiled} Krusher"
 	// Defiled_Krusher_P3.DisplayName: "{§Defiled} Krusher"
-	// Impetus_P.DisplayName: Impetus P
-	// Impetus_Splut_P.DisplayName: Impetus Splut P
+	// Impetus_P.DisplayName: Impetus
+	// Impetus_Splut_P.DisplayName: Impetus Splut
 	// Impetus_Shrapnel.DisplayName: Impetus Shrapnel
-	// Rocket_Rifle_P.DisplayName: Rocket Rifle P
-	// Inject_Incantation_P.DisplayName: Inject Incantation P
+	// Rocket_Rifle_P.DisplayName: Rocket Rifle
+	// Inject_Incantation_P.DisplayName: Inject Incantation
 	// Huff_Puffer.DisplayName: Huff Puffer
 	// Mildew_Carrion_Spore.DisplayName: "{§Mildew_Carrion} Spore"
 	// Mildew_Carrion_Spore2.DisplayName: "{§Mildew_Carrion} Spore"
 	// Mildew_Carrion_Spore3.DisplayName: "{§Mildew_Carrion} Spore"
 	// Mildew_Incantation_P.DisplayName: Mildew Incantation
 	// Mildew_Incantation_Creeper.DisplayName: Mildew Incantation Creeper
-	// Eye_Of_Aether_P.DisplayName: Eye Of Aether P
+	// Eye_Of_Aether_P.DisplayName: Eye Of Aether
 	// Soul_Snatcher_P.DisplayName: Soul Snatcher
 	// Soul_Snatcher_Spin.DisplayName: Soul Snatcher Spin
-	// Tangela_Tether_P.DisplayName: "{§Tangela} Tether P"
+	// Tangela_Tether_P.DisplayName: "{§Tangela} Tether"
 	// Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
 	// Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
 	// Greasy_Gas.DisplayName: Greasy Gas
@@ -1764,6 +1764,7 @@ Projectiles: {
 	// Shimmer_Guardian.DisplayName: Shimmer Guardian
 	// Shimmer_Guardian_Counter.DisplayName: Shimmer Guardian Counter
 	// Shimmer_Guardian_Shard.DisplayName: Shimmer Guardian Shard
+	// Chambersite_Hook_P.DisplayName: Chambersite Hook
 }
 
 Prefixes: {
