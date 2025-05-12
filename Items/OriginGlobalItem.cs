@@ -169,6 +169,10 @@ namespace Origins.Items {
 			}
 			return null;
 		}
+		public override bool NeedsAmmo(Item item, Player player) {
+			if (wishingGlassActive) return false;
+			return true;
+		}
 		public override void UpdateEquip(Item item, Player player) {
 			switch (item.type) {
 				case ItemID.MiningHelmet:

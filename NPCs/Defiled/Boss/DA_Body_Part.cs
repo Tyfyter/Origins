@@ -309,13 +309,6 @@ namespace Origins.NPCs.Defiled.Boss {
 				return;
 			}
 
-			Point coords = Utils.ToTileCoordinates(NPC.Center);
-			int tileType = WorldGen.TileType(coords.X, coords.Y);
-			if (tileType != -1 && Main.tileSolid[tileType] && !Main.tileSolidTop[tileType]) {
-
-				NPC.Center = Vector2.Lerp(NPC.Center, NPC.targetRect.Center() - new Vector2(0, 200), 0.2f);
-			}
-
 			if (NPC.collideY || NPC.velocity.Y == 0) {
 				NPC.velocity.X = 0;
 				Timer++;

@@ -81,7 +81,7 @@ namespace Origins {
 						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
 					}
 				}
-			} else if(riptideSet && !Player.mount.Active) {
+			} else if (riptideSet && !Player.mount.Active) {
 				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
@@ -168,6 +168,34 @@ namespace Origins {
 					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
 					dashDelay = 10 + 6;
 					refactoringPiecesDashCooldown = 120;
+				}
+			} else if (shimmerShield && !Player.mount.Active) {
+				otherDash = true;
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int shimmerDashDuration = 30;
+				float shimmerDashSpeed = 9f;
+				if (dashVase) shimmerDashSpeed *= 1.2f;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < shimmerDashSpeed)) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					shimmerShieldDashTime = shimmerDashDuration * dashDirection;
+					Player.timeSinceLastDashStarted = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
+					}
+				}
+				if (shimmerShieldDashTime != 0) {
+					if (Math.Abs(shimmerShieldDashTime) > 15) {
+						Player.dashDelay = -1;
+						Player.velocity.X = shimmerDashSpeed * Math.Sign(shimmerShieldDashTime);
+					} else {
+						Player.dashDelay = 25;
+					}
+					Player.cShield = Shimmer_Dye.ShaderID;
+					shimmerShieldDashTime -= Math.Sign(shimmerShieldDashTime);
+					dashDelay = 25;
 				}
 			} else if (loversLeap) {
 				const int loversLeapDuration = 6;

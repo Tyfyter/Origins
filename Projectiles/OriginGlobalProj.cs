@@ -354,7 +354,7 @@ namespace Origins.Projectiles {
 					hasUsedMitosis = false;
 				}
 			}
-			if (!projectile.ownerHitCheck && projectile.damage > 0) {
+			if (!projectile.ownerHitCheck && projectile.damage > 0 && OriginsSets.Projectiles.CanBeDeflected[projectile.type]) {
 				for (int i = 0; i < The_Bird_Swing.reflectors.Count; i++) {
 					Projectile reflector = Main.projectile[The_Bird_Swing.reflectors[i]];
 					Rectangle hitbox = reflector.Hitbox;

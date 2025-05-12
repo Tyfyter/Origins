@@ -7,7 +7,6 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Journal;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
 using Origins.NPCs.MiscE;
@@ -21,8 +20,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using ThoriumMod.Empowerments;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -74,6 +71,7 @@ namespace Origins {
 			necromanaUsedThisUse = false;
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {
+			if (wishingGlassActive) return false;
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
 				if (endlessExplosives && Main.rand.NextBool(15, 100)) return false;
 				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
@@ -464,6 +462,24 @@ namespace Origins {
 				int damageMult = 1 + Player.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt();
 				Player.lifeRegen -= 9 * damageMult;
 			}
+		}
+		public override bool CanBeHitByProjectile(Projectile proj) {
+			if (shimmerShieldDashTime != 0 && OriginsSets.Projectiles.CanBeDeflected[proj.type]) {
+				Vector2 direction = Vector2.UnitX * Math.Sign(shimmerShieldDashTime);
+				if (proj.TryGetGlobalProjectile(out HostileGlobalProjectile hostileProjectile) && hostileProjectile.TryGetOwnerPosition(out Vector2? ownerPosition) == HostileGlobalProjectile.OwnerState.Alive) {
+					direction = proj.DirectionTo(ownerPosition ?? direction);
+				}
+				proj.reflected = true;
+				if (proj.hostile) proj.damage *= 3;
+				proj.hostile = false;
+				proj.friendly = true;
+				float speed = Math.Max(12f / proj.MaxUpdates, proj.velocity.Length());
+				proj.velocity = direction * speed;
+				proj.owner = Player.whoAmI;
+				proj.netUpdate = true;
+				return false;
+			}
+			return true;
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {

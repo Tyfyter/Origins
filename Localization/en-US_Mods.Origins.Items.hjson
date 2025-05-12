@@ -6035,3 +6035,8 @@ Wishing_Glass: {
 	DisplayName: Wishing Glass
 	Tooltip: ""
 }
+
+Shimmer_Shield: {
+	DisplayName: Shimmer Shield
+	Tooltip: ""
+}

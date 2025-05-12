@@ -35,8 +35,10 @@ namespace Origins {
 			.Description("Controls how Magic Tripwire and similar effects detonate the projectile")
 			.RegisterIntSet(0);
 			public static bool[] CanBeDeflected { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(CanBeDeflected))
-			.Description("Controls whether compatible projectile deflection effects will affect the projectile")
-			.RegisterBoolSet(true);
+			.Description("Controls whether compatible projectile deflection and reflection effects will affect the projectile")
+			.RegisterBoolSet(true,
+				ProjectileID.FairyQueenSunDance
+			);
 			public static (bool first, bool second, bool third)[] DuplicationAIVariableResets { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(DuplicationAIVariableResets))
 			.Description("Controls which ai variables will be carried over to duplicates from compatible projectile duplication effects, false to carry over, true to reset")
 			.RegisterCustomSet((false, false, false));
