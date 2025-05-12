@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Ranged {
 				velocity *= speed;
 
 				position += Projectile.velocity * 37 + new Vector2(-Projectile.velocity.Y, Projectile.velocity.X) * 6 * player.direction;
-				CombinedHooks.ModifyShootStats(player, player.HeldItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockBack);;
+				CombinedHooks.ModifyShootStats(player, player.HeldItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockBack);
 				float spread = 0.7f - Math.Min(Projectile.ai[1], 6) * 0.1f;
 				int projectiles = 1;
 				if (Projectile.ai[2] == 0) {

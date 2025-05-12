@@ -297,6 +297,8 @@ namespace Origins {
 		public bool goldenLotus = false;
 		public Item goldenLotusItem = null;
 		public int goldenLotusProj = -1;
+		public bool resizingGlove = false;
+		public float resizingGloveScale = 1f;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -692,6 +694,11 @@ namespace Origins {
 					}
 					SoundEngine.PlaySound(SoundID.NPCDeath13.WithVolumeScale(0.75f), Player.position);
 				}
+			}
+			if (resizingGlove) {
+				const float strength = 1.2f;
+				if (Player.ItemAnimationJustStarted) resizingGloveScale = Main.rand.NextFloat(1 / strength, float.BitIncrement(strength));
+				resizingGlove = false;
 			}
 			lotteryTicketItem = null;
 

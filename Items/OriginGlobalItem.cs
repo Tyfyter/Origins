@@ -157,7 +157,9 @@ namespace Origins.Items {
 		}
 		public override void ModifyItemScale(Item item, Player player, ref float scale) {
 			if (item.CountsAsClass(DamageClass.Melee)) {
-				scale *= player.OriginPlayer().meleeScaleMultiplier;
+				OriginPlayer originPlayer = player.OriginPlayer();
+				scale *= originPlayer.meleeScaleMultiplier;
+				if (originPlayer.resizingGlove) scale *= originPlayer.resizingGloveScale;
 			}
 		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
