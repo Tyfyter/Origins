@@ -5997,7 +5997,8 @@ Shimmerstar_Staff: {
 	Tooltip:
 		'''
 		Releases empowered aether stars to track down enemies
-		'Oh hey... this is the area I was in charge for three seconds'
+		<right> while holding for an alternate attack!
+		'Oh hey... this is the area I was in charge of for three seconds'
 		'''
 }
 
