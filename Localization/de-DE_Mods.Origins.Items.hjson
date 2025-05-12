@@ -6015,3 +6015,12 @@ Chambersite_Hook: {
 	// DisplayName: Chambersite Hook
 	// Tooltip: ""
 }
+
+Chambersite_Robe: {
+	// DisplayName: Chambersite Robe
+	/* Tooltip:
+		'''
+		Reduces maximum mana by 80
+		Cannot go below 20 maximum mana
+		''' */
+}

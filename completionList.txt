@@ -362,7 +362,7 @@ ARMOR:
 
 (^) Blast Armor*
 (X) Chambersite Armor° !!!
-(X) Chambersite Robe !!!
+(^3, @) Chambersite Robe !!!
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*

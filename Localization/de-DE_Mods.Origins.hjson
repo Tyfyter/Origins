@@ -2584,6 +2584,8 @@ SetBonuses: {
 		All minions don mildew growths that inflict Acid Venom
 		All projectiles release mildew vines in their wake that also inflict Acid Venom
 		''' */
+	// ChambersiteMagicHat: Chambersite Robe instead decreases maximum mana by 20
+	// ChambersiteWizardHat: +20% magic critical strike chance
 }
 
 ItemSourceFilter: {
