@@ -99,7 +99,9 @@ namespace Origins.Items.Weapons.Magic {
 					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 4 : 0;
 				}
-				offset *= 1.65f;
+				offset = (1 - MathF.Pow(1 - Math.Abs(offset), 2)) * Math.Sign(offset);
+				offset *= 1.8f;
+				offset = float.Clamp(offset, -1.65f, 1.65f);
 				player.SetCompositeArmFront(
 					true,
 					Player.CompositeArmStretchAmount.Full,
@@ -189,12 +191,14 @@ namespace Origins.Items.Weapons.Magic {
 						Projectile.netUpdate = true;
 					}
 				}
-			} else if(Projectile.ai[0] != -1) {
-				NPC target = Main.npc[(int)Projectile.ai[0]];
-				if (target.CanBeChasedBy(Projectile)) {
-					Projectile.velocity = Projectile.DirectionTo(target.Center) * Projectile.ai[2];
-				} else {
-					Projectile.ai[0] = -1;
+			} else {
+				if (Projectile.ai[0] != -1) {
+					NPC target = Main.npc[(int)Projectile.ai[0]];
+					if (target.CanBeChasedBy(Projectile)) {
+						Projectile.velocity = Projectile.DirectionTo(target.Center) * Projectile.ai[2];
+					} else {
+						Projectile.ai[0] = -1;
+					}
 				}
 				if (!Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
 					Projectile.tileCollide = true;
