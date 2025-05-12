@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using PegasusLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader;
 
 namespace Origins {
@@ -59,5 +56,9 @@ namespace Origins {
 			public string Name { get; } = name;
 			public string DefaultBinding { get; } = defaultBinding;
 		}
+	}
+	public class SyncedKeybinds : KeybindHandlerPlayer {
+		[Keybind(Keys.V)]
+		public AutoKeybind WishingGlass;
 	}
 }

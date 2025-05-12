@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles.Weapons;
 using Origins.Reflection;
 using PegasusLib;
@@ -297,6 +298,9 @@ namespace Origins.Projectiles {
 			scrapCompactor = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile, bool isHitting = false) {
+			if (projectile.type == Shimmer_Guardian_Shard.ID) {
+				return projectile.ai[0] == 0 && projectile.velocity != Vector2.Zero && projectile.ai[1] <= 50;
+			}
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
 				return explodingProjectile.IsExploding();

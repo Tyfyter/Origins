@@ -257,7 +257,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromThis(),
 							Projectile.Center,
-							direction.RotatedBy(1f * ((i / (float)count - 0.5f) + Main.rand.NextFloat(-0.1f, 0.1f))) * 8,
+							direction.RotatedBy(1f * ((i / (float)count - 0.5f) + Main.rand.NextFloat(-0.1f, 0.1f))) * 12,
 							Shimmer_Guardian_Shard.ID,
 							Projectile.originalDamage,
 							Projectile.knockBack,
@@ -425,6 +425,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 								Projectile.velocity = Vector2.Zero;
 								Projectile.ai[1] = 0;
 							}
+						} else {
+							Projectile.velocity *= 0.97f;
 						}
 						Projectile.rotation += Projectile.direction * 0.05f * Projectile.velocity.Length();
 					}
@@ -439,7 +441,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					bool passed = dist < 16 * 4 && (dist <= 0 || Vector2.Dot(diffToOwner / dist, Projectile.ai[1].ToRotationVector2()) < 0);
 					if (passed) {
 						Projectile.ai[2] = owner.ai[1];
-						if (!beDrone || Projectile.ai[2] == -1) {
+						if (!beDrone || player.ownedProjectileCounts[Type] < 3 || Projectile.ai[2] == -1) {
 							Projectile.ai[0] = 2;
 						} else {
 							Projectile.ai[0] = 1;

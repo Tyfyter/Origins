@@ -16,6 +16,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.Donate;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -299,6 +300,13 @@ namespace Origins {
 		public int goldenLotusProj = -1;
 		public bool resizingGlove = false;
 		public float resizingGloveScale = 1f;
+		public bool WishingGlass {
+			get => wishingGlassEquipTime > 0;
+			set => wishingGlassEquipTime = value.Mul(2);
+		}
+		int wishingGlassEquipTime = 0;
+		public bool wishingGlassActive = false;
+		public int wishingGlassCooldown = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -700,6 +708,42 @@ namespace Origins {
 				if (Player.ItemAnimationJustStarted) resizingGloveScale = Main.rand.NextFloat(1 / strength, float.BitIncrement(strength));
 				resizingGlove = false;
 			}
+			wishingGlassEquipTime.Cooldown();
+			if (wishingGlassCooldown.Cooldown()) {
+				for (int i = 0; i < 20; i++) {
+					Dust dust = Dust.NewDustDirect(
+						Player.position,
+						Player.width,
+						Player.height,
+						DustID.ShimmerTorch,
+						0f,
+						0f,
+						100,
+						default,
+						2.5f
+					);
+					dust.noGravity = true;
+					dust.velocity *= 7f;
+					dust.position -= dust.velocity * 20;
+					dust.velocity += Player.velocity;
+
+					dust = Dust.NewDustDirect(
+						Player.position,
+						Player.width,
+						Player.height,
+						DustID.ShimmerTorch,
+						0f,
+						0f,
+						100,
+						default,
+						1.5f
+					);
+					dust.velocity *= 3f;
+					dust.position -= dust.velocity * 20;
+					dust.velocity += Player.velocity;
+				}
+			}
+			wishingGlassActive = false;
 			lotteryTicketItem = null;
 
 			

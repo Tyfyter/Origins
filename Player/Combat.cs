@@ -70,6 +70,7 @@ namespace Origins {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
 			}
+			if (wishingGlassActive) mult *= 0;
 			necromanaUsedThisUse = false;
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {

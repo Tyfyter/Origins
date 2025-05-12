@@ -346,6 +346,37 @@ namespace Origins {
 					}
 				}
 			}
+			if (wishingGlassCooldown <= 0 && Player.GetModPlayer<SyncedKeybinds>().WishingGlass.JustPressed) {
+				for (int i = 0; i < 20; i++) {
+					Dust dust = Dust.NewDustDirect(
+						Player.position,
+						Player.width,
+						Player.height,
+						DustID.ShimmerTorch,
+						0f,
+						0f,
+						100,
+						default,
+						2.5f
+					);
+					dust.noGravity = true;
+					dust.velocity *= 7f;
+					Dust.NewDustDirect(
+						Player.position,
+						Player.width,
+						Player.height,
+						DustID.ShimmerTorch,
+						0f,
+						0f,
+						100,
+						default,
+						1.5f
+					).velocity *= 3f;
+				}
+				if (Main.myPlayer == Player.whoAmI) {
+					Player.AddBuff(ModContent.BuffType<Wishing_Glass_Buff>(), 8 * 60);
+				}
+			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
 				//Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				Item item = protozoaFoodItem;

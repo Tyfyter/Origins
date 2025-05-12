@@ -2805,6 +2805,13 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
+		public static bool Cooldown(ref this int value, int to = 0) {
+			if (value > to) {
+				value--;
+				return value <= to;
+			}
+			return false;
+		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			for (int c = 0; c < area.Width; c += 2) {

@@ -6030,3 +6030,8 @@ Resizing_Glove: {
 	// DisplayName: Resizing Glove
 	// Tooltip: ""
 }
+
+Wishing_Glass: {
+	// DisplayName: Wishing Glass
+	// Tooltip: ""
+}

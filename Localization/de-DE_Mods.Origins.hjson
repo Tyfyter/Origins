@@ -1202,6 +1202,11 @@ Buffs: {
 		// DisplayName: Shimmer Guardian Buff
 		// Description: Mods.Origins.Buffs.Shimmer_Guardian_Buff.Description
 	}
+
+	Wishing_Glass_Buff: {
+		// DisplayName: Wishing Glass Buff
+		// Description: Mods.Origins.Buffs.Wishing_Glass_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2063,6 +2068,7 @@ Keybinds: {
 	// GoldenLotus.DisplayName: Golden Lotus
 	// UseMojoFlask.DisplayName: Use Mojo Flask
 	// JournalBack.DisplayName: Journal: Back
+	// WishingGlass.DisplayName: Wishing Glass
 }
 
 Configs: {

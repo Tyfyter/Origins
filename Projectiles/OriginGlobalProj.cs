@@ -67,9 +67,11 @@ namespace Origins.Projectiles {
 		public Vector2? weakpointAnalyzerTarget = default;
 		public Vector2 extraGravity = default;
 		public bool shouldUnmiss = false;
+		public bool[] alreadyUnmissed = new bool[Main.maxNPCs];
 		public int unmissTarget = -1;
 		public Vector2 unmissTargetPos = default;
 		public int unmissAnimation = 0;
+		public bool isUnmissing = false;
 		public bool laserBow = false;
 		public bool astoxoEffect = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
@@ -226,60 +228,62 @@ namespace Origins.Projectiles {
 				projectile.damage = projectile.originalDamage;
 			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = Main.player[projectile.owner].OriginPlayer().felnumShock;
 			if (shouldUnmiss) {
-				if (Origins.MagicTripwireRange[projectile.type] >= 0) {
-					int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
-					if (magicTripwireRange == 0) magicTripwireRange = 48;
-					Rectangle magicTripwireHitbox = new(
-						(int)projectile.Center.X - magicTripwireRange,
-						(int)projectile.Center.Y - magicTripwireRange,
-						magicTripwireRange * 2,
-						magicTripwireRange * 2
-					);
-					int tripper = -1;
-					foreach (NPC npc in Main.ActiveNPCs) {
-						if (npc.CanBeChasedBy() && magicTripwireHitbox.Intersects(npc.Hitbox)) {
-							tripper = npc.whoAmI;
-							break;
-						}
+				int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
+				if (magicTripwireRange == 0) magicTripwireRange = 48;
+				Rectangle magicTripwireHitbox = new(
+					(int)projectile.Center.X - magicTripwireRange,
+					(int)projectile.Center.Y - magicTripwireRange,
+					magicTripwireRange * 2,
+					magicTripwireRange * 2
+				);
+				int tripper = -1;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (!alreadyUnmissed[npc.whoAmI] && npc.CanBeChasedBy() && magicTripwireHitbox.Intersects(npc.Hitbox)) {
+						tripper = npc.whoAmI;
+						break;
 					}
-					if (tripper == -1) {
-						Player owner = Main.player[projectile.owner];
-						if (owner.hostile) {
-							foreach (Player player in Main.ActivePlayers) {
-								if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
-									tripper = player.whoAmI + Main.maxNPCs + 1;
-									break;
-								}
+				}
+				if (tripper == -1) {
+					Player owner = Main.player[projectile.owner];
+					if (owner.hostile) {
+						foreach (Player player in Main.ActivePlayers) {
+							if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
+								tripper = player.whoAmI + Main.maxNPCs + 1;
+								break;
 							}
 						}
 					}
-					if (tripper != -1) {
-						unmissTarget = tripper;
-					} else if (unmissTarget != -1) {
-						Entity target = null;
-						if (unmissTarget > Main.maxNPCs + 1) {
-							int translatedTarget = unmissTarget - (Main.maxNPCs + 1);
-							if (Main.player.IndexInRange(translatedTarget)) {
-								Player playerTarget = Main.player[translatedTarget];
-								if (playerTarget.active && !playerTarget.dead && playerTarget.hostile && playerTarget.team != Main.player[projectile.owner].team) {
-									target = playerTarget;
-								}
-							}
-						} else {
-							if (Main.npc.IndexInRange(unmissTarget) && Main.npc[unmissTarget].CanBeChasedBy(projectile)) {
-								target = Main.npc[unmissTarget];
+				}
+
+				if (tripper != -1 && !isUnmissing) {
+					unmissTarget = tripper;
+				} else if (unmissTarget != -1) {
+					Entity target = null;
+					if (unmissTarget > Main.maxNPCs + 1) {
+						int translatedTarget = unmissTarget - (Main.maxNPCs + 1);
+						if (Main.player.IndexInRange(translatedTarget)) {
+							Player playerTarget = Main.player[translatedTarget];
+							if (playerTarget.active && !playerTarget.dead && playerTarget.hostile && playerTarget.team != Main.player[projectile.owner].team) {
+								target = playerTarget;
 							}
 						}
-						if (target is not null) {
-							unmissTargetPos = target.Center - projectile.velocity * 10;
-							if (++unmissAnimation == 8) {
-								shouldUnmiss = false;
-								(unmissTargetPos, projectile.Center) = (projectile.Center, unmissTargetPos);
-							}
-						} else {
-							unmissTarget = -1;
-							if (unmissAnimation > 0) unmissAnimation--;
+					} else {
+						if (Main.npc.IndexInRange(unmissTarget) && Main.npc[unmissTarget].CanBeChasedBy(projectile)) {
+							target = Main.npc[unmissTarget];
 						}
+					}
+					if (target is not null && !isUnmissing) {
+						unmissTargetPos = target.Center - projectile.velocity * 10;
+						if (++unmissAnimation >= 8) {
+							isUnmissing = true;
+							alreadyUnmissed[target.whoAmI] = true;
+							//shouldUnmiss = false;
+							(unmissTargetPos, projectile.Center) = (projectile.Center, unmissTargetPos);
+						}
+					} else {
+						isUnmissing = false;
+						unmissTarget = -1;
+						if (unmissAnimation > 0) unmissAnimation--;
 					}
 				}
 			} else if (unmissAnimation > 0) {
