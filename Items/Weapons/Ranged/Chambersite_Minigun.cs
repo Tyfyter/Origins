@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Chambersite_Minigun : ModItem {
@@ -39,7 +38,9 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Chambersite_Minigun_P : ModProjectile {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.Megashark;//typeof(Chambersite_Minigun).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 2;
+		}
 		public override void SetDefaults() {
 			Projectile.width = 22;
 			Projectile.height = 22;
@@ -58,8 +59,8 @@ namespace Origins.Items.Weapons.Ranged {
 				SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.position);
 				Projectile.ai[2] = 1;
 			}
-			if (Main.myPlayer == Projectile.owner) {
-				if (!player.noItems && !player.CCed) {
+			if (!player.noItems && !player.CCed) {
+				if (Main.myPlayer == Projectile.owner) {
 					Vector2 position = player.MountedCenter + ((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 12).Floor();
 					Projectile.position = position;
 					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
@@ -72,14 +73,21 @@ namespace Origins.Items.Weapons.Ranged {
 						Projectile.netUpdate = true;
 					}
 					Projectile.rotation = velocity.ToRotation();
-					if (Projectile.ai[1] > 0 && --Projectile.ai[0] <= 0) {
+				}
+				if (Projectile.ai[1] > 0 && --Projectile.ai[0] <= 0) {
+					if (Main.myPlayer == Projectile.owner) {
 						if (!player.channel || !ActuallyShoot()) Projectile.Kill();
 					}
-				} else {
-					Projectile.Kill();
 				}
+				if (Projectile.localAI[0] != Projectile.ai[0]) {
+					if (Projectile.ai[0] > Projectile.localAI[0]) Projectile.localAI[1] = Projectile.ai[0];
+					Projectile.localAI[0] = Projectile.ai[0];
+				}
+				Projectile.frame = (int)((Projectile.ai[0] / (Projectile.localAI[1] + 1)) * Main.projFrames[Type]);
+			} else {
+				Projectile.Kill();
 			}
-			Projectile.position.Y += player.gravDir * 2f;
+			//Projectile.position.Y += player.gravDir * 2f;
 		}
 		bool ActuallyShoot() {
 			Player player = Main.player[Projectile.owner];
@@ -89,7 +97,8 @@ namespace Origins.Items.Weapons.Ranged {
 				Vector2 velocity = Projectile.velocity;
 				velocity *= speed;
 
-				CombinedHooks.ModifyShootStats(player, player.HeldItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockBack);
+				position += Projectile.velocity * 37 + new Vector2(-Projectile.velocity.Y, Projectile.velocity.X) * 6 * player.direction;
+				CombinedHooks.ModifyShootStats(player, player.HeldItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockBack);;
 				float spread = 0.7f - Math.Min(Projectile.ai[1], 6) * 0.1f;
 				int projectiles = 1;
 				if (Projectile.ai[2] == 0) {
@@ -122,14 +131,15 @@ namespace Origins.Items.Weapons.Ranged {
 				dir ^= SpriteEffects.FlipVertically;
 			}
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Vector2 origin = new Vector2(27, 25);
+			Vector2 origin = new Vector2(27, 12);
+			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
 			Main.EntitySpriteDraw(
 				texture,
 				Projectile.position - Main.screenPosition,
-				null,
+				frame,
 				lightColor,
 				Projectile.rotation,
-				origin.Apply(dir, texture.Size()),
+				origin.Apply(dir, frame.Size()),
 				Projectile.scale,
 				dir
 			);
