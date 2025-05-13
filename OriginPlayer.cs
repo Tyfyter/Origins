@@ -1,7 +1,10 @@
-﻿using Origins.Buffs;
+﻿using CalamityMod.NPCs.TownNPCs;
+using CalamityMod.Systems;
+using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
+using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
@@ -544,6 +547,7 @@ namespace Origins {
 
 			selfDamageRally = 0;
 			blastSetCharge = 0;
+			ownedLargeGems.Clear();
 		}
 		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
 			base.ModifyMaxStats(out health, out mana);
@@ -587,6 +591,25 @@ namespace Origins {
 				Projectile pet = Main.projectile[talkingPet];
 				if (pet.type == Chew_Toy.projectileID) {
 					Chee_Toy_Messages.Instance.PlayRandomMessage(Chee_Toy_Message_Types.Death, pet.Top);
+				}
+			}
+			if (Player.difficulty == 0 || Player.difficulty == 3) {
+				for (int i = 0; i < 59; i++) {
+					if (Player.inventory[i].stack > 0 && ModLargeGem.GemTextures[Player.inventory[i].type] is not null) {
+						int num = Item.NewItem(Player.GetSource_Death(), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, Player.inventory[i].type);
+						Main.item[num].netDefaults(Player.inventory[i].netID);
+						Main.item[num].Prefix(Player.inventory[i].prefix);
+						Main.item[num].stack = Player.inventory[i].stack;
+						Main.item[num].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+						Main.item[num].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
+						Main.item[num].noGrabDelay = 100;
+						Main.item[num].favorited = false;
+						Main.item[num].newAndShiny = false;
+						if (Main.netMode == NetmodeID.MultiplayerClient)
+							NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num);
+
+						Player.inventory[i].SetDefaults();
+					}
 				}
 			}
 		}

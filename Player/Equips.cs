@@ -1,9 +1,11 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Build.Utilities;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
+using Origins.Items.Other;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
@@ -234,6 +236,17 @@ namespace Origins {
 			}
 			if (Player.miscEquips[3]?.ModItem is Ravel ravel) {
 				ravel.UpdateEquip(Player);
+			}
+			if (Player.gemCount == 9) {
+				ownedLargeGems.Clear();
+				for (int i = 0; i <= 58; i++) {
+					if (ModLargeGem.GemTextures[Player.inventory[i].type] is not null && !ownedLargeGems.Contains(Player.inventory[i].type)) {
+						ownedLargeGems.Add(Player.inventory[i].type);
+					}
+				}
+				ownedLargeGems.Sort();
+
+				if (Player.trashItem?.IsAir != true && ModLargeGem.GemTextures[Player.trashItem.type] is not null) Player.trashItem.SetDefaults();
 			}
 		}
 		public override void PostUpdateMiscEffects() {

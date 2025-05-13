@@ -19,6 +19,7 @@ namespace Origins {
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
 			Item item = drawInfo.heldItem;
 			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
+			PlayerDrawLayers.CaptureTheGem.Hide();
 
 			if (mountOnly && !drawInfo.headOnlyRender) {
 				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {

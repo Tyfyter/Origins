@@ -2045,6 +2045,7 @@ Tiles: {
 	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	Lucky_Hat_Tile.MapEntry: Lucky Hat
 	Residual_Crate_Tile.MapEntry: Residual Crate
+	Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
 }
 
 MapObject: {

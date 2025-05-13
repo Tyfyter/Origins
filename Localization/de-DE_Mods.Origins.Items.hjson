@@ -6040,3 +6040,13 @@ Shimmer_Shield: {
 	// DisplayName: Shimmer Shield
 	// Tooltip: ""
 }
+
+Large_Chambersite: {
+	// DisplayName: Large Chambersite
+	// Tooltip: For Capture the Gem. It drops when you die
+}
+
+Chambersite_Gem_Lock_Item: {
+	// DisplayName: Chambersite Gem Lock
+	// Tooltip: <right> to place or remove {$Large_Chambersite.DisplayName}s
+}

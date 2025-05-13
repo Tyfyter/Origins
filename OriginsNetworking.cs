@@ -229,6 +229,14 @@ namespace Origins {
 						break;
 					}
 
+					case set_gem_lock: {
+						short i = reader.ReadInt16();
+						short j = reader.ReadInt16();
+						bool on = reader.ReadBoolean();
+						if (TileLoader.GetTile(Framing.GetTileSafely(i, j).TileType) is ModGemLock gemLock) gemLock.ToggleGemLock(i, j, on); 
+						break;
+					}
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on server");
 					break;
@@ -472,6 +480,7 @@ namespace Origins {
 			internal const byte chest_sync_projectile = 25;
 			internal const byte soul_snatcher_activate = 26;
 			internal const byte tyrfing_zap = 27;
+			internal const byte set_gem_lock = 28;
 		}
 	}
 	public interface IChestSyncRecipient {
