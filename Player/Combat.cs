@@ -468,6 +468,8 @@ namespace Origins {
 				Vector2 direction = Vector2.UnitX * Math.Sign(shimmerShieldDashTime);
 				if (proj.TryGetGlobalProjectile(out HostileGlobalProjectile hostileProjectile) && hostileProjectile.TryGetOwnerPosition(out Vector2? ownerPosition) == HostileGlobalProjectile.OwnerState.Alive) {
 					direction = proj.DirectionTo(ownerPosition ?? direction);
+				} else if (proj.friendly && proj.TryGetOwner(out Player attacker)) {
+					direction = proj.DirectionTo(attacker.MountedCenter);
 				}
 				proj.reflected = true;
 				if (proj.hostile) proj.damage *= 3;
