@@ -362,7 +362,6 @@ ARMOR:
 
 (^) Blast Armor*
 (X) Chambersite Armor° !!!
-(^3, @) Chambersite Robe !!!
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -380,6 +379,7 @@ ARMOR:
 (^) Nova Armor*
 
 (^) Ancient Hallowed Visage*
+(@, ^3) Chambersite Robe !!!
 (^) Chlorophyte Crown*
 (^) Chlorophyte Visage*
 (^) Hallowed Visage*
@@ -496,7 +496,7 @@ ACCESSORIES:
 (^) Rebreather Gear
 (X) Reformward
 (^) Resin Shield*
-(X) Resizing Glove !!!
+(@, ^3) Resizing Glove !!!
 (^) Return To Sender*
 (^) Rockstar Choker
 (^) Ruby Reticle*
@@ -540,6 +540,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (^) Retaliatory Tendril°
+(@, ^3) Shield of Shimmer !!!
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -556,6 +557,7 @@ ACCESSORIES:
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
+(@, ^3) Wishing Glass !!!
 
 (^) Agility Core°
 (^) Combat Core°
@@ -616,7 +618,7 @@ VANITY:
 UTILITIES:
 |---
 (^) Amoeba Hook*
-(☻) Chambersite Hook !!!
+(^) Chambersite Hook
 (^) Tangela Tether
 
 (X) Strange Backpack
@@ -809,7 +811,7 @@ RANGED WEAPONS:
 (X) Tripod Jawbow
 
 (^) Astoxo
-(#2, ^2) Chambersite Minigun !!! (needs visual code)
+(^) Chambersite Minigun
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°

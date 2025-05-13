@@ -1,5 +1,8 @@
 ﻿using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
+using Origins.Tiles.Other;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -37,6 +40,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			item.value = Item.sellPrice(gold: 2);
 			item.rare = ItemRarityID.Pink;
 			cost = 20;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient<Busted_Servo>(17)
+			.AddIngredient<Rotor>(8)
+			.AddIngredient<Watered_Down_Keytar>()
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public static TooltipLine ModeTooltip => new(
 			Origins.instance,
@@ -229,6 +240,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Keytar.SetSharedDefaults(Item, out int cost);
 			Item.shoot = ModContent.ProjectileType<Keytar_Synth_Thorium>();
 			InspirationCost = cost / 10;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient<Busted_Servo>(17)
+			.AddIngredient<Rotor>(8)
+			.AddIngredient<Watered_Down_Keytar>()
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public override void BardUseAnimation(Player player) {
 			if (player.altFunctionUse == 2) {

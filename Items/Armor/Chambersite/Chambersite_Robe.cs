@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Origins.Tiles.Other;
+﻿using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -16,7 +15,7 @@ namespace Origins.Items.Armor.Chambersite {
 		public override void SetDefaults() {
 			Item.defense = 9;
 			Item.value = Item.sellPrice(gold: 6);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
 			player.statManaMax2 = Math.Max(player.statManaMax2 - (player.armor[0].type == ItemID.MagicHat ? 20 : 80), 20);

@@ -23,8 +23,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetDefaults() {
 			NPC.width = 100;
 			NPC.height = 110;
-			NPC.lifeMax = 1000;
-			NPC.damage = 1;
+			NPC.lifeMax = 6600;
+			NPC.damage = 27;
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;

@@ -1,5 +1,8 @@
 ﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -33,6 +36,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			item.rare = ItemRarityID.LightRed;
 			item.UseSound = Origins.Sounds.RivenBass;
 			cost = 10;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient<Alkahest>(25)
+			.AddIngredient<Riven_Flesh_Item>(30)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(Item.UseSound.Value.WithPitchOffset(
@@ -130,6 +141,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 				empPool.Remove(EmpowermentLoader.EmpowermentType<FlightTime>());
 			}
 			base.ModifyEmpowermentPool(player, target, empPool);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient<Alkahest>(25)
+			.AddIngredient<Riven_Flesh_Item>(30)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public string CustomStatPath => WikiPageExporter.GetWikiName(this) + "_Thorium";
 	}

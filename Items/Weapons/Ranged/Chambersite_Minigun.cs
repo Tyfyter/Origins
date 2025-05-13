@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -35,6 +36,14 @@ namespace Origins.Items.Weapons.Ranged {
 				return false;
 			}
 			return true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Megashark)
+			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 30)
+			.AddIngredient(ModContent.ItemType<Chambersite_Item>(), 13)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 	}
 	public class Chambersite_Minigun_P : ModProjectile {

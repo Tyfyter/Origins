@@ -1,14 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Bloodletter : Harpoon_Gun, ICustomWikiStat {
+	public class Bloodletter : Harpoon_Gun, ICustomWikiStat {
         public new string[] Categories => [
             "HarpoonGun"
         ];

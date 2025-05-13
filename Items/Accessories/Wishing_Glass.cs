@@ -18,6 +18,9 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().WishingGlass = true;
 		}
+		/*public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			tooltips.SubstituteKeybind(Keybindings.WishingGlass);
+		}*/
 	}
 	public class Wishing_Glass_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.WineGlass;

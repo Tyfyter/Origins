@@ -61,7 +61,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.NewProjectile(
 						source,
 						position + staffOffset,
-						velocity.RotatedBy(secondSwing.ToDirectionInt() * MathHelper.PiOver2 * -1.25f),
+						velocity.RotatedBy(secondSwing.ToDirectionInt() * MathHelper.PiOver2 * 1.25f),
 						ModContent.ProjectileType<Shimmerstar_Staff_P2>(),
 						damage,
 						knockback,
@@ -93,10 +93,10 @@ namespace Origins.Items.Weapons.Magic {
 				float timePerSwing = player.itemAnimationMax;
 				ref int itemComboAnimationTime = ref player.OriginPlayer().itemComboAnimationTime;
 				if (itemComboAnimationTime > 0) {
-					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing - 1;
+					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 0 : 4; 
 				} else {
-					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
+					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing - 1;
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 4 : 0;
 				}
 				offset = (1 - MathF.Pow(1 - Math.Abs(offset), 2)) * Math.Sign(offset);

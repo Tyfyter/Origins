@@ -361,7 +361,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction.RotatedBy(NPC.direction * -0.5f) * speed,
 							ModContent.ProjectileType<Lost_Diver_Depth_Charge>(),
-							30 + (int)(5 * difficultyMult),
+							30 + (int)(15 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						).identity;
@@ -384,7 +384,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Torpedo_Tube>(),
-							26 + (int)(4 * difficultyMult),
+							26 + (int)(9 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						);
@@ -411,7 +411,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Mildew_Whip>(),
-							24 + (int)(5 * difficultyMult),
+							24 + (int)(11 * difficultyMult),
 							2,
 							ai2: NPC.whoAmI
 						).identity;
