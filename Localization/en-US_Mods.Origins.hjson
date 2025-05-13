@@ -1770,6 +1770,7 @@ Projectiles: {
 	Shimmer_Guardian_Counter.DisplayName: Shimmer Guardian Counter
 	Shimmer_Guardian_Shard.DisplayName: Shimmer Guardian Shard
 	Chambersite_Hook_P.DisplayName: Chambersite Hook
+	Chambersite_Mine.DisplayName: Chambersite Mine
 }
 
 Prefixes: {

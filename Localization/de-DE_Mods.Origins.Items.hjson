@@ -6050,3 +6050,8 @@ Chambersite_Gem_Lock_Item: {
 	// DisplayName: Chambersite Gem Lock
 	// Tooltip: <right> to place or remove {$Large_Chambersite.DisplayName}s
 }
+
+Chambersite_Mine_Launcher: {
+	// DisplayName: Chambersite Mine Launcher
+	// Tooltip: ""
+}
