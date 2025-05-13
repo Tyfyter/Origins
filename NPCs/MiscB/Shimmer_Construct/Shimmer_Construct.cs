@@ -257,8 +257,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
-			stringBuilder.Append($"]");
-			Origins.instance.Logger.Info(stringBuilder.ToString());
+			stringBuilder.Append(']');
+			//Origins.instance.Logger.Info(stringBuilder.ToString());
 		}
 		public override void OnKill() {
 			Boss_Tracker.Instance.downedShimmerConstruct = true;

@@ -6,7 +6,7 @@ using Terraria;
 using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using PegasusLib;
 using Terraria.ModLoader;
-using Terraria.Graphics;
+using Origins.Items.Weapons.Magic;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -76,7 +76,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier);
 		}
 		public class Shimmer_Construct_Missiles : ModProjectile {
-			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
 			public static int ID { get; private set; }
 			public override void SetStaticDefaults() {
 				ProjectileID.Sets.TrailingMode[Type] = 3;
@@ -111,13 +111,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (!Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
 					Projectile.tileCollide = true;
 				}
+				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				if (Projectile.velocity.X != 0) modifiers.HitDirectionOverride = Math.Sign(Projectile.velocity.X);
 				modifiers.Knockback.Base += 4;
 			}
 			public override bool PreDraw(ref Color lightColor) {
-				default(MagicMissileDrawer).Draw(Projectile);
+				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
 				return false;
 			}
 		}

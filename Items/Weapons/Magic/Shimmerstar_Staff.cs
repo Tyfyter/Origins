@@ -214,38 +214,41 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
+			DrawShimmerstar(Projectile);
+			return false;
+		}
+		public static void DrawShimmerstar(Projectile projectile) {
 			MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 			miscShaderData.UseSaturation(-2.8f);
 			miscShaderData.UseOpacity(4f);
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
+			_vertexStrip.PrepareStripWithProceduralPadding(projectile.oldPos, projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + projectile.Size / 2f);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			Color StripColors(float progressOnStrip) {
 				if (float.IsNaN(progressOnStrip)) return Color.Transparent;
-				Vector2 pos = Projectile.oldPos[(int)(progressOnStrip * (Projectile.oldPos.Length - 1))];
+				Vector2 pos = projectile.oldPos[(int)(progressOnStrip * (projectile.oldPos.Length - 1))];
 				return new(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16));
 			}
 			float StripWidth(float progressOnStrip) {
 				float num = 1f;
 				float lerpValue = Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
 				num *= 1f - (1f - lerpValue) * (1f - lerpValue);
-				return MathHelper.Lerp(0f, 32f * Utils.GetLerpValue(0f, 32f, Projectile.position.Distance(Projectile.oldPos[12]), clamped: true), num);
+				return MathHelper.Lerp(0f, 32f * Utils.GetLerpValue(0f, 32f, projectile.position.Distance(projectile.oldPos[12]), clamped: true), num);
 			}
 
-			Vector2 vector73 = Projectile.Center + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 center = projectile.Center + Vector2.UnitY * projectile.gfxOffY - Main.screenPosition;
+			Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
 			Color color = new(255, 255, 255, 0);
 			Vector2 origin = new Vector2(texture.Width, texture.Height) * 0.5f;
 			float rotation = 0;
-			float scale = Projectile.scale * Utils.GetLerpValue(32f, 0f, Projectile.position.Distance(Projectile.oldPos[12]), clamped: true);
+			float scale = projectile.scale * Utils.GetLerpValue(32f, 0f, projectile.position.Distance(projectile.oldPos[12]), clamped: true);
 			scale = Math.Min(scale * scale * 1.4f, 0.5f);
 			Vector2 spinningpoint6 = new Vector2(2f * scale + (float)Math.Cos(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi) * 0.4f, 0f).RotatedBy(rotation + Main.GlobalTimeWrappedHourly * MathHelper.TwoPi);
 			for (float f = 0f; f < 1f; f += 1f / 6f) {
-				Vector2 pos = vector73 + spinningpoint6.RotatedBy(f * MathHelper.TwoPi);
+				Vector2 pos = center + spinningpoint6.RotatedBy(f * MathHelper.TwoPi);
 				Main.EntitySpriteDraw(texture, pos, null, new(LiquidRenderer.GetShimmerBaseColor((pos.X + Main.screenPosition.X) / 16, (pos.Y + Main.screenPosition.Y) / 16) * new Vector4(Vector3.One, 0.5f)), rotation, origin, scale, SpriteEffects.None);
 			}
-			return false;
 		}
 	}
 	public class Shimmerstar_Staff_P2 : Shimmerstar_Staff_P {
