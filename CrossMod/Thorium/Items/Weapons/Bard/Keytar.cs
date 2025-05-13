@@ -245,7 +245,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Recipe.Create(Type)
 			.AddIngredient<Busted_Servo>(17)
 			.AddIngredient<Rotor>(8)
-			.AddIngredient<Watered_Down_Keytar>()
+			.AddIngredient<Watered_Down_Keytar_Thorium>()
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
