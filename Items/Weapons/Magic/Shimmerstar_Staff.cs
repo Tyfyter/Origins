@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmerstar_Staff : ModItem, ICustomDrawItem {
 		public override string Texture => typeof(Bled_Out_Staff).GetDefaultTMLName();
-		public static int MainFireCount => 6;
+		public static int MainFireCount => 4;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 42;
 			Item.shoot = ModContent.ProjectileType<Shimmerstar_Staff_P>();
 			Item.shootSpeed = 12f;
-			Item.mana = 17;
+			Item.mana = 12;
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
@@ -42,6 +42,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override float UseAnimationMultiplier(Player player) => player.altFunctionUse == 2 ? 0.35f : 1;
+		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
+			if (player.altFunctionUse == 2) mult /= MainFireCount / 2;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
 				int turnDir = (velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt();
@@ -221,7 +224,7 @@ namespace Origins.Items.Weapons.Magic {
 			Color StripColors(float progressOnStrip) {
 				if (float.IsNaN(progressOnStrip)) return Color.Transparent;
 				Vector2 pos = Projectile.oldPos[(int)(progressOnStrip * (Projectile.oldPos.Length - 1))];
-				return new(LiquidRenderer.GetShimmerBaseColor(pos.X, pos.Y));
+				return new(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16));
 			}
 			float StripWidth(float progressOnStrip) {
 				float num = 1f;
@@ -240,7 +243,7 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 spinningpoint6 = new Vector2(2f * scale + (float)Math.Cos(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi) * 0.4f, 0f).RotatedBy(rotation + Main.GlobalTimeWrappedHourly * MathHelper.TwoPi);
 			for (float f = 0f; f < 1f; f += 1f / 6f) {
 				Vector2 pos = vector73 + spinningpoint6.RotatedBy(f * MathHelper.TwoPi);
-				Main.EntitySpriteDraw(texture, pos, null, new(LiquidRenderer.GetShimmerBaseColor(pos.X, pos.Y) * new Vector4(Vector3.One, 0.5f)), rotation, origin, scale, SpriteEffects.None);
+				Main.EntitySpriteDraw(texture, pos, null, new(LiquidRenderer.GetShimmerBaseColor((pos.X + Main.screenPosition.X) / 16, (pos.Y + Main.screenPosition.Y) / 16) * new Vector4(Vector3.One, 0.5f)), rotation, origin, scale, SpriteEffects.None);
 			}
 			return false;
 		}
@@ -248,6 +251,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Shimmerstar_Staff_P2 : Shimmerstar_Staff_P {
 		public override bool ShouldUpdatePosition() => Projectile.ai[0] != -3;
 		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation();
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.ai[0] == -3) {
 				if (player.ItemAnimationEndingOrEnded) {
@@ -255,10 +259,10 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.penetrate = 1;
 				} else {
 					Vector2 position = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
-					bool secondSwing = player.OriginPlayer().itemComboAnimationTime > 0;
+					bool firstSwing = player.OriginPlayer().itemComboAnimationTime > 0;
 					Vector2 staffDir = (player.compositeFrontArm.rotation - MathHelper.PiOver2 * player.direction).ToRotationVector2();
 					if (player.direction != -1) staffDir = -staffDir;
-					Projectile.velocity = staffDir.RotatedBy(secondSwing.ToDirectionInt() * player.direction * MathHelper.PiOver2 * -0.5f) * Projectile.ai[2];
+					Projectile.velocity = staffDir.RotatedBy(firstSwing.ToDirectionInt() * player.direction * MathHelper.PiOver2 * 0.5f) * Projectile.ai[2];
 					Projectile.Center = position + staffDir * 40;
 					Projectile.penetrate = -1;
 					return;
