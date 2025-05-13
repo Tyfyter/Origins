@@ -411,6 +411,7 @@ namespace Origins {
 					windSpeed = (short)Math.Clamp(windSpeed + Player.velocity.X, -128, 128);
 				}
 			}*/
+			if (weakShimmer) Player.ignoreWater = true;
 			onSlope = false;
 		}
 		public override void PreUpdate() {
@@ -464,6 +465,12 @@ namespace Origins {
 						Collision.StepUp(ref Player.position, ref Player.velocity, Player.width, Player.height, ref Player.stepSpeed, ref Player.gfxOffY, -1, true);
 					}
 				}
+			}
+			if (weakShimmer) {
+				Player.maxFallSpeed = 10f;
+				Player.gravity = Player.defaultGravity;
+				Player.jumpHeight = 15;
+				Player.jumpSpeed = 5.01f;
 			}
 		}
 		public override void PostUpdate() {

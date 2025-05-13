@@ -162,6 +162,10 @@ namespace Origins.Items {
 				if (originPlayer.resizingGlove) scale *= originPlayer.resizingGloveScale;
 			}
 		}
+		public override bool CanUseItem(Item item, Player player) {
+			if (item.mountType != -1 && player.OriginPlayer().weakShimmer) return false;
+			return true;
+		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
 			if (player.nonTorch != -1 && player.inventory[player.nonTorch].type == Boomphracken.ID && player.HeldItem.CountsAsClass<Thrown_Explosive>()) {
 				player.selectItemOnNextUse = true;

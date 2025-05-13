@@ -68,6 +68,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
+			if (player.mount?.Active == true) player.mount.Dismount(player);
 			player.shimmering = true;
 			player.OriginPlayer().weakShimmer = true;
 			player.fallStart = (int)(player.position.Y / 16f);
