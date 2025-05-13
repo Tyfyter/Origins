@@ -11,6 +11,10 @@ using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using PegasusLib;
 using Terraria.Graphics.Shaders;
 using Origins.Items.Other.Dyes;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Utilities;
+using ThoriumMod.Items.Donate;
+using Terraria.GameContent.Liquid;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
@@ -64,8 +68,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					npc.Center,
-					direction * 7,
-					ProjectileID.BulletSnowman,
+					direction * 6,
+					Shimmer_Construct_Bullet.ID,
 					1,
 					1
 				);
@@ -75,6 +79,52 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.ai[3] = 16 - ContentExtensions.DifficultyDamageMultiplier * 0.75f;
+		}
+		public class Shimmer_Construct_Bullet : ModProjectile {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.HallowBossRainbowStreak;
+			public static int ID { get; private set; }
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.TrailingMode[Type] = 3;
+				ProjectileID.Sets.TrailCacheLength[Type] = 30;
+				ID = Type;
+			}
+			public override void SetDefaults() {
+				Projectile.friendly = false;
+				Projectile.hostile = true;
+				Projectile.aiStyle = 0;
+				Projectile.extraUpdates = 1;
+				Projectile.width = 24;
+				Projectile.height = 24;
+				Projectile.tileCollide = false;
+			}
+			public override void AI() {
+				base.AI();
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Texture2D texture = TextureAssets.Projectile[Type].Value;
+				Vector2 origin = texture.Size() / 2f;
+				int trailLength = ProjectileID.Sets.TrailCacheLength[Type];
+				static Color GetColorAtPos(Vector2 position) {
+					return new Color(LiquidRenderer.GetShimmerBaseColor(position.X / 16, position.Y / 16)).MultiplyRGBA(new(1, 0.9f, 0.9f, 0.5f));
+				}
+				Vector2 gfxOff = Vector2.UnitY * Projectile.gfxOffY;
+				for (int i = trailLength; i > 0; i--) {
+					Vector2 oldPos = Projectile.oldPos.GetIfInRange(i);
+					if (oldPos == Vector2.Zero) continue;
+
+					Vector2 position = oldPos + Projectile.Size / 2f + gfxOff;
+
+					Color color = GetColorAtPos(position);
+					color.A -= (byte)(color.A / 4);
+					color *= 0.5f;
+					color *= Utils.GetLerpValue(0f, 20f, Projectile.timeLeft, clamped: true);
+					color *= ((trailLength - i) / (ProjectileID.Sets.TrailCacheLength[Type] * 1.5f));
+
+					Main.EntitySpriteDraw(texture, position - Main.screenPosition, null, color, Projectile.rotation, origin, MathHelper.Lerp(Projectile.scale, 0.5f, i / (trailLength + 1)), default);
+				}
+				return false;
+			}
 		}
 	}
 	public class SpawnCloudsState : AIState {
