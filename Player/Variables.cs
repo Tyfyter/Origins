@@ -425,6 +425,7 @@ namespace Origins {
 		public bool soulSnatcherActive = false;
 
 		public bool shimmerGuardianMinion = false;
+		public List<int> ownedLargeGems = [];
 		#endregion
 
 		#region visuals

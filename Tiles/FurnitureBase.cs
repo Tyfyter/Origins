@@ -677,6 +677,7 @@ namespace Origins.Tiles {
 		protected internal TileItem item;
 		public virtual bool LavaDeath => true;
 		public virtual Color MapColor => new(122, 217, 232);
+		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>
 		public abstract int LidType { get; }
 		/// <summary>
 		/// Used to set the base kind of cage this tile is.
@@ -738,16 +739,14 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class TileItem : ModItem {
-		readonly ModTile tile;
+	public class TileItem(ModTile tile) : ModItem() {
+		readonly ModTile tile = tile;
 		public override string Name => tile.Name + "_Item";
 		public override string Texture => tile.Texture + "_Item";
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
-		public TileItem(ModTile tile) : base() {
-			this.tile = tile;
-		}
+
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(tile.Type);
 			Item.width = 14;
@@ -763,6 +762,14 @@ namespace Origins.Tiles {
 				OnAddRecipes(Item);
 				OnAddRecipes = null;
 			}
+		}
+		public TileItem WithExtraDefaults(Action<Item> extra) {
+			ExtraDefaults += extra;
+			return this;
+		}
+		public TileItem WithOnAddRecipes(Action<Item> recipes) {
+			OnAddRecipes += recipes;
+			return this;
 		}
 	}
 }

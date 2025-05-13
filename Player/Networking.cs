@@ -4,6 +4,7 @@ using Origins.Tiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -83,6 +84,7 @@ namespace Origins {
 			clone.defiledWill = defiledWill;
 			clone.tornTarget = tornTarget;
 			clone.tornSeverityRate = tornSeverityRate;
+			clone.ownedLargeGems = ownedLargeGems.ToList();
 			if (CheckAssimilationDesync(clone) && !Player.HasBuff(Purifying_Buff.ID)) {
 				foreach (AssimilationInfo info in IterateAssimilation()) {
 					clone.GetAssimilation(info.Type.AssimilationType).Percent = info.Percent;

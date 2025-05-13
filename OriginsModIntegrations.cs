@@ -46,6 +46,8 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.CrossMod.Fargos.Items;
+using Origins.Items.Other;
+using ThoriumMod.Items.Misc;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -599,6 +601,9 @@ namespace Origins {
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {
+			ModLargeGem.AddCrossModLargeGem(ModContent.GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
+			ModLargeGem.AddCrossModLargeGem(ModContent.GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
+			ModLargeGem.AddCrossModLargeGem(ModContent.GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
 			Recipe.Create(ModContent.ItemType<Asylum_Whistle>())
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
