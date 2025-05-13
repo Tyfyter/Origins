@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -124,6 +125,21 @@ namespace Origins {
 
 					case tyrfing_zap: {
 						Tyrfing_P.DoArcVisual(reader.ReadVector2(), reader.ReadVector2());
+						break;
+					}
+
+					case mass_teleport: {
+						for (int i = reader.ReadUInt16(); i > 0; i--) {
+							Player player = Main.player[reader.ReadUInt16()];
+							Vector2 position = reader.ReadPackedVector2();
+							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+								PositionInWorld = player.Bottom
+							});
+							player.Teleport(position, 12);
+							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+								PositionInWorld = player.Bottom
+							});
+						}
 						break;
 					}
 
@@ -481,6 +497,7 @@ namespace Origins {
 			internal const byte soul_snatcher_activate = 26;
 			internal const byte tyrfing_zap = 27;
 			internal const byte set_gem_lock = 28;
+			internal const byte mass_teleport = 29;
 		}
 	}
 	public interface IChestSyncRecipient {
