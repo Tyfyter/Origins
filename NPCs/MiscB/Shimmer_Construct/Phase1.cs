@@ -148,6 +148,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override string Texture => typeof(Shimmer_Cloud_Ball).GetDefaultTMLName();
 			public override void SetStaticDefaults() {
 				Main.projFrames[Type] = 4;
+				OriginsSets.Projectiles.IsEnemyOwned[Type] = true;
 			}
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.RainCloudMoving);
@@ -210,6 +211,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override string Texture => typeof(Shimmer_Cloud_P).GetDefaultTMLName();
 			public override void SetStaticDefaults() {
 				Main.projFrames[Type] = 6;
+				OriginsSets.Projectiles.IsEnemyOwned[Type] = true;
 			}
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.RainCloudRaining);

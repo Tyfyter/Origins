@@ -189,6 +189,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 600;
 			Projectile.noEnchantmentVisuals = true;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];

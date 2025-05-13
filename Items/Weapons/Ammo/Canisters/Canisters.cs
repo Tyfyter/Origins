@@ -741,7 +741,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Aether_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		public CanisterData GetCanisterData => new(new(182, 194, 211), new(100, 222, 242));
 		public bool? Hardmode => false;
-		static readonly FrameCachedValue<Color> color = new(() => new(LiquidRenderer.GetShimmerBaseColor(0, 0)));
+		internal static readonly FrameCachedValue<Color> color = new(() => new(LiquidRenderer.GetShimmerBaseColor(0, 0)));
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;

@@ -39,6 +39,9 @@ namespace Origins {
 			.RegisterBoolSet(true,
 				ProjectileID.FairyQueenSunDance
 			);
+			public static bool[] IsEnemyOwned { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(IsEnemyOwned))
+			.Description("Controls whether compatible effects will treat the projectile as owned by an enemy NPC")
+			.RegisterBoolSet(false);
 			public static (bool first, bool second, bool third)[] DuplicationAIVariableResets { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(DuplicationAIVariableResets))
 			.Description("Controls which ai variables will be carried over to duplicates from compatible projectile duplication effects, false to carry over, true to reset")
 			.RegisterCustomSet((false, false, false));

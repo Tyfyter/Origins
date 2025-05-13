@@ -1771,6 +1771,8 @@ Projectiles: {
 	Shimmer_Guardian_Shard.DisplayName: Shimmer Guardian Shard
 	Chambersite_Hook_P.DisplayName: Chambersite Hook
 	Chambersite_Mine.DisplayName: Chambersite Mine
+	Cool_Sword_Slash.DisplayName: Cool Sword
+	Cool_Sword_P.DisplayName: Cool Star
 }
 
 Prefixes: {

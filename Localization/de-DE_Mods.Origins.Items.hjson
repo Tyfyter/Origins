@@ -6070,3 +6070,8 @@ Chambersite_Mine_Launcher: {
 	// DisplayName: Chambersite Mine Launcher
 	// Tooltip: ""
 }
+
+Cool_Sword: {
+	// DisplayName: Cool Sword
+	// Tooltip: ""
+}
