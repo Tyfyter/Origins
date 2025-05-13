@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,12 +9,20 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Chambersite_Mine_Launcher : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Chambersite_Mine>(20, 28, 7.5f, 48, 32);
+			Item.DefaultToCanisterLauncher<Chambersite_Mine>(38, 28, 7.5f, 48, 32);
 			Item.knockBack = 4f;
-			Item.rare = ItemRarityID.Green;
-			Item.value = Item.sellPrice(gold: 1, silver: 20);
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 2);
 			Item.UseSound = SoundID.Item62.WithPitch(0.4f);
 			Item.reuseDelay = 50;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 16)
+			.AddIngredient<Carburite_Item>(22)
+			.AddIngredient<Chambersite_Item>(10)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-6f, 0);

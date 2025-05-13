@@ -6021,24 +6021,39 @@ Chambersite_Robe: {
 	// DisplayName: Chambersite Robe
 	/* Tooltip:
 		'''
+		80% reduced mana cost
 		Reduces maximum mana by 80
-		Cannot go below 20 maximum mana
+		Maximum mana cannot go below 20 
 		''' */
 }
 
 Resizing_Glove: {
 	// DisplayName: Resizing Glove
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Swung melee weapons will be a random size every swing
+		Enables auto swing for melee weapons
+		'Resizing Glove, huh? Why do they only come in small?'
+		''' */
 }
 
 Wishing_Glass: {
 	// DisplayName: Wishing Glass
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Press <key> for 8 seconds of infinite ammo and mana, and insanely fast use time
+		10 second cooldown
+		''' */
 }
 
 Shimmer_Shield: {
-	// DisplayName: Shimmer Shield
-	// Tooltip: ""
+	// DisplayName: Shield of Shimmer
+	/* Tooltip:
+		'''
+		+9% damage reduction
+		Allows the player to dash into and reflect enemy projectiles
+		Double tap a direction
+		''' */
 }
 
 Large_Chambersite: {

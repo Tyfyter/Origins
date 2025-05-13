@@ -1014,7 +1014,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(#, ^2) Chambersite Mine Launcher !!!
+(#2, ^2) Chambersite Mine Launcher !!! (crit effect)
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair
@@ -1364,7 +1364,7 @@ MATERIALS:
 (^) Qube°
 (X) Weapon Blueprint°
 
-(#, ^2) Large Chambersite !!!
+(^) Large Chambersite
 ---
 
 
