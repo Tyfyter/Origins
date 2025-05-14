@@ -1,8 +1,10 @@
 ﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using PegasusLib;
+using ReLogic.Content;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
@@ -59,6 +63,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
+			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+			NPC.DeathSound = SoundID.DD2_DefeatScene;
+			NPC.BossBar = ModContent.GetInstance<SC_BossBar>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			Array.Fill(previousStates, NPC.aiAction);
 		}
@@ -330,6 +337,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
 			public void Unload() { }
+		}
+	}
+	public class SC_BossBar : ModBossBar {
+		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
+			return TextureAssets.Item[ItemID.ShimmerBlock]; // Corgi head icon
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			return true;
 		}
 	}
 	class Eye_Shimmer_Collision : GlobalNPC {

@@ -170,7 +170,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[1] > 0) {
 				Projectile.hide = true;
 				Player player = Main.player[Projectile.owner];
-				Vector2 targetPos = player.Top - ((Projectile.ai[0]) * MathHelper.Pi).ToRotationVector2() * 32;
+				Vector2 targetPos = player.Top - (Projectile.ai[0] * MathHelper.Pi).ToRotationVector2() * 32;
 				Projectile.velocity = (targetPos - Projectile.Center).WithMaxLength(8) + player.velocity;
 				if (--Projectile.ai[1] <= 0) {
 					Projectile.ai[0] = -1;
