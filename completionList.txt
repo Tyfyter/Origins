@@ -1165,7 +1165,7 @@ TILES:
 (X) Cancer Block° !!!
 (X) Cancer Furniture° !!!
 (^) Chambersite Bunny Cage°
-(#, ^2) Chambersite Gem Lock° !!!
+(☻) Chambersite Gem Lock° !!!
 (^) Chambersite Gemspark°
 (^) Chambersite Gemstone°
 (^) Chambersite Gemstone (Corruption)°
