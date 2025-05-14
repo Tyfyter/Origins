@@ -2,6 +2,7 @@
 using Microsoft.Build.Utilities;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dusts;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
@@ -360,12 +361,13 @@ namespace Origins {
 				}
 			}
 			if (wishingGlassCooldown <= 0 && Player.GetModPlayer<SyncedKeybinds>().WishingGlass.JustPressed) {
+				int dustType = ModContent.DustType<Following_Shimmer_Dust>();
 				for (int i = 0; i < 20; i++) {
 					Dust dust = Dust.NewDustDirect(
 						Player.position,
 						Player.width,
 						Player.height,
-						DustID.ShimmerTorch,
+						dustType,
 						0f,
 						0f,
 						100,
@@ -374,17 +376,23 @@ namespace Origins {
 					);
 					dust.noGravity = true;
 					dust.velocity *= 7f;
-					Dust.NewDustDirect(
+					dust.velocity += Player.velocity * 0.75f;
+					dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
+
+					dust = Dust.NewDustDirect(
 						Player.position,
 						Player.width,
 						Player.height,
-						DustID.ShimmerTorch,
+						dustType,
 						0f,
 						0f,
 						100,
 						default,
 						1.5f
-					).velocity *= 3f;
+					);
+					dust.velocity *= 3f;
+					dust.velocity += Player.velocity * 0.75f;
+					dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
 				}
 				if (Main.myPlayer == Player.whoAmI) {
 					Player.AddBuff(ModContent.BuffType<Wishing_Glass_Buff>(), 8 * 60);

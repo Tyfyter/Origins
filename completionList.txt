@@ -1014,7 +1014,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(#2, ^2) Chambersite Mine Launcher !!! (crit effect)
+(#2, ^2) Chambersite Mine Launcher !!! (crit effect?)
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair

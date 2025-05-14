@@ -53,6 +53,17 @@ namespace Origins {
 			.RegisterCustomSet<string>(null);
 		}
 		[ReinitializeDuringResizeArrays]
+		public static class Tiles {
+			public static int[] PlacementItem { get; } = TileID.Sets.Factory.CreateIntSet(-1);
+			public static int[] ShimmerTransformToTile { get; } = TileID.Sets.Factory.CreateIntSet(-1,
+				TileID.LavaMoss, TileID.RainbowMoss,
+				TileID.KryptonMoss, TileID.RainbowMoss,
+				TileID.XenonMoss, TileID.RainbowMoss,
+				TileID.ArgonMoss, TileID.RainbowMoss,
+				TileID.VioletMoss, TileID.RainbowMoss
+			);
+		}
+		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))
 			.Description("Denotes prefixes which have effects other than stat changes")

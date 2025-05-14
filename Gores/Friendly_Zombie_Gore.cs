@@ -49,6 +49,7 @@ namespace Origins.Gores {
 		protected abstract Rectangle Frame { get; }
 		public override void SetStaticDefaults() {
 			DustsBehindTiles.Add(Type);
+			ChildSafety.SafeDust[Type] = false;
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.frame = Frame;

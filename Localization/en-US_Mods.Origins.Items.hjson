@@ -6080,3 +6080,8 @@ Chambersite_Minecart_Item: {
 	DisplayName: Chambersite Minecart
 	Tooltip: ""
 }
+
+Shimmer_Dynamite: {
+	DisplayName: Shimmer Dynamite
+	Tooltip: ""
+}

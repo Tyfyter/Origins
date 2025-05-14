@@ -229,6 +229,22 @@ namespace Origins {
 			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
+			for (int k = 0; k < ItemLoader.ItemCount; k++) {
+				Item item = ContentSamples.ItemsByType[k];
+				if (item.createTile > -1 && OriginsSets.Tiles.PlacementItem[item.createTile] == -1 && (!Main.tileFrameImportant[item.createTile] || TileID.Sets.Torch[item.createTile])) {
+					OriginsSets.Tiles.PlacementItem[item.createTile] = item.type;
+				}
+			}
+			for (int i = 0; i < OriginsSets.Tiles.PlacementItem.Length; i++) {
+				int placementItem = OriginsSets.Tiles.PlacementItem[i];
+				if (placementItem < 0) continue;
+				if (ItemID.Sets.ShimmerCountsAsItem[placementItem] >= 0) placementItem = ItemID.Sets.ShimmerCountsAsItem[placementItem];
+				if (ItemID.Sets.ShimmerTransformToItem[placementItem] < 0) continue;
+				Item item = ContentSamples.ItemsByType[ItemID.Sets.ShimmerTransformToItem[placementItem]];
+				if (item.createTile > -1) {
+					OriginsSets.Tiles.ShimmerTransformToTile[i] = item.createTile;
+				}
+			}
 		}
 		public override void Load() {
 			AssimilationLoader.Load();

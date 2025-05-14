@@ -6,6 +6,7 @@ using Terraria;
 using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using Terraria.ModLoader;
 using MonoMod.Cil;
+using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -68,7 +69,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			if (player.mount?.Active == true) player.mount.Dismount(player);
+			if (player.mount?.Active == true) {
+				Mount mount = player.mount;
+				player.ClearBuff(mount._data.buff);
+
+				mount._mountSpecificData = null;
+
+				if (mount.Cart) {
+					player.ClearBuff(mount._data.extraBuff);
+					player.cartFlip = false;
+					player.lastBoost = Vector2.Zero;
+				}
+
+				player.fullRotation = 0f;
+				player.fullRotationOrigin = Vector2.Zero;
+
+				mount.Reset();
+				player.position.Y += player.height;
+				player.height = 42;
+				player.position.Y -= player.height;
+				if (player.whoAmI == Main.myPlayer)
+					NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
+			}
+			player.buffImmune[BuffID.Shimmer] = true;
 			player.shimmering = true;
 			player.OriginPlayer().weakShimmer = true;
 			player.fallStart = (int)(player.position.Y / 16f);
