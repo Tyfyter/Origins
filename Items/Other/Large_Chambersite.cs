@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using PegasusLib;
+using Origins.Tiles.Other;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -113,5 +110,12 @@ namespace Origins.Items.Other {
 			drawInfo.DrawDataCache.AddRange(list);
 		}
 	}
-	public class Large_Chambersite : ModLargeGem { }
+	public class Large_Chambersite : ModLargeGem {
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Chambersite_Item>(15)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
+	}
 }

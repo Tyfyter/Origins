@@ -6075,3 +6075,8 @@ Cool_Sword: {
 	// DisplayName: Cool Sword
 	// Tooltip: ""
 }
+
+Chambersite_Minecart_Item: {
+	// DisplayName: Chambersite Minecart
+	// Tooltip: ""
+}
