@@ -34,6 +34,7 @@ namespace Origins {
 		public const float explosive_defense_factor = 2f;
 		public static OriginPlayer LocalOriginPlayer { get; internal set; }
 		public override void PreUpdateMovement() {
+			Debugging.LogFirstRun(PreUpdateMovement);
 			_ = Player.Hitbox;
 			realControlUseItem = Player.controlUseItem;
 			Origins.hurtCollisionCrimsonVine = false;
@@ -381,6 +382,7 @@ namespace Origins {
 			onSlope = false;
 		}
 		public override void PreUpdate() {
+			Debugging.LogFirstRun(PreUpdate);
 			if (OriginConfig.Instance.Assimilation) {
 				foreach (AssimilationInfo info in IterateAssimilation()) {
 					if (info.Percent > 0) Player.AddBuff(info.Type.Type, 5);
@@ -434,6 +436,7 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdate() {
+			Debugging.LogFirstRun(PostUpdate);
 			heldProjectile = -1;
 			if (rasterizedTime > 0) {
 				Player.velocity = Vector2.Lerp(Player.velocity, Player.oldVelocity, rasterizedTime * 0.06f);
@@ -756,6 +759,16 @@ namespace Origins {
 				return false;
 			}
 			return true;
+		}
+		public override void SetControls() {
+			Debugging.LogFirstRun(SetControls);
+		}
+		public override void PreUpdateBuffs() {
+			Debugging.LogFirstRun(PreUpdateBuffs);
+		}
+		public override bool PreModifyLuck(ref float luck) {
+			Debugging.LogFirstRun(PreModifyLuck);
+			return base.PreModifyLuck(ref luck);
 		}
 		public override bool PreItemCheck() {
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;

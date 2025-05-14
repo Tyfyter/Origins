@@ -302,17 +302,12 @@ namespace Origins {
 			lastHour = hour;
 		}
 		public override void PostUpdateEverything() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PostUpdateEverything)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PostUpdateEverything);
 			for (int i = 0; i < Origins.tickers.Count; i++) {
 				Origins.tickers[i].Tick();
 			}
-			if (firstUpdate) {
-				Mod.Logger.Info($"Ran {nameof(PostUpdateEverything)} for the first time, passed tickers");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(nameof(PostUpdateEverything) + " (passed tickers)");
+			Debugging.firstUpdate = false;
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }
@@ -564,10 +559,7 @@ namespace Origins {
 			Time_Radices.Refresh();
 		}
 		public override void PreUpdateProjectiles() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateProjectiles)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateProjectiles);
 			OriginsGlobalBiome.isConversionFromProjectile = true;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
@@ -627,12 +619,8 @@ namespace Origins {
 		public int[] laserTagTeamHits = new int[6];
 		public int[] laserTagTeamGems = new int[6];
 		public int[] laserTagTeamPlayers = new int[6];
-		bool firstUpdate = true;
 		public override void PreUpdatePlayers() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdatePlayers, true);
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];
 			else OriginPlayer.playersByGuid.Clear();
@@ -643,52 +631,28 @@ namespace Origins {
 			}
 		}
 		public override void PreUpdateNPCs() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateNPCs)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateNPCs);
 		}
 		public override void PreUpdateGores() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateGores)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateGores);
 		}
 		public override void PreUpdateItems() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateItems)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateItems);
 		}
 		public override void PreUpdateDusts() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateDusts)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateDusts);
 		}
 		public override void PreUpdateTime() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateTime)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateTime);
 		}
 		public override void PreUpdateWorld() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateWorld)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateWorld);
 		}
 		public override void PreUpdateInvasions() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PreUpdateInvasions)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PreUpdateInvasions);
 		}
 		public override void PostUpdateInvasions() {
-			if (firstUpdate) {
-				Mod.Logger.Info($"Running {nameof(PostUpdateInvasions)} for the first time");
-				Main.QueueMainThreadAction(() => firstUpdate = false);
-			}
+			Debugging.LogFirstRun(PostUpdateInvasions);
 		}
 	}
 	public class TempleBiome : ModBiome {

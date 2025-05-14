@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -15,6 +16,47 @@ namespace Origins {
 		internal static void ChatOverhead(object message, int duration = 5) {
 			ChatOverhead(message.ToString(), duration);
 		}
+		static bool firstFirstUpdate = true;
+		internal static bool firstUpdate = false;
+
+		//Running OriginSystem.PreUpdatePlayers for the first time
+		//Running OriginPlayer.PreUpdate for the first time
+		//Running OriginPlayer.SetControls for the first time
+		//Running OriginPlayer.ResetEffects for the first time
+		//Running OriginPlayer.UpdateDyes for the first time
+		//Running OriginPlayer.PreUpdateBuffs for the first time
+		//Running OriginPlayer.UpdateEquips for the first time
+		//Running OriginPlayer.PreModifyLuck for the first time
+		//Running OriginPlayer.PostUpdateEquips for the first time
+		//Running OriginPlayer.PostUpdateMiscEffects for the first time
+		//Running OriginPlayer.UpdateLifeRegen for the first time
+		//Running OriginPlayer.PostUpdateRunSpeeds for the first time
+		//Running OriginPlayer.PreUpdateMovement for the first time
+		//Running OriginPlayer.PostUpdate for the first time
+		//Running OriginSystem.PreUpdateNPCs for the first time
+		//Running OriginSystem.PreUpdateGores for the first time
+		//Running OriginSystem.PreUpdateProjectiles for the first time
+		//Running OriginSystem.PreUpdateItems for the first time
+		//Running OriginSystem.PreUpdateDusts for the first time
+		//Running OriginSystem.PreUpdateTime for the first time
+		//Running OriginSystem.PreUpdateWorld for the first time
+		//Running OriginSystem.PreUpdateInvasions for the first time
+		//Running OriginSystem.PostUpdateInvasions for the first time
+		//Running OriginSystem.PostUpdateEverything for the first time
+		//Running PostUpdateEverything (passed tickers) for the first time
+		public static void LogFirstRun(string name, bool isGameLoop = false) {
+			if (isGameLoop) {
+
+			}
+			if (firstFirstUpdate && isGameLoop) {
+				firstUpdate = true;
+				firstFirstUpdate = false;
+			}
+			if (firstUpdate) {
+				Origins.instance.Logger.Info($"Running {name} for the first time");
+			}
+		}
+		public static void LogFirstRun(Delegate del, bool isGameLoop = false) => LogFirstRun($"{del.Method.DeclaringType.Name}.{del.Method.Name}", isGameLoop);
 	}
 #if DEBUG
 	internal class ShaderTestingEffect : ModSceneEffect {
