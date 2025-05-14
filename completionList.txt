@@ -305,7 +305,7 @@ STATUS EFFECTS:
 (^) Rasterized*
 (^) Riven Assimilation*
 (^) Shadefire*
-(@, #2) Shimmering? !!! (faster fall and unaffected by liquids)
+(☻) Shimmering? !!!
 (^) Static Shock*
 (^) Torn*
 (^) Totally Safe*
@@ -715,7 +715,7 @@ MELEE WEAPONS:
 (^) Amoebash*
 (^) Boomboom
 (X) Chambersite Phaseblade !!!
-(#, ^2) Chambersite Phasesaber !!!
+(☻) Chambersite Phasesaber !!!
 (^) Crystal Cutters
 (^) Depth Charge
 (^) Knee Slapper*

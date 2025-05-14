@@ -34,7 +34,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() {
 			On_Player.ShimmerCollision += (On_Player.orig_ShimmerCollision orig, Player self, bool fallThrough, bool ignorePlats, bool noCollision) => {
 				if (self.OriginPlayer().weakShimmer) {
-					self.position += self.velocity * new Vector2(0.75f, 0.5f);
+					self.position += self.velocity * new Vector2(0.75f, 0.75f);
 				} else {
 					orig(self, fallThrough, ignorePlats, noCollision);
 				}
