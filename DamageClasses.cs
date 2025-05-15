@@ -52,6 +52,40 @@ namespace Origins {
 			}
 		}
 		public static void Patch() {
+			static StatInheritanceData GenericInherit(DamageClass damageClass) {
+				return damageClass.GetModifierInheritance(DamageClass.Generic);
+			}
+			On_Player.GetTotalDamage += (orig, self, damageClass) => {
+				StatModifier stat = orig(self, damageClass);
+				if (damageClass == DamageClass.Ranged) stat = stat.CombineWith(self.GetDamage(RangedExplosiveInherit));
+				if (damageClass != DamageClass.Summon) stat = stat.CombineWith(self.GetDamage(NoSummonInherit).Scale(GenericInherit(damageClass).damageInheritance));
+				return stat;
+			};
+			On_Player.GetTotalKnockback += (orig, self, damageClass) => {
+				StatModifier stat = orig(self, damageClass);
+				if (damageClass == DamageClass.Ranged) stat = stat.CombineWith(self.GetKnockback(RangedExplosiveInherit));
+				if (damageClass != DamageClass.Summon) stat = stat.CombineWith(self.GetKnockback(NoSummonInherit).Scale(GenericInherit(damageClass).knockbackInheritance));
+				return stat;
+			};
+			On_Player.GetTotalCritChance += (orig, self, damageClass) => {
+				float stat = orig(self, damageClass);
+				if (damageClass == DamageClass.Ranged) stat += self.GetCritChance(RangedExplosiveInherit);
+				if (damageClass != DamageClass.Summon) stat += self.GetCritChance(NoSummonInherit) * GenericInherit(damageClass).critChanceInheritance;
+				return stat;
+			};
+			On_Player.GetTotalArmorPenetration += (orig, self, damageClass) => {
+				float stat = orig(self, damageClass);
+				if (damageClass == DamageClass.Ranged) stat += self.GetArmorPenetration(RangedExplosiveInherit);
+				if (damageClass != DamageClass.Summon) stat += self.GetArmorPenetration(NoSummonInherit) * GenericInherit(damageClass).armorPenInheritance;
+				return stat;
+			};
+			On_Player.GetTotalAttackSpeed += (orig, self, damageClass) => {
+				float stat = orig(self, damageClass);
+				if (damageClass == DamageClass.Ranged) stat += self.GetAttackSpeed(RangedExplosiveInherit) - 1f;
+				if (damageClass != DamageClass.Summon) stat += (self.GetAttackSpeed(NoSummonInherit) - 1f) * GenericInherit(damageClass).attackSpeedInheritance;
+				return stat;
+			};
+			/*
 			HashSet<MethodInfo> patched = [];
 			foreach (DamageClass damageClass in All) {
 				MethodInfo method = damageClass.GetType().GetMethod(nameof(DamageClass.GetModifierInheritance));
@@ -62,6 +96,7 @@ namespace Origins {
 					return orig(self, other);
 				});
 			}
+			*/
 		}
 		public void Unload() {
 			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)) {

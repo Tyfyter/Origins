@@ -46,6 +46,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Fargowiltas.Common.Configs;
 using Origins.Water;
+using Origins.Items.Armor.Other;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -322,6 +323,41 @@ namespace Origins {
 			AddModdedNPCAssimilation<Crimson_Assimilation>("SpiritMod/CrimsonTrapper", default, CrimsonGlobalNPC.NPCTypes);
 			AddModdedProjectileAssimilation<Crimson_Assimilation>("SpiritMod/ArterialBloodClump", 0.08f, "SpiritMod/CrimsonTrapper");
 			AddModdedNPCAssimilation<Crimson_Assimilation>("SpiritMod/Bladetongue", default, CrimsonGlobalNPC.NPCTypes);
+
+			if (ModLoader.TryGetMod("RecipeBrowser", out Mod recipeBrowser)) {
+				Type ArmorSetFeatureHelper = recipeBrowser.Code.GetType("RecipeBrowser.UIElements.ArmorSetFeatureHelper");
+				MethodInfo CalculateArmorSets = ArmorSetFeatureHelper?.GetMethod("CalculateArmorSets", BindingFlags.NonPublic | BindingFlags.Static);
+				if (CalculateArmorSets is not null) {
+					try {
+						MonoModHooks.Modify(CalculateArmorSets, il => {
+							ILCursor c = new(il);
+							c.GotoNext(MoveType.After,
+								i => i.MatchStsfld(ArmorSetFeatureHelper, "armorSetSlots")
+							);
+							c.EmitLdsfld(ArmorSetFeatureHelper.GetField("sets", BindingFlags.NonPublic | BindingFlags.Static));
+							c.EmitDelegate<Action<List<Tuple<Item, Item, Item, string, int>>>>(sets => {
+								int hatType = ModContent.ItemType<Lucky_Hat>();
+								bool firstHat = true;
+								sets.RemoveAll(i => {
+									if (i.Item1.type == hatType) {
+										if (firstHat) {
+											/*string annything = Language.GetTextValue("Mods.Origins.CrossMod.RecipeBrowserAnyArmor");
+											i.Item2.SetNameOverride(annything);
+											i.Item3.SetNameOverride(annything);*/
+											firstHat = false;
+											return false;
+										}
+										return true;
+									}
+									return false;
+								});
+							});
+						});
+					} catch (Exception ex) {
+						if (Origins.LogLoadingILError("RecipeBrowser_CalculateArmorSets_Fix", ex)) throw;
+					}
+				}
+			}
 		}
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {

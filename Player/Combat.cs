@@ -42,6 +42,7 @@ namespace Origins {
 			return speed;
 		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
+			Debugging.LogFirstRun(ModifyWeaponDamage);
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
 				damage.Flat += Player.statDefense / 2;
 			}
@@ -57,6 +58,7 @@ namespace Origins {
 				float mult = (90f / Math.Max(item.useAnimation, 8)) * 1.3f;
 				if (mult > 1) damage *= mult;
 			}
+			Debugging.LogFirstRun($"{nameof(ModifyWeaponDamage)} (after)");
 		}
 		public override void ModifyWeaponCrit(Item item, ref float crit) {
 			if (rubyReticle) {

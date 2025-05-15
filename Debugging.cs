@@ -35,6 +35,9 @@ namespace Origins {
 		//Running Player.SlopingCollision for the first time
 		//Running PressurePlateHelper.UpdatePlayerPosition for the first time
 		//Running OriginPlayer.PreItemCheck for the first time
+		//Running OriginPlayer.ModifyWeaponDamage for the first time
+		//Running OriginPlayer.ModifyWeaponDamage (after) for the first time
+		//Running OriginPlayer.PostItemCheck for the first time
 		//Running OriginPlayer.FrameEffects for the first time
 		//Running OriginPlayer.PostUpdate for the first time
 		//Running OriginSystem.PreUpdateNPCs for the first time

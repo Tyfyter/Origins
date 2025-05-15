@@ -823,6 +823,7 @@ namespace Origins {
 			return true;
 		}
 		public override void PostItemCheck() {
+			Debugging.LogFirstRun(PostItemCheck);
 			ItemChecking = false;
 			releaseAltUse = !Player.controlUseTile;
 		}
