@@ -481,7 +481,7 @@ namespace Origins {
 			}
 			Player.oldVelocity = Player.velocity;
 			rivenWet = false;
-			if ((Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet)) {
+			if (!weakShimmer && (Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet)) {
 				if (Player.InModBiome<Riven_Hive>()) {
 					rivenWet = true;
 					/*if (GameModeData.ExpertMode) {
