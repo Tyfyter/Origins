@@ -18,7 +18,6 @@ namespace Origins {
 		}
 		static bool firstFirstUpdate = true;
 		internal static bool firstUpdate = false;
-
 		//Running OriginSystem.PreUpdatePlayers for the first time
 		//Running OriginPlayer.PreUpdate for the first time
 		//Running OriginPlayer.SetControls for the first time
@@ -32,6 +31,11 @@ namespace Origins {
 		//Running OriginPlayer.UpdateLifeRegen for the first time
 		//Running OriginPlayer.PostUpdateRunSpeeds for the first time
 		//Running OriginPlayer.PreUpdateMovement for the first time
+		//Running Player.UpdateTouchingTiles for the first time
+		//Running Player.SlopingCollision for the first time
+		//Running PressurePlateHelper.UpdatePlayerPosition for the first time
+		//Running OriginPlayer.PreItemCheck for the first time
+		//Running OriginPlayer.FrameEffects for the first time
 		//Running OriginPlayer.PostUpdate for the first time
 		//Running OriginSystem.PreUpdateNPCs for the first time
 		//Running OriginSystem.PreUpdateGores for the first time
@@ -45,9 +49,6 @@ namespace Origins {
 		//Running OriginSystem.PostUpdateEverything for the first time
 		//Running PostUpdateEverything (passed tickers) for the first time
 		public static void LogFirstRun(string name, bool isGameLoop = false) {
-			if (isGameLoop) {
-
-			}
 			if (firstFirstUpdate && isGameLoop) {
 				firstUpdate = true;
 				firstFirstUpdate = false;

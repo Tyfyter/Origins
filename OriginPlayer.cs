@@ -771,6 +771,7 @@ namespace Origins {
 			return base.PreModifyLuck(ref luck);
 		}
 		public override bool PreItemCheck() {
+			Debugging.LogFirstRun(PreItemCheck);
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
 			if (disableUseItem) {

@@ -717,9 +717,18 @@ namespace Origins {
 			};
 			IL_WaterShaderData.DrawWaves += Brine_Pool_NPC.DisableRipples;
 			On_Player.SlopingCollision += (On_Player.orig_SlopingCollision orig, Player self, bool fallThrough, bool ignorePlats) => {
+				Debugging.LogFirstRun(self.SlopingCollision);
 				float startY = self.position.Y;
 				orig(self, fallThrough, ignorePlats);
 				if (self.position.Y != startY) self.OriginPlayer().onSlope = true;
+			};
+			On_Player.UpdateTouchingTiles += (orig, self) => {
+				Debugging.LogFirstRun(self.UpdateTouchingTiles);
+				orig(self);
+			};
+			On_PressurePlateHelper.UpdatePlayerPosition += (orig, self) => {
+				Debugging.LogFirstRun(PressurePlateHelper.UpdatePlayerPosition);
+				orig(self);
 			};
 		}
 		public static bool processingDash = false;
