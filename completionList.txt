@@ -437,7 +437,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(X) Gaming Glove !!!
+(#, ^2) Gaming Glove !!!
 (^) Golden Lotus
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
@@ -454,7 +454,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(@4, ^3) Lazy Cloak° !!!
+(#2, ^2) Lazy Cloak° !!! (glow code)
 (^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
@@ -496,7 +496,7 @@ ACCESSORIES:
 (^) Rebreather Gear
 (X) Reformward
 (^) Resin Shield*
-(@, ^3) Resizing Glove !!!
+(#2, ^2) Resizing Glove !!! (doesn't show up despite have graphical code)
 (^) Return To Sender*
 (^) Rockstar Choker
 (^) Ruby Reticle*
@@ -540,7 +540,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (^) Retaliatory Tendril°
-(@, ^3) Shield of Shimmer !!!
+(#2, ^2) Shield of Shimmer !!! (graphical code)
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -557,7 +557,7 @@ ACCESSORIES:
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
-(@, ^3) Wishing Glass !!!
+(#2, ^2) Wishing Glass !!! (needs tooltip key, accessory visual mayhaps)
 
 (^) Agility Core°
 (^) Combat Core°
@@ -714,8 +714,7 @@ MELEE WEAPONS:
 (^) Amenonuhoko
 (^) Amoebash*
 (^) Boomboom
-(X) Chambersite Phaseblade !!!
-(☻) Chambersite Phasesaber !!!
+(^) Chambersite Phasesaber
 (^) Crystal Cutters
 (^) Depth Charge
 (^) Knee Slapper*
@@ -1014,7 +1013,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(#2, ^2) Chambersite Mine Launcher !!! (crit effect?)
+(#2, ^2) Chambersite Mine Launcher !!! (generic effect)
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair

@@ -1,11 +1,8 @@
-using Terraria.ID;
-using Terraria.ModLoader;
-using Origins.Dev;
+using Origins.Projectiles;
 using PegasusLib;
 using Terraria;
-using Origins.Projectiles;
-using CalamityMod.NPCs.TownNPCs;
-using ThoriumMod.Items.Donate;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Chambersite_Phasesaber : ModItem {
@@ -14,18 +11,18 @@ namespace Origins.Items.Weapons.Melee {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.damage = 18;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 48;
 			Item.height = 48;
 			Item.useTime = 16;
 			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 2;
+			Item.knockBack = 3;
 			Item.autoReuse = true;
 			Item.useTurn = true;
-			Item.rare = ItemRarityID.Green;
-			Item.UseSound = SoundID.Item1;
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = SoundID.Item15;
 			Item.shoot = ModContent.ProjectileType<Chambersite_Phasesaber_P>();
 			Item.shootSpeed = 11;
 		}

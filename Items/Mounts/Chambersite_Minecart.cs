@@ -20,8 +20,8 @@ namespace Origins.Items.Mounts {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Large_Chambersite>()
 			.AddIngredient(ItemID.Minecart)
+			.AddIngredient<Large_Chambersite>()
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -65,7 +65,7 @@ namespace Origins.Items.Mounts {
 		}
 	}
 	public class Chambersite_Minecart_Buff : ModBuff, ICustomWikiStat {
-		public override string Texture => base.Texture.Replace("Buff", "Item");
+		public override string Texture => "Origins/Buffs/Chambersite_Minecart_Buff";
 		public string CustomStatPath => Name;
 		public override LocalizedText DisplayName => Language.GetText("BuffName.MinecartLeft");
 		public override LocalizedText Description => Language.GetText("BuffDescription.MinecartLeft");

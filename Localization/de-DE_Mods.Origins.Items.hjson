@@ -6068,12 +6068,12 @@ Chambersite_Gem_Lock_Item: {
 
 Chambersite_Mine_Launcher: {
 	// DisplayName: Chambersite Mine Launcher
-	// Tooltip: ""
+	// Tooltip: Fully benefits from generic boosts
 }
 
 Cool_Sword: {
 	// DisplayName: Cool Sword
-	// Tooltip: ""
+	// Tooltip: Releases aether stars
 }
 
 Chambersite_Minecart_Item: {
@@ -6082,11 +6082,16 @@ Chambersite_Minecart_Item: {
 }
 
 Shimmer_Dynamite: {
-	// DisplayName: Shimmer Dynamite
-	// Tooltip: ""
+	// DisplayName: Defective Shimmer Dynamite
+	/* Tooltip:
+		'''
+		Doesn't shimmer you or anything else
+		Deals poor damage for a post-ML weapon
+		At least it's non-consumable
+		''' */
 }
 
 Chambersite_Phasesaber: {
 	// DisplayName: Chambersite Phasesaber
-	// Tooltip: ""
+	// Tooltip: Can be thrown at enemies, but it doesn't glow!
 }

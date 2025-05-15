@@ -4,8 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.HandsOn)]
 	public class Resizing_Glove : ModItem, ICustomWikiStat {
-		public override string Texture => typeof(Gun_Glove).GetDefaultTMLName();
 		public string[] Categories => [
 			"Combat",
 			"MeleeBoostAcc"
