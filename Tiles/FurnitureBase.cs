@@ -685,7 +685,7 @@ namespace Origins.Tiles {
 		/// <br/> 1 = Large Terrarium Cage
 		/// <br/> 2 = Jar Cage
 		/// </summary>
-		public abstract int CageKind { get; }
+		public abstract int CageKind { get; } // should probably be an enum
 		private static readonly Dictionary<int, (int, TileObjectData, int)> CageKindMap = new() {
 			[0] = (TileID.CageBuggy, TileObjectData.Style3x2, 1),
 			[1] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
@@ -704,7 +704,6 @@ namespace Origins.Tiles {
 			Main.tileSolidTop[Type] = true;
 			Main.tileTable[Type] = true;
 			Main.tileLavaDeath[Type] = LavaDeath;
-			Main.critterCage = true;
 			TileID.Sets.CritterCageLidStyle[Type] = LidType;
 
 			AdjTiles = [CageKindMap[CageKind].Item1];
@@ -731,11 +730,15 @@ namespace Origins.Tiles {
 			num = fail ? 6 : 3;
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Main.critterCage = true;
 			Tile tile = Framing.GetTileSafely(i, j);
 			int frameIndex;
 			if (CageKind != 1) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
-			frameYOffset = FrameIndexArray[frameIndex];
+			frameYOffset = FrameIndexArray[frameIndex] * AnimationFrameHeight;
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			offsetY = 2;
 		}
 	}
 	public abstract class ModGemLock : ModTile {
