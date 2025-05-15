@@ -498,6 +498,7 @@ namespace Origins {
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
 		public override void ResetEffects() {
+			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
 			if (felnumSet) oldBonuses |= 2;

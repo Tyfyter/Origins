@@ -17,6 +17,7 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Brine {
 	public abstract class Brine_Pool_NPC : ModNPC, IBrinePoolNPC {
+		public static float ScalingArmorPenetrationToCompensateForTSNerf => 0.1f;
 		public int PathfindingTime { get; set; } = 0;
 		public bool TargetIsRipple { get; set; } = false;
 		public bool CanSeeTarget { get; set; } = false;
@@ -189,6 +190,9 @@ namespace Origins.NPCs.Brine {
 					}
 				}
 			}
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.WritePackedVector2(TargetPos);

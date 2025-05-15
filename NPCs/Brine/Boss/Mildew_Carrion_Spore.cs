@@ -57,6 +57,9 @@ namespace Origins.NPCs.Brine.Boss {
 			Projectile.height = 20;
 			Projectile.penetrate = 1;
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Projectile.penetrate--;
 		}

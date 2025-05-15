@@ -94,6 +94,9 @@ namespace Origins.NPCs.Brine.Boss {
 			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
 			return null;
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Projectile.penetrate--;
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 120);

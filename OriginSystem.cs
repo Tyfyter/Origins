@@ -302,9 +302,12 @@ namespace Origins {
 			lastHour = hour;
 		}
 		public override void PostUpdateEverything() {
+			Debugging.LogFirstRun(PostUpdateEverything);
 			for (int i = 0; i < Origins.tickers.Count; i++) {
 				Origins.tickers[i].Tick();
 			}
+			Debugging.LogFirstRun(nameof(PostUpdateEverything) + " (passed tickers)");
+			Debugging.firstUpdate = false;
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }
@@ -556,6 +559,7 @@ namespace Origins {
 			Time_Radices.Refresh();
 		}
 		public override void PreUpdateProjectiles() {
+			Debugging.LogFirstRun(PreUpdateProjectiles);
 			OriginsGlobalBiome.isConversionFromProjectile = true;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
@@ -616,14 +620,39 @@ namespace Origins {
 		public int[] laserTagTeamGems = new int[6];
 		public int[] laserTagTeamPlayers = new int[6];
 		public override void PreUpdatePlayers() {
+			Debugging.LogFirstRun(PreUpdatePlayers, true);
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = [];
 			else OriginPlayer.playersByGuid.Clear();
 			Laser_Tag_Console.ProcessLaserTag();
 			if (!hasLoggedPUP) {
 				hasLoggedPUP = true;
-				Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
+				//Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
 			}
+		}
+		public override void PreUpdateNPCs() {
+			Debugging.LogFirstRun(PreUpdateNPCs);
+		}
+		public override void PreUpdateGores() {
+			Debugging.LogFirstRun(PreUpdateGores);
+		}
+		public override void PreUpdateItems() {
+			Debugging.LogFirstRun(PreUpdateItems);
+		}
+		public override void PreUpdateDusts() {
+			Debugging.LogFirstRun(PreUpdateDusts);
+		}
+		public override void PreUpdateTime() {
+			Debugging.LogFirstRun(PreUpdateTime);
+		}
+		public override void PreUpdateWorld() {
+			Debugging.LogFirstRun(PreUpdateWorld);
+		}
+		public override void PreUpdateInvasions() {
+			Debugging.LogFirstRun(PreUpdateInvasions);
+		}
+		public override void PostUpdateInvasions() {
+			Debugging.LogFirstRun(PostUpdateInvasions);
 		}
 	}
 	public class TempleBiome : ModBiome {

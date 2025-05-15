@@ -22,7 +22,11 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
+		public override void UpdateEquips() {
+			Debugging.LogFirstRun(UpdateEquips);
+		}
 		public override void PostUpdateEquips() {
+			Debugging.LogFirstRun(PostUpdateEquips);
 			if (bugZapper && tornCurrentSeverity > 0) {
 				Player.statDefense *= 1.15f + tornCurrentSeverity;
 			}
@@ -251,6 +255,7 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateMiscEffects() {
+			Debugging.LogFirstRun(PostUpdateMiscEffects);
 			if (oldCryostenHelmet) {
 				if (Player.statLife != Player.statLifeMax2) {
 					bool buffed = cryostenLifeRegenCount > 0;
@@ -553,6 +558,7 @@ namespace Origins {
 			return true;
 		}
 		public override void UpdateDyes() {
+			Debugging.LogFirstRun(UpdateDyes);
 			if (dashVaseVisual) {
 				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
 					if (Player.armor[i].ModItem is Fallacious_Vase) {
@@ -657,6 +663,7 @@ namespace Origins {
 			}
 		}
 		public override void UpdateLifeRegen() {
+			Debugging.LogFirstRun(UpdateLifeRegen);
 			if (extremophileSet && Player.lifeRegen < 0) {
 				Player.lifeRegen -= Main.rand.RandomRound(Player.lifeRegen * 0.333f);
 			}

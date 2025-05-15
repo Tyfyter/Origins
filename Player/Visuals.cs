@@ -85,8 +85,10 @@ namespace Origins {
 			}
 		}
 		public override void FrameEffects() {
+			Debugging.LogFirstRun(FrameEffects);
 			for (int i = 13; i < 18 + Player.extraAccessorySlots * 2; i++) {
-				if (Player.armor.GetIfInRange(i)?.type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
+				if (!Player.armor.IndexInRange(i)) break;
+				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
 			}
 			if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
 				Player.armorEffectDrawShadow = true;
@@ -113,6 +115,7 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateRunSpeeds() {
+			Debugging.LogFirstRun(PostUpdateRunSpeeds);
 			oldGravDir = Player.gravDir;
 			if (forceFallthrough) Player.GoingDownWithGrapple = true;
 			forceFallthrough = false;

@@ -95,6 +95,9 @@ namespace Origins.NPCs.Brine.Boss {
 			if (Mildew_Creeper.FriendlyNPCTypes.Contains(target.type)) return false;
 			return Projectile.ai[1] == -1 ? null : false;
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if ((Main.expertMode || (Owner.wet && !target.wet)) && Projectile.ai[0] == 0) Projectile.ai[1] = target.whoAmI;
 			Projectile.ai[0] = 1f;

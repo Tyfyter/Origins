@@ -763,6 +763,9 @@ namespace Origins.NPCs.Brine.Boss {
 				}*/
 			}
 		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
+		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 diff = Owner.Center - NPC.Center;
