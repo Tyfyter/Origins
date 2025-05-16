@@ -8,12 +8,15 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Shinedown : ModItem {
 		public override string Texture => typeof(Bled_Out_Staff).GetDefaultTMLName();
 		public static float ExtraManaPerEnemyPercent => 0.3f;
+		public static float FlatKnockbackAdjustment => 1f;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 		}
@@ -30,16 +33,20 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shoot = ModContent.ProjectileType<Shinedown_Staff_P>();
 			Item.shootSpeed = 16 * 30;
 			Item.mana = 7;
-			Item.knockBack = 1f;
+			Item.knockBack = FlatKnockbackAdjustment;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = false;
 			Item.channel = true;
 		}
+		public static float GetSpeedMultiplier(Player player, Item item) {
+			return (30f / item.useTime) / CombinedHooks.TotalUseTimeMultiplier(player, item);
+		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			LanguageTree locKey = TextUtils.LanguageTree.Find($"Mods.Origins.Items.{nameof(Shinedown)}");
-			float speed = 30f / CombinedHooks.TotalUseTime(Item.useTime, Main.LocalPlayer, Item);
+			LanguageTree locKey = this.GetLocalizationTree();
+			float speed = GetSpeedMultiplier(Main.LocalPlayer, Item);
+			if (Main.LocalPlayer.kbBuff) Item.knockBack /= 1.5f;
 			for (int i = 0; i < tooltips.Count; i++) {
 				switch (tooltips[i].Name) {
 					case "Damage":
@@ -53,11 +60,14 @@ namespace Origins.Items.Weapons.Magic {
 					tooltips.RemoveAt(i--);
 					break;
 					case "Knockback":
-					float statusRate = Main.LocalPlayer.GetWeaponKnockback(Item) * speed;
+					float statusRate = Main.LocalPlayer.GetWeaponKnockback(Item) * speed / FlatKnockbackAdjustment;
 					string statusText = $"{statusRate:0.#}";
 					LanguageTree tree = locKey.Find("StatusEffects");
 					if (!tree.TryGetValue(statusText, out LanguageTree format)) format = tree.Find("Default");
 					tooltips[i].Text = locKey.Find("PerSecond").value.Format(format.value.Format(statusText));
+					break;
+					case "PrefixKnockback":
+					tooltips[i].Text = locKey.Find("StatusChance").value.Format(tooltips[i].Text.Split(' ')[0]);
 					break;
 					case "UseMana":
 					float manaCost = Main.LocalPlayer.GetManaCost(Item) * speed;
@@ -160,7 +170,7 @@ namespace Origins.Items.Weapons.Magic {
 						globalNPC.shinedownDamage += damage;
 						globalNPC.shinedownSpeed = Projectile.ai[1];
 						totalDamage += damage;
-						if (Projectile.owner == Main.myPlayer && Main.rand.NextFloat() < (Projectile.knockBack * Projectile.ai[1]) / 60f) {
+						if (Projectile.owner == Main.myPlayer && Main.rand.NextFloat() < (Projectile.knockBack * Projectile.ai[1] / Shinedown.FlatKnockbackAdjustment) / 60f) {
 							switch (Main.rand.Next(4)) {
 								case 0:
 								npc.AddBuff(BuffID.CursedInferno, 60);
@@ -227,7 +237,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 
-			Projectile.ai[1] = 30f / CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+			Projectile.ai[1] = Shinedown.GetSpeedMultiplier(player, player.HeldItem);
 			Projectile.ai[0] = Projectile.ai[1] * 20;
 			Projectile.netUpdate = true;
 			return true;

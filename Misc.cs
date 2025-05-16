@@ -2912,6 +2912,8 @@ namespace Origins {
 			while (Language.Exists($"{key}.{i}")) i++;
 			return Language.GetText($"{key}.{Main.rand.Next(i)}");
 		}
+		public static LanguageTree GetLocalizationTree(this ILocalizedModType self)
+			=> TextUtils.LanguageTree.Find(self.Mod.GetLocalizationKey($"{self.LocalizationCategory}.{self.Name}"));
 		public static void GetMultiTileTopLeft(int i, int j, TileObjectData data, out int left, out int top) {
 			Tile tile = Main.tile[i, j];
 			int innerFrameY = tile.TileFrameY % data.CoordinateFullHeight;

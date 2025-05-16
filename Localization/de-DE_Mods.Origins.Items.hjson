@@ -6125,6 +6125,7 @@ Shinedown: {
 	// DisplayName: Shinedown
 	// PerSecond: "{0} per second"
 	// ManaPerSecond: Uses {0:.#} mana per second, plus {1:.#} per target
+	// StatusChance: "{0} status effect chance"
 
 	StatusEffects: {
 		// 1: "{0} status effect"
