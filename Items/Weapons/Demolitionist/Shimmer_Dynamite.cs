@@ -22,6 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.damage = 65;
+			Item.DamageType = DamageClasses.ThrownExplosive;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
@@ -55,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Dynamite);
-			Projectile.timeLeft = 360;
+			Projectile.timeLeft = 180;
 			Projectile.friendly = false;
 			DrawOriginOffsetY = -16;
 		}
@@ -162,6 +163,26 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 			//WorldGen.RangeFrame(minI - 1, maxI + 1, minJ - 1, maxJ + 1);
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.ModifyHitInfo += (ref NPC.HitInfo info) => {
+				if (NPCID.Sets.ShimmerTransformToNPC[target.type] >= 0 || NPCID.Sets.ShimmerTransformToItem[target.type] >= 0) {
+					if (info.Damage >= target.life) {
+						target.shimmerTransparency = 1;
+						info.Damage = target.life - 1;
+					}
+				}
+			};
+		}
+
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Shimmer, 91);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.Knockback *= 0;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.Shimmer, 60);
 		}
 	}
 }

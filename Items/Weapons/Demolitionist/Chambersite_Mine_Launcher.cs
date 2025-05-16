@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 14;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 0;
-			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.DamageType = ModContent.GetInstance<Chambersite_Mine_Launcher_Damage>();
 			Projectile.timeLeft = 240;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 1;
