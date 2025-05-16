@@ -60,7 +60,13 @@ namespace Origins {
 				TileID.KryptonMoss, TileID.RainbowMoss,
 				TileID.XenonMoss, TileID.RainbowMoss,
 				TileID.ArgonMoss, TileID.RainbowMoss,
-				TileID.VioletMoss, TileID.RainbowMoss
+				TileID.VioletMoss, TileID.RainbowMoss,
+
+				TileID.Topaz, TileID.Amethyst,
+				TileID.Sapphire, TileID.Topaz,
+				TileID.Emerald, TileID.Sapphire,
+				TileID.Ruby, TileID.Emerald,
+				TileID.Diamond, TileID.Ruby
 			);
 		}
 		[ReinitializeDuringResizeArrays]

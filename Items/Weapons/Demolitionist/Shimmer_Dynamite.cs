@@ -86,61 +86,73 @@ namespace Origins.Items.Weapons.Demolitionist {
 						continue;
 
 					Tile tile = Main.tile[i, j];
-					if (Main.tile[i, j] != null && tile.HasTile && Projectile.CanExplodeTile(i, j)) {
-						void TransformToTile(int type) {
-							if (type >= 0) {
-								tile.TileType = (ushort)type;
-								if (tile.TileType == TileID.Torches) {
-									tile.TileFrameY = 23 * 22;
-								}
-								if (Main.netMode != NetmodeID.SinglePlayer) {
-									NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+					if (Main.tile[i, j] != null) {
+						if (tile.HasTile && Projectile.CanExplodeTile(i, j)) {
+							void TransformToTile(int type) {
+								if (type >= 0) {
+									tile.TileType = (ushort)type;
+									if (tile.TileType == TileID.Torches) {
+										tile.TileFrameY = 23 * 22;
+									}
+									if (Main.netMode != NetmodeID.SinglePlayer) {
+										NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+									}
 								}
 							}
-						}
-						switch (tile.TileType) {
-							case TileID.LunarBrick: {
-								switch (Main.GetMoonPhase()) {
-									case MoonPhase.Full:
-									TransformToTile(TileID.HeavenforgeBrick);
+							switch (tile.TileType) {
+								case TileID.LunarBrick: {
+									switch (Main.GetMoonPhase()) {
+										case MoonPhase.Full:
+										TransformToTile(TileID.HeavenforgeBrick);
+										break;
+										case MoonPhase.ThreeQuartersAtLeft:
+										TransformToTile(TileID.LunarRustBrick);
+										break;
+										case MoonPhase.HalfAtLeft:
+										TransformToTile(TileID.AstraBrick);
+										break;
+										case MoonPhase.QuarterAtLeft:
+										TransformToTile(TileID.DarkCelestialBrick);
+										break;
+										case MoonPhase.Empty:
+										TransformToTile(TileID.MercuryBrick);
+										break;
+										case MoonPhase.QuarterAtRight:
+										TransformToTile(TileID.StarRoyaleBrick);
+										break;
+										case MoonPhase.HalfAtRight:
+										TransformToTile(TileID.CryocoreBrick);
+										break;
+										case MoonPhase.ThreeQuartersAtRight:
+										TransformToTile(TileID.CosmicEmberBrick);
+										break;
+									}
 									break;
-									case MoonPhase.ThreeQuartersAtLeft:
-									TransformToTile(TileID.LunarRustBrick);
-									break;
-									case MoonPhase.HalfAtLeft:
-									TransformToTile(TileID.AstraBrick);
-									break;
-									case MoonPhase.QuarterAtLeft:
-									TransformToTile(TileID.DarkCelestialBrick);
-									break;
-									case MoonPhase.Empty:
-									TransformToTile(TileID.MercuryBrick);
-									break;
-									case MoonPhase.QuarterAtRight:
-									TransformToTile(TileID.StarRoyaleBrick);
-									break;
-									case MoonPhase.HalfAtRight:
-									TransformToTile(TileID.CryocoreBrick);
-									break;
-									case MoonPhase.ThreeQuartersAtRight:
-									TransformToTile(TileID.CosmicEmberBrick);
-									break;
+								}
+								case TileID.ExposedGems:
+								if (tile.TileFrameX >= 18) {
+									tile.TileFrameX -= 18;
+									if (Main.netMode != NetmodeID.SinglePlayer) {
+										NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
+									}
 								}
 								break;
+								default:
+								TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
+								break;
 							}
-							case TileID.ExposedGems:
-							if (tile.TileFrameX >= 18) {
-								tile.TileFrameX -= 18;
-								if (Main.netMode != NetmodeID.SinglePlayer) {
-									NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
-								}
-							}
+						}
+						switch (tile.LiquidType) {
+							case LiquidID.Water:
+							tile.LiquidType = LiquidID.Lava;
 							break;
-							default:
-							TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
+							case LiquidID.Lava:
+							tile.LiquidType = LiquidID.Honey;
+							break;
+							case LiquidID.Honey:
+							tile.LiquidType = LiquidID.Water;
 							break;
 						}
-
 					}
 					/*for (int k = i - 1; k <= i + 1; k++) {
 						for (int l = j - 1; l <= j + 1; l++) {
