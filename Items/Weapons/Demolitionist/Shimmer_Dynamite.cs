@@ -87,6 +87,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 					Tile tile = Main.tile[i, j];
 					if (Main.tile[i, j] != null) {
+						bool needsSync = false;
 						if (tile.HasTile && Projectile.CanExplodeTile(i, j)) {
 							void TransformToTile(int type) {
 								if (type >= 0) {
@@ -94,9 +95,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 									if (tile.TileType == TileID.Torches) {
 										tile.TileFrameY = 23 * 22;
 									}
-									if (Main.netMode != NetmodeID.SinglePlayer) {
-										NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
-									}
+									needsSync = true;
 								}
 							}
 							switch (tile.TileType) {
@@ -132,9 +131,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 								case TileID.ExposedGems:
 								if (tile.TileFrameX >= 18) {
 									tile.TileFrameX -= 18;
-									if (Main.netMode != NetmodeID.SinglePlayer) {
-										NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
-									}
+									needsSync = true;
 								}
 								break;
 								default:
@@ -145,13 +142,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 						switch (tile.LiquidType) {
 							case LiquidID.Water:
 							tile.LiquidType = LiquidID.Lava;
+							if (tile.LiquidAmount > 0) needsSync = true;
 							break;
 							case LiquidID.Lava:
 							tile.LiquidType = LiquidID.Honey;
+							if (tile.LiquidAmount > 0) needsSync = true;
 							break;
 							case LiquidID.Honey:
 							tile.LiquidType = LiquidID.Water;
+							if (tile.LiquidAmount > 0) needsSync = true;
 							break;
+						}
+						if (needsSync && Main.netMode != NetmodeID.SinglePlayer) {
+							NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
 						}
 					}
 					/*for (int k = i - 1; k <= i + 1; k++) {
