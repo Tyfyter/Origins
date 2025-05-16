@@ -68,6 +68,7 @@ namespace Origins.NPCs {
 		public int sonarDynamiteTime = 0;
 		public bool lazyCloakShimmer = false;
 		public int shinedownDamage = 0;
+		public float shinedownSpeed = 1;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -259,7 +260,8 @@ namespace Origins.NPCs {
 				}
 			}
 			if (shinedownDamage > 0) {
-				if (damage < shinedownDamage) damage = shinedownDamage / 2;
+				int displayedDamage = Main.rand.RandomRound(shinedownDamage / shinedownSpeed);
+				if (damage < displayedDamage) damage = displayedDamage;
 				npc.lifeRegenCount -= shinedownDamage * 4;
 				shinedownDamage = 0;
 			}

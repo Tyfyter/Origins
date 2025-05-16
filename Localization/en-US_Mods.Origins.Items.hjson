@@ -6123,5 +6123,13 @@ Gaming_Glove: {
 
 Shinedown: {
 	DisplayName: Shinedown
+	PerSecond: "{0} per second"
+	ManaPerSecond: Uses {0:.#} mana per second, plus {1:.#} per target
+
+	StatusEffects: {
+		1: "{0} status effect"
+		Default: "{0} status effects"
+	}
+
 	Tooltip: ""
 }

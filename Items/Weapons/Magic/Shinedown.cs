@@ -1,27 +1,19 @@
-using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Buffs;
-using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
-using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod;
-using ThoriumMod.Empowerments;
-using ThoriumMod.Items.Donate;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Shinedown : ModItem {
 		public override string Texture => typeof(Bled_Out_Staff).GetDefaultTMLName();
+		public static float ExtraManaPerEnemyPercent => 0.3f;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 		}
@@ -29,21 +21,50 @@ namespace Origins.Items.Weapons.Magic {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.DamageType = DamageClass.Magic;
 			Item.useStyle = -1;
-			Item.damage = 20;
+			Item.damage = 40;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
-			Item.useTime = 37;
-			Item.useAnimation = 37;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Shinedown_Staff_P>();
-			Item.shootSpeed = 300f;
-			Item.mana = 13;
+			Item.shootSpeed = 16 * 30;
+			Item.mana = 7;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = false;
 			Item.channel = true;
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			LanguageTree locKey = TextUtils.LanguageTree.Find($"Mods.Origins.Items.{nameof(Shinedown)}");
+			float speed = 30f / CombinedHooks.TotalUseTime(Item.useTime, Main.LocalPlayer, Item);
+			for (int i = 0; i < tooltips.Count; i++) {
+				switch (tooltips[i].Name) {
+					case "Damage":
+					tooltips[i].Text = locKey.Find("PerSecond").value.Format($"{Main.LocalPlayer.GetWeaponDamage(Item) * speed * 2:0.#}{Item.DamageType.DisplayName.Value}");
+					break;
+					case "CritChance":
+					case "PrefixCritChance":
+					tooltips.RemoveAt(i--);
+					break;
+					case "Speed":
+					tooltips.RemoveAt(i--);
+					break;
+					case "Knockback":
+					float statusRate = Main.LocalPlayer.GetWeaponKnockback(Item) * speed;
+					string statusText = $"{statusRate:0.#}";
+					LanguageTree tree = locKey.Find("StatusEffects");
+					if (!tree.TryGetValue(statusText, out LanguageTree format)) format = tree.Find("Default");
+					tooltips[i].Text = locKey.Find("PerSecond").value.Format(format.value.Format(statusText));
+					break;
+					case "UseMana":
+					float manaCost = Main.LocalPlayer.GetManaCost(Item) * speed;
+					tooltips[i].Text = locKey.Find("ManaPerSecond").value.Format(manaCost, manaCost * ExtraManaPerEnemyPercent);
+					break;
+				}
+			}
 		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			player.bodyFrame.Y = player.bodyFrame.Height * 2;
@@ -77,12 +98,13 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[1] == 2) {
 				Projectile.aiStyle = -1;
 				for (int i = 0; i < decayingAims.Length; i++) {
-					decayingAims[i].UpdateDecaying();
+					decayingAims[i].UpdateDecaying(Projectile.ai[1]);
 					if (decayingAims[i].active) Projectile.timeLeft = 2;
 				}
 				if (Projectile.timeLeft == 2) player.SetDummyItemTime(2);
 				return;
 			}
+			if (Projectile.owner == Main.myPlayer) player.ChangeDir((Main.MouseWorld.X > player.Center.X).ToDirectionInt());
 			player.SetDummyItemTime(2);
 			aims ??= new Aim[Main.maxNPCs];
 			decayingAims ??= new Aim[20];
@@ -90,7 +112,11 @@ namespace Origins.Items.Weapons.Magic {
 			if (!player.noItems && !player.CCed) {
 				if (--Projectile.ai[0] <= 0) {
 					if (Main.myPlayer == Projectile.owner) {
-						if (!player.channel || !ActuallyShoot(maxLengthSQ)) Projectile.ai[1] = 1;
+						if (!player.channel) {
+							Projectile.ai[1] = 1;
+						} else {
+							DoShoot(maxLengthSQ);
+						}
 					}
 				}
 				if (Projectile.localAI[0] != Projectile.ai[0]) {
@@ -105,11 +131,11 @@ namespace Origins.Items.Weapons.Magic {
 			for (int i = 0; i < aims.Length; i++) {
 				if (aims[i].active) {
 					activeAims++;
-					if (aims[i].Update(center, maxLengthSQ)) AddDecayingAim(aims[i]);
+					if (aims[i].Update(center, Projectile.ai[1], maxLengthSQ)) AddDecayingAim(aims[i]);
 				}
 			}
 			for (int i = 0; i < decayingAims.Length; i++) {
-				decayingAims[i].UpdateDecaying();
+				decayingAims[i].UpdateDecaying(Projectile.ai[1]);
 			}
 			Triangle hitTri;
 			Vector2 perp;
@@ -127,11 +153,14 @@ namespace Origins.Items.Weapons.Magic {
 					hitTri = new(center + perp * 16, center - perp * 16, center + motion * Projectile.scale + norm * 16);
 					if (hitTri.Intersects(npcHitbox)) {
 						NPC.HitModifiers hitModifiers = npc.GetIncomingStrikeModifiers(Projectile.DamageType, 0);
-						hitModifiers.Defense = new StatModifier(0, 0);
+						hitModifiers.Defense.Base = Math.Min(hitModifiers.Defense.Base, 8);
 						int damage = hitModifiers.GetDamage(Projectile.damage, false);
-						npc.GetGlobalNPC<OriginGlobalNPC>().shinedownDamage += damage;
+						damage = Main.rand.RandomRound(damage * Projectile.ai[1]);
+						OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
+						globalNPC.shinedownDamage += damage;
+						globalNPC.shinedownSpeed = Projectile.ai[1];
 						totalDamage += damage;
-						if (Projectile.owner == Main.myPlayer && Main.rand.NextFloat() < Projectile.knockBack / 60f) {
+						if (Projectile.owner == Main.myPlayer && Main.rand.NextFloat() < (Projectile.knockBack * Projectile.ai[1]) / 60f) {
 							switch (Main.rand.Next(4)) {
 								case 0:
 								npc.AddBuff(BuffID.CursedInferno, 60);
@@ -154,6 +183,12 @@ namespace Origins.Items.Weapons.Magic {
 					}
 				}
 			}
+			Projectile.ai[2] += (1 + activeAims * Shinedown.ExtraManaPerEnemyPercent) * player.GetManaCost(player.HeldItem) * Projectile.ai[1] / 60f;
+			if (Projectile.ai[2] > 1) {
+				int cost = (int)Projectile.ai[2];
+				Projectile.ai[2] -= cost;
+				if (!player.CheckMana(player.HeldItem, cost, true)) Projectile.ai[1] = 1;
+			}
 			player.addDPS(Main.rand.RandomRound(totalDamage / 30f));
 		}
 		void AddDecayingAim(Aim aim) {
@@ -174,12 +209,11 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			decayingAims[bestDecaying] = aim;
 		}
-		bool ActuallyShoot(float maxLengthSQ) {
+		bool DoShoot(float maxLengthSQ) {
 			Player player = Main.player[Projectile.owner];
 			float bestAngle = 0.5f;
 			Vector2 aimOrigin = player.Top;
 			Vector2 aimVector = aimOrigin.DirectionTo(Main.MouseWorld);
-			Projectile.ai[0] = 1;
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (aims[npc.whoAmI].active) continue;
 				//if (!npc.CanBeChasedBy(Projectile)) continue;
@@ -193,7 +227,8 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 
-			Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+			Projectile.ai[1] = 30f / CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+			Projectile.ai[0] = Projectile.ai[1] * 20;
 			Projectile.netUpdate = true;
 			return true;
 		}
@@ -248,7 +283,7 @@ namespace Origins.Items.Weapons.Magic {
 				motion = default;
 				active = true;
 			}
-			public bool Update(Vector2 position, float maxLengthSQ) {
+			public bool Update(Vector2 position, float speed, float maxLengthSQ) {
 				NPC target = Main.npc[index];
 				if (!target.active || target.type != type) target = null;
 				if (target is null) {
@@ -260,14 +295,14 @@ namespace Origins.Items.Weapons.Magic {
 					active = false;
 					return true;
 				}
-				MathUtils.LinearSmoothing(ref motion, diff, 4);
-				motion = Utils.rotateTowards(Vector2.Zero, motion, diff, 0.3f);
+				MathUtils.LinearSmoothing(ref motion, diff, 4 * speed);
+				motion = Utils.rotateTowards(Vector2.Zero, motion, diff, 0.3f * speed);
 				return false;
 			}
-			public void UpdateDecaying() {
+			public void UpdateDecaying(float speed) {
 				if (active) {
 					float length = Motion.Length();
-					motion *= 0.99f * ((length - 2) / length);
+					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * speed;
 					active = length > 4;
 				}
 			}
