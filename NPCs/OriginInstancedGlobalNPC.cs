@@ -67,6 +67,7 @@ namespace Origins.NPCs {
 		public bool deadBird = false;
 		public int sonarDynamiteTime = 0;
 		public bool lazyCloakShimmer = false;
+		public int shinedownDamage = 0;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -256,6 +257,11 @@ namespace Origins.NPCs {
 					npc.lifeRegen -= 15;
 					damage += 2;
 				}
+			}
+			if (shinedownDamage > 0) {
+				if (damage < shinedownDamage) damage = shinedownDamage;
+				npc.lifeRegenCount -= shinedownDamage * 4;
+				shinedownDamage = 0;
 			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {

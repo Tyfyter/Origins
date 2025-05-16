@@ -1777,6 +1777,8 @@ Projectiles: {
 	// Chambersite_Phasesaber_P.DisplayName: Chambersite Phasesaber P
 	// Bile_Harpoon_Droplet.DisplayName: Bile Harpoon Droplet
 	// Bile_Harpoon_P.DisplayName: Bile Harpoon P
+	// Shinedown_P.DisplayName: Shinedown P
+	// Shinedown_Staff_P.DisplayName: Shinedown Staff P
 }
 
 Prefixes: {
