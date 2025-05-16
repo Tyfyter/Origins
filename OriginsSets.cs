@@ -17,7 +17,7 @@ namespace Origins {
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
 			public static float[] DamageBonusScale { get; } = ItemID.Sets.Factory.CreateFloatSet(1f);
 			public static string[] JournalEntries { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntries)}")
-			.Description("Controls which items are associated with which journal entries")
+			.Description("Controls which items are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
 		}
 		[ReinitializeDuringResizeArrays]
@@ -49,7 +49,7 @@ namespace Origins {
 		[ReinitializeDuringResizeArrays]
 		public static class NPCs {
 			public static string[] JournalEntries { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(NPCs)}_{nameof(JournalEntries)}")
-			.Description("Controls which npcs are associated with which journal entries")
+			.Description("Controls which npcs are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
 		}
 		[ReinitializeDuringResizeArrays]

@@ -1067,11 +1067,16 @@ namespace Origins {
 			talkingPet = index;
 			talkingPetTime = 2;
 		}
-		public void UnlockJournalEntry(string entryName) {
-			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
-				unreadJournalEntries.Add(entryName);
-				SoundEngine.PlaySound(Origins.Sounds.Journal);
+		public void UnlockJournalEntry(string entryNames) {
+			if (!journalUnlocked) return;
+			bool playSound = false;
+			foreach (string entryName in entryNames.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
+				if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
+					unreadJournalEntries.Add(entryName);
+					playSound = true;
+				}
 			}
+			if (playSound) SoundEngine.PlaySound(Origins.Sounds.Journal);
 		}
 		bool necromanaUsedThisUse = false;
 		public override void OnConsumeMana(Item item, int manaConsumed) {

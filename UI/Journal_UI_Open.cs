@@ -21,6 +21,7 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -113,7 +114,7 @@ namespace Origins.UI {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					currentPage.Add(textSnippet);
 					minNewLines = Math.Max(minNewLines, (int)Math.Ceiling(size.Y / (lineSpace * num3 * Main.UIScale)));
-					float minCursorY = cursor.Y + lineSpace * num3 * minNewLines;
+					float minCursorY = cursor.Y + lineSpace * minNewLines;
 					while (cursor.X > bounds.Width) {
 						cursor.Y += lineSpace * num3;
 						cursor.X -= bounds.Width;
@@ -342,9 +343,22 @@ namespace Origins.UI {
 							inkColor = Color.White;
 						}
 					}
+					float lineSpace = FontAssets.MouseText.Value.LineSpacing;
 					for (int i = 0; i < OriginPlayer.LocalOriginPlayer.journalText.Count; i++) {
 						if (i < OriginPlayer.LocalOriginPlayer.journalText.Count) {
-							pages.Add(ChatManager.ParseMessage(OriginPlayer.LocalOriginPlayer.journalText[i], inkColor));
+							List<TextSnippet> page = ChatManager.ParseMessage(OriginPlayer.LocalOriginPlayer.journalText[i], inkColor);
+							for (int j = 0; j < page.Count; j++) {
+								if (j + 1 < page.Count && page[j].UniqueDraw(true, out Vector2 size, null)) {
+									size.Y -= lineSpace;
+									if (!page[j + 1].UniqueDraw(true, out _, null)) {
+										while (size.Y > 0) {
+											size.Y -= lineSpace;
+											page.Insert(++j, new("\n "));
+										}
+									}
+								}
+							}
+							pages.Add(page);
 						}
 					}
 					currentEffect = GameShaders.Armor.GetSecondaryShader(dye, Main.LocalPlayer);
@@ -477,6 +491,7 @@ namespace Origins.UI {
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
 					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
+					WrappingTextSnippetSetup.SetWrappingData(pagePos, bounds.Width * 0.5f - XMarginTotal);
 					bool canEnterWritingMode = true;
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
@@ -523,6 +538,7 @@ namespace Origins.UI {
 					}
 				}
 			} finally {
+				WrappingTextSnippetSetup.SetWrappingData(Vector2.Zero, float.PositiveInfinity);
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = float.PositiveInfinity;
 				if (shade) {
 					Origins.shaderOroboros.Stack(currentEffect);

@@ -804,6 +804,20 @@ Ocean_Tribe: {
 	}
 }
 
+µTutorial: {
+	DisplayName: Mechanics
+
+	Explosive_Weapons: {
+		Name: Explosive Weapons
+		Text: Explosive weapons deal high damage, but receive reduced damage bonuses and are more heavily affected by defense
+	}
+
+	TutorialJournalEntry: {
+		Text: Mods.Origins.Journal.µTutorial.TutorialJournalEntry.Text
+		Name: Tutorial Journal Entry
+	}
+}
+
 µUncategorized: {
 	DisplayName: Uncategorized
 

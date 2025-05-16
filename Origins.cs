@@ -512,6 +512,9 @@ namespace Origins {
 			ChatManager.Register<Journal_Series_Header_Handler>([
 				"jsh"
 			]);
+			ChatManager.Register<Journal_Entry_Handler>([
+				"jentry"
+			]);
 			ChatManager.Register<Quest_Link_Handler>([
 				"quest",
 				"q"
@@ -765,12 +768,13 @@ namespace Origins {
 			SetBalanceSetValues();
 			foreach (ModItem item in MC.GetContent<ModItem>()) {
 				if (item is not IJournalEntrySource source) continue;
-				OriginsSets.Items.JournalEntries[item.Type] = source.EntryName;
+				JournalEntry.AddJournalEntry(ref OriginsSets.Items.JournalEntries[item.Type], source.EntryName);
 			}
 			foreach (ModNPC npc in MC.GetContent<ModNPC>()) {
 				if (npc is not IJournalEntrySource source) continue;
-				OriginsSets.NPCs.JournalEntries[npc.Type] = source.EntryName;
+				JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[npc.Type], source.EntryName);
 			}
+			ModContent.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 		}
 		/// <summary>
 		/// Set here rather than in the initializer so that they can be changed freely

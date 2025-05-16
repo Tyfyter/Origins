@@ -71,19 +71,23 @@ namespace Origins.Journal {
 				return Part.CompareTo(other.Part);
 			}
 		}
+		public static void AddJournalEntry(ref string current, string newEntry) {
+			if (!string.IsNullOrEmpty(current)) current += ';';
+			current += newEntry;
+		}
 	}
 	public abstract class VanillaItemJournalEntry : JournalEntry {
 		public abstract int ItemType { get; }
 		public override LocalizedText DisplayName => Lang.GetItemName(ItemType);
 		public override void SetStaticDefaults() {
-			OriginsSets.Items.JournalEntries[ItemType] = FullName;
+			JournalEntry.AddJournalEntry(ref OriginsSets.Items.JournalEntries[ItemType], FullName);
 		}
 	}
 	public abstract class VanillaNPCJournalEntry : JournalEntry {
 		public abstract int NPCType { get; }
 		public override LocalizedText DisplayName => Lang.GetNPCName(NPCType);
 		public override void SetStaticDefaults() {
-			OriginsSets.NPCs.JournalEntries[NPCType] = FullName;
+			JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[NPCType], FullName);
 		}
 	}
 }
