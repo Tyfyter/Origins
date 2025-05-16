@@ -259,7 +259,7 @@ namespace Origins.NPCs {
 				}
 			}
 			if (shinedownDamage > 0) {
-				if (damage < shinedownDamage) damage = shinedownDamage;
+				if (damage < shinedownDamage) damage = shinedownDamage / 2;
 				npc.lifeRegenCount -= shinedownDamage * 4;
 				shinedownDamage = 0;
 			}
