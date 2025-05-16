@@ -437,7 +437,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(#, ^2) Gaming Glove !!!
+(^) Gaming Glove (Was ♠)
 (^) Golden Lotus
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
@@ -557,7 +557,7 @@ ACCESSORIES:
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
-(#2, ^2) Wishing Glass !!! (needs tooltip key, accessory visual mayhaps)
+(#2, ^2) Wishing Glass !!! (accessory visual mayhaps)
 
 (^) Agility Core°
 (^) Combat Core°
@@ -1570,7 +1570,7 @@ AMMO:
 (^) Bile Bullet*
 (^) Bile Canister*
 (^) Bile Dart*
-(#, ^2) Bile Harpoon !!!
+(☻) Bile Harpoon !!!
 (^) Coolant Canister*
 (^) Cursed Canister*
 (^) Cursed Harpoon*

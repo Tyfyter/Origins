@@ -308,6 +308,7 @@ namespace Origins {
 		int wishingGlassEquipTime = 0;
 		public bool wishingGlassActive = false;
 		public int wishingGlassCooldown = 0;
+		public bool wishingGlassVisible = false;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
 
@@ -751,6 +752,7 @@ namespace Origins {
 				}
 			}
 			wishingGlassActive = false;
+			wishingGlassVisible = false;
 			shimmerShield = false;
 			lotteryTicketItem = null;
 

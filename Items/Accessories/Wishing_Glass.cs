@@ -16,8 +16,12 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 			Item.master = true;
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().WishingGlass = true;
+			if (!hideVisual) UpdateVanity(player);
+		}
+		public override void UpdateVanity(Player player) {
+			player.OriginPlayer().wishingGlassVisible = true;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.SubstituteKeybind(Keybindings.WishingGlass);
