@@ -258,4 +258,24 @@ namespace Origins {
 	}
 	public class No_Summon_Inherit : DamageClass { }
 	public class Ranged_Explosive_Inherit : DamageClass { }
+	public class Chambersite_Mine_Launcher_Damage : DamageClass {
+		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.DamageClasses.ExplosivePlus.DisplayName").WithFormatArgs(Ranged.DisplayName);
+
+		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
+			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
+			typeof(ILoadable).GetMethod("Load").Invoke(newClass, [Origins.instance]);
+			return newClass;
+		}
+		public override bool GetEffectInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetEffectInheritance(damageClass) || Ranged.GetEffectInheritance(damageClass);
+		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || Ranged.GetsPrefixesFor(damageClass);
+		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
+			if (damageClass == Generic) {
+				return StatInheritanceData.Full;
+			}
+			return DamageClasses.Explosive.GetModifierInheritance(damageClass);
+		}
+		public override void SetDefaultStats(Player player) {
+			player.GetCritChance(this) -= 4;
+		}
+	}
 }

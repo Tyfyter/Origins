@@ -10,6 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Chambersite_Mine_Launcher : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Chambersite_Mine>(38, 28, 7.5f, 48, 32);
+			Item.DamageType = ModContent.GetInstance<Chambersite_Mine_Launcher_Damage>();
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 2);
@@ -66,6 +67,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			this.DoGravity(0.04f);
+			Projectile.rotation += Projectile.velocity.Length() * Projectile.direction * 0.03f;
 			if (Projectile.owner == Main.myPlayer && Projectile.timeLeft == 240) Projectile.timeLeft -= Main.rand.Next(30);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
