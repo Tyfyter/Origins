@@ -843,7 +843,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Manasynk*
 (^) Nerve Flan
-(@, #2) Shimmerstar Staff !!!
+(☻) Shimmerstar Staff !!!
 (^) Splitsplash*
 (^) Tones of Agony
 

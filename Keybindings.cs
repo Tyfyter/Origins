@@ -18,7 +18,6 @@ namespace Origins {
 		public static ModKeybind OpenJournal { get; private set; }*/
 		[Keybind(Keys.Up)]
 		public static ModKeybind JournalBack { get; private set; }
-		[Keybind(Keys.Up)]
 		public static ModKeybind WishingGlass => ModContent.GetInstance<SyncedKeybinds>().WishingGlass.keybind;
 #if DEBUG
 		[Keybind("Debug Screen Shader", Keys.OemQuotes)]

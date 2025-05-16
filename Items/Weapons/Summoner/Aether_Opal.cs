@@ -252,16 +252,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (foundTarget) {
 				if (++Projectile.ai[0] >= attack_time) {
 					int mode = projDistanceFromTarget > 16 * 10 ? 0 : 1;
+					SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
 					int count = 6;
 					for (int i = count; i > 0; i--) {
-						Projectile.NewProjectile(
+						Projectile.SpawnProjectile(
 							Projectile.GetSource_FromThis(),
 							Projectile.Center,
 							direction.RotatedBy(1f * ((i / (float)count - 0.5f) + Main.rand.NextFloat(-0.1f, 0.1f))) * 12,
 							Shimmer_Guardian_Shard.ID,
 							Projectile.originalDamage,
-							Projectile.knockBack,
-							Projectile.owner
+							Projectile.knockBack
 						);
 					}
 				}
