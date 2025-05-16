@@ -6095,3 +6095,8 @@ Chambersite_Phasesaber: {
 	DisplayName: Chambersite Phasesaber
 	Tooltip: Can be thrown at enemies, but it doesn't glow!
 }
+
+Bile_Harpoon: {
+	DisplayName: Bile Harpoon
+	Tooltip: ""
+}
