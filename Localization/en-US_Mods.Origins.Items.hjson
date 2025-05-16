@@ -6100,3 +6100,18 @@ Bile_Harpoon: {
 	DisplayName: Bile Harpoon
 	Tooltip: ""
 }
+
+Aetherite_Pants: {
+	DisplayName: Aetherite Pants
+	Tooltip: ""
+}
+
+Aetherite_Robes: {
+	DisplayName: Aetherite Robes
+	Tooltip: ""
+}
+
+Aetherite_Wreath: {
+	DisplayName: Aetherite Wreath
+	Tooltip: ""
+}

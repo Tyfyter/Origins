@@ -658,6 +658,12 @@ namespace Origins {
 					blastSetActive = true;
 					break;
 				}
+
+				case SetActiveAbility.aetherite_armor: {
+					// pending shimmer construct phase 3 visuals
+					break;
+				}
+
 				default:
 				break;
 			}
@@ -705,5 +711,6 @@ namespace Origins {
 	}
 	public static class SetActiveAbility {
 		public const int blast_armor = 4;
+		public const int aetherite_armor = 5;
 	}
 }

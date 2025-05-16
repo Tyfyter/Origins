@@ -4641,6 +4641,20 @@ namespace Origins {
 				OriginsModIntegrations.GoToKeybind(keybind);
 			}
 		}
+		public static string SubstituteKeybind(this string line, ModKeybind keybind) {
+			InputMode inputMode = InputMode.Keyboard;
+			switch (PlayerInput.CurrentInputMode) {
+				case InputMode.XBoxGamepad or InputMode.XBoxGamepadUI:
+				inputMode = InputMode.XBoxGamepad;
+				break;
+			}
+			string substitution = keybind.GetAssignedKeys(inputMode).FirstOrDefault() ?? Language.GetOrRegister("Mods.Origins.Generic.UnboundKey").Format(keybind.DisplayName);
+			line = line.Replace("<key>", substitution);
+			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+				OriginsModIntegrations.GoToKeybind(keybind);
+			}
+			return line;
+		}
 		public static float DifficultyDamageMultiplier {
 			get {
 				if (Main.GameModeInfo.IsJourneyMode) {

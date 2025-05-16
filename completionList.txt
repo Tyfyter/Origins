@@ -329,7 +329,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(X) Aetherite Armor !!!
+(@, #2) Aetherite Armor !!!
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
