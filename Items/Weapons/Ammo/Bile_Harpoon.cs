@@ -1,14 +1,11 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
+using PegasusLib;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Buffs;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using PegasusLib;
-using System.Collections.Generic;
-using CalamityMod.NPCs.TownNPCs;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Harpoon : ModItem, ICustomWikiStat {

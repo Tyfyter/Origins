@@ -809,7 +809,16 @@ Ocean_Tribe: {
 
 	Explosive_Weapons: {
 		// Name: Explosive Weapons
-		// Text: Explosive weapons deal high damage, but receive reduced damage bonuses and are more heavily affected by defense
+		/* Text:
+			'''
+			Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by defense. They also tend to be more expensive and rely heavily on your aim because of their often-slow velocities. Fortunately, this reality of Terraria has some possible explosive equipment that could be manifested, but even the equipment is generally the lowest in terms of defense (as to permit flexibility and mobility). All of this and to mention that you could blow yourself up along with the world. Don't get caught in the blast radius of your own explosives!
+
+			It's not all that bad to run with the rockets, however, it just requires a different level of play that running other classes might not have. Fortunately, some explosive weapons are safe to the user, but if they aren't there are plenty of items to provide you with "self-damage" protection. Not to mention, your explosives will only deal self-damage according to your own defense too!
+
+			Being a "demolitionist", as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
+
+			Oh, and one more thing: grenades are good for crowd-control, dynamite is good for single targets and bombs are an in-between. Yes, dynamite and bombs can be used offensively despite blowing up the world. That's just what a Pincushion from the Clothier is for. Also, look for any armor penetration bonuses to make them ignore defense and deal more damage!
+			''' */
 	}
 
 	TutorialJournalEntry: {

@@ -437,7 +437,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(^) Gaming Glove (Was ♠)
+(#2, ^2) Gaming Glove (Needs handsOn, Was ♠)
 (^) Golden Lotus
 (⛥) Grave Danger* !!!
 (^) Gun Glove*
@@ -843,7 +843,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Manasynk*
 (^) Nerve Flan
-(☻) Shimmerstar Staff !!!
+(@, #2) Shimmerstar Staff !!! (still needs sprite and visual code when you see what I'm trying to do)
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -1013,7 +1013,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (^) Boomphracken
-(#2, ^2) Chambersite Mine Launcher !!! (generic effect)
+(^) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair
@@ -1164,7 +1164,7 @@ TILES:
 (X) Cancer Block° !!!
 (X) Cancer Furniture° !!!
 (^) Chambersite Bunny Cage°
-(☻) Chambersite Gem Lock° !!!
+(^) Chambersite Gem Lock°
 (^) Chambersite Gemspark°
 (^) Chambersite Gemstone°
 (^) Chambersite Gemstone (Corruption)°
