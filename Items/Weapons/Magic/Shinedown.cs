@@ -7,14 +7,10 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.Map;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Shinedown : ModItem {
-		public override string Texture => typeof(Bled_Out_Staff).GetDefaultTMLName();
 		public static float ExtraManaPerEnemyPercent => 0.3f;
 		public static float FlatKnockbackAdjustment => 1f;
 		public override void SetStaticDefaults() {
@@ -24,7 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.DamageType = DamageClass.Magic;
 			Item.useStyle = -1;
-			Item.damage = 40;
+			Item.damage = 70;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
@@ -36,7 +32,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.knockBack = FlatKnockbackAdjustment;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item67;
+			Item.UseSound = SoundID.Item132.WithPitch(5f);
 			Item.autoReuse = false;
 			Item.channel = true;
 		}

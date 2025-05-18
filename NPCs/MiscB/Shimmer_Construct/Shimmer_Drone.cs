@@ -5,18 +5,18 @@ using Terraria.DataStructures;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class Shimmer_Drone : ModNPC {
-		public override string Texture => "Terraria/Images/NPC_" + NPCID.ServantofCthulhu;
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.ServantofCthulhu] = Type;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.ServantofCthulhu);
-			NPC.damage = 18;
-			NPC.lifeMax = 30;
+			NPC.damage = 22;
+			NPC.lifeMax = 45;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
+			NPC.HitSound = SoundID.DD2_CrystalCartImpact.WithPitch(2f);
+			NPC.DeathSound = SoundID.Item101;
 		}
 		public override void OnSpawn(IEntitySource source) => NPC.ai[1] = -2;
 		public override void AI() {
