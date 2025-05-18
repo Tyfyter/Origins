@@ -45,6 +45,7 @@ namespace Origins.NPCs.Riven {
 			OriginPlayer.InflictTorn(target, 6 * 60);
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!Main.hardMode) return 0;
 			if (!spawnInfo.DesertCave) return 0;
 			if (!spawnInfo.Player.InModBiome<Riven_Hive>()) return 0;
 			return Riven_Hive.SpawnRates.Ghoul;
