@@ -58,6 +58,7 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 180f;
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!Main.hardMode) return 0;
 			if (!spawnInfo.DesertCave) return 0;
 			if (!spawnInfo.Player.InModBiome<Defiled_Wastelands>()) return 0;
 			return Defiled_Wastelands.SpawnRates.Ghoul;
