@@ -5130,7 +5130,7 @@ Necromancer_Crown: {
 
 Lost_Diver_Bag: {
 	// DisplayName: Treasure Bag (Lost Diver)
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Torpedo_Tube: {
@@ -6098,27 +6098,37 @@ Chambersite_Phasesaber: {
 
 Bile_Harpoon: {
 	// DisplayName: Bile Harpoon
-	// Tooltip: ""
+	// Tooltip: Stuns the target
 }
 
 Aetherite_Pants: {
 	// DisplayName: Aetherite Pants
-	// Tooltip: ""
+	// Tooltip: Increased jump speed and slower fall
 }
 
 Aetherite_Robes: {
 	// DisplayName: Aetherite Robes
-	// Tooltip: ""
+	// Tooltip: +24% generic attack speed
 }
 
 Aetherite_Wreath: {
 	// DisplayName: Aetherite Wreath
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		+15% generic velocity
+		+15% melee weapon size
+		''' */
 }
 
 Gaming_Glove: {
 	// DisplayName: Gaming Glove
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Swung melee weapons will be a random size every swing
+		''' */
 }
 
 Shinedown: {
@@ -6134,3 +6144,39 @@ Shinedown: {
 
 	// Tooltip: ""
 }
+
+Chambersite_Breastplate: {
+	// DisplayName: Chambersite Breastplate
+	/* Tooltip:
+		'''
+		+10% critical strike chance
+		+8% damage reduction
+		''' */
+}
+
+Chambersite_Greaves: {
+	// DisplayName: Chambersite Greaves
+	// Tooltip: +10% faster weapon use time and movement speed
+}
+
+Chambersite_Helmet: {
+	// DisplayName: Chambersite Helmet
+	// Tooltip: +10% weapon damage and velocity
+}
+
+Shimmer_Construct_Bag: {
+	// DisplayName: Treasure Bag (Shimmer Construct)
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Shimmer_Construct_Relic_Item: {
+	// DisplayName: Shimmer Construct Relic
+	// Tooltip: ""
+}
+
+Shimmer_Construct_Trophy_Item: {
+	// DisplayName: Shimmer Construct Trophy
+	// Tooltip: ""
+}
+
+// Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask

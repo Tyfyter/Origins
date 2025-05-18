@@ -11,6 +11,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Lazy_Cloak : ModItem {
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+		}
+		static short glowmask;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
 			Item.damage = 10;
@@ -19,11 +23,11 @@ namespace Origins.Items.Accessories {
 			Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
 			Item.value = Item.sellPrice(gold: 6);
-			Item.rare = ItemRarityID.Master;
+			Item.rare = ItemRarityID.Orange;
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
 			Item.hasVanityEffects = true;
-			Item.master = true;
+			Item.glowMask = glowmask;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			Item.backSlot = -1;
@@ -241,7 +245,6 @@ namespace Origins.Items.Accessories {
 namespace Origins.Buffs {
 	public class Lazy_Cloak_Buff : ModBuff, ICustomWikiStat {
 		public string CustomStatPath => nameof(Lazy_Cloak_Buff);
-		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
 		public static int ID { get; private set; }
 		public override void Load() {
 			try {

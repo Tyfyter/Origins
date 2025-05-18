@@ -285,16 +285,15 @@ namespace Origins {
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Shimmer_Construct).Replace("_", ""),
-					6.8f,
+					6.91f,
 					() => Boss_Tracker.Instance.downedShimmerConstruct,
 					ModContent.NPCType<Shimmer_Construct>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
-						/*["collectibles"] = new List<int> {
+						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
 							TrophyTileBase.ItemType<Shimmer_Construct_Trophy>()
-						},*/
-						["overrideHeadTextures"] = ModContent.GetInstance<Shimmer_Construct>().BossHeadTexture,
+						}
 					}
 				);
 			}

@@ -3,5 +3,7 @@
     public class World_Cracker_Relic : RelicTileBase {}
     public class Fiberglass_Weaver_Relic : RelicTileBase {}
 	public class Lost_Diver_Relic : RelicTileBase { }
-	// public class Shimmer_Construct_Relic : RelicTileBase { }
+	public class Shimmer_Construct_Relic : RelicTileBase {
+		public override string RelicTextureName => "Origins/Tiles/BossDrops/World_Cracker_Relic";
+	}
 }

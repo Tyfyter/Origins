@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
-using Origins.Journal;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
@@ -17,7 +15,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Donate;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -100,6 +97,7 @@ namespace Origins {
 		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
 		public bool mildewHead = false;
 		public bool mildewSet = false;
+		public bool chambersiteCommandoSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -611,6 +609,7 @@ namespace Origins {
 			}
 			mildewHead = false;
 			mildewSet = false;
+			chambersiteCommandoSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {

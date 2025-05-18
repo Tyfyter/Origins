@@ -1,9 +1,12 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Accessories;
+using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
-using PegasusLib;
+using Origins.LootConditions;
+using Origins.Tiles.BossDrops;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -18,16 +21,18 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class Shimmer_Construct : ModNPC {
 		protected readonly static List<AIState> aiStates = [];
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeofCthulhu;
+		public override string BossHeadTexture => "Terraria/Images/NPC_Head_Boss_0";
 		public readonly int[] previousStates = new int[6];
 		public bool IsInPhase3 => Main.expertMode && NPC.life * 10 < NPC.lifeMax;
+		internal static IItemDropRule normalDropRule;
 		public override void Load() {
 			On_NPC.DoDeathEvents += static (On_NPC.orig_DoDeathEvents orig, NPC self, Player closestPlayer) => {
 				orig(self, closestPlayer);
@@ -49,6 +54,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			};
 		}
+		public override void Unload() {
+			normalDropRule = null;
+		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
@@ -65,7 +73,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 			NPC.DeathSound = SoundID.DD2_DefeatScene;
-			NPC.BossBar = ModContent.GetInstance<SC_BossBar>();
+			NPC.BossBar = GetInstance<SC_BossBar>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			Array.Fill(previousStates, NPC.aiAction);
 		}
@@ -131,13 +139,26 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			potionType = ItemID.RestorationPotion;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(new OneFromRulesRule(1,
-				ItemDropRule.Common(ModContent.ItemType<Cool_Sword>()),
-				//ItemDropRule.Common(ModContent.ItemType<>()),
-				ItemDropRule.Common(ModContent.ItemType<Shimmerstar_Staff>()),
-				ItemDropRule.Common(ModContent.ItemType<Aether_Opal>())
-				//ItemDropRule.Common(ModContent.ItemType<Cool_Sword>())
+			normalDropRule = new LeadingSuccessRule();
+			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1,
+				ItemType<Cool_Sword>(),
+				//ItemType<>(),
+				ItemType<Shimmerstar_Staff>(),
+				ItemType<Aether_Opal>()));
+
+			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1,
+				ItemType<Lazy_Cloak>(),
+				ItemType<Resizing_Glove>()));
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Shimmer_Construct_Trophy>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Shimmer_Construct_Mask>(), 10));
+
+			npcLoot.Add(new DropBasedOnExpertMode(
+				normalDropRule,
+				new DropLocalPerClientAndResetsNPCMoneyTo0(ItemType<Shimmer_Construct_Bag>(), 1, 1, 1, null)
 			));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Wishing_Glass>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Shimmer_Construct_Relic>()));
 		}
 		internal static void DoDeathTeleport(Vector2 offset, BitArray oldItems) {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -285,7 +306,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			aiStates[npc.aiAction].StartAIState(boss);
 			npc.netUpdate = true;
 		}
-		public static int StateIndex<TState>() where TState : AIState => ModContent.GetInstance<TState>().Index;
+		public static int StateIndex<TState>() where TState : AIState => GetInstance<TState>().Index;
 		public static void SelectAIState(Shimmer_Construct boss, params List<AIState>[] from) {
 			WeightedRandom<int> states = new(Main.rand);
 			for (int j = 0; j < from.Length; j++) {

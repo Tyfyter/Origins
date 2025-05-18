@@ -361,7 +361,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(X) Chambersite Armor° !!!
+(@, ^3) Chambersite Armor° !!! (will work on the sentinal summon later)
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -1503,6 +1503,7 @@ CONSUMABLES:
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
 (^) Lost Diver Bag
+(@, ^3) Shimmer Construct Bag
 (^) World Cracker Bag*
 ---
 

@@ -5130,7 +5130,7 @@ Necromancer_Crown: {
 
 Lost_Diver_Bag: {
 	DisplayName: Treasure Bag (Lost Diver)
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Torpedo_Tube: {
@@ -6144,3 +6144,39 @@ Shinedown: {
 
 	Tooltip: ""
 }
+
+Chambersite_Breastplate: {
+	DisplayName: Chambersite Breastplate
+	Tooltip:
+		'''
+		+10% critical strike chance
+		+8% damage reduction
+		'''
+}
+
+Chambersite_Greaves: {
+	DisplayName: Chambersite Greaves
+	Tooltip: +10% faster weapon use time and movement speed
+}
+
+Chambersite_Helmet: {
+	DisplayName: Chambersite Helmet
+	Tooltip: +10% weapon damage and velocity
+}
+
+Shimmer_Construct_Bag: {
+	DisplayName: Treasure Bag (Shimmer Construct)
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Shimmer_Construct_Relic_Item: {
+	DisplayName: Shimmer Construct Relic
+	Tooltip: ""
+}
+
+Shimmer_Construct_Trophy_Item: {
+	DisplayName: Shimmer Construct Trophy
+	Tooltip: ""
+}
+
+Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask

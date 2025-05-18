@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Wishing_Glass : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.WineGlass;
 		public string[] Categories => [
 			"Combat",
 			"GenericBoostAcc"
@@ -28,7 +27,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Wishing_Glass_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.WineGlass;
+		public override string Texture => "Origins/Items/Accessories/Wishing_Glass";
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (originPlayer.WishingGlass) {

@@ -9,9 +9,11 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Movement"
 		];
+		internal static int shieldSlot;
 		public override void SetDefaults() {
+			shieldSlot = Item.shieldSlot;
 			Item.CloneDefaults(ItemID.WarriorEmblem);
-			Item.shieldSlot = ArmorIDs.Shield.ShieldofCthulhu;
+			Item.shieldSlot = shieldSlot;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.expert = true;

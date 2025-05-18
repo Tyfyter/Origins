@@ -2602,6 +2602,11 @@ SetBonuses: {
 		'''
 	ChambersiteMagicHat: Chambersite Robe instead decreases maximum mana by 20
 	ChambersiteWizardHat: +20% magic critical strike chance
+	ChambersiteCommander:
+		'''
+		Summons a Chambersite Sentinal to watch over you
+		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
+		'''
 }
 
 ItemSourceFilter: {
