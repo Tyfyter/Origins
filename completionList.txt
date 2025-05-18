@@ -846,6 +846,7 @@ MAGIC WEAPONS:
 (#2, ^2) Shimmerstar Staff !!! (needs visual code)
 (^) Splitsplash*
 (^) Tones of Agony
+(X) Amnestic Rose
 
 (^) Bled Out Staff
 (^) Brine Haze
