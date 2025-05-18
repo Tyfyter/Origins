@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 30;
 			Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Shinedown_Staff_P>();
-			Item.shootSpeed = 16 * 30;
+			Item.shootSpeed = 16 * 45;
 			Item.mana = 7;
 			Item.knockBack = FlatKnockbackAdjustment;
 			Item.value = Item.sellPrice(gold: 1);

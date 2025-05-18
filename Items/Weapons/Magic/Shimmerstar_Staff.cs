@@ -1,19 +1,25 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Journal;
+using PegasusLib;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Liquid;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using PegasusLib;
-using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
-using Terraria.GameContent.Liquid;
-using System;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Shimmerstar_Staff : ModItem, ICustomDrawItem {
+	public class Shimmerstar_Staff : ModItem, ICustomDrawItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Shimmerstar_Staff_Entry).Name;
+		public class Shimmerstar_Staff_Entry : JournalEntry {
+			public override string TextKey => "Shimmer_Star";
+			public override JournalSortIndex SortIndex => new("Arabel", 1);
+		}
 		public static int MainFireCount => 4;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;

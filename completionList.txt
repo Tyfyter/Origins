@@ -88,6 +88,7 @@ TOWN NPCs:
 (%2, X) Cubekon Tinkerer
 ---
 
+
 TOWN NPC Quests:
 |---
 (^) TOWN NPC QUEST MECHANICS°
@@ -132,17 +133,25 @@ VANILLA MODIFICATIONS:
 (^) Wooden armor buffs*
 ---
 
+
 WORLD GENERATION:
 |---
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
+(X) Fractured Isles
 (^) Limestone Cave
 (^) Riven Hive
 (#2, 々) The Dusk
 
+(X) Defiled Egregore
+(X) The Cosmos
+
+(X) Defiled Mazes
+
 (^) Chambersite Conversion
 ---
+
 
 OTHER:
 |---
@@ -286,11 +295,13 @@ EVENTS:
 (#, %2) Crimson Invasion
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
+(X) War of the World
 
 (X) Test of the Ancients
 
 (^) Laser Tag
 ---
+
 
 STATUS EFFECTS:
 |---
@@ -580,6 +591,7 @@ VANITY:
 (^) World Cracker Mask*
 (X) Scrapper Head
 (X) Severus' Hat
+(X) Shimmer Construct Mask !!!
 
 (X) Abyssal Outcast Set
 (X) Amebic Protector Set
@@ -846,7 +858,6 @@ MAGIC WEAPONS:
 (#2, ^2) Shimmerstar Staff !!! (needs visual code)
 (^) Splitsplash*
 (^) Tones of Agony
-(X) Amnestic Rose
 
 (^) Bled Out Staff
 (^) Brine Haze
@@ -923,6 +934,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Acrid Spout
+(X) Amnestic Rose !!!
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
@@ -1298,6 +1310,8 @@ TILES:
 (々) Miscreant Trophy*
 (々) Quantux Relic*
 (々) Quantux Trophy*
+(X) Shimmer Construct Relic* !!!
+(X) Shimmer Construct Trophy* !!!
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
@@ -1504,7 +1518,7 @@ CONSUMABLES:
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
 (^) Lost Diver Bag
-(@, ^3) Shimmer Construct Bag
+(@, ^3) Shimmer Construct Bag !!!
 (^) World Cracker Bag*
 ---
 
@@ -1523,9 +1537,10 @@ MOUNTS & PETS:
 
 (^) Chromatic Scale (Rainbow Pangolin)*
 (^) Chew Toy (Chee Toy)*
+(X) Gelatin Bloom Brooch !!!
 (^) Strange Power-Up (Platformer Mech)*
 
-(☻, @) Chambersite Minecart !!! (needs buff icon)
+(^) Chambersite Minecart
 (^) Dash Ravel*
 (^) Depth Ravel*
 (X) Drill Ravel°

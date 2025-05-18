@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -9,11 +10,15 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Summoner {
-	public class Defective_Mortar_Shell : ModItem, ICustomWikiStat {
+	public class Defective_Mortar_Shell : ModItem, ICustomWikiStat, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Defective_Mortar_Shell_Entry).Name;
+		public class Defective_Mortar_Shell_Entry : JournalEntry {
+			public override string TextKey => "Defective_Mortar_Shell";
+			public override JournalSortIndex SortIndex => new("The_Ashen", 2);
+		}
 		public string[] Categories => [
-			"Torn",
-			"TornSource"
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {

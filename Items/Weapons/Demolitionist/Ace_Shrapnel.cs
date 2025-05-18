@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,6 +10,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel : ModItem, ICustomWikiStat {
+		public string EntryName => "Origins/" + typeof(Ace_Shrapnel_Entry).Name;
+		public class Ace_Shrapnel_Entry : JournalEntry {
+			public override string TextKey => "Ace_Shrapnel";
+			public override JournalSortIndex SortIndex => new("The_Ashen", 3);
+		}
 		public string[] Categories => [
 			"Launcher"
 		];
