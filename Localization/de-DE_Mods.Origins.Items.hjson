@@ -6098,27 +6098,37 @@ Chambersite_Phasesaber: {
 
 Bile_Harpoon: {
 	// DisplayName: Bile Harpoon
-	// Tooltip: ""
+	// Tooltip: Stuns the target
 }
 
 Aetherite_Pants: {
 	// DisplayName: Aetherite Pants
-	// Tooltip: ""
+	// Tooltip: Increased jump speed and slower fall
 }
 
 Aetherite_Robes: {
 	// DisplayName: Aetherite Robes
-	// Tooltip: ""
+	// Tooltip: +24% generic attack speed
 }
 
 Aetherite_Wreath: {
 	// DisplayName: Aetherite Wreath
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		+15% generic velocity
+		+15% melee weapon size
+		''' */
 }
 
 Gaming_Glove: {
 	// DisplayName: Gaming Glove
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Swung melee weapons will be a random size every swing
+		''' */
 }
 
 Shinedown: {

@@ -1,30 +1,26 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.NPCs;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using PegasusLib;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo.Canisters;
-using System;
-using Origins.Items.Other.Consumables;
-using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Cool_Sword : ModItem {
-		public override string Texture => base.Texture + "_WIP";
 		public override void SetDefaults() {
-			Item.damage = 28;
+			Item.damage = 54;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
-			Item.width = 42;
-			Item.height = 50;
+			Item.width = 180;
+			Item.height = 188;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
 			Item.shoot = ModContent.ProjectileType<Cool_Sword_Slash>();
@@ -34,12 +30,12 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item71.WithPitch(-1.3f);
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Aetherite_Bar>(10)
+			.AddIngredient<Aetherite_Bar>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
@@ -49,7 +45,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Cool_Sword_Slash : ModProjectile {
-		public override string Texture => typeof(Cool_Sword).GetDefaultTMLName() + "_WIP";
+		public override string Texture => typeof(Cool_Sword).GetDefaultTMLName();
 		public static int ExtraHitboxes => 3;
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;

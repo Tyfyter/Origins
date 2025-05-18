@@ -211,7 +211,7 @@ ENEMY NPCS:
 (^) Riven Protoform*
 (X) Scanner Scout
 (^) Shattered Goldfish*
-(@, ^3) Shimmer Drone !!!
+(#2, ^2) Shimmer Drone !!! (needs gores)
 (X) Shooter Creeper
 (^) Single-Cellular Nautilus*
 (^) Slime Worm (Slorm)*
@@ -305,7 +305,7 @@ STATUS EFFECTS:
 (^) Rasterized*
 (^) Riven Assimilation*
 (^) Shadefire*
-(☻) Shimmering? !!!
+(^) Shimmering?
 (^) Static Shock*
 (^) Torn*
 (^) Totally Safe*
@@ -379,7 +379,7 @@ ARMOR:
 (^) Nova Armor*
 
 (^) Ancient Hallowed Visage*
-(@, ^3) Chambersite Robe !!!
+(^) Chambersite Robe
 (^) Chlorophyte Crown*
 (^) Chlorophyte Visage*
 (^) Hallowed Visage*
@@ -439,7 +439,7 @@ ACCESSORIES:
 (^) Futurephones*
 (#2, ^2) Gaming Glove (Needs handsOn, Was ♠)
 (^) Golden Lotus
-(⛥) Grave Danger* !!!
+(⛥) Grave Danger*
 (^) Gun Glove*
 (^) Gun Magazine*
 (^) Haggard Artery*
@@ -464,7 +464,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(X) Master Magician's Cloak !!!
+(#, ^2) Master Magician's Cloak !!!
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Mildew Heart
@@ -479,7 +479,7 @@ ACCESSORIES:
 (^) Noxious Mithrafin
 (^) Olid Organ*
 (^) Ornamental Keepsake
-(X) Otherworldly Cloak !!!
+(#, ^2) Otherworldly Cloak !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -684,7 +684,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@, ☻) Cool Sword !!!
+(#2, ^2) Cool Sword !!! (needs slash anim)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -752,7 +752,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun
 (^) Chipper Knife*
-(X) Constellation !!!
+(#, ^2) Constellation !!!
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -843,7 +843,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Manasynk*
 (^) Nerve Flan
-(@, #2) Shimmerstar Staff !!! (still needs sprite and visual code when you see what I'm trying to do)
+(#2, ^2) Shimmerstar Staff !!! (needs visual code)
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -859,7 +859,7 @@ MAGIC WEAPONS:
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
-(@, ☻) Shinedown !!!
+(#2, ^2) Shinedown !!!
 (X) Siphon Staff
 (^) Splashid
 (^) Startillery

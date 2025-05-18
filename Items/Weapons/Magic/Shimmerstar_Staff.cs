@@ -14,7 +14,6 @@ using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmerstar_Staff : ModItem, ICustomDrawItem {
-		public override string Texture => typeof(Bled_Out_Staff).GetDefaultTMLName();
 		public static int MainFireCount => 4;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
@@ -35,7 +34,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundID.Item67;
+			Item.UseSound = Origins.Sounds.PowerUp.WithPitchRange(0.5f, 0.65f);
 			Item.autoReuse = true;
 			Item.useLimitPerAnimation = MainFireCount;
 			Item.ChangePlayerDirectionOnShoot = false;
@@ -140,7 +139,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 8)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 12)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
