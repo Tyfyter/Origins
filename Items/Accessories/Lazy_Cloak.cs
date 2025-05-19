@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Lazy_Cloak : ModItem,, IJournalEntrySource {
+	public class Lazy_Cloak : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Lazy_Cloak_Entry).Name;
 		public class Lazy_Cloak_Entry : JournalEntry {
 			public override string TextKey => "Lazy_Cloak";
