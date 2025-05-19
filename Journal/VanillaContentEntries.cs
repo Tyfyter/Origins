@@ -1,6 +1,11 @@
 ﻿using Terraria.ID;
 
 namespace Origins.Journal {
+	public class Fallen_Star_Entry : VanillaItemJournalEntry {
+		public override int ItemType => ItemID.FallenStar;
+		public override JournalSortIndex SortIndex => new("Arabel", 2);
+	}
+
 	public class Life_Fruit_Entry : VanillaItemJournalEntry {
 		public override int ItemType => ItemID.LifeFruit;
 		public override JournalSortIndex SortIndex => new("Birth_Of_The_Gods", 1);

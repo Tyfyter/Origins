@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
+using Origins.Journal;
 using Origins.NPCs;
 using System;
 using Terraria;
@@ -10,7 +11,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Lazy_Cloak : ModItem {
+	public class Lazy_Cloak : ModItem,, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Lazy_Cloak_Entry).Name;
+		public class Lazy_Cloak_Entry : JournalEntry {
+			public override string TextKey => "Lazy_Cloak";
+			public override JournalSortIndex SortIndex => new("Lazy_Cloak", 4);
+		}
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
