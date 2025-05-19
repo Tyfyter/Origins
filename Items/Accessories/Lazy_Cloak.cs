@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Lazy_Cloak_Entry).Name;
 		public class Lazy_Cloak_Entry : JournalEntry {
 			public override string TextKey => "Lazy_Cloak";
-			public override JournalSortIndex SortIndex => new("Lazy_Cloak", 4);
+			public override JournalSortIndex SortIndex => new("Arabel", 4);
 		}
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
