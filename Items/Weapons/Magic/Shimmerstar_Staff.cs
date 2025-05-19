@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Shimmerstar_Staff : ModItem, ICustomDrawItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Shimmerstar_Staff_Entry).Name;
 		public class Shimmerstar_Staff_Entry : JournalEntry {
-			public override string TextKey => "Shimmer_Star";
+			public override string TextKey => "Shimmerstar_Staff";
 			public override JournalSortIndex SortIndex => new("Arabel", 1);
 		}
 		public static int MainFireCount => 4;

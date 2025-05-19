@@ -5,6 +5,45 @@ TabName: {
 	// Custom: Notes
 }
 
+Arabel: {
+	// DisplayName: Arabel
+	// SeriesLength: "4"
+	/* Shimmerstar_Staff.Text:
+		'''
+		[header:Shimmerstar Staff (1/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
+		*****
+		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. The stars of the universe a symbol of motherhood, fostering life as everything we know is made from stardust. The accumulation of worlds that circle around each star, a mother's endless care no matter what. That is why the comparison is often made between a mother and the stars in the sky.
+		''' */
+
+	Fallen_Star: {
+		// Name: "{$ItemName.Fallen_Star}"
+		/* Text:
+			'''
+			[header:Fallen Star (2/{$SeriesLength})]
+			[jimage/sc2d:Terraria/Images/Item_75]
+
+			*****
+			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana", and it is a natural resource that we can use for magic abilities.
+			''' */
+	}
+
+	/* Constellation.Text:
+		'''
+		[header:Constellation (3/{$SeriesLength})]
+		[jimage/sc2d:Origins/Items/Weapons/Ranged/Constellation]
+		*****
+		It is because of this mana that Terraria can be alive, but there are many forces of evil in the world that are trying to take it all for themselves like the Defiled. It is all in steady balance, an equal hold on magic from both the light and dark. Hence, when I say that the stars represent life, this is what I mean.
+		''' */
+	/* Lazy_Cloak.Text:
+		'''
+		[header:Lazy Cloak (4/{$SeriesLength})]
+		[jimage/sc2d:Origins/Items/Accessories/Lazy_Cloak]
+		*****
+		My son, one day you will get to wear this much like I do. I can see the potential for good in you, but of course not without its hardship. You will become strong and better than your mother ever could fighting off monsters. It's enough for people to tell tales of you, to be the one Terraria needs.
+		''' */
+}
+
 Lost_Crone: {
 	// DisplayName: Lost Crone
 	// SeriesLength: "4"
@@ -442,13 +481,27 @@ Brine_Pool_And_Lost_Diver: {
 
 The_Ashen: {
 	// DisplayName: The Ashen
-	// SeriesLength: "1"
+	// SeriesLength: "3"
 	/* Stack_of_Shraps.Text:
 		'''
 		[header:Stack of Shraps (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Stack_of_Shraps]
 		*****
 		Hints like these for your inquisitive mind to guess of atrocities committed against wasteful spendthrifts. Prodigies possessive of such powerful crafts giving away their gifts only for them to be in the headwinds of pointless wars against once-allies.
+		''' */
+	/* Defective_Mortar_Shell.Text:
+		'''
+		[header:Defective Mortar Shell (2/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Summon/Defective_Mortar_Shell]
+		*****
+		I saw no point in it. If they were to seek dominion, then why turn around and give away their advancements to those who obviously wanted to bring them down? My foresight had only made my relations with my Subjects more tense. My only directive was to support them and ensure the survival of the Mechanicus, but they were often the reason of extraneous circumstances.
+		''' */
+	/* Ace_Shrapnel.Text:
+		'''
+		[header:Ace Shrapnel (3/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Ace_Shrapnel]
+		*****
+		My Subjects, no, they were quite mentally capable. It was merely their greed; that much had made sense to me, a strong economy relies on effective trade. But, it couldn't have worked with their flawed leader, my Creator MT. Neferly. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he neverly truly understood his creation.
 		''' */
 }
 
@@ -465,7 +518,7 @@ The_Crimson: {
 
 
 			*****
-			Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria.
+			Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria. 
 			''' */
 	}
 
@@ -478,7 +531,7 @@ The_Crimson: {
 
 
 			*****
-			Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order. But, first must understand the Crimson's long history in this world.
+			Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order, but first must understand the Crimson's long history in this world.
 			''' */
 	}
 
@@ -615,14 +668,14 @@ Ashen_Armor: {
 		[header:Ashen Helmet (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Helmet]
 		*****
-		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore it the advantage over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
+		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore advantages over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
 		''' */
 	/* Ashen_Breastplate.Text:
 		'''
 		[header:Ashen Breastplate (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Breastplate]
 		*****
-		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Soveriegnty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them so successful and allowed many of these suits to be crafted. The suit was not the best quality, but it was still powerful for what little it had.
+		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Sovereignty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them successful and allowed many of these suits to created. The suit was not the best quality, but it was capable for what little it had.
 		''' */
 	/* Ashen_Greaves.Text:
 		'''

@@ -5,16 +5,10 @@ TabName: {
 	Custom: Notes
 }
 
-"{$ItemName.Bladetongue}"
-		Text:
-			'''
-			[header:Bladetongue (1/{$SeriesLength})]
-			[jimage/sc2d:Terraria/Images/Item_3211]
-
 Arabel: {
 	DisplayName: Arabel
 	SeriesLength: "4"
-	Shimmerstar.Text:
+	Shimmerstar_Staff.Text:
 		'''
 		[header:Shimmerstar Staff (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
