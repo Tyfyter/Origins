@@ -957,6 +957,8 @@ namespace Origins {
 			public static int CrownJewel = MusicID.OtherworldlySpace;
 			public static int AncientBrinePool;
 
+			public static int ShimmerConstruct = MusicID.OtherworldlyBoss2;
+
 			public static int Dusk;
 
 			public static int Defiled = MusicID.OtherworldlyMushrooms;

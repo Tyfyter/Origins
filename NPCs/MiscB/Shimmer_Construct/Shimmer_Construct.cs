@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
+using Origins.Music;
 using Origins.Tiles.BossDrops;
 using ReLogic.Content;
 using System;
@@ -359,6 +360,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
 			public void Unload() { }
 		}
+	}
+	public class SC_Music_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
+		public override int Music => Origins.Music.ShimmerConstruct;
 	}
 	public class SC_BossBar : ModBossBar {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
