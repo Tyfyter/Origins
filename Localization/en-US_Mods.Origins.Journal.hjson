@@ -15,6 +15,7 @@ Arabel: {
 		*****
 		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. The stars of the universe a symbol of motherhood, fostering life as everything we know is made from stardust. The accumulation of worlds that circle around each star, a mother's endless care no matter what. That is why the comparison is often made between a mother and the stars in the sky.
 		'''
+
 	Fallen_Star: {
 		Name: "{$ItemName.Fallen_Star}"
 		Text:
@@ -26,6 +27,7 @@ Arabel: {
 			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana", and it is a natural resource that we can use for magic abilities.
 			'''
 	}
+
 	Constellation.Text:
 		'''
 		[header:Constellation (3/{$SeriesLength})]
