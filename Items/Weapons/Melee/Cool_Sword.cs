@@ -46,12 +46,14 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Cool_Sword_Slash : ModProjectile {
 		public override string Texture => typeof(Cool_Sword).GetDefaultTMLName();
-		public static int ExtraHitboxes => 3;
+		public static int ExtraHitboxes => 5;
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
+			Projectile.width = 60;
+			Projectile.height = 60;
 			Projectile.aiStyle = 0;
 			Projectile.extraUpdates = 0;
 			Projectile.usesLocalNPCImmunity = true;
@@ -75,13 +77,6 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			Player player = Main.player[Projectile.owner];
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
-			if (swingFactor < 0.333f) {
-				player.bodyFrame.Y = player.bodyFrame.Height * 1;
-			} else if (swingFactor < 0.666f) {
-				player.bodyFrame.Y = player.bodyFrame.Height * 2;
-			} else {
-				player.bodyFrame.Y = player.bodyFrame.Height * 3;
-			}
 			Projectile.rotation = MathHelper.Lerp(-2f, 1.3f, swingFactor) * player.direction;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates + 2;
@@ -90,7 +85,17 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			player.heldProj = Projectile.whoAmI;
 			//player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + GeometryUtils.Vec2FromPolar(24, realRotation);
+			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + GeometryUtils.Vec2FromPolar(32, realRotation);
+			if (swingFactor < 0.4f) {
+				player.bodyFrame.Y = player.bodyFrame.Height * 1;
+			} else if (swingFactor < 0.7f) {
+				player.bodyFrame.Y = player.bodyFrame.Height * 2;
+				Projectile.position.X += 6 * player.direction * (1 - (swingFactor - 0.4f) / 0.6f);
+			} else {
+				player.bodyFrame.Y = player.bodyFrame.Height * 3;
+				Projectile.position.X += 3 * player.direction;
+				Projectile.position.Y += 8;
+			}
 
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.4f;
 			List<int> noSpawnStarIndices = new(ExtraHitboxes);
