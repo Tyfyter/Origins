@@ -5,13 +5,14 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Shinedown : ModItem {
-		public static float ExtraManaPerEnemyPercent => 0.3f;
+		public static float ExtraManaPerEnemyPercent => 0.6f;
 		public static float FlatKnockbackAdjustment => 1f;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
@@ -74,7 +75,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			player.bodyFrame.Y = player.bodyFrame.Height * 2;
-			player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, 0);
+			player.itemLocation = player.MountedCenter + new Vector2(player.direction * -6, 6);
 		}
 	}
 	public class Shinedown_Staff_P : ModProjectile {
@@ -84,13 +85,17 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.width = 0;
 			Projectile.height = 0;
 			Projectile.tileCollide = false;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		Aim[] aims;
 		Aim[] decayingAims;
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) Projectile.originalDamage = itemUse.Item.damage;
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			player.itemRotation = MathHelper.PiOver4 * -player.direction;
+			player.itemRotation = 0;//MathHelper.PiOver4 * -player.direction;
 			Projectile.position = player.RotatedRelativePoint(player.MountedCenter + new Vector2(6 * player.direction, -48));
 			if (Projectile.ai[1] == 1) {
 				Projectile.ai[1] = 2;
@@ -137,7 +142,7 @@ namespace Origins.Items.Weapons.Magic {
 			for (int i = 0; i < aims.Length; i++) {
 				if (aims[i].active) {
 					activeAims++;
-					if (aims[i].Update(center, Projectile.ai[1], maxLengthSQ)) AddDecayingAim(aims[i]);
+					if (aims[i].Update(i, center, Projectile.ai[1], maxLengthSQ)) AddDecayingAim(aims[i]);
 				}
 			}
 			for (int i = 0; i < decayingAims.Length; i++) {
@@ -278,18 +283,17 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		struct Aim {
-			int index;
 			int type;
 			Vector2 motion;
+			float progress;
 			public bool active;
 			public readonly Vector2 Motion => motion;
 			public void Set(NPC target) {
-				index = target.whoAmI;
 				type = target.type;
 				motion = default;
 				active = true;
 			}
-			public bool Update(Vector2 position, float speed, float maxLengthSQ) {
+			public bool Update(int index, Vector2 position, float speed, float maxLengthSQ) {
 				NPC target = Main.npc[index];
 				if (!target.active || target.type != type) target = null;
 				if (target is null) {
@@ -301,12 +305,16 @@ namespace Origins.Items.Weapons.Magic {
 					active = false;
 					return true;
 				}
+				MathUtils.LinearSmoothing(ref progress, 1, 1 / 60f);
+				speed *= (progress + 1);
 				MathUtils.LinearSmoothing(ref motion, diff, 4 * speed);
 				motion = Utils.rotateTowards(Vector2.Zero, motion, diff, 0.3f * speed);
 				return false;
 			}
 			public void UpdateDecaying(float speed) {
 				if (active) {
+					MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
+					speed *= (2 - progress);
 					float length = Motion.Length();
 					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * speed;
 					active = length > 4;
