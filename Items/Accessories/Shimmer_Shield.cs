@@ -11,9 +11,7 @@ namespace Origins.Items.Accessories {
 		];
 		internal static int shieldSlot;
 		public override void SetDefaults() {
-			shieldSlot = Item.shieldSlot;
-			Item.CloneDefaults(ItemID.WarriorEmblem);
-			Item.shieldSlot = shieldSlot;
+			Item.DefaultToAccessory(32, 32);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.expert = true;

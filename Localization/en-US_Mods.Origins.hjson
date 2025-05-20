@@ -1779,6 +1779,7 @@ Projectiles: {
 	Bile_Harpoon_P.DisplayName: Bile Harpoon P
 	Shinedown_P.DisplayName: Shinedown P
 	Shinedown_Staff_P.DisplayName: Shinedown Staff P
+	Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon P
 }
 
 Prefixes: {

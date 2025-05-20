@@ -551,7 +551,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (^) Retaliatory Tendril°
-(#2, ^2) Shield of Shimmer !!! (graphical code)
+(#2, ^2) Shield of Shimmer !!! (graphical code)?
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -696,7 +696,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(#2, ^2) Cool Sword !!! (needs slash anim)
+(☻) Cool Sword !!! (has slash anim)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -855,7 +855,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Manasynk*
 (^) Nerve Flan
-(#2, ^2) Shimmerstar Staff !!! (needs visual code)
+(#2, ^2) Shimmerstar Staff !!! (needs visual code)?
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -904,7 +904,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(@, #2) Aether Opal !!! (custom sounds)
+(@, #2?) Aether Opal !!! (custom sounds)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
@@ -1066,7 +1066,7 @@ EXPLOSIVE WEAPONS:
 (@4, ^3) Caustica
 (^) Flakjack
 (X) Helix
-(#, ^2) Shimmer Dynamite !!!
+(#?, ^2) Shimmer Dynamite !!!
 (@4, #) Starburst
 ---
 
@@ -1243,7 +1243,6 @@ TILES:
 (X) Barnacle Infested Coral !!!
 (^) Brineglow Vine*
 (X) Cargo Elevator Door
-(#, ^2) Chambersite Gem Tree !!!
 (^) Defiled Foliage
 (々) Defiled Heart
 (^) Defiled Relay
@@ -1353,7 +1352,6 @@ MATERIALS:
 (^) Black Bile*
 (^) Bleeding Obsidian Shard*
 (^) Brineglow*
-(#, ^2) Chambersite Gemcorn !!!
 (^) Eitrite Bar*
 (^) Respyrite*
 
@@ -1580,7 +1578,7 @@ AMMO:
 (^) Alkahest Bullet*
 (^) Alkahest Canister*
 (^) Alkahest Dart
-(#, ^2) Alkahest Harpoon !!!
+(☻) Alkahest Harpoon !!!
 (^) Alkaline Canister*
 (^) Alkaline Harpoon*
 (^) Bile Arrow*

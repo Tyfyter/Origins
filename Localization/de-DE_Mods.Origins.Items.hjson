@@ -6180,3 +6180,8 @@ Shimmer_Construct_Trophy_Item: {
 }
 
 // Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask
+
+Alkahest_Harpoon: {
+	// DisplayName: Alkahest Harpoon
+	// Tooltip: ""
+}
