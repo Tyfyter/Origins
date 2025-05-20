@@ -80,34 +80,28 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public override void UseItemFrame(Player player) {
+			float[] handles = [0, 0.2017f, 0.12f, 0.85f, 1f, 1f, 1f, 1f];
 			if (player.altFunctionUse != 2) {
-				float offset;
-				float timePerSwing = player.itemAnimationMax * 0.5f;
-				const float stop = 0.5f;
-				float[] handles = [0, 0.2017f, 0.12f, 0.85f, 1f, 1f, 1f, 1f];
 				float progress = (player.itemAnimationMax - player.itemAnimation) * 2 / (float)player.itemAnimationMax;
 				if (progress >= 1) {
 					progress -= 1;
 					for (int i = 0; i < handles.Length; i++) handles[i] = 1 - handles[i];
 				}
-				offset = (float.Clamp(OriginExtensions.Bezier(float.Lerp, progress, handles), 0, 1) - 0.5f) * 2.5f;
+				float offset = (float.Clamp(OriginExtensions.Bezier(float.Lerp, progress, handles), 0, 1) - 0.5f) * 2.5f;
 				player.SetCompositeArmFront(
 					true,
 					Player.CompositeArmStretchAmount.Full,
 					(MathHelper.Pi * 1.0625f - offset) * player.direction + player.direction * 0.25f
 				);
 			} else {
-				float offset;
-				float timePerSwing = player.itemAnimationMax;
 				ref int itemComboAnimationTime = ref player.OriginPlayer().itemComboAnimationTime;
-				float[] handles = [0, 0.2017f, 0.12f, 0.85f, 1f, 1f, 1f, 1f];
 				if (itemComboAnimationTime > 0) {
 					for (int i = 0; i < handles.Length; i++) handles[i] = 1 - handles[i];
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 0 : 4; 
 				} else {
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 4 : 0;
 				}
-				offset = (float.Clamp(OriginExtensions.Bezier(float.Lerp, 1 - player.itemAnimation / (float)player.itemAnimationMax, handles), 0, 1) - 0.5f) * 3.5f;
+				float offset = (float.Clamp(OriginExtensions.Bezier(float.Lerp, 1 - player.itemAnimation / (float)player.itemAnimationMax, handles), 0, 1) - 0.5f) * 3.5f;
 				player.SetCompositeArmFront(
 					true,
 					Player.CompositeArmStretchAmount.Full,
@@ -116,13 +110,6 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
-			float offset;
-			float timePerSwing = drawInfo.drawPlayer.itemAnimationMax * 0.5f;
-			if (drawInfo.drawPlayer.itemAnimation > timePerSwing) {
-				offset = (drawInfo.drawPlayer.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
-			} else {
-				offset = (timePerSwing - drawInfo.drawPlayer.itemAnimation) * -2 / timePerSwing + 1;
-			}
 			Vector2 origin = new(10, 10);
 			float rotOffset = MathHelper.PiOver2 * 0.875f;
 			if (drawInfo.drawPlayer.altFunctionUse == 2) {
