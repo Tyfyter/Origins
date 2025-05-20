@@ -1780,6 +1780,8 @@ Projectiles: {
 	// Shinedown_P.DisplayName: Shinedown P
 	// Shinedown_Staff_P.DisplayName: Shinedown Staff P
 	// Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon P
+	// Amnestic_Rose_Flower_P.DisplayName: Amnestic Rose Flower P
+	// Amnestic_Rose_Thorn.DisplayName: Amnestic Rose Thorn
 }
 
 Prefixes: {

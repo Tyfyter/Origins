@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -199,6 +200,8 @@ namespace Origins {
 		public int[] potatOSQuoteCooldown;
 		public int[] protOSQuoteCooldown;
 		public int lastGravDir = 1;
+		public int lastDir = 1;
+		public bool changedDir = false;
 		public int nearbyBoundNPCTime = 0;
 		public int nearbyBoundNPCType = 0;
 		public bool resinShield = false;
@@ -426,6 +429,13 @@ namespace Origins {
 
 		public bool shimmerGuardianMinion = false;
 		public List<int> ownedLargeGems = [];
+		public int amnesticRoseHoldTime = 0;
+		public int amnesticRoseBloomTime = 0;
+		public PolarVec2[] amnesticRoseJoints = [];
+		/// <summary>
+		/// Relative to Player.Bottom
+		/// </summary>
+		public Vector2 relativeTarget = Vector2.Zero;
 		#endregion
 
 		#region visuals
@@ -886,6 +896,8 @@ namespace Origins {
 			boatRockerAltUse2 = false;
 
 			shimmerGuardianMinion = false;
+			amnesticRoseHoldTime.Cooldown();
+			if (amnesticRoseHoldTime <= 0) amnesticRoseBloomTime.Cooldown();
 
 			manaShielding = 0f;
 
@@ -1045,6 +1057,7 @@ namespace Origins {
 				Player.honeyWet |= forceHoneyCollision = voodooDoll.honeyWet;
 				Player.shimmerWet |= forceShimmerCollision = voodooDoll.shimmerWet;
 			}
+			changedDir = lastDir.TrySet(Player.direction);
 			voodooDoll = null;
 			forceDrown = false;
 			heldProjOverArm = null;
