@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 			player.noFallDmg = true;
 			if (player.controlJump) {
 				player.gravity = 0.15f;
-			} else if (player.controlDown) {
+			} else if (player.controlDown && player.velocity.Y != 0f) {
 				player.gravity = 1.4f;
 			}
 		}
