@@ -344,7 +344,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Shimmer_Guardian_Shard : ModProjectile {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CrystalShard;
+		public override string Texture => "Origins/NPCs/MiscB/Shimmer_Construct/Shimmer_Drone";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 3;
@@ -371,8 +371,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.extraUpdates = 1;
 			Projectile.penetrate = -1;
 			Projectile.netImportant = true;
-			Projectile.localNPCHitCooldown = -1;
-			Projectile.idStaticNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = 120;
 			Projectile.usesLocalNPCImmunity = true;
 		}
 		public override bool MinionContactDamage() => true;
@@ -396,8 +395,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool beDrone = owner.ai[1] != -1 && !Main.npc[(int)owner.ai[1]].Center.IsWithin(owner.Center, 16 * 25);
 			switch ((int)Projectile.ai[0]) {
 				case 0: {
-					Projectile.usesLocalNPCImmunity = true;
-					Projectile.usesIDStaticNPCImmunity = false;
 					if (Projectile.velocity == Vector2.Zero) {
 						if (++Projectile.ai[1] > 20) {
 							if (beDrone && owner.ai[1] != -1) {
@@ -421,6 +418,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 								Projectile.ai[0] = 1;
 								Projectile.ai[2] = owner.ai[1];
 								Projectile.localAI[0] = (Main.npc[(int)Projectile.ai[2]].Center - Projectile.Center).ToRotation();
+								Projectile.ResetLocalNPCHitImmunity();
 							} else if ((Projectile.velocity *= 0.85f).LengthSquared() < 1) {
 								Projectile.velocity = Vector2.Zero;
 								Projectile.ai[1] = 0;
@@ -447,6 +445,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Projectile.ai[0] = 1;
 							Projectile.ai[1] = (Main.npc[(int)Projectile.ai[2]].Center - Projectile.Center).ToRotation();
 						}
+						Projectile.ResetLocalNPCHitImmunity();
 					} else {
 						Projectile.velocity += Projectile.DirectionTo(targetPos) * 0.5f;
 						Projectile.velocity = Projectile.velocity.SafeNormalize(default) * 8;
@@ -454,8 +453,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					break;
 				}
 				case 1: {
-					Projectile.usesLocalNPCImmunity = false;
-					Projectile.usesIDStaticNPCImmunity = true;
 					if (Projectile.ai[2] == -1) {
 						Projectile.ai[0] = -1;
 						goto case -1;

@@ -145,11 +145,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ItemType<Cool_Sword>(),
 				//ItemType<>(),
 				ItemType<Shimmerstar_Staff>(),
-				ItemType<Aether_Opal>()));
+				ItemType<Aether_Opal>())
+			);
 
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1,
 				ItemType<Lazy_Cloak>(),
-				ItemType<Resizing_Glove>()));
+				ItemType<Resizing_Glove>())
+			);
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Shimmer_Construct_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Shimmer_Construct_Mask>(), 10));

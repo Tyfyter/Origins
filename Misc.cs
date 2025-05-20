@@ -2506,6 +2506,17 @@ namespace Origins {
 			}
 			return false;
 		}
+		public delegate T Lerp<T>(T a, T b, float value);
+		public static T Bezier<T>(this Lerp<T> lerp, float progress, params T[] handles) {
+			do {
+				T[] nextHandles = new T[handles.Length - 1];
+				for (int i = 0; i < nextHandles.Length; i++) {
+					nextHandles[i] = lerp(handles[i], handles[i + 1], progress);
+				}
+				handles = nextHandles;
+			} while (handles.Length > 1);
+			return handles[0];
+		}
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
 			WeightedRandom<int> wr = new(rand);
 			for (int i = 0; i < prefixCategories.Length; i++) {

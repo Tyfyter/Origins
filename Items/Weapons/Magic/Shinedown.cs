@@ -333,7 +333,7 @@ namespace Origins.Items.Weapons.Magic {
 					return true;
 				}
 				MathUtils.LinearSmoothing(ref progress, 1, 1 / 60f);
-				speed *= (progress + 1);
+				speed *= progress + 1;
 				MathUtils.LinearSmoothing(ref motion, diff, 4 * speed);
 				motion = Utils.rotateTowards(Vector2.Zero, motion, diff, 0.3f * speed);
 				return false;
@@ -341,7 +341,7 @@ namespace Origins.Items.Weapons.Magic {
 			public void UpdateDecaying(float speed) {
 				if (active) {
 					MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
-					speed *= (2 - progress);
+					speed *= 2 - progress;
 					float length = Motion.Length();
 					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * speed;
 					active = length > 4;

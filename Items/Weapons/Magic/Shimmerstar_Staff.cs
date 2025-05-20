@@ -84,32 +84,30 @@ namespace Origins.Items.Weapons.Magic {
 				float offset;
 				float timePerSwing = player.itemAnimationMax * 0.5f;
 				const float stop = 0.5f;
-				if (player.itemAnimation > timePerSwing) {
-					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
-					offset = float.Clamp(offset * (1 + stop), -1, 1);
-				} else {
-					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
-					offset = float.Clamp(offset * (1 + stop), -1, 1);
+				float[] handles = [0, 0.2017f, 0.12f, 0.85f, 1f, 1f, 1f, 1f];
+				float progress = (player.itemAnimationMax - player.itemAnimation) * 2 / (float)player.itemAnimationMax;
+				if (progress >= 1) {
+					progress -= 1;
+					for (int i = 0; i < handles.Length; i++) handles[i] = 1 - handles[i];
 				}
+				offset = (float.Clamp(OriginExtensions.Bezier(float.Lerp, progress, handles), 0, 1) - 0.5f) * 2.5f;
 				player.SetCompositeArmFront(
 					true,
 					Player.CompositeArmStretchAmount.Full,
-					(MathHelper.Pi * 1.0625f - offset) * player.direction
+					(MathHelper.Pi * 1.0625f - offset) * player.direction + player.direction * 0.25f
 				);
 			} else {
 				float offset;
 				float timePerSwing = player.itemAnimationMax;
 				ref int itemComboAnimationTime = ref player.OriginPlayer().itemComboAnimationTime;
+				float[] handles = [0, 0.2017f, 0.12f, 0.85f, 1f, 1f, 1f, 1f];
 				if (itemComboAnimationTime > 0) {
-					offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
+					for (int i = 0; i < handles.Length; i++) handles[i] = 1 - handles[i];
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 0 : 4; 
 				} else {
-					offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing - 1;
 					itemComboAnimationTime = player.ItemAnimationEndingOrEnded ? 4 : 0;
 				}
-				offset = (1 - MathF.Pow(1 - Math.Abs(offset), 2)) * Math.Sign(offset);
-				offset *= 1.8f;
-				offset = float.Clamp(offset, -1.65f, 1.65f);
+				offset = (float.Clamp(OriginExtensions.Bezier(float.Lerp, 1 - player.itemAnimation / (float)player.itemAnimationMax, handles), 0, 1) - 0.5f) * 3.5f;
 				player.SetCompositeArmFront(
 					true,
 					Player.CompositeArmStretchAmount.Full,
@@ -125,7 +123,7 @@ namespace Origins.Items.Weapons.Magic {
 			} else {
 				offset = (timePerSwing - drawInfo.drawPlayer.itemAnimation) * -2 / timePerSwing + 1;
 			}
-			Vector2 origin = new(13, 13);
+			Vector2 origin = new(10, 10);
 			float rotOffset = MathHelper.PiOver2 * 0.875f;
 			if (drawInfo.drawPlayer.altFunctionUse == 2) {
 				origin = new(9, 9);

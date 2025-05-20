@@ -260,7 +260,7 @@ namespace Origins.NPCs {
 				}
 			}
 			if (shinedownDamage > 0) {
-				int displayedDamage = Main.rand.RandomRound(shinedownDamage / shinedownSpeed);
+				int displayedDamage = Main.rand.RandomRound(shinedownDamage / (shinedownSpeed * 1.5f));
 				if (damage < displayedDamage) damage = displayedDamage;
 				npc.lifeRegenCount -= shinedownDamage * 4;
 				shinedownDamage = 0;
