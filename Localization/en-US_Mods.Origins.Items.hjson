@@ -6190,3 +6190,8 @@ Amnestic_Rose: {
 	DisplayName: Amnestic Rose
 	Tooltip: "'A Rose, But for whom?'"
 }
+
+Otherworldly_Cloak: {
+	DisplayName: Otherworldly Cloak
+	Tooltip: ""
+}

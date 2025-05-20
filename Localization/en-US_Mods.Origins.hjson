@@ -1212,6 +1212,11 @@ Buffs: {
 		DisplayName: Amnestic Rose Buff
 		Description: Mods.Origins.Buffs.Amnestic_Rose_Buff.Description
 	}
+
+	Otherworldly_Cloak_Buff: {
+		DisplayName: Otherworldly Cloak Buff
+		Description: Mods.Origins.Buffs.Otherworldly_Cloak_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1789,6 +1794,7 @@ Projectiles: {
 	Amnestic_Rose_Thorn.DisplayName: Amnestic Rose Thorn
 	Amnestic_Rose_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
 	Amnestic_Rose_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
+	Otherworldly_Cloak_P.DisplayName: Otherworldly Cloak P
 }
 
 Prefixes: {

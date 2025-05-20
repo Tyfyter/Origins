@@ -1,22 +1,20 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.NPCs;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Front)]
@@ -35,7 +33,7 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClass.Summon;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
+			Item.shoot = Lazy_Cloak_P.ID;
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Orange;
 			Item.backSlot = 5;
@@ -62,6 +60,7 @@ namespace Origins.Items.Accessories {
 	public class Lazy_Cloak_P : ModProjectile, IShadedProjectile {
 		public const int frameSpeed = 5;
 		public static int ID { get; private set; }
+		public virtual int BuffID => Lazy_Cloak_Buff.ID;
 		public int Shader => Main.player[Projectile.owner].cFront;
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
@@ -73,7 +72,7 @@ namespace Origins.Items.Accessories {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
-			ID = Type;
+			if (GetType().GetProperty(nameof(ID)).GetSetMethod(true) is MethodInfo setID) setID.Invoke(null, [Type]);
 		}
 
 		public override void SetDefaults() {
@@ -107,9 +106,9 @@ namespace Origins.Items.Accessories {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Lazy_Cloak_Buff.ID);
+				player.ClearBuff(BuffID);
 			}
-			if (player.HasBuff(Lazy_Cloak_Buff.ID)) {
+			if (player.HasBuff(BuffID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -159,26 +158,6 @@ namespace Origins.Items.Accessories {
 				}
 			}
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-			/*if (!foundTarget) {
-				for (int i = 0; i < Main.maxNPCs; i++) {
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy()) {
-						float between = Vector2.Distance(npc.Center, Projectile.Center);
-						bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
-						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 100f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
-							distanceFromTarget = between;
-							targetCenter = npc.height / (float)npc.width > 1 ? npc.Top + new Vector2(0, 8) : npc.Center;
-							target = npc.whoAmI;
-							foundTarget = true;
-						}
-					}
-				}
-			}*/
 
 			Projectile.friendly = foundTarget;
 			#endregion
@@ -265,7 +244,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.player[Projectile.owner].IsWithinRectangular(target, new Vector2(16 * 4, 16 * 2))) {
-				target.AddBuff(Lazy_Cloak_Buff.ID, 10);
+				target.AddBuff(ModContent.BuffType<Lazy_Cloak_Buff>(), 10);
 				target.DoCustomKnockback(Vector2.UnitY * Main.player[Projectile.owner].GetTotalKnockback(DamageClass.Summon).ApplyTo(4));
 			}
 		}
@@ -275,6 +254,7 @@ namespace Origins.Buffs {
 	public class Lazy_Cloak_Buff : MinionBuff {
 		public static int ID { get; private set; }
 		public override void Load() {
+			if (GetType() != typeof(Lazy_Cloak_Buff)) return;
 			try {
 				IL_NPC.UpdateNPC_Inner += DoLazyCloakShimmer;
 			} catch (Exception ex) {
@@ -295,7 +275,7 @@ namespace Origins.Buffs {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			ID = Type;
+			if (GetType().GetProperty(nameof(ID)).GetSetMethod(true) is MethodInfo setID) setID.Invoke(null, [Type]);
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			bool foundAny = false;
