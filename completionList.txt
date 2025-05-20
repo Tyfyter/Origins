@@ -465,7 +465,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(#2, ^2) Lazy Cloak° !!! (glow code)
+(☻) Lazy Cloak° !!! (glows)
 (^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
@@ -475,7 +475,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(#, ^2) Master Magician's Cloak !!!
+(♠) Master Magician's Cloak !!!
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Mildew Heart
@@ -490,7 +490,7 @@ ACCESSORIES:
 (^) Noxious Mithrafin
 (^) Olid Organ*
 (^) Ornamental Keepsake
-(#, ^2) Otherworldly Cloak !!!
+(♠ (not actually a pure combination, but it's one more if statement)) Otherworldly Cloak !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
