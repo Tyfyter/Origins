@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public abstract IEnumerable<int> ProjectileTypes();
 		public virtual bool IsArtifact => false;
 		public virtual bool DrawHealthBars => IsArtifact;
+		public virtual bool ShowCount => true;
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
@@ -44,9 +45,11 @@ namespace Origins.Items.Weapons.Summoner {
 					ArtifactMinionSystem.DrawBuffHealthbars(proj, ref drawParams, startY);
 				}
 			}
-			int count = 0;
-			foreach (int proj in ProjectileTypes()) count += Main.LocalPlayer.ownedProjectileCounts[proj];
-			spriteBatch.DrawString(FontAssets.ItemStack.Value, count + "", drawParams.TextPosition, drawParams.DrawColor, 0f, default, 0.8f, SpriteEffects.None, 0f);
+			if (ShowCount) {
+				int count = 0;
+				foreach (int proj in ProjectileTypes()) count += Main.LocalPlayer.ownedProjectileCounts[proj];
+				spriteBatch.DrawString(FontAssets.ItemStack.Value, count + "", drawParams.TextPosition, drawParams.DrawColor, 0f, default, 0.8f, SpriteEffects.None, 0f);
+			}
 		}
 	}
 }

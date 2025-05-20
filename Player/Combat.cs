@@ -380,7 +380,7 @@ namespace Origins {
 					int type = ModContent.ProjectileType<Unsatisfied_Soul>();
 					int damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(target.lifeMax / 4) + 40;
 					int knockback = (int)Player.GetTotalKnockback(DamageClass.Summon).ApplyTo(4);
-					for (int i = Player.maxMinions / 2; i > 0; i--) {
+					for (int i = Main.rand.RandomRound(Player.maxMinions * 0.5f); i > 0; i--) {
 						Projectile.NewProjectile(
 							target.GetSource_Death(),
 							target.Center,

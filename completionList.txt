@@ -871,7 +871,7 @@ MAGIC WEAPONS:
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
-(#2, ^2) Shinedown !!!
+(☻) Shinedown !!!
 (X) Siphon Staff
 (^) Splashid
 (^) Startillery
