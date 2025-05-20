@@ -4,6 +4,8 @@ using Origins.NPCs;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -92,13 +94,18 @@ namespace Origins.Items.Weapons.Magic {
 		Aim[] decayingAims;
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse itemUse) Projectile.originalDamage = itemUse.Item.damage;
+			Projectile.ai[0] = 2;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || !player.active) {
+				Projectile.Kill();
+				return;
+			}
 			player.itemRotation = 0;//MathHelper.PiOver4 * -player.direction;
 			Projectile.position = player.RotatedRelativePoint(player.MountedCenter + new Vector2(6 * player.direction, -48));
-			if (Projectile.ai[1] == 1) {
-				Projectile.ai[1] = 2;
+			if (Projectile.ai[2] == 1) {
+				Projectile.ai[2] = 2;
 				for (int i = 0; i < aims.Length; i++) {
 					if (aims[i].active) {
 						aims[i].active = false;
@@ -106,7 +113,7 @@ namespace Origins.Items.Weapons.Magic {
 					}
 				}
 			}
-			if (Projectile.ai[1] == 2) {
+			if (Projectile.ai[2] == 2) {
 				Projectile.aiStyle = -1;
 				for (int i = 0; i < decayingAims.Length; i++) {
 					decayingAims[i].UpdateDecaying(Projectile.ai[1]);
@@ -124,18 +131,14 @@ namespace Origins.Items.Weapons.Magic {
 				if (--Projectile.ai[0] <= 0) {
 					if (Main.myPlayer == Projectile.owner) {
 						if (!player.channel) {
-							Projectile.ai[1] = 1;
+							Projectile.ai[2] = 1;
 						} else {
 							DoShoot(maxLengthSQ);
 						}
 					}
 				}
-				if (Projectile.localAI[0] != Projectile.ai[0]) {
-					if (Projectile.ai[0] > Projectile.localAI[0]) Projectile.localAI[1] = Projectile.ai[0];
-					Projectile.localAI[0] = Projectile.ai[0];
-				}
 			} else {
-				Projectile.ai[1] = 1;
+				Projectile.ai[2] = 1;
 			}
 			Vector2 center = Projectile.Center;
 			int activeAims = 0;
@@ -153,6 +156,7 @@ namespace Origins.Items.Weapons.Magic {
 			int totalDamage = 0;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			foreach (NPC npc in Main.ActiveNPCs) {
+				if (!npc.CanBeChasedBy(Projectile)) continue;
 				Rectangle npcHitbox = npc.Hitbox;
 				for (int i = 0; i < aims.Length; i++) {
 					if (!aims[i].active) continue;
@@ -194,11 +198,16 @@ namespace Origins.Items.Weapons.Magic {
 					}
 				}
 			}
-			Projectile.ai[2] += (1 + activeAims * Shinedown.ExtraManaPerEnemyPercent) * player.GetManaCost(player.HeldItem) * Projectile.ai[1] / 60f;
-			if (Projectile.ai[2] > 1) {
-				int cost = (int)Projectile.ai[2];
-				Projectile.ai[2] -= cost;
-				if (!player.CheckMana(player.HeldItem, cost, true)) Projectile.ai[1] = 1;
+			if (Main.myPlayer == Projectile.owner) {
+				Projectile.localAI[2] += (1 + activeAims * Shinedown.ExtraManaPerEnemyPercent) * player.GetManaCost(player.HeldItem) * Projectile.ai[1] / 60f;
+				if (Projectile.localAI[2] > 1) {
+					int cost = (int)Projectile.localAI[2];
+					Projectile.localAI[2] -= cost;
+					if (!player.CheckMana(player.HeldItem, cost, true)) {
+						Projectile.ai[2] = 1;
+						Projectile.netUpdate = true;
+					}
+				}
 			}
 			player.addDPS(Main.rand.RandomRound(totalDamage / 30f));
 		}
@@ -223,25 +232,43 @@ namespace Origins.Items.Weapons.Magic {
 		bool DoShoot(float maxLengthSQ) {
 			Player player = Main.player[Projectile.owner];
 			float bestAngle = 0.5f;
-			Vector2 aimOrigin = player.Top;
+			Vector2 aimOrigin = Projectile.Center;
 			Vector2 aimVector = aimOrigin.DirectionTo(Main.MouseWorld);
+			List<byte> newAims = null;
+			if (Main.netMode != NetmodeID.SinglePlayer) newAims = [];
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (aims[npc.whoAmI].active) continue;
-				//if (!npc.CanBeChasedBy(Projectile)) continue;
-				Vector2 diff = Main.MouseWorld.Clamp(npc.Hitbox) - aimOrigin;
+				if (!npc.CanBeChasedBy(Projectile)) continue;
+				Vector2 diff = npc.Center - aimOrigin;
 				float lengthSQ = diff.LengthSquared();
 				if (lengthSQ > maxLengthSQ) continue;
 				diff /= MathF.Sqrt(lengthSQ);
 				float angle = Vector2.Dot(diff, aimVector);
 				if (angle > bestAngle) {
 					aims[npc.whoAmI].Set(npc);
+					newAims?.Add((byte)npc.whoAmI);
 				}
+			}
+			if (Main.netMode != NetmodeID.SinglePlayer && newAims.Count > 0) {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.shinedown_spawn_shadows);
+				packet.Write((byte)Projectile.owner);
+				packet.Write((ushort)Projectile.identity);
+				packet.Write((byte)newAims.Count);
+				packet.Write(newAims.ToArray());
+				packet.Send();
 			}
 
 			Projectile.ai[1] = Shinedown.GetSpeedMultiplier(player, player.HeldItem);
 			Projectile.ai[0] = Projectile.ai[1] * 20;
 			Projectile.netUpdate = true;
 			return true;
+		}
+		public void RecieveSync(byte[] indices) {
+			for (int i = 0; i < indices.Length; i++) {
+				byte index = indices[i];
+				aims[indices[i]].Set(Main.npc[index]);
+			}
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			overPlayers.Add(index);

@@ -1,6 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
+﻿using Origins.Items.Accessories;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Questing;
@@ -12,11 +11,8 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
-using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
@@ -45,6 +41,7 @@ namespace Origins {
 					case custom_knockback:
 					case entity_interaction:
 					case soul_snatcher_activate:
+					case shinedown_spawn_shadows:
 					altHandle = true;
 					break;
 
@@ -164,6 +161,7 @@ namespace Origins {
 					case custom_knockback:
 					case entity_interaction:
 					case soul_snatcher_activate:
+					case shinedown_spawn_shadows:
 					altHandle = true;
 					break;
 
@@ -460,6 +458,33 @@ namespace Origins {
 						}
 						break;
 					}
+
+					case shinedown_spawn_shadows: {
+						byte owner = reader.ReadByte();
+						ushort identity = reader.ReadUInt16();
+						byte length = reader.ReadByte();
+						byte[] indices = reader.ReadBytes(length);
+						Shinedown_Staff_P shinedown = null;
+						foreach (Projectile proj in Main.ActiveProjectiles) {
+							if (proj.owner == owner && proj.identity == identity) {
+								shinedown = proj.ModProjectile as Shinedown_Staff_P;
+								break;
+							}
+						}
+						if (shinedown is null) break;
+						shinedown.RecieveSync(indices);
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = instance.GetPacket();
+							packet.Write(shinedown_spawn_shadows);
+							packet.Write(owner);
+							packet.Write(identity);
+							packet.Write(length);
+							packet.Write(indices);
+							packet.Send(ignoreClient: owner);
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -498,6 +523,7 @@ namespace Origins {
 			internal const byte tyrfing_zap = 27;
 			internal const byte set_gem_lock = 28;
 			internal const byte mass_teleport = 29;
+			internal const byte shinedown_spawn_shadows = 30;
 		}
 	}
 	public interface IChestSyncRecipient {

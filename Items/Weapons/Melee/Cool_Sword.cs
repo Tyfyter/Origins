@@ -102,14 +102,10 @@ namespace Origins.Items.Weapons.Melee {
 			List<int> noSpawnStarIndices = new(ExtraHitboxes);
 			for (int j = 0; j <= ExtraHitboxes; j++) noSpawnStarIndices.Add(j);
 			float starThreshold = player.itemTimeMax / 10f;
-			float oldStarCounter = Projectile.ai[0];
 			Projectile.ai[0]++;
 			while (Projectile.rotation < 1 && Projectile.ai[0] >= starThreshold && noSpawnStarIndices.Count > 0) {
 				noSpawnStarIndices.RemoveAt(Main.rand.Next(noSpawnStarIndices.Count));
 				Projectile.ai[0] -= starThreshold;
-			}
-			if (noSpawnStarIndices.Count <= 2) {
-
 			}
 			for (int j = 0; j <= ExtraHitboxes; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
