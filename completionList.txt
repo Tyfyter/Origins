@@ -934,7 +934,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Acrid Spout
-(X) Amnestic Rose !!!
+(☻) Amnestic Rose !!!
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl

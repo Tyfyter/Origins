@@ -57,6 +57,7 @@ Items: {
 	}
 
 	Tripod_Nip.DisplayName: Cat Nip
+	Amnestic_Rose.Tooltip: I forgor [i:1274]
 }
 
 Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!

@@ -1207,6 +1207,11 @@ Buffs: {
 		// DisplayName: Wishing Glass Buff
 		// Description: Mods.Origins.Buffs.Wishing_Glass_Buff.Description
 	}
+
+	Amnestic_Rose_Buff: {
+		// DisplayName: Amnestic Rose Buff
+		// Description: Mods.Origins.Buffs.Amnestic_Rose_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1782,6 +1787,8 @@ Projectiles: {
 	// Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon P
 	// Amnestic_Rose_Flower_P.DisplayName: Amnestic Rose Flower P
 	// Amnestic_Rose_Thorn.DisplayName: Amnestic Rose Thorn
+	// Amnestic_Rose_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
+	// Amnestic_Rose_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
 }
 
 Prefixes: {

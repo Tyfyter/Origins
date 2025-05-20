@@ -10,7 +10,7 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			npc.GetGlobalNPC<OriginGlobalNPC>().slowDebuff = true;
+			if (!npc.boss) npc.GetGlobalNPC<OriginGlobalNPC>().slowDebuff = true;
 		}
 	}
 }

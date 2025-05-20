@@ -69,6 +69,7 @@ namespace Origins.NPCs {
 		public bool lazyCloakShimmer = false;
 		public int shinedownDamage = 0;
 		public float shinedownSpeed = 1;
+		public bool amnesticRose = false;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -131,6 +132,7 @@ namespace Origins.NPCs {
 				}
 			}
 			lazyCloakShimmer = false;
+			amnesticRose = false;
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {

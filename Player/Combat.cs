@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Necromancer;
@@ -7,8 +8,10 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
+using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -437,6 +440,36 @@ namespace Origins {
 				if (retaliatoryTendrilCharge <= 0) {
 					retaliatoryTendrilCharge = 0;
 					retaliatoryTendrilStrength = 0;
+				}
+			}
+			if (target.GetGlobalNPC<OriginGlobalNPC>().amnesticRose) {
+				float mana = 1 + MathF.Pow(damageDone * 0.1f, 0.5f);
+				if (target.ModNPC is IDefiledEnemy defiledEnemy) {
+					mana = Math.Min(mana, defiledEnemy.Mana);
+				}
+				if (mana > 0) {
+					Projectile.NewProjectile(
+						Player.GetSource_OnHit(target),
+						target.Center,
+						Vector2.Zero,
+						ModContent.ProjectileType<Defiled_Prefix_Orb>(),
+						0,
+						0,
+						ai0: mana
+					);
+				}
+				if (hit.Crit || target.life <= 0) {
+					for (int i = int.Min(Main.rand.Next(3), Main.rand.Next(3)); i >= 0; i--) {
+						Projectile.NewProjectile(
+							Player.GetSource_OnHit(target),
+							Main.rand.NextVector2FromRectangle(target.Hitbox),
+							target.velocity + Main.rand.NextVector2Circular(2, 2),
+							ModContent.ProjectileType<Amnestic_Rose_Goo_Ball>(),
+							0,
+							0,
+							ai0: mana
+						);
+					}
 				}
 			}
 		}

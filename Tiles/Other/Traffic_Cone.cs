@@ -81,7 +81,7 @@ namespace Origins.Tiles.Other {
 					if (Projectile.position.DistanceSQ(Projectile.position.Clamp(npc.Hitbox)) < range * range) {
 						int index = npc.FindBuffIndex(Slow_Debuff.ID);
 						if (index >= 0) {
-							npc.buffTime[index] = 10;
+							if (npc.buffTime[index] < 10) npc.buffTime[index] = 10;
 						} else {
 							npc.AddBuff(Slow_Debuff.ID, 10);
 						}

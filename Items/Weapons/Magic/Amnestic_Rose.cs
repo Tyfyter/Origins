@@ -1,21 +1,83 @@
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Dev;
+using MonoMod.Cil;
+using Origins.Buffs;
+using Origins.Dusts;
+using Origins.Graphics;
 using Origins.Items.Materials;
+using Origins.NPCs;
 using Origins.Tiles.Defiled;
 using PegasusLib;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	//TODO: flower effect, stop automatic turnaround from movement
-	public class Amnestic_Rose : ModItem, ICustomDrawItem {
+	public class Amnestic_Rose : ModItem {
 		static AutoLoadingAsset<Texture2D> stemTexture = typeof(Amnestic_Rose).GetDefaultTMLName() + "_Stem";
 		static AutoLoadingAsset<Texture2D> flowerTexture = typeof(Amnestic_Rose).GetDefaultTMLName() + "_Flower";
+		static AutoLoadingAsset<Texture2D> jointTexture = typeof(Amnestic_Rose).GetDefaultTMLName() + "_Thorn";
+		public override void Load() {
+			try {
+				IL_Player.PlayerFrame += (il) => {
+					ILCursor c = new(il);
+					//IL_1c74: ldarg.0
+					//IL_1c75: ldflda valuetype [FNA]Microsoft.Xna.Framework.Vector2 Terraria.Entity::velocity
+					//IL_1c7a: ldfld float32 [FNA]Microsoft.Xna.Framework.Vector2::X
+					//IL_1c7f: call float32 [System.Runtime]System.Math::Abs(float32)
+					//IL_1c84: conv.r8
+					//IL_1c85: ldc.r8 1.3
+					//IL_1c8e: mul
+					c.GotoNext(MoveType.After,
+						i => i.MatchLdarg0(),
+						i => i.MatchLdflda<Entity>(nameof(Player.velocity)),
+						i => i.MatchLdfld<Vector2>(nameof(Vector2.X)),
+						i => i.MatchCall(typeof(Math), nameof(Math.Abs)),
+						i => i.MatchConvR8(),
+						i => i.MatchLdcR8(1.3),
+						i => i.MatchMul()
+					);
+					c.EmitLdarg0();
+					c.EmitDelegate((float orig, Player player) => {
+						return Math.Abs(orig) * (player.direction * Math.Sign(player.velocity.X));
+					});
+					//IL_1b04: ldarg.0
+					//IL_1b05: ldfld float64 Terraria.Player::legFrameCounter
+					//IL_1b0a: ldc.r8 8
+					//IL_1b13: bgt.s IL_1ad4
+					c.GotoNext(MoveType.After,
+						i => i.MatchLdarg0(),
+						i => i.MatchLdfld<Player>(nameof(Player.legFrameCounter)),
+						i => i.MatchLdcR8(8),
+						i => i.MatchBgt(out _)
+					);
+
+					c.EmitLdarg0();
+					c.EmitDelegate((Player player) => {
+						if (player.direction != Math.Sign(player.velocity.X)) {
+							while (player.legFrameCounter < 0) {
+								player.legFrameCounter += 8.0;
+								player.legFrame.Y -= player.legFrame.Height;
+							}
+						}
+					});
+				};
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError("Amnestic_Rose.Fix_Legs", e)) throw;
+			}
+			On_Player.HorizontalMovement += (orig, self) => {
+				int forceDirection = 0;
+				if (self.HeldItem.ModItem is Amnestic_Rose) forceDirection = self.direction;
+				orig(self);
+				if (forceDirection != 0) self.direction = forceDirection;
+			};
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.useStyle = ItemUseStyleID.HiddenAnimation;
@@ -42,10 +104,11 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		static Vector2 GetStartPosition(Player player) {
-			return player.MountedCenter - new Vector2(player.width * player.direction * 0.5f, 0);
+			return player.MountedCenter - new Vector2(player.width * player.direction * 0.5f, -8);
 		}
 		static void UpdateJoints(OriginPlayer originPlayer, PolarVec2[] joints) {
 			int playerDirection = originPlayer.Player.direction;
+			float playerRotation = originPlayer.Player.fullRotation;
 			float diff;
 			int dir;
 			for (int j = 0; j < 2; j++) {
@@ -59,7 +122,7 @@ namespace Origins.Items.Weapons.Magic {
 						prevRot = -MathHelper.PiOver2 - playerDirection * 1.5f;
 						highMaxCurve = 0.75f;
 					}
-					diff = GeometryUtils.AngleDif(joints[i].Theta, prevRot, out dir);
+					diff = GeometryUtils.AngleDif(joints[i].Theta + playerRotation, prevRot, out dir);
 					float maxCurve = dir == playerDirection ? 0.2f : highMaxCurve;
 					if (diff > maxCurve) {
 						joints[i].Theta += (diff - maxCurve) * dir;
@@ -71,24 +134,29 @@ namespace Origins.Items.Weapons.Magic {
 					}
 				}
 				Vector2 pos = GetEndPos(originPlayer.Player, joints);
-				diff = GeometryUtils.AngleDif(joints[^1].Theta, (originPlayer.relativeTarget + originPlayer.Player.Bottom - pos).ToRotation(), out dir) * dir;
+				diff = GeometryUtils.AngleDif(joints[^1].Theta + playerRotation, (originPlayer.relativeTarget + originPlayer.Player.Bottom - pos).ToRotation(), out dir);
+				float remainingDiff = diff;
 				for (int i = 0; i < joints.Length; i++) {
 					float bonus = 1f;
 					if (i > 0) {
-						bonus = 1 + float.Max(0, GeometryUtils.AngleDif(joints[i].Theta, joints[i - 1].Theta, out dir) - 0.5f) * dir;
+						bonus = 1 + float.Max(0, GeometryUtils.AngleDif(joints[i].Theta, joints[i - 1].Theta, out int dir2) - 0.5f) * dir2;
 					}
-					joints[i].Theta += diff * 0.01f * (bonus + (atLimit / (float)joints.Length) * 2 + i * 0.25f);
+					float change = diff * 0.01f * (bonus + (atLimit / (float)joints.Length) * 2 + i * 0.25f);
+					joints[i].Theta += change * dir;
+					remainingDiff -= change;
+					if (remainingDiff <= 0) break;
 				}
 			}
 		}
 		static Vector2 GetEndPos(Player player, PolarVec2[] joints) {
-			Vector2 startPos = GetStartPosition(player);
+			Vector2 startPos = player.RotatedRelativePoint(GetStartPosition(player));
 			for (int i = 0; i < joints.Length; i++) {
 				startPos += (Vector2)joints[i];
 			}
 			return startPos;
 		}
 		public override void HoldItem(Player player) {
+			player.itemLocation = Vector2.Zero;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (player.whoAmI == Main.myPlayer) originPlayer.relativeTarget = Main.MouseWorld - player.Bottom;
 			if ((originPlayer.relativeTarget.X > 0) != (player.direction > 0)) {
@@ -106,20 +174,25 @@ namespace Origins.Items.Weapons.Magic {
 					new(40, startRot + unit * 4),
 					new(28, startRot + unit * 5) // flower, 
 				];
+				if (originPlayer.changedDir) {
+					for (int i = 0; i < 20; i++) {
+						UpdateJoints(originPlayer, originPlayer.amnesticRoseJoints);
+					}
+				}
 			}
 			originPlayer.amnesticRoseHoldTime = 3;
 			UpdateJoints(originPlayer, originPlayer.amnesticRoseJoints);
 			if (originPlayer.amnesticRoseBloomTime.Cooldown()) {
 				Vector2 pos = GetEndPos(originPlayer.Player, originPlayer.amnesticRoseJoints) - 8 * Vector2.One;
 				for (int i = 0; i < 16; i++) {
-					Dust.NewDust(pos, 16, 16, DustID.Paint, newColor: new Color(70, 60, 80));
+					Dust.NewDust(pos, 16, 16, ModContent.DustType<Rose_Dust>());
 				}
 			}
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			position = GetEndPos(player, originPlayer.amnesticRoseJoints);
-			velocity = GeometryUtils.Vec2FromPolar(velocity.Length(), originPlayer.amnesticRoseJoints[^1].Theta);
+			velocity = GeometryUtils.Vec2FromPolar(velocity.Length(), originPlayer.amnesticRoseJoints[^1].Theta + player.fullRotation);
 			if (originPlayer.amnesticRoseBloomTime > 0) type = ModContent.ProjectileType<Amnestic_Rose_Thorn>();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -129,7 +202,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.NewProjectile(
 						source,
 						position,
-						velocity.RotatedByRandom(0.5f) * (1 + (i % 2 == 0).ToDirectionInt() * 0.1f),
+						velocity.RotatedBy((Main.rand.NextFloat(0.2f) + 0.2f * (i < 4).ToInt()) * (i % 4 < 2).ToDirectionInt()) * (1 + (i % 2 == 0).ToDirectionInt() * 0.1f),
 						type,
 						damage,
 						knockback,
@@ -139,35 +212,64 @@ namespace Origins.Items.Weapons.Magic {
 				return false;
 			}
 			originPlayer.amnesticRoseBloomTime = 60 * 8;
+			player.AddBuff(ModContent.BuffType<Amnestic_Rose_Buff>(), originPlayer.amnesticRoseBloomTime);
 			return true;
 		}
-		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
-			OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
-			Rectangle frame = stemTexture.Frame(3);
-			DrawData data = new(
-				stemTexture,
-				Vector2.Zero,
-				frame,
-				Color.White
-			) {
-				origin = new(frame.Width * 0.5f, frame.Height)
-			};
-			Vector2 pos = GetStartPosition(drawInfo.drawPlayer) - Main.screenPosition;
-			for (int i = 0; i < originPlayer.amnesticRoseJoints.Length - 1; i++) {
-				frame.X = frame.Width * (i % 3);
-				data.sourceRect = frame;
-				data.rotation = originPlayer.amnesticRoseJoints[i].Theta + MathHelper.PiOver2;
-				data.position = pos;
-				drawInfo.DrawDataCache.Add(data);
-				pos += (Vector2)originPlayer.amnesticRoseJoints[i];
+		public class Amnestic_Rose_Layer : PlayerDrawLayer {
+			public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
+				return  drawInfo.shadow == 0 && drawInfo.heldItem.ModItem is Amnestic_Rose;
 			}
-			frame = flowerTexture.Frame(verticalFrames: 2, frameY: (originPlayer.amnesticRoseBloomTime <= 0).ToInt());
-			data.texture = flowerTexture;
-			data.sourceRect = frame;
-			data.origin = new(frame.Width * 0.5f, frame.Height);
-			data.rotation = originPlayer.amnesticRoseJoints[^1].Theta + MathHelper.PiOver2;
-			data.position = pos;
-			drawInfo.DrawDataCache.Add(data);
+			public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.Tails, PlayerDrawLayers.Wings);
+			protected override void Draw(ref PlayerDrawSet drawInfo) {
+				OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
+				Rectangle frame = stemTexture.Frame(3);
+				DrawData data = new(
+					stemTexture,
+					Vector2.Zero,
+					frame,
+					Color.White
+				) {
+					origin = new(frame.Width * 0.5f, frame.Height)
+				};
+				DrawData jointData = new(
+					jointTexture,
+					Vector2.Zero,
+					null,
+					Color.White
+				) {
+					origin = jointTexture.Value.Size() * new Vector2(0.5f, 0.6f),
+					shader = TangelaVisual.FakeShaderID
+				};
+				Vector2 pos = GetStartPosition(drawInfo.drawPlayer);
+				if (!TangelaVisual.DrawOver) {
+					jointData.rotation = GeometryUtils.AngleDif(0, originPlayer.amnesticRoseJoints[0].Theta, out int dir) * dir * 0.5f;
+					jointData.position = pos - Main.screenPosition;
+					drawInfo.DrawDataCache.Add(jointData);
+				}
+				for (int i = 0; i < originPlayer.amnesticRoseJoints.Length - 1; i++) {
+					if (!TangelaVisual.DrawOver) {
+						jointData.rotation = originPlayer.amnesticRoseJoints[i].Theta;
+						jointData.rotation += GeometryUtils.AngleDif(jointData.rotation, originPlayer.amnesticRoseJoints[i + 1].Theta, out int dir) * dir * 0.5f;
+						jointData.position = pos + (Vector2)originPlayer.amnesticRoseJoints[i] - Main.screenPosition;
+						drawInfo.DrawDataCache.Add(jointData);
+					}
+					frame.X = frame.Width * (i % 3);
+					data.sourceRect = frame;
+					data.rotation = originPlayer.amnesticRoseJoints[i].Theta + MathHelper.PiOver2;
+					data.position = pos - Main.screenPosition;
+					data.color = Lighting.GetColor(pos.ToTileCoordinates());
+					drawInfo.DrawDataCache.Add(data);
+					pos += (Vector2)originPlayer.amnesticRoseJoints[i];
+				}
+				frame = flowerTexture.Frame(verticalFrames: 2, frameY: (originPlayer.amnesticRoseBloomTime <= 0).ToInt());
+				data.texture = flowerTexture;
+				data.sourceRect = frame;
+				data.origin = new(frame.Width * 0.5f, frame.Height);
+				data.rotation = originPlayer.amnesticRoseJoints[^1].Theta + MathHelper.PiOver2;
+				data.position = pos - Main.screenPosition;
+				data.color = Lighting.GetColor(pos.ToTileCoordinates());
+				drawInfo.DrawDataCache.Add(data);
+			}
 		}
 	}
 	public class Amnestic_Rose_Thorn : ModProjectile {
@@ -192,25 +294,220 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = true;
 			Projectile.aiStyle = -1;
 			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 			Projectile.extraUpdates = 1;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 1) {
-				Projectile.ai[1] += 1 / 60f;
-				if (Projectile.ai[1] > 1) Projectile.Kill();
+				if (Projectile.ai[1] == 0) {
+					// temp sound
+					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+				}
+				Projectile.localNPCHitCooldown = -1;
+				Projectile.ai[1] += 1 / 45f;
+				if (Projectile.ai[1] > 1) {
+					Projectile.ai[1] = 1;
+					if (++Projectile.ai[2] > 10) Projectile.Kill();
+				}
+				Projectile.localAI[0] = MathF.Pow(Projectile.ai[1], 0.5f);
+			} else {
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			}
 		}
-		void StartBloom() {
-			if (!Projectile.ai[0].TrySet(1)) return;
-			Projectile.timeLeft = 120;
+		bool StartBloom() {
+			if (!Projectile.ai[0].TrySet(1)) return true;
+			Projectile.timeLeft = 12000;
 			Projectile.velocity = Vector2.Zero;
 			Projectile.tileCollide = false;
+			Projectile.netUpdate = true;
+			return false;
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (Projectile.ai[0] == 1) {
+				return targetHitbox.IsWithin(Projectile.Center, (96 + 8) * Projectile.localAI[0]);
+			}
+			return null;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			StartBloom();
+			if (StartBloom()) {
+				target.AddBuff(ModContent.BuffType<Amnestic_Rose_Buff>(), 180);
+			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			StartBloom();
+			return false;
+		}
+
+		private static VertexStrip _vertexStrip = new();
+		public override bool PreDraw(ref Color lightColor) => !GraphicsUtils.drawingEffect;
+		public override void PostDraw(Color lightColor) {
+			if (Projectile.ai[0] == 1) {
+				if (Mask_Rasterize.QueueProjectile(Projectile.whoAmI)) return;
+				Draw(Projectile.Center, MathF.Pow(Projectile.ai[1], 0.5f));
+				Draw(Projectile.Center, Projectile.ai[1] * Projectile.ai[1]);
+			}
+		}
+		static void Draw(Vector2 center, float size) {
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
+			miscShaderData.UseImage0(TextureAssets.Extra[197]);
+			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1.5f, 0, 0, 0));
+			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
+			miscShaderData.Apply();
+			const int verts = 64;
+			float[] rot = new float[verts + 1];
+			Vector2[] pos = new Vector2[verts + 1];
+			Matrix matrix = Main.GameViewMatrix.TransformationMatrix;
+			float length = 96 * size;
+			size *= matrix.Right.X;
+			for (int i = 0; i < verts + 1; i++) {
+				rot[i] = (i * MathHelper.TwoPi) / verts;
+				pos[i] = Vector2.Transform(center + new Vector2(length, 0).RotatedBy(rot[i] + MathHelper.PiOver2) - Main.screenPosition, matrix);
+			}
+			_vertexStrip.PrepareStrip(pos, rot, progress => new(MathF.Cos(progress * MathHelper.TwoPi) * 0.5f + 0.5f, MathF.Sin(progress * MathHelper.TwoPi) * 0.5f + 0.5f, 0), _ => 32 + 16 * size, Vector2.Zero, pos.Length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
+	}
+	public class Amnestic_Rose_Buff : ModBuff {
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			OriginGlobalNPC originGlobalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
+			originGlobalNPC.amnesticRose = true;
+			if (!npc.boss) originGlobalNPC.slowDebuff = true;
+			if (Main.rand.NextBool(3)) Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<Rose_Dust>());
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.buffTime[buffIndex] = player.OriginPlayer().amnesticRoseBloomTime;
+		}
+	}
+	public class Amnestic_Rose_Goo_Ball : ModProjectile {
+		public override void SetDefaults() {
+			Projectile.width = 14;
+			Projectile.height = 14;
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.friendly = true;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = 1;
+			Projectile.extraUpdates = 0;
+		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.velocity.Y += 0.12f;
+			if (Main.rand.NextBool(10)) {
+				Dust.NewDust(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					ModContent.DustType<Rose_Dust>()
+				);
+			}
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			for (int i = 0; i < 10; i++) {
+				Dust.NewDust(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					ModContent.DustType<Rose_Dust>()
+				);
+			}
+			if (Projectile.owner != Main.myPlayer) return true;
+			if (Projectile.velocity.X != oldVelocity.X) {
+				Vector2 dir = new(oldVelocity.X - Projectile.velocity.X, 0);
+				dir.Normalize();
+				Projectile.NewProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
+					dir,
+					ModContent.ProjectileType<Amnestic_Rose_Goo_Floor>(),
+					Projectile.damage / 2,
+					Projectile.knockBack / 10,
+					Projectile.owner
+				);
+			}
+			if (Projectile.velocity.Y != oldVelocity.Y) {
+				Vector2 dir = new(0, oldVelocity.Y - Projectile.velocity.Y);
+				dir.Normalize();
+				Projectile.NewProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
+					dir,
+					ModContent.ProjectileType<Amnestic_Rose_Goo_Floor>(),
+					Projectile.damage / 2,
+					Projectile.knockBack / 10,
+					Projectile.owner
+				);
+			}
+			return true;
+		}
+	}
+	public class Amnestic_Rose_Goo_Floor : ModProjectile {
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 2;
+		}
+		public override void SetDefaults() {
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.timeLeft = 60 * 10;
+			Projectile.friendly = true;
+			Projectile.hide = true;
+			Projectile.tileCollide = false;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = 1;
+			Projectile.extraUpdates = 0;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override void AI() {
+			if (Projectile.timeLeft == 60 * 10) Projectile.frame = Main.rand.Next(2);
+			Rectangle hitbox = Projectile.Hitbox;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.CanBeChasedBy(Projectile)) {
+					if (Projectile.Colliding(hitbox, npc.Hitbox)) {
+						int index = npc.FindBuffIndex(Slow_Debuff.ID);
+						if (index >= 0) {
+							if (npc.buffTime[index] < 10) npc.buffTime[index] = 10;
+						} else {
+							npc.AddBuff(Slow_Debuff.ID, 10);
+						}
+					}
+				}
+			}
+			if (Projectile.TryGetOwner(out Player owner)/* && owner.hostile*/) {
+				foreach (Player other in Main.ActivePlayers) {
+					if (/*other.hostile && other.team != owner.team && */Projectile.Colliding(hitbox, other.Hitbox)) {
+						int index = other.FindBuffIndex(BuffID.Slow);
+						if (index >= 0) {
+							if (other.buffTime[index] < 10) other.buffTime[index] = 10;
+						} else {
+							other.AddBuff(BuffID.Slow, 10);
+						}
+					}
+				}
+			}
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			behindNPCsAndTiles.Add(index);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				TextureAssets.Projectile[Type].Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame),
+				lightColor,
+				Projectile.rotation,
+				new(18, 8),
+				1,
+				SpriteEffects.None
+			);
 			return false;
 		}
 	}
