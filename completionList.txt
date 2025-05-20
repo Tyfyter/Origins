@@ -507,7 +507,7 @@ ACCESSORIES:
 (^) Rebreather Gear
 (X) Reformward
 (^) Resin Shield*
-(#2, ^2) Resizing Glove !!! (doesn't show up despite have graphical code)
+(@4) Resizing Glove !!! (it's not the code that's the problem, the spritesheet is the old format)
 (^) Return To Sender*
 (^) Rockstar Choker
 (^) Ruby Reticle*
