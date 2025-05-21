@@ -6142,7 +6142,7 @@ Shinedown: {
 		Default: "{0} status effects"
 	}
 
-	Tooltip: ""
+	Tooltip: Hold it out to cast shadows on enemies
 }
 
 Chambersite_Breastplate: {
@@ -6183,7 +6183,7 @@ Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask
 
 Alkahest_Harpoon: {
 	DisplayName: Alkahest Harpoon
-	Tooltip: ""
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Amnestic_Rose: {

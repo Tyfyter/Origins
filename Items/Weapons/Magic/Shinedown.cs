@@ -4,9 +4,8 @@ using Origins.NPCs;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -23,7 +22,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.DamageType = DamageClass.Magic;
 			Item.useStyle = -1;
-			Item.damage = 70;
+			Item.damage = 84;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
@@ -33,7 +32,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shootSpeed = 16 * 45;
 			Item.mana = 7;
 			Item.knockBack = FlatKnockbackAdjustment;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item132.WithPitch(5f);
 			Item.autoReuse = false;
@@ -159,6 +158,8 @@ namespace Origins.Items.Weapons.Magic {
 				if (!npc.CanBeChasedBy(Projectile)) continue;
 				Rectangle npcHitbox = npc.Hitbox;
 				for (int i = 0; i < aims.Length; i++) {
+					if (Main.rand.NextBool(15)) SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitch(2f).WithVolume(0.01f), Projectile.Center);
+					//SoundEngine.PlaySound(SoundID.Item176.WithPitch(5f), Projectile.Center);
 					if (!aims[i].active) continue;
 					Vector2 motion = aims[i].Motion;
 					if (motion == Vector2.Zero) continue;

@@ -551,7 +551,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (^) Retaliatory Tendril°
-(#2, ^2) Shield of Shimmer !!! (graphical code)?
+(^) Shield of Shimmer
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
@@ -871,7 +871,7 @@ MAGIC WEAPONS:
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
-(☻) Shinedown !!!
+(#2, ^2) Shinedown !!! (needs sound code)
 (X) Siphon Staff
 (^) Splashid
 (^) Startillery
@@ -1578,7 +1578,7 @@ AMMO:
 (^) Alkahest Bullet*
 (^) Alkahest Canister*
 (^) Alkahest Dart
-(☻) Alkahest Harpoon !!!
+(^) Alkahest Harpoon
 (^) Alkaline Canister*
 (^) Alkaline Harpoon*
 (^) Bile Arrow*

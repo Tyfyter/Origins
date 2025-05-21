@@ -31,18 +31,18 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shoot = Alkahest_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
 			Item.value = Item.sellPrice(silver: 9);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
-			.AddIngredient<Alkahest>()
 			.AddRecipeGroup(RecipeGroupID.IronBar, 4)
+			.AddIngredient<Alkahest>()
 			.AddTile(TileID.Anvils)
 			.Register();
 
 			Recipe.Create(Type, 4)
-			.AddIngredient<Alkahest>()
 			.AddIngredient<Harpoon>(4)
+			.AddIngredient<Alkahest>()
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

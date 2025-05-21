@@ -11,7 +11,7 @@ Arabel: {
 	Shimmerstar_Staff.Text:
 		'''
 		[header:Shimmerstar Staff (1/{$SeriesLength})]
-		[jimage/sc3d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
+		[jimage/sc2d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
 		*****
 		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. The stars of the universe a symbol of motherhood, fostering life as everything we know is made from stardust. The accumulation of worlds that circle around each star, a mother's endless care no matter what. That is why the comparison is often made between a mother and the stars in the sky.
 		'''
@@ -38,7 +38,7 @@ Arabel: {
 	Lazy_Cloak.Text:
 		'''
 		[header:Lazy Cloak (4/{$SeriesLength})]
-		[jimage/sc2d:Origins/Items/Accessories/Lazy_Cloak]
+		[jimage/sc2.2d:Origins/Items/Accessories/Lazy_Cloak]
 		*****
 		My son, one day you will get to wear this much like I do. I can see the potential for good in you, but of course not without its hardship. You will become strong and better than your mother ever could fighting off monsters. It's enough for people to tell tales of you, to be the one Terraria needs.
 		'''
