@@ -6195,3 +6195,8 @@ Otherworldly_Cloak: {
 	DisplayName: Otherworldly Cloak
 	Tooltip: ""
 }
+
+Master_Magician_Cloak: {
+	DisplayName: Master Magician Cloak
+	Tooltip: ""
+}
