@@ -448,7 +448,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(#2, ^2) Gaming Glove (Needs handsOn, Was ♠)
+(#2?, ^2) Gaming Glove (Needs handsOn, Was ♠)
 (^) Golden Lotus
 (⛥) Grave Danger*
 (^) Gun Glove*
