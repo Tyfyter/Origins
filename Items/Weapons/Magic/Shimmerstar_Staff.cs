@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 			public override string TextKey => "Shimmerstar_Staff";
 			public override JournalSortIndex SortIndex => new("Arabel", 1);
 		}
+		public static AutoLoadingAsset<Texture2D> swipeTexture = typeof(Shimmerstar_Staff).GetDefaultTMLName() + "_Swipe";
 		public static int MainFireCount => 4;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
@@ -49,6 +50,24 @@ namespace Origins.Items.Weapons.Magic {
 		public override float UseAnimationMultiplier(Player player) => player.altFunctionUse == 2 ? 0.35f : 1;
 		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
 			if (player.altFunctionUse == 2) mult /= MainFireCount / 2;
+		}
+		static (Vector2 origin, float rotation) GetFrameCompensation(int frame) {
+			switch (frame) {
+				default: return (new(49, 69), new Vector2(-42, -26).ToRotation());
+				case 1: return (new(49, 69), new Vector2(-42, -26).ToRotation());
+				case 2: return (new(49, 67), new Vector2(-35, -36).ToRotation());
+				case 3: return (new(51, 59), new Vector2(-15, -47).ToRotation());
+				case 4: return (new(60, 56), new Vector2(0, -1).ToRotation());
+				case 5: return (new(69, 59), new Vector2(37, -35).ToRotation());
+				case 6: return (new(71, 63), new Vector2(45, -23).ToRotation());
+				case 7: return (new(73, 71), new Vector2(51, -7).ToRotation());
+				case 8: return (new(73, 71), new Vector2(51, -7).ToRotation());
+				case 9: return (new(69, 63), new Vector2(37, -35).ToRotation());
+				case 10: return (new(67, 59), new Vector2(29, -43).ToRotation());
+				case 11: return (new(60, 57), new Vector2(5, -51).ToRotation());
+				case 12: return (new(55, 59), new Vector2(-23, -43).ToRotation());
+				case 13: return (new(53, 63), new Vector2(-35, -37).ToRotation());
+			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
@@ -112,17 +131,33 @@ namespace Origins.Items.Weapons.Magic {
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Vector2 origin = new(10, 10);
 			float rotOffset = MathHelper.PiOver2 * 0.875f;
+			Rectangle frame;
+			float progress = 1 - drawInfo.drawPlayer.itemAnimation / (float)drawInfo.drawPlayer.itemAnimationMax;
+			itemTexture = swipeTexture;
 			if (drawInfo.drawPlayer.altFunctionUse == 2) {
-				origin = new(9, 9);
-				rotOffset = MathHelper.PiOver4;
+				int frameNum = (int)(10 * progress);
+				frame = itemTexture.Frame(verticalFrames: 14, frameY: frameNum);
+				(origin, float rotCompensation) = GetFrameCompensation(frameNum);
+				if (drawInfo.drawPlayer.OriginPlayer().itemComboAnimationTime <= 0) {
+					drawInfo.itemEffect ^= SpriteEffects.FlipHorizontally;
+					rotCompensation = MathHelper.Pi - rotCompensation;
+				}
+				rotOffset = rotCompensation + MathHelper.PiOver2;
+			} else {
+				int frameNum = (int)(14 * progress);
+				frame = itemTexture.Frame(verticalFrames: 14, frameY: frameNum);
+				(origin, float rotCompensation) = GetFrameCompensation(frameNum);
+				//drawInfo.itemEffect ^= SpriteEffects.FlipHorizontally;
+				//rotCompensation = MathHelper.Pi - rotCompensation;
+				rotOffset = rotCompensation + MathHelper.PiOver2;
 			}
 			DrawData data = new(
 				itemTexture,
 				drawInfo.drawPlayer.GetFrontHandPosition(drawInfo.drawPlayer.compositeFrontArm.stretch, drawInfo.drawPlayer.compositeFrontArm.rotation) - Main.screenPosition,
-				itemTexture.Bounds,
+				frame,
 				lightColor,
 				drawInfo.drawPlayer.compositeFrontArm.rotation + MathHelper.Pi - rotOffset * drawInfo.drawPlayer.direction,
-				origin.Apply(drawInfo.itemEffect ^ SpriteEffects.FlipVertically, itemTexture.Size()),
+				origin.Apply(drawInfo.itemEffect, itemTexture.Size()),
 				1f,
 				drawInfo.itemEffect
 			);

@@ -310,6 +310,7 @@ namespace Origins {
 		public bool wishingGlassActive = false;
 		public int wishingGlassCooldown = 0;
 		public bool wishingGlassVisible = false;
+		public int wishingGlassDye = -1;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
 

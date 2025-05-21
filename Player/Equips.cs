@@ -13,6 +13,7 @@ using Origins.NPCs.Defiled;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -566,6 +567,17 @@ namespace Origins {
 					}
 					if (Player.armor[i + 10].ModItem is Fallacious_Vase) {
 						dashVaseDye = Player.dye[i].dye;
+						break;
+					}
+				}
+			}
+			if (wishingGlassVisible) {
+				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
+					if (Player.armor[i].ModItem is Wishing_Glass) {
+						wishingGlassDye = Player.dye[i].dye;
+					}
+					if (Player.armor[i + 10].ModItem is Wishing_Glass) {
+						wishingGlassDye = Player.dye[i].dye;
 						break;
 					}
 				}
