@@ -319,6 +319,7 @@ namespace Origins.Items.Weapons.Magic {
 				type = target.type;
 				motion = default;
 				active = true;
+				progress = 0;
 			}
 			public bool Update(int index, Vector2 position, float speed, float maxLengthSQ) {
 				NPC target = Main.npc[index];

@@ -1,0 +1,199 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Armor.Riven;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Magic;
+using Origins.World.BiomeData;
+using PegasusLib;
+using System.Collections.Generic;
+using System;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.DataStructures;
+
+namespace Origins.NPCs.MiscB {
+	public class Chambersite_Sentinel : ModNPC {
+		//public override void Load() => this.AddBanner();
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[NPC.type] = 2;
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.Drippler);
+			NPC.lifeMax = 40;
+			NPC.defense = 0;
+			NPC.damage = 14;
+			NPC.width = 24;
+			NPC.height = 47;
+			NPC.friendly = false;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath15;
+			NPC.knockBackResist = 0.75f;
+			NPC.value = 76;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
+		}
+		Aim[] aims;
+		Aim[] decayingAims;
+		public override void AI() {
+			aims ??= new Aim[Main.maxPlayers];
+			decayingAims ??= new Aim[20];
+			float maxLengthSQ = 16 * 16 * 15 * 15;
+			if (--NPC.localAI[0] <= 0) {
+				DoShoot(maxLengthSQ);
+			}
+			Vector2 center = NPC.Center;
+			int activeAims = 0;
+			for (int i = 0; i < aims.Length; i++) {
+				if (aims[i].active) {
+					activeAims++;
+					if (aims[i].Update(i, center, maxLengthSQ)) AddDecayingAim(aims[i]);
+				}
+			}
+			for (int i = 0; i < decayingAims.Length; i++) {
+				decayingAims[i].UpdateDecaying();
+			}
+			Triangle hitTri;
+			Vector2 perp;
+			int dp2s = Main.rand.RandomRound(40 * ContentExtensions.DifficultyDamageMultiplier);
+			foreach (Player player in Main.ActivePlayers) {
+				Rectangle npcHitbox = player.Hitbox;
+				for (int i = 0; i < aims.Length; i++) {
+					if (!aims[i].active) continue;
+					Vector2 motion = aims[i].Motion;
+					if (motion == Vector2.Zero) continue;
+					Vector2 norm = motion.SafeNormalize(Vector2.Zero);
+					perp.X = norm.Y;
+					perp.Y = -norm.X;
+					hitTri = new(center + perp * 16, center - perp * 16, center + motion * NPC.scale + norm * 16);
+					if (hitTri.Intersects(npcHitbox)) {
+						player.lifeRegenCount -= dp2s;
+						break;
+					}
+				}
+			}
+			NPC.spriteDirection = NPC.direction;
+		}
+		void AddDecayingAim(Aim aim) {
+			aim.active = true;
+			float bestLength = float.PositiveInfinity;
+			int bestDecaying = 0;
+			for (int i = 0; i < decayingAims.Length; i++) {
+				if (decayingAims[i].active) {
+					float length = decayingAims[i].Motion.LengthSquared();
+					if (bestLength > length) {
+						bestLength = length;
+						bestDecaying = i;
+					}
+				} else {
+					bestDecaying = i;
+					break;
+				}
+			}
+			decayingAims[bestDecaying] = aim;
+		}
+		bool DoShoot(float maxLengthSQ) {
+			Vector2 aimOrigin = NPC.Center;
+			foreach (Player player in Main.ActivePlayers) {
+				if (aims[player.whoAmI].active) continue;
+				Vector2 diff = player.Center - aimOrigin;
+				float lengthSQ = diff.LengthSquared();
+				if (lengthSQ > maxLengthSQ) continue;
+				aims[player.whoAmI].Set();
+			}
+
+			NPC.localAI[0] = 20;
+			NPC.netUpdate = true;
+			return true;
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Shinedown_Staff_P>()].Value;
+			Vector2 position = NPC.Center + Vector2.UnitY * NPC.gfxOffY - Main.screenPosition;
+			Vector2 origin = texture.Frame().Bottom();
+			float spriteLengthFactor = 1.1f / texture.Height;
+			Color color = Color.Black * 0.4f;
+			DrawData data;
+			for (int i = 0; i < aims.Length; i++) {
+				if (!aims[i].active) continue;
+				Vector2 motion = aims[i].Motion;
+				data = new DrawData(
+					texture,
+					position,
+					null,
+					color,
+					motion.ToRotation() + MathHelper.PiOver2,
+					origin,
+					new Vector2(1.2f, motion.Length() * spriteLengthFactor),
+					SpriteEffects.None
+				);
+				for (int j = 0; j < 3; j++) Main.EntitySpriteDraw(data);
+			}
+			for (int i = 0; i < decayingAims.Length; i++) {
+				if (!decayingAims[i].active) continue;
+				Vector2 motion = decayingAims[i].Motion;
+				data = new DrawData(
+					texture,
+					position,
+					null,
+					color,
+					motion.ToRotation() + MathHelper.PiOver2,
+					origin,
+					new Vector2(1.2f, motion.Length() * spriteLengthFactor),
+					SpriteEffects.None
+				);
+				for (int j = 0; j < 3; j++) Main.EntitySpriteDraw(data);
+			}
+			return true;
+		}
+		struct Aim {
+			Vector2 motion;
+			float progress;
+			public bool active;
+			public readonly Vector2 Motion => motion;
+			public void Set() {
+				motion = default;
+				active = true;
+				progress = 0;
+			}
+			public bool Update(int index, Vector2 position, float maxLengthSQ) {
+				Player target = Main.player[index];
+				if (!target.active || target.dead) target = null;
+				if (target is null) {
+					active = false;
+					return true;
+				}
+				Vector2 diff = target.Center - position;
+				if (diff.LengthSquared() > maxLengthSQ) {
+					active = false;
+					return true;
+				}
+				MathUtils.LinearSmoothing(ref progress, 1, 1 / 60f);
+				float speed = progress + 1;
+				MathUtils.LinearSmoothing(ref motion, diff, 4 * speed);
+				motion = Utils.rotateTowards(Vector2.Zero, motion, diff, 0.3f * speed);
+				return false;
+			}
+			public void UpdateDecaying() {
+				if (active) {
+					MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
+					float length = Motion.Length();
+					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * (2 - progress);
+					active = length > 4;
+				}
+			}
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(7);
+		}
+	}
+}
