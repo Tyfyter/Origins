@@ -26,6 +26,9 @@ namespace Origins.Tiles.Riven {
 			Main.tileNoAttach[Type] = true;
 			Main.tileLighted[Type] = true;
 			//Main.tileOreFinderPriority[Type] = 500;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);

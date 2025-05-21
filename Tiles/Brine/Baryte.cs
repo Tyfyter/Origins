@@ -18,6 +18,7 @@ namespace Origins.Tiles.Brine {
 			Main.tileMerge[TileID.Mud][Type] = true;
 			Origins.TileBlocksMinecartTracks[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			AddMapEntry(new Color(18, 73, 56));
 			MinPick = 195;
 			HitSound = SoundID.Tink;
