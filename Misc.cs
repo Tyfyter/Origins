@@ -344,8 +344,8 @@ namespace Origins {
 		}
 	}
 	public readonly struct UnorderedTuple<T>(T a, T b) : IEquatable<UnorderedTuple<T>> {
-		readonly T a = a;
-		readonly T b = b;
+		public readonly T a = a;
+		public readonly T b = b;
 
 		public bool Equals(UnorderedTuple<T> other) {
 			return other == this;

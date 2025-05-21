@@ -6200,3 +6200,8 @@ Master_Magician_Cloak: {
 	// DisplayName: Master Magician Cloak
 	// Tooltip: ""
 }
+
+Constellation: {
+	// DisplayName: Constellation
+	// Tooltip: ""
+}

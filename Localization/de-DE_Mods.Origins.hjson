@@ -1801,6 +1801,9 @@ Projectiles: {
 	// Amnestic_Rose_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
 	// Otherworldly_Cloak_P.DisplayName: Otherworldly Cloak P
 	// Master_Magician_Cloak_P.DisplayName: Master Magician Cloak P
+	// Constellation_P.DisplayName: Constellation P
+	// Constellation_Star.DisplayName: Constellation Star
+	// Actual_Constellation.DisplayName: Actual Constellation
 }
 
 Prefixes: {
