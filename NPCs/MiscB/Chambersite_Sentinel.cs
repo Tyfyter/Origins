@@ -2,6 +2,7 @@
 using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using PegasusLib;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -9,6 +10,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.MiscB {
 	public class Chambersite_Sentinel : ModNPC {
@@ -28,6 +30,7 @@ namespace Origins.NPCs.MiscB {
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 15000;
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) => (OriginSystem.chambersiteTiles + OriginSystem.chambersiteWalls) * 0.0001f;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
@@ -38,8 +41,8 @@ namespace Origins.NPCs.MiscB {
 		public override void AI() {
 			aims ??= new Aim[Main.maxPlayers];
 			decayingAims ??= new Aim[20];
-			float maxLengthSQ = 16 * 16 * 15 * 15;
-			if (--NPC.localAI[0] <= 0) {
+			float maxLengthSQ = 16 * 16 * 12 * 12;
+			if (--NPC.ai[3] <= 0) {
 				DoShoot(maxLengthSQ);
 			}
 			Vector2 center = NPC.Center;
@@ -52,6 +55,11 @@ namespace Origins.NPCs.MiscB {
 			}
 			for (int i = 0; i < decayingAims.Length; i++) {
 				decayingAims[i].UpdateDecaying();
+			}
+			if (activeAims <= 0) {
+				if (--NPC.localAI[0] <= 0) NPC.localAI[0] = Teleport() ? 300 : 20;
+			} else {
+				NPC.localAI[0] = 600;
 			}
 			Triangle hitTri;
 			Vector2 perp;
@@ -73,6 +81,32 @@ namespace Origins.NPCs.MiscB {
 				}
 			}
 			NPC.spriteDirection = NPC.direction;
+		}
+		bool Teleport() {
+			List<Point> positions = [];
+			static bool CheckTeleport(int x, int y) {
+				for (int i = x - 1; i <= x + 1; i++) {
+					for (int j = y - 3; j < y; j++) {
+						if (Framing.GetTileSafely(i, j).HasFullSolidTile()) return false;
+					}
+				}
+				return true;
+			}
+			Point pos = NPC.targetRect.Center().ToTileCoordinates();
+			const int range = 15;
+			const int invalid_range = 10;
+			for (int i = -range; i <= range; i++) {
+				if (i > -invalid_range && i < invalid_range) continue;
+				for (int j = -range; j <= range; j++) {
+					if (j > -invalid_range && j < invalid_range) continue;
+					if (CheckTeleport(pos.X + i, pos.Y + j)) {
+						positions.Add(new(pos.X + i, pos.Y + j - 3));
+					}
+				}
+			}
+			if (positions.Count <= 0) return false;
+			NPC.Teleport(Main.rand.Next(positions).ToWorldCoordinates(0, -8), 13); // could have custom effect
+			return true;
 		}
 		void AddDecayingAim(Aim aim) {
 			aim.active = true;
@@ -102,7 +136,7 @@ namespace Origins.NPCs.MiscB {
 				aims[player.whoAmI].Set();
 			}
 
-			NPC.localAI[0] = 20;
+			NPC.ai[3] = 20;
 			NPC.netUpdate = true;
 			return true;
 		}
