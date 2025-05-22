@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
-				global.extraGravity.Y -= 0.24f;
+				if (proj.TryGetGlobalProjectile(out HarpoonGlobalProjectile harpoonGlobal)) harpoonGlobal.extraGravity.Y -= 0.24f;
 			});
 		}
 		public override void SetDefaults() {

@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Ranged {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				if (proj.aiStyle != ProjAIStyleID.HeldProjectile) {
 					global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 1);
-					global.extraGravity.Y -= 0.24f;
+					if (proj.TryGetGlobalProjectile(out HarpoonGlobalProjectile harpoonGlobal)) harpoonGlobal.extraGravity.Y -= 0.24f;
 				}
 			});
 			ItemID.Sets.gunProj[Type] = true;
@@ -77,7 +77,8 @@ namespace Origins.Items.Weapons.Ranged {
 				Projectile.ai[2] = 0;
 			}
 			if (Projectile.ai[0] == 0 && originPlayer.currentActiveHarpoons == 0) {
-				Projectile.ai[1] = 3;
+				if (player.reuseDelay > 0) player.reuseDelay--;
+				if (player.reuseDelay <= 0) Projectile.ai[1] = 3;
 			}
 			if (Main.myPlayer == Projectile.owner) {
 				if ((player.channel || originPlayer.currentActiveHarpoons != 0 || Projectile.ai[0] > 0) && !player.noItems && !player.CCed) {
@@ -105,7 +106,10 @@ namespace Origins.Items.Weapons.Ranged {
 						if (Projectile.ai[1] > 0) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 					}
 				} else {
-					Projectile.Kill();
+					if (player.reuseDelay > 0) player.reuseDelay--;
+					if (player.reuseDelay <= 0) Projectile.Kill();
+					Vector2 position = player.MountedCenter + ((Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 12).Floor();
+					Projectile.position = position;
 				}
 			}
 			if (originPlayer.currentActiveHarpoons > 0) {
