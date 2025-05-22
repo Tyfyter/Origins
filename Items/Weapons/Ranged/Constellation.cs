@@ -51,8 +51,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
-			Projectile.width = 30;
-			Projectile.height = 30;
+			Projectile.width = 16;
+			Projectile.height = 16;
 			Projectile.penetrate = 1;
 		}
 		public override void OnSpawn(IEntitySource source) {
@@ -81,6 +81,20 @@ namespace Origins.Items.Weapons.Ranged {
 			if (++Projectile.frameCounter >= 3) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
+			const int HalfSpriteWidth = 24 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
@@ -121,6 +135,7 @@ namespace Origins.Items.Weapons.Ranged {
 				}
 			}
 		}
+		public override Color? GetAlpha(Color lightColor) => new(1f, 1f, 1f, 0.9f);
 	}
 	public class Actual_Constellation : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
