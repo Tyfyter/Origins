@@ -1,11 +1,7 @@
-using CalamityMod.NPCs.TownNPCs;
-using Newtonsoft.Json.Linq;
 using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.Projectiles;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,7 +17,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.damage = 65;
+			Item.CloneDefaults(ItemID.Dynamite);
+			Item.damage = 220;
 			Item.DamageType = DamageClasses.ThrownExplosive;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noUseGraphic = true;
@@ -29,19 +26,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAnimation = 40;
 			Item.useTime = 40;
 			Item.shoot = ModContent.ProjectileType<Shimmer_Dynamite_P>();
-			Item.shootSpeed = 8f;
+			Item.shootSpeed *= 2f;
 			Item.width = 8;
 			Item.height = 28;
 			Item.UseSound = SoundID.Item1;
 			Item.consumable = false;
 			Item.maxStack = 1;
 			Item.value = Item.sellPrice(platinum: 1);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Red;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.Dynamite)
 			.AddIngredient(ItemID.BottomlessShimmerBucket)
+			.AddIngredient(ItemID.Dynamite)
 			.AddTile(TileID.LunarCraftingStation)
 			.Register();
 		}

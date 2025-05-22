@@ -49,7 +49,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 |---
-(◘) Chambersite Sentinel !!!
+(#2, ^2) Chambersite Sentinel !!! (needs spawning code and sounds)
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
@@ -934,7 +934,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Acrid Spout
-(☻) Amnestic Rose !!!
+(@, #2) Amnestic Rose !!! (Amnestic Rose Shimmer texture alt and special sounds)
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
@@ -1066,7 +1066,7 @@ EXPLOSIVE WEAPONS:
 (@4, ^3) Caustica
 (^) Flakjack
 (X) Helix
-(#?, ^2) Shimmer Dynamite !!!
+(^) Shimmer Dynamite
 (@4, #) Starburst
 ---
 
@@ -1585,7 +1585,7 @@ AMMO:
 (^) Bile Bullet*
 (^) Bile Canister*
 (^) Bile Dart*
-(☻) Bile Harpoon !!!
+(^) Bile Harpoon
 (^) Coolant Canister*
 (^) Cursed Canister*
 (^) Cursed Harpoon*

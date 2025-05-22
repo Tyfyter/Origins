@@ -1204,13 +1204,13 @@ Buffs: {
 	}
 
 	Wishing_Glass_Buff: {
-		DisplayName: Wishing Glass Buff
-		Description: Mods.Origins.Buffs.Wishing_Glass_Buff.Description
+		DisplayName: Wish Granted!
+		Description: You got your wish! How imaginative!
 	}
 
 	Amnestic_Rose_Buff: {
-		DisplayName: Amnestic Rose Buff
-		Description: Mods.Origins.Buffs.Amnestic_Rose_Buff.Description
+		DisplayName: Rose Regrowth
+		Description: The Rosebud is regrowing
 	}
 
 	Otherworldly_Cloak_Buff: {

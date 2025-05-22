@@ -1,40 +1,32 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Dev;
-using Origins.Items.Armor.Riven;
-using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Magic;
-using Origins.World.BiomeData;
+using Origins.Tiles.Other;
 using PegasusLib;
-using System.Collections.Generic;
-using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 
 namespace Origins.NPCs.MiscB {
 	public class Chambersite_Sentinel : ModNPC {
 		//public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 2;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Drippler);
-			NPC.lifeMax = 40;
-			NPC.defense = 0;
-			NPC.damage = 14;
+			NPC.lifeMax = 1600;
+			NPC.defense = 12;
+			NPC.damage = 54;
 			NPC.width = 24;
 			NPC.height = 47;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.NPCDeath15;
+			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+			NPC.DeathSound = SoundID.Item119.WithPitch(-2f);
 			NPC.knockBackResist = 0.75f;
-			NPC.value = 76;
+			NPC.value = 15000;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -75,7 +67,7 @@ namespace Origins.NPCs.MiscB {
 					perp.Y = -norm.X;
 					hitTri = new(center + perp * 16, center - perp * 16, center + motion * NPC.scale + norm * 16);
 					if (hitTri.Intersects(npcHitbox)) {
-						player.lifeRegenCount -= dp2s;
+						player.lifeRegenCount -= (int)(dp2s * 1.6f);
 						break;
 					}
 				}
@@ -191,9 +183,9 @@ namespace Origins.NPCs.MiscB {
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-		}
-		public override void FindFrame(int frameHeight) {
-			NPC.DoFrames(7);
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Carburite_Item>(), 1, 7, 27));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Chambersite_Item>(), 1, 3, 6));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shinedown>(), 19));
 		}
 	}
 }

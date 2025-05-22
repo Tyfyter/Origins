@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Wishing_Glass_Buff : ModBuff {
-		public override string Texture => "Origins/Items/Accessories/Wishing_Glass";
+		public override string Texture => "Origins/Buffs/Wishing_Glass_Buff";
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (originPlayer.WishingGlass) {

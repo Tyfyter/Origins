@@ -2139,7 +2139,11 @@ Alkahest_Bullet: {
 
 Alkaline_Harpoon: {
 	DisplayName: Alkaline Harpoon
-	Tooltip: Used as ammo for harpoon guns
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts acid venom
+		'''
 }
 
 Bile_Arrow: {
@@ -2159,22 +2163,38 @@ Bile_Dart: {
 
 Bouncy_Harpoon: {
 	DisplayName: Bouncy Harpoon
-	Tooltip: Used as ammo for harpoon guns
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Bouncy!
+		'''
 }
 
 Cursed_Harpoon: {
 	DisplayName: Cursed Harpoon
-	Tooltip: Used as ammo for harpoon guns
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts cursed inferno
+		'''
 }
 
 Explosive_Harpoon: {
 	DisplayName: Explosive Harpoon
-	Tooltip: Used as ammo for harpoon guns
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Might explode
+		'''
 }
 
 Flammable_Harpoon: {
 	DisplayName: Flammable Harpoon
-	Tooltip: Used as ammo for harpoon guns
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Sets enemies ablaze
+		'''
 }
 
 Metal_Slug: {
@@ -5505,7 +5525,7 @@ The_Foot: {
 	Tooltip:
 		'''
 		Inflicts Toxic Shock
-		Releases a akaline aura when striking the ground
+		Releases an akaline aura when striking the ground
 		Hold and right-click to use it like a flail
 		Right-click and release to use it as an anchor
 		'''
@@ -6082,12 +6102,11 @@ Chambersite_Minecart_Item: {
 }
 
 Shimmer_Dynamite: {
-	DisplayName: Defective Shimmer Dynamite
+	DisplayName: Shimmer Dynamite
 	Tooltip:
 		'''
-		Doesn't shimmer you or anything else
-		Deals poor damage for a post-ML weapon
-		At least it's non-consumable
+		Non-consumable
+		Shimmers things
 		'''
 }
 
@@ -6098,7 +6117,11 @@ Chambersite_Phasesaber: {
 
 Bile_Harpoon: {
 	DisplayName: Bile Harpoon
-	Tooltip: Stuns the target
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Stuns the target
+		'''
 }
 
 Aetherite_Pants: {
@@ -6183,12 +6206,21 @@ Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask
 
 Alkahest_Harpoon: {
 	DisplayName: Alkahest Harpoon
-	Tooltip: Used as ammo for harpoon guns
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Tenderizes the target
+		'''
 }
 
 Amnestic_Rose: {
 	DisplayName: Amnestic Rose
-	Tooltip: "'A Rose, But for whom?'"
+	Tooltip:
+		'''
+		Launches a rose that slows enemies
+		Sometimes steals mana
+		'A Rose, But for whom?'
+		'''
 }
 
 Otherworldly_Cloak: {

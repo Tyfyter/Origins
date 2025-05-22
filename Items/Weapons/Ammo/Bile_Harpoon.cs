@@ -101,6 +101,7 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (hitboxes is null) return false;
 			for (int i = 0; i < hitboxes.Length; i++) {
 				if (targetHitbox.Intersects(hitboxes[i].hitbox)) return true;
 			}
