@@ -147,8 +147,8 @@ namespace Origins.Items.Weapons.Magic {
 				int frameNum = (int)(14 * progress);
 				frame = itemTexture.Frame(verticalFrames: 14, frameY: frameNum);
 				(origin, float rotCompensation) = GetFrameCompensation(frameNum);
-				//drawInfo.itemEffect ^= SpriteEffects.FlipHorizontally;
-				//rotCompensation = MathHelper.Pi - rotCompensation;
+				drawInfo.itemEffect ^= SpriteEffects.FlipHorizontally;
+				rotCompensation = MathHelper.Pi - rotCompensation;
 				rotOffset = rotCompensation + MathHelper.PiOver2;
 			}
 			DrawData data = new(
