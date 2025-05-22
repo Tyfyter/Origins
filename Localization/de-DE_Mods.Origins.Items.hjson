@@ -5374,7 +5374,11 @@ Acrid_Spout: {
 
 Liars_Tongue: {
 	// DisplayName: Liar's Tongue
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		You are Silenced, press <key> to silence everyone else too
+		Gain up to 10% damage resistance over time by not speaking
+		''' */
 }
 
 Caeser_Salad: {
