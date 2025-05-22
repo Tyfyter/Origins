@@ -1020,7 +1020,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
-(X) Voltefuse !!!
+(@, ☻) Voltefuse !!!
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
