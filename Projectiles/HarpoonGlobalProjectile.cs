@@ -13,7 +13,6 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Tyfyter.Utils;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Origins.Projectiles {
 	//separate global for organization
@@ -23,6 +22,7 @@ namespace Origins.Projectiles {
 		int slamTime = -1;
 		bool justHit = false;
 		public bool bloodletter = false;
+		public Vector2 extraGravity = default;
 		bool boatRockerCanEmbed = false;
 		int boatRockerEmbedTime = 0;
 		Entity boatRockerEmbed = null;
@@ -144,6 +144,14 @@ namespace Origins.Projectiles {
 					projectile.Center = boatRockerEmbed.Center - projectile.velocity - projectile.velocity.SafeNormalize(default) * 8;
 				}
 			}
+			switch (projectile.aiStyle) {
+				case ProjAIStyleID.Harpoon:
+				if (projectile.ai[1] >= 10f) projectile.velocity += extraGravity;
+				break;
+				case ProjAIStyleID.Arrow:
+				if (projectile.ai[1] >= 15f) projectile.velocity += (extraGravity + 0.2f * Vector2.UnitY);
+				break;
+			}
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
 			if (boatRockerEmbed is not null) return false;
@@ -194,6 +202,7 @@ namespace Origins.Projectiles {
 			} else {
 				bitWriter.WriteBit(false);
 			}
+			if (extraGravity != default) binaryWriter.WriteVector2(extraGravity);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isRetracting = bitReader.ReadBit();
@@ -211,6 +220,7 @@ namespace Origins.Projectiles {
 			} else {
 				boatRockerEmbed = null;
 			}
+			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
 		}
 		public override bool PreDrawExtras(Projectile projectile) {
 			Player player = Main.player[projectile.owner];
