@@ -66,12 +66,18 @@ namespace Origins.Items.Weapons.Ammo {
 					Dust.NewDust(pos - new Vector2(2), 4, 4, DustID.Stone, Scale: 0.75f);
 					pos += diff;
 				}
+				if (Projectile.TryGetOwner(out Player owner)) {
+					owner.reuseDelay += 10;
+				}
 			}
 			if (Projectile.penetrate == 1) {
 				Projectile.penetrate--;
 			}
 		}
 		public override void OnKill(int timeLeft) {
+			if (Projectile.aiStyle != 1 && Projectile.TryGetOwner(out Player owner)) {
+				owner.reuseDelay += 10;
+			}
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Shatter, smokeDustAmount: 10, smokeGoreAmount: 0, fireDustType: -1);
 			for (int i = 0; i < 20; i++) {
 				Dust dust = Dust.NewDustDirect(
