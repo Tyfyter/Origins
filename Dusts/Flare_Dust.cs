@@ -46,7 +46,7 @@ namespace Origins.Dusts {
 			for (int k = 0; k < trail; k++) {
 				Vector2 pos = dust.position - dust.velocity * k;
 				float scale = dust.scale * (1f - k / 10f);
-				Main.spriteBatch.Draw(TextureAssets.Dust.Value, pos - Main.screenPosition, dust.frame, color, dust.rotation, origin, scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(Texture2D.Value, pos - Main.screenPosition, dust.frame, color, dust.rotation, origin, scale, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

@@ -203,21 +203,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public void MakeShape(Color color, float scale, params Vector2[] vertices) => MakeShape(color, scale, Vector2.Zero, vertices);
 		public void MakeShape(Color color, float scale, Vector2 offset, params Vector2[] vertices) {
 			float spread = 0.25f / scale;
+			List<TUDFLOMD_Subdust> dusts = [];
 			for (int i = 0; i < vertices.Length; i++) {
 				Vector2 a = vertices[i];
 				Vector2 b = vertices[(i + 1) % vertices.Length];
 				float speed = spread / a.Distance(b);
 				for (float j = 0; j < 1; j += speed) {
 					Vector2 direction = (Vector2.Lerp(a, b, j) + offset) * scale;
-					Dust.NewDustPerfect(
-						Projectile.Center,
-						ModContent.DustType<Flare_Dust>(),
-					direction,
-						newColor: color,
-						Scale: 0.85f
-					).noGravity = true;
+					dusts.Add(new(Projectile.Center, direction, 0.85f, color));
 				}
 			}
+			Dust.NewDustPerfect(
+				Projectile.Center,
+				ModContent.DustType<TUDFLOMDust>(),
+				Vector2.Zero
+			).customData = dusts.ToArray();
 		}
 	}
 	public class TUDFLOMD_Rocket_Canister : TUDFLOMD_Rocket, ICanisterProjectile {
@@ -621,12 +621,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2[] star = Star(6, 2, 0.75f).Scaled(scale).RotatedBy(rot);
 			MakeShape(color, 8, star);
 			for (int i = (timeLeft - 1) / 15; i-- > 0;) {
-				MakeShape(Color.White, 2, (GeometryUtils.Vec2FromPolar(10, (i + 1.15f) * -(MathHelper.TwoPi / 6)) * scale).RotatedBy(rot), star.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
+				MakeShape(new(191, 171, 143), 2, (GeometryUtils.Vec2FromPolar(10, (i + 1.15f) * -(MathHelper.TwoPi / 6)) * scale).RotatedBy(rot), star.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
 			}
 		}
 	}
 	public class TUDFLOMD_Rocket_Purple_Explosion : TUDFLOMD_Rocket {
-		public override Color Color => Color.White;
+		public override Color Color => new(191, 171, 143);
 		public override void SetStaticDefaults() { }
 		public override void SetDefaults() {
 			base.SetDefaults();
