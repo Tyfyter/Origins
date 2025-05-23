@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles.Weapons;
 using Origins.Questing;
@@ -621,6 +622,10 @@ namespace Origins.Projectiles {
 				projectile.ai[0]++;
 			}
 			projectile.rotation += 0.3f * projectile.direction;
+		}
+		public override bool? CanCutTiles(Projectile projectile) {
+			if (projectile.TryGetOwner(out Player owner) && owner.HasBuff<Weak_Shimmer_Debuff>()) return false;
+			return null;
 		}
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
 			if (projectile.friendly && projectile.TryGetOwner(out Player owner) && owner.OriginPlayer().mildewSet) {
