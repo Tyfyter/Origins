@@ -102,7 +102,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						if (++Projectile.ai[1] > 30f - difficultyMult) {
 							float acceleration = 2;
 							if (Projectile.ai[1] >= 40) {
-								acceleration = (0.2f + difficultyMult * 0.1f) * Math.Max(1 - (Projectile.ai[1] - 40) / 80, 0);
+								acceleration = (0.2f + (difficultyMult - Projectile.ai[2]) * 0.1f) * Math.Max(1 - (Projectile.ai[1] - 40) / 80, 0);
 							}
 							Projectile.velocity += Projectile.DirectionTo(target.Center) * acceleration;
 						}

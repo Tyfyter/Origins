@@ -16,6 +16,7 @@ using ReLogic.Content;
 using Origins.Reflection;
 using PegasusLib;
 using Origins.Items.Weapons.Magic;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -25,7 +26,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void SetStaticDefaults() {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
-			aiStates.Add(ModContent.GetInstance<MagicMissilesState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -43,24 +43,21 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
+		Stack<Vector2> positions = new();
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
-			if (++npc.ai[0] >= npc.ai[1]) {
-				npc.ai[0] -= npc.ai[1];
-				Vector2 basePos = npc.Center;
-				basePos.Y = npc.ai[3];
-				for (int i = Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier - 1); i > 0; i--) {
+			Vector2 targetPos = npc.GetTargetData().Center;
+			npc.velocity += npc.DirectionTo(targetPos - Vector2.UnitY * 16 * 15) * 0.5f;
+			for (int i = 0; i < 2; i++) {
+				if (positions.TryPop(out Vector2 position)) {
 					npc.SpawnProjectile(null,
-						basePos + new Vector2(Main.rand.Next(1, 40) * 16 * Main.rand.NextBool().ToDirectionInt(), Main.rand.Next(5) * 16 * Main.rand.NextBool().ToDirectionInt()),
+						position,
 						Vector2.Zero,
 						Shimmer_Landmines.ID,
 						1,
 						1
 					);
-				}
-				npc.ai[3] += 16 * 8;
-				if (--npc.ai[2] <= 0) {
+				} else {
 					SetAIState(boss, StateIndex<AutomaticIdleState>());
 				}
 			}
@@ -76,16 +73,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					lowestHeight = player.BottomLeft.Y;
 				}
 			}
-			npc.ai[3] = lowestHeight + 16 * 5;
 			if (lowestHeight == 0) {
 				npc.ai[1] = 0;
 				npc.ai[2] = 0;
+			} else {
+				Vector2 basePos = npc.GetTargetData().Center;
+				basePos.Y = lowestHeight + 16 * 10;
+				Rectangle area = OriginExtensions.BoxOf(basePos - new Vector2(60 * 16, 0), basePos + new Vector2(40 * 16, 80 * 16));
+				List<Vector2> newPositions = OriginExtensions.PoissonDiskSampling(Main.rand, area, 16 * (27 - ContentExtensions.DifficultyDamageMultiplier * 2));
+				positions.Clear();
+				while (newPositions.Count > 0) {
+					int rand = Main.rand.Next(newPositions.Count);
+					positions.Push(newPositions[rand]);
+					newPositions.RemoveAt(rand);
+				}
 			}
 		}
+		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) => (!previousStates.Contains(Index)).ToInt();
 		public class Shimmer_Landmines : ModProjectile {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
 			public static int ID { get; private set; }
 			public override void SetStaticDefaults() {
+				ProjectileID.Sets.TrailingMode[Type] = 3;
+				ProjectileID.Sets.TrailCacheLength[Type] = 30;
 				ID = Type;
 			}
 			public override void SetDefaults() {
@@ -101,13 +111,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (Projectile.localAI[0] == 0) {
 					Projectile.localAI[0] = 1;
 					Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+					Vector2 pos = Projectile.position;
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (npc.ModNPC is Shimmer_Construct) {
+							pos = npc.Center - Projectile.Size * 0.5f;
+							break;
+						}
+					}
+					float rotation = (pos - Projectile.position).ToRotation();
+					for (int i = 0; i < Projectile.oldPos.Length; i++) {
+						Projectile.oldPos[i] = Vector2.Lerp(Projectile.position, pos, i / (float)Projectile.oldPos.Length);
+						Projectile.oldRot[i] = rotation;
+					}
 				}
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				int direction = Math.Sign(target.Center.X - Projectile.Center.X);
 				if (direction == 0) direction = Main.rand.NextBool().ToDirectionInt();
 				modifiers.HitDirectionOverride = direction;
-				modifiers.KnockbackImmunityEffectiveness *= 0.5f;
+				modifiers.KnockbackImmunityEffectiveness *= 0.8f;
 				modifiers.Knockback.Base += 6;
 			}
 			public override bool PreDraw(ref Color lightColor) {
@@ -122,7 +144,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.velocity = npc.ai[1].ToRotationVector2() * (6 + ContentExtensions.DifficultyDamageMultiplier) * 1.5f;
+			npc.velocity = npc.ai[1].ToRotationVector2() * (6 + ContentExtensions.DifficultyDamageMultiplier) * (npc.ai[2] > 0 ? 1.15f : 1.3f);
 			npc.rotation = npc.velocity.ToRotation();
 			if ((++npc.ai[0]) * npc.ai[3] > 16 * (11 - ContentExtensions.DifficultyDamageMultiplier * 2)) {
 				npc.ai[0] = 0;
@@ -149,17 +171,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[3] = 6 + ContentExtensions.DifficultyDamageMultiplier;
 			npc.ai[1] = (npc.GetTargetData().Center - npc.Center).ToRotation();
 			npc.ai[2] = ContentExtensions.DifficultyDamageMultiplier * 2 - 2;
-		}
-		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
-			double weight = base.GetWeight(boss, previousStates);
-			if (weight <= 0) return 0;
+
 			int droneType = ModContent.NPCType<Shimmer_Drone>();
 			int drones = 0;
-			const int threshold = 4;
+			const int threshold = 2;
 			foreach (NPC other in Main.ActiveNPCs) {
-				if (other.type == droneType && ++drones >= threshold) return 0;
+				if (other.type == droneType && ++drones >= threshold) {
+					npc.ai[2] = -npc.ai[2];
+					break;
+				}
 			}
-			return weight * (1 - drones / (float)threshold);
 		}
 	}
 	public class Weak_Shimmer_Debuff : ModBuff {
