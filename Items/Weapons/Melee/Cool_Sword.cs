@@ -46,8 +46,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Cool_Sword_Slash : ModProjectile {
-		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
-		static AutoLoadingAsset<Texture2D> slashTexture = typeof(Cool_Sword_Slash).GetDefaultTMLName();
+		public override string Texture => typeof(Cool_Sword_Slash).GetDefaultTMLName();
 		public static int ExtraHitboxes => 5;
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
@@ -147,9 +146,9 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
 			SpriteEffects effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			Rectangle slashFrame = slashTexture.Value.Frame(verticalFrames: 10, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
+			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 10, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
 			Main.EntitySpriteDraw(
-				slashTexture,
+				TextureAssets.Projectile[Type].Value,
 				player.MountedCenter - Main.screenPosition,
 				slashFrame,
 				new Color(0.75f, 0.75f, 0.75f, 0.5f),
@@ -159,7 +158,7 @@ namespace Origins.Items.Weapons.Melee {
 				effects,
 				0
 			);
-			effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			/*effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
@@ -171,7 +170,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.scale,
 				effects,
 				0
-			);
+			);*/
 			return false;
 		}
 	}
