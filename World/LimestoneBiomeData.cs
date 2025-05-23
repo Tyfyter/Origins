@@ -2,17 +2,10 @@
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Other;
 using Origins.Reflection;
-using Origins.Tiles.Defiled;
 using Origins.Tiles.Limestone;
-using Origins.Tiles.Other;
-using Origins.World.BiomeData;
 using PegasusLib;
-using PegasusLib.ID;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Biomes;
 using Terraria.GameContent.Biomes.Desert;
@@ -20,13 +13,12 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
-using static Fargowiltas.UI.StatSheetUI;
 
 namespace Origins.World {
 	public class Limestone_Cave : ModBiome {
+		public override int Music => -1;
 		public override void Load() {
 			On_DesertBiome.Place += On_DesertBiome_Place;
 			On_AnthillEntrance.PlaceAt += On_AnthillEntrance_PlaceAt;
