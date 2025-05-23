@@ -49,11 +49,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Dynamite);
 			Projectile.timeLeft = FuseTime;
 			Projectile.friendly = false;
-			Projectile.hide = true;
 			AIType = ProjectileID.Grenade;
 			DrawOriginOffsetY = -16;
 		}
-		public override bool ShouldUpdatePosition() => Projectile.localAI[0] < FuseTime;
+		public override bool ShouldUpdatePosition() => Projectile.localAI[1] <= 0;
 		public override void AI() {
 			if (Projectile.localAI[1] <= 0) {
 				Projectile.numUpdates++;
@@ -96,7 +95,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 				Projectile.ai[2] = -1;
 				AIType = ProjectileID.None;
-				Projectile.hide = false;
 				Projectile.rotation = Projectile.oldRot[(int)(Projectile.localAI[0] - Projectile.localAI[1])];
 				Projectile.position = Projectile.oldPos[(int)(Projectile.localAI[0] - Projectile.localAI[1])];
 				if (++Projectile.localAI[1] > Projectile.localAI[0]) Projectile.Kill();
@@ -107,6 +105,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public void Explode(int delay = 0) {
 			if (Projectile.localAI[2] <= 0) Projectile.localAI[2] = 1 + delay;
 		}
+		public override Color? GetAlpha(Color lightColor) {
+			if (Projectile.localAI[1] <= 1) lightColor *= 0.2f;
+			return lightColor;
+		}
 	}
 	public class Voltefuse_Star : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
@@ -116,8 +118,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ProjectileID.Sets.NeedsUUID[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.width = 16;
-			Projectile.height = 16;
+			Projectile.width = 8;
+			Projectile.height = 8;
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
 			Projectile.tileCollide = false;
@@ -125,6 +127,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool ShouldUpdatePosition() => Projectile.ai[1] <= 0;
 		public override void AI() {
+			Projectile.scale = 1 / (Projectile.ai[0] + 1);
+			int size = (int)(48 * Projectile.scale);
+			if (Projectile.width != size) Projectile.Resize(size, size);
 			if (Projectile.ai[1] <= 0) {
 				Projectile.numUpdates++;
 				Projectile.timeLeft = MaxTime;
@@ -172,11 +177,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 				Projectile.ai[2] = -1;
 				Projectile.rotation = 0;
-				Projectile.scale = 1 / (Projectile.ai[0] + 1);
 				Projectile.hide = false;
 				Projectile.friendly = true;
 				Projectile.position = Projectile.oldPos[(int)(Projectile.localAI[0] - Projectile.ai[1])];
 				if (++Projectile.ai[1] > Projectile.localAI[0]) Projectile.Kill();
+				const int HalfSpriteWidth = 54 / 2;
+				const int HalfSpriteHeight = 54 / 2;
+
+				int HalfProjWidth = Projectile.width / 2;
+				int HalfProjHeight = Projectile.height / 2;
+
+				// Vanilla configuration for "hitbox in middle of sprite"
+				DrawOriginOffsetX = 0;
+				DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
+				DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => new(1f, 1f, 1f, 0.9f);
