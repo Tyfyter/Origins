@@ -15,6 +15,7 @@ using Terraria.Graphics.Shaders;
 using ReLogic.Content;
 using Origins.Reflection;
 using PegasusLib;
+using Origins.Items.Weapons.Magic;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -23,11 +24,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			AutomaticIdleState.aiStates.Add((this, boss => boss.IsInPhase3.Mul(3)));
 		}
 		public override void SetStaticDefaults() {
-
+			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
+			aiStates.Add(ModContent.GetInstance<MagicMissilesState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.TargetClosest();
+			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > (60 - ContentExtensions.DifficultyDamageMultiplier * 10) && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
@@ -36,13 +39,131 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void TrackState(int[] previousStates) { }
 	}
+	public class ShimmerLandminesState : AIState {
+		public override void Load() {
+			PhaseThreeIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
+			if (++npc.ai[0] >= npc.ai[1]) {
+				npc.ai[0] -= npc.ai[1];
+				Vector2 basePos = npc.Center;
+				basePos.Y = npc.ai[3];
+				for (int i = Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier - 1); i > 0; i--) {
+					npc.SpawnProjectile(null,
+						basePos + new Vector2(Main.rand.Next(1, 40) * 16 * Main.rand.NextBool().ToDirectionInt(), Main.rand.Next(5) * 16 * Main.rand.NextBool().ToDirectionInt()),
+						Vector2.Zero,
+						Shimmer_Landmines.ID,
+						1,
+						1
+					);
+				}
+				npc.ai[3] += 16 * 8;
+				if (--npc.ai[2] <= 0) {
+					SetAIState(boss, StateIndex<AutomaticIdleState>());
+				}
+			}
+		}
+		public override void StartAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.ai[1] = 6 - ContentExtensions.DifficultyDamageMultiplier;
+			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier - 1);
+			float lowestHeight = 0;
+			int buffID = ModContent.BuffType<Weak_Shimmer_Debuff>();
+			foreach (Player player in Main.ActivePlayers) {
+				if (lowestHeight < player.BottomLeft.Y && player.HasBuff(buffID)) {
+					lowestHeight = player.BottomLeft.Y;
+				}
+			}
+			npc.ai[3] = lowestHeight + 16 * 5;
+			if (lowestHeight == 0) {
+				npc.ai[1] = 0;
+				npc.ai[2] = 0;
+			}
+		}
+		public class Shimmer_Landmines : ModProjectile {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
+			public static int ID { get; private set; }
+			public override void SetStaticDefaults() {
+				ID = Type;
+			}
+			public override void SetDefaults() {
+				Projectile.friendly = false;
+				Projectile.hostile = true;
+				Projectile.timeLeft = 60 * 20;
+				Projectile.aiStyle = 0;
+				Projectile.width = 24;
+				Projectile.height = 24;
+				Projectile.tileCollide = false;
+			}
+			public override void AI() {
+				if (Projectile.localAI[0] == 0) {
+					Projectile.localAI[0] = 1;
+					Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+				}
+			}
+			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+				int direction = Math.Sign(target.Center.X - Projectile.Center.X);
+				if (direction == 0) direction = Main.rand.NextBool().ToDirectionInt();
+				modifiers.HitDirectionOverride = direction;
+				modifiers.KnockbackImmunityEffectiveness *= 0.5f;
+				modifiers.Knockback.Base += 6;
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
+				return false;
+			}
+		}
+	}
+	public class DroneDashState : AIState {
+		public override void Load() {
+			PhaseThreeIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.velocity = npc.ai[1].ToRotationVector2() * (6 + ContentExtensions.DifficultyDamageMultiplier) * 1.5f;
+			npc.rotation = npc.velocity.ToRotation();
+			if ((++npc.ai[0]) * npc.ai[3] > 16 * (11 - ContentExtensions.DifficultyDamageMultiplier * 2)) {
+				npc.ai[0] = 0;
+				if (--npc.ai[2] > 0) {
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						NPC.NewNPCDirect(
+							npc.GetSource_FromAI(),
+							npc.Center,
+							ModContent.NPCType<Shimmer_Drone>()
+						).velocity = Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * Main.rand.NextFloat(4, 8);
+					}
+				} else {
+					SetAIState(boss, StateIndex<AutomaticIdleState>());
+				}
+			}
+		}
+		public override void StartAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.ai[3] = 6 + ContentExtensions.DifficultyDamageMultiplier;
+			npc.ai[1] = (npc.GetTargetData().Center - npc.Center).ToRotation();
+			npc.ai[2] = ContentExtensions.DifficultyDamageMultiplier * 3 - 2;
+		}
+		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
+			double weight = base.GetWeight(boss, previousStates);
+			if (weight <= 0) return 0;
+			int droneType = ModContent.NPCType<Shimmer_Drone>();
+			int drones = 0;
+			const int threshold = 4;
+			foreach (NPC other in Main.ActiveNPCs) {
+				if (other.type == droneType && ++drones >= threshold) return 0;
+			}
+			return weight * (1 - drones / (float)threshold);
+		}
+	}
 	public class Weak_Shimmer_Debuff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Shimmer;
 		public static int ID { get; private set; }
 		public override void Load() {
 			On_Player.ShimmerCollision += (On_Player.orig_ShimmerCollision orig, Player self, bool fallThrough, bool ignorePlats, bool noCollision) => {
 				if (self.OriginPlayer().weakShimmer) {
-					self.position += self.velocity * new Vector2(0.75f, 0.75f);
+					self.position += self.velocity * new Vector2(0.75f, self.controlDown ? 0.75f : (self.controlUp ? 0.3f : 0.5f));
 				} else {
 					orig(self, fallThrough, ignorePlats, noCollision);
 				}

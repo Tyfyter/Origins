@@ -243,23 +243,25 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public static void DrawShimmerstar(Projectile projectile) {
-			MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
-			miscShaderData.UseSaturation(-2.8f);
-			miscShaderData.UseOpacity(4f);
-			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(projectile.oldPos, projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + projectile.Size / 2f);
-			_vertexStrip.DrawTrail();
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			Color StripColors(float progressOnStrip) {
-				if (float.IsNaN(progressOnStrip)) return Color.Transparent;
-				Vector2 pos = projectile.oldPos[(int)(progressOnStrip * (projectile.oldPos.Length - 1))];
-				return new(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16));
-			}
-			float StripWidth(float progressOnStrip) {
-				float num = 1f;
-				float lerpValue = Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
-				num *= 1f - (1f - lerpValue) * (1f - lerpValue);
-				return MathHelper.Lerp(0f, 32f * Utils.GetLerpValue(0f, 32f, projectile.position.Distance(projectile.oldPos[12]), clamped: true), num);
+			if (projectile.oldPos.Length > 0) {
+				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
+				miscShaderData.UseSaturation(-2.8f);
+				miscShaderData.UseOpacity(4f);
+				miscShaderData.Apply();
+				_vertexStrip.PrepareStripWithProceduralPadding(projectile.oldPos, projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + projectile.Size / 2f);
+				_vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				Color StripColors(float progressOnStrip) {
+					if (float.IsNaN(progressOnStrip)) return Color.Transparent;
+					Vector2 pos = projectile.oldPos[(int)(progressOnStrip * (projectile.oldPos.Length - 1))];
+					return new(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16));
+				}
+				float StripWidth(float progressOnStrip) {
+					float num = 1f;
+					float lerpValue = Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
+					num *= 1f - (1f - lerpValue) * (1f - lerpValue);
+					return MathHelper.Lerp(0f, 32f * Utils.GetLerpValue(0f, 32f, projectile.position.Distance(projectile.oldPos[12]), clamped: true), num);
+				}
 			}
 
 			Vector2 center = projectile.Center + Vector2.UnitY * projectile.gfxOffY - Main.screenPosition;
@@ -267,7 +269,7 @@ namespace Origins.Items.Weapons.Magic {
 			Color color = new(255, 255, 255, 0);
 			Vector2 origin = new Vector2(texture.Width, texture.Height) * 0.5f;
 			float rotation = 0;
-			float scale = projectile.scale * Utils.GetLerpValue(32f, 0f, projectile.position.Distance(projectile.oldPos[12]), clamped: true);
+			float scale = projectile.scale * Utils.GetLerpValue(32f, 0f, projectile.position.Distance(projectile.oldPos.GetIfInRange(12, projectile.position)), clamped: true);
 			scale = Math.Min(scale * scale * 1.4f, 0.5f);
 			Vector2 spinningpoint6 = new Vector2(2f * scale + (float)Math.Cos(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi) * 0.4f, 0f).RotatedBy(rotation + Main.GlobalTimeWrappedHourly * MathHelper.TwoPi);
 			for (float f = 0f; f < 1f; f += 1f / 6f) {
