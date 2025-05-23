@@ -7,6 +7,7 @@ using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using PegasusLib;
 using Terraria.ModLoader;
 using Origins.Items.Weapons.Magic;
+using Terraria.DataStructures;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -91,6 +92,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.height = 24;
 				Projectile.tileCollide = false;
 			}
+			public override void OnSpawn(IEntitySource source) {
+				if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC parentNPC && parentNPC.ModNPC is Shimmer_Construct construct && construct.IsInPhase3) Projectile.ai[2] = 1;
+			}
 			public override void AI() {
 				if (Main.player.GetIfInRange((int)Projectile.ai[0]) is Player target) {
 					if (target.active && !target.dead) {
@@ -108,7 +112,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				if (Projectile.ai[1] < 28) Projectile.velocity *= 0.97f;
 				else if (Projectile.ai[1] <= 32) Projectile.velocity *= 0.9f;
-				if (!Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
+				if (Projectile.ai[2] == 0 && !Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
 					Projectile.tileCollide = true;
 				}
 				Projectile.rotation = Projectile.velocity.ToRotation();

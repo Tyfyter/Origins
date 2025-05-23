@@ -126,7 +126,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.rotation = npc.velocity.ToRotation();
 			if ((++npc.ai[0]) * npc.ai[3] > 16 * (11 - ContentExtensions.DifficultyDamageMultiplier * 2)) {
 				npc.ai[0] = 0;
-				if (--npc.ai[2] > 0) {
+				if (npc.ai[2] == 0) {
+					SetAIState(boss, StateIndex<AutomaticIdleState>());
+				}
+				if (npc.ai[2] > 0) {
+					npc.ai[2]--;
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
 						NPC.NewNPCDirect(
 							npc.GetSource_FromAI(),
@@ -135,15 +139,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						).velocity = Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * Main.rand.NextFloat(4, 8);
 					}
 				} else {
-					SetAIState(boss, StateIndex<AutomaticIdleState>());
+					npc.ai[2]++;
 				}
+				npc.ai[2] = (int)npc.ai[2];
 			}
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.ai[3] = 6 + ContentExtensions.DifficultyDamageMultiplier;
 			npc.ai[1] = (npc.GetTargetData().Center - npc.Center).ToRotation();
-			npc.ai[2] = ContentExtensions.DifficultyDamageMultiplier * 3 - 2;
+			npc.ai[2] = ContentExtensions.DifficultyDamageMultiplier * 2 - 2;
 		}
 		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
 			double weight = base.GetWeight(boss, previousStates);
