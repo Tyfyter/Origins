@@ -287,6 +287,7 @@ namespace Origins {
 		public bool oldMithrafin = false;
 		public const float mithrafinSelfMult = 0.8f;
 		public bool fullSend = false;
+		public bool fullSendHorseshoeBonus = false;
 		public Item fullSendItem = null;
 		public Vector2 fullSendStartPos;
 		public Vector2 fullSendPos;

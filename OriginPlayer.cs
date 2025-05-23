@@ -474,6 +474,12 @@ namespace Origins {
 				Player.jumpHeight = 15;
 				Player.jumpSpeed = 5.01f;
 			}
+			fullSendHorseshoeBonus = false;
+			if (fullSend && Player.noFallDmg) {
+				Player.noFallDmg = false;
+				fullSendHorseshoeBonus = true;
+				if (Player.fallStart * 16 > Player.position.Y) Player.fallStart = (int)(Player.position.Y / 16f);
+			}
 		}
 		public override void PostUpdate() {
 			Debugging.LogFirstRun(PostUpdate);

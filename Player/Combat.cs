@@ -712,7 +712,7 @@ namespace Origins {
 		int manaDamageToTake = 0;
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
 			if (fullSend && modifiers.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
-				modifiers.FinalDamage *= 0.14f;
+				modifiers.FinalDamage *= 0.14f - fullSendHorseshoeBonus.Mul(0.07f);
 			}
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 12) < 3) {
 				modifiers.FinalDamage *= 1.5f;
@@ -877,7 +877,7 @@ namespace Origins {
 			}
 			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.SourceDamage * 0.86;
+				double totalDamage = info.SourceDamage * (0.86 + fullSendHorseshoeBonus.Mul(0.07f));
 				Vector2 center = Player.MountedCenter;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
