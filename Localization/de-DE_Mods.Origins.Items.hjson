@@ -6260,5 +6260,9 @@ Constellation: {
 
 Voltefuse: {
 	// DisplayName: Voltefuse
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Explodes into a cluster of stars, in reverse
+		'Deja vu...'
+		''' */
 }

@@ -211,7 +211,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 				return false;
 			}
-			originPlayer.amnesticRoseBloomTime = 60 * 8;
+			originPlayer.amnesticRoseBloomTime = (int)((60 + player.itemAnimationMax * 1.5f) * 0.5f * 8);
 			player.AddBuff(ModContent.BuffType<Amnestic_Rose_Buff>(), originPlayer.amnesticRoseBloomTime);
 			return true;
 		}
@@ -323,6 +323,9 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.velocity = Vector2.Zero;
 			Projectile.tileCollide = false;
 			Projectile.netUpdate = true;
+			for (int i = 0; i < 16; i++) {
+				Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<Rose_Dust>()).velocity *= 2;
+			}
 			return false;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
@@ -345,7 +348,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 
 		private static VertexStrip _vertexStrip = new();
-		public override bool PreDraw(ref Color lightColor) => !GraphicsUtils.drawingEffect;
+		public override bool PreDraw(ref Color lightColor) => Projectile.ai[0] != 1;
 		public override void PostDraw(Color lightColor) {
 			if (Projectile.ai[0] == 1) {
 				if (Mask_Rasterize.QueueProjectile(Projectile.whoAmI)) return;
