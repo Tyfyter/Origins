@@ -475,7 +475,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(♠) Master Magician's Cloak !!!
+(☻, ♠) Master Magician's Cloak !!!
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Mildew Heart
@@ -490,7 +490,7 @@ ACCESSORIES:
 (^) Noxious Mithrafin
 (^) Olid Organ*
 (^) Ornamental Keepsake
-(♠ (not actually a pure combination, but it's one more if statement)) Otherworldly Cloak !!!
+(☻, ♠ (not actually a pure combination, but it's one more if statement)) Otherworldly Cloak !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -764,7 +764,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun
 (^) Chipper Knife*
-(#, ^2) Constellation !!!
+(#2, ^2) Constellation !!!
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -855,7 +855,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Manasynk*
 (^) Nerve Flan
-(#2, ^2) Shimmerstar Staff !!! (needs visual code)?
+(#2, ^2) Shimmerstar Staff !!! (what visual code does it need?)
 (^) Splitsplash*
 (^) Tones of Agony
 
@@ -871,7 +871,7 @@ MAGIC WEAPONS:
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
-(#2, ^2) Shinedown !!! (needs sound code)
+(☻) Shinedown !!! (sound code)
 (X) Siphon Staff
 (^) Splashid
 (^) Startillery

@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
+using Origins.Walls;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -365,6 +366,20 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SC_Music_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
 		public override int Music => Origins.Music.ShimmerConstruct;
+		public override void SpecialVisuals(Player player, bool isActive) {
+			Vector2 sourcePos = default;
+			bool phase3Active = false;
+			if (isActive) {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.ModNPC is Shimmer_Construct shimmerConstruct) {
+						sourcePos = npc.Center;
+						phase3Active = shimmerConstruct.IsInPhase3;
+						break;
+					}
+				}
+			}
+			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
+		}
 	}
 	public class SC_BossBar : ModBossBar {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {

@@ -57,6 +57,7 @@ using Origins.Journal;
 using Origins.Backgrounds;
 using Terraria.ModLoader.Core;
 using Origins.Dusts;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -393,6 +394,9 @@ namespace Origins {
 				Filters.Scene["Origins:ZoneFiberglassUndergrowth"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
 				Overlays.Scene["Origins:ZoneFiberglassUndergrowth"] = new Fiberglass_Background();
 
+				Filters.Scene["Origins:ShimmerConstructPhase3"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Overlays.Scene["Origins:ShimmerConstructPhase3"] = new SC_Phase_Three_Overlay();
+
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "RivenBloodCoating"), EffectPriority.VeryHigh);
@@ -646,6 +650,12 @@ namespace Origins {
 				MaxInstances = 1,
 				SoundLimitBehavior = SoundLimitBehavior.IgnoreNew,
 				PitchVariance = 0.4f
+			};
+			Sounds.ShinedownLoop = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true,
+				//Volume = 0.75f,
+				PitchRange = (0.2f, 0.3f)
 			};
 			//OriginExtensions.initClone();
 
@@ -990,6 +1000,7 @@ namespace Origins {
 			public static SoundStyle RivenBass = SoundID.Item4;
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 			public static SoundStyle IMustScream = SoundID.Roar;
+			public static SoundStyle ShinedownLoop = SoundID.ForceRoar;
 
 			public static SoundStyle Lightning = SoundID.Roar;
 			public static SoundStyle LightningCharging = SoundID.Roar;

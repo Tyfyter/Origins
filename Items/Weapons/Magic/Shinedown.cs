@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.NPCs;
 using PegasusLib;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -141,14 +142,26 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			Vector2 center = Projectile.Center;
 			int activeAims = 0;
+			float highestProgress = 0;
 			for (int i = 0; i < aims.Length; i++) {
 				if (aims[i].active) {
 					activeAims++;
 					if (aims[i].Update(i, center, Projectile.ai[1], maxLengthSQ)) AddDecayingAim(aims[i]);
+					highestProgress = float.Max(highestProgress, aims[i].Progress);
 				}
 			}
 			for (int i = 0; i < decayingAims.Length; i++) {
 				decayingAims[i].UpdateDecaying(Projectile.ai[1]);
+				highestProgress = float.Max(highestProgress, decayingAims[i].Progress);
+			}
+			if (highestProgress > 0) {
+				if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) {
+					sound.Volume = highestProgress;
+					sound.Position = Projectile.position;
+				} else {
+					int projType = Type;
+					soundSlot = SoundEngine.PlaySound(SoundID.Pixie.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
+				}
 			}
 			Triangle hitTri;
 			Vector2 perp;
@@ -158,8 +171,6 @@ namespace Origins.Items.Weapons.Magic {
 				if (!npc.CanBeChasedBy(Projectile)) continue;
 				Rectangle npcHitbox = npc.Hitbox;
 				for (int i = 0; i < aims.Length; i++) {
-					if (Main.rand.NextBool(15)) SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitch(2f).WithVolume(0.01f), Projectile.Center);
-					//SoundEngine.PlaySound(SoundID.Item176.WithPitch(5f), Projectile.Center);
 					if (!aims[i].active) continue;
 					Vector2 motion = aims[i].Motion;
 					if (motion == Vector2.Zero) continue;
@@ -212,6 +223,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			player.addDPS(Main.rand.RandomRound(totalDamage / 30f));
 		}
+		SlotId soundSlot;
 		void AddDecayingAim(Aim aim) {
 			aim.active = true;
 			float bestLength = float.PositiveInfinity;
@@ -315,6 +327,7 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 motion;
 			float progress;
 			public bool active;
+			public readonly float Progress => progress;
 			public readonly Vector2 Motion => motion;
 			public void Set(NPC target) {
 				type = target.type;

@@ -7,6 +7,17 @@ using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using Terraria.ModLoader;
 using MonoMod.Cil;
 using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using PegasusLib.Graphics;
+using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Renderers;
+using Terraria.Graphics;
+using Terraria.GameContent;
+using Origins.Items.Other.Dyes;
+using Terraria.Graphics.Shaders;
+using ReLogic.Content;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -113,5 +124,66 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 		}
+	}
+	public class SC_Phase_Three_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater) {
+		readonly Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/Textures/Shimmer_Construct_BG");
+		readonly ArmorShaderData invertAnimateShader = GameShaders.Armor.BindShader(ItemID.HallowedBar, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "InvertAnimate"));
+		readonly List<Player> players = [];
+		Vector2 position;
+		bool active = false;
+		public override void Draw(SpriteBatch spriteBatch) {
+			SpriteBatchState state = spriteBatch.GetState();
+			Origins.shaderOroboros.Capture(spriteBatch);
+			spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
+			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
+			const int scale = 4;
+			Rectangle frame = new(0, 0, (int)size.X, (int)size.Y);
+			spriteBatch.Draw(
+				texture.Value,
+				-new Vector2(Main.screenPosition.X % (size.X * scale * 0.5f), Main.screenPosition.Y % (size.Y * scale * 0.5f)),
+				frame,
+				Color.White,
+				0,
+				Vector2.Zero,
+				scale,
+				SpriteEffects.None,
+			0);
+			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null);
+			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(0.5f));
+			Origins.shaderOroboros.Stack(invertAnimateShader);
+			Origins.shaderOroboros.Stack(shader);
+			Origins.shaderOroboros.Release();
+			players.Clear();
+			int buffID = ModContent.BuffType<Weak_Shimmer_Debuff>();
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.HasBuff(buffID)) {
+					players.Add(player);
+					Lighting.AddLight(player.Center, new Vector3(1));
+				}
+			}
+
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (!proj.hide) Main.instance.DrawProj(proj.whoAmI);
+			}
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.ModNPC is Shimmer_Construct or Shimmer_Drone) {
+					Main.instance.DrawNPCDirect(spriteBatch, npc, false, Main.screenPosition);
+				}
+			}
+			spriteBatch.End();
+			Main.PlayerRenderer.DrawPlayers(Main.Camera, players);
+			spriteBatch.Begin(state);
+		}
+		public override void Update(GameTime gameTime) { }
+		public override void Activate(Vector2 position, params object[] args) {
+			this.position = position;
+			Mode = OverlayMode.Active;
+			active = true;
+		}
+		public override void Deactivate(params object[] args) {
+			active = false;
+			Mode = OverlayMode.Inactive;
+		}
+		public override bool IsVisible() => active;
 	}
 }
