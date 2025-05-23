@@ -1806,6 +1806,7 @@ Projectiles: {
 	Actual_Constellation.DisplayName: Actual Constellation
 	Voltefuse_Star.DisplayName: Voltefuse Star
 	Shimmer_Landmines.DisplayName: Shimmer Landmines
+	Shotgun_Indicator.DisplayName: Shotgun Indicator
 }
 
 Prefixes: {

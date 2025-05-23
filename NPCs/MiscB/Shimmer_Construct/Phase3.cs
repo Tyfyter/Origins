@@ -17,6 +17,7 @@ using Origins.Reflection;
 using PegasusLib;
 using Origins.Items.Weapons.Magic;
 using Terraria.Utilities;
+using Origins.NPCs.Defiled.Boss;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -180,6 +181,83 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					npc.ai[2] = -npc.ai[2];
 					break;
 				}
+			}
+		}
+	}
+	public class ShotgunState : AIState {
+		public override void Load() {
+			PhaseThreeIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			GeometryUtils.AngularSmoothing(ref npc.ai[2], (npc.GetTargetData().Center - npc.Center).ToRotation(), 0.01f);
+			npc.rotation = npc.ai[2];
+			npc.velocity *= 0.93f;
+			if (++npc.ai[0] > 30) SetAIState(boss, StateIndex<AutomaticIdleState>());
+		}
+		public override void StartAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.ai[2] = (npc.GetTargetData().Center - npc.Center).ToRotation();
+			npc.SpawnProjectile(null,
+				npc.Center,
+				Vector2.Zero,
+				ModContent.ProjectileType<Shotgun_Indicator>(),
+				1,
+				1,
+				60,
+				Main.rand.Next(1000),
+				npc.whoAmI
+			);
+		}
+		public class Shotgun_Indicator : ModProjectile {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.HallowBossRainbowStreak;
+
+			UnifiedRandom rand = new();
+			NPC Owner => Main.npc.GetIfInRange((int)Projectile.ai[2]);
+			public override void SetDefaults() {
+				Projectile.tileCollide = false;
+			}
+			public override bool ShouldUpdatePosition() => false;
+			IEnumerable<Vector2> GetShots() {
+				rand.SetSeed((int)Projectile.ai[1]);
+				Vector2 dir = Owner.rotation.ToRotationVector2() * 12;
+				for (int i = 3 + rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier); i > 0; i--) {
+					yield return dir.RotatedBy(rand.NextFloat(0.5f) * (i % 2 == 0).ToDirectionInt()) * rand.NextFloat(0.7f, 1f);
+				}
+			}
+			public override void AI() {
+				if (Owner is not NPC owner) {
+					Projectile.Kill();
+					return;
+				}
+				Projectile.Center = owner.Center;
+				if (--Projectile.ai[0] <= 0) {
+					foreach (Vector2 shot in GetShots()) {
+						Projectile.SpawnProjectile(null,
+							Projectile.Center,
+							shot,
+							Shimmer_Construct_Bullet.ID,
+							Projectile.damage,
+							Projectile.knockBack
+						);
+					}
+					Projectile.Kill();
+				}
+				owner.ai[0] = 0;
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				float alpha = (Projectile.ai[0] <= 5 && Projectile.ai[0] >= 2) ? 0.08f : 0.02f;
+				foreach (Vector2 shot in GetShots()) {
+					float rotation = shot.ToRotation();
+					Defiled_Spike_Indicator.Draw(
+						[Projectile.Center, Projectile.Center + shot * 80],
+						[rotation, rotation],
+						8,
+						alpha,
+						0.5f
+					);
+				}
+				return false;
 			}
 		}
 	}
