@@ -85,7 +85,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				case Part.leg1:
 				maxFrames = 3;
-				NPC.frame = new Rectangle(0, 0, 40, 75);
+				NPC.frame = new Rectangle(0, 0, 40, 90);
 				frameHeight = 90;
 				NPC.noTileCollide = false;
 				NPC.noGravity = false;
@@ -206,8 +206,8 @@ namespace Origins.NPCs.Defiled.Boss {
 
 				case Part.leg1:
 				NPC.width = 40;
-				NPC.height = 90;
-				NPC.frame = new Rectangle(0, 0, 40, 75);
+				NPC.height = 75;
+				NPC.frame = new Rectangle(0, 0, 40, 90);
 				break;
 
 				case Part.leg2:
@@ -334,17 +334,20 @@ namespace Origins.NPCs.Defiled.Boss {
 		public void CheckTrappedCollision() {
 			if (NPC.position.Y > Main.UnderworldLayer * 16 && NPC.HasValidTarget) {
 				NPC.noTileCollide = false;
-				trappedTime = 30;
+				trappedTime = 60;
 				return;
 			}
 			Rectangle hitbox = NPC.Hitbox;
-			hitbox.Inflate(-1, -1);
+			int inflateAmount = NPC.noTileCollide.ToDirectionInt() * 4;
+			hitbox.Inflate(inflateAmount, inflateAmount);
 			if (!hitbox.OverlapsAnyTiles()) {
-				NPC.noTileCollide = false;
+				if (trappedTime <= 0) NPC.noTileCollide = false;
+			} else {
+				trappedTime = 60;
 			}
 			if (NPC.collideX || NPC.collideY) {
-				trappedTime += 5;
-				if (trappedTime > 150) {
+				trappedTime += 2;
+				if (trappedTime > 60) {
 					NPC.noTileCollide = true;
 					NPC.collideX = NPC.collideY = false;
 				}
