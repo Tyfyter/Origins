@@ -1,13 +1,12 @@
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Projectiles;
 using PegasusLib;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Voltefuse : ModItem, ICustomWikiStat {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.Dynamite;
@@ -21,11 +20,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
-			Item.damage = 65;
+			Item.damage = 54;
 			Item.shoot = ModContent.ProjectileType<Voltefuse_P>();
-			Item.shootSpeed *= 1.75f;
+			Item.shootSpeed *= 1.5f;
 			Item.value = Item.sellPrice(silver: 5);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)

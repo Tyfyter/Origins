@@ -91,15 +91,15 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 40;
 			Item.useAnimation = 40;
 			Item.mana = 16;
-			Item.UseSound = SoundID.Item17;
-			Item.value = Item.sellPrice(silver: 80);
+			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitch(2);
+			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient<Wilting_Rose_Item>()
 			.AddIngredient(ItemID.SoulofNight, 100)
 			.AddIngredient<Black_Bile>(50)
+			.AddIngredient<Wilting_Rose_Item>()
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -301,9 +301,10 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			if (Projectile.ai[0] == 1) {
 				if (Projectile.ai[1] == 0) {
-					// temp sound
-					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item105.WithPitch(1.5f).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item76.WithPitch(2).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item123.WithPitch(2).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.defiledKill.WithPitch(2).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
 				}
 				Projectile.localNPCHitCooldown = -1;
 				Projectile.ai[1] += 1 / 45f;

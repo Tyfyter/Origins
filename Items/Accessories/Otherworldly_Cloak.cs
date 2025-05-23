@@ -13,8 +13,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
+			Item.damage = 30;
 			Item.shoot = Otherworldly_Cloak_P.ID;
-			Item.value = Item.sellPrice(gold: 6);
+			Item.value = Item.sellPrice(gold: 3, silver: 35);
 			Item.buffType = Otherworldly_Cloak_Buff.ID;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
@@ -31,8 +32,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Lazy_Cloak>()
 			.AddIngredient<Feather_Cape>()
+			.AddIngredient<Lazy_Cloak>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

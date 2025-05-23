@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -45,7 +46,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Cool_Sword_Slash : ModProjectile {
-		public override string Texture => typeof(Cool_Sword).GetDefaultTMLName();
+		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
 		static AutoLoadingAsset<Texture2D> slashTexture = typeof(Cool_Sword_Slash).GetDefaultTMLName();
 		public static int ExtraHitboxes => 5;
 		public override void SetStaticDefaults() {

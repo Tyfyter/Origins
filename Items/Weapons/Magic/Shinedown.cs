@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 7;
 			Item.knockBack = FlatKnockbackAdjustment;
 			Item.value = Item.sellPrice(gold: 4);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item132.WithPitch(5f);
 			Item.autoReuse = false;
 			Item.channel = true;
@@ -162,6 +162,13 @@ namespace Origins.Items.Weapons.Magic {
 					int projType = Type;
 					soundSlot = SoundEngine.PlaySound(SoundID.Pixie.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
 				}
+				if (SoundEngine.TryGetActiveSound(soundSlot2, out sound)) {
+					sound.Volume = highestProgress;
+					sound.Position = Projectile.position;
+				} else {
+					int projType = Type;
+					soundSlot2 = SoundEngine.PlaySound(Origins.Sounds.LightningCharging.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
+				}
 			}
 			Triangle hitTri;
 			Vector2 perp;
@@ -224,6 +231,7 @@ namespace Origins.Items.Weapons.Magic {
 			player.addDPS(Main.rand.RandomRound(totalDamage / 30f));
 		}
 		SlotId soundSlot;
+		SlotId soundSlot2;
 		void AddDecayingAim(Aim aim) {
 			aim.active = true;
 			float bestLength = float.PositiveInfinity;

@@ -6229,12 +6229,28 @@ Amnestic_Rose: {
 
 Otherworldly_Cloak: {
 	DisplayName: Otherworldly Cloak
-	Tooltip: ""
+	Tooltip:
+		'''
+		Chases after marked enemies
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		'''
 }
 
 Master_Magician_Cloak: {
-	DisplayName: Master Magician Cloak
-	Tooltip: ""
+	DisplayName: Master Magician's Cloak
+	Tooltip:
+		'''
+		8% reduced mana cost
+		Automatically use mana potions when needed
+		Causes stars to fall after taking damage
+		Stars restore mana when collected
+		Chases after marked enemies
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		'''
 }
 
 Constellation: {
@@ -6244,5 +6260,9 @@ Constellation: {
 
 Voltefuse: {
 	DisplayName: Voltefuse
-	Tooltip: ""
+	Tooltip:
+		'''
+		Explodes into a cluster of stars, in reverse
+		'Deja vu...'
+		'''
 }

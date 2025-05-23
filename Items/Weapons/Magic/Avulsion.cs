@@ -1,14 +1,13 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Origins.Dev;
-using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
-    public class Avulsion : ModItem, ICustomWikiStat {
+	public class Avulsion : ModItem, ICustomWikiStat {
         static short glowmask;
         public string[] Categories => [
             "Torn",

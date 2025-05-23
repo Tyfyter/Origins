@@ -1,6 +1,4 @@
-﻿using MagicStorage.Common.Systems.RecurrentRecipes;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Magic;
+﻿using Origins.Items.Materials;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -10,24 +8,25 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Constellation : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
-			Item.damage = 9;
+			Item.damage = 20;
 			Item.width = 26;
 			Item.height = 62;
+			Item.shootSpeed += 4;
 			Item.knockBack = float.Epsilon;
 			Item.shoot = ModContent.ProjectileType<Constellation_P>();
-			Item.value = Item.sellPrice(copper: 30);
+			Item.value = Item.sellPrice(gold: 1, silver: 60);
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override Vector2? HoldoutOffset() => new(-4f, 0);
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient<Aetherite_Bar>(12)
-			.AddTile(TileID.WorkBenches)
+			.AddTile(TileID.Anvils)
 			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

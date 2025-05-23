@@ -11,8 +11,9 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() { }
 		public override void SetDefaults() {
 			base.SetDefaults();
+			Item.damage = 50;
 			Item.shoot = Master_Magician_Cloak_P.ID;
-			Item.value = Item.sellPrice(gold: 6);
+			Item.value = Item.sellPrice(gold: 6, silver: 35);
 			Item.buffType = Master_Magician_Cloak_Buff.ID;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
@@ -33,8 +34,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Otherworldly_Cloak>()
 			.AddIngredient(ItemID.ManaCloak)
+			.AddIngredient<Otherworldly_Cloak>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}

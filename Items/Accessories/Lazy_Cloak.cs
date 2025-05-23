@@ -29,12 +29,12 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
-			Item.damage = 10;
+			Item.damage = 18;
 			Item.DamageType = DamageClass.Summon;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.shoot = Lazy_Cloak_P.ID;
-			Item.value = Item.sellPrice(gold: 6);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
 			Item.backSlot = 5;
 			Item.hasVanityEffects = true;
