@@ -1535,7 +1535,7 @@ MOUNTS & PETS:
 
 (^) Chromatic Scale (Rainbow Pangolin)*
 (^) Chew Toy (Chee Toy)*
-(X) Gelatin Bloom Brooch !!!
+(#, ^2) Gelatin Bloom Brooch !!!
 (^) Strange Power-Up (Platformer Mech)*
 
 (^) Chambersite Minecart
@@ -1590,7 +1590,7 @@ AMMO:
 (^) Cursed Canister*
 (^) Cursed Harpoon*
 (^) Ichor Canister*
-(X) Ichor Harpoon !!!
+(#, ^2) Ichor Harpoon !!!
 (^) Metal Slug*
 (^) Resizable Mine V*
 
