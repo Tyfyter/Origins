@@ -395,7 +395,7 @@ namespace Origins {
 				Overlays.Scene["Origins:ZoneFiberglassUndergrowth"] = new Fiberglass_Background();
 
 				Filters.Scene["Origins:ShimmerConstructPhase3"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
-				Overlays.Scene["Origins:ShimmerConstructPhase3"] = new SC_Phase_Three_Overlay();
+				Overlays.Scene["Origins:ShimmerConstructPhase3"] = ModContent.GetInstance<SC_Phase_Three_Overlay>();
 
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);

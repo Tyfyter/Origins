@@ -6,18 +6,15 @@ using Terraria;
 using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 using Terraria.ModLoader;
 using MonoMod.Cil;
-using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics;
 using PegasusLib.Graphics;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
-using Terraria.Graphics.Renderers;
-using Terraria.Graphics;
-using Terraria.GameContent;
 using Origins.Items.Other.Dyes;
 using Terraria.Graphics.Shaders;
 using ReLogic.Content;
+using Origins.Reflection;
+using PegasusLib;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -125,14 +122,35 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
-	public class SC_Phase_Three_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater) {
+	public class SC_Phase_Three_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater), ILoadable {
 		readonly Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/Textures/Shimmer_Construct_BG");
 		readonly ArmorShaderData invertAnimateShader = GameShaders.Armor.BindShader(ItemID.HallowedBar, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "InvertAnimate"));
+		readonly ArmorShaderData maskShader = GameShaders.Armor.BindShader(ItemID.AdamantiteMask, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "Mask"));
 		readonly List<Player> players = [];
-		Vector2 position;
 		bool active = false;
+		float opacity;
+		public static readonly List<DrawData> drawDatas = [];
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (renderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
 			SpriteBatchState state = spriteBatch.GetState();
+			RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
+			try {
+				spriteBatch.Restart(state);
+				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+				for (int i = 0; i < drawDatas.Count; i++) {
+					drawDatas[i].Draw(spriteBatch);
+				}
+			} finally {
+				spriteBatch.End();
+				spriteBatch.UseOldRenderTargets(oldRenderTargets);
+				spriteBatch.Begin(state);
+			}
+
 			Origins.shaderOroboros.Capture(spriteBatch);
 			spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
@@ -149,9 +167,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				SpriteEffects.None,
 			0);
 			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null);
-			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(0.5f));
+			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(opacity));
 			Origins.shaderOroboros.Stack(invertAnimateShader);
 			Origins.shaderOroboros.Stack(shader);
+			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(new(0.3f), 0.3f));
+			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
+			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
 			players.Clear();
 			int buffID = ModContent.BuffType<Weak_Shimmer_Debuff>();
@@ -165,6 +186,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			foreach (Projectile proj in Main.ActiveProjectiles) {
 				if (!proj.hide) Main.instance.DrawProj(proj.whoAmI);
 			}
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.ModNPC is Shimmer_Construct or Shimmer_Drone) {
 					Main.instance.DrawNPCDirect(spriteBatch, npc, false, Main.screenPosition);
@@ -172,18 +194,39 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			spriteBatch.End();
 			Main.PlayerRenderer.DrawPlayers(Main.Camera, players);
+			PegasusLib.Reflection.DelegateMethods._target.SetValue(MainReflection.DrawDust, Main.instance);
+			MainReflection.DrawDust();
 			spriteBatch.Begin(state);
 		}
-		public override void Update(GameTime gameTime) { }
+		public override void Update(GameTime gameTime) {
+			if (!Main.gamePaused || drawDatas.Count > 25) drawDatas.Clear();
+		}
 		public override void Activate(Vector2 position, params object[] args) {
-			this.position = position;
 			Mode = OverlayMode.Active;
-			active = true;
+			if (active.TrySet(true)) opacity = Main.rand.NextFloat(0.6f, 0.85f);
 		}
 		public override void Deactivate(params object[] args) {
 			active = false;
 			Mode = OverlayMode.Inactive;
 		}
 		public override bool IsVisible() => active;
+		public void Load(Mod mod) {
+		}
+		public void Unload() {
+			if (renderTarget is not null) {
+				Main.QueueMainThreadAction(renderTarget.Dispose);
+				Main.OnResolutionChanged -= Resize;
+			}
+		}
+		internal RenderTarget2D renderTarget;
+		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
+			renderTarget.Dispose();
+			SetupRenderTargets();
+		}
+		void SetupRenderTargets() {
+			if (renderTarget is not null && !renderTarget.IsDisposed) return;
+			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
 	}
 }

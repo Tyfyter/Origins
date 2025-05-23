@@ -47,6 +47,28 @@ float3 HSVToRGB(float3 hsv) {
 	}
 	return rgbOff + float3(m, m, m);
 }
+float3 RGBToHSV(float3 rgb) {
+	float Cmax = max(max(rgb.r, rgb.g), rgb.b);
+	float Cmin = min(min(rgb.r, rgb.g), rgb.b);
+	float delta = Cmax - Cmin;
+	float3 hsv = float3(0, 0, Cmax);
+	if (delta <= 0) {
+		hsv.x = 0;
+	} else if (Cmax <= rgb.r) {
+		hsv.x = ((rgb.g - rgb.b) / delta) % 6;
+		//if (hsv.x >= 6) hsv.x -= 6;
+	} else if (Cmax <= rgb.g) {
+		hsv.x = ((rgb.b - rgb.r) / delta + 2);
+	} else {
+		hsv.x = ((rgb.r - rgb.g) / delta + 4);
+	}
+	if (Cmax <= 0) {
+		hsv.y = 0;
+	} else {
+		hsv.y = delta / Cmax;
+	}
+	return hsv;
+}
 
 float4 InvertAnimate(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
@@ -55,8 +77,22 @@ float4 InvertAnimate(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : C
 	return color * uFullColor;
 }
 
-technique Technique1{
+float4 Mask(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 color = tex2D(uImage0, coords);
+	float saturation = max(max(color.r, color.g), color.b) - min(min(color.r, color.g), color.b);
+	float lightness = max(max(color.r, color.g), color.b);
+	float keepLightness = clamp((saturation * 2 - lightness) * 10, 0, 1);
+	//return float4(lerp((1 - lightness) / lightness, 1, keepLightness), lerp((1 - lightness) / lightness, 1, keepLightness), lerp((1 - lightness) / lightness, 1, keepLightness), 1);
+	color.rgb *= lerp((1 - lightness) / lightness, 1, keepLightness);
+	//color.rgb *= (1 - lightness) / lightness;
+	return color * uFullColor * tex2D(uImage1, coords).a;
+}
+
+technique Technique1 {
 	pass InvertAnimate {
 		PixelShader = compile ps_3_0 InvertAnimate();
+	}
+	pass Mask {
+		PixelShader = compile ps_3_0 Mask();
 	}
 }

@@ -136,6 +136,7 @@ namespace Origins {
 							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
 								PositionInWorld = player.Bottom
 							});
+							player.velocity = Vector2.Zero;
 						}
 						break;
 					}

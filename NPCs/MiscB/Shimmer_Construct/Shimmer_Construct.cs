@@ -33,7 +33,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeofCthulhu;
 		public override string BossHeadTexture => "Terraria/Images/NPC_Head_Boss_0";
 		public readonly int[] previousStates = new int[6];
-		public bool IsInPhase3 => Main.expertMode && NPC.life * 10 < NPC.lifeMax;
+		public bool IsInPhase3 => Main.expertMode && NPC.life * 1 < NPC.lifeMax;
 		internal static IItemDropRule normalDropRule;
 		public override void Load() {
 			On_NPC.DoDeathEvents += static (On_NPC.orig_DoDeathEvents orig, NPC self, Player closestPlayer) => {
@@ -256,6 +256,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
 								PositionInWorld = player.Bottom
 							});
+							player.velocity = Vector2.Zero;
 						}
 						if (Main.netMode != NetmodeID.SinglePlayer) {
 							ModPacket packet = Origins.instance.GetPacket();
@@ -366,6 +367,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SC_Music_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
 		public override int Music => Origins.Music.ShimmerConstruct;
+		Asset<Texture2D> circle = Main.Assets.Request<Texture2D>("Images/Misc/StarDustSky/Planet");
+		float scale = 0;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			Vector2 sourcePos = default;
 			bool phase3Active = false;
@@ -377,6 +380,38 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						break;
 					}
 				}
+			}
+			if (phase3Active) {
+				if (float.IsFinite(scale)) {
+					const float radius = 312f;
+					scale += 0.05f;
+					if (sourcePos.WithinRange(Main.screenPosition, radius * scale)
+						&& sourcePos.WithinRange(Main.screenPosition + Main.ScreenSize.ToVector2() * Vector2.UnitX, radius * scale)
+						&& sourcePos.WithinRange(Main.screenPosition + Main.ScreenSize.ToVector2() * Vector2.UnitY, radius * scale)
+						&& sourcePos.WithinRange(Main.screenPosition + Main.ScreenSize.ToVector2(), radius * scale)
+					) {
+						scale = float.PositiveInfinity;
+					}
+				}
+				if (float.IsFinite(scale)) {
+					SC_Phase_Three_Overlay.drawDatas.Add(new(
+						circle.Value,
+						sourcePos - Main.screenPosition,
+						null,
+						Color.White
+					) {
+						origin = circle.Size() * 0.5f,
+						scale = Vector2.One * scale
+					});
+				} else {
+					SC_Phase_Three_Overlay.drawDatas.Add(new(
+						TextureAssets.MagicPixel.Value,
+						new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
+						Color.White
+					));
+				}
+			} else {
+				scale = 0;
 			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
