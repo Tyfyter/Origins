@@ -102,6 +102,8 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.Kill();
 				return;
 			}
+			float highestProgress = 0;
+			ActiveSound sound;
 			player.itemRotation = 0;//MathHelper.PiOver4 * -player.direction;
 			Projectile.position = player.RotatedRelativePoint(player.MountedCenter + new Vector2(6 * player.direction, -48));
 			if (Projectile.ai[2] == 1) {
@@ -118,8 +120,17 @@ namespace Origins.Items.Weapons.Magic {
 				for (int i = 0; i < decayingAims.Length; i++) {
 					decayingAims[i].UpdateDecaying(Projectile.ai[1]);
 					if (decayingAims[i].active) Projectile.timeLeft = 2;
+					highestProgress = float.Max(highestProgress, decayingAims[i].Progress);
 				}
 				if (Projectile.timeLeft == 2) player.SetDummyItemTime(2);
+				if (SoundEngine.TryGetActiveSound(soundSlot, out sound)) {
+					sound.Volume = highestProgress;
+					sound.Position = Projectile.position;
+				}
+				if (SoundEngine.TryGetActiveSound(soundSlot2, out sound)) {
+					sound.Volume = highestProgress;
+					sound.Position = Projectile.position;
+				}
 				return;
 			}
 			if (Projectile.owner == Main.myPlayer) player.ChangeDir((Main.MouseWorld.X > player.Center.X).ToDirectionInt());
@@ -142,7 +153,6 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			Vector2 center = Projectile.Center;
 			int activeAims = 0;
-			float highestProgress = 0;
 			for (int i = 0; i < aims.Length; i++) {
 				if (aims[i].active) {
 					activeAims++;
@@ -154,21 +164,19 @@ namespace Origins.Items.Weapons.Magic {
 				decayingAims[i].UpdateDecaying(Projectile.ai[1]);
 				highestProgress = float.Max(highestProgress, decayingAims[i].Progress);
 			}
-			if (highestProgress > 0) {
-				if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) {
-					sound.Volume = highestProgress;
-					sound.Position = Projectile.position;
-				} else {
-					int projType = Type;
-					soundSlot = SoundEngine.PlaySound(SoundID.Pixie.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
-				}
-				if (SoundEngine.TryGetActiveSound(soundSlot2, out sound)) {
-					sound.Volume = highestProgress;
-					sound.Position = Projectile.position;
-				} else {
-					int projType = Type;
-					soundSlot2 = SoundEngine.PlaySound(Origins.Sounds.LightningCharging.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
-				}
+			if (SoundEngine.TryGetActiveSound(soundSlot, out sound)) {
+				sound.Volume = highestProgress;
+				sound.Position = Projectile.position;
+			} else if (highestProgress > 0) {
+				int projType = Type;
+				soundSlot = SoundEngine.PlaySound(SoundID.Pixie.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
+			}
+			if (SoundEngine.TryGetActiveSound(soundSlot2, out sound)) {
+				sound.Volume = highestProgress;
+				sound.Position = Projectile.position;
+			} else if (highestProgress > 0) {
+				int projType = Type;
+				soundSlot2 = SoundEngine.PlaySound(Origins.Sounds.LightningCharging.WithPitch(-1), Projectile.Center, soundInstance => soundInstance.Volume > 0 && Projectile.active && Projectile.type == projType);
 			}
 			Triangle hitTri;
 			Vector2 perp;
@@ -362,8 +370,8 @@ namespace Origins.Items.Weapons.Magic {
 				return false;
 			}
 			public void UpdateDecaying(float speed) {
+				MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
 				if (active) {
-					MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
 					speed *= 2 - progress;
 					float length = Motion.Length();
 					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * speed;
