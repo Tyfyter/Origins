@@ -10,11 +10,10 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.NPCs.MiscB {
 	public class Chambersite_Sentinel : ModNPC {
-		//public override void Load() => this.AddBanner();
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 		}
 		public override void SetDefaults() {

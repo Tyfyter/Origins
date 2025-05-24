@@ -49,7 +49,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 |---
-(#2, ^2) Chambersite Sentinel !!! (needs spawning code and sounds)
+(#2, ^2) Chambersite Sentinel !!! (needs sounds)
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
@@ -372,7 +372,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(@, ^3) Chambersite Armor° !!! (will work on the sentinal summon later)
+(@, #2) Chambersite Armor° !!! (will work on the sentinel summon later)
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -448,7 +448,7 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
-(@4, ^3) Gaming Glove (Needs handsOn) !!!
+(^) Gaming Glove
 (^) Golden Lotus
 (⛥) Grave Danger*
 (^) Gun Glove*
@@ -465,7 +465,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(@2, ^3) Lazy Cloak° !!!
+(#2, ^2) Lazy Cloak° !!! (needs back code, glowmask and buff icon stuffs)
 (^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
@@ -475,7 +475,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(@2, ^3) Master Magician's Cloak !!!
+(#2, ^2) Master Magician's Cloak !!! (needs back code, glowmask and buff icon stuffs)
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Mildew Heart
@@ -490,7 +490,7 @@ ACCESSORIES:
 (^) Noxious Mithrafin
 (^) Olid Organ*
 (^) Ornamental Keepsake
-(@2, ^3) Otherworldly Cloak !!!
+(#2, ^2) Otherworldly Cloak !!! (needs back code, glowmask and buff icon stuffs)
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -507,7 +507,7 @@ ACCESSORIES:
 (^) Rebreather Gear
 (X) Reformward
 (^) Resin Shield*
-(@4) Resizing Glove !!! (it's not the code that's the problem, the spritesheet is the old format)
+(^) Resizing Glove
 (^) Return To Sender*
 (^) Rockstar Choker
 (^) Ruby Reticle*
@@ -589,9 +589,9 @@ VANITY:
 (X) Miscreant Mask
 (X) Quantux Mask
 (^) World Cracker Mask*
-(X) Scrapper Head
 (X) Severus' Hat
 (X) Shimmer Construct Mask !!!
+(X) Trenchmaker Mask
 
 (X) Abyssal Outcast Set
 (X) Amebic Protector Set
@@ -696,7 +696,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@4, #2) Cool Sword !!! (rework slasj)
+(@4, #2) Cool Sword !!! (rework slash)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -871,7 +871,7 @@ MAGIC WEAPONS:
 (X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
-(#3, ^2) Shinedown !!! (lightning SFX lingering bug)
+(^) Shinedown
 (X) Siphon Staff
 (^) Splashid
 (^) Startillery
@@ -934,7 +934,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Acrid Spout
-(@, #2) Amnestic Rose !!! (Amnestic Rose Shimmer texture alt and special sounds)
+(#2, ^2) Amnestic Rose !!! (Amnestic Rose Shimmer texture alt)
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
@@ -1020,7 +1020,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
-(@, #2) Voltefuse !!! (position indicator)
+(#2, ^2) Voltefuse !!! (still needs indicator)
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
@@ -1222,7 +1222,7 @@ TILES:
 (^) Riven Water Fountain
 (X) Rusty Locker
 (X) Sanguinite Brick
-(X) Shadow Torch° !!!
+(#, ^2) Shadow Torch° !!!
 (^) Traffic Cone*
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
@@ -1462,7 +1462,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(@, ^3) Nerve Flan !!!
+(#2, ^2) Nerve Flan !!! (needs graphical code)
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
@@ -1715,7 +1715,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(X) Shimmer Construct !!!
+(^) Shimmer Construct
 (X) Tearror
 (X) Trenchmaker
 

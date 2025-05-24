@@ -100,6 +100,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ID = Type;
 			}
 			public override void SetDefaults() {
+				Projectile.damage = 48/* + (4 * difficultyMult)*/;
 				Projectile.friendly = false;
 				Projectile.hostile = true;
 				Projectile.timeLeft = 60 * 20;

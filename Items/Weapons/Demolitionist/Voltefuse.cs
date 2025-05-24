@@ -9,7 +9,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Voltefuse : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.Dynamite;
 		public string[] Categories => [
 			"ThrownExplosive",
 			"IsDynamite",
@@ -29,14 +28,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			Recipe.Create(Type, 8)
 			.AddIngredient(ItemID.Dynamite, 8)
-			.AddIngredient<Rubber>()
+			.AddIngredient<Aetherite_Bar>()
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
 	}
-	public class Voltefuse_P : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.Dynamite;
-		//public override string Texture => typeof(Voltefuse).GetDefaultTMLName();
+	public class Voltefuse_P : ModProjectile, IIsExplodingProjectile {public override string Texture => typeof(Voltefuse).GetDefaultTMLName();
 		public override LocalizedText DisplayName => Language.GetOrRegister($"Mods.Origins.Items.{nameof(Voltefuse)}.DisplayName");
 		static int FuseTime => 240;
 		public override void SetStaticDefaults() {
