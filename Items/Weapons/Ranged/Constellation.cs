@@ -160,6 +160,14 @@ namespace Origins.Items.Weapons.Ranged {
 			for (int i = 0; i < nodes.Count; i++) {
 				const float max_dist_sq = 16 * 16 * 15 * 15;
 				if (nodes[i].Position.DistanceSQ(node.Position) < max_dist_sq) {
+					bool cross = false;
+					for (int j = 0; !cross && j < nodeConnections.Count; j++) {
+						if (nodeConnections[j].a == i || nodeConnections[j].b == i || nodeConnections[j].a == newNode || nodeConnections[j].b == newNode) continue;
+						Vector2 aStart = nodes[nodeConnections[j].a].Position, aEnd = nodes[nodeConnections[j].b].Position;
+						Vector2 bStart = node.Position, bEnd = nodes[i].Position;
+						cross = Collision.CheckLinevLine(aStart, aEnd, bStart, bEnd).Length > 0;
+					}
+					if (cross) continue;
 					UnorderedTuple<int> tuple = new(newNode, i);
 					if (!nodeConnections.Contains(tuple)) nodeConnections.Add(tuple);
 				}
@@ -198,7 +206,15 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			for (int i = 0; i < nodeConnections.Count; i++) {
-				OriginExtensions.DrawDebugLineSprite(nodes[nodeConnections[i].a].Position, nodes[nodeConnections[i].b].Position, Color.White, -Main.screenPosition);
+				OriginExtensions.DrawLightningArc(Main.spriteBatch,
+					[nodes[nodeConnections[i].a].Position, nodes[nodeConnections[i].b].Position],
+					offset: -Main.screenPosition,
+					colors: [
+						(0.15f, new Color(80, 204, 219, 0) * 0.5f),
+						(0.1f, new Color(80, 251, 255, 0) * 0.5f),
+						(0.05f, new Color(200, 255, 255, 0) * 0.5f)
+					]
+				);
 			}
 			DrawData data = new(
 				TextureAssets.Projectile[Type].Value,
