@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
+using Origins.Layers;
 using Origins.NPCs;
 using ReLogic.Content;
 using System;
@@ -17,7 +18,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Front)]
+	[AutoloadEquip(EquipType.Front, EquipType.Back)]
 	public class Lazy_Cloak : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Lazy_Cloak_Entry).Name;
 		public class Lazy_Cloak_Entry : JournalEntry {
@@ -26,6 +27,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMask<Back_Glow_Layer>(Item.backSlot, Texture + "_Back_Glow");
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
@@ -36,7 +38,6 @@ namespace Origins.Items.Accessories {
 			Item.shoot = Lazy_Cloak_P.ID;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
-			Item.backSlot = 5;
 			Item.hasVanityEffects = true;
 			Item.buffType = Lazy_Cloak_Buff.ID;
 		}
@@ -45,10 +46,12 @@ namespace Origins.Items.Accessories {
 				player.SpawnMinionOnCursor(player.GetSource_Accessory(Item), player.whoAmI, Item.shoot, Item.damage, Item.knockBack, player.MountedCenter - Main.MouseWorld);
 			}
 			player.AddBuff(Item.buffType, 5);
+			player.OriginPlayer().lazyCloakHidden = hideVisual;
 		}
+		public override void UpdateVanity(Player player) => player.OriginPlayer().lazyCloakHidden = false;
 		public override void EquipFrameEffects(Player player, EquipType type) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (type == EquipType.Front && originPlayer.lazyCloakOffPlayer > 0) {
+			if (type == EquipType.Front && !originPlayer.lazyCloakHidden && originPlayer.lazyCloakOffPlayer > 0) {
 				player.front = -1;
 				player.back = -1;
 			}

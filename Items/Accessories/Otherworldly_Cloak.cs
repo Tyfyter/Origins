@@ -6,11 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Front)]
+	[AutoloadEquip(EquipType.Front, EquipType.Back)]
 	public class Otherworldly_Cloak : Lazy_Cloak {
-		public override void SetStaticDefaults() {
-			Origins.AddGlowMask(this);
-		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.damage = 30;

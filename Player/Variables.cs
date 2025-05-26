@@ -111,6 +111,7 @@ namespace Origins {
 		public bool advancedImaging = false;
 		public bool venomFang = false;
 		public bool lightningRing = false;
+		public bool lazyCloakHidden = false;
 		public int lazyCloakOffPlayer = 0;
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
@@ -644,6 +645,7 @@ namespace Origins {
 			advancedImaging = false;
 			venomFang = false;
 			lightningRing = false;
+			lazyCloakHidden = false;
 			lazyCloakOffPlayer.Cooldown();
 			amebicVialVisible = false;
 			entangledEnergy = false;

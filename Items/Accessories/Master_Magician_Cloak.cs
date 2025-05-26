@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Front)]
+	[AutoloadEquip(EquipType.Front, EquipType.Back)]
 	public class Master_Magician_Cloak : Lazy_Cloak {
 		public override void SetStaticDefaults() { }
 		public override void SetDefaults() {
