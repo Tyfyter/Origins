@@ -1227,6 +1227,11 @@ Buffs: {
 		DisplayName: Amnestic Rose Alt Buff
 		Description: Mods.Origins.Buffs.Amnestic_Rose_Alt_Buff.Description
 	}
+
+	Gelatin_Aspect_Buff: {
+		DisplayName: Gelatin Aspect Buff
+		Description: Mods.Origins.Buffs.Gelatin_Aspect_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1818,6 +1823,7 @@ Projectiles: {
 	Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Alt Thorn
 	Ichor_Harpoon_Droplet.DisplayName: Ichor Harpoon Droplet
 	Ichor_Harpoon_P.DisplayName: Ichor Harpoon P
+	Gelatin_Buddy.DisplayName: Gelatin Buddy
 }
 
 Prefixes: {
@@ -2653,6 +2659,7 @@ ItemSourceFilter: {
 	CursedRarity.DisplayName: Cursed
 	ButterscotchRarity.DisplayName: Butterscotch
 	AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
+	Eccentric_Rarity.DisplayName: Eccentric
 }
 
 Music: {

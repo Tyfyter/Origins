@@ -6278,3 +6278,8 @@ Ichor_Harpoon: {
 	DisplayName: Ichor Harpoon
 	Tooltip: ""
 }
+
+Gelatin_Bloom_Brooch: {
+	DisplayName: Gelatin Bloom Brooch
+	Tooltip: ""
+}
