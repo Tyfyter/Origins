@@ -220,7 +220,7 @@ ENEMY NPCS:
 (^) Riven Protoform*
 (X) Scanner Scout
 (^) Shattered Goldfish*
-(#2, ^2) Shimmer Drone !!! (needs gores)
+(☻) Shimmer Drone !!! (needs gores)
 (X) Shooter Creeper
 (^) Single-Cellular Nautilus*
 (^) Slime Worm (Slorm)*

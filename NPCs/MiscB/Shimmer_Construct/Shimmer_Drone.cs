@@ -66,5 +66,33 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.velocity += NPC.DirectionTo(targetPos) * 0.5f;
 			NPC.velocity = NPC.velocity.SafeNormalize(default) * 8;
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(1 * NPC.direction, -6).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(7 * NPC.direction, 3).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-6 * NPC.direction, -8).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(9 * NPC.direction, -13).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2")
+				);
+			}
+		}
 	}
 }
