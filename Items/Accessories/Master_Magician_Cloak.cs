@@ -48,7 +48,6 @@ namespace Origins.Items.Accessories {
 namespace Origins.Buffs {
 	public class Master_Magician_Cloak_Buff : Lazy_Cloak_Buff {
 		public static new int ID { get; private set; }
-		public override string Texture => typeof(Lazy_Cloak_Buff).GetDefaultTMLName();
 		public override IEnumerable<int> ProjectileTypes() => [
 			Master_Magician_Cloak_P.ID
 		];
