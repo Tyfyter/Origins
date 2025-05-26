@@ -2,8 +2,10 @@
 using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using PegasusLib;
+using ReLogic.Utilities;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -46,14 +48,31 @@ namespace Origins.NPCs.MiscB {
 			}
 			Vector2 center = NPC.Center;
 			int activeAims = 0;
+			float highestProgress = 0;
 			for (int i = 0; i < aims.Length; i++) {
 				if (aims[i].active) {
 					activeAims++;
 					if (aims[i].Update(i, center, maxLengthSQ)) AddDecayingAim(aims[i]);
+					highestProgress = float.Max(highestProgress, aims[i].Progress);
 				}
 			}
 			for (int i = 0; i < decayingAims.Length; i++) {
 				decayingAims[i].UpdateDecaying();
+				highestProgress = float.Max(highestProgress, decayingAims[i].Progress);
+			}
+			if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound)) {
+				sound.Volume = highestProgress;
+				sound.Position = NPC.Center;
+			} else if (highestProgress > 0) {
+				int projType = Type;
+				soundSlot = SoundEngine.PlaySound(SoundID.Pixie.WithPitch(-1), NPC.Center, soundInstance => soundInstance.Volume > 0 && NPC.active && NPC.type == projType);
+			}
+			if (SoundEngine.TryGetActiveSound(soundSlot2, out sound)) {
+				sound.Volume = highestProgress;
+				sound.Position = NPC.Center;
+			} else if (highestProgress > 0) {
+				int projType = Type;
+				soundSlot2 = SoundEngine.PlaySound(Origins.Sounds.LightningCharging.WithPitch(-1), NPC.Center, soundInstance => soundInstance.Volume > 0 && NPC.active && NPC.type == projType);
 			}
 			if (activeAims <= 0) {
 				if (--NPC.localAI[0] <= 0) NPC.localAI[0] = Teleport() ? 300 : 20;
@@ -81,6 +100,8 @@ namespace Origins.NPCs.MiscB {
 			}
 			NPC.spriteDirection = NPC.direction;
 		}
+		SlotId soundSlot;
+		SlotId soundSlot2;
 		bool Teleport() {
 			List<Point> positions = [];
 			static bool CheckTeleport(int x, int y) {
@@ -182,6 +203,7 @@ namespace Origins.NPCs.MiscB {
 			Vector2 motion;
 			float progress;
 			public bool active;
+			public readonly float Progress => progress;
 			public readonly Vector2 Motion => motion;
 			public void Set() {
 				motion = default;
@@ -207,8 +229,8 @@ namespace Origins.NPCs.MiscB {
 				return false;
 			}
 			public void UpdateDecaying() {
+				MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
 				if (active) {
-					MathUtils.LinearSmoothing(ref progress, 0, 1 / 60f);
 					float length = Motion.Length();
 					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * (2 - progress);
 					active = length > 4;

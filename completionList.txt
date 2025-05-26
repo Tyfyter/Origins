@@ -49,7 +49,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 |---
-(#2, ^2) Chambersite Sentinel !!! (needs sounds)
+(☻) Chambersite Sentinel !!! (needs sounds)
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
