@@ -1816,6 +1816,8 @@ Projectiles: {
 	// Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Alt Goo Ball
 	// Amnestic_Rose_Alt_Goo_Floor.DisplayName: Amnestic Rose Alt Goo Floor
 	// Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Alt Thorn
+	// Ichor_Harpoon_Droplet.DisplayName: Ichor Harpoon Droplet
+	// Ichor_Harpoon_P.DisplayName: Ichor Harpoon P
 }
 
 Prefixes: {

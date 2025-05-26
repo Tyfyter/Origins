@@ -1590,7 +1590,7 @@ AMMO:
 (^) Cursed Canister*
 (^) Cursed Harpoon*
 (^) Ichor Canister*
-(#, ^2) Ichor Harpoon !!!
+(☻) Ichor Harpoon !!!
 (^) Metal Slug*
 (^) Resizable Mine V*
 
