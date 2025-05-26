@@ -8,7 +8,6 @@ using Origins.Buffs;
 
 namespace Origins.Items.Other.Consumables.Food {
 	public class Nerve_Flan_Food : ModItem {
-		public override string Texture => "Terraria/Images/Buff_" + BuffID.WellFed3;
 		public override LocalizedText DisplayName => Language.GetText(Mod.GetLocalizationKey($"{LocalizationCategory}.{nameof(Nerve_Flan)}.{nameof(DisplayName)}"));
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Nerve_Flan>();

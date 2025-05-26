@@ -934,7 +934,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Acrid Spout
-(#2, ^2) Amnestic Rose !!! (Amnestic Rose Shimmer texture alt)
+(☻) Amnestic Rose !!! (Amnestic Rose Shimmer texture alt implemented)
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
@@ -1020,7 +1020,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
-(#2, ^2) Voltefuse !!! (still needs indicator)
+(#2, ^2) Voltefuse !!! (still needs indicator (indicator?))
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
@@ -1462,7 +1462,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(#2, ^2) Nerve Flan !!! (needs graphical code)
+(☻) Nerve Flan !!! (c'mon, this one was literally just removing one line, ' should probably have its own buff icon though)
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
