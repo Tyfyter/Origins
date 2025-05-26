@@ -6268,3 +6268,8 @@ Voltefuse: {
 		'Deja vu...'
 		'''
 }
+
+Amnestic_Rose_Alt: {
+	DisplayName: Amnestic Rose Alt
+	Tooltip: ""
+}

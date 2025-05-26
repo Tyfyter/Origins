@@ -442,7 +442,8 @@ namespace Origins {
 					retaliatoryTendrilStrength = 0;
 				}
 			}
-			if (target.GetGlobalNPC<OriginGlobalNPC>().amnesticRose) {
+			OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
+			if (originGlobalNPC.amnesticRose) {
 				float mana = 1 + MathF.Pow(damageDone * 0.1f, 0.5f);
 				if (target.ModNPC is IDefiledEnemy defiledEnemy) {
 					mana = Math.Min(mana, defiledEnemy.Mana);
@@ -464,7 +465,7 @@ namespace Origins {
 							Player.GetSource_OnHit(target),
 							Main.rand.NextVector2FromRectangle(target.Hitbox),
 							target.velocity + Main.rand.NextVector2Circular(2, 2),
-							ModContent.ProjectileType<Amnestic_Rose_Goo_Ball>(),
+							originGlobalNPC.amnesticRoseGooProj,
 							0,
 							0,
 							ai0: mana

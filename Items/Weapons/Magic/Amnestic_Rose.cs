@@ -16,14 +16,20 @@ using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Amnestic_Rose : ModItem {
-		static AutoLoadingAsset<Texture2D> stemTexture = typeof(Amnestic_Rose).GetDefaultTMLName() + "_Stem";
-		static AutoLoadingAsset<Texture2D> flowerTexture = typeof(Amnestic_Rose).GetDefaultTMLName() + "_Flower";
-		static AutoLoadingAsset<Texture2D> jointTexture = typeof(Amnestic_Rose).GetDefaultTMLName() + "_Thorn";
+		static bool firstLoad = false;
+		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(DisplayName)}");
+		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
+			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}"),
+			Language.GetText("Mods.Origins.Items.GenericTooltip.ConceptAndSpriteBy").WithFormatArgs("Calano")
+		);
 		public override void Load() {
+			Mod.AddContent(new Amnestic_Rose_Layer(this));
+			if (!firstLoad.TrySet(true)) return;
 			try {
 				IL_Player.PlayerFrame += (il) => {
 					ILCursor c = new(il);
@@ -78,6 +84,17 @@ namespace Origins.Items.Weapons.Magic {
 				if (forceDirection != 0) self.direction = forceDirection;
 			};
 		}
+		AutoLoadingAsset<Texture2D> stemTexture;
+		AutoLoadingAsset<Texture2D> flowerTexture;
+		AutoLoadingAsset<Texture2D> jointTexture;
+		protected int thornID;
+		protected override bool CloneNewInstances => true;
+		public override void SetStaticDefaults() {
+			stemTexture = Texture + "_Stem";
+			flowerTexture = Texture + "_Flower";
+			jointTexture = Texture + "_Thorn";
+			thornID = ModContent.ProjectileType<Amnestic_Rose_Thorn>();
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.useStyle = ItemUseStyleID.HiddenAnimation;
@@ -94,6 +111,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitch(2);
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;
+			Item.buffType = ModContent.BuffType<Amnestic_Rose_Buff>();
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -193,7 +211,7 @@ namespace Origins.Items.Weapons.Magic {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			position = GetEndPos(player, originPlayer.amnesticRoseJoints);
 			velocity = GeometryUtils.Vec2FromPolar(velocity.Length(), originPlayer.amnesticRoseJoints[^1].Theta + player.fullRotation);
-			if (originPlayer.amnesticRoseBloomTime > 0) type = ModContent.ProjectileType<Amnestic_Rose_Thorn>();
+			if (originPlayer.amnesticRoseBloomTime > 0) type = thornID;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -212,19 +230,21 @@ namespace Origins.Items.Weapons.Magic {
 				return false;
 			}
 			originPlayer.amnesticRoseBloomTime = (int)((60 + player.itemAnimationMax * 1.5f) * 0.5f * 8);
-			player.AddBuff(ModContent.BuffType<Amnestic_Rose_Buff>(), originPlayer.amnesticRoseBloomTime);
+			player.AddBuff(Item.buffType, originPlayer.amnesticRoseBloomTime);
 			return true;
 		}
-		public class Amnestic_Rose_Layer : PlayerDrawLayer {
+		[Autoload(false)]
+		public class Amnestic_Rose_Layer(Amnestic_Rose item) : PlayerDrawLayer {
+			public override string Name => item.Name + "_Layer";
 			public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-				return  drawInfo.shadow == 0 && drawInfo.heldItem.ModItem is Amnestic_Rose;
+				return drawInfo.shadow == 0 && drawInfo.heldItem.type == item.Type;
 			}
 			public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.Tails, PlayerDrawLayers.Wings);
 			protected override void Draw(ref PlayerDrawSet drawInfo) {
 				OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
-				Rectangle frame = stemTexture.Frame(3);
+				Rectangle frame = item.stemTexture.Frame(3);
 				DrawData data = new(
-					stemTexture,
+					item.stemTexture,
 					Vector2.Zero,
 					frame,
 					Color.White
@@ -232,12 +252,12 @@ namespace Origins.Items.Weapons.Magic {
 					origin = new(frame.Width * 0.5f, frame.Height)
 				};
 				DrawData jointData = new(
-					jointTexture,
+					item.jointTexture,
 					Vector2.Zero,
 					null,
 					Color.White
 				) {
-					origin = jointTexture.Value.Size() * new Vector2(0.5f, 0.6f),
+					origin = item.jointTexture.Value.Size() * new Vector2(0.5f, 0.6f),
 					shader = TangelaVisual.FakeShaderID
 				};
 				Vector2 pos = GetStartPosition(drawInfo.drawPlayer);
@@ -261,8 +281,8 @@ namespace Origins.Items.Weapons.Magic {
 					drawInfo.DrawDataCache.Add(data);
 					pos += (Vector2)originPlayer.amnesticRoseJoints[i];
 				}
-				frame = flowerTexture.Frame(verticalFrames: 2, frameY: (originPlayer.amnesticRoseBloomTime <= 0).ToInt());
-				data.texture = flowerTexture;
+				frame = item.flowerTexture.Frame(verticalFrames: 2, frameY: (originPlayer.amnesticRoseBloomTime <= 0).ToInt());
+				data.texture = item.flowerTexture;
 				data.sourceRect = frame;
 				data.origin = new(frame.Width * 0.5f, frame.Height);
 				data.rotation = originPlayer.amnesticRoseJoints[^1].Theta + MathHelper.PiOver2;
@@ -297,6 +317,11 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.extraUpdates = 1;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				Projectile.localAI[2] = itemUse.Item.buffType;
+			}
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 1) {
@@ -334,12 +359,9 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			return null;
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			
-		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (StartBloom()) {
-				target.AddBuff(ModContent.BuffType<Amnestic_Rose_Buff>(), 180);
+				target.AddBuff((int)Projectile.localAI[2], 180);
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -378,13 +400,16 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Amnestic_Rose_Buff : ModBuff {
+		protected int projType;
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+			projType = ModContent.ProjectileType<Amnestic_Rose_Goo_Ball>();
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			OriginGlobalNPC originGlobalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
 			originGlobalNPC.amnesticRose = true;
+			originGlobalNPC.amnesticRoseGooProj = projType;
 			if (!npc.boss) originGlobalNPC.slowDebuff = true;
 			if (Main.rand.NextBool(3)) Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<Rose_Dust>());
 		}
@@ -393,6 +418,11 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Amnestic_Rose_Goo_Ball : ModProjectile {
+		protected int floorGooType;
+		protected override bool CloneNewInstances => true;
+		public override void SetStaticDefaults() {
+			floorGooType = ModContent.ProjectileType<Amnestic_Rose_Goo_Floor>();
+		}
 		public override void SetDefaults() {
 			Projectile.width = 14;
 			Projectile.height = 14;
@@ -431,7 +461,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.GetSource_FromAI(),
 					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
 					dir,
-					ModContent.ProjectileType<Amnestic_Rose_Goo_Floor>(),
+					floorGooType,
 					Projectile.damage / 2,
 					Projectile.knockBack / 10,
 					Projectile.owner
@@ -444,7 +474,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.GetSource_FromAI(),
 					Projectile.Center + dir * CollisionExt.Raymarch(Projectile.Center, dir, 32),
 					dir,
-					ModContent.ProjectileType<Amnestic_Rose_Goo_Floor>(),
+					floorGooType,
 					Projectile.damage / 2,
 					Projectile.knockBack / 10,
 					Projectile.owner
@@ -515,4 +545,36 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 	}
+	public class Amnestic_Rose_Alt : Amnestic_Rose {
+		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
+			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}"),
+			Language.GetText("Mods.Origins.Items.GenericTooltip.ConceptBy").WithFormatArgs("Calano")
+		);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			thornID = ModContent.ProjectileType<Amnestic_Rose_Alt_Thorn>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Amnestic_Rose>()] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Amnestic_Rose>();
+		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.buffType = ModContent.BuffType<Amnestic_Rose_Alt_Buff>();
+		}
+		public override void AddRecipes() { } // empty override so it doesn't register the recipe for both
+	}
+	public class Amnestic_Rose_Alt_Thorn : Amnestic_Rose_Thorn { }
+	public class Amnestic_Rose_Alt_Flower_P : Amnestic_Rose_Flower_P { }
+	public class Amnestic_Rose_Alt_Buff : Amnestic_Rose_Buff {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			projType = ModContent.ProjectileType<Amnestic_Rose_Goo_Ball>();
+		}
+	}
+	public class Amnestic_Rose_Alt_Goo_Ball : Amnestic_Rose_Goo_Ball {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			floorGooType = ModContent.ProjectileType<Amnestic_Rose_Alt_Goo_Floor>();
+		}
+	}
+	public class Amnestic_Rose_Alt_Goo_Floor : Amnestic_Rose_Goo_Floor { }
 }

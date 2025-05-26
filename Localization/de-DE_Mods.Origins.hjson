@@ -1222,6 +1222,11 @@ Buffs: {
 		// DisplayName: Master Magician Cloak Buff
 		// Description: Mods.Origins.Buffs.Master_Magician_Cloak_Buff.Description
 	}
+
+	Amnestic_Rose_Alt_Buff: {
+		// DisplayName: Amnestic Rose Alt Buff
+		// Description: Mods.Origins.Buffs.Amnestic_Rose_Alt_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1807,6 +1812,10 @@ Projectiles: {
 	// Voltefuse_Star.DisplayName: Voltefuse Star
 	// Shimmer_Landmines.DisplayName: Shimmer Landmines
 	// Shotgun_Indicator.DisplayName: Shotgun Indicator
+	// Amnestic_Rose_Alt_Flower_P.DisplayName: Amnestic Rose Alt Flower P
+	// Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Alt Goo Ball
+	// Amnestic_Rose_Alt_Goo_Floor.DisplayName: Amnestic Rose Alt Goo Floor
+	// Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Alt Thorn
 }
 
 Prefixes: {

@@ -70,6 +70,7 @@ namespace Origins.NPCs {
 		public int shinedownDamage = 0;
 		public float shinedownSpeed = 1;
 		public bool amnesticRose = false;
+		public int amnesticRoseGooProj = 0;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
