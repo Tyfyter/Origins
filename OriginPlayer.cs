@@ -902,6 +902,9 @@ namespace Origins {
 			ItemChecking = false;
 			releaseAltUse = !Player.controlUseTile;
 		}
+		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
+			if (Gelatin_Bloom_Brooch.GetNameIndex(Player.name) != -1) yield return new(ModContent.ItemType<Gelatin_Bloom_Brooch>());
+		}
 		public void InflictAssimilation<TAssimilation>(float assimilationAmount) where TAssimilation : AssimilationDebuff => InflictAssimilation((ushort)ModContent.GetInstance<TAssimilation>().AssimilationType, assimilationAmount);
 		public void InflictAssimilation(ushort assimilationType, float assimilationAmount) {
 			GetAssimilation(assimilationType).Percent += assimilationAmount;

@@ -161,6 +161,7 @@ namespace Origins.NPCs.MiscB {
 			return true;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (aims is null) return true;
 			Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Shinedown_Staff_P>()].Value;
 			Vector2 position = NPC.Center + Vector2.UnitY * NPC.gfxOffY - Main.screenPosition;
 			Vector2 origin = texture.Frame().Bottom();

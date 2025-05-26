@@ -35,20 +35,23 @@ namespace Origins.Items.Pets {
 			}
 		}
 		public static Color GetGolor(string name) {
+			return Colors.GetIfInRange(GetNameIndex(name), Colors[^1]);
+		}
+		public static int GetNameIndex(string name) {
 			switch (name) {
 				case "Askoi":
-				return Colors[0];
+				return 0;
 				case "Calano":
-				return Colors[1];
+				return 1;
 				case "Aria":
-				return Colors[2];
+				return 2;
 				case "Saeheras":
-				return Colors[3];
+				return 3;
 				case "Blaire":
-				return Colors[4];
+				return 4;
 
 				default:
-				return Colors[^1];
+				return -1;
 			}
 		}
 		public static Color[] Colors { get; } = [
@@ -67,10 +70,13 @@ namespace Origins.Items.Pets {
 	}
 	public class Eccentric_Rarity : ModRarity {
 		static double timeForFade => Main.timeForVisualEffects / 60f;
+		static float Easing(double time) {
+			return (float)double.Lerp(Math.Pow(time, 3), 1 - Math.Pow(1 - time, 3), time);
+		}
 		public override Color RarityColor => Color.Lerp(
 			Gelatin_Bloom_Brooch.Colors[(int)timeForFade % (Gelatin_Bloom_Brooch.Colors.Length - 1)],
 			Gelatin_Bloom_Brooch.Colors[((int)timeForFade + 1) % (Gelatin_Bloom_Brooch.Colors.Length - 1)],
-			(float)(timeForFade % 1)
+			Easing(timeForFade % 1)
 		);
 	}
 	public class Gelatin_Buddy : ModProjectile {
@@ -145,7 +151,7 @@ namespace Origins.Items.Pets {
 
 			float speed;
 			float inertia;
-			if (distanceToIdlePosition > 600f) {
+			if (distanceToIdlePosition > 160f) {
 				speed = 16f;
 				inertia = 36f;
 			} else {
@@ -191,7 +197,7 @@ namespace Origins.Items.Pets {
 			DrawOriginOffsetX = 0;
 			DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
 			DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
-			if (baseColorRenderTarget is not null) {
+			if (glowColor is null && baseColorRenderTarget is not null) {
 				Color[] retrievedColor = new Color[1];
 				baseColorRenderTarget.GetData(
 					0,
@@ -201,10 +207,19 @@ namespace Origins.Items.Pets {
 					1
 				);
 				Vector3 glow = retrievedColor[0].ToVector3();
-				Lighting.AddLight(Projectile.Center, glow.X, glow.Y, glow.Z);
+				glowColor = glow;
+				Vector3 normalizedGlow = Vector3.Normalize(glow);
+				if (!float.IsNaN(normalizedGlow.X) && !float.IsNaN(normalizedGlow.Y) && !float.IsNaN(normalizedGlow.Z)) {
+					normalizedGlow *= normalizedGlow * normalizedGlow; // cube the normalized light to make white not better than the other colors
+					glowColor = normalizedGlow;
+				}
+			}
+			{
+				if (glowColor is Vector3 glow) Lighting.AddLight(Projectile.Center, glow.X, glow.Y, glow.Z);
 			}
 			#endregion
 		}
+		Vector3? glowColor;
 		RenderTarget2D baseColorRenderTarget;
 		public override void OnKill(int timeLeft) {
 			if (baseColorRenderTarget is not null) {

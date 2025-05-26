@@ -1535,7 +1535,7 @@ MOUNTS & PETS:
 
 (^) Chromatic Scale (Rainbow Pangolin)*
 (^) Chew Toy (Chee Toy)*
-(#, ^2) Gelatin Bloom Brooch !!!
+(☻) Gelatin Bloom Brooch !!!
 (^) Strange Power-Up (Platformer Mech)*
 
 (^) Chambersite Minecart

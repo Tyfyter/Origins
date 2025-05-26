@@ -6281,5 +6281,9 @@ Ichor_Harpoon: {
 
 Gelatin_Bloom_Brooch: {
 	// DisplayName: Gelatin Bloom Brooch
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Summons a gelatinous aspect to light the way
+		'Many thanks from the folks over in [c/b8e843:Salvature]'
+		''' */
 }
