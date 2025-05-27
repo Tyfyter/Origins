@@ -6287,3 +6287,8 @@ Gelatin_Bloom_Brooch: {
 		'Many thanks from the folks over in [c/b8e843:Salvature]'
 		'''
 }
+
+Shadow_Torch: {
+	DisplayName: Shadow Torch
+	Tooltip: ""
+}
