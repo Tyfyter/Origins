@@ -49,7 +49,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 |---
-(☻) Chambersite Sentinel !!! (needs sounds)
+(☻) Chambersite Sentinel !!! (has sounds)
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
@@ -220,7 +220,7 @@ ENEMY NPCS:
 (^) Riven Protoform*
 (X) Scanner Scout
 (^) Shattered Goldfish*
-(☻) Shimmer Drone !!! (needs gores)
+(☻) Shimmer Drone !!! (has gores)
 (X) Shooter Creeper
 (^) Single-Cellular Nautilus*
 (^) Slime Worm (Slorm)*
@@ -696,7 +696,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@4, #2) Cool Sword !!! (rework slash)
+(@4, #2?) Cool Sword !!! (rework slash)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -1320,7 +1320,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(X) Aetherite Bar !!!
+(@, ^3) Aetherite Bar !!!
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
