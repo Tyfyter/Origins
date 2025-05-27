@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			base.UpdateAccessory(player, hideVisual);
-			if (player.OriginPlayer().lazyCloakOffPlayer <= 0) {
+			if (player.OriginPlayer().lazyCloaksOffPlayer[Item.frontSlot] <= 0) {
 				player.jumpSpeedBoost += 12;
 				player.noFallDmg = true;
 				if (player.controlJump) {

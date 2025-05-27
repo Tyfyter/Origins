@@ -112,7 +112,7 @@ namespace Origins {
 		public bool venomFang = false;
 		public bool lightningRing = false;
 		public bool lazyCloakHidden = false;
-		public int lazyCloakOffPlayer = 0;
+		public int[] lazyCloaksOffPlayer = ArmorIDs.Front.Sets.Factory.CreateIntSet();
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
 		public bool entangledEnergy = false;
@@ -646,7 +646,7 @@ namespace Origins {
 			venomFang = false;
 			lightningRing = false;
 			lazyCloakHidden = false;
-			lazyCloakOffPlayer.Cooldown();
+			for (int i = 0; i < lazyCloaksOffPlayer.Length; i++) lazyCloaksOffPlayer[i].Cooldown();
 			amebicVialVisible = false;
 			entangledEnergy = false;
 			mysteriousSprayMult = 1;

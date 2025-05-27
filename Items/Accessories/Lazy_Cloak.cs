@@ -51,7 +51,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateVanity(Player player) => player.OriginPlayer().lazyCloakHidden = false;
 		public override void EquipFrameEffects(Player player, EquipType type) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (type == EquipType.Front && !originPlayer.lazyCloakHidden && originPlayer.lazyCloakOffPlayer > 0) {
+			if (type == EquipType.Front && !originPlayer.lazyCloakHidden && player.front == Item.frontSlot && originPlayer.lazyCloaksOffPlayer[Item.frontSlot] > 0) {
 				player.front = -1;
 				player.back = -1;
 			}
@@ -90,6 +90,10 @@ namespace Origins.Items.Accessories {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 12;
 			Projectile.netImportant = true;
+		}
+
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) Projectile.ai[1] = itemUse.Item.frontSlot;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -180,7 +184,7 @@ namespace Origins.Items.Accessories {
 				direction *= speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 
-				player.OriginPlayer().lazyCloakOffPlayer = 2;
+				player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
 			} else {
 				if (distanceToIdlePosition > 600f) {
 					speed = 24f;
@@ -203,7 +207,7 @@ namespace Origins.Items.Accessories {
 					Projectile.hide = true;
 					Projectile.position = idlePosition;
 				} else {
-					player.OriginPlayer().lazyCloakOffPlayer = 2;
+					player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
 				}
 			}
 			#endregion
