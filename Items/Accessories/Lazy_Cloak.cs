@@ -225,25 +225,42 @@ namespace Origins.Items.Accessories {
 			}
 			#endregion
 		}
-		public override void PostDraw(Color lightColor) {
-			if (ModContent.RequestIfExists(GlowTexture, out Asset<Texture2D> glowTexture, AssetRequestMode.ImmediateLoad)) {
-				SpriteEffects dir = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-				int num137 = 0;
-				int num136 = 0;
-				float num138 = 0;
-				ProjectileLoader.DrawOffset(Projectile, ref num137, ref num136, ref num138);
-				int num408 = glowTexture.Height() / Main.projFrames[Projectile.type];
-				int y27 = num408 * Projectile.frame;
+		bool requestedGlow;
+		Asset<Texture2D> glowTexture;
+		public override bool PreDraw(ref Color lightColor) {
+			if (!requestedGlow) {
+				requestedGlow = true;
+				ModContent.RequestIfExists(GlowTexture, out glowTexture, AssetRequestMode.ImmediateLoad);
+			}
+			SpriteEffects dir = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			int offsetX = 0;
+			int offsetY = 0;
+			float originX = 0;
+			ProjectileLoader.DrawOffset(Projectile, ref offsetX, ref offsetY, ref originX);
+			int frameHeight = glowTexture.Height() / Main.projFrames[Projectile.type];
+			Vector2 origin = new(originX, Projectile.height / 2 + offsetY);
+			Rectangle sourceRectangle = new(0, frameHeight * Projectile.frame, TextureAssets.Projectile[Projectile.type].Width(), frameHeight - 1);
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value,
+				Projectile.position + new Vector2(originX + offsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
+				sourceRectangle,
+				lightColor,
+				Projectile.rotation,
+				origin,
+				Projectile.scale,
+				dir
+			);
+			if (glowTexture is not null) {
 				Main.EntitySpriteDraw(glowTexture.Value,
-					Projectile.position + new Vector2(num138 + (float)num137, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
-					new Rectangle(0, y27, TextureAssets.Projectile[Projectile.type].Width(), num408 - 1),
+					Projectile.position + new Vector2(originX + offsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
+					sourceRectangle,
 					new Color(250, 250, 250, Projectile.alpha),
 					Projectile.rotation,
-					new Vector2(num138, Projectile.height / 2 + num136),
+					origin,
 					Projectile.scale,
 					dir
 				);
 			}
+			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.player[Projectile.owner].IsWithinRectangular(target, new Vector2(16 * 4, 16 * 2))) {
