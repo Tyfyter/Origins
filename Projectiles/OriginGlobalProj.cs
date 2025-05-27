@@ -75,6 +75,7 @@ namespace Origins.Projectiles {
 		public bool isUnmissing = false;
 		public bool laserBow = false;
 		public bool astoxoEffect = false;
+		public bool weakShimmer = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public Vector2[] oldPositions = [];
 		public OwnerMinionKey ownerMinion = null;
@@ -124,6 +125,7 @@ namespace Origins.Projectiles {
 			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
 				weakpointAnalyzerTarget = Main.MouseWorld;
 			}
+			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) weakShimmer = true;
 			if (source is EntitySource_ItemUse itemUseSource) {
 				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
@@ -560,6 +562,8 @@ namespace Origins.Projectiles {
 				binaryWriter.Write((byte)ownerMinion.Owner);
 				binaryWriter.Write(ownerMinion.Identity);
 			}
+
+			bitWriter.WriteBit(weakShimmer);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
@@ -576,6 +580,8 @@ namespace Origins.Projectiles {
 			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
 
 			if (bitReader.ReadBit()) ownerMinion = new(binaryReader.ReadInt32(), binaryReader.ReadByte(), binaryReader.ReadInt32());
+
+			weakShimmer = bitReader.ReadBit();
 		}
 		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
 			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;

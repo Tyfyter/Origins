@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Magic;
@@ -412,6 +413,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			} else {
 				scale = 0;
+			}
+			if (!phase3Active) {
+				int type = ModContent.ProjectileType<Aetherite_Aura_P>();
+				foreach (Projectile projectile in Main.ActiveProjectiles) {
+					if (projectile.type == type) {
+						phase3Active = true;
+						break;
+					}
+				}
 			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}

@@ -1,9 +1,12 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -79,6 +82,43 @@ namespace Origins.Items.Armor.Aetherite {
 			.AddIngredient<Aetherite_Bar>(18)
 			.AddTile(TileID.Anvils)
 			.Register();
+		}
+	}
+	public class Aetherite_Aura_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
+		public override void SetDefaults() {
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.scale = 0;
+		}
+		public override void AI() {
+			Projectile.timeLeft = 2;
+			if (Projectile.ai[0] == 0) {
+				if (MathUtils.LinearSmoothing(ref Projectile.scale, 1, 1 / 60f)) Projectile.ai[0] = 1;
+			} else if (++Projectile.ai[0] > 600) {
+				if (MathUtils.LinearSmoothing(ref Projectile.scale, 0, 1 / 60f)) Projectile.Kill();
+			}
+			float radius = 312f * Projectile.scale;
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.Hitbox.IsWithin(Projectile.position, radius)) {
+					player.AddBuff(Weak_Shimmer_Debuff.ID, 5, true);
+				}
+			}
+			if (!Main.gamePaused) {
+				Texture2D circle = TextureAssets.Projectile[Type].Value;
+				SC_Phase_Three_Overlay.drawDatas.Add(new(
+					circle,
+					Projectile.position - Main.screenPosition,
+					null,
+					Color.White
+				) {
+					origin = circle.Size() * 0.5f,
+					scale = Vector2.One * Projectile.scale
+				});
+			}
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			return false;
 		}
 	}
 }

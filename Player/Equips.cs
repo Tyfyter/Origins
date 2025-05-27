@@ -5,6 +5,7 @@ using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Aetherite;
 using Origins.Items.Mounts;
 using Origins.Items.Other;
 using Origins.Items.Tools;
@@ -672,7 +673,14 @@ namespace Origins {
 				}
 
 				case SetActiveAbility.aetherite_armor: {
-					// pending shimmer construct phase 3 visuals
+					setAbilityCooldown = 600;
+					Player.SpawnProjectile(null,
+						Player.MountedCenter,
+						Vector2.Zero,
+						ModContent.ProjectileType<Aetherite_Aura_P>(),
+						0,
+						0
+					);
 					break;
 				}
 

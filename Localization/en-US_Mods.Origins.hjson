@@ -1764,9 +1764,9 @@ Projectiles: {
 	Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
 	Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
 	Greasy_Gas.DisplayName: Greasy Gas
-	Cannihound_Gore1.DisplayName: Cannihound Gore1
-	Cannihound_Gore2.DisplayName: Cannihound Gore2
-	Cannihound_Gore3.DisplayName: Cannihound Gore3
+	Cannihound_Gore1.DisplayName: Cannihound Gore
+	Cannihound_Gore2.DisplayName: Cannihound Gore
+	Cannihound_Gore3.DisplayName: Cannihound Gore
 	Brine_Haze_P.DisplayName: Brine Haze Cloud
 	Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
 	Defiled_Broadcaster_Flan.DisplayName: "{§Defiled} Broadcaster"
@@ -1799,31 +1799,32 @@ Projectiles: {
 	Cool_Sword_Slash.DisplayName: Cool Sword
 	Cool_Sword_P.DisplayName: Cool Star
 	Shimmer_Construct_Bullet.DisplayName: Shimmer Construct Bullet
-	Chambersite_Phasesaber_P.DisplayName: Chambersite Phasesaber P
+	Chambersite_Phasesaber_P.DisplayName: Chambersite Phasesaber
 	Bile_Harpoon_Droplet.DisplayName: Bile Harpoon Droplet
-	Bile_Harpoon_P.DisplayName: Bile Harpoon P
-	Shinedown_P.DisplayName: Shinedown P
-	Shinedown_Staff_P.DisplayName: Shinedown Staff P
-	Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon P
-	Amnestic_Rose_Flower_P.DisplayName: Amnestic Rose Flower P
+	Bile_Harpoon_P.DisplayName: Bile Harpoon
+	Shinedown_P.DisplayName: Shinedown
+	Shinedown_Staff_P.DisplayName: Shinedown Staff
+	Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon
+	Amnestic_Rose_Flower_P.DisplayName: Amnestic Rose Flower
 	Amnestic_Rose_Thorn.DisplayName: Amnestic Rose Thorn
 	Amnestic_Rose_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
 	Amnestic_Rose_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
-	Otherworldly_Cloak_P.DisplayName: Otherworldly Cloak P
-	Master_Magician_Cloak_P.DisplayName: Master Magician Cloak P
-	Constellation_P.DisplayName: Constellation P
+	Otherworldly_Cloak_P.DisplayName: Otherworldly Cloak
+	Master_Magician_Cloak_P.DisplayName: Master Magician Cloak
+	Constellation_P.DisplayName: Constellation
 	Constellation_Star.DisplayName: Constellation Star
 	Actual_Constellation.DisplayName: Actual Constellation
 	Voltefuse_Star.DisplayName: Voltefuse Star
 	Shimmer_Landmines.DisplayName: Shimmer Landmines
 	Shotgun_Indicator.DisplayName: Shotgun Indicator
-	Amnestic_Rose_Alt_Flower_P.DisplayName: Amnestic Rose Alt Flower P
-	Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Alt Goo Ball
-	Amnestic_Rose_Alt_Goo_Floor.DisplayName: Amnestic Rose Alt Goo Floor
-	Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Alt Thorn
+	Amnestic_Rose_Alt_Flower_P.DisplayName: Amnestic Rose Flower
+	Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
+	Amnestic_Rose_Alt_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
+	Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Thorn
 	Ichor_Harpoon_Droplet.DisplayName: Ichor Harpoon Droplet
-	Ichor_Harpoon_P.DisplayName: Ichor Harpoon P
+	Ichor_Harpoon_P.DisplayName: Ichor Harpoon
 	Gelatin_Buddy.DisplayName: Gelatin Buddy
+	Aetherite_Aura_P.DisplayName: Aetherite Aura
 }
 
 Prefixes: {

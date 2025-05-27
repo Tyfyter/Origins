@@ -18,6 +18,7 @@ using PegasusLib;
 using Origins.Items.Weapons.Magic;
 using Terraria.Utilities;
 using Origins.NPCs.Defiled.Boss;
+using Origins.Projectiles;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -292,7 +293,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				i => i.MatchLdfld<Projectile>(nameof(Projectile.tileCollide))
 			);
 			c.EmitLdarg0();
-			c.EmitDelegate((bool tileCollide, Projectile projectile) => tileCollide && (!projectile.friendly || !projectile.TryGetOwner(out Player player) || !player.OriginPlayer().weakShimmer));
+			c.EmitDelegate((bool tileCollide, Projectile projectile) => tileCollide && !(projectile.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer));
 		}
 
 		public override void SetStaticDefaults() {
@@ -347,6 +348,22 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			npc.GetGlobalNPC<OriginGlobalNPC>().lazyCloakShimmer = true;
+			bool isBlocked = false;
+			for (int i = (int)(npc.position.X / 16f); i <= (npc.position.X + npc.width) / 16; i++) {
+				for (int j = (int)(npc.position.Y / 16f); j <= (npc.position.Y + npc.height) / 16; j++) {
+					if (WorldGen.SolidTile3(i, j))
+						isBlocked = true;
+				}
+			}
+
+			if (isBlocked) {
+				npc.buffTime[buffIndex]++;
+			} else {
+				npc.DelBuff(buffIndex--);
+			}
+		}
 	}
 	public class SC_Phase_Three_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater), ILoadable {
 		readonly Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/Textures/Shimmer_Construct_BG");
@@ -363,18 +380,21 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			SpriteBatchState state = spriteBatch.GetState();
-			RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
-			try {
-				spriteBatch.Restart(state);
-				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
-				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-				for (int i = 0; i < drawDatas.Count; i++) {
-					drawDatas[i].Draw(spriteBatch);
+			if (!Main.gamePaused) {
+				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
+				try {
+					spriteBatch.Restart(state);
+					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+					for (int i = 0; i < drawDatas.Count; i++) {
+						drawDatas[i].Draw(spriteBatch);
+					}
+				} finally {
+					spriteBatch.End();
+					spriteBatch.UseOldRenderTargets(oldRenderTargets);
+					spriteBatch.Begin(state);
 				}
-			} finally {
-				spriteBatch.End();
-				spriteBatch.UseOldRenderTargets(oldRenderTargets);
-				spriteBatch.Begin(state);
+				drawDatas.Clear();
 			}
 
 			Origins.shaderOroboros.Capture(spriteBatch);
@@ -424,9 +444,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			MainReflection.DrawDust();
 			spriteBatch.Begin(state);
 		}
-		public override void Update(GameTime gameTime) {
-			if (!Main.gamePaused || drawDatas.Count > 25) drawDatas.Clear();
-		}
+		public override void Update(GameTime gameTime) { }
 		public override void Activate(Vector2 position, params object[] args) {
 			Mode = OverlayMode.Active;
 			if (active.TrySet(true)) opacity = Main.rand.NextFloat(0.6f, 0.85f);
@@ -436,8 +454,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Mode = OverlayMode.Inactive;
 		}
 		public override bool IsVisible() => active;
-		public void Load(Mod mod) {
-		}
+		public void Load(Mod mod) { }
 		public void Unload() {
 			if (renderTarget is not null) {
 				Main.QueueMainThreadAction(renderTarget.Dispose);
