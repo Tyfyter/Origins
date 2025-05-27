@@ -42,7 +42,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Master_Magician_Cloak_P : Lazy_Cloak_P {
 		public static new int ID { get; private set; }
-		public override int BuffID => Otherworldly_Cloak_Buff.ID;
+		public override int BuffID => Master_Magician_Cloak_Buff.ID;
 	}
 }
 namespace Origins.Buffs {
