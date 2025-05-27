@@ -13,12 +13,14 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Light;
+using Terraria.ID;
 using Terraria.ModLoader;
 using OpCodes = System.Reflection.Emit.OpCodes;
 
 namespace Origins.Graphics.Unlighting {
+	[ReinitializeDuringResizeArrays]
 	public class Anti_LightingEngine : ILoadable {
-		LightingEngine unlightingEngine = new();
+		readonly LightingEngine unlightingEngine = new();
 		public void Load(Mod mod) {
 			unlightingEngine.Rebuild();
 			On_LightingEngine.ProcessScan += On_LightingEngine_ProcessScan;
@@ -34,16 +36,16 @@ namespace Origins.Graphics.Unlighting {
 			On_TileLightScanner.ApplyLiquidLight += (On_TileLightScanner.orig_ApplyLiquidLight orig, TileLightScanner self, Tile tile, ref Vector3 lightColor) => {
 				if (self != tileScanner.Value) orig(self, tile, ref lightColor);
 			};
-			IL_TileLightScanner.ApplyTileLight += IL_TileLightScanner_ApplyTileLight;
-			IL_TileLightScanner.ApplyWallLight += IL_TileLightScanner_ApplyTileLight;
+			IL_TileLightScanner.ApplyTileLight += ApplyTileWallLight;
+			IL_TileLightScanner.ApplyWallLight += ApplyTileWallLight;
 			IL_LightingEngine.ApplyPerFrameLights += IL_LightingEngine_ApplyPerFrameLights;
 			lightingEngine = new(() => _activeEngine.Value);
 			tileScanner = new(() => _tileScanner.GetValue(unlightingEngine));
 
-			string methodName = "MoveUnlights";
+			string methodName = "CopyPerFrameUnlights";
 			DynamicMethod getterMethod = new(methodName, typeof(void), [typeof(LightingEngine), typeof(LightingEngine)], true);
 			ILGenerator gen = getterMethod.GetILGenerator();
-			MethodInfo debugObject = GetType().GetMethod("debugObject", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+			FieldInfo anyPerFrameUnglows = GetType().GetField(nameof(Anti_LightingEngine.anyPerFrameUnglows), BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 			FieldInfo _perFrameLights = typeof(LightingEngine).GetField("_perFrameLights", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			Type PerFrameLight = typeof(LightingEngine).GetNestedType("PerFrameLight", BindingFlags.NonPublic);
 			Type List = typeof(List<>).MakeGenericType(PerFrameLight);
@@ -51,11 +53,10 @@ namespace Origins.Graphics.Unlighting {
 			FieldInfo Color = PerFrameLight.GetField("Color", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
 			LocalBuilder i = gen.DeclareLocal(typeof(int));
-			//LocalBuilder lights = gen.DeclareLocal(Span);
 			LocalBuilder current = gen.DeclareLocal(PerFrameLight);
-			/*gen.Emit(OpCodes.Ldarg_0);
-			gen.Emit(OpCodes.Call, typeof(CollectionsMarshal).GetMethod(nameof(CollectionsMarshal.AsSpan)).MakeGenericMethod(PerFrameLight));
-			gen.Emit(OpCodes.Stloc, lights); // Span<PerFrameLight> lights = CollectionsMarshal.AsSpan(arg0);*/
+
+			gen.Emit(OpCodes.Ldc_I4_0);
+			gen.Emit(OpCodes.Stsfld, anyPerFrameUnglows); // anyPerFrameUnglows = false;
 
 			gen.Emit(OpCodes.Ldarg_1);
 			gen.Emit(OpCodes.Ldfld, _perFrameLights);
@@ -77,10 +78,6 @@ namespace Origins.Graphics.Unlighting {
 			gen.Emit(OpCodes.Ldloc, i);
 			gen.Emit(OpCodes.Ldc_I4_0);
 			gen.Emit(OpCodes.Ble, end); // if (i < 0) break;
-
-			gen.Emit(OpCodes.Ldloc, i);
-			gen.Emit(OpCodes.Box, typeof(int));
-			gen.Emit(OpCodes.Call, debugObject);
 
 			gen.Emit(OpCodes.Ldarg_0);
 			gen.Emit(OpCodes.Ldfld, _perFrameLights);
@@ -113,19 +110,25 @@ namespace Origins.Graphics.Unlighting {
 			gen.Emit(OpCodes.Ldfld, _perFrameLights);
 			gen.Emit(OpCodes.Ldloc, current);
 			gen.Emit(OpCodes.Callvirt, List.GetMethod(nameof(List<object>.Add))); //arg1.Add(current);
+			gen.Emit(OpCodes.Ldc_I4_1);
+			gen.Emit(OpCodes.Stsfld, anyPerFrameUnglows); // anyPerFrameUnglows = true;
 
 			gen.Emit(OpCodes.Br, loop); // goto loop;
 
 			gen.MarkLabel(end);
 			gen.Emit(OpCodes.Ret);
 
-			MoveUnlights = getterMethod.CreateDelegate<Action<LightingEngine, LightingEngine>>();
+			CopyPerFrameUnlights = getterMethod.CreateDelegate<Action<LightingEngine, LightingEngine>>();
 		}
-		Action<LightingEngine, LightingEngine> MoveUnlights;
+#pragma warning disable IDE0044 // Add readonly modifier
+		static bool anyUnglowingBlocks = false;
+		static bool anyPerFrameUnglows = false;
+#pragma warning restore IDE0044 // Add readonly modifier
+		Action<LightingEngine, LightingEngine> CopyPerFrameUnlights;
 		private void IL_LightingEngine_ApplyPerFrameLights(ILContext il) {
 			ILCursor c = new(il);
 			c.GotoNext(MoveType.After, i => i.MatchLdfld(typeof(LightingEngine).GetNestedType("PerFrameLight", BindingFlags.NonPublic), "Color"));
-			c.EmitDelegate((Vector3 value) => value * -unlighting.ToDirectionInt());
+			c.EmitDelegate((Vector3 value) => value * unlightingFactor);
 		}
 
 		private void On_LightingEngine_Present(On_LightingEngine.orig_Present orig, LightingEngine self) {
@@ -133,7 +136,7 @@ namespace Origins.Graphics.Unlighting {
 			if (self == lightingEngine.Value) orig(unlightingEngine);
 		}
 
-		private void IL_TileLightScanner_ApplyTileLight(ILContext il) {
+		private void ApplyTileWallLight(ILContext il) {
 			ILCursor c = new(il);
 			int loc = -1;
 			Func<Instruction, bool>[] predicates = [
@@ -143,17 +146,26 @@ namespace Origins.Graphics.Unlighting {
 				i => i.MatchBgeUn(out _)//IL_353a: bge.un.s IL_3544
 			];
 			while (c.TryGotoNext(MoveType.AfterLabel, predicates)) {
-				int cursorIndex = c.Index;
+				/*int cursorIndex = c.Index;
 				while (c.TryGotoNext(MoveType.After, i => i.MatchLdloc(loc))) {
-					c.EmitDelegate((float value) => value * -unlighting.ToDirectionInt());
+					c.EmitDelegate((float value) => {
+						anyUnglowingBlocks |= value < 0;
+						return value * unlightingFactor;
+					});
 				}
-				c.Index = cursorIndex;
+				c.Index = cursorIndex;*/
+				c.EmitLdloca(loc);
+				c.EmitDelegate((ref float value) => {
+					anyUnglowingBlocks |= value < 0;
+					value *= unlightingFactor;
+				});
+				c.Index += predicates.Length - 1;
 			}
 		}
 
 		private Vector3 On_LightingEngine_GetColor(On_LightingEngine.orig_GetColor orig, LightingEngine self, int x, int y) {
 			Vector3 value = orig(self, x, y);
-			if (self == lightingEngine.Value) {
+			if ((anyUnglowingBlocks || anyPerFrameUnglows) && self == lightingEngine.Value) {
 				Vector3 unlight = orig(unlightingEngine, x, y);
 				int num = (Main.tileColor.R + Main.tileColor.G + Main.tileColor.B) / 3;
 				float minLight = (float)(num * 0.4) / 255f;
@@ -176,24 +188,25 @@ namespace Origins.Graphics.Unlighting {
 		private void On_LightingEngine_ProcessBlur(On_LightingEngine.orig_ProcessBlur orig, LightingEngine self) {
 			if (self == lightingEngine.Value) {
 				try {
-					unlighting = true;
-					MoveUnlights(self, unlightingEngine);
+					unlightingFactor = -1;
+					CopyPerFrameUnlights(self, unlightingEngine);
 					orig(unlightingEngine);
 				} finally {
-					unlighting = false;
+					unlightingFactor = 1;
 				}
 			}
 			orig(self);
 		}
-		static bool unlighting = false;
+		static float unlightingFactor = 1;
 		private void On_LightingEngine_ProcessScan(On_LightingEngine.orig_ProcessScan orig, LightingEngine self, Rectangle area) {
+			anyUnglowingBlocks = false;
 			orig(self, area);
 			if (self == lightingEngine.Value) {
 				try {
-					unlighting = true;
+					unlightingFactor = -1;
 					orig(unlightingEngine, area);
 				} finally {
-					unlighting = false;
+					unlightingFactor = 1;
 				}
 			}
 		}
