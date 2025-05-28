@@ -8,8 +8,10 @@ namespace Origins.Misc {
 		T value;
 		public FrameCachedValue(Func<T> getValueFunc) {
 			GetValueFunc = getValueFunc;
-			lastGameFrameCount = Origins.gameFrameCount;
-			value = GetValueFunc();
+			try {
+				value = GetValueFunc();
+				lastGameFrameCount = Origins.gameFrameCount;
+			} catch (Exception) { }
 		}
 		public T GetValue() => Value;
 		public T Value {
