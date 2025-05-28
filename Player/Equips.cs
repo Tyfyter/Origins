@@ -368,7 +368,7 @@ namespace Origins {
 					}
 				}
 			}
-			if (wishingGlassCooldown <= 0 && Player.GetModPlayer<SyncedKeybinds>().WishingGlass.JustPressed) {
+			if (WishingGlass && wishingGlassCooldown <= 0 && Player.GetModPlayer<SyncedKeybinds>().WishingGlass.JustPressed) {
 				if (wishingGlassVisible) {
 					Wishing_Glass_Layer.StartAnimation(ref wishingGlassAnimation);
 				} else {
