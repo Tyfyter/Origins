@@ -50,6 +50,9 @@ namespace Origins.Items.Pets {
 				case "Blaire":
 				return 4;
 
+				case "Jennifer_Alt":
+				return Colors.IndexInRange(Main.LocalPlayer.selectedItem) ? Main.LocalPlayer.selectedItem : -1;
+
 				default:
 				return -1;
 			}
@@ -117,7 +120,7 @@ namespace Origins.Items.Pets {
 
 			#region General behavior
 			Vector2 idlePosition = player.Top;
-			idlePosition.X -= 48f * player.direction;
+			idlePosition.X += 40f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -153,10 +156,10 @@ namespace Origins.Items.Pets {
 			float inertia;
 			if (distanceToIdlePosition > 160f) {
 				speed = 16f;
-				inertia = 36f;
+				inertia = 18f;
 			} else {
 				speed = 6f;
-				inertia = 48f;
+				inertia = 24f;
 			}
 			if (distanceToIdlePosition > 12f) {
 				// The immediate range around the player (when it passively floats about)
@@ -180,11 +183,10 @@ namespace Origins.Items.Pets {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= Main.projFrames[Projectile.type]) Projectile.frame = 0;
 			}
-			int velDir = Math.Sign(Projectile.velocity.X);
-			if (velDir == 0) {
+			if (Math.Abs(Projectile.velocity.X) < 0.1f) {
 				Projectile.spriteDirection = player.direction;
 			} else {
-				Projectile.spriteDirection = velDir;
+				Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 			}
 
 			const int HalfSpriteWidth = 36 / 2;
@@ -210,8 +212,9 @@ namespace Origins.Items.Pets {
 				glowColor = glow;
 				Vector3 normalizedGlow = Vector3.Normalize(glow);
 				if (!float.IsNaN(normalizedGlow.X) && !float.IsNaN(normalizedGlow.Y) && !float.IsNaN(normalizedGlow.Z)) {
-					normalizedGlow *= normalizedGlow * normalizedGlow; // cube the normalized light to make white not better than the other colors
-					glowColor = normalizedGlow;
+					const float power = 2.7268f; // Menger sponge the normalized light to make white not better than the other colors
+												 // I was going to England it, but its Hausdorff dimensionality is too low, and I'd have to update it if a clod be washed away by the sea
+					glowColor = new(MathF.Pow(normalizedGlow.X, power), MathF.Pow(normalizedGlow.Y, power), MathF.Pow(normalizedGlow.Z, power));
 				}
 			}
 			{
