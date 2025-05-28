@@ -95,5 +95,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				);
 			}
 		}
+		public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
 	}
 }

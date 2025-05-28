@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -26,6 +27,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.Utilities.Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
@@ -34,7 +36,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeofCthulhu;
 		public override string BossHeadTexture => "Terraria/Images/NPC_Head_Boss_0";
 		public readonly int[] previousStates = new int[6];
-		public bool IsInPhase3 => Main.expertMode && NPC.life * 1 < NPC.lifeMax;
+		public bool IsInPhase3 => isInPhase3;// Main.expertMode && NPC.life * 10 <= NPC.lifeMax;
 		internal static IItemDropRule normalDropRule;
 		public override void Load() {
 			On_NPC.DoDeathEvents += static (On_NPC.orig_DoDeathEvents orig, NPC self, Player closestPlayer) => {
@@ -75,7 +77,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
-			NPC.DeathSound = SoundID.DD2_DefeatScene;
 			NPC.BossBar = GetInstance<SC_BossBar>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			Array.Fill(previousStates, NPC.aiAction);
@@ -91,7 +92,24 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.shimmerTransparency -= 0.005f;
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
 			}
-			aiStates[NPC.aiAction].DoAIState(this);
+			NPC.dontTakeDamage = false;
+			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) aiStates[NPC.aiAction].DoAIState(this);
+			else {
+				NPC.velocity = Vector2.Zero;
+				NPC.dontTakeDamage = true;
+				if (++deathAnimationTime >= DeathAnimationTime) {
+					if (Main.expertMode) {
+						NPC.lifeMax = (int)(2000 * ContentExtensions.DifficultyDamageMultiplier);
+						NPC.life = NPC.lifeMax;
+						isInPhase3 = true;
+						NPC.netUpdate = true;
+					} else {
+						NPC.life = 0;
+						NPC.checkDead();
+					}
+				}
+			}
+			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 			if (IsInPhase3) {
 				Rectangle npcRect = NPC.Hitbox;
 				const int active_range = 5000;
@@ -127,6 +145,114 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
+		}
+		int deathAnimationTime = 0;
+		bool isInPhase3 = false;
+		static int DeathAnimationTime => 480;
+		public override bool CheckDead() {
+			if (deathAnimationTime < DeathAnimationTime) {
+				NPC.life = 1;
+				return false;
+			}
+			return true;
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0 && deathAnimationTime <= 0) {
+				SoundEngine.PlaySound(SoundID.DD2_DefeatScene, NPC.Center);
+				if (deathAnimationTime <= 0) deathAnimationTime = 1;
+			}
+		}
+		Chunk[] chunks = [];
+		struct Chunk(int type, Vector2 position) {
+			float rotation;
+			Vector2 position = position;
+			Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
+			public void Update(Shimmer_Construct construct) {
+				bool collision = true;
+				if (construct.deathAnimationTime < 240) {
+					velocity.Y += 0.4f;
+				} else if (construct.deathAnimationTime < 300) {
+					velocity *= 0.9f;
+				} else if (construct.deathAnimationTime < 360) {
+					velocity *= 0.9f;
+					collision = false;
+					Vector2 targetPos = construct.NPC.Center;
+					velocity += position.DirectionTo(targetPos);
+				} else if (construct.deathAnimationTime == 360) {
+					velocity = new(0, 32 + type * 8);
+					return;
+				} else {
+					float speed = 0.15f + type * 0.01f;
+					velocity = velocity.RotatedBy(speed);
+					position = construct.NPC.Center + velocity;
+					rotation += speed;
+					return;
+				}
+				rotation += velocity.X * 0.1f;
+				if (collision) {
+					int size = (int)(Math.Min(TextureAssets.Gore[type].Width(), TextureAssets.Gore[type].Height()) * 0.9f);
+					Vector2 halfSize = new(size * 0.5f);
+					Vector4 slopeCollision = Collision.SlopeCollision(position - halfSize, velocity, size, size);
+					position = slopeCollision.XY() + halfSize;
+					velocity = slopeCollision.ZW();
+					velocity = Collision.TileCollision(position - halfSize, velocity, size, size);
+					if (velocity.Y == 0f) {
+						velocity.X *= 0.97f;
+						if (velocity.X > -0.01 && velocity.X < 0.01) {
+							velocity.X = 0f;
+						}
+					}
+				}
+				position += velocity;
+			}
+			public readonly bool Draw(Shimmer_Construct construct) {
+				Point lightPos = position.ToTileCoordinates();
+				Main.instance.LoadGore(type);
+				Main.spriteBatch.Draw(
+					TextureAssets.Gore[type].Value,
+					position - Main.screenPosition,
+					null,
+					construct.isInPhase3 ? Color.White : Lighting.GetColor(lightPos),
+					rotation,
+					TextureAssets.Gore[type].Size() * 0.5f,
+					1,
+					SpriteEffects.None,
+				0f);
+				return false;
+			}
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Vector2 position = NPC.Center;
+			if (deathAnimationTime > 0) {
+				const float shattertime = 100;
+				if (deathAnimationTime >= shattertime) {
+					if (chunks.Length <= 0) {
+						chunks = [
+							new(2, position),
+							new(7, position),
+							new(9, position),
+							new(10, position)
+						];
+					}
+					for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
+					return false;
+				}
+				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
+			}
+			spriteBatch.Draw(
+				TextureAssets.Npc[Type].Value,
+				position - screenPos,
+				NPC.frame,
+				drawColor,
+				NPC.rotation,
+				new(55, 107),
+				NPC.scale,
+				SpriteEffects.None,
+			0);
+			return false;
+		}
+		public override void BossHeadSlot(ref int index) {
+			index = 1;
 		}
 		public override bool PreKill() {
 			if (IsInPhase3) {
@@ -300,9 +426,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);
+			writer.Write((bool)isInPhase3);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
+			isInPhase3 = reader.ReadBoolean();
 		}
 		public static void SetAIState(Shimmer_Construct boss, int state) {
 			NPC npc = boss.NPC;
@@ -322,6 +450,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			SetAIState(boss, states);
 		}
+		public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
 		public class AutomaticIdleState : AIState {
 			public delegate int StatePriority(Shimmer_Construct boss);
 			public static List<(AIState state, StatePriority condition)> aiStates = [];
@@ -366,7 +495,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public void Unload() { }
 		}
 	}
-	public class SC_Music_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
+	public class SC_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
 		public override int Music => Origins.Music.ShimmerConstruct;
 		Asset<Texture2D> circle = Main.Assets.Request<Texture2D>("Images/Misc/StarDustSky/Planet");
 		float scale = 0;
