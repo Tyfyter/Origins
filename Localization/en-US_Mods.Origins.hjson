@@ -28,6 +28,7 @@ Conditions: {
 	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
 	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
 	DownedShimmerConstruct: After defeating the Shimmer Construct
+	DownedChambersiteSentinel: After defeating the Chambersite Sentinel
 }
 
 ModMenu: {
@@ -1199,8 +1200,8 @@ Buffs: {
 	}
 
 	Shimmer_Guardian_Buff: {
-		DisplayName: Shimmer Guardian Buff
-		Description: Mods.Origins.Buffs.Shimmer_Guardian_Buff.Description
+		DisplayName: Shimmer Guardian
+		Description: The shimmer guardian will fight for you
 	}
 
 	Wishing_Glass_Buff: {
@@ -1214,23 +1215,23 @@ Buffs: {
 	}
 
 	Otherworldly_Cloak_Buff: {
-		DisplayName: Otherworldly Cloak Buff
-		Description: Mods.Origins.Buffs.Otherworldly_Cloak_Buff.Description
+		DisplayName: Otherworldly Cloak
+		Description: Your cloak will fight for you
 	}
 
 	Master_Magician_Cloak_Buff: {
-		DisplayName: Master Magician Cloak Buff
-		Description: Mods.Origins.Buffs.Master_Magician_Cloak_Buff.Description
+		DisplayName: Master Magician Cloak
+		Description: Your cloak will fight for you
 	}
 
 	Amnestic_Rose_Alt_Buff: {
-		DisplayName: Amnestic Rose Alt Buff
-		Description: Mods.Origins.Buffs.Amnestic_Rose_Alt_Buff.Description
+		DisplayName: Rose Regrowth
+		Description: The Rosebud is regrowing
 	}
 
 	Gelatin_Aspect_Buff: {
-		DisplayName: Gelatin Aspect Buff
-		Description: Mods.Origins.Buffs.Gelatin_Aspect_Buff.Description
+		DisplayName: Gelatin Aspect
+		Description: An aspect of gelatin lights your way
 	}
 }
 
@@ -2652,6 +2653,11 @@ SetBonuses: {
 		'''
 		Summons a Chambersite Sentinal to watch over you
 		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
+		'''
+	Aetherite:
+		'''
+		Able to temporarily take enemies into a partial shimmering with you, significantly slowing them down and slowing down their projectiles at the cost of random aether stars positioned in this dimension.
+		Teleports the player and all entities back where they last were after this ability. 15 second cooldown (applies to bosses too)
 		'''
 }
 

@@ -51,6 +51,7 @@ using ThoriumMod.Items.Misc;
 using Fargowiltas.Common.Configs;
 using Origins.Water;
 using Origins.Items.Armor.Other;
+using Origins.NPCs.MiscB;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -294,6 +295,16 @@ namespace Origins {
 							RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
 							TrophyTileBase.ItemType<Shimmer_Construct_Trophy>()
 						}
+					}
+				);
+				bossChecklist.Call("LogMiniBoss",
+					mod,
+					nameof(Chambersite_Sentinel).Replace("_", ""),
+					7.2f,
+					() => Boss_Tracker.Instance.downedChambersiteSentinel,
+					ModContent.NPCType<Chambersite_Sentinel>(),
+					new Dictionary<string, object> {
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition")
 					}
 				);
 			}

@@ -20,6 +20,8 @@ namespace Origins.NPCs {
 		public bool downedLostDiver;
 		public bool downedShimmerConstruct;
 
+		public bool downedChambersiteSentinel;
+
 		public bool downedDefiledMimic;
 		public bool downedRivenMimic;
 		public bool downedAshenMimic;

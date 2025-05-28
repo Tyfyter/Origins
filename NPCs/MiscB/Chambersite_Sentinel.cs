@@ -34,8 +34,13 @@ namespace Origins.NPCs.MiscB {
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) => (OriginSystem.chambersiteTiles + OriginSystem.chambersiteWalls) * 0.0001f;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText()
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
+		}
+		public override void OnKill() {
+			Boss_Tracker.Instance.downedChambersiteSentinel = true;
+			NetMessage.SendData(MessageID.WorldData);
 		}
 		Aim[] aims;
 		Aim[] decayingAims;

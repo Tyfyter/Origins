@@ -5,6 +5,7 @@ GenericTooltip: {
 	// ArtifactTag: "[c/ffb300:-Artifact Minion-]"
 	// ConceptBy: Concept by {0}
 	// ConceptAndSpriteBy: Concept and art by {0}
+	// Extractinator: For use with the Extractinator
 }
 
 Krunch_Mix: {
@@ -1980,7 +1981,7 @@ Tearracuda: {
 
 Tire: {
 	// DisplayName: Tire
-	// Tooltip: ""
+	// Tooltip: "{$Mods.Origins.Items.GenericTooltip.Extractinator}"
 }
 
 Journal_Item: {
@@ -5792,7 +5793,7 @@ Ocotillo_Flower: {
 
 Geothermal_Sludge: {
 	// DisplayName: Geothermal Sludge
-	// Tooltip: ""
+	// Tooltip: "{$Mods.Origins.Items.GenericTooltip.Extractinator}"
 }
 
 Inject_Incantation: {

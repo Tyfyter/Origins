@@ -8,6 +8,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.ServantofCthulhu] = Type;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 		}
 		public override void SetDefaults() {

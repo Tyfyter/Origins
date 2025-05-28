@@ -386,4 +386,8 @@ Shimmer_Construct: {
 // Chambersite_Bunny.DisplayName: Chambersite Bunny
 // Chambersite_Squirrel.DisplayName: Chambersite Squirrel
 // Shimmer_Drone.DisplayName: Shimmer Drone
-// Chambersite_Sentinel.DisplayName: Chambersite Sentinel
+
+Chambersite_Sentinel: {
+	// DisplayName: Chambersite Sentinel
+	// BossChecklistIntegration.SpawnCondition: Spawns randomly when nearby chambersite
+}
