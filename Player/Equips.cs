@@ -10,6 +10,7 @@ using Origins.Items.Mounts;
 using Origins.Items.Other;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
+using Origins.Layers;
 using Origins.NPCs.Defiled;
 using PegasusLib;
 using System;
@@ -368,38 +369,42 @@ namespace Origins {
 				}
 			}
 			if (wishingGlassCooldown <= 0 && Player.GetModPlayer<SyncedKeybinds>().WishingGlass.JustPressed) {
-				int dustType = ModContent.DustType<Following_Shimmer_Dust>();
-				for (int i = 0; i < 20; i++) {
-					Dust dust = Dust.NewDustDirect(
-						Player.position,
-						Player.width,
-						Player.height,
-						dustType,
-						0f,
-						0f,
-						100,
-						default,
-						2.5f
-					);
-					dust.noGravity = true;
-					dust.velocity *= 7f;
-					dust.velocity += Player.velocity * 0.75f;
-					dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
+				if (wishingGlassVisible) {
+					Wishing_Glass_Layer.StartAnimation(ref wishingGlassAnimation);
+				} else {
+					int dustType = ModContent.DustType<Following_Shimmer_Dust>();
+					for (int i = 0; i < 20; i++) {
+						Dust dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							2.5f
+						);
+						dust.noGravity = true;
+						dust.velocity *= 7f;
+						dust.velocity += Player.velocity * 0.75f;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
 
-					dust = Dust.NewDustDirect(
-						Player.position,
-						Player.width,
-						Player.height,
-						dustType,
-						0f,
-						0f,
-						100,
-						default,
-						1.5f
-					);
-					dust.velocity *= 3f;
-					dust.velocity += Player.velocity * 0.75f;
-					dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
+						dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							1.5f
+						);
+						dust.velocity *= 3f;
+						dust.velocity += Player.velocity * 0.75f;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
+					}
 				}
 				if (Main.myPlayer == Player.whoAmI) {
 					Player.AddBuff(ModContent.BuffType<Wishing_Glass_Buff>(), 8 * 60);
@@ -572,15 +577,13 @@ namespace Origins {
 					}
 				}
 			}
-			if (wishingGlassVisible) {
-				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-					if (Player.armor[i].ModItem is Wishing_Glass) {
-						wishingGlassDye = Player.dye[i].dye;
-					}
-					if (Player.armor[i + 10].ModItem is Wishing_Glass) {
-						wishingGlassDye = Player.dye[i].dye;
-						break;
-					}
+			for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
+				if (Player.armor[i].ModItem is Wishing_Glass) {
+					wishingGlassDye = Player.dye[i].dye;
+				}
+				if (Player.armor[i + 10].ModItem is Wishing_Glass) {
+					wishingGlassDye = Player.dye[i].dye;
+					break;
 				}
 			}
 		}

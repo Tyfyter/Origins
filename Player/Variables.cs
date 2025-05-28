@@ -5,6 +5,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
@@ -312,6 +313,7 @@ namespace Origins {
 		public bool wishingGlassActive = false;
 		public int wishingGlassCooldown = 0;
 		public bool wishingGlassVisible = false;
+		public int wishingGlassAnimation = 0;
 		public int wishingGlassDye = -1;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
@@ -729,42 +731,47 @@ namespace Origins {
 			}
 			wishingGlassEquipTime.Cooldown();
 			if (wishingGlassCooldown.Cooldown()) {
-				int dustType = ModContent.DustType<Following_Shimmer_Dust>();
-				for (int i = 0; i < 20; i++) {
-					Dust dust = Dust.NewDustDirect(
-						Player.position,
-						Player.width,
-						Player.height,
-						dustType,
-						0f,
-						0f,
-						100,
-						default,
-						2.5f
-					);
-					dust.noGravity = true;
-					dust.velocity *= 11f;
-					dust.position -= dust.velocity * 12;
-					dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player, 1);
+				if (wishingGlassVisible) {
 
-					dust = Dust.NewDustDirect(
-						Player.position,
-						Player.width,
-						Player.height,
-						dustType,
-						0f,
-						0f,
-						100,
-						default,
-						1.5f
-					);
-					dust.noGravity = true;
-					dust.velocity *= 7f;
-					dust.position -= dust.velocity * 12;
-					dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player, 1);
+				} else {
+					int dustType = ModContent.DustType<Following_Shimmer_Dust>();
+					for (int i = 0; i < 20; i++) {
+						Dust dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							2.5f
+						);
+						dust.noGravity = true;
+						dust.velocity *= 11f;
+						dust.position -= dust.velocity * 12;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player, 1);
+
+						dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							1.5f
+						);
+						dust.noGravity = true;
+						dust.velocity *= 7f;
+						dust.position -= dust.velocity * 12;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player, 1);
+					}
 				}
 			}
 			wishingGlassActive = false;
+			Wishing_Glass_Layer.UpdateAnimation(ref wishingGlassAnimation, wishingGlassCooldown);
 			wishingGlassVisible = false;
 			shimmerShield = false;
 			lotteryTicketItem = null;
