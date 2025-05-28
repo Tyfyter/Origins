@@ -241,10 +241,11 @@ namespace Origins.Items.Accessories {
 			int offsetY = 0;
 			float originX = 0;
 			ProjectileLoader.DrawOffset(Projectile, ref offsetX, ref offsetY, ref originX);
-			int frameHeight = glowTexture.Height() / Main.projFrames[Projectile.type];
+			int frameHeight = TextureAssets.Projectile[Type].Height() / Main.projFrames[Projectile.type];
 			Vector2 origin = new(originX, Projectile.height / 2 + offsetY);
 			Rectangle sourceRectangle = new(0, frameHeight * Projectile.frame, TextureAssets.Projectile[Projectile.type].Width(), frameHeight - 1);
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value,
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
 				Projectile.position + new Vector2(originX + offsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
 				sourceRectangle,
 				lightColor,
@@ -254,7 +255,8 @@ namespace Origins.Items.Accessories {
 				dir
 			);
 			if (glowTexture is not null) {
-				Main.EntitySpriteDraw(glowTexture.Value,
+				Main.EntitySpriteDraw(
+					glowTexture.Value,
 					Projectile.position + new Vector2(originX + offsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
 					sourceRectangle,
 					new Color(250, 250, 250, Projectile.alpha),
