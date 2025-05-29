@@ -178,8 +178,9 @@ namespace Origins.Tiles.Other {
 		}
 
 		public override void AddRecipes() {
-			CreateRecipe(3)
-			.AddIngredient(ItemID.Torch, 3)
+			CreateRecipe(10)
+			.AddIngredient(ItemID.Torch, 10)
+			.AddIngredient<Chambersite_Item>()
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 		}

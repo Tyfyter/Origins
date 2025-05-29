@@ -1222,7 +1222,7 @@ TILES:
 (^) Riven Water Fountain
 (X) Rusty Locker
 (X) Sanguinite Brick
-(#, ^2) Shadow Torch° !!!
+(☻) Shadow Torch° !!!
 (^) Traffic Cone*
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
