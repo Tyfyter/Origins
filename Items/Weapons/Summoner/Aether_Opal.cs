@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
@@ -12,20 +11,13 @@ using System.Collections.Generic;
 using Terraria.Audio;
 using Origins.Projectiles;
 using Origins.Items.Materials;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Liquid;
-using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
 using PegasusLib;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Aether_Opal : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CrystalShard;
-		public override void SetStaticDefaults() {
-			//Origins.AddGlowMask(this);
-		}
 		public override void SetDefaults() {
 			Item.damage = 30;
 			Item.DamageType = DamageClass.Summon;
@@ -60,7 +52,7 @@ namespace Origins.Buffs {
 	[ReinitializeDuringResizeArrays]
 	public class Shimmer_Guardian_Buff : MinionBuff {
 		internal static int?[] prefixValueCache = PrefixID.Sets.Factory.CreateCustomSet<int?>(null);
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CrystalShard;
+		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal";
 		public static int ID { get; private set; }
 		public override IEnumerable<int> ProjectileTypes() => [
 			Shimmer_Guardian_Counter.ID
@@ -133,7 +125,7 @@ namespace Origins.Buffs {
 
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Shimmer_Guardian : ModProjectile {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CrystalShard;
+		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
@@ -511,7 +503,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Shimmer_Guardian_Counter : ModProjectile {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CrystalShard; // this one actually doesn't need a texture
+		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal"; // this one actually doesn't need a texture
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
