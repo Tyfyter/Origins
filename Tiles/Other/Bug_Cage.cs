@@ -3,7 +3,7 @@ using Origins.Items.Other.Critters;
 using Terraria.ID;
 
 namespace Origins.Tiles.Other {
-	public class Cage_Cage : CageBase {
+	public class Bug_Cage : CageBase {
 		public override string Texture => "Origins/Tiles/Other/Amoeba_Buggy_Cage";
 		public override int LidType => 0;
 		public override int[] FrameIndexArray => Main.snailCageFrame;

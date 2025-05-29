@@ -6293,3 +6293,18 @@ Shadow_Torch: {
 	DisplayName: Shadow Torch
 	Tooltip: ""
 }
+
+Amoeba_Buggy_Cage_Item: {
+	DisplayName: Amoeba Buggy Cage
+	Tooltip: ""
+}
+
+Bug_Cage_Item: {
+	DisplayName: Bug Cage
+	Tooltip: ""
+}
+
+Cicada_3301_Cage_Item: {
+	DisplayName: Cicada 3301 Cage
+	Tooltip: ""
+}
