@@ -1,22 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Pets;
-using Origins.Journal;
-using Origins.Tiles;
-using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Reflection;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 

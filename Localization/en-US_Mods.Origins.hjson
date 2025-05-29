@@ -1233,6 +1233,11 @@ Buffs: {
 		DisplayName: Gelatin Aspect
 		Description: An aspect of gelatin lights your way
 	}
+
+	Chambersite_Commander_Sentinel_Buff: {
+		DisplayName: Chambersite Sentinel
+		Description: The chambersite sentinel will fight for you
+	}
 }
 
 DamageClassName: {
@@ -1826,6 +1831,7 @@ Projectiles: {
 	Ichor_Harpoon_P.DisplayName: Ichor Harpoon
 	Gelatin_Buddy.DisplayName: Gelatin Buddy
 	Aetherite_Aura_P.DisplayName: Aetherite Aura
+	Chambersite_Commander_Sentinel.DisplayName: Chambersite Commander Sentinel
 }
 
 Prefixes: {
@@ -2651,12 +2657,14 @@ SetBonuses: {
 	ChambersiteWizardHat: +20% magic critical strike chance
 	ChambersiteCommander:
 		'''
-		Summons a Chambersite Sentinal to watch over you
 		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
+		Temporarily summons a Chambersite Sentinal to watch over you. 5 second cooldown
 		'''
 	Aetherite:
 		'''
-		Able to temporarily take enemies into a partial shimmering with you, significantly slowing them down and slowing down their projectiles at the cost of random aether stars positioned in this dimension.
+		Able to temporarily take enemies into a partial shimmering with you,
+		significantly slowing them down and slowing down their projectiles,
+		at the cost of random aether stars positioned in this dimension.
 		Teleports the player and all entities back where they last were after this ability. 15 second cooldown (applies to bosses too)
 		'''
 }

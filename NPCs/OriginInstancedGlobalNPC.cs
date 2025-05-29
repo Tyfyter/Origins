@@ -1,17 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
-using SteelSeries.GameSense.DeviceZone;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -69,6 +66,8 @@ namespace Origins.NPCs {
 		public bool lazyCloakShimmer = false;
 		public int shinedownDamage = 0;
 		public float shinedownSpeed = 1;
+		public int sentinelDamage = 0;
+		public float sentinelSpeed = 1;
 		public bool amnesticRose = false;
 		public int amnesticRoseGooProj = 0;
 		public override void ResetEffects(NPC npc) {
@@ -267,6 +266,12 @@ namespace Origins.NPCs {
 				if (damage < displayedDamage) damage = displayedDamage;
 				npc.lifeRegenCount -= shinedownDamage * 4;
 				shinedownDamage = 0;
+			}
+			if (sentinelDamage > 0) {
+				int displayedDamage = Main.rand.RandomRound(sentinelDamage / (sentinelSpeed * 1.5f));
+				if (damage < displayedDamage) damage = displayedDamage;
+				npc.lifeRegenCount -= sentinelDamage * 4;
+				sentinelDamage = 0;
 			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {

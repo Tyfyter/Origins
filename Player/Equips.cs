@@ -1,23 +1,18 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Build.Utilities;
-using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
+using Origins.Items.Armor.Chambersite;
 using Origins.Items.Mounts;
 using Origins.Items.Other;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
-using Origins.NPCs.Defiled;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -687,6 +682,20 @@ namespace Origins {
 					break;
 				}
 
+				case SetActiveAbility.chambersite_armor: {
+					setAbilityCooldown = 1080;
+					int dmg = 180;
+					Player.SpawnProjectile(null,
+						Player.MountedCenter,
+						Vector2.Zero,
+						Chambersite_Commander_Sentinel.ID,
+						dmg,
+						1
+					).originalDamage = dmg;
+					Player.AddBuff(Chambersite_Commander_Sentinel_Buff.ID, 900);
+					break;
+				}
+
 				default:
 				break;
 			}
@@ -735,5 +744,6 @@ namespace Origins {
 	public static class SetActiveAbility {
 		public const int blast_armor = 4;
 		public const int aetherite_armor = 5;
+		public const int chambersite_armor = 6;
 	}
 }
