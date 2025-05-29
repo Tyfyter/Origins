@@ -26,7 +26,7 @@ namespace Origins.Dusts {
 			c.Index--;
 			c.EmitLdloc(loc);
 			c.EmitLdarg3();
-			c.EmitDelegate((bool active, Dust oldDust, int newType) => active && Set[oldDust.type] <= Set[newType]);
+			c.EmitDelegate((bool active, Dust oldDust, int newType) => active && Set.GetIfInRange(oldDust.type) <= Set.GetIfInRange(newType));
 		}
 		public void Unload() { }
 	}
