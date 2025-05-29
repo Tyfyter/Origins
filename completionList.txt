@@ -1167,13 +1167,13 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(X) Amoeba Buggy Cage* !!!
+(@, ^3) Amoeba Buggy Cage* !!!
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (^) Brine Water Fountain
-(X) Bug Cage°
+(@, ^3) Bug Cage°
 (X) Cancer Block° !!!
 (X) Cancer Furniture° !!!
 (^) Chambersite Bunny Cage°
@@ -1185,7 +1185,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(X) Cicada 3301 Cage° !!!
+(@, ^3) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
