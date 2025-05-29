@@ -685,11 +685,11 @@ namespace Origins.Tiles {
 		/// <br/> 1 = Large Terrarium Cage
 		/// <br/> 2 = Jar Cage
 		/// </summary>
-		public abstract int CageKind { get; } // should probably be an enum
-		private static readonly Dictionary<int, (int, TileObjectData, int)> CageKindMap = new() {
-			[0] = (TileID.CageBuggy, TileObjectData.Style3x2, 1),
-			[1] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
-			[2] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
+		public abstract CageKinds CageKind { get; } // should probably be an enum
+		private static readonly Dictionary<CageKinds, (int, TileObjectData, int)> CageKindMap = new() {
+			[CageKinds.SmallCage] = (TileID.CageBuggy, TileObjectData.Style3x2, 1),
+			[CageKinds.BigCage] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
+			[CageKinds.Jar] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
 		};
 		public abstract int[] FrameIndexArray { get; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
@@ -733,12 +733,17 @@ namespace Origins.Tiles {
 			Main.critterCage = true;
 			Tile tile = Framing.GetTileSafely(i, j);
 			int frameIndex;
-			if (CageKind != 1) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
+			if (CageKind != CageKinds.BigCage) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			frameYOffset = FrameIndexArray[frameIndex] * AnimationFrameHeight;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;
+		}
+		public enum CageKinds {
+			SmallCage,
+			BigCage,
+			Jar
 		}
 	}
 	public abstract class ModGemLock : ModTile {
