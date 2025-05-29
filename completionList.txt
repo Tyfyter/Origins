@@ -372,7 +372,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(@, #2) Chambersite Armor° !!! (will work on the sentinel summon later)
+(☻) Chambersite Armor° !!!
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
