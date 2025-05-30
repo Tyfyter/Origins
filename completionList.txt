@@ -1527,6 +1527,7 @@ MOUNTS & PETS:
 (^) Fleshy Globe (Self-Contained Universe)*
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
+(X) Aetherite Crystal !!!
 
 (^) Amoeba Toy (Meberoid)*
 (X) Rusty Cross Necklace (Guardian Angel)

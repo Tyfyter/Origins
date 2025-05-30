@@ -9,7 +9,6 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
-using Origins.Walls;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -27,7 +26,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.Utilities.Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
@@ -271,7 +269,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			normalDropRule = new LeadingSuccessRule();
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1,
 				ItemType<Cool_Sword>(),
-				//ItemType<>(),
 				ItemType<Shimmerstar_Staff>(),
 				ItemType<Aether_Opal>())
 			);
@@ -288,6 +285,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ItemType<Shimmer_Construct_Bag>(), 1, 1, 1, null)
 			));
+			// npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Aetherium_Crystal>(), 4)); // SC master pet
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Wishing_Glass>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Shimmer_Construct_Relic>()));
 		}
