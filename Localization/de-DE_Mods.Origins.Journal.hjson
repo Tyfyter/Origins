@@ -21,7 +21,7 @@ Arabel: {
 		/* Text:
 			'''
 			[header:Fallen Star (2/{$SeriesLength})]
-			[jimage/sc2d:Terraria/Images/Item_75]
+			[jimage/sc2dfr0,104,22,26:Terraria/Images/Item_75]
 
 			*****
 			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana", and it is a natural resource that we can use for magic abilities.
