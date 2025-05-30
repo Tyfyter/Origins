@@ -537,7 +537,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
-				Main.QueueMainThreadAction(renderTarget.Dispose);
+				TangelaVisual.SendRenderTargetForDisposal(ref renderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}
@@ -674,7 +674,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
-				Main.QueueMainThreadAction(renderTarget.Dispose);
+				TangelaVisual.SendRenderTargetForDisposal(ref renderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}

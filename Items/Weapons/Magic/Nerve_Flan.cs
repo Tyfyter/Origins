@@ -218,7 +218,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
-				Main.QueueMainThreadAction(renderTarget.Dispose);
+				TangelaVisual.SendRenderTargetForDisposal(ref renderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}
