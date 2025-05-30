@@ -393,6 +393,8 @@ namespace Origins {
 				compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.AddFancyLighting"));
 			}
 
+			if (!Lighting.NotRetro) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.RetroBad"));
+
 			if (ModLoader.TryGetMod("ModDemoUtils", out Mod modDemoUtils)) {
 				ItemWikiProvider itemWikiProvider = new();
 				modDemoUtils.Call("RegisterDemo", Origins.instance, "Tyfyter/Origins");
