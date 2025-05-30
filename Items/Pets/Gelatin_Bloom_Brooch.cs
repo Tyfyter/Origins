@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Pets;
+using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
@@ -256,7 +257,9 @@ namespace Origins.Items.Pets {
 
 namespace Origins.Buffs {
 	public class Gelatin_Aspect_Buff : ModBuff {
+		AutoLoadingAsset<Texture2D> overlayTexture;
 		public override void SetStaticDefaults() {
+			overlayTexture = Texture + "_Overlay";
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.lightPet[Type] = true;
@@ -273,6 +276,13 @@ namespace Origins.Buffs {
 
 				Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, projType, 0, 0f, player.whoAmI);
 			}
+		}
+
+		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
+			Color color = Gelatin_Bloom_Brooch.GetGolor(Main.LocalPlayer?.name);
+			if (color == Color.White) return;
+
+			spriteBatch.Draw(overlayTexture, drawParams.Position, drawParams.SourceRectangle, color.MultiplyRGBA(drawParams.DrawColor), 0f, default, 1f, SpriteEffects.None, 0f);
 		}
 	}
 }
