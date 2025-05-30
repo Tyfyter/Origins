@@ -111,6 +111,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					return;
 				}
 				offset.X *= player.direction;
+				offset.Y *= player.gravDir;
 				Projectile.Center = handPosition + offset.RotatedBy(player.itemRotation);
 			} else {
 				Projectile.ai[0] = 2;

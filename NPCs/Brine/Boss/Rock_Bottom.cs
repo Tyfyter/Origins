@@ -23,7 +23,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.height = 58;
 			NPC.knockBackResist = 0;
 		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) => NPC.AnyNPCs(Type) ? 0 : Brine_Pool.SpawnRates.Dead_Guy;
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) => (!Main.hardMode || NPC.AnyNPCs(Type)) ? 0 : Brine_Pool.SpawnRates.Dead_Guy;
 		public override bool PreAI() {
 			NPC.velocity.X = 0f;
 			NPC.velocity.Y = 0f;

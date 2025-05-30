@@ -499,7 +499,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 			Origins.shaderOroboros.Capture();
 			DrawDefiledBolt(Projectile.oldPos, Projectile.oldRot, Projectile.timeLeft / 300f);
-			Origins.shaderOroboros.DrawContents(renderTarget);
+			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.Transform);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = renderTarget.Size() * 0.5f;
 
@@ -530,7 +530,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
-				Main.QueueMainThreadAction(renderTarget.Dispose);
+				TangelaVisual.SendRenderTargetForDisposal(ref renderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}
@@ -649,7 +649,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 			Origins.shaderOroboros.Capture();
 			Nerve_Flan_P_Drawer.Draw(Projectile);
-			Origins.shaderOroboros.DrawContents(renderTarget);
+			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.Transform);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = renderTarget.Size() * 0.5f;
 			TangelaVisual.DrawTangela(
@@ -667,7 +667,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
-				Main.QueueMainThreadAction(renderTarget.Dispose);
+				TangelaVisual.SendRenderTargetForDisposal(ref renderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}

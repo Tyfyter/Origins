@@ -21,9 +21,9 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public static void DrawInHand(Texture2D smallTexture, ref PlayerDrawSet drawInfo, Color lightColor, Texture2D smallGlowTexture = null, Color? smallGlowColor = null) {
 			//if (drawInfo.DrawDataCache[^1].texture.Bounds != new Rectangle(0, 0, 360, 224)) return;
-			Vector2 pos = drawInfo.drawPlayer.GetBackHandPosition(drawInfo.drawPlayer.compositeBackArm.stretch, drawInfo.drawPlayer.compositeBackArm.rotation);
-			pos.Y -= 4;
-			float rotation = drawInfo.drawPlayer.compositeBackArm.rotation + drawInfo.drawPlayer.direction;
+			Vector2 pos = drawInfo.drawPlayer.GetCompositeArmPosition(true);
+			pos.Y -= 4 * drawInfo.drawPlayer.gravDir;
+			float rotation = drawInfo.drawPlayer.compositeBackArm.rotation * drawInfo.drawPlayer.gravDir + drawInfo.drawPlayer.direction;
 			if (drawInfo.drawPlayer.mount?.Active == true && drawInfo.drawPlayer.mount.Type == MountID.Wolf) {
 				pos = drawInfo.Position;
 				pos.X += drawInfo.drawPlayer.width / 2 + 32 * drawInfo.drawPlayer.direction;

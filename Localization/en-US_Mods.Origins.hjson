@@ -23,7 +23,9 @@ Conditions: {
 	NotHoliday: Not on {0}
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
-	DownedScrapper: Mods.Origins.Conditions.DownedScrapper
+	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
+	DownedScrapper: After defeating the MISSING_OBJECT_ERROR
+	// DownedScrapper: After defeating the Scrapper
 	DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
 	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
 	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode

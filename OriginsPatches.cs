@@ -905,9 +905,12 @@ namespace Origins {
 			c.EmitDelegate(
 				static (int i, int l6, int l182, int[] l20, int l5, int l7, int l183, Vector2 lineOrigin, float[] l22, int[] l19) => {
 					if (i != workshopMenuIndex) return;
-					if (updatedHiddenSuggestions) OriginsModIntegrations.compatRecommendations.RemoveAll(loc => DebugConfig.Instance.IgnoredCompatibilitySuggestions.Contains(loc.Key));// let players disable recommendations they've seen
+					if (updatedHiddenSuggestions) {// let players disable recommendations they've seen
+						OriginsModIntegrations.compatRecommendations.RemoveAll(loc => DebugConfig.Instance.IgnoredCompatibilitySuggestions.Contains(loc.Key));
+						OriginsModIntegrations.conditionalCompatRecommendations.RemoveAll(loc => DebugConfig.Instance.IgnoredCompatibilitySuggestions.Contains(loc.text.Key));
+					}
 					bool anyErrors = OriginsModIntegrations.compatErrors.Count != 0;
-					if (!anyErrors && OriginsModIntegrations.compatRecommendations.Count == 0) return;
+					if (!anyErrors && OriginsModIntegrations.compatRecommendations.Count == 0 && OriginsModIntegrations.conditionalCompatRecommendations.Where(x => x.condition()).Count() == 0) return;
 					Vector2 anchorPosition = new(l6 + l182 + l20[i] + lineOrigin.X, l5 + l7 * i + l183 + lineOrigin.Y * l22[i] * 0.5f + l19[i]);
 					Rectangle rectangle = new((int)anchorPosition.X, (int)anchorPosition.Y, 30, 30);
 					float scaleValue = MathHelper.Lerp(0.5f, 0.75f, Main.mouseTextColor / 255f);
@@ -924,14 +927,22 @@ namespace Origins {
 					);
 					if (rectangle.Contains(Main.mouseX, Main.mouseY)) {
 						string ignoreAll = "";
-						if (OriginsModIntegrations.compatRecommendations.Count != 0) ignoreAll = "\n" + Language.GetTextValue("Mods.Origins.ModCompatNotes.ClearAll");
+						if (OriginsModIntegrations.compatRecommendations.Count != 0 || OriginsModIntegrations.conditionalCompatRecommendations.Where(x => x.condition()).Count() != 0) {
+							ignoreAll = "\n" + Language.GetTextValue("Mods.Origins.ModCompatNotes.ClearAll");
+						}
 						UICommon.TooltipMouseText(string.Join("\n",
 							OriginsModIntegrations.compatErrors.Select(x => $"[c/ff0000:{x.Value}]")
 							.Concat(OriginsModIntegrations.compatRecommendations.Select(x => x.Value))
+							.Concat(OriginsModIntegrations.conditionalCompatRecommendations.Where(x => x.condition()).Select(x => x.text.Value))
 						) + ignoreAll);
 						if (Main.mouseRight && Main.mouseRightRelease) {
 							for (int j = 0; j < OriginsModIntegrations.compatRecommendations.Count; j++) {
 								DebugConfig.Instance.IgnoredCompatibilitySuggestions.Add(OriginsModIntegrations.compatRecommendations[j].Key);
+							}
+							for (int j = 0; j < OriginsModIntegrations.conditionalCompatRecommendations.Count; j++) {
+								if (OriginsModIntegrations.conditionalCompatRecommendations[j].condition()) {
+									DebugConfig.Instance.IgnoredCompatibilitySuggestions.Add(OriginsModIntegrations.conditionalCompatRecommendations[j].text.Key);
+								}
 							}
 							OriginClientConfig.Instance.Save();
 							updatedHiddenSuggestions = true;

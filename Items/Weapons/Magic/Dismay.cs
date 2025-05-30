@@ -62,6 +62,8 @@ namespace Origins.Items.Weapons.Magic {
 
 			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
 
+			if (drawPlayer.gravDir == -1) drawInfo.itemEffect ^= SpriteEffects.FlipVertically;
+
 			drawInfo.DrawDataCache.Add(new DrawData(
 				itemTexture,
 				pos,

@@ -155,6 +155,7 @@ namespace Origins.NPCs.Brine.Boss {
 				this.GetBestiaryFlavorText()
 			);
 		}
+		public int enragedAttackCount = 0;
 		public override void AI() {
 			float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
 			DoTargeting();
@@ -305,6 +306,11 @@ namespace Origins.NPCs.Brine.Boss {
 					AIMode = rand.Get();
 					LastMode = AIMode;
 					NPC.netUpdate = true;
+					if (enraged) {
+						if (enragedAttackCount < 5) enragedAttackCount++;
+					} else if (enragedAttackCount > 0) {
+						enragedAttackCount--;
+					}
 					goto startMode;
 				}
 				break;

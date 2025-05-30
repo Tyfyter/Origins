@@ -44,10 +44,9 @@ namespace Origins.Items.Tools {
 				noHitbox = true;
 				return;
 			}
-			float itemRotation = player.compositeFrontArm.rotation;
 			float size = 14 * player.GetAdjustedItemScale(Item);
-			Vector2 pos = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, itemRotation)
-				+ new Vector2(24, -4 * player.direction).RotatedBy(itemRotation + MathHelper.PiOver2)
+			Vector2 pos = player.GetCompositeArmPosition(false)
+				+ new Vector2(24, -4 * player.direction).RotatedBy(player.compositeFrontArm.rotation + MathHelper.PiOver2 * player.gravDir)
 				- new Vector2(size, size);
 			size *= 2;
 			hitbox = new(
@@ -76,11 +75,11 @@ namespace Origins.Items.Tools {
 		public override void UseItemFrame(Player player) {
 			float fact = (0.5f - (player.itemAnimation / (float)player.itemAnimationMax)) * 2;
 			if (player.altFunctionUse == 2) {
-				player.itemRotation -= player.direction * (fact * (Math.Abs(fact + 0.1f) - 0.65f) + 0.2f);
+				player.itemRotation -= player.direction * player.gravDir * (fact * (Math.Abs(fact + 0.1f) - 0.65f) + 0.2f);
 			} else {
-				player.itemRotation += player.direction * fact * (Math.Abs(fact) - 0.5f);
+				player.itemRotation += player.direction * player.gravDir * fact * (Math.Abs(fact) - 0.5f);
 			}
-			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2 * player.direction);
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation * player.gravDir - MathHelper.PiOver2 * player.direction);
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
@@ -90,21 +89,21 @@ namespace Origins.Items.Tools {
 		}
 		public bool DrawOverHand => true;
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
-			Player drawPlayer = drawInfo.drawPlayer;
-			float itemRotation = drawPlayer.itemRotation - MathHelper.PiOver2;
+			Player player = drawInfo.drawPlayer;
+			float itemRotation = player.itemRotation - MathHelper.PiOver2 * player.gravDir;
 
 			Texture2D texture = useTexture.Value;
-			if (drawInfo.itemEffect == SpriteEffects.FlipHorizontally) {
-				drawInfo.itemEffect = SpriteEffects.FlipVertically;
+			if (drawInfo.itemEffect.HasFlag(SpriteEffects.FlipHorizontally)) {
+				drawInfo.itemEffect ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			}
 			drawInfo.DrawDataCache.Add(new DrawData(
 				texture,
-				drawPlayer.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, drawPlayer.compositeFrontArm.rotation) - Main.screenPosition,
-				texture.Frame(verticalFrames: 2, frameY: (drawPlayer.itemAnimation % 4) / 2),
+				player.GetCompositeArmPosition(false) - Main.screenPosition,
+				texture.Frame(verticalFrames: 2, frameY: (player.itemAnimation % 4) / 2),
 				Item.GetAlpha(lightColor),
-				itemRotation + (MathHelper.Pi * 0.75f) * drawPlayer.direction,
-				new Vector2(11, drawPlayer.direction == 1 ? 27 : 7),
-				drawPlayer.GetAdjustedItemScale(Item),
+				itemRotation + (MathHelper.Pi * 0.75f) * player.direction * player.gravDir,
+				new Vector2(11, player.direction * player.gravDir == 1 ? 27 : 7),
+				player.GetAdjustedItemScale(Item),
 				drawInfo.itemEffect,
 				1
 			));

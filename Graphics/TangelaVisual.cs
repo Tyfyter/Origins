@@ -76,6 +76,11 @@ namespace Origins.Graphics {
 		static DateTime changeModeTime = DateTime.MinValue;
 		public static bool DrawOver { get; private set; } = false;
 		public static readonly List<TangelaDrawData> drawDatas = [];
+		static readonly List<RenderTarget2D> renderTargetsToDispose = [];
+		public static void SendRenderTargetForDisposal(ref RenderTarget2D renderTarget) {
+			renderTargetsToDispose.Add(renderTarget);
+			renderTarget = null;
+		}
 		private static void Scene_OnPostDraw() {
 			if (DateTime.Now > changeModeTime) {
 				DrawOver = Main.rand.NextBool(3);
@@ -87,7 +92,7 @@ namespace Origins.Graphics {
 			}
 			if (DrawOver && !Main.gameMenu) {
 				try {
-					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
 					for (int i = 0; i < drawDatas.Count; i++) {
 						(DrawData data, int seed, Vector2 extraOffset) = drawDatas[i];
@@ -104,7 +109,14 @@ namespace Origins.Graphics {
 					Main.spriteBatch.End();
 				}
 			}
+			ClearQueues();
+		}
+		internal static void ClearQueues() {
 			drawDatas.Clear();
+			for (int i = 0; i < renderTargetsToDispose.Count; i++) {
+				renderTargetsToDispose[i].Dispose();
+			}
+			renderTargetsToDispose.Clear();
 		}
 		public static void DrawTangela(this ITangelaHaver tangelaHaver, Texture2D texture, Vector2 position, Rectangle? sourceRectangle, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, Vector2 extraOffset = default) {
 			if (!tangelaHaver.TangelaSeed.HasValue) tangelaHaver.TangelaSeed = Main.rand.Next();
@@ -150,6 +162,10 @@ namespace Origins.Graphics {
 		public override void Draw(SpriteBatch spriteBatch) {
 			if (lastGameFrameCount == Origins.gameFrameCount) return;
 			lastGameFrameCount = Origins.gameFrameCount;
+			if (!Lighting.NotRetro) {
+				TangelaVisual.ClearQueues();
+				return;
+			}
 			if (TangelaVisual.DrawOver && !Main.gameMenu) {
 				bool anyAntiGray = false;
 				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
@@ -173,7 +189,7 @@ namespace Origins.Graphics {
 					if (!TangelaVisual.DrawOver || data.shader != TangelaVisual.ShaderID) data.Draw(spriteBatch);
 				}
 			} finally {
-				Origins.shaderOroboros.DrawContents(renderTarget);
+				Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.Transform);
 				Origins.shaderOroboros.Reset(default);
 			}
 			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseImage(renderTarget, 1);
