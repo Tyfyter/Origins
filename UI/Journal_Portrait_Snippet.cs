@@ -58,6 +58,7 @@ namespace Origins.UI {
 				switch (options.Shader) {
 					case JournalImageShader.Sketch:
 					shaderOroboros.Capture();
+					Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
 					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);
 					Origins.journalDrawingShader.UseColor(Color);
@@ -67,6 +68,7 @@ namespace Origins.UI {
 
 					case JournalImageShader.Transparent:
 					shaderOroboros.Capture();
+					Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
 					entry.Icon.Draw(_collectionInfo, Main.spriteBatch, settings);
 					shaderOroboros.Stack(Origins.journalTransparentShader);
 					shaderOroboros.Release();

@@ -31,7 +31,10 @@ namespace Origins.UI {
 				image.Wait();
 				size = (options.Frame?.Size() ?? image.Size()) * Scale;
 				if (justCheckingString) return true;
-				if (options.Shader != JournalImageShader.None) shaderOroboros.Capture();
+				if (options.Shader != JournalImageShader.None) {
+					shaderOroboros.Capture(spriteBatch);
+					spriteBatch.Restart(spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
+				}
 				spriteBatch?.Draw(image.Value, position, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
 				switch (options.Shader) {
 					case JournalImageShader.Sketch:
