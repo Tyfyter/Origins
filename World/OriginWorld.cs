@@ -46,6 +46,7 @@ namespace Origins {
 		public static bool HasRivenHive => Instance.hasRiven;
 		private static double? _worldSurfaceLow;
 		public static double WorldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
+		public Rectangle brinePoolRange;
 		public static bool DefiledResurgenceActive => Main.hardMode && !NPC.downedPlantBoss;//true;
 		public const byte evil_corruption = 0b0001;//1
 		public const byte evil_crimson = 0b0010;//2
@@ -113,6 +114,9 @@ namespace Origins {
 				peatSold = tag.GetAsInt("peatSold");
 			}
 			if (tag.ContainsKey("worldSurfaceLow")) _worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
+			if (tag.TryGet("brinePoolRange", out TagCompound range)) {
+				if (range.TryGet("X", out int x) && range.TryGet("Y", out int y) && range.TryGet("Width", out int width) && range.TryGet("Height", out int height)) brinePoolRange = new(x, y, width, height);
+			}
 			if (tag.ContainsKey("defiledHearts")) {
 				LegacySave_DefiledHearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint16).ToList();
 			}
@@ -164,6 +168,14 @@ namespace Origins {
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}
+			tag.Add("brinePoolRange",
+				new TagCompound {
+					["X"] = brinePoolRange.X,
+					["Y"] = brinePoolRange.Y,
+					["Width"] = brinePoolRange.Width,
+					["Height"] = brinePoolRange.Height
+				}
+			);
 			tag.Add("voidLocks", VoidLocks.Select(kvp => new TagCompound() {
 				["pos"] = kvp.Key.ToVector2(),
 				["uuid"] = kvp.Value.ToString()

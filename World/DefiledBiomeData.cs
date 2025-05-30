@@ -898,9 +898,6 @@ namespace Origins.World.BiomeData {
 
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
 		}
-		public override int GetAltBlock(int BaseBlock, int posX, int posY, bool GERunner = false) {
-			return base.GetAltBlock(BaseBlock, posX, posY, GERunner);
-		}
 
 		public IEnumerable<int> ProvideItemObtainability() {
 			yield return BiomeChestItem.Value;
@@ -943,41 +940,6 @@ namespace Origins.World.BiomeData {
 				evilBiomePositionEastBound += offset;
 			}
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				/*int offset;
-				for (offset = 0; offset < 300; offset = offset > 0 ? (-offset) : ((-offset) + 2)) {
-					if (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX) continue;
-					for (int j = (int)OriginSystem.WorldSurfaceLow; j < Main.maxTilesY; j++) {
-						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
-						if (!tile.HasTile || !Main.tileSolid[tile.TileType]) continue;
-						bool fail = false;
-						for (int k = 0; k < 10; k++) {
-							tile = Framing.GetTileSafely(evilBiomePosition + offset, j + k);
-							if (tile.HasTile && (tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud)) {
-								fail = true;
-								break;
-							}
-						}
-						if (fail) break;
-						evilBiomePosition += offset;
-						evilBiomePositionWestBound += offset;
-						evilBiomePositionEastBound += offset;
-						Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands normally");
-						goto positioned;
-					}
-				}
-				if (Math.Abs(evilBiomePosition - GenVars.jungleMaxX) < Math.Abs(evilBiomePosition - GenVars.jungleMinX)) {
-					offset = evilBiomePosition - GenVars.jungleMaxX;
-					if (WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.X < evilBiomePosition && r.X + r.Width > evilBiomePosition)) offset = evilBiomePosition - GenVars.jungleMinX;
-				} else {
-					offset = evilBiomePosition - GenVars.jungleMinX;
-					if (WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.X < evilBiomePosition && r.X + r.Width > evilBiomePosition)) offset = evilBiomePosition - GenVars.jungleMaxX;
-				}
-				evilBiomePosition += offset;
-				evilBiomePositionWestBound += offset;
-				evilBiomePositionEastBound += offset;
-				Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands after failure to find a position without jungle grass");
-
-				positioned:*/
 				defiledWastelandsWestEdge ??= [];
 				defiledWastelandsEastEdge ??= [];
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);

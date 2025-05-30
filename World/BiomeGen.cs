@@ -8,6 +8,7 @@ using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
+using PegasusLib;
 using Steamworks;
 using System;
 using System.Collections.Generic;
@@ -54,8 +55,8 @@ namespace Origins {
 			#endregion _
 			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
 			if (genIndex != -1) {
-				tasks.Insert(genIndex + 1, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
-				tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
+				tasks.Insert(++genIndex, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
+				tasks.Insert(++genIndex, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
 					Mod.Logger.Info("Pooling Brine");
 					progress.Message = "Pooling Brine";
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
@@ -80,14 +81,18 @@ namespace Origins {
 					brineCenter = new(X, Y);
 					//}
 				}));
-				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
+				tasks.Insert(++genIndex, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
 					Mod.Logger.Info("Fiberglass Undergrowth");
 					progress.Message = "Undergrowing Fiberglass";
+					_ = OriginSystem.Instance.brinePoolRange;
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
 					bool placed = false;
 					int tries = 0;
-					while (!placed) {
-						int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
+					RangeRandom rangeRand = new(WorldGen.genRand, GenVars.jungleMinX + 100, GenVars.jungleMaxX - 10);
+					rangeRand.Multiply(Instance.brinePoolRange.Left, Instance.brinePoolRange.Right, 0.1f);
+					while (!placed && rangeRand.AnyWeight) {
+						int X = rangeRand.Get();
+						rangeRand.Multiply(X, X, 0);
 						int Y;
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(350, 450);
