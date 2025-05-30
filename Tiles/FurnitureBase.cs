@@ -679,13 +679,7 @@ namespace Origins.Tiles {
 		public virtual Color MapColor => new(122, 217, 232);
 		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>
 		public abstract int LidType { get; }
-		/// <summary>
-		/// Used to set the base kind of cage this tile is.
-		/// <br/><br/> 0 = Small Terrarium Cage
-		/// <br/> 1 = Large Terrarium Cage
-		/// <br/> 2 = Jar Cage
-		/// </summary>
-		public abstract CageKinds CageKind { get; } // should probably be an enum
+		public abstract CageKinds CageKind { get; }
 		private static readonly Dictionary<CageKinds, (int, TileObjectData, int)> CageKindMap = new() {
 			[CageKinds.SmallCage] = (TileID.CageBuggy, TileObjectData.Style3x2, 1),
 			[CageKinds.BigCage] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
@@ -695,7 +689,11 @@ namespace Origins.Tiles {
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		public sealed override void Load() {
-			Mod.AddContent(item = new TileItem(this));
+			Mod.AddContent(item = new TileItem(this).WithExtraDefaults(item => {
+				item.width = 32;
+				item.height = 32;
+				item.value = 0;
+			}));
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
