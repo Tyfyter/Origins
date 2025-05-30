@@ -7,6 +7,7 @@ using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,6 +31,8 @@ namespace Origins.NPCs.Brine.Boss {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 			global = new();
 		}
+		Vector2[] path = [];
+		int pathIndex = 0;
 		public override void AI() {
 			NPC owner = Owner;
 			if (!owner.active) {
@@ -47,17 +50,50 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 			float distance = diff.Length();
 			if (Projectile.ai[0] == 0f) {
-				if (distance > 700f)
+				if (distance > 700f && path.Length > pathIndex)
 					Projectile.ai[0] = 1f;
 
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 				Projectile.localAI[1] += 1f;
 				if (Projectile.localAI[1] > 5f)
 					Projectile.alpha = 0;
-
 				if (Projectile.localAI[1] >= 10f) {
-					Projectile.localAI[1] = 15f;
-					Projectile.velocity.Y += 0.3f;
+					if (owner.ModNPC is Lost_Diver lostDiver && lostDiver.enragedAttackCount >= 0) {
+						Projectile.localAI[1] = 5f;
+						Vector2 searchSize = new Vector2(48) * 16;
+						Vector2 searchStart = Projectile.Center - searchSize;
+						searchStart = (searchStart / 16).Floor() * 16;
+						Point topLeft = searchStart.ToTileCoordinates();
+						Point bottomRight = (Projectile.Center + searchSize).ToTileCoordinates();
+						HashSet<Point> validEnds = [];
+						Rectangle targetHibox = owner.GetTargetData().Hitbox;
+						foreach (Point point in Collision.GetTilesIn(targetHibox.TopLeft(), targetHibox.BottomRight())) {
+							validEnds.Add(point);
+						}
+						path = CollisionExtensions.GridBasedPathfinding(
+							CollisionExtensions.GeneratePathfindingGrid(topLeft, bottomRight, 1, 1),
+							searchSize.ToTileCoordinates(),
+							(targetHibox.Center() - searchStart).ToTileCoordinates(),
+							validEnds
+						).Select(p => p.ToWorldCoordinates() + searchStart).ToArray();
+					} else {
+						Projectile.localAI[1] = 15f;
+						Projectile.velocity.Y += 0.3f;
+					}
+				}
+				if (pathIndex < path.Length) {
+					Vector2 pos = Projectile.Center;
+				}
+				if (pathIndex < path.Length) {
+					Vector2 targetPos = path[pathIndex];
+					Vector2 diffFromTarget = targetPos - Projectile.Center;
+					float dist = diffFromTarget.Length();
+					if (dist < 32) {
+						Vector2 pos = Projectile.Center;
+						pathIndex++;
+						if (pathIndex + 1 < path.Length && CollisionExt.CanHitRay(pos, path[pathIndex + 1])) pathIndex++;
+					}
+					Projectile.velocity = diffFromTarget * 12 / dist;
 				}
 				Projectile.ai[1] = -1;
 			} else if (Projectile.ai[0] == 1f) {
@@ -87,7 +123,11 @@ namespace Origins.NPCs.Brine.Boss {
 				if (distance < 16 * (10 - multiplier)) {
 					Projectile.ai[1] = -1;
 				}
-				if (Projectile.timeLeft >= 120) Projectile.timeLeft = 120;
+				if (path.Length > 0) {
+					if (Projectile.timeLeft < 120) Projectile.timeLeft = 120;
+				} else {
+					if (Projectile.timeLeft >= 120) Projectile.timeLeft = 120;
+				}
 			}
 		}
 		public override bool CanHitPlayer(Player target) => Projectile.ai[1] == -1;
@@ -164,6 +204,7 @@ namespace Origins.NPCs.Brine.Boss {
 			return false;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
+			if (path.Length > pathIndex) return false;
 			Projectile.ai[0] = 1f;
 			return false;
 		}

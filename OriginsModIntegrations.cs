@@ -393,7 +393,7 @@ namespace Origins {
 				compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.AddFancyLighting"));
 			}
 
-			if (!Lighting.NotRetro) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.RetroBad"));
+			conditionalCompatRecommendations.Add((() => !Lighting.NotRetro, Language.GetText("Mods.Origins.ModCompatNotes.RetroBad")));
 
 			if (ModLoader.TryGetMod("ModDemoUtils", out Mod modDemoUtils)) {
 				ItemWikiProvider itemWikiProvider = new();
@@ -469,9 +469,11 @@ namespace Origins {
 		}
 		public void Unload() {
 			instance = null;
+			conditionalCompatRecommendations = null;
 			compatRecommendations = null;
 			compatErrors = null;
 		}
+		public static List<(Func<bool> condition, LocalizedText text)> conditionalCompatRecommendations = [];
 		public static List<LocalizedText> compatRecommendations = [];
 		public static List<LocalizedText> compatErrors = [];
 		[JITWhenModsEnabled("FancyLighting")]
