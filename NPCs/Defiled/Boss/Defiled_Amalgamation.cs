@@ -1132,24 +1132,25 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			(Vector2 pos, Vector2 perpendicular)[] curve = GetCurve(1f);
 
+			Vector2[] worldPositions = new Vector2[curve.Length];
 			Vector2[] positions = new Vector2[curve.Length];
 			float[] rotations = new float[curve.Length];
 
 			for (int i = 0; i < curve.Length; i++) {
-
-				positions[i] = curve[i].pos;
-				rotations[i] = curve[i].perpendicular.ToRotation() + MathHelper.PiOver2;
+				worldPositions[i] = curve[i].pos;
+				rotations[i] = (curve[i].perpendicular.ToRotation() + MathHelper.PiOver2) * Main.Transform.Up.Y;
+				positions[i] = Vector2.Transform(worldPositions[i] - Main.screenPosition, Main.Transform);
 			}
 
 			if (progress > 0) {
-				DrawDefiledPortal(curve[0].pos - Main.screenPosition, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (max_lifetime + Projectile.timeLeft) / (float)max_lifetime));
-				DrawDefiledSpikeStrip(TextureAssets.Projectile[Type], positions, rotations, progress - 1, Projectile.ai[0]);
+				DrawDefiledPortal(curve[0].pos, Projectile.velocity.ToRotation() + MathHelper.PiOver2, new Vector2(128, 64), Utils.GetLerpValue(0, 1, (max_lifetime + Projectile.timeLeft) / (float)max_lifetime));
+				DrawDefiledSpikeStrip(TextureAssets.Projectile[Type], positions, worldPositions, rotations, progress - 1, Projectile.ai[0]);
 			}
 			return false;
 		}
 		private static readonly VertexStrip vertexStrip = new();
 		private static readonly VertexRectangle rect = new();
-		public static void DrawDefiledSpikeStrip(Asset<Texture2D> tex, Vector2[] positions, float[] rotations, float progress, float length) {
+		public static void DrawDefiledSpikeStrip(Asset<Texture2D> tex, Vector2[] positions, Vector2[] lightPositions, float[] rotations, float progress, float length) {
 			MiscShaderData shader = GameShaders.Misc["Origins:DefiledSpike"];
 			shader.UseImage1(tex);
 			shader.UseColor(Color.Black);
@@ -1157,7 +1158,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			shader.UseSamplerState(SamplerState.PointClamp);
 			shader.UseShaderSpecificData(new Vector4(progress, length, 0, 0));
 			shader.Apply();
-			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Lighting.GetColor(positions[(int)Math.Round(p * (positions.Length - 1))].ToTileCoordinates()), (p) => 16, -Main.screenPosition, false);
+			vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => Lighting.GetColor(lightPositions[(int)Math.Round(p * (lightPositions.Length - 1))].ToTileCoordinates()), (p) => 16, Vector2.Zero, false);
 			vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
@@ -1230,8 +1231,8 @@ namespace Origins.NPCs.Defiled.Boss {
 			Vector2[] pos = new Vector2[segments * 32];
 			float[] rot = new float[segments * 32];
 			for (int i = 0; i < curve.Length && i < pos.Length; i++) {
-				pos[i] = curve[i].pos;
-				rot[i] = curve[i].per.ToRotation() + MathHelper.PiOver2;
+				pos[i] = Vector2.Transform(curve[i].pos - Main.screenPosition, Main.Transform) + Main.screenPosition;
+				rot[i] = (curve[i].per.ToRotation() + MathHelper.PiOver2) * Main.Transform.Up.Y;
 			}
 
 			float progress = Projectile.timeLeft / (float)max_lifetime;

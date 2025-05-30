@@ -1446,9 +1446,67 @@ namespace Origins {
 				case 4:
 				return ref player.hurtCooldowns[cooldownCounter];
 			}
+			discard = 0;
 			return ref discard;
 		}
 		static int discard = 0;
+		public static Vector2 GetCompositeArmPosition(this Player player, bool back) {
+			if (player.gravDir == -1) {
+				if (back) {
+					float rotation = player.compositeBackArm.rotation - MathHelper.PiOver2;
+					Vector2 offset = rotation.ToRotationVector2();
+					switch (player.compositeBackArm.stretch) {
+						case Player.CompositeArmStretchAmount.Full:
+						offset *= new Vector2(10f, 12f);
+						break;
+						case Player.CompositeArmStretchAmount.None:
+						offset *= new Vector2(4f, 6f);
+						break;
+						case Player.CompositeArmStretchAmount.Quarter:
+						offset *= new Vector2(6f, 8f);
+						break;
+						case Player.CompositeArmStretchAmount.ThreeQuarters:
+						offset *= new Vector2(8f, 10f);
+						break;
+					}
+					if (player.direction == -1) {
+						offset += new Vector2(-6f, 2f);
+					} else {
+						offset += new Vector2(6f, 2f);
+					}
+					return player.MountedCenter + offset;
+				} else {
+					Vector2 offset = new(-1, 3 * player.direction);
+					switch (player.compositeFrontArm.stretch) {
+						case Player.CompositeArmStretchAmount.Full:
+						offset.X *= 10f;
+						break;
+						case Player.CompositeArmStretchAmount.None:
+						offset.X *= 4f;
+						break;
+						case Player.CompositeArmStretchAmount.Quarter:
+						offset.X *= 6f;
+						break;
+						case Player.CompositeArmStretchAmount.ThreeQuarters:
+						offset.X *= 8f;
+						break;
+					}
+					offset = offset.RotatedBy(player.compositeFrontArm.rotation + MathHelper.PiOver2);
+					if (player.direction == -1) {
+						offset += new Vector2(4f, 2f);
+					} else {
+						offset += new Vector2(-4f, 2f);
+					}
+					return player.MountedCenter + offset;
+				}
+			} else {
+				if (back) {
+					return player.GetBackHandPosition(player.compositeBackArm.stretch, player.compositeBackArm.rotation);
+				} else {
+					return player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+				}
+			}
+		}
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();

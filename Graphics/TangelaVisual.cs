@@ -87,7 +87,7 @@ namespace Origins.Graphics {
 			}
 			if (DrawOver && !Main.gameMenu) {
 				try {
-					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+					Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(ShaderID, Main.LocalPlayer);
 					for (int i = 0; i < drawDatas.Count; i++) {
 						(DrawData data, int seed, Vector2 extraOffset) = drawDatas[i];
@@ -173,7 +173,7 @@ namespace Origins.Graphics {
 					if (!TangelaVisual.DrawOver || data.shader != TangelaVisual.ShaderID) data.Draw(spriteBatch);
 				}
 			} finally {
-				Origins.shaderOroboros.DrawContents(renderTarget);
+				Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.Transform);
 				Origins.shaderOroboros.Reset(default);
 			}
 			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseImage(renderTarget, 1);

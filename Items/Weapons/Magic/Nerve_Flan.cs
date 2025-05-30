@@ -57,25 +57,26 @@ namespace Origins.Items.Weapons.Magic {
 			player.SetCompositeArmFront(
 				true,
 				Player.CompositeArmStretchAmount.Full,
-				player.itemRotation - (MathHelper.PiOver2 + offset) * player.direction
+				player.itemRotation * player.gravDir - (MathHelper.PiOver2 + offset) * player.direction
 			);
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			float offset;
-			float timePerSwing = drawInfo.drawPlayer.itemAnimationMax * 0.5f;
-			if (drawInfo.drawPlayer.itemAnimation > timePerSwing) {
-				offset = (drawInfo.drawPlayer.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
+			Player player = drawInfo.drawPlayer;
+			float timePerSwing = player.itemAnimationMax * 0.5f;
+			if (player.itemAnimation > timePerSwing) {
+				offset = (player.itemAnimation - timePerSwing) * -2 / timePerSwing + 1;
 			} else {
-				offset = (timePerSwing - drawInfo.drawPlayer.itemAnimation) * -2 / timePerSwing + 1;
+				offset = (timePerSwing - player.itemAnimation) * -2 / timePerSwing + 1;
 			}
 			const float open_time_factor = 10f;
 			Rectangle frame = useTexture.Value.Frame(verticalFrames: 6, frameY: Math.Clamp((int)(open_time_factor - Math.Abs(offset * open_time_factor)), 0, 5));
 			DrawData data = new(
 				useTexture,
-				drawInfo.drawPlayer.GetFrontHandPosition(drawInfo.drawPlayer.compositeFrontArm.stretch, drawInfo.drawPlayer.compositeFrontArm.rotation) - Main.screenPosition,
+				player.GetCompositeArmPosition(false) - Main.screenPosition,
 				frame,
 				lightColor,
-				drawInfo.drawPlayer.compositeFrontArm.rotation + MathHelper.Pi - MathHelper.PiOver4 * drawInfo.drawPlayer.direction,
+				player.compositeFrontArm.rotation + MathHelper.Pi - MathHelper.PiOver4 * player.direction * player.gravDir,
 				new Vector2(11, 22).Apply(drawInfo.itemEffect, frame.Size()),
 				1f,
 				drawInfo.itemEffect
@@ -87,10 +88,11 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.ItemUsesThisAnimation is 1 or 5 or 9) return false;
+
 			Projectile.NewProjectile(
 				source,
-				player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation),
-				(velocity.RotatedByRandom(0.05f) + (player.compositeFrontArm.rotation + MathHelper.PiOver2).ToRotationVector2() * 3).SafeNormalize(default) * velocity.Length(),
+				player.GetCompositeArmPosition(false),
+				(velocity.RotatedByRandom(0.05f) + ((player.compositeFrontArm.rotation + MathHelper.PiOver2) * player.gravDir).ToRotationVector2() * 3).SafeNormalize(default) * velocity.Length(),
 				type,
 				damage,
 				knockback
@@ -198,7 +200,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			Origins.shaderOroboros.Capture();
 			Nerve_Flan_P_Drawer.Draw(Projectile);
-			Origins.shaderOroboros.DrawContents(renderTarget);
+			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.Transform);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = renderTarget.Size() * 0.5f;
 			TangelaVisual.DrawTangela(

@@ -200,8 +200,10 @@ namespace Origins.Items.Other.Consumables {
 				Utils.Swap(ref renderTarget, ref oldRenderTarget);
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Matrix.Identity);
+
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.Identity);
 				if (oldHadLatchkeys) Main.spriteBatch.Draw(oldRenderTarget, Main.screenLastPosition - Main.screenPosition, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
+
 				for (int i = 0; i < latchkeys.Count; i++) {
 					Player player = Main.player[latchkeys[i].owner];
 					Main.PlayerRenderer.DrawPlayer(
@@ -219,12 +221,9 @@ namespace Origins.Items.Other.Consumables {
 
 				Main.spriteBatch.End();
 				Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
+
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
-				//Main.spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
-				DrawData data = new(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
-				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null); // temp shader choice
-				shader.Apply(Main.LocalPlayer, data);
-				data.Draw(Main.spriteBatch);
+
 				TangelaVisual.DrawTangela(this, renderTarget, Vector2.Zero, null, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
 				Main.spriteBatch.End();
 
