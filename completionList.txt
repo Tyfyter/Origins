@@ -590,7 +590,7 @@ VANITY:
 (X) Quantux Mask
 (^) World Cracker Mask*
 (X) Severus' Hat
-(X) Shimmer Construct Mask !!!
+(@, ^3) Shimmer Construct Mask !!!
 (X) Trenchmaker Mask
 
 (X) Abyssal Outcast Set
@@ -1309,8 +1309,8 @@ TILES:
 (々) Miscreant Trophy*
 (々) Quantux Relic*
 (々) Quantux Trophy*
-(X) Shimmer Construct Relic* !!!
-(X) Shimmer Construct Trophy* !!!
+(@, ^3) Shimmer Construct Relic* !!!
+(@, ^3) Shimmer Construct Trophy* !!!
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
