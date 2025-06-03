@@ -709,6 +709,9 @@ namespace Origins {
 							}
 						}
 					}
+					for (int i = 0; i < shopInventory.Length; i++) {
+						shopInventory[i] ??= new();
+					}
 					if (Main.netMode != NetmodeID.SinglePlayer) {
 						ModPacket packet = Mod.GetPacket();
 						packet.Write(Origins.NetMessageType.sync_peat);
