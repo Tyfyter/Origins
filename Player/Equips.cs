@@ -398,6 +398,7 @@ namespace Origins {
 					Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * currentStatSharePercent;
 
 					float crit = Player.GetCritChance(damageClass) * currentStatSharePercent;
+					if (damageClass is ExplosivePlus) crit += 2;
 					Player.GetCritChance(DamageClass.Generic) += crit;
 					Player.GetCritChance(damageClass) -= crit;
 				}
