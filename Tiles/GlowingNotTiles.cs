@@ -72,7 +72,7 @@ namespace Origins.Tiles {
 							Vector2 position = new Vector2(i * 16 - (int)unscaledPosition.X + 8, j * 16 - (int)unscaledPosition.Y + 16) + zero + offset;
 							float windFactor = 0;
 							if (tile.WallType == WallID.None) {
-								windFactor = Main.instance.TilesRenderer.GetWindCycle(i, j, TileDrawingMethods._treeWindCounter.GetValue(Main.instance.TilesRenderer));
+								windFactor = Main.instance.TilesRenderer.GetWindCycle(i, j, Main.instance.TilesRenderer._treeWindCounter);
 								position.X += windFactor * 2f;
 								position.Y += System.Math.Abs(windFactor) * 2f;
 							}
@@ -123,7 +123,7 @@ namespace Origins.Tiles {
 					Vector2 position = new Vector2(i * 16, j * 16) - Main.screenPosition;
 					float windFactor = 0;
 					if (tile.WallType == WallID.None) {
-						windFactor = Main.instance.TilesRenderer.GetWindCycle(i, j, TileDrawingMethods._treeWindCounter.GetValue(Main.instance.TilesRenderer));
+						windFactor = Main.instance.TilesRenderer.GetWindCycle(i, j, Main.instance.TilesRenderer._treeWindCounter);
 					}
 					switch (tile.TileFrameX) {
 						case 22: {

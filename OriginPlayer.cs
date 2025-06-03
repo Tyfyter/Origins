@@ -343,18 +343,19 @@ namespace Origins {
 			if (dashVase && !otherDash) {
 				Player.dashTime = 0;
 				const int vaseDashDuration = 12;
+				const int vaseDashCooldown = 18;
 				float vaseDashSpeed = 8f;
-				if (dashDirection != 0 && (Player.velocity.X * dashDirection < vaseDashSpeed)) {
+				if (Player.dashDelay <= 0 && dashDirection != 0 && (Player.velocity.X * dashDirection < vaseDashSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
-					Player.dashDelay = vaseDashDuration;
+					Player.dashDelay = vaseDashDuration + vaseDashCooldown;
 					Player.timeSinceLastDashStarted = 0;
 					vaseDashDirection = dashDirection;
 					if (Player.velocity.Y * Player.gravDir > Player.gravity * Player.gravDir * 8) {
 						Player.velocity.Y = Player.gravity * 8;
 					}
 				}
-				if (Player.dashDelay > 0 && vaseDashDirection != 0) {
+				if (Player.dashDelay > vaseDashCooldown && vaseDashDirection != 0) {
 					if (Player.velocity.X * vaseDashDirection < vaseDashSpeed) Player.velocity.X = vaseDashSpeed * vaseDashDirection;
 					Dust.NewDust(
 						Player.position,
@@ -365,6 +366,7 @@ namespace Origins {
 						Player.velocity.Y
 					);
 				} else {
+					vaseDashDirection = 0;
 					dashVaseVisual = false;
 				}
 			} else {
