@@ -557,7 +557,7 @@ namespace Origins {
 			timeSinceLastDeath = -1;
 			tornCurrentSeverity = 0;
 			tornTarget = 0f;
-			mojoFlaskCount = mojoFlaskCountMax;
+			mojoFlaskChargesUsed = 0;
 
 			foreach (AssimilationInfo info in IterateAssimilation()) {
 				info.Percent = 0;
@@ -824,7 +824,6 @@ namespace Origins {
 			}
 			netInitialized = false;
 			ResetLaserTag();
-			mojoFlaskCount = mojoFlaskCountMax;
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);

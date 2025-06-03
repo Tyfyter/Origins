@@ -17,20 +17,19 @@ namespace Origins.Items.Other.Consumables {
 		];
 		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{nameof(Mojo_Flask)}.{nameof(Tooltip)}"));
 		public override void SetStaticDefaults() {
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrameGetter(Type, FlaskUseCount + 1)));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrameGetter(Type, FlaskUseCount)));
 		}
 		public virtual int CooldownTime => 5 * 60;
 		public virtual int FlaskUseCount => 5;
-		public static Func<Texture2D, Rectangle> GetFrameGetter(int type, int frameCount) => (Texture2D texture) => {
+		public static Func<Texture2D, Rectangle> GetFrameGetter(int type, int chargeCount) => (Texture2D texture) => {
 			int frame = 5;
 			if (!Main.gameMenu) {
-				frame = Main.CurrentPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
+				frame = chargeCount - Main.CurrentPlayer.OriginPlayer().mojoFlaskChargesUsed;
 				if (Main.CurrentPlayer.ItemAnimationActive && Main.CurrentPlayer.HeldItem.type == type) {
 					frame++;
 				}
 			}
-			if (frame > frameCount) frame = frameCount;
-			return texture.Frame(frameCount, 1, Math.Min(frame, frameCount - 1), 0);
+			return texture.Frame(chargeCount + 1, 1, Math.Clamp(frame, 0, chargeCount), 0, -1);
 		};
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.HealingPotion);
@@ -69,10 +68,10 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool CanUseItem(Player player) {
 			if (player.HasBuff(ModContent.BuffType<Mojo_Flask_Cooldown>())) return false;
-			return player.GetModPlayer<OriginPlayer>().mojoFlaskCount > 0;
+			return player.OriginPlayer().mojoFlaskChargesUsed < FlaskUseCount;
 		}
 		public override bool? UseItem(Player player) {
-			player.GetModPlayer<OriginPlayer>().mojoFlaskCount--;
+			player.OriginPlayer().mojoFlaskChargesUsed++;
 			player.AddBuff(ModContent.BuffType<Mojo_Flask_Cooldown>(), CooldownTime);
 			player.AddBuff(Purifying_Buff.ID, Item.buffTime);
 			return true;
@@ -88,7 +87,7 @@ namespace Origins.Items.Other.Consumables {
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
-				Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount.ToString(),
+				Math.Max(FlaskUseCount - Main.LocalPlayer.OriginPlayer().mojoFlaskChargesUsed, 0).ToString(),
 				position + origin * scale * new Vector2(0.75f, 0.4f),
 				drawColor,
 				0f,

@@ -19,12 +19,14 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.lifeMax = 1800;
 			NPC.defense = 24;
 			NPC.noGravity = true;
+			NPC.chaseable = false;
 			NPC.width = 76;
 			NPC.height = 58;
 			NPC.knockBackResist = 0;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) => (!Main.hardMode || NPC.AnyNPCs(Type)) ? 0 : Brine_Pool.SpawnRates.Dead_Guy;
 		public override bool PreAI() {
+			NPC.chaseable = false;
 			NPC.velocity.X = 0f;
 			NPC.velocity.Y = 0f;
 			if (NPC.ai[1] == 0) return false;

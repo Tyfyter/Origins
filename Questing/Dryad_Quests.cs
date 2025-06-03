@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Common.Systems;
+using Origins.Items.Other.Consumables;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -33,6 +34,7 @@ namespace Origins.Questing {
 			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Complete");
 			Stage = 3;
 			ShouldSync = true;
+			Main.LocalPlayer.QuickSpawnItem(npc.GetSource_GiftOrReward(FullName), ModContent.ItemType<Mojo_Flask>());
 		}
 		public override bool ShowInJournal() => Completed || (base.ShowInJournal() && LocalPlayerStarted);
 		public override string GetJournalPage() {
