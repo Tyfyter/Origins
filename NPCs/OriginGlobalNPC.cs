@@ -95,7 +95,7 @@ namespace Origins.NPCs {
 					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
 					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));
 					shop.Add<Trash_Lid>(PeatSoldCondition(160));
-					//shop.Add(ItemID.Beenade)(PeatSoldCondition(170), Condition.NotTheBeesWorld);
+					shop.Add(ItemID.Beenade, PeatSoldCondition(170), Condition.NotTheBeesWorld);
 					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]); // Lost Diver condition for both
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
@@ -141,6 +141,7 @@ namespace Origins.NPCs {
 					shop.Add(ModContent.ItemType<Gun_Magazine>());
 					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
 					shop.Add<Harpoon_Burst_Rifle>(Quest.QuestCondition<Harpoon_Burst_Rifle_Quest>());
+					shop.Add<Harpoon>(HarpoonCondition());
 					break;
 				}
 				case NPCID.Stylist: {
@@ -513,7 +514,7 @@ namespace Origins.NPCs {
 				spawnRateMultiplier *= 0.2f;
 			}
 			if (player.HasBuff<Cannihound_Lure_Debuff>()) {
-				spawnRateMultiplier *= 0.8f; 
+				spawnRateMultiplier *= 0.8f;
 			}
 			spawnRate = (int)(spawnRate * spawnRateMultiplier);
 			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);
@@ -532,6 +533,15 @@ namespace Origins.NPCs {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.PeatSoldCondition").WithFormatArgs(amount),
 				() => ModContent.GetInstance<OriginSystem>().peatSold >= amount
+			);
+		}
+		public static Condition HarpoonCondition() {
+			return new Condition(
+				Language.GetOrRegister("Mods.Origins.Conditions.HarpoonCondition"),
+				() => {
+					foreach (Item itm in Main.LocalPlayer.inventory) if (itm?.ModItem is Harpoon_Gun) return true;
+					return false;
+				}
 			);
 		}
 		public static Condition WorldEvilBossCondition<TEvil>(string key) where TEvil : AltBiome {
