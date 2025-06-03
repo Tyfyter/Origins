@@ -84,7 +84,7 @@ namespace Origins.Tiles.Other {
 			foreach (AssimilationInfo info in originPlayer.IterateAssimilation()) {
 				assimilationTotal += info.Percent;
 			}
-			if (assimilationTotal > 0 || originPlayer.mojoFlaskCount < originPlayer.mojoFlaskCountMax) {
+			if (assimilationTotal > 0 || originPlayer.mojoFlaskChargesUsed > 0) {
 				for (int k = 0; k < 3 + 6 * assimilationTotal; k++) {
 					Vector2 pos = new Vector2(i + Main.rand.NextFloat(1), j + Main.rand.NextFloat(1)) * 16;
 					Vector2 dir = ((Main.LocalPlayer.MountedCenter - pos) / 24).WithMaxLength(8);
@@ -104,7 +104,7 @@ namespace Origins.Tiles.Other {
 				dust.fadeIn = 1.5f;
 				dust.color = Color.Blue;
 			}
-			originPlayer.mojoFlaskCount = originPlayer.mojoFlaskCountMax;
+			originPlayer.mojoFlaskChargesUsed = 0;
 			Main.LocalPlayer.AddBuff(Purifying_Buff.ID, 120);
 			return true;
 		}

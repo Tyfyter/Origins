@@ -380,8 +380,9 @@ namespace Origins {
 		public int tolrukCharge = 0;
 		public bool boatRockerAltUse = false;
 		public bool boatRockerAltUse2 = false;
-		public int mojoFlaskCount = 5;
+		public int mojoFlaskChargesUsed = 0;
 		public int mojoFlaskCountMax = 5;
+		public int MojoFlaskCount => mojoFlaskCountMax - mojoFlaskChargesUsed;
 
 		public int quantumInjectors = 0;
 		public bool mojoInjection = false;
@@ -815,6 +816,7 @@ namespace Origins {
 			if (staticBrothEffectCooldown > 0)
 				staticBrothEffectCooldown--;
 
+			mojoFlaskCountMax = 0;
 			for (int i = 0; i < Player.inventory.Length; i++) {
 				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask) mojoFlaskCountMax = mojoFlask.FlaskUseCount;
 			}
