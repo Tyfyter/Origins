@@ -85,6 +85,7 @@ namespace Origins.UI {
 				minNewLines = 0;
 			}
 			float lineSpace = font.LineSpacing * baseScale.Y;
+			float telemetryLength = 0;
 			switch (mode) {
 				case Journal_UI_Mode.Normal_Page:
 				//lineSpace *= Main.UIScale;
@@ -99,11 +100,7 @@ namespace Origins.UI {
 					finishPage();
 				}
 				if (textSnippet is Journal_Control_Handler.Journal_Control_Snippet ctrl) {
-					switch (ctrl.Text.ToLower()) {
-						case "end_page":
-						finishPage();
-						break;
-					}
+					ctrl.Process(new(this, finishPage, ref i, ref telemetryLength, (int)(bounds.Height / lineSpace), (int)bounds.Width));
 					continue;
 				}
 				textSnippet.Update();
@@ -123,6 +120,7 @@ namespace Origins.UI {
 					result.X = Math.Max(result.X, cursor.X);
 					continue;
 				}
+				telemetryLength += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
 				if (textSnippet.GetType() != typeof(TextSnippet)) {
 					cursor.X += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
 					if (cursor.X > bounds.Width) {
