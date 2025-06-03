@@ -20,17 +20,24 @@ namespace Origins.Items.Other.Fish {
 		static FishingLootInfo _pool;
 		public static FishingLootInfo lastProcessedLoot;
 		public static FishingLootInfo Pool => _pool ??= new OrderedFishingLoot(
+		#region brine
+				new LeadingConditionFishLoot(new OrderedFishingLoot(new LeadingConditionFishLoot(
+						new OrderedFishingLoot(
+						new ItemFishingLoot(ItemType<Huff_Puffer_Bait>(), (_, _) => true)
+					), (_, attempt) => attempt.rare),
+					new LeadingConditionFishLoot(
+						new OrderedFishingLoot(
+						new ItemFishingLoot(ItemType<Bobbit_Worm>(), (_, attempt) => attempt.questFish == ItemType<Bobbit_Worm>()),
+						new ItemFishingLoot(ItemType<Toadfish>(), (_, _) => true)
+					), (_, attempt) => attempt.uncommon)
+				), (player, _) => player.InModBiome<Brine_Pool>()),
+		#endregion brine
+
 		#region fiberglass undergrowth
 			new LeadingConditionFishLoot(
 				new ItemFishingLoot(ItemType<Fiberbass>(), (_, attempt) => attempt.uncommon && attempt.questFish == ItemType<Fiberbass>()),
 			(player, _) => player.InModBiome<Fiberglass_Undergrowth>()),
 		#endregion fiberglass undergrowth
-
-		#region jungle
-			new LeadingConditionFishLoot(
-				new ItemFishingLoot(ItemType<Messy_Leech>(), (player, attempt) => (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) && Main.rand.NextBool(10)),
-			(player, _) => player.ZoneJungle),
-		#endregion jungle
 
 			new LeadingConditionFishLoot(new ComboFishingLoot(
 				((_, _) => 1, new ItemFishingLoot(ItemType<Tire>(), (_, _) => Main.rand.NextBool(4)))
@@ -88,19 +95,13 @@ namespace Origins.Items.Other.Fish {
 					), (_, attempt) => attempt.uncommon)
 				)),
 		#endregion dusk
-		#region brine
-				((player, _) => player.InModBiome<Brine_Pool>() ? 1 : 0, new OrderedFishingLoot(new LeadingConditionFishLoot(
-						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Huff_Puffer_Bait>(), (_, _) => true)
-					), (_, attempt) => attempt.rare),
-					new LeadingConditionFishLoot(
-						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Bobbit_Worm>(), (_, attempt) => attempt.questFish == ItemType<Bobbit_Worm>()),
-						new ItemFishingLoot(ItemType<Toadfish>(), (_, _) => true)
-					), (_, attempt) => attempt.uncommon)
-				))
-		#endregion brine
-			)
+			),
+
+		#region jungle
+			new LeadingConditionFishLoot(
+				new ItemFishingLoot(ItemType<Messy_Leech>(), (player, attempt) => (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) && Main.rand.NextBool(10)),
+			(player, _) => player.ZoneJungle)
+		#endregion jungle
 		);
 		public IEnumerable<int> ProvideItemObtainability() => Pool.ReportDrops();
 		public void Load(Mod mod) { }
