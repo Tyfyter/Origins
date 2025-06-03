@@ -102,9 +102,10 @@ namespace Origins.NPCs {
 				netReceive = _netReceive.CreateDelegate<Action<BinaryReader, Boss_Tracker>>();
 			}
 			foreach (FieldInfo field in GetType().GetFields()) {
-				if (field.FieldType == typeof(bool)) {
+				if (field.FieldType == typeof(bool) && !field.IsStatic) {
 					DynamicMethod get = new("get_" + field.Name, typeof(bool), []);
-					get.GetILGenerator().Emit(OpCodes.Ldsfld, field);
+					get.GetILGenerator().Emit(OpCodes.Call, GetType().GetProperty(nameof(Instance)).GetGetMethod());
+					get.GetILGenerator().Emit(OpCodes.Ldfld, field);
 					get.GetILGenerator().Emit(OpCodes.Ret);
 					Conditions.Add(field.Name, new(Language.GetOrRegister("Mods.Origins.Conditions." + field.Name.Replace("downed", "Downed")), get.CreateDelegate<Func<bool>>()));
 				}
