@@ -31,6 +31,7 @@ Conditions: {
 	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
 	DownedShimmerConstruct: After defeating the Shimmer Construct
 	DownedChambersiteSentinel: After defeating the Chambersite Sentinel
+	HarpoonCondition: When the player has a Harpoon Gun in their inventory
 }
 
 ModMenu: {
