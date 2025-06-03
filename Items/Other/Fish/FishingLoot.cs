@@ -93,7 +93,7 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Duskarp>(), (_, attempt) => attempt.questFish == ItemType<Duskarp>()),
 						new ItemFishingLoot(ItemType<Duskarp>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
-				)),
+				))
 		#endregion dusk
 			),
 
