@@ -231,7 +231,7 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && Player.potionDelay > 0) {
+			if (entangledEnergy && Player.potionDelay > 0) {
 				Projectile.NewProjectile(
 					Player.GetSource_OnHit(target),
 					target.Center,
