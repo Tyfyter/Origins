@@ -1,7 +1,10 @@
-﻿using Terraria.ID;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class Shimmer_Drone : ModNPC {
@@ -66,6 +69,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			NPC.velocity += NPC.DirectionTo(targetPos) * 0.5f;
 			NPC.velocity = NPC.velocity.SafeNormalize(default) * 8;
+			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
@@ -96,5 +100,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Drone).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Drone).GetDefaultTMLName() + "_AF";
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+			}
+		}
 	}
 }
