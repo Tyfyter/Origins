@@ -442,6 +442,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						Projectile.velocity += Projectile.DirectionTo(targetPos) * 0.5f;
 						Projectile.velocity = Projectile.velocity.SafeNormalize(default) * 8;
 					}
+					Projectile.rotation = (-Projectile.velocity).ToRotation() - MathHelper.PiOver2;
+					Projectile.spriteDirection = Math.Sign(-Projectile.velocity.X);
 					break;
 				}
 				case 1: {
@@ -457,6 +459,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 					Projectile.velocity += Projectile.DirectionTo(targetPos) * 0.5f;
 					Projectile.velocity = Projectile.velocity.SafeNormalize(default) * 8;
+					Projectile.rotation = (-Projectile.velocity).ToRotation() - MathHelper.PiOver2;
+					Projectile.spriteDirection = Math.Sign(-Projectile.velocity.X);
 					break;
 				}
 
