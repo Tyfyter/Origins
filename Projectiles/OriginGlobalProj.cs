@@ -124,7 +124,7 @@ namespace Origins.Projectiles {
 			if (source is EntitySource_ItemUse itemUseSource) {
 				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
-				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && originPlayer.entangledEnergy) {
+				if (originPlayer.entangledEnergy) {
 					fiberglassLifesteal = true;
 				}
 				Prefix = itemUseSource.Item.prefix;
@@ -185,6 +185,7 @@ namespace Origins.Projectiles {
 					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
 					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
+					fiberglassLifesteal = parentGlobalProjectile.fiberglassLifesteal;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -422,13 +423,13 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (fiberglassLifesteal) {
+			if (fiberglassLifesteal && Main.player[projectile.owner].potionDelay > 0) {
 				Projectile.NewProjectile(
 					projectile.GetSource_OnHit(target),
 					target.Center,
-					default,
+					Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(4, 8),
 					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-					(int)MathF.Ceiling(damageDone / 10f),
+					(int)MathF.Pow(damageDone, 0.5f),
 					0,
 					projectile.owner
 				);

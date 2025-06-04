@@ -43,8 +43,8 @@ namespace Origins {
 		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			Debugging.LogFirstRun(ModifyWeaponDamage);
-			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
-				damage.Flat += Player.statDefense / 2;
+			if (entangledEnergy) {
+				damage.Flat += MathF.Pow((Player.statLifeMax2 - Player.statLife) / 400f, 1.5f) * 10;
 			}
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
 			if (focusCrystal) {
@@ -231,7 +231,7 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && Player.potionDelay > 0) {
 				Projectile.NewProjectile(
 					Player.GetSource_OnHit(target),
 					target.Center,
