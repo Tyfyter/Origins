@@ -1241,6 +1241,11 @@ Buffs: {
 		// DisplayName: Chambersite Sentinel
 		// Description: The chambersite sentinel will fight for you
 	}
+
+	Aetherite_Crystal_Buff: {
+		// DisplayName: Aetherite Crystal
+		// Description: Mods.Origins.Buffs.Aetherite_Crystal_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1835,6 +1840,7 @@ Projectiles: {
 	// Gelatin_Buddy.DisplayName: Gelatin Buddy
 	// Aetherite_Aura_P.DisplayName: Aetherite Aura
 	// Chambersite_Commander_Sentinel.DisplayName: Chambersite Commander Sentinel
+	// Aetherium_Construct.DisplayName: Aetherium Construct
 }
 
 Prefixes: {
