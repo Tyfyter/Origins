@@ -81,7 +81,11 @@ namespace Origins {
 			}
 			if (ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (weakpointAnalyzer && Main.rand.NextBool(8, 100)) return false;
-				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
+				if (controlLocus) {
+					int dupeCount = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[ammo.shoot];
+					if (dupeCount == 0) return false;
+					return Main.rand.NextFloat(1) < 0.6f / dupeCount;
+				}
 			}
 			return true;
 		}

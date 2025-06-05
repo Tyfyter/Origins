@@ -144,7 +144,7 @@ namespace Origins.Projectiles {
 						bocShadows = 2;
 					} else if (originPlayer.controlLocus && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
 						if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
-						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = 5;
+						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[projectile.type];
 					}
 					EntitySource_ItemUse multishotSource = null;
 					int ammoID = ItemID.None;
@@ -154,7 +154,7 @@ namespace Origins.Projectiles {
 							ammoID = sourceWAmmo.AmmoItemIdUsed;
 						}
 					}
-					if (bocShadows > 0) {
+					if (bocShadows > 0 && projectile.damage > 0) {
 						for (int i = bocShadows; i-- > 0;) {
 							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
 							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
@@ -399,6 +399,12 @@ namespace Origins.Projectiles {
 				);
 			}
 		}
+		public override bool PreAI(Projectile projectile) {
+			if (weakpointAnalyzerTarget.HasValue && OriginsSets.Projectiles.WeakpointAnalyzerAIReplacement[projectile.type] is Func<Projectile, bool> fakeAI) {
+				if (!fakeAI(projectile)) return false;
+			}
+			return true;
+		}
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			if (viperEffect) {
 				for (int i = 0; i < target.buffType.Length; i++) {
@@ -524,9 +530,17 @@ namespace Origins.Projectiles {
 				);
 			}
 		}
+		static bool getAlphaRecursionLock = false;
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
+			if (getAlphaRecursionLock) return null;
 			if (weakpointAnalyzerTarget is Vector2 targetPos) {
-				Color baseColor = projectile.ModProjectile?.GetAlpha(lightColor) ?? lightColor;
+				Color baseColor;
+				try {
+					getAlphaRecursionLock = true;
+					baseColor = projectile.GetAlpha(lightColor);
+				} finally {
+					getAlphaRecursionLock = false;
+				}
 				float distSQ = projectile.DistanceSQ(targetPos);
 				const float range = 128;
 				const float rangeSQ = range * range;
