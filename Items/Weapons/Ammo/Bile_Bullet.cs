@@ -29,8 +29,9 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 150)
-			.AddIngredient(ItemID.EmptyBullet, 150)
+			.AddIngredient(ItemID.MusketBall, 150)
 			.AddIngredient(ModContent.ItemType<Black_Bile>())
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 		public void ModifyWikiStats(JObject data) {
