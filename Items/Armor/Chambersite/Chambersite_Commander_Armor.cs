@@ -27,7 +27,7 @@ namespace Origins.Items.Armor.Chambersite {
 		];
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
@@ -47,8 +47,8 @@ namespace Origins.Items.Armor.Chambersite {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(ItemID.LunarTabletFragment, 3)
-			.AddIngredient<Chambersite_Item>(4)
 			.AddIngredient<Carburite_Item>(12)
+			.AddIngredient<Chambersite_Item>(4)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -62,7 +62,7 @@ namespace Origins.Items.Armor.Chambersite {
 		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Breastplate";
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.sellPrice(silver: 80);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
@@ -72,8 +72,8 @@ namespace Origins.Items.Armor.Chambersite {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(ItemID.LunarTabletFragment, 3)
-			.AddIngredient<Chambersite_Item>(12)
 			.AddIngredient<Carburite_Item>(36)
+			.AddIngredient<Chambersite_Item>(12)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -82,8 +82,8 @@ namespace Origins.Items.Armor.Chambersite {
 	public class Chambersite_Greaves : ModItem, INoSeperateWikiPage {
 		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Greaves";
 		public override void SetDefaults() {
-			Item.defense = 6;
-			Item.value = Item.sellPrice(silver: 60);
+			Item.defense = 7;
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
@@ -93,8 +93,8 @@ namespace Origins.Items.Armor.Chambersite {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(ItemID.LunarTabletFragment, 3)
-			.AddIngredient<Chambersite_Item>(8)
 			.AddIngredient<Carburite_Item>(24)
+			.AddIngredient<Chambersite_Item>(8)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
