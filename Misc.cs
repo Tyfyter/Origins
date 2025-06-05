@@ -2878,11 +2878,17 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
-		public static bool Cooldown(ref this int value, int to = 0) {
+		public static bool Cooldown(ref this float value, float to = 0, float rate = 1) => value.Cooldown<float>(to, rate);
+		public static bool Cooldown(ref this int value, int to = 0, int rate = 1) => value.Cooldown<int>(to, rate);
+		public static bool Cooldown<N>(ref this N value, N to, N rate) where N : struct, INumber<N> {
 			if (value > to) {
-				value--;
-				return value <= to;
+				value -= rate;
+				if (value <= to) {
+					value = to;
+					return true;
+				}
 			}
+			return false;
 		}
 		public static bool Warmup(ref this float value, float to, float rate = 1) => value.Warmup<float>(to, rate);
 		public static bool Warmup(ref this int value, int to, int rate = 1) => value.Warmup<int>(to, rate);
