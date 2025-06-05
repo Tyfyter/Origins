@@ -2864,7 +2864,10 @@ namespace Origins {
 		public static bool Warmup<N>(ref this N value, N to, N rate) where N : struct, INumber<N> {
 			if (value < to) {
 				value += rate;
-				return value >= to;
+				if (value >= to) {
+					value = to;
+					return true;
+				}
 			}
 			return false;
 		}
