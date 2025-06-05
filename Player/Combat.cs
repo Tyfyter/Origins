@@ -44,7 +44,7 @@ namespace Origins {
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			Debugging.LogFirstRun(ModifyWeaponDamage);
 			if (entangledEnergy) {
-				damage.Flat += MathF.Pow((Player.statLifeMax2 - Player.statLife) / 400f, 1.5f) * 10;
+				damage.Flat += Entangled_Energy.DamageBonus(Player.statLifeMax2 - Player.statLife);
 			}
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
 			if (focusCrystal) {

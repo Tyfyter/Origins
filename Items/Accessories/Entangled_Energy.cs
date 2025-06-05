@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
 		/// <param name="damage">the damage dealt by the hit which triggered the healing orb</param>
 		/// <param name="trueMelee">whether or not the hit is "true melee" (directly uses the item hitbox, spears, etc.)</param>
 		public static float RestorationPerHit(int damage, bool trueMelee) => (trueMelee ? 10 : 7) + MathF.Pow(damage, 0.5f) / (trueMelee ? 1.5f : 2);
+		public static float DamageBonus(int missingLife) => MathF.Pow(missingLife / 400f, 1.5f) * 10;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Blue;
@@ -46,6 +47,7 @@ namespace Origins.Items.Accessories {
 				int reduction = int.Min(Main.rand.RandomRound(Entangled_Energy.RestorationPerHit(Projectile.damage, Projectile.ai[1] == 1)), (int)entangledEnergyCount);
 				player.potionDelay = int.Max(player.potionDelay - reduction, 0);
 				entangledEnergyCount -= reduction;
+
 				int sicknessDebuff = player.FindBuffIndex(BuffID.PotionSickness);
 				if (sicknessDebuff != -1) player.buffTime[sicknessDebuff] = player.potionDelay;
 				Projectile.Kill();
