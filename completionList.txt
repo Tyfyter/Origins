@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(@, #2) Shimmer Construct !!!
+(#2, ^2) Shimmer Construct !!!
 (#, ^2) Trenchmaker
 (@4, ^3) World Cracker* !!!
 
@@ -590,7 +590,7 @@ VANITY:
 (X) Quantux Mask
 (^) World Cracker Mask*
 (X) Severus' Hat
-(@, ^3) Shimmer Construct Mask !!!
+(^) Shimmer Construct Mask
 (X) Trenchmaker Mask
 
 (X) Abyssal Outcast Set
