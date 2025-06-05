@@ -51,6 +51,7 @@ using Origins.Tiles.Other;
 using Origins.Backgrounds;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using ThoriumMod.Projectiles;
+using System.Numerics;
 
 namespace Origins {
 	#region classes
@@ -2857,6 +2858,15 @@ namespace Origins {
 				Main.projectile[index].timeLeft = minTimeLeft;
 				if (count > limit) goto redo;
 			}
+		}
+		public static bool Warmup(ref this float value, float to, float rate = 1) => value.Warmup<float>(to, rate);
+		public static bool Warmup(ref this int value, int to, int rate = 1) => value.Warmup<int>(to, rate);
+		public static bool Warmup<N>(ref this N value, N to, N rate) where N : struct, INumber<N> {
+			if (value < to) {
+				value += rate;
+				return value >= to;
+			}
+			return false;
 		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;

@@ -241,9 +241,10 @@ namespace Origins {
 					target.Center,
 					default,
 					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-					(int)MathF.Ceiling(damageDone / 10f),
+					damageDone,
 					0,
-					Player.whoAmI
+					Player.whoAmI,
+					ai1: 1
 				);
 			}
 			if (item.CountsAsClass(DamageClass.Melee)) {//flasks

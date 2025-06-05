@@ -1,12 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Dusts;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Entangled_Energy : ModItem, ICustomWikiStat {
+	public class Entangled_Energy : ModItem {
+		/// <summary>
+		/// The maximum amount of seconds of reduction per second
+		/// </summary>
+		public static float MaxSecondsPerSecond => 1f;
+		/// <param name="damage">the damage dealt by the hit which triggered the healing orb</param>
+		/// <param name="trueMelee">whether or not the hit is "true melee" (directly uses the item hitbox, spears, etc.)</param>
+		public static float RestorationPerHit(int damage, bool trueMelee) => (trueMelee ? 10 : 7) + MathF.Pow(damage, 0.5f) / (trueMelee ? 1.5f : 2);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Blue;
@@ -34,7 +42,10 @@ namespace Origins.Items.Accessories {
 					dust.noGravity = true;
 					dust.velocity += (dust.position - player.Center).SafeNormalize(default) * 4;
 				}
-				player.potionDelay = int.Max(player.potionDelay - Main.rand.RandomRound(3.5f + Projectile.damage / 2f), 0);
+				ref float entangledEnergyCount = ref player.OriginPlayer().entangledEnergyCount;
+				int reduction = int.Min(Main.rand.RandomRound(Entangled_Energy.RestorationPerHit(Projectile.damage, Projectile.ai[1] == 1)), (int)entangledEnergyCount);
+				player.potionDelay = int.Max(player.potionDelay - reduction, 0);
+				entangledEnergyCount -= reduction;
 				int sicknessDebuff = player.FindBuffIndex(BuffID.PotionSickness);
 				if (sicknessDebuff != -1) player.buffTime[sicknessDebuff] = player.potionDelay;
 				Projectile.Kill();

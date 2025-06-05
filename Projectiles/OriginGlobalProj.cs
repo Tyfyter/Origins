@@ -435,9 +435,10 @@ namespace Origins.Projectiles {
 					target.Center,
 					Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(4, 8),
 					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-					(int)MathF.Pow(damageDone, 0.5f),
+					damageDone,
 					0,
-					projectile.owner
+					projectile.owner,
+					ai1: projectile.ownerHitCheck.ToInt()
 				);
 			}
 			if (prefix is IOnHitNPCPrefix onHitNPCPrefix) {

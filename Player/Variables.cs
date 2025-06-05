@@ -114,6 +114,7 @@ namespace Origins {
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
 		public bool entangledEnergy = false;
+		public float entangledEnergyCount = 0;
 		public bool asylumWhistle = false;
 		public int asylumWhistleTarget = -1;
 		public int mitosisCooldown = 0;
@@ -619,6 +620,7 @@ namespace Origins {
 			lazyCloakVisible = false;
 			amebicVialVisible = false;
 			entangledEnergy = false;
+			entangledEnergyCount.Warmup(60, Entangled_Energy.MaxSecondsPerSecond);
 			mysteriousSprayMult = 1;
 			protozoaFood = false;
 			protozoaFoodItem = null;
