@@ -6272,7 +6272,11 @@ Voltefuse: {
 
 Ichor_Harpoon: {
 	DisplayName: Ichor Harpoon
-	Tooltip: ""
+	Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts Ichor
+		'''
 }
 
 Gelatin_Bloom_Brooch: {
@@ -6286,7 +6290,7 @@ Gelatin_Bloom_Brooch: {
 
 Shadow_Torch: {
 	DisplayName: Shadow Torch
-	Tooltip: ""
+	Tooltip: Darkens the area around it
 }
 
 Amoeba_Buggy_Cage_Item: {
