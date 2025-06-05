@@ -735,6 +735,9 @@ namespace Origins {
 				Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
 			}
 		}
+		public override void GetHealLife(Item item, bool quickHeal, ref int healValue) {
+			if (entangledEnergy) healValue -= healValue / 4;
+		}
 		public void SetMimicSetChoice(int level, int choice) {
 			mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
 		}

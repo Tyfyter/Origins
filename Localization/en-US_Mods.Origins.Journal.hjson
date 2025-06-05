@@ -64,9 +64,10 @@ Lost_Crone: {
 	Haggard_Artery.Text:
 		'''
 		[header:Haggard Artery (3/{$SeriesLength})]
-		[jimage/sc2.5d:Origins/Items/Accessories/Haggard_Artery]
+		[jctrl/skip_next_if:MaxLength 1818 >=][jimage/sc2.5d:Origins/Items/Accessories/Haggard_Artery]
 		*****
 		My organs being removed from my body only left a more empty feeling, and made me reckless and dangerous to myself. My contemptedness towards the heroics made me a hypocrite, I already knew what was destined to happen.
+		[jctrl/skip_next_2_if:MaxLength 1818 <][jctrl:end_page][jimage/sc2.5d:Origins/Items/Accessories/Haggard_Artery]
 		'''
 	Fleshy_Figurine.Text:
 		'''
