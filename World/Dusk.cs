@@ -12,6 +12,7 @@ using Origins.Tiles.Dusk;
 using System.Collections.Generic;
 using Tyfyter.Utils;
 using PegasusLib;
+using Origins.Buffs;
 
 namespace Origins.World.BiomeData {
 	public class Dusk : ModBiome {
@@ -25,9 +26,9 @@ namespace Origins.World.BiomeData {
 			return originPlayer.ZoneVoid;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(originPlayer.ZoneVoidProgressSmoothed);
-			player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", originPlayer.ZoneVoidProgressSmoothed > 0, player.Center);
+			float progress = player.OriginPlayer().ZoneVoidProgressSmoothed - player.HasBuff<Voidsight_Buff>().Mul(0.2f);
+			Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(progress);
+			player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", progress != 0, player.Center);
 		}
 		public class Gen {
 			internal static int duskLeft;
@@ -100,7 +101,7 @@ namespace Origins.World.BiomeData {
 				}
 				bool canBeCleared = TileID.Sets.CanBeClearedDuringGeneration[oreID];
 				TileID.Sets.CanBeClearedDuringGeneration[oreID] = false;
-				while (hellSpikes.Count > 0) {
+				while ((hellSpikes?.Count ?? 0) > 0) {
 					(Point pos, int size) = hellSpikes.Pop();
 					Vector2 vel = new Vector2(0, (pos.Y < Main.maxTilesY - 150) ? 2.75f : -2.75f).RotatedByRandom(1.25f, WorldGen.genRand);
 					bool twist = WorldGen.genRand.NextBool();
