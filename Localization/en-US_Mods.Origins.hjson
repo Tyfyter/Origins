@@ -395,7 +395,7 @@ TownNPCMood: {
 }
 
 Interface: {
-	Journal: Journal
+	Journal: "{§Journal}"
 	Quests: Quests
 	AcceptQuest: Accept
 	CompleteQuestGeneric: Complete quest
@@ -442,6 +442,7 @@ Generic: {
 	UnboundKey: '''"{0}" (not bound)'''
 	Mildew_Carrion: Mildew Carrion
 	Tangela: Tangela
+	Journal: Journal
 }
 
 AltBiomes: {
@@ -2140,7 +2141,7 @@ Keybinds: {
 	"Debug Screen Shader.DisplayName": Debug  Screen  Shader
 	GoldenLotus.DisplayName: Golden Lotus
 	UseMojoFlask.DisplayName: Use Mojo Flask
-	JournalBack.DisplayName: Journal: Back
+	JournalBack.DisplayName: "{§Journal}: Back"
 	WishingGlass.DisplayName: Wishing Glass
 }
 
@@ -2153,16 +2154,11 @@ Configs: {
 			Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
 		}
 
-		Headers.Journal: Journal options
+		Headers.Journal: "{§Journal} options"
 
 		TabbyJournal: {
-			Label: Alternate journal layout
+			Label: Alternate {§Journal} layout
 			Tooltip: Currently the "normal" layout is still unimplemented
-		}
-
-		OpenJournalOnUnlock: {
-			Label: Auto-open on unlock
-			Tooltip: Opens the Journal when inspecting an item for the first time
 		}
 
 		AnimatedRavel: {
@@ -2187,7 +2183,7 @@ Configs: {
 		}
 
 		DefaultJournalMode: {
-			Label: Open Journal to
+			Label: Open {§Journal} to
 			Tooltip: ""
 		}
 

@@ -9,7 +9,11 @@ Generic: {
 	Defiled_Antibodies: Blŏkusland™ Employees
 	Mildew_Carrion: Mildew Chadlion
 	Tangela: Clown Vomit
+	Journal: Lore/Quest Muffin
 }
+
+GameTips.Journal: Having trouble keeping track of your quests? If only- ooh! 2 for one muffins!
+Quests.Guide.Quest_Quest.Inquire: "[player:_], are you having trouble keeping track of your quests? Have a muffin."
 
 Status_Messages: {
 	Defiled_Fissure_1: is that bone-hurting juice?

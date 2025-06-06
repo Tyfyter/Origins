@@ -1986,7 +1986,7 @@ Tire: {
 }
 
 Journal_Item: {
-	// DisplayName: Journal
+	// DisplayName: "{§Journal}"
 	// Tooltip: ""
 }
 
