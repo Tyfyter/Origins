@@ -51,6 +51,7 @@ namespace Origins.Items.Armor.Chambersite {
 			.AddIngredient<Carburite_Item>(12)
 			.AddIngredient<Chambersite_Item>(4)
 			.AddTile(TileID.MythrilAnvil)
+			.AddCondition(Condition.DownedPlantera)
 			.Register();
 		}
 		public string ArmorSetName => "Chambersite_Armor";
@@ -76,6 +77,7 @@ namespace Origins.Items.Armor.Chambersite {
 			.AddIngredient<Carburite_Item>(36)
 			.AddIngredient<Chambersite_Item>(12)
 			.AddTile(TileID.MythrilAnvil)
+			.AddCondition(Condition.DownedPlantera)
 			.Register();
 		}
 	}
@@ -97,6 +99,7 @@ namespace Origins.Items.Armor.Chambersite {
 			.AddIngredient<Carburite_Item>(24)
 			.AddIngredient<Chambersite_Item>(8)
 			.AddTile(TileID.MythrilAnvil)
+			.AddCondition(Condition.DownedPlantera)
 			.Register();
 		}
 	}
