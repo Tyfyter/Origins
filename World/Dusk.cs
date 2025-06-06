@@ -101,7 +101,7 @@ namespace Origins.World.BiomeData {
 				}
 				bool canBeCleared = TileID.Sets.CanBeClearedDuringGeneration[oreID];
 				TileID.Sets.CanBeClearedDuringGeneration[oreID] = false;
-				while (hellSpikes.Count > 0) {
+				while ((hellSpikes?.Count ?? 0) > 0) {
 					(Point pos, int size) = hellSpikes.Pop();
 					Vector2 vel = new Vector2(0, (pos.Y < Main.maxTilesY - 150) ? 2.75f : -2.75f).RotatedByRandom(1.25f, WorldGen.genRand);
 					bool twist = WorldGen.genRand.NextBool();
