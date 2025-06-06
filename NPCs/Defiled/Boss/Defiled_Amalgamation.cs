@@ -713,6 +713,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						if (NPC.ai[1] >= 65 && difficultyMult > 1) projectilesToHaveFired++;
 						if (NPC.ai[1] >= 70) projectilesToHaveFired++;
 						if (NPC.ai[2] < projectilesToHaveFired) {
+							NPC.ai[2]++;
 							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
 								Projectile.NewProjectileDirect(

@@ -184,6 +184,7 @@ namespace Origins.Graphics {
 			try {
 				Origins.shaderOroboros.Capture();
 				if (Main.gameMenu) Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.UIScaleMatrix);
+				else Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.EffectMatrix);
 				for (int i = 0; i < TangelaVisual.drawDatas.Count; i++) {
 					DrawData data = TangelaVisual.drawDatas[i].Data;
 					if (!TangelaVisual.DrawOver || data.shader != TangelaVisual.ShaderID) data.Draw(spriteBatch);
