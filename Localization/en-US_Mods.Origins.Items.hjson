@@ -278,8 +278,9 @@ Entangled_Energy: {
 	DisplayName: Entangled Energy
 	Tooltip:
 		'''
-		Fiberglass weapons gain damage based on defense
-		Fiberglass weapons gain lifesteal
+		Fiberglass weapons gain damage based on missing health
+		Fiberglass weapons reduce Potion Sickness on hit
+		-25% potion healing
 		'''
 }
 
