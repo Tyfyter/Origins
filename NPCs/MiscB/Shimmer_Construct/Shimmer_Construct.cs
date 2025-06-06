@@ -73,10 +73,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
-				CustomTexturePath = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2", // "Origins/UI/Shimmer_Construct_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(0f, -32f),
-				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = -32f
+				Position = new Vector2(25, -30),
+				Rotation = 0.7f
 			};
 			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
@@ -105,7 +103,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
 			}
 			NPC.dontTakeDamage = false;
-			if (!IsInPhase3  && aiStates[NPC.aiAction] is not DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
+			if (!IsInPhase3 && aiStates[NPC.aiAction] is not DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) aiStates[NPC.aiAction].DoAIState(this);
 			else {
 				NPC.velocity = Vector2.Zero;
@@ -245,8 +243,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 position = NPC.Center;
-			Texture2D Crystal = crystal;
-			if (IsInPhase2) Crystal = crystal2;
 
 			if (deathAnimationTime > 0) {
 				const float shattertime = 100;
@@ -267,7 +263,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			SpriteBatchState state = spriteBatch.GetState();
 			spriteBatch.Restart(state, SpriteSortMode.Immediate);
 			DrawData data = new(
-				Crystal,
+				IsInPhase2 || NPC.IsABestiaryIconDummy ? crystal2 : crystal,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
@@ -324,7 +320,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ItemType<Shimmer_Construct_Bag>(), 1, 1, 1, null)
 			));
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Aetherite_Crystal>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Jawbreaker>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Wishing_Glass>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Shimmer_Construct_Relic>()));
 		}
@@ -594,7 +590,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SC_BossBar : ModBossBar {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
-			return TextureAssets.NpcHeadBoss[NPCType<Shimmer_Construct>()];
+			return TextureAssets.NpcHeadBoss[GetModBossHeadSlot(GetInstance<Shimmer_Construct>().BossHeadTexture)];
 		}
 	}
 	class Eye_Shimmer_Collision : GlobalNPC {

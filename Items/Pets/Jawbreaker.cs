@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Aetherite_Crystal : ModItem /*, ICustomWikiStat, ICustomPetFrames, IJournalEntrySource<Blockus_Tube_Entry> */ {
+	public class Jawbreaker : ModItem /*, ICustomWikiStat, ICustomPetFrames, IJournalEntrySource<Blockus_Tube_Entry> */ {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
@@ -34,10 +34,10 @@ namespace Origins.Items.Pets {
 			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Juvenile_Amalgamation).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 5)),
 		];*/
 	}
-	public class Aetherium_Construct : ModProjectile {
+	public class Stellar_Spark : ModProjectile {
 		public override string Texture => $"Terraria/Images/NPC_{NPCID.ServantofCthulhu}";
 		public override void SetStaticDefaults() {
-			Aetherite_Crystal.projectileID = Projectile.type;
+			Jawbreaker.projectileID = Projectile.type;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 2;
 
@@ -66,9 +66,9 @@ namespace Origins.Items.Pets {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Aetherite_Crystal.buffID);
+				player.ClearBuff(Jawbreaker.buffID);
 			}
-			if (player.HasBuff(Aetherite_Crystal.buffID)) {
+			if (player.HasBuff(Jawbreaker.buffID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -181,19 +181,19 @@ namespace Origins.Items.Pets {
 }
 
 namespace Origins.Buffs {
-	public class Aetherite_Crystal_Buff : ModBuff {
+	public class Stellar_Spark_Buff : ModBuff {
 		public override string Texture => $"Terraria/Images/Item_{ItemID.CrystalShard}";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			Aetherite_Crystal.buffID = Type;
+			Jawbreaker.buffID = Type;
 		}
 
 		public override void Update(Player player, ref int buffIndex) {
 			player.buffTime[buffIndex] = 18000;
 
-			int projType = Aetherite_Crystal.projectileID;
+			int projType = Jawbreaker.projectileID;
 
 			// If the player is local, and there hasn't been a pet projectile spawned yet - spawn it.
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0) {
