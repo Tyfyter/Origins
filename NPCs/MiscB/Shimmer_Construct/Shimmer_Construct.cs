@@ -71,13 +71,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
-			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;/*
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
-				CustomTexturePath = "Origins/UI/Shimmer_Construct_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				CustomTexturePath = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2", // "Origins/UI/Shimmer_Construct_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(0f, -32f),
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -32f
-			};*/
+			};
 			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
 		public override void SetDefaults() {
