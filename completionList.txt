@@ -904,7 +904,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(@, #2) Aether Opal !!! (custom sounds)
+(#2, ^2) Aether Opal !!! (utilize new sprites, custom sounds)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
@@ -1462,7 +1462,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(@3, #2) Nerve Flan !!! (buff icon, holding position)
+(#2, ^2) Nerve Flan !!! (use buff icon, holding position)
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*

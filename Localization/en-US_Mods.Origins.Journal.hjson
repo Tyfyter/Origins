@@ -858,6 +858,17 @@ Ocean_Tribe: {
 	}
 }
 
+Trenchmaker: {
+	Name: Trenchmaker
+	Text:
+		'''
+		[header:Trenchmaker]
+		[jimage/s1d:Origins/NPCs/Ashen/Boss/Trenchmaker]
+		*****
+		It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew came to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Do not get me wrong, the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since Lauren sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-PS1 was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-PS1. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-PS and TM-MT lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the other network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack from quick reflexes, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I promised myself to never leave until the "Ashen" is powered off for good, so here I am.
+		'''
+}
+
 µTutorial: {
 	DisplayName: Mechanics
 

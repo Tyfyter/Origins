@@ -1383,7 +1383,7 @@ Sapphire_Hood: {
 
 Sapphire_Tights: {
 	DisplayName: Sapphire Mediator Tights
-	Tooltip: Increased movement speed
+	Tooltip: +10% movement speed
 }
 
 Sapphire_Vest: {
@@ -6309,7 +6309,7 @@ Cicada_3301_Cage_Item: {
 	Tooltip: ""
 }
 
-Aetherite_Crystal: {
-	DisplayName: Aetherite Crystal
+Jawbreaker: {
+	DisplayName: Jawbreaker
 	Tooltip: ""
 }

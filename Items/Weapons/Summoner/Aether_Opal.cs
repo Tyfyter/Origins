@@ -1,20 +1,24 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.Projectiles;
+using PegasusLib;
+using PegasusLib.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Liquid;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Weapons.Summoner.Minions;
-using System.Collections.Generic;
-using Terraria.Audio;
-using Origins.Projectiles;
-using Origins.Items.Materials;
-using Terraria.GameContent.Liquid;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
-using PegasusLib;
+using ThoriumMod.Projectiles;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Aether_Opal : ModItem, ICustomWikiStat {
@@ -52,7 +56,6 @@ namespace Origins.Buffs {
 	[ReinitializeDuringResizeArrays]
 	public class Shimmer_Guardian_Buff : MinionBuff {
 		internal static int?[] prefixValueCache = PrefixID.Sets.Factory.CreateCustomSet<int?>(null);
-		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal";
 		public static int ID { get; private set; }
 		public override IEnumerable<int> ProjectileTypes() => [
 			Shimmer_Guardian_Counter.ID
@@ -125,7 +128,9 @@ namespace Origins.Buffs {
 
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Shimmer_Guardian : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal";
+		private AutoLoadingAsset<Texture2D> crust = typeof(Shimmer_Guardian).GetDefaultTMLName() + "_Crust";
+		private AutoLoadingAsset<Texture2D> crystal = typeof(Shimmer_Guardian).GetDefaultTMLName() + "_Crystal";
+
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
@@ -507,7 +512,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Shimmer_Guardian_Counter : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal"; // this one actually doesn't need a texture
+		public override string Texture => base.Texture.Replace("_Counter", null); // this one actually doesn't need a texture
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

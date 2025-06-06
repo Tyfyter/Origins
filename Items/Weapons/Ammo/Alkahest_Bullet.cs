@@ -27,8 +27,9 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 150)
-			.AddIngredient(ItemID.EmptyBullet, 150)
+			.AddIngredient(ItemID.MusketBall, 150)
 			.AddIngredient(ModContent.ItemType<Alkahest>())
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}

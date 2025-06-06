@@ -12,8 +12,6 @@ using PegasusLib;
 using Terraria.Graphics.Shaders;
 using Origins.Items.Other.Dyes;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Utilities;
-using ThoriumMod.Items.Donate;
 using Terraria.GameContent.Liquid;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
