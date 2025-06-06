@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Buffs {
+namespace Origins.Buffs.Food {
 	public class Nerve_Flan_Food_Buff : ModBuff {
 		public override void SetStaticDefaults() {
 			BuffID.Sets.IsWellFed[Type] = true;

@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Origins.Items.Weapons.Magic;
-using Origins.Buffs;
+using Origins.Buffs.Food;
 
 namespace Origins.Items.Other.Consumables.Food {
 	public class Nerve_Flan_Food : ModItem {
