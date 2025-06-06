@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Armor.Chambersite;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
@@ -393,8 +394,9 @@ namespace Origins.Items.Armor.Chambersite {
 			}
 		}
 	}
+}
+namespace Origins.Buffs {
 	public class Chambersite_Commander_Sentinel_Buff : MinionBuff {
-		public override string Texture => "Origins/Buffs/Brainy_Buff";
 		public static int ID { get; private set; }
 		public override IEnumerable<int> ProjectileTypes() => [
 			Chambersite_Commander_Sentinel.ID
