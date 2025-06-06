@@ -11,6 +11,8 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Pets;
+using System.Linq;
+using System.Reflection;
 
 namespace Origins.World {
 	public class AshenBiomeData : ModBiome {
@@ -48,7 +50,9 @@ namespace Origins.World {
 			.SetVileInnard(ModContent.ItemType<Biocomponent10>())
 			.SetEvilBossDrop(ModContent.ItemType<NE8>());
 		public override void SetStaticDefaults() {
-			Selectable = false;
+			//temp solution, we can change it to override Selectable once the AltLib update has been out for a non-zero amount of time
+			FieldInfo temp_Selectable = typeof(AltBiome).GetField("Selectable", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? typeof(AltBiome).GetField("<Selectable>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
+			temp_Selectable?.SetValue(this, false);
 			BiomeOre = ModContent.TileType<Sanguinite_Ore>();
 			BiomeOreItem = ModContent.ItemType<Sanguinite_Ore_Item>();
 		}
