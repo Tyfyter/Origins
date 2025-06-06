@@ -110,7 +110,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.dontTakeDamage = true;
 				if (++deathAnimationTime >= DeathAnimationTime) {
 					if (Main.expertMode) {
-						NPC.lifeMax = (int)(2000 * ContentExtensions.DifficultyDamageMultiplier);
+						NPC.lifeMax = (int)(NPC.lifeMax * PhaseThreeIdleState.HealthMultiplier);
 						NPC.life = NPC.lifeMax;
 						isInPhase3 = true;
 						NPC.netUpdate = true;
@@ -526,6 +526,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
 			public void Unload() { }
+			protected static float DifficultyMult => ContentExtensions.DifficultyDamageMultiplier;
 		}
 	}
 	public class SC_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
