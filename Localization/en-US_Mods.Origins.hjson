@@ -30,7 +30,7 @@ Conditions: {
 	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
 	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
 	DownedShimmerConstruct: After defeating the Shimmer Construct
-	DownedChambersiteSentinel: After defeating the Chambersite Sentinel
+	DownedChambersiteSentinel: After defeating a Chambersite Sentinel
 	HarpoonCondition: When the player has a Harpoon Gun in their inventory
 }
 
@@ -1239,7 +1239,7 @@ Buffs: {
 
 	Chambersite_Commander_Sentinel_Buff: {
 		DisplayName: Chambersite Sentinel
-		Description: The chambersite sentinel will fight for you
+		Description: The Chambersite Sentinel will fight for you
 	}
 
 	Aetherite_Crystal_Buff: {
@@ -2667,14 +2667,14 @@ SetBonuses: {
 	ChambersiteCommander:
 		'''
 		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
-		Allows you tp temporarily summon a Chambersite Sentinel to fight. 
+		Allows you to temporarily summon a Chambersite Sentinel to fight. 
 		5 second cooldown
 		'''
 	Aetherite:
 		'''
 		Able to temporarily open a shimmering rift,
 		The rift significantly slows enemies and their projectiles down
-		Random damaging aether stars will be appear in this dimension
+		Random damaging aether stars will appear in this dimension
 		Teleports the player and all entities back where they last were afterwards
 		15 second cooldown
 		'''
