@@ -13,7 +13,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
 		public static List<AIState> aiStates = [];
 		public override void Load() {
-			AutomaticIdleState.aiStates.Add((this, boss => (boss.NPC.life * 2 < boss.NPC.lifeMax).Mul(2)));
+			AutomaticIdleState.aiStates.Add((this, boss => boss.IsInPhase2.Mul(2)));
 		}
 		public override void SetStaticDefaults() {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());

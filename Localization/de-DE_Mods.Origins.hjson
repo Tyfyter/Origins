@@ -2667,14 +2667,16 @@ SetBonuses: {
 	/* ChambersiteCommander:
 		'''
 		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
-		Temporarily summons a Chambersite Sentinal to watch over you. 5 second cooldown
+		Allows you tp temporarily summon a Chambersite Sentinel to fight. 
+		5 second cooldown
 		''' */
 	/* Aetherite:
 		'''
-		Able to temporarily take enemies into a partial shimmering with you,
-		significantly slowing them down and slowing down their projectiles,
-		at the cost of random aether stars positioned in this dimension.
-		Teleports the player and all entities back where they last were after this ability. 15 second cooldown (applies to bosses too)
+		Able to temporarily open a shimmering rift,
+		The rift significantly slows enemies and their projectiles down
+		Random damaging aether stars will be appear in this dimension
+		Teleports the player and all entities back where they last were afterwards
+		15 second cooldown
 		''' */
 }
 

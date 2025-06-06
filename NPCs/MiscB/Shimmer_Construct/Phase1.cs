@@ -41,7 +41,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.velocity.X = npc.ai[1];
 			npc.velocity.Y = npc.ai[2];
-			npc.rotation = npc.velocity.ToRotation();
+			npc.rotation = npc.velocity.ToRotation() - MathHelper.PiOver2;
 			if ((++npc.ai[0]) * npc.ai[3] > 16 * 30) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
@@ -62,7 +62,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			Vector2 targetDiff = direction.RotatedBy(npc.direction) * 16 * 30;
 			npc.velocity = diff.DirectionFrom(targetDiff) * (6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f);
-			npc.rotation = npc.velocity.ToRotation();
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
 				npc.ai[1]++;
