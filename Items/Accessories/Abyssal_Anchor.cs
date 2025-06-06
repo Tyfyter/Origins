@@ -60,7 +60,7 @@ namespace Origins.Items.Accessories {
 				}
 			}*/
 			static void DoCollision(ref Vector2 position, ref Vector2 velocity) {
-				Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, 24, 24);
+				Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, 24, 24, fall: true);
 				position = slopeCollision.XY();
 				velocity = slopeCollision.ZW();
 				velocity = Collision.TileCollision(position, velocity, 24, 24);
