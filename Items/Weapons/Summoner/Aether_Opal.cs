@@ -547,9 +547,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Drone).GetDefaultTMLName() + "_AF";
 		public override void PostDraw(Color lightColor) {
 			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
+				TextureAssets.Projectile[Type] = afTexture;
 			} else {
-				TextureAssets.Npc[Type] = normalTexture;
+				TextureAssets.Projectile[Type] = normalTexture;
 			}
 		}
 	}
