@@ -452,6 +452,7 @@ namespace Origins {
 				.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
 				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
 				GameShaders.Misc["Origins:SilhouetteShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/SilhouetteShader"), "SilhouetteShader");
+				GameShaders.Misc["Origins:ShimmerConstructSDF"] = new MiscShaderData(Assets.Request<Effect>("Effects/ShimmerConstructSDF"), "ShimmerConstructSDF");
 
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
 				.UseSamplerState(SamplerState.PointClamp);
