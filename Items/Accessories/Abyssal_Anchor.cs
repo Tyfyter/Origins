@@ -41,7 +41,7 @@ namespace Origins.Items.Accessories {
 			player.lifeRegen += 4;
 			player.statDefense += 8;
 			player.pickSpeed -= 0.25f;
-			player.endurance += .1f;
+			player.endurance += (1 - player.endurance) * 0.1f;
 			player.GetKnockback(DamageClass.Summon).Base += 1;
 
 			player.moveSpeed *= 0.75f;

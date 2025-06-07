@@ -30,7 +30,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.refactoringPieces = true;
 			originPlayer.manaShielding += 0.1f;
-			player.endurance += .1f;
+			player.endurance += (1 - player.endurance) * 0.1f;
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {
