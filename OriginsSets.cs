@@ -1,15 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Items.Tools;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginsSets;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -115,6 +114,34 @@ namespace Origins {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))
 			.Description("Denotes prefixes which have effects other than stat changes")
 			.RegisterBoolSet(false);
+		}
+		public static class Misc {
+			public static HashSet<(Effect effect, string pass)> BasicColorDyeShaderPasses = [];
+			public static bool[] BasicColorDyeShaders;
+			public static void SetupDyes() {
+				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColored"));
+				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColoredAndBlack"));
+				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColoredAndSilverTrim"));
+				FastFieldInfo<ArmorShaderDataSet, List<ArmorShaderData>> _shaderData = "_shaderData";
+				FastFieldInfo<ShaderData, string> _passName = "_passName";
+				List<ArmorShaderData> shaders = _shaderData.GetValue(GameShaders.Armor);
+				BasicColorDyeShaders = new bool[shaders.Count + 1];
+				for (int i = 0; i < shaders.Count; i++) {
+					ArmorShaderData shader = shaders[i];
+					if (BasicColorDyeShaderPasses.Contains((shader.Shader, _passName.GetValue(shader)))) {
+						BasicColorDyeShaders[i + 1] = true;
+					}
+				}
+				BasicColorDyeShaderPasses = null;
+				for (int i = 1; i < BasicColorDyeShaders.Length; i++) {
+					if (!BasicColorDyeShaders[i]) continue;
+					Type type = shaders[i - 1].GetType();
+					if (type != typeof(ArmorShaderData) && type.GetMethod(nameof(ArmorShaderData.GetSecondaryShader), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly) is not null) {
+						BasicColorDyeShaders[i] = false;
+					}
+				}
+				Shimmer_Guardian.SetupCrystalTextures();
+			}
 		}
 	}
 }

@@ -247,6 +247,7 @@ namespace Origins {
 					OriginsSets.Tiles.ShimmerTransformToTile[i] = item.createTile;
 				}
 			}
+			OriginsSets.Misc.SetupDyes();
 		}
 		public override void Load() {
 			AssimilationLoader.Load();
@@ -1020,11 +1021,24 @@ namespace Origins {
 				public static SoundStyle Score = SoundID.DrumTamaSnare;
 			}
 		}
+		public enum CallType {
+			GetExplosiveClassesDict,
+			AddBasicColorDyeShaderPass,
+		}
 		public override object Call(params object[] args) {
-			return args[0] switch {
-				"get_explosive_classes_dict" or "GetExplosiveClassesDict" => DamageClasses.ExplosiveVersion,
-				_ => base.Call(args),
-			};
+			if (!Enum.TryParse(args[0].ToString().Replace("_", ""), true, out CallType callType)) return null;
+			switch (callType) {
+				case CallType.GetExplosiveClassesDict:
+				return DamageClasses.ExplosiveVersion;
+
+				case CallType.AddBasicColorDyeShaderPass:
+				try {
+					return OriginsSets.Misc.BasicColorDyeShaderPasses.Add(((Effect)args[1], (string)args[2]));
+				} catch (NullReferenceException) {
+					throw new Exception("Cannot add Basic Color Dye Shader Pass after AddRecipes");
+				}
+			}
+			return null;
 		}
 		public static void LogError(object message) {
 			instance.Logger.Error(message);
