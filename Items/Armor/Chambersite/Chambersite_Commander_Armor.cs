@@ -27,7 +27,7 @@ namespace Origins.Items.Armor.Chambersite {
 			"GenericBoostGear"
 		];
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
@@ -63,7 +63,7 @@ namespace Origins.Items.Armor.Chambersite {
 	public class Chambersite_Breastplate : ModItem, INoSeperateWikiPage {
 		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Breastplate";
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 22;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
@@ -85,7 +85,7 @@ namespace Origins.Items.Armor.Chambersite {
 	public class Chambersite_Greaves : ModItem, INoSeperateWikiPage {
 		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Greaves";
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 15;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
