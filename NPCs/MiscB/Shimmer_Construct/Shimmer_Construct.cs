@@ -1,15 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -29,13 +30,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
+using static Terraria.Graphics.Shaders.GameShaders;
+using PegasusLib;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
+	[AutoloadBossHead]
 	public class Shimmer_Construct : ModNPC {
 		protected readonly static List<AIState> aiStates = [];
-		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeofCthulhu;
-		public override string BossHeadTexture => "Terraria/Images/NPC_Head_Boss_0";
+		private AutoLoadingAsset<Texture2D> crust = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Crust";
+		private AutoLoadingAsset<Texture2D> crystal = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Crystal";
+		private AutoLoadingAsset<Texture2D> crystal2 = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2_Crystal";
 		public readonly int[] previousStates = new int[6];
+		public bool IsInPhase2 => isInPhase2;// NPC.life * 2 < NPC.lifeMax;
 		public bool IsInPhase3 => isInPhase3;// Main.expertMode && NPC.life * 10 <= NPC.lifeMax;
 		internal static IItemDropRule normalDropRule;
 		public override void Load() {
@@ -66,6 +72,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
+				Position = new Vector2(25, -30),
+				Rotation = 0.7f
+			};
 			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
 		public override void SetDefaults() {
@@ -93,13 +103,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
 			}
 			NPC.dontTakeDamage = false;
+			if (!IsInPhase3 && aiStates[NPC.aiAction] is not DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) aiStates[NPC.aiAction].DoAIState(this);
 			else {
 				NPC.velocity = Vector2.Zero;
 				NPC.dontTakeDamage = true;
 				if (++deathAnimationTime >= DeathAnimationTime) {
 					if (Main.expertMode) {
-						NPC.lifeMax = (int)(2000 * ContentExtensions.DifficultyDamageMultiplier);
+						NPC.lifeMax = (int)(NPC.lifeMax * PhaseThreeIdleState.HealthMultiplier);
 						NPC.life = NPC.lifeMax;
 						isInPhase3 = true;
 						NPC.netUpdate = true;
@@ -109,6 +120,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
+			if (!IsInPhase3 && NPC.GetLifePercent() < 0.5f) isInPhase2 = true;
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 			if (IsInPhase3) {
 				Rectangle npcRect = NPC.Hitbox;
@@ -147,6 +159,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		int deathAnimationTime = 0;
+		bool isInPhase2 = false;
 		bool isInPhase3 = false;
 		static int DeathAnimationTime => 480;
 		public override bool CheckDead() {
@@ -160,6 +173,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (NPC.life <= 0 && deathAnimationTime <= 0) {
 				SoundEngine.PlaySound(SoundID.DD2_DefeatScene, NPC.Center);
 				if (deathAnimationTime <= 0) deathAnimationTime = 1;
+			}
+		}
+		public override void FindFrame(int frameHeight) {
+			if (IsInPhase2) NPC.frame = new Rectangle(0, 0, 134, 134);
+			else {
+				float stage = Math.Min((2 - NPC.GetLifePercent() * 2) * Main.npcFrameCount[Type], 5);
+				NPC.frame.Y = frameHeight * (int)stage;
 			}
 		}
 		Chunk[] chunks = [];
@@ -224,7 +244,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 position = NPC.Center;
 
-			default(ShimmerConstructSDF).Draw(position - screenPos,NPC.rotation);
 			if (deathAnimationTime > 0) {
 				const float shattertime = 100;
 				if (deathAnimationTime >= shattertime) {
@@ -241,20 +260,32 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
-			spriteBatch.Draw(
-				TextureAssets.Npc[Type].Value,
+			SpriteBatchState state = spriteBatch.GetState();
+			spriteBatch.Restart(state, SpriteSortMode.Immediate);
+			DrawData data = new(
+				IsInPhase2 || NPC.IsABestiaryIconDummy ? crystal2 : crystal,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
 				NPC.rotation,
-				new(55, 107),
+				NPC.Size / 1.5f,
+				NPC.scale,
+				SpriteEffects.None);
+			ArmorShaderData shader = Armor.GetSecondaryShader(Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye), Main.LocalPlayer);
+			shader.Apply(NPC, data);
+			data.Draw(spriteBatch);
+			spriteBatch.Restart(state);
+			spriteBatch.Draw(
+				crust,
+				position - screenPos,
+				new(0, 0, NPC.frame.Width, NPC.frame.Height),
+				drawColor,
+				NPC.rotation,
+				NPC.Size / 1.5f,
 				NPC.scale,
 				SpriteEffects.None,
 			0);
 			return false;
-		}
-		public override void BossHeadSlot(ref int index) {
-			index = 1;
 		}
 		public override bool PreKill() {
 			if (IsInPhase3) {
@@ -289,7 +320,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ItemType<Shimmer_Construct_Bag>(), 1, 1, 1, null)
 			));
-			// npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Aetherium_Crystal>(), 4)); // SC master pet
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Jawbreaker>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Wishing_Glass>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Shimmer_Construct_Relic>()));
 		}
@@ -495,6 +526,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
 			public void Unload() { }
+			protected static float DifficultyMult => ContentExtensions.DifficultyDamageMultiplier;
 		}
 	}
 	public class SC_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
@@ -559,11 +591,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SC_BossBar : ModBossBar {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
-			return TextureAssets.Item[ItemID.ShimmerBlock]; // Corgi head icon
-		}
-
-		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
-			return true;
+			return TextureAssets.NpcHeadBoss[GetModBossHeadSlot(GetInstance<Shimmer_Construct>().BossHeadTexture)];
 		}
 	}
 	class Eye_Shimmer_Collision : GlobalNPC {
@@ -571,26 +599,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void AI(NPC npc) {
 			Collision.WetCollision(npc.position, npc.width, npc.height);
 			if (Collision.shimmer) {
-				npc.buffImmune[BuffID.Shimmer] = false;
-				npc.AddBuff(BuffID.Shimmer, 100, true); // Pass true to quiet as clients execute this as well.
+				switch (npc.type) {
+					case NPCID.ServantofCthulhu: goto case -1;
+					case NPCID.EyeofCthulhu: {
+						if (NPC.CountNPCS(NPCType<Shimmer_Construct>()) <= 0) goto case -1;
+						break;
+					}
+					case -1: {
+						npc.buffImmune[BuffID.Shimmer] = false;
+						npc.AddBuff(BuffID.Shimmer, 100, true); // Pass true to quiet as clients execute this as well.
+						break;
+					}
+				}
 			}
-		}
-	}
-	public struct ShimmerConstructSDF
-	{
-		private static VertexRectangle rect = new VertexRectangle();
-		public void Draw(Vector2 position, float rotation)
-		{
-		
-			MiscShaderData shader = GameShaders.Misc["Origins:ShimmerConstructSDF"];
-			shader.UseColor(Color.CornflowerBlue);
-			shader.UseSecondaryColor(Color.MediumPurple);
-			shader.UseImage1(TextureAssets.Extra[193]);
-			shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
-			shader.UseShaderSpecificData(new Vector4(position.X,position.Y,0,0));
-			shader.Apply();
-			rect.Draw(position,Color.White,new Vector2(256,256),rotation,position);
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
 	}
 }

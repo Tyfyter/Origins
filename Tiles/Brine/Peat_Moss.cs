@@ -4,6 +4,7 @@ using Origins.Items.Other.Testing;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
 using PegasusLib;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -25,17 +26,22 @@ namespace Origins.Tiles.Brine {
 			HitSound = SoundID.Dig;
 			DustType = DustID.GrassBlades;
 		}
+		static void DoBoom(int i, int j) {
+			Projectile.NewProjectile(
+				WorldGen.GetItemSource_FromTileBreak(i, j),
+				new Vector2(i * 16 + 8, j * 16 + 8),
+				Vector2.Zero,
+				ProjectileType<Peat_Moss_Tile_Explosion>(),
+				20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier),
+				4
+			);
+		}
+		public override IEnumerable<Item> GetItemDrops(int i, int j) {
+			DoBoom(i, j);
+			return base.GetItemDrops(i, j);
+		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (!fail) {
-				Projectile.NewProjectile(
-					WorldGen.GetItemSource_FromTileBreak(i, j),
-					new Vector2(i * 16 + 8, j * 16 + 8),
-					Vector2.Zero,
-					ProjectileType<Peat_Moss_Tile_Explosion>(),
-					20 + (int)(10 * ContentExtensions.DifficultyDamageMultiplier),
-					4
-				);
-			}
+			//if (!fail) DoBoom(i, j);
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile && Framing.GetTileSafely(i, j + 1).LiquidAmount >= 255) {
@@ -65,7 +71,7 @@ namespace Origins.Tiles.Brine {
 	}
 	public class Peat_Moss_Tile_Explosion : ExplosionProjectile {
 		public override DamageClass DamageType => DamageClasses.Explosive;
-		public override int Size => 48;
+		public override int Size => 56;
 		public override SoundStyle? Sound => SoundID.Item14.WithVolume(0.66f);
 		public override bool Hostile => true;
 		public override int FireDustAmount => 0;

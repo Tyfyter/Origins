@@ -11,9 +11,11 @@ using Terraria.DataStructures;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
-		public static List<AIState> aiStates = [];
+		#region stats
+		public static float IdleTime => 60 - DifficultyMult * 10;
+		#endregion stats
 		public override void Load() {
-			AutomaticIdleState.aiStates.Add((this, boss => (boss.NPC.life * 2 < boss.NPC.lifeMax).Mul(2)));
+			AutomaticIdleState.aiStates.Add((this, boss => boss.IsInPhase2.Mul(2)));
 		}
 		public override void SetStaticDefaults() {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
@@ -22,35 +24,48 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
-			if (++npc.ai[0] > (60 - ContentExtensions.DifficultyDamageMultiplier * 10) && Main.netMode != NetmodeID.MultiplayerClient) {
+			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
 				SelectAIState(boss, aiStates);
 			}
 		}
 		public override void TrackState(int[] previousStates) { }
+		public static List<AIState> aiStates = [];
 	}
 	public class FastDashState : DashState {
+		#region stats
+		public static float DashSpeedMultiplier => 1.5f;
+		#endregion stats
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			base.StartAIState(boss);
 			NPC npc = boss.NPC;
-			npc.ai[3] *= 1.5f;
-			npc.ai[1] *= 1.5f;
-			npc.ai[2] *= 1.5f;
+			npc.ai[3] *= DashSpeedMultiplier;
+			npc.ai[1] *= DashSpeedMultiplier;
+			npc.ai[2] *= DashSpeedMultiplier;
 		}
 	}
 	public class FastCircleState : CircleState {
+		#region stats
+		public static new float ShotRate => 16 - DifficultyMult * 0.75f;
+		#endregion stats
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[3] = 14 - ContentExtensions.DifficultyDamageMultiplier * 1.25f;
+			npc.ai[3] = ShotRate;
 		}
 	}
 	public class MagicMissilesState : AIState {
+		#region stats
+		public static int ShotDamage => (int)DifficultyMult;
+		public static float ShotRate => 6 - DifficultyMult;
+		public static float ShotCount => 5 + DifficultyMult;
+		public static float ExtraIdleTime => DifficultyMult * 8;
+		#endregion stats
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -62,19 +77,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					npc.Center,
 					Vector2.UnitY.RotatedByRandom(1.5f) * -8,
 					Shimmer_Construct_Missiles.ID,
-					1,
+					ShotDamage,
 					1
 				);
 				if (--npc.ai[2] <= 0) {
 					SetAIState(boss, StateIndex<AutomaticIdleState>());
-					npc.ai[0] -= ContentExtensions.DifficultyDamageMultiplier * 8;
+					npc.ai[0] -= ExtraIdleTime;
 				}
 			}
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[1] = 6 - ContentExtensions.DifficultyDamageMultiplier;
-			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier);
+			npc.ai[1] = ShotRate;
+			npc.ai[2] = Main.rand.RandomRound(ShotCount);
 		}
 		public class Shimmer_Construct_Missiles : ModProjectile {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
@@ -130,6 +145,17 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 
 	public class SpawnDronesStateState : AIState {
+		#region stats
+		public static float SpawnCount => 5 + DifficultyMult;
+		public static float SpawnRate => 15 - DifficultyMult;
+		public static float ExtraIdleTime => DifficultyMult * 8;
+		/// <summary>
+		/// time after drones are finished spawning over which the spinning slows down
+		/// measured in <see cref="SpawnRate"/>s
+		/// </summary>
+		public static int SpinDownAnim => 4;
+		public static int CanUseThreshold => 4;
+		#endregion stats
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -138,7 +164,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 
 			const float spin_spawn_ratio = 2f;
 			float spinAccelFactor = npc.ai[1] * spin_spawn_ratio;
-			if (npc.ai[2] > -4 + spin_spawn_ratio) npc.ai[3] += 1 / spinAccelFactor;
+			if (npc.ai[2] > -SpinDownAnim + spin_spawn_ratio) npc.ai[3] += 1 / spinAccelFactor;
 			else npc.ai[3] -= 1 / spinAccelFactor;
 			npc.ai[3] = float.Clamp(npc.ai[3], 0, 1);
 			npc.rotation += npc.direction * (0.5f * Math.Max(npc.ai[3] * npc.ai[3], 0));
@@ -152,16 +178,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						ModContent.NPCType<Shimmer_Drone>()
 					).velocity = Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * Main.rand.NextFloat(4, 8);
 				}
-				if (--npc.ai[2] <= -4) {
+				if (--npc.ai[2] <= -SpinDownAnim) {
 					SetAIState(boss, StateIndex<AutomaticIdleState>());
-					npc.ai[0] -= ContentExtensions.DifficultyDamageMultiplier * 8;
+					npc.ai[0] -= ExtraIdleTime;
 				}
 			}
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[1] = 15 - ContentExtensions.DifficultyDamageMultiplier;
-			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier);
+			npc.ai[1] = SpawnRate;
+			npc.ai[2] = Main.rand.RandomRound(SpawnCount);
 			npc.ai[3] = 0;
 		}
 		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
@@ -169,7 +195,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (weight <= 0) return 0;
 			int droneType = ModContent.NPCType<Shimmer_Drone>();
 			int drones = 0;
-			const int threshold = 4;
+			int threshold = CanUseThreshold;
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (other.type == droneType && ++drones >= threshold) return 0;
 			}

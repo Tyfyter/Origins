@@ -8,7 +8,7 @@ Guide: {
 			{$Mods.Origins.Quests.Guide.Quest_Quest.Name}
 			Client: [npcname:Guide]
 
-			'{$Mods.Origins.Quests.Guide.Quest_Quest.Inquire}'
+			'{§Mods.Origins.Quests.Guide.Quest_Quest.Inquire}'
 
 			- [qs{0}:Complete a quest]
 			''' */

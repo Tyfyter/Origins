@@ -197,7 +197,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
 		}
 		public const int state_single_dash = 1;
-		public const int state_projectiles = 2;
+		public const int state_spike_field = 2;
 		public const int state_triple_dash = 3;
 		public const int state_sidestep_dash = 4;
 		public const int state_summon_roar = 5;
@@ -205,6 +205,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public const int state_magic_missile = 7;
 		public const int state_split_amalgamation_active = 8;
 		public const int state_split_amalgamation_start = 9;
+		public const int state_projectiles = 10;
 		public int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public int AttacksSinceTripleDash { get => (int)NPC.localAI[0]; set => NPC.localAI[0] = value; }
 		public int AttacksSinceSplit { get => (int)NPC.localAI[1]; set => NPC.localAI[1] = value; }
@@ -256,14 +257,15 @@ namespace Origins.NPCs.Defiled.Boss {
 									[
 									new(0, 0f),
 									new(state_single_dash, 0.9f),
-									new(state_projectiles, 0.9f),
+									new(state_spike_field, 0.9f),
 									new(state_triple_dash, 0.1f * Math.Clamp(AttacksSinceTripleDash - 1, 0, 5)),
 									new(state_sidestep_dash, 0.5f + (0.05f * difficultyMult)),
 									new(state_summon_roar, 0f),
 									new(state_ground_spikes, 0.9f),
 									new(state_magic_missile, 1f),
 									new(state_split_amalgamation_start, NPC.AnyNPCs(ModContent.NPCType<Defiled_Swarmer>()) ? 0 : 0.12f * Math.Clamp(AttacksSinceSplit - 1, 0, 5)),// swapped to make state_split_amalgamation_active weight state_split_amalgamation_start
-									new(state_split_amalgamation_active, 0f)
+									new(state_split_amalgamation_active, 0f),
+									new(state_projectiles, 0.9f)
 									]
 								);
 								int lastUsedAttack = -AIState;
@@ -305,6 +307,9 @@ namespace Origins.NPCs.Defiled.Boss {
 								} else {
 									AttacksSinceSplit++;
 								}
+								if (AIState == state_projectiles) {
+									NPC.ai[2] = 0;
+								}
 
 								if (AIState == state_single_dash) {
 									SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-0.9f), NPC.Center);
@@ -340,8 +345,8 @@ namespace Origins.NPCs.Defiled.Boss {
 						break;
 					}
 
-					//projectile spray
-					case state_projectiles: {
+					//spike field
+					case state_spike_field: {
 						CheckTrappedCollision();
 						NPC.ai[1] += 1;
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
@@ -393,7 +398,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							break;
 							default:
 							if (NPC.ai[1] > 100) {
-								AIState = -state_projectiles;
+								AIState = -state_spike_field;
 								NPC.ai[1] = 0;
 							}
 							break;
@@ -680,6 +685,54 @@ namespace Origins.NPCs.Defiled.Boss {
 
 						break;
 					}
+
+					//projectile spray
+					case state_projectiles: {
+						CheckTrappedCollision();
+						NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
+						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
+						float targetX = 320 + (float)Math.Sin(++time * 0.01f) * 32;
+						float speed = 3;
+
+						float diffY = NPC.Bottom.Y - (NPC.targetRect.Center().Y - targetHeight);
+						float diffX = NPC.Center.X - NPC.targetRect.Center().X;
+						diffX -= Math.Sign(diffX) * targetX;
+						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
+						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), 0.4f);
+						leftArmTarget = -0.75f;
+						rightArmTarget = -0.75f;
+						armSpeed = 0.1f;
+						int projectilesToHaveFired = 0;
+						if (NPC.ai[1] >= 10) projectilesToHaveFired++;
+						if (NPC.ai[1] >= 12 && difficultyMult > 1) projectilesToHaveFired++;
+						if (NPC.ai[1] >= 15) projectilesToHaveFired++;
+						if (NPC.ai[1] >= 17 && difficultyMult > 1) projectilesToHaveFired++;
+						if (NPC.ai[1] >= 20) projectilesToHaveFired++;
+
+						if (NPC.ai[1] >= 60) projectilesToHaveFired++;
+						if (NPC.ai[1] >= 65 && difficultyMult > 1) projectilesToHaveFired++;
+						if (NPC.ai[1] >= 70) projectilesToHaveFired++;
+						if (NPC.ai[2] < projectilesToHaveFired) {
+							NPC.ai[2]++;
+							SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
+							if (Main.netMode != NetmodeID.MultiplayerClient) {
+								Projectile.NewProjectileDirect(
+									NPC.GetSource_FromAI(),
+									NPC.Center,
+									Vector2.Normalize(NPC.targetRect.Center() - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
+									ModContent.ProjectileType<Low_Signal_Hostile>(),
+									22 - (difficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
+									0f,
+									Main.myPlayer
+								).tileCollide = Collision.CanHitLine(NPC.targetRect.TopLeft(), NPC.targetRect.Width, NPC.targetRect.Height, NPC.Center, 8, 8);
+							}
+						}
+						if (NPC.ai[1] > 100) {
+							AIState = -state_projectiles;
+							NPC.ai[1] = 0;
+						}
+					}
+					break;
 				}
 				OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
 				OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);

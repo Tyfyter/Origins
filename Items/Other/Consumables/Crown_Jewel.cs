@@ -5,6 +5,7 @@ using Origins.LootConditions;
 using Origins.Music;
 using Origins.NPCs.Brine.Boss;
 using PegasusLib.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -102,7 +103,9 @@ namespace Origins.Items.Other.Consumables {
 			get {
 				int result = 0;
 				for (int i = 0; i < bosses.Count; i++) {
-					if (Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[bosses[i]]) > 0) {
+					if (OriginsSets.NPCs.BossKillCounterOverrider.GetIfInRange(bosses[i]) is Func<bool> predicate) {
+						if (predicate()) result++;
+					} else if (Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[bosses[i]]) > 0) {
 						result++;
 					}
 				}

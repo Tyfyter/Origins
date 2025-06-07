@@ -19,10 +19,16 @@ using Origins.Items.Weapons.Magic;
 using Terraria.Utilities;
 using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles;
+using MagicStorage.CrossMod;
+using Terraria.GameContent;
+using Terraria.Graphics;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
-		public static List<AIState> aiStates = [];
+		#region stats
+		public static float HealthMultiplier => 2000f / 6600f;
+		public static float IdleTime => 60 - DifficultyMult * 10;
+		#endregion stats
 		public override void Load() {
 			AutomaticIdleState.aiStates.Add((this, boss => boss.IsInPhase3.Mul(3)));
 		}
@@ -40,8 +46,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public override void TrackState(int[] previousStates) { }
+		public static List<AIState> aiStates = [];
 	}
 	public class ShimmerLandminesState : AIState {
+		#region stats
+		public static int StarDamage => (int)DifficultyMult;
+		public static int AreaYOffset => 16 * 10;
+		public static int AreaWidth => 60;
+		public static int AreaHeight => 80;
+		/// <summary>
+		/// I'm not actually 100% sure what unit this is in
+		/// </summary>
+		public static float Density => 16 * (27 - DifficultyMult * 2);
+		#endregion stats
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
@@ -56,7 +73,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						position,
 						Vector2.Zero,
 						Shimmer_Landmines.ID,
-						1,
+						StarDamage,
 						1
 					);
 				} else {
@@ -66,8 +83,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[1] = 6 - ContentExtensions.DifficultyDamageMultiplier;
-			npc.ai[2] = 5 + Main.rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier - 1);
 			float lowestHeight = 0;
 			int buffID = ModContent.BuffType<Weak_Shimmer_Debuff>();
 			foreach (Player player in Main.ActivePlayers) {
@@ -75,14 +90,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					lowestHeight = player.BottomLeft.Y;
 				}
 			}
-			if (lowestHeight == 0) {
-				npc.ai[1] = 0;
-				npc.ai[2] = 0;
-			} else {
+			if (lowestHeight != 0) {
 				Vector2 basePos = npc.GetTargetData().Center;
-				basePos.Y = lowestHeight + 16 * 10;
-				Rectangle area = OriginExtensions.BoxOf(basePos - new Vector2(60 * 16, 0), basePos + new Vector2(40 * 16, 80 * 16));
-				List<Vector2> newPositions = OriginExtensions.PoissonDiskSampling(Main.rand, area, 16 * (27 - ContentExtensions.DifficultyDamageMultiplier * 2));
+				basePos.Y = lowestHeight + AreaYOffset;
+				Rectangle area = OriginExtensions.BoxOf(basePos - new Vector2(AreaWidth * 16, 0), basePos + new Vector2(AreaWidth * 16, AreaHeight * 16));
+				List<Vector2> newPositions = OriginExtensions.PoissonDiskSampling(Main.rand, area, Density);
 				positions.Clear();
 				while (newPositions.Count > 0) {
 					int rand = Main.rand.Next(newPositions.Count);
@@ -142,14 +154,23 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public class DroneDashState : AIState {
+		#region stats
+		public static float DashSpeed => 6 + DifficultyMult;
+		public static float SpawnCount => DifficultyMult * 2 - 2;
+		/// <summary>
+		/// measured in tiles traveled
+		/// </summary>
+		public static float SpawnRate => 16 * (11 - ContentExtensions.DifficultyDamageMultiplier * 2);
+		public static int NoSpawnThreshold => 2;
+		#endregion stats
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.velocity = npc.ai[1].ToRotationVector2() * (6 + ContentExtensions.DifficultyDamageMultiplier) * (npc.ai[2] > 0 ? 1.15f : 1.3f);
+			npc.velocity = npc.ai[1].ToRotationVector2() * npc.ai[3] * (npc.ai[2] > 0 ? 1.15f : 1.3f);
 			npc.rotation = npc.velocity.ToRotation();
-			if ((++npc.ai[0]) * npc.ai[3] > 16 * (11 - ContentExtensions.DifficultyDamageMultiplier * 2)) {
+			if ((++npc.ai[0]) * npc.ai[3] > SpawnRate) {
 				npc.ai[0] = 0;
 				if (npc.ai[2] == 0) {
 					SetAIState(boss, StateIndex<AutomaticIdleState>());
@@ -171,13 +192,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[3] = 6 + ContentExtensions.DifficultyDamageMultiplier;
+			npc.ai[3] = DashSpeed;
 			npc.ai[1] = (npc.GetTargetData().Center - npc.Center).ToRotation();
-			npc.ai[2] = ContentExtensions.DifficultyDamageMultiplier * 2 - 2;
+			npc.ai[2] = SpawnCount;
 
 			int droneType = ModContent.NPCType<Shimmer_Drone>();
 			int drones = 0;
-			const int threshold = 2;
+			int threshold = NoSpawnThreshold;
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (other.type == droneType && ++drones >= threshold) {
 					npc.ai[2] = -npc.ai[2];
@@ -187,15 +208,30 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public class ShotgunState : AIState {
+		#region stats
+#pragma warning disable IDE0060 // Remove unused parameter
+		public static int ShotDamage => (int)DifficultyMult;
+		public static float ShotCount => 3 + DifficultyMult;
+		public static float Spread => 0.5f;
+		public static float ShotSpeed => 12;
+		public static float MinShotSpeedFactor => 0.7f;
+		public static float TurnRate => 0.01f;
+		public static int Startup => 60;
+		public static int EndLag => 30;
+		public static float IndicatorAlpha(int time) => (time <= 5 && time >= 2) ? 0.08f : 0.02f;
+		public static float IndicatorLength(int time) => 80;
+		public static Color IndicatorColor(int time) => Color.White;
+#pragma warning restore IDE0060 // Remove unused parameter
+		#endregion stats
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			GeometryUtils.AngularSmoothing(ref npc.ai[2], (npc.GetTargetData().Center - npc.Center).ToRotation(), 0.01f);
+			GeometryUtils.AngularSmoothing(ref npc.ai[2], (npc.GetTargetData().Center - npc.Center).ToRotation(), TurnRate);
 			npc.rotation = npc.ai[2];
 			npc.velocity *= 0.93f;
-			if (++npc.ai[0] > 30) SetAIState(boss, StateIndex<AutomaticIdleState>());
+			if (++npc.ai[0] > EndLag) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -204,9 +240,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				npc.Center,
 				Vector2.Zero,
 				ModContent.ProjectileType<Shotgun_Indicator>(),
+				ShotDamage,
 				1,
-				1,
-				60,
+				Startup,
 				Main.rand.Next(1000),
 				npc.whoAmI
 			);
@@ -214,7 +250,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public class Shotgun_Indicator : ModProjectile {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.HallowBossRainbowStreak;
 
-			UnifiedRandom rand = new();
+			readonly UnifiedRandom rand = new();
 			NPC Owner => Main.npc.GetIfInRange((int)Projectile.ai[2]);
 			public override void SetDefaults() {
 				Projectile.tileCollide = false;
@@ -222,9 +258,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override bool ShouldUpdatePosition() => false;
 			IEnumerable<Vector2> GetShots() {
 				rand.SetSeed((int)Projectile.ai[1]);
-				Vector2 dir = Owner.rotation.ToRotationVector2() * 12;
-				for (int i = 3 + rand.RandomRound(ContentExtensions.DifficultyDamageMultiplier); i > 0; i--) {
-					yield return dir.RotatedBy(rand.NextFloat(0.5f) * (i % 2 == 0).ToDirectionInt()) * rand.NextFloat(0.7f, 1f);
+				Vector2 dir = Owner.rotation.ToRotationVector2() * ShotSpeed;
+				for (int i = rand.RandomRound(ShotCount); i > 0; i--) {
+					yield return dir.RotatedBy(rand.NextFloat(Spread) * (i % 2 == 0).ToDirectionInt()) * rand.NextFloat(MinShotSpeedFactor, 1f);
 				}
 			}
 			public override void AI() {
@@ -248,18 +284,31 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				owner.ai[0] = 0;
 			}
 			public override bool PreDraw(ref Color lightColor) {
-				float alpha = (Projectile.ai[0] <= 5 && Projectile.ai[0] >= 2) ? 0.08f : 0.02f;
+				float alpha = IndicatorAlpha((int)Projectile.ai[0]);
 				foreach (Vector2 shot in GetShots()) {
 					float rotation = shot.ToRotation();
-					Defiled_Spike_Indicator.Draw(
-						[Projectile.Center, Projectile.Center + shot * 80],
+					DrawPath(
+						[Projectile.Center, Projectile.Center + shot * IndicatorLength((int)Projectile.ai[0])],
 						[rotation, rotation],
 						8,
 						alpha,
-						0.5f
+						0.5f,
+						IndicatorColor((int)Projectile.ai[0])
 					);
 				}
 				return false;
+			}
+			private static readonly VertexStrip vertexStrip = new();
+			public static void DrawPath(Vector2[] positions, float[] rotations, float width, float alpha, float progress, Color color) {
+				MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
+				shader.UseImage1(TextureAssets.Extra[193]);
+				shader.UseColor(Color.Black);
+				shader.UseSecondaryColor(Color.Green);
+				shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
+				shader.Apply();
+				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => color * alpha, (p) => width, -Main.screenPosition, false);
+				vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			}
 		}
 	}

@@ -49,14 +49,14 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 |---
-(☻) Chambersite Sentinel !!! (has sounds)
+(^) Chambersite Sentinel
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(@, #2) Shimmer Construct !!!
+(#2, ^2) Shimmer Construct !!!
 (#, ^2) Trenchmaker
 (@4, ^3) World Cracker* !!!
 
@@ -220,7 +220,7 @@ ENEMY NPCS:
 (^) Riven Protoform*
 (X) Scanner Scout
 (^) Shattered Goldfish*
-(☻) Shimmer Drone !!! (has gores)
+(^) Shimmer Drone
 (X) Shooter Creeper
 (^) Single-Cellular Nautilus*
 (^) Slime Worm (Slorm)*
@@ -465,7 +465,7 @@ ACCESSORIES:
 (X) Land Surveyor
 (^) Laser Tag Vest*
 (^) Last Descendent*
-(☻) Lazy Cloak° !!!
+(^) Lazy Cloak°
 (^) Liar's Tongue
 (^) Lightning Ring*
 (^) Locket Necklace*
@@ -475,7 +475,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(☻) Master Magician's Cloak !!!
+(^) Master Magician's Cloak
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Mildew Heart
@@ -490,7 +490,7 @@ ACCESSORIES:
 (^) Noxious Mithrafin
 (^) Olid Organ*
 (^) Ornamental Keepsake
-(☻) Otherworldly Cloak !!!
+(^) Otherworldly Cloak
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag*
@@ -590,7 +590,7 @@ VANITY:
 (X) Quantux Mask
 (^) World Cracker Mask*
 (X) Severus' Hat
-(@, ^3) Shimmer Construct Mask !!!
+(^) Shimmer Construct Mask
 (X) Trenchmaker Mask
 
 (X) Abyssal Outcast Set
@@ -696,7 +696,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@4, #2?) Cool Sword !!! (rework slash)
+(@4, #2) Cool Sword !!! (rework slash)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -904,12 +904,12 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(@, #2?) Aether Opal !!! (custom sounds)
+(#2, ^2) Aether Opal !!! (utilize new sprites, custom sounds)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
 (^) Brainy Staff*
-(@4, ^3) Broken Terratotem
+(@4, ^3) Broken Terratotem !!!
 (^) Defective Mortar Shell
 (^) Desert Crown*
 (^) Eyeball Staff
@@ -934,7 +934,7 @@ SUMMONER WEAPONS:
 (^) Woodsprite Staff
 
 (^) Acrid Spout
-(☻) Amnestic Rose !!! (Amnestic Rose Shimmer texture alt implemented)
+(^) Amnestic Rose
 (X) Barnacled Purse
 (^) Brine Convergence Incantation
 (X) Deep Ocean Pearl
@@ -973,7 +973,7 @@ SUMMONER WEAPONS:
 (X, @2, #) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(@4, ^3) Terratotem
+(@4, ^3) Terratotem !!!
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
@@ -1020,7 +1020,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
-(#2, ^2) Voltefuse !!! (still needs indicator (indicator?))
+(^) Voltefuse
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
@@ -1222,7 +1222,7 @@ TILES:
 (^) Riven Water Fountain
 (X) Rusty Locker
 (X) Sanguinite Brick
-(☻) Shadow Torch° !!!
+(^) Shadow Torch°
 (^) Traffic Cone*
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
@@ -1462,7 +1462,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(☻) Nerve Flan !!! (c'mon, this one was literally just removing one line, ' should probably have its own buff icon though)
+(#2, ^2) Nerve Flan !!! (use buff icon, holding position)
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
@@ -1525,9 +1525,9 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
+(X) Jawbreaker (Stellar Spark) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
-(X) Aetherite Crystal !!!
 
 (^) Amoeba Toy (Meberoid)*
 (X) Rusty Cross Necklace (Guardian Angel)
@@ -1536,7 +1536,7 @@ MOUNTS & PETS:
 
 (^) Chromatic Scale (Rainbow Pangolin)*
 (^) Chew Toy (Chee Toy)*
-(☻) Gelatin Bloom Brooch !!!
+(^) Gelatin Bloom Brooch
 (^) Strange Power-Up (Platformer Mech)*
 
 (^) Chambersite Minecart
@@ -1591,7 +1591,7 @@ AMMO:
 (^) Cursed Canister*
 (^) Cursed Harpoon*
 (^) Ichor Canister*
-(☻) Ichor Harpoon !!!
+(^) Ichor Harpoon
 (^) Metal Slug*
 (^) Resizable Mine V*
 

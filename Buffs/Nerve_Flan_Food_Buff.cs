@@ -2,9 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Buffs {
+namespace Origins.Buffs.Food {
 	public class Nerve_Flan_Food_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_" + BuffID.WellFed3;
 		public override void SetStaticDefaults() {
 			BuffID.Sets.IsWellFed[Type] = true;
 			BuffID.Sets.IsFedState[Type] = true;

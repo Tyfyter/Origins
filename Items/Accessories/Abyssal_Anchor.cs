@@ -1,6 +1,7 @@
 ﻿using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Misc;
+using PegasusLib;
 using System.Drawing;
 using Terraria;
 using Terraria.ID;
@@ -59,12 +60,6 @@ namespace Origins.Items.Accessories {
 					break;
 				}
 			}*/
-			static void DoCollision(ref Vector2 position, ref Vector2 velocity) {
-				Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, 24, 24);
-				position = slopeCollision.XY();
-				velocity = slopeCollision.ZW();
-				velocity = Collision.TileCollision(position, velocity, 24, 24);
-			}
 			Vector2 halfSize = new Vector2(12);
 			ref Physics.Chain chain = ref originPlayer.abyssalAnchorChain;
 			if (chain is null || chain.links[0].position.HasNaNs() || chain.links[0].position.DistanceSQ(player.position) > 512 * 512) {
@@ -73,21 +68,33 @@ namespace Origins.Items.Accessories {
 					offset = Vector2.Zero
 				};
 				const float spring = 0.5f;
+				Physics.Gravity[] gravs = [
+					new Physics.ConstantGravity(Vector2.UnitY * 0.08f)
+				];
 				chain = new Physics.Chain() {
 					anchor = anchor,
 					links = [
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 8, null, drag: 0.93f, spring: spring),
-						new(anchor.WorldPosition, default, 12, [new Physics.EntityDirectionGravity(new Vector2(-0.12f, 0.08f), player)], drag: 0.93f, spring: spring)
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 8, gravs, drag: 0.93f, spring: spring),
+						new(anchor.WorldPosition, default, 12, [new Physics.EntityDirectionGravity(new Vector2(-0.18f, 0.08f), player), ..gravs], drag: 0.93f, spring: spring)
 					]
 				};
 				originPlayer.abyssalAnchorPosition = chain.links[^1].position - halfSize;
 				originPlayer.abyssalAnchorVelocity = default;
+			}
+			Vector2 anchorWorldPosition = chain.anchor.WorldPosition;
+			void DoCollision(ref Vector2 position, ref Vector2 velocity) {
+				if (!position.IsWithin(anchorWorldPosition, 68 * 3)) return;
+				bool fall = !position.IsWithin(anchorWorldPosition, 68);
+				Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, 24, 24, fall: fall);
+				position = slopeCollision.XY();
+				velocity = slopeCollision.ZW();
+				velocity = Collision.TileCollision(position, velocity, 24, 24, fallThrough: fall);
 			}
 			DoCollision(ref originPlayer.abyssalAnchorPosition, ref originPlayer.abyssalAnchorVelocity);
 			/*Vector4 slopeCollision = Collision.SlopeCollision(originPlayer.abyssalAnchorPosition, originPlayer.abyssalAnchorVelocity, 24, 24);
@@ -104,8 +111,14 @@ namespace Origins.Items.Accessories {
 				originPlayer.abyssalAnchorPosition += difference;
 				originPlayer.abyssalAnchorVelocity = chain.links[^1].velocity;
 				if (OriginsModIntegrations.CheckAprilFools()) {
+					float oldVelY = player.velocity.Y;
+					float sum = 0;
 					for (int j = 0; j < deltas.Length; j++) {
 						player.velocity -= deltas[j] * 0.004f;
+						sum += deltas[j].Y * 0.004f;
+					}
+					if (float.Abs(sum) < 0.001f) {
+						player.velocity.Y = oldVelY;
 					}
 				}
 				if (kMax < 20 && (chain.links[0].position - chain.anchor.WorldPosition).LengthSquared() > 128 * 128) {

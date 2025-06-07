@@ -1,12 +1,14 @@
-﻿using Origins.Items.Tools;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Projectiles;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginsSets;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -45,12 +47,50 @@ namespace Origins {
 			public static (bool first, bool second, bool third)[] DuplicationAIVariableResets { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(DuplicationAIVariableResets))
 			.Description("Controls which ai variables will be carried over to duplicates from compatible projectile duplication effects, false to carry over, true to reset")
 			.RegisterCustomSet((false, false, false));
+			public static Func<Projectile, bool>[] WeakpointAnalyzerAIReplacement { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(WeakpointAnalyzerAIReplacement))
+			.Description("If a projectile has an entry in this set, copies from Weakpoint Analyzer will use before their AI, if it returns false, it will prevent the normal AI running")
+			.RegisterCustomSet<Func<Projectile, bool>>(null,
+				ProjectileID.ChlorophyteBullet, (Projectile projectile) => {
+					float distSQ = projectile.DistanceSQ(projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.Value);
+					const float range = 128;
+					const float rangeSQ = range * range;
+					projectile.Opacity = MathHelper.Min(1f / (((distSQ * distSQ) / (rangeSQ * rangeSQ)) + 1), 1);
+					if (projectile.damage == 0) {
+						if (projectile.alpha < 170) {
+							for (int i = 0; i < 10; i++) {
+								float x2 = projectile.position.X - projectile.velocity.X / 10f * i;
+								float y2 = projectile.position.Y - projectile.velocity.Y / 10f * i;
+								Dust dust = Dust.NewDustDirect(new Vector2(x2, y2), 1, 1, DustID.CursedTorch);
+								dust.alpha = projectile.alpha;
+								dust.position.X = x2;
+								dust.position.Y = y2;
+								dust.velocity *= 0f;
+								dust.noGravity = true;
+							}
+						}
+						projectile.alpha = 255;
+						return false;
+					}
+					return true;
+				}
+			);
+			public static int[] RangedControlLocusDuplicateCount { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(RangedControlLocusDuplicateCount))
+			.Description("The number of duplicates that will be made when this projectile is shot with the effects of Control Locus")
+			.RegisterIntSet(5,
+				ProjectileID.ChlorophyteBullet, 3
+			);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class NPCs {
 			public static string[] JournalEntries { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(NPCs)}_{nameof(JournalEntries)}")
 			.Description("Controls which npcs are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
+			public static Func<bool>[] BossKillCounterOverrider { get; } = NPCID.Sets.Factory.CreateNamedSet(nameof(BossKillCounterOverrider))
+			.Description("If an NPC type has an entry in this set, that will be used instead of ")
+			.RegisterCustomSet<Func<bool>>(null,
+				NPCID.Retinazer, () => NPC.downedMechBoss2,
+				NPCID.Spazmatism, () => false
+			);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Tiles {
@@ -74,6 +114,34 @@ namespace Origins {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))
 			.Description("Denotes prefixes which have effects other than stat changes")
 			.RegisterBoolSet(false);
+		}
+		public static class Misc {
+			public static HashSet<(Effect effect, string pass)> BasicColorDyeShaderPasses = [];
+			public static bool[] BasicColorDyeShaders;
+			public static void SetupDyes() {
+				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColored"));
+				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColoredAndBlack"));
+				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColoredAndSilverTrim"));
+				FastFieldInfo<ArmorShaderDataSet, List<ArmorShaderData>> _shaderData = "_shaderData";
+				FastFieldInfo<ShaderData, string> _passName = "_passName";
+				List<ArmorShaderData> shaders = _shaderData.GetValue(GameShaders.Armor);
+				BasicColorDyeShaders = new bool[shaders.Count + 1];
+				for (int i = 0; i < shaders.Count; i++) {
+					ArmorShaderData shader = shaders[i];
+					if (BasicColorDyeShaderPasses.Contains((shader.Shader, _passName.GetValue(shader)))) {
+						BasicColorDyeShaders[i + 1] = true;
+					}
+				}
+				BasicColorDyeShaderPasses = null;
+				for (int i = 1; i < BasicColorDyeShaders.Length; i++) {
+					if (!BasicColorDyeShaders[i]) continue;
+					Type type = shaders[i - 1].GetType();
+					if (type != typeof(ArmorShaderData) && type.GetMethod(nameof(ArmorShaderData.GetSecondaryShader), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly) is not null) {
+						BasicColorDyeShaders[i] = false;
+					}
+				}
+				Shimmer_Guardian.SetupCrystalTextures();
+			}
 		}
 	}
 }

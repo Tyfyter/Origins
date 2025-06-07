@@ -43,8 +43,8 @@ namespace Origins {
 		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			Debugging.LogFirstRun(ModifyWeaponDamage);
-			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
-				damage.Flat += Player.statDefense / 2;
+			if (entangledEnergy) {
+				damage.Flat += Entangled_Energy.DamageBonus(Player.statLifeMax2 - Player.statLife);
 			}
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
 			if (focusCrystal) {
@@ -83,7 +83,11 @@ namespace Origins {
 			}
 			if (ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (weakpointAnalyzer && Main.rand.NextBool(8, 100)) return false;
-				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
+				if (controlLocus) {
+					int dupeCount = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[ammo.shoot];
+					if (dupeCount == 0) return false;
+					return Main.rand.NextFloat(1) < 0.6f / dupeCount;
+				}
 			}
 			return true;
 		}
@@ -233,15 +237,16 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+			if (entangledEnergy && Player.potionDelay > 0) {
 				Projectile.NewProjectile(
 					Player.GetSource_OnHit(target),
 					target.Center,
 					default,
 					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-					(int)MathF.Ceiling(damageDone / 10f),
+					damageDone,
 					0,
-					Player.whoAmI
+					Player.whoAmI,
+					ai1: 1
 				);
 			}
 			if (item.CountsAsClass(DamageClass.Melee)) {//flasks

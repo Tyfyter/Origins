@@ -12,13 +12,13 @@ using PegasusLib;
 using Terraria.Graphics.Shaders;
 using Origins.Items.Other.Dyes;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Utilities;
-using ThoriumMod.Items.Donate;
 using Terraria.GameContent.Liquid;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
-		public static List<AIState> aiStates = [];
+		#region stats
+		public static float IdleTime => 60;
+		#endregion stats
 		public override void Load() {
 			AutomaticIdleState.aiStates.Add((this, _ => 1));
 		}
@@ -26,14 +26,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
-			if (++npc.ai[0] > 60 && Main.netMode != NetmodeID.MultiplayerClient) {
+			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
 				SelectAIState(boss, aiStates);
 			}
 		}
 		public override void TrackState(int[] previousStates) { }
+		public static List<AIState> aiStates = [];
 	}
 	public class DashState : AIState {
+		#region stats
+		public static float DashSpeed => 6 + DifficultyMult;
+		public static float DashLength => 16 * 30;
+		#endregion stats
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -41,18 +46,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.velocity.X = npc.ai[1];
 			npc.velocity.Y = npc.ai[2];
-			npc.rotation = npc.velocity.ToRotation();
-			if ((++npc.ai[0]) * npc.ai[3] > 16 * 30) SetAIState(boss, StateIndex<AutomaticIdleState>());
+			npc.rotation = npc.velocity.ToRotation() - MathHelper.PiOver2;
+			if ((++npc.ai[0]) * npc.ai[3] > DashLength) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[3] = 6 + ContentExtensions.DifficultyDamageMultiplier;
+			npc.ai[3] = DashSpeed;
 			Vector2 direction = npc.DirectionTo(npc.GetTargetData().Center) * npc.ai[3];
 			npc.ai[1] = direction.X;
 			npc.ai[2] = direction.Y;
 		}
 	}
 	public class CircleState : AIState {
+		#region stats
+		public static float ShotRate => 16 - DifficultyMult * 0.75f;
+		public static int ShotDamage => (int)DifficultyMult;
+		public static float ShotVelocity => 6;
+		public static float MoveSpeed => 6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f;
+		public static int Duration => 120;
+		#endregion stats
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -61,24 +73,23 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			Vector2 targetDiff = direction.RotatedBy(npc.direction) * 16 * 30;
-			npc.velocity = diff.DirectionFrom(targetDiff) * (6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f);
-			npc.rotation = npc.velocity.ToRotation();
+			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					npc.Center,
-					direction * 6,
+					direction * ShotVelocity,
 					Shimmer_Construct_Bullet.ID,
-					1,
+					ShotDamage,
 					1
 				);
 			}
-			if (npc.ai[0] > 120) SetAIState(boss, StateIndex<AutomaticIdleState>());
+			if (npc.ai[0] > Duration) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.ai[3] = 16 - ContentExtensions.DifficultyDamageMultiplier * 0.75f;
+			npc.ai[3] = ShotRate;
 		}
 	}
 	public class Shimmer_Construct_Bullet : ModProjectile {
@@ -128,6 +139,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public class SpawnCloudsState : AIState {
+		#region stats
+		public static int RainDamage => (int)DifficultyMult;
+		public static float CloudXDistance => 53 - 8 * DifficultyMult;
+		public static float CloudYDistance => 25;
+		public static float CloudBallSpeed => 4.5f + DifficultyMult * 4.5f;
+		#endregion stats
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 			if (Main.dedServ) return;
@@ -157,26 +174,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			Vector2 targetPos = npc.GetTargetData().Center;
-			float difficultyMultiplier = ContentExtensions.DifficultyDamageMultiplier;
-			float xDist = 53 - 8 * difficultyMultiplier;
-			Vector2 unfurlPos = targetPos - new Vector2(-xDist, 25) * 16;
-			float speed = 4.5f + difficultyMultiplier * 4.5f;
+			float xDist = CloudXDistance;
+			Vector2 unfurlPos = targetPos - new Vector2(-xDist, CloudYDistance) * 16;
+			float speed = CloudBallSpeed;
 			npc.SpawnProjectile(null,
 				npc.Center,
 				npc.DirectionTo(unfurlPos) * speed,
 				ModContent.ProjectileType<Shimmer_Construct_Cloud_Ball>(),
-				1,
+				RainDamage,
 				1,
 				unfurlPos.X,
 				unfurlPos.Y,
 				-1
 			);
-			unfurlPos = targetPos - new Vector2(xDist, 25) * 16;
+			unfurlPos = targetPos - new Vector2(xDist, CloudYDistance) * 16;
 			npc.SpawnProjectile(null,
 				npc.Center,
 				npc.DirectionTo(unfurlPos) * speed,
 				ModContent.ProjectileType<Shimmer_Construct_Cloud_Ball>(),
-				1,
+				RainDamage,
 				1,
 				unfurlPos.X,
 				unfurlPos.Y,

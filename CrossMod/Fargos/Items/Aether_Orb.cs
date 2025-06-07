@@ -14,6 +14,7 @@ namespace Origins.CrossMod.Fargos.Items{
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
 			Item.rare = ItemRarityID.Blue;
+			Item.consumable = false;
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (Item.shimmerWet && !Item.shimmered && Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModContent.NPCType<Shimmer_Construct>())) {

@@ -281,8 +281,9 @@ Entangled_Energy: {
 	// DisplayName: Entangled Energy
 	/* Tooltip:
 		'''
-		Fiberglass weapons gain damage based on defense
-		Fiberglass weapons gain lifesteal
+		Your attacks deal additional damage based on missing health
+		Potion Sickness is reduced when you strike an enemy
+		-25% potion healing
 		''' */
 }
 
@@ -1382,7 +1383,7 @@ Sapphire_Hood: {
 
 Sapphire_Tights: {
 	// DisplayName: Sapphire Mediator Tights
-	// Tooltip: Increased movement speed
+	// Tooltip: +10% movement speed
 }
 
 Sapphire_Vest: {
@@ -1985,7 +1986,7 @@ Tire: {
 }
 
 Journal_Item: {
-	// DisplayName: Journal
+	// DisplayName: "{§Journal}"
 	// Tooltip: ""
 }
 
@@ -6272,7 +6273,11 @@ Voltefuse: {
 
 Ichor_Harpoon: {
 	// DisplayName: Ichor Harpoon
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts Ichor
+		''' */
 }
 
 Gelatin_Bloom_Brooch: {
@@ -6286,7 +6291,7 @@ Gelatin_Bloom_Brooch: {
 
 Shadow_Torch: {
 	// DisplayName: Shadow Torch
-	// Tooltip: ""
+	// Tooltip: Darkens the area around it
 }
 
 Amoeba_Buggy_Cage_Item: {
@@ -6304,7 +6309,7 @@ Cicada_3301_Cage_Item: {
 	// Tooltip: ""
 }
 
-Aetherite_Crystal: {
-	// DisplayName: Aetherite Crystal
+Jawbreaker: {
+	// DisplayName: Jawbreaker
 	// Tooltip: ""
 }

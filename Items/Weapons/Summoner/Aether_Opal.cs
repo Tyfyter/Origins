@@ -1,20 +1,26 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.Projectiles;
+using PegasusLib;
+using PegasusLib.Graphics;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent;
+using Terraria.GameContent.Liquid;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Weapons.Summoner.Minions;
-using System.Collections.Generic;
-using Terraria.Audio;
-using Origins.Projectiles;
-using Origins.Items.Materials;
-using Terraria.GameContent.Liquid;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
-using PegasusLib;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Aether_Opal : ModItem, ICustomWikiStat {
@@ -52,7 +58,6 @@ namespace Origins.Buffs {
 	[ReinitializeDuringResizeArrays]
 	public class Shimmer_Guardian_Buff : MinionBuff {
 		internal static int?[] prefixValueCache = PrefixID.Sets.Factory.CreateCustomSet<int?>(null);
-		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal";
 		public static int ID { get; private set; }
 		public override IEnumerable<int> ProjectileTypes() => [
 			Shimmer_Guardian_Counter.ID
@@ -124,8 +129,12 @@ namespace Origins.Buffs {
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-	public class Shimmer_Guardian : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal";
+	public class Shimmer_Guardian : ModProjectile, IShadedProjectile {
+		private AutoLoadingAsset<Texture2D> crust = typeof(Shimmer_Guardian).GetDefaultTMLName() + "_Crust";
+		private static AutoLoadingAsset<Texture2D> crystal = typeof(Shimmer_Guardian).GetDefaultTMLName() + "_Crystal";
+		static Texture2D[] crystalTextures;
+
+		public int Shader => GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
@@ -138,6 +147,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 			ID = Type;
+			crystal.LoadAsset();
 		}
 
 		public override void SetDefaults() {
@@ -169,7 +179,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.timeLeft = 2;
 			}
 			int extraSlotsUsed = player.ownedProjectileCounts[Shimmer_Guardian_Counter.ID] - 1;
-			Projectile.damage = (int)(Projectile.damage * (1 + 0.75f * extraSlotsUsed));
+			int GetModifiedDamage(int baseDamage) {
+				return (int)(baseDamage * (1 + 0.75f * extraSlotsUsed));
+			}
+			Projectile.damage = GetModifiedDamage(Projectile.damage);
 			#endregion
 
 			#region General behavior
@@ -241,6 +254,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			float projDistanceFromTarget = direction.Length();
 			direction /= projDistanceFromTarget;
 
+			int originalDamage = GetModifiedDamage(Projectile.originalDamage);
 			if (foundTarget) {
 				if (++Projectile.ai[0] >= attack_time) {
 					int mode = projDistanceFromTarget > 16 * 10 ? 0 : 1;
@@ -252,7 +266,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Projectile.Center,
 							direction.RotatedBy(1f * ((i / (float)count - 0.5f) + Main.rand.NextFloat(-0.1f, 0.1f))) * 12,
 							Shimmer_Guardian_Shard.ID,
-							Projectile.originalDamage,
+							originalDamage,
 							Projectile.knockBack
 						);
 					}
@@ -300,7 +314,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					inertia = 24f;
 					Projectile.spriteDirection = player.direction;
 				}
-				
+
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition * speed) / inertia;
 				if (Projectile.velocity.LengthSquared() < 0.01f) {
 					// If there is a case where it's not moving at all, give it a little "poke"
@@ -334,9 +348,102 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			height -= 8;
 			return true;
 		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (Type == Type + 1) {
+				SetupCrystalTextures();
+			}
+			Player owner = Main.player[Projectile.owner];
+			int minionDye = owner.cMinion;
+			bool shade = minionDye != 0;
+			SpriteBatchState state = Main.spriteBatch.GetState();
+			Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
+			DrawData data = new(
+				GetCrystalTexture(minionDye, owner),
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				Projectile.Size / 2,
+				Projectile.scale,
+				Projectile.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
+
+			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(shade && !OriginsSets.Misc.BasicColorDyeShaders[minionDye] ? minionDye : Shader, Main.LocalPlayer);
+			shader.Apply(Projectile, data);
+			data.Draw(Main.spriteBatch);
+
+			Main.spriteBatch.Restart(state, shade ? null : SpriteSortMode.Immediate);
+			data.texture = crust;
+			if (shade) {
+				shader = GameShaders.Armor.GetSecondaryShader(minionDye, Main.LocalPlayer);
+				shader.Apply(Projectile, data);
+			}
+			data.Draw(Main.spriteBatch);
+			Main.spriteBatch.Restart(state);
+			return false;
+		}
+		public override void Unload() {
+			Main.QueueMainThreadAction(() => {
+				if (crystalTextures is null) return;
+				for (int i = 0; i < crystalTextures.Length; i++) crystalTextures[i]?.Dispose();
+			});
+		}
+		internal static void SetupCrystalTextures() {
+			Main.QueueMainThreadAction(() => {
+				crystalTextures = new Texture2D[OriginsSets.Misc.BasicColorDyeShaders.Length];
+				Asset<Texture2D> texture = crystal;
+				DrawData data = new(texture.Value, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None);
+				for (int i = 0; i < crystalTextures.Length; i++) {
+					if (OriginsSets.Misc.BasicColorDyeShaders[i]) {
+						RenderTarget2D renderTarget = new(Main.instance.GraphicsDevice, texture.Width(), texture.Height(), false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+
+						Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+						Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+						Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.Identity);
+						try {
+							ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(i, null);
+							shader.Apply(null, data);
+						} catch (NullReferenceException) {
+							OriginsSets.Misc.BasicColorDyeShaders[i] = false;
+							Main.spriteBatch.End();
+							Main.graphics.GraphicsDevice.SetRenderTarget(null);
+							renderTarget.Dispose();
+							continue;
+						}
+						data.Draw(Main.spriteBatch);
+
+						Main.spriteBatch.End();
+						Main.graphics.GraphicsDevice.SetRenderTarget(null);
+						crystalTextures[i] = renderTarget;
+					}
+				}
+			});
+		}
+		public static Texture2D GetCrystalTexture(int shader, Player player) {
+			if (shader == GameShaders.Armor.GetShaderIdFromItemId(ItemID.TeamDye)) {
+				switch ((Team)player.team) {
+					case Team.Red:
+					shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.RedDye);
+					break;
+					case Team.Green:
+					shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.GreenDye);
+					break;
+					case Team.Blue:
+					shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.BlueDye);
+					break;
+					case Team.Yellow:
+					shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.YellowDye);
+					break;
+					case Team.Pink:
+					shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.PinkDye);
+					break;
+				}
+			}
+			return crystalTextures.GetIfInRange(shader) ?? crystal;
+		}
 	}
 	public class Shimmer_Guardian_Shard : ModProjectile {
-		public override string Texture => "Origins/NPCs/MiscB/Shimmer_Construct/Shimmer_Drone";
+		public override string Texture => typeof(Shimmer_Drone).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 3;
@@ -505,9 +612,18 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Drone).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Drone).GetDefaultTMLName() + "_AF";
+		public override void PostDraw(Color lightColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Projectile[Type] = afTexture;
+			} else {
+				TextureAssets.Projectile[Type] = normalTexture;
+			}
+		}
 	}
 	public class Shimmer_Guardian_Counter : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Aether_Opal"; // this one actually doesn't need a texture
+		public override string Texture => base.Texture.Replace("_Counter", null); // this one actually doesn't need a texture
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
