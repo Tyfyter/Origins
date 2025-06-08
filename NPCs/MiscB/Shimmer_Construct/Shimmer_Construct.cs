@@ -244,9 +244,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 position = NPC.Center;
-			if(IsInPhase3 || (deathAnimationTime > 100))
-			{
-				default(ShimmerConstructSDF).Draw(position - screenPos,NPC.rotation);
+			if (IsInPhase3 || (deathAnimationTime > 100)) {
+				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation);
 			}
 			if (deathAnimationTime > 0) {
 				const float shattertime = 100;
@@ -582,9 +581,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				scale = 0;
 			}
 			if (!phase3Active) {
-				int type = ModContent.ProjectileType<Aetherite_Aura_P>();
+				int type = ProjectileType<Aetherite_Aura_P>();
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.type == type) {
+					if (projectile.type == type || projectile.type == Jawbreaker.projectileID) {
 						phase3Active = true;
 						break;
 					}
@@ -618,18 +617,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
-	public struct ShimmerConstructSDF
-	{
+	public struct ShimmerConstructSDF {
 		private static VertexRectangle rect = new VertexRectangle();
-		public void Draw(Vector2 position, float rotation)
-		{
+		public void Draw(Vector2 position, float rotation) {
 			MiscShaderData shader = GameShaders.Misc["Origins:ShimmerConstructSDF"];
 			shader.UseColor(Color.CornflowerBlue);
 			shader.UseSecondaryColor(Color.MediumPurple);
 			shader.UseImage1(TextureAssets.Extra[193]);
 			//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
 			shader.Apply();
-			rect.Draw(position,Color.White,new Vector2(256,256),rotation,position);
+			rect.Draw(position, Color.White, new Vector2(256, 256), rotation, position);
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
 	}
