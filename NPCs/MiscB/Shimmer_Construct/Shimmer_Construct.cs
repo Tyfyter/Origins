@@ -90,6 +90,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 			NPC.BossBar = GetInstance<SC_BossBar>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
+			NPC.knockBackResist = 0;
 			Array.Fill(previousStates, NPC.aiAction);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^2) Shimmer Construct !!!
+(#2, ^2) Shimmer Construct !!! (utilize large gore sprites)
 (#, ^2) Trenchmaker
 (@4, ^3) World Cracker* !!!
 
@@ -340,7 +340,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(@, ☻) Aetherite Armor !!!
+(#2, ^2) Aether Armor !!!
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -696,7 +696,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@4, #2) Cool Sword !!! (rework slash)
+(#2, ^2) Cool Sword !!! (rework slash)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -904,7 +904,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#2, ^2) Aether Opal !!! (utilize new sprites, custom sounds)
+(^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
