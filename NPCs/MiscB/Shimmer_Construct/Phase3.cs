@@ -50,7 +50,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class ShimmerLandminesState : AIState {
 		#region stats
-		public static int StarDamage => (int)DifficultyMult;
+		public static int StarDamage => (int) (48 + 4 * DifficultyMult);
 		public static int AreaYOffset => 16 * 10;
 		public static int AreaWidth => 60;
 		public static int AreaHeight => 80;
@@ -210,7 +210,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class ShotgunState : AIState {
 		#region stats
 #pragma warning disable IDE0060 // Remove unused parameter
-		public static int ShotDamage => (int)DifficultyMult;
+		public static int ShotDamage => (int) (35 + 6 * DifficultyMult);
 		public static float ShotCount => 3 + DifficultyMult;
 		public static float Spread => 0.5f;
 		public static float ShotSpeed => 12;
