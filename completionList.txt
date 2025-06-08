@@ -340,7 +340,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(#2, ^2) Aether Armor !!!
+(#2, ^2) Aether Armor !!! (sproits)
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -372,7 +372,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(☻) Chambersite Armor° !!!
+(#2, ^2) Chambersite Armor° !!! (sproits)
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*

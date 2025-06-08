@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 4;
 			Item.mana = 24;
-			Item.width = 32;
-			Item.height = 32;
+			Item.width = 28;
+			Item.height = 28;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.HoldUp;
