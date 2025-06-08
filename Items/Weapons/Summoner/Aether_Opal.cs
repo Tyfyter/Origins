@@ -25,7 +25,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Aether_Opal : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
-			Item.damage = 28;
+			Item.damage = 23;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 4;
 			Item.mana = 24;
