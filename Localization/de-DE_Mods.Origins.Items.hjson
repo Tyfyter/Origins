@@ -1115,7 +1115,7 @@ Encrusted_Coat: {
 
 Encrusted_Mask: {
 	// DisplayName: Encrusted Mask
-	// Tooltip: Increases minion damage by 10%
+	// Tooltip: Increases summon damage by 10%
 }
 
 Encrusted_Pants: {
@@ -1189,7 +1189,7 @@ Fiberglass_Legs: {
 
 Lost_Breastplate: {
 	// DisplayName: Lost Cloak
-	// Tooltip: 15% increased magic damage
+	// Tooltip: 15% increased magic speed
 }
 
 Lost_Helm: {
@@ -1199,24 +1199,24 @@ Lost_Helm: {
 
 Lost_Pants: {
 	// DisplayName: Lost Pants
-	// Tooltip: Increased movement speed
+	// Tooltip: +5% movement speed
 }
 
 Mythic_Leggings: {
 	// DisplayName: Mythic Leggings
-	// Tooltip: Greatly increased movement speed
+	// Tooltip: +20% movement speed
 }
 
 Mythic_Shell: {
 	// DisplayName: Mythic Shell
-	// Tooltip: Greatly increased jump speed
+	// Tooltip: +45% jump speed
 }
 
 Mythic_Skull: {
 	// DisplayName: Mythic Skull
 	/* Tooltip:
 		'''
-		Increased explosive velocity
+		+15% explosive velocity
 		'Skull ON'
 		''' */
 }
@@ -6133,17 +6133,17 @@ Bile_Harpoon: {
 }
 
 Aetherite_Pants: {
-	// DisplayName: Aetherite Pants
+	// DisplayName: Aether Pants
 	// Tooltip: Increased jump speed and slower fall
 }
 
 Aetherite_Robes: {
-	// DisplayName: Aetherite Robes
+	// DisplayName: Aether Robes
 	// Tooltip: +24% generic attack speed
 }
 
 Aetherite_Wreath: {
-	// DisplayName: Aetherite Wreath
+	// DisplayName: Aether Wreath
 	/* Tooltip:
 		'''
 		+15% generic velocity

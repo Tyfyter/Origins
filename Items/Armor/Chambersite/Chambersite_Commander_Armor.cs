@@ -21,13 +21,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Chambersite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chambersite_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Helmet";
+		//private AutoLoadingAsset<Texture2D> tail = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Tail";
 		public string[] Categories => [
 			"ArmorSet",
 			"GenericBoostGear"
 		];
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
@@ -61,9 +61,8 @@ namespace Origins.Items.Armor.Chambersite {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Chambersite_Breastplate : ModItem, INoSeperateWikiPage {
-		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Breastplate";
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 22;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
@@ -83,9 +82,8 @@ namespace Origins.Items.Armor.Chambersite {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Chambersite_Greaves : ModItem, INoSeperateWikiPage {
-		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Greaves";
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 15;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}

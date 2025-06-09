@@ -35,12 +35,13 @@ namespace Origins.Items.Accessories {
 			originPlayer.abyssalAnchor = true;
 			originPlayer.refactoringPieces = true;
 
-			player.GetAttackSpeed(DamageClass.Melee) += 0.15f;
 			player.GetDamage(DamageClass.Generic) += 0.1f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.15f;
 			player.GetCritChance(DamageClass.Generic) += 4f;
 			player.lifeRegen += 4;
 			player.statDefense += 8;
 			player.pickSpeed -= 0.25f;
+			player.endurance += (1 - player.endurance) * 0.1f;
 			player.GetKnockback(DamageClass.Summon).Base += 1;
 
 			player.moveSpeed *= 0.75f;

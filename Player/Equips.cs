@@ -684,8 +684,8 @@ namespace Origins {
 				}
 
 				case SetActiveAbility.chambersite_armor: {
-					setAbilityCooldown = 1080;
-					int dmg = 180;
+					setAbilityCooldown = 1200;
+					int dmg = 90;
 					Player.SpawnProjectile(null,
 						Player.MountedCenter,
 						Vector2.Zero,

@@ -25,12 +25,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Aether_Opal : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
-			Item.damage = 30;
+			Item.damage = 23;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 4;
 			Item.mana = 24;
-			Item.width = 32;
-			Item.height = 32;
+			Item.width = 28;
+			Item.height = 28;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.HoldUp;

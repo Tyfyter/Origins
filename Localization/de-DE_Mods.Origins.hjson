@@ -2575,7 +2575,7 @@ SetBonuses: {
 		Immunity to Frozen and Chilled
 		''' */
 	// Defiled: Greatly increased maximum life
-	// Encrusted: Increases minion damage by up to 30% when over half health
+	// Encrusted: Increases summon damage by up to 30% when over half health
 	// Felnum: Moving quickly will build up a static charge to boost your next attack's damage
 	// Fiberglass: Weapon damage increased by 4
 	// Lost: 15% of damage taken is redirected to mana

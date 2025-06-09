@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^2) Shimmer Construct !!!
+(#2, ^2) Shimmer Construct !!! (utilize large gore sprites)
 (#, ^2) Trenchmaker
 (@4, ^3) World Cracker* !!!
 
@@ -340,7 +340,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(@, ☻) Aetherite Armor !!!
+(#2, ^2) Aether Armor !!! (sproits)
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -372,7 +372,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(☻) Chambersite Armor° !!!
+(#2, ^2) Chambersite Armor° !!! (sproits)
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -568,7 +568,7 @@ ACCESSORIES:
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
-(☻) Wishing Glass !!! (has an accessory visual now)
+(#2, ^2) Wishing Glass !!! (more loose movement)
 
 (^) Agility Core°
 (^) Combat Core°
@@ -696,7 +696,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@4, #2) Cool Sword !!! (rework slash)
+(#2, ^2) Cool Sword !!! (rework slash)
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -904,7 +904,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#2, ^2) Aether Opal !!! (utilize new sprites, custom sounds)
+(#2, ^2) Aether Opal !!! (shotgun chunks to use gores)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact

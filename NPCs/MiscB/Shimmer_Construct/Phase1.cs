@@ -60,7 +60,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class CircleState : AIState {
 		#region stats
 		public static float ShotRate => 16 - DifficultyMult * 0.75f;
-		public static int ShotDamage => (int)DifficultyMult;
+		public static int ShotDamage => (int) (15 + 6 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		public static float MoveSpeed => 6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f;
 		public static int Duration => 120;
@@ -140,7 +140,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SpawnCloudsState : AIState {
 		#region stats
-		public static int RainDamage => (int)DifficultyMult;
+		public static int RainDamage => (int) (15 + 7 * DifficultyMult);
 		public static float CloudXDistance => 53 - 8 * DifficultyMult;
 		public static float CloudYDistance => 25;
 		public static float CloudBallSpeed => 4.5f + DifficultyMult * 4.5f;

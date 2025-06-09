@@ -3,6 +3,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
@@ -90,6 +91,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 			NPC.BossBar = GetInstance<SC_BossBar>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
+			NPC.knockBackResist = 0;
 			Array.Fill(previousStates, NPC.aiAction);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -177,7 +179,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public override void FindFrame(int frameHeight) {
-			if (IsInPhase2) NPC.frame = new Rectangle(0, 0, 134, 134);
+			if (IsInPhase2 || NPC.IsABestiaryIconDummy) NPC.frame = new Rectangle(0, 0, 134, 134);
 			else {
 				float stage = Math.Min((2 - NPC.GetLifePercent() * 2) * Main.npcFrameCount[Type], 5);
 				NPC.frame.Y = frameHeight * (int)stage;
@@ -252,10 +254,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (deathAnimationTime >= shattertime) {
 					if (chunks.Length <= 0) {
 						chunks = [
-							new(2, position),
-							new(7, position),
-							new(9, position),
-							new(10, position)
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece1"), position + new Vector2(38 * NPC.direction, 27).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece2"), position + new Vector2(-26 * NPC.direction, 31).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece3"), position + new Vector2(48 * NPC.direction, -12).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece4"), position + new Vector2(14 * NPC.direction, 14).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece5"), position + new Vector2(-23 * NPC.direction, -57).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece6"), position + new Vector2(22 * NPC.direction, -57).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece7"), position + new Vector2(16 * NPC.direction, -34).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece8"), position + new Vector2(22 * NPC.direction, -20).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece9"), position + new Vector2(-14 * NPC.direction, -11).RotatedBy(NPC.rotation)),
+							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece10"), position + new Vector2(-49 * NPC.direction, -22).RotatedBy(NPC.rotation)),
 						];
 					}
 					for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
@@ -264,7 +272,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
 			SpriteBatchState state = spriteBatch.GetState();
-			spriteBatch.Restart(state, SpriteSortMode.Immediate);
+			spriteBatch.Restart(state);
 			DrawData data = new(
 				IsInPhase2 || NPC.IsABestiaryIconDummy ? crystal2 : crystal,
 				position - screenPos,
@@ -274,20 +282,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.Size / 1.5f,
 				NPC.scale,
 				SpriteEffects.None);
-			ArmorShaderData shader = Armor.GetSecondaryShader(Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye), Main.LocalPlayer);
-			shader.Apply(NPC, data);
 			data.Draw(spriteBatch);
-			spriteBatch.Restart(state);
-			spriteBatch.Draw(
-				crust,
-				position - screenPos,
-				new(0, 0, NPC.frame.Width, NPC.frame.Height),
-				drawColor,
-				NPC.rotation,
-				NPC.Size / 1.5f,
-				NPC.scale,
-				SpriteEffects.None,
-			0);
+			data.texture = crust;
+			data.Draw(spriteBatch);
 			return false;
 		}
 		public override bool PreKill() {
@@ -581,9 +578,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				scale = 0;
 			}
 			if (!phase3Active) {
-				int type = ModContent.ProjectileType<Aetherite_Aura_P>();
+				int type = ProjectileType<Aetherite_Aura_P>();
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.type == type) {
+					if (projectile.type == type || projectile.type == Jawbreaker.projectileID) {
 						phase3Active = true;
 						break;
 					}
