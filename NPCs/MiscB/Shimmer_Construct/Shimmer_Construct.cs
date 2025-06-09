@@ -106,7 +106,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
 			}
 			NPC.dontTakeDamage = false;
-			if (!IsInPhase3 && aiStates[NPC.aiAction] is not DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
+			if (aiStates[NPC.aiAction] is not DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState or DroneDashState or ShotgunState) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) aiStates[NPC.aiAction].DoAIState(this);
 			else {
 				NPC.velocity = Vector2.Zero;
@@ -202,10 +202,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					Vector2 targetPos = construct.NPC.Center;
 					velocity += position.DirectionTo(targetPos);
 				} else if (construct.deathAnimationTime == 360) {
-					velocity = new(0, 32 + type * 8);
+					velocity = new(0, 32 + (type % 10) * 8);
 					return;
 				} else {
-					float speed = 0.15f + type * 0.01f;
+					float speed = 0.15f + (type % 10) * 0.01f;
 					velocity = velocity.RotatedBy(speed);
 					position = construct.NPC.Center + velocity;
 					rotation += speed;
