@@ -104,6 +104,7 @@ namespace Origins.Items.Armor.Chambersite {
 	public class Chambersite_Commander_Sentinel : ModProjectile {
 		public override string Texture => "Origins/NPCs/MiscB/Chambersite_Sentinel";
 		public static int ID { get; private set; }
+		public static int MaxActiveAims => 5;
 		public override void SetStaticDefaults() {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
@@ -276,16 +277,19 @@ namespace Origins.Items.Armor.Chambersite {
 		}
 		bool DoShoot() {
 			Player player = Main.player[Projectile.owner];
-			float bestAngle = 0.5f;
-			Vector2 aimOrigin = Projectile.Center;
-			//Vector2 aimVector = aimOrigin.DirectionTo(Main.MouseWorld);
 			List<byte> newAims = null;
 			if (Main.netMode != NetmodeID.SinglePlayer) newAims = [];
+			int activeAimsCount = 0;
+			for (int i = 0; i < aims.Length; i++) {
+				if (aims[i].active) activeAimsCount++;
+			}
 			foreach (NPC npc in Main.ActiveNPCs) {
+				if (activeAimsCount >= MaxActiveAims) break;
 				if (aims[npc.whoAmI].active) continue;
 				if (!npc.CanBeChasedBy(Projectile)) continue;
 				aims[npc.whoAmI].Set(npc);
 				newAims?.Add((byte)npc.whoAmI);
+				activeAimsCount++;
 			}
 			if (Main.netMode != NetmodeID.SinglePlayer && newAims.Count > 0) {
 				ModPacket packet = Origins.instance.GetPacket();
