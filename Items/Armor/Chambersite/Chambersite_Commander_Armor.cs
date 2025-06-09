@@ -7,6 +7,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
 using Origins.Tiles.Other;
 using PegasusLib;
+using PegasusLib.Graphics;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,7 +23,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Chambersite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chambersite_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Helmet";
+		private AutoLoadingAsset<Texture2D> tail = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Tail";
 		public string[] Categories => [
 			"ArmorSet",
 			"GenericBoostGear"
@@ -61,7 +63,6 @@ namespace Origins.Items.Armor.Chambersite {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Chambersite_Breastplate : ModItem, INoSeperateWikiPage {
-		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Breastplate";
 		public override void SetDefaults() {
 			Item.defense = 22;
 			Item.value = Item.sellPrice(gold: 2);
@@ -83,7 +84,6 @@ namespace Origins.Items.Armor.Chambersite {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Chambersite_Greaves : ModItem, INoSeperateWikiPage {
-		public override string Texture => "Origins/Items/Armor/Ashen/Ashen_Greaves";
 		public override void SetDefaults() {
 			Item.defense = 15;
 			Item.value = Item.sellPrice(gold: 2);
