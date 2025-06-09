@@ -405,7 +405,7 @@ namespace Origins {
 					Player.AddBuff(ModContent.BuffType<Wishing_Glass_Buff>(), 8 * 60);
 				}
 			}
-			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
+			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay: true)) {
 				//Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
@@ -499,7 +499,7 @@ namespace Origins {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
 			}
 
-			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) { 
+			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) {
 				for (int i = 0; i < cinderSealCount; i++) {
 					Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
 				}
@@ -637,7 +637,7 @@ namespace Origins {
 			#endregion
 		}
 		public void TriggerSetBonus(bool fromNet = false) {
-			if (setAbilityCooldown > 0) return;
+			if (setAbilityCooldown > 0 && !Player.DeadOrGhost) return;
 			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
 
 			}
