@@ -316,6 +316,7 @@ namespace Origins {
 		public bool wishingGlassVisible = false;
 		public int wishingGlassAnimation = 0;
 		public int wishingGlassDye = -1;
+		public Vector2 wishingGlassOffset = default;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
 
@@ -774,6 +775,8 @@ namespace Origins {
 				}
 			}
 			wishingGlassActive = false;
+			wishingGlassOffset -= Player.velocity * (wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0 : 0.5f);
+			wishingGlassOffset *= wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0.7f : 0.85f;
 			Wishing_Glass_Layer.UpdateAnimation(ref wishingGlassAnimation, wishingGlassCooldown);
 			wishingGlassVisible = false;
 			shimmerShield = false;
