@@ -7,7 +7,6 @@ using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
 using Origins.Tiles.Other;
 using PegasusLib;
-using PegasusLib.Graphics;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -23,7 +21,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Chambersite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chambersite_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		private AutoLoadingAsset<Texture2D> tail = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Tail";
+		//private AutoLoadingAsset<Texture2D> tail = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Tail";
 		public string[] Categories => [
 			"ArmorSet",
 			"GenericBoostGear"
