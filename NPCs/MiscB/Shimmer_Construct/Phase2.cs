@@ -61,7 +61,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class MagicMissilesState : AIState {
 		#region stats
-		public static int ShotDamage => (int) (35 + 7 * DifficultyMult);
+		public static int ShotDamage => (int) (25 + 8 * DifficultyMult);
 		public static float ShotRate => 6 - DifficultyMult;
 		public static float ShotCount => 5 + DifficultyMult;
 		public static float ExtraIdleTime => DifficultyMult * 8;
@@ -146,7 +146,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 
 	public class SpawnDronesStateState : AIState {
 		#region stats
-		public static float SpawnCount => 5 + DifficultyMult;
+		public static float SpawnCount => 2 + (2 *DifficultyMult);
 		public static float SpawnRate => 15 - DifficultyMult;
 		public static float ExtraIdleTime => DifficultyMult * 8;
 		/// <summary>
