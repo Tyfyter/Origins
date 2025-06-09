@@ -570,6 +570,7 @@ namespace Origins {
 					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
 				}
 			}
+			Player.GetJumpState<Latchkey_Jump_Refresh>().Enable();
 			rivenSet = false;
 			rivenSetBoost = false;
 			bleedingObsidianSet = false;
