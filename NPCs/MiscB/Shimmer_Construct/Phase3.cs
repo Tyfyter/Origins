@@ -50,7 +50,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class ShimmerLandminesState : AIState {
 		#region stats
-		public static int StarDamage => (int) (48 + 4 * DifficultyMult);
+		public static int StarDamage => (int) (38 + 4 * DifficultyMult);
 		public static int AreaYOffset => 16 * 10;
 		public static int AreaWidth => 60;
 		public static int AreaHeight => 80;
