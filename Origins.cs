@@ -922,7 +922,8 @@ namespace Origins {
 			Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
 			Array.Resize(ref wallHammerRequirement, WallLoader.WallCount);
 			flatDamageMultiplier = ItemID.Sets.Factory.CreateFloatSet(1f,
-				ItemID.Minishark, 3f / 8f
+				ItemID.Minishark, 3f / 8f,
+				ItemID.BeeGun, 3f / 8f
 			);
 			Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
