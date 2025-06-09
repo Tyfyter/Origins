@@ -49,7 +49,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() {
 			On_NPC.DoDeathEvents += static (On_NPC.orig_DoDeathEvents orig, NPC self, Player closestPlayer) => {
 				orig(self, closestPlayer);
-				if (self.ModNPC is Shimmer_Construct) {
+				if (self.ModNPC is Shimmer_Construct construct && !construct.noShimmer) {
 					if (oldItems is not null) {
 						Rectangle npcRect = self.Hitbox;
 						const int active_range = 5000;
@@ -61,7 +61,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 								players.Add(player);
 							}
 						}
-						DoDeathTeleport(self.Center, oldItems);
+						DoDeathTeleport(construct.averageShimmerSurfacePosition, oldItems);
 						oldItems = null;
 					}
 				}
@@ -119,6 +119,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						NPC.netUpdate = true;
 					} else {
 						NPC.life = 0;
+						HitEffect(default);
 						NPC.checkDead();
 					}
 				}
@@ -164,7 +165,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		int deathAnimationTime = 0;
 		bool isInPhase2 = false;
 		bool isInPhase3 = false;
-		static int DeathAnimationTime => 480;
+		static int DeathAnimationTime => Main.expertMode ? 521 : 460;
 		public override bool CheckDead() {
 			if (deathAnimationTime < DeathAnimationTime) {
 				NPC.life = 1;
@@ -173,9 +174,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return true;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life <= 0 && deathAnimationTime <= 0) {
-				SoundEngine.PlaySound(SoundID.DD2_DefeatScene, NPC.Center);
-				if (deathAnimationTime <= 0) deathAnimationTime = 1;
+			if (NPC.life <= 0) {
+				if (deathAnimationTime <= 0) {
+					SoundEngine.PlaySound(SoundID.DD2_DefeatScene, NPC.Center);
+					deathAnimationTime = 1;
+				} else {
+					//turn chunks to gores here
+				}
 			}
 		}
 		public override void FindFrame(int frameHeight) {
@@ -194,14 +199,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				bool collision = true;
 				if (construct.deathAnimationTime < 240) {
 					velocity.Y += 0.4f;
-				} else if (construct.deathAnimationTime < 300) {
+				} else if (construct.deathAnimationTime < 460) {
 					velocity *= 0.9f;
-				} else if (construct.deathAnimationTime < 360) {
+				} else if (construct.deathAnimationTime < 520) {
 					velocity *= 0.9f;
 					collision = false;
 					Vector2 targetPos = construct.NPC.Center;
 					velocity += position.DirectionTo(targetPos);
-				} else if (construct.deathAnimationTime == 360) {
+				} else if (construct.deathAnimationTime == 520) {
 					velocity = new(0, 32 + (type % 10) * 8);
 					return;
 				} else {
@@ -281,7 +286,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.rotation,
 				NPC.Size / 1.5f,
 				NPC.scale,
-				SpriteEffects.None);
+				SpriteEffects.None
+			);
 			data.Draw(spriteBatch);
 			data.texture = crust;
 			data.Draw(spriteBatch);
@@ -293,6 +299,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				for (int i = 0; i < Main.item.Length; i++) {
 					if (Main.item[i].active) oldItems[i] = true;
 				}
+				DoPreDeathTeleport();
 			}
 			return base.PreKill();
 		}
@@ -324,13 +331,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Wishing_Glass>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Shimmer_Construct_Relic>()));
 		}
-		internal static void DoDeathTeleport(Vector2 offset, BitArray oldItems) {
-			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			StringBuilder stringBuilder = new();
-			stringBuilder.Append($"Shimmer Construct downed, ");
+		Point averageShimmerSurfacePosition = Point.Zero;
+		bool noShimmer = false;
+		internal void DoPreDeathTeleport() {
+			noShimmer = true;
 			if (OriginSystem.Instance.shimmerPosition is Vector2 baseShimmerPosition) {
-				stringBuilder.Append($"baseShimmerPosition: {baseShimmerPosition}, ");
-				Point averageShimmerSurfacePosition = Point.Zero;
+				averageShimmerSurfacePosition = Point.Zero;
 				int shimmerCount = 0;
 				Point pos = baseShimmerPosition.ToPoint();
 				for (int i = -100; i <= 100; i++) {
@@ -352,98 +358,102 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					} else {
 						for (; Framing.GetTileSafely(averageShimmerSurfacePosition).LiquidType == LiquidID.Shimmer; averageShimmerSurfacePosition.Y++) ;
 					}
-					offset -= averageShimmerSurfacePosition.ToWorldCoordinates() - (Vector2.UnitY * 16 * 8);
-					List<Player> players = [];
-					foreach (Player player in Main.ActivePlayers) {
-						if (player.HasBuff(Weak_Shimmer_Debuff.ID)) {
-							players.Add(player);
+					NPC.Center = averageShimmerSurfacePosition.ToWorldCoordinates() - (Vector2.UnitY * 16 * 8);
+					noShimmer = false;
+				}
+			}
+		}
+		internal static void DoDeathTeleport(Point averageShimmerSurfacePosition, BitArray oldItems) {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			StringBuilder stringBuilder = new();
+			stringBuilder.Append($"Shimmer Construct downed, ");
+			if (OriginSystem.Instance.shimmerPosition is Vector2 baseShimmerPosition) {
+				stringBuilder.Append($"baseShimmerPosition: {baseShimmerPosition}, ");
+				List<Player> players = [];
+				foreach (Player player in Main.ActivePlayers) {
+					if (player.HasBuff(Weak_Shimmer_Debuff.ID)) {
+						players.Add(player);
+					}
+				}
+				Point pos = averageShimmerSurfacePosition;
+				List<Point> positions = [];
+				static bool CheckTeleport(int x, int y) {
+					for (int i = x - 1; i <= x + 1; i++) {
+						for (int j = y - 3; j < y; j++) {
+							if (Framing.GetTileSafely(i, j).HasFullSolidTile()) return false;
 						}
 					}
-					pos = averageShimmerSurfacePosition;
-					List<Point> positions = [];
-					static bool CheckTeleport(int x, int y) {
-						for (int i = x - 1; i <= x + 1; i++) {
-							for (int j = y - 3; j < y; j++) {
-								if (Framing.GetTileSafely(i, j).HasFullSolidTile()) return false;
-							}
-						}
-						return true;
-					}
-					for (int i = 0; i <= 100; i++) {
-						for (int j = -10; j <= 10; j++) {
-							if (Framing.GetTileSafely(pos.X + i, pos.Y + j).HasSolidTile()) {
-								Tile above = Framing.GetTileSafely(pos.X + i, pos.Y + j - 1);
-								if (above.LiquidAmount <= 0 || above.LiquidType != LiquidID.Shimmer) {
-									if (CheckTeleport(pos.X + i, pos.Y + j)) {
-										positions.Add(new(pos.X + i, pos.Y + j - 3));
-									}
+					return true;
+				}
+				for (int i = 0; i <= 100; i++) {
+					for (int j = -10; j <= 10; j++) {
+						if (Framing.GetTileSafely(pos.X + i, pos.Y + j).HasSolidTile()) {
+							Tile above = Framing.GetTileSafely(pos.X + i, pos.Y + j - 1);
+							if (above.LiquidAmount <= 0 || above.LiquidType != LiquidID.Shimmer) {
+								if (CheckTeleport(pos.X + i, pos.Y + j)) {
+									positions.Add(new(pos.X + i, pos.Y + j - 3));
 								}
 							}
-							if (Framing.GetTileSafely(pos.X - i, pos.Y + j).HasSolidTile()) {
-								Tile above = Framing.GetTileSafely(pos.X + i, pos.Y + j - 1);
-								if (above.LiquidAmount <= 0 || above.LiquidType != LiquidID.Shimmer) {
-									if (CheckTeleport(pos.X + i, pos.Y + j)) {
-										positions.Add(new(pos.X + i + 2, pos.Y + j - 3));
-									}
+						}
+						if (Framing.GetTileSafely(pos.X - i, pos.Y + j).HasSolidTile()) {
+							Tile above = Framing.GetTileSafely(pos.X + i, pos.Y + j - 1);
+							if (above.LiquidAmount <= 0 || above.LiquidType != LiquidID.Shimmer) {
+								if (CheckTeleport(pos.X + i, pos.Y + j)) {
+									positions.Add(new(pos.X + i + 2, pos.Y + j - 3));
 								}
 							}
-							if (positions.Count >= players.Count * 4 + 8) {
-								break;
-							}
+						}
+						if (positions.Count >= players.Count * 4 + 8) {
+							break;
 						}
 					}
-					stringBuilder.Append($"player positions: [{string.Join(", ", positions)}], ");
-					if (positions.Count > 0) {
-						List<(Player player, Vector2 position)> teleports = [];
-						if (positions.Count < players.Count) {
-							for (int i = 0; i < players.Count; i++) {
-								teleports.Add((players[i], Main.rand.Next(positions).ToWorldCoordinates(0, -8)));
-							}
-						} else {
-							for (int i = 0; i < players.Count; i++) {
-								pos = Main.rand.Next(positions);
-								positions.Remove(pos);
-								teleports.Add((players[i], pos.ToWorldCoordinates(0, -8)));
-							}
+				}
+				stringBuilder.Append($"player positions: [{string.Join(", ", positions)}], ");
+				if (positions.Count > 0) {
+					List<(Player player, Vector2 position)> teleports = [];
+					if (positions.Count < players.Count) {
+						for (int i = 0; i < players.Count; i++) {
+							teleports.Add((players[i], Main.rand.Next(positions).ToWorldCoordinates(0, -8)));
 						}
-						stringBuilder.Append($"teleports: [{string.Join(", ", teleports.Select(static ((Player player, Vector2 position) tele) => $"{tele.player.name}: {tele.position}"))}], ");
+					} else {
+						for (int i = 0; i < players.Count; i++) {
+							pos = Main.rand.Next(positions);
+							positions.Remove(pos);
+							teleports.Add((players[i], pos.ToWorldCoordinates(0, -8)));
+						}
+					}
+					stringBuilder.Append($"teleports: [{string.Join(", ", teleports.Select(static ((Player player, Vector2 position) tele) => $"{tele.player.name}: {tele.position}"))}], ");
+					for (int i = 0; i < teleports.Count; i++) {
+						(Player player, Vector2 position) = teleports[i];
+						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+							PositionInWorld = player.Bottom
+						});
+						player.Teleport(position, 12);
+						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+							PositionInWorld = player.Bottom
+						});
+						player.velocity = Vector2.Zero;
+					}
+					if (Main.netMode != NetmodeID.SinglePlayer) {
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(Origins.NetMessageType.mass_teleport);
+						packet.Write((ushort)teleports.Count);
 						for (int i = 0; i < teleports.Count; i++) {
 							(Player player, Vector2 position) = teleports[i];
-							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-								PositionInWorld = player.Bottom
-							});
-							player.Teleport(position, 12);
-							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-								PositionInWorld = player.Bottom
-							});
-							player.velocity = Vector2.Zero;
+							packet.Write((ushort)player.whoAmI);
+							packet.WritePackedVector2(position);
 						}
-						if (Main.netMode != NetmodeID.SinglePlayer) {
-							ModPacket packet = Origins.instance.GetPacket();
-							packet.Write(Origins.NetMessageType.mass_teleport);
-							packet.Write((ushort)teleports.Count);
-							for (int i = 0; i < teleports.Count; i++) {
-								(Player player, Vector2 position) = teleports[i];
-								packet.Write((ushort)player.whoAmI);
-								packet.WritePackedVector2(position);
-							}
-							packet.Send();
-						}
+						packet.Send();
 					}
-				} else {
-					stringBuilder.Append($"baseShimmerPosition: null, ");
-					offset = Vector2.Zero;
 				}
-			} else {
-				offset = Vector2.Zero;
 			}
-			stringBuilder.Append($"item offset: {offset}, Shimmering items: [");
+			stringBuilder.Append($"Shimmering items: [");
 			for (int i = 0; i < Main.item.Length; i++) {
 				Item item = Main.item[i];
 				if (item.active && !oldItems[i]) {
 					item.shimmered = true;
 					item.shimmerTime = 1;
-					item.position -= offset;
+					item.position += Main.rand.NextVector2Circular(64, 64);
 					stringBuilder.Append($"{item.Name}, ");
 					if (Main.netMode != NetmodeID.SinglePlayer) {
 						NetMessage.SendData(MessageID.SyncItemsWithShimmer, -1, -1, null, i, 1f);
