@@ -6132,14 +6132,13 @@ Bile_Harpoon: {
 		''' */
 }
 
-Aetherite_Pants: {
-	// DisplayName: Aether Pants
-	// Tooltip: Increased jump speed and slower fall
-}
-
-Aetherite_Robes: {
+Aetherite_Robe: {
 	// DisplayName: Aether Robes
-	// Tooltip: +24% generic attack speed
+	/* Tooltip:
+		'''
+		+24% generic attack speed
+		Increased jump speed and slower fall
+		''' */
 }
 
 Aetherite_Wreath: {
