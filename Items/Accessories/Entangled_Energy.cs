@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 		/// <param name="damage">the damage dealt by the hit which triggered the healing orb</param>
 		/// <param name="trueMelee">whether or not the hit is "true melee" (directly uses the item hitbox, spears, etc.)</param>
 		public static float RestorationPerHit(int damage, bool trueMelee) => (trueMelee ? 10 : 7) + MathF.Pow(damage, 0.66f) / (trueMelee ? 1.5f : 2);
-		public static float DamageBonus(int missingLife) => MathF.Pow(missingLife / 400f, 1.5f) * 15;
+		public static float DamageBonus(int missingLife) => Math.Clamp(MathF.Pow(missingLife / 350f, 1.5f), 0, 1) * 15;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Blue;
