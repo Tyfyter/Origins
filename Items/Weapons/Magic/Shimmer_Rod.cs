@@ -11,6 +11,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -97,14 +98,14 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[2] == 0) {
 				owner.itemTime = owner.itemTimeMax;
 				owner.itemAnimation = owner.itemAnimationMax;
-				Projectile.Center = owner.itemLocation + new Vector2(24 * owner.direction, -24).RotatedBy(owner.itemRotation);
+				Projectile.Center = owner.itemLocation + new Vector2(24 * owner.direction, -24 * owner.gravDir).RotatedBy(owner.itemRotation);
 				if (!owner.channel && Main.myPlayer == Projectile.owner) {
 					Projectile.ai[2] = 1;
 					Projectile.localAI[0] = TargetRot;
 					Projectile.netUpdate = true;
 				}
 			} else {
-				Vector2 tan = new Vector2(24 * owner.direction, -24).RotatedBy(owner.itemRotation);
+				Vector2 tan = new Vector2(24 * owner.direction, -24 * owner.gravDir).RotatedBy(owner.itemRotation);
 				Projectile.Center = owner.itemLocation + tan;
 				if (Main.myPlayer == Projectile.owner) {
 					Vector2 diff = (TargetPos - Projectile.Center).SafeNormalize(Projectile.velocity);
