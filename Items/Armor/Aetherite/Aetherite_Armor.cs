@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
-using Origins.Journal;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using Terraria;
@@ -14,6 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Aetherite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Aetherite_Wreath : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+		//private AutoLoadingAsset<Texture2D> cords = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Cords";
 		public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 		}
