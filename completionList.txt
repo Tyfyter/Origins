@@ -568,7 +568,7 @@ ACCESSORIES:
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
-(#2, ^2) Wishing Glass !!! (more loose movement)
+(^) Wishing Glass
 
 (^) Agility Core°
 (^) Combat Core°
