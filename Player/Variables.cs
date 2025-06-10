@@ -733,8 +733,8 @@ namespace Origins {
 				}
 			}
 			if (resizingGlove) {
-				const float strength = 1.2f;
-				if (Player.ItemAnimationJustStarted) resizingGloveScale = Main.rand.NextFloat(1 / strength, float.BitIncrement(strength));
+				const float strength = 2f;
+				if (Player.ItemAnimationJustStarted) resizingGloveScale = Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2);
 				resizingGlove = false;
 			}
 			wishingGlassEquipTime.Cooldown();
