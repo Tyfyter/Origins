@@ -140,7 +140,6 @@ namespace Origins {
 						BasicColorDyeShaders[i] = false;
 					}
 				}
-				Shimmer_Guardian.SetupCrystalTextures();
 			}
 		}
 	}
