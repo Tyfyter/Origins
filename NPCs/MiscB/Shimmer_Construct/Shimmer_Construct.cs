@@ -3,7 +3,6 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
-using Origins.Items.Other.Dyes;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
@@ -32,16 +31,13 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static Terraria.Graphics.Shaders.GameShaders;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
 	public class Shimmer_Construct : ModNPC {
 		protected readonly static List<AIState> aiStates = [];
-		private AutoLoadingAsset<Texture2D> crust = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Crust";
-		private AutoLoadingAsset<Texture2D> crystal = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Crystal";
-		private AutoLoadingAsset<Texture2D> crystal2 = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2_Crystal";
+		private AutoLoadingAsset<Texture2D> phase2 = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2";
 		public readonly int[] previousStates = new int[6];
 		public bool IsInPhase2 => isInPhase2;// NPC.life * 2 < NPC.lifeMax;
 		public bool IsInPhase3 => isInPhase3;// Main.expertMode && NPC.life * 10 <= NPC.lifeMax;
@@ -179,7 +175,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					SoundEngine.PlaySound(SoundID.DD2_DefeatScene, NPC.Center);
 					deathAnimationTime = 1;
 				} else {
-					//turn chunks to gores here
+					if (Main.netMode != NetmodeID.Server) {
+						for (int i = 0; i < chunks.Length; i++) {
+							Chunk chk = chunks[i];
+							Gore gore = Main.gore[OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), chk.position, chk.velocity, chk.ID)];
+							gore.rotation = chunks[i].rotation;
+						}
+					}
 				}
 			}
 		}
@@ -192,9 +194,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		Chunk[] chunks = [];
 		struct Chunk(int type, Vector2 position) {
-			float rotation;
-			Vector2 position = position;
-			Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
+			public float rotation;
+			public Vector2 position = position;
+			public Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
+			public int ID = type;
 			public void Update(Shimmer_Construct construct) {
 				bool collision = true;
 				if (construct.deathAnimationTime < 240) {
@@ -206,11 +209,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					collision = false;
 					Vector2 targetPos = construct.NPC.Center;
 					velocity += position.DirectionTo(targetPos);
-				} else if (construct.deathAnimationTime == 520) {
-					velocity = new(0, 32 + (type % 10) * 8);
+				} else if (construct.deathAnimationTime == 360) {
+					velocity = new(0, 32 + (ID % 10) * 8);
 					return;
 				} else {
-					float speed = 0.15f + (type % 10) * 0.01f;
+					float speed = 0.15f + (ID % 10) * 0.01f;
 					velocity = velocity.RotatedBy(speed);
 					position = construct.NPC.Center + velocity;
 					rotation += speed;
@@ -218,7 +221,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				rotation += velocity.X * 0.1f;
 				if (collision) {
-					int size = (int)(Math.Min(TextureAssets.Gore[type].Width(), TextureAssets.Gore[type].Height()) * 0.9f);
+					int size = (int)(Math.Min(TextureAssets.Gore[ID].Width(), TextureAssets.Gore[ID].Height()) * 0.9f);
 					Vector2 halfSize = new(size * 0.5f);
 					Vector4 slopeCollision = Collision.SlopeCollision(position - halfSize, velocity, size, size);
 					position = slopeCollision.XY() + halfSize;
@@ -235,14 +238,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public readonly bool Draw(Shimmer_Construct construct) {
 				Point lightPos = position.ToTileCoordinates();
-				Main.instance.LoadGore(type);
+				Main.instance.LoadGore(ID);
 				Main.spriteBatch.Draw(
-					TextureAssets.Gore[type].Value,
+					TextureAssets.Gore[ID].Value,
 					position - Main.screenPosition,
 					null,
 					construct.isInPhase3 ? Color.White : Lighting.GetColor(lightPos),
 					rotation,
-					TextureAssets.Gore[type].Size() * 0.5f,
+					TextureAssets.Gore[ID].Size() * 0.5f,
 					1,
 					SpriteEffects.None,
 				0f);
@@ -276,10 +279,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
-			SpriteBatchState state = spriteBatch.GetState();
-			spriteBatch.Restart(state);
-			DrawData data = new(
-				IsInPhase2 || NPC.IsABestiaryIconDummy ? crystal2 : crystal,
+			Main.EntitySpriteDraw(
+				IsInPhase2 || NPC.IsABestiaryIconDummy ? phase2 : TextureAssets.Npc[Type].Value,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
@@ -288,9 +289,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.scale,
 				SpriteEffects.None
 			);
-			data.Draw(spriteBatch);
-			data.texture = crust;
-			data.Draw(spriteBatch);
 			return false;
 		}
 		public override bool PreKill() {
