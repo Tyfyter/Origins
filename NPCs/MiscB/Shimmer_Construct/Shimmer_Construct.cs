@@ -69,7 +69,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
 				Position = new Vector2(25, -30),
-				Rotation = 0.7f
+				Rotation = 0.7f,
+				Frame = 6
 			};
 			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
