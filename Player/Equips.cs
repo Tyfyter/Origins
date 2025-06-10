@@ -562,26 +562,6 @@ namespace Origins {
 		}
 		public override void UpdateDyes() {
 			Debugging.LogFirstRun(UpdateDyes);
-			if (dashVaseVisual) {
-				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-					if (Player.armor[i].ModItem is Fallacious_Vase) {
-						dashVaseDye = Player.dye[i].dye;
-					}
-					if (Player.armor[i + 10].ModItem is Fallacious_Vase) {
-						dashVaseDye = Player.dye[i].dye;
-						break;
-					}
-				}
-			}
-			for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-				if (Player.armor[i].ModItem is Wishing_Glass) {
-					wishingGlassDye = Player.dye[i].dye;
-				}
-				if (Player.armor[i + 10].ModItem is Wishing_Glass) {
-					wishingGlassDye = Player.dye[i].dye;
-					break;
-				}
-			}
 		}
 		public void ApplyEyndumSetBuffs() {
 			#region movement

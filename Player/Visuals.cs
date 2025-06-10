@@ -119,6 +119,9 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 			if (forceFallthrough) Player.GoingDownWithGrapple = true;
 			forceFallthrough = false;
+			Player.runAcceleration *= moveSpeedMult;
+			Player.maxRunSpeed *= moveSpeedMult;
+			Player.accRunSpeed *= moveSpeedMult;
 			if (cursedCrown && Player.velocity.Y == 0) {
 				Player.maxRunSpeed *= 0.9f;
 				Player.accRunSpeed *= 0.9f;

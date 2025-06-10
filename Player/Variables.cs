@@ -514,6 +514,7 @@ namespace Origins {
 		public bool realControlUseItem = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
+		public float moveSpeedMult = 1;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -780,6 +781,7 @@ namespace Origins {
 			wishingGlassOffset *= wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0.7f : 0.85f;
 			Wishing_Glass_Layer.UpdateAnimation(ref wishingGlassAnimation, wishingGlassCooldown);
 			wishingGlassVisible = false;
+			wishingGlassDye = 0;
 			shimmerShield = false;
 			lotteryTicketItem = null;
 
@@ -1082,6 +1084,7 @@ namespace Origins {
 			heldProjOverArm = null;
 			shieldGlow = -1;
 			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
+			moveSpeedMult = 1;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
