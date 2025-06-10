@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
