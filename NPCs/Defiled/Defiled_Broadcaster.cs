@@ -27,9 +27,8 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 5;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(28, 0),
-				PortraitPositionXOverride = 0,
-				PortraitPositionYOverride = -28,
+				Position = new(-5, -5),
+				PortraitPositionYOverride = -10,
 				Velocity = 1f
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);

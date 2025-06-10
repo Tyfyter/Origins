@@ -30,9 +30,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(28, 0),
-				PortraitPositionXOverride = 0,
-				PortraitPositionYOverride = -28,
+				Position = Vector2.UnitY,
+				PortraitPositionXOverride = -25,
 				Velocity = 1f
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
