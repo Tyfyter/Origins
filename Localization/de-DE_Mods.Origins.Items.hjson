@@ -481,6 +481,7 @@ Lovers_Leap: {
 	/* Tooltip:
 		'''
 		5% increased damage
+		Allows flight
 		The wearer can run super fast and even faster after taking damage
 		Allows the player to dash into the enemy
 		Double tap a direction
@@ -4474,6 +4475,7 @@ Speed_Booster: {
 		The wearer can run super fast and even faster after taking damage
 		Allows the user to climb walls and dash into enemies
 		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		Allows flight
 		5% increased damage
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash

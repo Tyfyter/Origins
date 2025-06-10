@@ -146,7 +146,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
 			SpriteEffects effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 10, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
+			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 11, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				player.MountedCenter - Main.screenPosition,
