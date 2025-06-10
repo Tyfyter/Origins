@@ -405,7 +405,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 								Projectile.ai[0] = 2;
 								Projectile.ai[1] = 0;
 							}
-							Array.Fill(Projectile.localNPCImmunity, 0);
 						}
 					} else {
 						Vector2 newVelocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true, true);
@@ -418,7 +417,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 								Projectile.ai[0] = 1;
 								Projectile.ai[2] = owner.ai[1];
 								Projectile.localAI[0] = (Main.npc[(int)Projectile.ai[2]].Center - Projectile.Center).ToRotation();
-								Projectile.ResetLocalNPCHitImmunity();
 							} else if ((Projectile.velocity *= 0.85f).LengthSquared() < 1) {
 								Projectile.velocity = Vector2.Zero;
 								Projectile.ai[1] = 0;
