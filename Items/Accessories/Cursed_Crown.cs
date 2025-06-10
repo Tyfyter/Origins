@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			player.canFloatInWater = true;
 			if (player.wet) player.velocity.Y -= 0.5f;
 			player.noFallDmg = true;
-			player.moveSpeed *= player.velocity.Y == 0 ? 0.8f : 1.2f;
+			originPlayer.moveSpeedMult *= player.velocity.Y == 0 ? 0.8f : 1.2f;
 			player.jumpSpeedBoost += 3.75f;
 			player.endurance += (1 - player.endurance) * 0.3f;
 			if (!hideVisual) originPlayer.cursedCrownVisual = true;

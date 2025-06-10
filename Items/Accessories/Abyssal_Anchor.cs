@@ -44,7 +44,7 @@ namespace Origins.Items.Accessories {
 			player.endurance += (1 - player.endurance) * 0.1f;
 			player.GetKnockback(DamageClass.Summon).Base += 1;
 
-			player.moveSpeed *= 0.75f;
+			originPlayer.moveSpeedMult *= 0.75f;
 			player.jumpSpeedBoost -= 2.2f;
 			if (!hideVisual) UpdateVanity(player);
 		}

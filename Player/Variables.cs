@@ -514,6 +514,7 @@ namespace Origins {
 		public bool realControlUseItem = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
+		public float moveSpeedMult = 1;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -1082,6 +1083,7 @@ namespace Origins {
 			heldProjOverArm = null;
 			shieldGlow = -1;
 			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
+			moveSpeedMult = 1;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
