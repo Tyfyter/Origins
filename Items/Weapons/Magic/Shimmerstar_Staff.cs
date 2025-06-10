@@ -243,7 +243,7 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public static void DrawShimmerstar(Projectile projectile) {
-			if (projectile.oldPos.Length > 0) {
+			if (projectile.oldPos.Length > 0 && projectile.oldPos[^1] != projectile.position) {
 				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 				miscShaderData.UseSaturation(-2.8f);
 				miscShaderData.UseOpacity(4f);

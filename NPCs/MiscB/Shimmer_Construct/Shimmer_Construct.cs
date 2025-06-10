@@ -88,6 +88,23 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.knockBackResist = 0;
 			Array.Fill(previousStates, NPC.aiAction);
 		}
+		public override void OnSpawn(IEntitySource source) {
+			int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);
+			int[] chunks = [
+				NPCType<Shimmer_Chunk1>(), NPCType<Shimmer_Chunk1>(),
+				NPCType<Shimmer_Chunk2>(), NPCType<Shimmer_Chunk2>(),
+				NPCType<Shimmer_Chunk3>(), NPCType<Shimmer_Chunk3>(),
+			];
+			int n = chunks.Length;
+			while (n > 1) {
+				n--;
+				int k = Main.rand.Next(n + 1);
+				(chunks[n], chunks[k]) = (chunks[k], chunks[n]);
+			}
+			for (int i = 0; i < count; i++) {
+				NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, chunks[i], ai0: NPC.whoAmI, ai1: i, ai2: count);
+			}
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
@@ -101,8 +118,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			NPC.dontTakeDamage = false;
 			if (aiStates[NPC.aiAction] is not DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState or DroneDashState or ShotgunState) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
-			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) aiStates[NPC.aiAction].DoAIState(this);
-			else {
+			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) {
+				aiStates[NPC.aiAction].DoAIState(this);
+				if (!isInPhase2 && (NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk1>()] || NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk2>()] || NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk3>()])) {
+					NPC.dontTakeDamage = true;
+				} else {
+					NPC.dontTakeDamage = false;
+				}
+			} else {
 				NPC.velocity = Vector2.Zero;
 				NPC.dontTakeDamage = true;
 				if (++deathAnimationTime >= DeathAnimationTime) {
@@ -176,7 +199,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					if (Main.netMode != NetmodeID.Server) {
 						for (int i = 0; i < chunks.Length; i++) {
 							Chunk chk = chunks[i];
-							Gore gore = Main.gore[OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), chk.position, chk.velocity, chk.ID)];
+							Gore gore = Main.gore[OriginExtensions.SpawnGoreByType(NPC.GetSource_Death(), chk.VisualPostion, chk.velocity, chk.ID)];
+							gore.position -= new Vector2(gore.Width * 0.5f, gore.Height * 0.5f);
 							gore.rotation = chunks[i].rotation;
 						}
 					}
@@ -192,22 +216,26 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public float rotation;
 			public Vector2 position = position;
 			public Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
+			public Vector2 offset = Vector2.Zero;
+			public readonly Vector2 VisualPostion => position + offset;
 			public int ID = type;
 			public void Update(Shimmer_Construct construct) {
 				bool collision = true;
 				if (construct.deathAnimationTime < 240) {
 					velocity.Y += 0.4f;
 				} else if (construct.deathAnimationTime < 460) {
+					float prog = float.Pow((construct.deathAnimationTime - 240) / 220f, 2);
+					offset = Main.rand.NextVector2Circular(1, 1) * Main.rand.NextFloat(0.5f, 1f) * 12 * prog - Vector2.UnitY * prog * 32;
 					velocity *= 0.9f;
-				} else if (construct.deathAnimationTime < 520) {
-					velocity *= 0.9f;
-					collision = false;
-					Vector2 targetPos = construct.NPC.Center;
-					velocity += position.DirectionTo(targetPos);
-				} else if (construct.deathAnimationTime == 360) {
+				} else if (construct.deathAnimationTime == 460) {
 					velocity = new(0, 32 + (ID % 10) * 8);
-					return;
+					offset = VisualPostion - construct.NPC.Center;
 				} else {
+					float offsetLength = offset.Length();
+					if (offsetLength > 0) {
+						offset -= offset * (Math.Min(16, offsetLength) / offsetLength);
+						offset *= 0.97f;
+					}
 					float speed = 0.15f + (ID % 10) * 0.01f;
 					velocity = velocity.RotatedBy(speed);
 					position = construct.NPC.Center + velocity;
@@ -232,11 +260,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				position += velocity;
 			}
 			public readonly bool Draw(Shimmer_Construct construct) {
-				Point lightPos = position.ToTileCoordinates();
+				Point lightPos = VisualPostion.ToTileCoordinates();
 				Main.instance.LoadGore(ID);
 				Main.spriteBatch.Draw(
 					TextureAssets.Gore[ID].Value,
-					position - Main.screenPosition,
+					VisualPostion - Main.screenPosition,
 					null,
 					construct.isInPhase3 ? Color.White : Lighting.GetColor(lightPos),
 					rotation,

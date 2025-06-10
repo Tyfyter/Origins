@@ -110,6 +110,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override void SetStaticDefaults() {
 				ProjectileID.Sets.TrailingMode[Type] = 3;
 				ProjectileID.Sets.TrailCacheLength[Type] = 30;
+				ProjectileID.Sets.NoLiquidDistortion[Type] = true;
 				ID = Type;
 			}
 			public override void SetDefaults() {
@@ -254,6 +255,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC Owner => Main.npc.GetIfInRange((int)Projectile.ai[2]);
 			public override void SetDefaults() {
 				Projectile.tileCollide = false;
+				Projectile.hostile = true;
 			}
 			public override bool ShouldUpdatePosition() => false;
 			IEnumerable<Vector2> GetShots() {
@@ -421,7 +423,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		readonly List<Player> players = new(255);
 		bool active = false;
 		float opacity;
-		public static readonly List<DrawData> drawDatas = [];
+		public static List<DrawData> oldDrawDatas = [];
+		public static List<DrawData> drawDatas = [];
 		static readonly BlendState realAlphaSourceBlend = new() {
 				ColorSourceBlend = Blend.One,
 				AlphaSourceBlend = Blend.One,
@@ -441,6 +444,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.Restart(state);
 					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+					for (int i = 0; i < oldDrawDatas.Count; i++) {
+						oldDrawDatas[i].Draw(spriteBatch);
+					}
 					for (int i = 0; i < drawDatas.Count; i++) {
 						drawDatas[i].Draw(spriteBatch);
 					}
@@ -449,9 +455,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.UseOldRenderTargets(oldRenderTargets);
 					spriteBatch.Begin(state);
 				}
-				drawDatas.Clear();
+				OriginExtensions.SwapClear(ref drawDatas, ref oldDrawDatas);
 			}
-
 			Origins.shaderOroboros.Capture(spriteBatch);
 			spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
@@ -490,7 +495,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Main.CurrentDrawnEntity = null;
 				Main.CurrentDrawnEntityShader = 0;
 			}
-
 			DrawCachedProjectiles(DrawCacheProjsBehindProjectiles);
 			DrawCachedProjectiles(DrawCacheProjsBehindNPCs);
 			foreach (Projectile proj in Main.ActiveProjectiles) {

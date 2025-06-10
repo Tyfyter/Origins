@@ -98,6 +98,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 3;
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
+			ProjectileID.Sets.NoLiquidDistortion[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -110,7 +111,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			base.AI();
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
 		public override bool PreDraw(ref Color lightColor) {
@@ -392,4 +392,45 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
+	public abstract class Shimmer_Construct_Health_Chunk : ModNPC {
+		public override void SetStaticDefaults() {
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+		}
+		public override void SetDefaults() {
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
+			NPC.width = 56;
+			NPC.height = 56;
+			NPC.lifeMax = 800;
+			NPC.damage = 0;// also responsible for making it not scale with difficulty
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+		}
+		public override void AI() {
+			if (Main.npc.GetIfInRange((int)NPC.ai[0]) is not NPC owner) {
+				NPC.active = false;
+				return;
+			}
+			float distance = 16 * 10 - NPC.ai[3];
+			NPC.Center = owner.Center + GeometryUtils.Vec2FromPolar(distance, (MathHelper.TwoPi * NPC.ai[1] / NPC.ai[2]) + (++NPC.localAI[0]) * 0.03f);
+			if (NPC.ai[3] <= 0) {
+				NPC.velocity *= 0.99f;
+				NPC.position -= NPC.velocity * 0.5f;
+			} else {
+				NPC.ai[3] += NPC.velocity.Length() * 1.5f + 1;
+				if (distance < 0) {
+					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 2 });
+					NPC.active = false;
+				}
+			}
+		}
+		public override bool CheckDead() {
+			NPC.ai[3] += 1;
+			NPC.life = 1;
+			NPC.dontTakeDamage = true;
+			return false;
+		}
+	}
+	public class Shimmer_Chunk1 : Shimmer_Construct_Health_Chunk { }
+	public class Shimmer_Chunk2 : Shimmer_Construct_Health_Chunk { }
+	public class Shimmer_Chunk3 : Shimmer_Construct_Health_Chunk { }
 }
