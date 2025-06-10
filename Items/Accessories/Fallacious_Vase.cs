@@ -23,6 +23,7 @@ namespace Origins.Items.Accessories {
 			originPlayer.dashVase = true;
 			originPlayer.dashVaseVisual = !hideVisual;
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().dashVaseDye = dye;
 
 		private static void On_WorldGen_SpawnThingsFromPot(On_WorldGen.orig_SpawnThingsFromPot orig, int i, int j, int x2, int y2, int style) {
 			if (Player.GetClosestRollLuck(i, j, 500) == 0f) {

@@ -781,6 +781,7 @@ namespace Origins {
 			wishingGlassOffset *= wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0.7f : 0.85f;
 			Wishing_Glass_Layer.UpdateAnimation(ref wishingGlassAnimation, wishingGlassCooldown);
 			wishingGlassVisible = false;
+			wishingGlassDye = 0;
 			shimmerShield = false;
 			lotteryTicketItem = null;
 
