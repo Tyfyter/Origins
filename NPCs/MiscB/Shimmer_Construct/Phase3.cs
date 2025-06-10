@@ -537,7 +537,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				orig(self);
 				Array.Clear(shimmeryNormalProjs);
 				if (active) {
-					void PluckProjectiles(List<int> source, List<int> bucket) {
+					static void PluckProjectiles(List<int> source, List<int> bucket) {
 						bucket.Clear();
 						for (int i = source.Count - 1; i >= 0; i--) {
 							Projectile projectile = Main.projectile[source[i]];

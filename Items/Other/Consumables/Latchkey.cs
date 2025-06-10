@@ -72,6 +72,7 @@ namespace Origins.Items.Other.Consumables {
 			owner.velocity = Vector2.UnitY * -0.01f;
 			ref ExtraJumpState jumpState = ref owner.GetJumpState<Latchkey_Jump_Refresh>();
 			if (jumpState.Available) {
+				owner.rocketTime = owner.rocketTimeMax;
 				owner.RefreshExtraJumps();
 				jumpState.Available = false;
 			}
