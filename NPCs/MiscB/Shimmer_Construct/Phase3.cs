@@ -510,8 +510,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			spriteBatch.Begin(state);
 			DrawCachedProjectiles(DrawCacheProjsOverPlayers);
 			spriteBatch.End();
+			/* TODO: see if dust-heavy weapons look weird without this
 			PegasusLib.Reflection.DelegateMethods._target.SetValue(MainReflection.DrawDust, Main.instance);
-			MainReflection.DrawDust();
+			MainReflection.DrawDust();*/
 			spriteBatch.Begin(state);
 		}
 		public override void Update(GameTime gameTime) { }
