@@ -30,7 +30,7 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.statDefense += 8;
-            player.moveSpeed *= 0.9f;
+            player.OriginPlayer().moveSpeedMult *= 0.9f;
             player.jumpSpeedBoost -= 1.8f;
 		}
     }

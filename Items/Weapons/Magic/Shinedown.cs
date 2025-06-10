@@ -92,6 +92,7 @@ namespace Origins.Items.Weapons.Magic {
 			base.SetDefaults();
 			Projectile.width = 0;
 			Projectile.height = 0;
+			Projectile.timeLeft = 5;
 			Projectile.tileCollide = false;
 			Projectile.ContinuouslyUpdateDamageStats = true;
 		}
@@ -140,6 +141,7 @@ namespace Origins.Items.Weapons.Magic {
 				return;
 			}
 			if (Projectile.owner == Main.myPlayer) player.ChangeDir((Main.MouseWorld.X > player.Center.X).ToDirectionInt());
+			Projectile.timeLeft = 2;
 			player.SetDummyItemTime(2);
 			aims ??= new Aim[Main.maxNPCs];
 			decayingAims ??= new Aim[20];

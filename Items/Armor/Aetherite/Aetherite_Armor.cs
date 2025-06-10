@@ -14,6 +14,7 @@ namespace Origins.Items.Armor.Aetherite {
 	public class Aetherite_Wreath : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		//private AutoLoadingAsset<Texture2D> cords = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Cords";
 		public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
