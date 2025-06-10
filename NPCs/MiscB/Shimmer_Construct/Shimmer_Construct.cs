@@ -12,7 +12,6 @@ using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
 using PegasusLib;
-using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -22,7 +21,6 @@ using System.Linq;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
@@ -37,7 +35,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
 	public class Shimmer_Construct : ModNPC {
 		protected readonly static List<AIState> aiStates = [];
-		private AutoLoadingAsset<Texture2D> phase2 = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2";
 		public readonly int[] previousStates = new int[6];
 		public bool IsInPhase2 => isInPhase2;// NPC.life * 2 < NPC.lifeMax;
 		public bool IsInPhase3 => isInPhase3;// Main.expertMode && NPC.life * 10 <= NPC.lifeMax;

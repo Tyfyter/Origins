@@ -617,7 +617,7 @@ namespace Origins {
 			#endregion
 		}
 		public void TriggerSetBonus(bool fromNet = false) {
-			if (setAbilityCooldown > 0 && !Player.DeadOrGhost) return;
+			if (setAbilityCooldown > 0 || Player.DeadOrGhost) return;
 			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
 
 			}
