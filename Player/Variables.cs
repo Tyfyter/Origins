@@ -710,6 +710,8 @@ namespace Origins {
 			dashHitDebuffs.Clear();
 			dashVase = false;
 			dashVaseDye = 0;
+			abyssalAnchorDye = 0;
+			bindingBookDye = 0;
 			goldenLotus = false;
 
 			trapCharm = false;

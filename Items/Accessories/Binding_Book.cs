@@ -36,16 +36,6 @@ namespace Origins.Items.Accessories {
 		public override void UpdateVanity(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.bindingBookVisual = true;
-			for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-				if (player.armor[i] == Item) {
-					originPlayer.bindingBookDye = player.dye[i].dye;
-					break;
-				}
-				if (player.armor[i + 10] == Item) {
-					originPlayer.bindingBookDye = player.dye[i].dye;
-					break;
-				}
-			}
 			Physics.Chain[] chains = originPlayer.bindingBookChains;
 			for (int i = 0; i < chains.Length; i++) {
 				Physics.Chain chain = chains[i];
@@ -101,5 +91,6 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().bindingBookDye = dye;
 	}
 }
