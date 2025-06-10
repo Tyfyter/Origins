@@ -67,7 +67,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			normalDropRule = null;
 		}
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[Type] = 6;
+			Main.npcFrameCount[Type] = 7;
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.EyeofCthulhu] = Type;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
@@ -186,11 +186,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public override void FindFrame(int frameHeight) {
-			if (IsInPhase2 || NPC.IsABestiaryIconDummy) NPC.frame = new Rectangle(0, 0, 134, 134);
-			else {
-				float stage = Math.Min((2 - NPC.GetLifePercent() * 2) * Main.npcFrameCount[Type], 5);
-				NPC.frame.Y = frameHeight * (int)stage;
-			}
+			float stage = Math.Min((1 - NPC.GetLifePercent()) * 2, 1) * (Main.npcFrameCount[Type] - 1);
+			NPC.frame.Y = frameHeight * (int)stage;
 		}
 		Chunk[] chunks = [];
 		struct Chunk(int type, Vector2 position) {
@@ -280,7 +277,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
 			Main.EntitySpriteDraw(
-				IsInPhase2 || NPC.IsABestiaryIconDummy ? phase2 : TextureAssets.Npc[Type].Value,
+				TextureAssets.Npc[Type].Value,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
