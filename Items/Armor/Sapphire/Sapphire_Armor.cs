@@ -24,6 +24,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void UpdateEquip(Player player) {
 			player.statManaMax2 -= 40;
+			player.manaRegenBonus += 100;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Sapphire_Vest>() && legs.type == ModContent.ItemType<Sapphire_Tights>();
@@ -60,7 +61,7 @@ namespace Origins.Items.Armor.Sapphire {
 	public class Sapphire_Vest : ModItem, INoSeperateWikiPage {
 		
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 10;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
@@ -80,12 +81,13 @@ namespace Origins.Items.Armor.Sapphire {
 	public class Sapphire_Tights : ModItem, INoSeperateWikiPage {
 		
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 8;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.1f;
+			player.manaCost *= 0.92f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
