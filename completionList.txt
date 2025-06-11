@@ -34,7 +34,7 @@ X: No progress
 ♠: Pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
 ◘: Pending review before continuation
 ○: Implemented with temp stats/missing recipe/etc.
-†: Needs testing (unicode hex code 2020)
+†: Needs balance/testing (unicode hex code 2020)
 ᗢ: Implemented, but will need to be revisited in later update
 ⚐: Needs banner (unicode hex code 2690)
 ⛥: Needs design discussion (unicode hex code 26E5)
@@ -738,7 +738,6 @@ MELEE WEAPONS:
 
 (X) Chiton Kursarigama
 (X) Executioner
-(X) Gospel
 (X) Laser Tag Sabre
 (^) Personal Laser Blade*
 (X) Pile Bunker
@@ -749,7 +748,6 @@ MELEE WEAPONS:
 (^) True Waning Crescent*
 (^) Tyrfing
 
-(X) Celestial Point
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
@@ -808,21 +806,18 @@ RANGED WEAPONS:
 (^) HNO-3 "Viper"*
 (^) Incision*
 (X) Lag Spike
-(X) Left Klik°
 (^) Laser Line Bow
 (^) Mythril Harpoon Gun*
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun*
 (^) Palladium Harpoon Gun*
 (X) Ritualmaker
-(X) Riveiar
 (^) Spray 'N Pray°
 (^) Tiny Sniper
 (^) Titanium Harpoon Gun*
-(X) Tripod Jawbow
 
 (^) Astoxo
-(^) Chambersite Minigun
+(†) Chambersite Minigun !!!
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
@@ -830,13 +825,9 @@ RANGED WEAPONS:
 (^) Laser Tag Gun
 (X) Laser Tag Shotgun
 (X) Shroomshot
-(X) Skewr
 (^) Tolruk
 
-(X) Fulcrum
-(X) Journey's End
 (X) L.W.M.U.G.°
-(X) Pinpoint
 (X) Synergy
 ---
 
@@ -861,14 +852,12 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Brine Haze
-(X) Broadcast
 (^) Chemical Laser
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
-(X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
 (^) Shinedown
@@ -880,11 +869,8 @@ MAGIC WEAPONS:
 
 (^) Amber of Embers
 (^) Breach
-(X) Divine Lite
-(X) Ghost Trap
 (^) Hævateinn
 (^) Haunted Vase
-(X) Lunarfire
 (^) Missing File*
 (♫) Phantom Fury
 (^) Pike of Deepneus
@@ -896,7 +882,6 @@ MAGIC WEAPONS:
 (^) The Calibrator
 (X) True Seam Beam
 
-(X) Ion Minigun
 (X) Last Nerve
 (^) Rigged Cubix
 ---
@@ -904,7 +889,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#2, ^2) Aether Opal !!! (shotgun chunks to use gores)
+(#2, †, ^2) Aether Opal !!! (shotgun chunks to use gores)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact

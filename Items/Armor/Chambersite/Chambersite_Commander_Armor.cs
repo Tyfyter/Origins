@@ -21,11 +21,14 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Chambersite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chambersite_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		//private AutoLoadingAsset<Texture2D> tail = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Tail";
+		public static int HeadSlot { get; private set; }
 		public string[] Categories => [
 			"ArmorSet",
 			"GenericBoostGear"
 		];
+		public override void SetStaticDefaults() {
+			HeadSlot = Item.headSlot;
+		}
 		public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 2);
