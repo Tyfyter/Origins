@@ -32,8 +32,9 @@ namespace Origins.Items.Armor.Chambersite {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Generic) += 0.10f;
-			player.OriginPlayer().projectileSpeedBoost += 0.1f;
+			player.GetDamage(DamageClass.Generic) += 0.12f;
+			player.OriginPlayer().projectileSpeedBoost += 0.12f;
+			player.maxMinions += 1;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Chambersite_Breastplate>() && legs.type == ModContent.ItemType<Chambersite_Greaves>();
@@ -43,6 +44,7 @@ namespace Origins.Items.Armor.Chambersite {
 			player.OriginPlayer().chambersiteCommandoSet = true;
 			player.OriginPlayer().setActiveAbility = SetActiveAbility.chambersite_armor;
 			player.GetKnockback(DamageClass.Generic) += 0.15f;
+			player.maxMinions += 1;
 			player.AddBuff(ModContent.BuffType<Voidsight_Buff>(), 60);
 		}
 		public override void AddRecipes() {
@@ -67,8 +69,10 @@ namespace Origins.Items.Armor.Chambersite {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClass.Generic) += 0.10f;
+			player.GetCritChance(DamageClass.Generic) += 0.12f;
 			player.endurance += (1 - player.endurance) * 0.08f;
+			player.statManaMax2 += 60;
+			player.manaCost *= 0.9f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
@@ -88,7 +92,7 @@ namespace Origins.Items.Armor.Chambersite {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.1f;
+			player.moveSpeed += 0.2f;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f;
 		}
 		public override void AddRecipes() {

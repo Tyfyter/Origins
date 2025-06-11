@@ -6181,19 +6181,29 @@ Chambersite_Breastplate: {
 	DisplayName: Chambersite Breastplate
 	Tooltip:
 		'''
-		+10% critical strike chance
+		+12% critical strike chance
 		+8% damage reduction
+		+60 max mana
+		10% reduced mana cost
 		'''
 }
 
 Chambersite_Greaves: {
 	DisplayName: Chambersite Greaves
-	Tooltip: +10% faster weapon use time and movement speed
+	Tooltip:
+		'''
+		+10% faster weapon use time
+		+20% movement speed
+		'''
 }
 
 Chambersite_Helmet: {
 	DisplayName: Chambersite Helmet
-	Tooltip: +10% weapon damage and velocity
+	Tooltip:
+		'''
+		+12% weapon damage and velocity
+		Increases your max number of minions by 1
+		'''
 }
 
 Shimmer_Construct_Bag: {

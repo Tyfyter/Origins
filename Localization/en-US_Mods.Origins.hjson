@@ -2664,6 +2664,8 @@ SetBonuses: {
 	ChambersiteCommander:
 		'''
 		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
+		Increases your max number of minions by 1
+		+15% knockback
 		Allows you to temporarily summon a Chambersite Sentinel to fight. 
 		5 second cooldown
 		'''
