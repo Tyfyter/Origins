@@ -1379,7 +1379,8 @@ Riven2_Pants: {
 
 Sapphire_Hood: {
 	// DisplayName: Sapphire Mediator Hood
-	/* Tooltip:'''
+	/* Tooltip:
+		'''
 		-40 mana
 		Increased mana regeneration
 		''' */
@@ -1387,7 +1388,8 @@ Sapphire_Hood: {
 
 Sapphire_Tights: {
 	// DisplayName: Sapphire Mediator Tights
-	/* Tooltip:'''
+	/* Tooltip:
+		'''
 		+10% movement speed
 		8% reduced mana cost
 		''' */
