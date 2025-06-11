@@ -12,10 +12,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Aetherite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Aetherite_Wreath : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		//private AutoLoadingAsset<Texture2D> cords = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Cords";
+		public static int HeadSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
-			Origins.AddHelmetGlowmask(this);
+			HeadSlot = Item.headSlot;
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
