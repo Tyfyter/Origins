@@ -16,6 +16,8 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
+			Item.useAnimation = 45;
+			Item.useTime = 45;
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
