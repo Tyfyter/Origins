@@ -60,6 +60,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			};
+			On_NPC.Transform += (orig, self, newType) => {
+				orig(self, newType);
+				if (self.ModNPC is Shimmer_Construct && Main.netMode != NetmodeID.MultiplayerClient) {
+					self.ModNPC.OnSpawn(null);
+				}
+			};
 		}
 		public override void Unload() {
 			normalDropRule = null;
@@ -88,6 +94,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			NPC.knockBackResist = 0;
 			Array.Fill(previousStates, NPC.aiAction);
+		}
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
+			// I think this is the "normal" amount:
+			//NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment)
 		}
 		public override void OnSpawn(IEntitySource source) {
 			int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);
@@ -183,7 +193,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		int deathAnimationTime = 0;
 		bool isInPhase2 = false;
 		bool isInPhase3 = false;
-		static int DeathAnimationTime => Main.expertMode ? 521 : 460;
+		static int DeathAnimationTime => Main.expertMode ? 521 : 440;
 		public override bool CheckDead() {
 			if (deathAnimationTime < DeathAnimationTime) {
 				NPC.life = 1;
@@ -224,11 +234,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				bool collision = true;
 				if (construct.deathAnimationTime < 240) {
 					velocity.Y += 0.4f;
-				} else if (construct.deathAnimationTime < 460) {
+				} else if (construct.deathAnimationTime < 440) {
 					float prog = float.Pow((construct.deathAnimationTime - 240) / 220f, 2);
 					offset = Main.rand.NextVector2Circular(1, 1) * Main.rand.NextFloat(0.5f, 1f) * 12 * prog - Vector2.UnitY * prog * 32;
 					velocity *= 0.9f;
-				} else if (construct.deathAnimationTime == 460) {
+				} else if (construct.deathAnimationTime == 440) {
 					velocity = new(0, 32 + (ID % 10) * 8);
 					offset = VisualPostion - construct.NPC.Center;
 				} else {
