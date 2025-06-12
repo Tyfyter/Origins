@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoMod.Cil;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace Origins.Gores {
 		public void Load(Mod mod) {
 			IL_Main.DrawDust += IL_Main_DrawDust;
 			On_Main.DoDraw_Tiles_Solid += On_Main_DoDraw_Tiles_Solid;
+			On_Main.DrawDust += (orig, self) => {
+				if (!SC_Phase_Three_Overlay.HideAllDust) orig(self);
+			};
 		}
 
 		private void On_Main_DoDraw_Tiles_Solid(On_Main.orig_DoDraw_Tiles_Solid orig, Main self) {

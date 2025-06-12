@@ -514,9 +514,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			spriteBatch.Begin(state);
 			DrawCachedProjectiles(DrawCacheProjsOverPlayers);
 			spriteBatch.End();
-			/* TODO: see if dust-heavy weapons look weird without this
-			PegasusLib.Reflection.DelegateMethods._target.SetValue(MainReflection.DrawDust, Main.instance);
-			MainReflection.DrawDust();*/
+			try {
+				drawingDust = true;
+				PegasusLib.Reflection.DelegateMethods._target.SetValue(MainReflection.DrawDust, Main.instance);
+				MainReflection.DrawDust();
+			} finally {
+				drawingDust = false;
+			}
 			spriteBatch.Begin(state);
 		}
 		public override void Update(GameTime gameTime) { }
@@ -589,8 +593,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} catch (Exception ex) {
 				if (Origins.LogLoadingILError($"{nameof(SC_Phase_Three_Overlay)}_DontNormalDrawShimmeryProjectiles", ex)) throw;
 			}
+			instance = this;
 		}
-
+		bool drawingDust = false;
+		public static bool HideAllDust => instance.active && !instance.drawingDust;
+		static SC_Phase_Three_Overlay instance;
 		public void Unload() {
 			if (renderTarget is not null) {
 				Main.QueueMainThreadAction(renderTarget.Dispose);
