@@ -174,8 +174,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			int extraSlotsUsed = player.ownedProjectileCounts[Shimmer_Guardian_Counter.ID] - 1;
 			int GetModifiedDamage(int baseDamage) {
-				return (int)(baseDamage * (1 + 0.75f * extraSlotsUsed));
-			}
+				if (Main.hardMode)
+					return (int)(baseDamage * (1 + 0.75f * extraSlotsUsed));
+				else
+					return (int)(baseDamage * (1 + 0.5f * extraSlotsUsed));
+		}
 			Projectile.damage = GetModifiedDamage(Projectile.damage);
 			#endregion
 
