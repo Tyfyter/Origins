@@ -86,6 +86,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.height = 110;
 			NPC.lifeMax = 6600;
 			NPC.damage = 27;
+			NPC.defense = 14;
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;

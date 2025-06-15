@@ -437,6 +437,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Main.OnResolutionChanged += Resize;
 				return;
 			}
+			if (spriteBatch is null) return;
 			SpriteBatchState state = spriteBatch.GetState();
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
