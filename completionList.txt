@@ -1294,8 +1294,8 @@ TILES:
 (々) Miscreant Trophy*
 (々) Quantux Relic*
 (々) Quantux Trophy*
-(@, ^3) Shimmer Construct Relic* !!!
-(@, ^3) Shimmer Construct Trophy* !!!
+(#2, ^2) Shimmer Construct Relic* !!! (apply sprite)
+(#2, ^2) Shimmer Construct Trophy* !!! (apply sprite)
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
@@ -1305,7 +1305,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(@, ^3) Aetherite Bar !!!
+(^) Aetherite Bar
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*

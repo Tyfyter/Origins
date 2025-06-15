@@ -59,7 +59,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Aetherite_Bar : MaterialItem {
-		public override string Texture => typeof(Bleeding_Obsidian_Shard).GetDefaultTMLName();
+		public override int Rare => ItemRarityID.Orange;
 		public override int ResearchUnlockCount => 25;
 		public override int Value => Item.sellPrice(silver: 1);
 		public override bool Hardmode => false;
