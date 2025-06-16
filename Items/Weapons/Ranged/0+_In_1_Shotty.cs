@@ -12,6 +12,8 @@ namespace Origins.Items.Weapons.Ranged {
         public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
+			Item.useTime = 50;
+			Item.useAnimation = 50;
 			Item.value = Item.sellPrice(gold: 4);
 		}
 		public override void AddRecipes() {
@@ -34,6 +36,8 @@ namespace Origins.Items.Weapons.Ranged {
 		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
+			Item.useTime = 60;
+			Item.useAnimation = 60;
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void AddRecipes() {
