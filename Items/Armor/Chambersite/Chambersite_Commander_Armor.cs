@@ -112,6 +112,7 @@ namespace Origins.Items.Armor.Chambersite {
 		public override string Texture => "Origins/NPCs/MiscB/Chambersite_Sentinel";
 		public static int ID { get; private set; }
 		public static int MaxActiveAims => 5;
+		public static float SpeedMult => 1;
 		public override void SetStaticDefaults() {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
@@ -308,7 +309,7 @@ namespace Origins.Items.Armor.Chambersite {
 				packet.Send();
 			}
 
-			Projectile.ai[1] = Shinedown.GetSpeedMultiplier(player, player.HeldItem);
+			Projectile.ai[1] = SpeedMult;
 			Projectile.ai[0] = Projectile.ai[1] * 20;
 			Projectile.netUpdate = true;
 			return true;
