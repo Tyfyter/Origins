@@ -372,7 +372,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(#2, †, ^2) Chambersite Armor° !!! (needs balance)
+(^) Chambersite Armor°
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
