@@ -112,7 +112,7 @@ namespace Origins.Items.Armor.Chambersite {
 		public override string Texture => "Origins/NPCs/MiscB/Chambersite_Sentinel";
 		public static int ID { get; private set; }
 		public static int MaxActiveAims => 5;
-		public static float SpeedMult => 1;
+		public static float SpeedMult => 2.5f;
 		public override void SetStaticDefaults() {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
