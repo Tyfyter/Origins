@@ -17,6 +17,8 @@ namespace Origins.NPCs.MiscE {
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public static float KnockbackMultiplier => 1.5f;
+		public static float Friction => 0.97f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
