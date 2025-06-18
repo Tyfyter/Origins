@@ -130,6 +130,12 @@ namespace Origins.Buffs {
 
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Shimmer_Guardian : ModProjectile {
+		public static int GetModifiedDamage(int baseDamage, int extraSlotsUsed) {
+			if (Main.hardMode)
+				return (int)(baseDamage * (1 + 0.75f * extraSlotsUsed));
+			else
+				return (int)(baseDamage * (1 + 0.5f * extraSlotsUsed));
+		}
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
@@ -173,13 +179,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.timeLeft = 2;
 			}
 			int extraSlotsUsed = player.ownedProjectileCounts[Shimmer_Guardian_Counter.ID] - 1;
-			int GetModifiedDamage(int baseDamage) {
-				if (Main.hardMode)
-					return (int)(baseDamage * (1 + 0.75f * extraSlotsUsed));
-				else
-					return (int)(baseDamage * (1 + 0.5f * extraSlotsUsed));
-		}
-			Projectile.damage = GetModifiedDamage(Projectile.damage);
+			Projectile.damage = GetModifiedDamage(Projectile.damage, extraSlotsUsed);
 			#endregion
 
 			#region General behavior
@@ -251,7 +251,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			float projDistanceFromTarget = direction.Length();
 			direction /= projDistanceFromTarget;
 
-			int originalDamage = GetModifiedDamage(Projectile.originalDamage);
+			int originalDamage = GetModifiedDamage(Projectile.originalDamage, extraSlotsUsed);
 			if (foundTarget) {
 				if (++Projectile.ai[0] >= attack_time) {
 					int mode = projDistanceFromTarget > 16 * 10 ? 0 : 1;
@@ -437,6 +437,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 					Vector2 diffToOwner = targetPos - Projectile.Center;
 					float dist = diffToOwner.Length();
+					if (dist > 4000) {
+						Projectile.Kill();
+						return;
+					}
 					bool passed = dist < 16 * 4 && (dist <= 0 || Vector2.Dot(diffToOwner / dist, Projectile.ai[1].ToRotationVector2()) < 0);
 					if (passed) {
 						Projectile.ai[2] = owner.ai[1];
