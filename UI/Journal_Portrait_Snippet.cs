@@ -15,6 +15,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.Utilities;
 using Origins.Graphics;
 using Terraria.GameContent;
+using Terraria.ModLoader;
 
 namespace Origins.UI {
 	public class Journal_Portrait_Handler : ITagHandler {
@@ -45,7 +46,10 @@ namespace Origins.UI {
 					IsPortrait = true,
 					IsHovered = false
 				};
-				//entry.Icon.Update(_collectionInfo, dimensions, settings);
+				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(id, out NPCID.Sets.NPCBestiaryDrawModifiers value) && value.CustomTexturePath != null) {
+					ModContent.Request<Texture2D>(value.CustomTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad);
+				}
+				entry.Icon.Update(_collectionInfo, dimensions, settings);
 				bool wasSpritebatchRunning = Main.spriteBatch.IsRunning();
 				SpriteBatchState state = Main.spriteBatch.GetState();
 				if (wasSpritebatchRunning) {
