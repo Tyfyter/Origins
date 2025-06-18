@@ -437,6 +437,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 					Vector2 diffToOwner = targetPos - Projectile.Center;
 					float dist = diffToOwner.Length();
+					if (dist > 4000) {
+						Projectile.Kill();
+						return;
+					}
 					bool passed = dist < 16 * 4 && (dist <= 0 || Vector2.Dot(diffToOwner / dist, Projectile.ai[1].ToRotationVector2()) < 0);
 					if (passed) {
 						Projectile.ai[2] = owner.ai[1];
