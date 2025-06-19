@@ -77,6 +77,10 @@ namespace Origins.Items.Weapons.Melee {
 				return;
 			}
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || player.CCed) {
+				Projectile.active = false;
+				return;
+			}
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			Projectile.rotation = MathHelper.Lerp(-2f, 1.3f, swingFactor) * player.direction;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();

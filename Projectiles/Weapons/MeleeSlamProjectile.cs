@@ -47,7 +47,7 @@ namespace Origins.Projectiles.Weapons {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			if (player.dead) {
+			if (player.dead || player.CCed) {
 				Projectile.active = false;
 				return;
 			}
