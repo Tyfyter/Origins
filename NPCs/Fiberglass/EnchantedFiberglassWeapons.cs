@@ -68,10 +68,12 @@ namespace Origins.NPCs.Fiberglass {
 			if (NPC.spriteDirection == 1) NPC.rotation += MathHelper.Pi;
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			if (damageDone <= 1) return;
 			NPC.ai[0] = -15f;
 			teleport();
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			if (damageDone <= 1) return;
 			NPC.ai[0] = 0f;
 			teleport();
 		}
