@@ -166,6 +166,7 @@ OTHER:
 
 ENEMY NPCS:
 |---
+(X) Amoebayena
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
@@ -191,8 +192,10 @@ ENEMY NPCS:
 (^) Defiled Broadcaster
 (^) Defiled Cyclops*
 (^) Defiled Digger*
+(X) Defiled Glitchbeest
 (^) Defiled Krusher*
 (^) Defiled Mite*
+(X) Defiled Ostrich
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
@@ -218,6 +221,7 @@ ENEMY NPCS:
 (X) Repairboy
 (^) Riven Penguin*
 (^) Riven Protoform*
+(X) Rivenpotamus
 (X) Scanner Scout
 (^) Shattered Goldfish*
 (^) Shimmer Drone
@@ -244,6 +248,7 @@ ENEMY NPCS:
 (^) Defiled Pigron*
 (X) Defiled Shooter
 (^) Defiled Squid*
+(X) Defiled Surveyor
 (^) Defiled Tripod*
 (^) Defiled Watcher*
 (X) Depth Crawler
@@ -268,6 +273,7 @@ ENEMY NPCS:
 (^) Shattered Mummy*
 (^) Shotgunfish
 (X) Tendon Terror
+(X) Terrogator
 (^) Torn Ghoul*
 (^) Trijaw Shark*
 (X) VV-13
@@ -1233,6 +1239,7 @@ TILES:
 (^) Defiled Relay
 (^) Defiled Pot
 (X) Eden Tree°
+(X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
 (X) Fuzzvine !!!
@@ -1244,6 +1251,7 @@ TILES:
 (X) Marrowick Flange !!!
 (X) Moonshine°
 (^) Ocotillo
+(X) Petrified Baobab Tree*
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
@@ -1281,7 +1289,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(@, #, $2) Otherworldly Music Box (Defiled Wastelands)
+(@, #, $2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
