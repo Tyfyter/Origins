@@ -39,7 +39,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.knockBackResist = 1.5f;
+			NPC.knockBackResist = KnockbackMultiplier;
 			NPC.value = 75;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
@@ -63,8 +63,8 @@ namespace Origins.NPCs.MiscE {
 		public override void AI() {
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
-			NPC.knockBackResist = 1.5f;
-			NPC.velocity *= 0.97f;
+			NPC.knockBackResist = KnockbackMultiplier;
+			NPC.velocity *= Friction;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
