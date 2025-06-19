@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -32,6 +31,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item71.WithPitch(-1.3f);
+			Item.autoReuse = false;
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {

@@ -22,6 +22,7 @@ using Origins.Projectiles;
 using MagicStorage.CrossMod;
 using Terraria.GameContent;
 using Terraria.Graphics;
+using Terraria.Audio;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -68,6 +69,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 targetPos = npc.GetTargetData().Center;
 			npc.velocity += npc.DirectionTo(targetPos - Vector2.UnitY * 16 * 15) * 0.5f;
 			for (int i = 0; i < 2; i++) {
+				SoundEngine.PlaySound(SoundID.Item88);
+				SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.75f));
 				if (positions.TryPop(out Vector2 position)) {
 					npc.SpawnProjectile(null,
 						position,
@@ -214,9 +217,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int ShotDamage => (int) (29 + 8 * DifficultyMult);
 		public static float ShotCount => 3 + DifficultyMult;
 		public static float Spread => 0.5f;
-		public static float ShotSpeed => 12;
+		public static float ShotSpeed => 25;
 		public static float MinShotSpeedFactor => 0.7f;
-		public static float TurnRate => 0.01f;
+		public static float TurnRate => 0.03f;
 		public static int Startup => 60;
 		public static int EndLag => 30;
 		public static float IndicatorAlpha(int time) => (time <= 5 && time >= 2) ? 0.08f : 0.02f;
@@ -237,6 +240,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.ai[2] = (npc.GetTargetData().Center - npc.Center).ToRotation();
+			SoundEngine.PlaySound(SoundID.Item121.WithPitchRange(0.15f, 0.4f));
 			npc.SpawnProjectile(null,
 				npc.Center,
 				Vector2.Zero,

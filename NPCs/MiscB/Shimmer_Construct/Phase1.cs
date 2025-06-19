@@ -13,6 +13,7 @@ using Terraria.Graphics.Shaders;
 using Origins.Items.Other.Dyes;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Liquid;
+using Terraria.Audio;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
@@ -76,6 +77,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
+				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f));
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					npc.Center,
@@ -172,6 +174,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		internal static Stack<int> cachedClouds = [];
 		internal static Stack<int> cachedRain = [];
 		public override void DoAIState(Shimmer_Construct boss) {
+			SoundEngine.PlaySound(SoundID.Item28);
 			NPC npc = boss.NPC;
 			Vector2 targetPos = npc.GetTargetData().Center;
 			float xDist = CloudXDistance;
@@ -233,6 +236,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (TargetPos != default) {
 					Vector2 combined = Projectile.velocity * (TargetPos - Projectile.Center);
 					if (Projectile.owner == Main.myPlayer && combined.X <= 0 && combined.Y <= 0) {
+						SoundEngine.PlaySound(SoundID.Item20);
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							TargetPos,
@@ -413,8 +417,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			float distance = 16 * 10 - NPC.ai[3];
 			NPC.Center = owner.Center + GeometryUtils.Vec2FromPolar(distance, (MathHelper.TwoPi * NPC.ai[1] / NPC.ai[2]) + (++NPC.localAI[0]) * 0.03f);
 			if (NPC.ai[3] <= 0) {
+				SoundEngine.PlaySound(SoundID.Item20);
 				NPC.velocity *= 0.99f;
-				NPC.position -= NPC.velocity * 0.5f;
+				NPC.position -= NPC.velocity * 18f;
 			} else {
 				NPC.ai[3] += NPC.velocity.Length() * 1.5f + 1;
 				if (distance < 0) {

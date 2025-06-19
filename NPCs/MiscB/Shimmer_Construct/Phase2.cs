@@ -8,6 +8,7 @@ using PegasusLib;
 using Terraria.ModLoader;
 using Origins.Items.Weapons.Magic;
 using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -72,6 +73,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			if (++npc.ai[0] >= npc.ai[1]) {
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
 				npc.ai[0] -= npc.ai[1];
 				npc.SpawnProjectile(null,
 					npc.Center,
@@ -172,6 +175,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (++npc.ai[0] >= npc.ai[1]) {
 				npc.ai[0] -= npc.ai[1];
 				if (npc.ai[2] > 0 && Main.netMode != NetmodeID.MultiplayerClient) {
+					SoundEngine.PlaySound(SoundID.Item60.WithPitch(-2f));
+					SoundEngine.PlaySound(SoundID.Item84.WithVolume(0.5f).WithPitchRange(0.85f, 1f));
 					NPC.NewNPCDirect(
 						npc.GetSource_FromAI(),
 						npc.Center,

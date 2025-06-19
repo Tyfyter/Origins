@@ -19,8 +19,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.damage = 22;
 			NPC.lifeMax = 45;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.HitSound = SoundID.DD2_CrystalCartImpact.WithPitch(2f);
-			NPC.DeathSound = SoundID.Item101;
+			NPC.HitSound = SoundID.DD2_CrystalCartImpact.WithPitch(2f).WithVolume(0.5f);
+			NPC.DeathSound = SoundID.Item101.WithVolume(0.6f);
 		}
 		public override void OnSpawn(IEntitySource source) => NPC.ai[1] = -2;
 		public override void AI() {
