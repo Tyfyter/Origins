@@ -143,6 +143,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						Projectile.oldRot[i] = rotation;
 					}
 				}
+				if (Projectile.timeLeft < 15) {
+					Projectile.Opacity = Projectile.timeLeft / 15f;
+				} else if (!NPC.npcsFoundForCheckActive[ModContent.NPCType<Shimmer_Construct>()]) {
+					Projectile.timeLeft = 15;
+				}
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				int direction = Math.Sign(target.Center.X - Projectile.Center.X);

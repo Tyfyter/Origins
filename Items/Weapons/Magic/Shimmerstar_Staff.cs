@@ -243,6 +243,7 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public static void DrawShimmerstar(Projectile projectile) {
+			float opacity = projectile.Opacity;
 			if (projectile.oldPos.Length > 0 && projectile.oldPos[^1] != projectile.position) {
 				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 				miscShaderData.UseSaturation(-2.8f);
@@ -254,7 +255,7 @@ namespace Origins.Items.Weapons.Magic {
 				Color StripColors(float progressOnStrip) {
 					if (float.IsNaN(progressOnStrip)) return Color.Transparent;
 					Vector2 pos = projectile.oldPos[(int)(progressOnStrip * (projectile.oldPos.Length - 1))];
-					return new(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16));
+					return new Color(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16)) * opacity;
 				}
 				float StripWidth(float progressOnStrip) {
 					float num = 1f;
@@ -274,7 +275,7 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 spinningpoint6 = new Vector2(2f * scale + (float)Math.Cos(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi) * 0.4f, 0f).RotatedBy(rotation + Main.GlobalTimeWrappedHourly * MathHelper.TwoPi);
 			for (float f = 0f; f < 1f; f += 1f / 6f) {
 				Vector2 pos = center + spinningpoint6.RotatedBy(f * MathHelper.TwoPi);
-				Main.EntitySpriteDraw(texture, pos, null, new(LiquidRenderer.GetShimmerBaseColor((pos.X + Main.screenPosition.X) / 16, (pos.Y + Main.screenPosition.Y) / 16) * new Vector4(Vector3.One, 0.5f)), rotation, origin, scale, SpriteEffects.None);
+				Main.EntitySpriteDraw(texture, pos, null, new Color(LiquidRenderer.GetShimmerBaseColor((pos.X + Main.screenPosition.X) / 16, (pos.Y + Main.screenPosition.Y) / 16) * new Vector4(Vector3.One, 0.5f)) * opacity, rotation, origin, scale, SpriteEffects.None);
 			}
 		}
 	}
