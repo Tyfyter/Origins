@@ -163,7 +163,7 @@ namespace Origins.Items {
 			}
 		}
 		public override bool CanUseItem(Item item, Player player) {
-			if (item.mountType != -1 && player.OriginPlayer().weakShimmer) return false;
+			if ((item.mountType != -1 || Main.projHook.GetIfInRange(item.shoot)) && player.OriginPlayer().weakShimmer) return false;
 			return true;
 		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
