@@ -404,7 +404,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.width = 56;
 			NPC.height = 56;
-			NPC.lifeMax = 800;
+			NPC.lifeMax = 1;
 			NPC.damage = 0;// also responsible for making it not scale with difficulty
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -414,14 +414,27 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.active = false;
 				return;
 			}
+			if (NPC.lifeMax == 1) {
+				NPC.lifeMax = (owner.lifeMax / (int)NPC.ai[2]) / 2;
+				NPC.life = NPC.lifeMax;
+			}
 			float distance = 16 * 10 - NPC.ai[3];
 			NPC.Center = owner.Center + GeometryUtils.Vec2FromPolar(distance, (MathHelper.TwoPi * NPC.ai[1] / NPC.ai[2]) + (++NPC.localAI[0]) * 0.03f);
 			if (NPC.ai[3] <= 0) {
-				SoundEngine.PlaySound(SoundID.Item20);
-				NPC.velocity *= 0.99f;
-				NPC.position -= NPC.velocity * 18f;
+				SoundEngine.PlaySound(SoundID.Item20); // ???
+				NPC.localAI[1] *= 0.95f;
+				NPC.localAI[2] *= 0.95f;
+				NPC.localAI[1] += NPC.velocity.X * 0.05f;
+				NPC.localAI[2] += NPC.velocity.Y * 0.05f;
+				NPC.velocity *= 0.95f;
+				NPC.position += new Vector2(NPC.localAI[1], NPC.localAI[2]) * 18f;
 			} else {
-				NPC.ai[3] += NPC.velocity.Length() * 1.5f + 1;
+				if (NPC.localAI[1] != 0 || NPC.localAI[2] != 0) {
+					NPC.velocity += new Vector2(NPC.localAI[1], NPC.localAI[2]);
+					NPC.localAI[1] = 0;
+					NPC.localAI[2] = 0;
+				}
+				NPC.ai[3] += Math.Min(NPC.velocity.Length() * 1.5f + 1, 16);
 				if (distance < 0) {
 					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 2 });
 					NPC.active = false;
