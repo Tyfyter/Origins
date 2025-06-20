@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^2) Shimmer Construct !!! (utilize hit gore sprites, phase 1 feedback)
+(#2, ^2) Shimmer Construct !!! (utilize hit gore sprites, phase 1 feedback, use boss bar)
 (#, ^2) Trenchmaker
 (#2, ^2) World Cracker* !!! (utilize new sprites and possible AI additions?)
 
@@ -1079,14 +1079,14 @@ GENERIC WEAPONS:
 
 TILES:
 |---
-(X) Aetherite Ore !!!
+(#, ^2) Aetherite Ore !!!
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Baryte*
 (^) Batholith°
 (^) Bleeding Obsidian*
 (^) Bomb Trap
-(@4) Brittle Quartz* !!!
+(^) Brittle Quartz*
 (X) Brown Ice
 (^) Chambersite
 (X) Cubekon Altar°
@@ -1094,7 +1094,7 @@ TILES:
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (X) Defiled Regolith
-(@4) Defiled Sand* !!!
+(^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
 (^) Dusklight°
@@ -1106,7 +1106,7 @@ TILES:
 (^) Felnum Ore*
 (^) Fiberglass Block*
 (^) Gray Ice Block*
-(@4) Hardened Defiled Sand* !!!
+(^) Hardened Defiled Sand*
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (^) Limestone
@@ -1115,7 +1115,7 @@ TILES:
 (^) Mildew Block°
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(@4) Quartz Block* !!!
+(^) Quartz Block*
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*

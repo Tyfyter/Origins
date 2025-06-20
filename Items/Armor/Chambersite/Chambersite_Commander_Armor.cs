@@ -96,7 +96,7 @@ namespace Origins.Items.Armor.Chambersite {
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.2f;
-			player.GetAttackSpeed(DamageClass.Generic) += 0.1f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.12f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

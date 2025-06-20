@@ -160,6 +160,7 @@ namespace Origins.Graphics {
 	public class Tangela_Resaturate_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), IUnloadable {
 		static uint lastGameFrameCount;
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (spriteBatch is null) return;
 			if (lastGameFrameCount == Origins.gameFrameCount) return;
 			lastGameFrameCount = Origins.gameFrameCount;
 			if (!Lighting.NotRetro) {
