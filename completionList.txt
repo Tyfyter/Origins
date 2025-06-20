@@ -1119,7 +1119,7 @@ TILES:
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
-(@4, ^3) Sanguinite Ore* !!!
+(^) Sanguinite Ore*
 (X) Scrap Heap
 (^) Silica*
 (^) Silicon Ore*
@@ -1159,7 +1159,7 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(@, ^3) Amoeba Buggy Cage* !!!
+(#2, ^2) Amoeba Buggy Cage* !!! (gib glows)
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1177,7 +1177,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(@, ^3) Cicada 3301 Cage° !!!
+(#2, ^2) Cicada 3301 Cage° !!! (give glow)
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1290,7 +1290,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(@, #, $2) Otherworldly Music Box (Defiled Wastelands) !!!
+(#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
