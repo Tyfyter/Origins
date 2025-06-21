@@ -91,7 +91,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
-			NPC.BossBar = GetInstance<SC_BossBar>();
+			NPC.BossBar = GetInstance<Boss_Bar_SC>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			NPC.knockBackResist = 0;
 			Array.Fill(previousStates, NPC.aiAction);
@@ -675,9 +675,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
 	}
-	public class SC_BossBar : ModBossBar {
+	public class Boss_Bar_SC : ModBossBar {
+		int bossHeadIndex = -1;
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
-			return TextureAssets.NpcHeadBoss[GetModBossHeadSlot(GetInstance<Shimmer_Construct>().BossHeadTexture)];
+			if (bossHeadIndex == -1) return null;
+			return TextureAssets.NpcHeadBoss[bossHeadIndex];
+		}
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			bossHeadIndex = npc.GetBossHeadTextureIndex();
+			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
+			return false;
 		}
 	}
 	class Eye_Shimmer_Collision : GlobalNPC {
