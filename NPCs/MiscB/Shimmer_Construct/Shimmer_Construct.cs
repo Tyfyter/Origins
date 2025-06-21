@@ -219,9 +219,51 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 		}
+		private void SpawnGore(Vector2 position, string type = "2") {
+			string kind = type;
+			position.X *= NPC.direction;
+			if (string.IsNullOrEmpty(kind)) kind = "2";
+			Gore.NewGore(
+				NPC.GetSource_Death(),
+				NPC.Center + position.RotatedBy(NPC.rotation),
+				NPC.velocity,
+				Mod.GetGoreSlot($"Gores/NPCs/Shimmer_Thing{kind}")
+			);
+		}
+		private int frame = 0;
 		public override void FindFrame(int frameHeight) {
 			float stage = Math.Min((1 - NPC.GetLifePercent()) * 2, 1) * (Main.npcFrameCount[Type] - 1);
 			NPC.frame.Y = frameHeight * (int)stage;
+			Vector2[] positions = [
+				new(-1, 82),
+				new(13, 68),
+				new(-13, 71),
+				new(-25, 55),
+				new(7, 42),
+				new(24, 47),
+				new(-14, 41),
+				new(12, 55),
+				new(-11, 55),
+				new(0, 65),
+				new(-30, 44),
+				new(22, 36)
+			];
+			string[] shard = new string[positions.Length];
+			if (frame < (int)stage) {
+				if ((int)stage >= 6) {
+					RangeRandom rangeRandom = new(Main.rand, 0, shard.Length);
+					for (int i = 0; i < Main.rand.Next(2, 5); i++) {
+						int index = rangeRandom.Get();
+						shard[index] = "2";
+						rangeRandom.Multiply(index, index + 1, 0);
+					}
+					for (int i = 0; i < shard.Length; i++) {
+						shard[i] ??= $"_Lorg{Main.rand.Next(3) + 1}";
+					}
+				}
+				for (int i = 0; i < positions.Length; i++) SpawnGore(positions[i], shard[i]);
+			}
+			frame = (int)stage;
 		}
 		Chunk[] chunks = [];
 		struct Chunk(int type, Vector2 position) {
