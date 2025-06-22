@@ -65,7 +65,7 @@ namespace Origins.Tiles {
 			width = TileObjectData.newTile.Width;
 			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
-			
+
 			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID), MapName);
 			AdjTiles = [
 				BaseTileID
@@ -853,6 +853,9 @@ namespace Origins.Tiles {
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+		}
 
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(tile.Type);
