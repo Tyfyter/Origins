@@ -253,7 +253,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				new(22, 36)
 			];
 			string[] shard = new string[positions.Length];
-			if (frame < (int)stage) {
+			if (!IsInPhase3 && frame < (int)stage) {
 				RangeRandom rangeRandom = new(Main.rand, 0, shard.Length);
 				int smallShards = (int)stage >= 6 ? Main.rand.Next(2, 5) : Main.rand.Next(6, shard.Length - 1);
 				for (int i = 0; i < smallShards; i++) {
