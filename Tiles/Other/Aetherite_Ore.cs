@@ -31,7 +31,7 @@ namespace Origins.Tiles.Other {
         }
         public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Aetherite_Ore>());
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(silver: 14);
 		}
 		public void ModifyWikiStats(JObject data) {

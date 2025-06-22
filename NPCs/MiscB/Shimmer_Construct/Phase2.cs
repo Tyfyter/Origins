@@ -73,8 +73,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			if (++npc.ai[0] >= npc.ai[1]) {
-				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
-				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f), npc.Center);
+				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), npc.Center);
 				npc.ai[0] -= npc.ai[1];
 				npc.SpawnProjectile(null,
 					npc.Center,
@@ -175,8 +175,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (++npc.ai[0] >= npc.ai[1]) {
 				npc.ai[0] -= npc.ai[1];
 				if (npc.ai[2] > 0 && Main.netMode != NetmodeID.MultiplayerClient) {
-					SoundEngine.PlaySound(SoundID.Item60.WithPitch(-2f));
-					SoundEngine.PlaySound(SoundID.Item84.WithVolume(0.5f).WithPitchRange(0.85f, 1f));
+					SoundEngine.PlaySound(SoundID.Item60.WithPitch(-2f), npc.Center);
+					SoundEngine.PlaySound(SoundID.Item84.WithVolume(0.5f).WithPitchRange(0.85f, 1f), npc.Center);
 					NPC.NewNPCDirect(
 						npc.GetSource_FromAI(),
 						npc.Center,

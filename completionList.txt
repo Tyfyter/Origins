@@ -56,7 +56,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^2) Shimmer Construct !!! (utilize hit gore sprites, phase 1 feedback, use boss bar)
+(#2, †, ^2) Shimmer Construct !!! 
 (#, ^2) Trenchmaker
 (#2, ^2) World Cracker* !!! (utilize new sprites and possible AI additions?)
 
@@ -1079,7 +1079,7 @@ GENERIC WEAPONS:
 
 TILES:
 |---
-(☻) Aetherite Ore !!!
+(^) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Baryte*
@@ -1132,11 +1132,11 @@ TILES:
 (X) Witherwood
 
 (^) Amebic Gel Wall
-(X) Barnacle Wall !!!
+(#, ^2) Barnacle Wall !!!
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(X) Calcified Spug Flesh Wall !!!
+(#, ^2) Calcified Spug Flesh Wall !!!
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -1159,7 +1159,7 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(#2, ^2) Amoeba Buggy Cage* !!! (gib glows)
+(#3, ^2) Amoeba Buggy Cage* !!!
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1177,7 +1177,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(#2, ^2) Cicada 3301 Cage° !!! (give glow)
+(#3, ^2) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1314,7 +1314,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(☻) Aetherite Bar !!!
+(^) Aetherite Bar
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*

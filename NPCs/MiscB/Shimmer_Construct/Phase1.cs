@@ -77,7 +77,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
-				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f));
+				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					npc.Center,

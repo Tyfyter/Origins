@@ -70,7 +70,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity += npc.DirectionTo(targetPos - Vector2.UnitY * 16 * 15) * 0.5f;
 			for (int i = 0; i < 2; i++) {
 				SoundEngine.PlaySound(SoundID.Item88);
-				SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.75f));
+				SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.75f), npc.Center);
 				if (positions.TryPop(out Vector2 position)) {
 					npc.SpawnProjectile(null,
 						position,
@@ -245,7 +245,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.ai[2] = (npc.GetTargetData().Center - npc.Center).ToRotation();
-			SoundEngine.PlaySound(SoundID.Item121.WithPitchRange(0.15f, 0.4f));
+			SoundEngine.PlaySound(SoundID.Item121.WithPitchRange(0.15f, 0.4f), npc.Center);
 			npc.SpawnProjectile(null,
 				npc.Center,
 				Vector2.Zero,
