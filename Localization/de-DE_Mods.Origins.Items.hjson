@@ -4370,7 +4370,7 @@ Endowood_Platform_Item: {
 
 Dark_Spiral: {
 	// DisplayName: Dark Spiral
-	// Tooltip: Releases shadow scales when thrown
+	// Tooltip: Releases shadow scales on hit
 }
 
 Waning_Crescent: {

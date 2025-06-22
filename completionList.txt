@@ -618,6 +618,7 @@ VANITY:
 
 (^) First Dream
 (^) Tyfyter's Set*
+(X) DIO's Set (head: Vampiric Locks, chest: Vampiric Vest, legs: Vampiric Trousers, wings: Vampiric Spell)
 
 (^) Acrid Dye
 (^) Amber Dye
