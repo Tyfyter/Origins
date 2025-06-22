@@ -1079,7 +1079,7 @@ GENERIC WEAPONS:
 
 TILES:
 |---
-(#, ^2) Aetherite Ore !!!
+(☻) Aetherite Ore !!!
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Baryte*
@@ -1314,7 +1314,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(#2, ^2) Aetherite Bar !!! (make it placeable)
+(☻) Aetherite Bar !!!
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
