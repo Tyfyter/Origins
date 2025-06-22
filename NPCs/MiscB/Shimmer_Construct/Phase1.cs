@@ -409,6 +409,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.damage = 0;// also responsible for making it not scale with difficulty
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
+			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 		}
 		public override void AI() {
 			if (Main.npc.GetIfInRange((int)NPC.ai[0]) is not NPC owner) {
