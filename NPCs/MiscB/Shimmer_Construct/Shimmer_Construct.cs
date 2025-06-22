@@ -186,7 +186,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		Chunk[] chunks = [];
-		struct Chunk(int type, Vector2 position) {
+		struct Chunk(int type, Vector2 position, int index) {
 			float rotation;
 			Vector2 position = position;
 			Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
@@ -202,10 +202,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					Vector2 targetPos = construct.NPC.Center;
 					velocity += position.DirectionTo(targetPos);
 				} else if (construct.deathAnimationTime == 360) {
-					velocity = new(0, 32 + type * 8);
+					velocity = new(0, 32 + index * 8);
 					return;
 				} else {
-					float speed = 0.15f + type * 0.01f;
+					float speed = 0.15f + index * 0.01f;
 					velocity = velocity.RotatedBy(speed);
 					position = construct.NPC.Center + velocity;
 					rotation += speed;
@@ -253,18 +253,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				const float shattertime = 100;
 				if (deathAnimationTime >= shattertime) {
 					if (chunks.Length <= 0) {
-						chunks = [
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece1"), position + new Vector2(38 * NPC.direction, 27).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece2"), position + new Vector2(-26 * NPC.direction, 31).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece3"), position + new Vector2(48 * NPC.direction, -12).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece4"), position + new Vector2(14 * NPC.direction, 14).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece5"), position + new Vector2(-23 * NPC.direction, -57).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece6"), position + new Vector2(22 * NPC.direction, -57).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece7"), position + new Vector2(16 * NPC.direction, -34).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece8"), position + new Vector2(22 * NPC.direction, -20).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece9"), position + new Vector2(-14 * NPC.direction, -11).RotatedBy(NPC.rotation)),
-							new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece10"), position + new Vector2(-49 * NPC.direction, -22).RotatedBy(NPC.rotation)),
-						];
+						chunks = new Chunk[10];
+						for (int i = 1; i < chunks.Length; i++) 
+						{
+						
+							chunks[i] = new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Construct_Piece" + i), position,i - 1);
+
+						
+						}
+
 					}
 					for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
 					return false;
