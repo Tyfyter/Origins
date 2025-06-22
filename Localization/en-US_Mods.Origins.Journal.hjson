@@ -13,7 +13,7 @@ Arabel: {
 		[header:Shimmerstar Staff (1/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
 		*****
-		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. The stars of the universe a symbol of motherhood, fostering life as everything we know is made from stardust. The accumulation of worlds that circle around each star, a mother's endless care no matter what. That is why the comparison is often made between a mother and the stars in the sky.
+		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. Even when the stars do die, they only transform into something new. They truly are such magical constructs of the universe.
 		'''
 
 	Fallen_Star: {
@@ -24,7 +24,7 @@ Arabel: {
 			[jimage/sc2dfr0,104,22,26:Terraria/Images/Item_75]
 
 			*****
-			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana", and it is a natural resource that we can use for magic abilities.
+			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana". It is a natural resource that we use for magical abilities. It is because of this mana that Terraria can be alive.
 			'''
 	}
 
@@ -33,14 +33,35 @@ Arabel: {
 		[header:Constellation (3/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Ranged/Constellation]
 		*****
-		It is because of this mana that Terraria can be alive, but there are many forces of evil in the world that are trying to take it all for themselves like the Defiled. It is all in steady balance, an equal hold on magic from both the light and dark. Hence, when I say that the stars represent life, this is what I mean.
+		There are many forces of evil in this world that are trying to take it for themselves. It is all in steady balance, an equal hold on magic from both the light and dark. It is up to everyone's sole responsibility to uphold the balance so that this starpower can be shared amongst all.
 		'''
 	Lazy_Cloak.Text:
 		'''
 		[header:Lazy Cloak (4/{$SeriesLength})]
 		[jimage/sc2.2d:Origins/Items/Accessories/Lazy_Cloak]
 		*****
-		My son, one day you will get to wear this much like I do. I can see the potential for good in you, but of course not without its hardship. You will become strong and better than your mother ever could fighting off monsters. It's enough for people to tell tales of you, to be the one Terraria needs.
+		My son, one day you will get to wear this in my stead. I see great potential for good in you... but it will not be without hardship. You will become strong and better than your mother ever could. It's enough for people to tell tales of you, to be the one Terraria needs.
+		'''
+
+	Shimmer_Construct: {
+		Name: "{$NPCs.Shimmer_Construct.DisplayName}"
+		Text:
+			'''
+			[header:{§Mods.Origins.NPCs.Shimmer_Construct.DisplayName} (5/{$SeriesLength})]
+			[jportrait/s1dw300h48:Origins/Shimmer_Construct]
+
+
+			*****
+			For now, it's time for your bedtime. You need to get some sleep for your big day tomorrow. Oh? Of course, my son. I'll also tuck Rocky in his bed for you too. There. He's all warm and cozy, ready to have crazy dreams of falling just like you. Sleep tight, my little munchkin.
+			'''
+	}
+
+	Aetherite_Ore.Text:
+		'''
+		[header:Aetherite Ore (6/{$SeriesLength})]
+		[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
+		*****
+		I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
 		'''
 }
 

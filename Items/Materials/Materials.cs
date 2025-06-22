@@ -59,10 +59,23 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Aetherite_Bar : MaterialItem {
+		public string[] Categories => [
+			"Bar"
+		];
 		public override int Rare => ItemRarityID.Orange;
 		public override int ResearchUnlockCount => 25;
 		public override int Value => Item.sellPrice(silver: 1);
 		public override bool Hardmode => false;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this, dust: DustID.PurpleCrystalShard);
+		}
+		/*public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Aetherite_Ore_Item>(), 3)
+			.AddTile(TileID.Hellforge)
+			.Register();
+		}*/
 	}
 	public class Alkahest : MaterialItem, IJournalEntrySource {
 		public string[] Categories => [

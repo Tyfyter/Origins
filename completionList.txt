@@ -1314,7 +1314,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(^) Aetherite Bar
+(#2, ^2) Aetherite Bar !!! (make it placeable)
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*

@@ -5,6 +5,7 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
@@ -41,7 +42,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = Origins.Sounds.PowerUp.WithPitchRange(0.5f, 0.65f);
+			Item.UseSound = null;
 			Item.autoReuse = true;
 			Item.useLimitPerAnimation = MainFireCount;
 			Item.ChangePlayerDirectionOnShoot = false;
@@ -73,13 +74,16 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.altFunctionUse != 2) {
 				int turnDir = (velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt();
 				if (player.ItemUsesThisAnimation == 1) player.ChangeDir(turnDir);
-
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
 				int arcIndex = player.direction == 1 ? player.ItemUsesThisAnimation : ((MainFireCount + 1) - player.ItemUsesThisAnimation);
 				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: (arcIndex - 0.5f) / (float)MainFireCount, ai1: player.itemAnimation);
 
 				if (player.ItemUsesThisAnimation == Item.useLimitPerAnimation) player.ChangeDir(turnDir);
 			} else {
 				if (player.ItemUsesThisAnimation == 1) {
+					SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
+					SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
 					player.ChangeDir((velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt());
 					position = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 					bool secondSwing = player.OriginPlayer().itemComboAnimationTime > 0;

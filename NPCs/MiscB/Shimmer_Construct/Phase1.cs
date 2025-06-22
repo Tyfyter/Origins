@@ -417,7 +417,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			if (NPC.lifeMax == 1) {
-				NPC.lifeMax = (owner.lifeMax / (int)NPC.ai[2]) / 2;
+				NPC.lifeMax = (owner.lifeMax / (int)NPC.ai[2]) / 3;
 				NPC.life = NPC.lifeMax;
 			}
 			float distance = 16 * 10 - NPC.ai[3];
@@ -438,7 +438,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				NPC.ai[3] += Math.Min(NPC.velocity.Length() * 1.5f + 1, 16);
 				if (distance < 0) {
-					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 2 });
+					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 3 });
 					NPC.active = false;
 				}
 			}

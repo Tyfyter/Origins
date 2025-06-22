@@ -392,6 +392,6 @@ Chambersite_Sentinel: {
 	// BossChecklistIntegration.SpawnCondition: Spawns randomly when nearby chambersite
 }
 
-// Shimmer_Chunk1.DisplayName: Shimmer Chunk1
-// Shimmer_Chunk2.DisplayName: Shimmer Chunk2
-// Shimmer_Chunk3.DisplayName: Shimmer Chunk3
+// Shimmer_Chunk1.DisplayName: Shimmer Pod
+// Shimmer_Chunk2.DisplayName: Shimmer Pod
+// Shimmer_Chunk3.DisplayName: Shimmer Pod
