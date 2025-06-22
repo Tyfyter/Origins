@@ -250,16 +250,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			];
 			string[] shard = new string[positions.Length];
 			if (frame < (int)stage) {
-				if ((int)stage >= 6) {
-					RangeRandom rangeRandom = new(Main.rand, 0, shard.Length);
-					for (int i = 0; i < Main.rand.Next(2, 5); i++) {
-						int index = rangeRandom.Get();
-						shard[index] = "2";
-						rangeRandom.Multiply(index, index + 1, 0);
-					}
-					for (int i = 0; i < shard.Length; i++) {
-						shard[i] ??= $"_Lorg{Main.rand.Next(3) + 1}";
-					}
+				RangeRandom rangeRandom = new(Main.rand, 0, shard.Length);
+				int smallShards = (int)stage >= 6 ? Main.rand.Next(2, 5) : Main.rand.Next(6, shard.Length - 1);
+				for (int i = 0; i < smallShards; i++) {
+					int index = rangeRandom.Get();
+					shard[index] = "2";
+					rangeRandom.Multiply(index, index + 1, 0);
+				}
+				for (int i = 0; i < shard.Length; i++) {
+					shard[i] ??= $"_Lorg{Main.rand.Next(1,4)}";
 				}
 				for (int i = 0; i < positions.Length; i++) SpawnGore(positions[i], shard[i]);
 			}
