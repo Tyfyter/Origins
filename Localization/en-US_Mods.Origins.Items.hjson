@@ -6332,3 +6332,8 @@ Jawbreaker: {
 	DisplayName: Jawbreaker
 	Tooltip: ""
 }
+
+Aetherite_Ore_Item: {
+	DisplayName: Aetherite Ore
+	Tooltip: ""
+}

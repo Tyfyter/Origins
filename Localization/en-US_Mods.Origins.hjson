@@ -2045,21 +2045,21 @@ Tiles: {
 	}
 
 	Brine_Leaf_Clover_Tile.MapEntry: Brine Leaf Clover
-	Eitrite_Ore.MapEntry: Eitrite Ore
+	Eitrite_Ore.MapEntry: Eitrite
 	Eden_Tree_Sapling.MapEntry: Eden Sapling
 	Defiled_Altar.MapEntry: "{§Defiled} Altar"
 	Defiled_Dungeon_Chest_Locked.MapEntry: Locked {§Defiled} Chest
 	Defiled_Fissure.MapEntry: "{§Defiled} Fissure"
 	Defiled_Heart.MapEntry: "{§Defiled} Heart"
-	Defiled_Ore.MapEntry: Lost Ore
-	Sanguinite_Ore.MapEntry: Sanguinite Ore
+	Defiled_Ore.MapEntry: Lost
+	Sanguinite_Ore.MapEntry: Sanguinite
 	Defiled_Tree_Sapling.MapEntry: "{§Defiled} Sapling"
 	Soulspore.MapEntry: Soulspore
 	Wilted_Rose.MapEntry: Wilted Rose
-	Felnum_Ore.MapEntry: Felnum Ore
+	Felnum_Ore.MapEntry: Felnum
 	Fiberglass_Tile.MapEntry: Mods.Origins.MapObject.Fiberglass_Tile
 	Acetabularia.MapEntry: Acetabularia
-	Encrusted_Ore.MapEntry: Encrusted Ore
+	Encrusted_Ore.MapEntry: Encrusted
 	Riven_Altar.MapEntry: "{§Riven} Altar"
 	Riven_Dungeon_Chest_Locked.MapEntry: Locked {§Riven} Chest
 	Riven_Lesion.MapEntry: "{§Riven} Lesion"
@@ -2096,9 +2096,9 @@ Tiles: {
 	Ancient_Music_Box_DW: Ancient Music Box ({§Defiled_Wastelands})
 	Ancient_Music_Box_RH: Ancient Music Box ({§Riven_Hive})
 	Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
-	Lost_Ore.MapEntry: Lost Ore
+	Lost_Ore.MapEntry: Lost
 	Carburite.MapEntry: Carburite
-	Silicon_Ore.MapEntry: Silicon Ore
+	Silicon_Ore.MapEntry: Silicon
 	Underwater_Vine.MapEntry: Underwater Vine
 	Defiled_Relay.MapEntry: "{§Defiled} Relay"
 	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
@@ -2119,6 +2119,7 @@ Tiles: {
 	Lucky_Hat_Tile.MapEntry: Lucky Hat
 	Residual_Crate_Tile.MapEntry: Residual Crate
 	Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
+	Aetherite_Ore.MapEntry: Aetherite
 }
 
 MapObject: {

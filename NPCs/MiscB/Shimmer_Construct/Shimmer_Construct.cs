@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
+using Origins.Tiles.Other;
 using PegasusLib;
 using ReLogic.Content;
 using System;
@@ -397,6 +398,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ItemType<Lazy_Cloak>(),
 				ItemType<Resizing_Glove>())
 			);
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Aetherite_Ore_Item>(), minimumDropped: 30, maximumDropped: 90));
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Shimmer_Construct_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Shimmer_Construct_Mask>(), 10));
