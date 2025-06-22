@@ -218,6 +218,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
+			if (!IsInPhase3) {
+				Rectangle goreArea = NPC.Hitbox.Scaled(0.85f).Recentered(NPC.Center);
+				SpawnGore((NPC.Size / 2) - new Vector2(Main.rand.NextFloat(goreArea.Width), Main.rand.NextFloat(goreArea.Height)), Main.rand.Next(1,3).ToString());
+			}
 		}
 		private void SpawnGore(Vector2 position, string type = "2") {
 			string kind = type;
@@ -226,7 +230,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Gore.NewGore(
 				NPC.GetSource_Death(),
 				NPC.Center + position.RotatedBy(NPC.rotation),
-				NPC.velocity,
+				NPC.velocity.RotatedBy(NPC.rotation),
 				Mod.GetGoreSlot($"Gores/NPCs/Shimmer_Thing{kind}")
 			);
 		}
