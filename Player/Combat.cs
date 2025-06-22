@@ -71,7 +71,7 @@ namespace Origins {
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
-			}
+			}	
 			if (wishingGlassActive) mult *= 0;
 			necromanaUsedThisUse = false;
 		}
@@ -80,13 +80,13 @@ namespace Origins {
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
 				if (endlessExplosives && Main.rand.NextBool(15, 100)) return false;
 				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
-			}
+			} else
 			if (ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (weakpointAnalyzer && Main.rand.NextBool(8, 100)) return false;
 				if (controlLocus) {
 					int dupeCount = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[ammo.shoot];
 					if (dupeCount == 0) return false;
-					return Main.rand.NextFloat(1) < 0.6f / dupeCount;
+					return Main.rand.NextFloat(1) > 0.6f / dupeCount;
 				}
 			}
 			return true;

@@ -31,6 +31,7 @@ namespace Origins.Items.Accessories {
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 12);
 			Item.maxStack = 1;
+			Item.dye = 0;
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.OriginPlayer();

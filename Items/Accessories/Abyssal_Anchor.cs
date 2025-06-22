@@ -2,7 +2,6 @@
 using Origins.Dev;
 using Origins.Misc;
 using PegasusLib;
-using System.Drawing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,23 +43,13 @@ namespace Origins.Items.Accessories {
 			player.endurance += (1 - player.endurance) * 0.1f;
 			player.GetKnockback(DamageClass.Summon).Base += 1;
 
-			player.moveSpeed *= 0.75f;
+			originPlayer.moveSpeedMult *= 0.75f;
 			player.jumpSpeedBoost -= 2.2f;
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.abyssalAnchorVisual = true;
-			/*for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-				if (player.armor[i] == Item) {
-					originPlayer.bindingBookDye = player.dye[i].dye;
-					break;
-				}
-				if (player.armor[i + 10] == Item) {
-					originPlayer.bindingBookDye = player.dye[i].dye;
-					break;
-				}
-			}*/
 			Vector2 halfSize = new Vector2(12);
 			ref Physics.Chain chain = ref originPlayer.abyssalAnchorChain;
 			if (chain is null || chain.links[0].position.HasNaNs() || chain.links[0].position.DistanceSQ(player.position) > 512 * 512) {
@@ -127,6 +116,7 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().abyssalAnchorDye = dye;
 		internal static void IL_Player_WaterCollision(ILContext il) {
 			ILCursor c = new(il);
 			c.GotoNext(MoveType.After,

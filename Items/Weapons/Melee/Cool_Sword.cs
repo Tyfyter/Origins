@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -32,6 +31,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item71.WithPitch(-1.3f);
+			Item.autoReuse = false;
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
@@ -77,6 +77,10 @@ namespace Origins.Items.Weapons.Melee {
 				return;
 			}
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || player.CCed) {
+				Projectile.active = false;
+				return;
+			}
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			Projectile.rotation = MathHelper.Lerp(-2f, 1.3f, swingFactor) * player.direction;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
@@ -146,7 +150,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
 			SpriteEffects effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 10, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
+			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 11, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				player.MountedCenter - Main.screenPosition,

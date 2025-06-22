@@ -80,12 +80,19 @@ namespace Origins.Items.Weapons.Magic {
 			player.itemLocation = player.MountedCenter + new Vector2(player.direction * -6, 6);
 		}
 	}
+	[ReinitializeDuringResizeArrays]
 	public class Shinedown_Staff_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MedusaHeadRay;
+		public static bool[] InalidTargetNPCs = NPCID.Sets.Factory.CreateBoolSet(
+			NPCID.TheDestroyer,
+			NPCID.TheDestroyerBody,
+			NPCID.TheDestroyerTail
+		);
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.width = 0;
 			Projectile.height = 0;
+			Projectile.timeLeft = 5;
 			Projectile.tileCollide = false;
 			Projectile.ContinuouslyUpdateDamageStats = true;
 		}
@@ -134,6 +141,7 @@ namespace Origins.Items.Weapons.Magic {
 				return;
 			}
 			if (Projectile.owner == Main.myPlayer) player.ChangeDir((Main.MouseWorld.X > player.Center.X).ToDirectionInt());
+			Projectile.timeLeft = 2;
 			player.SetDummyItemTime(2);
 			aims ??= new Aim[Main.maxNPCs];
 			decayingAims ??= new Aim[20];
@@ -183,7 +191,7 @@ namespace Origins.Items.Weapons.Magic {
 			int totalDamage = 0;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (!npc.CanBeChasedBy(Projectile)) continue;
+				if (InalidTargetNPCs[npc.type] || !npc.CanBeChasedBy(Projectile)) continue;
 				Rectangle npcHitbox = npc.Hitbox;
 				for (int i = 0; i < aims.Length; i++) {
 					if (!aims[i].active) continue;
@@ -267,7 +275,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (Main.netMode != NetmodeID.SinglePlayer) newAims = [];
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (aims[npc.whoAmI].active) continue;
-				if (!npc.CanBeChasedBy(Projectile)) continue;
+				if (InalidTargetNPCs[npc.type] || !npc.CanBeChasedBy(Projectile)) continue;
 				Vector2 diff = npc.Center - aimOrigin;
 				float lengthSQ = diff.LengthSquared();
 				if (lengthSQ > maxLengthSQ) continue;
@@ -374,7 +382,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (active) {
 					speed *= 2 - progress;
 					float length = Motion.Length();
-					motion *= 1 - (1 - 0.99f * ((length - 2) / length)) * speed;
+					motion *= Math.Max(1 - (1 - 0.99f * ((length - 2) / length)) * speed, 0);
 					active = length > 4;
 				}
 			}

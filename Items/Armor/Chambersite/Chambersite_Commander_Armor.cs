@@ -21,19 +21,23 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Chambersite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chambersite_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		//private AutoLoadingAsset<Texture2D> tail = typeof(Chambersite_Helmet).GetDefaultTMLName() + "_Tail";
+		public static int HeadSlot { get; private set; }
 		public string[] Categories => [
 			"ArmorSet",
 			"GenericBoostGear"
 		];
+		public override void SetStaticDefaults() {
+			HeadSlot = Item.headSlot;
+		}
 		public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Generic) += 0.10f;
-			player.OriginPlayer().projectileSpeedBoost += 0.1f;
+			player.GetDamage(DamageClass.Generic) += 0.12f;
+			player.OriginPlayer().projectileSpeedBoost += 0.12f;
+			player.maxMinions += 1;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Chambersite_Breastplate>() && legs.type == ModContent.ItemType<Chambersite_Greaves>();
@@ -43,6 +47,7 @@ namespace Origins.Items.Armor.Chambersite {
 			player.OriginPlayer().chambersiteCommandoSet = true;
 			player.OriginPlayer().setActiveAbility = SetActiveAbility.chambersite_armor;
 			player.GetKnockback(DamageClass.Generic) += 0.15f;
+			player.maxMinions += 1;
 			player.AddBuff(ModContent.BuffType<Voidsight_Buff>(), 60);
 		}
 		public override void AddRecipes() {
@@ -67,8 +72,10 @@ namespace Origins.Items.Armor.Chambersite {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClass.Generic) += 0.10f;
+			player.GetCritChance(DamageClass.Generic) += 0.12f;
 			player.endurance += (1 - player.endurance) * 0.08f;
+			player.statManaMax2 += 60;
+			player.manaCost *= 0.9f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
@@ -88,8 +95,8 @@ namespace Origins.Items.Armor.Chambersite {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.1f;
-			player.GetAttackSpeed(DamageClass.Generic) += 0.1f;
+			player.moveSpeed += 0.2f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.12f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
@@ -104,6 +111,8 @@ namespace Origins.Items.Armor.Chambersite {
 	public class Chambersite_Commander_Sentinel : ModProjectile {
 		public override string Texture => "Origins/NPCs/MiscB/Chambersite_Sentinel";
 		public static int ID { get; private set; }
+		public static int MaxActiveAims => 5;
+		public static float SpeedMult => 2.5f;
 		public override void SetStaticDefaults() {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
@@ -276,16 +285,19 @@ namespace Origins.Items.Armor.Chambersite {
 		}
 		bool DoShoot() {
 			Player player = Main.player[Projectile.owner];
-			float bestAngle = 0.5f;
-			Vector2 aimOrigin = Projectile.Center;
-			//Vector2 aimVector = aimOrigin.DirectionTo(Main.MouseWorld);
 			List<byte> newAims = null;
 			if (Main.netMode != NetmodeID.SinglePlayer) newAims = [];
+			int activeAimsCount = 0;
+			for (int i = 0; i < aims.Length; i++) {
+				if (aims[i].active) activeAimsCount++;
+			}
 			foreach (NPC npc in Main.ActiveNPCs) {
+				if (activeAimsCount >= MaxActiveAims) break;
 				if (aims[npc.whoAmI].active) continue;
 				if (!npc.CanBeChasedBy(Projectile)) continue;
 				aims[npc.whoAmI].Set(npc);
 				newAims?.Add((byte)npc.whoAmI);
+				activeAimsCount++;
 			}
 			if (Main.netMode != NetmodeID.SinglePlayer && newAims.Count > 0) {
 				ModPacket packet = Origins.instance.GetPacket();
@@ -297,7 +309,7 @@ namespace Origins.Items.Armor.Chambersite {
 				packet.Send();
 			}
 
-			Projectile.ai[1] = Shinedown.GetSpeedMultiplier(player, player.HeldItem);
+			Projectile.ai[1] = SpeedMult;
 			Projectile.ai[0] = Projectile.ai[1] * 20;
 			Projectile.netUpdate = true;
 			return true;

@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 			player.pickSpeed -= 0.25f;
 			player.GetKnockback(DamageClass.Summon).Base += 1;
 
-			player.moveSpeed *= 0.9f;
+			player.OriginPlayer().moveSpeedMult *= 0.9f;
 			player.jumpSpeedBoost -= 1.8f;
 		}
 

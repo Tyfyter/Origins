@@ -481,6 +481,7 @@ Lovers_Leap: {
 	Tooltip:
 		'''
 		5% increased damage
+		Allows flight
 		The wearer can run super fast and even faster after taking damage
 		Allows the player to dash into the enemy
 		Double tap a direction
@@ -1378,12 +1379,20 @@ Riven2_Pants: {
 
 Sapphire_Hood: {
 	DisplayName: Sapphire Mediator Hood
-	Tooltip: -40 mana
+	Tooltip:
+		'''
+		-40 mana
+		Increased mana regeneration
+		'''
 }
 
 Sapphire_Tights: {
 	DisplayName: Sapphire Mediator Tights
-	Tooltip: +10% movement speed
+	Tooltip:
+		'''
+		+10% movement speed
+		8% reduced mana cost
+		'''
 }
 
 Sapphire_Vest: {
@@ -4361,7 +4370,7 @@ Endowood_Platform_Item: {
 
 Dark_Spiral: {
 	DisplayName: Dark Spiral
-	Tooltip: Releases shadow scales when thrown
+	Tooltip: Releases shadow scales on hit
 }
 
 Waning_Crescent: {
@@ -4474,6 +4483,7 @@ Speed_Booster: {
 		The wearer can run super fast and even faster after taking damage
 		Allows the user to climb walls and dash into enemies
 		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		Allows flight
 		5% increased damage
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash
@@ -6018,7 +6028,10 @@ Chambersite_Minigun: {
 	Tooltip: Fires in a spread before ramping up
 }
 
-Aetherite_Bar.DisplayName: Aetherite Bar
+Aetherite_Bar_Item: {
+	DisplayName: Aetherite Bar
+	Tooltip: "'It's smooth, but that's not what it feels like'"
+}
 
 Shimmerstar_Staff: {
 	DisplayName: Shimmerstar Staff
@@ -6132,14 +6145,13 @@ Bile_Harpoon: {
 		'''
 }
 
-Aetherite_Pants: {
-	DisplayName: Aether Pants
-	Tooltip: Increased jump speed and slower fall
-}
-
-Aetherite_Robes: {
+Aetherite_Robe: {
 	DisplayName: Aether Robes
-	Tooltip: +24% generic attack speed
+	Tooltip:
+		'''
+		+24% generic attack speed
+		Increased jump speed and slower fall
+		'''
 }
 
 Aetherite_Wreath: {
@@ -6180,19 +6192,29 @@ Chambersite_Breastplate: {
 	DisplayName: Chambersite Breastplate
 	Tooltip:
 		'''
-		+10% critical strike chance
+		+12% critical strike chance
 		+8% damage reduction
+		+60 max mana
+		10% reduced mana cost
 		'''
 }
 
 Chambersite_Greaves: {
 	DisplayName: Chambersite Greaves
-	Tooltip: +10% faster weapon use time and movement speed
+	Tooltip:
+		'''
+		+10% faster weapon use time
+		+20% movement speed
+		'''
 }
 
 Chambersite_Helmet: {
 	DisplayName: Chambersite Helmet
-	Tooltip: +10% weapon damage and velocity
+	Tooltip:
+		'''
+		+12% weapon damage and velocity
+		Increases your max number of minions by 1
+		'''
 }
 
 Shimmer_Construct_Bag: {
@@ -6311,5 +6333,14 @@ Cicada_3301_Cage_Item: {
 
 Jawbreaker: {
 	DisplayName: Jawbreaker
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a stellar spark
+		'NOT RECOMMENDED FOR CONSUMPTION'
+		'''
+}
+
+Aetherite_Ore_Item: {
+	DisplayName: Aetherite Ore
+	Tooltip: "'It's smooth, but that's not what it feels like'"
 }

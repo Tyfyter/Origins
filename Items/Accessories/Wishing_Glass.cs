@@ -22,6 +22,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateVanity(Player player) {
 			player.OriginPlayer().wishingGlassVisible = true;
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().wishingGlassDye = dye;
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.SubstituteKeybind(Keybindings.WishingGlass);
 		}

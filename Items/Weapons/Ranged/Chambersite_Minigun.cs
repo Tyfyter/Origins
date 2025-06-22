@@ -15,9 +15,9 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);
-			Item.damage = 27;
-			Item.knockBack = 5;
-			Item.useTime = Item.useAnimation = 42;
+			Item.damage = 45;
+			Item.knockBack = 6;
+			Item.useTime = Item.useAnimation = 35;
 			Item.shoot = ModContent.ProjectileType<Chambersite_Minigun_P>();
 			Item.shootSpeed = 8;
 			Item.width = 38;
@@ -25,9 +25,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 			Item.channel = true;
 			Item.noUseGraphic = true;
-			Item.value = Item.sellPrice(silver: 80);
+			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = Origins.Sounds.HeavyCannon;
+			Item.UseSound = SoundID.Item36.WithPitch(2f);
 		}
 		public static bool isShooting = false;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
+			.AddIngredient(ItemID.Ectoplasm, 10)
 			.AddIngredient(ItemID.Megashark)
 			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 30)
 			.AddIngredient(ModContent.ItemType<Chambersite_Item>(), 13)

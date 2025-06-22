@@ -13,6 +13,7 @@ using Terraria.Graphics.Shaders;
 using Origins.Items.Other.Dyes;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Liquid;
+using Terraria.Audio;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
@@ -60,7 +61,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class CircleState : AIState {
 		#region stats
 		public static float ShotRate => 16 - DifficultyMult * 0.75f;
-		public static int ShotDamage => (int) (15 + 6 * DifficultyMult);
+		public static int ShotDamage => (int) (15 + 9 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		public static float MoveSpeed => 6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f;
 		public static int Duration => 120;
@@ -76,6 +77,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
+				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
 					npc.Center,
@@ -98,6 +100,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 3;
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
+			ProjectileID.Sets.NoLiquidDistortion[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -110,7 +113,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			base.AI();
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
 		public override bool PreDraw(ref Color lightColor) {
@@ -140,7 +142,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SpawnCloudsState : AIState {
 		#region stats
-		public static int RainDamage => (int) (15 + 7 * DifficultyMult);
+		public static int RainDamage => (int) (25 + 7 * DifficultyMult);
 		public static float CloudXDistance => 53 - 8 * DifficultyMult;
 		public static float CloudYDistance => 25;
 		public static float CloudBallSpeed => 4.5f + DifficultyMult * 4.5f;
@@ -172,6 +174,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		internal static Stack<int> cachedClouds = [];
 		internal static Stack<int> cachedRain = [];
 		public override void DoAIState(Shimmer_Construct boss) {
+			SoundEngine.PlaySound(SoundID.Item28);
 			NPC npc = boss.NPC;
 			Vector2 targetPos = npc.GetTargetData().Center;
 			float xDist = CloudXDistance;
@@ -233,6 +236,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (TargetPos != default) {
 					Vector2 combined = Projectile.velocity * (TargetPos - Projectile.Center);
 					if (Projectile.owner == Main.myPlayer && combined.X <= 0 && combined.Y <= 0) {
+						SoundEngine.PlaySound(SoundID.Item20);
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							TargetPos,
@@ -392,4 +396,61 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
+	public abstract class Shimmer_Construct_Health_Chunk : ModNPC {
+		public override void SetStaticDefaults() {
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
+		}
+		public override void SetDefaults() {
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
+			NPC.width = 56;
+			NPC.height = 56;
+			NPC.lifeMax = 1;
+			NPC.damage = 0;// also responsible for making it not scale with difficulty
+			NPC.noGravity = true;
+			NPC.noTileCollide = true;
+			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+		}
+		public override void AI() {
+			if (Main.npc.GetIfInRange((int)NPC.ai[0]) is not NPC owner) {
+				NPC.active = false;
+				return;
+			}
+			if (NPC.lifeMax == 1) {
+				NPC.lifeMax = (owner.lifeMax / (int)NPC.ai[2]) / 3;
+				NPC.life = NPC.lifeMax;
+			}
+			float distance = 16 * 10 - NPC.ai[3];
+			NPC.Center = owner.Center + GeometryUtils.Vec2FromPolar(distance, (MathHelper.TwoPi * NPC.ai[1] / NPC.ai[2]) + (++NPC.localAI[0]) * 0.03f);
+			if (NPC.ai[3] <= 0) {
+				SoundEngine.PlaySound(SoundID.Item20); // ???
+				NPC.localAI[1] *= 0.95f;
+				NPC.localAI[2] *= 0.95f;
+				NPC.localAI[1] += NPC.velocity.X * 0.05f;
+				NPC.localAI[2] += NPC.velocity.Y * 0.05f;
+				NPC.velocity *= 0.95f;
+				NPC.position += new Vector2(NPC.localAI[1], NPC.localAI[2]) * 18f;
+			} else {
+				if (NPC.localAI[1] != 0 || NPC.localAI[2] != 0) {
+					NPC.velocity += new Vector2(NPC.localAI[1], NPC.localAI[2]);
+					NPC.localAI[1] = 0;
+					NPC.localAI[2] = 0;
+				}
+				NPC.ai[3] += Math.Min(NPC.velocity.Length() * 1.5f + 1, 16);
+				if (distance < 0) {
+					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 3 });
+					NPC.active = false;
+				}
+			}
+		}
+		public override bool CheckDead() {
+			NPC.ai[3] += 1;
+			NPC.life = 1;
+			NPC.dontTakeDamage = true;
+			return false;
+		}
+	}
+	public class Shimmer_Chunk1 : Shimmer_Construct_Health_Chunk { }
+	public class Shimmer_Chunk2 : Shimmer_Construct_Health_Chunk { }
+	public class Shimmer_Chunk3 : Shimmer_Construct_Health_Chunk { }
 }

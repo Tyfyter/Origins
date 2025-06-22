@@ -405,7 +405,7 @@ namespace Origins {
 					Player.AddBuff(ModContent.BuffType<Wishing_Glass_Buff>(), 8 * 60);
 				}
 			}
-			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
+			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay: true)) {
 				//Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
@@ -499,7 +499,7 @@ namespace Origins {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
 			}
 
-			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) { 
+			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) {
 				for (int i = 0; i < cinderSealCount; i++) {
 					Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
 				}
@@ -562,26 +562,6 @@ namespace Origins {
 		}
 		public override void UpdateDyes() {
 			Debugging.LogFirstRun(UpdateDyes);
-			if (dashVaseVisual) {
-				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-					if (Player.armor[i].ModItem is Fallacious_Vase) {
-						dashVaseDye = Player.dye[i].dye;
-					}
-					if (Player.armor[i + 10].ModItem is Fallacious_Vase) {
-						dashVaseDye = Player.dye[i].dye;
-						break;
-					}
-				}
-			}
-			for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-				if (Player.armor[i].ModItem is Wishing_Glass) {
-					wishingGlassDye = Player.dye[i].dye;
-				}
-				if (Player.armor[i + 10].ModItem is Wishing_Glass) {
-					wishingGlassDye = Player.dye[i].dye;
-					break;
-				}
-			}
 		}
 		public void ApplyEyndumSetBuffs() {
 			#region movement
@@ -637,7 +617,7 @@ namespace Origins {
 			#endregion
 		}
 		public void TriggerSetBonus(bool fromNet = false) {
-			if (setAbilityCooldown > 0) return;
+			if (setAbilityCooldown > 0 || Player.DeadOrGhost) return;
 			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
 
 			}

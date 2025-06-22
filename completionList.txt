@@ -34,7 +34,7 @@ X: No progress
 ♠: Pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
 ◘: Pending review before continuation
 ○: Implemented with temp stats/missing recipe/etc.
-†: Needs testing (unicode hex code 2020)
+†: Needs balance/testing (unicode hex code 2020)
 ᗢ: Implemented, but will need to be revisited in later update
 ⚐: Needs banner (unicode hex code 2690)
 ⛥: Needs design discussion (unicode hex code 26E5)
@@ -56,9 +56,9 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^2) Shimmer Construct !!! (utilize large gore sprites)
+(#2, †, ^2) Shimmer Construct !!! 
 (#, ^2) Trenchmaker
-(@4, ^3) World Cracker* !!!
+(#2, ^2) World Cracker* !!! (utilize new sprites and possible AI additions?)
 
 (X) Corrupt Harvester
 (^) Lost Diver/Mildew Carrion
@@ -166,6 +166,7 @@ OTHER:
 
 ENEMY NPCS:
 |---
+(X) Amoebayena
 (^) Amoebic Slime*
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
@@ -191,8 +192,10 @@ ENEMY NPCS:
 (^) Defiled Broadcaster
 (^) Defiled Cyclops*
 (^) Defiled Digger*
+(X) Defiled Glitchbeest
 (^) Defiled Krusher*
 (^) Defiled Mite*
+(X) Defiled Ostrich
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
@@ -218,6 +221,7 @@ ENEMY NPCS:
 (X) Repairboy
 (^) Riven Penguin*
 (^) Riven Protoform*
+(X) Rivenpotamus
 (X) Scanner Scout
 (^) Shattered Goldfish*
 (^) Shimmer Drone
@@ -244,6 +248,7 @@ ENEMY NPCS:
 (^) Defiled Pigron*
 (X) Defiled Shooter
 (^) Defiled Squid*
+(X) Defiled Surveyor
 (^) Defiled Tripod*
 (^) Defiled Watcher*
 (X) Depth Crawler
@@ -268,6 +273,7 @@ ENEMY NPCS:
 (^) Shattered Mummy*
 (^) Shotgunfish
 (X) Tendon Terror
+(X) Terrogator
 (^) Torn Ghoul*
 (^) Trijaw Shark*
 (X) VV-13
@@ -299,6 +305,7 @@ EVENTS:
 
 (X) Test of the Ancients
 
+(X) Evvillll
 (^) Laser Tag
 ---
 
@@ -340,7 +347,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(#2, ^2) Aether Armor !!! (sproits)
+(#2, ^2) Aether Armor !!! (needs completed set bonus)
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -372,7 +379,7 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(#2, ^2) Chambersite Armor° !!! (sproits)
+(^) Chambersite Armor°
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
@@ -568,7 +575,7 @@ ACCESSORIES:
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
 (^) Weakpoint Analyzer*
-(#2, ^2) Wishing Glass !!! (more loose movement)
+(^) Wishing Glass
 
 (^) Agility Core°
 (^) Combat Core°
@@ -611,6 +618,7 @@ VANITY:
 
 (^) First Dream
 (^) Tyfyter's Set*
+(X) DIO's Set (head: Vampiric Locks, chest: Vampiric Vest, legs: Vampiric Trousers, wings: Vampiric Spell)
 
 (^) Acrid Dye
 (^) Amber Dye
@@ -696,7 +704,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(#2, ^2) Cool Sword !!! (rework slash)
+(^) Cool Sword
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -738,7 +746,6 @@ MELEE WEAPONS:
 
 (X) Chiton Kursarigama
 (X) Executioner
-(X) Gospel
 (X) Laser Tag Sabre
 (^) Personal Laser Blade*
 (X) Pile Bunker
@@ -749,7 +756,6 @@ MELEE WEAPONS:
 (^) True Waning Crescent*
 (^) Tyrfing
 
-(X) Celestial Point
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
@@ -808,18 +814,15 @@ RANGED WEAPONS:
 (^) HNO-3 "Viper"*
 (^) Incision*
 (X) Lag Spike
-(X) Left Klik°
 (^) Laser Line Bow
 (^) Mythril Harpoon Gun*
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun*
 (^) Palladium Harpoon Gun*
 (X) Ritualmaker
-(X) Riveiar
 (^) Spray 'N Pray°
 (^) Tiny Sniper
 (^) Titanium Harpoon Gun*
-(X) Tripod Jawbow
 
 (^) Astoxo
 (^) Chambersite Minigun
@@ -830,13 +833,9 @@ RANGED WEAPONS:
 (^) Laser Tag Gun
 (X) Laser Tag Shotgun
 (X) Shroomshot
-(X) Skewr
 (^) Tolruk
 
-(X) Fulcrum
-(X) Journey's End
 (X) L.W.M.U.G.°
-(X) Pinpoint
 (X) Synergy
 ---
 
@@ -861,14 +860,12 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Brine Haze
-(X) Broadcast
 (^) Chemical Laser
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
-(X) Meta Arcanum
 (^) Seam Beam
 (^) Shimmer Rod
 (^) Shinedown
@@ -880,11 +877,8 @@ MAGIC WEAPONS:
 
 (^) Amber of Embers
 (^) Breach
-(X) Divine Lite
-(X) Ghost Trap
 (^) Hævateinn
 (^) Haunted Vase
-(X) Lunarfire
 (^) Missing File*
 (♫) Phantom Fury
 (^) Pike of Deepneus
@@ -896,7 +890,6 @@ MAGIC WEAPONS:
 (^) The Calibrator
 (X) True Seam Beam
 
-(X) Ion Minigun
 (X) Last Nerve
 (^) Rigged Cubix
 ---
@@ -1087,14 +1080,14 @@ GENERIC WEAPONS:
 
 TILES:
 |---
-(X) Aetherite Ore !!!
+(^) Aetherite Ore
 (^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Baryte*
 (^) Batholith°
 (^) Bleeding Obsidian*
 (^) Bomb Trap
-(@4) Brittle Quartz* !!!
+(^) Brittle Quartz*
 (X) Brown Ice
 (^) Chambersite
 (X) Cubekon Altar°
@@ -1102,7 +1095,7 @@ TILES:
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (X) Defiled Regolith
-(@4) Defiled Sand* !!!
+(^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
 (^) Dusklight°
@@ -1114,7 +1107,7 @@ TILES:
 (^) Felnum Ore*
 (^) Fiberglass Block*
 (^) Gray Ice Block*
-(@4) Hardened Defiled Sand* !!!
+(^) Hardened Defiled Sand*
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (^) Limestone
@@ -1123,11 +1116,11 @@ TILES:
 (^) Mildew Block°
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(@4) Quartz Block* !!!
+(^) Quartz Block*
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
-(@4, ^3) Sanguinite Ore* !!!
+(^) Sanguinite Ore*
 (X) Scrap Heap
 (^) Silica*
 (^) Silicon Ore*
@@ -1140,11 +1133,11 @@ TILES:
 (X) Witherwood
 
 (^) Amebic Gel Wall
-(X) Barnacle Wall !!!
+(#, ^2) Barnacle Wall !!!
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(X) Calcified Spug Flesh Wall !!!
+(#, ^2) Calcified Spug Flesh Wall !!!
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -1167,7 +1160,7 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(@, ^3) Amoeba Buggy Cage* !!!
+(#3, ^2) Amoeba Buggy Cage* !!!
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1185,7 +1178,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(@, ^3) Cicada 3301 Cage° !!!
+(#3, ^2) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1248,6 +1241,7 @@ TILES:
 (^) Defiled Relay
 (^) Defiled Pot
 (X) Eden Tree°
+(X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
 (X) Fuzzvine !!!
@@ -1259,6 +1253,7 @@ TILES:
 (X) Marrowick Flange !!!
 (X) Moonshine°
 (^) Ocotillo
+(X) Petrified Baobab Tree*
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
@@ -1296,7 +1291,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(@, #, $2) Otherworldly Music Box (Defiled Wastelands)
+(#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
@@ -1309,8 +1304,8 @@ TILES:
 (々) Miscreant Trophy*
 (々) Quantux Relic*
 (々) Quantux Trophy*
-(@, ^3) Shimmer Construct Relic* !!!
-(@, ^3) Shimmer Construct Trophy* !!!
+(#2, ^2) Shimmer Construct Relic* !!! (apply sprite)
+(#2, ^2) Shimmer Construct Trophy* !!! (apply sprite)
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
@@ -1320,7 +1315,7 @@ MATERIALS:
 |---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(@, ^3) Aetherite Bar !!!
+(^) Aetherite Bar
 (^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
@@ -1462,7 +1457,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(#2, ^2) Nerve Flan !!! (use buff icon, holding position)
+(#2, ^2) Nerve Flan !!! (holding position)
 (^) Pawpaw*
 (^) Periven*
 (^) Petrified Prickly Pear*
@@ -1516,7 +1511,7 @@ CONSUMABLES:
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
 (^) Lost Diver Bag
-(@, ^3) Shimmer Construct Bag !!!
+(^) Shimmer Construct Bag
 (^) World Cracker Bag*
 ---
 
@@ -1525,7 +1520,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(X) Jawbreaker (Stellar Spark) !!!
+(#2, ^2) Jawbreaker (Stellar Spark) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 

@@ -6,12 +6,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Shotty_x2 : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Gun"
-        ];
-        public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
+		public string[] Categories => [
+			"Gun"
+		];
+		public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
+			Item.useTime = 50;
+			Item.useAnimation = 50;
 			Item.value = Item.sellPrice(gold: 4);
 		}
 		public override void AddRecipes() {
@@ -31,19 +33,16 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Shotty_x3 : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/3_In_1_Shotty";
-		
+
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Boomstick);
-			Item.value = Item.sellPrice(gold: 6);
+			Item.CloneDefaults(ItemID.Shotgun);
+			Item.useTime = 50;
+			Item.useAnimation = 50;
+			Item.value = Item.sellPrice(gold: 9);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.Boomstick, 3)
-			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 9)
-			.AddTile(TileID.TinkerersWorkbench)
-			.Register();
-			Recipe.Create(Type)
-			.AddIngredient(ItemID.Boomstick)
+			.AddIngredient(ItemID.Shotgun)
 			.AddIngredient(ModContent.ItemType<Shotty_x2>())
 			.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 3)
 			.AddTile(TileID.TinkerersWorkbench)

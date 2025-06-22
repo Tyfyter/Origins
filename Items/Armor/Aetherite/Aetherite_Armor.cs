@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
-using Origins.Journal;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using Terraria;
@@ -14,12 +12,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Aetherite {
 	[AutoloadEquip(EquipType.Head)]
 	public class Aetherite_Wreath : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override string Texture => typeof(Ashen.Ashen_Helmet).GetDefaultTMLName();
+		public static int HeadSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			Origins.AddHelmetGlowmask(this);
+			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
+			HeadSlot = Item.headSlot;
 		}
 		public override void SetDefaults() {
-			Item.defense = 6;
+			Item.defense = 8;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
 		}
@@ -29,7 +28,7 @@ namespace Origins.Items.Armor.Aetherite {
 			originPlayer.meleeScaleMultiplier *= 1.15f;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Aetherite_Robes>() && legs.type == ModContent.ItemType<Aetherite_Pants>();
+			return body.type == ModContent.ItemType<Aetherite_Robe>();
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Aetherite").SubstituteKeybind(Keybindings.TriggerSetBonus);
@@ -43,43 +42,33 @@ namespace Origins.Items.Armor.Aetherite {
 		}
 		public string ArmorSetName => "Aetherite_Armor";
 		public int HeadItemID => Type;
-		public int BodyItemID => ModContent.ItemType<Aetherite_Robes>();
-		public int LegsItemID => ModContent.ItemType<Aetherite_Pants>();
+		public int BodyItemID => ModContent.ItemType<Aetherite_Robe>();
+		public int LegsItemID => 0;
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Aetherite_Robes : ModItem, INoSeperateWikiPage {
-		public override string Texture => typeof(Ashen.Ashen_Breastplate).GetDefaultTMLName();
+	public class Aetherite_Robe : ModItem, INoSeperateWikiPage {
+		int legsID;
+		public override void Load() {
+			legsID = EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Legs}", EquipType.Legs, name: $"{Name}_{EquipType.Legs}");
+		}
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 8;
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetAttackSpeed(DamageClass.Generic) += 0.24f;
 			player.maxMinions += 1;
+			if (!player.controlDown) player.gravity *= 0.8f;
+			player.jumpSpeedBoost += 2f;
+		}
+		public override void SetMatch(bool male, ref int equipSlot, ref bool robes) {
+			robes = true;
+			equipSlot = legsID;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient<Aetherite_Bar>(24)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}
-	}
-	[AutoloadEquip(EquipType.Legs)]
-	public class Aetherite_Pants : ModItem, INoSeperateWikiPage {
-		public override string Texture => typeof(Ashen.Ashen_Greaves).GetDefaultTMLName();
-		public override void SetDefaults() {
-			Item.defense = 6;
-			Item.value = Item.sellPrice(silver: 60);
-			Item.rare = ItemRarityID.Orange;
-		}
-		public override void UpdateEquip(Player player) {
-			if (!player.controlDown) player.gravity *= 0.8f;
-			player.jumpSpeedBoost += 2f;
-		}
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient<Aetherite_Bar>(18)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

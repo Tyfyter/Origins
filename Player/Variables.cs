@@ -316,6 +316,7 @@ namespace Origins {
 		public bool wishingGlassVisible = false;
 		public int wishingGlassAnimation = 0;
 		public int wishingGlassDye = -1;
+		public Vector2 wishingGlassOffset = default;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
 
@@ -513,6 +514,7 @@ namespace Origins {
 		public bool realControlUseItem = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
+		public float moveSpeedMult = 1;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -569,6 +571,7 @@ namespace Origins {
 					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
 				}
 			}
+			Player.GetJumpState<Latchkey_Jump_Refresh>().Enable();
 			rivenSet = false;
 			rivenSetBoost = false;
 			bleedingObsidianSet = false;
@@ -707,6 +710,8 @@ namespace Origins {
 			dashHitDebuffs.Clear();
 			dashVase = false;
 			dashVaseDye = 0;
+			abyssalAnchorDye = 0;
+			bindingBookDye = 0;
 			goldenLotus = false;
 
 			trapCharm = false;
@@ -728,8 +733,8 @@ namespace Origins {
 				}
 			}
 			if (resizingGlove) {
-				const float strength = 1.2f;
-				if (Player.ItemAnimationJustStarted) resizingGloveScale = Main.rand.NextFloat(1 / strength, float.BitIncrement(strength));
+				const float strength = 2f;
+				if (Player.ItemAnimationJustStarted) resizingGloveScale = Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2);
 				resizingGlove = false;
 			}
 			wishingGlassEquipTime.Cooldown();
@@ -774,8 +779,11 @@ namespace Origins {
 				}
 			}
 			wishingGlassActive = false;
+			wishingGlassOffset -= Player.velocity * (wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0 : 0.5f);
+			wishingGlassOffset *= wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0.7f : 0.85f;
 			Wishing_Glass_Layer.UpdateAnimation(ref wishingGlassAnimation, wishingGlassCooldown);
 			wishingGlassVisible = false;
+			wishingGlassDye = 0;
 			shimmerShield = false;
 			lotteryTicketItem = null;
 
@@ -1078,6 +1086,7 @@ namespace Origins {
 			heldProjOverArm = null;
 			shieldGlow = -1;
 			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
+			moveSpeedMult = 1;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

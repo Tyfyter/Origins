@@ -22,6 +22,7 @@ using Origins.Projectiles;
 using MagicStorage.CrossMod;
 using Terraria.GameContent;
 using Terraria.Graphics;
+using Terraria.Audio;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -50,7 +51,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class ShimmerLandminesState : AIState {
 		#region stats
-		public static int StarDamage => (int) (38 + 4 * DifficultyMult);
+		public static int StarDamage => (int) (32 + 6 * DifficultyMult);
 		public static int AreaYOffset => 16 * 10;
 		public static int AreaWidth => 60;
 		public static int AreaHeight => 80;
@@ -68,6 +69,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 targetPos = npc.GetTargetData().Center;
 			npc.velocity += npc.DirectionTo(targetPos - Vector2.UnitY * 16 * 15) * 0.5f;
 			for (int i = 0; i < 2; i++) {
+				SoundEngine.PlaySound(SoundID.Item88);
+				SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.75f), npc.Center);
 				if (positions.TryPop(out Vector2 position)) {
 					npc.SpawnProjectile(null,
 						position,
@@ -110,6 +113,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override void SetStaticDefaults() {
 				ProjectileID.Sets.TrailingMode[Type] = 3;
 				ProjectileID.Sets.TrailCacheLength[Type] = 30;
+				ProjectileID.Sets.NoLiquidDistortion[Type] = true;
 				ID = Type;
 			}
 			public override void SetDefaults() {
@@ -138,6 +142,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						Projectile.oldPos[i] = Vector2.Lerp(Projectile.position, pos, i / (float)Projectile.oldPos.Length);
 						Projectile.oldRot[i] = rotation;
 					}
+				}
+				if (Projectile.timeLeft < 15) {
+					Projectile.Opacity = Projectile.timeLeft / 15f;
+				} else if (!NPC.npcsFoundForCheckActive[ModContent.NPCType<Shimmer_Construct>()]) {
+					Projectile.timeLeft = 15;
 				}
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
@@ -210,12 +219,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class ShotgunState : AIState {
 		#region stats
 #pragma warning disable IDE0060 // Remove unused parameter
-		public static int ShotDamage => (int) (35 + 6 * DifficultyMult);
+		public static int ShotDamage => (int) (29 + 8 * DifficultyMult);
 		public static float ShotCount => 3 + DifficultyMult;
 		public static float Spread => 0.5f;
-		public static float ShotSpeed => 12;
+		public static float ShotSpeed => 25;
 		public static float MinShotSpeedFactor => 0.7f;
-		public static float TurnRate => 0.01f;
+		public static float TurnRate => 0.03f;
 		public static int Startup => 60;
 		public static int EndLag => 30;
 		public static float IndicatorAlpha(int time) => (time <= 5 && time >= 2) ? 0.08f : 0.02f;
@@ -236,6 +245,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.ai[2] = (npc.GetTargetData().Center - npc.Center).ToRotation();
+			SoundEngine.PlaySound(SoundID.Item121.WithPitchRange(0.15f, 0.4f), npc.Center);
 			npc.SpawnProjectile(null,
 				npc.Center,
 				Vector2.Zero,
@@ -254,6 +264,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC Owner => Main.npc.GetIfInRange((int)Projectile.ai[2]);
 			public override void SetDefaults() {
 				Projectile.tileCollide = false;
+				Projectile.hostile = true;
 			}
 			public override bool ShouldUpdatePosition() => false;
 			IEnumerable<Vector2> GetShots() {
@@ -418,16 +429,24 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		readonly Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/Textures/Shimmer_Construct_BG");
 		readonly ArmorShaderData invertAnimateShader = GameShaders.Armor.BindShader(ItemID.HallowedBar, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "InvertAnimate"));
 		readonly ArmorShaderData maskShader = GameShaders.Armor.BindShader(ItemID.AdamantiteMask, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "Mask"));
-		readonly List<Player> players = [];
+		readonly List<Player> players = new(255);
 		bool active = false;
 		float opacity;
-		public static readonly List<DrawData> drawDatas = [];
+		public static List<DrawData> oldDrawDatas = [];
+		public static List<DrawData> drawDatas = [];
+		static readonly BlendState realAlphaSourceBlend = new() {
+				ColorSourceBlend = Blend.One,
+				AlphaSourceBlend = Blend.One,
+				ColorDestinationBlend = Blend.InverseSourceAlpha,
+				AlphaDestinationBlend = Blend.InverseSourceAlpha
+			};
 		public override void Draw(SpriteBatch spriteBatch) {
 			if (renderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;
 				return;
 			}
+			if (spriteBatch is null) return;
 			SpriteBatchState state = spriteBatch.GetState();
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
@@ -435,6 +454,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.Restart(state);
 					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+					for (int i = 0; i < oldDrawDatas.Count; i++) {
+						oldDrawDatas[i].Draw(spriteBatch);
+					}
 					for (int i = 0; i < drawDatas.Count; i++) {
 						drawDatas[i].Draw(spriteBatch);
 					}
@@ -443,11 +465,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.UseOldRenderTargets(oldRenderTargets);
 					spriteBatch.Begin(state);
 				}
-				drawDatas.Clear();
+				OriginExtensions.SwapClear(ref drawDatas, ref oldDrawDatas);
 			}
-
 			Origins.shaderOroboros.Capture(spriteBatch);
-			spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
+			spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
 			const int scale = 4;
 			Rectangle frame = new(0, 0, (int)size.X, (int)size.Y);
@@ -469,17 +490,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
-			players.Clear();
-			int buffID = ModContent.BuffType<Weak_Shimmer_Debuff>();
-			foreach (Player player in Main.ActivePlayers) {
-				if (player.HasBuff(buffID)) {
-					players.Add(player);
-					Lighting.AddLight(player.Center, new Vector3(1));
-				}
-			}
 
+			static void DrawCachedProjectiles(List<int> projCache) {
+				Main.CurrentDrawnEntity = null;
+				Main.CurrentDrawnEntityShader = 0;
+				for (int i = 0; i < projCache.Count; i++) {
+					try {
+						Main.instance.DrawProj(projCache[i]);
+					} catch (Exception e) {
+						TimeLogger.DrawException(e);
+						Main.projectile[projCache[i]].active = false;
+					}
+				}
+				Main.CurrentDrawnEntity = null;
+				Main.CurrentDrawnEntityShader = 0;
+			}
+			DrawCachedProjectiles(DrawCacheProjsBehindProjectiles);
+			DrawCachedProjectiles(DrawCacheProjsBehindNPCs);
 			foreach (Projectile proj in Main.ActiveProjectiles) {
-				if (!proj.hide) Main.instance.DrawProj(proj.whoAmI);
+				if (shimmeryNormalProjs[proj.whoAmI]) Main.instance.DrawProj(proj.whoAmI);
 			}
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			foreach (NPC npc in Main.ActiveNPCs) {
@@ -488,9 +517,20 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			spriteBatch.End();
+			for (int i = 0; i < players.Count; i++) {
+				Lighting.AddLight(players[i].Center, new Vector3(1));
+			}
 			Main.PlayerRenderer.DrawPlayers(Main.Camera, players);
-			PegasusLib.Reflection.DelegateMethods._target.SetValue(MainReflection.DrawDust, Main.instance);
-			MainReflection.DrawDust();
+			spriteBatch.Begin(state);
+			DrawCachedProjectiles(DrawCacheProjsOverPlayers);
+			spriteBatch.End();
+			try {
+				drawingDust = true;
+				PegasusLib.Reflection.DelegateMethods._target.SetValue(MainReflection.DrawDust, Main.instance);
+				MainReflection.DrawDust();
+			} finally {
+				drawingDust = false;
+			}
 			spriteBatch.Begin(state);
 		}
 		public override void Update(GameTime gameTime) { }
@@ -503,7 +543,71 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Mode = OverlayMode.Inactive;
 		}
 		public override bool IsVisible() => active;
-		public void Load(Mod mod) { }
+		List<int> DrawCacheProjsBehindProjectiles = new(1000);
+		List<int> DrawCacheProjsBehindNPCs = new(1000);
+		List<int> DrawCacheProjsOverPlayers = new(1000);
+		bool[] projOwners = new bool[Main.maxPlayers];
+		bool[] shimmeryNormalProjs = new bool[Main.maxProjectiles];
+
+		readonly FastFieldInfo<Main, List<Player>> _playersThatDrawAfterProjectiles = "_playersThatDrawAfterProjectiles";
+		public void Load(Mod mod) {
+			On_Main.CacheProjDraws += (orig, self) => {
+				orig(self);
+				Array.Clear(shimmeryNormalProjs);
+				if (active) {
+					static void PluckProjectiles(List<int> source, List<int> bucket) {
+						bucket.Clear();
+						for (int i = source.Count - 1; i >= 0; i--) {
+							Projectile projectile = Main.projectile[source[i]];
+							if (projectile.hostile || projectile.GetGlobalProjectile<OriginGlobalProj>().weakShimmer) {
+								bucket.Add(source[i]);
+								source.RemoveAt(i);
+							}
+						}
+					}
+					PluckProjectiles(Main.instance.DrawCacheProjsBehindProjectiles, DrawCacheProjsBehindProjectiles);
+					PluckProjectiles(Main.instance.DrawCacheProjsBehindNPCs, DrawCacheProjsBehindNPCs);
+					PluckProjectiles(Main.instance.DrawCacheProjsOverPlayers, DrawCacheProjsOverPlayers);
+					foreach (Projectile projectile in Main.ActiveProjectiles) {
+						if ((!projectile.hide || DrawCacheProjsBehindNPCs.Contains(projectile.whoAmI)) && (projectile.hostile || projectile.GetGlobalProjectile<OriginGlobalProj>().weakShimmer)) {
+							shimmeryNormalProjs[projectile.whoAmI] = true;
+						}
+					}
+				}
+			};
+			On_Main.RefreshPlayerDrawOrder += (orig, self) => {
+				orig(self);
+				if (active) {
+					Array.Clear(projOwners);
+					players.Clear();
+					int buffID = ModContent.BuffType<Weak_Shimmer_Debuff>();
+					List<Player> playersThatDrawAfterProjectiles = _playersThatDrawAfterProjectiles.GetValue(self);
+					for (int i = playersThatDrawAfterProjectiles.Count - 1; i >= 0; i--) {
+						Player player = playersThatDrawAfterProjectiles[i];
+						if (player.HasBuff(buffID)) {
+							players.Add(player);
+							playersThatDrawAfterProjectiles.RemoveAt(i);
+							projOwners[player.whoAmI] = true;
+						}
+					}
+				}
+			};
+			try {
+				IL_Main.DrawProjectiles += (il) => {
+					ILCursor c = new(il);
+					c.GotoNext(MoveType.Before, i => i.MatchLdfld<Projectile>(nameof(Projectile.hide)));
+					c.EmitDup();
+					c.Index++;
+					c.EmitDelegate((Projectile proj, bool hide) => hide || shimmeryNormalProjs[proj.whoAmI]);
+				};
+			} catch (Exception ex) {
+				if (Origins.LogLoadingILError($"{nameof(SC_Phase_Three_Overlay)}_DontNormalDrawShimmeryProjectiles", ex)) throw;
+			}
+			instance = this;
+		}
+		bool drawingDust = false;
+		public static bool HideAllDust => instance.active && !instance.drawingDust;
+		static SC_Phase_Three_Overlay instance;
 		public void Unload() {
 			if (renderTarget is not null) {
 				Main.QueueMainThreadAction(renderTarget.Dispose);

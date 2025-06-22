@@ -484,9 +484,6 @@ namespace Origins.NPCs {
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
 			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || player.InModBiome<Riven_Hive>()) {
-				if (Main.invasionType <= 0) pool[0] = 0;
-			}
 			if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) {
 				if (player.InModBiome<Defiled_Wastelands>() && !ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().IsActive(spawnInfo)) {
 					pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);

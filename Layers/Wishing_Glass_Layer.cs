@@ -26,7 +26,7 @@ namespace Origins.Layers {
 			OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
 			int wishingGlassAnimation = originPlayer.wishingGlassAnimation;
 			if (wishingGlassAnimation == CooldownEndAnimationDuration + 1) return;
-			Vector2 position = drawInfo.Position + drawInfo.drawPlayer.Size * 0.5f;
+			Vector2 position = drawInfo.Position + drawInfo.drawPlayer.Size * 0.5f + originPlayer.wishingGlassOffset;
 			Vector2 posScale = new(drawInfo.drawPlayer.direction * 1.5f, 1.25f);
 			if (wishingGlassAnimation > CooldownEndAnimationDuration) {
 				position += drawInfo.drawPlayer.Size * GetPosition(wishingGlassAnimation).XY() * posScale;

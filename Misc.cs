@@ -1549,6 +1549,10 @@ namespace Origins {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			return Gore.NewGore(source, Position, Velocity, mod.GetGoreSlot(name), Scale);
 		}
+		public static int SpawnGoreByType(IEntitySource source, Vector2 Position, Vector2 Velocity, int type, float Scale = 1) {
+			if (Main.netMode == NetmodeID.Server) return 0;
+			return Gore.NewGore(source, Position, Velocity, type, Scale);
+		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
 			return drawPlayerItemPos(gravdir, itemtype);
@@ -2365,7 +2369,7 @@ namespace Origins {
 					projRotation,
 					frames[frame].Size() * 0.5f,
 					Vector2.One,
-					SpriteEffects.None, 
+					SpriteEffects.None,
 				0);
 				data.shader = dye;
 				Main.EntitySpriteDraw(data);
@@ -3131,9 +3135,9 @@ namespace Origins {
 			shop.InsertAfter(targetItem, ModContent.ItemType<T>(), condition);
 		public static NPCShop InsertBefore<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
 			shop.InsertBefore(targetItem, ModContent.ItemType<T>(), condition);
-		public static NPCShop InsertAfter<TAfter, TNew>(this NPCShop shop, params Condition[] condition) where TAfter : ModItem where TNew : ModItem  =>
+		public static NPCShop InsertAfter<TAfter, TNew>(this NPCShop shop, params Condition[] condition) where TAfter : ModItem where TNew : ModItem =>
 			shop.InsertAfter(ModContent.ItemType<TAfter>(), ModContent.ItemType<TNew>(), condition);
-		public static NPCShop InsertBefore<TBefore, TNew>(this NPCShop shop, params Condition[] condition) where TBefore : ModItem where TNew : ModItem  =>
+		public static NPCShop InsertBefore<TBefore, TNew>(this NPCShop shop, params Condition[] condition) where TBefore : ModItem where TNew : ModItem =>
 			shop.InsertBefore(ModContent.ItemType<TBefore>(), ModContent.ItemType<TNew>(), condition);
 	}
 	public static class ConditionExtensions {
@@ -3486,13 +3490,13 @@ namespace Origins {
 			Vector2 point2 = point - normal;
 
 			float t = ((a.X - point.X) * (point.Y - point2.Y) - (a.Y - point.Y) * (point.X - point2.X))
-					/ ((a.X - b.X)     * (point.Y - point2.Y) - (a.Y - b.Y)     * (point.X - point2.X));
+					/ ((a.X - b.X) * (point.Y - point2.Y) - (a.Y - b.Y) * (point.X - point2.X));
 			progressOnSegment = t;
 			if (onlyWithinSegment && (t < 0 || t > 1)) {
 				return float.NaN;
 			}
 
-			float u = ((a.X - b.X) * (a.Y - point.Y)      - (a.Y - b.Y) * (a.X - point.X))
+			float u = ((a.X - b.X) * (a.Y - point.Y) - (a.Y - b.Y) * (a.X - point.X))
 					/ ((a.X - b.X) * (point.Y - point2.Y) - (a.Y - b.Y) * (point.X - point2.X));
 			return u;
 		}
@@ -3519,11 +3523,11 @@ namespace Origins {
 				Vector2 b = lines[i].end;
 				if (hasSize && Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
 				float t = ((a.X - rectPos.X) * (rectPos.Y) - (a.Y - rectPos.Y) * (rectPos.X))
-						/ ((a.X - b.X)       * (rectPos.Y) - (a.Y - b.Y)       * (rectPos.X));
+						/ ((a.X - b.X) * (rectPos.Y) - (a.Y - b.Y) * (rectPos.X));
 				if (t < 0 || t > 1) continue;
 
 				float u = ((a.X - b.X) * (a.Y - rectPos.Y) - (a.Y - b.Y) * (a.X - rectPos.X))
-						/ ((a.X - b.X) * (rectPos.Y)       - (a.Y - b.Y) * (rectPos.X));
+						/ ((a.X - b.X) * (rectPos.Y) - (a.Y - b.Y) * (rectPos.X));
 				if (u > 0 && u < 1) intersections++;
 			}
 			return intersections % 2 == 1;

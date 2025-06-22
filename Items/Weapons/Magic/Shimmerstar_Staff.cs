@@ -5,6 +5,7 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
@@ -41,7 +42,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = Origins.Sounds.PowerUp.WithPitchRange(0.5f, 0.65f);
+			Item.UseSound = null;
 			Item.autoReuse = true;
 			Item.useLimitPerAnimation = MainFireCount;
 			Item.ChangePlayerDirectionOnShoot = false;
@@ -73,13 +74,16 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.altFunctionUse != 2) {
 				int turnDir = (velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt();
 				if (player.ItemUsesThisAnimation == 1) player.ChangeDir(turnDir);
-
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
 				int arcIndex = player.direction == 1 ? player.ItemUsesThisAnimation : ((MainFireCount + 1) - player.ItemUsesThisAnimation);
 				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: (arcIndex - 0.5f) / (float)MainFireCount, ai1: player.itemAnimation);
 
 				if (player.ItemUsesThisAnimation == Item.useLimitPerAnimation) player.ChangeDir(turnDir);
 			} else {
 				if (player.ItemUsesThisAnimation == 1) {
+					SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
+					SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
 					player.ChangeDir((velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt());
 					position = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 					bool secondSwing = player.OriginPlayer().itemComboAnimationTime > 0;
@@ -243,7 +247,8 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public static void DrawShimmerstar(Projectile projectile) {
-			if (projectile.oldPos.Length > 0) {
+			float opacity = projectile.Opacity;
+			if (projectile.oldPos.Length > 0 && projectile.oldPos[^1] != projectile.position) {
 				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 				miscShaderData.UseSaturation(-2.8f);
 				miscShaderData.UseOpacity(4f);
@@ -254,7 +259,7 @@ namespace Origins.Items.Weapons.Magic {
 				Color StripColors(float progressOnStrip) {
 					if (float.IsNaN(progressOnStrip)) return Color.Transparent;
 					Vector2 pos = projectile.oldPos[(int)(progressOnStrip * (projectile.oldPos.Length - 1))];
-					return new(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16));
+					return new Color(LiquidRenderer.GetShimmerBaseColor(pos.X / 16, pos.Y / 16)) * opacity;
 				}
 				float StripWidth(float progressOnStrip) {
 					float num = 1f;
@@ -274,7 +279,7 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 spinningpoint6 = new Vector2(2f * scale + (float)Math.Cos(Main.GlobalTimeWrappedHourly * MathHelper.TwoPi) * 0.4f, 0f).RotatedBy(rotation + Main.GlobalTimeWrappedHourly * MathHelper.TwoPi);
 			for (float f = 0f; f < 1f; f += 1f / 6f) {
 				Vector2 pos = center + spinningpoint6.RotatedBy(f * MathHelper.TwoPi);
-				Main.EntitySpriteDraw(texture, pos, null, new(LiquidRenderer.GetShimmerBaseColor((pos.X + Main.screenPosition.X) / 16, (pos.Y + Main.screenPosition.Y) / 16) * new Vector4(Vector3.One, 0.5f)), rotation, origin, scale, SpriteEffects.None);
+				Main.EntitySpriteDraw(texture, pos, null, new Color(LiquidRenderer.GetShimmerBaseColor((pos.X + Main.screenPosition.X) / 16, (pos.Y + Main.screenPosition.Y) / 16) * new Vector4(Vector3.One, 0.5f)) * opacity, rotation, origin, scale, SpriteEffects.None);
 			}
 		}
 	}

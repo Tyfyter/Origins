@@ -41,7 +41,12 @@ namespace Origins.Items.Weapons.Demolitionist {
             .AddIngredient(ItemID.CrimsandBlock)
             .Register();
 
-            Recipe.Create(Type, 60)
+			Recipe.Create(Type, 60)
+			.AddIngredient(ItemID.SilverOre)
+			.AddIngredient(ItemID.PearlsandBlock)
+			.Register();
+
+			Recipe.Create(Type, 60)
             .AddIngredient(ItemID.SilverOre)
             .AddIngredient(ModContent.ItemType<Defiled_Sand_Item>())
             .Register();
