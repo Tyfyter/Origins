@@ -688,6 +688,7 @@ namespace Origins.Tiles {
 		public abstract int[] FrameIndexArray { get; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
+		private int offsetY;
 		public sealed override void Load() {
 			Mod.AddContent(item = new TileItem(this).WithExtraDefaults(item => {
 				item.width = 32;
@@ -719,10 +720,6 @@ namespace Origins.Tiles {
 			TileObjectData.addTile(Type);
 			glowTexture = Texture + "_Glow";
 		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (!glowTexture.Exists) return;
-			OriginExtensions.DrawTileGlow(glowTexture, GlowmaskColor, i, j, spriteBatch);
-		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 6 : 3;
@@ -733,7 +730,14 @@ namespace Origins.Tiles {
 			int frameIndex;
 			if (CageKind != CageKinds.BigCage) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
-			frameYOffset = FrameIndexArray[frameIndex] * AnimationFrameHeight;
+			frameYOffset = offsetY = FrameIndexArray[frameIndex] * AnimationFrameHeight;
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (!glowTexture.Exists) return;
+			Rectangle glowRect = new(drawData.tileFrameX, drawData.tileFrameY + offsetY, drawData.tileWidth, drawData.tileHeight);
+			drawData.glowTexture = glowTexture;
+			drawData.glowColor = GlowmaskColor;
+			drawData.glowSourceRect = glowRect;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;

@@ -6028,7 +6028,10 @@ Chambersite_Minigun: {
 	// Tooltip: Fires in a spread before ramping up
 }
 
-// Aetherite_Bar.DisplayName: Aetherite Bar
+Aetherite_Bar: {
+	// DisplayName: Aetherite Bar
+	// Tooltip: "'It's smooth, but that's not what it feels like'"
+}
 
 Shimmerstar_Staff: {
 	// DisplayName: Shimmerstar Staff
