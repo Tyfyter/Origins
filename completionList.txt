@@ -616,9 +616,9 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
+(X) DIO's Set
 (^) First Dream
 (^) Tyfyter's Set*
-(X) DIO's Set (head: Vampiric Locks, chest: Vampiric Vest, legs: Vampiric Trousers, wings: Vampiric Spell)
 
 (^) Acrid Dye
 (^) Amber Dye
@@ -660,6 +660,8 @@ WINGS:
 (X) Booster Pack
 (X) Fibron Thruster Array
 (X) Nova Backblaster
+
+(X) Vampiric Spell
 ---
 
 
@@ -902,7 +904,7 @@ SUMMONER WEAPONS:
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
 (^) Brainy Staff*
-(@4, ^3) Broken Terratotem !!!
+(#2, ^2) Broken Terratotem !!!
 (^) Defective Mortar Shell
 (^) Desert Crown*
 (^) Eyeball Staff
@@ -966,7 +968,7 @@ SUMMONER WEAPONS:
 (X, @2, #) SMART Wrench
 (X) Solstice Incantation
 (X) Technomancer 4000
-(@4, ^3) Terratotem !!!
+(#2, ^2) Terratotem !!!
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
@@ -1233,7 +1235,6 @@ TILES:
 (^) Acetabularia*
 (X) Ashen Scrap Foliage
 (X) Ashen Soot Foliage
-(X) Barnacle Infested Coral !!!
 (^) Brineglow Vine*
 (X) Cargo Elevator Door
 (^) Defiled Foliage
@@ -1249,15 +1250,15 @@ TILES:
 (X) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble
-(X) Marrowick Coral !!!
-(X) Marrowick Flange !!!
+(#, ^2) Marrowick Coral !!!
+(#, ^2) Marrowick Flange !!!
 (X) Moonshine°
 (^) Ocotillo
 (X) Petrified Baobab Tree*
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
-(X) Shelf Coral !!!
+(#, ^2) Shelf Coral !!!
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
