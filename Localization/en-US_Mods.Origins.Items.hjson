@@ -6033,6 +6033,8 @@ Aetherite_Bar_Item: {
 	Tooltip: "'It's smooth, but that's not what it feels like'"
 }
 
+Aetherite_Bar.DisplayName: Aetherite Bar
+
 Shimmerstar_Staff: {
 	DisplayName: Shimmerstar Staff
 	Tooltip:

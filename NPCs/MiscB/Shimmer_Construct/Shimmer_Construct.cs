@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
@@ -125,6 +126,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			);
 		}
 		public override void AI() {
+			//Dusts
+			if(Main.rand.NextBool(3))
+				Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32,32),ModContent.DustType<ShimmerConstructDust>(),Main.rand.NextVector2Circular(15,15),Scale:1).noGravity = true;
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
