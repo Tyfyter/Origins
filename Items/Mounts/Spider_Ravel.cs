@@ -25,7 +25,7 @@ namespace Origins.Items.Mounts {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient(ItemID.Cobweb, 270)
-			.AddIngredient(ItemID.SpiderFang, 50)
+			.AddIngredient(ItemID.SpiderFang, 10)
 			.AddIngredient(Ravel.ID)
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
