@@ -6346,11 +6346,11 @@ Aetherite_Ore_Item: {
 }
 
 Kono_Dio_Da_Set: {
-	// DisplayName: Kono Dio Da Set
+	// DisplayName: Dio Set
 	// Tooltip: ""
 }
 
 Kono_Dio_Da_Wings: {
-	// DisplayName: <PH> Kono Dio Da Wings
+	// DisplayName: Vampiric Spell
 	// Tooltip: ""
 }
