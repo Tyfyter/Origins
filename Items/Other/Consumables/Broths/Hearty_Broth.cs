@@ -19,7 +19,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			];
 		}
 		public override void PreUpdateMinion(Projectile minion) {
-			minion.GetGlobalProjectile<MinionGlobalProjectile>().tempBonusUpdates += minion.MaxUpdates * 0.1f;
+			minion.GetGlobalProjectile<MinionGlobalProjectile>().tempBonusUpdates += 0.1f;
 			if (minion.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) artifact.maxHealthModifier += 0.2f;
 		}
 	}
