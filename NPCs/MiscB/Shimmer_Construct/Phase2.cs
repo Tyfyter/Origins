@@ -95,7 +95,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[2] = Main.rand.RandomRound(ShotCount);
 		}
 		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
-			if (!CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
+			if (!boss.IsInPhase3 && !CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
 			return base.GetWeight(boss, previousStates);
 		}
 		public class Shimmer_Construct_Missiles : ModProjectile {
