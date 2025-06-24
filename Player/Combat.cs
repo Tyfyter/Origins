@@ -552,16 +552,6 @@ namespace Origins {
 					//damage-=damage/5;
 				}
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
-				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
-					Vector2 diff = proj.Center - Player.MountedCenter;
-					if (diff.Y > 24 && diff.Y > Math.Abs(diff.X)) {
-						modifiers.SourceDamage *= 0;
-						modifiers.SourceDamage.Flat = 1;
-						//modifiers.Knockback *= 0;
-						modifiers.HitDirectionOverride = 0;
-						modifiers.DisableSound();
-					}
-				}
 				const float min_self_destruct_mult = 0.1f;
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
 					modifiers.ScalingArmorPenetration += 1;
@@ -569,6 +559,18 @@ namespace Origins {
 				}
 				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
 				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
+				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
+					Vector2 diff = proj.Center - Player.MountedCenter;
+					if (diff.Y > 24 && diff.Y > Math.Abs(diff.X)) {
+						modifiers.SourceDamage *= 0;
+						modifiers.SourceDamage.Flat = 0;
+						modifiers.FinalDamage *= 0;
+						modifiers.FinalDamage.Flat = 1;
+						//modifiers.Knockback *= 0;
+						modifiers.HitDirectionOverride = 0;
+						modifiers.DisableSound();
+					}
+				}
 			}
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;

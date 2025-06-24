@@ -1,4 +1,4 @@
-
+﻿
 <Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="..\tModLoader.targets" />
 	<PropertyGroup>
@@ -12,14 +12,26 @@
 		<Reference Include="AltLibrary">
 			<HintPath>..\ModAssemblies\AltLibrary_v1.2.dll</HintPath>
 		</Reference>
+		<Reference Include="AltLibrary">
+		  <HintPath>..\ModAssemblies\AltLibrary_v2.0.2.2.dll</HintPath>
+		</Reference>
 		<Reference Include="BetterDialogue">
 			<HintPath>..\ModAssemblies\BetterDialogue_v1.1.5.3.dll</HintPath>
+		</Reference>
+		<Reference Include="BetterDialogue">
+		  <HintPath>..\ModAssemblies\BetterDialogue_v1.1.6.3.dll</HintPath>
 		</Reference>
 		<Reference Include="CalamityMod">
 			<HintPath>..\ModAssemblies\CalamityMod_v2.0.4.5.dll</HintPath>
 		</Reference>
+		<Reference Include="CalamityMod">
+		  <HintPath>..\ModAssemblies\CalamityMod_v2.0.5.dll</HintPath>
+		</Reference>
 		<Reference Include="Fargowiltas">
 			<HintPath>..\ModAssemblies\Fargowiltas_v3.3.5.5.dll</HintPath>
+		</Reference>
+		<Reference Include="Fargowiltas">
+		  <HintPath>..\ModAssemblies\Fargowiltas_v3.3.6.2.dll</HintPath>
 		</Reference>
 		<Reference Include="PegasusLib">
 			<HintPath>..\ModAssemblies\PegasusLib_v1.0.6.4.dll</HintPath>

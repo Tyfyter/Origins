@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
@@ -125,6 +126,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			);
 		}
 		public override void AI() {
+			//Dusts
+			if(Main.rand.NextBool(3))
+				Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32,32),ModContent.DustType<ShimmerConstructDust>(),Main.rand.NextVector2Circular(15,15),Scale:1).noGravity = true;
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
@@ -679,6 +683,54 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
+		}
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle {
+			get {
+
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.ModNPC is Shimmer_Construct shimmerConstruct) {
+						if (shimmerConstruct.IsInPhase3)
+							return ModContent.GetInstance<SC_BG>(); ;
+					}
+				}
+				return null;
+			}
+		}
+	}
+	public class SC_BG : ModSurfaceBackgroundStyle {
+		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
+
+		}
+		private static int SurfaceFrameCounter;
+		private static int SurfaceFrame = 6;
+		private static int pingpongCounter = 1;
+		private static Asset<Texture2D>[] sc_BGs;
+		private const int bgsAmount = 30;
+		public override void Load() {
+			sc_BGs = new Asset<Texture2D>[bgsAmount];
+			for (int i = 1; i < bgsAmount; i++) 
+			{
+				sc_BGs[i] = Mod.Assets.Request<Texture2D>("Textures/Backgrounds/SC_BG/SC_BG"+i);
+			}
+		}
+
+		public override bool PreDrawCloseBackground(SpriteBatch spriteBatch) {
+
+			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value,new Rectangle(0,0,Main.ScreenSize.X,Main.ScreenSize.Y),Color.White);
+
+			return base.PreDrawCloseBackground(spriteBatch);
+		}
+
+		public override int ChooseMiddleTexture() {
+			if (++SurfaceFrameCounter > 1) {
+				// remove the first 5 frame since it makes me want to throw up 
+				if(SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
+					pingpongCounter *= -1;
+				SurfaceFrame = (SurfaceFrame + pingpongCounter);
+				SurfaceFrameCounter = 0;
+			}
+
+			return -1;
 		}
 	}
 	public class Boss_Bar_SC : ModBossBar {

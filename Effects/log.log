@@ -122,6 +122,10 @@ Loading description file: RivenBloodCoating.fx... Done!
 Compiling font... Done!
 Compiling font content file: RivenBloodCoating.xnb... Done!
 
+Loading description file: SC_DustEffect.fx... Done!
+Compiling font... Done!
+Compiling font content file: SC_DustEffect.xnb... Done!
+
 Loading description file: Shimmer.fx... Done!
 Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
