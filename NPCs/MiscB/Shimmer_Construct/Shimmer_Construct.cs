@@ -702,11 +702,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 
 		}
 		private static int SurfaceFrameCounter;
-		private static int SurfaceFrame;
+		private static int SurfaceFrame = 6;
+		private static int pingpongCounter = 1;
 		private static Asset<Texture2D>[] sc_BGs;
+		private const int bgsAmount = 30;
 		public override void Load() {
-			sc_BGs = new Asset<Texture2D>[96];
-			for (int i = 1; i < sc_BGs.Length; i++) 
+			sc_BGs = new Asset<Texture2D>[bgsAmount];
+			for (int i = 1; i < bgsAmount; i++) 
 			{
 				sc_BGs[i] = Mod.Assets.Request<Texture2D>("Textures/Backgrounds/SC_BG/SC_BG"+i);
 			}
@@ -721,9 +723,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 
 		public override int ChooseMiddleTexture() {
 			if (++SurfaceFrameCounter > 1) {
-				SurfaceFrame = (SurfaceFrame + 1) % 96;
-				if(SurfaceFrame == 0)
-					SurfaceFrame = 1;
+				// remove the first 5 frame since it makes me want to throw up 
+				if(SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
+					pingpongCounter *= -1;
+				SurfaceFrame = (SurfaceFrame + pingpongCounter);
 				SurfaceFrameCounter = 0;
 			}
 
