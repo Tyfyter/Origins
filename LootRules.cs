@@ -3,6 +3,7 @@ using Origins.World.BiomeData;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -227,8 +228,24 @@ namespace Origins.LootConditions {
 	}
 	public class DropAsSetRule(int iconicItem) : IItemDropRule {
 		public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
-		public bool CanDrop(DropAttemptInfo info) => true;
+		public bool CanDrop(DropAttemptInfo info) {
+			for (int i = 0; i < ChainedRules.Count; i++) {
+				if (ChainedRules[i].RuleToChain.CanDrop(info)) return true;
+			}
+			return false;
+		}
 		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			List<IItemDropRuleCondition> addConditions = [];
+			for (int i = 0; i < ChainedRules.Count; i++) {
+				List<DropRateInfo> _drops = [];
+				ChainedRules[i].RuleToChain.ReportDroprates(_drops, ratesInfo);
+				for (int j = 0; j < _drops.Count; j++) {
+					addConditions = _drops[j].conditions;
+					if ((addConditions?.Count ?? 0) != 0) break;
+				}
+			}
+
+			ratesInfo.conditions = (ratesInfo.conditions ?? []).Concat(addConditions ?? []).ToList();
 			drops.Add(new DropRateInfo(iconicItem, 1, 1, ratesInfo.parentDroprateChance, ratesInfo.conditions));
 		}
 		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {

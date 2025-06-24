@@ -680,14 +680,15 @@ namespace Origins.Tiles {
 		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>
 		public abstract int LidType { get; }
 		public abstract CageKinds CageKind { get; }
-		private static readonly Dictionary<CageKinds, (int, TileObjectData, int)> CageKindMap = new() {
-			[CageKinds.SmallCage] = (TileID.CageBuggy, TileObjectData.Style3x2, 1),
+		private static readonly Dictionary<CageKinds, (int baseTileID, TileObjectData baseTileData, int drawYOffset)> CageKindMap = new() {
+			[CageKinds.SmallCage] = (TileID.CageBuggy, TileObjectData.StyleSmallCage, 1),
 			[CageKinds.BigCage] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
 			[CageKinds.Jar] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
 		};
 		public abstract int[] FrameIndexArray { get; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
+		private int offsetY;
 		public sealed override void Load() {
 			Mod.AddContent(item = new TileItem(this).WithExtraDefaults(item => {
 				item.width = 32;
@@ -704,7 +705,7 @@ namespace Origins.Tiles {
 			Main.tileLavaDeath[Type] = LavaDeath;
 			TileID.Sets.CritterCageLidStyle[Type] = LidType;
 
-			AdjTiles = [CageKindMap[CageKind].Item1];
+			AdjTiles = [CageKindMap[CageKind].baseTileID];
 			DustType = DustID.Glass;
 
 			// Names
@@ -712,16 +713,12 @@ namespace Origins.Tiles {
 
 			// Placement
 			// In addition to copying from the TileObjectData.Something templates, modders can copy from specific tile types. CopyFrom won't copy subtile data, so style specific properties won't be copied, such as how Obsidian doors are immune to lava.
-			TileObjectData.newTile.CopyFrom(CageKindMap[CageKind].Item2);
+			TileObjectData.newTile.CopyFrom(CageKindMap[CageKind].baseTileData);
 			TileObjectData.newTile.LavaDeath = LavaDeath;
-			TileObjectData.newTile.DrawYOffset = CageKindMap[CageKind].Item3;
+			TileObjectData.newTile.DrawYOffset = CageKindMap[CageKind].drawYOffset;
 			AnimationFrameHeight = TileObjectData.newTile.CoordinateFullHeight;
 			TileObjectData.addTile(Type);
 			glowTexture = Texture + "_Glow";
-		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (!glowTexture.Exists) return;
-			OriginExtensions.DrawTileGlow(glowTexture, GlowmaskColor, i, j, spriteBatch);
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
@@ -733,7 +730,14 @@ namespace Origins.Tiles {
 			int frameIndex;
 			if (CageKind != CageKinds.BigCage) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
-			frameYOffset = FrameIndexArray[frameIndex] * AnimationFrameHeight;
+			frameYOffset = offsetY = FrameIndexArray[frameIndex] * AnimationFrameHeight;
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (!glowTexture.Exists) return;
+			Rectangle glowRect = new(drawData.tileFrameX, drawData.tileFrameY + offsetY, drawData.tileWidth, drawData.tileHeight);
+			drawData.glowTexture = glowTexture;
+			drawData.glowColor = GlowmaskColor;
+			drawData.glowSourceRect = glowRect;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;

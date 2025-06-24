@@ -386,6 +386,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (player.whoAmI == Main.myPlayer)
 					NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
 			}
+			if (player.grapCount > 0) player.RemoveAllGrapplingHooks();
 			player.buffImmune[BuffID.Shimmer] = true;
 			player.shimmering = true;
 			player.OriginPlayer().weakShimmer = true;

@@ -14,6 +14,7 @@ namespace Origins.Tiles.Other {
 			Main.tileBlockLight[Type] = true;
 			Main.tileOreFinderPriority[Type] = 320;
 			Main.tileSpelunker[Type] = true;
+			Main.tileMergeDirt[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(44, 57, 126), name);

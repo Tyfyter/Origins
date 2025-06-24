@@ -52,6 +52,7 @@ using Fargowiltas.Common.Configs;
 using Origins.Water;
 using Origins.Items.Armor.Other;
 using Origins.NPCs.MiscB;
+using Terraria.GameContent;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -304,7 +305,8 @@ namespace Origins {
 					() => Boss_Tracker.Instance.downedChambersiteSentinel,
 					ModContent.NPCType<Chambersite_Sentinel>(),
 					new Dictionary<string, object> {
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition")
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
+						["overrideHeadTextures"] = TextureAssets.MagicPixel.Name
 					}
 				);
 			}

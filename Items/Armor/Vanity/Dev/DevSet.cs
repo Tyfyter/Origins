@@ -28,6 +28,9 @@ namespace Origins.Items.Armor.Vanity.Dev {
 			w.Rule.ReportDroprates(drops, new DropRateInfoChainFeed(1));
 			return drops.Select(d => d.itemId);
 		});
+		public override void ModifyItemLoot(ItemLoot itemLoot) {
+			foreach (ItemTypeDropRuleWrapper drop in GetDrops()) itemLoot.Add(drop.Rule);
+		}
 		public record struct ItemTypeDropRuleWrapper(IItemDropRule Rule) {
 			public static implicit operator ItemTypeDropRuleWrapper(int drop) => new(ItemDropRule.Common(drop));
 		}

@@ -6028,7 +6028,7 @@ Chambersite_Minigun: {
 	Tooltip: Fires in a spread before ramping up
 }
 
-Aetherite_Bar_Item: {
+Aetherite_Bar: {
 	DisplayName: Aetherite Bar
 	Tooltip: "'It's smooth, but that's not what it feels like'"
 }
@@ -6345,4 +6345,14 @@ Jawbreaker: {
 Aetherite_Ore_Item: {
 	DisplayName: Aetherite Ore
 	Tooltip: "'It's smooth, but that's not what it feels like'"
+}
+
+Kono_Dio_Da_Set: {
+	DisplayName: Kono Dio Da Set
+	Tooltip: ""
+}
+
+Kono_Dio_Da_Wings: {
+	DisplayName: <PH> Kono Dio Da Wings
+	Tooltip: ""
 }

@@ -1066,10 +1066,18 @@ namespace Origins {
 		// for DevHelper
 		static string DevHelpBrokenReason {
 			get {
+				string reason = null;
+				void AddReason(string text) {
+					if (reason is not null) reason += "\n";
+					reason += text;
+				}
+				foreach (ModItem item in instance.GetContent<ModItem>()) {
+					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
+				}
 #if DEBUG
-				return "Mod was last built in DEBUG configuration";
+				AddReason("Mod was last built in DEBUG configuration");
 #endif
-				return null;
+				return reason;
 			}
 		}
 	}

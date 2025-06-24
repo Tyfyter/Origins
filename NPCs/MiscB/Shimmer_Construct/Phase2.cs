@@ -94,6 +94,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[1] = ShotRate;
 			npc.ai[2] = Main.rand.RandomRound(ShotCount);
 		}
+		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
+			if (!boss.IsInPhase3 && !CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
+			return base.GetWeight(boss, previousStates);
+		}
 		public class Shimmer_Construct_Missiles : ModProjectile {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
 			public static int ID { get; private set; }
@@ -204,6 +208,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (other.type == droneType && ++drones >= threshold) return 0;
 			}
+			if (!CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
 			return weight * (1 - drones / (float)threshold);
 		}
 	}
