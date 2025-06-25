@@ -6029,8 +6029,8 @@ Chambersite_Minigun: {
 }
 
 Aetherite_Bar: {
-	// DisplayName: Aetherite Bar
 	// Tooltip: "'It's smooth, but that's not what it feels like'"
+	// DisplayName: Aetherite Bar
 }
 
 Shimmerstar_Staff: {
@@ -6352,5 +6352,20 @@ Kono_Dio_Da_Set: {
 
 Kono_Dio_Da_Wings: {
 	// DisplayName: Vampiric Spell
+	// Tooltip: ""
+}
+
+Calcified_Riven_Flesh_Item: {
+	// DisplayName: Calcified Riven Flesh Item
+	// Tooltip: ""
+}
+
+Calcified_Riven_Flesh_Wall_Safe_Item: {
+	// DisplayName: Calcified Riven Flesh Wall Safe Item
+	// Tooltip: ""
+}
+
+Calcified_Riven_Flesh_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Calcified Riven Flesh Wall Placed Unsafe Item
 	// Tooltip: ""
 }

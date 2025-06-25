@@ -1924,7 +1924,7 @@ namespace Origins {
 		}
 		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, float r, int k = 30) {
 			float cellSize = r / MathF.Sqrt(2);
-			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			static int Ceil(float value) => (int)float.Ceiling(value);
 			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
 			Vector2 topLeft = area.TopLeft();
 			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
@@ -1952,7 +1952,7 @@ namespace Origins {
 		}
 		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, Predicate<Vector2> customShape, float r, int k = 30) {
 			float cellSize = r / MathF.Sqrt(2);
-			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			static int Ceil(float value) => (int)float.Ceiling(value);
 			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
 			Vector2 topLeft = area.TopLeft();
 			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
@@ -1964,7 +1964,7 @@ namespace Origins {
 				Vector2 newSample;
 				for (int i = 0; i < k; i++) {
 					newSample = currentSample + GeometryUtils.Vec2FromPolar(r * (1 + MathF.Sqrt(rand.NextFloat())), rand.NextFloat(MathHelper.TwoPi));
-					if (customShape(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
+					if (area.Contains(newSample) && customShape(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
 						goto foundPoint;
 					}
 				}
