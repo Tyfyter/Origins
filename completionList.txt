@@ -211,7 +211,7 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (ᗢ) Flagellant* (new behavior)
 (^) Flying Exoskeleton*
-(X) Goo Wall
+(#, ^2) Goo Wall !!!
 (^) Graveshield Zombie*
 (X) Hammerhand
 (^) Optiphage*
@@ -1091,6 +1091,7 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz*
 (X) Brown Ice
+(#, ^2) Calcified Spug Flesh !!!
 (^) Chambersite
 (X) Cubekon Altar°
 (^) Defiled Cactus*
@@ -1169,8 +1170,8 @@ TILES:
 (^) Brine Dungeon Chest
 (^) Brine Water Fountain
 (@, ^3) Bug Cage°
-(X) Cancer Block° !!!
-(X) Cancer Furniture° !!!
+(X) Cancer Block°
+(X) Cancer Furniture°
 (^) Chambersite Bunny Cage°
 (^) Chambersite Gem Lock°
 (^) Chambersite Gemspark°
@@ -1194,7 +1195,7 @@ TILES:
 (^) Encrusted Brick
 (^) Endowood Furniture*
 (^) Laser Tag Console*
-(X) Limestone Furniture !!!
+(#, ^2) Limestone Furniture !!!
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
@@ -1209,8 +1210,8 @@ TILES:
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker
 (X) Ravel Locker
-(X) Residue Block° !!!
-(X) Residue Furniture° !!!
+(X) Residue Block°
+(X) Residue Furniture°
 (^) Riven Campfire*
 (^) Riven Dungeon Chest*
 (^) Riven Torch*
@@ -1245,7 +1246,7 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(X) Fuzzvine !!!
+(#, ^2) Fuzzvine !!!
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
@@ -1266,10 +1267,10 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(@4, ^3) Wrycoral* !!!
+(@4, #2) Wrycoral* !!! (glow)
 
 (^) A Perfect World
-(X) Deceptive Beauty !!!
+(#, ^2) Deceptive Beauty !!!
 (X) Four Corners
 (X) Light And Dark
 (^) The Jungle's Window
