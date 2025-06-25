@@ -747,7 +747,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	class Eye_Shimmer_Collision : GlobalNPC {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type is NPCID.EyeofCthulhu or NPCID.ServantofCthulhu;
-		public override void AI(NPC npc) {
+		public override bool PreAI(NPC npc) {
 			Collision.WetCollision(npc.position, npc.width, npc.height);
 			if (Collision.shimmer) {
 				switch (npc.type) {
@@ -763,6 +763,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
+			return true;
 		}
 	}
 	public struct ShimmerConstructSDF {
