@@ -1306,8 +1306,8 @@ TILES:
 (々) Miscreant Trophy*
 (々) Quantux Relic*
 (々) Quantux Trophy*
-(#2, ^2) Shimmer Construct Relic* !!! (apply sprite)
-(#2, ^2) Shimmer Construct Trophy* !!! (apply sprite)
+(^) Shimmer Construct Relic* !!!
+(^) Shimmer Construct Trophy*
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
