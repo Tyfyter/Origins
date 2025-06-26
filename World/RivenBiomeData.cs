@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
+using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -21,6 +22,7 @@ using Origins.Water;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -32,6 +34,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
@@ -345,6 +348,71 @@ namespace Origins.World.BiomeData {
 					tile.HasTile = true;
 				}
 				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
+				{// speckle
+					// tweak this to make calcified areas closer together
+					const float spread = 7;
+					bool[] replaceableTiles = TileID.Sets.Factory.CreateBoolSet(fleshBlockType, gooBlockType);
+					WeightedRandom<Vector2> positions = new(genRand, genRand.PoissonDiskSampling(genRange, v => {
+						Tile tile = Framing.GetTileSafely(v.ToPoint());
+						return tile.WallType == fleshWallType || (tile.HasTile && replaceableTiles[tile.TileType]);
+					}, spread)
+					.Select(v => new Tuple<Vector2, double>(v, 1)).ToArray());
+					// tweak this to make more calcified areas
+					int count = (int)(Main.maxTilesX * 1E-02 * genRand.NextFloat(0.9f, 1f));
+
+					ushort calcifiedTile = (ushort)ModContent.TileType<Calcified_Riven_Flesh>();
+					ushort calcifiedWall = (ushort)OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural);
+					while (count-- > 0 && positions.elements.Count > 0) {
+						Vector2 specklePos = positions.Pop();
+						Tile startTile = Framing.GetTileSafely(specklePos.ToPoint());
+						bool foreground = true;
+						if (!startTile.TileIsType(fleshBlockType)) {
+							if (startTile.WallType != fleshWallType) {
+								count++;
+								continue;
+							}
+							foreground = false;
+						}
+						ushort tileType = fleshBlockType;
+						ushort wallType = fleshWallType;
+						switch (genRand.Next(1)) { // add possibilities to add possibilities
+							case 0:
+							tileType = calcifiedTile;
+							wallType = calcifiedWall;
+							break;
+						}
+						Carver.Filter filter = Carver.TileFilter(tile => (tile.HasTile && replaceableTiles[tile.TileType]) || (!foreground && tile.WallType == fleshWallType));
+						if (foreground) filter += Carver.ActiveTileInSet(replaceableTiles);
+						Vector2 posMin = new(float.PositiveInfinity);
+						Vector2 posMax = new(float.NegativeInfinity);
+						// tweak to change the shape and size of the calcified areas
+						filter += Carver.PointyLemon(
+							specklePos,
+							scale: genRand.NextFloat(6, 10),
+							rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+							aspectRatio: genRand.NextFloat(3, 6),
+							roundness: genRand.NextFloat(1, 2),
+							ref posMin,
+							ref posMax
+						);
+
+						if (Carver.DoCarve(
+							filter,
+							pos => {
+								Tile tile = Framing.GetTileSafely(pos.ToPoint());
+								if (tile.HasTile && replaceableTiles[tile.TileType]) tile.TileType = tileType;
+								if (!foreground && tile.WallType == fleshWallType) tile.WallType = wallType;
+								return 1;
+							},
+							posMin,
+							posMax,
+							8
+						) <= 0) {
+							count++;
+							continue;
+						}
+					}
+				}
 				ushort rivenAltar = (ushort)ModContent.TileType<Riven_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
