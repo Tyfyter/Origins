@@ -220,7 +220,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish*
 (X) Repairboy
 (^) Riven Penguin*
-(^) Riven Protoform*
+(#2, ^2) Riven Protoform* !!! (new AI and sprites)
 (X) Rivenpotamus
 (X) Scanner Scout
 (^) Shattered Goldfish*
@@ -236,9 +236,9 @@ ENEMY NPCS:
 (^) Airsnatcher
 (^) Amoebeye*
 (^) Amoebic Mummy*
-(^) Amoeba Bugger*
+(#2, ^2) Amoeba Bugger* !!! (utilize new sprote)
 (X) Angel
-(^) Barnacle Mound*
+(#2, ^2) Barnacle Mound* !!! (hew sprites)
 (X) Beckonbug
 (^) Brine Latcher
 (^) Brine Serpent

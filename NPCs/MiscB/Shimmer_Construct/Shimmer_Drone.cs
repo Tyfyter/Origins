@@ -17,7 +17,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.ServantofCthulhu);
 			NPC.damage = 22;
-			NPC.lifeMax = 45;
+			NPC.lifeMax = 30;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact.WithPitch(2f).WithVolume(0.5f);
 			NPC.DeathSound = SoundID.Item101.WithVolume(0.6f);
