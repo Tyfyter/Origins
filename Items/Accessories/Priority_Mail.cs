@@ -14,6 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 1);
+			Item.AllowReforgeForStackableItem = true;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

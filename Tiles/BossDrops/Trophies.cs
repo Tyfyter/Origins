@@ -4,6 +4,5 @@
     public class Fiberglass_Weaver_Trophy : TrophyTileBase {}
 	public class Lost_Diver_Trophy : TrophyTileBase { }
 	public class Shimmer_Construct_Trophy : TrophyTileBase {
-		public override string Texture => "Origins/Tiles/BossDrops/Boss_Trophy_Empty";
 	}
 }
