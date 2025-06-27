@@ -423,7 +423,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			float distance = 16 * 10 - NPC.ai[3];
 			NPC.Center = owner.Center + GeometryUtils.Vec2FromPolar(distance, (MathHelper.TwoPi * NPC.ai[1] / NPC.ai[2]) + (++NPC.localAI[0]) * 0.03f);
 			if (NPC.ai[3] <= 0) {
-				SoundEngine.PlaySound(SoundID.Item20); // ???
 				NPC.localAI[1] *= 0.95f;
 				NPC.localAI[2] *= 0.95f;
 				NPC.localAI[1] += NPC.velocity.X * 0.05f;

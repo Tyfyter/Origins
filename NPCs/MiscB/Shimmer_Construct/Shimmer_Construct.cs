@@ -471,7 +471,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					return true;
 				}
 				for (int i = 0; i <= 100; i++) {
-					SoundEngine.PlaySound(SoundID.Item6.WithVolume(0.5f));
 					for (int j = -10; j <= 10; j++) {
 						if (Framing.GetTileSafely(pos.X + i, pos.Y + j).HasSolidTile()) {
 							Tile above = Framing.GetTileSafely(pos.X + i, pos.Y + j - 1);
