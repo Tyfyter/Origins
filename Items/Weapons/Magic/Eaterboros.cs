@@ -37,10 +37,10 @@ namespace Origins.Items.Weapons.Magic {
 			Item.channel = true;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item1; 
 		}
 		public override bool MeleePrefix() => true;
-		public bool? Hardmode => true;
+		public bool? Hardmode => false;
 		public override bool AltFunctionUse(Player player) => true;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) type = ModContent.ProjectileType<Eaterboros_Shoot>();
