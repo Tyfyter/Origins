@@ -436,11 +436,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					NPC.localAI[2] = 0;
 				}
 				NPC.ai[3] += Math.Min(NPC.velocity.Length() * 1.5f + 1, 16);
-				if (distance < 0) {
-					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 3 });
-					NPC.active = false;
-				}
+				if (distance < 0) DoStrike();
 			}
+		}
+		public void DoStrike() {
+			if (Main.npc.GetIfInRange((int)NPC.ai[0]) is NPC owner) {
+				owner.StrikeNPC(new() { Damage = NPC.lifeMax });
+			}
+			NPC.active = false;
 		}
 		public override bool CheckDead() {
 			NPC.ai[3] += 1;

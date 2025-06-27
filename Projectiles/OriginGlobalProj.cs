@@ -228,6 +228,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void PostAI(Projectile projectile) {
+			if (projectile.minion) weakShimmer = Main.player.GetIfInRange(projectile.owner)?.OriginPlayer()?.weakShimmer ?? false;
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall)
 				projectile.damage = projectile.originalDamage;
 			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = Main.player[projectile.owner].OriginPlayer().felnumShock;

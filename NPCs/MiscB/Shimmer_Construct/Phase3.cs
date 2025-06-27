@@ -17,12 +17,11 @@ using Origins.Reflection;
 using PegasusLib;
 using Origins.Items.Weapons.Magic;
 using Terraria.Utilities;
-using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles;
-using MagicStorage.CrossMod;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Audio;
+using static Origins.NPCs.MiscB.Shimmer_Construct.SpawnTurretsState;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -323,6 +322,99 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
+	public class SpawnTurretsState : AIState {
+		#region stats
+		public static float ShotRate => 110 - DifficultyMult * 10f;
+		public static int ShotDamage => (int)(15 + 9 * DifficultyMult);
+		public static float ShotVelocity => 6;
+		public static int HealthAmount => (int)(150 + 90 * DifficultyMult);
+		#endregion stats
+		static List<int> Types { get; } = [];
+		public override void Load() {
+			PhaseThreeIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			SoundEngine.PlaySound(SoundID.Item28);
+			NPC npc = boss.NPC;
+			npc.SpawnNPC(null,
+				(int)npc.Center.X,
+				(int)npc.Center.Y,
+				Main.rand.Next(Types),
+				ai0: npc.whoAmI
+			);
+			SetAIState(boss, StateIndex<AutomaticIdleState>());
+		}
+		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
+			int turretType = ModContent.NPCType<Shimmer_Construct_Turret_Chunk>();
+			int count = 0;
+			foreach (NPC proj in Main.ActiveNPCs) {
+				if (proj.type == turretType && ++count >= 2) return 0;
+			}
+			return Math.Max(base.GetWeight(boss, previousStates) - 0.5f, 0);
+		}
+		public abstract class Shimmer_Construct_Turret_Chunk : Shimmer_Construct_Health_Chunk {
+			public override string Texture => base.Texture.Replace("_Turret", "");
+			public override void SetStaticDefaults() {
+				Types.Add(Type);
+			}
+			public override void AI() {
+				if (Main.npc.GetIfInRange((int)NPC.ai[0]) is not NPC owner || !owner.active) {
+					NPC.active = false;
+					return;
+				}
+				if (NPC.lifeMax == 1) {
+					NPC.lifeMax = HealthAmount;
+					NPC.life = NPC.lifeMax;
+				}
+
+				Vector2 friction = new(0.95f, 0.95f);
+				if (NPC.ai[3] <= 0) {
+					Player ownerTarget = Main.player.GetIfInRange(owner.target);
+
+					if (ownerTarget is not null) ownerTarget.aggro -= 800;
+					NPC.TargetClosest();
+					if (ownerTarget is not null) ownerTarget.aggro += 800;
+					int fallDir = 1;
+					if (NPC.HasValidTarget) {
+						Vector2 diff = NPC.GetTargetData().Center - NPC.Center;
+						Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
+						if (++NPC.ai[2] > ShotRate) {
+							NPC.ai[2] -= ShotRate;
+							SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), NPC.Center);
+							NPC.SpawnProjectile(null,
+								NPC.Center,
+								direction * ShotVelocity,
+								Shimmer_Construct_Bullet.ID,
+								ShotDamage,
+								1
+							);
+						}
+						int moveDir = Math.Sign(diff.X);
+						if (Math.Abs(diff.X) < 16 * 40) {
+							if (Math.Abs(diff.X) > 16 * 25) {
+								moveDir = 0;
+							} else {
+								moveDir *= -1;
+							}
+						}
+						NPC.velocity.X += moveDir * 0.2f;
+						if (diff.Y < 0) {
+							fallDir = -1;
+						}
+						if (Math.Abs(diff.Y) < 16 * 20) friction.Y = 1;
+					}
+					NPC.velocity.Y += (MathF.Sin(NPC.ai[1]++ / 60) + 1) * 0.2f * fallDir;
+				} else {
+					NPC.velocity += NPC.DirectionTo(owner.Center) * 2;
+					if (NPC.Hitbox.Intersects(owner.Hitbox)) DoStrike();
+				}
+				NPC.velocity *= friction;
+			}
+		}
+		public class Shimmer_Turret_Chunk1 : Shimmer_Construct_Turret_Chunk { }
+		public class Shimmer_Turret_Chunk2 : Shimmer_Construct_Turret_Chunk { }
+		public class Shimmer_Turret_Chunk3 : Shimmer_Construct_Turret_Chunk { }
+	}
 	public class Weak_Shimmer_Debuff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Shimmer;
 		public static int ID { get; private set; }
@@ -346,7 +438,34 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} catch (Exception ex) {
 				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
 			}
+			On_Projectile.Update += (orig, self, i) => {
+				isUpdatingShimmeryProj = (self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer);
+				try {
+					orig(self, i);
+				} catch {
+					isUpdatingShimmeryProj = false;
+					throw;
+				}
+				isUpdatingShimmeryProj = false;
+			};
+			On_Collision.CanHitLine += (orig, Position1, Width1, Height1, Position2, Width2, Height2) => isUpdatingShimmeryProj || orig(Position1, Width1, Height1, Position2, Width2, Height2);
+			On_Collision.CanHitWithCheck += (orig, Position1, Width1, Height1, Position2, Width2, Height2, check) => isUpdatingShimmeryProj || orig(Position1, Width1, Height1, Position2, Width2, Height2, check);
+			On_Collision.CanHit_Entity_Entity += (orig, a, b) => isUpdatingShimmeryProj || orig(a, b);
+			On_Collision.CanHit_Entity_NPCAimedTarget += (orig, a, b) => isUpdatingShimmeryProj || orig(a, b);
+			On_Collision.CanHit_Point_int_int_Point_int_int += (orig, a, aw, ah, b, bw, bh) => isUpdatingShimmeryProj || orig(a, aw, ah, b, bw, bh);
+			On_Collision.CanHit_Vector2_int_int_Vector2_int_int += (orig, a, aw, ah, b, bw, bh) => isUpdatingShimmeryProj || orig(a, aw, ah, b, bw, bh);
+			MonoModHooks.Add(typeof(CollisionExt).GetMethod(nameof(CollisionExt.Raymarch), [typeof(Vector2), typeof(Vector2), typeof(Predicate<Tile>), typeof(float)]), (Func<Vector2, Vector2, Predicate<Tile>, float, float> orig, Vector2 position, Vector2 direction, Predicate<Tile> extraCheck, float maxLength) => {
+				if (isUpdatingShimmeryProj) return maxLength;
+				return orig(position, direction, extraCheck, maxLength);
+			});
+			MonoModHooks.Add(typeof(CollisionExt).GetMethod(nameof(CollisionExt.Raymarch), [typeof(Vector2), typeof(Vector2), typeof(float)]), (Func<Vector2, Vector2, float, float> orig, Vector2 position, Vector2 direction, float maxLength) => {
+				if (isUpdatingShimmeryProj) return maxLength;
+				return orig(position, direction, maxLength);
+			});
 		}
+
+		static bool isUpdatingShimmeryProj = false;
+
 		static void IL_Projectile_HandleMovement(ILContext il) {
 			ILCursor c = new(il);
 			c.GotoNext(MoveType.After,
@@ -513,7 +632,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.ModNPC is Shimmer_Construct or Shimmer_Drone) {
+				if (npc.ModNPC is Shimmer_Construct or Shimmer_Drone or Shimmer_Construct_Turret_Chunk) {
 					Main.instance.DrawNPCDirect(spriteBatch, npc, false, Main.screenPosition);
 				}
 			}
