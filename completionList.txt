@@ -1267,7 +1267,7 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(@4, #2) Wrycoral* !!! (glow)
+(#2, ^2) Wrycoral* !!! (glow and new format)
 
 (^) A Perfect World
 (#, ^2) Deceptive Beauty !!!
@@ -1293,6 +1293,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
+(#, ^2/4) Music Box (The Dive) !!!
 (#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
@@ -1713,7 +1714,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(^) Shimmer Construct
+($) Shimmer Construct !!! (still needs phase III music)
 (X) Tearror
 (X) Trenchmaker
 
