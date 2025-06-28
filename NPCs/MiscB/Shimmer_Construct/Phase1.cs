@@ -436,15 +436,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					NPC.localAI[2] = 0;
 				}
 				NPC.ai[3] += Math.Min(NPC.velocity.Length() * 1.5f + 1, 16);
-<<<<<<< Updated upstream
 				if (distance < 0) DoStrike();
-=======
-				if (distance < 0) {
-					SoundEngine.PlaySound(SoundID.NPCDeath44.WithPitch(-1.2f), NPC.Center);
-					owner.StrikeNPC(new() { Damage = (owner.lifeMax / (int)NPC.ai[2]) / 3 });
-					NPC.active = false;
-				}
->>>>>>> Stashed changes
 			}
 		}
 		public void DoStrike() {
