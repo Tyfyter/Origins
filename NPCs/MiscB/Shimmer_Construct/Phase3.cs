@@ -566,6 +566,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ColorDestinationBlend = Blend.InverseSourceAlpha,
 				AlphaDestinationBlend = Blend.InverseSourceAlpha
 			};
+		private int SurfaceFrameCounter;
+		private int SurfaceFrame = 6;
+		private int pingpongCounter = 1;
+		private Asset<Texture2D>[] sc_BGs;
+		private const int bgsAmount = 30;
 		public override void Draw(SpriteBatch spriteBatch) {
 			if (renderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
@@ -573,6 +578,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			if (spriteBatch is null) return;
+			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
+			if (++SurfaceFrameCounter > 1) {
+				// remove the first 5 frame since it makes me want to throw up 
+				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
+					pingpongCounter *= -1;
+				SurfaceFrame += pingpongCounter;
+				SurfaceFrameCounter = 0;
+			}
+			//spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 0f));
 			SpriteBatchState state = spriteBatch.GetState();
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
@@ -615,6 +629,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(new(0.3f), 0.3f));
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);
+			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 0f));
 			Origins.shaderOroboros.Release();
 
 			static void DrawCachedProjectiles(List<int> projCache) {
@@ -730,6 +745,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (Origins.LogLoadingILError($"{nameof(SC_Phase_Three_Overlay)}_DontNormalDrawShimmeryProjectiles", ex)) throw;
 			}
 			instance = this;
+			sc_BGs = new Asset<Texture2D>[bgsAmount];
+			for (int i = 1; i < bgsAmount; i++) {
+				sc_BGs[i] = ModContent.Request<Texture2D>("Origins/Textures/Backgrounds/SC_BG/SC_BG" + i);
+			}
 		}
 		bool drawingDust = false;
 		public static bool HideAllDust => instance.active && !instance.drawingDust;

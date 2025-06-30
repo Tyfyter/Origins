@@ -627,8 +627,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override int Music => Origins.Music.ShimmerConstruct;
 		Asset<Texture2D> circle = Main.Assets.Request<Texture2D>("Images/Misc/StarDustSky/Planet");
 		float scale = 0;
+		Vector2 sourcePos;
 		public override void SpecialVisuals(Player player, bool isActive) {
-			Vector2 sourcePos = default;
 			bool phase3Active = false;
 			if (isActive) {
 				foreach (NPC npc in Main.ActiveNPCs) {
@@ -651,23 +651,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						scale = float.PositiveInfinity;
 					}
 				}
-				if (float.IsFinite(scale)) {
-					SC_Phase_Three_Overlay.drawDatas.Add(new(
-						circle.Value,
-						sourcePos - Main.screenPosition,
-						null,
-						Color.White
-					) {
-						origin = circle.Size() * 0.5f,
-						scale = Vector2.One * scale
-					});
-				} else {
-					SC_Phase_Three_Overlay.drawDatas.Add(new(
-						TextureAssets.MagicPixel.Value,
-						new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
-						Color.White
-					));
-				}
 			} else {
 				scale = 0;
 			}
@@ -682,53 +665,25 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle {
-			get {
-
-				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.ModNPC is Shimmer_Construct shimmerConstruct) {
-						if (shimmerConstruct.IsInPhase3)
-							return ModContent.GetInstance<SC_BG>(); ;
-					}
-				}
-				return null;
+		public void AddArea() {
+			if (scale == 0) return;
+			if (float.IsFinite(scale)) {
+				SC_Phase_Three_Overlay.drawDatas.Add(new(
+					circle.Value,
+					sourcePos - Main.screenPosition,
+					null,
+					Color.White
+				) {
+					origin = circle.Size() * 0.5f,
+					scale = Vector2.One * scale
+				});
+			} else {
+				SC_Phase_Three_Overlay.drawDatas.Add(new(
+					TextureAssets.MagicPixel.Value,
+					new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
+					Color.White
+				));
 			}
-		}
-	}
-	public class SC_BG : ModSurfaceBackgroundStyle {
-		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
-
-		}
-		private static int SurfaceFrameCounter;
-		private static int SurfaceFrame = 6;
-		private static int pingpongCounter = 1;
-		private static Asset<Texture2D>[] sc_BGs;
-		private const int bgsAmount = 30;
-		public override void Load() {
-			sc_BGs = new Asset<Texture2D>[bgsAmount];
-			for (int i = 1; i < bgsAmount; i++) 
-			{
-				sc_BGs[i] = Mod.Assets.Request<Texture2D>("Textures/Backgrounds/SC_BG/SC_BG"+i);
-			}
-		}
-
-		public override bool PreDrawCloseBackground(SpriteBatch spriteBatch) {
-
-			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value,new Rectangle(0,0,Main.ScreenSize.X,Main.ScreenSize.Y),Color.White);
-
-			return base.PreDrawCloseBackground(spriteBatch);
-		}
-
-		public override int ChooseMiddleTexture() {
-			if (++SurfaceFrameCounter > 1) {
-				// remove the first 5 frame since it makes me want to throw up 
-				if(SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
-					pingpongCounter *= -1;
-				SurfaceFrame = (SurfaceFrame + pingpongCounter);
-				SurfaceFrameCounter = 0;
-			}
-
-			return -1;
 		}
 	}
 	public class Boss_Bar_SC : ModBossBar {
