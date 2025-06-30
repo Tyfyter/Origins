@@ -973,6 +973,7 @@ namespace Origins {
 			public static int AncientBrinePool;
 
 			public static int ShimmerConstruct = MusicID.OtherworldlyBoss2;
+			public static int ShimmerConstructPhase3 = MusicID.OtherworldlyBoss2;
 
 			public static int Dusk;
 

@@ -196,7 +196,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 		}
-		int deathAnimationTime = 0;
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot) => (!NPC.dontTakeDamage || NPC.life != 1);
+		public int deathAnimationTime = 0;
+		public const float shattertime = 100;
 		bool isInPhase2 = false;
 		bool isInPhase3 = false;
 		static int DeathAnimationTime => Main.expertMode ? 521 : 440;
@@ -343,7 +345,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation);
 			}
 			if (deathAnimationTime > 0) {
-				const float shattertime = 100;
 				if (deathAnimationTime >= shattertime) {
 					if (chunks.Length <= 0) {
 						chunks = [
@@ -625,15 +626,18 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public class SC_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {
-		public override int Music => Origins.Music.ShimmerConstruct;
+		public override int Music => (boss?.IsInPhase3 ?? false) ? Origins.Music.ShimmerConstructPhase3 : Origins.Music.ShimmerConstruct;
 		Asset<Texture2D> circle = Main.Assets.Request<Texture2D>("Images/Misc/StarDustSky/Planet");
 		float scale = 0;
 		Vector2 sourcePos;
+		Shimmer_Construct boss;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			bool phase3Active = false;
+			boss = null;
 			if (isActive) {
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (npc.ModNPC is Shimmer_Construct shimmerConstruct) {
+						boss = shimmerConstruct;
 						sourcePos = npc.Center;
 						phase3Active = shimmerConstruct.IsInPhase3;
 						break;
