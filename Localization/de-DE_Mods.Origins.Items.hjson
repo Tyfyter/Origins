@@ -6369,3 +6369,8 @@ Deceptive_Beauty_Item: {
 	// DisplayName: Deceptive Beauty
 	// Tooltip: ""
 }
+
+Barnacle_Wall_Safe_Item: {
+	// DisplayName: Barnacle Wall
+	// Tooltip: ""
+}

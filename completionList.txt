@@ -899,7 +899,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#2, ^2) Aether Opal !!! (shotgun chunks to use gores)
+(☻) Aether Opal !!! (shotgun chunks to use gores)
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
@@ -1136,7 +1136,7 @@ TILES:
 (X) Witherwood
 
 (^) Amebic Gel Wall
-(#, ^2) Barnacle Wall !!!
+(☻) Barnacle Wall !!!
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
@@ -1463,7 +1463,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(#2, ^2) Nerve Flan !!! (holding position)
+(☻) Nerve Flan !!! (holding position)
 (^) Pawpaw*
 (X) Pen Ink
 (^) Periven*

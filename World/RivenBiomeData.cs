@@ -352,13 +352,58 @@ namespace Origins.World.BiomeData {
 					// tweak this to make calcified areas closer together
 					const float spread = 7;
 					bool[] replaceableTiles = TileID.Sets.Factory.CreateBoolSet(fleshBlockType, gooBlockType);
-					WeightedRandom<Vector2> positions = new(genRand, genRand.PoissonDiskSampling(genRange, v => {
-						Tile tile = Framing.GetTileSafely(v.ToPoint());
-						return tile.WallType == fleshWallType || (tile.HasTile && replaceableTiles[tile.TileType]);
-					}, spread)
-					.Select(v => new Tuple<Vector2, double>(v, 1)).ToArray());
+					Tuple<Vector2, double>[] poss;
+					int tries = 100;
+					do {
+						poss = genRand.PoissonDiskSampling(genRange, v => {
+							Tile tile = Framing.GetTileSafely(v.ToPoint());
+							return tile.WallType == fleshWallType || (tile.HasTile && replaceableTiles[tile.TileType]);
+						}, spread).Select(v => new Tuple<Vector2, double>(v, 1)).ToArray();
+					} while (poss.Length <= 1 && --tries > 0);
+					WeightedRandom<Vector2> positions = new(genRand, poss);
 					// tweak this to make more calcified areas
-					int count = (int)(Main.maxTilesX * 1E-02 * genRand.NextFloat(0.9f, 1f));
+					int count = (int)(Main.maxTilesX * 3E-03 * genRand.NextFloat(0.9f, 1f));
+					ushort barnacleWall = (ushort)OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural);
+					while (count-- > 0 && positions.elements.Count > 0) {
+						Vector2 specklePos = positions.Pop();
+						Tile startTile = Framing.GetTileSafely(specklePos.ToPoint());
+						if (startTile.WallType != fleshWallType) {
+							count++;
+							continue;
+						}
+						ushort wallType = fleshWallType;
+						switch (genRand.Next(1)) { // add possibilities to add possibilities
+							case 0:
+							wallType = barnacleWall;
+							break;
+						}
+						Vector2 posMin = new(float.PositiveInfinity);
+						Vector2 posMax = new(float.NegativeInfinity);
+						if (Carver.DoCarve(
+							Carver.TileFilter(tile => tile.WallType == fleshWallType)
+							+ Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
+								specklePos,
+								scale: genRand.NextFloat(6, 10),
+								rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+								aspectRatio: genRand.NextFloat(1, 2),
+								roundness: genRand.NextFloat(1, 2),
+								ref posMin,
+								ref posMax
+							),
+							pos => {
+								Framing.GetTileSafely(pos.ToPoint()).WallType = wallType;
+								return 1;
+							},
+							posMin,
+							posMax,
+							8
+						) <= 0) {
+							count++;
+							continue;
+						}
+					}
+					positions = new(genRand, poss);
+					count = (int)(Main.maxTilesX * 6E-03 * genRand.NextFloat(0.9f, 1f));
 
 					ushort calcifiedTile = (ushort)ModContent.TileType<Calcified_Riven_Flesh>();
 					ushort calcifiedWall = (ushort)OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural);
@@ -402,6 +447,49 @@ namespace Origins.World.BiomeData {
 								Tile tile = Framing.GetTileSafely(pos.ToPoint());
 								if (tile.HasTile && replaceableTiles[tile.TileType]) tile.TileType = tileType;
 								if (!foreground && tile.WallType == fleshWallType) tile.WallType = wallType;
+								return 1;
+							},
+							posMin,
+							posMax,
+							8
+						) <= 0) {
+							count++;
+							continue;
+						}
+					}
+					positions = new(genRand, poss);
+					count = (int)(Main.maxTilesX * 4E-03 * genRand.NextFloat(0.9f, 1f));
+					while (count-- > 0 && positions.elements.Count > 0) {
+						Vector2 specklePos = positions.Pop();
+						Tile startTile = Framing.GetTileSafely(specklePos.ToPoint());
+						if (!replaceableTiles[startTile.TileType]) {
+							count++;
+							continue;
+						}
+						ushort tileType = fleshBlockType;
+						switch (genRand.Next(1)) { // add possibilities to add possibilities
+							case 0:
+							tileType = calcifiedTile;
+							break;
+						}
+						Vector2 posMin = new(float.PositiveInfinity);
+						Vector2 posMax = new(float.NegativeInfinity);
+						Carver.Filter filter = 
+							Carver.ActiveTileInSet(replaceableTiles)
+							+ Carver.PointyLemon( // tweak to change the shape and size of the calcified areas
+								specklePos,
+								scale: genRand.NextFloat(6, 10),
+								rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+								aspectRatio: genRand.NextFloat(3, 6),
+								roundness: genRand.NextFloat(1, 2),
+								ref posMin,
+								ref posMax
+							);
+
+						if (Carver.DoCarve(
+							filter,
+							pos => {
+								Framing.GetTileSafely(pos.ToPoint()).TileType = tileType;
 								return 1;
 							},
 							posMin,

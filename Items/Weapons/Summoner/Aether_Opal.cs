@@ -516,7 +516,21 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					return MathHelper.Lerp(0f, 32f * Utils.GetLerpValue(0f, 32f, Projectile.position.Distance(Projectile.oldPos[12]), clamped: true), num);
 				}
 			}
-			return true;
+			if (Projectile.localAI[1] == 0) {
+				Projectile.localAI[1] = Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium" + (Main.rand.Next(2) + 1));
+			}
+			Texture2D texture = TextureAssets.Gore[(int)Projectile.localAI[1]].Value;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				texture.Size() * 0.5f,
+				1,
+				default
+			);
+			return false;
 		}
 		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Drone).GetDefaultTMLName();
 		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Drone).GetDefaultTMLName() + "_AF";
