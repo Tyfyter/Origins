@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Origins.Items.Weapons.Magic;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using System.IO;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -81,7 +82,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					Vector2.UnitY.RotatedByRandom(1.5f) * -8,
 					Shimmer_Construct_Missiles.ID,
 					ShotDamage,
-					1
+					1,
+					ai0: npc.target,
+					ai1: boss.IsInPhase3.ToInt()
 				);
 				if (--npc.ai[2] <= 0) {
 					SetAIState(boss, StateIndex<AutomaticIdleState>());
@@ -116,9 +119,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.tileCollide = false;
 			}
 			public override void OnSpawn(IEntitySource source) {
+				if (Projectile.ai[1] == 1) Projectile.localAI[0] = 1;
+				Projectile.ai[1] = 0;
 				if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC parentNPC && parentNPC.ModNPC is Shimmer_Construct construct && construct.IsInPhase3) Projectile.ai[2] = 1;
 			}
 			public override void AI() {
+				bool inPhase3 = Projectile.localAI[0] != 0;
 				if (Main.player.GetIfInRange((int)Projectile.ai[0]) is Player target) {
 					if (target.active && !target.dead) {
 						float difficultyMult = ContentExtensions.DifficultyDamageMultiplier;
@@ -127,6 +133,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							if (Projectile.ai[1] >= 40) {
 								acceleration = (0.2f + (difficultyMult - Projectile.ai[2]) * 0.1f) * Math.Max(1 - (Projectile.ai[1] - 40) / 80, 0);
 							}
+							if (inPhase3) acceleration *= 0.8f;
 							Projectile.velocity += Projectile.DirectionTo(target.Center) * acceleration;
 						}
 					} else {
@@ -135,7 +142,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				if (Projectile.ai[1] < 28) Projectile.velocity *= 0.97f;
 				else if (Projectile.ai[1] <= 32) Projectile.velocity *= 0.9f;
-				if (Projectile.ai[2] == 0 && !Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
+				if (inPhase3) {
+					Projectile.tileCollide = false;
+				} else if (Projectile.ai[2] == 0 && !Projectile.tileCollide && !Projectile.Hitbox.OverlapsAnyTiles()) {
 					Projectile.tileCollide = true;
 				}
 				Projectile.rotation = Projectile.velocity.ToRotation();
@@ -143,6 +152,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				if (Projectile.velocity.X != 0) modifiers.HitDirectionOverride = Math.Sign(Projectile.velocity.X);
 				modifiers.Knockback.Base += 4;
+			}
+			public override void SendExtraAI(BinaryWriter writer) {
+				writer.Write(Projectile.localAI[0] != 0);
+			}
+			public override void ReceiveExtraAI(BinaryReader reader) {
+				Projectile.localAI[0] = reader.ReadBoolean().ToInt();
 			}
 			public override bool PreDraw(ref Color lightColor) {
 				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);

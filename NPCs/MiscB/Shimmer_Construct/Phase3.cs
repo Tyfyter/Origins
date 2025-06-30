@@ -34,6 +34,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void SetStaticDefaults() {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
+			aiStates.Add(ModContent.GetInstance<MagicMissilesState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
