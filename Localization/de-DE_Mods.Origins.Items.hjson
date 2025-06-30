@@ -6364,3 +6364,8 @@ Calcified_Riven_Flesh_Wall_Safe_Item: {
 	// DisplayName: Calcified Riven Flesh Wall
 	// Tooltip: ""
 }
+
+Deceptive_Beauty_Item: {
+	// DisplayName: Deceptive Beauty
+	// Tooltip: ""
+}
