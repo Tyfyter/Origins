@@ -238,7 +238,7 @@ ENEMY NPCS:
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
 (X) Angel
-(#2, ^2) Barnacle Mound* !!! (hew sprites)
+(☻) Barnacle Mound* !!! (hew sprites)
 (X) Beckonbug
 (^) Brine Latcher
 (^) Brine Serpent
@@ -1091,7 +1091,7 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz*
 (X) Brown Ice
-(#, ^2) Calcified Spug Flesh !!!
+(☻) Calcified Spug Flesh !!!
 (^) Chambersite
 (X) Cubekon Altar°
 (^) Defiled Cactus*
@@ -1140,7 +1140,7 @@ TILES:
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(#, ^2) Calcified Spug Flesh Wall !!!
+(☻) Calcified Spug Flesh Wall !!!
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -1163,7 +1163,7 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(#3, ^2) Amoeba Buggy Cage* !!!
+(☻) Amoeba Buggy Cage* !!!
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1181,7 +1181,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(#3, ^2) Cicada 3301 Cage° !!!
+(☻) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
