@@ -15,7 +15,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 1;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
-			Main.npcFrameCount[NPC.type] = 2;
+			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
 		}
 		public override void SetDefaults() {
@@ -46,10 +46,7 @@ namespace Origins.NPCs.Riven {
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
-			if (++NPC.frameCounter > 0.5f) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 32) % 192, 48, 30);
-				NPC.frameCounter = 0;
-			}
+			NPC.DoFrames(1);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
