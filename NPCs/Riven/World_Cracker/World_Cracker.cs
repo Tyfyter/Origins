@@ -1,6 +1,3 @@
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.VisualBasic;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
@@ -16,14 +13,12 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
-using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using PegasusLib;
 using ReLogic.Content;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -35,12 +30,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.HealerItems;
-using Tyfyter.Utils;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	[AutoloadBossHead]
 	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat {
 		public AssimilationAmount? Assimilation => 0.08f;
 		public void LoadTextures() => _ = GlowTexture;
@@ -61,6 +53,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		internal static IItemDropRule normalDropRule;
 		internal static IItemDropRule armorBreakDropRule;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		static int[] bossHeads = new int[4];
+		public override void Load() {
+			for (int i = 0; i < bossHeads.Length; i++) {
+				bossHeads[i] = Mod.AddBossHeadTexture(BossHeadTexture + i);
+			}
+		}
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifier = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/World_Cracker_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
@@ -70,9 +68,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 			if (!Main.dedServ) {
-				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
+				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Head_Armor");
 				HPBarArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor_Health_Bar");
 			}
+			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
@@ -363,25 +362,21 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
-		public static void DrawArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Rectangle frame, NPC npc) {
+		public static void DrawArmor(Texture2D armorTexture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, int frameIndex, int frameCount, NPC npc, int damageFrameCount) {
 			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
 			if (ArmorHealthPercent <= 0f) return;
-			if (ArmorHealthPercent <= 0.5f) {
-				frame.Y += 120;
-			}
+			Rectangle frame = armorTexture.Frame(frameCount, damageFrameCount, frameIndex, (int)float.Floor((1 - ArmorHealthPercent) * damageFrameCount));
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (npc.spriteDirection == 1) {
 				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
-			Texture2D armorTexture = ArmorTexture;
-			Vector2 halfSize = frame.Size() / 2;
 			spriteBatch.Draw(
 				armorTexture,
 				npc.Center - screenPos,
 				frame,
 				drawColor,
 				npc.rotation,
-				halfSize,
+				frame.Size() * 0.5f,
 				npc.scale,
 				spriteEffects,
 			0);
@@ -390,9 +385,13 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			// These two properties handle the movement of the worm
 			worm.NPC.ai[3] = MaxArmorHealth;
 		}
+		public override void BossHeadSlot(ref int index) {
+			float ArmorHealthPercent = ((int)NPC.ai[3]) / (float)MaxArmorHealth;
+			index = bossHeads[(int)float.Floor((1 - ArmorHealthPercent) * (bossHeads.Length - 1))];
+		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
-			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(0, 0, 102, 58), NPC);
+			DrawArmor(ArmorTexture, spriteBatch, screenPos, drawColor, NPC.frame.Y / NPC.frame.Width, 4, NPC, 3);
 		}
 		void SetBaseSpeed() {
 			MoveSpeed = 15.5f + DifficultyMult * 0.5f;
@@ -468,13 +467,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override bool SharesImmunityFrames => true;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
+		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
+			if (!Main.dedServ) {
+				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
+			}
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
-			NPC.width = NPC.height = 48;
+			NPC.width = NPC.height = 84;
 			NPC.damage = 20;
 			NPC.defense = 100;
 			NPC.aiStyle = -1;
@@ -492,6 +495,20 @@ namespace Origins.NPCs.Riven.World_Cracker {
 
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;
 			if (Main.expertMode) ProcessShoot(NPC);
+			foreach (Point pos in Collision.GetTilesIn(NPC.position, NPC.Size)) {
+				Lighting.AddLight(pos.X, pos.Y, 0, 0, 1 / 255f);
+			}
+		}
+		public override void FindFrame(int frameHeight) {
+			const int frame_width = 104;
+			if (NPC.frame.Width != frame_width - 2) {
+				NPC.frame = new(
+					((int)NPC.frameCounter) * frame_width,
+					0,
+					frame_width - 2,
+					frameHeight
+				);
+			}
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			base.OnHitByItem(player, item, hit, damageDone);
@@ -515,12 +532,27 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			return false;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
-			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(104, (int)(60 * NPC.frameCounter), 62, 58), NPC);
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			DrawData data = new(
+				TextureAssets.Npc[Type].Value,
+				NPC.Center - screenPos,
+				NPC.frame,
+				drawColor,
+				NPC.rotation,
+				NPC.frame.Size() * 0.5f,
+				NPC.scale,
+				NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
+			data.Draw(spriteBatch);
+			data.texture = GlowTexture;
+			data.color = Riven_Hive.GetGlowAlpha(drawColor);
+			data.Draw(spriteBatch);
+			DrawArmor(ArmorTexture, spriteBatch, screenPos, drawColor, (int)NPC.frameCounter, 3, NPC, 3);
+			return false;
 		}
 		public override void Init() {
-			NPC.frameCounter = Main.rand.Next(2);
+			NPC.frameCounter = NPC.whoAmI % 2;
+			if (FollowerNPC?.ModNPC is World_Cracker_Tail) NPC.frameCounter = 2;
 			CommonWormInit(this);
 		}
 		public override void UpdateLifeRegen(ref int damage) {
@@ -532,13 +564,16 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Tail : WormTail, IRivenEnemy {
 		public AssimilationAmount? Assimilation => 0.10f;
 		public override bool SharesImmunityFrames => true;
-		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
+		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public virtual string GlowTexturePath => Texture + "_Glow";
+		private Asset<Texture2D> _glowTexture;
+		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
-			NPC.width = NPC.height = 60;
+			NPC.width = NPC.height = 76;
 			NPC.damage = 38;
 			NPC.defense = 20;
 			NPC.aiStyle = -1;
@@ -552,6 +587,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;
 			if (Main.expertMode) ProcessShoot(NPC);
+			foreach (Point pos in Collision.GetTilesIn(NPC.position, NPC.Size)) {
+				Lighting.AddLight(pos.X, pos.Y, 0, 0, 1 / 255f);
+			}
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			base.OnHitByItem(player, item, hit, damageDone);
@@ -574,11 +612,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, TextureAssets.Npc[Type].Value, NPC, Riven_Hive.GetGlowAlpha(drawColor));
-			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(168, 0, 52, 56), NPC);
+			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 		}
 		public override void Init() {
 			CommonWormInit(this);
+			ArmorHealth = 0;
 		}
 		public override void UpdateLifeRegen(ref int damage) {
 			damage = ushort.MaxValue;
@@ -596,25 +634,27 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			drawParams.ShowText = true;
 			float totalWidth = 0;
 			List<Rectangle> frames = new();
-			void AddFrame(NPC currentNPC, Rectangle baseFrame) {
-				if (currentNPC.ai[3] <= 0) {
-					baseFrame.Y = 27;
-					baseFrame.Height = 1;
-				} else if (currentNPC.ai[3] < MaxArmorHealth * 0.5f) {
-					baseFrame.Y += 28;
-				}
-				totalWidth += baseFrame.Width;
-				frames.Add(baseFrame);
+			Texture2D texture = HPBarArmorTexture.Value;
+			const int head_frames = 1;
+			const int body_frames = 3;
+			const int tail_frames = 1;
+			const int total_frames = head_frames + body_frames + tail_frames;
+			const int damage_frames = 3;
+			void AddFrame(NPC currentNPC, int frameNumX) {
+				Rectangle frame = texture.Frame(total_frames, damage_frames, frameNumX, (int)float.Floor((1 - currentNPC.ai[3] / MaxArmorHealth) * damage_frames));
+				totalWidth += frame.Width;
+				frames.Add(frame);
 			}
-			AddFrame(npc, new Rectangle(0, 0, 32, 26));
+
+			AddFrame(npc, npc.whoAmI % head_frames);
 			totalWidth -= 48;
 			NPC current = Main.npc[(int)npc.ai[0]];
 			int bodyType = ModContent.NPCType<World_Cracker_Body>();
 			while (current.type == bodyType) {
-				AddFrame(current, new Rectangle(34, 0, 32, 26));
+				AddFrame(current, current.whoAmI % body_frames + head_frames);
 				current = Main.npc[(int)current.ai[0]];
 			}
-			AddFrame(npc, new Rectangle(68, 0, 32, 26));
+			AddFrame(npc, current.whoAmI % tail_frames + head_frames + body_frames);
 			Vector2 pos = drawParams.BarCenter;
 			float scale = 1f;
 			float barWidth = drawParams.BarTexture.Width - 48;
