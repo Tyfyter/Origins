@@ -410,6 +410,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				NPC.velocity *= friction;
 			}
+			public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
 		}
 		public class Shimmer_Turret_Chunk1 : Shimmer_Construct_Turret_Chunk { }
 		public class Shimmer_Turret_Chunk2 : Shimmer_Construct_Turret_Chunk { }
