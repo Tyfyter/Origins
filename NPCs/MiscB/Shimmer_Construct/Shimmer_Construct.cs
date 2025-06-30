@@ -92,6 +92,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
+			NPC.npcSlots = 200;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 			NPC.BossBar = GetInstance<Boss_Bar_SC>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
