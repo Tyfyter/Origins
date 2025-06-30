@@ -160,8 +160,11 @@ namespace Origins.Items.Pets {
 					Projectile.ai[1] = Projectile.ai[0] = 0;
 				}
 			}
-			if (!Main.gamePaused) {
-				Texture2D circle = TextureAssets.Projectile[ModContent.ProjectileType<Aetherite_Aura_P>()].Value;
+			#endregion
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (SC_Phase_Three_Overlay.drawnMaskSources.Add(Projectile)) {
+				Texture2D circle = TextureAssets.Projectile[Type].Value;
 				SC_Phase_Three_Overlay.drawDatas.Add(new(
 					circle,
 					Projectile.position - Main.screenPosition,
@@ -169,10 +172,10 @@ namespace Origins.Items.Pets {
 					Color.White
 				) {
 					origin = circle.Size() * 0.5f,
-					scale = Vector2.One * Projectile.ai[2]
+					scale = Vector2.One * Projectile.scale
 				});
 			}
-			#endregion
+			return false;
 		}
 	}/*
 	public class Aetherite_Crystal_Entry : JournalEntry {

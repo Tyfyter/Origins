@@ -666,7 +666,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
 		public void AddArea() {
-			if (scale == 0) return;
+			if (scale == 0 || !SC_Phase_Three_Overlay.drawnMaskSources.Add(this)) return;
 			if (float.IsFinite(scale)) {
 				SC_Phase_Three_Overlay.drawDatas.Add(new(
 					circle.Value,
@@ -693,6 +693,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return TextureAssets.NpcHeadBoss[bossHeadIndex];
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			if (npc.dontTakeDamage && npc.life == 1) return false;
 			bossHeadIndex = npc.GetBossHeadTextureIndex();
 			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
 			return false;

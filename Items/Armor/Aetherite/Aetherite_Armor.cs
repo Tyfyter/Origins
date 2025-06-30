@@ -93,7 +93,9 @@ namespace Origins.Items.Armor.Aetherite {
 					player.AddBuff(Weak_Shimmer_Debuff.ID, 5, true);
 				}
 			}
-			if (!Main.gamePaused) {
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (SC_Phase_Three_Overlay.drawnMaskSources.Add(Projectile)) {
 				Texture2D circle = TextureAssets.Projectile[Type].Value;
 				SC_Phase_Three_Overlay.drawDatas.Add(new(
 					circle,
@@ -105,8 +107,6 @@ namespace Origins.Items.Armor.Aetherite {
 					scale = Vector2.One * Projectile.scale
 				});
 			}
-		}
-		public override bool PreDraw(ref Color lightColor) {
 			return false;
 		}
 	}

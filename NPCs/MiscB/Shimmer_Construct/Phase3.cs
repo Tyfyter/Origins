@@ -275,7 +275,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			public override void AI() {
-				if (Owner is not NPC owner) {
+				if (Owner is not NPC owner || !owner.active) {
 					Projectile.Kill();
 					return;
 				}
@@ -555,11 +555,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		readonly Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/Textures/Shimmer_Construct_BG");
 		readonly ArmorShaderData invertAnimateShader = GameShaders.Armor.BindShader(ItemID.HallowedBar, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "InvertAnimate"));
 		readonly ArmorShaderData maskShader = GameShaders.Armor.BindShader(ItemID.AdamantiteMask, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "Mask"));
+		readonly ArmorShaderData simpleMaskShader = GameShaders.Armor.BindShader(ItemID.BeeMask, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "SimpleMask"));
 		readonly List<Player> players = new(255);
 		bool active = false;
 		float opacity;
-		public static List<DrawData> oldDrawDatas = [];
 		public static List<DrawData> drawDatas = [];
+		public static HashSet<object> drawnMaskSources = [];
 		static readonly BlendState realAlphaSourceBlend = new() {
 				ColorSourceBlend = Blend.One,
 				AlphaSourceBlend = Blend.One,
@@ -586,7 +587,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				SurfaceFrame += pingpongCounter;
 				SurfaceFrameCounter = 0;
 			}
-			//spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 0f));
 			SpriteBatchState state = spriteBatch.GetState();
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
@@ -594,9 +594,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.Restart(state);
 					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-					for (int i = 0; i < oldDrawDatas.Count; i++) {
-						oldDrawDatas[i].Draw(spriteBatch);
-					}
 					for (int i = 0; i < drawDatas.Count; i++) {
 						drawDatas[i].Draw(spriteBatch);
 					}
@@ -605,8 +602,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.UseOldRenderTargets(oldRenderTargets);
 					spriteBatch.Begin(state);
 				}
-				OriginExtensions.SwapClear(ref drawDatas, ref oldDrawDatas);
+				drawDatas.Clear();
+				drawnMaskSources.Clear();
 			}
+			if (drawDatas.Count > 100) drawDatas.RemoveRange(0, drawDatas.Count - 99);
+			Origins.shaderOroboros.Capture(spriteBatch);
+			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 0f));
+			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
+			Origins.shaderOroboros.Stack(simpleMaskShader);
+			Origins.shaderOroboros.Release();
 			Origins.shaderOroboros.Capture(spriteBatch);
 			spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
@@ -629,7 +633,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(new(0.3f), 0.3f));
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);
-			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 0f));
 			Origins.shaderOroboros.Release();
 
 			static void DrawCachedProjectiles(List<int> projCache) {
