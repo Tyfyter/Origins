@@ -21,7 +21,7 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(Fiberglass_Weaver.weaponDropRule);
 			itemLoot.Add(ItemDropRule.Common(TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(), 10));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Entangled_Energy>()));
-			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
+			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 1), false));
 		}
 		public override bool CanRightClick() {
 			return true;

@@ -16,7 +16,7 @@ namespace Origins.Items.Other.LootBags {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			itemLoot.Add(Mildew_Carrion.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Retaliatory_Tendril>()));
-			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 12), false));
+			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(silver: 240), false));
 		}
 		public override bool CanRightClick() {
 			return true;
