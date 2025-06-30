@@ -236,7 +236,7 @@ ENEMY NPCS:
 (^) Airsnatcher
 (^) Amoebeye*
 (^) Amoebic Mummy*
-(#2, ^2) Amoeba Bugger* !!! (utilize new sprote)
+(^) Amoeba Bugger*
 (X) Angel
 (#2, ^2) Barnacle Mound* !!! (hew sprites)
 (X) Beckonbug
@@ -1450,11 +1450,14 @@ CONSUMABLES:
 (X) Sanguis Pack
 (X) Unmarked Antidote
 
+(X) Bad Juju Stone
 (^) Bileberry*
 (^) Blue Bovine*
 (^) Bread*
 (^) Brine Cheese*
 (^) Caeser Salad
+(X) Contaminated Infusion
+(X) Edible Hair Gel
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*
@@ -1462,6 +1465,7 @@ CONSUMABLES:
 (^) Krunch Mix*
 (#2, ^2) Nerve Flan !!! (holding position)
 (^) Pawpaw*
+(X) Pen Ink
 (^) Periven*
 (^) Petrified Prickly Pear*
 (^) Potato*

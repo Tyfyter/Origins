@@ -88,7 +88,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.height = 110;
 			NPC.lifeMax = 6600;
 			NPC.damage = 27;
-			NPC.defense = 14;
+			NPC.defense = 6;
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -126,9 +126,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			);
 		}
 		public override void AI() {
-			//Dusts
-			if(Main.rand.NextBool(3))
-				Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32,32),ModContent.DustType<ShimmerConstructDust>(),Main.rand.NextVector2Circular(15,15),Scale:1).noGravity = true;
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
@@ -161,6 +158,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (!IsInPhase3 && NPC.GetLifePercent() < 0.5f) isInPhase2 = true;
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 			if (IsInPhase3) {
+				if (Main.rand.NextBool(3))
+					Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32, 32), ModContent.DustType<ShimmerConstructDust>(), Main.rand.NextVector2Circular(15, 15), Scale: 1).noGravity = true;
 				Rectangle npcRect = NPC.Hitbox;
 				const int active_range = 5000;
 				Rectangle playerRect = new(0, 0, active_range * 2, active_range * 2);

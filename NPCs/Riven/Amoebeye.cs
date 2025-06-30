@@ -21,7 +21,7 @@ namespace Origins.NPCs.Riven {
 			public override string TextKey => "Amoebeye";
 			public override JournalSortIndex SortIndex => new("Riven", 7);
 		}
-		public Rectangle DrawRect => new(0, 0, 72, 68);
+		public Rectangle DrawRect => new(0, 0, 70, 98);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
@@ -129,7 +129,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 68) % 272, 72, 66);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 98) % 392, 70, 96);
 				NPC.frameCounter = 0;
 			}
 		}

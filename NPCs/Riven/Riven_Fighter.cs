@@ -22,7 +22,7 @@ namespace Origins.NPCs.Riven {
 			public override string TextKey => "Riven_Protoform";
 			public override JournalSortIndex SortIndex => new("Riven", 6);
 		}
-		public Rectangle DrawRect => new(0, 6, 36, 40);
+		public Rectangle DrawRect => new(0, 6, 68, 56);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		private int FrameHeight = 40;

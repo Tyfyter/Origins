@@ -22,12 +22,12 @@ namespace Origins.World.BiomeData {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneVoid = OriginSystem.voidTiles > 300;
 			originPlayer.ZoneVoidProgress = Math.Clamp(OriginSystem.voidTiles - 200, 0, 200) / 300f;
-			LinearSmoothing(ref originPlayer.ZoneVoidProgressSmoothed, originPlayer.ZoneVoidProgress, OriginSystem.biomeShaderSmoothing);
+			//LinearSmoothing(ref originPlayer.ZoneVoidProgressSmoothed, originPlayer.ZoneVoidProgress, OriginSystem.biomeShaderSmoothing);
 			return originPlayer.ZoneVoid;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			float progress = player.OriginPlayer().ZoneVoidProgressSmoothed - player.HasBuff<Voidsight_Buff>().Mul(0.2f);
-			Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(progress);
+			//Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(progress);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", progress != 0, player.Center);
 		}
 		public class Gen {
