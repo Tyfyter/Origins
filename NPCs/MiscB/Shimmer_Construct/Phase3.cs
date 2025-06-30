@@ -468,6 +468,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (isUpdatingShimmeryProj) return maxLength;
 				return orig(position, direction, maxLength);
 			});
+			On_Collision.TileCollision += (orig, Position, Velocity, Width, Height, fallThrough, fall2, gravDir) => isUpdatingShimmeryProj ? Velocity : orig(Position, Velocity, Width, Height, fallThrough, fall2, gravDir);
+			On_Collision.AdvancedTileCollision += (orig, forcedIgnoredTiles, Position, Velocity, Width, Height, fallThrough, fall2, gravDir) => isUpdatingShimmeryProj ? Velocity : orig(forcedIgnoredTiles, Position, Velocity, Width, Height, fallThrough, fall2, gravDir);
+			On_Collision.SlopeCollision += (orig, Position, Velocity, Width, Height, fallThrough, gravDir) => isUpdatingShimmeryProj ? new Vector4(Position, Velocity.X, Velocity.Y) : orig(Position, Velocity, Width, Height, fallThrough, gravDir);
 		}
 
 		static bool isUpdatingShimmeryProj = false;
