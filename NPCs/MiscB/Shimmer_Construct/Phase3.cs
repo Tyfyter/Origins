@@ -329,6 +329,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int ShotDamage => (int)(15 + 9 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		public static int HealthAmount => (int)(150 + 90 * DifficultyMult);
+		public static float MoveSpeed => 0.2f;
+		public static float MoveInXRange => 16 * 40;
+		public static float MoveOutXRange => 16 * 10;
+		public static float SlideYRange => 16 * 20;
 		#endregion stats
 		static List<int> Types { get; } = [];
 		public override void Load() {
@@ -391,20 +395,20 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							);
 						}
 						int moveDir = Math.Sign(diff.X);
-						if (Math.Abs(diff.X) < 16 * 40) {
-							if (Math.Abs(diff.X) > 16 * 25) {
+						if (Math.Abs(diff.X) < MoveInXRange) {
+							if (Math.Abs(diff.X) > MoveOutXRange) {
 								moveDir = 0;
 							} else {
 								moveDir *= -1;
 							}
 						}
-						NPC.velocity.X += moveDir * 0.2f;
+						NPC.velocity.X += moveDir * MoveSpeed;
 						if (diff.Y < 0) {
 							fallDir = -1;
 						}
-						if (Math.Abs(diff.Y) < 16 * 20) friction.Y = 1;
+						if (Math.Abs(diff.Y) < SlideYRange) friction.Y = 1;
 					}
-					NPC.velocity.Y += (MathF.Sin(NPC.ai[1]++ / 60) + 1) * 0.2f * fallDir;
+					NPC.velocity.Y += (MathF.Sin(NPC.ai[1]++ / 60) + 1) * MoveSpeed * fallDir;
 				} else {
 					NPC.velocity += NPC.DirectionTo(owner.Center) * 2;
 					if (NPC.Hitbox.Intersects(owner.Hitbox)) DoStrike();
