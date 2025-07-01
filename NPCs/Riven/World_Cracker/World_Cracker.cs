@@ -47,6 +47,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static int DifficultyScaledSegmentCount => 13 + 2 * DifficultyMult;
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
 		public static AutoCastingAsset<Texture2D> HPBarArmorTexture { get; private set; }
+		public override float SegmentSeparation => 140;
 		public static int MaxArmorHealth {
 			get => 100 + 50 * DifficultyMult;
 		}
@@ -469,6 +470,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override bool SharesImmunityFrames => true;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
+		public override float SegmentSeparation => 90;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 			if (!Main.dedServ) {
@@ -565,6 +567,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public AssimilationAmount? Assimilation => 0.10f;
 		public override bool SharesImmunityFrames => true;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+		public override float SegmentSeparation => 96;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;

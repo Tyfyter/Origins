@@ -55,6 +55,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.scale = 0.85f;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 1;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void AI() {
 			this.DoGravity(0.08f);

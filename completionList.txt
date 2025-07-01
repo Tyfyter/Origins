@@ -56,9 +56,9 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, †, ^2) Shimmer Construct !!! 
+(#2/3, ^2) Shimmer Construct !!! 
 (#, ^2) Trenchmaker
-(@4) World Cracker* !!! (Head Armor spritesheet needs to use rows for health, not columns)
+(#2, ^2) World Cracker* !!! (mouth anims and sounds)
 
 (X) Corrupt Harvester
 (^) Lost Diver/Mildew Carrion

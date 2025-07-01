@@ -610,7 +610,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (drawDatas.Count > 100) drawDatas.RemoveRange(0, drawDatas.Count - 99);
 			Origins.shaderOroboros.Capture(spriteBatch);
-			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 0f));
+			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(1f, 1f, 1f, 1f));
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(simpleMaskShader);
 			Origins.shaderOroboros.Release();
@@ -633,7 +633,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(opacity));
 			Origins.shaderOroboros.Stack(invertAnimateShader);
 			Origins.shaderOroboros.Stack(shader);
-			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(new(0.3f), 0.3f));
+			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(new(0.15f), 0.7f));
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
