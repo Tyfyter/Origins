@@ -107,6 +107,7 @@ TOWN NPC Quests:
 (^) Guide - Troubling Trouble
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
+(X) Painter Apprentice !!!
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
@@ -136,12 +137,15 @@ VANILLA MODIFICATIONS:
 
 WORLD GENERATION:
 |---
+(X) Ashen Factory
+(X) Ashen Outpost
+(X) Ashen Overworld
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(^) Riven Hive
+(#2) Riven Hive !!!
 (#2, 々) The Dusk
 
 (X) Defiled Egregore
@@ -171,7 +175,7 @@ ENEMY NPCS:
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
 (^) Aqueoua
-(ᗢ) Barnacleback*
+(#2, ^2) Barnacleback* !!! (BBs spitting out Goo Walls)
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (X) Blotopus
@@ -199,7 +203,6 @@ ENEMY NPCS:
 (^) Defiled Phantom*
 (^) Defiled Swarmer*
 (^) Defiled Wisp*
-(X) Draconess
 (^) Enchanted Fiberglass Bow*
 (^) Enchanted Fiberglass Cannon*
 (^) Enchanted Fiberglass Pistol*
@@ -209,7 +212,7 @@ ENEMY NPCS:
 (^) Felnum Einheri*
 (^) Felnum Guardian*
 (^) Felnum Slime*
-(ᗢ) Flagellant* (new behavior)
+(#2, ^2) Flagellant* !!! (flagellash whipping behavior)
 (^) Flying Exoskeleton*
 (#, ^2) Goo Wall !!!
 (^) Graveshield Zombie*
@@ -238,7 +241,7 @@ ENEMY NPCS:
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
 (X) Angel
-(☻) Barnacle Mound* !!! (hew sprites)
+(^) Barnacle Mound*
 (X) Beckonbug
 (^) Brine Latcher
 (^) Brine Serpent
@@ -437,6 +440,7 @@ ACCESSORIES:
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
 (^) Danger Barrel*
+(X) Decorative Ashes
 (^) Destructive Claws*
 (^) Dim Starlight*
 (^) Donor Wristband*
@@ -512,7 +516,6 @@ ACCESSORIES:
 (^) Razorwire*
 (^) Rebreather*
 (^) Rebreather Gear
-(X) Reformward
 (^) Resin Shield*
 (^) Resizing Glove
 (^) Return To Sender*
@@ -554,7 +557,6 @@ ACCESSORIES:
 (@4, #) Bomb Rack
 (^) Entangled Energy*
 (^) Mana Drive°
-(X) Probe Pack
 (^) Protozoa Food*
 (^) Refactoring Pieces*
 (^) Retaliatory Tendril°
@@ -562,14 +564,19 @@ ACCESSORIES:
 
 (^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
+(X) Crystal Heart
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Faith Beads
 (^) Fiberglass Dagger*
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
+(X) Glitter Glue
 (^) Mysterious Spray*
+(X) Retool Arm
+(X) Robo-tail
 (^) Scribe of the Meat God*
+(X) Space Pirate's Eye
 (ᗢ) Stack of Shraps*
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
@@ -598,7 +605,7 @@ VANITY:
 (^) World Cracker Mask*
 (X) Severus' Hat
 (^) Shimmer Construct Mask
-(X) Trenchmaker Mask
+(#, ^2) Trenchmaker Mask
 
 (X) Abyssal Outcast Set
 (X) Amebic Protector Set
@@ -645,7 +652,7 @@ UTILITIES:
 
 (^) Hydrolantern
 (^) Salty Seed (Mitosis Node)*
-(^5 ?) Saltier Seed (Mitosis Node)
+(^5) Saltier Seed (Mitosis Node)
 ---
 
 
@@ -662,6 +669,7 @@ WINGS:
 (X) Nova Backblaster
 
 (X) Vampiric Spell
+(X) Tyfyter's Wings
 ---
 
 
@@ -793,7 +801,7 @@ RANGED WEAPONS:
 (^) Threemoepeater*
 (^) Unmisfire*
 (^) Unstrung Fiberglass Bow*
-(X) Welding Torch
+(#, ^2) Welding Torch
 (^) 2-in-1 Shotty*
 (^) 3-in-1 Shotty*
 
@@ -899,7 +907,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(☻) Aether Opal !!! (shotgun chunks to use gores)
+(^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
@@ -1091,7 +1099,8 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz*
 (X) Brown Ice
-(☻) Calcified Spug Flesh !!!
+(^) Calcified Spug Flesh
+(X) Catwalk
 (^) Chambersite
 (X) Cubekon Altar°
 (^) Defiled Cactus*
@@ -1136,11 +1145,11 @@ TILES:
 (X) Witherwood
 
 (^) Amebic Gel Wall
-(☻) Barnacle Wall !!!
+(^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
-(☻) Calcified Spug Flesh Wall !!!
+(^) Calcified Spug Flesh Wall
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -1163,7 +1172,7 @@ TILES:
 (^) Spug Flesh Wall
 
 (^) Alkahest Torch*
-(☻) Amoeba Buggy Cage* !!!
+(^) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1181,7 +1190,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(☻) Cicada 3301 Cage° !!!
+(#3, ^2) Cicada 3301 Cage° !!!
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1463,7 +1472,7 @@ CONSUMABLES:
 (^) Jam Sandwich*
 (^) Jelly Schnapps*
 (^) Krunch Mix*
-(☻) Nerve Flan !!! (holding position)
+(^) Nerve Flan
 (^) Pawpaw*
 (X) Pen Ink
 (^) Periven*
