@@ -309,7 +309,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				return false;
 			}
-			private static readonly VertexStrip vertexStrip = new();
+			private static VertexStrip vertexStrip = new();
 			public static void DrawPath(Vector2[] positions, float[] rotations, float width, float alpha, float progress, Color color) {
 				MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
 				shader.UseImage1(TextureAssets.Extra[193]);
@@ -317,7 +317,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				shader.UseSecondaryColor(Color.Green);
 				shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));
 				shader.Apply();
-				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => color * alpha, (p) => width, -Main.screenPosition, false);
+				vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (p) => color * alpha, (p) => width, -Main.screenPosition, true);
 				vertexStrip.DrawTrail();
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			}
