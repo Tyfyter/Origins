@@ -17,7 +17,7 @@ namespace Origins.Tiles.Dusk {
 			Main.tileMerge[Type][TileType<Bleeding_Obsidian>()] = true;
 			AddMapEntry(new Color(20, 20, 20));
 			mergeID = TileID.Stone;
-			MinPick = 220;
+			MinPick = 200;
 			HitSound = SoundID.Dig;
 			DustType = DustID.t_Granite;
 		}
