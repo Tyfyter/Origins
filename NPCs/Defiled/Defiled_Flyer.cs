@@ -40,8 +40,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
-			NPC.defense = 10;
 			NPC.damage = 20;
+			NPC.defense = 0;
 			NPC.width = 30;
 			NPC.height = 30;
 			NPC.catchItem = 0;

@@ -36,8 +36,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
-			NPC.defense = 10;
 			NPC.damage = 12;
+			NPC.defense = 0;
 			NPC.width = 40;
 			NPC.height = 48;
 			NPC.hide = true;
@@ -154,7 +154,7 @@ namespace Origins.NPCs.Defiled {
 				} else {
 
 				}
-			} else {
+			} else if (Main.npc.IndexInRange((int)NPC.ai[1] - 300)) { 
 				NPC carriedNPC = Main.npc[(int)NPC.ai[1] - 300];
 				if (!carriedNPC.TryGetGlobalNPC(out DefiledGlobalNPC global)) {
 					NPC.ai[2] = 0;

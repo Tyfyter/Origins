@@ -21,7 +21,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.lifeMax = 60;
-			NPC.defense = 6;
+			NPC.defense = 5;
 			NPC.damage = 30;
 			NPC.width = 32;
 			NPC.height = 24;

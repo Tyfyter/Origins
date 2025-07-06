@@ -24,8 +24,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 			NPC.lifeMax = 12;
-			NPC.defense = 2;
 			NPC.damage = 10;
+			NPC.defense = 1;
 			NPC.width = 22;
 			NPC.height = 22;
 			NPC.knockBackResist = 0.2f;
