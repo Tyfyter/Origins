@@ -765,6 +765,7 @@ MELEE WEAPONS:
 (^) True Light Disc*
 (^) True Waning Crescent*
 (^) Tyrfing
+(X) Xeyah Laeta
 
 (X) Chromakama
 (X) Chromtain Smasher
@@ -1117,7 +1118,7 @@ TILES:
 (^) Encrusted Ore*
 (^) Endowood*
 (^) Felnum Ore*
-(^) Fiberglass Block*
+(#2, ^2) Fiberglass Block* !!! (needs shatter destruction noise)
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick°
@@ -1142,6 +1143,9 @@ TILES:
 (^) Spug Flesh*
 (X) Truss Block
 (@4, ^3) Twilith*
+(X) Type-I Fortified Steel Block
+(X) Type-II Fortified Steel Block
+(X) Type-III Fortified Steel Block
 (X) Witherwood
 
 (^) Amebic Gel Wall
@@ -1169,7 +1173,9 @@ TILES:
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
+(X) Sheet Metal Wall
 (^) Spug Flesh Wall
+(X) Type-III Fortified Steel Wall
 
 (^) Alkahest Torch*
 (^) Amoeba Buggy Cage*
@@ -1203,12 +1209,14 @@ TILES:
 (X) Edenwood Furniture°
 (^) Encrusted Brick
 (^) Endowood Furniture*
+(X) Large Container
 (^) Laser Tag Console*
 (#, ^2) Limestone Furniture !!!
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
 (^) Marrowick Furniture*
+(X) Medium Container
 (X) Mushroom Dungeon Chest°
 (X) Nova Brick°
 (X) Nova Fragment Block°
@@ -1228,6 +1236,7 @@ TILES:
 (X) Rusty Locker
 (X) Sanguinite Brick
 (^) Shadow Torch°
+(X) Small Container
 (^) Traffic Cone*
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
@@ -1262,6 +1271,7 @@ TILES:
 (^) Limestone Rubble
 (#, ^2) Marrowick Coral !!!
 (#, ^2) Marrowick Flange !!!
+(X) Modular Light Fixture
 (X) Moonshine°
 (^) Ocotillo
 (X) Petrified Baobab Tree*

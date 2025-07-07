@@ -421,7 +421,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ItemType<Resizing_Glove>())
 			);
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Aetherite_Ore_Item>(), minimumDropped: 30, maximumDropped: 90));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Aetherite_Ore_Item>(), minimumDropped: 140, maximumDropped: 330));
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Shimmer_Construct_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ItemType<Shimmer_Construct_Mask>(), 10));
