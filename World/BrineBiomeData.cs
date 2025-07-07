@@ -313,7 +313,7 @@ namespace Origins.World.BiomeData {
 				for (int k = genRand.Next(40, 60); k > 0;) {
 					int posX = genRand.Next(range.Left, range.Right);
 					int posY = genRand.Next(range.Top, range.Bottom);
-					if (TileExtenstions.CanActuallyPlace(posX, posY, rivenAltar, 0, 0, out TileObject objectData, false, checkStay: true)) {
+					if (Framing.GetTileSafely(posX, posY).WallType == stoneWallID && TileExtenstions.CanActuallyPlace(posX, posY, rivenAltar, 0, 0, out TileObject objectData, false, checkStay: true)) {
 						TileObject.Place(objectData);
 						k--;
 					}
