@@ -17,7 +17,7 @@ namespace Origins.Items.Other.LootBags {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			itemLoot.Add(Shimmer_Construct.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shimmer_Shield>()));
-			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 10), false));
+			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 7), false));
 		}
 		public override bool CanRightClick() {
 			return true;
