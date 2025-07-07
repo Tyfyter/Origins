@@ -361,7 +361,7 @@ namespace Origins.World.BiomeData {
 						}, spread).Select(v => new Tuple<Vector2, double>(v, 1)).ToArray();
 					} while (poss.Length <= 1 && --tries > 0);
 					WeightedRandom<Vector2> positions = new(genRand, poss);
-					// tweak this to make more calcified areas
+					// tweak this to make more barnicled areas
 					int count = (int)(Main.maxTilesX * 3E-03 * genRand.NextFloat(0.9f, 1f));
 					ushort barnacleWall = (ushort)OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural);
 					while (count-- > 0 && positions.elements.Count > 0) {
@@ -403,6 +403,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 					positions = new(genRand, poss);
+					// tweak this to make more calcified areas
 					count = (int)(Main.maxTilesX * 6E-03 * genRand.NextFloat(0.9f, 1f));
 
 					ushort calcifiedTile = (ushort)ModContent.TileType<Calcified_Riven_Flesh>();
@@ -458,6 +459,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 					positions = new(genRand, poss);
+					// tweak this to make more calcified areas
 					count = (int)(Main.maxTilesX * 4E-03 * genRand.NextFloat(0.9f, 1f));
 					while (count-- > 0 && positions.elements.Count > 0) {
 						Vector2 specklePos = positions.Pop();
