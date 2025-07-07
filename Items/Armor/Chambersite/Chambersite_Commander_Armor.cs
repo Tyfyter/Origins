@@ -5,6 +5,7 @@ using Origins.Items.Armor.Chambersite;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.Projectiles;
 using Origins.Tiles.Other;
 using PegasusLib;
 using ReLogic.Utilities;
@@ -141,6 +142,7 @@ namespace Origins.Items.Armor.Chambersite {
 
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			Projectile.GetGlobalProjectile<OriginGlobalProj>().weakShimmer = player.OriginPlayer()?.weakShimmer ?? false;
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
