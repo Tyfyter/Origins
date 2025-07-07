@@ -379,6 +379,22 @@ namespace Origins.Items {
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					break;
 				}
+				case ItemID.FrozenCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
+					bool foundMain = false;
+					OneFromRulesRule rule = dropRules.FindDropRule<OneFromRulesRule>(dropRule => {
+						List<DropRateInfo> drops = [];
+						dropRule.ReportDroprates(drops, default);
+						return drops.Any(i => i.itemId == ItemID.IceBoomerang);
+					});
+					if (rule is not null) {
+						rule.Add(
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Cryostrike>())
+						);
+						foundMain = true;
+					}
+					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					break;
+				}
 			}
 			if (ItemID.Sets.BossBag[item.type] && item.ModItem?.Mod == Origins.instance) {
 				itemLoot.Add(devSetRealDropRule);

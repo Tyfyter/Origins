@@ -4722,6 +4722,12 @@ namespace Origins {
 				rule.options[^i] = rules[^i];
 			}
 		}
+		public static void Add(this AlwaysAtleastOneSuccessDropRule rule, params IItemDropRule[] rules) {
+			Array.Resize(ref rule.rules, rule.rules.Length + rules.Length);
+			for (int i = 1; i <= rules.Length; i++) {
+				rule.rules[^i] = rules[^i];
+			}
+		}
 		public static void SubstituteKeybind(this List<TooltipLine> tooltips, ModKeybind keybind) {
 			InputMode inputMode = InputMode.Keyboard;
 			switch (PlayerInput.CurrentInputMode) {
