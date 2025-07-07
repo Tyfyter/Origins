@@ -45,7 +45,7 @@ namespace Origins.NPCs.Fiberglass {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Fiberglass_Weaver_Preview");
 		public override void SetStaticDefaults() {
-			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Fiberglass_Weaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
