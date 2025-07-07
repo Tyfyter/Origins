@@ -132,8 +132,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
 			}
 			NPC.dontTakeDamage = false;
-			if (aiStates[NPC.aiAction] is not (DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState or DroneDashState or ShotgunState)) GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) {
+				if (aiStates[NPC.aiAction] is not (DashState or MagicMissilesState or SpawnDronesStateState or SpawnCloudsState or DroneDashState or ShotgunState)) {
+					GeometryUtils.AngularSmoothing(ref NPC.rotation, NPC.AngleTo(NPC.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
+				}
 				aiStates[NPC.aiAction].DoAIState(this);
 				if (!isInPhase2 && (NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk1>()] || NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk2>()] || NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk3>()])) {
 					NPC.dontTakeDamage = true;
