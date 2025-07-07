@@ -850,9 +850,11 @@ namespace Origins.World.BiomeData {
 				});
 				shadowOrbSmashed = true;
 				shadowOrbCount++;
+				int bossHeadType = ModContent.NPCType<World_Cracker_Head>();
+				if (shadowOrbCount >= 3 && NPC.npcsFoundForCheckActive[bossHeadType]) shadowOrbCount--;
 				if (shadowOrbCount >= 3) {
 					shadowOrbCount = 0;
-					Main.LocalPlayer.SpawnBossOn(ModContent.NPCType<World_Cracker_Head>());
+					Main.LocalPlayer.SpawnBossOn(bossHeadType);
 				} else {
 					LocalizedText localizedText = Lang.misc[10];
 					if (shadowOrbCount == 2) {
