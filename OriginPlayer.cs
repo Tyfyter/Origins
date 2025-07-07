@@ -554,6 +554,7 @@ namespace Origins {
 			}
 		}
 		public override void UpdateDead() {
+			weakShimmer = false;
 			timeSinceLastDeath = -1;
 			tornCurrentSeverity = 0;
 			tornTarget = 0f;
