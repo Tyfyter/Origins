@@ -99,7 +99,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Tire : ModItem {
 		public override void SetStaticDefaults() {
-			ItemID.Sets.ExtractinatorMode[Type] = 1;
+			ItemID.Sets.ExtractinatorMode[Type] = ItemID.OldShoe;
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -110,9 +110,6 @@ namespace Origins.Items.Other.Fish {
 			Item.rare = ItemRarityID.Gray;
 			Item.autoReuse = true;
 			Item.consumable = true;
-		}
-		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack) {
-
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Rubber>(), 3)
