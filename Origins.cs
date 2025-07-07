@@ -730,6 +730,17 @@ namespace Origins {
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 			loggedErrors.Clear();
 			List<LocalizedText> loadingWarnings = [];
+			FastFieldInfo<OverlayManager, LinkedList<Overlay>[]> _activeOverlays = "_activeOverlays";
+			LinkedList<Overlay>[] activeOverlays = _activeOverlays.GetValue(Overlays.Scene);
+			for (int i = 0; i < activeOverlays.Length; i++) {
+				LinkedList<Overlay> overlayer = activeOverlays[i];
+				LinkedListNode<Overlay> node = overlayer.First;
+				while (node is not null) {
+					LinkedListNode<Overlay> next = node.Next;
+					if (node.Value.GetType().Assembly.FullName.Contains(nameof(Origins))) overlayer.Remove(node);
+					node = next;
+				}
+			}
 		}
 		public static uint gameFrameCount = 0;
 		static void IncrementFrameCount(GameTime gameTime) {
