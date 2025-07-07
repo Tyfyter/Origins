@@ -217,7 +217,8 @@ namespace Origins.Projectiles {
 							(int)artifact.Life,
 							artifact.MaxLife,
 							drawParams.DrawColor.A / 255f,
-							0.85f
+							0.85f,
+							true
 						);
 					} else {
 						artifact.DrawDeadHealthBar(drawParams.TextPosition + posOffset, drawParams.DrawColor.A / 255f);
