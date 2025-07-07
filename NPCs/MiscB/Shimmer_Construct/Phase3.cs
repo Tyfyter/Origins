@@ -668,9 +668,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			spriteBatch.End();
-			for (int i = 0; i < players.Count; i++) {
-				Lighting.AddLight(players[i].Center, new Vector3(1));
-			}
 			Main.PlayerRenderer.DrawPlayers(Main.Camera, players);
 			spriteBatch.Begin(state);
 			DrawCachedProjectiles(DrawCacheProjsOverPlayers);

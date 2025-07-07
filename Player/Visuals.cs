@@ -83,6 +83,11 @@ namespace Origins {
 				float progress = blizzardwalkerActiveTime / (float)Blizzardwalkers_Jacket.max_active_time;
 				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.Red, progress * progress);
 			}
+			if (weakShimmer) {
+				drawInfo.colorArmorHead = Color.White;
+				drawInfo.colorArmorBody = Color.White;
+				drawInfo.colorArmorLegs = Color.White;
+			}
 		}
 		public override void FrameEffects() {
 			Debugging.LogFirstRun(FrameEffects);
