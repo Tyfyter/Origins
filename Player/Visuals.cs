@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Graphics.Renderers;
+using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
@@ -40,6 +41,24 @@ namespace Origins {
 			}
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+			if (weakShimmer) {
+				drawInfo.colorHair = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.GetHairColor(), drawInfo.shadow);
+				drawInfo.colorEyeWhites = drawInfo.drawPlayer.GetImmuneAlpha(Color.White, drawInfo.shadow);
+				drawInfo.colorEyes = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.eyeColor, drawInfo.shadow);
+				drawInfo.colorHead = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.skinColor, drawInfo.shadow);
+				drawInfo.colorBodySkin = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.skinColor, drawInfo.shadow);
+				drawInfo.colorLegs = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.skinColor, drawInfo.shadow);
+				drawInfo.colorShirt = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.shirtColor, drawInfo.shadow);
+				drawInfo.colorUnderShirt = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.underShirtColor, drawInfo.shadow);
+				drawInfo.colorPants = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.pantsColor, drawInfo.shadow);
+				drawInfo.colorShoes = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.shoeColor, drawInfo.shadow);
+				drawInfo.colorArmorHead = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+				drawInfo.colorArmorBody = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+				drawInfo.colorMount = drawInfo.colorArmorBody;
+				drawInfo.colorArmorLegs = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+				drawInfo.floatingTubeColor = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+			}
+
 			if (cursedCrownVisual) {
 				drawInfo.skinDyePacked = GameShaders.Armor.GetShaderIdFromItemId(ItemID.BlueAcidDye);
 				const float alphaMult = 0.9f;
@@ -82,11 +101,6 @@ namespace Origins {
 			if (blizzardwalkerJacketVisual && blizzardwalkerActiveTime > 0) {
 				float progress = blizzardwalkerActiveTime / (float)Blizzardwalkers_Jacket.max_active_time;
 				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.Red, progress * progress);
-			}
-			if (weakShimmer) {
-				drawInfo.colorArmorHead = Color.White;
-				drawInfo.colorArmorBody = Color.White;
-				drawInfo.colorArmorLegs = Color.White;
 			}
 		}
 		public override void FrameEffects() {
