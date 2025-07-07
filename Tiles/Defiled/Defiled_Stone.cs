@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;

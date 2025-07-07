@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Walls;
-using Origins.World.BiomeData;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,6 +17,7 @@ namespace Origins.Tiles.Limestone {
 			AddMapEntry(new Color(180, 172, 134));
 			AddDefiledTile();
 			DustType = DustID.Sand;
+			HitSound = SoundID.Tink;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileID.Sand, 2)], TileExtenstions.ExtraTileBlending);

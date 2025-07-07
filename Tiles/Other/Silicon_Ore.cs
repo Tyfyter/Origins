@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -21,6 +20,7 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(60, 60, 60), CreateMapEntryName());
 			MineResist = 2;
 			DustType = DustID.Lead;
+			HitSound = SoundID.Tink;
 		}
 	}
 	public class Silicon_Ore_Item : ModItem, ICustomWikiStat {

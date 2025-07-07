@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
