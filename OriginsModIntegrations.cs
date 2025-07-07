@@ -53,6 +53,7 @@ using Origins.Water;
 using Origins.Items.Armor.Other;
 using Origins.NPCs.MiscB;
 using Terraria.GameContent;
+using Microsoft.Build.Tasks;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -90,6 +91,15 @@ namespace Origins {
 		}
 		public static void SearchKeybind(string text) {
 			instance.searchKeybinds?.Invoke(text);
+		}
+		delegate void _drawingAOMap(ref bool value);
+		_drawingAOMap drawingAOMap;
+		public static bool DrawingAOMap {
+			get {
+				bool value = false;
+				instance.drawingAOMap(ref value);
+				return value;
+			}
 		}
 		public void Load(Mod mod) {
 			instance = this;
@@ -572,6 +582,25 @@ namespace Origins {
 					Origins.LogLoadingWarning(Language.GetText("Mods.Origins.Warnings.FancyLightingWallShineDelegateMissing"));
 				}
 				//*/
+				Type ambientOcclusionType = fancyLighting.GetType().Assembly.GetType("FancyLighting.AmbientOcclusion");
+				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+				bool drawingAO = false;
+				MonoModHooks.Add(
+					ambientOcclusionType.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance),
+					(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((Func<object, RenderTarget2D, bool, bool, RenderTarget2D> orig, object self, RenderTarget2D wallTarget, bool doDraw, bool updateWallTarget) => {
+						drawingAO = true;
+						RenderTarget2D value;
+						try {
+							value = orig(self, wallTarget, doDraw, updateWallTarget);
+						} catch (Exception) {
+							drawingAO = false;
+							throw;
+						}
+						drawingAO = false;
+						return value;
+					})
+				);
+				drawingAOMap += (ref bool value) => value |= drawingAO;
 			} catch (Exception e) {
 				Origins.LogError("Exception thrown while loading Fancy Lighting Integration:", e);
 				FancyLighting = null;
