@@ -48,6 +48,7 @@ namespace Origins.Projectiles {
 					if (proj.TryGetOwner(out Player player)) {
 						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {
 							artifact.maxHealthModifier = StatModifier.Default;
+							if (proj.ModProjectile is IArtifactMinion) ArtifactMinionSystem.nextArtifactMinions.Add(proj.whoAmI);
 						}
 						BrothBase currentBroth = player.OriginPlayer()?.broth;
 						if (global.activeBroth != currentBroth) {

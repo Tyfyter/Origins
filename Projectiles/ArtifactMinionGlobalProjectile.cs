@@ -64,9 +64,6 @@ namespace Origins.Projectiles {
 						projectile.Kill();
 					}
 				}
-				if (projectile.owner == Main.myPlayer && projectile.numUpdates == -1) {
-					ArtifactMinionSystem.nextArtifactMinions.Add(projectile.whoAmI);
-				}
 			}
 		}
 		public bool CanRespawn(Projectile projectile) {
