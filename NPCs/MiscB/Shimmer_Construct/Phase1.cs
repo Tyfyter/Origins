@@ -417,7 +417,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			if (NPC.lifeMax == 1) {
-				NPC.lifeMax = (owner.lifeMax / (int)NPC.ai[2]) / 3;
+				NPC.lifeMax = (owner.lifeMax / (int)NPC.ai[2]) / 2;
 				NPC.life = NPC.lifeMax;
 			}
 			float distance = 16 * 10 - NPC.ai[3];
