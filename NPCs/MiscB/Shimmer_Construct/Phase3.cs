@@ -329,9 +329,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int ShotDamage => (int)(15 + 9 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		public static int HealthAmount => (int)(150 + 90 * DifficultyMult);
-		public static float MoveSpeed => 0.2f;
+		public static float MoveSpeedX => 0.4f;
+		public static float MoveSpeedY => 0.6f;
+		//will move towards the player if x distance is greater than this
 		public static float MoveInXRange => 16 * 40;
-		public static float MoveOutXRange => 16 * 10;
+		//will move away from the player if x distance is less than this
+		public static float MoveOutXRange => 16 * 7;
+		//will slide vertically if y distance to player is greater than this
 		public static float SlideYRange => 16 * 20;
 		#endregion stats
 		static List<int> Types { get; } = [];
@@ -402,13 +406,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 								moveDir *= -1;
 							}
 						}
-						NPC.velocity.X += moveDir * MoveSpeed;
+						NPC.velocity.X += moveDir * MoveSpeedX;
 						if (diff.Y < 0) {
 							fallDir = -1;
 						}
 						if (Math.Abs(diff.Y) < SlideYRange) friction.Y = 1;
 					}
-					NPC.velocity.Y += (MathF.Sin(NPC.ai[1]++ / 60) + 1) * MoveSpeed * fallDir;
+					NPC.velocity.Y += (MathF.Sin(NPC.ai[1]++ / 60) + 1) * MoveSpeedY * fallDir;
 				} else {
 					NPC.velocity += NPC.DirectionTo(owner.Center) * 2;
 					if (NPC.Hitbox.Intersects(owner.Hitbox)) DoStrike();

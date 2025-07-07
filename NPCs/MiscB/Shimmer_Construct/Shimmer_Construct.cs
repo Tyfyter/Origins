@@ -101,7 +101,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
 			// I think this is the "normal" amount:
-			//NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment)
+			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment);
 		}
 		public override void OnSpawn(IEntitySource source) {
 			int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);
@@ -167,12 +167,18 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Vector2 min = NPC.TopLeft;
 				Vector2 max = NPC.BottomRight;
 				List<Player> players = [];
+				List<NPC> turrets = [];
 				foreach (Player player in Main.ActivePlayers) {
 					if (NPC.playerInteraction[player.whoAmI] || npcRect.Intersects(playerRect.Recentered(player.Center))) {
 						min = Vector2.Min(min, player.TopLeft);
 						max = Vector2.Max(max, player.BottomRight);
 						player.AddBuff(Weak_Shimmer_Debuff.ID, 5, true);
 						players.Add(player);
+					}
+				}
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.ModNPC is SpawnTurretsState.Shimmer_Construct_Turret_Chunk) {
+						turrets.Add(npc);
 					}
 				}
 				if (max.Y >= Main.bottomWorld - 640f - 64f) {
@@ -191,6 +197,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						players[i].Teleport(players[i].position - top, 12);
 						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
 							PositionInWorld = players[i].Bottom
+						});
+					}
+					for (int i = 0; i < turrets.Count; i++) {
+						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+							PositionInWorld = turrets[i].Bottom
+						});
+						turrets[i].Teleport(turrets[i].position - top, 12);
+						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+							PositionInWorld = turrets[i].Bottom
 						});
 					}
 				}
@@ -388,7 +403,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return base.PreKill();
 		}
 		static BitArray oldItems;
-		public override void BossLoot(ref string name, ref int potionType) {
+		public override void BossLoot(ref int potionType) {
 			potionType = ItemID.RestorationPotion;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
