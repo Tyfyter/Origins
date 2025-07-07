@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Projectiles;
 using Origins.Tiles.Other;
 using PegasusLib;
 using Terraria;
@@ -107,6 +108,8 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			Projectile.GetGlobalProjectile<OriginGlobalProj>().weakShimmer = player.OriginPlayer()?.weakShimmer ?? false;
+
 			Projectile.position = player.MountedCenter;
 			if (!player.dead && player.GetModPlayer<OriginPlayer>().sapphireSet) {
 				Projectile.timeLeft = 5;
