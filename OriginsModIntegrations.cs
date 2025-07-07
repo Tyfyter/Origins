@@ -96,6 +96,7 @@ namespace Origins {
 		_drawingAOMap drawingAOMap;
 		public static bool DrawingAOMap {
 			get {
+				if (instance is null) return false;
 				bool value = false;
 				instance.drawingAOMap(ref value);
 				return value;
