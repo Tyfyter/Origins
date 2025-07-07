@@ -20,6 +20,14 @@ namespace Origins.Tiles.Other {
 			HitSound = SoundID.Dig;
 			AddMapEntry(new Color(148, 144, 144), Language.GetText("MapObject.Trap"));
 		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			if (Main.LocalPlayer.direction == 1) {
+				Main.tile[i, j].TileFrameX += 18;
+				if (Main.netMode == NetmodeID.MultiplayerClient) {
+					NetMessage.SendTileSquare(-1, i, j);
+				}
+			}
+		}
 		public override void HitWire(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			if (Wiring.CheckMech(i, j, 300)) {
