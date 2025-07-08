@@ -18,10 +18,27 @@ namespace Origins.World {
 			posMax = Vector2.Max(posMax, center + Vector2.Max(Vector2.Max(a, b), Vector2.Max(-a, -b)));
 			void DoFilter(Vector2 pos, ref bool output) {
 				if (!output) return;
-				Vector2 offset = (pos - center) / scale;
 				if (pos == center) return;
+				Vector2 offset = (pos - center) / scale;
 				offset = new(offset.X * cos + offset.Y * sin, offset.X * sin - offset.Y * cos);
 				float dist = offset.Y * offset.Y + MathF.Pow(Math.Abs(offset.X * aspectRatio), Math.Abs(offset.Y * roundness));
+				output = dist <= 1;
+			}
+			return DoFilter;
+		}
+		public static Filter Circle(Vector2 center, float scale, float rotation, float aspectRatio, ref Vector2 posMin, ref Vector2 posMax) {
+			float sin = MathF.Sin(rotation);
+			float cos = MathF.Cos(rotation);
+			Vector2 a = new Vector2(1, aspectRatio).RotatedBy(rotation) * scale * 0.5f;
+			Vector2 b = new Vector2(-1, aspectRatio).RotatedBy(rotation) * scale * 0.5f;
+			posMin = Vector2.Min(posMin, center + Vector2.Min(Vector2.Min(a, b), Vector2.Min(-a, -b)));
+			posMax = Vector2.Max(posMax, center + Vector2.Max(Vector2.Max(a, b), Vector2.Max(-a, -b)));
+			void DoFilter(Vector2 pos, ref bool output) {
+				if (!output) return;
+				if (pos == center) return;
+				Vector2 offset = (pos - center) / scale;
+				offset = new(offset.X * cos + offset.Y * sin, offset.X * sin - offset.Y * cos);
+				float dist = MathF.Pow(offset.X / aspectRatio, 2) + MathF.Pow(offset.Y, 2);
 				output = dist <= 1;
 			}
 			return DoFilter;

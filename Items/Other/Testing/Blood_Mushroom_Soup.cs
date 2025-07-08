@@ -564,8 +564,8 @@ namespace Origins.Items.Other.Testing {
 			);
 			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
 			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
-			Dust.NewDustPerfect(posMin, 6, Vector2.Zero).noGravity = true;
-			Dust.NewDustPerfect(posMax, 6, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(posMin * 16 + Vector2.One * 8, 6, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(posMax * 16 + Vector2.One * 8, 6, Vector2.Zero).noGravity = true;
 			return "";
 		}
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
@@ -577,8 +577,8 @@ namespace Origins.Items.Other.Testing {
 			PlayerInput.SetZoom_MouseInWorld();
 			Vector2 direction = (Main.MouseWorld - Main.LocalPlayer.MountedCenter).SafeNormalize(Vector2.UnitX);
 			float dist = CollisionExt.Raymarch(Main.LocalPlayer.MountedCenter, direction, 16 * 50);
-			return Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Riven_Flesh>()))
-			+ Carver.PointyLemon((Main.LocalPlayer.MountedCenter + direction * dist) / 16, 10, direction.ToRotation() + MathHelper.PiOver2, 6, 1, ref posMin, ref posMax);
+			return Carver.ActiveTileInSet(TileID.Sets.AllTiles)
+			+ Carver.Circle((Main.LocalPlayer.MountedCenter + direction * (dist + 6 * 16)) / 16, 3, direction.ToRotation() + MathHelper.PiOver2, 1, ref posMin, ref posMax);
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
 			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();

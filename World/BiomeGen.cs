@@ -27,6 +27,7 @@ namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		public static List<Vector2> EvilSpikeAvoidancePoints = [];
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
+			const double max_defiled_spike_size = 8.0;
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
 			EvilSpikeAvoidancePoints.Clear();
@@ -193,6 +194,7 @@ namespace Origins {
 					p = p.OffsetBy((int)(vel.X * -3), (int)(vel.Y * -3));
 					//TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
 					double size = i.size * 0.25;
+					if (size > max_defiled_spike_size) size = max_defiled_spike_size;
 					if (genRand.NextBool(5)) {
 						size += 6;
 						Vector2 tempPos = new(p.X, p.Y);
