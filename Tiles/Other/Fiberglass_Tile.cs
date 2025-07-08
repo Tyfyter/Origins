@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -23,6 +24,10 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(42, 116, 160));
             //BreakSound = SoundID.Shatter;
 			DustType = DustID.Everscream;
+		}
+		public override bool KillSound(int i, int j, bool fail) {
+			if (!fail) SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i * 16, j * 16));
+			return fail;
 		}
 	}
 	public class Fiberglass_Item : ModItem {

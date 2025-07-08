@@ -59,6 +59,7 @@ using Origins.Backgrounds;
 using Terraria.ModLoader.Core;
 using Origins.Dusts;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using NVorbis;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -487,11 +488,18 @@ namespace Origins {
 						}
 					}
 				};
-				IEnumerable<string> files = GetFileNames();
-				IEnumerable<string> goreFiles = files.Where(f => f.EndsWith(".rawimg") && f.Contains("Gores") && !files.Contains(f.Replace(".rawimg", ".cs")));
-				foreach (string gore in goreFiles) {
-					AutoLoadGores.AddGore("Origins/" + gore.Replace(".rawimg", null), this);
+				List<string> files = GetFileNames();
+				for (int i = 0; i < files.Count; i++) {
+					string file = files[i];
+					string name = file.Split('/')[^1];
+					string[] nameParts = name.Split('.');
+					string pureName = string.Join('.', nameParts[0..^1]);
+					string extension = nameParts[^1];
+					if (extension == "rawimg" && file.Contains("Gores") && !files.Contains(file.Replace(".rawimg", ".cs"))) {
+						AutoLoadGores.AddGore("Origins/" + file.Replace(".rawimg", null), this);
+					}
 				}
+
 				/*Task.Run(async () => {
 					await Task.Yield();
 					lock (CloudBottoms) {
@@ -660,6 +668,18 @@ namespace Origins {
 				IsLooped = true,
 				//Volume = 0.75f,
 				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.WCHit = new SoundStyle("Origins/Sounds/Custom/WCHit", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchVariance = 0.3f
+			};
+			Sounds.WCIdle = new SoundStyle("Origins/Sounds/Custom/WCIdle", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchVariance = 0.3f
+			};
+			Sounds.WCScream = new SoundStyle("Origins/Sounds/Custom/WCScream", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchVariance = 0.3f
 			};
 			//OriginExtensions.initClone();
 
@@ -1018,6 +1038,9 @@ namespace Origins {
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 			public static SoundStyle IMustScream = SoundID.Roar;
 			public static SoundStyle ShinedownLoop = SoundID.ForceRoar;
+			public static SoundStyle WCHit = SoundID.ForceRoar;
+			public static SoundStyle WCIdle = SoundID.ForceRoar;
+			public static SoundStyle WCScream = SoundID.ForceRoar;
 
 			public static SoundStyle Lightning = SoundID.Roar;
 			public static SoundStyle LightningCharging = SoundID.Roar;

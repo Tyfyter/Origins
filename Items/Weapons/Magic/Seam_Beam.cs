@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Magic {
 			ProjectileID.Sets.TrailCacheLength[Type] = max_length / tick_motion;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = max_length + 16;
 			OriginsSets.Projectiles.DuplicationAIVariableResets[Type].second = true;
-			ID = Type;
+			if (GetType() == typeof(Seam_Beam_Beam)) ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.width = 10;

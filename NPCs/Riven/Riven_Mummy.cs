@@ -15,7 +15,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 2;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.07f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {

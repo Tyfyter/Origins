@@ -121,7 +121,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				NetMessage.SendData(MessageID.SyncNPC, number: index);
 			}
 		}
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 	public class Riven_Fighter_WC : Riven_Fighter, ICustomWikiStat {
 		string ICustomWikiStat.CustomStatPath => nameof(Riven_Fighter_WC);

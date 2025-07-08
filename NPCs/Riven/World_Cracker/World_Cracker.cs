@@ -27,6 +27,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -136,6 +137,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			);
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.WCIdle, NPC.Center);
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
 			NPC.defense = 100 * (int)(ArmorHealthPercent);
 			//ForcedTargetPosition = Main.MouseWorld;
@@ -176,7 +178,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 			ProcessShoot(NPC);
-
+			NPC.frame.Y = NPC.frame.Height * 1;
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
 		}
 		public static void ProcessShoot(NPC npc) {
@@ -272,7 +274,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					} else {
 						Vector2 velocity = Vector2.Normalize(targetPos - npc.Center);
 						if (projType == Amoeball.ID) velocity = velocity.RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f);
-						else velocity *= 8;
+						else velocity *= Seam_Beam_Beam.tick_motion;
 						Projectile.NewProjectileDirect(
 							npc.GetSource_FromAI(),
 							npc.Center,
@@ -349,6 +351,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 						hit.GetKnockbackFromHit(),
 						"Gores/NPCs/WC_Cracked_Armor" + Main.rand.Next(1, 5)
 					);
+					SoundEngine.PlaySound(Origins.Sounds.WCScream, Vector2.Lerp(npc.Center, Main.LocalPlayer.MountedCenter, 0.5f));
 				}
 			}
 			if (!fromNet && Main.netMode == NetmodeID.MultiplayerClient) {
@@ -363,13 +366,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
-		public static void DrawArmor(Texture2D armorTexture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, int frameIndex, int frameCount, NPC npc, int damageFrameCount) {
+		public static void DrawArmor(Texture2D armorTexture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, int frameIndex, int frameCount, NPC npc, int damageFrameCount, Vector2 originOffset = default) {
 			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
 			if (ArmorHealthPercent <= 0f) return;
 			Rectangle frame = armorTexture.Frame(frameCount, damageFrameCount, frameIndex, (int)float.Floor((1 - ArmorHealthPercent) * damageFrameCount));
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (npc.spriteDirection == 1) {
 				spriteEffects = SpriteEffects.FlipHorizontally;
+				originOffset.X *= -1;
 			}
 			spriteBatch.Draw(
 				armorTexture,
@@ -377,7 +381,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				frame,
 				drawColor,
 				npc.rotation,
-				frame.Size() * 0.5f,
+				frame.Size() * 0.5f + originOffset,
 				npc.scale,
 				spriteEffects,
 			0);
@@ -392,7 +396,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
-			DrawArmor(ArmorTexture, spriteBatch, screenPos, drawColor, NPC.frame.Y / NPC.frame.Width, 4, NPC, 3);
+			DrawArmor(ArmorTexture, spriteBatch, screenPos + new Vector2(0, 12), drawColor, NPC.frame.Y / NPC.frame.Width, 4, NPC, 3, new Vector2(-15, 8));
 		}
 		void SetBaseSpeed() {
 			MoveSpeed = 15.5f + DifficultyMult * 0.5f;
@@ -628,9 +632,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public class Boss_Bar_WC : ModBossBar {
-		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
-			return Asset<Texture2D>.Empty;
-		}
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
 			drawParams.ShowText = false;
 			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
@@ -829,6 +830,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Beam : Seam_Beam_Beam {
 		public AssimilationAmount Assimilation = 0.06f;
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			this.AddAssimilation<Riven_Assimilation>(Assimilation);
 		}
 		public override void SetDefaults() {

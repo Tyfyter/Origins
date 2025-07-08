@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Aqueoua : Glowing_Mod_NPC, IRivenEnemy {
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.07f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;

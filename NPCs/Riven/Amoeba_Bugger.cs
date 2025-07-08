@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.03f;
 		public Rectangle DrawRect => new(0, 0, 48, 32);
 		public int AnimationFrames => 1;

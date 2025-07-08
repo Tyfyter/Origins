@@ -19,6 +19,7 @@ namespace Origins.NPCs.MiscE {
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public static float KnockbackMultiplier => 1.5f;
 		public static float Friction => 0.97f;
+		public static float AccelMult => 0.99f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
@@ -64,6 +65,7 @@ namespace Origins.NPCs.MiscE {
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
 			NPC.knockBackResist = KnockbackMultiplier;
+			NPC.velocity = Vector2.Lerp(NPC.oldVelocity, NPC.velocity, AccelMult);
 			NPC.velocity *= Friction;
 		}
 		public override void FindFrame(int frameHeight) {

@@ -4308,50 +4308,7 @@ namespace Origins {
 		public static void DrawGlowingNPCPart(this SpriteBatch spriteBatch, Texture2D texture, Texture2D glowTexture, Vector2 position, Rectangle? sourceRectangle, Color color, Color glowColor, float rotation, Vector2 origin, float scale, SpriteEffects effects) {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
-		}/* "borrowed" code for testing
-		public static bool AboveSurface(NPCSpawnInfo spawnInfo) {
-			int y = spawnInfo.SpawnTileY;
-			bool aboveSurface = y < Main.worldSurface;
-			if (Main.remixWorld && y > Main.rockLayer - 20.0) {
-				if (y <= Main.maxTilesY - 190 && !Main.rand.NextBool(3)) {
-					aboveSurface = true;
-				} else if ((Main.bloodMoon || (Main.eclipse && Main.dayTime)) && DontDigUpStartingIsland(spawnInfo)) {
-					aboveSurface = true;
-				}
-			}
-			return aboveSurface;
 		}
-		public static bool DontDigUpStartingIsland(NPCSpawnInfo spawnInfo) {
-			return Main.remixWorld && DontDigUpStartingIslandPosition(spawnInfo.SpawnTileX);
-		}
-		public static bool DontDigUpStartingIslandPosition(int x) {
-			return x > Main.maxTilesX * 0.38f + 50f && x < Main.maxTilesX * 0.62f;
-		}
-		public static bool BelowSurface(NPCSpawnInfo spawnInfo, bool ignoreNoDungeonCheck = false) {
-			return !AboveSurface(spawnInfo) && (ignoreNoDungeonCheck || !spawnInfo.Player.ZoneDungeon);
-		}
-		public static bool NoInvasion(NPCSpawnInfo spawnInfo) {
-			return !spawnInfo.Invasion && (!DD2Event.Ongoing || !spawnInfo.Player.ZoneOldOneArmy) && ((!Main.pumpkinMoon && !Main.snowMoon) || BelowSurface(spawnInfo, false) || Main.dayTime) && (!Main.eclipse || BelowSurface(spawnInfo, false) || !Main.dayTime);
-		}
-		public static bool GemCritterSpawn(NPCSpawnInfo spawnInfo) {
-			if (!spawnInfo.PlayerInTown || AboveSurface(spawnInfo) || !NoInvasion(spawnInfo)) {
-				return false;
-			}
-			bool belowRockLayer = spawnInfo.SpawnTileY >= Main.rockLayer;
-			if (Main.remixWorld) {
-				belowRockLayer = spawnInfo.SpawnTileY > Main.worldSurface && spawnInfo.SpawnTileY < Main.rockLayer;
-			}
-			if (Main.raining && spawnInfo.SpawnTileY <= Main.UnderworldLayer && belowRockLayer && Main.rand.NextBool(5)) {
-				return true;
-			}
-			if (spawnInfo.SpawnTileY > Main.UnderworldLayer) {
-				return Main.remixWorld && spawnInfo.Player.Center.X / 16f > Main.maxTilesX * 0.39f + 50f && spawnInfo.Player.Center.X / 16f < Main.maxTilesX * 0.61f && Main.rand.NextBool(2);
-			}
-			if (Main.remixWorld) {
-				return spawnInfo.SpawnTileY < Main.rockLayer && spawnInfo.SpawnTileY > Main.worldSurface && Main.rand.NextBool(5);
-			}
-			return spawnInfo.SpawnTileY >= Main.rockLayer && spawnInfo.SpawnTileY <= Main.UnderworldLayer && Main.rand.NextBool(5);
-		}*/
 	}
 	public static class TileExtenstions {
 		public record class MergeMatcher(int Up, int Down, int Left, int Right, int? UpLeft = null, int? UpRight = null, int? DownLeft = null, int? DownRight = null) {
