@@ -33,7 +33,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			AutomaticIdleState.aiStates.Add((this, boss => boss.IsInPhase3.Mul(3)));
 		}
 		public override void SetStaticDefaults() {
-			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
 			aiStates.Add(ModContent.GetInstance<MagicMissilesState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
