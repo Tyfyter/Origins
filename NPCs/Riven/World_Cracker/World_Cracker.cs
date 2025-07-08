@@ -137,6 +137,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			);
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.WCIdle, NPC.Center);
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
 			NPC.defense = 100 * (int)(ArmorHealthPercent);
 			//ForcedTargetPosition = Main.MouseWorld;
@@ -273,7 +274,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					} else {
 						Vector2 velocity = Vector2.Normalize(targetPos - npc.Center);
 						if (projType == Amoeball.ID) velocity = velocity.RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f);
-						else velocity *= 8;
+						else velocity *= Seam_Beam_Beam.tick_motion;
 						Projectile.NewProjectileDirect(
 							npc.GetSource_FromAI(),
 							npc.Center,
@@ -350,6 +351,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 						hit.GetKnockbackFromHit(),
 						"Gores/NPCs/WC_Cracked_Armor" + Main.rand.Next(1, 5)
 					);
+					SoundEngine.PlaySound(Origins.Sounds.WCScream, Vector2.Lerp(npc.Center, Main.LocalPlayer.MountedCenter, 0.5f));
 				}
 			}
 			if (!fromNet && Main.netMode == NetmodeID.MultiplayerClient) {
@@ -828,6 +830,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Beam : Seam_Beam_Beam {
 		public AssimilationAmount Assimilation = 0.06f;
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			this.AddAssimilation<Riven_Assimilation>(Assimilation);
 		}
 		public override void SetDefaults() {
