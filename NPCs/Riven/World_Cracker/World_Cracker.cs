@@ -177,6 +177,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 			ProcessShoot(NPC);
+			NPC.frame.Y = NPC.frame.Height * 1;
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
 		}
 		public static void ProcessShoot(NPC npc) {
@@ -363,13 +364,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
-		public static void DrawArmor(Texture2D armorTexture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, int frameIndex, int frameCount, NPC npc, int damageFrameCount) {
+		public static void DrawArmor(Texture2D armorTexture, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, int frameIndex, int frameCount, NPC npc, int damageFrameCount, Vector2 originOffset = default) {
 			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
 			if (ArmorHealthPercent <= 0f) return;
 			Rectangle frame = armorTexture.Frame(frameCount, damageFrameCount, frameIndex, (int)float.Floor((1 - ArmorHealthPercent) * damageFrameCount));
 			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (npc.spriteDirection == 1) {
 				spriteEffects = SpriteEffects.FlipHorizontally;
+				originOffset.X *= -1;
 			}
 			spriteBatch.Draw(
 				armorTexture,
@@ -377,7 +379,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				frame,
 				drawColor,
 				npc.rotation,
-				frame.Size() * 0.5f,
+				frame.Size() * 0.5f + originOffset,
 				npc.scale,
 				spriteEffects,
 			0);
@@ -392,7 +394,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
-			DrawArmor(ArmorTexture, spriteBatch, screenPos, drawColor, NPC.frame.Y / NPC.frame.Width, 4, NPC, 3);
+			DrawArmor(ArmorTexture, spriteBatch, screenPos + new Vector2(0, 12), drawColor, NPC.frame.Y / NPC.frame.Width, 4, NPC, 3, new Vector2(-15, 8));
 		}
 		void SetBaseSpeed() {
 			MoveSpeed = 15.5f + DifficultyMult * 0.5f;
