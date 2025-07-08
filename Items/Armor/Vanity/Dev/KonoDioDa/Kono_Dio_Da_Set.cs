@@ -45,9 +45,11 @@ namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
 			Item.DefaultToAccessory();
 			Item.wingSlot = WingsID;
 		}
-		public override bool WingUpdate(Player player, bool inUse) {
-			player.OriginPlayer().upsideDown ^= inUse;
-			return true;
+		public override void EquipFrameEffects(Player player, EquipType type) {
+			if (player.velocity.Y != 0) {
+				player.OriginPlayer().upsideDown ^= true;
+				player.bodyFrame.Y = 280;
+			}
 		}
 	}
 }
