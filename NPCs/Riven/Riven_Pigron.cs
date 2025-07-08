@@ -21,7 +21,7 @@ namespace Origins.NPCs.Riven {
 		}
 		string ICustomWikiStat.CustomStatPath => "Riven_Pigron";
 		string ICustomWikiStat.CustomSpritePath => "Riven_Pigron";
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.PigronCrimson];
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers() {

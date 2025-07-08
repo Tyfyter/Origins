@@ -24,7 +24,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public bool IsSandshark => true;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -124,7 +124,7 @@ namespace Origins.NPCs.Riven {
 		public void PostUpdateCollision() { }
 	}
 	public class Trijaw_Shark_Feesh : Glowing_Mod_NPC, ICustomCollisionNPC {
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public bool IsSandshark => true;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;

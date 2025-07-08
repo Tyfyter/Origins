@@ -16,7 +16,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.04f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -87,7 +87,7 @@ namespace Origins.NPCs.Riven {
     }
 	public class Spider_Amoeba_Wall : Spider_Amoeba, ICustomWikiStat {
 		bool ICustomWikiStat.CanExportStats => false;
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
