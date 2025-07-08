@@ -26,7 +26,7 @@ namespace Origins.Items.Other.Consumables {
 			if (player.itemAnimation / (float)player.itemAnimationMax < 0.85f) player.bodyFrame.Y = player.bodyFrame.Height * 2;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			Recipe.Create(Type, 5)
 			.AddIngredient(ItemID.Lens, 2)
 			.AddIngredient(ItemID.FallenStar)
 			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 5)
