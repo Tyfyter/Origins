@@ -586,14 +586,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (spriteBatch is null) return;
 			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
-			if (++SurfaceFrameCounter > 1) {
-				// remove the first 5 frame since it makes me want to throw up 
-				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
-					pingpongCounter *= -1;
-				SurfaceFrame += pingpongCounter;
-				SurfaceFrameCounter = 0;
-			}
-			SpriteBatchState state = spriteBatch.GetState();
+			SpriteBatchState state = spriteBatch.GetState() with { rasterizerState = RasterizerState.CullNone };
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				try {
@@ -610,6 +603,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				drawDatas.Clear();
 				drawnMaskSources.Clear();
+			} else {
+				spriteBatch.Restart(state);
 			}
 			if (drawDatas.Count > 100) drawDatas.RemoveRange(0, drawDatas.Count - 99);
 			Origins.shaderOroboros.Capture(spriteBatch);
@@ -680,7 +675,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			spriteBatch.Begin(state);
 		}
-		public override void Update(GameTime gameTime) { }
+		public override void Update(GameTime gameTime) {
+			if (++SurfaceFrameCounter > 1) {
+				// remove the first 5 frame since it makes me want to throw up 
+				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
+					pingpongCounter *= -1;
+				SurfaceFrame += pingpongCounter;
+				SurfaceFrameCounter = 0;
+			}
+		}
 		public override void Activate(Vector2 position, params object[] args) {
 			Mode = OverlayMode.Active;
 			if (active.TrySet(true)) opacity = Main.rand.NextFloat(0.6f, 0.85f);
