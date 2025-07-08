@@ -27,6 +27,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -176,7 +177,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 			ProcessShoot(NPC);
-
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
 		}
 		public static void ProcessShoot(NPC npc) {
@@ -628,9 +628,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 	}
 	public class Boss_Bar_WC : ModBossBar {
-		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
-			return Asset<Texture2D>.Empty;
-		}
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
 			drawParams.ShowText = false;
 			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
