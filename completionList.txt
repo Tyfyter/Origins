@@ -1211,7 +1211,7 @@ TILES:
 (^) Endowood Furniture*
 (X) Large Container
 (^) Laser Tag Console*
-(#, ^2) Limestone Furniture !!!
+(☻) Limestone Furniture !!!
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
