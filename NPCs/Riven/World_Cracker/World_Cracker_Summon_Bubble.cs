@@ -1,21 +1,12 @@
 ﻿using Origins.Gores.NPCs;
 using Origins.World.BiomeData;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
-using PegasusLib;
 using Terraria.Localization;
 using Origins.Dev;
-using CalamityMod.NPCs.TownNPCs;
-using Newtonsoft.Json.Linq;
-using static Origins.Misc.Physics;
-using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Summon_Bubble : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
