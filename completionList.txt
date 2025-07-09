@@ -1118,7 +1118,7 @@ TILES:
 (^) Encrusted Ore*
 (^) Endowood*
 (^) Felnum Ore*
-(#2, ^2) Fiberglass Block* !!! (needs shatter destruction noise)
+(☻) Fiberglass Block* !!! (has shatter destruction noise)
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick°

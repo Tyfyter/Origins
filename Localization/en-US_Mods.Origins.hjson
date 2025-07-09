@@ -2121,6 +2121,7 @@ Tiles: {
 	Residual_Crate_Tile.MapEntry: Residual Crate
 	Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
 	Aetherite_Ore.MapEntry: Aetherite
+	Limestone_Chest.MapEntry: Limestone Chest
 }
 
 MapObject: {

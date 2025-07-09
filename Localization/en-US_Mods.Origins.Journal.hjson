@@ -410,6 +410,7 @@ The_Dungeon: {
 		*****
 		 I would eventually learn of the way this world worked through magic. This bastion was my home and full of many powerful magic users who would educate me on their practices to be their next apprentice. Magic was fun, but it would lose its novelty after so much time.
 		'''
+
 	Aqua_Scepter: {
 		Name: "{$ItemName.Aqua_Scepter}"
 		Text:
@@ -421,6 +422,8 @@ The_Dungeon: {
 			*****
 			We people of the Badst Kingdom were different as only the most capable were allowed to stay. All others were forced to leave and live on their own accords. I never knew why at first, but it's clear now that they were searching for the most elite. I still don't know how it worked out for us as long as it did, but the judgement call still came when Cthulhu reigned havoc on Terraria.
 			'''
+	}
+
 	Celestial_Sigil: {
 		Name: "{$ItemName.Celestial_Sigil}"
 		Text:

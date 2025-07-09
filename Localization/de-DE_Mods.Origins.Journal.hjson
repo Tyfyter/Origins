@@ -395,7 +395,7 @@ The_Defiled: {
 
 The_Dungeon: {
 	// DisplayName: The Dungeon
-	// SeriesLength: "1"
+	// SeriesLength: "4"
 	/* Asylum_Whistle.Text:
 		'''
 		[header:Asylum Whistle (1/{$SeriesLength})]
@@ -403,6 +403,39 @@ The_Dungeon: {
 		*****
 		They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get the children inside. Following that would always be lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground. I was curious as to why they were so angry at the ground all the time, but I could never get to know why because the whistle would always sound.
 		''' */
+	/* Beginners_Tome.Text:
+		'''
+		[header:Beginner's Tome (2/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Magic/Beginners_Tome]
+		*****
+		 I would eventually learn of the way this world worked through magic. This bastion was my home and full of many powerful magic users who would educate me on their practices to be their next apprentice. Magic was fun, but it would lose its novelty after so much time.
+		''' */
+
+	Aqua_Scepter: {
+		// Name: "{$ItemName.Aqua_Scepter}"
+		/* Text:
+			'''
+			[header:Aqua Scepter (3/{$SeriesLength})]
+			[jimage/sc2d:Terraria/Images/Item_157]
+
+
+			*****
+			We people of the Badst Kingdom were different as only the most capable were allowed to stay. All others were forced to leave and live on their own accords. I never knew why at first, but it's clear now that they were searching for the most elite. I still don't know how it worked out for us as long as it did, but the judgement call still came when Cthulhu reigned havoc on Terraria.
+			''' */
+	}
+
+	Celestial_Sigil: {
+		// Name: "{$ItemName.Celestial_Sigil}"
+		/* Text:
+			'''
+			[header:Celestial Sigil (4/{$SeriesLength})]
+			[jimage/sc2d:Terraria/Images/Item_3601]
+
+
+			*****
+			Being this close to the shoreline, of course, we were among the first to respond. Cthulhu was relentless and we lost many. Our home quickly became a burial ground and inhospitable such that after the ancient war, we were forced to move out. We lost our governance following the move and were phased out of existence. The remaining had to fend for themselves, and likely died from natural causes.
+			''' */
+	}
 }
 
 Brine_Pool_And_Lost_Diver: {
@@ -789,7 +822,7 @@ Birth_Of_The_Gods: {
 			[jimage/sc3d:Terraria/Images/Item_1291]
 
 			*****
-			Terraria's Dryads were its true keepers, bringing about life and acting on behalf the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
+			Terraria's Dryads were its true keepers, bringing about life and acting on behalf of the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
 			''' */
 	}
 
@@ -958,7 +991,7 @@ Trenchmaker: {
 				- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:CopperOre] by blessing it at a Crystal Ball [i:CrystalBall].
 							
 			Chemistry:
-				- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+				- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits and Aetherite [i:Origins/Aetherite_Bar] dropped by a mysterious-yet-powerful guardian of the Aether. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
 							
 			History: 
 				- Felnum is an artificial metal material conjured by the wizards of the Bastille (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.

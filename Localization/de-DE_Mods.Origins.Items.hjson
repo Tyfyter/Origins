@@ -6372,3 +6372,98 @@ Barnacle_Wall_Safe_Item: {
 	// DisplayName: Barnacle Wall
 	// Tooltip: ""
 }
+
+Limestone_Platform_Item: {
+	// DisplayName: Limestone Platform Item
+	// Tooltip: ""
+}
+
+Limestone_Door_Item: {
+	// DisplayName: Limestone Door Item
+	// Tooltip: ""
+}
+
+Limestone_Grandfather_Clock_Item: {
+	// DisplayName: Limestone Grandfather Clock Item
+	// Tooltip: ""
+}
+
+Limestone_Chair_Item: {
+	// DisplayName: Limestone Chair Item
+	// Tooltip: ""
+}
+
+Limestone_Toilet_Item: {
+	// DisplayName: Limestone Toilet Item
+	// Tooltip: ""
+}
+
+Limestone_Sofa_Item: {
+	// DisplayName: Limestone Sofa Item
+	// Tooltip: ""
+}
+
+Limestone_Bathtub_Item: {
+	// DisplayName: Limestone Bathtub Item
+	// Tooltip: ""
+}
+
+Limestone_Sink_Item: {
+	// DisplayName: Limestone Sink Item
+	// Tooltip: ""
+}
+
+Limestone_Candle_Item: {
+	// DisplayName: Limestone Candle Item
+	// Tooltip: ""
+}
+
+Limestone_Candelabra_Item: {
+	// DisplayName: Limestone Candelabra Item
+	// Tooltip: ""
+}
+
+Limestone_Lamp_Item: {
+	// DisplayName: Limestone Lamp Item
+	// Tooltip: ""
+}
+
+Limestone_Lantern_Item: {
+	// DisplayName: Limestone Lantern Item
+	// Tooltip: ""
+}
+
+Limestone_Bookcase_Item: {
+	// DisplayName: Limestone Bookcase Item
+	// Tooltip: ""
+}
+
+Limestone_Piano_Item: {
+	// DisplayName: Limestone Piano Item
+	// Tooltip: ""
+}
+
+Limestone_Table_Item: {
+	// DisplayName: Limestone Table Item
+	// Tooltip: ""
+}
+
+Limestone_Work_Bench_Item: {
+	// DisplayName: Limestone Work Bench Item
+	// Tooltip: ""
+}
+
+Limestone_Dresser_Item: {
+	// DisplayName: Limestone Dresser Item
+	// Tooltip: ""
+}
+
+Limestone_Bed_Item: {
+	// DisplayName: Limestone Bed Item
+	// Tooltip: ""
+}
+
+Limestone_Chest_Item: {
+	// DisplayName: Limestone Chest Item
+	// Tooltip: ""
+}

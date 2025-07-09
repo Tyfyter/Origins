@@ -22,7 +22,6 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			AddMapEntry(new Color(42, 116, 160));
-            //BreakSound = SoundID.Shatter;
 			DustType = DustID.Everscream;
 		}
 		public override bool KillSound(int i, int j, bool fail) {
