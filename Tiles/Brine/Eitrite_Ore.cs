@@ -31,8 +31,8 @@ namespace Origins.Tiles.Brine {
 		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ItemID.CobaltOre] = Type;
-			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PlatinumOre;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.ChlorophyteOre] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.TitaniumOre;
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
