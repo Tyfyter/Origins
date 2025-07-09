@@ -239,12 +239,6 @@ namespace Origins.Items.Materials {
 			base.Load();
 			tileID = Bar_Tile.AddBarTile(this, new(127, 168, 220), DustID.Mythril);
 		}
-
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.HallowedBar] = ModContent.ItemType<Eitrite_Bar>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Eitrite_Bar>()] = ItemID.HallowedBar;
-		}
 		public override int Value => Item.sellPrice(silver: 81);
 		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {

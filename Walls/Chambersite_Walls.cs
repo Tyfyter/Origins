@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
 	[ReinitializeDuringResizeArrays]
-    public class Chambersite_Stone_Wall : ModWall {
+	public class Chambersite_Stone_Wall : ModWall {
 		public static Dictionary<ushort, ushort> AddChambersite = [];
 		public static List<int> chambersiteWalls = [];
 		public static int[] wallCounts = WallID.Sets.Factory.CreateIntSet();
@@ -40,10 +40,6 @@ namespace Origins.Walls {
 			//IL_00c6: ldloca.s 7
 			//IL_00c8: call instance bool Terraria.Tile::active()
 			//IL_00cd: brtrue.s IL_00f9
-		}
-
-		private void IL_SceneMetrics_ScanAndExportToMain(MonoMod.Cil.ILContext il) {
-			throw new NotImplementedException();
 		}
 
 		public override void SetStaticDefaults() {

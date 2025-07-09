@@ -2838,12 +2838,12 @@ namespace Origins {
 			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
 
 			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Topaz, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Emerald, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Ruby, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Diamond, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Topaz, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Emerald, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Ruby, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Diamond, oneWay: true, extraFunctions: false);
 
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
 			biome.AddWallConversions(wall,

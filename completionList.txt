@@ -350,7 +350,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(#2, ^2) Aether Armor !!! (needs completed set bonus)
+(#2?, ^2) Aether Armor !!! (set bonus implemented differently than original plan deliberately, review redesign)
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -1289,7 +1289,7 @@ TILES:
 (#2, ^2) Wrycoral* !!! (glow and new format)
 
 (^) A Perfect World
-(#, ^2) Deceptive Beauty !!!
+(☻) Deceptive Beauty !!!
 (X) Four Corners
 (X) Light And Dark
 (^) The Jungle's Window
@@ -1546,7 +1546,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#2, ^2) Jawbreaker (Stellar Spark) !!!
+(#2?, ^2) Jawbreaker (Stellar Spark) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
