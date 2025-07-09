@@ -8,7 +8,6 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
-using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System.Collections.Generic;
@@ -22,7 +21,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Riven {
