@@ -1843,6 +1843,7 @@ Projectiles: {
 	Chambersite_Commander_Sentinel.DisplayName: Chambersite Commander Sentinel
 	Aetherium_Construct.DisplayName: Aetherium Construct
 	Stellar_Spark.DisplayName: Stellar Spark
+	Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
 }
 
 Prefixes: {
