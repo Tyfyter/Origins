@@ -445,4 +445,9 @@ namespace Origins.Tiles.MusicBoxes {
 		public override int MusicSlot => Origins.Music.Fiberglass;
 		public override int DustType => DustID.Glass;
 	}
+	public class Music_Box_TD : Music_Box {
+		public override Color MapColor => new(87, 35, 178);
+		public override int MusicSlot => Origins.Music.TheDive;
+		public override int DustType => DustID.GemAmethyst;
+	}
 }
