@@ -62,6 +62,7 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 240f;
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!NPC.downedBoss1 && !NPC.downedBoss2 && !NPC.downedBoss3) return 0;
 			if (spawnInfo.Player.ZoneSkyHeight) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Broadcaster;
 		}
