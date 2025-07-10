@@ -4,10 +4,10 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.CrossMod.Fargos.Items{
+namespace Origins.CrossMod.Fargos.Items {
 	[ExtendsFromMod(nameof(Fargowiltas))]
-    public class Aether_Orb : ModItem {
-        public override void SetStaticDefaults() {
+	public class Aether_Orb : ModItem {
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
 		}

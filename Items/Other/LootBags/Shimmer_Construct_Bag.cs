@@ -19,6 +19,12 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shimmer_Shield>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 7), false));
 		}
+		public override void Update(ref float gravity, ref float maxFallSpeed) {
+			if (Item.newAndShiny) {
+				Item.shimmered = true;
+				Item.shimmerTime = 1;
+			}
+		}
 		public override bool CanRightClick() {
 			return true;
 		}
