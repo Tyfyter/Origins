@@ -795,6 +795,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
+(#2, ^2) Shimmershot !!!
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*
@@ -908,6 +909,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
+(#, ^2) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
@@ -1005,6 +1007,7 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Glass Cannon*
+(#, ^2) Hand Cannon !!!
 (^) Hand Grenade Launcher
 (^) Heartache Dynamite
 (^) Hellfire Bomb*
@@ -1211,7 +1214,7 @@ TILES:
 (^) Endowood Furniture*
 (X) Large Container
 (^) Laser Tag Console*
-(☻) Limestone Furniture !!!
+(#2, ^2) Limestone Furniture !!!
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
@@ -1289,7 +1292,7 @@ TILES:
 (#2, ^2) Wrycoral* !!! (glow and new format)
 
 (^) A Perfect World
-(☻) Deceptive Beauty !!!
+(^) Deceptive Beauty
 (X) Four Corners
 (X) Light And Dark
 (^) The Jungle's Window
@@ -1312,7 +1315,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(☻) Music Box (The Dive) !!!
+(#3, ^2) Music Box (The Dive) !!!
 (#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*

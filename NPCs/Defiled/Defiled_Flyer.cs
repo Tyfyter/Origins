@@ -41,7 +41,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
 			NPC.damage = 20;
-			NPC.defense = 0;
+			NPC.defense = 5;
 			NPC.width = 30;
 			NPC.height = 30;
 			NPC.catchItem = 0;

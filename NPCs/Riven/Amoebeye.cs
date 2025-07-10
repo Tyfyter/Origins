@@ -66,6 +66,10 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 1, 2, 5));
 		}
 		public override bool PreAI() {
+			if (Main.rand.NextBool(1000)) {
+				SoundEngine.PlaySound(SoundID.Zombie47.WithPitch(-2f).WithVolume(0.35f), NPC.Center);
+				SoundEngine.PlaySound(Origins.Sounds.WCIdle.WithPitchRange(1.35f, 1.55f).WithVolume(0.15f), NPC.Center);
+			}
 			NPC.aiStyle = NPCAIStyleID.Hovering;
 			if (NPC.ai[3] != 0) {
 				NPC.defense = 0;
@@ -73,6 +77,8 @@ namespace Origins.NPCs.Riven {
 				if (!isAggro) {
 					NPC bubble = Main.npc[(int)NPC.ai[3] - 1];
 					if (!bubble.active || bubble.type != Amoebeye_P.ID) {
+						SoundEngine.PlaySound(SoundID.Zombie61.WithPitch(1.5f), NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.WCHit.WithPitchRange(1.35f, 1.55f), NPC.Center);
 						NPC.ai[3] = -1;
 						isAggro = true;
 					} else if (bubble.ai[0] != 0) {

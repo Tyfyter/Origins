@@ -87,7 +87,7 @@ namespace Origins.Items.Armor.Sapphire {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.1f;
+			player.moveSpeed += 0.2f;
 			player.manaCost *= 0.92f;
 		}
 		public override void AddRecipes() {

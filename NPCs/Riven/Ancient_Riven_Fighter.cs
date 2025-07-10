@@ -57,9 +57,9 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 16));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Symbiote_Skull>(), 40));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 14));
 		}
 		public override bool PreAI() {
 			NPC.localAI[0] += Main.rand.NextFloat(0, 1);
