@@ -16,7 +16,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			if (Origins.ArtifactMinion[proj.type]) modifiers.SourceDamage *= 1.1f;
 		}
 		public override void PreUpdateMinion(Projectile minion) {
-			minion.GetGlobalProjectile<MinionGlobalProjectile>().tempBonusUpdates += minion.MaxUpdates * 0.15f;
+			minion.GetGlobalProjectile<MinionGlobalProjectile>().tempBonusUpdates += 0.15f;
 		}
 	}
 }
