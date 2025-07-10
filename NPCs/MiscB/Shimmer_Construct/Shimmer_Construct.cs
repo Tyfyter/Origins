@@ -147,16 +147,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (NetmodeActive.Server) {
 				for (int i = 0; i < NPC.playerInteraction.Length; i++) {
 					if (NPC.playerInteraction[i] && !oldPlayerInteraction[i]) {
-						Mod.Logger.Info("interactions changed");
 						NPC.playerInteraction.CopyTo(oldPlayerInteraction.AsSpan());
 						ModPacket packet = Origins.instance.GetPacket();
 						packet.Write(Origins.NetMessageType.sync_npc_interactions);
 						packet.Write((ushort)NPC.whoAmI);
 						Utils.SendBitArray(new BitArray(NPC.playerInteraction), packet);
 						packet.Send();
-						foreach (Player player in Main.ActivePlayers) {
-							Mod.Logger.Info($"{player.name} interacted: {NPC.playerInteraction[player.whoAmI]}");
-						}
 						break;
 					}
 				}

@@ -144,9 +144,6 @@ namespace Origins {
 					case sync_npc_interactions: {
 						NPC npc = Main.npc[reader.ReadUInt16()];
 						Utils.ReceiveBitArray(Main.maxPlayers + 1, reader).CopyTo(npc.playerInteraction, 0);
-						foreach (Player player in Main.ActivePlayers) {
-							Logger.Info($"{player.name} interacted: {npc.playerInteraction[player.whoAmI]}");
-						}
 						break;
 					}
 
