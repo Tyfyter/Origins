@@ -713,6 +713,7 @@ namespace Origins {
 			};
 			On_PressurePlateHelper.UpdatePlayerPosition += (orig, self) => {
 				Debugging.LogFirstRun(PressurePlateHelper.UpdatePlayerPosition);
+				if (self.OriginPlayer().weakShimmer) return;
 				orig(self);
 			};
 		}
