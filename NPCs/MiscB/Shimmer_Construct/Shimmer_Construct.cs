@@ -183,7 +183,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						turrets.Add(npc);
 					}
 				}
-				if (max.Y >= Main.bottomWorld - 640f - 64f) {
+				if (Main.netMode != NetmodeID.MultiplayerClient && max.Y >= Main.bottomWorld - 640f - 64f) {
 					Vector2 top = (min.Y - (640f + 16f)) * Vector2.UnitY;
 					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
 						PositionInWorld = NPC.Bottom
@@ -192,15 +192,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
 						PositionInWorld = NPC.Bottom
 					});
-					for (int i = 0; i < players.Count; i++) {
-						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-							PositionInWorld = players[i].Bottom
-						});
-						players[i].Teleport(players[i].position - top, 12);
-						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-							PositionInWorld = players[i].Bottom
-						});
-					}
+					DoTeleports(players.Select(player => (player, player.position - top)).ToList());
 					for (int i = 0; i < turrets.Count; i++) {
 						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
 							PositionInWorld = turrets[i].Bottom
@@ -466,6 +458,30 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 		}
+		static void DoTeleports(List<(Player player, Vector2 position)> teleports) {
+			for (int i = 0; i < teleports.Count; i++) {
+				(Player player, Vector2 position) = teleports[i];
+				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+					PositionInWorld = player.Bottom
+				});
+				player.Teleport(position, 12);
+				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+					PositionInWorld = player.Bottom
+				});
+				player.velocity = Vector2.Zero;
+			}
+			if (Main.netMode != NetmodeID.SinglePlayer) {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.mass_teleport);
+				packet.Write((ushort)teleports.Count);
+				for (int i = 0; i < teleports.Count; i++) {
+					(Player player, Vector2 position) = teleports[i];
+					packet.Write((ushort)player.whoAmI);
+					packet.WritePackedVector2(position);
+				}
+				packet.Send();
+			}
+		}
 		internal static void DoDeathTeleport(Point averageShimmerSurfacePosition, BitArray oldItems) {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			StringBuilder stringBuilder = new();
@@ -526,28 +542,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						}
 					}
 					stringBuilder.Append($"teleports: [{string.Join(", ", teleports.Select(static ((Player player, Vector2 position) tele) => $"{tele.player.name}: {tele.position}"))}], ");
-					for (int i = 0; i < teleports.Count; i++) {
-						(Player player, Vector2 position) = teleports[i];
-						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-							PositionInWorld = player.Bottom
-						});
-						player.Teleport(position, 12);
-						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-							PositionInWorld = player.Bottom
-						});
-						player.velocity = Vector2.Zero;
-					}
-					if (Main.netMode != NetmodeID.SinglePlayer) {
-						ModPacket packet = Origins.instance.GetPacket();
-						packet.Write(Origins.NetMessageType.mass_teleport);
-						packet.Write((ushort)teleports.Count);
-						for (int i = 0; i < teleports.Count; i++) {
-							(Player player, Vector2 position) = teleports[i];
-							packet.Write((ushort)player.whoAmI);
-							packet.WritePackedVector2(position);
-						}
-						packet.Send();
-					}
+					DoTeleports(teleports);
 				}
 			}
 			stringBuilder.Append($"Shimmering items: [");
