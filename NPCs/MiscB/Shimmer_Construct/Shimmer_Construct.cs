@@ -144,12 +144,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (!IsInPhase3 && NPC.GetLifePercent() < 0.5f) isInPhase2 = true;
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
-#if DEBUG
-			if (!NetmodeActive.Server) 
-			foreach (Player player in Main.ActivePlayers) {
-				Main.LocalPlayer.chatOverhead.NewMessage(NPC.playerInteraction[player.whoAmI].ToString(), 5);
-			}
-#endif
 			if (NetmodeActive.Server) {
 				for (int i = 0; i < NPC.playerInteraction.Length; i++) {
 					if (NPC.playerInteraction[i] && !oldPlayerInteraction[i]) {
