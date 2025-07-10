@@ -139,6 +139,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					} else {
 						Projectile.ai[0] = -1;
 					}
+				} else {
+					Projectile.timeLeft -= 19;
+					Debugging.ChatOverhead(Projectile.ai[0]);
 				}
 				if (Projectile.ai[1] < 28) Projectile.velocity *= 0.97f;
 				else if (Projectile.ai[1] <= 32) Projectile.velocity *= 0.9f;
