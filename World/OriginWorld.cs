@@ -199,13 +199,13 @@ namespace Origins {
 			if (shimmerPosition.HasValue) tag.Add(nameof(shimmerPosition), shimmerPosition.Value);
 		}
 		public override void NetSend(BinaryWriter writer) {
-			writer.WriteFlags(forceAF, forceThunderstorm);
+			writer.WriteFlags(forceAF, forceThunderstorm, shimmerPosition.HasValue);
 			if (shimmerPosition.HasValue) writer.WriteVector2(shimmerPosition.Value);
 		}
 		public override void NetReceive(BinaryReader reader) {
-			reader.ReadFlags(out bool forceAF, out forceThunderstorm);
+			reader.ReadFlags(out bool forceAF, out forceThunderstorm, out bool hasShimmerPosition);
 			ForceAF = forceAF;
-			if (reader.ReadBoolean()) shimmerPosition = reader.ReadVector2();
+			if (hasShimmerPosition) shimmerPosition = reader.ReadVector2();
 		}
 		public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
