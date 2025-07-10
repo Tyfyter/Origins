@@ -670,15 +670,12 @@ namespace Origins {
 				PitchRange = (0.2f, 0.3f)
 			};
 			Sounds.WCHit = new SoundStyle("Origins/Sounds/Custom/WCHit", SoundType.Sound) {
-				MaxInstances = 0,
 				PitchVariance = 0.3f
 			};
 			Sounds.WCIdle = new SoundStyle("Origins/Sounds/Custom/WCIdle", SoundType.Sound) {
-				MaxInstances = 0,
 				PitchVariance = 0.3f
 			};
 			Sounds.WCScream = new SoundStyle("Origins/Sounds/Custom/WCScream", SoundType.Sound) {
-				MaxInstances = 0,
 				PitchVariance = 0.3f
 			};
 			//OriginExtensions.initClone();
