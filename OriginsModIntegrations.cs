@@ -754,10 +754,10 @@ namespace Origins {
 			AddItemsToGroup(GetGroup("MagicStorage:AnySnowBiomeBlock"), [ModContent.ItemType<Defiled_Ice_Item>(), ModContent.ItemType<Primordial_Permafrost_Item>()]);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyDemonAltar"), [ModContent.ItemType<Fake_Defiled_Altar_Item>(), ModContent.ItemType<Fake_Riven_Altar_Item>()/*, ModContent.ItemType<Fake_Ashen_Altar_Item>()*/]);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyChest"), [ModContent.ItemType<Endowood_Chest_Item>(), ModContent.ItemType<Marrowick_Chest_Item>(), ModContent.ItemType<Brine_Dungeon_Chest_Item>(), ModContent.ItemType<Defiled_Dungeon_Chest_Item>(), ModContent.ItemType<Riven_Dungeon_Chest_Item>()]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyWorkBench"), [ModContent.GetInstance<Endowood_Work_Bench>().item.Type, ModContent.GetInstance<Marrowick_Work_Bench>().item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnySink"), [ModContent.GetInstance<Endowood_Sink>().item.Type, ModContent.GetInstance<Marrowick_Sink>().item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyTable"), [ModContent.GetInstance<Endowood_Table>().item.Type, ModContent.GetInstance<Marrowick_Table>().item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), [ModContent.GetInstance<Endowood_Bookcase>().item.Type, ModContent.GetInstance<Marrowick_Bookcase>().item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyWorkBench"), [ModContent.GetInstance<Endowood_Work_Bench>().Item.Type, ModContent.GetInstance<Marrowick_Work_Bench>().Item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnySink"), [ModContent.GetInstance<Endowood_Sink>().Item.Type, ModContent.GetInstance<Marrowick_Sink>().Item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyTable"), [ModContent.GetInstance<Endowood_Table>().Item.Type, ModContent.GetInstance<Marrowick_Table>().Item.Type]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), [ModContent.GetInstance<Endowood_Bookcase>().Item.Type, ModContent.GetInstance<Marrowick_Bookcase>().Item.Type]);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), [ModContent.ItemType<Defiled_Campfire_Item>(), ModContent.ItemType<Riven_Campfire_Item>()]);
 		}
 		static void AddFargosGroups() {

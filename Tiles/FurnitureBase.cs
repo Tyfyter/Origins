@@ -19,12 +19,12 @@ namespace Origins.Tiles {
 		public abstract int BaseTileID { get; }
 		public abstract Color MapColor { get; }
 		public virtual bool LavaDeath => true;
-		protected internal TileItem item;
+		public TileItem Item { get; protected set; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		protected int width, height;
 		public sealed override void Load() {
-			Mod.AddContent(item = new TileItem(this));
+			Mod.AddContent(Item = new TileItem(this));
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
@@ -105,7 +105,7 @@ namespace Origins.Tiles {
 
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = item.Type;
+			player.cursorItemIconID = Item.Type;
 
 			if (Main.tile[i, j].TileFrameX / 18 < 1) {
 				player.cursorItemIconReversed = true;
@@ -360,7 +360,7 @@ namespace Origins.Tiles {
 					player.cursorItemIconText = defaultName;
 				}
 				if (player.cursorItemIconText == defaultName) {
-					player.cursorItemIconID = item.Type;
+					player.cursorItemIconID = Item.Type;
 					player.cursorItemIconText = "";
 				}
 			}
@@ -428,7 +428,7 @@ namespace Origins.Tiles {
 			} else {
 				player.noThrow = 2;
 				player.cursorItemIconEnabled = true;
-				player.cursorItemIconID = item.Type;
+				player.cursorItemIconID = Item.Type;
 			}
 		}
 	}

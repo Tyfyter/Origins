@@ -9,7 +9,7 @@ namespace Origins.Tiles.Endowood {
 	public class Endowood_Platform : Platform_Tile {
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 2)
 				.AddIngredient<Endowood_Item>(1)
 				.Register();
@@ -49,7 +49,7 @@ namespace Origins.Tiles.Endowood {
 	public class Endowood_Chair : ChairBase {
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(4)
 				.AddTile(TileID.WorkBenches)
@@ -62,7 +62,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Toilets;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(6)
 				.AddTile(TileID.Sawmill)
@@ -78,7 +78,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Benches;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(5)
 				.AddIngredient(ItemID.Silk, 2)
@@ -92,7 +92,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Bathtubs;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(14)
 				.AddTile(TileID.Sawmill)
@@ -105,7 +105,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Sinks;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(6)
 				.AddIngredient(ItemID.WaterBucket)
@@ -119,7 +119,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(4)
 				.AddIngredient(ItemID.Torch)
@@ -140,7 +140,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Candelabras;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(5)
 				.AddIngredient(ItemID.Torch, 3)
@@ -161,7 +161,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Torch)
 				.AddIngredient<Endowood_Item>(3)
@@ -182,7 +182,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Chandeliers;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(4)
 				.AddIngredient(ItemID.Torch, 4)
@@ -204,7 +204,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.HangingLanterns;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(6)
 				.AddIngredient(ItemID.Torch)
@@ -225,7 +225,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Bookcases;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(20)
 				.AddIngredient(ItemID.Book, 10)
@@ -239,7 +239,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Pianos;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(20)
 				.AddIngredient(ItemID.Book, 10)
@@ -253,7 +253,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.Tables;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(8)
 				.AddTile(TileID.WorkBenches)
@@ -266,7 +266,7 @@ namespace Origins.Tiles.Endowood {
 		public override int BaseTileID => TileID.WorkBenches;
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(10)
 				.Register();
@@ -277,7 +277,7 @@ namespace Origins.Tiles.Endowood {
 	public class Endowood_Dresser : DresserBase {
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(16)
 				.AddTile(TileID.Sawmill)
@@ -289,7 +289,7 @@ namespace Origins.Tiles.Endowood {
 	public class Endowood_Bed : BedBase {
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(15)
 				.AddIngredient(ItemID.Silk, 5)
