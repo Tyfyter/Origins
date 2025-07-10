@@ -316,7 +316,7 @@ namespace Origins {
 					ModContent.NPCType<Chambersite_Sentinel>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
-						["overrideHeadTextures"] = TextureAssets.MagicPixel.Name
+						["overrideHeadTextures"] = "Terraria/Images/MagicPixel"
 					}
 				);
 			}
