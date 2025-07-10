@@ -41,7 +41,7 @@ namespace Origins.Projectiles {
 			binaryWriter.Write((byte)state);
 			switch (state) {
 				case OwnerState.Alive:
-				binaryWriter.Write(ownerNPC.whoAmI);
+				binaryWriter.Write((byte)ownerNPC.whoAmI);
 				break;
 
 				case OwnerState.Dead:
