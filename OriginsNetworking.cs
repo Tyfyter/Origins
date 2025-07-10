@@ -141,6 +141,15 @@ namespace Origins {
 						break;
 					}
 
+					case sync_npc_interactions: {
+						NPC npc = Main.npc[reader.ReadUInt16()];
+						Utils.ReceiveBitArray(Main.maxPlayers + 1, reader).CopyTo(npc.playerInteraction, 0);
+						foreach (Player player in Main.ActivePlayers) {
+							Logger.Info($"{player.name} interacted: {npc.playerInteraction[player.whoAmI]}");
+						}
+						break;
+					}
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -525,6 +534,7 @@ namespace Origins {
 			internal const byte set_gem_lock = 28;
 			internal const byte mass_teleport = 29;
 			internal const byte shinedown_spawn_shadows = 30;
+			internal const byte sync_npc_interactions = 31;
 		}
 	}
 	public interface IChestSyncRecipient {

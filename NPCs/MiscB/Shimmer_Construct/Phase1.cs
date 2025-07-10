@@ -23,8 +23,32 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() {
 			AutomaticIdleState.aiStates.Add((this, _ => 1));
 		}
+		static bool AnyHealthChunks() {
+			int[] chunks = [ModContent.NPCType<Shimmer_Chunk1>(), ModContent.NPCType<Shimmer_Chunk2>(), ModContent.NPCType<Shimmer_Chunk3>()];
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (chunks.Contains(npc.type)) return true;
+			}
+			return false;
+		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			if (npc.life == npc.lifeMax && !AnyHealthChunks()) {
+				int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);
+				int[] chunks = [
+					ModContent.NPCType<Shimmer_Chunk1>(), ModContent.NPCType<Shimmer_Chunk1>(),
+					ModContent.NPCType<Shimmer_Chunk2>(), ModContent.NPCType<Shimmer_Chunk2>(),
+					ModContent.NPCType<Shimmer_Chunk3>(), ModContent.NPCType<Shimmer_Chunk3>(),
+				];
+				int n = chunks.Length;
+				while (n > 1) {
+					n--;
+					int k = Main.rand.Next(n + 1);
+					(chunks[n], chunks[k]) = (chunks[k], chunks[n]);
+				}
+				for (int i = 0; i < count; i++) {
+					npc.SpawnNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, chunks[i], ai0: npc.whoAmI, ai1: i, ai2: count);
+				}
+			}
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
@@ -174,8 +198,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		internal static Stack<int> cachedClouds = [];
 		internal static Stack<int> cachedRain = [];
 		public override void DoAIState(Shimmer_Construct boss) {
-			SoundEngine.PlaySound(SoundID.Item28);
 			NPC npc = boss.NPC;
+			SoundEngine.PlaySound(SoundID.Item28, npc.Center);
 			Vector2 targetPos = npc.GetTargetData().Center;
 			float xDist = CloudXDistance;
 			Vector2 unfurlPos = targetPos - new Vector2(-xDist, CloudYDistance) * 16;
@@ -441,7 +465,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public void DoStrike() {
 			if (Main.npc.GetIfInRange((int)NPC.ai[0]) is NPC owner) {
-				owner.StrikeNPC(new() { Damage = NPC.lifeMax });
+				for (int i = 0; i < owner.playerInteraction.Length; i++) {
+					owner.playerInteraction[i] |= NPC.playerInteraction[i];
+				}
+				if (!NetmodeActive.MultiplayerClient) owner.StrikeNPC(new() { Damage = NPC.lifeMax }, noPlayerInteraction: true);
 			}
 			NPC.active = false;
 		}

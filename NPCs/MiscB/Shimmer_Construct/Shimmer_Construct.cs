@@ -103,29 +103,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			// I think this is the "normal" amount:
 			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment);
 		}
-		public override void OnSpawn(IEntitySource source) {
-			int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);
-			int[] chunks = [
-				NPCType<Shimmer_Chunk1>(), NPCType<Shimmer_Chunk1>(),
-				NPCType<Shimmer_Chunk2>(), NPCType<Shimmer_Chunk2>(),
-				NPCType<Shimmer_Chunk3>(), NPCType<Shimmer_Chunk3>(),
-			];
-			int n = chunks.Length;
-			while (n > 1) {
-				n--;
-				int k = Main.rand.Next(n + 1);
-				(chunks[n], chunks[k]) = (chunks[k], chunks[n]);
-			}
-			for (int i = 0; i < count; i++) {
-				NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, chunks[i], ai0: NPC.whoAmI, ai1: i, ai2: count);
-			}
-		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}
+		bool[] oldPlayerInteraction = new bool[Main.maxPlayers + 1];
 		public override void AI() {
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
@@ -160,6 +144,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (!IsInPhase3 && NPC.GetLifePercent() < 0.5f) isInPhase2 = true;
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
+#if DEBUG
+			if (!NetmodeActive.Server) 
+			foreach (Player player in Main.ActivePlayers) {
+				Main.LocalPlayer.chatOverhead.NewMessage(NPC.playerInteraction[player.whoAmI].ToString(), 5);
+			}
+#endif
+			if (NetmodeActive.Server) {
+				for (int i = 0; i < NPC.playerInteraction.Length; i++) {
+					if (NPC.playerInteraction[i] && !oldPlayerInteraction[i]) {
+						Mod.Logger.Info("interactions changed");
+						NPC.playerInteraction.CopyTo(oldPlayerInteraction.AsSpan());
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(Origins.NetMessageType.sync_npc_interactions);
+						packet.Write((ushort)NPC.whoAmI);
+						Utils.SendBitArray(new BitArray(NPC.playerInteraction), packet);
+						packet.Send();
+						foreach (Player player in Main.ActivePlayers) {
+							Mod.Logger.Info($"{player.name} interacted: {NPC.playerInteraction[player.whoAmI]}");
+						}
+						break;
+					}
+				}
+			}
 			if (IsInPhase3) {
 				if (Main.rand.NextBool(3))
 					Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32, 32), ModContent.DustType<ShimmerConstructDust>(), Main.rand.NextVector2Circular(15, 15), Scale: 1).noGravity = true;

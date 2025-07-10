@@ -4731,4 +4731,9 @@ namespace Origins {
 		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
 		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
 	}
+	public static class NetmodeActive {
+		public static bool SinglePlayer => Main.netMode == NetmodeID.SinglePlayer;
+		public static bool MultiplayerClient => Main.netMode == NetmodeID.MultiplayerClient;
+		public static bool Server => Main.netMode == NetmodeID.Server;
+	}
 }

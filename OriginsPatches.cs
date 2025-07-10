@@ -1042,9 +1042,10 @@ namespace Origins {
 		}
 
 		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
+		static FastFieldInfo<Exception, string> _message = "_message";
 		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
 			if (args?.Exception is IOException ioException && ((ioException.Message?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (ioException.Message?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false))) {
-				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
+				_message.SetValue(ioException, _message.GetValue(ioException) + $" with packet type {lastPacketType}");
 			}
 			orig(sender, args);
 		}
