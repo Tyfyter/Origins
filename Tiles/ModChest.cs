@@ -126,7 +126,13 @@ namespace Origins.Tiles {
 				} else {
 					int chest = Chest.FindChest(left, top);
 					if (chest >= 0) {
-						player.OpenChest(i, j, chest);
+						if (chest == player.chest) {
+							player.chest = -1;
+							SoundEngine.PlaySound(SoundID.MenuClose);
+						} else {
+							player.OpenChest(i, j, chest);
+							SoundEngine.PlaySound(SoundID.MenuOpen);
+						}
 						/*Main.stackSplit = 600;
 						if (chest == player.chest) {
 							player.chest = -1;
