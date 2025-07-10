@@ -20,7 +20,7 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 7), false));
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
-			if (Item.newAndShiny) {
+			if (Item.newAndShiny && !Item.shimmered) {
 				Item.shimmered = true;
 				Item.shimmerTime = 1;
 			}
