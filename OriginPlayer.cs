@@ -852,6 +852,7 @@ namespace Origins {
 		}
 		public override bool PreItemCheck() {
 			Debugging.LogFirstRun(PreItemCheck);
+			compositeFrontArmWasEnabled = Player.compositeFrontArm.enabled;
 			if (weakShimmer) {
 				Player.shimmering = false;
 				Weak_Shimmer_Debuff.isUpdatingShimmeryThing = true;

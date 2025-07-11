@@ -20,6 +20,16 @@ namespace Origins {
 			public static string[] JournalEntries { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntries)}")
 			.Description("Controls which items are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
+			public static bool[] SwungNoMeleeMelees { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(SwungNoMeleeMelees)}")
+			.Description("Allows weapons with Item.noMelee to trigger effects meant for swung melee weapons")
+			.RegisterBoolSet(
+				ItemID.NightsEdge,
+				ItemID.TrueNightsEdge,
+				ItemID.Excalibur,
+				ItemID.TrueExcalibur,
+				ItemID.TerraBlade,
+				ItemID.TheHorsemansBlade
+			);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {

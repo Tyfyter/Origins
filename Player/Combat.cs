@@ -181,6 +181,9 @@ namespace Origins {
 			} else if (flaskSalt) {
 				Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
 			}
+			DoGunGlove();
+		}
+		public void DoGunGlove() {
 			if (gunGlove && gunGloveCooldown <= 0) {
 				if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId)) {
 					int manaCost = Player.GetManaCost(gunGloveItem);
@@ -189,7 +192,9 @@ namespace Origins {
 							Player.manaRegenDelay = (int)Player.maxRegenDelay;
 						}
 						Vector2 position = Player.itemLocation;
-						Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
+						float rotation = Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi;
+						if (compositeFrontArmWasEnabled) rotation = Player.compositeFrontArm.rotation + MathHelper.PiOver2;
+						Vector2 velocity = Vec2FromPolar(rotation, speed);
 
 						if (gunGloveItem.UseSound is not null) SoundEngine.PlaySound(gunGloveItem.UseSound, position);
 

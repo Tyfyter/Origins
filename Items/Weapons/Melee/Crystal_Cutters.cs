@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Melee {
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
+			Item.noMelee = false;
 			Item.damage = 44;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 34;

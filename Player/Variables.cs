@@ -391,6 +391,7 @@ namespace Origins {
 		public int staticShockTime = 0;
 		public int relayRodStrength = 0;
 		public bool weakShimmer = false;
+		public bool compositeFrontArmWasEnabled = false;
 		#endregion
 
 		#region keybinds
@@ -907,6 +908,7 @@ namespace Origins {
 			staticShockDamage = false;
 			if (!Player.HasBuff<Relay_Rod_Buff>()) relayRodStrength = 0;
 			weakShimmer = false;
+			compositeFrontArmWasEnabled = false;
 			broth = null;
 			if (staticBrothEffectCooldown > 0)
 				staticBrothEffectCooldown--;
