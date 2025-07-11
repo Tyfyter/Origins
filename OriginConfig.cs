@@ -143,6 +143,9 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool TwentyFourHourTime = false;
 
+		[DefaultValue(false)]
+		public bool ShowRarityInHotbar = false;
+
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
 

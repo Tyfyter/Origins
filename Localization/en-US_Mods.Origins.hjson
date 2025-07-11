@@ -2251,6 +2251,11 @@ Configs: {
 			Label: Entry Category Headers
 			Tooltip: ""
 		}
+
+		ShowRarityInHotbar: {
+			Label: Show Rarity In Hotbar
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
