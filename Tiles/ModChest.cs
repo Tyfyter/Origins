@@ -34,6 +34,7 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			_ = DefaultContainerName(0, 0);
 		}
 
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 0 : 1);
