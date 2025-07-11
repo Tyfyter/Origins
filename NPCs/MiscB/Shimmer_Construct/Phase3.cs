@@ -581,7 +581,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ColorDestinationBlend = Blend.InverseSourceAlpha,
 				AlphaDestinationBlend = Blend.InverseSourceAlpha
 			};
-		private int SurfaceFrameCounter;
 		private int SurfaceFrame = 6;
 		private int pingpongCounter = 1;
 		private Asset<Texture2D>[] sc_BGs;
@@ -684,13 +683,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			spriteBatch.Begin(state);
 		}
 		public override void Update(GameTime gameTime) {
-			if (++SurfaceFrameCounter > 1) {
-				// remove the first 5 frame since it makes me want to throw up 
-				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
-					pingpongCounter *= -1;
-				SurfaceFrame += pingpongCounter;
-				SurfaceFrameCounter = 0;
-			}
+			if (SurfaceFrame == 5 || SurfaceFrame + 1 >= bgsAmount)
+				pingpongCounter *= -1;
+			SurfaceFrame += pingpongCounter;
 		}
 		public override void Activate(Vector2 position, params object[] args) {
 			Mode = OverlayMode.Active;
