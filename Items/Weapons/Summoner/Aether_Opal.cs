@@ -277,7 +277,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Default movement parameters (here for attacking)
 			float speed = 12f;
 			float inertia = 8f;
-			vectorToIdlePosition.Normalize();
+			vectorToIdlePosition = vectorToIdlePosition.SafeNormalize(default);
 			if (foundTarget) {
 				float projDistanceFromPlayer = (Projectile.Center - player.Center).Length();
 				Projectile.tileCollide = true;
