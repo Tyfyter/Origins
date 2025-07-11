@@ -15,9 +15,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Cool_Sword : ModItem {
 		public override void SetDefaults() {
-			Item.damage = 54;
+			Item.damage = 42;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
+			Item.crit = -4;
 			Item.noMelee = true;
 			Item.width = 180;
 			Item.height = 188;
