@@ -267,6 +267,13 @@ namespace Origins.Tiles.Marrowick {
 			};
 			DustType = DustID.TintablePaint;
 		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
+			if (frameX / 18 != 1) height = -1600;
+		}
 	}
 	public class Marrowick_Piano : FurnitureBase {
 		public override int BaseTileID => TileID.Pianos;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -108,7 +107,9 @@ namespace Origins {
 				TileID.Ruby, TileID.Emerald,
 				TileID.Diamond, TileID.Ruby
 			);
+			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
 		}
+		public delegate void MultitileCollisionOffsetter(short frameX, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))

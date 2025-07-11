@@ -234,6 +234,13 @@ namespace Origins.Tiles.Endowood {
 			};
 			DustType = DustID.t_Granite;
 		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
+			if (frameX / 18 != 1) y += 14;
+		}
 	}
 	public class Endowood_Piano : FurnitureBase {
 		public override int BaseTileID => TileID.Pianos;

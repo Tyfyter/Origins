@@ -716,6 +716,40 @@ namespace Origins {
 				if (self.OriginPlayer().weakShimmer) return;
 				orig(self);
 			};
+			try {
+				IL_Collision.TileCollision += IL_Collision_TileCollision_OffsetBookcases;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_Collision_TileCollision_OffsetBookcases), e)) throw;
+			}
+		}
+		internal static void IL_Collision_TileCollision_OffsetBookcases(ILContext il) {
+			ILCursor c = new(il);
+			int tile = -1;
+			int pos = -1;
+			int height = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdloca(out tile),
+				i => i.MatchCall<Tile>("halfBrick"),
+				i => i.MatchBrfalse(out _),
+				i => i.MatchLdloca(out pos),        //IL_01b8: ldloca.s 12
+				i => i.MatchLdflda<Vector2>("Y"),   //IL_01ba: ldflda float32[FNA]Microsoft.Xna.Framework.Vector2::Y
+				i => i.MatchDup(),                  //IL_01bf: dup
+				i => i.MatchLdindR4(),              //IL_01c0: ldind.r4
+				i => i.MatchLdcR4(8),               //IL_01c1: ldc.r4 8
+				i => i.MatchAdd(),                  //IL_01c6: add
+				i => i.MatchStindR4(),              //IL_01c7: stind.r4
+				i => i.MatchLdloc(out height),      //IL_01c8: ldloc.s 15
+				i => i.MatchLdcI4(8),               //IL_01ca: ldc.i4.8
+				i => i.MatchSub(),                  //IL_01cb: sub
+				i => i.MatchStloc(out _)            //IL_01cc: stloc.s 15
+			);
+			c.MoveAfterLabels();
+			c.EmitLdloc(tile);
+			c.EmitLdloca(pos);
+			c.EmitLdloca(height);
+			c.EmitDelegate((Tile tile, ref Vector2 pos, ref int height) => {
+				OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType)?.Invoke(tile.TileFrameX, ref pos.Y, ref height);
+			});
 		}
 
 		public static bool processingDash = false;
