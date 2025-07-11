@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Tools;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -40,7 +41,7 @@ namespace Origins.Items.Weapons.Melee {
 				label = c.DefineLabel();
 				c.EmitLdarg0();
 				c.EmitDelegate((Player player) => {
-					return player.HeldItem.ModItem is Soul_Snatcher or Tyrfing;
+					return player.HeldItem.ModItem is Soul_Snatcher or Tyrfing or Miter_Saw;
 				});
 				c.EmitBrtrue(label);
 				c.Index += predicates.Length;

@@ -34,9 +34,12 @@ namespace Origins.Items.Tools {
 			Item.useTime = 5;
 			Item.useAnimation = 48;
 			Item.knockBack = 0.8f;
+			Item.shoot = ModContent.ProjectileType<Miter_Saw_P>();
+			Item.shootSpeed = 28;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.UseSound = SoundID.Item23;
 			Item.rare = ItemRarityID.Blue;
+			Item.channel = true;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
@@ -87,6 +90,7 @@ namespace Origins.Items.Tools {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
+		public override bool CanShoot(Player player) => player.altFunctionUse == 2;
 		public bool DrawOverHand => true;
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player player = drawInfo.drawPlayer;
@@ -96,10 +100,12 @@ namespace Origins.Items.Tools {
 			if (drawInfo.itemEffect.HasFlag(SpriteEffects.FlipHorizontally)) {
 				drawInfo.itemEffect ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			}
+			int frameSource = player.itemAnimation;
+			if (Main.projectile.GetIfInRange(player.heldProj) is Projectile heldProj) frameSource = heldProj.frameCounter;
 			drawInfo.DrawDataCache.Add(new DrawData(
 				texture,
 				player.GetCompositeArmPosition(false) - Main.screenPosition,
-				texture.Frame(verticalFrames: 2, frameY: (player.itemAnimation % 4) / 2),
+				texture.Frame(verticalFrames: 2, frameY: (frameSource % 4) / 2),
 				Item.GetAlpha(lightColor),
 				itemRotation + (MathHelper.Pi * 0.75f) * player.direction * player.gravDir,
 				new Vector2(11, player.direction * player.gravDir == 1 ? 27 : 7),
@@ -107,6 +113,22 @@ namespace Origins.Items.Tools {
 				drawInfo.itemEffect,
 				1
 			));
+		}
+	}
+	public class Miter_Saw_P : ModProjectile {
+		public override string Texture => typeof(Miter_Saw).GetDefaultTMLName();
+		public override void SetStaticDefaults() { }
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.TitaniumChainsaw);
+			Projectile.friendly = false;
+			Projectile.hide = true;
+		}
+		public override void AI() {
+			Projectile.position -= Projectile.velocity.SafeNormalize(default) * 4;
+			Player player = Main.player[Projectile.owner];
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation * player.gravDir - MathHelper.PiOver2 * player.direction);
+			player.heldProj = Projectile.whoAmI;
+			Projectile.frameCounter = (Projectile.frameCounter + 1) % 4;
 		}
 	}
 }
