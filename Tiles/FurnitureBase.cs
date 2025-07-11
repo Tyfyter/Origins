@@ -247,6 +247,7 @@ namespace Origins.Tiles {
 				TileID.LifeCrystalBoulder,
 				TileID.RollingCactus
 			];
+			_ = DefaultContainerName(0, 0);
 		}
 
 		public override string MapName(string name, int i, int j) {

@@ -2123,6 +2123,7 @@ Tiles: {
 	// Aetherite_Ore.MapEntry: Aetherite
 	// Limestone_Chest.MapEntry: Limestone Chest
 	// Music_Box_TD: Music Box T D
+	// Limestone_Dresser.MapEntry: Limestone_ Dresser
 }
 
 MapObject: {
