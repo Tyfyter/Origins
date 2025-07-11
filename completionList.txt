@@ -634,6 +634,7 @@ VANITY:
 (X) Ashen Dye
 (X) Defiled Dye
 (^) High Contrast Dye
+(#, ^2) Lotusy Dye !!!
 (X) Nova Dye
 (ᗢ) Rasterized Dye
 (X) Riven Dye
