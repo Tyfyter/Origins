@@ -137,7 +137,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			);
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.WCIdle, NPC.Center);
+			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.WCIdle, NPC.Center);
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
 			NPC.defense = 100 * (int)(ArmorHealthPercent);
 			//ForcedTargetPosition = Main.MouseWorld;
