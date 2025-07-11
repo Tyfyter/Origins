@@ -2122,8 +2122,8 @@ Tiles: {
 	// Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
 	// Aetherite_Ore.MapEntry: Aetherite
 	// Limestone_Chest.MapEntry: Limestone Chest
-	// Music_Box_TD: Music Box T D
-	// Limestone_Dresser.MapEntry: Limestone_ Dresser
+	// Music_Box_TD: Music Box ([wiggle:The Dive])
+	// Limestone_Dresser.MapEntry: Limestone Dresser
 }
 
 MapObject: {

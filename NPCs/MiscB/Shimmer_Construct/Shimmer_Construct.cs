@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
+using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
 using PegasusLib;
 using ReLogic.Content;
@@ -135,6 +136,17 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						NPC.life = NPC.lifeMax;
 						isInPhase3 = true;
 						NPC.netUpdate = true;
+						if (!NetmodeActive.MultiplayerClient) {
+							int num = Item.NewItem(NPC.GetSource_FromThis(), (int)(Main.leftWorld + 640f + 16f + 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
+							Main.item[num].newAndShiny = true;
+							if (Main.netMode == NetmodeID.MultiplayerClient)
+								NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num);
+
+							num = Item.NewItem(NPC.GetSource_FromThis(), (int)(Main.rightWorld - 640f - 32f - 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
+							Main.item[num].newAndShiny = true;
+							if (Main.netMode == NetmodeID.MultiplayerClient)
+								NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num);
+						}
 					} else {
 						NPC.life = 0;
 						HitEffect(default);

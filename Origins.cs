@@ -570,6 +570,9 @@ namespace Origins {
 			ChatManager.Register<Item_Hint_Handler>([
 				"itemhint"
 			]);
+			ChatManager.Register<Wiggle_Handler>([
+				"wiggle"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

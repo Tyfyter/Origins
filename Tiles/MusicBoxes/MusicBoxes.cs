@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -54,7 +55,7 @@ namespace Origins.Tiles.MusicBoxes {
 			}
 		}
 		public override void Load() {
-			Item = new(this);
+			Item = CreateItem();
 			Mod.AddContent(Item);
 			musicBoxes.Add(this);
 		}
@@ -82,6 +83,7 @@ namespace Origins.Tiles.MusicBoxes {
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = Item.Type;
 		}
+		public virtual Music_Box_Item CreateItem() => new(this);
 	}
 	[Autoload(false)]
 	public class Music_Box_Item(Music_Box tile) : ModItem(), ICustomWikiStat {
@@ -449,5 +451,10 @@ namespace Origins.Tiles.MusicBoxes {
 		public override Color MapColor => new(87, 35, 178);
 		public override int MusicSlot => Origins.Music.TheDive;
 		public override int DustType => DustID.GemAmethyst;
+		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
+			public override void Update(ref float gravity, ref float maxFallSpeed) {
+				if (Item.newAndShiny && !NPC.AnyNPCs(NPCType<Shimmer_Construct>())) Item.TurnToAir();
+			}
+		}
 	}
 }
