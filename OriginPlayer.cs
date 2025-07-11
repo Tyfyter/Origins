@@ -13,6 +13,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.NPCs;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
@@ -851,7 +852,10 @@ namespace Origins {
 		}
 		public override bool PreItemCheck() {
 			Debugging.LogFirstRun(PreItemCheck);
-			if (weakShimmer) Player.shimmering = false;
+			if (weakShimmer) {
+				Player.shimmering = false;
+				Weak_Shimmer_Debuff.isUpdatingShimmeryThing = true;
+			}
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
 			if (disableUseItem) {
@@ -906,6 +910,7 @@ namespace Origins {
 			Debugging.LogFirstRun(PostItemCheck);
 			ItemChecking = false;
 			releaseAltUse = !Player.controlUseTile;
+			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
 		}
 		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
 			if (Gelatin_Bloom_Brooch.GetNameIndex(Player.name) != -1) yield return new(ModContent.ItemType<Gelatin_Bloom_Brooch>());

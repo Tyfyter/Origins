@@ -44,7 +44,7 @@ namespace Origins.Gores {
 			);
 			c.Index--;
 			c.EmitLdloc(dust);
-			c.EmitDelegate((bool active, Dust dust) => active && (isBehindTiles.Contains(dust.type) == isDrawingBehindTiles));
+			c.EmitDelegate((bool active, Dust dust) => active && (isBehindTiles.Contains(dust.type) == isDrawingBehindTiles) && (dust.type != DustID.Lava || !SC_Phase_Three_Overlay.HideLavaDust));
 		}
 		public void Unload() {}
 		public static void Add(int type) => ModContent.GetInstance<DustsBehindTiles>().isBehindTiles.Add(type);

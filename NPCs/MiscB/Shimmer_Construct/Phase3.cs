@@ -448,35 +448,42 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
 			}
 			On_Projectile.Update += (orig, self, i) => {
-				isUpdatingShimmeryProj = (self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer);
+				isUpdatingShimmeryThing = (self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer);
 				try {
 					orig(self, i);
 				} catch {
-					isUpdatingShimmeryProj = false;
+					isUpdatingShimmeryThing = false;
 					throw;
 				}
-				isUpdatingShimmeryProj = false;
+				isUpdatingShimmeryThing = false;
 			};
-			On_Collision.CanHitLine += (orig, Position1, Width1, Height1, Position2, Width2, Height2) => isUpdatingShimmeryProj || orig(Position1, Width1, Height1, Position2, Width2, Height2);
-			On_Collision.CanHitWithCheck += (orig, Position1, Width1, Height1, Position2, Width2, Height2, check) => isUpdatingShimmeryProj || orig(Position1, Width1, Height1, Position2, Width2, Height2, check);
-			On_Collision.CanHit_Entity_Entity += (orig, a, b) => isUpdatingShimmeryProj || orig(a, b);
-			On_Collision.CanHit_Entity_NPCAimedTarget += (orig, a, b) => isUpdatingShimmeryProj || orig(a, b);
-			On_Collision.CanHit_Point_int_int_Point_int_int += (orig, a, aw, ah, b, bw, bh) => isUpdatingShimmeryProj || orig(a, aw, ah, b, bw, bh);
-			On_Collision.CanHit_Vector2_int_int_Vector2_int_int += (orig, a, aw, ah, b, bw, bh) => isUpdatingShimmeryProj || orig(a, aw, ah, b, bw, bh);
+			On_Collision.CanHitLine += (orig, Position1, Width1, Height1, Position2, Width2, Height2) => isUpdatingShimmeryThing || orig(Position1, Width1, Height1, Position2, Width2, Height2);
+			On_Collision.CanHitWithCheck += (orig, Position1, Width1, Height1, Position2, Width2, Height2, check) => isUpdatingShimmeryThing || orig(Position1, Width1, Height1, Position2, Width2, Height2, check);
+			On_Collision.CanHit_Entity_Entity += (orig, a, b) => isUpdatingShimmeryThing || orig(a, b);
+			On_Collision.CanHit_Entity_NPCAimedTarget += (orig, a, b) => isUpdatingShimmeryThing || orig(a, b);
+			On_Collision.CanHit_Point_int_int_Point_int_int += (orig, a, aw, ah, b, bw, bh) => isUpdatingShimmeryThing || orig(a, aw, ah, b, bw, bh);
+			On_Collision.CanHit_Vector2_int_int_Vector2_int_int += (orig, a, aw, ah, b, bw, bh) => isUpdatingShimmeryThing || orig(a, aw, ah, b, bw, bh);
 			MonoModHooks.Add(typeof(CollisionExt).GetMethod(nameof(CollisionExt.Raymarch), [typeof(Vector2), typeof(Vector2), typeof(Predicate<Tile>), typeof(float)]), (Func<Vector2, Vector2, Predicate<Tile>, float, float> orig, Vector2 position, Vector2 direction, Predicate<Tile> extraCheck, float maxLength) => {
-				if (isUpdatingShimmeryProj) return maxLength;
+				if (isUpdatingShimmeryThing) return maxLength;
 				return orig(position, direction, extraCheck, maxLength);
 			});
 			MonoModHooks.Add(typeof(CollisionExt).GetMethod(nameof(CollisionExt.Raymarch), [typeof(Vector2), typeof(Vector2), typeof(float)]), (Func<Vector2, Vector2, float, float> orig, Vector2 position, Vector2 direction, float maxLength) => {
-				if (isUpdatingShimmeryProj) return maxLength;
+				if (isUpdatingShimmeryThing) return maxLength;
 				return orig(position, direction, maxLength);
 			});
-			On_Collision.TileCollision += (orig, Position, Velocity, Width, Height, fallThrough, fall2, gravDir) => isUpdatingShimmeryProj ? Velocity : orig(Position, Velocity, Width, Height, fallThrough, fall2, gravDir);
-			On_Collision.AdvancedTileCollision += (orig, forcedIgnoredTiles, Position, Velocity, Width, Height, fallThrough, fall2, gravDir) => isUpdatingShimmeryProj ? Velocity : orig(forcedIgnoredTiles, Position, Velocity, Width, Height, fallThrough, fall2, gravDir);
-			On_Collision.SlopeCollision += (orig, Position, Velocity, Width, Height, fallThrough, gravDir) => isUpdatingShimmeryProj ? new Vector4(Position, Velocity.X, Velocity.Y) : orig(Position, Velocity, Width, Height, fallThrough, gravDir);
+			On_Collision.TileCollision += (orig, Position, Velocity, Width, Height, fallThrough, fall2, gravDir) => isUpdatingShimmeryThing ? Velocity : orig(Position, Velocity, Width, Height, fallThrough, fall2, gravDir);
+			On_Collision.AdvancedTileCollision += (orig, forcedIgnoredTiles, Position, Velocity, Width, Height, fallThrough, fall2, gravDir) => isUpdatingShimmeryThing ? Velocity : orig(forcedIgnoredTiles, Position, Velocity, Width, Height, fallThrough, fall2, gravDir);
+			On_Collision.SlopeCollision += (orig, Position, Velocity, Width, Height, fallThrough, gravDir) => isUpdatingShimmeryThing ? new Vector4(Position, Velocity.X, Velocity.Y) : orig(Position, Velocity, Width, Height, fallThrough, gravDir);
+			On_Collision.SolidCollision_Vector2_int_int += (orig, Position, Width, Height) => !isUpdatingShimmeryThing && orig(Position, Width, Height);
+			On_Collision.WetCollision += (orig, Position, Width, Height) => {
+				Collision.honey = false;
+				Collision.shimmer = false;
+				return !isUpdatingShimmeryThing && orig(Position, Width, Height);
+			};
+			On_Collision.LavaCollision += (orig, Position, Width, Height) => !isUpdatingShimmeryThing && orig(Position, Width, Height);
 		}
 
-		static bool isUpdatingShimmeryProj = false;
+		internal static bool isUpdatingShimmeryThing = false;
 
 		static void IL_Projectile_HandleMovement(ILContext il) {
 			ILCursor c = new(il);
@@ -761,6 +768,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		bool drawingDust = false;
 		public static bool HideAllDust => instance.active && !instance.drawingDust;
+		public static bool HideLavaDust => instance.active && instance.drawingDust;
 		static SC_Phase_Three_Overlay instance;
 		public void Unload() {
 			if (renderTarget is not null) {
