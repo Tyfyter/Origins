@@ -19,9 +19,6 @@ namespace Origins.Gores {
 		public void Load(Mod mod) {
 			IL_Main.DrawDust += IL_Main_DrawDust;
 			On_Main.DoDraw_Tiles_Solid += On_Main_DoDraw_Tiles_Solid;
-			On_Main.DrawDust += (orig, self) => {
-				if (!SC_Phase_Three_Overlay.HideAllDust) orig(self);
-			};
 		}
 
 		private void On_Main_DoDraw_Tiles_Solid(On_Main.orig_DoDraw_Tiles_Solid orig, Main self) {
@@ -44,7 +41,7 @@ namespace Origins.Gores {
 			);
 			c.Index--;
 			c.EmitLdloc(dust);
-			c.EmitDelegate((bool active, Dust dust) => active && (isBehindTiles.Contains(dust.type) == isDrawingBehindTiles) && (dust.type != DustID.Lava || !SC_Phase_Three_Overlay.HideLavaDust));
+			c.EmitDelegate((bool active, Dust dust) => active && (isBehindTiles.Contains(dust.type) == isDrawingBehindTiles));
 		}
 		public void Unload() {}
 		public static void Add(int type) => ModContent.GetInstance<DustsBehindTiles>().isBehindTiles.Add(type);
