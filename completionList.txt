@@ -1315,7 +1315,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(#3, ^2) Music Box (The Dive) !!!
+(#2, ^2) Music Box (The Dive) !!!
 (#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
@@ -1740,7 +1740,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-($) Shimmer Construct !!! (still needs phase III music)
+(#2, ^4) Shimmer Construct !!! (Phase I>II better transition)
 (X) Tearror
 (X) Trenchmaker
 

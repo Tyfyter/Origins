@@ -27,7 +27,7 @@ namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		public static List<Vector2> EvilSpikeAvoidancePoints = [];
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
-			const double max_defiled_spike_size = 8.0;
+			const double max_defiled_spike_size = 6.0;
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
 			EvilSpikeAvoidancePoints.Clear();
