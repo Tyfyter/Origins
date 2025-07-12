@@ -68,7 +68,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 targetPos = npc.GetTargetData().Center;
 			npc.velocity += npc.DirectionTo(targetPos - Vector2.UnitY * 16 * 15) * 0.5f;
 			for (int i = 0; i < 2; i++) {
-				SoundEngine.PlaySound(SoundID.Item88);
+				SoundEngine.PlaySound(SoundID.Item88, npc.Center);
 				SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.75f), npc.Center);
 				if (positions.TryPop(out Vector2 position)) {
 					npc.SpawnProjectile(null,
@@ -342,8 +342,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
-			SoundEngine.PlaySound(SoundID.Item28);
 			NPC npc = boss.NPC;
+			SoundEngine.PlaySound(SoundID.Item28, npc.Center);
 			npc.SpawnNPC(null,
 				(int)npc.Center.X,
 				(int)npc.Center.Y,
@@ -353,10 +353,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
-			int turretType = ModContent.NPCType<Shimmer_Construct_Turret_Chunk>();
 			int count = 0;
-			foreach (NPC proj in Main.ActiveNPCs) {
-				if (proj.type == turretType && ++count >= 2) return 0;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.ModNPC is Shimmer_Construct_Turret_Chunk && ++count >= 2) return 0;
 			}
 			return Math.Max(base.GetWeight(boss, previousStates) - 0.5f, 0);
 		}
