@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.SoulBottleNight, 15)
+			.AddIngredient(ItemID.SoulofNight, 15)
 			.AddIngredient(ModContent.ItemType<Respyrite>(), 25)
 			.AddIngredient(ModContent.ItemType<Scrap>(), 50)
 			.AddTile(TileID.MythrilAnvil)
