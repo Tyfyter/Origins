@@ -1028,6 +1028,8 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
+(%2) Ticking Bomb
+(%2) Ticking Dynamite
 (^) Voltefuse
 
 (^) Acrid Handcannon*
@@ -1067,8 +1069,6 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundershot
-(X) Ticking Bomb
-(X) Ticking Dynamite
 
 (@4, ^3) Black Hole Bomb°
 (@4, ^3) Caustica
