@@ -264,6 +264,8 @@ namespace Origins.Items.Weapons.Melee {
 			switch ((Main.player.GetIfInRange(Projectile.owner)?.name ?? "").ToLower()) {
 				default:
 				return BladeColor.DEFAULT;
+				case "reivax":
+				return BladeColor.CORAL;
 				case "jennifer" or "jennifer_alt" or "faust":
 				return BladeColor.CHRYSALIS;
 			}
