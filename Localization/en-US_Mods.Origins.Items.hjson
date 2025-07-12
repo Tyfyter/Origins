@@ -6048,7 +6048,7 @@ Aether_Opal: {
 
 Aether_Orb: {
 	DisplayName: Aether Orb
-	Tooltip: Throw into some shimmer to summon the {$Mods.Origins.NPCs.Shimmer_Construct.DisplayName}
+	Tooltip: Throw into the Shimmer to summon the {$Mods.Origins.NPCs.Shimmer_Construct.DisplayName}
 }
 
 Chambersite_Hook: {
