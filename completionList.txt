@@ -61,7 +61,7 @@ BOSSES AND MINI-BOSSES:
 (#2, ^2) World Cracker* !!! (mouth anims and sounds)
 
 (X) Corrupt Harvester
-(^) Lost Diver/Mildew Carrion
+(^) Lost Diver/Mildew Carrion°
 (X) Snowdrop
 
 (X) Crimson King
@@ -731,9 +731,9 @@ MELEE WEAPONS:
 (^) Riverang*
 (^) Silicon Sword
 (^) Snapthrow*
-(^) Soldering Iron
+(^) Soldering Iron*
 (^) Soul Snatcher*
-(^) Soulslasher
+(^) Soulslasher*
 (^) Spiker Sword*
 (^) Switchblade*
 (^) Thunderbolt
@@ -742,12 +742,12 @@ MELEE WEAPONS:
 (^) Vorpal Sword (Uncursed)*
 (^) Waning Crescent*
 
-(^) Amenonuhoko
+(^) Amenonuhoko*
 (^) Amoebash*
 (^) Boomboom
 (^) Chambersite Phasesaber
-(^) Crystal Cutters
-(^) Depth Charge
+(^) Crystal Cutters*
+(^) Depth Charge*
 (^) Knee Slapper*
 (^) Nematoclaw*
 (X) Origins Biome Keybrands
@@ -1122,7 +1122,7 @@ TILES:
 (^) Encrusted Ore*
 (^) Endowood*
 (^) Felnum Ore*
-(☻) Fiberglass Block* !!! (has shatter destruction noise)
+(^) Fiberglass Block*
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick°
