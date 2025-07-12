@@ -34,14 +34,14 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 4)
-			.AddRecipeGroup(RecipeGroupID.IronBar, 4)
+			Recipe.Create(Type, 5)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 5)
 			.AddIngredient<Alkahest>()
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(Type, 4)
-			.AddIngredient<Harpoon>(4)
+			Recipe.Create(Type, 5)
+			.AddIngredient<Harpoon>(5)
 			.AddIngredient<Alkahest>()
 			.AddTile(TileID.Anvils)
 			.Register();

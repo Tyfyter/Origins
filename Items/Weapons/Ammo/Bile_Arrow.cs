@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Recipe.Create(Type, 150)
 			.AddIngredient(ItemID.WoodenArrow, 150)
 			.AddIngredient(ModContent.ItemType<Black_Bile>())
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}
