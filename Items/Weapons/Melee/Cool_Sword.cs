@@ -14,6 +14,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Cool_Sword : ModItem {
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 42;
 			Item.DamageType = DamageClass.Melee;

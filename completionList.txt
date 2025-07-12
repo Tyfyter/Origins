@@ -685,7 +685,7 @@ TOOLS:
 (^) Felnum Pickaxe*
 (^) Lightning Rod*
 (^) Marrowick Hammer*
-(^) Miter Saw*
+(ᗢ) Miter Saw*
 (^) Parasitic Manipulator*
 (^) Piledriver*
 (^) Rivenator*

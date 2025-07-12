@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
@@ -13,7 +12,6 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]
@@ -26,6 +24,7 @@ namespace Origins.Items.Weapons.Melee {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 185;

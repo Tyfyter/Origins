@@ -13,6 +13,9 @@ namespace Origins.Items.Weapons.Melee {
 		public string[] Categories => [
 			"Sword"
 		];
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 27;
 			Item.DamageType = DamageClass.Melee;

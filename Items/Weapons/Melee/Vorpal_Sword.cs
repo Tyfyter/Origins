@@ -20,6 +20,9 @@ namespace Origins.Items.Weapons.Melee {
         ];
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override bool HasOwnTexture => true;
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 28;
 			Item.DamageType = DamageClass.Melee;
