@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using System;
 using Terraria;
@@ -19,23 +20,27 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);
-			Item.damage = 45;
-			Item.knockBack = 6;
-			Item.useTime = Item.useAnimation = 35;
+			Item.damage = 54;
+			Item.knockBack = 8;
+			Item.crit = 15;
+			Item.useTime = Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Shimmershot_P>();
-			Item.shootSpeed = 8;
+			Item.shootSpeed = 16;
 			Item.width = 38;
 			Item.height = 18;
 			Item.autoReuse = true;
 			Item.channel = true;
 			Item.noUseGraphic = true;
-			Item.value = Item.sellPrice(gold: 8);
-			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item36.WithPitch(2f);
+			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.UseSound = null;
 		}
 		public static bool isShooting = false;
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f));
+			SoundEngine.PlaySound(SoundID.Item142);
+			SoundEngine.PlaySound(Origins.Sounds.HeavyCannon);
 			if (source.Context?.Contains("gunProj") != true) {
 				Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, ai1: 1, ai2: player.altFunctionUse == 2 ? -1 : 0);
 				return false;
@@ -43,8 +48,10 @@ namespace Origins.Items.Weapons.Ranged {
 			return true;
 		}
 		public override void AddRecipes() {
-			/*Recipe.Create(Type)
-			.Register();*/
+			CreateRecipe()
+			.AddIngredient<Aetherite_Bar>(13)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Shimmershot_P : ModProjectile {

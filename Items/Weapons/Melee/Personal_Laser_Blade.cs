@@ -193,6 +193,9 @@ namespace Origins.Items.Weapons.Melee {
 				case BladeColor.CHRYSALIS:
 				dustColor = new(12, 168, 10, 32);
 				break;
+				case BladeColor.FAILURE:
+				dustColor = new(156, 191, 255, 64);
+				break;
 			}
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
@@ -256,6 +259,11 @@ namespace Origins.Items.Weapons.Melee {
 				trailDrawer.BladeColor = new(88, 196, 84, 64);
 				trailDrawer.BladeSecondaryColor = new(11, 84, 91, 64);
 				break;
+				case BladeColor.FAILURE:
+				trailDrawer.TrailColor = new(156, 191, 255, 255);
+				trailDrawer.BladeColor = new(255, 255, 255, 64);
+				trailDrawer.BladeSecondaryColor = new(156, 191, 255, 64);
+				break;
 			}
 			trailDrawer.Length = Projectile.velocity.Length() * Projectile.width * 0.9f * HitboxSteps;
 			trailDrawer.Draw(Projectile);
@@ -265,12 +273,14 @@ namespace Origins.Items.Weapons.Melee {
 			switch ((Main.player.GetIfInRange(Projectile.owner)?.name ?? "").ToLower()) {
 				default:
 				return BladeColor.DEFAULT;
-				case "chee":
-				return BladeColor.PULSE;
+				case "ceroba":
+				return BladeColor.STUN;
 				case "reivax":
 				return BladeColor.CORAL;
 				case "jennifer" or "jennifer_alt" or "faust":
 				return BladeColor.CHRYSALIS;
+				case "chee" or "xiqi" or "chrersis":
+				return BladeColor.FAILURE;
 			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -284,7 +294,8 @@ namespace Origins.Items.Weapons.Melee {
 			STUN,
 			PULSE,
 			CORAL,
-			CHRYSALIS
+			CHRYSALIS,
+			FAILURE
 		}
 		public struct LaserBladeDrawer {
 
