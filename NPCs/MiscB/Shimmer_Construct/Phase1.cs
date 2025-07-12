@@ -260,7 +260,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (TargetPos != default) {
 					Vector2 combined = Projectile.velocity * (TargetPos - Projectile.Center);
 					if (Projectile.owner == Main.myPlayer && combined.X <= 0 && combined.Y <= 0) {
-						SoundEngine.PlaySound(SoundID.Item20);
+						SoundEngine.PlaySound(SoundID.Item20, Projectile.Center);
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							TargetPos,

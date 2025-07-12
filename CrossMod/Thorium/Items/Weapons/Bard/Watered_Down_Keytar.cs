@@ -38,7 +38,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			
 			SoundEngine.PlaySound(Item.UseSound.Value.WithPitchOffset(
 				Math.Min(((Main.MouseWorld - player.Center) / new Vector2(Main.screenWidth * 0.4f, Main.screenHeight * 0.4f)).Length(), 1) * 2 - 1
-			));
+			), player.Center);
 			return null;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);

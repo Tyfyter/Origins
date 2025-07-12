@@ -8,6 +8,7 @@ using Origins.Dev;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
+using Terraria.Audio;
 namespace Origins.Items.Weapons.Melee {
 	public class Riverang : ModItem, ICustomWikiStat {
 		internal static short glowmask;
@@ -141,7 +142,7 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.UnitX) * Projectile.velocity.Length();
 					Projectile.localAI[1] = 10;
 				}
-				Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig);
+				SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 				return false;
 			}
 			return true;

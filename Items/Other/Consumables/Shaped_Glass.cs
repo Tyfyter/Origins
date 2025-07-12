@@ -17,7 +17,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			if (player.InModBiome<Fiberglass_Undergrowth>() && !NPC.AnyNPCs(ModContent.NPCType<Fiberglass_Weaver>())) {
-				SoundEngine.PlaySound(SoundID.Roar);
+				SoundEngine.PlaySound(SoundID.Roar, player.Center);
 				player.SpawnBossOn(ModContent.NPCType<Fiberglass_Weaver>());
 				return true;
 			}

@@ -18,7 +18,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (Item.shimmerWet && !Item.shimmered && Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModContent.NPCType<Shimmer_Construct>())) {
-				SoundEngine.PlaySound(SoundID.Roar);
+				SoundEngine.PlaySound(SoundID.Roar, Item.Center);
 				NPC.SpawnBoss((int)Item.Center.X, (int)Item.Center.Y, ModContent.NPCType<Shimmer_Construct>(), Main.myPlayer);
 				Item.stack--;
 				if (Item.stack <= 0) Item.active = false;

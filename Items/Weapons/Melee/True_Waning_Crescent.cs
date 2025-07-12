@@ -116,7 +116,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (Projectile.velocity.Y != oldVelocity.Y) {
 				Projectile.velocity.Y = -oldVelocity.Y;
 			}
-			SoundEngine.PlaySound(SoundID.Dig);
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

@@ -46,7 +46,7 @@ namespace Origins.Items.Other.Consumables {
 				}
 			}
 			if (SpawnMap.Count <= 0) goto fail;
-			SoundEngine.PlaySound(SoundID.Roar);
+			SoundEngine.PlaySound(SoundID.Roar, player.Center);
 			if (Main.netMode != NetmodeID.MultiplayerClient) NPC.NewNPCDirect(new EntitySource_BossSpawn(player), Main.rand.Next(SpawnMap), spawn);
 			return true;
 			fail:

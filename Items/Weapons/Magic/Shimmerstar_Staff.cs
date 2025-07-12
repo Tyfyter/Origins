@@ -74,16 +74,16 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.altFunctionUse != 2) {
 				int turnDir = (velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt();
 				if (player.ItemUsesThisAnimation == 1) player.ChangeDir(turnDir);
-				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
-				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f), player.Center);
+				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), player.Center);
 				int arcIndex = player.direction == 1 ? player.ItemUsesThisAnimation : ((MainFireCount + 1) - player.ItemUsesThisAnimation);
 				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: (arcIndex - 0.5f) / (float)MainFireCount, ai1: player.itemAnimation);
 
 				if (player.ItemUsesThisAnimation == Item.useLimitPerAnimation) player.ChangeDir(turnDir);
 			} else {
 				if (player.ItemUsesThisAnimation == 1) {
-					SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f));
-					SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f));
+					SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f), player.Center);
+					SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), player.Center);
 					player.ChangeDir((velocity.RotatedBy(-player.fullRotation).X > 0).ToDirectionInt());
 					position = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
 					bool secondSwing = player.OriginPlayer().itemComboAnimationTime > 0;

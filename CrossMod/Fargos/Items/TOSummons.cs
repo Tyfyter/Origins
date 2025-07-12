@@ -21,7 +21,7 @@ namespace Origins.CrossMod.Fargos.Items {
 			if (player.whoAmI == Main.myPlayer) {
 				Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250));
 				NPC.NewNPCDirect(NPC.GetBossSpawnSource(player.whoAmI), pos, ModContent.NPCType<TSummon>());
-				SoundEngine.PlaySound(SoundID.Roar);
+				SoundEngine.PlaySound(SoundID.Roar, player.Center);
 			}
 			return true;
 		}
