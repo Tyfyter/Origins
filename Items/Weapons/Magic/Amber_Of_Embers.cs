@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.timeLeft >= 80) Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire, 300);
+			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire3, 300);
 			if (Projectile.penetrate == 1) {
 				Projectile.penetrate = 2;
 				Projectile.timeLeft = 80;
