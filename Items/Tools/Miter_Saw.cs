@@ -19,6 +19,7 @@ namespace Origins.Items.Tools {
 		public override void SetStaticDefaults() {
 			useTexture = ModContent.Request<Texture2D>(Texture + "_Use");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 			Origins.ItemsThatAllowRemoteRightClick[Type] = true;
 		}
 		public override void Unload() {

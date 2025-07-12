@@ -26,6 +26,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 62;

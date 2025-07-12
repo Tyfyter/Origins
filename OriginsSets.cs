@@ -30,6 +30,7 @@ namespace Origins {
 				ItemID.TerraBlade,
 				ItemID.TheHorsemansBlade
 			);
+			public static bool[] ItemsThatCanChannelWithRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {

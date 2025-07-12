@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Melee {
 				label = c.DefineLabel();
 				c.EmitLdarg0();
 				c.EmitDelegate((Player player) => {
-					return player.HeldItem.ModItem is Soul_Snatcher or Tyrfing or Miter_Saw;
+					return OriginsSets.Items.ItemsThatCanChannelWithRightClick[player.HeldItem.type];
 				});
 				c.EmitBrtrue(label);
 				c.Index += predicates.Length;
@@ -75,6 +75,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 			Main.RegisterItemAnimation(Item.type, new ItemDrawAnimation(5, 7));
 		}
 		public override void SetDefaults() {

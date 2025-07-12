@@ -6467,3 +6467,8 @@ Limestone_Chest_Item: {
 	// DisplayName: Limestone Chest
 	// Tooltip: ""
 }
+
+Shimmershot: {
+	// DisplayName: Shimmershot
+	// Tooltip: ""
+}

@@ -1845,6 +1845,7 @@ Projectiles: {
 	Stellar_Spark.DisplayName: Stellar Spark
 	Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
 	Miter_Saw_P.DisplayName: Miter Saw P
+	Shimmershot_P.DisplayName: Shimmershot P
 }
 
 Prefixes: {

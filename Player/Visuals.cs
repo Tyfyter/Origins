@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Tiles.Defiled;
 using PegasusLib;
@@ -156,6 +157,12 @@ namespace Origins {
 					Tangela_Bramble.StandInside(Player);
 					break;
 				}
+			}
+		}
+		public override void ModifyZoom(ref float zoom) {
+			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot) {
+				if (zoom == -1) zoom = 0;
+				zoom += 0.5f;
 			}
 		}
 	}
