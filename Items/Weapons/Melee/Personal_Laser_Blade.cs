@@ -251,8 +251,8 @@ namespace Origins.Items.Weapons.Melee {
 				trailDrawer.BladeSecondaryColor = new(255, 127, 80, 64);
 				break;
 				case BladeColor.CHRYSALIS:
-				trailDrawer.TrailColor = new(35, 17, 11, 0);
-				trailDrawer.BladeColor = new(88, 196, 84, 128);
+				trailDrawer.TrailColor = new(11, 84, 91, 255);
+				trailDrawer.BladeColor = new(88, 196, 84, 64);
 				trailDrawer.BladeSecondaryColor = new(11, 84, 91, 64);
 				break;
 			}
