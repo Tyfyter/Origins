@@ -8,6 +8,7 @@ using static ReLogic.Graphics.DynamicSpriteFont;
 
 namespace Origins.UI {
 	public class Wiggle_Handler : ITagHandler {
+		internal static Vector2 origin;
 		public class Wiggle_Snippet(string text, Options options, Color color = default, float scale = 1) : TextSnippet(text, color, scale) {
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
 				if (justCheckingString || spriteBatch is null) {
@@ -32,7 +33,7 @@ namespace Origins.UI {
 					pos.X += padding.X * scale;
 					pos.Y += padding.Y * scale;
 					pos.Y += (float)Math.Sin(zero.X / (options.WiggleWidth * scale) + Main.timeForVisualEffects * options.Speed) * options.WiggleScale;
-					spriteBatch.Draw(characterData.Texture, pos + position, characterData.Glyph, color, 0, Vector2.Zero, scale, default, 0);
+					spriteBatch.Draw(characterData.Texture, pos + position, characterData.Glyph, color, 0, origin, scale, default, 0);
 					zero.X += (kerning.Y + kerning.Z) * scale;
 				}
 				return true;
