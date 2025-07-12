@@ -10,6 +10,9 @@ namespace Origins.Tiles.Riven {
 		public override Color MapColor => new Color(20, 136, 182);
 	}
 	public class Riven_Campfire_Item : ModItem {
+		public override void SetStaticDefaults() {
+			ModCompatSets.AnyCampfires[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Campfire>());
 		}

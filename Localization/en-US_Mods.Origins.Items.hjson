@@ -6468,6 +6468,11 @@ Limestone_Chest_Item: {
 	Tooltip: ""
 }
 
+Limestone_Chandelier_Item: {
+	DisplayName: Limestone Chandelier
+	Tooltip: ""
+}
+
 Shimmershot: {
 	DisplayName: Shimmershot
 	Tooltip: ""

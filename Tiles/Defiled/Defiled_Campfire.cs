@@ -9,6 +9,9 @@ namespace Origins.Tiles.Defiled {
 		public override Color MapColor => new Color(200, 200, 200);
 	}
 	public class Defiled_Campfire_Item : ModItem {
+		public override void SetStaticDefaults() {
+			ModCompatSets.AnyCampfires[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Defiled_Campfire>());
 		}

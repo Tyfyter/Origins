@@ -66,7 +66,11 @@ namespace Origins.Tiles {
 			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 
-			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID), MapName);
+			if (!Main.dedServ) {
+				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
+				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
+				else AddMapEntry(MapColor, text, MapName);
+			}
 			AdjTiles = [
 				BaseTileID
 			];
@@ -83,6 +87,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class ChairBase : FurnitureBase {
 		public override int BaseTileID => TileID.Chairs;
+		private bool IsABench => BaseTileID == TileID.Benches;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
 			return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance); // Avoid being able to trigger it from long range
 		}
@@ -117,11 +122,14 @@ namespace Origins.Tiles {
 
 			//info.directionOffset = info.restingEntity is Player ? 6 : 2; // Default to 6 for players, 2 for NPCs
 			//info.visualOffset = Vector2.Zero; // Defaults to (0,0)
+			if (IsABench) {
+				info.TargetDirection = info.RestingEntity.direction;
+			} else {
+				info.TargetDirection = -1;
 
-			info.TargetDirection = -1;
-
-			if (tile.TileFrameX != 0) {
-				info.TargetDirection = 1; // Facing right if sat down on the right alternate (added through addAlternate in SetStaticDefaults earlier)
+				if (tile.TileFrameX != 0) {
+					info.TargetDirection = 1; // Facing right if sat down on the right alternate (added through addAlternate in SetStaticDefaults earlier)
+				}
 			}
 
 			// The anchor represents the bottom-most tile of the chair. This is used to align the entity hitbox
@@ -434,7 +442,8 @@ namespace Origins.Tiles {
 		}
 	}
 	public abstract class LightFurnitureBase : FurnitureBase {
-		AutoLoadingAsset<Texture2D> flameTexture;
+		public AutoLoadingAsset<Texture2D> flameTexture;
+		public virtual int flameDust => -1;
 		public bool IsOn(Tile tile) => tile.TileFrameX < width * 18;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -465,8 +474,23 @@ namespace Origins.Tiles {
 				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (!glowTexture.Exists) return;
+
+			int width = 16;
+			int offsetY = 0;
+			int height = 16;
+			short frameX = drawData.tileFrameX;
+			short frameY = drawData.tileFrameY;
+
+			TileLoader.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref frameX, ref frameY);
+
+			Rectangle glowRect = new(frameX, frameY, width, height + offsetY);
+			drawData.glowTexture = glowTexture;
+			drawData.glowColor = GlowmaskColor;
+			drawData.glowSourceRect = glowRect;
+		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			base.PostDraw(i, j, spriteBatch);
 			if (!flameTexture.Exists) return;
 			Tile tile = Main.tile[i, j];
 
@@ -501,6 +525,27 @@ namespace Origins.Tiles {
 				float shakeY = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
 
 				spriteBatch.Draw(flame, new Vector2(i * 16 - (int)Main.screenPosition.X - (width - 16f) / 2f + shakeX, j * 16 - (int)Main.screenPosition.Y + offsetY + shakeY) + zero, new Rectangle(frameX, frameY, width, height), new Color(100, 100, 100, 0), 0f, default, 1f, effects, 0f);
+			}
+		}
+		public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
+			if (Main.rand.NextBool(40) && tileFrameY < 54) {
+				// The following math makes dust only spawn at the tile coordinates of the flames:
+				// ---
+				// O-O
+				// ---
+
+				int tileColumn = tileFrameX / 18 % 3;
+				if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
+					if (flameDust != -1) {
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, flameDust, 0f, 0f, 100);
+						if (Main.rand.NextBool(3)) {
+							dust.noGravity = true;
+						}
+
+						dust.velocity *= 0.3f;
+						dust.velocity.Y -= 1.5f;
+					}
+				}
 			}
 		}
 	}
@@ -643,6 +688,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class Platform_Tile : FurnitureBase {
 		public sealed override int BaseTileID => TileID.Platforms;
+		public override Color MapColor => new(190, 141, 110);
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileLighted[Type] = true;
@@ -669,7 +715,11 @@ namespace Origins.Tiles {
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
-			AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
+			if (!Main.dedServ) {
+				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
+				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
+				else AddMapEntry(MapColor, text, MapName);
+			}
 
 			glowTexture = Texture + "_Glow";
 		}
@@ -686,7 +736,8 @@ namespace Origins.Tiles {
 			[CageKinds.BigCage] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
 			[CageKinds.Jar] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
 		};
-		public abstract int[] FrameIndexArray { get; }
+		public virtual int[] FrameIndexArray => [Main.cageFrames];
+		public virtual int[,] Frame2dArray { get; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		private int offsetY;
@@ -729,10 +780,12 @@ namespace Origins.Tiles {
 			Main.critterCage = true;
 			Tile tile = Framing.GetTileSafely(i, j);
 			int frameIndex;
+			ExtraAnimate();
 			if (CageKind != CageKinds.BigCage) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			frameYOffset = offsetY = FrameIndexArray[frameIndex] * AnimationFrameHeight;
 		}
+		public virtual void ExtraAnimate() { }
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			if (!glowTexture.Exists) return;
 			Rectangle glowRect = new(drawData.tileFrameX, drawData.tileFrameY + offsetY, drawData.tileWidth, drawData.tileHeight);

@@ -28,6 +28,9 @@ namespace Origins.Tiles.Brine {
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
 	}
 	public class Brine_Dungeon_Chest_Item : ModItem {
+		public override void SetStaticDefaults() {
+			ModCompatSets.AnyChests[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;

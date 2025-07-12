@@ -48,6 +48,7 @@ namespace Origins.Tiles.Riven {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			ModCompatSets.AnyChests[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.width = 32;

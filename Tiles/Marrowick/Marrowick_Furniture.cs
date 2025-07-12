@@ -1,14 +1,28 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics;
-using Origins.Tiles.Riven;
-using Origins.World.BiomeData;
-using Terraria;
+﻿using Origins.Tiles.Riven;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Marrowick {
+	public class Marrowick_Furniture : FurnitureSet<Marrowick_Item> {
+		public override Color MapColor => new(245, 225, 143);
+		public override int DustType => DustID.TintablePaint;
+		public override Vector3 LightColor {
+			get {
+				Vector3 color = default;
+				TorchID.TorchColor(TorchID.Torch, out color.X, out color.Y, out color.Z);
+				color.X = 0f;
+				return color;
+			}
+		}
+		public override bool LanternSway => false;
+		public override bool ChandelierSway => false;
+		public override void SetupTile(ModTile tile) {
+			if (tile is FurnitureSet_Bookcase) OriginsSets.Tiles.MultitileCollisionOffset[tile.Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
+			if (frameX / 18 != 1) height = -1600;
+		}
+	}/* left as backup just in case we still need it
 	public class Marrowick_Platform : Platform_Tile {
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
@@ -381,5 +395,5 @@ namespace Origins.Tiles.Marrowick {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
-	}
+	}*/
 }

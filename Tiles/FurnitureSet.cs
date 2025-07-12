@@ -1,18 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
-using Origins.Tiles.Riven;
-using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria;
 using Terraria.ModLoader;
-using ThoriumMod.Items.ThrownItems;
-using ThoriumMod.Tiles;
+using Terraria.ObjectData;
 
 namespace Origins.Tiles {
 	public abstract class FurnitureSet<TItem> : FurnitureSet where TItem : ModItem {
@@ -23,6 +18,14 @@ namespace Origins.Tiles {
 		public virtual string TextureBase => (GetType().Namespace + ".").Replace('.', '/');
 		public abstract Color MapColor { get; }
 		public abstract int DustType { get; }
+		public virtual int FlameDust => -1;
+		public virtual bool FurnitureFancyGlows => true;
+		public virtual bool LightFancyGlows => true;
+		public virtual bool CandleFancyGlow => LightFancyGlows;
+		public virtual bool CandelabraFancyGlow => LightFancyGlows;
+		public virtual bool LampFancyGlow => LightFancyGlows;
+		public virtual bool ChandelierFancyGlow => LightFancyGlows;
+		public virtual bool LanternFancyGlow => LightFancyGlows;
 		public virtual Vector3 LightColor {
 			get {
 				Vector3 color = default;
@@ -30,6 +33,8 @@ namespace Origins.Tiles {
 				return color;
 			}
 		}
+		public virtual bool LanternSway => true;
+		public virtual bool ChandelierSway => true;
 		public virtual int CraftingStation => TileID.WorkBenches;
 		public abstract int IngredientItem { get; }
 		public void Load(Mod mod) {
@@ -49,6 +54,7 @@ namespace Origins.Tiles {
 			AddTile(new FurnitureSet_Sink(this));
 			AddTile(new FurnitureSet_Candle(this));
 			AddTile(new FurnitureSet_Candelabra(this));
+			AddTile(new FurnitureSet_Chandelier(this));
 			AddTile(new FurnitureSet_Lamp(this));
 			AddTile(new FurnitureSet_Lantern(this));
 			AddTile(new FurnitureSet_Bookcase(this));
@@ -61,6 +67,16 @@ namespace Origins.Tiles {
 		}
 		protected virtual bool ExcludeTile(ModTile tile) => false;
 		public virtual void SetupTile(ModTile tile) { }
+		/// <inheritdoc	cref="ModTile.AdjustMultiTileVineParameters"/>
+		public virtual void ChandelierSwayParams(LightFurnitureBase tile, int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) { }
+		/// <inheritdoc	cref="ModTile.GetTileFlameData"/>
+		public virtual void ChandelierFlameData(LightFurnitureBase tile, int i, int j, ref TileDrawing.TileFlameData tileFlameData) { }
+
+		/// <inheritdoc	cref="ModTile.AdjustMultiTileVineParameters"/>
+		public virtual void LanternSwayParams(LightFurnitureBase tile, int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) { }
+		/// <inheritdoc	cref="ModTile.GetTileFlameData"/>
+		public virtual void LanternFlameData(LightFurnitureBase tile, int i, int j, ref TileDrawing.TileFlameData tileFlameData) { }
+
 		public void Unload() { }
 		readonly Dictionary<Type, ModTile> tilesByType = [];
 		public static TTile Get<TSet, TTile>() where TSet : FurnitureSet where TTile : ModTile {
@@ -73,7 +89,6 @@ namespace Origins.Tiles {
 	public class FurnitureSet_Platform(FurnitureSet furnitureSet) : Platform_Tile {
 		public override string Name => furnitureSet.Name + "_Platform";
 		public override string Texture => furnitureSet.TextureBase + Name;
-		public override Color MapColor => furnitureSet.MapColor;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 2)
@@ -131,7 +146,7 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Chair(FurnitureSet furnitureSet) : ChairBase {
+	public class FurnitureSet_Chair(FurnitureSet furnitureSet) : ChairBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Chair";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override Color MapColor => furnitureSet.MapColor;
@@ -148,9 +163,17 @@ namespace Origins.Tiles {
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
+		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Toilet(FurnitureSet furnitureSet) : ChairBase {
+	public class FurnitureSet_Toilet(FurnitureSet furnitureSet) : ChairBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Toilet";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Toilets;
@@ -171,9 +194,17 @@ namespace Origins.Tiles {
 		public override void HitWire(int i, int j) {
 			ToiletHitWire(i, j);
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
+		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Sofa(FurnitureSet furnitureSet) : ChairBase {
+	public class FurnitureSet_Sofa(FurnitureSet furnitureSet) : ChairBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Sofa";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Benches;
@@ -192,9 +223,17 @@ namespace Origins.Tiles {
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
+		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Bathtub(FurnitureSet furnitureSet) : FurnitureBase {
+	public class FurnitureSet_Bathtub(FurnitureSet furnitureSet) : FurnitureBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Bathtub";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Bathtubs;
@@ -212,9 +251,17 @@ namespace Origins.Tiles {
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
+		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Sink(FurnitureSet furnitureSet) : FurnitureBase {
+	public class FurnitureSet_Sink(FurnitureSet furnitureSet) : FurnitureBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Sink";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Sinks;
@@ -232,6 +279,15 @@ namespace Origins.Tiles {
 			base.SetStaticDefaults();
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+			ModCompatSets.AnySinks[Item.Type] = true;
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
 		}
 	}
 	[Autoload(false)]
@@ -240,6 +296,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => furnitureSet.MapColor;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -262,6 +319,11 @@ namespace Origins.Tiles {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.CandleFancyGlow && glowTexture.Exists && IsOn(tile)) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
+		}
 	}
 	[Autoload(false)]
 	public class FurnitureSet_Candelabra(FurnitureSet furnitureSet) : LightFurnitureBase, IGlowingModTile {
@@ -269,6 +331,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Candelabras;
 		public override Color MapColor => furnitureSet.MapColor;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -292,8 +355,8 @@ namespace Origins.Tiles {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (IsOn(tile)) {
-				color = furnitureSet.LightColor;
+			if (furnitureSet.CandelabraFancyGlow && glowTexture.Exists && IsOn(tile)) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
 			}
 		}
 	}
@@ -303,6 +366,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor => furnitureSet.MapColor;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -326,8 +390,8 @@ namespace Origins.Tiles {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (IsOn(tile)) {
-				color = furnitureSet.LightColor;
+			if (furnitureSet.LampFancyGlow && glowTexture.Exists && IsOn(tile)) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
 			}
 		}
 	}
@@ -337,6 +401,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Chandeliers;
 		public override Color MapColor => furnitureSet.MapColor;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -349,8 +414,38 @@ namespace Origins.Tiles {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			TileID.Sets.MultiTileSway[Type] = furnitureSet.ChandelierSway;
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			//offsetY -= 2;
+			/*Tile tile = Main.tile[i, j];
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int x = i - tile.TileFrameX / 18 % data.Width;
+            int topLeftY = j - tile.TileFrameY / 18 % data.Height;
+            if (WorldGen.IsBelowANonHammeredPlatform(x, topLeftY)) {
+                offsetY -= 8;
+            }*/
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!furnitureSet.ChandelierSway) return true;
+			Tile tile = Main.tile[i, j];
+			if (TileObjectData.IsTopLeft(tile)) {
+				// Makes this tile sway in the wind and with player interaction when used with TileID.Sets.MultiTileSway
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
+			}
+			// We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
+			return false;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!furnitureSet.ChandelierSway) base.PostDraw(i, j, spriteBatch);
+		}
+		public override void AdjustMultiTileVineParameters(int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
+			if (furnitureSet.ChandelierSway) furnitureSet.ChandelierSwayParams(this, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
+		}
+		public override void GetTileFlameData(int i, int j, ref TileDrawing.TileFlameData tileFlameData) {
+			furnitureSet.ChandelierFlameData(this, i, j, ref tileFlameData);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -361,8 +456,8 @@ namespace Origins.Tiles {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (IsOn(tile)) {
-				color = furnitureSet.LightColor;
+			if (furnitureSet.ChandelierFancyGlow && glowTexture.Exists && IsOn(tile)) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
 			}
 		}
 	}
@@ -372,6 +467,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.HangingLanterns;
 		public override Color MapColor => furnitureSet.MapColor;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -383,8 +479,38 @@ namespace Origins.Tiles {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			TileID.Sets.MultiTileSway[Type] = furnitureSet.LanternSway;
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			if (furnitureSet.LanternSway) return;
+			Tile tile = Main.tile[i, j];
+			TileObjectData data = TileObjectData.GetTileData(tile);
+			int x = i - tile.TileFrameX / 18 % data.Width;
+			int topLeftY = j - tile.TileFrameY / 18 % data.Height;
+			if (WorldGen.IsBelowANonHammeredPlatform(x, topLeftY)) {
+				offsetY -= 8;
+			}
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!furnitureSet.LanternSway) return true;
+			Tile tile = Main.tile[i, j];
+			if (TileObjectData.IsTopLeft(tile)) {
+				// Makes this tile sway in the wind and with player interaction when used with TileID.Sets.MultiTileSway
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
+			}
+			// We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
+			return false;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!furnitureSet.LanternSway) base.PostDraw(i, j, spriteBatch);
+		}
+		public override void AdjustMultiTileVineParameters(int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
+			if (furnitureSet.LanternSway) furnitureSet.LanternSwayParams(this, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
+		}
+		public override void GetTileFlameData(int i, int j, ref TileDrawing.TileFlameData tileFlameData) {
+			furnitureSet.LanternFlameData(this, i, j, ref tileFlameData);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (IsOn(Main.tile[i, j])) {
@@ -395,13 +521,13 @@ namespace Origins.Tiles {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (IsOn(tile)) {
-				color = furnitureSet.LightColor;
+			if (furnitureSet.LanternFancyGlow && glowTexture.Exists && IsOn(tile)) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
 			}
 		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Bookcase(FurnitureSet furnitureSet) : FurnitureBase {
+	public class FurnitureSet_Bookcase(FurnitureSet furnitureSet) : FurnitureBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Bookcase";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Bookcases;
@@ -419,10 +545,19 @@ namespace Origins.Tiles {
 			base.SetStaticDefaults();
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+			ModCompatSets.AnyBookcases[Item.Type] = true;
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
 		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Piano(FurnitureSet furnitureSet) : FurnitureBase {
+	public class FurnitureSet_Piano(FurnitureSet furnitureSet) : FurnitureBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Piano";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Pianos;
@@ -440,6 +575,14 @@ namespace Origins.Tiles {
 			base.SetStaticDefaults();
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
 		}
 	}
 	[Autoload(false)]
@@ -460,12 +603,15 @@ namespace Origins.Tiles {
 			base.SetStaticDefaults();
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+			ModCompatSets.AnyTables[Item.Type] = true;
 		}
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = furnitureSet.LightColor;
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
 		}
 	}
 	[Autoload(false)]
@@ -485,16 +631,19 @@ namespace Origins.Tiles {
 			base.SetStaticDefaults();
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+			ModCompatSets.AnyWorkBenches[Item.Type] = true;
 		}
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = furnitureSet.LightColor;
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
 		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Dresser(FurnitureSet furnitureSet) : DresserBase {
+	public class FurnitureSet_Dresser(FurnitureSet furnitureSet) : DresserBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Dresser";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override Color MapColor => furnitureSet.MapColor;
@@ -511,9 +660,17 @@ namespace Origins.Tiles {
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
 		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
+		}
 	}
 	[Autoload(false)]
-	public class FurnitureSet_Bed(FurnitureSet furnitureSet) : BedBase {
+	public class FurnitureSet_Bed(FurnitureSet furnitureSet) : BedBase, IGlowingModTile {
 		public override string Name => furnitureSet.Name + "_Bed";
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override Color MapColor => furnitureSet.MapColor;
@@ -530,6 +687,14 @@ namespace Origins.Tiles {
 			base.SetStaticDefaults();
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
+		}
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => GlowmaskColor;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
+				color = Vector3.Max(color, furnitureSet.LightColor);
+			}
 		}
 	}
 	[Autoload(false)]
@@ -554,6 +719,7 @@ namespace Origins.Tiles {
 		protected override bool CloneNewInstances => true;
 		public override string Name => chest.Name + "_Item";
 		public override string Texture => chest.Texture + "_Item";
+		public override void SetStaticDefaults() => ModCompatSets.AnyChests[Type] = true;
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;

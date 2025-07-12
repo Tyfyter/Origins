@@ -54,6 +54,7 @@ using Origins.Items.Armor.Other;
 using Origins.NPCs.MiscB;
 using Terraria.GameContent;
 using Microsoft.Build.Tasks;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -744,21 +745,21 @@ namespace Origins {
 		}
 		[JITWhenModsEnabled("MagicStorage")]
 		static void AddMagicStorageGroups() {
-			static void AddItemsToGroup(RecipeGroup group, params int[] items) {
+			static void AddItemsToGroup(RecipeGroup group, params bool[] items) {
 				for (int i = 0; i < items.Length; i++) {
-					group.ValidItems.Add(items[i]);
+					if (items[i]) group.ValidItems.Add(i);
 				}
 			}
 			static RecipeGroup GetGroup(string key) => RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs[key]];
 
-			AddItemsToGroup(GetGroup("MagicStorage:AnySnowBiomeBlock"), [ModContent.ItemType<Defiled_Ice_Item>(), ModContent.ItemType<Primordial_Permafrost_Item>()]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyDemonAltar"), [ModContent.ItemType<Fake_Defiled_Altar_Item>(), ModContent.ItemType<Fake_Riven_Altar_Item>()/*, ModContent.ItemType<Fake_Ashen_Altar_Item>()*/]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyChest"), [ModContent.ItemType<Endowood_Chest_Item>(), ModContent.ItemType<Marrowick_Chest_Item>(), ModContent.ItemType<Brine_Dungeon_Chest_Item>(), ModContent.ItemType<Defiled_Dungeon_Chest_Item>(), ModContent.ItemType<Riven_Dungeon_Chest_Item>()]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyWorkBench"), [ModContent.GetInstance<Endowood_Work_Bench>().Item.Type, ModContent.GetInstance<Marrowick_Work_Bench>().Item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnySink"), [ModContent.GetInstance<Endowood_Sink>().Item.Type, ModContent.GetInstance<Marrowick_Sink>().Item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyTable"), [ModContent.GetInstance<Endowood_Table>().Item.Type, ModContent.GetInstance<Marrowick_Table>().Item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), [ModContent.GetInstance<Endowood_Bookcase>().Item.Type, ModContent.GetInstance<Marrowick_Bookcase>().Item.Type]);
-			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), [ModContent.ItemType<Defiled_Campfire_Item>(), ModContent.ItemType<Riven_Campfire_Item>()]);
+			AddItemsToGroup(GetGroup("MagicStorage:AnySnowBiomeBlock"), ModCompatSets.AnySnowBiomeTiles);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyDemonAltar"), ModCompatSets.AnyFakeDemonAltars);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyChest"), ModCompatSets.AnyChests);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyWorkBench"), ModCompatSets.AnyWorkBenches);
+			AddItemsToGroup(GetGroup("MagicStorage:AnySink"), ModCompatSets.AnySinks);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyTable"), ModCompatSets.AnyTables);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), ModCompatSets.AnyBookcases);
+			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), ModCompatSets.AnyCampfires);
 		}
 		static void AddFargosGroups() {
 			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
@@ -788,5 +789,16 @@ namespace Origins {
 	}
 	public interface IBardDamageClassOverride {
 		DamageClass DamageType { get; }
+	}
+	[ReinitializeDuringResizeArrays]
+	public class ModCompatSets {
+		public static bool[] AnySnowBiomeTiles { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnyFakeDemonAltars { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnyChests { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnyWorkBenches { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnySinks { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnyTables { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnyBookcases { get; } = ItemID.Sets.Factory.CreateBoolSet();
+		public static bool[] AnyCampfires { get; } = ItemID.Sets.Factory.CreateBoolSet();
 	}
 }
