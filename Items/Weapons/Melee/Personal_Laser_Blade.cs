@@ -65,6 +65,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void UseItemFrame(Player player) {
 			player.handon = Item.handOnSlot;
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Personal_Laser_Blade_P : ModProjectile, IElementalProjectile {
 		public const int trail_length = 20;
@@ -174,6 +175,24 @@ namespace Origins.Items.Weapons.Melee {
 					rotMult = 0.05f;
 				}
 			}
+			Color dustColor = Color.Magenta;
+			switch (GetBladeColor()) {
+				case BladeColor.DEFAULT:
+				dustColor = new(0, 225, 255, 64);
+				break;
+				case BladeColor.STUN:
+				dustColor = new(255, 255, 0, 64);
+				break;
+				case BladeColor.PULSE:
+				dustColor = new(80, 255, 219, 64);
+				break;
+				case BladeColor.CORAL:
+				dustColor = new(255, 127, 80, 64);
+				break;
+				case BladeColor.CHRYSALIS:
+				dustColor = new(12, 168, 10, 32);
+				break;
+			}
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
 				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < 1 + Projectile.ai[0]) {
@@ -181,7 +200,7 @@ namespace Origins.Items.Weapons.Melee {
 						Projectile.position + vel * j,
 						Projectile.width, Projectile.height,
 						DustID.PortalBoltTrail,
-						newColor: new(0, 225, 255, 64)
+						newColor: dustColor
 					);
 					dust.velocity = dust.velocity * 0.25f + Projectile.velocity.RotatedBy(Projectile.rotation * rotMult) * velocityMult;
 					dust.position += dust.velocity * 2;
@@ -210,28 +229,57 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			LaserBladeDrawer trailDrawer = default;
-			trailDrawer.TrailColor = new(0, 35, 35, 0);
-			trailDrawer.BladeColor = new(0, 255, 255, 128);
-			trailDrawer.BladeSecondaryColor = new(0, 180, 255, 64);
-			/* stun baton
-			trailDrawer.TrailColor = new(35, 35, 0, 0);
-			trailDrawer.BladeColor = new(255, 255, 0, 128);
-			trailDrawer.BladeSecondaryColor = new(255, 255, 130, 64);
-			//*/
-			/* pulse blade
-			trailDrawer.TrailColor = new(15, 35, 30, 0);
-			trailDrawer.BladeColor = new(80, 255, 219, 128);
-			trailDrawer.BladeSecondaryColor = new(130, 255, 255, 64);
-			//*/
+			switch (GetBladeColor()) {
+				case BladeColor.DEFAULT:
+				trailDrawer.TrailColor = new(0, 35, 35, 0);
+				trailDrawer.BladeColor = new(0, 255, 255, 128);
+				trailDrawer.BladeSecondaryColor = new(0, 180, 255, 64);
+				break;
+				case BladeColor.STUN:
+				trailDrawer.TrailColor = new(35, 35, 0, 0);
+				trailDrawer.BladeColor = new(255, 255, 0, 128);
+				trailDrawer.BladeSecondaryColor = new(255, 255, 130, 64);
+				break;
+				case BladeColor.PULSE:
+				trailDrawer.TrailColor = new(15, 35, 30, 0);
+				trailDrawer.BladeColor = new(80, 255, 219, 128);
+				trailDrawer.BladeSecondaryColor = new(130, 255, 255, 64);
+				break;
+				case BladeColor.CORAL:
+				trailDrawer.TrailColor = new(35, 17, 11, 0);
+				trailDrawer.BladeColor = new(240, 128, 128, 128);
+				trailDrawer.BladeSecondaryColor = new(255, 127, 80, 64);
+				break;
+				case BladeColor.CHRYSALIS:
+				trailDrawer.TrailColor = new(35, 17, 11, 0);
+				trailDrawer.BladeColor = new(88, 196, 84, 128);
+				trailDrawer.BladeSecondaryColor = new(11, 84, 91, 64);
+				break;
+			}
 			trailDrawer.Length = Projectile.velocity.Length() * Projectile.width * 0.9f * HitboxSteps;
 			trailDrawer.Draw(Projectile);
 			return false;
+		}
+		public BladeColor GetBladeColor() {
+			switch ((Main.player.GetIfInRange(Projectile.owner)?.name ?? "").ToLower()) {
+				default:
+				return BladeColor.DEFAULT;
+				case "jennifer" or "jennifer_alt" or "faust":
+				return BladeColor.CHRYSALIS;
+			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+		}
+		public enum BladeColor {
+			DEFAULT,
+			STUN,
+			PULSE,
+			CORAL,
+			CHRYSALIS
 		}
 		public struct LaserBladeDrawer {
 

@@ -19,8 +19,9 @@ namespace Origins.Layers {
 			return !drawInfo.drawPlayer.dead && drawInfo.drawPlayer.OriginPlayer().wishingGlassVisible;
 		}
 		public override Position GetDefaultPosition() => new Multiple {
-			{ PlayerDrawLayers.BeforeFirstVanillaLayer, drawInfo => !IsInFront(drawInfo.drawPlayer.OriginPlayer().wishingGlassAnimation) },
-			{ PlayerDrawLayers.AfterLastVanillaLayer, drawInfo => IsInFront(drawInfo.drawPlayer.OriginPlayer().wishingGlassAnimation) },
+			{ new(null, PlayerDrawLayers.SolarShield), drawInfo => GetLayerPosition(drawInfo.drawPlayer.OriginPlayer().wishingGlassAnimation) == 0 },
+			{ PlayerDrawLayers.BeforeFirstVanillaLayer, drawInfo => GetLayerPosition(drawInfo.drawPlayer.OriginPlayer().wishingGlassAnimation) == 1 },
+			{ PlayerDrawLayers.AfterLastVanillaLayer, drawInfo => GetLayerPosition(drawInfo.drawPlayer.OriginPlayer().wishingGlassAnimation) == 2 },
 		};
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
@@ -93,7 +94,10 @@ namespace Origins.Layers {
 			float spinAngle = progress * MathHelper.Pi * 4;
 			return new(-MathF.Cos(spinAngle), MathF.Acos(progress * 2 - 1) / MathHelper.Pi - 0.5f, MathF.Sin(spinAngle));
 		}
-		public static bool IsInFront(int wishingGlassAnimation) => GetPosition(wishingGlassAnimation).Z <= 0;
+		public static int GetLayerPosition(int wishingGlassAnimation) {
+			if (wishingGlassAnimation == 0) return 0;
+			return GetPosition(wishingGlassAnimation).Z <= 0 ? 1 : 2;
+		}
 		public static void StartAnimation(ref int wishingGlassAnimation) {
 			wishingGlassAnimation = StartAnimationDuration + CooldownEndAnimationDuration + 1;
 		}
