@@ -1212,14 +1212,14 @@ TILES:
 (X) Dusk Dungeon Chest°
 (X) Edenwood Furniture°
 (^) Encrusted Brick
-(☻ Endowood Furniture* !!! (changed how they're created, chandelier and lantern sway, check for bugs)
+(^) Endowood Furniture*
 (X) Large Container
 (^) Laser Tag Console*
-(☻) Limestone Furniture !!! (check for bugs)
+(^) Limestone Furniture
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Lost Brick
-(☻) Marrowick Furniture* (changed how they're created, check for bugs)
+(^) Marrowick Furniture*
 (X) Medium Container
 (X) Mushroom Dungeon Chest°
 (X) Nova Brick°
