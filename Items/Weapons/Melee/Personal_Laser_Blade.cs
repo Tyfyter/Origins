@@ -42,6 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 1;
 			Item.autoReuse = false;
 			Item.useTurn = false;
+			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item45;
 			Item.glowMask = glowmask;
@@ -187,7 +188,7 @@ namespace Origins.Items.Weapons.Melee {
 				dustColor = new(80, 255, 219, 64);
 				break;
 				case BladeColor.CORAL:
-				dustColor = new(255, 127, 80, 64);
+				dustColor = new(255, 32, 20, 64);
 				break;
 				case BladeColor.CHRYSALIS:
 				dustColor = new(12, 168, 10, 32);
@@ -264,6 +265,8 @@ namespace Origins.Items.Weapons.Melee {
 			switch ((Main.player.GetIfInRange(Projectile.owner)?.name ?? "").ToLower()) {
 				default:
 				return BladeColor.DEFAULT;
+				case "chee":
+				return BladeColor.PULSE;
 				case "reivax":
 				return BladeColor.CORAL;
 				case "jennifer" or "jennifer_alt" or "faust":
