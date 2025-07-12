@@ -50,6 +50,7 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
+(X) D2L2 "Warsaw"
 (#, ^2, 々) Grand Corruptor
 (#, ^2, 々) Ichor Storm
 (X) Zombie Paladin
@@ -1028,8 +1029,8 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
-(%2) Ticking Bomb
-(%2) Ticking Dynamite
+(X) Ticking Bomb
+(X) Ticking Dynamite
 (^) Voltefuse
 
 (^) Acrid Handcannon*
