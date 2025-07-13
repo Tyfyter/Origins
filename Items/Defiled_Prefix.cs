@@ -1,14 +1,8 @@
 ﻿using Origins.Dusts;
-using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
-using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
