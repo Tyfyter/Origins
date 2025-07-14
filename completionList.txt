@@ -1647,7 +1647,7 @@ CROSS-MOD CONTENT:
 
 (X) Contagion Assimilation
 
-(#3) Aether Orb (instantly spawns the SC on shimmer contact)
+(☻) Aether Orb !!!
 (々) Ashen Chest
 (々) Ashen Renewal
 (々) Ashen Renewal Supreme
