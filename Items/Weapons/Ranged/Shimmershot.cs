@@ -39,9 +39,6 @@ namespace Origins.Items.Weapons.Ranged {
 		public static bool isShooting = false;
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f));
-			SoundEngine.PlaySound(SoundID.Item142);
-			SoundEngine.PlaySound(Origins.Sounds.HeavyCannon);
 			if (source.Context?.Contains("gunProj") != true) {
 				Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, ai1: 1, ai2: player.altFunctionUse == 2 ? -1 : 0);
 				return false;
@@ -72,7 +69,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (Projectile.ai[2] == 1) {
-				SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.position);
+				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), Projectile.position);
+				SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
+				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon, Projectile.position);
 				Projectile.ai[2] = 0;
 			}
 			if (!player.noItems && !player.CCed) {
