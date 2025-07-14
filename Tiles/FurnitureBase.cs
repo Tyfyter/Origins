@@ -724,8 +724,13 @@ namespace Origins.Tiles {
 			glowTexture = Texture + "_Glow";
 		}
 	}
-	public abstract class CageBase : ModTile {
+	public abstract class CageBase<TCritter>(int cage = ItemID.Terrarium) : CageBase(cage) where TCritter : ModItem {
+		public override int IngredientItem => ModContent.ItemType<TCritter>();
+	}
+	public abstract class CageBase(int cage = ItemID.Terrarium) : ModTile {
+
 		protected internal TileItem item;
+		public abstract int IngredientItem {  get; }
 		public virtual bool LavaDeath => true;
 		public virtual Color MapColor => new(122, 217, 232);
 		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>
@@ -736,8 +741,8 @@ namespace Origins.Tiles {
 			[CageKinds.BigCage] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
 			[CageKinds.Jar] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
 		};
-		public virtual int[] FrameIndexArray => [Main.cageFrames];
-		public virtual int[,] Frame2dArray { get; }
+		public virtual int[] FrameIndexArray => new int[Main.cageFrames];
+		public int[] FrameCounter = new int[Main.cageFrames];
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		private int offsetY;
@@ -746,6 +751,11 @@ namespace Origins.Tiles {
 				item.width = 32;
 				item.height = 32;
 				item.value = 0;
+			}).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(IngredientItem)
+				.AddIngredient(cage)
+				.Register();
 			}));
 			OnLoad();
 		}

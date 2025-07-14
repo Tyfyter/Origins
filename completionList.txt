@@ -1189,7 +1189,7 @@ TILES:
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (^) Brine Water Fountain
-(@, ^3) Bug Cage°
+(@, ^3) Bug Cage° (using temp sprites)
 (X) Cancer Block°
 (X) Cancer Furniture°
 (^) Chambersite Bunny Cage°
@@ -1201,7 +1201,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(#3, ^2) Cicada 3301 Cage° !!!
+(^3) Cicada 3301 Cage° !!! (using temp sprites)
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
