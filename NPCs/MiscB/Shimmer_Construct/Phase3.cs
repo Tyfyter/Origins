@@ -597,7 +597,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (SC_Phase_Three_Overlay.drawDatas.Count > 100) SC_Phase_Three_Overlay.drawDatas.RemoveRange(0, SC_Phase_Three_Overlay.drawDatas.Count - 99);
 			Origins.shaderOroboros.Capture(spriteBatch);
-			const float brightness = 1f;
+			const float brightness = 0.8f;
 			const float alpha = 1f;
 			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(brightness, brightness, brightness, alpha));
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
@@ -685,8 +685,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(opacity));
 			Origins.shaderOroboros.Stack(invertAnimateShader);
 			Origins.shaderOroboros.Stack(shader);
-			const float brightness = 0.3f;
-			const float alpha = 0.3f;
+			const float brightness = 0.2f;
+			const float alpha = 0.2f;
 			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(brightness, brightness, brightness, alpha));
 			Main.graphics.GraphicsDevice.Textures[1] = SC_Phase_Three_Underlay.instance.renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);
