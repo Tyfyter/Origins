@@ -193,7 +193,10 @@ namespace Origins {
 						}
 						Vector2 position = Player.itemLocation;
 						float rotation = Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi;
-						if (compositeFrontArmWasEnabled) rotation = Player.compositeFrontArm.rotation + MathHelper.PiOver2;
+						if (compositeFrontArmWasEnabled) {
+							rotation = Player.compositeFrontArm.rotation + MathHelper.PiOver2;
+							position = Player.GetCompositeArmPosition(false);
+						}
 						Vector2 velocity = Vec2FromPolar(rotation, speed);
 
 						if (gunGloveItem.UseSound is not null) SoundEngine.PlaySound(gunGloveItem.UseSound, position);
