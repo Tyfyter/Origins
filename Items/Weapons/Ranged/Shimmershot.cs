@@ -87,12 +87,12 @@ namespace Origins.Items.Weapons.Ranged {
 				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon, Projectile.position);
 				Projectile.ai[2] = 0;
 			}
-			if (Main.myPlayer == Projectile.owner) { // charging, 
+			if (Main.myPlayer == Projectile.owner) { // charging
 				if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 				}
-				if (player.channel && !Main.mouseLeft) {
+				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
 						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
 					} else {

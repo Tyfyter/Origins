@@ -1746,7 +1746,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(#2, ^4) Shimmer Construct !!! (Phase I>II better transition)
+(☻) Shimmer Construct !!! (Phase I>II better transition)
 (X) Tearror
 (X) Trenchmaker
 
