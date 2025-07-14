@@ -436,7 +436,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(^) Control Locus*
+(#2, ^2) Control Locus* !!! (needs rework implemented)
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -582,7 +582,7 @@ ACCESSORIES:
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
-(^) Weakpoint Analyzer*
+(#2, ^2) Weakpoint Analyzer* !!! (needs rework implemented)
 (^) Wishing Glass
 
 (^) Agility Core°
