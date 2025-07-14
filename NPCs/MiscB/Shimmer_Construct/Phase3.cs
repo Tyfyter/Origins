@@ -21,6 +21,7 @@ using Origins.Projectiles;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Audio;
+using Terraria.Graphics.Light;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -43,7 +44,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
 				SelectAIState(boss, aiStates);
 			}
-			if (npc.HasValidTarget) npc.DiscourageDespawn(60 * 10);
+			if (npc.HasValidTarget) npc.DiscourageDespawn(60 * 5);
+			else npc.EncourageDespawn(60);
 		}
 		public override void TrackState(int[] previousStates) { }
 		public static List<AIState> aiStates = [];
@@ -435,10 +437,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			};
 			On_Player.TryLandingOnDetonator += (orig, self) => {
-				orig(self);
 				if (self.OriginPlayer().weakShimmer) {
 					Collision.up = false;
 					Collision.down = false;
+				} else {
+					orig(self);
 				}
 			};
 			try {
@@ -480,8 +483,27 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return !isUpdatingShimmeryThing && orig(Position, Width, Height);
 			};
 			On_Collision.LavaCollision += (orig, Position, Width, Height) => !isUpdatingShimmeryThing && orig(Position, Width, Height);
+			try {
+				IL_PlayerDrawLayers.DrawPlayer_27_HeldItem += DrawPlayer_27_HeldItem;
+			} catch (Exception ex) {
+				if (Origins.LogLoadingILError(nameof(DrawPlayer_27_HeldItem), ex)) throw;
+			}
+			On_PlayerDrawLayers.DrawHeldProj += (On_PlayerDrawLayers.orig_DrawHeldProj orig, PlayerDrawSet drawinfo, Projectile proj) => {
+				isDrawingShimmeryThing = drawinfo.drawPlayer?.OriginPlayer()?.weakShimmer ?? false;
+				orig(drawinfo, proj);
+				isDrawingShimmeryThing = false;
+			};
+			On_LegacyLighting.GetColor += (On_LegacyLighting.orig_GetColor orig, LegacyLighting self, int x, int y) => {
+				if (isDrawingShimmeryThing) return Vector3.One;
+				return orig(self, x, y);
+			};
+			On_LightingEngine.GetColor += (On_LightingEngine.orig_GetColor orig, LightingEngine self, int x, int y) => {
+				if (isDrawingShimmeryThing) return Vector3.One;
+				return orig(self, x, y);
+			};
 		}
 
+		static bool isDrawingShimmeryThing = false;
 		internal static bool isUpdatingShimmeryThing = false;
 
 		static void IL_Projectile_HandleMovement(ILContext il) {
@@ -491,6 +513,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			);
 			c.EmitLdarg0();
 			c.EmitDelegate((bool tileCollide, Projectile projectile) => tileCollide && !(projectile.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer));
+		}
+		static void DrawPlayer_27_HeldItem(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.Before,
+				i => i.MatchStfld<PlayerDrawSet>(nameof(PlayerDrawSet.itemColor))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate((Color color, ref PlayerDrawSet drawInfo) => drawInfo.drawPlayer.OriginPlayer().weakShimmer ? drawInfo.colorArmorBody : color);
 		}
 
 		public override void SetStaticDefaults() {
@@ -619,7 +649,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Update(GameTime gameTime) {
 			SurfaceFrameCounter += Math.Round(gameTime.ElapsedGameTime.Divide(TimeSpan.FromSeconds(1 / 60d)));
 			const double frames_per_frame = 2;
-			if (SurfaceFrameCounter >= frames_per_frame) {
+			while (SurfaceFrameCounter >= frames_per_frame) {
 				// remove the first 5 frame since it makes me want to throw up 
 				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
 					pingpongCounter *= -1;
@@ -689,8 +719,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(opacity));
 			Origins.shaderOroboros.Stack(invertAnimateShader);
 			Origins.shaderOroboros.Stack(shader);
-			const float brightness = 0.2f;
-			const float alpha = 0.2f;
+			const float brightness = 0.1f;
+			const float alpha = 0.1f;
 			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(brightness, brightness, brightness, alpha));
 			Main.graphics.GraphicsDevice.Textures[1] = SC_Phase_Three_Underlay.instance.renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);

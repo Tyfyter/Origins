@@ -90,16 +90,15 @@ namespace Origins.Items.Weapons.Ranged {
 			if (Main.myPlayer == Projectile.owner) { // charging, 
 				if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
-					//SoundEngine.PlaySound(SoundID.Item, Projectile.position); // full charge sound
+					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 				}
 				if (player.channel && !Main.mouseLeft) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
 						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
 					} else {
 						int type = Type;
-						chargeSound = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, Projectile.Center, soundInstance => {
+						chargeSound = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, null, soundInstance => {
 							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
-							soundInstance.Position = Projectile.position;
 							return Projectile.active && Projectile.type == type;
 						});
 					}
@@ -108,7 +107,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (!player.noItems && !player.CCed) {
 				Vector2 position = player.MountedCenter + (new Vector2(8, -6 * player.direction).RotatedBy(Projectile.rotation - MathHelper.PiOver2)).Floor();
 				Projectile.position = position;
-				if (Main.myPlayer == Projectile.owner && (player.channel && (Main.mouseRight || (Projectile.ai[0] <= 1 && Projectile.ai[2] != -1 && Main.mouseLeft)))) {
+				if (Main.myPlayer == Projectile.owner && (Main.mouseRight || (Projectile.ai[0] <= 1 && Projectile.ai[2] != -1 && Main.mouseLeft))) {
 					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
 					if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
 
@@ -337,13 +336,13 @@ namespace Origins.Items.Weapons.Ranged {
 			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(frameStart, 0, 1 - frameStart, 1));
 			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameStart, MathF.Sin((float)Main.timeForVisualEffects * 0.1f) * 0.2f, 1 - frameStart, 1));
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => Color.Wheat * 0.7f, (_) => 24, -Main.screenPosition, true);
+			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => Color.White, (_) => 24, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameStart, (float)Main.timeForVisualEffects * -0.1f, 1 - frameStart, 1));
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => new Color(0.4f, 0.5f, 0f, 0.5f), (_) => 24, -Main.screenPosition, true);
+			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => Color.White, (_) => 24, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
