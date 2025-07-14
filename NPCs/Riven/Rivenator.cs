@@ -27,6 +27,7 @@ namespace Origins.NPCs.Riven {
 			};
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.width = 22;

@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Magic {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SpaceGun);
 			Item.damage = 1;

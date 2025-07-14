@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.EnergyRipple.WithPitchRange(1.7f, 2f);
 		}
+		public bool? Hardmode => true;
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)

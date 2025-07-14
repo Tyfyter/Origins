@@ -39,6 +39,7 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(81, 81, 81), CreateMapEntryName());
 			DustType = DustID.Lead;
 		}
+		public bool? Hardmode => true;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => CheckInteract(true);
 		public override bool RightClick(int i, int j) => CheckInteract(false);
 		public static bool CheckInteract(bool justCheck) {

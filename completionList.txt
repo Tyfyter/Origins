@@ -781,7 +781,7 @@ RANGED WEAPONS:
 (^) Ancient Kruncher*
 (^) Bloodletter*
 (^) Blotopus*
-(^) Bolt Gun
+(^) Bolt Gun*
 (^) Chipper Knife*
 (#2, ^2) Constellation !!!
 (^) Endowood Bow*
@@ -819,7 +819,7 @@ RANGED WEAPONS:
 (^) Cobalt Harpoon Gun*
 (^) Crawdaddy's Revenge
 (^) Dart Crossbow*
-(^) Dragon's Breath°
+(^) Dragon's Breath*
 (^) Fifth Spline*
 (^) Firespit*
 (^) Fumethrower
@@ -834,20 +834,20 @@ RANGED WEAPONS:
 (^) Orichalcum Harpoon Gun*
 (^) Palladium Harpoon Gun*
 (X) Ritualmaker
-(^) Spray 'N Pray°
-(^) Tiny Sniper
+(^) Spray 'N Pray
+(^) Tiny Sniper*
 (^) Titanium Harpoon Gun*
 
-(^) Astoxo
+(^) Astoxo*
 (^) Chambersite Minigun
 (X) Disciple Maker°
 (^) Dreikan
 (X) EAC Thunder°
 (X) Fungi Pipe
-(^) Laser Tag Gun
+(^) Laser Tag Gun*
 (X) Laser Tag Shotgun
 (X) Shroomshot
-(^) Tolruk
+(^) Tolruk*
 
 (X) L.W.M.U.G.°
 (X) Synergy
@@ -859,39 +859,39 @@ MAGIC WEAPONS:
 (^) Area Denial*
 (^) Avulsion*
 (^) Beginner's Tome
-(^) Cryostike
-(^) Eaterboros
+(^) Cryostike*
+(^) Eaterboros*
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion*
 (^) Low Signal*
-(^) Magnus
+(^) Magnus*
 (^) Manasynk*
 (^) Nerve Flan
 (^) Shimmerstar Staff
 (^) Splitsplash*
 (^) Tones of Agony
 
-(^) Bled Out Staff
+(^) Bled Out Staff*
 (^) Brine Haze
-(^) Chemical Laser
+(^) Chemical Laser*
 (^) Communion*
 (^) Dew Justice*
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
-(^) Seam Beam
+(^) Seam Beam*
 (^) Shimmer Rod
 (^) Shinedown
 (X) Siphon Staff
-(^) Splashid
+(^) Splashid*
 (^) Startillery
 (X) Symbiotic Staff
 (X) True Nerve Flan
 
-(^) Amber of Embers
+(^) Amber of Embers*
 (^) Breach
-(^) Hævateinn
+(^) Hævateinn*
 (^) Haunted Vase
 (^) Missing File*
 (♫) Phantom Fury
@@ -901,7 +901,7 @@ MAGIC WEAPONS:
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
-(^) The Calibrator
+(^) The Calibrator*
 (X) True Seam Beam
 
 (X) Last Nerve

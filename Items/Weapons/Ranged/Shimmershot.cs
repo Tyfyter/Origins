@@ -35,6 +35,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = null;
 		}
+		public bool? Hardmode => false;
 		public static bool isShooting = false;
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
