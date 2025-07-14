@@ -224,7 +224,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish*
 (X) Repairboy
 (^) Riven Penguin*
-(#2, ^2) Riven Protoform* !!! (new AI and sprites)
+(☻) Riven Protoform* !!! (new AI and sprites)
 (X) Rivenpotamus
 (X) Scanner Scout
 (^) Shattered Goldfish*
@@ -635,7 +635,7 @@ VANITY:
 (X) Ashen Dye
 (X) Defiled Dye
 (^) High Contrast Dye
-(#, ^2) Lotusy Dye !!!
+(☻) Lotusy Dye !!!
 (X) Nova Dye
 (ᗢ) Rasterized Dye
 (X) Riven Dye
@@ -797,7 +797,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(#2, ^2) Shimmershot !!!
+(☻) Shimmershot !!!
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*

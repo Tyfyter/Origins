@@ -94,6 +94,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = -1;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 16 * 400;
 			ID = Type;
 		}
 		public override void SetDefaults() {

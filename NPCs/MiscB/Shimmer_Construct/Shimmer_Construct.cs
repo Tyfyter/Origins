@@ -8,6 +8,7 @@ using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Music;
@@ -245,7 +246,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (!IsInPhase3) {
 				Rectangle goreArea = NPC.Hitbox.Scaled(0.85f).Recentered(NPC.Center);
-				SpawnGore((NPC.Size / 2) - new Vector2(Main.rand.NextFloat(goreArea.Width), Main.rand.NextFloat(goreArea.Height)), Main.rand.Next(1,3).ToString());
+				SpawnGore((NPC.Size / 2) - new Vector2(Main.rand.NextFloat(goreArea.Width), Main.rand.NextFloat(goreArea.Height)), Main.rand.Next(1, 3).ToString());
 			}
 		}
 		private void SpawnGore(Vector2 position, string type = "2") {
@@ -287,7 +288,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					rangeRandom.Multiply(index, index + 1, 0);
 				}
 				for (int i = 0; i < shard.Length; i++) {
-					shard[i] ??= $"_Lorg{Main.rand.Next(1,4)}";
+					shard[i] ??= $"_Lorg{Main.rand.Next(1, 4)}";
 				}
 				for (int i = 0; i < positions.Length; i++) SpawnGore(positions[i], shard[i]);
 			}
@@ -682,8 +683,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (!phase3Active) {
 				int type = ProjectileType<Aetherite_Aura_P>();
+				int shimmershotType = ProjectileType<Shimmershot_Aura>();
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.type == type || projectile.type == Jawbreaker.projectileID) {
+					if (projectile.type == type || projectile.type == Jawbreaker.projectileID || projectile.type == shimmershotType) {
 						phase3Active = true;
 						break;
 					}

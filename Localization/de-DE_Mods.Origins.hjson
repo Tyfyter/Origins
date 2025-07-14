@@ -1846,6 +1846,8 @@ Projectiles: {
 	// Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
 	// Miter_Saw_P.DisplayName: Miter Saw P
 	// Shimmershot_P.DisplayName: Shimmershot P
+	// Shimmershot_Aura.DisplayName: Shimmershot Aura
+	// Shimmershot_Bullet.DisplayName: Shimmershot Bullet
 }
 
 Prefixes: {

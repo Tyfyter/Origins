@@ -592,6 +592,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				SC_Phase_Three_Overlay.drawDatas.Clear();
 				SC_Phase_Three_Overlay.drawnMaskSources.Clear();
+				for (int i = 0; i < SC_Phase_Three_Overlay.renderTargetsToDispose.Count; i++) {
+					SC_Phase_Three_Overlay.renderTargetsToDispose[i].Dispose();
+				}
+				SC_Phase_Three_Overlay.renderTargetsToDispose.Clear();
 			} else {
 				spriteBatch.Restart(state);
 			}
@@ -691,6 +695,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Main.graphics.GraphicsDevice.Textures[1] = SC_Phase_Three_Underlay.instance.renderTarget;
 			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
+		}
+		internal static readonly List<RenderTarget2D> renderTargetsToDispose = [];
+		public static void SendRenderTargetForDisposal(ref RenderTarget2D renderTarget) {
+			renderTargetsToDispose.Add(renderTarget);
+			renderTarget = null;
 		}
 		public override void Update(GameTime gameTime) { }
 		public override void Activate(Vector2 position, params object[] args) {

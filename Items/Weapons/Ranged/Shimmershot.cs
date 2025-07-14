@@ -1,13 +1,23 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.NPCs;
 using Origins.Tiles.Other;
+using PegasusLib;
+using ReLogic.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Projectiles;
+using Origins.Graphics;
+using Origins.Items.Weapons.Magic;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
@@ -17,6 +27,9 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.GamepadWholeScreenUseRange[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
+			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
+				if (proj.friendly) global.SetUpdateCountBoost(proj, proj.MaxUpdates);
+			});
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);
@@ -25,7 +38,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.crit = 15;
 			Item.useTime = Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Shimmershot_P>();
-			Item.shootSpeed = 16;
+			Item.shootSpeed = 8;
 			Item.width = 38;
 			Item.height = 18;
 			Item.autoReuse = true;
@@ -35,7 +48,6 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = null;
 		}
-		public bool? Hardmode => false;
 		public static bool isShooting = false;
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -65,6 +77,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.hide = true;
 			Projectile.ignoreWater = true;
 		}
+		SlotId chargeSound;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -74,10 +87,28 @@ namespace Origins.Items.Weapons.Ranged {
 				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon, Projectile.position);
 				Projectile.ai[2] = 0;
 			}
+			if (Main.myPlayer == Projectile.owner) { // charging, 
+				if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
+					//SoundEngine.PlaySound(SoundID.Item, Projectile.position); // full charge sound
+				}
+				if (player.channel && !Main.mouseLeft) {
+					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
+						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
+					} else {
+						int type = Type;
+						chargeSound = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, Projectile.Center, soundInstance => {
+							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
+							soundInstance.Position = Projectile.position;
+							return Projectile.active && Projectile.type == type;
+						});
+					}
+				}
+			}
 			if (!player.noItems && !player.CCed) {
-				if (Main.myPlayer == Projectile.owner) {
-					Vector2 position = player.MountedCenter + (new Vector2(8, -6 * player.direction).RotatedBy(Projectile.rotation - MathHelper.PiOver2)).Floor();
-					Projectile.position = position;
+				Vector2 position = player.MountedCenter + (new Vector2(8, -6 * player.direction).RotatedBy(Projectile.rotation - MathHelper.PiOver2)).Floor();
+				Projectile.position = position;
+				if (Main.myPlayer == Projectile.owner && (player.channel && (Main.mouseRight || (Projectile.ai[0] <= 1 && Projectile.ai[2] != -1 && Main.mouseLeft)))) {
 					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
 					if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
 
@@ -87,9 +118,9 @@ namespace Origins.Items.Weapons.Ranged {
 						Projectile.velocity = velocity;
 						Projectile.netUpdate = true;
 					}
-					Projectile.rotation = velocity.ToRotation();
 				}
-				if (--Projectile.ai[0] <= 0) {
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				if (Main.myPlayer == Projectile.owner && --Projectile.ai[0] <= 0) {
 					if (Projectile.ai[2] != -1) {
 						if (Main.mouseLeft && Projectile.ai[2] != -1) {
 							ActuallyShoot();
@@ -100,10 +131,6 @@ namespace Origins.Items.Weapons.Ranged {
 						Projectile.ai[2] = 0;
 					}
 				}
-				if (Projectile.localAI[0] != Projectile.ai[0]) {
-					if (Projectile.ai[0] > Projectile.localAI[0]) Projectile.localAI[1] = Projectile.ai[0];
-					Projectile.localAI[0] = Projectile.ai[0];
-				}
 			} else {
 				Projectile.Kill();
 			}
@@ -112,7 +139,9 @@ namespace Origins.Items.Weapons.Ranged {
 		bool ActuallyShoot() {
 			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.position;
+			bool fullCharge = Projectile.localAI[0] >= Projectile.localAI[1];
 			if (player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemId)) {
+				if (fullCharge) projToShoot = ModContent.ProjectileType<Shimmershot_Bullet>();
 				EntitySource_ItemUse_WithAmmo projectileSource = new(player, player.HeldItem, usedAmmoItemId, "gunProj");
 				Vector2 velocity = Projectile.velocity;
 				velocity *= speed;
@@ -129,6 +158,8 @@ namespace Origins.Items.Weapons.Ranged {
 				}
 				Projectile.ai[2] = 1;
 				Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
+				Projectile.localAI[0] = Projectile.ai[0] * -1f;
+				Projectile.localAI[1] = Projectile.ai[0] * 2f;
 				Projectile.netUpdate = true;
 				return true;
 			}
@@ -154,6 +185,197 @@ namespace Origins.Items.Weapons.Ranged {
 				dir
 			);
 			return false;
+		}
+	}
+	public class Shimmershot_Bullet : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
+		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.localAI[0] += 1f;
+			if (Projectile.localAI[0] > 3f)
+				Projectile.alpha = 0;
+
+			if (Projectile.ai[0] >= 20f) {
+				Projectile.ai[0] = 20f;
+				Projectile.velocity.Y += 0.075f;
+			}
+			int auraProjIndex = (int)Projectile.ai[1] - 1;
+			if (auraProjIndex < 0) {
+				if (Projectile.owner == Main.myPlayer) Projectile.ai[1] = Projectile.NewProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.position,
+					default,
+					Shimmershot_Aura.ID,
+					Projectile.damage / 2,
+					0,
+					Projectile.owner,
+					Projectile.whoAmI
+				) + 1;
+			} else {
+				Projectile auraProj = Main.projectile[auraProjIndex];
+				if (auraProj.active && auraProj.type == Shimmershot_Aura.ID) {
+					auraProj.position = Projectile.Center;
+					auraProj.rotation = Projectile.rotation;
+				} else {
+					Projectile.ai[1] = 0;
+				}
+			}
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			return Projectile.alpha == 0 ? new Color(255, 255, 255, 200) : Color.Transparent;
+		}
+		public override void OnKill(int timeLeft) {
+			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.CritDamage *= 1.5f;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+		}
+	}
+	public class Shimmershot_Aura : ModProjectile {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.TrailCacheLength[Type] = 30;
+			ProjectileID.Sets.TrailingMode[Type] = -1;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 16 * 400;
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.hide = true;
+			Projectile.width = Projectile.height = 0;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+			Projectile.tileCollide = false;
+		}
+		public override void AI() {
+			int auraProj = (int)Projectile.ai[0];
+			if (auraProj >= 0) {
+				Projectile ownerProj = Main.projectile[auraProj];
+				if (ownerProj.active) {
+					Projectile.scale = ownerProj.scale;
+					Projectile.Center = ownerProj.Center;
+					Projectile.rotation = ownerProj.rotation;
+				} else {
+					Projectile.Center = ownerProj.Center;
+					Projectile.ai[0] = -1;
+				}
+			}
+			for (int i = Projectile.oldPos.Length - 1; i > 0; i--) {
+				Projectile.oldPos[i] = Projectile.oldPos[i - 1];
+				Projectile.oldRot[i] = Projectile.oldRot[i - 1];
+			}
+			Projectile.oldPos[0] = Projectile.position;
+			Projectile.oldRot[0] = Projectile.rotation;
+			if (Projectile.oldPos[^1] == Projectile.position && Projectile.oldRot[^1] == Projectile.rotation) Projectile.Kill();
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			return CollisionExtensions.PolygonIntersectsRect(GetPolygon().ToArray(), targetHitbox);
+		}
+		int lastCacheTime = -1;
+		List<(Vector2 start, Vector2 end)> polygonCache;
+		private List<(Vector2 start, Vector2 end)> GetPolygon() {
+			if (Projectile.timeLeft == lastCacheTime && polygonCache is not null) return polygonCache;
+			lastCacheTime = Projectile.timeLeft;
+			Vector2 width = new(12, 0);
+			Vector2 rot = width.RotatedBy(Projectile.rotation);
+			Vector2 lastPos0 = Projectile.position - rot;
+			Vector2 lastPos1 = Projectile.position + rot;
+			Vector2 nextPos0 = default, nextPos1 = default;
+			polygonCache = [(lastPos1, lastPos0)];
+			for (int i = 0; i < Projectile.oldPos.Length; i++) {
+				Vector2 nextPos = Projectile.oldPos[i];
+				if (nextPos == default) break;
+				rot = width.RotatedBy(Projectile.oldRot[i]);
+				nextPos0 = nextPos - rot;
+				nextPos1 = nextPos + rot;
+
+				polygonCache.Add((lastPos0, nextPos0));
+				polygonCache.Add((nextPos1, lastPos1));
+				lastPos0 = nextPos0;
+				lastPos1 = nextPos1;
+			}
+			polygonCache.Add((nextPos0, nextPos1));
+			return polygonCache;
+		}
+
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => behindProjectiles.Add(index);
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+		}
+		private static VertexStrip _vertexStrip = new();
+		public override bool PreDraw(ref Color lightColor) {
+			if (renderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return false;
+			}
+			Origins.shaderOroboros.Capture();
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
+
+			Vector2[] positions = new Vector2[Projectile.oldPos.Length - 1];
+			float[] rotations = new float[Projectile.oldPos.Length - 1];
+			int count = 0;
+			for (int i = 1; i < Projectile.oldPos.Length; i++) {
+				positions[i - 1] = Projectile.oldPos[i];
+				rotations[i - 1] = Projectile.oldRot[i] + MathHelper.PiOver2;
+				if (Projectile.oldPos[i] == default) break;
+				count++;
+			}
+			float frameStart = 1 - count / (float)Projectile.oldPos.Length;
+			miscShaderData.UseImage0(TextureAssets.Projectile[Type]);
+			miscShaderData.UseImage1(TextureAssets.Extra[193]);
+			//miscShaderData.UseImage0(TextureAssets.Extra[189]);
+			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 1, 1, 0));
+			miscShaderData.Shader.Parameters["uAlphaMatrix1"].SetValue(new Vector4(0.7f, 0, 0, 0));
+			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(frameStart, 0, 1 - frameStart, 1));
+			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameStart, MathF.Sin((float)Main.timeForVisualEffects * 0.1f) * 0.2f, 1 - frameStart, 1));
+			miscShaderData.Apply();
+			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => Color.Wheat * 0.7f, (_) => 24, -Main.screenPosition, true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+
+			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameStart, (float)Main.timeForVisualEffects * -0.1f, 1 - frameStart, 1));
+			miscShaderData.Apply();
+			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => new Color(0.4f, 0.5f, 0f, 0.5f), (_) => 24, -Main.screenPosition, true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			Origins.shaderOroboros.Reset(default);
+			Vector2 center = renderTarget.Size() * 0.5f;
+			SC_Phase_Three_Overlay.drawDatas.Add(new(
+				renderTarget,
+				center,
+				null,
+				Color.White,
+				0,
+				center,
+				Vector2.One / Main.GameViewMatrix.Zoom,
+				SpriteEffects.None
+			));
+			return false;
+		}
+		public override void OnKill(int timeLeft) {
+			if (renderTarget is not null) {
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);
+				Main.OnResolutionChanged -= Resize;
+			}
+		}
+		internal RenderTarget2D renderTarget;
+		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);
+			SetupRenderTargets();
+		}
+		void SetupRenderTargets() {
+			if (renderTarget is not null && !renderTarget.IsDisposed) return;
+			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
 	}
 }
