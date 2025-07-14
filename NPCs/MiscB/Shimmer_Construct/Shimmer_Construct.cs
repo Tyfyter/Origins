@@ -6,6 +6,7 @@ using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -684,8 +685,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (!phase3Active) {
 				int type = ProjectileType<Aetherite_Aura_P>();
 				int shimmershotType = ProjectileType<Shimmershot_Aura>();
+				int handCannonType = ProjectileType<Hand_Cannon_Portal>();
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.type == type || projectile.type == Jawbreaker.projectileID || projectile.type == shimmershotType) {
+					if (projectile.type == type || projectile.type == Jawbreaker.projectileID || projectile.type == shimmershotType || projectile.type == handCannonType) {
 						phase3Active = true;
 						break;
 					}

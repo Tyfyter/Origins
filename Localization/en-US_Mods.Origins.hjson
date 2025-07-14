@@ -1844,10 +1844,12 @@ Projectiles: {
 	Aetherium_Construct.DisplayName: Aetherium Construct
 	Stellar_Spark.DisplayName: Stellar Spark
 	Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
-	Miter_Saw_P.DisplayName: Miter Saw P
+	Miter_Saw_P.DisplayName: Miter Saw
 	Shimmershot_P.DisplayName: Shimmershot P
 	Shimmershot_Aura.DisplayName: Shimmershot Aura
 	Shimmershot_Bullet.DisplayName: Shimmershot Bullet
+	Hand_Cannon_P.DisplayName: Hand Cannon
+	Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
 }
 
 Prefixes: {

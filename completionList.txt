@@ -1009,7 +1009,7 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Glass Cannon*
-(#, ^2) Hand Cannon !!!
+(☻) Hand Cannon !!!
 (^) Hand Grenade Launcher
 (^) Heartache Dynamite
 (^) Hellfire Bomb*

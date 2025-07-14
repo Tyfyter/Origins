@@ -1848,6 +1848,8 @@ Projectiles: {
 	// Shimmershot_P.DisplayName: Shimmershot P
 	// Shimmershot_Aura.DisplayName: Shimmershot Aura
 	// Shimmershot_Bullet.DisplayName: Shimmershot Bullet
+	// Hand_Cannon_P.DisplayName: Hand Cannon P
+	// Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
 }
 
 Prefixes: {

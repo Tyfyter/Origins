@@ -1,0 +1,152 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
+using Origins.Tiles.Cubekon;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
+using System;
+using MagicStorage.CrossMod;
+using Origins.Graphics;
+using System.Collections.Generic;
+using Terraria.GameContent;
+using PegasusLib;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+
+namespace Origins.Items.Weapons.Demolitionist {
+	[AutoloadEquip(EquipType.HandsOn)]
+	public class Hand_Cannon : ModItem {
+		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
+		public override void SetDefaults() {
+			Item.DefaultToCanisterLauncher<Hand_Cannon_Portal>(30, 26, 10, 28, 28);
+			Item.knockBack = 4;
+			Item.noUseGraphic = true;
+			Item.value = Item.sellPrice(gold: 15);
+			Item.rare = ItemRarityID.Orange;
+		}
+		public override void HoldItem(Player player) {
+			player.handon = Item.handOnSlot;
+		}
+		public override void UseItemFrame(Player player) {
+			player.handon = Item.handOnSlot;
+			player.SetCompositeArmFront(true, (player.itemAnimationMax - player.itemAnimation) switch {
+				<= 0 => Player.CompositeArmStretchAmount.None,
+				<= 1 => Player.CompositeArmStretchAmount.Quarter,
+				<= 2 => Player.CompositeArmStretchAmount.ThreeQuarters,
+				_ => Player.CompositeArmStretchAmount.Full
+			}, player.itemRotation - player.direction * MathHelper.PiOver2);
+		}
+	}
+	public class Hand_Cannon_P : ModProjectile, ICanisterProjectile {
+		public override string Texture => "Terraria/Images/Item_1";
+		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
+		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Canister_Inner";
+		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
+		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			Origins.MagicTripwireRange[Type] = 32;
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.aiStyle = 0;
+			Projectile.extraUpdates = 1;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.width = 28;
+			Projectile.height = 28;
+			Projectile.friendly = true;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 900;
+			Projectile.scale = 0.85f;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 6;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			if (Projectile.velocity.X == 0f) {
+				Projectile.velocity.X = -oldVelocity.X;
+			}
+			if (Projectile.velocity.Y == 0f) {
+				Projectile.velocity.Y = -oldVelocity.Y;
+			}
+			Projectile.timeLeft = 1;
+			return true;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
+		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+		}
+	}
+	public class Hand_Cannon_Portal : ModProjectile, ICanisterProjectile {
+		public override string Texture => "Terraria/Images/Extra_98";
+		public AutoLoadingAsset<Texture2D> OuterTexture { get; } = "";
+		public AutoLoadingAsset<Texture2D> InnerTexture { get; } = "";
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			Origins.MagicTripwireRange[Type] = 32;
+			ID = Type;
+		}
+		public override bool ShouldUpdatePosition() => true;
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.timeLeft = 14;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
+		}
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			Player.CompositeArmStretchAmount oldStretch = player.compositeFrontArm.stretch;
+			player.compositeFrontArm.stretch = Player.CompositeArmStretchAmount.Full;
+			Projectile.position = player.GetCompositeArmPosition(false) + Projectile.velocity.SafeNormalize(default) * 12;
+			player.compositeFrontArm.stretch = oldStretch;
+			if (Projectile.timeLeft > 6) {
+				if (Projectile.ai[0] <= 4) {
+					if (++Projectile.ai[0] > 4) {
+						Projectile.SpawnProjectile(null,
+							Projectile.position,
+							Projectile.velocity,
+							ModContent.ProjectileType<Hand_Cannon_P>(),
+							Projectile.damage,
+							Projectile.knockBack
+						);
+					}
+				}
+			} else {
+				Projectile.ai[0] = Projectile.timeLeft - 1;
+				if (Projectile.ai[0] <= 0) Projectile.active = false;
+			}
+		}
+		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
+			if (SC_Phase_Three_Overlay.drawnMaskSources.Add(Projectile)) {
+				Texture2D circle = TextureAssets.Projectile[Type].Value;
+				for (int i = 0; i < Projectile.ai[0]; i++) {
+					SC_Phase_Three_Overlay.drawDatas.Add(new(
+						circle,
+						Projectile.position - Main.screenPosition,
+						null,
+						Color.White
+					) {
+						rotation = projectile.rotation,
+						origin = circle.Size() * 0.5f,
+						scale = Vector2.One * Projectile.scale
+					});
+				}
+			}
+		}
+	}
+}
