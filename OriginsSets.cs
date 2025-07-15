@@ -123,7 +123,7 @@ namespace Origins {
 			);
 			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
 		}
-		public delegate void MultitileCollisionOffsetter(short frameX, ref float y, ref int height);
+		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))

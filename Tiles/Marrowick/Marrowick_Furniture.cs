@@ -1,4 +1,5 @@
 ﻿using Origins.Tiles.Riven;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,8 +20,8 @@ namespace Origins.Tiles.Marrowick {
 		public override void SetupTile(ModTile tile) {
 			if (tile is FurnitureSet_Bookcase) OriginsSets.Tiles.MultitileCollisionOffset[tile.Type] = OffsetBookcaseCollision;
 		}
-		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
-			if (frameX / 18 != 1) height = -1600;
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			if (tile.TileFrameX / 18 != 1) height = -1600;
 		}
 	}/* left as backup just in case we still need it
 	public class Marrowick_Platform : Platform_Tile {

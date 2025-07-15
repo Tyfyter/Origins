@@ -747,7 +747,7 @@ namespace Origins {
 			c.EmitLdloca(pos);
 			c.EmitLdloca(height);
 			c.EmitDelegate((Tile tile, ref Vector2 pos, ref int height) => {
-				OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType)?.Invoke(tile.TileFrameX, ref pos.Y, ref height);
+				OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType)?.Invoke(tile, ref pos.Y, ref height);
 			});
 		}
 

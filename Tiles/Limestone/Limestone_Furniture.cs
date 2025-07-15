@@ -1,4 +1,5 @@
-﻿using Terraria.ID;
+﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Limestone {
@@ -10,8 +11,8 @@ namespace Origins.Tiles.Limestone {
 		public override void SetupTile(ModTile tile) {
 			if (tile is FurnitureSet_Bookcase) OriginsSets.Tiles.MultitileCollisionOffset[tile.Type] = OffsetBookcaseCollision;
 		}
-		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
-			if (frameX / 18 != 1) y += 14;
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			if (tile.TileFrameX / 18 != 1) y += 14;
 		}
 	}
 }

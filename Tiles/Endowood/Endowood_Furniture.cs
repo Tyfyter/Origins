@@ -21,8 +21,8 @@ namespace Origins.Tiles.Endowood {
 		public override void SetupTile(ModTile tile) {
 			if (tile is FurnitureSet_Bookcase) OriginsSets.Tiles.MultitileCollisionOffset[tile.Type] = OffsetBookcaseCollision;
 		}
-		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
-			if (frameX / 18 != 1) y += 14;
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			if (tile.TileFrameX / 18 != 1) y += 14;
 		}
 		public override void ChandelierSwayParams(LightFurnitureBase tile, int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
 			// Vanilla chandeliers all share these parameters.
