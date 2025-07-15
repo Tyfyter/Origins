@@ -23,7 +23,7 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
 			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -38,6 +38,7 @@ namespace Origins.Tiles.Riven {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.addTile(Type);
 
 
