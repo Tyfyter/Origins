@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
 using Origins.World.BiomeData;
+using System.Reflection.Metadata;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -129,9 +130,16 @@ namespace Origins.Tiles.Riven {
 					if (Main.tile[i + k, j + l].TileIsType(wrycoral)) existing++;
 				}
 			}
-			if (!Main.tile[i, j + 1].HasTile) {
-				if (TileObject.CanPlace(i, j + 1, wrycoral, 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
-					TileObject.Place(objectData);
+			Tile below = Main.tile[i, j + 1];
+			if (!below.HasTile && WorldGen.genRand.NextBool(50)) {
+				if (WorldGen.genRand.NextBool(50 - existing)) {
+					if (TileExtenstions.CanActuallyPlace(i, j + 1, wrycoral, 0, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+						TileObject.Place(objectData);
+					}
+				} else {
+					below.TileType = (ushort)TileType<Fuzzvine>();
+					below.HasTile = true;
+					WorldGen.TileFrame(i, j + 1, true);
 				}
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
@@ -139,6 +147,8 @@ namespace Origins.Tiles.Riven {
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+				} else if (WorldGen.genRand.NextBool(10) && TileExtenstions.CanActuallyPlace(i, j - 1, WorldGen.genRand.NextBool(3) ? TileType<Marrowick_Coral>() : TileType<Riven_Large_Foliage>(), 0, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+					TileObject.Place(objectData);
 				} else {
 					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
 				}

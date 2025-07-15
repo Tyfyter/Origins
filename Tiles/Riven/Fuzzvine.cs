@@ -1,0 +1,101 @@
+﻿using AltLibrary.Common.Hooks;
+using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
+using Terraria;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.Metadata;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
+using static Terraria.GameContent.Drawing.TileDrawing;
+
+namespace Origins.Tiles.Riven {
+    public class Fuzzvine : OriginTile {
+		int[] AnchorTiles;
+		public override void SetStaticDefaults() {
+			AnchorTiles = [
+				ModContent.TileType<Riven_Grass>(),
+				ModContent.TileType<Riven_Jungle_Grass>(),
+				ModContent.TileType<Riven_Flesh>()
+			];
+			//Main.tileFrameImportant[Type] = true;
+			Main.tileObsidianKill[Type] = true;
+			Main.tileCut[Type] = true;
+			Main.tileNoFail[Type] = true;
+			Main.tileWaterDeath[Type] = false;
+			TileID.Sets.TileCutIgnore.Regrowth[Type] = true;
+			TileID.Sets.IsVine[Type] = true;
+			TileID.Sets.ReplaceTileBreakDown[Type] = true;
+			TileID.Sets.VineThreads[Type] = true;
+			TileID.Sets.ReplaceTileBreakUp[Type] = true;
+			TileID.Sets.IgnoredInHouseScore[Type] = true;
+			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
+			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
+
+			LocalizedText name = CreateMapEntryName();
+			AddMapEntry(new Color(37, 109, 128), name);
+
+			HitSound = SoundID.Grass;
+			DustType = DustID.BlueMoss;
+			AltVines.AddVine(Type, AnchorTiles);
+		}
+		public override void RandomUpdate(int i, int j) {
+			Tile below = Framing.GetTileSafely(i, j + 1);
+			if (!below.HasTile) {
+				const int min_chance = 6;
+				int count = 1;
+				for (int k = 1; k < min_chance; k++) {
+					if (!Framing.GetTileSafely(i, j - k).TileIsType(Type)) break;
+					count++;
+					if (count >= min_chance) break;
+				}
+				if (true || WorldGen.genRand.NextBool(1 + count / 2)) {
+					below.TileType = Type;
+					below.HasTile = true;
+					WorldGen.TileFrame(i, j, true);
+				}
+			}
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile above = Framing.GetTileSafely(i, j - 1);
+			if (!above.HasTile || (above.TileType != Type && !AnchorTiles.Contains(above.TileType))) {
+				WorldGen.KillTile(i, j);
+				return false;
+			}
+			DoFrame(i, j, resetFrame);
+			return false;
+		}
+		public void DoFrame(int i, int j, bool resetFrame) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (tile.TileType != Type) return;
+			Tile above = Framing.GetTileSafely(i, j - 1);
+			Tile below = Framing.GetTileSafely(i, j + 1);
+			if (!below.TileIsType(Type)) {
+				tile.TileFrameY = 2 * 18;
+				if (resetFrame) tile.TileFrameNumber = above.TileFrameNumber;
+			} else if (!above.TileIsType(Type)) {
+				tile.TileFrameY = 0 * 18;
+				if (resetFrame) {
+					tile.TileFrameNumber = Main.rand.Next(3);
+					DoFrame(i, j + 1, true);
+				}
+			} else {
+				tile.TileFrameY = 1 * 18;
+				if (resetFrame) {
+					tile.TileFrameNumber = above.TileFrameNumber;
+					DoFrame(i, j + 1, true);
+				}
+			}
+			tile.TileFrameX = (short)(tile.TileFrameNumber * 18);
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (TileObjectData.IsTopLeft(Main.tile[i, j])) {
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
+			}
+			return true;
+		}
+	}
+}

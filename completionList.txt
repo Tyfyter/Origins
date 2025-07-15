@@ -1272,12 +1272,12 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(#, ^2) Fuzzvine !!!
+(☻) Fuzzvine !!!
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble
-(#, ^2) Marrowick Coral !!!
+(☻) Marrowick Coral !!!
 (#, ^2) Marrowick Flange !!!
 (X) Modular Light Fixture
 (X) Moonshine°

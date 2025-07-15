@@ -537,11 +537,12 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				ushort rivenLargePile = (ushort)ModContent.TileType<Riven_Large_Foliage>();
+				ushort coralPile = (ushort)ModContent.TileType<Marrowick_Coral>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
 					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
-					while (!PlaceObject(x, y, rivenLargePile)) {
+					while (!PlaceObject(x, y, genRand.NextBool(3) ? coralPile : rivenLargePile)) {
 						y--;
 						if (tries-- > 0) break;
 					}

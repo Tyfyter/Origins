@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Hanging_Wrycoral : OriginTile, IGlowingModTile { 
+	public class Hanging_Wrycoral : OriginTile, IGlowingModTile {
 		public override string Texture => base.Texture.Replace("Hanging_", "");
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
@@ -93,15 +93,15 @@ namespace Origins.Tiles.Riven {
 		}
 	}
 	public class Wrycoral_Item : ModItem {
-        public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 25;
-        }
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 25;
+		}
+		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Hanging_Wrycoral>());
 			Item.maxStack = Item.CommonMaxStack;
 			Item.width = 12;
 			Item.height = 14;
 			Item.value = Item.sellPrice(copper: 20);
 		}
-    }
+	}
 }

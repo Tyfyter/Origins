@@ -2131,6 +2131,7 @@ Tiles: {
 	Music_Box_TD: Music Box ([wiggle:The Dive])
 	Limestone_Dresser.MapEntry: Limestone Dresser
 	Hanging_Wrycoral.MapEntry: Hanging Wrycoral
+	Fuzzvine.MapEntry: Fuzzvine
 }
 
 MapObject: {
