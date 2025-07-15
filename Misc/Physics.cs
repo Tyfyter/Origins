@@ -24,12 +24,12 @@ namespace Origins.Misc {
 		public class WorldAnchorPoint(Vector2 position) : AnchorPoint {
 			public override Vector2 WorldPosition { get; } = position;
 		}
-		public class EntityAnchorPoint : AnchorPoint {
+		public class EntityAnchorPoint(Entity entity = null, Vector2 offset = default) : AnchorPoint {
 			public override Vector2 WorldPosition {
 				get => entity.Center + offset * new Vector2(entity.direction, 1);
 			}
-			public Entity entity;
-			public Vector2 offset;
+			public Entity entity = entity;
+			public Vector2 offset = offset;
 		}
 		public class NPCAnchorPoint : AnchorPoint {
 			public override Vector2 WorldPosition {

@@ -1247,6 +1247,11 @@ Buffs: {
 		// DisplayName: Stellar Spark
 		// Description: Mods.Origins.Buffs.Stellar_Spark_Buff.Description
 	}
+
+	Accretion_Ribbon_Buff: {
+		// DisplayName: Accretion Ribbon Buff
+		// Description: Mods.Origins.Buffs.Accretion_Ribbon_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1850,6 +1855,7 @@ Projectiles: {
 	// Shimmershot_Bullet.DisplayName: Shimmershot Bullet
 	// Hand_Cannon_P.DisplayName: Hand Cannon
 	// Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
+	// Accretion_Ribbon_P.DisplayName: Accretion Ribbon P
 }
 
 Prefixes: {

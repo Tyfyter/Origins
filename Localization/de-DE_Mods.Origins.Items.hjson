@@ -6487,3 +6487,13 @@ Hand_Cannon: {
 	// DisplayName: Hand Cannon
 	// Tooltip: Summons canisters from your hand
 }
+
+Accretion_Ribbon: {
+	// DisplayName: Accretion Ribbon
+	// Tooltip: ""
+}
+
+Shelf_Coral_Item: {
+	// DisplayName: Shelf Coral Item
+	// Tooltip: ""
+}

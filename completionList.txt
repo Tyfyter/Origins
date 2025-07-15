@@ -351,7 +351,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(#2?, ^2) Aether Armor !!! (set bonus implemented differently than original plan deliberately, review redesign)
+(♦) Aether Armor !!! (set bonus implemented differently than original plan deliberately, review redesign)
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -911,7 +911,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#, ^2) Accretion Ribbon !!!
+(◘) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*

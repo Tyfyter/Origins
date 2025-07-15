@@ -683,11 +683,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				scale = 0;
 			}
 			if (!phase3Active) {
-				int type = ProjectileType<Aetherite_Aura_P>();
-				int shimmershotType = ProjectileType<Shimmershot_Aura>();
-				int handCannonType = ProjectileType<Hand_Cannon_Portal>();
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.type == type || projectile.type == Jawbreaker.projectileID || projectile.type == shimmershotType || projectile.type == handCannonType) {
+					if (projectile.ModProjectile is Aetherite_Aura_P or Stellar_Spark or Shimmershot_Aura or Hand_Cannon_Portal or Accretion_Ribbon_P) {
 						phase3Active = true;
 						break;
 					}
