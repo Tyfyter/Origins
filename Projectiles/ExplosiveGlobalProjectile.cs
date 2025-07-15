@@ -140,8 +140,8 @@ namespace Origins.Projectiles {
 			if (originPlayer.novaSet && Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
 				isHoming = true;
 			}
-			if (originPlayer.explosiveFuseTime != StatModifier.Default) {
-				projectile.timeLeft = (int)(originPlayer.explosiveFuseTime.ApplyTo(projectile.timeLeft));
+			if (OriginsSets.Projectiles.ApplyLifetimeModifiers[projectile.type] && originPlayer.explosiveFuseTime != StatModifier.Default) {
+				projectile.timeLeft = (int)originPlayer.explosiveFuseTime.ApplyTo(projectile.timeLeft);
 			}
 			if (originPlayer.magicTripwire) {
 				magicTripwire = true;

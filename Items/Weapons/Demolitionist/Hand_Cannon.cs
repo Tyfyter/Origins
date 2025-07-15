@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> InnerTexture { get; } = "";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			Origins.MagicTripwireRange[Type] = 32;
+			OriginsSets.Projectiles.ApplyLifetimeModifiers[Type] = false;
 			ID = Type;
 		}
 		public override bool ShouldUpdatePosition() => true;
@@ -103,6 +103,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = false;
 			Projectile.tileCollide = false;
 			Projectile.timeLeft = 14;
+			OriginsSets.Projectiles.ApplyLifetimeModifiers[Type] = false;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);

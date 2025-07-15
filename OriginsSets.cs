@@ -89,6 +89,9 @@ namespace Origins {
 			.RegisterIntSet(5,
 				ProjectileID.ChlorophyteBullet, 3
 			);
+			public static bool[] ApplyLifetimeModifiers { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ApplyLifetimeModifiers))
+			.Description("Controls whether compatible projectile lifetime modification effects will apply to the projectile type")
+			.RegisterBoolSet(true);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class NPCs {
