@@ -92,13 +92,14 @@ namespace Origins.Items.Weapons.Ranged {
 				if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
+					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
 				}
 				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
 						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
 					} else {
 						int type = Type;
-						chargeSound = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, null, soundInstance => {
+						chargeSound = SoundEngine.PlaySound(SoundID.Item92.WithVolume(0.35f), null, soundInstance => {
 							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
 							return Projectile.active && Projectile.type == type;
 						});
@@ -143,7 +144,10 @@ namespace Origins.Items.Weapons.Ranged {
 			position += position.DirectionTo(Main.MouseWorld).RotatedBy(player.direction * -MathHelper.PiOver2) * BarrelOffset;
 			bool fullCharge = Projectile.localAI[0] >= Projectile.localAI[1];
 			if (player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemId)) {
-				if (fullCharge) projToShoot = ModContent.ProjectileType<Shimmershot_Bullet>();
+				if (fullCharge) {
+					projToShoot = ModContent.ProjectileType<Shimmershot_Bullet>();
+					damage *= 2;
+				}
 				EntitySource_ItemUse_WithAmmo projectileSource = new(player, player.HeldItem, usedAmmoItemId, "gunProj");
 				Vector2 velocity = Projectile.velocity;
 				velocity *= speed;

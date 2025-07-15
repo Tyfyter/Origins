@@ -1,23 +1,14 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo;
-using Origins.Projectiles;
-using Origins.Tiles.Cubekon;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using PegasusLib;
+using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo.Canisters;
-using System;
-using MagicStorage.CrossMod;
-using Origins.Graphics;
-using System.Collections.Generic;
-using Terraria.GameContent;
-using PegasusLib;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
@@ -27,8 +18,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DefaultToCanisterLauncher<Hand_Cannon_Portal>(30, 26, 10, 28, 28);
 			Item.knockBack = 4;
 			Item.noUseGraphic = true;
-			Item.value = Item.sellPrice(gold: 15);
+			Item.UseSound = null;
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient<Aetherite_Bar>(12)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override void HoldItem(Player player) {
 			player.handon = Item.handOnSlot;
@@ -118,6 +116,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.timeLeft > 6) {
 				if (Projectile.ai[0] <= 4) {
 					if (++Projectile.ai[0] > 4) {
+						SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(0.15f, 0.3f).WithVolume(1f), Projectile.position);
+						SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
+						SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(2f), Projectile.position);
 						Projectile.SpawnProjectile(null,
 							Projectile.position,
 							Projectile.velocity,

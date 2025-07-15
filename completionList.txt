@@ -224,7 +224,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish*
 (X) Repairboy
 (^) Riven Penguin*
-(☻) Riven Protoform* !!! (new AI and sprites)
+(^) Riven Protoform*
 (X) Rivenpotamus
 (X) Scanner Scout
 (^) Shattered Goldfish*
@@ -635,7 +635,7 @@ VANITY:
 (X) Ashen Dye
 (X) Defiled Dye
 (^) High Contrast Dye
-(☻) Lotusy Dye !!!
+(^) Lotusy Dye
 (X) Nova Dye
 (ᗢ) Rasterized Dye
 (X) Riven Dye
@@ -797,7 +797,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(☻) Shimmershot !!!
+(^) Shimmershot
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*
@@ -1009,7 +1009,7 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Glass Cannon*
-(☻) Hand Cannon !!!
+(^) Hand Cannon
 (^) Hand Grenade Launcher
 (^) Heartache Dynamite
 (^) Hellfire Bomb*
@@ -1272,12 +1272,12 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(☻) Fuzzvine !!!
+(#2/3, ^2) Fuzzvine !!!
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble
-(☻) Marrowick Coral !!!
+(^) Marrowick Coral
 (#, ^2) Marrowick Flange !!!
 (X) Modular Light Fixture
 (X) Moonshine°
@@ -1294,7 +1294,7 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(☻) Wrycoral* !!! (glow and new format)
+(#2, ^2) Wrycoral* !!!
 
 (^) A Perfect World
 (^) Deceptive Beauty
@@ -1647,7 +1647,7 @@ CROSS-MOD CONTENT:
 
 (X) Contagion Assimilation
 
-(☻) Aether Orb !!!
+(^) Aether Orb
 (々) Ashen Chest
 (々) Ashen Renewal
 (々) Ashen Renewal Supreme
@@ -1746,7 +1746,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(☻) Shimmer Construct !!! (Phase I>II better transition)
+(#2) Shimmer Construct !!! (Phase III cuts and looping)
 (X) Tearror
 (X) Trenchmaker
 

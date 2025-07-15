@@ -6475,7 +6475,7 @@ Limestone_Chandelier_Item: {
 
 Shimmershot: {
 	// DisplayName: Shimmershot
-	// Tooltip: ""
+	// Tooltip: Hold right click to zoom and charge your shots
 }
 
 Lotusy_Dye: {
@@ -6485,5 +6485,5 @@ Lotusy_Dye: {
 
 Hand_Cannon: {
 	// DisplayName: Hand Cannon
-	// Tooltip: ""
+	// Tooltip: Summons canisters from your hand
 }
