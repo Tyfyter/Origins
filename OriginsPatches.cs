@@ -178,7 +178,6 @@ namespace Origins {
 			};
 			On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
-			On_WorldGen.PlantAlch += WorldGen_PlantAlch;
 			On_WorldGen.ShakeTree += WorldGen_ShakeTree;
 			MonoModHooks.Add(
 				typeof(MC).GetMethod("ResizeArrays", BindingFlags.NonPublic | BindingFlags.Static),
@@ -1568,52 +1567,6 @@ namespace Origins {
 					case Mono.Cecil.Cil.Code.Pop:
 					c.Emit(instruction.OpCode, instruction.Operand);
 					break;
-				}
-			}
-		}
-		private void WorldGen_PlantAlch(On_WorldGen.orig_PlantAlch orig) {
-			orig();
-			//if (!WorldGen.genRand.NextBool(10)) return;
-			int x = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
-			int y = WorldGen.genRand.Next((int)Main.worldSurface - 250, Main.UnderworldLayer);
-			while (y < Main.maxTilesY - 20 && (Main.tile[x, y].HasTile || Main.tile[x, y].WallType == WallID.None)) {
-				y++;
-			}
-			int wallType = MC.WallType<Riven_Flesh_Wall>();
-			while (y > 20 && !Main.tile[x, y - 1].HasTile && Main.tile[x, y - 1].WallType == wallType) {
-				y--;
-			}
-			Tile tile = Framing.GetTileSafely(x, y);
-			if (tile.WallType == MC.WallType<Riven_Flesh_Wall>()) {
-				Tile left = Framing.GetTileSafely(x - 1, y);
-				Tile right = Framing.GetTileSafely(x + 1, y);
-				Tile up = Framing.GetTileSafely(x, y - 1);
-				static int GetConnections(Tile tile, int dir) {
-					if (tile.HasTile) {
-						if (tile.TileType == MC.TileType<Wrycoral>()) return 2;
-						if (tile.TileType == MC.TileType<Riven_Flesh>()) {
-							switch (tile.BlockType) {
-								case BlockType.Solid:
-								return 1;
-								case BlockType.HalfBlock:
-								return dir == 2 ? 1 : 0;
-								case BlockType.SlopeDownLeft:
-								return dir == 1 ? 0 : 1;
-								case BlockType.SlopeDownRight:
-								return dir == 0 ? 0 : 1;
-								case BlockType.SlopeUpLeft:
-								return dir == 2 ? 1 : 0;
-								case BlockType.SlopeUpRight:
-								return dir == 1 ? 1 : 0;
-							}
-						}
-					}
-					return 0;
-				}
-				int connections = GetConnections(left, 0) + GetConnections(right, 1) + GetConnections(up, 2);
-				if (Main.rand.Next(connections) > (connections / 3)) {
-					tile.ResetToType((ushort)MC.TileType<Wrycoral>());
-					WorldGen.SquareTileFrame(x, y);
 				}
 			}
 		}

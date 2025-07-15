@@ -1294,7 +1294,7 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(#2, ^2) Wrycoral* !!! (glow and new format)
+(☻) Wrycoral* !!! (glow and new format)
 
 (^) A Perfect World
 (^) Deceptive Beauty

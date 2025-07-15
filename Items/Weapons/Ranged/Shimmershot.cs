@@ -66,6 +66,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Shimmershot_P : ModProjectile {
 		public override string Texture => typeof(Shimmershot).GetDefaultTMLName();
+		public static int BarrelOffset => 2;
 		public override void SetDefaults() {
 			Projectile.width = 22;
 			Projectile.height = 22;
@@ -107,6 +108,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (!player.noItems && !player.CCed) {
 				Vector2 position = player.MountedCenter + (new Vector2(8, -6 * player.direction).RotatedBy(Projectile.rotation - MathHelper.PiOver2)).Floor();
 				Projectile.position = position;
+				position += position.DirectionTo(Main.MouseWorld).RotatedBy(player.direction * MathHelper.PiOver2) * BarrelOffset;
 				if (Main.myPlayer == Projectile.owner && (Main.mouseRight || (Projectile.ai[0] <= 1 && Projectile.ai[2] != -1 && Main.mouseLeft))) {
 					Vector2 direction = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY) - position;
 					if (player.gravDir == -1f) direction.Y = (Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - position.Y;
@@ -138,6 +140,7 @@ namespace Origins.Items.Weapons.Ranged {
 		bool ActuallyShoot() {
 			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.position;
+			position += position.DirectionTo(Main.MouseWorld).RotatedBy(player.direction * -MathHelper.PiOver2) * BarrelOffset;
 			bool fullCharge = Projectile.localAI[0] >= Projectile.localAI[1];
 			if (player.PickAmmo(player.HeldItem, out int projToShoot, out float speed, out int damage, out float knockBack, out int usedAmmoItemId)) {
 				if (fullCharge) projToShoot = ModContent.ProjectileType<Shimmershot_Bullet>();

@@ -122,8 +122,17 @@ namespace Origins.Tiles.Riven {
 			return !(Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile);
 		}
 		public override void RandomUpdate(int i, int j) {
-			if (WorldGen.genRand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
-				TileObject.Place(objectData);
+			int wrycoral = TileType<Hanging_Wrycoral>();
+			int existing = 0;
+			for (int k = -4; k <= 4; k++) {
+				for (int l = -1; l <= 1; l++) {
+					if (Main.tile[i + k, j + l].TileIsType(wrycoral)) existing++;
+				}
+			}
+			if (!Main.tile[i, j + 1].HasTile) {
+				if (TileObject.CanPlace(i, j + 1, wrycoral, 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+					TileObject.Place(objectData);
+				}
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
 			Tile above = Framing.GetTileSafely(i, j - 1);
