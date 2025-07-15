@@ -224,6 +224,40 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public static void DoGravity<T>(this T self, float value) where T : ModProjectile, ICanisterProjectile {
 			self.Projectile.velocity.Y += value * self.Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().gravityMultiplier;
 		}
+		public static bool InheritImmunityFrames(this Projectile parent, int childType, out int[] iFrames) {
+			Projectile childTemplate = ContentSamples.ProjectilesByType[childType];
+			int[] _iFrames = [];
+			iFrames = _iFrames;
+			Action<int> applyIFrames;
+			if (childTemplate.usesLocalNPCImmunity) {
+				iFrames = new int[childTemplate.localNPCImmunity.Length];
+				applyIFrames = index => _iFrames[index] = childTemplate.localNPCHitCooldown;
+			} else if (childTemplate.usesIDStaticNPCImmunity) {
+				applyIFrames = index => Projectile.perIDStaticNPCImmunity[childType][index] = Main.GameUpdateCount + (uint)childTemplate.idStaticNPCHitCooldown;
+			} else {
+				applyIFrames = index => Main.npc[index].immune[parent.owner] = Math.Max(Main.npc[index].immune[parent.owner], 10);
+			}
+			if (parent.usesLocalNPCImmunity) {
+				for (int i = 0; i < parent.localNPCImmunity.Length; i++) {
+					if (parent.localNPCImmunity[i] != 0) {
+						applyIFrames(i);
+					}
+				}
+			} else if (parent.usesIDStaticNPCImmunity) {
+				for (int i = 0; i < Projectile.perIDStaticNPCImmunity[parent.type].Length; i++) {
+					if (Projectile.IsNPCIndexImmuneToProjectileType(parent.type, i)) {
+						applyIFrames(i);
+					}
+				}
+			} else {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.immune[parent.owner] > 0) {
+						applyIFrames(npc.whoAmI);
+					}
+				}
+			}
+			return iFrames.Length != 0;
+		}
 	}
 	#endregion global stuff
 	public class Coolant_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
@@ -300,12 +334,14 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			} else {
 				ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
 			}
+			int napalm = ModContent.ProjectileType<Napalm_P>();
+			projectile.InheritImmunityFrames(napalm, out _);
 			for (int i = 0; i < 5; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
 					projectile.Center,
 					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)),
-					ModContent.ProjectileType<Napalm_P>(),
+					napalm,
 					(int)(projectile.damage * 0.65f),
 					0,
 					projectile.owner
@@ -392,6 +428,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
 			projectile.damage = damage;
 			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
+			projectile.InheritImmunityFrames(Lingering_Cursed_Flames_P.ID, out _);
 			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, default, Lingering_Cursed_Flames_P.ID, (int)(projectile.damage * 0.65f), 0, projectile.owner);
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
@@ -498,6 +535,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
+			projectile.InheritImmunityFrames(Bile_Canister_Explosion.ID, out _);
 			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.oldPosition + ContentSamples.ProjectilesByType[projectile.type].Size / 2 + projectile.velocity, default, Bile_Canister_Explosion.ID, (int)(projectile.damage * 0.75f), 0, projectile.owner);
 		}
 	}
@@ -582,11 +620,13 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			if (projectile.ModProjectile is ICanisterProjectile canister) {
 				canister.DefaultExplosion(projectile);
 			}
+			projectile.InheritImmunityFrames(Alkahest_Canister_Droplet.ID, out _);
 			for (int i = 0; i < 6; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
 					projectile.Center,
-					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f, Alkahest_Canister_Droplet.ID,
+					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
+					Alkahest_Canister_Droplet.ID,
 					(int)(projectile.damage * 0.35f),
 					0,
 					projectile.owner
@@ -655,6 +695,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				canister.DefaultExplosion(projectile);
 			}
 			int projType = ModContent.ProjectileType<Projectiles.Weapons.Brine_Droplet>();
+			projectile.InheritImmunityFrames(projType, out _);
 			for (int i = 0; i < 6; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
@@ -695,6 +736,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 			int t = ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>();
+			projectile.InheritImmunityFrames(t, out _);
 			for (int i = Main.rand.Next(2); i < 3; i++) {
 				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, t, (int)(projectile.damage * 0.5f), 6, projectile.owner);
 			}
@@ -726,7 +768,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				canister.DefaultExplosion(projectile);
 			}
 			for (int i = 0; i < 4; i++) {
-				Projectile.NewProjectile(
+				Projectile bee = Projectile.NewProjectileDirect(
 					projectile.GetSource_FromThis(),
 					projectile.Center,
 					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
@@ -735,6 +777,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 					0,
 					projectile.owner
 				);
+				projectile.InheritImmunityFrames(bee.type, out _); // bee type is procedurally unknowable, so we have to just do this for every bee type that gets spawned
+				bee.usesIDStaticNPCImmunity = true;
+				bee.idStaticNPCHitCooldown = 8;
 			}
 		}
 	}
@@ -764,12 +809,14 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				canister.DefaultExplosion(projectile, DustID.ShimmerTorch);
 			}
 			if (Main.myPlayer != projectile.owner) return;
+			int starType = ModContent.ProjectileType<Aether_Canister_P>();
+			projectile.InheritImmunityFrames(starType, out _);
 			for (int i = 0; i < 5; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_Death(),
 					projectile.Center,
 					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(3, 6), (i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi),
-					ModContent.ProjectileType<Aether_Canister_P>(),
+					starType,
 					(int)(projectile.damage * 0.65f),
 				0);
 			}
