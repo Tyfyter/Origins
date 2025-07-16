@@ -70,7 +70,9 @@ namespace Origins.Items.Weapons.Magic {
 					case NPCID.CultistBoss or NPCID.CultistBossClone or NPCID.CultistDevote or NPCID.CultistArcherBlue or NPCID.CultistArcherWhite:
 					return !npc.active || npc.DistanceSQ(Main.LocalPlayer.MountedCenter) > (Main.screenWidth * Main.screenWidth) + (Main.screenHeight * Main.screenHeight);
 				}
-				return !npc.CanBeChasedBy(typeof(Missing_File_UI)) || BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out int type) ? type : npc.netID)?.Icon is null;
+				if (!npc.CanBeChasedBy(typeof(Missing_File_UI))) return true;
+				if (BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out int type) ? type : npc.netID)?.Icon is not null) return false;
+				return BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.type, out type) ? type : npc.type)?.Icon is null;
 			}
 			if (targets.Count == 0) {
 				HashSet<int> realNPCs = [];
