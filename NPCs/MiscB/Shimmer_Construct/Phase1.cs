@@ -423,7 +423,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public abstract class Shimmer_Construct_Health_Chunk : ModNPC {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;

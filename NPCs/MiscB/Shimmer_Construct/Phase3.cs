@@ -364,6 +364,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public abstract class Shimmer_Construct_Turret_Chunk : Shimmer_Construct_Health_Chunk {
 			public override string Texture => base.Texture.Replace("_Turret", "");
 			public override void SetStaticDefaults() {
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 				Types.Add(Type);
 			}
 			public override void AI() {
