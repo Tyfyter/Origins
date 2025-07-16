@@ -122,6 +122,7 @@ namespace Origins {
 				TileID.Diamond, TileID.Ruby
 			);
 			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
+			public static float[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateFloatSet(0);
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]

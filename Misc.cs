@@ -4538,7 +4538,7 @@ namespace Origins {
 			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
 		}
-		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false, bool cut = true) {
 			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
 				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
 
@@ -4547,11 +4547,17 @@ namespace Origins {
 				for (int y = 0; y < tileData.Height; y++) {
 					for (int x = 0; x < tileData.Width; x++) {
 						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
-						if (tileSafely.HasTile && !(Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
+						if (tileSafely.HasTile && !(cut && (Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType]))) {
 							return false;
 						}
 					}
 				}
+				/*for (int y = 0; y < tileData.Height; y++) {
+					tileData.AnchorLeft.
+				}
+				for (int x = 0; x < tileData.Width; x++) { 
+
+				}*/
 				return true;
 			}
 			return false;

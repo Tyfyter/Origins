@@ -2138,6 +2138,7 @@ Tiles: {
 	Limestone_Dresser.MapEntry: Limestone Dresser
 	Hanging_Wrycoral.MapEntry: Hanging Wrycoral
 	Fuzzvine.MapEntry: Fuzzvine
+	Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
 }
 
 MapObject: {

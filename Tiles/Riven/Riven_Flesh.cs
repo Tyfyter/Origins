@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
 using Origins.World.BiomeData;
+using System;
 using System.Reflection.Metadata;
 using Terraria;
 using Terraria.GameContent;
@@ -132,8 +133,8 @@ namespace Origins.Tiles.Riven {
 			}
 			Tile below = Main.tile[i, j + 1];
 			if (!below.HasTile && WorldGen.genRand.NextBool(30)) {
-				if (WorldGen.genRand.NextBool(20 - (int)float.Ceiling(existing * 0.5f))) {
-					if (TileExtenstions.CanActuallyPlace(i, j + 1, wrycoral, WorldGen.genRand.Next(3), 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+				if (WorldGen.genRand.NextBool(5)) {
+					if (TileExtenstions.CanActuallyPlace(i, j + 1, WorldGen.genRand.NextBool(Math.Max(20 - existing, 1)) ? wrycoral : TileType<Fuzzvine_Lorg>(), WorldGen.genRand.Next(3), 0, out TileObject objectData, onlyCheck: false, checkStay: true, cut: false)) {
 						TileObject.Place(objectData);
 					}
 				} else {

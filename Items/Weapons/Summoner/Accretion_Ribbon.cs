@@ -77,7 +77,7 @@ namespace Origins.Items.Weapons.Summoner {
 						player.velocity += new Vector2(Projectile.direction * 2, -1) * (5.01f + player.jumpSpeedBoost);
 					}
 				}
-				player.velocity.X = float.Clamp(player.velocity.X + Projectile.direction * 0.1f, -maxXVel, maxXVel);
+				player.velocity.X = float.Clamp(player.velocity.X + Projectile.direction * 0.2f, -maxXVel, maxXVel);
 				Projectile.velocity = Projectile.velocity.RotatedBy(0.35f * Projectile.direction);
 			} else {
 				PolarVec2 vel = (PolarVec2)Projectile.velocity;

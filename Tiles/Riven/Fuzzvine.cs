@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
@@ -12,7 +14,7 @@ using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 using static Terraria.GameContent.Drawing.TileDrawing;
 
 namespace Origins.Tiles.Riven {
-    public class Fuzzvine : OriginTile {
+	public class Fuzzvine : OriginTile {
 		int[] AnchorTiles;
 		public override void SetStaticDefaults() {
 			AnchorTiles = [
@@ -41,6 +43,7 @@ namespace Origins.Tiles.Riven {
 			HitSound = SoundID.Grass;
 			DustType = DustID.BlueMoss;
 			AltVines.AddVine(Type, AnchorTiles);
+			OriginsSets.Tiles.MinionSlowdown[Type] = 0.25f;
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile below = Framing.GetTileSafely(i, j + 1);
@@ -92,10 +95,56 @@ namespace Origins.Tiles.Riven {
 			tile.TileFrameX = (short)(tile.TileFrameNumber * 18);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			OriginsSets.Tiles.MinionSlowdown[Type] = 0.25f;
+			if (!Framing.GetTileSafely(i, j - 1).TileIsType(Type)) {
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.Vine);
+			}
+			return false;
+		}
+	}
+	public class Fuzzvine_Lorg : OriginTile {
+		public override void SetStaticDefaults() {
+			Main.tileFrameImportant[Type] = true;
+			Main.tileObsidianKill[Type] = true;
+			Main.tileCut[Type] = true;
+			Main.tileNoFail[Type] = true;
+			Main.tileWaterDeath[Type] = false;
+			TileID.Sets.TileCutIgnore.Regrowth[Type] = true;
+			TileID.Sets.ReplaceTileBreakDown[Type] = true;
+			TileID.Sets.MultiTileSway[Type] = true;
+			TileID.Sets.ReplaceTileBreakUp[Type] = true;
+			TileID.Sets.IgnoredInHouseScore[Type] = true;
+			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
+			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.Width = 2;
+			TileObjectData.newTile.Height = 5;
+			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.PlanterBox, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.AnchorValidTiles = [
+				ModContent.TileType<Riven_Grass>(),
+				ModContent.TileType<Riven_Jungle_Grass>(),
+				ModContent.TileType<Riven_Flesh>()
+			];
+			TileObjectData.newTile.CoordinateHeights = [..Enumerable.Repeat(16, TileObjectData.newTile.Height)];
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.RandomStyleRange = 0;
+			TileObjectData.addTile(Type);
+
+			LocalizedText name = CreateMapEntryName();
+			AddMapEntry(new Color(37, 109, 128), name);
+
+			HitSound = SoundID.Grass;
+			DustType = DustID.BlueMoss;
+			OriginsSets.Tiles.MinionSlowdown[Type] = 0.50f;
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			OriginsSets.Tiles.MinionSlowdown[Type] = 0.50f;
 			if (TileObjectData.IsTopLeft(Main.tile[i, j])) {
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
 			}
-			return true;
+			return false;
 		}
 	}
 }
