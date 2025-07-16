@@ -99,6 +99,8 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			// fix DragonLens spawning npcs bc i keep accidentally softlocking myself
+			if (NPC.IsABestiaryIconDummy) return false;
 			//no clue how I missed the 'u' key so badly
 			int chanked = 0;
 			for (int i = 0; i < chunks.Length; i++) {
